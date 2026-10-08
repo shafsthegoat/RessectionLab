@@ -39,7 +39,7 @@ compact execution record, not a replacement specification.
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | The three fixed-N24 boundary/interior cases and independent 244-state replay passed. Primary force difference is55.308µN and probe difference0.657µm; local plate order2.0447 does not bound total error. Prepare one prospective global N32 check; preserve total-error and load-step gates. Retain FEBio; compare SOFA for later interaction. |
+| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | The three fixed-N24 boundary/interior cases and independent 244-state replay passed. Primary force difference is55.308µN and probe difference0.657µm; local plate order2.0447 does not bound total error. Completed N32 improves adjacent agreement but fails the remaining-error envelope at states 49–60. Review one prospective N36 diagnostic and its higher runtime budget; preserve spatial, load-step and calibration gates. Retain FEBio; compare SOFA for later interaction. |
 | Physiology | Actual VitalDB case3/subject2861 DEVELOPMENT import/replay:21,970 pump/NIBP records and7,207 boundaries independently checked;15 focused checks pass. Original arterial task fails. Unshifted native clock supported, recording-start offset and cuff-measurement age unresolved. No validated response or learning. | Fresh-checkout cache preparation passes16independently repeated controls and real-record admission. Add observed-event integration; resolve release-specific native origin. Keep this separate patient's records separate from glioma anatomy, and qualify actual action/endpoint support before learning. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
@@ -336,3 +336,22 @@ and separate QC; new revision-2 routes remain untested. Metadata review passed.
 [IBSR](../artifacts/ibsr-source-qualification-v1/RESULT.md) remains unadmitted after
 three official metadata checks: README access, label ancestry/domain, participant
 overlap and use rights remain unresolved. No new agreement or payload was used.
+
+## October 8: N32 completion retains a negative accuracy result
+
+The [N32 study](../artifacts/mechanics/hbe-global-n32-execution-v1/RESULT.md)
+completed with one native call, no retry, and all resource limits respected.
+Independent review reproduced 305 states across five readouts and checked all
+unequal-spacing force-order calculations with a different root solver. Adjacent
+reaction/motion changes now pass. The prespecified two-limit sensitivity envelope
+is 0.985189 mN against 0.724169 mN; states 49–60 fail. This conditional estimate is not
+a rigorous continuum bound. Spatial acceptance and physical calibration remain
+closed, and finest-level temporal verification remains required. No measured
+biological curves or patient records were consumed. The N36 proposal is an
+unexecuted forecast requiring separate review and resource/source declaration.
+
+The annotation intake is now implemented and independently reviewed: 54 software/
+metadata checks pass after a real process-interruption bookkeeping defect was
+reproduced and repaired. Public metadata proofs are portable. The first cache-only
+real-mask pilot reproduced 193 positive voxels and passed independent source/grid
+checks; full-inventory acquisition/QC and actual component fitting remain open.

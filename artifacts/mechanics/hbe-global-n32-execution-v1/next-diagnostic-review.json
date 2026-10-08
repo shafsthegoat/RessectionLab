@@ -1,0 +1,229 @@
+{
+  "audit_script_sha256": "73bd2ffd7dc73c6db0fb27bd7a38c513985b1ab510bb81ab78315f88a7090acc",
+  "blocking_arithmetic_errors": [],
+  "created_at": "2026-10-08T11:50:05.644663+00:00",
+  "existing_N32": {
+    "allowance_N": 0.0007241685256994747,
+    "comparison_sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e",
+    "execution_review_completed": true,
+    "failed_states": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ],
+    "frozen_envelope_N": 0.0009851889327635727,
+    "independent_review_sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67",
+    "latest_remaining_N": 0.0006917018215840398,
+    "scientific_spatial_result": "failed_two_model_envelope"
+  },
+  "forecast_only_threshold_sensitivity": {
+    "comparison_floor_is_not_noise_bound": true,
+    "endpoint_candidate_interval_about_forecast_N": [
+      -1.5210269607053573e-06,
+      6.364695346212923e-07
+    ],
+    "forecast": {
+      "T_N": 0.0007231747382971713,
+      "drift_allowance": 0.15033793260643755,
+      "increment_ratio": 2.7800660873043026,
+      "limit_disagreement_N": 3.0531133177191805e-16,
+      "new_limit_N": -0.03550872446339,
+      "order_drift": 2.5623947408348613e-13,
+      "p": 0.6329202704194921,
+      "previous_limit_minus_F36_N": 0.0006420124514688666,
+      "signed_latest_remaining_N": 0.0006420124514685602,
+      "two_latest_limit_envelope_N": 0.0006420124514688666
+    },
+    "negative_delta_to_order_drift_failure_N": -1.5210269607053573e-06,
+    "old_N12_N16_N24_limit_distance_at_F36_N": 0.0009354995626483995,
+    "old_limit_distance_over_allowance": 1.2936009972516191,
+    "original_0_2_percent_temporal_relative_allowance_N": 7.230147382971712e-05,
+    "positive_delta_to_envelope_failure_N": 6.364695346212923e-07,
+    "positive_delta_to_order_drift_failure_N": 1.5624196408915714e-06,
+    "temporal_allowance_over_forecast_sensitivity": 113.59769776370749,
+    "threshold_assumption": "Uses abs(endpoint F36) as the series maximum for this forecast; actual gate must use max across all 61 native states.",
+    "warning": "The 0.636 microN endpoint decision sensitivity is about 114 times smaller than the original 0.2 percent temporal allowance. Passing that temporal tolerance alone would not prove this fragile spatial classification invariant; report actual observed step changes against the decision margin without retroactively relaxing any gate."
+  },
+  "generalized_spacing": {
+    "a": 0.28768207245178085,
+    "b": 0.11778303565638346,
+    "forecast_increment_ratio": 2.7800660873043026,
+    "formula": "R=expm1(p*a)/(-expm1(-p*b)); correction=d23/expm1(p*b). Retain same-sign resolved increments, R>a/b and declared 1e-6<=p<=16 domain; no equal-ratio shortcut.",
+    "positive_order_ratio_lower_limit": 2.4424745961808587,
+    "root_uniqueness": "d(log R)/dp=a/(1-exp(-pa))-b/(exp(pb)-1)>0 for a,b,p>0.",
+    "triplet": [
+      24,
+      32,
+      36
+    ]
+  },
+  "input_bindings": {
+    "build/hbe-n32-global-execution-review-v1/acceptance.json": {
+      "bytes": 1059,
+      "sha256": "5efc115dc26d2fe93fe9b1ff0491faa885a50fd48221b42ea5554a0b8befa0dd"
+    },
+    "build/hbe-n32-global-execution-review-v1/verification.json": {
+      "bytes": 6018,
+      "sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67"
+    },
+    "build/hbe-n32-next-diagnostic-v1/diagnostic.json": {
+      "bytes": 15459,
+      "sha256": "61f7cce3c02052f68348a02dcdf5df6d9e77b95a4ac531318009a39855255107"
+    },
+    "data/optional-runtimes/febio-4.13/source/Documentation/FEBio_Theory_Manual.lyx": {
+      "bytes": 1697598,
+      "sha256": "788c83610b2295cd50cac9ff34c6b2f67f630dac745a1b4ca41b16bacd294f70"
+    },
+    "data/optional-runtimes/febio-4.13/source/FEBioMech/FE3FieldElasticSolidDomain.cpp": {
+      "bytes": 19072,
+      "sha256": "2eabad7908288baca716695e52059fa662d52323a236d6a13bbeeb9c3c982c9f"
+    },
+    "data/optional-runtimes/febio-4.13/source/FEBioMech/FESolidDomainFactory.cpp": {
+      "bytes": 6485,
+      "sha256": "1e20985fa6b5d3621056e29f89957ef10980008b48971f5d4d92a04244d9d7d5"
+    },
+    "docs/hbe-halfheight-spatial.md": {
+      "bytes": 7306,
+      "sha256": "0ea8cede6ed9b35520efcc4ddd471702f8ffd3d5bdfa0b50ebd43994eca1367c"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/comparison.json": {
+      "bytes": 149243,
+      "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/result.json": {
+      "bytes": 2097,
+      "sha256": "c3285870764b744bb2946bfe110cd459d10996cdbd3c94ec039c0a6d31bcf62b"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/runs/compression-N32-S60-reference/execution.json": {
+      "bytes": 3886,
+      "sha256": "3cd61feadf9304197a99ccc223d0a22794d9b1ddba4c3eaf118274f5496f5475"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/runs/compression-N32-S60-reference/readout.json": {
+      "bytes": 555499,
+      "sha256": "00226a9ec8b62c1cc79deb5698aaea935571f0270241b5caf2e7037ed07a46cb"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/state.json": {
+      "bytes": 5917,
+      "sha256": "c87ab89279181c441826a9dede1f07561d5751ca904aceeb63a2bdba896a377f"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    }
+  },
+  "mandatory_prospective_checks": [
+    "Bind exactly 39610 native nodes, 34992 native hex8 cells, 3961 midpoint nodes, 75259 reconstructed full nodes and 69984 full cells; 61 S60 states; 9 node/8 element fields. No generic parser-limit widening.",
+    "Keep specimen geometry, original five-block uniform rule, Ogden exponent 2, mu = 1000 Pa, K = 149mu/3, three-field hex8, laugon = 0, bonded plates/free side, backend/thread/source identities and accepted half-height assumptions unchanged.",
+    "Keep every 61-state native/reconstructed individual balance, free-DOF, prescribed-motion, sampled-J, residual, work-energy and 75 fixed physical probe check, plus 8 micrometre motion and original raw adjacent-trend reporting.",
+    "At every nonrest state compute 12/16/24, 16/24/32, 24/32/36 orders. Preserve 8/12/16 and all earlier estimates/nulls as history. Report finite limits, exact eligibility reasons, all drift/disagreement flags, maximum envelope and attaining state.",
+    "Freeze the new two-latest window before execution; retain the old N32 failure and explicitly display the older-limit discrepancy. Do not drop a newly inconvenient model after seeing N36.",
+    "Require both latest model limits for E=max(abs(limit24/32/36-F36),abs(limit16/24/32-F36)); compare against 1.6e-7+0.02*max_all_states(abs(F36)). No unresolved nonrest state may be hidden beneath an eligible-only maximum.",
+    "Keep the same absolute-order-drift and limit-disagreement diagnostics. An absence of flags, especially under short refinement spacing, does not establish a stable asymptotic regime.",
+    "Report the native forecast residual and threshold sensitivity, not only a pass boolean. Never substitute an extrapolated continuum value for a native reaction in later calibration."
+  ],
+  "recommendation": "One separately declared N36 S60 run is a defensible final uniform-family forecast/consistency test. It does not distinguish the physical origin of discretization error. A favorable result may satisfy only the prospective conditional spatial screen and nominate temporal review; it cannot repair the failed N32 study, certify continuum error or release calibration.",
+  "recomputed_options": [
+    {
+      "N": 36,
+      "RSS_projection_B": 2522646830.2709594,
+      "combined_logs_projection_B": 643708079.7352957,
+      "counts": {
+        "full_cells": 69984,
+        "full_nodes": 75259,
+        "half_cells": 34992,
+        "half_nodes": 39610,
+        "midplane_nodes": 3961
+      },
+      "element_log_projection_B": 258924653.7890625,
+      "forecast_force_N": -0.03615073691485856,
+      "forecast_remaining_N": 0.0006420124514688666,
+      "illustrative_native_seconds": [
+        909.907834527572,
+        1023.6463138435186,
+        1295.5523659582032
+      ],
+      "node_log_projection_B": 384783425.94623315
+    },
+    {
+      "N": 40,
+      "RSS_projection_B": 3419425169.5046225,
+      "combined_logs_projection_B": 876748336.8560927,
+      "counts": {
+        "full_cells": 96000,
+        "full_nodes": 102501,
+        "half_cells": 48000,
+        "half_nodes": 53691,
+        "midplane_nodes": 4881
+      },
+      "element_log_projection_B": 355177851.5625,
+      "forecast_force_N": -0.03610932070166488,
+      "forecast_remaining_N": 0.0006005962382751862,
+      "illustrative_native_seconds": [
+        1248.1588950995501,
+        1560.1986188744377,
+        2437.8103419913086
+      ],
+      "node_log_projection_B": 521570485.29359263
+    }
+  ],
+  "resource_review": {
+    "RSS_projected_margin_B": 698578641.7290406,
+    "aggregate_minus_native_cap_seconds": 300,
+    "assessment": "1500s native/1800s aggregate is a plausible new prospective allocation with only 300 s reserved when native reaches cap. N36 projected parser margins are only about 4.4 percent (nodes) and 3.5 percent (elements); output formatting, fill, replay/readout and memory may still cause terminal failure. Linear RSS/N^k timing scenarios are not bounds. Include source checks, prior replay, readout, cleanup and publication in aggregate; no borrowing from acquisition or another run. Sampling can miss between-sample peaks.",
+    "caps": {
+      "active_output_B": 805306368,
+      "aggregate_seconds_proposed_for_review": 1800,
+      "element_parser_max_B": 268435456,
+      "mesh_generation_calls": 1,
+      "native_seconds_proposed_for_review": 1500,
+      "native_solver_calls": 1,
+      "new_total_output_B": 2147483648,
+      "node_parser_max_B": 402653184,
+      "preparation_seconds": 60,
+      "sampled_family_RSS_B": 3221225472,
+      "solver_parser_max_B": 16777216,
+      "threads": 1
+    },
+    "element_log_projected_margin_B": 9510802.2109375,
+    "node_log_projected_margin_B": 17869758.053766847,
+    "observed_N32_other_seconds": 111.86198637494817
+  },
+  "review_actions": {
+    "execution_or_release_created": false,
+    "measured_curve_reads": 0,
+    "mesher_calls": 0,
+    "new_meshes": 0,
+    "new_native_calls": 0,
+    "pure_scalar_refusal_and_monotonicity_controls_passed": true,
+    "raw_primitive_parses": 0,
+    "source_edits": 0
+  },
+  "schema": "hbe-n36-independent-prospective-numerical-review-v1",
+  "status": "one_uniform_consistency_test_is_informative_with_mandatory_scope_limits_not_a_release",
+  "stopping_and_gate_interpretation": [
+    "Exactly one new mesher call and one solver call. A preparation, resource, solver, parser, input-identity or individual-check failure is terminal with all partial evidence retained; no automatic retry, resume or larger cap.",
+    "A failed prospective spatial screen ends this uniform-refinement line; do not schedule N40/N48 or another plate split to search for a favorable threshold crossing. Any future graded/formulation study needs a distinct question and declaration.",
+    "A passing screen nominates the selected discretization for separate S120/scaling/other-axial-branch review. Original failed gates stay failed; temporal adequacy, physical validation, calibration and held-out measured response are not established.",
+    "Even after a temporal pass, disclose whether its actual force shift is small relative to the spatial decision margin. Numerical equilibrium residual ratios alone are not certified force-error bounds."
+  ],
+  "why_one_level_not_another_method_now": [
+    "N36 is the next larger admissible even N with an even original full axial layer count: 18 full layers/9 half layers. N34 would have 17 full layers and no whole-cell midpoint cut.",
+    "It adds 42.3828125 percent native cells and tests a fourth uniform level against the already frozen 16/24/32 forecast with all three new triplet levels using native half-height solutions.",
+    "Uniform convergence and bonded/free rim concentration are compatible hypotheses. One additional global level tests predictive consistency, not a causal separation of radial, circumferential, geometry and bulk errors.",
+    "Rim grading would change the mesh-error family; it needs its own geometry/reflection/quality definition and multilevel evidence. Do not mix one graded force into the uniform power law.",
+    "Higher-order formulation would also change validated element/energy/readout assumptions. Current hex8 three-field checks give no simple formulation defect requiring that larger implementation first."
+  ]
+}

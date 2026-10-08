@@ -1,0 +1,70 @@
+{
+  "files": [
+    {
+      "bytes": 778,
+      "path": "README.txt",
+      "sha256": "96a9a34d633094a78453d911195ef3f86d6de804dd92ff7138400ccf52547b17"
+    },
+    {
+      "bytes": 149243,
+      "path": "comparison.json",
+      "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+    },
+    {
+      "bytes": 397,
+      "path": "execution.json",
+      "sha256": "e77994dfb78f00d0e6dd7714e96f50c6124a43de7664c9deb689693f17b3ce40"
+    },
+    {
+      "bytes": 1174,
+      "path": "inspection.json",
+      "sha256": "269d0df8f22e1c9812a890ebcbea2401538f14bb3750df5478112086cbbcf8fa"
+    },
+    {
+      "bytes": 44920,
+      "path": "n32-spatial-diagnostic.pdf",
+      "sha256": "35a0f2425752ca2ce8ae8dde1b82d762a62b56675d653d32b9fc8b214187c6da"
+    },
+    {
+      "bytes": 416656,
+      "path": "n32-spatial-diagnostic.png",
+      "sha256": "181b4f4fdee29af8b3b6a04b4a5d3f15954bab7831b552488175a601832e56de"
+    },
+    {
+      "bytes": 9998,
+      "path": "plot.py",
+      "sha256": "97707a8545ae708afb15a2b930164ddacea35a18f3b3721cca0d31ece0520722"
+    },
+    {
+      "bytes": 5204,
+      "path": "provenance.json",
+      "sha256": "82ca1077d871f77d511f5ee40547412a4acdaaca80683dc833a2faf07a85219d"
+    },
+    {
+      "bytes": 1419,
+      "path": "render-result.json",
+      "sha256": "3e0626ab3b59c4e22a294a6eb062e89b243a8bdb5a33e094c96ff5743376f791"
+    },
+    {
+      "bytes": 1419,
+      "path": "run.log",
+      "sha256": "53c68f84261b31bcb0924172b5eb49acb700f857e690d5c1a03ae142c863b319"
+    },
+    {
+      "bytes": 109,
+      "path": "started.json",
+      "sha256": "6fc53016a9407da6117366ecb3b6bb065c8836976e52d8ef3db8e5ba6b137f97"
+    },
+    {
+      "bytes": 3959,
+      "path": "typography-only.diff",
+      "sha256": "6e3c280138fd03917cd7ecacdb4fadbb0202458b9be9beeeb013e13332ad8a69"
+    },
+    {
+      "bytes": 6018,
+      "path": "verification.json",
+      "sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67"
+    }
+  ],
+  "schema": "hbe-n32-global-figure-artifact-index.v2"
+}

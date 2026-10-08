@@ -1,0 +1,243 @@
+{
+  "actions": {
+    "measured_curves_opened": 0,
+    "mesher_calls": 0,
+    "native_solver_calls": 0,
+    "new_meshes": 0,
+    "new_scientific_response_datasets": 0,
+    "raw_primitive_logs_opened": 0,
+    "releases_created": 0,
+    "tracked_source_edits": 0
+  },
+  "calibration_released": false,
+  "created_at": "2026-10-08T11:35:27.129599+00:00",
+  "evidence": {
+    "data/optional-runtimes/febio-4.13/source/Documentation/FEBio_Theory_Manual.lyx": {
+      "bytes": 1697598,
+      "sha256": "788c83610b2295cd50cac9ff34c6b2f67f630dac745a1b4ca41b16bacd294f70"
+    },
+    "data/optional-runtimes/febio-4.13/source/FEBioMech/FE3FieldElasticSolidDomain.cpp": {
+      "bytes": 19072,
+      "sha256": "2eabad7908288baca716695e52059fa662d52323a236d6a13bbeeb9c3c982c9f"
+    },
+    "data/optional-runtimes/febio-4.13/source/FEBioMech/FESolidDomainFactory.cpp": {
+      "bytes": 6485,
+      "sha256": "1e20985fa6b5d3621056e29f89957ef10980008b48971f5d4d92a04244d9d7d5"
+    },
+    "docs/hbe-halfheight-spatial.md": {
+      "bytes": 7306,
+      "sha256": "0ea8cede6ed9b35520efcc4ddd471702f8ffd3d5bdfa0b50ebd43994eca1367c"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/comparison.json": {
+      "bytes": 149243,
+      "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/result.json": {
+      "bytes": 2097,
+      "sha256": "c3285870764b744bb2946bfe110cd459d10996cdbd3c94ec039c0a6d31bcf62b"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/runs/compression-N32-S60-reference/execution.json": {
+      "bytes": 3886,
+      "sha256": "3cd61feadf9304197a99ccc223d0a22794d9b1ddba4c3eaf118274f5496f5475"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/runs/compression-N32-S60-reference/readout.json": {
+      "bytes": 555499,
+      "sha256": "00226a9ec8b62c1cc79deb5698aaea935571f0270241b5caf2e7037ed07a46cb"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/state.json": {
+      "bytes": 5917,
+      "sha256": "c87ab89279181c441826a9dede1f07561d5751ca904aceeb63a2bdba896a377f"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    }
+  },
+  "forecast_reconciliation": {
+    "actual_minus_forecast_N": -7.471206821561827e-06,
+    "adjacent_change_percent_smaller_than_forecast": 5.130937856180795,
+    "forecast_endpoint_force_N": -0.03619295507815217,
+    "interpretation": "A 7.471 microN more-negative force and 5.13% smaller adjacent increment increased fitted p and reduced the latest conditional correction by 29.25%. The older N12/16/24 limit did not change; therefore the frozen two-limit envelope increased by the same 7.471 microN instead of passing. The latest-only indicator is below tolerance by only 32.467 microN. Discarding the older limit now would be posthoc acceptance and is forbidden.",
+    "latest_indicator_percent_smaller_than_forecast": 29.253423229327325
+  },
+  "hypotheses": [
+    {
+      "claim": "The uniform hex8 force sequence is approaching a stable sublinear asymptotic regime; the N12/16/24 estimate is still pre-asymptotic.",
+      "id": "H1",
+      "limitation": "Order increments .152550 and .150337 barely shrink. The absence of a drift flag does not demonstrate stabilized order or a rigorous continuum bound. Thirty-five early states fail the oldest triplet positive-order model.",
+      "support": "All later triplet states are eligible; adjacent force/motion shrink; latest order .632920 and latest remainder 1.91% are favorable."
+    },
+    {
+      "claim": "Mixed bonded-plate/free-side boundary concentration and transverse/bulk discretization still contribute; current evidence cannot apportion the total force error.",
+      "id": "H2",
+      "limitation": "Those controls keep radial/circumferential geometry fixed. Their approximately 61.4 microN local extrapolated P1 correction cannot certify total error or establish that radial grading alone will cure it. Curved-side geometry remains part of the uniform sequence.",
+      "support": "Saved N8/12/16/24 rim traction proxies grow while core values stabilize. The executed fixed-N24 P1/P2/P4 plate-normal sequence has local order 2.0447 and only 3.608 microN conditional remainder."
+    },
+    {
+      "claim": "A simple volumetric-locking or nonlinear-residual fix is not presently evidenced.",
+      "id": "H3",
+      "limitation": "These are equilibrium/consistency observations, not a reaction error bound. They neither rule out all formulation error nor replace finest-level step checks.",
+      "support": "Current Ogden material already uses the established three-field hex8 formulation; independently computed balance, free DOFs, positive sampled J and solver residual checks pass with substantial margins."
+    }
+  ],
+  "observed": {
+    "N24_to_N32_max_signed_force_change_N": 0.00013813973275670494,
+    "N32_endpoint_force_N": -0.03620042628497373,
+    "adjacent_force_motion_and_raw_trend_checks_pass": true,
+    "adjacent_motion_change_m": 1.727312299166703e-06,
+    "envelope_excess_N": 0.00026102040706409797,
+    "envelope_percent_of_endpoint_force": 2.7214843411181326,
+    "failed_states": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ],
+    "force_allowance_N": 0.0007241685256994747,
+    "frozen_two_limit_envelope_N": 0.0009851889327635727,
+    "inclusive_aggregate_seconds": 750.9193406659178,
+    "individual_native_and_reconstructed_checks_pass": true,
+    "latest_indicator_percent_of_endpoint_force": 1.91075601192894,
+    "latest_limit_N": -0.03550872446338969,
+    "latest_limit_disagreement_N": 0.00029348711117953286,
+    "latest_order": 0.6329202704192358,
+    "latest_remaining_indicator_N": 0.0006917018215840398,
+    "maximum_free_dof_reaction_ratio": 0.0007881602290369524,
+    "maximum_solver_residual_ratio": 1.40551968333164e-10,
+    "minimum_sampled_J": 0.585956916393358,
+    "native_seconds": 639.0573542909697,
+    "non_native_inclusive_overhead_seconds": 111.86198637494817,
+    "original_coarse_triplet_ineligible_state_count": 35,
+    "previous_limit_N": -0.03521523735221016,
+    "prior_orders": [
+      0.33003322965017934,
+      0.4825833378127983
+    ],
+    "retained_bytes_before_result": 513106756,
+    "sampled_peak_family_RSS_B": 1798078464,
+    "successive_order_changes": [
+      0.15255010816261894,
+      0.15033693260643755
+    ],
+    "unresolved_nonrest_states": []
+  },
+  "option_assessment": {
+    "cost_model_caveat": "Endpoint power-law extensions and all N36/N40 resource values are extrapolations, not measurements. N^3/N^4/N^6 timing scenarios are illustrative scaling from the one observed N32 run, not a fitted complexity law. Sparse fill and readout may exceed these values; linear node RSS scaling is not an upper bound.",
+    "grading": "Radial refinement concentrated near the bonded/free rim is scientifically motivated and could retain the current hex8 independent reader. Another purely axial plate split has little diagnostic value. A same-count radial redistribution may be cheaper per solve, but one result cannot establish total accuracy; it starts a new graded family requiring fixed geometry policy, quality/reflection controls and at least a prospective multilevel comparison. It also changes mesh-error terms, so its response cannot be inserted into the existing uniform power-law sequence.",
+    "higher_order": "The installed FEBio source factory selects three-field-solid for uncoupled HEX8; its HEX20/HEX27 branch selects elastic-solid. A higher-order switch is not the same discrete formulation, and the current independent energy/geometry/readout supports exactly hex8. It would need its own formulation and quadrature validation; higher order alone does not remove a mixed-BC singularity. No evidence presently justifies that larger implementation before the one remaining uniform consistency check.",
+    "step_only": "N32 S120 would fulfill a later temporal obligation but cannot repair the failed spatial envelope. The current frozen declaration explicitly reserves temporal work until spatial-model review. It is not the smallest discriminator of H1 versus persistent spatial model dependence.",
+    "uniform": [
+      {
+        "N": 36,
+        "forecast_only_endpoint_force_N": -0.03615073691485856,
+        "forecast_only_force_allowance_N": 0.0007231747382971713,
+        "forecast_only_next_signed_change_N": 4.9689370115173215e-05,
+        "forecast_only_remaining_N": 0.0006420124514688639,
+        "full_cells": 69984,
+        "full_nodes": 75259,
+        "half_cells": 34992,
+        "half_nodes": 39610,
+        "illustrative_native_time_N_cubic_quartic_sextic_s": [
+          909.907834527572,
+          1023.6463138435186,
+          1295.5523659582032
+        ],
+        "linear_node_count_RSS_projection_B": 2522646830.2709594,
+        "midplane_nodes": 3961,
+        "row_count_element_log_projection_B": 258924653.7890625,
+        "row_count_node_log_projection_B": 384783425.94623315
+      },
+      {
+        "N": 40,
+        "forecast_only_endpoint_force_N": -0.03610932070166488,
+        "forecast_only_force_allowance_N": 0.0007223464140332977,
+        "forecast_only_next_signed_change_N": 9.110558330885365e-05,
+        "forecast_only_remaining_N": 0.0006005962382751863,
+        "full_cells": 96000,
+        "full_nodes": 102501,
+        "half_cells": 48000,
+        "half_nodes": 53691,
+        "illustrative_native_time_N_cubic_quartic_sextic_s": [
+          1248.1588950995501,
+          1560.1986188744377,
+          2437.8103419913086
+        ],
+        "linear_node_count_RSS_projection_B": 3419425169.5046225,
+        "midplane_nodes": 4881,
+        "row_count_element_log_projection_B": 355177851.5625,
+        "row_count_node_log_projection_B": 521570485.29359263
+      }
+    ]
+  },
+  "physical_validation_pass": null,
+  "primary_references": [
+    {
+      "accessed": "2026-10-08",
+      "support": "Official documentation recommends three-field formulation for nearly incompressible linear hex/penta elements; formulation choice is not specimen validation.",
+      "url": "https://febiosoftware.github.io/febio-docs/features/features/solid_soliddomain_three-field-solid/"
+    },
+    {
+      "lines": [
+        67,
+        70,
+        89,
+        93
+      ],
+      "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FESolidDomainFactory.cpp",
+      "support": "Exact source separates HEX8 three-field and HEX20/HEX27 elastic-solid factory branches."
+    },
+    {
+      "lines": [
+        29220,
+        29234
+      ],
+      "path": "data/optional-runtimes/febio-4.13/source/Documentation/FEBio_Theory_Manual.lyx",
+      "support": "Primary local theory documentation discusses incompressibility and three-field elements."
+    }
+  ],
+  "recommendation": {
+    "decision": "After independent N32 acceptance, prospectively review ONE N36 uniform global half-height compression S60 case; do not launch it under the existing N32 release and do not schedule a mesh sweep.",
+    "forecast_only": "Continuation of the latest .632920 endpoint model predicts F36=-.0361507369 N and 0.642012 mN remaining correction versus approximately .723175 mN allowance. This predicts a possible candidate, not a pass or observation. The new short refinement interval makes order inference sensitive; roughly 0.636 microN deviation toward a less-negative F36 from that forecast reaches the endpoint remainder threshold under the anchored three-grid model. Report this sensitivity rather than claiming robust accuracy from a single scalar.",
+    "frozen_analysis_for_separate_review": [
+      "Reuse exactly the signed unequal-spacing root algorithm, increment floor, eligibility/null handling and 61-state accounting. Evaluate history N12/16/24, N16/24/32 and new N24/32/36; preserve older triplets in the report.",
+      "Declare before any run that the prospective two-latest-limit envelope uses the N16/24/32 and N24/32/36 models relative to F36; do not overwrite or reinterpret the failed N32 envelope. Retain all older limits so changing-window sensitivity stays visible.",
+      "Keep 1.6e-7 N + .02 max(abs(F36)), 8 micrometre motion, original individual balance/J/residual/work-energy gates, and the same order-drift and limit-disagreement rules. No unresolved non-rest states may be hidden.",
+      "A favorable screen can only nominate the selected discretization for S120 and independent review; it cannot release curves or substitute an extrapolated force for native forces in calibration."
+    ],
+    "prospective_resources_not_authorized": {
+      "active_output_B": 805306368,
+      "aggregate_seconds_proposed_for_review": 1800,
+      "element_parser_max_B": 268435456,
+      "mesh_generation_calls": 1,
+      "native_seconds_proposed_for_review": 1500,
+      "native_solver_calls": 1,
+      "new_total_output_B": 2147483648,
+      "node_parser_max_B": 402653184,
+      "preparation_seconds": 60,
+      "sampled_family_RSS_B": 3221225472,
+      "solver_parser_max_B": 16777216,
+      "threads": 1
+    },
+    "remaining_after_a_favorable_result": "Selected-level S120 and required scaling controls, tension branch numerical adequacy, access-layer source/evidence integration, and genuine measured calibration/held-out torsion validation remain separate requirements; this diagnostic validates none of them.",
+    "resource_scope": "The proposed wall caps are a NEW prospective allocation requiring separate review/release, not an extension/retry of N32 or a change to scientific tolerances. Existing 750/1200 s caps remain frozen. N36 estimates are roughly 910-1296 native seconds plus at least the observed 112 s other work; 3 GiB and parser/output margins may still be exhausted terminally.",
+    "stopping_rule": "At most this one additional uniform observation. First resource/preparation/native/individual failure is terminal. If the prospective spatial screen still fails or order becomes unstable, stop the uniform family and review a controlled rim-graded family or established error-estimation approach; no automatic N40/N48, retries or further plate split. If it passes, review temporal verification and the other axial branch before any calibration access.",
+    "why_N36": "It is the smallest larger even cross-section level with an even full axial layer count, retaining the original whole-cell half cut and all original physics. It adds 42.38% native cells versus 95.31% for N40. The new N24/32/36 triplet consists entirely of native half-height runs and directly tests continuation of the latest uniform trend.",
+    "why_not_N40": "Simple row scaling gives about 876.7 MB primitive logs before other output, already above 768 MiB active output; linear-node RSS predicts about 3.419 GB, above 3 GiB. It is not the smallest feasible discriminator."
+  },
+  "review_boundary": "Independent execution review is still running; this note interprets saved compact receipts and does not independently replay raw primitives.",
+  "schema": "hbe-n32-next-diagnostic-v1",
+  "spatial_convergence_accepted": false,
+  "status": "read_only_interpretation_and_prospective_recommendation_not_a_release"
+}

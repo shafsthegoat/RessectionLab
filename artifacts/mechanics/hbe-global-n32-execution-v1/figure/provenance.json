@@ -1,0 +1,148 @@
+{
+  "calibration": false,
+  "continuum_error_bound": false,
+  "excluded_reads": [
+    "primitive logs",
+    "patient images",
+    "measured biological curves"
+  ],
+  "fixed_figure": {
+    "display_choices": "Linear axes, every eligible saved state marked, straight connecting segments as visual guides; no smoothing/refitting/recalibration.",
+    "panels": [
+      {
+        "allowance": "force_allowance_N \u00d71000; horizontal fixed dashed line",
+        "curves": [
+          "states[*].orders.N16-N24-N32.absolute_remaining_indicator_N \u00d71000",
+          "states[*].two_latest_limit_envelope_N \u00d71000"
+        ],
+        "highlight": "saved remaining_exceedance_states49..60",
+        "label": "a",
+        "x": "Saved load state0..60",
+        "y": "Remaining-force diagnostic (mN)",
+        "y_limits": [
+          0,
+          1.08
+        ]
+      },
+      {
+        "curves": [
+          "N8-N12-N16",
+          "N12-N16-N24",
+          "N16-N24-N32"
+        ],
+        "label": "b",
+        "null_policy": "State0 not estimated for all;35 oldest ineligible states1..35 remain NaN gaps, never zeros or interpolated values.",
+        "x": "Saved load state0..60",
+        "y": "Observed power-law order",
+        "y_limits": [
+          0,
+          1.0
+        ]
+      }
+    ],
+    "png_dpi": 220,
+    "side_text": "Saved endpoint values, negative spatial status, explicit eligibility counts and limitations",
+    "side_text_typography": {
+      "count_text_vertical_alignment": "top",
+      "count_text_y": 0.325,
+      "state_labels_include_space": true
+    },
+    "size_inches": [
+      13.2,
+      8.8
+    ],
+    "title": "Numerical model study \u00b7 N32 spatial diagnostic"
+  },
+  "inputs": {
+    "comparison.json": {
+      "bytes": 149243,
+      "origin": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/comparison.json",
+      "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+    },
+    "verification.json": {
+      "bytes": 6018,
+      "origin": "build/hbe-n32-global-execution-review-v1/verification.json",
+      "sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67"
+    }
+  },
+  "limits": {
+    "attempts": 1,
+    "process_hard_rss_enforced": false,
+    "rss_scope": "Plotting worker RSS sampled by parent; not a certified instantaneous peak or process-group total.",
+    "sampled_worker_rss_threshold_bytes": 536870912,
+    "whole_worker_wall_seconds": 120
+  },
+  "measured_force_validation": false,
+  "outputs": [
+    "n32-spatial-diagnostic.png",
+    "n32-spatial-diagnostic.pdf"
+  ],
+  "plotting_choices_frozen_before_render": true,
+  "portable_layout": "plot.py reads comparison.json, verification.json and provenance.json as siblings; no repository paths required for reproduction.",
+  "prior_version_files": {
+    "README.txt": {
+      "bytes": 742,
+      "sha256": "2f29c8cb9d4807b30768990c5d496e9e4abccd12f72dfdcc0764f04e94f37c5f"
+    },
+    "artifact-index.json": {
+      "bytes": 1879,
+      "sha256": "cac85597e4066ac4ee41c3102c1648e5ca6f70d409492e370e84271811f709b4"
+    },
+    "comparison.json": {
+      "bytes": 149243,
+      "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+    },
+    "execution.json": {
+      "bytes": 397,
+      "sha256": "a31a00a519f9f1e87fe88323673984a2193531e061b42673308907001de6569b"
+    },
+    "inspection.json": {
+      "bytes": 1641,
+      "sha256": "6fd26bcd8e19476c692cfc618993a49270b857067e7bf31f4898d98745a40525"
+    },
+    "n32-spatial-diagnostic.pdf": {
+      "bytes": 44917,
+      "sha256": "521e4f5069e186ab55abe5b6b193f70cbb9126baef7c5b6cb7ae2f4efe7632b1"
+    },
+    "n32-spatial-diagnostic.png": {
+      "bytes": 416624,
+      "sha256": "57407eec1da2f0804028306b2df0d212f591389c1769b207af7da5cccac2418c"
+    },
+    "plot.py": {
+      "bytes": 9985,
+      "sha256": "47fde7ec5a8f30cf09dd2bcfbb6b5c9069c26bf8b8f32c8efec8e3e0ad5cf6e2"
+    },
+    "provenance.json": {
+      "bytes": 2807,
+      "sha256": "5c5d127b212ac707f8c2792fdb323c1857536914a2574ddbda4f33b44c7c0b9c"
+    },
+    "render-result.json": {
+      "bytes": 1419,
+      "sha256": "92cc0024ee1afd6e7cffeeb7a26fe54df6fd8eb9c4c49b743a4ee7810e2c09fe"
+    },
+    "run.log": {
+      "bytes": 1419,
+      "sha256": "299cf816f232272568a5a57480667299255ff29f5893c40e02f940d16fb3b3b4"
+    },
+    "started.json": {
+      "bytes": 109,
+      "sha256": "af8fbfb32f0564e31e1b5c2368cc90996052d3b6c2ea717ef62b72e855ac1a89"
+    },
+    "verification.json": {
+      "bytes": 6018,
+      "sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67"
+    }
+  },
+  "render_status": "not_yet_rendered; actual execution and output hashes recorded separately",
+  "schema": "hbe-n32-global-fixed-figure-provenance.v2",
+  "solver_calls": 0,
+  "typography_only_release": {
+    "authority": "Root explicitly approved exactly one typography-only redraw in v2; v1 must remain unchanged.",
+    "changes": [
+      "Sidebar count text y0.345\u21920.325 and vertical alignment top.",
+      "Label spacing: STATE 60, states 49\u201360, State 0/state 0."
+    ],
+    "data_axes_colors_selections_and_missing_entries_unchanged": true,
+    "new_scientific_inputs_or_computation": false
+  }
+}

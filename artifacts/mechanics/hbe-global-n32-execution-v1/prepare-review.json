@@ -1,0 +1,121 @@
+{
+  "baseline_input_bytes": 522339717,
+  "baseline_inputs_rehashed": 221,
+  "blocking_defects": [],
+  "boundary_constraints": {
+    "bottom_xyz": 3137,
+    "curved_side": "free",
+    "full_load_endpoint_m": -0.0007337385,
+    "load_states": 61,
+    "midplane_xy": "free",
+    "midplane_z_only": 3137,
+    "native_midplane_scale": 0.5,
+    "steps": 60
+  },
+  "coordinate_tolerance_m": 4.89159e-13,
+  "counts": {
+    "full_elements": 49152,
+    "full_nodes": 53329,
+    "half_elements": 24576,
+    "half_nodes": 28233,
+    "midplane_nodes": 3137
+  },
+  "declarations": 5,
+  "face_counts": {
+    "full": {
+      "exterior": 8192,
+      "interior": 143360,
+      "nonmanifold": 0
+    },
+    "half": {
+      "exterior": 7168,
+      "interior": 70144,
+      "nonmanifold": 0
+    }
+  },
+  "frozen_source_and_preparation_unchanged": true,
+  "git_and_extracted_bytes_equal": true,
+  "historical_numeric_logs_hash_only_not_parsed": true,
+  "independent_polygon_prism_volume_m3": 2.457793997447727e-07,
+  "launcher_failure": {
+    "before_preflight_no_native_retry": true,
+    "path": "build/hbe-halfheight-global-n32-v1/import-failure-01.json",
+    "preserved": true,
+    "sha256": "1470908fdc4bf35a973a030992666c6eae96127b902d2b269073ac1f342b6f30"
+  },
+  "limitations": [
+    "Saved mesh and deck validation only; no Gmsh, FEBio, response parsing, measured curves or patient data accessed by reviewer.",
+    "Baseline historical numeric primitives were streamed only for SHA256 fixity, without parsing or evaluating response values.",
+    "Sampled RSS/output evidence can miss between-sample peaks. Current absence of the old process group complements saved clean exit; it is not continuous independent process tracing.",
+    "Accepted preparation establishes geometry/input readiness only. N32 response, convergence, finest temporal review and calibration remain unestablished; original failed numerical studies remain failed.",
+    "Measured specimen geometry provenance/uncertainty assumptions remain unchanged; no independently measured material property is established."
+  ],
+  "measured_curve_reads": 0,
+  "native_meshing_calls_recorded": 1,
+  "native_solver_calls_recorded": 0,
+  "native_survivors_now": [],
+  "output_cap_bytes": 2147483648,
+  "prepared_files_sha256": {
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/generated/mesh.json": "5680a53bb8fa9c5303b23bd9036a6e67ebb2d0cb8604a08106211490c5b2116a",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/generated/receipt.json": "21ee5d9d2715d0c5967194cdedb85e66335e1df6c8b810afc70960f793951fa8",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/generated/specimen.msh": "5b07e9001b14c2c209941dc41503756ef1c88dafbe7e4d019149129b1164da84",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/mesh.json": "edbb95dd61e2f1ba94faf405bbd263a2d995dcc87ebd298a8e072595ecc6009a",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/reconstruction.json": "fa853fa294277d0f468b977d5e83506c693f49ae4d7c74864f3eefdddac9084c",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/baseline.json": "50fa1956b1efe35b95c9b6234e795a18d6bbe76621f99a7057ff535d6a103f2a",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/cases/compression-N32-S60-reference/loading.json": "25a37c8048a29e8c222ae6973066707480b1966472289e44590bc53698fe4fd3",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/cases/compression-N32-S60-reference/skyline.feb": "f481b4bb872ad1982eddd16544e579bef3caf96bbf1a91a2e2ad01f9446740e3",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/cases/compression-N32-S60-reference/specimen.feb": "cb61cbb07811ce65475b0743aad60b7c45756529e0faf6331d6dbd40287bfdf6",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/output-watch.json": "d58cd6de794045fdb32f8fd90ea35b5f4551c3a3d7d8d866fece56049accc818",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/result.json": "9405b447e87028b331be66bed6284894067d7ad6d080347bfdd64f3024963306",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/state.json": "f462af71d989c337d4a8b0f141f70c08d8a567c306a45f19a393a5d82fa77b15",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/supervision/combined.log": "bcd949757e15093b10cae1254ad5585f750ff58a91423b7cadabbfc4f340c61e",
+    "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/supervision/supervision.json": "9f9c231844d26801d187156d23fbcea1667cce0b6c9ae863f3319bbc180e9b3b"
+  },
+  "quality": {
+    "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+    "checks": {
+      "declared_cell_count": true,
+      "finest_boundary_sag": true,
+      "finest_volume": true,
+      "minimum_scaled_jacobian": true,
+      "positive_rest_jacobians": true
+    },
+    "connected_cell_count": 49152,
+    "exterior_face_count": 8192,
+    "hex8_cell_count": 49152,
+    "integrated_volume_m3": 2.457793997447727e-07,
+    "interior_face_count": 143360,
+    "maximum_radial_boundary_sag_m": 1.2047252272544273e-06,
+    "maximum_radial_boundary_sag_over_R": 0.00030118130681360683,
+    "minimum_rest_determinant_m3": 2.4733434076651473e-13,
+    "minimum_rest_scaled_jacobian": 0.7071067811865488,
+    "node_count": 53329,
+    "passed": true,
+    "relative_volume_error": 0.000401546850321523,
+    "sampled_site_count_per_cell": 17
+  },
+  "quality_recomputed_exact": true,
+  "reflection_maximum_coordinate_difference_m": 4.336808689942018e-19,
+  "release_sha256": "fae67101c3b40a4aee97f407c9230aeff9802b749c5c07a33fb418251f0383c4",
+  "response_replay_calls": 0,
+  "result_sha256": "9405b447e87028b331be66bed6284894067d7ad6d080347bfdd64f3024963306",
+  "review_code_sha256": "3aba589ded00c689fa0b86503da735e1b88f7eb77bfde0fb969a71ad61c9416e",
+  "review_elapsed_seconds": 9.140795917017385,
+  "review_python": {
+    "numpy": "2.5.3",
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "resolved": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "scipy": "1.18.1"
+  },
+  "reviewer_native_calls": 0,
+  "sampled_peak_group_rss_bytes": 608387072,
+  "schema": "hbe-global-n32-saved-preparation-independent-review-v1",
+  "source_archive_files": 22,
+  "source_archive_sha256": "6632d31aaabb642c338291918ee92b5e2096f375e3a68f2c9c869c4853948f7d",
+  "source_commit": "0e8285d821633d27c9b1f4219ebdde60672844e4",
+  "source_modules": 17,
+  "status": "preparation_verified_ready_for_separately_released_single_solve",
+  "total_output_including_result_bytes": 47092542,
+  "tracked_writes": 0,
+  "whole_preparation_elapsed_seconds": 13.420893542002887
+}

@@ -1,0 +1,152 @@
+{
+  "actual_execution": {
+    "active_cap_bytes": 805306368,
+    "active_max_bytes": 463539655,
+    "aggregate_cap_seconds": 1200,
+    "aggregate_elapsed_seconds": 750.9193406659178,
+    "clean_reaped_exit": true,
+    "current_native_or_old_group_survivors": [],
+    "gmsh_calls": 0,
+    "native_calls": 1,
+    "native_cap_seconds": 750,
+    "native_elapsed_seconds": 639.0573542909697,
+    "native_element_log_bytes": 181851060,
+    "native_element_log_cap_bytes": 268435456,
+    "native_node_log_bytes": 274263834,
+    "native_node_log_cap_bytes": 402653184,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_group_rss_bytes": 1798078464,
+    "total_cap_bytes": 2147483648,
+    "total_new_output_bytes_including_result": 513108853
+  },
+  "actual_result_sha256": "c3285870764b744bb2946bfe110cd459d10996cdbd3c94ec039c0a6d31bcf62b",
+  "baseline_input_hash_count": 233,
+  "blocking_record_mismatches": [],
+  "comparison_sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e",
+  "complete_comparison_reproduced": true,
+  "conclusion": {
+    "adjacent_force_difference_N": 0.00013813973275670494,
+    "adjacent_motion_m": 1.727312299166703e-06,
+    "all_61_states_retained": true,
+    "calibration_released": false,
+    "eligibility_counts": {
+      "N12-N16-N24": {
+        "eligible": 60
+      },
+      "N16-N24-N32": {
+        "eligible": 60
+      },
+      "N8-N12-N16": {
+        "eligible": 25,
+        "no_admissible_positive_root": 35
+      }
+    },
+    "endpoint_force_N": -0.03620042628497373,
+    "endpoint_orders": {
+      "N12-N16-N24": 0.48258333781279805,
+      "N16-N24-N32": 0.6329202704192359,
+      "N8-N12-N16": 0.3300332296501791
+    },
+    "endpoint_two_latest_limit_envelope_N": 0.0009851889327635727,
+    "finest_level_temporal_convergence_evaluated": false,
+    "force_allowance_N": 0.0007241685256994747,
+    "individual_numerical_checks_passed": true,
+    "instability_states": [],
+    "motion_limit_m": 8e-06,
+    "remaining_exceedance_states": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ],
+    "spatial_convergence_accepted": false,
+    "unresolved_nonrest_states": []
+  },
+  "declarations": 5,
+  "independent_root_maximum_differences": {
+    "envelope_N": 3.469446951953614e-18,
+    "force_limit_N": 8.222589276130066e-16,
+    "order": 2.3869795029440866e-15
+  },
+  "independent_scalar_file": {
+    "path": "build/hbe-n32-global-execution-review-v1/independent-scalars.json",
+    "sha256": "a79499958e285a97b28dc4fa7748dbdc09355edd5510cdecba7feef387c02721"
+  },
+  "limitations": [
+    "Raw numerical replay recomputes the reviewed mechanics readouts from saved native logs; it is not a new solve or a second native full-domain N32 result.",
+    "Independent scalar diagnostics use Brent root finding rather than the production bisection; agreement does not make the power-law assumption or two-limit envelope a rigorous continuum error bound.",
+    "The oldest triplet is ineligible at 35 nonrest states; these null orders and unavailable drift flags remain exposed. Both latest triplets are eligible at all 60 nonrest states.",
+    "Original aggregate spatial failures remain failures. The successful bounded execution produced a negative remaining-error diagnostic; it does not release calibration, biological validation or a new refinement.",
+    "RSS and active-output maxima are sampled. Timing excludes final receipt publication as prospectively declared. No inference of general solver speed is made.",
+    "No measured biological force curves, patient data, mesher calls or native solver calls were used by this review."
+  ],
+  "measured_curve_reads": 0,
+  "original_inputs_and_saved_results_unchanged": true,
+  "patient_data_reads": 0,
+  "prepared_review_sha256": "194ef13243878caf8c1111def7b419989a10cbe429273c0ba9e88967a46a856a",
+  "preserved_prior_failures": true,
+  "probes_per_frame": 75,
+  "release": {
+    "path": "build/hbe-halfheight-global-n32-v1/solve-release.json",
+    "sha256": "50e7167c9bc70ba51fd8e3f76d24845fcf28da70842ad49822eece4e714b94d7"
+  },
+  "replay_seconds": {
+    "N32_raw_readout_seconds": 60.73585170810111,
+    "full_N8_N12_N16_seconds": 10.374547624960542,
+    "original_context_N24_seconds": 26.46121845813468
+  },
+  "review_code_sha256": "96520cc08606f7b0ce9ef75e6bcc52b744d5f05524df33e7f378c4f200dec2b6",
+  "review_elapsed_seconds": 100.21646837494336,
+  "review_runtime": {
+    "numpy": "2.5.3",
+    "python": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "resolved_interpreter_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+    "scipy": "1.18.1"
+  },
+  "reviewer_gmsh_calls": 0,
+  "reviewer_native_calls": 0,
+  "schema": "hbe-global-n32-execution-independent-review-v1",
+  "source_archive": {
+    "path": "build/hbe-halfheight-global-n32-v1/source.tar",
+    "sha256": "6632d31aaabb642c338291918ee92b5e2096f375e3a68f2c9c869c4853948f7d"
+  },
+  "source_archive_members": 22,
+  "source_commit": "0e8285d821633d27c9b1f4219ebdde60672844e4",
+  "source_modules": 17,
+  "status": "saved_execution_verified_negative_spatial_diagnostic",
+  "total_frames_replayed": 305,
+  "tracked_writes": 0,
+  "whole_record_replays": {
+    "compression:N12:S60:reference": {
+      "canonical_whole_record_equal": true,
+      "frame_count": 61
+    },
+    "compression:N16:S60:reference": {
+      "canonical_whole_record_equal": true,
+      "frame_count": 61
+    },
+    "compression:N24:S60:reference": {
+      "canonical_whole_record_equal": true,
+      "frame_count": 61,
+      "original_context": "build/hbe-halfheight-spatial-v1/source"
+    },
+    "compression:N32:S60:reference": {
+      "canonical_whole_record_equal": true,
+      "frame_count": 61,
+      "native_element_items_per_frame": 24576,
+      "native_node_items_per_frame": 28233
+    },
+    "compression:N8:S60:reference": {
+      "canonical_whole_record_equal": true,
+      "frame_count": 61
+    }
+  }
+}

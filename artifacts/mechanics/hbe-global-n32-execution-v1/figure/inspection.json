@@ -1,0 +1,28 @@
+{
+  "actual_png_inspected": true,
+  "approved_typography_changes_only": true,
+  "draws_this_version": 1,
+  "figure": {
+    "bytes": 416656,
+    "path": "n32-spatial-diagnostic.png",
+    "sha256": "181b4f4fdee29af8b3b6a04b4a5d3f15954bab7831b552488175a601832e56de"
+  },
+  "findings": [
+    "Sidebar count text is separated from the orange spatial-criterion heading; count and eligibility labels remain legible.",
+    "STATE 60, states 49\u201360 and State 0/state 0 label spacing is corrected.",
+    "Data curves, endpoint values, axes, colors, all61 state positions and35 oldest-triplet missing nonrest estimates are unchanged.",
+    "Numerical-model-only, no measured-force validation/calibration and conditional-error limitations remain legible."
+  ],
+  "further_draws": 0,
+  "pdf": {
+    "bytes": 44920,
+    "path": "n32-spatial-diagnostic.pdf",
+    "sha256": "35a0f2425752ca2ce8ae8dde1b82d762a62b56675d653d32b9fc8b214187c6da"
+  },
+  "schema": "hbe-n32-global-figure-visual-inspection.v2",
+  "scientific_data_or_model_change": false,
+  "sibling_input_copies_unchanged": true,
+  "status": "inspected_legible",
+  "tracked_writes": false,
+  "v1_every_file_unchanged": true
+}

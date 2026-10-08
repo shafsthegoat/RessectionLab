@@ -1,0 +1,1394 @@
+{
+  "maximum_differences": {
+    "envelope_N": 3.469446951953614e-18,
+    "force_limit_N": 8.222589276130066e-16,
+    "order": 2.3869795029440866e-15
+  },
+  "root_algorithm": "scipy.optimize.brentq, original domain and prespecified eligibility",
+  "states": [
+    {
+      "state": 0,
+      "status": "rest/not_estimated"
+    },
+    {
+      "envelope_N": 7.410103746873734e-06,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.0005086275207284605,
+          "order": 0.5934144059243297,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0005117474932988629,
+          "order": 0.8749304413335717,
+          "status": "eligible"
+        }
+      ],
+      "state": 1
+    },
+    {
+      "envelope_N": 1.5094252089384525e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.0010197423288973466,
+          "order": 0.5873563494311205,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0010261403863718321,
+          "order": 0.8699275575265482,
+          "status": "eligible"
+        }
+      ],
+      "state": 2
+    },
+    {
+      "envelope_N": 2.3058260814783028e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.001533353143507127,
+          "order": 0.5814347147683719,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.00154318969255521,
+          "order": 0.864964252689781,
+          "status": "eligible"
+        }
+      ],
+      "state": 3
+    },
+    {
+      "envelope_N": 3.130773262295487e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.0020494686943347204,
+          "order": 0.5756520670683102,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0020629060838818114,
+          "order": 0.8600403722849731,
+          "status": "eligible"
+        }
+      ],
+      "state": 4
+    },
+    {
+      "envelope_N": 3.9848032821982425e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.0025680977363028382,
+          "order": 0.5700108448705751,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.002585299872763252,
+          "order": 0.8551556807399224,
+          "status": "eligible"
+        }
+      ],
+      "state": 5
+    },
+    {
+      "envelope_N": 4.868426430594411e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.00308924906471165,
+          "order": 0.5645133626012339,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0031103809945964627,
+          "order": 0.8503098845382048,
+          "status": "eligible"
+        }
+      ],
+      "state": 6
+    },
+    {
+      "envelope_N": 5.7821243307799256e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.003612931529623401,
+          "order": 0.5591618044160402,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.003638158990002162,
+          "order": 0.8455026364702946,
+          "status": "eligible"
+        }
+      ],
+      "state": 7
+    },
+    {
+      "envelope_N": 6.726347621688073e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.004139154049131935,
+          "order": 0.5539582170039398,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.004168642986663621,
+          "order": 0.8407335363912125,
+          "status": "eligible"
+        }
+      ],
+      "state": 8
+    },
+    {
+      "envelope_N": 7.701513769014113e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.0046679256212922874,
+          "order": 0.5489045033323844,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.004701841680910156,
+          "order": 0.8360021338014861,
+          "status": "eligible"
+        }
+      ],
+      "state": 9
+    },
+    {
+      "envelope_N": 8.708005020062037e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.005199255334597805,
+          "order": 0.544002417186877,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.005237763318888996,
+          "order": 0.8313079279878351,
+          "status": "eligible"
+        }
+      ],
+      "state": 10
+    },
+    {
+      "envelope_N": 9.746166622356424e-05,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.005733152375809037,
+          "order": 0.5392535549700841,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.005776415677589071,
+          "order": 0.8266503710850158,
+          "status": "eligible"
+        }
+      ],
+      "state": 11
+    },
+    {
+      "envelope_N": 0.00010816305203037099,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.006269626036185827,
+          "order": 0.5346593515939172,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0063178060453529476,
+          "order": 0.8220288676770755,
+          "status": "eligible"
+        }
+      ],
+      "state": 12
+    },
+    {
+      "envelope_N": 0.00011918687440997441,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.006808685714835143,
+          "order": 0.5302210750061241,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.006861941202450799,
+          "order": 0.8174427783167696,
+          "status": "eligible"
+        }
+      ],
+      "state": 13
+    },
+    {
+      "envelope_N": 0.00013053539054957465,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.007350340918943861,
+          "order": 0.5259398205393838,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.00740882740128414,
+          "order": 0.8128914211852097,
+          "status": "eligible"
+        }
+      ],
+      "state": 14
+    },
+    {
+      "envelope_N": 0.00014221044094397256,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.007894601261070451,
+          "order": 0.5218165066231257,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.007958470346453306,
+          "order": 0.8083740741710052,
+          "status": "eligible"
+        }
+      ],
+      "state": 15
+    },
+    {
+      "envelope_N": 0.0001542134460567248,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.008441476452783845,
+          "order": 0.5178518702244476,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.008510875174889635,
+          "order": 0.8038899784845459,
+          "status": "eligible"
+        }
+      ],
+      "state": 16
+    },
+    {
+      "envelope_N": 0.00016654540634122687,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.008990976295074333,
+          "order": 0.514046463893962,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.009066046435772064,
+          "order": 0.7994383410109499,
+          "status": "eligible"
+        }
+      ],
+      "state": 17
+    },
+    {
+      "envelope_N": 0.0001792069066887808,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.009543110664497229,
+          "order": 0.5104006518982043,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.00962398807055395,
+          "order": 0.7950183376505288,
+          "status": "eligible"
+        }
+      ],
+      "state": 18
+    },
+    {
+      "envelope_N": 0.00019219812325484663,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.010097889497126903,
+          "order": 0.5069146106681349,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.010184703393102658,
+          "order": 0.7906291169103848,
+          "status": "eligible"
+        }
+      ],
+      "state": 19
+    },
+    {
+      "envelope_N": 0.00020551883831216103,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.010655322764704109,
+          "order": 0.5035883212380494,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.010748195070163972,
+          "order": 0.7862698048170337,
+          "status": "eligible"
+        }
+      ],
+      "state": 20
+    },
+    {
+      "envelope_N": 0.00021916845312080525,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.011215420453029975,
+          "order": 0.5004215750922667,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.01131446510161633,
+          "order": 0.7819395068306926,
+          "status": "eligible"
+        }
+      ],
+      "state": 21
+    },
+    {
+      "envelope_N": 0.00023314601078231086,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.01177819253066703,
+          "order": 0.4974139685502427,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.011883514802302183,
+          "order": 0.777637316907991,
+          "status": "eligible"
+        }
+      ],
+      "state": 22
+    },
+    {
+      "envelope_N": 0.00024745021840964256,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.012343648918655597,
+          "order": 0.49456490630605165,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.012455344782916933,
+          "order": 0.7733623186658699,
+          "status": "eligible"
+        }
+      ],
+      "state": 23
+    },
+    {
+      "envelope_N": 0.00026207947647538705,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.012911799453427053,
+          "order": 0.49187359969951633,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.01302995493264369,
+          "order": 0.7691135929504487,
+          "status": "eligible"
+        }
+      ],
+      "state": 24
+    },
+    {
+      "envelope_N": 0.0002770319076335105,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.013482653850681689,
+          "order": 0.48933907183331293,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.013607344402470847,
+          "order": 0.7648902241776029,
+          "status": "eligible"
+        }
+      ],
+      "state": 25
+    },
+    {
+      "envelope_N": 0.0002923053903754261,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.014056221664883194,
+          "order": 0.4869601598735628,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.014187511588785274,
+          "order": 0.7606913045538112,
+          "status": "eligible"
+        }
+      ],
+      "state": 26
+    },
+    {
+      "envelope_N": 0.000307897596907759,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.01463251224507727,
+          "order": 0.48473551641492,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.01477045412001373,
+          "order": 0.7565159456420495,
+          "status": "eligible"
+        }
+      ],
+      "state": 27
+    },
+    {
+      "envelope_N": 0.00032380602918535145,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.015211534693106857,
+          "order": 0.48266361642425976,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.015356168842639928,
+          "order": 0.7523632821985374,
+          "status": "eligible"
+        }
+      ],
+      "state": 28
+    },
+    {
+      "envelope_N": 0.0003400280582704848,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.015793297819178473,
+          "order": 0.48074276227447776,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.015944651810697808,
+          "order": 0.7482324827296323,
+          "status": "eligible"
+        }
+      ],
+      "state": 29
+    },
+    {
+      "envelope_N": 0.00035656096484800587,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.016377810096944372,
+          "order": 0.47897108929867216,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.01653589827676418,
+          "order": 0.7441227585789718,
+          "status": "eligible"
+        }
+      ],
+      "state": 30
+    },
+    {
+      "envelope_N": 0.0003734019763799376,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.01696507962274032,
+          "order": 0.47734657559558885,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.01712990268519852,
+          "order": 0.7400333726622006,
+          "status": "eligible"
+        }
+      ],
+      "state": 31
+    },
+    {
+      "envelope_N": 0.00039054830905704135,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.01755511407086853,
+          "order": 0.4758670469747909,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.01772665866921452,
+          "order": 0.7359636520414725,
+          "status": "eligible"
+        }
+      ],
+      "state": 32
+    },
+    {
+      "envelope_N": 0.00040799720142098775,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.018147920658144502,
+          "order": 0.4745301896177114,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.018326159050751144,
+          "order": 0.731912998873488,
+          "status": "eligible"
+        }
+      ],
+      "state": 33
+    },
+    {
+      "envelope_N": 0.000425745950456944,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.018743506106981906,
+          "order": 0.47333355864470383,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.018928395844061592,
+          "order": 0.7278809022040122,
+          "status": "eligible"
+        }
+      ],
+      "state": 34
+    },
+    {
+      "envelope_N": 0.0004437919420886942,
+      "force_limit_instability": false,
+      "increasing_order_drift": null,
+      "orders": [
+        {
+          "force_limit_N": null,
+          "order": null,
+          "status": "no_admissible_positive_root"
+        },
+        {
+          "force_limit_N": -0.019341876615200034,
+          "order": 0.4722745900617931,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0195333602653451,
+          "order": 0.7238669539379764,
+          "status": "eligible"
+        }
+      ],
+      "state": 35
+    },
+    {
+      "envelope_N": 0.00046213267784485715,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": 0.06508478658594491,
+          "order": 0.003728484722856032,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.019943037830847023,
+          "order": 0.4713506131366501,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.020141042745839624,
+          "order": 0.7198708614663037,
+          "status": "eligible"
+        }
+      ],
+      "state": 36
+    },
+    {
+      "envelope_N": 0.0004807657972121897,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": 0.0010910423243774905,
+          "order": 0.014845932717026817,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0205469948329228,
+          "order": 0.4705588636049376,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.020751432959300372,
+          "order": 0.7158924774608784,
+          "status": "eligible"
+        }
+      ],
+      "state": 37
+    },
+    {
+      "envelope_N": 0.0004996890922667717,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.008802637310420471,
+          "order": 0.02630243577686058,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02115375212002221,
+          "order": 0.4698964981432682,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.021364519824461043,
+          "order": 0.7119317707691147,
+          "status": "eligible"
+        }
+      ],
+      "state": 38
+    },
+    {
+      "envelope_N": 0.0005189005164821965,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.013152988379431355,
+          "order": 0.03808052542046638,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02176331360880089,
+          "order": 0.4693606112022256,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.021980291577231973,
+          "order": 0.7079889142104935,
+          "status": "eligible"
+        }
+      ],
+      "state": 39
+    },
+    {
+      "envelope_N": 0.0005383981875551995,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.01579149893612532,
+          "order": 0.050162614140944375,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02237568263769944,
+          "order": 0.4689482495941331,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02259873579192329,
+          "order": 0.7040642598148519,
+          "status": "eligible"
+        }
+      ],
+      "state": 40
+    },
+    {
+      "envelope_N": 0.000558180379408111,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.017681068228659468,
+          "order": 0.06253105882717931,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02299086198453588,
+          "order": 0.4686564310979948,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.023219839443341883,
+          "order": 0.7001583731858736,
+          "status": "eligible"
+        }
+      ],
+      "state": 41
+    },
+    {
+      "envelope_N": 0.0005782455046771801,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.01917734880664995,
+          "order": 0.07516822674164653,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02360885389537375,
+          "order": 0.4684821639270286,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.023843588975628806,
+          "order": 0.6962720587495181,
+          "status": "eligible"
+        }
+      ],
+      "state": 42
+    },
+    {
+      "envelope_N": 0.0005985920910630202,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.020442251557210987,
+          "order": 0.08805655797878714,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.024229660121708088,
+          "order": 0.4684224646056157,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02446997038419882,
+          "order": 0.6924063854452492,
+          "status": "eligible"
+        }
+      ],
+      "state": 43
+    },
+    {
+      "envelope_N": 0.0006192187414337802,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.0215600603318266,
+          "order": 0.10117862629110012,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02485328197624521,
+          "order": 0.4684743806849164,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02509896931448944,
+          "order": 0.6885627160660198,
+          "status": "eligible"
+        }
+      ],
+      "state": 44
+    },
+    {
+      "envelope_N": 0.0006401240849891916,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.022578976088409173,
+          "order": 0.1145171978704528,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02547972040019847,
+          "order": 0.4686350126772443,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02573057117955892,
+          "order": 0.6847427397794484,
+          "status": "eligible"
+        }
+      ],
+      "state": 45
+    },
+    {
+      "envelope_N": 0.0006613067310299106,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.023528560461617203,
+          "order": 0.1280552885670226,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02610897603071297,
+          "order": 0.46890152962292686,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02636476130862514,
+          "order": 0.6809485210144625,
+          "status": "eligible"
+        }
+      ],
+      "state": 46
+    },
+    {
+      "envelope_N": 0.0006827651413567372,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.024427952098298646,
+          "order": 0.14177621751209007,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.026741049352700896,
+          "order": 0.4692712199349072,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02700152506215332,
+          "order": 0.677182474345604,
+          "status": "eligible"
+        }
+      ],
+      "state": 47
+    },
+    {
+      "envelope_N": 0.0007044976185654923,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.025290088914187155,
+          "order": 0.155663657590755,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.027375940738008437,
+          "order": 0.4697414788344233,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0276408480883157,
+          "order": 0.673447499539374,
+          "status": "eligible"
+        }
+      ],
+      "state": 48
+    },
+    {
+      "envelope_N": 0.0007265021521670918,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.026124031747549535,
+          "order": 0.16970168599097488,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.028013650630282796,
+          "order": 0.4703098606172381,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.028282716494654043,
+          "order": 0.6697469621466347,
+          "status": "eligible"
+        }
+      ],
+      "state": 49
+    },
+    {
+      "envelope_N": 0.000748776311635585,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.026936315945484256,
+          "order": 0.18387483012634112,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.028654179686714965,
+          "order": 0.47097410083355884,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.028927117108354432,
+          "order": 0.6660847551998812,
+          "status": "eligible"
+        }
+      ],
+      "state": 50
+    },
+    {
+      "envelope_N": 0.0007713171132276986,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.02773177439322735,
+          "order": 0.19816810861801368,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.029297528950110542,
+          "order": 0.4717321449989988,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.029574037764982106,
+          "order": 0.6624653522053275,
+          "status": "eligible"
+        }
+      ],
+      "state": 51
+    },
+    {
+      "envelope_N": 0.0007941208677192911,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.02851405848118808,
+          "order": 0.21256707474393233,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.02994370004449435,
+          "order": 0.47258217966615584,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.030223467635859366,
+          "order": 0.6588938613063423,
+          "status": "eligible"
+        }
+      ],
+      "state": 52
+    },
+    {
+      "envelope_N": 0.0008171829602245106,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.02928597866239859,
+          "order": 0.2270578407762306,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03059269544342507,
+          "order": 0.4735226866586303,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03087539759305083,
+          "order": 0.6553760750790197,
+          "status": "eligible"
+        }
+      ],
+      "state": 53
+    },
+    {
+      "envelope_N": 0.0008404978522706039,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.030049734307394653,
+          "order": 0.24162715787946334,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.031244518521153557,
+          "order": 0.47455239345163347,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.031529820663445444,
+          "order": 0.6519185700279087,
+          "status": "eligible"
+        }
+      ],
+      "state": 54
+    },
+    {
+      "envelope_N": 0.0008640585959315411,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.030807071083061834,
+          "order": 0.256262382583072,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03189917409735302,
+          "order": 0.47567043139878123,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03218673246098271,
+          "order": 0.6485287231838512,
+          "status": "eligible"
+        }
+      ],
+      "state": 55
+    },
+    {
+      "envelope_N": 0.0008878567864374562,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.03155939308713167,
+          "order": 0.2709515506862394,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03255666854925931,
+          "order": 0.4768762925639902,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.032846131749699914,
+          "order": 0.6452148181013393,
+          "status": "eligible"
+        }
+      ],
+      "state": 56
+    },
+    {
+      "envelope_N": 0.0009118822718940101,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.03230784293498489,
+          "order": 0.2856833931657627,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.033217010173091074,
+          "order": 0.47816988747764944,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.0335080210352514,
+          "order": 0.6419861157197914,
+          "status": "eligible"
+        }
+      ],
+      "state": 57
+    },
+    {
+      "envelope_N": 0.0009361228795715937,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.03305336048302686,
+          "order": 0.3004473617846879,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03388020953579632,
+          "order": 0.47955158752964766,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03417240722787422,
+          "order": 0.6388529369082094,
+          "status": "eligible"
+        }
+      ],
+      "state": 58
+    },
+    {
+      "envelope_N": 0.0009605641329414258,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.03379672649537478,
+          "order": 0.3152336533138626,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03454627984323962,
+          "order": 0.48102226449341645,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03483930237522226,
+          "order": 0.6358267515096024,
+          "status": "eligible"
+        }
+      ],
+      "state": 59
+    },
+    {
+      "envelope_N": 0.0009851889327635727,
+      "force_limit_instability": false,
+      "increasing_order_drift": false,
+      "orders": [
+        {
+          "force_limit_N": -0.034538595562188044,
+          "order": 0.3300332296501791,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03521523735221016,
+          "order": 0.48258333781279805,
+          "status": "eligible"
+        },
+        {
+          "force_limit_N": -0.03550872446338969,
+          "order": 0.6329202704192359,
+          "status": "eligible"
+        }
+      ],
+      "state": 60
+    }
+  ]
+}

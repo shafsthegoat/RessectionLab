@@ -1,0 +1,4168 @@
+{
+  "calibration_released": false,
+  "candidate_for_temporal_review": false,
+  "eligibility_counts": {
+    "N12-N16-N24": {
+      "eligible": 60
+    },
+    "N16-N24-N32": {
+      "eligible": 60
+    },
+    "N8-N12-N16": {
+      "eligible": 25,
+      "no_admissible_positive_root": 35
+    }
+  },
+  "endpoint": {
+    "continuum_error_bound": false,
+    "force_limit_instability": false,
+    "fraction": 1.0,
+    "increasing_order_drift": false,
+    "latest_limit_disagreement_N": 0.00029348711117953286,
+    "order_changes": [
+      0.15255010816261894,
+      0.15033693260643755
+    ],
+    "orders": {
+      "N12-N16-N24": {
+        "absolute_remaining_indicator_N": 0.001123328665520275,
+        "continuum_error_bound": false,
+        "force_limit_N": -0.03521523735221016,
+        "increment_ratio": 0.8380143449147468,
+        "levels": [
+          12,
+          16,
+          24
+        ],
+        "order": 0.4825833378127983,
+        "positive_order_ratio_lower_limit": 0.7095112913514545,
+        "signed_first_change_N": 0.00020345392111919408,
+        "signed_remaining_indicator_N": 0.001123328665520275,
+        "signed_second_change_N": 0.00024278095280086398,
+        "status": "eligible"
+      },
+      "N16-N24-N32": {
+        "absolute_remaining_indicator_N": 0.0006917018215840398,
+        "continuum_error_bound": false,
+        "force_limit_N": -0.03550872446338969,
+        "increment_ratio": 1.7575026964070917,
+        "levels": [
+          16,
+          24,
+          32
+        ],
+        "order": 0.6329202704192358,
+        "positive_order_ratio_lower_limit": 1.4094208396532095,
+        "signed_first_change_N": 0.00024278095280086398,
+        "signed_remaining_indicator_N": 0.0006917018215840398,
+        "signed_second_change_N": 0.00013813973275670494,
+        "status": "eligible"
+      },
+      "N8-N12-N16": {
+        "absolute_remaining_indicator_N": 0.0020427514083432552,
+        "continuum_error_bound": false,
+        "force_limit_N": -0.034538595562188044,
+        "increment_ratio": 1.5807985120624992,
+        "levels": [
+          8,
+          12,
+          16
+        ],
+        "order": 0.33003322965017934,
+        "positive_order_ratio_lower_limit": 1.4094208396532095,
+        "signed_first_change_N": 0.0003216196557785031,
+        "signed_remaining_indicator_N": 0.0020427514083432552,
+        "signed_second_change_N": 0.00020345392111919408,
+        "status": "eligible"
+      }
+    },
+    "remaining_within_allowance": false,
+    "state": 60,
+    "status": "resolved_conditional_model",
+    "two_latest_limit_envelope_N": 0.0009851889327635727
+  },
+  "finest_level_step_convergence_evaluated": false,
+  "force_allowance_N": 0.0007241685256994747,
+  "forecast_not_observation": {
+    "N24_to_N32_signed_change_N": 0.00014561093957826676,
+    "basis": "frozen existing N12/16/24 endpoint power law; N32 has not been generated or solved",
+    "endpoint_force_N": -0.03619295507815217,
+    "expected_implication": "approximately2.7percent remaining bias could still exceed2percent allowance; this prospective check is not expected or promised to unlock calibration",
+    "remaining_percent_of_predicted_abs_force": 2.7014034190654104,
+    "signed_remaining_indicator_N": 0.0009777177259420108
+  },
+  "instability_states": [],
+  "interpretation": "conditional two-limit model-sensitivity envelope; not a rigorous error bound or continuum certification",
+  "maximum_eligible_envelope_N": 0.0009851889327635727,
+  "maximum_eligible_envelope_state": 60,
+  "measured_data_accessed": false,
+  "original_adjacent_change_checks_passed": true,
+  "original_raw_trend_retained_as_separate_metric": true,
+  "original_style_N16_N24_N32_metrics": {
+    "motion": {
+      "actual": 1.727312299166703e-06,
+      "limit": 8e-06,
+      "units": "m"
+    },
+    "motion_trend": {
+      "actual": 4.7996799685768796e-06,
+      "limit": 8e-06,
+      "units": "m"
+    },
+    "reaction": {
+      "actual": 0.00013813973275670494,
+      "limit": 0.0007241685256994747,
+      "units": "N"
+    },
+    "reaction_trend": {
+      "actual": 0.00013813973275670494,
+      "comparison": "lt",
+      "limit": 0.00024278095280086398,
+      "units": "N"
+    }
+  },
+  "physical_validation_pass": null,
+  "preserved_failures": {
+    "boundary_comparison": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json",
+      "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+    },
+    "finer_spatial_comparison": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json",
+      "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+    },
+    "finer_spatial_result": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-result.json",
+      "sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a"
+    },
+    "finer_spatial_review": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json",
+      "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+    },
+    "full_domain_resolution_outcome": {
+      "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/outcome.json",
+      "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+    },
+    "full_domain_resolution_study": {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    "original_mesh_review": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-independent-review-v1/review.json",
+      "sha256": "289d72991067b84129ae86193420de91340b445de8ac60dadbde5c6b6e85d0ff"
+    },
+    "original_mesh_study": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    }
+  },
+  "remaining_exceedance_states": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "schema": "hbe-halfheight-global-comparison-v1",
+  "spatial_convergence_accepted": false,
+  "states": [
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": null,
+      "fraction": 0.0,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": null,
+      "order_changes": null,
+      "orders": {},
+      "remaining_within_allowance": null,
+      "state": 0,
+      "status": "rest/not_estimated",
+      "two_latest_limit_envelope_N": null
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.016666666666666666,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 3.119972570402572e-06,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 8.637992636962624e-06,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0005086275207284603,
+          "increment_ratio": 0.870476846191646,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5934144059243289,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 2.045390656113034e-06,
+          "signed_remaining_indicator_N": 8.637992636962624e-06,
+          "signed_second_change_N": 2.349735854619982e-06,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 4.29013117647126e-06,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0005117474932988629,
+          "increment_ratio": 1.913638826433217,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8749304413335715,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.349735854619982e-06,
+          "signed_remaining_indicator_N": 4.29013117647126e-06,
+          "signed_second_change_N": 1.2278888900888341e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3714677998504392,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.805187422973989e-06,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 2.045390656113034e-06,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 1,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 7.410103746873843e-06
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.03333333333333333,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 6.3980574744855814e-06,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 1.7567124583178527e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0010197423288973466,
+          "increment_ratio": 0.8686722498580515,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5873563494311191,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 4.103474895710306e-06,
+          "signed_remaining_indicator_N": 1.7567124583178527e-05,
+          "signed_second_change_N": 4.723847108481765e-06,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 8.696194614898962e-06,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0010261403863718321,
+          "increment_ratio": 1.910267157056044,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8699275575265482,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.723847108481765e-06,
+          "signed_remaining_indicator_N": 8.696194614898962e-06,
+          "signed_second_change_N": 2.472872493793901e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.368278207509565,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.614695274862996e-06,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 4.103474895710306e-06,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 2,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 1.5094252089384525e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.05,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 9.836549048083086e-06,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 2.679379136595102e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0015333531435071269,
+          "increment_ratio": 0.866911698821838,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5814347147683703,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 6.175349354780755e-06,
+          "signed_remaining_indicator_N": 2.679379136595102e-05,
+          "signed_second_change_N": 7.123389110071142e-06,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 1.3221711766700062e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.00154318969255521,
+          "increment_ratio": 1.9069283499352425,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8649642526897812,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.123389110071142e-06,
+          "signed_remaining_indicator_N": 1.3221711766700062e-05,
+          "signed_second_change_N": 3.7355305511678222e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3653272403630066,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 8.431372692840281e-06,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 6.175349354780755e-06,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 3,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 2.3058260814783245e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.06666666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 1.3437389547091456e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 3.632419867780265e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.00204946869433472,
+          "increment_ratio": 0.8651957149448508,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5756520670683078,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 8.262148288229985e-06,
+          "signed_remaining_indicator_N": 3.632419867780265e-05,
+          "signed_second_change_N": 9.54945585780742e-06,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 1.787034307586396e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0020629060838818114,
+          "increment_ratio": 1.9036221422408581,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8600403722849734,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 9.54945585780742e-06,
+          "signed_remaining_indicator_N": 1.787034307586396e-05,
+          "signed_second_change_N": 5.01646605484754e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3626193084294749,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.1258162786649713e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 8.262148288229985e-06,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 4,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 3.130773262295531e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.08333333333333333,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 1.720213646041373e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 4.616433896408446e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0025680977363028382,
+          "increment_ratio": 0.863524783261308,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5700108448705772,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 1.0365044383960076e-05,
+          "signed_remaining_indicator_N": 4.616433896408446e-05,
+          "signed_second_change_N": 1.2003181130267049e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 2.2645896361568694e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.002585299872763252,
+          "increment_ratio": 1.900348219390144,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8551556807399223,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.2003181130267049e-05,
+          "signed_remaining_indicator_N": 2.2645896361568694e-05,
+          "signed_second_change_N": 6.316306142102254e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3601570527036646,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.4098088220429808e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 1.0365044383960076e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 5,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 3.9848032821982425e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.1,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 2.1131929884812568e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 5.631996719848056e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.00308924906471165,
+          "increment_ratio": 0.8618993533603443,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5645133626012357,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 1.248524953817963e-05,
+          "signed_remaining_indicator_N": 5.631996719848056e-05,
+          "signed_second_change_N": 1.448573953501944e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 2.7552334421131717e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0031103809945964627,
+          "increment_ratio": 1.8971062309376325,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8503098845382049,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.448573953501944e-05,
+          "signed_remaining_indicator_N": 2.7552334421131717e-05,
+          "signed_second_change_N": 7.63570289253647e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3579441720523437,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.6954271846990245e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 1.248524953817963e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 6,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 4.868426430594411e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.11666666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 2.5227460378761217e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 6.679657743909687e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.003612931529623401,
+          "increment_ratio": 0.8603198381903281,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5591618044160422,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 1.462401562099926e-05,
+          "signed_remaining_indicator_N": 6.679657743909687e-05,
+          "signed_second_change_N": 1.699834755846232e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 3.2593782929037924e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.003638158990002162,
+          "increment_ratio": 1.8938957937162055,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8455026364702944,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.699834755846232e-05,
+          "signed_remaining_indicator_N": 3.2593782929037924e-05,
+          "signed_second_change_N": 8.975334131297759e-06,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.355983604808628,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.9829925418540263e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 1.462401562099926e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 7,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 5.7821243307799256e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.13333333333333333,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 2.9488937531685355e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 7.75993804502319e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.004139154049131935,
+          "increment_ratio": 0.8587866125513179,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5539582170039414,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 1.6782635217460137e-05,
+          "signed_remaining_indicator_N": 7.75993804502319e-05,
+          "signed_second_change_N": 1.9542264600051935e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 3.777453868519509e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.004168642986663621,
+          "increment_ratio": 1.8907164926116018,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8407335363912121,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 1.9542264600051935e-05,
+          "signed_remaining_indicator_N": 3.777453868519509e-05,
+          "signed_second_change_N": 1.0335904233351595e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3542780360890243,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.272835426270041e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 1.6782635217460137e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 8,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 6.726347621688073e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.15,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 3.3916059617868956e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 8.873328261653211e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0046679256212922874,
+          "increment_ratio": 0.8573000118591408,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5489045033323854,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 1.896244236361099e-05,
+          "signed_remaining_indicator_N": 8.873328261653211e-05,
+          "signed_second_change_N": 2.211879400595019e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 4.3099078072272106e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.004701841680910156,
+          "increment_ratio": 1.8875678825353202,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8360021338014856,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.211879400595019e-05,
+          "signed_remaining_indicator_N": 4.3099078072272106e-05,
+          "signed_second_change_N": 1.1718144926391172e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3528298843743425,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.565295871021899e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 1.896244236361099e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 9,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 7.701513769014113e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.16666666666666666,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 3.8507984291190345e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00010020286629049522,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.005199255334597806,
+          "increment_ratio": 0.8558603311319347,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5440024171868778,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 2.1164813254131304e-05,
+          "signed_remaining_indicator_N": 0.00010020286629049522,
+          "signed_second_change_N": 2.4729284071548646e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 4.857206590942903e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.005237763318888996,
+          "increment_ratio": 1.8844494887517387,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8313079279878353,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.4729284071548646e-05,
+          "signed_remaining_indicator_N": 4.857206590942903e-05,
+          "signed_second_change_N": 1.3122816089875325e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3516412909967428,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.860723551051901e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 2.1164813254131304e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 10,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 8.70800502006195e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.18333333333333332,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 4.3263301780034104e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00011201237277249299,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.005733152375809037,
+          "increment_ratio": 0.8544678231585234,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5392535549700845,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 2.339116692490987e-05,
+          "signed_remaining_indicator_N": 0.00011201237277249299,
+          "signed_second_change_N": 2.7375129046340076e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 5.419836444352996e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.005776415677589071,
+          "increment_ratio": 1.881360809132316,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8266503710850157,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 2.7375129046340076e-05,
+          "signed_remaining_indicator_N": 5.419836444352996e-05,
+          "signed_second_change_N": 1.4550706548929065e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3507141087122712,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.159477918471959e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 2.339116692490987e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 11,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 9.746166622356424e-05
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.2,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 4.8180009167120286e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00012416568689669277,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.006269626036185827,
+          "increment_ratio": 0.8531226978540427,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5346593515939178,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 2.564296591778953e-05,
+          "signed_remaining_indicator_N": 0.00012416568689669277,
+          "signed_second_change_N": 3.005777009836008e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 5.9983042863250504e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0063178060453529476,
+          "increment_ratio": 1.878301314092808,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8220288676770751,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.005777009836008e-05,
+          "signed_remaining_indicator_N": 5.9983042863250504e-05,
+          "signed_second_change_N": 1.6002634866322044e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3500498917800348,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.461928336223087e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 2.564296591778953e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 12,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00010816305203037099
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.21666666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 5.325548761565477e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00013666632452006633,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.006808685714835144,
+          "increment_ratio": 0.8518251211930925,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5302210750061247,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 2.792171691270995e-05,
+          "signed_remaining_indicator_N": 0.00013666632452006633,
+          "signed_second_change_N": 3.277869625822015e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 6.593138679431872e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.006861941202450799,
+          "increment_ratio": 1.8752704491140855,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8174427783167697,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.277869625822015e-05,
+          "signed_remaining_indicator_N": 6.593138679431872e-05,
+          "signed_second_change_N": 1.747945011009236e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.349649886071498,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.76845420501596e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 2.792171691270995e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 13,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00011918687440997354
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.23333333333333334,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 5.8486482340278784e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00014951742316764982,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0073503409189438615,
+          "increment_ratio": 0.8505752140692205,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5259398205393848,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 3.02289713249599e-05,
+          "signed_remaining_indicator_N": 0.00014951742316764982,
+          "signed_second_change_N": 3.553944533645891e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 7.204890820929467e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.00740882740128414,
+          "increment_ratio": 1.8722676360073525,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8128914211852096,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.553944533645891e-05,
+          "signed_remaining_indicator_N": 7.204890820929467e-05,
+          "signed_second_change_N": 1.8982032618075628e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3495150207736706,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.079445086556995e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 3.02289713249599e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 14,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00013053539054957378
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.25,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 6.386908538285468e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0001627217356865299,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.007894601261070451,
+          "increment_ratio": 0.8493730515279427,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.521816506623126,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 3.2566325870311136e-05,
+          "signed_remaining_indicator_N": 0.0001627217356865299,
+          "signed_second_change_N": 3.834160480100865e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 7.834135556111785e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.007958470346453306,
+          "increment_ratio": 1.8692922744392184,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8083740741710048,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 3.834160480100865e-05,
+          "signed_remaining_indicator_N": 7.834135556111785e-05,
+          "signed_second_change_N": 2.0511294742557584e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3496458999499419,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.395300818729915e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 3.2566325870311136e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 15,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00014221044094397256
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.26666666666666666,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 6.939872210579012e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0001762816276212048,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.008441476452783845,
+          "increment_ratio": 0.8482186618923566,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5178518702244479,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 3.493542308321933e-05,
+          "signed_remaining_indicator_N": 0.0001762816276212048,
+          "signed_second_change_N": 4.118681261418983e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 8.481472395093516e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.008510875174889635,
+          "increment_ratio": 1.8663437444470425,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.8038899784845457,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.118681261418983e-05,
+          "signed_remaining_indicator_N": 8.481472395093516e-05,
+          "signed_second_change_N": 2.2068181564480552e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3500427966906576,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.7164316282840776e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 3.493542308321933e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 16,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0001542134460567248
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.2833333333333333,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 7.507014069773124e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0001901990779325374,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.008990976295074333,
+          "increment_ratio": 0.8471120263256781,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5140464638939621,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 3.7337951803068786e-05,
+          "signed_remaining_indicator_N": 0.0001901990779325374,
+          "signed_second_change_N": 4.407675802339979e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 9.147526564349623e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.009066046435772064,
+          "increment_ratio": 1.8634214080993619,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.79943834101095,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.407675802339979e-05,
+          "signed_remaining_indicator_N": 9.147526564349623e-05,
+          "signed_second_change_N": 2.3653671591310557e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3507056462351743,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.0432582319261815e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 3.7337951803068786e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 17,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00016654540634122687
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.3,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 8.087740605672127e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00020447568410785969,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.009543110664497229,
+          "increment_ratio": 0.8460530780942991,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5104006518982049,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 3.977564759414902e-05,
+          "signed_remaining_indicator_N": 0.00020447568410785969,
+          "signed_second_change_N": 4.701318229790273e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 9.832950063205902e-05,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.00962398807055395,
+          "increment_ratio": 1.8605246117845777,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7950183376505284,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.701318229790273e-05,
+          "signed_remaining_indicator_N": 9.832950063205902e-05,
+          "signed_second_change_N": 2.526877741907893e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.351634042505619,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.376211935095854e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 3.977564759414902e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 18,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0001792069066887808
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.31666666666666665,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 8.681389597575348e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00021911266960982526,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.010097889497126904,
+          "increment_ratio": 0.8450417030488824,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5069146106681357,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 4.2250293156881336e-05,
+          "signed_remaining_indicator_N": 0.00021911266960982526,
+          "signed_second_change_N": 4.999787939984936e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00010538422727909192,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.010184703393102658,
+          "increment_ratio": 1.8576526886398248,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7906291169103843,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 4.999787939984936e-05,
+          "signed_remaining_indicator_N": 0.00010538422727909192,
+          "signed_second_change_N": 2.6914546354979765e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3528272323035753,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.7157347155438465e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 4.2250293156881336e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 19,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0001921981232548449
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.3333333333333333,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 9.287230545986305e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00023411089931633084,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.010655322764704109,
+          "increment_ratio": 0.8440777377428774,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5035883212380499,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 4.476371858867095e-05,
+          "signed_remaining_indicator_N": 0.00023411089931633084,
+          "signed_second_change_N": 5.303269661911976e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00011264653285229735,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.010748195070163972,
+          "increment_ratio": 1.8548049618174052,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7862698048170329,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.303269661911976e-05,
+          "signed_remaining_indicator_N": 0.00011264653285229735,
+          "signed_second_change_N": 2.8592061004169625e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3542841164722281,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 6.06227930788697e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 4.476371858867095e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 20,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00020551883831216103
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.35,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 9.904464858635428e-05,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00024947089292892666,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.011215420453029975,
+          "increment_ratio": 0.8431609714025492,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.5004215750922671,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 4.731780170794814e-05,
+          "signed_remaining_indicator_N": 0.00024947089292892666,
+          "signed_second_change_N": 5.611953507434972e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00012012380453445021,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01131446510161633,
+          "increment_ratio": 1.8519807457651851,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7819395068306922,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.611953507434972e-05,
+          "signed_remaining_indicator_N": 0.00012012380453445021,
+          "signed_second_change_N": 3.0302439808121626e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3560032451935131,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 6.416309267140083e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 4.731780170794814e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 21,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00021916845312080525
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.36666666666666664,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00010532227163515331,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00026519284828503166,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01177819253066703,
+          "increment_ratio": 0.8422911445310763,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.49741396855024334,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 4.991446820504057e-05,
+          "signed_remaining_indicator_N": 0.00026519284828503166,
+          "signed_second_change_N": 5.926035021159952e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00012782373914715727,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.011883514802302183,
+          "increment_ratio": 1.8491793521456918,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7776373169079909,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 5.926035021159952e-05,
+          "signed_remaining_indicator_N": 0.00012782373914715727,
+          "signed_second_change_N": 3.2046837502720804e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3579828200464463,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 6.778299029419968e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 4.991446820504057e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 22,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00023314601078231086
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.38333333333333336,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.0001116958642613363,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00028127666396367366,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.012343648918655597,
+          "increment_ratio": 0.8414679501242747,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4945649063060519,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 5.255569177726842e-05,
+          "signed_remaining_indicator_N": 0.00028127666396367366,
+          "signed_second_change_N": 6.24571521345603e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00013575435414830712,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.012455344782916933,
+          "increment_ratio": 1.8464000905680695,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7733623186658689,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 6.24571521345603e-05,
+          "signed_remaining_indicator_N": 0.00013575435414830712,
+          "signed_second_change_N": 3.382644555403186e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3602206949622802,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.148733959349944e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 5.255569177726842e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 23,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00024745021840964256
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.4,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00011815547921663686,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0002977219689707989,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.012911799453427053,
+          "increment_ratio": 0.8406910333188845,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4918735996995165,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 5.524349413843152e-05,
+          "signed_remaining_indicator_N": 0.0002977219689707989,
+          "signed_second_change_N": 6.571200589631718e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0001439239972587503,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01302995493264369,
+          "increment_ratio": 1.8436422734683007,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7691135929504487,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 6.571200589631718e-05,
+          "signed_remaining_indicator_N": 0.0001439239972587503,
+          "signed_second_change_N": 3.564249249541143e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3627143796870824,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.528110384659968e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 5.524349413843152e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 24,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00026207947647538705
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.4166666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00012469055178915625,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00031452815180671006,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01348265385068169,
+          "increment_ratio": 0.8399599929765766,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.48933907183331316,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 5.7979945006858893e-05,
+          "signed_remaining_indicator_N": 0.00031452815180671006,
+          "signed_second_change_N": 6.902703163444088e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00015234135584435183,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.013607344402470847,
+          "increment_ratio": 1.8409052201493898,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7648902241776026,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 6.902703163444088e-05,
+          "signed_remaining_indicator_N": 0.00015234135584435183,
+          "signed_second_change_N": 3.7496244173200466e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3654610428542977,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.916935617370037e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 5.7979945006858893e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 25,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0002770319076335088
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.43333333333333335,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00013128992390207955,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0003316943943151672,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.014056221664883194,
+          "increment_ratio": 0.8392743824095049,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4869601598735631,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 6.076716194775185e-05,
+          "signed_remaining_indicator_N": 0.0003316943943151672,
+          "signed_second_change_N": 7.240440459208713e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00016101546647334644,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.014187511588785274,
+          "increment_ratio": 1.8381882594150711,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7606913045538111,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.240440459208713e-05,
+          "signed_remaining_indicator_N": 0.00016101546647334644,
+          "signed_second_change_N": 3.938900393974168e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3684575177379226,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 8.315727959899884e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 6.076716194775185e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 26,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0002923053903754261
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.45,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00013794187493645915,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00034921970958717987,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01463251224507727,
+          "increment_ratio": 0.8386337097953428,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.48473551641491974,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 6.360731011268751e-05,
+          "signed_remaining_indicator_N": 0.00034921970958717987,
+          "signed_second_change_N": 7.584635505316142e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0001699557219712991,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.014770454120013729,
+          "increment_ratio": 1.8354907369228861,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7565159456420489,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.584635505316142e-05,
+          "signed_remaining_indicator_N": 0.0001699557219712991,
+          "signed_second_change_N": 4.1322112679421236e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.371700310076421,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 8.725016700470052e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 6.360731011268751e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 27,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.000307897596907759
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.4666666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00014463414953307108,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00036710297797544315,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.015211534693106857,
+          "increment_ratio": 0.8380374401586539,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4826636164242599,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 6.650260190697865e-05,
+          "signed_remaining_indicator_N": 0.00036710297797544315,
+          "signed_second_change_N": 7.935516806312215e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00017917187965228097,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.015356168842639928,
+          "increment_ratio": 1.8328120174898421,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7523632821985373,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 7.935516806312215e-05,
+          "signed_remaining_indicator_N": 0.00017917187965228097,
+          "signed_second_change_N": 4.329694879009159e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3751856046071629,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 9.14534208113979e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 6.650260190697865e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 28,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00032380602918535145
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.48333333333333334,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.0001513539915193353,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0003853429862382367,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.015793297819178473,
+          "increment_ratio": 0.8374849967598916,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.48074276227447776,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 6.94552965100105e-05,
+          "signed_remaining_indicator_N": 0.0003853429862382367,
+          "signed_second_change_N": 8.293318301667851e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00018867406675114872,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.015944651810697808,
+          "increment_ratio": 1.8301514917048194,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7482324827296323,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 8.293318301667851e-05,
+          "signed_remaining_indicator_N": 0.00018867406675114872,
+          "signed_second_change_N": 4.531492796775241e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3789092761572135,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 9.577255263590323e-05,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 6.94552965100105e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 29,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0003400280582704848
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.5,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00015808817981980902,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00040393846773093786,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.016377810096944372,
+          "increment_ratio": 0.8369757625955837,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4789710892986727,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 7.246769927453725e-05,
+          "signed_remaining_indicator_N": 0.00040393846773093786,
+          "signed_second_change_N": 8.658279309045266e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0001984727850281972,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01653589827676418,
+          "increment_ratio": 1.8275085815391607,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7441227585789711,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 8.658279309045266e-05,
+          "signed_remaining_indicator_N": 0.0001984727850281972,
+          "signed_second_change_N": 4.7377502882930966e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3828668996383329,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00010021318261970238,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 7.246769927453725e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 30,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00035656096484800587
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.5166666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00016482306245819978,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0004228881390583108,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01696507962274032,
+          "increment_ratio": 0.836509083083124,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4773465755955887,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 7.554216101982036e-05,
+          "signed_remaining_indicator_N": 0.0004228881390583108,
+          "signed_second_change_N": 9.030644442185182e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00020857891392173704,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01712990268519852,
+          "increment_ratio": 1.8248827456835754,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7400333726622002,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 9.030644442185182e-05,
+          "signed_remaining_indicator_N": 0.00020857891392173704,
+          "signed_second_change_N": 4.9486162678372136e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3870537618947303,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001047810386241993,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 7.554216101982036e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 31,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0003734019763799376
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.5333333333333333,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00017154459834598998,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0004421907413361349,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01755511407086853,
+          "increment_ratio": 0.8360842673131532,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.47586704697479043,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 7.86810771086395e-05,
+          "signed_remaining_indicator_N": 0.0004421907413361349,
+          "signed_second_change_N": 9.410663516189535e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00021900371071105146,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.01772665866921452,
+          "increment_ratio": 1.8222734873003914,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7359636520414727,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 9.410663516189535e-05,
+          "signed_remaining_indicator_N": 0.00021900371071105146,
+          "signed_second_change_N": 5.164243227909204e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3914648756337442,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001094819551737021,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 7.86810771086395e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 32,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00039054830905704135
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.55,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00017823839260664234,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0004618450729062386,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.018147920658144502,
+          "increment_ratio": 0.835700591486127,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.47453018961771054,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 8.188688645889564e-05,
+          "signed_remaining_indicator_N": 0.0004618450729062386,
+          "signed_second_change_N": 9.79859142055603e-05,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00022975880881434443,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.018326159050751144,
+          "increment_ratio": 1.8196803606693779,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.731912998873488,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 9.79859142055603e-05,
+          "signed_remaining_indicator_N": 0.00022975880881434443,
+          "signed_second_change_N": 5.384787148525125e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.3960949933013527,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00011432187220230053,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 8.188688645889564e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 33,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00040799720142098775
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.5666666666666667,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.00018488973707968606,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00048185002432768714,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.018743506106981906,
+          "increment_ratio": 0.8353573011421255,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4733335586447043,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 8.51620703080612e-05,
+          "signed_remaining_indicator_N": 0.00048185002432768714,
+          "signed_second_change_N": 0.00010194687972634592,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00024085621337725853,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.018928395844061592,
+          "increment_ratio": 1.8171029783187789,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.727880902204012,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00010194687972634592,
+          "signed_remaining_indicator_N": 0.00024085621337725853,
+          "signed_second_change_N": 5.610407387074412e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.40093862305982,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00011930683351429883,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 8.51620703080612e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 34,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.000425745950456944
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.5833333333333334,
+      "increasing_order_drift": null,
+      "latest_limit_disagreement_N": 0.0001914836501450655,
+      "order_changes": null,
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0005022046074453253,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.019341876615200034,
+          "increment_ratio": 0.8350536143341215,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.47227459006179306,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 8.850915084700206e-05,
+          "signed_remaining_indicator_N": 0.0005022046074453253,
+          "signed_second_change_N": 0.00010599217742154193,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0002523082919436287,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0195333602653451,
+          "increment_ratio": 1.8145410207601242,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7238669539379763,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00010599217742154193,
+          "signed_remaining_indicator_N": 0.0002523082919436287,
+          "signed_second_change_N": 5.841266535663164e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": null,
+          "continuum_error_bound": false,
+          "force_limit_N": null,
+          "increment_ratio": 1.4059900450995355,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": null,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00012444298499109802,
+          "signed_remaining_indicator_N": null,
+          "signed_second_change_N": 8.850915084700206e-05,
+          "status": "no_admissible_positive_root"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 35,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0004437919420886942
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.6,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00019800491499260067,
+      "order_changes": [
+        0.46762212841379336,
+        0.2485202483296547
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0005229079804149581,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.019943037830847023,
+          "increment_ratio": 0.8347887249002381,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4713506131366494,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 9.193068962891696e-05,
+          "signed_remaining_indicator_N": 0.0005229079804149581,
+          "signed_second_change_N": 0.00011012449843510186,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00026412776285225555,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.020141042745839624,
+          "increment_ratio": 1.8119942440118857,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7198708614663041,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00011012449843510186,
+          "signed_remaining_indicator_N": 0.00026412776285225555,
+          "signed_second_change_N": 6.077530257009994e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.08566085689564222,
+          "continuum_error_bound": false,
+          "force_limit_N": 0.06508478658594513,
+          "increment_ratio": 1.4112433292254145,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.0037284847228560222,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00012973657248990106,
+          "signed_remaining_indicator_N": 0.08566085689564222,
+          "signed_second_change_N": 9.193068962891696e-05,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 36,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.00046213267784485715
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.6166666666666667,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00020443812637757283,
+      "order_changes": [
+        0.4557129308879113,
+        0.24533361385594077
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.00054395946777239,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0205469948329228,
+          "increment_ratio": 0.8345618059538047,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4705588636049376,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 9.542928579599902e-05,
+          "signed_remaining_indicator_N": 0.00054395946777239,
+          "signed_second_change_N": 0.0001143465769883091,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00027632767083461636,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.020751432959300372,
+          "increment_ratio": 1.8094624979787841,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7158924774608784,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001143465769883091,
+          "signed_remaining_indicator_N": 0.00027632767083461636,
+          "signed_second_change_N": 6.31936705602007e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.02229634320206181,
+          "continuum_error_bound": false,
+          "force_limit_N": 0.0010910423243783128,
+          "increment_ratio": 1.4166923534260407,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.014845932717026267,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00013519393948010008,
+          "signed_remaining_indicator_N": 0.02229634320206181,
+          "signed_second_change_N": 9.542928579599902e-05,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 37,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0004807657972121897
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.6333333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00021076770443883425,
+      "order_changes": [
+        0.44359406236640814,
+        0.24203527262584623
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0005653585737101506,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02115375212002221,
+          "increment_ratio": 0.8343720137198855,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4698964981432684,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 9.90075740423986e-05,
+          "signed_remaining_indicator_N": 0.0005653585737101506,
+          "signed_second_change_N": 0.00011866118759304087,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00028892138782793603,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.021364519824461043,
+          "increment_ratio": 1.806945707274266,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7119317707691146,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00011866118759304087,
+          "signed_remaining_indicator_N": 0.00028892138782793603,
+          "signed_second_change_N": 6.566948144337906e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.013035134570905077,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.008802637310420323,
+          "increment_ratio": 1.4223308235024112,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.026302435776860277,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00014082152432070075,
+          "signed_remaining_indicator_N": 0.013035134570905077,
+          "signed_second_change_N": 9.90075740423986e-05,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 38,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0004996890922667717
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.65,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.000216977968431082,
+      "order_changes": [
+        0.43128008578175947,
+        0.23862830300826776
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.000587104986641899,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02176331360880089,
+          "increment_ratio": 0.8342184920351643,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4693606112022254,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00010266822243289869,
+          "signed_remaining_indicator_N": 0.000587104986641899,
+          "signed_second_change_N": 0.00012307114192881136,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00030192254805111305,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.021980291577231973,
+          "increment_ratio": 1.8044439263385335,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7079889142104931,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00012307114192881136,
+          "signed_remaining_indicator_N": 0.00030192254805111305,
+          "signed_second_change_N": 6.820447015970163e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.009320501357940367,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.013152988379431234,
+          "increment_ratio": 1.4281522920076715,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.03808052542046589,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001466258571838977,
+          "signed_remaining_indicator_N": 0.009320501357940367,
+          "signed_second_change_N": 0.00010266822243289869,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 39,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0005189005164821965
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.6666666666666666,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002230531542238498,
+      "order_changes": [
+        0.4187856354531877,
+        0.23511601022071915
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0006091985797908969,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02237568263769944,
+          "increment_ratio": 0.8341003761957172,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4689482495941325,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00010641392981969311,
+          "signed_remaining_indicator_N": 0.0006091985797908969,
+          "signed_second_change_N": 0.0001275792852474672,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00031534503333135083,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02259873579192329,
+          "increment_ratio": 1.8019573228174959,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7040642598148517,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001275792852474672,
+          "signed_remaining_indicator_N": 0.00031534503333135083,
+          "signed_second_change_N": 7.080039223569812e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.00732096156661242,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.015791498936125383,
+          "increment_ratio": 1.4341501802488668,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.050162614140944806,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00015261355663190312,
+          "signed_remaining_indicator_N": 0.00732096156661242,
+          "signed_second_change_N": 0.00010641392981969311,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 40,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0005383981875551995
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.6833333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00022897745880600187,
+      "order_changes": [
+        0.4061253722708156,
+        0.2315019420878789
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0006316393992392016,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02299086198453588,
+          "increment_ratio": 0.8340167979511732,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.46865643109799493,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00011024742310699817,
+          "signed_remaining_indicator_N": 0.0006316393992392016,
+          "signed_second_change_N": 0.0001321884923395182,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00032920292060210855,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.023219839443341883,
+          "increment_ratio": 1.799486198474608,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.7001583731858738,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001321884923395182,
+          "signed_remaining_indicator_N": 0.00032920292060210855,
+          "signed_second_change_N": 7.345901983108957e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.006073621647455131,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.017681068228659468,
+          "increment_ratio": 1.4403177984023248,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.06253105882717935,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001587913257290012,
+          "signed_remaining_indicator_N": 0.006073621647455131,
+          "signed_second_change_N": 0.00011024742310699817,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 41,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.000558180379408111
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.7,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00023473508025505588,
+      "order_changes": [
+        0.3933139371853812,
+        0.22778989482249046
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0006544276421358305,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02360885389537375,
+          "increment_ratio": 0.8339668907452122,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.46848216392702813,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00011417145421129676,
+          "signed_remaining_indicator_N": 0.0006544276421358305,
+          "signed_second_change_N": 0.0001369016629776225,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0003435104244221249,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.023843588975628806,
+          "increment_ratio": 1.79703100417641,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6962720587495186,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001369016629776225,
+          "signed_remaining_indicator_N": 0.0003435104244221249,
+          "signed_second_change_N": 7.618213745864966e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.005222834393837225,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.019177348806649976,
+          "increment_ratio": 1.446648368008239,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.07516822674164694,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00016516594790789985,
+          "signed_remaining_indicator_N": 0.005222834393837225,
+          "signed_second_change_N": 0.00011417145421129676,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 42,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0005782455046771801
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.7166666666666667,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00024031026249073106,
+      "order_changes": [
+        0.380365906626829,
+        0.22398392083963325
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0006775636281879242,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.024229660121708088,
+          "increment_ratio": 0.8339497945043323,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.46842246460561543,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00011818879659389672,
+          "signed_remaining_indicator_N": 0.0006775636281879242,
+          "signed_second_change_N": 0.00014172171679009,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0003582818285722882,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02446997038419882,
+          "increment_ratio": 1.7945923550397394,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6924063854452487,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00014172171679009,
+          "signed_remaining_indicator_N": 0.0003582818285722882,
+          "signed_second_change_N": 7.897153712490418e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.004606693909475154,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02044225155721095,
+          "increment_ratio": 1.453135043912198,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.08805655797878639,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00017174428212840195,
+          "signed_remaining_indicator_N": 0.004606693909475154,
+          "signed_second_change_N": 0.00011818879659389672,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 43,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0005985920910630202
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.7333333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00024568733824422914,
+      "order_changes": [
+        0.36729575439381623,
+        0.2200883353811035
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0007010477541972574,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02485328197624521,
+          "increment_ratio": 0.8339646618203823,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4684743806849162,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00012230224160949751,
+          "signed_remaining_indicator_N": 0.0007010477541972574,
+          "signed_second_change_N": 0.0001466515875415339,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0003735314031895516,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02509896931448944,
+          "increment_ratio": 1.7921710477605883,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6885627160660197,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001466515875415339,
+          "signed_remaining_indicator_N": 0.0003735314031895516,
+          "signed_second_change_N": 8.182901276347632e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.004140920986157406,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.021560060331826596,
+          "increment_ratio": 1.4597709366370113,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.10117862629109997,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00017853325778710225,
+          "signed_remaining_indicator_N": 0.004140920986157406,
+          "signed_second_change_N": 0.00012230224160949751,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 44,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0006192187414337802
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.75,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00025085077936045155,
+      "order_changes": [
+        0.35411781480679216,
+        0.2161077271022035
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0007248804388787772,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02547972040019847,
+          "increment_ratio": 0.834010663921636,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4686350126772446,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.0001265145944272031,
+          "signed_remaining_indicator_N": 0.0007248804388787772,
+          "signed_second_change_N": 0.00015169421675295322,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0003892733056287395,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02573057117955892,
+          "increment_ratio": 1.7897680798134437,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6847427397794481,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00015169421675295322,
+          "signed_remaining_indicator_N": 0.0003892733056287395,
+          "signed_second_change_N": 8.47563538895861e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.003777318967421037,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.022578976088409163,
+          "increment_ratio": 1.4665491350214046,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.11451719787045248,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001855398690247985,
+          "signed_remaining_indicator_N": 0.003777318967421037,
+          "signed_second_change_N": 0.0001265145944272031,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 45,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0006401240849891916
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.7666666666666667,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002557852779121704,
+      "order_changes": [
+        0.3408462410559046,
+        0.21204699139153582
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0007490620691966081,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02610897603071297,
+          "increment_ratio": 0.8340869948367678,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4689015296229265,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00013082866949359895,
+          "signed_remaining_indicator_N": 0.0007490620691966081,
+          "signed_second_change_N": 0.00015685254692072298,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00040552145311774005,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02636476130862514,
+          "increment_ratio": 1.7873846787846652,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6809485210144623,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00015685254692072298,
+          "signed_remaining_indicator_N": 0.00040552145311774005,
+          "signed_second_change_N": 8.77553381666979e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0034863301852131167,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.023528560461617186,
+          "increment_ratio": 1.47346272940225,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.12805528856702192,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00019277116843610317,
+          "signed_remaining_indicator_N": 0.0034863301852131167,
+          "signed_second_change_N": 0.00013082866949359895,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 46,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0006613067310299106
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.7833333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002604757094524235,
+      "order_changes": [
+        0.32749500242281737,
+        0.20791125441069735
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0007735928658720338,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.026741049352700896,
+          "increment_ratio": 0.8341928856834231,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4692712199349067,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.0001352472857740969,
+          "signed_remaining_indicator_N": 0.0007735928658720338,
+          "signed_second_change_N": 0.00016212951236486972,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0004222894319043135,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02700152506215332,
+          "increment_ratio": 1.7850222851015594,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6771824743456041,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00016212951236486972,
+          "signed_remaining_indicator_N": 0.0004222894319043135,
+          "signed_second_change_N": 9.082772451529664e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.003248819632639168,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.024427952098298632,
+          "increment_ratio": 1.4805048343221558,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.14177621751208935,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002002342604175006,
+          "signed_remaining_indicator_N": 0.003248819632639168,
+          "signed_second_change_N": 0.0001352472857740969,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 47,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0006827651413567372
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.8,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002649073503072641,
+      "order_changes": [
+        0.3140778212436707,
+        0.20370602070495047
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0007984728607547344,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.027375940738008437,
+          "increment_ratio": 0.8343276008216766,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4697414788344233,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00013977326133409948,
+          "signed_remaining_indicator_N": 0.0007984728607547344,
+          "signed_second_change_N": 0.0001675280323897299,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.000439590268258229,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0276408480883157,
+          "increment_ratio": 1.7826826352027287,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6734474995393738,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001675280323897299,
+          "signed_remaining_indicator_N": 0.000439590268258229,
+          "signed_second_change_N": 9.39752421892405e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0030518527169657917,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.025290088914187107,
+          "increment_ratio": 1.4876686109746893,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.15566365759075262,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00020793629354030202,
+          "signed_remaining_indicator_N": 0.0030518527169657917,
+          "signed_second_change_N": 0.00013977326133409948,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 48,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0007044976185654923
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.8166666666666667,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00026906586437125055,
+      "order_changes": [
+        0.30060817462626294,
+        0.1994371015293971
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0008237017338847878,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.028013650630282792,
+          "increment_ratio": 0.8344904526043408,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4703098606172377,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00014440940761590096,
+          "signed_remaining_indicator_N": 0.0008237017338847878,
+          "signed_second_change_N": 0.00017305100036221766,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.000457436287795845,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.028282716494654043,
+          "increment_ratio": 1.78036774751589,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6697469621466348,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00017305100036221766,
+          "signed_remaining_indicator_N": 0.000457436287795845,
+          "signed_second_change_N": 9.719958171769405e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002886371616980268,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02612403174754953,
+          "increment_ratio": 1.4949472910428871,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.16970168599097474,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00021588445271649923,
+          "signed_remaining_indicator_N": 0.002886371616980268,
+          "signed_second_change_N": 0.00014440940761590096,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 49,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0007265021521670953
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.8333333333333334,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00027293742163946727,
+      "order_changes": [
+        0.2870992707072174,
+        0.19511065436632236
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.000849278694787577,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.028654179686714965,
+          "increment_ratio": 0.8346808075449031,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4709741008335584,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00014915852314019776,
+          "signed_remaining_indicator_N": 0.000849278694787577,
+          "signed_second_change_N": 0.00017870127333935795,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.00047583888999611676,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.028927117108354432,
+          "increment_ratio": 1.7780799592493712,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6660847551998808,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00017870127333935795,
+          "signed_remaining_indicator_N": 0.00047583888999611676,
+          "signed_second_change_N": 0.00010050238315199161,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0027458437093576455,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.026936315945484252,
+          "increment_ratio": 1.502334199503165,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.18387483012634098,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002240859504609033,
+          "signed_remaining_indicator_N": 0.0027458437093576455,
+          "signed_second_change_N": 0.00014915852314019776,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 50,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.000748776311635585
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.85,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002765088148715643,
+      "order_changes": [
+        0.27356403638098603,
+        0.19073320720632825
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0008752023363908969,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.029297528950110542,
+          "increment_ratio": 0.8348980943942453,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4717321449989992,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00015402338668279655,
+          "signed_remaining_indicator_N": 0.0008752023363908969,
+          "signed_second_change_N": 0.00018448166035706093,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.000494808298356134,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.029574037764982106,
+          "increment_ratio": 1.775821957539147,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6624653522053274,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00018448166035706093,
+          "signed_remaining_indicator_N": 0.000494808298356134,
+          "signed_second_change_N": 0.00010388522316319773,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002625438553631156,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.027731774393227344,
+          "increment_ratio": 1.509822776162079,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.19816810861801315,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00023254801727530527,
+          "signed_remaining_indicator_N": 0.002625438553631156,
+          "signed_second_change_N": 0.00015402338668279655,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 51,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0007713171132276986
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.8666666666666667,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002797675913650162,
+      "order_changes": [
+        0.26001510492222396,
+        0.18631168164018563
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0009014704684254796,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.02994370004449435,
+          "increment_ratio": 0.8351418129366301,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4725821796661559,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00015900674988869948,
+          "signed_remaining_indicator_N": 0.0009014704684254796,
+          "signed_second_change_N": 0.0001903949094939697,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0005143532763542748,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.030223467635859366,
+          "increment_ratio": 1.7735968111802431,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6588938613063415,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0001903949094939697,
+          "signed_remaining_indicator_N": 0.0005143532763542748,
+          "signed_second_change_N": 0.00010734960070618929,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0025215069412257247,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.028514058481188074,
+          "increment_ratio": 1.5174065997537345,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.21256707474393194,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00024127789168650396,
+          "signed_remaining_indicator_N": 0.0025215069412257247,
+          "signed_second_change_N": 0.00015900674988869948,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 52,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0007941208677192911
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.8833333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00028270214962575896,
+      "order_changes": [
+        0.24646484588240014,
+        0.18185338842038923
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0009280798812084941,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03059269544342507,
+          "increment_ratio": 0.8354115494770695,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4735226866586304,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00016411132991539512,
+          "signed_remaining_indicator_N": 0.0009280798812084941,
+          "signed_second_change_N": 0.00019644369295363645,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0005344808105987514,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03087539759305083,
+          "increment_ratio": 1.7714079995242569,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6553760750790196,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00019644369295363645,
+          "signed_remaining_indicator_N": 0.0005344808105987514,
+          "signed_second_change_N": 0.00011089692098398274,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002431240355188611,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.029285978662398588,
+          "increment_ratio": 1.5250794031931767,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.22705784077623026,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002502828090846093,
+          "signed_remaining_indicator_N": 0.002431240355188611,
+          "signed_second_change_N": 0.00016411132991539512,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 53,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0008171829602245106
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.9,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002853021422918843,
+      "order_changes": [
+        0.23292523557217043,
+        0.17736617657627485
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0009550263299879564,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03124451852115356,
+          "increment_ratio": 0.8357069625940149,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4745523934516338,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00016933979827059992,
+          "signed_remaining_indicator_N": 0.0009550263299879564,
+          "signed_second_change_N": 0.0002026305940361836,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0005551957099787137,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.031529820663445444,
+          "increment_ratio": 1.7692594721834773,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6519185700279087,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002026305940361836,
+          "signed_remaining_indicator_N": 0.0005551957099787137,
+          "signed_second_change_N": 0.00011452847771735442,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002352441137783046,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.030049734307394653,
+          "increment_ratio": 1.5328351194614651,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.24162715787946337,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00025956998991169544,
+          "signed_remaining_indicator_N": 0.002352441137783046,
+          "signed_second_change_N": 0.00016933979827059992,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 54,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0008404978522706004
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.9166666666666666,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00028755836362969606,
+      "order_changes": [
+        0.2194080488157094,
+        0.17285829178506928
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0009823040292150202,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03189917409735302,
+          "increment_ratio": 0.8360278285609701,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4756704313987813,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00017469477519149734,
+          "signed_remaining_indicator_N": 0.0009823040292150202,
+          "signed_second_change_N": 0.0002089580863500612,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0005765002323018437,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03218673246098271,
+          "increment_ratio": 1.767155657073921,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6485287231838506,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002089580863500612,
+          "signed_remaining_indicator_N": 0.0005765002323018437,
+          "signed_second_change_N": 0.00011824543328348147,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0022833651298562675,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.030807071083061834,
+          "increment_ratio": 1.5406678685413944,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.2562623825830719,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002691466269396023,
+          "signed_remaining_indicator_N": 0.0022833651298562675,
+          "signed_second_change_N": 0.00017469477519149734,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 55,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0008640585959315411
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.9333333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002894632004406053,
+      "order_changes": [
+        0.20592474187775123,
+        0.16833852553734974
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.001009905583367431,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03255666854925931,
+          "increment_ratio": 0.836374029075062,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4768762925639902,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00018017881713310036,
+          "signed_remaining_indicator_N": 0.001009905583367431,
+          "signed_second_change_N": 0.00021542851746886305,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0005983935859968497,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.032846131749699914,
+          "increment_ratio": 1.7651015240442542,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.64521481810134,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00021542851746886305,
+          "signed_remaining_indicator_N": 0.0005983935859968497,
+          "signed_second_change_N": 0.000122048796929973,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002222609562963936,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03155939308713167,
+          "increment_ratio": 1.5485720022714264,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.270951550686239,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00027901987161470243,
+          "signed_remaining_indicator_N": 0.002222609562963936,
+          "signed_second_change_N": 0.00018017881713310036,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 56,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0008878567864374562
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.95,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00029101086216032357,
+      "order_changes": [
+        0.1924864943118867,
+        0.16381622824214215
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0010378216724729345,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.033217010173091074,
+          "increment_ratio": 0.8367455679980291,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4781698874776489,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00018579440649750534,
+          "signed_remaining_indicator_N": 0.0010378216724729345,
+          "signed_second_change_N": 0.00022204408795618857,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0006208714097336859,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.0335080210352514,
+          "increment_ratio": 1.7631026266243002,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.641986115719791,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00022204408795618857,
+          "signed_remaining_indicator_N": 0.0006208714097336859,
+          "signed_second_change_N": 0.00012593940057892272,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0021690329985353104,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.032307842934984884,
+          "increment_ratio": 1.5565421195259899,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.2856833931657622,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002891968192857003,
+          "signed_remaining_indicator_N": 0.0021690329985353104,
+          "signed_second_change_N": 0.00018579440649750534,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 57,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0009118822718940101
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.9666666666666667,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.0002921976920779029,
+      "order_changes": [
+        0.17910422574495977,
+        0.15930134937856189
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0010660407517510356,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03388020953579632,
+          "increment_ratio": 0.8371425837710802,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4795515875296473,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00019154394000360508,
+          "signed_remaining_indicator_N": 0.0010660407517510356,
+          "signed_second_change_N": 0.00022880682898814703,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0006439251874936941,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03417240722787422,
+          "increment_ratio": 1.7611651511050268,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6388529369082092,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00022880682898814703,
+          "signed_remaining_indicator_N": 0.0006439251874936941,
+          "signed_second_change_N": 0.00012991787217944,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002121696633508646,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03305336048302685,
+          "increment_ratio": 1.564573087448517,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.30044736178468756,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0002996844935934939,
+          "signed_remaining_indicator_N": 0.002121696633508646,
+          "signed_second_change_N": 0.00019154394000360508,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 58,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0009361228795715937
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 0.9833333333333333,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00029302253198263545,
+      "order_changes": [
+        0.16578861117955468,
+        0.15480448701618554
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.0010945487393860859,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03454627984323962,
+          "increment_ratio": 0.8375653610914889,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.48102226449341656,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.0001974297160095978,
+          "signed_remaining_indicator_N": 0.0010945487393860859,
+          "signed_second_change_N": 0.00023571857813259323,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0006675416009587938,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03483930237522226,
+          "increment_ratio": 1.7592959697944786,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6358267515096021,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00023571857813259323,
+          "signed_remaining_indicator_N": 0.0006675416009587938,
+          "signed_second_change_N": 0.00013398460644466204,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.002079820665383529,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.033796726495374775,
+          "increment_ratio": 1.5726600628276415,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.3152336533138619,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0003104898295836975,
+          "signed_remaining_indicator_N": 0.002079820665383529,
+          "signed_second_change_N": 0.0001974297160095978,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 59,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0009605641329414258
+    },
+    {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "fraction": 1.0,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 0.00029348711117953286,
+      "order_changes": [
+        0.15255010816261894,
+        0.15033693260643755
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.001123328665520275,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03521523735221016,
+          "increment_ratio": 0.8380143449147468,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4825833378127983,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00020345392111919408,
+          "signed_remaining_indicator_N": 0.001123328665520275,
+          "signed_second_change_N": 0.00024278095280086398,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0006917018215840398,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03550872446338969,
+          "increment_ratio": 1.7575026964070917,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6329202704192358,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00024278095280086398,
+          "signed_remaining_indicator_N": 0.0006917018215840398,
+          "signed_second_change_N": 0.00013813973275670494,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0020427514083432552,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.034538595562188044,
+          "increment_ratio": 1.5807985120624992,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.33003322965017934,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0003216196557785031,
+          "signed_remaining_indicator_N": 0.0020427514083432552,
+          "signed_second_change_N": 0.00020345392111919408,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": false,
+      "state": 60,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0009851889327635727
+    }
+  ],
+  "status": "remaining_spatial_error_not_within_allowance",
+  "study_sha256": "902286e195a673acb6384a864f0bb57f747eb0ba450be44d2451dc221cd7d1ce",
+  "unresolved_nonrest_states": []
+}

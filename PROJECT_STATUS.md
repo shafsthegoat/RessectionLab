@@ -1740,3 +1740,17 @@ unexecuted. Annotation restrictions and protected Case4/SELECT/evaluation roles 
 [IBSR qualification](artifacts/ibsr-source-qualification-v1/RESULT.md) did not establish
 an eligible support-label source: noncommercial terms, README login, unresolved label
 ancestry/domain and participant overlap remain. No scientific payload was accessed.
+
+The [uniform N32 mechanics study](artifacts/mechanics/hbe-global-n32-execution-v1/RESULT.md)
+completed one native solve in 639.057 seconds (750.919 seconds for the full phase).
+Independent review reproduced five complete readouts and all 61-state comparison
+metrics. Adjacent-mesh changes pass, but the conditional remaining-force envelope
+**0.985189 mN exceeds 0.724169 mN** at states 49–60. Spatial acceptance, finest-mesh
+load-step verification and calibration remain closed; no physical force curve was
+accessed. A prospective N36 diagnostic needs a separate reviewed declaration.
+
+The reviewed [144-mask intake](artifacts/lausanne-annotation-intake-preparation-v1/RESULT.md)
+is committed with all 148 metadata outcomes retained. An independently checked
+cache-only sub476 pilot reproduced 193 positives with unchanged original bytes
+and its source-specific grid proof. Live transfer and full-inventory content QC
+remain next; no new fitting or planning admission follows.

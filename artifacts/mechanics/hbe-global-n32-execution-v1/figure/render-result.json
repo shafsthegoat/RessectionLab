@@ -1,0 +1,85 @@
+{
+  "attempts": 1,
+  "inputs_unchanged": true,
+  "missing_order_states": {
+    "N12-N16-N24": [
+      0
+    ],
+    "N16-N24-N32": [
+      0
+    ],
+    "N8-N12-N16": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ]
+  },
+  "os_reported_worker_maxrss_bytes": 111706112,
+  "outputs": {
+    "n32-spatial-diagnostic.pdf": {
+      "bytes": 44920,
+      "sha256": "35a0f2425752ca2ce8ae8dde1b82d762a62b56675d653d32b9fc8b214187c6da"
+    },
+    "n32-spatial-diagnostic.png": {
+      "bytes": 416656,
+      "sha256": "181b4f4fdee29af8b3b6a04b4a5d3f15954bab7831b552488175a601832e56de"
+    }
+  },
+  "plotted_state_count": 61,
+  "provenance_sha256": "82ca1077d871f77d511f5ee40547412a4acdaaca80683dc833a2faf07a85219d",
+  "remaining_exceedance_states": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "schema": "hbe-n32-global-fixed-figure-result.v1",
+  "source_sha256": "97707a8545ae708afb15a2b930164ddacea35a18f3b3721cca0d31ece0520722",
+  "status": "rendered",
+  "versions": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3"
+  },
+  "wall_seconds": 0.9700543337967247
+}
