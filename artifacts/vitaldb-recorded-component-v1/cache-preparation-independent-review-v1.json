@@ -1,0 +1,46 @@
+{
+  "schema": "resectionlab.vitaldb-independent-cache-review.v1",
+  "status": "passed",
+  "cache_preparer_sha256": "a4e9ad4c11c3a1ea567170053c3c3fc23a419a8658ad3b38f69cb700f48ed3c3",
+  "tests_passed": 16,
+  "tests_seconds": 0.17,
+  "fresh_cache_transport": "copies existing authenticated real bytes; no remote requests",
+  "mock_transport_invocations": [
+    "parser",
+    "recording"
+  ],
+  "real_network_subprocess_calls": 0,
+  "prepared_assets": {
+    "parser": "downloaded_verified",
+    "utils": "extracted_verified",
+    "recording": "downloaded_verified"
+  },
+  "only_pinned_utils_member_extracted": true,
+  "frozen_reader_admitted_records": 21970,
+  "frozen_reader_binding": {
+    "admission_evidence": {
+      "mit_notice_sha256": "87fa7cab278f36431b02007807f76c1b0b4d8534777d2337f1f1902294eea1d2",
+      "parser_archive_sha256": "70e0ce784b13d52bbf6a315b742ab06d5ed0599b8b01f76182971a391dd64130",
+      "rights_and_parser_receipt_sha256": "eb43776083dced77505dee6aa57c3f9bce4662cf34c140056f3eff67568913a5",
+      "rights_text_sha256": "9a78e7f22742dde9f66ae235ec793ba2212019dc4d0ced75c4da09ced0b35fb2",
+      "upstream_utils_sha256": "b0e88b1365c8d9a88814123c9a5b5a5d3c696a5c4849c7db3ebda476cc7134e3"
+    },
+    "case_id": 3,
+    "clock_review_sha256": "11bf6b1b97cdf894a64f4c0110a2d52f053bcb6ca52237bf2515c417df253dc8",
+    "component_declaration_sha256": "7170c6d5c521b845e937eb69b16d0083650823ae8da4a6da201eeff71bfe9679",
+    "declaration_sha256": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+    "mode": "retrospective_observed_component_replay",
+    "reader_code_sha256": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be",
+    "role": "DEVELOPMENT",
+    "source_bytes": 6537712,
+    "source_release": "PhysioNet VitalDB 1.0.0",
+    "source_sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+    "subject_id": 2861,
+    "time_basis": "unmapped_native_source_seconds"
+  },
+  "null_origin_and_unmapped_clock_preserved": true,
+  "second_offline_run_ready_without_attempts_or_downloaded_bytes": true,
+  "existing_integrity_and_attempt_controls": "16 focused controls passed; source review verified gates before network",
+  "substantive_findings": [],
+  "source_docs_tests_or_declarations_edited": false
+}

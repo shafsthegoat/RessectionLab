@@ -42,7 +42,20 @@ Accepted replay uses `unmapped_native_source_seconds`, null recording-start orig
 
 Focused checks: **15 passed, zero failed/skipped** (seven pure format/refusal controls and eight actual-source tests). [Independent comparison](implementation-comparison.json) matched all seven headers and every selected record, checked all 7,207 event boundaries for exact prefixes and record ages, reproduced snapshot continuation/full-prefix digest, and refused eleven changed snapshot bindings. The independent source files are retained beside the report.
 
-Run from the repository root with the authenticated ignored local caches present. No command downloads another patient or creates generated observations:
+For a fresh checkout, prepare the exact ignored cache locations first. This separate reproduction command uses Python's standard library and system curl; it does not install or execute the upstream parser:
+
+```sh
+python3 scripts/prepare_vitaldb_cache.py
+python3 scripts/prepare_vitaldb_cache.py --offline
+```
+
+Existing files must pass exact size/SHA256 checks; corruption refuses without repair. Only missing pinned parser/archive bytes (67,723 bytes, 120 seconds) and the same official-mirror case3 recording (6,537,712 bytes, 300 seconds) can be downloaded. Only authenticated `utils.py` is extracted, with a 1 MiB member bound. Each local artifact gets one durable attempt marker in ignored `build/vitaldb-cache-preparation-v1`; failures retain partials and receipts and cannot retry automatically. Historical study declarations, acquisition receipts, legal notices, and reader code remain unchanged. This reproduces the same DEVELOPMENT person and adds zero people or training contributions.
+
+[Cache verification](cache-preparation-verification-v1.json) records 16 passing controls, including the actual current cache with networking disabled and isolated missing-cache tests using already authenticated source bytes through mocked transport. The actual offline invocation made zero downloads; no new remote cold-download success is claimed.
+
+[Independent cache review](cache-preparation-independent-review-v1.json) passed those controls and admitted the isolated freshly prepared caches through the unchanged reader: all 21,970 records, source bindings, null origin, and unmapped native clock were preserved. Its second offline preparation made zero network attempts or downloads.
+
+Run the observed component checks from the repository root after preparation. No command downloads another patient or creates generated observations:
 
 ```sh
 .venv/bin/python -m pytest -q tests/test_vitaldb_observed.py
@@ -55,6 +68,6 @@ cp artifacts/vitaldb-recorded-component-v1/independent_reader.py artifacts/vital
 .venv/bin/python build/vitaldb-independent-reproduction/compare_implementation.py
 ```
 
-`original-check` deliberately exits 2. QC is whole-case retrospective inspection and must not be supplied as a deployment input. Replay clocks are native source seconds. Optional `--snapshot` and `--output` require distinct, previously absent files in the permitted artifact/output directories; source aliases and existing/protected destinations are refused. Missing local source/parser caches cause refusal; historical single-attempt acquisition declarations do not authorize automatic redownloads.
+`original-check` deliberately exits 2. QC is whole-case retrospective inspection and must not be supplied as a deployment input. Replay clocks are native source seconds. Optional `--snapshot` and `--output` require distinct, previously absent files in the permitted artifact/output directories; source aliases and existing/protected destinations are refused. Missing local source/parser caches cause replay refusal; use the separate preparation command above, not the historical one-shot acquisition runner. An earlier failed local cache-preparation attempt remains a refusal requiring explicit review, not a reason to delete its marker or retry automatically.
 
 Source attribution: Lee H, Jung C (2022), [VitalDB v1.0.0, PhysioNet](https://physionet.org/content/vitaldb/1.0.0/), DOI [10.13026/czw8-9p62](https://doi.org/10.13026/czw8-9p62), CC BY 4.0. Original publication: Lee HC et al., [Scientific Data 9, 279](https://doi.org/10.1038/s41597-022-01411-5). Exact release license and complete upstream MIT notice are retained; changes comprise this strict local numeric reader and replay interface.

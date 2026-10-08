@@ -1,0 +1,63 @@
+{
+  "schema": "resectionlab.vitaldb-cache-preparation-verification.v1",
+  "recorded_at_utc": "2026-10-08T08:25:52.362371+00:00",
+  "baseline_commit": "2dfdb34",
+  "scope": "local cache reproducibility only; existing DEVELOPMENT case3/subject2861 and frozen observed-replay interpretation unchanged",
+  "code_sha256": "a4e9ad4c11c3a1ea567170053c3c3fc23a419a8658ad3b38f69cb700f48ed3c3",
+  "tests_sha256": "9c97cf06664cf3b29694039db419848af135cc3bfec15b5bdbb1d634bbf07ed8",
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_vitaldb_cache_preparation.py",
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.19,
+    "evidence": "real existing archive/utils/recording bytes; pure format/transport/refusal controls; no generated patient records"
+  },
+  "actual_offline_cache": {
+    "command": ".venv/bin/python scripts/prepare_vitaldb_cache.py --offline",
+    "status": "ready",
+    "network_attempts": 0,
+    "downloaded_bytes": 0,
+    "assets": {
+      "parser": "verified_cached",
+      "utils": "verified_cached",
+      "recording": "verified_cached"
+    },
+    "local_receipt": "build/vitaldb-cache-preparation-v1/run-c8ecbce4f0c84b6ebd18529b8ad314e6.json",
+    "receipt_sha256": "f5ec16b687c373b59150a28c378a95a530848406d36c1deb86f6b2c51d1682a0"
+  },
+  "isolated_missing_cache": {
+    "location": "temporary directories under ignored build/vitaldb-cache-preparation-tests",
+    "transport": "mocked; copies already authenticated real source bytes",
+    "expected_destinations_exactly_prepared": true,
+    "only_utils_member_extracted": true,
+    "post_preparation_offline_ready": true,
+    "new_remote_cold_download_claimed": false
+  },
+  "controls": [
+    "Exact existing-cache size/hash verification before any network call",
+    "Committed rights and declarations checked",
+    "Nonregular, symlink and escaping paths refused",
+    "HTTPS/no redirect/no curl config/no retry/size/time options checked",
+    "Timeout, redirect and wrong-hash failures retain marker, partial and receipt",
+    "Previously failed or interrupted local attempts cannot retry",
+    "Concurrent destination is not overwritten",
+    "Missing offline downloads do not reserve an attempt",
+    "Only authenticated pinned archive utils.py is extracted"
+  ],
+  "frozen_replay_file_hashes_reverified": {
+    "src/resectionlab/vitaldb_observed.py": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be",
+    "scripts/acquire_vitaldb_component.py": "0cc38a5607f8dcfaaa46fe69f3226488ac5708d704ffac96e8cdc20ddbee32aa",
+    "scripts/replay_vitaldb_component.py": "893d0c375a282097ec1622e11bcf48fc7ff703e2f8cf5cd8cc5580f40b24060b",
+    "tests/test_vitaldb_observed.py": "f1b91e09cd67eb5f78594b19f303f5cee6a10482dc83de07155a87c4cdde9f7a",
+    "manifests/vitaldb-development-v1.json": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+    "manifests/vitaldb-official-mirror-attempt-v1.json": "3cf0fb91715286e3cad2425aa58eb12acf4811becbd96bc40d2f4e96640ae2a5",
+    "manifests/vitaldb-native-component-v1.json": "7170c6d5c521b845e937eb69b16d0083650823ae8da4a6da201eeff71bfe9679",
+    "manifests/vitaldb-native-clock-v1.json": "11bf6b1b97cdf894a64f4c0110a2d52f053bcb6ca52237bf2515c417df253dc8"
+  },
+  "new_people": 0,
+  "training_examples": 0,
+  "RL_transitions": 0,
+  "historical_receipts_modified": false,
+  "frozen_declarations_or_clock_changed": false
+}
