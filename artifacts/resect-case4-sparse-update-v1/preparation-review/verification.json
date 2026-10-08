@@ -1,0 +1,78 @@
+{
+  "case4_patient_reads": 0,
+  "changed_functions_after_review": [
+    "authenticate",
+    "launch"
+  ],
+  "initial_findings": [
+    {
+      "evidence": {
+        "path": "build/resect-case4-sparse-runner-review-v1/initial-final-clock-negative.json",
+        "sha256": "26708dca80e463d82458aed74f27f80154d15d2e40138891d5d4bb1699ae514a"
+      },
+      "name": "two_clock_acceptance_inconsistency",
+      "resolution": "One final monotonic reading governs saved elapsed and acceptance; receipt publication excluded explicitly."
+    },
+    {
+      "evidence": {
+        "path": "build/resect-case4-sparse-runner-review-v1/initial-prerequisite-negative.json",
+        "sha256": "8b4b080dd7c83646c7ff11b93394da3d9a557127b32a5f1d303766cb39458d55"
+      },
+      "name": "prerequisite_receipt_not_joined_to_stage_source_release",
+      "resolution": "Named predecessors recursively authenticate fixed committed release/declaration/source and require exact receipt schema, phase, source, release, zero integer exit and finite elapsed 0..30 seconds."
+    }
+  ],
+  "initial_source_history": {
+    "path": "build/resect-case4-sparse-runner-review-v1/initial-source.py",
+    "provenance": "Root reconstructed by reversing the repair and verified the exact originally reviewed SHA. Reviewer later independently verified that SHA; not a contemporaneous preserved copy.",
+    "sha256": "196694203c254511d71c926ffdaf3715b5bdfc2dc269cef4970913e9134a906f"
+  },
+  "limitations": [
+    "Review does not verify actual unopened Case4 headers, B/V values or final empirical metrics.",
+    "Release records and Python audit hooks are cooperative-host controls, not a hostile-process sandbox.",
+    "Memory is observed worker RSS, not a hard memory ceiling; parent preflight authentication and final receipt publication are outside reported supervised-phase timing.",
+    "Sparse conditional correspondence evaluation does not validate dense tissue deformation, actions, cavity, clearance or complete goal 4A integration.",
+    "Actual V evaluation consumes this Case4 holdout for future adapted/tuned methods; Case4 remains DEVELOPMENT."
+  ],
+  "manifest_unchanged": true,
+  "model_or_training_calls": 0,
+  "native_solver_calls": 0,
+  "review_scope_deviation": "Initial command inadvertently included 14 intake controls reading already-saved unrelated Lausanne index/receipt metadata and exercising short standard-library child cleanup. No Case4 patient bytes, image arrays, measured curves, solver or model access occurred. Remaining controls were metadata/algebra only.",
+  "schema": "resect-case4-sparse-runner-independent-review-v1",
+  "sources_sha256": {
+    "manifests/experiments/resect-case4-sparse-update-v1.json": "80e8a1e4d247a6eb4ba7e81d9e255455aea7a1e7107290ad0b2539518f4bf9b4",
+    "scripts/run_resect_case4_sparse_update.py": "a4cb9d2aa4ff269564878b68765f6881f77a5b4a62bf355736eaa2247193d5f9",
+    "tests/test_resect_case4_sparse_update.py": "2f5e589ee58401544e3a0b8ff974e08c9c09963949977f7cd7fa0f8605f8b39f"
+  },
+  "status": "PASS_preparation_review_only_no_execution_release",
+  "tests": [
+    {
+      "passed": 102,
+      "scope": "Initial runner plus landmark/comparison owner/review controls; command also included unrelated intake file",
+      "seconds": 1.39,
+      "warning": "One existing NumPy stride-assignment deprecation."
+    },
+    {
+      "deselected": 15,
+      "passed": 12,
+      "scope": "Final narrow clock/prerequisite regression cases only",
+      "seconds": 0.28
+    }
+  ],
+  "tracked_writes": 0,
+  "unchanged_reused_sources_sha256": {
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "verified_boundaries": [
+    "All three stages require separately root-authored, exact committed source/declaration release before original patient reads.",
+    "Original before/during hashes and bounded returned 348-byte NIfTI headers determine fixed millimetre/sform convention; no array construction or outcome-derived registration.",
+    "Source-only partition remains fixed 6 B and 13 V; fit numerically converts B destinations only.",
+    "Complete no-shift/proper-rigid/all-six-IDW2 fields are persisted before exclusive validation-attempt marker and one-time V conversion.",
+    "All 13 V rows, unavailable methods, Euclidean RMS/median/max and paired errors retained; B conditioning residuals separated.",
+    "No external field/sampler, MRI, domain, segmentation or FEM path; uncertainty, physical clearance and cavity support remain unknown."
+  ]
+}

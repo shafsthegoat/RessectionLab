@@ -1,0 +1,22 @@
+{
+  "control": "metadata-only mocked worker/supervisor; no scientific stage or patient data",
+  "expected": "One final elapsed reading must govern both acceptance and saved elapsed_seconds",
+  "finding": "scientific_result_accepted remains true while the final reported elapsed_seconds exceeds phase_wall_seconds",
+  "native_calls": 0,
+  "patient_reads": 0,
+  "result": {
+    "elapsed_seconds": 30.00999999999999,
+    "exit_code": 0,
+    "phase": "header-qc",
+    "release_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "schema": "resect-case4-sparse-update-v1-supervision",
+    "scientific_result_accepted": true,
+    "source_sha256": {
+      "mock": "source"
+    },
+    "started_at_utc": "2026-10-08T09:54:16.771680+00:00",
+    "status": "completed"
+  },
+  "schema": "review-negative-v1",
+  "source_sha256": "196694203c254511d71c926ffdaf3715b5bdfc2dc269cef4970913e9134a906f"
+}

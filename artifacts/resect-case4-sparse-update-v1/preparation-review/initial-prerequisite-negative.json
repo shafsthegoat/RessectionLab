@@ -1,0 +1,20 @@
+{
+  "accepted_dependency": {
+    "elapsed_seconds": 999,
+    "exit_code": 9,
+    "phase": "evaluate",
+    "release_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "schema": "unrelated-receipt",
+    "scientific_result_accepted": true,
+    "source_sha256": {
+      "wrong": "source"
+    },
+    "status": "completed"
+  },
+  "control": "metadata-only authentication with inert source files and mocked Git; no patient paths or scientific stage",
+  "finding": "Prerequisite receipt can have wrong schema/phase/source/release, exit_code9 and elapsed999s yet authenticate accepts it because it checks only status and scientific_result_accepted",
+  "native_calls": 0,
+  "patient_reads": 0,
+  "schema": "review-negative-v1",
+  "source_sha256": "196694203c254511d71c926ffdaf3715b5bdfc2dc269cef4970913e9134a906f"
+}
