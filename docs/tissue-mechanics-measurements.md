@@ -22,3 +22,80 @@ The actual fixture glues both specimen faces to sandpaper-covered plates; latera
 **Narrow prospective recommendation:** use the first metadata-eligible specimen under the [frozen selection rule](tissue-mechanics-validation.md) as a separate mechanics-development record (the creator preview lists **HBE_01_03**; the acquired inventory must confirm eligibility), with no change to BTC, ReMIND-001 or reserved external patient roles. Before fitting, freeze geometry/unit conversion, no-slip fixture, material law, calibration curves and a withheld loading mode. For example, calibrate on third-cycle compression/tension and assess third-cycle low-amplitude torsional torque, retaining failure if the shared material law does not transfer. That is within-specimen prediction, not independent-donor generalization. Keep all specimens/modes from one donor grouped for a later donor-held-out study; do not tune using published aggregate parameters fitted on that held-out donor.
 
 A later patient check should freeze the model before opening reserved RESECT images/correspondences. Measurements used to impose boundary displacement must be disjoint from withheld interior correspondence targets, with spatial grouping to limit near-neighbor leakage. Sparse landmarks are not necessarily surface boundary measurements; if no defensible boundary inputs exist, restrict the claim to displacement interpolation/image updating. Report physical endpoint errors against identity and rigid baselines, point coverage, missing/resected anatomy, numerical convergence and failures. Never force correspondence through a cavity, use a registration-generated warp as mechanical ground truth, or infer reaction-force accuracy from low landmark error.
+
+## October 8 real-observation follow-up
+
+These are source-admission findings, not new measurements or successful mechanics
+validation. Existing HBE convergence failures and RESECT mesh-fidelity gates
+remain unchanged.
+
+**RESECT-SEG visible-cavity labels.** The [creator annotation release](https://osf.io/jv8bk/),
+DOI `10.17605/OSF.IO/JV8BK`, has explicit **CC BY-NC-SA 4.0** annotation rights
+in its [README](https://osf.io/download/4mkfg/); original RESECT images separately
+use CC BY 4.0. Noncommercial component research is the intended use here;
+commercial annotation rights are not assumed. The All-Labels v1 release dated
+2024-02-15 uses revision-2 eight-bit masks. Metadata identifies 21 during and
+22 after cavity volumes, representing 22 people. Case11 has neither label;
+Case15 lacks the during label. Missing labels cannot become negative masks.
+
+[Primary methods, sections 2.3 and 2.7](https://doi.org/10.1002/mp.17317) describe
+manual contours on roughly every fifth slice, morphological interpolation,
+manual refinement and review/revision by two neurosurgeons. Record that actual
+annotation chain; do not describe every voxel as hand-drawn. No learned teacher
+appears in this documented cavity-label workflow. Exact source identity and
+image/mask correspondence still require acquisition QC.
+
+These labels describe the visible dark ultrasound cavity and can omit ambiguous
+blood-filled regions. They cannot establish complete removed tissue, cutting
+forces or a surgical reward. The component task would use actual during/after
+ultrasound at its recorded acquisition phase; later anatomy is not available to
+a preoperative planner. Exact event times and tool actions remain absent.
+
+The [family-level role manifest](../manifests/resect-component-cohort-v1.json)
+freezes 14 TRAIN, four SELECT, four locally payload-held-out MEASUREMENT_EVAL
+people and the previously exposed Case4 DEVELOPMENT person. Case3 is the
+metadata-selected TRAIN ingestion pilot (9,184,649 source image/mask bytes).
+Case4 is excluded from this learner; its protected during/after anatomy and
+motion partition remain under their earlier contract. Earlier anatomical
+inspection of its baseline MRI/US does not release those protected endpoints.
+RESECT-SEG and verified CuRIOUS/EASY-RESECT derivatives inherit original people;
+unmapped aliases remain quarantined. This is component evaluation, not an
+untouched external clinical cohort. No new image/mask payload was read to
+assign these roles.
+
+**Measured interaction candidate: MULTIS donor004, run005.** The [creator donor
+configuration](http://archive.simtk.org/multisdelta/SMULTIS004-1/Configuration/SMULTIS004-1.cfg)
+marks runs001–004 rejected and run005 accepted. Preserve that correction to the
+earlier run001 candidate before acquiring response curves. Proposed canonical
+donor `MULTIS004` is DEVELOPMENT, grouping SMULTIS/CMULTIS acquisitions of the
+same human; donor-role acquisition has not yet been enacted. Donors005–012
+remain unopened for future prospective evaluation. The release is
+[CC BY 4.0](http://archive.simtk.org/multisdelta/license.txt).
+
+Read-only source inspection identified **234 core files / 343,532,158 bytes**:
+one TDMS load/motion record, five configuration/XML files, acquisition/project
+metadata, 224 surface-deformation CSV exports and calibration metadata. The
+trial prefix is `005_SMULTIS004-1_SXX_IND_SKN-5` under the [official donor
+directory](http://archive.simtk.org/multisdelta/SMULTIS004-1/). Each core size was
+checked by HEAD; six transient metadata requests succeeded on one retry.
+Underlying stereo images add 300 pairs and 21 calibration pairs. Their combined
+876-file size is approximately 3.56 GB, estimated from sampled image sizes.
+The 76 image times without deformation exports cannot become zero displacement.
+
+Before any force/displacement comparison, inspect the actual run's channels,
+units, source validity flags, clock pairing and spatial transforms. [Creator
+code](https://simtk.org/svn/multis/app/InstrumentedSurgicalTools/PythonScripts/surgicalTools_experimentDataCheck.py)
+expects motion in mm/degrees, configuration offsets in m/rad, TDMS time in ms
+and six loads in N/N·m. Its rotation order is RzRyRx. Do not silently combine
+raw-sensor, tip and femur-oriented quantities. Camera calibration alone does not
+provide the camera-to-femur transformation.
+
+[Testing notes](http://archive.simtk.org/multisdelta/TestingNotes.txt) describe
+extra initial force data for donor004 and terminal-overlap alignment; the exact
+trim needs observed timing, not an assumed fixed offset. The [primary
+descriptor](https://www.nature.com/articles/s41597-020-0359-0) also reports an
+indenter timing discrepancy of 71.5 ± 32.5 ms. Retain it as a limitation, not a
+run005 correction. Donor004 had an extra freeze–thaw cycle. Calibration projects
+reference CMULTIS filenames while released images use SMULTIS names; verify
+the mapping explicitly. This candidate can validate a human cadaver **leg**
+interaction, not live brain retraction, glioma material properties or injury.

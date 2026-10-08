@@ -35,11 +35,11 @@ compact execution record, not a replacement specification.
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
 | Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). One original pair acquired; bounded intake and cache-resume checks pass. TOF orientation provenance and interscan alignment unresolved. TopCoW overlaps 20 people. | Expand to full eligible TRAIN originals with per-record QC using the tested bounded runner. Exclude atlas-derived vessel maps from measurement truth. |
-| Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. | Build source-bound component/recorded-experience admission; acquire real reviewed labels for component learning. Tracked glioma tools from Juvekar et al. need access/rights and action/endpoint fields; no outreach sent. |
+| Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT-SEG source research identifies reviewed cavity labels with explicit noncommercial rights; family roles now frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT). | Pin image/mask sources and QC before cavity-component fitting; Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | HBE numerical convergence and RESECT mesh fidelity unresolved; no calibrated cutting/bleeding response. | Acquire a complete MULTIS human-specimen trial with force/motion/surface/calibration/time support. It is nonbrain ex-vivo evidence, not patient brain force validation. Retain FEBio; compare SOFA for later interaction. |
+| Tissue / vascular | HBE numerical convergence and RESECT mesh fidelity unresolved; no calibrated cutting/bleeding response. MULTIS donor004 run005 is creator-accepted; earlier001 candidate was rejected. Core234 files/343.5 MB identified; pairing and spatial transform unverified. | Freeze donor role and acquire complete measurement support before force/displacement comparison. This is human cadaver leg evidence, not brain force validation. Retain FEBio; compare SOFA for later interaction. |
 | Physiology | No Pulse/BioGears adapter or validated patient response. VitalDB provides real perioperative signals but is non-neurosurgical. | Inspect actual timestamped infusion/monitor records and rights; implement common-clock/units/conservation contracts without invented baselines. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
@@ -69,6 +69,16 @@ termination and provenance defects. The acquisition-free replay verified the
 existing person's four source hashes and scalar/header QC; the cache-only
 resume launched no worker. Each excluded the other 209 sessions. Neither adds
 people, acquired source bytes, learning contributions or spatial admission.
+
+RESECT-SEG source research and the [family role declaration](../manifests/resect-component-cohort-v1.json)
+support a prospective visible-cavity component task. Independent metadata review
+recomputed all23 IDs, hash assignments and protected Case4 partition. No new
+RESECT image/label was opened to select roles. Root confirmed Case3 mask API
+size/hash metadata; a separate README request returned HTTP429 and its failure
+receipt is retained locally. Earlier source research read the explicit license;
+archiving the rights record and exact per-file admission remain pending.
+[Measurement follow-up](tissue-mechanics-measurements.md#october-8-real-observation-follow-up)
+records label semantics, derivative overlap and the accepted MULTIS run005.
 
 ## Remaining delivery gates
 
