@@ -1,0 +1,12 @@
+{
+  "status": "audit_reporting_harness_repaired",
+  "error": "KeyError execution while constructing final report: loop variable row shadowed native run row",
+  "production_defect": false,
+  "all_assertions_before_report_construction_reached": true,
+  "raw_121_frame_recomputation_and_complete_comparison_completed_before_error": true,
+  "original_source_sha256": "2182dc505ebf704058b3e2e536d8c1b9ea59706869444a050214c0dff924812a",
+  "repaired_source_sha256": "31986421b0eb7f0396317fd288a130e94776e37ee1e78062e79e905b1e01bdcb",
+  "repair": "final cost extraction reads state.run.execution directly",
+  "first_log_sha256": "8ad005d8fd823d0d00964f25a2b1c10d5cd768947642a8fc2d27619d57069a9c",
+  "next_action": "repeat saved-output audit only, no native solver or old raw replay"
+}

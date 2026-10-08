@@ -1,0 +1,874 @@
+{
+  "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12": {
+    "bytes": 18058560,
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/acceptance.json": {
+    "bytes": 1184,
+    "sha256": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/commands.json": {
+    "bytes": 1355,
+    "sha256": "570efa69ef4f0acebd89db93fdb17ccb411282a6694fc05caaa4aa4830b09554"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/installed-inventory.json": {
+    "bytes": 154409,
+    "sha256": "17d5d580f359c88dc83e743d0a128ac19ea9387ff10c09a816cb130f5cc397b6"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/linkage.json": {
+    "bytes": 144533,
+    "sha256": "0e87aebf450f6b1d37b9fbdf22e10c26d0531230564903486b3fe3bf0057d581"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/result.json": {
+    "bytes": 898,
+    "sha256": "ad17d726acf792c05d33ab598d7d1bd3b96b950b273d654144b160a283f290c3"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/runtime-identity-candidate.json": {
+    "bytes": 5825,
+    "sha256": "1665a6640c1d92fa7ee01c3960a50c104c11aaef63b8cb6b88f294be07ea0eed"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/supervision.json": {
+    "bytes": 923,
+    "sha256": "47683a320f3c0df24533a6b98d81d8f945177be6589a4cbba7a5a812fd08ba60"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/configure-01/source-inventory.json": {
+    "bytes": 333972,
+    "sha256": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json": {
+    "bytes": 7059,
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-independent-review-v1/saved-control-review.json": {
+    "bytes": 9481,
+    "sha256": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": {
+    "bytes": 5484,
+    "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-01/result.json": {
+    "bytes": 3602,
+    "sha256": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-acceptance.json": {
+    "bytes": 378,
+    "sha256": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-declaration.json": {
+    "bytes": 8583,
+    "sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": {
+    "bytes": 2860,
+    "sha256": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": {
+    "bytes": 21906,
+    "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/supervision-01/supervision.json": {
+    "bytes": 933,
+    "sha256": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-accelerate-controls-run-v1/release.json": {
+    "bytes": 1090,
+    "sha256": "949f4d808064c56b5539698933e04e59881b03a09d42340c87a87c4b10279d14"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-accelerate-experiment-independent-review-v1/review.json": {
+    "bytes": 3514,
+    "sha256": "289d72991067b84129ae86193420de91340b445de8ac60dadbde5c6b6e85d0ff"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json": {
+    "bytes": 843,
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json": {
+    "bytes": 3919,
+    "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-global-n32-execution-v1/comparison.json": {
+    "bytes": 149243,
+    "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-global-n32-execution-v1/independent-review.json": {
+    "bytes": 6018,
+    "sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-global-n32-execution-v1/solve-result.json": {
+    "bytes": 2097,
+    "sha256": "c3285870764b744bb2946bfe110cd459d10996cdbd3c94ec039c0a6d31bcf62b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json": {
+    "bytes": 3772,
+    "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json": {
+    "bytes": 940,
+    "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-result.json": {
+    "bytes": 2085,
+    "sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-resolution-experiment-result-v1/outcome.json": {
+    "bytes": 5175,
+    "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/solve-release.json": {
+    "bytes": 7216,
+    "sha256": "b95f76c6999533f4ab1235e667a1f257242c5ad3be45253f36e799858ff6c705"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source.tar": {
+    "bytes": 716800,
+    "sha256": "0069e7d03e080dccec905d7625a4a5bdccaab38163df5a1dcd9225effc12eee9"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/febio_runtime.py": {
+    "bytes": 24801,
+    "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_access.py": {
+    "bytes": 37769,
+    "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_backend.py": {
+    "bytes": 28370,
+    "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_evaluation.py": {
+    "bytes": 8744,
+    "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_experiment.py": {
+    "bytes": 47907,
+    "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global.py": {
+    "bytes": 12780,
+    "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_experiment.py": {
+    "bytes": 35804,
+    "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36.py": {
+    "bytes": 12828,
+    "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py": {
+    "bytes": 42053,
+    "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py": {
+    "bytes": 26682,
+    "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py": {
+    "bytes": 8765,
+    "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py": {
+    "bytes": 27125,
+    "sha256": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": {
+    "bytes": 19175,
+    "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_readout.py": {
+    "bytes": 22887,
+    "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_mesh.py": {
+    "bytes": 12115,
+    "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_readout.py": {
+    "bytes": 27043,
+    "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_spatial.py": {
+    "bytes": 10144,
+    "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py": {
+    "bytes": 29337,
+    "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_spatial_readout.py": {
+    "bytes": 13490,
+    "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_mesh.py": {
+    "bytes": 48654,
+    "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_outputs.py": {
+    "bytes": 8702,
+    "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_physics.py": {
+    "bytes": 17656,
+    "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_readout.py": {
+    "bytes": 18789,
+    "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/solve-release.json": {
+    "bytes": 6123,
+    "sha256": "119f21cf2a9b4d637784f8ea97ea641026737e7f4e804f908790e5d72df58b87"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source.tar": {
+    "bytes": 634880,
+    "sha256": "dc2716fdbddbaa7738ed10a9229360e4d4d4dfff5db33725b73e57020f555a4e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/febio_runtime.py": {
+    "bytes": 24801,
+    "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_access.py": {
+    "bytes": 37769,
+    "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_backend.py": {
+    "bytes": 28370,
+    "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_evaluation.py": {
+    "bytes": 8744,
+    "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_experiment.py": {
+    "bytes": 47907,
+    "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global.py": {
+    "bytes": 12780,
+    "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global_experiment.py": {
+    "bytes": 35804,
+    "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global_n36.py": {
+    "bytes": 12828,
+    "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py": {
+    "bytes": 42053,
+    "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py": {
+    "bytes": 26682,
+    "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global_readout.py": {
+    "bytes": 22887,
+    "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_mesh.py": {
+    "bytes": 12115,
+    "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_readout.py": {
+    "bytes": 27043,
+    "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_spatial.py": {
+    "bytes": 10144,
+    "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py": {
+    "bytes": 29337,
+    "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_spatial_readout.py": {
+    "bytes": 13490,
+    "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_mesh.py": {
+    "bytes": 48654,
+    "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_outputs.py": {
+    "bytes": 8702,
+    "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_physics.py": {
+    "bytes": 17656,
+    "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_readout.py": {
+    "bytes": 18789,
+    "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-n36-output-review-v1/verification.json": {
+    "bytes": 8222,
+    "sha256": "cb8f66db67560ecc65f35b90b7db6d716e480ae2851b2d3ffff0470a77147bda"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-n36-temporal-design-review-v1/verification.json": {
+    "bytes": 6510,
+    "sha256": "966feebdba98bfe1ee8f8487344718a9fb8d04d6d4b7b57a963518bf2b608319"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-n36-temporal-design-v1/proposal.json": {
+    "bytes": 14176,
+    "sha256": "321367067aed07e94eb55bb16ee524d35951bdf83c2925582eec7a41566a4c13"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+    "bytes": 10221,
+    "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb": {
+    "bytes": 17087,
+    "sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb": {
+    "bytes": 6170,
+    "sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb": {
+    "bytes": 6279,
+    "sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/shear.feb": {
+    "bytes": 16591,
+    "sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb": {
+    "bytes": 16642,
+    "sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb": {
+    "bytes": 17680,
+    "sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/translation.feb": {
+    "bytes": 17876,
+    "sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/zero.feb": {
+    "bytes": 16335,
+    "sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/declaration.json": {
+    "bytes": 5401,
+    "sha256": "46a538f54471b76f3b75f50c31be2de6530b94450f88d2b6f9f8698ac27a54fd"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/finite_stretch.feb": {
+    "bytes": 16934,
+    "sha256": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/manifest.json": {
+    "bytes": 3238,
+    "sha256": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear.feb": {
+    "bytes": 16438,
+    "sha256": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear_double_stiffness.feb": {
+    "bytes": 16489,
+    "sha256": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/translation.feb": {
+    "bytes": 17723,
+    "sha256": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/zero.feb": {
+    "bytes": 16182,
+    "sha256": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": {
+    "bytes": 4076,
+    "sha256": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb": {
+    "bytes": 6017,
+    "sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb": {
+    "bytes": 6126,
+    "sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb": {
+    "bytes": 17527,
+    "sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/febio_runtime.py": {
+    "bytes": 24801,
+    "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_accelerate_controls.py": {
+    "bytes": 23124,
+    "sha256": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py": {
+    "bytes": 20494,
+    "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_access.py": {
+    "bytes": 37769,
+    "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_backend.py": {
+    "bytes": 28370,
+    "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_evaluation.py": {
+    "bytes": 8744,
+    "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py": {
+    "bytes": 19006,
+    "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints_run.py": {
+    "bytes": 13830,
+    "sha256": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4": {
+    "bytes": 116312,
+    "sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib": {
+    "bytes": 244928,
+    "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib": {
+    "bytes": 1958976,
+    "sha256": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib": {
+    "bytes": 391952,
+    "sha256": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib": {
+    "bytes": 5436240,
+    "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib": {
+    "bytes": 2212176,
+    "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib": {
+    "bytes": 202400,
+    "sha256": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib": {
+    "bytes": 154208,
+    "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib": {
+    "bytes": 322912,
+    "sha256": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib": {
+    "bytes": 665904,
+    "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib": {
+    "bytes": 2824496,
+    "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib": {
+    "bytes": 107568,
+    "sha256": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib": {
+    "bytes": 205008,
+    "sha256": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/source/NumCore/AccelerateSparseSolver.cpp": {
+    "bytes": 21906,
+    "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib": {
+    "bytes": 844016,
+    "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-axial-resolution-v1.json": {
+    "bytes": 5411,
+    "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": {
+    "bytes": 18663,
+    "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json": {
+    "bytes": 25745,
+    "sha256": "902286e195a673acb6384a864f0bb57f747eb0ba450be44d2451dc221cd7d1ce"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json": {
+    "bytes": 22780,
+    "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json": {
+    "bytes": 38776,
+    "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-halfheight-spatial-v1.json": {
+    "bytes": 19148,
+    "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+    "bytes": 13880,
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/execution-baseline.json": {
+    "bytes": 23930,
+    "sha256": "2a5c447b3d5bc407e71c189bce81fa374b2daeb88d9d95069e1ff6d924ae6a94"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/execution.json": {
+    "bytes": 29406,
+    "sha256": "7b3a15d237b034ec1988c5088f09b81adb935974b50dde59d2e87b028e61c0a5"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/checked.json": {
+    "bytes": 5647,
+    "sha256": "b1c6a350dab731cd54f37ddd9ebb5c0ef62094959cd16ad3a0a118755dadee72"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/console.txt": {
+    "bytes": 8122,
+    "sha256": "8accdd12df1e9e67aa8e14c6352a89d9029c98c6457705b7f97f88ad8f1357de"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.elements.log": {
+    "bytes": 4310,
+    "sha256": "6ea157973658d3c7fe40cf01acf1dd54a84b3d995daa7d2286b659e072825aa8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.feb": {
+    "bytes": 17087,
+    "sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.log": {
+    "bytes": 36318,
+    "sha256": "14d683113e74ca7ce7f624392984dcdfc8548ab2f9fddb2485e85c90bee02af8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.nodes.log": {
+    "bytes": 10331,
+    "sha256": "3b72774c5dec70762594cca01a69df7bf1be9ae6c3e05fe05e72751069689e93"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/hex8-summary.json": {
+    "bytes": 22125,
+    "sha256": "4882279a8f0e89a1118265a4cd09ca2658529a15498c6ceb7da8d5b760c40d2b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/checked.json": {
+    "bytes": 55234,
+    "sha256": "851bdd30410e5dc68ac0dff0fc4ce82bdc44acb47ab0dc28ee8a1fe5d86cbabb"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/console.txt": {
+    "bytes": 13671,
+    "sha256": "00fbed3ebc09cab37b7651ac2b1fc9bb928c8247e8aa180fc8ec9a67ce800629"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.elements.log": {
+    "bytes": 3366,
+    "sha256": "734f781f8e9dd9e7e9f3b8e289e0264d95f162831cf1bb3a4992542bbf1f2498"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.feb": {
+    "bytes": 6170,
+    "sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.log": {
+    "bytes": 19525,
+    "sha256": "aeb31ae7258135419f2c96b7ac561d1b53dd599ed26ff2112d0b3e511bab8b3f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.nodes.log": {
+    "bytes": 18169,
+    "sha256": "c3197dc5a75bcc8f5fa805e28764807557519b283381818d64b5eefe5e227273"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/checked.json": {
+    "bytes": 55604,
+    "sha256": "3e00b7c394a52e2b3f0d0395f1f6d1c5126005ddbc71329f2183ee8b4c998347"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/console.txt": {
+    "bytes": 8133,
+    "sha256": "2cd154f5c989025c02c02b78436ccca42d01ba1e85c0e754f3a7c94e745b8b2f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.elements.log": {
+    "bytes": 3525,
+    "sha256": "f6b35c01ef594ea29695d9fc36e12def945a87ad7857c1f2e98648c635213a78"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.feb": {
+    "bytes": 6279,
+    "sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.log": {
+    "bytes": 13986,
+    "sha256": "02cfac3e0090dbd595c4e0dce4524a964fb45de396005ec2efa06f99ca383d16"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.nodes.log": {
+    "bytes": 11734,
+    "sha256": "7b981afd223479f12d3deef891b6fdc494f0c2379b7ed1057b5c36ce0d1c0654"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/results.json": {
+    "bytes": 30930,
+    "sha256": "765dc5ae422ac66d399b095a6f4df95e2e108e2276583441c13210d7440e24cf"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/checked.json": {
+    "bytes": 5672,
+    "sha256": "b01f3ac1d2a0100379d870341c8da97d02d97de7fcfa55e9f6a37f5d9aa345c9"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/console.txt": {
+    "bytes": 8023,
+    "sha256": "24110f91138c7711b0aa1f7772213e2435919c397c0a9aea0dd33111e851e78e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.elements.log": {
+    "bytes": 3387,
+    "sha256": "d86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.feb": {
+    "bytes": 16591,
+    "sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.log": {
+    "bytes": 36090,
+    "sha256": "2145982f6336447e71aed39e0753118b4eafce7fed8853f50c0c51c003eaf6cb"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.nodes.log": {
+    "bytes": 9698,
+    "sha256": "49d68b3b66abec99fe7026a6a85c8336d478c88af2935c6b12901f9599fb4469"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/checked.json": {
+    "bytes": 5685,
+    "sha256": "d831db77aacff7a86545484fc9e2d9328693b93463e3a293e3af479d2b6293a6"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/console.txt": {
+    "bytes": 8210,
+    "sha256": "cf23fb9697746ccfe5614ce4cbd5cd4b58a343de8dc1dfe544cc78f939490d8a"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.elements.log": {
+    "bytes": 3370,
+    "sha256": "d40640b320c8272696c94b29e85f412821ea97c77b0bd1a0fff2049326295bed"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.feb": {
+    "bytes": 16642,
+    "sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.log": {
+    "bytes": 36312,
+    "sha256": "619084b2172ed2beb1e00e22357a993003d7d985f7d64540637e5825eded2b47"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.nodes.log": {
+    "bytes": 9618,
+    "sha256": "6ac397c1ba84c2dc2b76994d01006475382f93ff864e52f120b5a77da3d6d2f5"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/checked.json": {
+    "bytes": 3630,
+    "sha256": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/console.txt": {
+    "bytes": 8100,
+    "sha256": "83a6249de8f94d0b0b1801b4cdeb1c58b6d78ffdf328f0121d3671e510621495"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.elements.log": {
+    "bytes": 3171,
+    "sha256": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.feb": {
+    "bytes": 17680,
+    "sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.log": {
+    "bytes": 36798,
+    "sha256": "b5c8faf3f9d961ab8f6f45940c0b90eb298e59f72849fc483f2d9417e8f241fc"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.nodes.log": {
+    "bytes": 11740,
+    "sha256": "7956ee9d0c797066adaa58971a333d49553e6fb737afc6770dc509e17d0ad8e2"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_mpc-summary.json": {
+    "bytes": 13154,
+    "sha256": "ea2c997006b1bf3eab1ed6859daa1277b14442b8564a8b18a00b088d7910c7c0"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/checked.json": {
+    "bytes": 5524,
+    "sha256": "01bd99f36f8b52143ab13c290ee1220605c3079a46460a1db903d5e1baf86a5f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/console.txt": {
+    "bytes": 8089,
+    "sha256": "4386db19eb7b6c1de5877560124968391e84fbc311c6f5fee3df2862d794db08"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.elements.log": {
+    "bytes": 4717,
+    "sha256": "a5ba50416863d872ccd0a9cfafa7722191cb2295bb82e7425087f3eadfc25e26"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.feb": {
+    "bytes": 17876,
+    "sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.log": {
+    "bytes": 36508,
+    "sha256": "f4e31f67f20ea268b009af5739d48e1d1f9de36bd51ac1d07e2a1ad7d64b1d61"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.nodes.log": {
+    "bytes": 12173,
+    "sha256": "a3e367341989c71db0f6ae3d56b99f1c9516b0f88031020a9a128bdbeff35569"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/checked.json": {
+    "bytes": 5597,
+    "sha256": "cf1fe679155ffc40803de5a143825fd91e24a79442a64d6d1463b31402a07937"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/console.txt": {
+    "bytes": 8012,
+    "sha256": "785124fd601fcea82278f5564bb296c0e14f4373a07f8120856301b39536ece9"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.elements.log": {
+    "bytes": 4421,
+    "sha256": "1547e3a2e60b48cd581d14f32a7ea2b92df09e9d31e3edd2d22d2fe9942818d3"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.feb": {
+    "bytes": 16335,
+    "sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.log": {
+    "bytes": 36001,
+    "sha256": "c7c370f91397f5f42774eb181e3a6c1cc797f04866652f4659e450a299808bbb"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.nodes.log": {
+    "bytes": 9493,
+    "sha256": "b28810dc7b15ddb5c0467c4e588038148074c2d3d1c11be26c2940ca8c269bd9"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json": {
+    "bytes": 24198,
+    "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/baseline.json": {
+    "bytes": 83377,
+    "sha256": "f454e149f193190ef9a48b0d6db37bdd9ebe2bdd17cfb1ff114009bf95308852"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/comparison.json": {
+    "bytes": 220913,
+    "sha256": "ddb18d15aecc4b687fcf22a195dbb3d707a357c7394358247a78be6bb8c5ebe8"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/preparation/execution.json": {
+    "bytes": 1212,
+    "sha256": "77c88a559fb801767f3d176d3255631b92c573a84546d7d984a0ea1a493f52e4"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/preparation/prepared.json": {
+    "bytes": 1511,
+    "sha256": "20903c49e55a915f6299f9612bc73da3bfb4fb57a7f7a3254f66225a65018d9f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/elements.log": {
+    "bytes": 517916077,
+    "sha256": "349080d67840997b0ab6b3067dcd60b6f1a84fd9a9744cd584ad732df265fe0c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/execution.json": {
+    "bytes": 3829,
+    "sha256": "fdc1487ba8445f756109a0e8cfdcd1388da0fcf6e497b09f750951e4d91c70af"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/loading.json": {
+    "bytes": 7183,
+    "sha256": "958a940b002ddf75657e25297bb206f151227ec320eb07ea670ef32b6965b31c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/nodes.log": {
+    "bytes": 774836975,
+    "sha256": "28c3a405b72151dcaffe2d61d7f40faffecc4ae2515b59c43f321327d5981276"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/readout.json": {
+    "bytes": 1098177,
+    "sha256": "b8eb882c68e4aa79bdc9d4057429b1e57412e86f28af7617ca312cb7ae34cb85"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/solver.log": {
+    "bytes": 1503720,
+    "sha256": "a40339ae178377e8dcd8ab6b4ea179d5cc461159f91a003b11cfc1961049a64e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/specimen.feb": {
+    "bytes": 7675059,
+    "sha256": "cf0f2502dc5ea77ac79fd44ad879095c21c69d4e535df830756b1e8ab1d84efb"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/state.json": {
+    "bytes": 4875,
+    "sha256": "b243d0c9b57f2fef3989564c6ead0c0b20e0836aa018e637fd225217f370415c"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/N32-replay/readout.json": {
+    "bytes": 555499,
+    "sha256": "00226a9ec8b62c1cc79deb5698aaea935571f0270241b5caf2e7037ed07a46cb"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/P1-replay/readout.json": {
+    "bytes": 555519,
+    "sha256": "57c879166fa79db87c4870d79854d60343ee33235cb0cd46802a12ce81c94aa2"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/baseline.json": {
+    "bytes": 134806,
+    "sha256": "c5fecf82a01b568fbfde14804f1dd10cc957dd5d4067b3749ed333d2e95de1cd"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/comparison.json": {
+    "bytes": 208148,
+    "sha256": "ec4aa11104a88106310766ad9995b3a57a6399180230b467ae8dd3bef0216f1b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/publication-check.json": {
+    "bytes": 813,
+    "sha256": "7d031f6d31805f01c8405e30f17de1d3e9ed8383b0e321190e855fd25af7bb5d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/result.json": {
+    "bytes": 2078,
+    "sha256": "7bb71645fe4146af38f8173ae612e55bf226c9699745da15d3b1ddf1d68b9e67"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/reused-compression-N12-S60-reference.json": {
+    "bytes": 550687,
+    "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/reused-compression-N16-S60-reference.json": {
+    "bytes": 550907,
+    "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/reused-compression-N8-S60-reference.json": {
+    "bytes": 549557,
+    "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/elements.log": {
+    "bytes": 259245577,
+    "sha256": "436bb57a05ca9b9748aa43d76c0323f1cf1bd7f15f91c7f3cdbf74567b24d812"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/execution.json": {
+    "bytes": 3891,
+    "sha256": "ea36bd4aee4440277695dc2a6d19df2f39b6d14b248554f0ad628cbc04ed672b"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/loading.json": {
+    "bytes": 4331,
+    "sha256": "6450d2aedf8902c9a02d73bf71d70f61d235ea82fe333a8ea1405df902595b69"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/nodes.log": {
+    "bytes": 387760933,
+    "sha256": "6ddd2462408973321913130a53d80aba9550368a80a5ef3a6d96c3f10dc5d4df"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/readout.json": {
+    "bytes": 555923,
+    "sha256": "dc39d29b75edc819605a3daddba67ce1741b9cd5d45daa6009262559bfd0a92a"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/solver.log": {
+    "bytes": 1360840,
+    "sha256": "6e57ef9d8e3e8aa9ea778dd07530f9deae3aba27059d0d0f51d6c9b6748850a7"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/specimen.feb": {
+    "bytes": 7669200,
+    "sha256": "2f24c4af603c037a9929805d7243b9f4e93e9dd67644822e9d37c0d5f4ca3694"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/state.json": {
+    "bytes": 6132,
+    "sha256": "3ee2ac1f1d9ecc108d22e41337e9955522444c4b6c949d85bdea0d8a52e34a0e"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/generated/mesh.json": {
+    "bytes": 19089681,
+    "sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json": {
+    "bytes": 10033345,
+    "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json": {
+    "bytes": 13553110,
+    "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/skyline.feb": {
+    "bytes": 7669047,
+    "sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/publication-check.json": {
+    "bytes": 796,
+    "sha256": "b30e8fb5d5f27ed557ce7b281a8e6a34b2501e4cfac7c1316ba6168e6bb87bd4"
+  },
+  "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/result.json": {
+    "bytes": 2065,
+    "sha256": "a83b1278a21642a9961ca590d8207891c37fa6f8a84ec50744e8541e2b0b4930"
+  }
+}

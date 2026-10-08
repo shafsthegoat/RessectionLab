@@ -1,0 +1,265 @@
+"""Root-gated saved S120 audit. Never launches native work or reads measured curves.
+
+Prepared while execution is live; only run after root supplies terminal hashes.
+"""
+from pathlib import Path
+from datetime import datetime, timezone
+import argparse, hashlib, json, math, sys, time
+import numpy as np
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).parent
+SOURCE = ROOT/'build/hbe-halfheight-global-n36-temporal-v1/source'
+ARCHIVE_SHA = '0069e7d03e080dccec905d7625a4a5bdccaab38163df5a1dcd9225effc12eee9'
+COMMIT = 'd131e8efe5a8cdf615ce403783654cae1b045079'
+RELEASE_SHA = 'b95f76c6999533f4ab1235e667a1f257242c5ad3be45253f36e799858ff6c705'
+sys.path.insert(0, str(SOURCE))
+from scripts import mechanics_hbe_halfheight_global_n36_temporal as core
+from scripts import mechanics_hbe_halfheight_global_n36_temporal_readout as reader
+from scripts import mechanics_hbe_halfheight_global_n36_temporal_experiment as runner
+
+def forbidden(*args, **kwargs):
+    raise AssertionError('Native execution, mesh creation and phase launch forbidden in saved-output audit')
+runner.subprocess.Popen = forbidden
+runner.runtime.supervise = forbidden
+runner.old.solve = forbidden
+runner.launch = forbidden
+runner.prepare_deck = forbidden
+core.previous.generate_full_mesh = forbidden
+
+def sha(path):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        while chunk := stream.read(1024*1024): h.update(chunk)
+    return h.hexdigest()
+def canonical(value): return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
+def load(path): return json.loads(Path(path).read_bytes())
+def bind(path): return {'path':str(Path(path).relative_to(ROOT)), 'sha256':sha(path)}
+def tree(path):
+    return {str(p.relative_to(path)):{'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(path.rglob('*')) if p.is_file()}
+def close(a,b): assert math.isclose(a,b,rel_tol=3e-12,abs_tol=3e-14),(a,b)
+
+# Independent scalar solution copied from the accepted previous independent audit,
+# not the production estimator. Receives saved completed values only.
+FLOOR = 1.6e-7
+TRIPLETS = ((8,12,16),(12,16,24),(16,24,32),(24,32,36))
+def scalar(ns,fs):
+    a,b = math.log(ns[1]/ns[0]),math.log(ns[2]/ns[1]); u,v = fs[1]-fs[0],fs[2]-fs[1]
+    if not all(math.isfinite(x) for x in (*fs,u,v)): return {'status':'invalid'}
+    if abs(u)<=FLOOR or abs(v)<=FLOOR:
+        return {'status':'below_original_difference_floor' if abs(u)<=FLOOR and abs(v)<=FLOOR else 'insufficient_increment_resolution'}
+    if (u>0)!=(v>0): return {'status':'opposite_signs'}
+    q=u/v
+    def quotient(p): return math.expm1(p*a)/(-math.expm1(-p*b)) if p else a/b
+    if not math.isfinite(q): return {'status':'invalid'}
+    if q<=a/b or q>quotient(16): return {'status':'no_admissible_positive_root'}
+    lo,hi=0.,16.
+    for _ in range(110):
+        mid=(lo+hi)/2
+        if quotient(mid)<q: lo=mid
+        else: hi=mid
+    p=(lo+hi)/2
+    if p<1e-6: return {'status':'no_admissible_positive_root'}
+    e=v/math.expm1(p*b); limit=fs[-1]+e
+    if not all(math.isfinite(x) for x in (p,e,limit)): return {'status':'invalid'}
+    return {'status':'eligible','order':p,'signed_remaining_indicator_N':e,
+            'absolute_remaining_indicator_N':abs(e),'force_limit_N':limit}
+
+def classify(row):
+    return {k:row.get(k) for k in ('status','increasing_order_drift','force_limit_instability','remaining_within_allowance')} | {
+        'triplet_eligibility':{k:v['status'] for k,v in row['orders'].items()}}
+
+def execute(expected_result, expected_publication):
+    started=time.perf_counter(); inputs={}
+    P=ROOT/'outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment'
+    # No output read is possible without the two explicit terminal bindings.
+    assert len(expected_result)==64 and len(expected_publication)==64
+    assert sha(P/'result.json')==expected_result
+    assert sha(P/'publication-check.json')==expected_publication
+    before=tree(P)
+    def bound(binding, json_value=True, maximum_bytes=None):
+        p=(ROOT/binding['path']).resolve()
+        if maximum_bytes is not None: assert p.stat().st_size<=maximum_bytes
+        assert sha(p)==binding['sha256'],str(p)
+        inputs[str(p)]={'sha256':binding['sha256'],'bytes':p.stat().st_size}
+        return load(p) if json_value else p
+    result=load(P/'result.json'); publication=load(P/'publication-check.json')
+    assert result['schema']=='hbe-n36-temporal-supervised-result-v1'
+    assert result['phase']=='solve' and result['aggregate_cap_seconds']==2400
+    assert result['measured_data_accessed'] is False and result['preparation_nested_in_aggregate'] is True
+    runner.previous_runner.require_publication(publication,result_binding=bind(P/'result.json'),phase='solve',cap=2400,output_cap=2*1024**3)
+    assert publication['result_status']==result['status']=='completed_numerical_diagnostic_only'
+    sup=result['supervision']
+    assert sup['status']=='completed' and sup['exit_code']==0 and sup.get('kill_reason') is None and sup.get('cleanup_error') is None
+    assert sup['sampled_peak_process_group_rss_bytes']<=3*1024**3
+    plan=bound(result['baseline']); state=bound(result['state']); study=bound(plan['study_binding']); release=bound(plan['release_binding'])
+    assert plan['release_binding']['sha256']==RELEASE_SHA
+    assert release['authorized'] is True and release['phase']=='solve' and release['source_commit']==COMMIT
+    assert release['source_archive']['sha256']==ARCHIVE_SHA
+    assert release['study']==plan['study_binding'] and release['source_bindings']==plan['source_bindings']
+    runner.source_inventory(ROOT,release,study)
+    for name,module in runner.NEW_SOURCES.items():
+        assert Path(module.__file__).resolve().is_relative_to(SOURCE)
+        assert sha(module.__file__)==release['source_bindings'][name]['sha256']
+    assert Path(runner.__file__).resolve().is_relative_to(SOURCE)
+    for path,h in plan['inputs'].items(): bound({'path':path,'sha256':h},False)
+    # Reauthenticate accepted compact baseline and provenance, never parse its raw streams.
+    baseline_rows,baseline_comparison=runner.accepted_baseline(ROOT,study,{'runtime_identity':plan['runtime_identity']},bound)
+    assert state['schema']=='hbe-n36-temporal-state-v1' and state['status']==result['status']
+    assert state['solver_invocations']==1 and state['gmsh_generation_calls']==0
+    assert state['run_id']==core.RUN_ID and state['measured_data_accessed'] is False
+    prep=bound(state['preparation']); prepared=bound(prep['receipt'])
+    assert prep['status']=='prepared_not_solved' and prep['exit_code']==0
+    assert prep['solver_calls']==prep['gmsh_generation_calls']==0
+    assert prep['included_in_aggregate'] is True and prep['cap_seconds']==60
+    assert 0<=prep['elapsed_seconds_before_publication']<=state['preparation_elapsed_seconds_including_publication']<60
+    assert prepared['case']==state['case'] and prepared['baseline_geometry_reused'] is True
+    assert prepared['run_id']==core.RUN_ID and prepared['study']==plan['study_binding']
+    assert prepared['solver_calls']==prepared['gmsh_generation_calls']==0 and prepared['measured_data_accessed'] is False
+    row=state['run']; assert row['status']=='passed_individual_numerical_checks'
+    saved=bound(row['readout']); execution=bound(saved['execution_binding'])
+    assert saved['execution_binding']==row['execution_binding'] and execution['execution']==row['execution']
+    runner.previous_runner.require_completed_native(row['execution'],2100)
+    assert 0<row['execution']['seconds_cap']<=2100
+    assert execution['schema']=='hbe-n36-temporal-native-execution-v1' and execution['run_id']==core.RUN_ID
+    assert execution['study']==plan['study_binding'] and execution['runtime_identity']==plan['runtime_identity']
+    assert execution['backend_profile']==plan['backend_profile'] and execution['primitive_bindings']==saved['primitive_bindings']
+    assert execution['reconstruction']==saved['reconstruction']==state['case']['reconstruction']
+    assert execution['command']==row['command']==[plan['executable'],'-noconfig','-no_title','-i','specimen.feb','-o','solver.log']
+    assert execution['backend_source_deck']==state['case']['backend_source_deck']
+    bound(execution['executable'],False)
+    target=P/'runs'/core.RUN_ID.replace(':','-')
+    for filename,record in row['retained_files'].items():
+        path=target/filename
+        assert path.stat().st_size==record['bytes'] and sha(path)==record['sha256']
+    for b in execution['primitive_bindings'].values(): bound(b,False)
+    # Full saved primitive replay at all 121 native states. No solver or old raw replay.
+    actual=reader.read_temporal_run(ROOT,half_bindings=execution['primitive_bindings'],reconstruction_binding=execution['reconstruction'],declaration_binding=plan['study_binding'])
+    actual['execution_binding']=saved['execution_binding']
+    assert actual['passed'] is True and actual['frame_count']==121 and canonical(actual)==canonical(saved)
+    comparison=bound(state['comparison'])
+    calculated=reader.comparison_report(baseline_rows,actual,study,baseline_comparison)
+    assert canonical(calculated)==canonical(comparison)
+    # Independent direct temporal arithmetic, all 61 exact coordinate pairs and 75 probes.
+    fine=np.asarray(actual['applied_force_N']); base=np.asarray(baseline_rows[36]['applied_force_N'])
+    probes=np.asarray(actual['probe_displacements_m']); old_probes=np.asarray(baseline_rows[36]['probe_displacements_m'])
+    assert fine.shape==(121,) and base.shape==(61,) and probes.shape==(121,75,3)
+    assert np.array_equal(np.asarray(actual['load_coordinate_m'])[::2],np.asarray(baseline_rows[36]['load_coordinate_m']))
+    delta=fine[::2]-base; motion=np.linalg.norm(probes[::2]-old_probes,axis=2).max(axis=1)
+    assert np.array_equal(delta,np.asarray(comparison['signed_force_shift_N']))
+    assert np.array_equal(motion,np.asarray(comparison['common_state_maximum_probe_vector_shifts_m']))
+    force_limit=1.6e-8+.002*float(np.max(np.abs(fine[::2]))); motion_limit=8e-7
+    max_i=int(np.argmax(np.abs(delta))); force_change=float(abs(delta[max_i])); motion_change=float(motion.max())
+    metrics=comparison['original_temporal_criteria']
+    close(metrics['reaction']['actual'],force_change); close(metrics['reaction']['limit'],force_limit)
+    close(metrics['motion']['actual'],motion_change); close(metrics['motion']['limit'],motion_limit)
+    temporal_pass=force_change<=force_limit and motion_change<=motion_limit
+    assert comparison['maximum_force_shift_state']==max_i and comparison['original_temporal_checks_passed'] is temporal_pass
+    margin=baseline_comparison['endpoint_actual_decision_sensitivity']; sensitivity=comparison['endpoint_sensitivity']
+    negative,positive=margin['negative_loss_delta_N'],margin['positive_loss_delta_N']
+    assert negative<0<positive
+    close(sensitivity['signed_S120_minus_S60_endpoint_N'],float(delta[-1]))
+    close(sensitivity['absolute_shift_over_minimum_margin'],abs(float(delta[-1]))/min(abs(negative),positive))
+    assert sensitivity['inside_fixed_other_state_scalar_interval'] is bool(negative<delta[-1]<positive)
+    # Independently solve 240 unequal-spacing triplets and all resulting state classes.
+    mixed=comparison['mixed_step_sensitivity']; allowance=FLOOR+.02*float(np.max(np.abs(fine[::2])))
+    close(mixed['force_allowance_N'],allowance)
+    forces={N:row['applied_force_N'] for N,row in baseline_rows.items()}; forces[36]=fine[::2].tolist()
+    maximum_scalar_error=0.; changes=[]; unresolved=[]; instability=[]; exceed=[]
+    for i in range(61):
+        row=mixed['states'][i]
+        assert row['state']==i
+        if i==0:
+            assert row['status']=='rest/not_estimated' and row['orders']=={}
+        else:
+            estimates=[scalar(ns,[forces[N][i] for N in ns]) for ns in TRIPLETS]
+            for ns,value in zip(TRIPLETS,estimates):
+                reported=row['orders']['-'.join('N'+str(N) for N in ns)]
+                assert value['status']==reported['status']
+                for field,val in value.items():
+                    if field!='status':
+                        close(val,reported[field]); maximum_scalar_error=max(maximum_scalar_error,abs(val-reported[field]))
+            old,recent,current=estimates[1:]; drift=None
+            if all(v['status']=='eligible' for v in estimates[1:]):
+                drift=abs(current['order']-recent['order'])>abs(recent['order']-old['order'])+1e-6
+            assert row['increasing_order_drift'] is drift
+            if recent['status']==current['status']=='eligible':
+                envelope=max(abs(current['force_limit_N']-forces[36][i]),abs(recent['force_limit_N']-forces[36][i]))
+                limit_flag=abs(current['force_limit_N']-recent['force_limit_N'])>allowance
+                assert row['status']=='resolved_conditional_model'
+                assert row['remaining_within_allowance'] is (envelope<=allowance)
+                assert row['force_limit_instability'] is limit_flag
+                close(envelope,row['two_latest_limit_envelope_N'])
+                if envelope>allowance: exceed.append(i)
+                if limit_flag or drift: instability.append(i)
+            else:
+                unresolved.append(i)
+                if drift: instability.append(i)
+        before_class,after_class=classify(baseline_comparison['states'][i]),classify(row)
+        if before_class!=after_class: changes.append({'state':i,'before':before_class,'after':after_class})
+    assert changes==mixed['classification_changes'] and unresolved==mixed['unresolved_nonrest_states']
+    assert exceed==mixed['remaining_exceedance_states'] and instability==mixed['instability_states']
+    # Independent adjacent criteria and trend decisions using fixed S60 older levels.
+    f24=np.asarray(forces[24]); f32=np.asarray(forces[32]); p24=np.asarray(baseline_rows[24]['probe_displacements_m']); p32=np.asarray(baseline_rows[32]['probe_displacements_m'])
+    prev_change=float(np.max(np.abs(f32-f24))); new_change=float(np.max(np.abs(fine[::2]-f32)))
+    prev_motion=float(np.max(np.linalg.norm(p32-p24,axis=2))); new_motion=float(np.max(np.linalg.norm(probes[::2]-p32,axis=2)))
+    adjacent_flags={'reaction':new_change<=allowance,'motion':new_motion<=8e-6,
+        'reaction_trend':new_change<prev_change or max(new_change,prev_change)<=FLOOR,
+        'motion_trend':new_motion<prev_motion or max(new_motion,prev_motion)<=8e-6}
+    old_adjacent=baseline_comparison['original_style_N24_N32_N36_metrics']
+    def passed(v): return v['actual']<v['limit'] if v.get('comparison')=='lt' else v['actual']<=v['limit']
+    assert all(passed(mixed['adjacent_metrics'][k])==v for k,v in adjacent_flags.items())
+    adjacent_changes=[k for k in mixed['adjacent_metrics'] if adjacent_flags[k]!=passed(old_adjacent[k])]
+    assert adjacent_changes==mixed['adjacent_classification_changes']
+    stable=not changes and not adjacent_changes; candidate=temporal_pass and stable and not unresolved and not instability and not exceed
+    assert mixed['classification_unchanged'] is stable and comparison['compression_temporal_candidate'] is bool(candidate)
+    expected_status='original_temporal_criteria_failed' if not temporal_pass else 'temporal_tolerance_pass_but_spatial_classification_fragile' if not candidate else 'finest_compression_temporal_candidate'
+    assert comparison['status']==expected_status
+    for key in ('calibration_released','spatial_convergence_accepted','measured_data_accessed','automatic_next_run_permitted'): assert comparison[key] is False
+    assert comparison['physical_validation_pass'] is None and mixed['homogeneous_spatial_convergence_study'] is False
+    preserved={k:bound(v) for k,v in study['preserved_failures'].items()}
+    watch=load(P/'output-watch.json'); assert watch['status']=='watching' and watch.get('reason') is None
+    assert watch['maximum_active_bytes']<=int(1.5*1024**3) and watch['maximum_total_bytes']<=2*1024**3
+    retained=sum(p.stat().st_size for p in P.parent.rglob('*') if p.is_file())
+    assert retained==publication['retained_bytes_including_closeout']
+    assert publication['retained_bytes_before_closeout']+len((P/'publication-check.json').read_bytes())==retained
+    assert tree(P)==before
+    for path,record in inputs.items(): assert sha(path)==record['sha256']
+    (OUT/'input-hashes.json').write_text(json.dumps(inputs,indent=2,sort_keys=True)+'\n')
+    report={'schema':'hbe-n36-temporal-independent-output-review-v1','created_at':datetime.now(timezone.utc).isoformat(),
+      'status':'saved_execution_and_temporal_diagnostic_verified','blocking_record_mismatches':[],
+      'result':bind(P/'result.json'),'publication':bind(P/'publication-check.json'),'comparison':state['comparison'],
+      'source_commit':COMMIT,'source_archive':release['source_archive'],
+      'complete_121_state_native_readout_canonical_equal':True,'complete_comparison_canonical_equal':True,
+      'independent_temporal':{'common_states':61,'probes_per_state':75,'signed_force_shift_N':delta.tolist(),
+        'maximum_absolute_force_shift_N':force_change,'maximum_shift_state':max_i,'force_limit_N':force_limit,
+        'maximum_probe_vector_shift_m':motion_change,'motion_limit_m':motion_limit,'original_temporal_checks_passed':temporal_pass},
+      'signed_endpoint_sensitivity':sensitivity,'independent_mixed_step':{'triplets_checked':240,'maximum_scalar_absolute_error':maximum_scalar_error,
+        'classification_changes':changes,'adjacent_classification_changes':adjacent_changes,'unresolved_states':unresolved,
+        'instability_states':instability,'remaining_exceedance_states':exceed,'endpoint':mixed['endpoint']},
+      'conclusion':{'status':expected_status,'compression_temporal_candidate':bool(candidate),'spatial_convergence_accepted':False,
+        'calibration_released':False,'physical_validation_pass':None,'automatic_next_run_permitted':False},
+      'costs':{'preparation_including_publication_seconds':state['preparation_elapsed_seconds_including_publication'],
+        'native_elapsed_seconds':state['run']['execution']['elapsed_seconds'],'inclusive_publication_seconds':publication['elapsed_through_result_publication_seconds'],
+        'sampled_peak_process_group_rss_bytes':sup['sampled_peak_process_group_rss_bytes'],'retained_bytes':retained,'output_watch':watch},
+      'scope':{'new_solver_calls':0,'new_mesh_calls':0,'measured_curve_reads':0,'old_raw_response_replays':0,
+        'native_saved_S120_frames_recomputed':121,'all_reviewed_inputs_and_outputs_unchanged':True},
+      'limitations':['Mixed-step classification sensitivity is not a new homogeneous spatial convergence study.',
+        'Signed endpoint margin holds the older states fixed and is not an error bound.',
+        'Original S60/N32 negatives remain immutable; no calibration or physical validation follows automatically.',
+        'RSS/output peaks are sampled; closeout receipt publication is outside its own clock.'],
+      'input_hash_inventory':bind(OUT/'input-hashes.json'),'audit_source':bind(Path(__file__)),'review_seconds':time.perf_counter()-started}
+    (OUT/'verification.json').write_text(json.dumps(report,indent=2,sort_keys=True,allow_nan=False)+'\n')
+    print(json.dumps({'verification':bind(OUT/'verification.json'),'status':report['status'],'conclusion':report['conclusion'],'review_seconds':report['review_seconds']},indent=2))
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--terminal-result-sha256',required=True)
+    parser.add_argument('--terminal-publication-sha256',required=True)
+    args=parser.parse_args()
+    try: execute(args.terminal_result_sha256,args.terminal_publication_sha256)
+    except BaseException as exc:
+        error={'type':type(exc).__name__,'message':str(exc),'result_sha256':args.terminal_result_sha256,
+               'publication_sha256':args.terminal_publication_sha256,'audit_source':bind(Path(__file__))}
+        path=OUT/('failure-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'.json')
+        path.write_text(json.dumps(error,indent=2)+'\n')
+        raise

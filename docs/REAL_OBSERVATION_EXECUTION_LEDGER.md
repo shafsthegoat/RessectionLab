@@ -89,14 +89,17 @@ are now present. Twenty-four RESECT pairs await separate image/label/grid QC;
 the previous Case3 QC and all split, missing-label and rights constraints remain.
 
 The additional [104-file original-source queue](../artifacts/resect-train-originals-execution-v1/RESULT.md)
-completed continuously in 265.1827 seconds: 28 MRI, 17 ultrasound and59 correspondence
+completed continuously in 265.1827 seconds: 28 MRI, 17 ultrasound and 59 correspondence
 files (672,336,857 bytes), all independently byte-verified. Combined original coverage
-is70 images/59 landmark files across the same14 TRAIN people; cavity labels remain
+is 70 images/59 landmark files across the same 14 TRAIN people; cavity labels remain
 25 masks/13 people. No new roles, scientific QC, fitting or recorded transitions.
-The original890-file queue plus104 files is994;144 Lausanne annotations are separate.
-The [N36/S120 solve](../artifacts/hbe-n36-temporal-preparation-v1/EXECUTION.md)
-is also running after verified archive/preflight and 13.3256-second preparation;
-no result is claimed until terminal publication and independent review.
+The original 890-file queue plus 104 files is 994; 144 Lausanne annotations are separate.
+The [N36/S120 solve and independent review passed](../artifacts/hbe-n36-temporal-execution-v1/RESULT.md):
+all 121 states and 61 common-state comparisons are verified. Force change is
+1.87025e-12 N; probe change is 2.31371e-14 m. No spatial-screen classification changed.
+The 1,946.3351-second phase used one native solve and zero remeshing. The original
+failures and a reporting-only independent-audit repair remain. Tension N24/S120 and
+branch-specific fitted confirmations remain next; no measured response was accessed.
 
 ## Evidence and decisions before the October 8 steering
 

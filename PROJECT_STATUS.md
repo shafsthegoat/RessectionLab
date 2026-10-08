@@ -58,9 +58,12 @@ admission remain unestablished. The [single N36 specimen solve](artifacts/hbe-n3
 now passes its independently reproduced conditional consistency screen:
 0.642702 mN envelope versus 0.723189 mN allowance. It supports temporal review
 only; spatial acceptance, physical validation and calibration remain unestablished.
-The [N36/S120 increment check](artifacts/hbe-n36-temporal-preparation-v1/EXECUTION.md)
-is now running from a verified committed archive. Its 13.3256-second preparation
-completed; no terminal comparison result is available at this checkpoint. The additional
+The [N36/S120 increment check passed](artifacts/hbe-n36-temporal-execution-v1/RESULT.md).
+Independent reconstruction verified all 121 states: force and probe changes are
+1.87025e-12 N and 2.31371e-14 m, within unchanged limits, with no spatial-screen
+classification changes. The 1,946.3351-second phase completed within its cap.
+A separate tension increment check and fitted axial confirmations remain required;
+physical validation and calibration remain unestablished. The additional
 [104-file RESECT originals queue is complete](artifacts/resect-train-originals-execution-v1/RESULT.md):
 28 MRI, 17 ultrasound and 59 correspondence files from the existing 14 TRAIN people.
 All 672,336,857 bytes passed independent size/MD5/SHA256 checks after a continuous

@@ -1,0 +1,23 @@
+{
+  "cleanup": {
+    "kill_sent": false,
+    "reaped": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+    "-noconfig",
+    "-no_title",
+    "-i",
+    "specimen.feb",
+    "-o",
+    "solver.log"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference",
+  "elapsed_seconds": 1766.5480909170583,
+  "exit_code": 0,
+  "pid": 93232,
+  "seconds_cap": 2100,
+  "started": true,
+  "status": "completed",
+  "timed_out": false
+}

@@ -1,0 +1,86 @@
+{
+  "backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "backend_source_deck": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/preparation/skyline.feb",
+    "sha256": "dd7e39a37a424c4121e43c7adc6b680b2aea595eb5b7e743ca3aae1fc1b1f4fa"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+    "-noconfig",
+    "-no_title",
+    "-i",
+    "specimen.feb",
+    "-o",
+    "solver.log"
+  ],
+  "executable": {
+    "path": "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+    "sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6"
+  },
+  "execution": {
+    "cleanup": {
+      "kill_sent": false,
+      "reaped": true
+    },
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+      "-noconfig",
+      "-no_title",
+      "-i",
+      "specimen.feb",
+      "-o",
+      "solver.log"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference",
+    "elapsed_seconds": 1766.5480909170583,
+    "exit_code": 0,
+    "pid": 93232,
+    "seconds_cap": 2100,
+    "started": true,
+    "status": "completed",
+    "timed_out": false
+  },
+  "primitive_bindings": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/specimen.feb",
+      "sha256": "cf0f2502dc5ea77ac79fd44ad879095c21c69d4e535df830756b1e8ab1d84efb"
+    },
+    "elements": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/elements.log",
+      "sha256": "349080d67840997b0ab6b3067dcd60b6f1a84fd9a9744cd584ad732df265fe0c"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/loading.json",
+      "sha256": "958a940b002ddf75657e25297bb206f151227ec320eb07ea670ef32b6965b31c"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+      "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+    },
+    "nodes": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/nodes.log",
+      "sha256": "28c3a405b72151dcaffe2d61d7f40faffecc4ae2515b59c43f321327d5981276"
+    },
+    "solver": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/solver.log",
+      "sha256": "a40339ae178377e8dcd8ab6b4ea179d5cc461159f91a003b11cfc1961049a64e"
+    }
+  },
+  "reconstruction": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json",
+    "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+  },
+  "run_id": "compression:N36:S120:reference",
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "schema": "hbe-n36-temporal-native-execution-v1",
+  "study": {
+    "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+    "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+  }
+}

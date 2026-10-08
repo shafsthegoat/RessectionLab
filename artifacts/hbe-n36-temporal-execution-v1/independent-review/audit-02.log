@@ -1,0 +1,16 @@
+{
+  "verification": {
+    "path": "build/hbe-n36-temporal-output-review-v1/verification.json",
+    "sha256": "a2f6be26d3f7b7f302da5385bdbda43749a82ebde93067754181cb11bf42b24b"
+  },
+  "status": "saved_execution_and_temporal_diagnostic_verified",
+  "conclusion": {
+    "status": "finest_compression_temporal_candidate",
+    "compression_temporal_candidate": true,
+    "spatial_convergence_accepted": false,
+    "calibration_released": false,
+    "physical_validation_pass": null,
+    "automatic_next_run_permitted": false
+  },
+  "review_seconds": 164.95520645799115
+}
