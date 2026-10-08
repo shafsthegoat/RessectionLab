@@ -10,7 +10,6 @@ const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
 const { importStructuralEvidence } = require('./structural-import.cjs');
 const { inspectAxisPlanning } = require('./axis-inspection.cjs');
-const { observedRequest, validateObservedResult } = require('./observed-landmark-contract.cjs');
 
 let log = message => process.stderr.write(String(message) + '\n');
 let window;
@@ -29,9 +28,9 @@ async function startEngine() {
   const config = app.isPackaged
     ? { executable: bundled, cwd: app.getPath('userData'), transferDir, runDir }
     : { python: path.join(repo, '.venv/bin/python'), cwd: repo, sourcePath: path.join(repo, 'src'), transferDir, runDir };
-  // Existing packaged engines do not accept the new argument. They remain
-  // startable and refuse the unsupported observation operation independently.
-  if (!app.isPackaged) config.observedSourceRoot = repo;
+  // This checkpoint's field is repository-local. Packaged installations fail
+  // explicitly unless the exact pinned artifact exists at this trusted root.
+  config.observedSourceRoot = app.isPackaged ? path.join(process.resourcesPath, 'observed-studies') : repo;
   await fs.mkdir(app.getPath('userData'), { recursive: true });
   await fs.access(config.executable || config.python);
   engine = new Sidecar(config);
@@ -84,9 +83,34 @@ function bindOperations() {
   handle('inspectRefinement', args => engine.request('inspectRefinement', plainArgs(args, ['caseHash', 'routeId'])));
   handle('inspectAxisPlanning', args => inspectAxisPlanning(args, { request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('inspectObservedLandmarkUpdate', async args => {
-    const request = observedRequest(args);
+    plainArgs(args, ['action', 'studyId', 'expectedStateHash', 'phase', 'landmarkId', 'snapshot']);
+    const allowed = { open: ['action', 'studyId'], advance: ['action', 'studyId', 'expectedStateHash', 'phase', 'landmarkId'],
+      reopen: ['action', 'studyId', 'expectedStateHash', 'snapshot'] };
+    const keys = Object.hasOwn(allowed, args.action) ? allowed[args.action] : null;
+    if (!keys || Object.keys(args).length !== keys.length || keys.some(key => !Object.hasOwn(args, key))
+        || args.studyId !== 'resect-case4-sparse-update-v1') throw new Error('Invalid observation request');
+    const hash = value => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/.test(value);
+    if (args.action !== 'open' && !(hash(args.expectedStateHash) || (args.action === 'reopen' && args.expectedStateHash === null)))
+      throw new Error('Invalid observation state identity');
+    if (args.action === 'advance' && (!['before', 'during'].includes(args.phase)
+        || ![1, 14, 8, 17, 19, 7].includes(args.landmarkId))) throw new Error('Invalid observation selection');
+    if (args.action === 'reopen') plainArgs(args.snapshot, ['schemaVersion', 'kind', 'binding', 'phase', 'landmarkId', 'stateHash', 'resultHash']);
+    const request = JSON.parse(JSON.stringify(args));
     const result = await engine.request('inspectObservedLandmarkUpdate', request);
-    return validateObservedResult(result, request);
+    const expectedPhase = request.action === 'advance' ? request.phase : request.snapshot?.phase;
+    const expectedRow = request.action === 'advance' ? request.landmarkId : request.snapshot?.landmarkId;
+    if (result?.schemaVersion !== 1 || result?.binding?.studyId !== request.studyId
+        || result.binding.fieldSha256 !== '5e3944a40a0240af99e8c82360fb02241ea4ab3a7148c60950e2829e64e79858'
+        || !hash(result?.stateHash) || !hash(result?.resultHash)
+        || result?.state?.frame !== 'RAS+' || result.state.units !== 'mm' || result.state.dataRole !== 'DEVELOPMENT'
+        || result.state.physicalClearanceMm !== null || result.state.cavitySupport !== null || result.state.brainSupport !== null
+        || result.state.acquisitionTimestamp !== null || result.state.selectedAction !== 'ABSTAIN_UNSUPPORTED_CLEARANCE'
+        || result?.snapshot?.stateHash !== result.stateHash || result.snapshot.resultHash !== result.resultHash
+        || (expectedPhase !== undefined && result?.state?.phase !== expectedPhase)
+        || (expectedRow !== undefined && result?.state?.selectedInspectionPoint?.landmarkId !== expectedRow)
+        || (request.action === 'reopen' && (result.stateHash !== request.snapshot.stateHash || result.resultHash !== request.snapshot.resultHash)))
+      throw new Error('Observation result does not match the requested state');
+    return result;
   });
   handle('inspectEvidence', args => engine.request('inspectEvidence', plainArgs(args, ['caseHash'])));
   handle('trainPatient', args => engine.request('trainPatient', plainArgs(args, ['caseHash', 'budgetSeconds', 'seed', 'routeId', 'resumeRunId']), 300000));

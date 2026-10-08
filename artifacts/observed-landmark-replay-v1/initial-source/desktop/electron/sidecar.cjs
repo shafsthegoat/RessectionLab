@@ -6,7 +6,6 @@ const { EventEmitter } = require('node:events');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const { AssetRegistry } = require('./assets.cjs');
-const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
 const OPERATIONS = new Set(['ping', 'createSyntheticCase', 'loadCase', 'importNifti', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
@@ -26,7 +25,7 @@ class Sidecar extends EventEmitter {
     const command = executable || python;
     const args = executable ? ['--transfer-dir', transferDir] : ['-u', '-m', 'resectionlab.desktop_bridge', '--transfer-dir', transferDir];
     if (runDir) args.push('--run-dir', runDir);
-    if (observedSourceRoot && !executable) args.push('--observed-source-root', observedSourceRoot);
+    if (observedSourceRoot) args.push('--observed-source-root', observedSourceRoot);
     this.child = spawn(command, args, { cwd, env, stdio: ['pipe', 'pipe', 'pipe'], shell: false });
     this.child.stdin.on('error', error => { if (!this.closed) this.failAll(error); });
     this.child.stdout.setEncoding('utf8');
@@ -41,9 +40,6 @@ class Sidecar extends EventEmitter {
     if (!OPERATIONS.has(op)) return Promise.reject(new Error('Unsupported research operation'));
     if (this.closed) return Promise.reject(new Error('Local research engine is not running'));
     if (!args || typeof args !== 'object' || Array.isArray(args)) return Promise.reject(new Error('Operation arguments must be an object'));
-    if (op === 'inspectObservedLandmarkUpdate') {
-      try { args = observedRequest(args); } catch (error) { return Promise.reject(error); }
-    }
     const id = randomUUID();
     const message = JSON.stringify({ id, op, args, timeoutMs });
     if (Buffer.byteLength(message) > 1024 * 1024) return Promise.reject(new Error('Operation request is too large'));
@@ -53,8 +49,7 @@ class Sidecar extends EventEmitter {
         this.child.stdin.write(JSON.stringify({ id: randomUUID(), op: 'cancel', args: { requestId: id } }) + '\n');
         reject(new Error('Operation exceeded its local time budget'));
       }, timeoutMs + 5000);
-      this.pending.set(id, { resolve, reject, timeout, op,
-        ...(op === 'inspectObservedLandmarkUpdate' ? { observedArgs: args } : {}) });
+      this.pending.set(id, { resolve, reject, timeout, op });
       this.child.stdin.write(message + '\n', error => { if (error) this.failAll(error); });
     });
   }
@@ -76,13 +71,9 @@ class Sidecar extends EventEmitter {
     const pending = this.pending.get(message.id);
     if (!pending) return;
     if (!['started', 'progress', 'result', 'error', 'cancelled'].includes(message.event)) throw new Error('Unknown local engine event');
-    const observed = pending.op === 'inspectObservedLandmarkUpdate';
-    // Validate the complete observation envelope and payload before any asset
-    // traversal or event forwarding, not just after the request resolves.
-    if (observed) validateObservedEvent(message, pending.observedArgs);
     if (message.event === 'result') {
       if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase'].includes(pending.op)) this.assets.clear();
-      if (!observed) message.result = await this.assets.expose(message.result);
+      message.result = await this.assets.expose(message.result);
     }
     this.emit('event', { ...message, op: pending.op });
     if (['result', 'error', 'cancelled'].includes(message.event)) {

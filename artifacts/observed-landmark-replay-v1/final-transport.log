@@ -1,0 +1,28 @@
+✔ all12 fixed transport pins independently match complete authentic response bytes (5.986292ms)
+✔ sidecar same valid request rejects corrupt result without events/assets and accepts immutable authentic result (1.006875ms)
+✔ unexpected payload cannot hide in sidecar nonresult events (0.197208ms)
+✔ main refuses extra excluded payload (7.494208ms)
+✔ main refuses altered source coordinate unchanged hash (1.627125ms)
+✔ main refuses wrong B membership unchanged hash (0.809459ms)
+✔ main refuses during observation leaked before phase (0.685917ms)
+✔ main refuses finite clock fabricated (0.644708ms)
+✔ main refuses nonfinite coordinate (0.584541ms)
+✔ main refuses invented tool pose (0.539125ms)
+✔ main refuses source binding changed (0.5935ms)
+✔ main refuses unbound snapshot selection (0.606042ms)
+✔ authentic result passes (1.105666ms)
+✔ sidecar does not emit excluded result before validation (0.480084ms)
+✔ actual six-B replay traverses Electron main, sidecar and Python without an anatomical case (361.012708ms)
+✔ main refuses renderer paths, geometry, unknown studies and invalid state selectors before dispatch (1.41725ms)
+✔ preload exposes only the named operation and forwards its request unchanged (0.775916ms)
+✔ all 12 real phase/row states have the same Python and JavaScript transport digest (95.251333ms)
+✔ sidecar rejects corrupted real responses before asset traversal, event emission or resolution (93.068958ms)
+✔ packaged main and packaged sidecar omit new arguments for the existing bundled engine (2.816333ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 616.111625

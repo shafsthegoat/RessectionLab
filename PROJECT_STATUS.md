@@ -24,6 +24,14 @@ all 144; the historical grid checkpoint is 116 passed, 27 awaiting original
 references and one unresolved grid. Four metadata exclusions and the earlier
 sub022 failure remain preserved. No anatomical or training admission is implied.
 
+The [continuous download runner](artifacts/continuous-source-acquisition-v1/RESULT.md)
+passes 143 focused controls and is running the full frozen 890-file queue. New
+receipts report byte verification only, with all scientific QC separately pending.
+The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
+now advances acquired phases/points and reopens bound snapshots. Independent review
+cleared transport and packaged-startup repairs. Sparse landmarks still provide no
+physical clearance or demonstrated surgical decision benefit; those fields stay null.
+
 Known incompatible learning, model-loading and SynthStrip support paths now
 refuse execution; complete artifact admission and provenance enforcement remain
 unfinished. The refusal-only suite passes **42 checks**; independent source review

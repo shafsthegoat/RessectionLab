@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "status": "review_passed",
+  "scope": "repaired observed-landmark replay/API boundary only; no UI WIP or packaged build validation",
+  "source_sha256": {
+    "src/resectionlab/observed_landmark_replay.py": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd",
+    "src/resectionlab/desktop_bridge.py": "f900380474782e8632353c44c0e1306766fe3b4c7bdd2bbf7167255b407ff6de",
+    "desktop/src/types.ts": "f88bccc6c7fc4accf142b0fc669d97397186c453358995db3c4dea595043dfb5",
+    "desktop/electron/main.cjs": "195f6939e6e2dba3a123a8dcc241128e4b914e73163b6c19db10bfe15f65e991",
+    "desktop/electron/preload.cjs": "29d2083d0f6d16c8765e0e8efa6efd0cb74c9e94d13ffd293f9b11695ec14f42",
+    "desktop/electron/sidecar.cjs": "9d878d3c9b030fe9a1d6a2ccbdad57f4ead26bc09b7ec3401ae3c68c1a685d48",
+    "tests/test_observed_landmark_replay.py": "851105a98299f98ae40a8b7f00f750a05aed22886685f3d1a921b1271f9c8236",
+    "desktop/electron/observed-landmark-replay.test.cjs": "260093bc99e03fe3066c1a25eb53f9574f52c9a5d1e2c791a60bc82884f947b4",
+    "desktop/electron/observed-landmark-contract.cjs": "505a0d03b90c634d180e8ab4280820e1b4657aae7e13cf7e0a3de8e49d9acd8d"
+  },
+  "source_unchanged_during_final_review": true,
+  "prior_failure_receipt": {
+    "path": "build/observed-replay-independent-v1/initial-review.json",
+    "sha256": "83a8814ef34860f32e4165383c14cd9abdbd1dbe5ed09324dbeec70945e4dfd8"
+  },
+  "resolved_findings": [
+    {
+      "id": "R1",
+      "evidence": "Shared exact result/event validation occurs before asset traversal and renderer events; all12 whole-response binary64 transport identities independently reproduced from released six-B data; nested result frozen before listeners."
+    },
+    {
+      "id": "R2",
+      "evidence": "Both packaged main and executable Sidecar omit new CLI argument; mocked launch confirms original arguments. No executable or package launched."
+    }
+  ],
+  "final_controls": {
+    "command": "bundled-node --test build/observed-replay-independent-v1/transport-review.test.cjs build/observed-replay-independent-v1/repair-review.test.cjs desktop/electron/observed-landmark-replay.test.cjs",
+    "passed": 20,
+    "failed": 0,
+    "duration_ms": 616.111625,
+    "original_independent_controls_unchanged": 11,
+    "new_independent_controls": 3,
+    "owner_controls": 6
+  },
+  "prior_python_controls": {
+    "passed": 30,
+    "seconds": 0.55,
+    "owner": 23,
+    "independent": 7,
+    "rerun": false,
+    "reason": "ObservedLandmarkReplay class AST exactly unchanged; bridge Python source and owner tests unchanged. New additive transport_digest does not change Python API/state hashes; actual12state cross-language checks pass."
+  },
+  "control_precision": [
+    "Original sidecar negative now also fails absent new observedArgs; retained unchanged, plus new nonvacuous same-valid-request test demonstrates corrupt rejection followed by authentic success with no asset traversal and immutable listener payload.",
+    "Twelve expected transport digests independently encoded using binary64 tagged JSON, compared against final fixed pins and actual contract; not claimed to be Python core.semantic_digest recomputation."
+  ],
+  "limitations": [
+    "Only already released six-B prediction field read; no V/raw Tag/images/new scientific access",
+    "No real packaged executable or bundle run; legacy startup compatibility verified with mocks and authenticated prior parser source",
+    "Feature remains unavailable in existing packaged engine; no silent source fallback",
+    "This is sparse observed correspondence replay, with no surgical target/tool/cavity/clearance or new empirical validation",
+    "Whole finite state whitelist supports exactly this fixed study and12phase/row combinations; changing evidence requires reviewed pin update"
+  ],
+  "evidence": {
+    "repair-pins.json": "7bf8a0914350ba1b1f8372c8d8e462c74223d1a399b3911d03a45913b0799cb3",
+    "repair-authentic-12.json": "ff99181344e0a12f93689969c68b3d3bbae5a4611798b8b82209b73c8af2c629",
+    "repair-review.test.cjs": "4c1474af1b09d2764456015b122172ddb7979c6b946b13a4c864e872f2613346",
+    "transport-review.test.cjs": "fce994acbdf178a8933a6e4b3ecbdeb68383d3d10fd52e6e397886c3665b5acd",
+    "final-transport.log": "41180e8ee8a85965f1290fda37ac8f08ea42e8f4c13c9394d081c3c3dc13ddfd",
+    "test_review.py": "ea72d04bd1233c001fdd36e34c8ae2ff35e25c057fb9434ed45f13269f92237d",
+    "python-controls.log": "a83f965f8eb8111a47c7585211339bbe7c73762f36b9654e18024f8ea0ed01f5",
+    "packaged-compatibility.json": "4bc0d62c5ae8b9ee0d0e0c984642a6547265e82e342ae6faeeca3556aad0e474"
+  }
+}

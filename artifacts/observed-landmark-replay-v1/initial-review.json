@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "status": "changes_required",
+  "scope": "eight-file observed six-B replay integration, not UI WIP",
+  "initial_source_sha256": {
+    "src/resectionlab/observed_landmark_replay.py": "dd228df8bce98c396169888efc705a5315c730e660006eeb37b462372779ea79",
+    "src/resectionlab/desktop_bridge.py": "f900380474782e8632353c44c0e1306766fe3b4c7bdd2bbf7167255b407ff6de",
+    "desktop/src/types.ts": "f88bccc6c7fc4accf142b0fc669d97397186c453358995db3c4dea595043dfb5",
+    "desktop/electron/main.cjs": "02b9a195839b605c1ea35ae95761a6caca518f92e59e8578316fd3bdb5cdf40c",
+    "desktop/electron/preload.cjs": "29d2083d0f6d16c8765e0e8efa6efd0cb74c9e94d13ffd293f9b11695ec14f42",
+    "desktop/electron/sidecar.cjs": "511bdbaf45720596f036c45aa03101319c1ab35b398fa6ae3c6961cbbb05af5c",
+    "tests/test_observed_landmark_replay.py": "851105a98299f98ae40a8b7f00f750a05aed22886685f3d1a921b1271f9c8236",
+    "desktop/electron/observed-landmark-replay.test.cjs": "793fd1c75aefb266b30d47eb16c8f8e46f00a9d6652f86ca7cbca8ada0a924c5"
+  },
+  "source_unchanged_at_initial_review": true,
+  "closure_after_initial_review": {
+    "src/resectionlab/observed_landmark_replay.py": "dd228df8bce98c396169888efc705a5315c730e660006eeb37b462372779ea79",
+    "src/resectionlab/desktop_bridge.py": "f900380474782e8632353c44c0e1306766fe3b4c7bdd2bbf7167255b407ff6de",
+    "desktop/src/types.ts": "f88bccc6c7fc4accf142b0fc669d97397186c453358995db3c4dea595043dfb5",
+    "desktop/electron/main.cjs": "02b9a195839b605c1ea35ae95761a6caca518f92e59e8578316fd3bdb5cdf40c",
+    "desktop/electron/preload.cjs": "29d2083d0f6d16c8765e0e8efa6efd0cb74c9e94d13ffd293f9b11695ec14f42",
+    "desktop/electron/sidecar.cjs": "511bdbaf45720596f036c45aa03101319c1ab35b398fa6ae3c6961cbbb05af5c",
+    "tests/test_observed_landmark_replay.py": "851105a98299f98ae40a8b7f00f750a05aed22886685f3d1a921b1271f9c8236",
+    "desktop/electron/observed-landmark-replay.test.cjs": "793fd1c75aefb266b30d47eb16c8f8e46f00a9d6652f86ca7cbca8ada0a924c5"
+  },
+  "controls": {
+    "python_owner": 23,
+    "python_independent": 7,
+    "python_passed": 30,
+    "python_seconds": 0.55,
+    "electron_owner_passed": 3,
+    "transport_independent_passed": 1,
+    "transport_independent_failed": 10
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "blocking_transport_boundary",
+      "location": "desktop/electron/main.cjs:104 + sidecar.cjs:79",
+      "description": "Main trusts hash labels and partial schema; malformed six-B/source/time/snapshot results or excluded extra fields pass. Sidecar emits raw event before main validation.",
+      "requested_correction": "Exact bounded observation result validation before asset traversal and event emission, shared with main request binding; content identity and phase/schema/source consistency."
+    },
+    {
+      "id": "R2",
+      "severity": "packaged_compatibility",
+      "location": "desktop/electron/main.cjs:33 + sidecar.cjs:28",
+      "description": "New CLI argument is unconditionally passed to old packaged engine whose pinned parser rejects it; package helper copies that frozen engine.",
+      "requested_correction": "Preserve older engine startup and make feature absence operation-local; no implicit packaged engine refresh."
+    }
+  ],
+  "positive_evidence": [
+    "Exact six-B file SHA checked on every operation; only fixed artifact opened",
+    "Actual selected correspondence position updates before to during; no fake clock or anatomical plan",
+    "Factory source mapping deeply frozen; output snapshots detached and replay-bound",
+    "Cancellation at begin_commit refuses open/advance/reopen without mutation; cancellation after commit refused truthfully",
+    "Missing source returns operation-level refusal in updated Python and later ping remains valid"
+  ],
+  "setup_notes": [
+    "First Node invocation unavailable on shell PATH; retained node-path-setup-failure.log; reran once with existing bundled Node. No change to test assertions."
+  ],
+  "limitations": [
+    "No actual V, raw Tag or image access",
+    "No scientific fit, model, training or native solve",
+    "Existing released six-B field and software bridge only",
+    "Package finding authenticated static source+binary metadata; no executable launch"
+  ],
+  "evidence": {
+    "initial-pins.json": "e644474dd64c6e3ed1c7b5ba6c1284d25f0d1155453fa7cfe3b22166be22d20f",
+    "packaged-compatibility.json": "4bc0d62c5ae8b9ee0d0e0c984642a6547265e82e342ae6faeeca3556aad0e474",
+    "owner-electron.log": "07d3c1a9463e710fa20af4675bd2a00574f19f399b1cd43599edbf53a79fb01e",
+    "authentic-before.json": "3058ebd514fff0dfa4b7f6def6874ee4d653480c2845bae921f7402f5ffb1f96",
+    "python-controls.log": "a83f965f8eb8111a47c7585211339bbe7c73762f36b9654e18024f8ea0ed01f5",
+    "initial-transport.log": "55215d87513d618dd3753e1f0be9f4811b2dc93a2e18678dd85300f45b2c3f19",
+    "node-path-setup-failure.log": "ed3c89128f627765d5867bb463eb97de4fc85714809ac64c1ab7fb43a3663ab3",
+    "transport-review.test.cjs": "fce994acbdf178a8933a6e4b3ecbdeb68383d3d10fd52e6e397886c3665b5acd",
+    "test_review.py": "ea72d04bd1233c001fdd36e34c8ae2ff35e25c057fb9434ed45f13269f92237d"
+  }
+}
