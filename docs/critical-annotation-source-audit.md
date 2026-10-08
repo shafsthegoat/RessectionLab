@@ -1,8 +1,9 @@
 # Critical annotation source audit
 
-Checked October 8, 2026 through bounded primary-source research. No scientific
-annotation payload, new agreement, outreach or patient-role change occurred.
-These findings support acquisition decisions; none is positive vessel acceptance.
+Checked October 8, 2026 through bounded primary-source research and one original
+Lausanne annotation intake. No new agreement, outreach or patient-role change
+occurred. These findings support acquisition decisions; none is positive vessel
+planning acceptance.
 
 ## Current candidates
 
@@ -41,3 +42,23 @@ derivation ancestry, actual review and documented annotation domain. Verify the
 native frame or an accepted transform before constructing the typed record.
 A healthy vascular component case could test integration; it would not validate
 glioma surgery, small-vessel completeness, injury mechanics or clinical safety.
+
+## Exact Lausanne source-manual candidate
+
+The author's pinned [voxelwise crosswalk](https://github.com/connectomicslab/Aneurysm_Detection/blob/5ecdf6e5b9a811e4ec7472c210dada42e60cc3dc/extra_files/patients_with_voxelwise_labels.pkl)
+includes `sub-476_ses-20140519` exactly. Its published release sidecar declares
+the original angiogram as `RawSources` and `Space: orig`. The full [primary
+methods](https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9931814/fullTextXML)
+describe axial slice-by-slice manual drawing in ITK-SNAP3.6.0 and senior
+neuroradiologist double-check. Weak spherical labels elsewhere are not contours.
+Dates in the author's sub022/sub450 entries differ from the dataset release;
+no undocumented date crosswalk was inferred.
+
+The [sub476 result](../artifacts/lausanne-sub476-annotation-v1/RESULT.md) records
+the successful82,420-byte binary-mask acquisition and failed direct-grid gate.
+Shape matches but units are unknown and affine coefficients differ slightly.
+The next action is a source-supported coordinate interpretation with explicit
+derivation and independent checks; original headers must remain unchanged.
+Any admitted derived component must retain aneurysm-only positive support,
+unknown background and unknown review/annotation availability. The planner's
+`vessels` channel cannot turn it into complete vascular or negative coverage.

@@ -43,7 +43,13 @@
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
       "remaining_train_sessions_to_acquire": 194,
-      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-05-summary.json"
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-05-summary.json",
+      "acquired_source_manual_aneurysm_masks": 1,
+      "manual_annotation_bytes": 82420,
+      "manual_annotation_positive_voxels": 193,
+      "manual_annotation_receipt": "artifacts/lausanne-sub476-annotation-v1/acquisition.json",
+      "manual_annotation_spatial_admissions": 0,
+      "manual_annotation_geometry_gate": "Same shape, unknown label spatial units and small nonzero affine mismatch; originals retained; no silent header repair"
     },
     {
       "accession": "TopCoW external Lausanne",

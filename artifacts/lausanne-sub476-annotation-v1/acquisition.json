@@ -1,0 +1,111 @@
+{
+  "status": "binary_mask_integrity_passed_grid_unresolved",
+  "manifest_sha256": "39537b60333a22e8e8e81f792ac5ba9dad306ef72ff3a4a4f768f6b7ab59230f",
+  "script_sha256": "119720fe15e453ed3d0fd6c661fde10a98ab50d91530f89556cddaa0117e8970",
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "source_review_available_at": null,
+  "component_optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "source_sha256": {
+    "scripts/acquire_lausanne_sub476_annotation.py": "119720fe15e453ed3d0fd6c661fde10a98ab50d91530f89556cddaa0117e8970",
+    "scripts/lausanne_train_intake.py": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/acquire_lausanne_pilot.py": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a",
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/data_policy.py": "72a9c5c5efc06bc1a028efa8e4f2da760b2fa7ce6e024975f92cf68e5ab6d282",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+  },
+  "acquisition": "downloaded_and_verified",
+  "mask_sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+  "mask_bytes": 82420,
+  "mask_grid": {
+    "shape": [
+      306,
+      384,
+      160
+    ],
+    "affine_ras": [
+      [
+        0.54451984167099,
+        0.01616097427904606,
+        0.06150888279080391,
+        -95.22364807128906
+      ],
+      [
+        -0.004947871435433626,
+        0.5328119993209839,
+        -0.15759621560573578,
+        -102.32044219970703
+      ],
+      [
+        -0.05045679956674576,
+        0.12215767800807953,
+        0.6792458891868591,
+        -106.03178405761719
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "spatial_units": "unknown",
+    "qform_code": 0,
+    "sform_code": 2,
+    "maximum_qform_sform_corner_disagreement_mm": null
+  },
+  "original_tof_grid": {
+    "shape": [
+      306,
+      384,
+      160
+    ],
+    "affine_ras": [
+      [
+        0.5445199012756348,
+        0.01616097427904606,
+        0.061508893966674805,
+        -95.22366333007812
+      ],
+      [
+        -0.004947871435433626,
+        0.5328119993209839,
+        -0.15759623050689697,
+        -102.3204574584961
+      ],
+      [
+        -0.050456803292036057,
+        0.12215769290924072,
+        0.6792460083961487,
+        -106.03179168701172
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "spatial_units": "mm",
+    "qform_code": 1,
+    "sform_code": 1,
+    "maximum_qform_sform_corner_disagreement_mm": 2.5294925080255697e-05
+  },
+  "labels": [
+    0.0,
+    1.0
+  ],
+  "positive_voxels": 193,
+  "decoded_bytes": 75202560,
+  "original_tof_sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+  "exact_native_grid_match": false,
+  "maximum_affine_coefficient_difference": 1.52587890625e-05,
+  "coverage_semantics": "positive aneurysm support only; background unknown; no whole-vessel or negative-domain assertion",
+  "elapsed_seconds": 0.7895714580081403
+}

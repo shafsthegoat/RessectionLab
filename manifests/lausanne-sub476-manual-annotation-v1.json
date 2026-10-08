@@ -1,0 +1,90 @@
+{
+  "schema": "lausanne-sub476-manual-annotation-v1",
+  "subject": "sub-476",
+  "session": "ses-20140519",
+  "role": "TRAIN",
+  "scope": "One original manual voxelwise aneurysm region; positive-support-only component; no general vascular coverage or clinical planning admission",
+  "cohort": {
+    "path": "manifests/lausanne-component-cohort-v1.json",
+    "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "bytes": 62650
+  },
+  "index": {
+    "path": "manifests/lausanne-train-originals-v1.json",
+    "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+    "bytes": 1586099
+  },
+  "original_acquisition": {
+    "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-476_ses-20140519.json",
+    "sha256": "55d42e4392645478f6c0c50d325b3f0a23e3c1019e6c5100f8bed001d33f7dc6",
+    "bytes": 7611
+  },
+  "original_tof": {
+    "path": "sub-476/ses-20140519/anat/sub-476_ses-20140519_angio.nii.gz",
+    "bytes": 16816195,
+    "sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+    "status": "downloaded_and_verified"
+  },
+  "source_metadata": [
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/voxelwise.pkl",
+      "url": "https://raw.githubusercontent.com/connectomicslab/Aneurysm_Detection/5ecdf6e5b9a811e4ec7472c210dada42e60cc3dc/extra_files/patients_with_voxelwise_labels.pkl",
+      "bytes": 1034,
+      "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/mask.json",
+      "url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.json",
+      "bytes": 86,
+      "sha256": "f589cb0e384b29740ae6e0b6140ab7a553be8783cbc7b5886cc32106940baf2e"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/mask-annex.txt",
+      "url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz",
+      "bytes": 145,
+      "sha256": "a49dd21b48546c8de1a115f47e865dde9f206a48a0c3f7c9201e7dd34555f754"
+    }
+  ],
+  "rights": [
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/source-metadata/dataset_description.json",
+      "sha256": "39baee3ef549835c0ae13c83eed3235a6597d7ea24b1f94bf361fc1f32fffc35",
+      "bytes": 1103
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/source-metadata/README",
+      "sha256": "b66e136ee47c7a520d8c22380a9bdf7600b9bc387f5991a89f28c4d205faa23f",
+      "bytes": 1793
+    }
+  ],
+  "license": "CC0",
+  "methods_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9931814/fullTextXML",
+  "source_reported_review": "Radiologist axial slice-by-slice drawing; senior neuroradiologist double-check of source annotations; no review of our derived record",
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "file": {
+    "path": "derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz",
+    "bytes": 82420,
+    "sha256": null,
+    "expected_md5": "4b8717630500d48edb362542a283a07b",
+    "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz?versionId=o2G8mwmecJU6sRJDlz2GDmDIRXIK9umG"
+  },
+  "bounds": {
+    "elapsed_seconds": 90,
+    "max_mask_voxels": 20000000,
+    "max_decoded_mask_bytes": 160000000,
+    "scientific_gets": 1,
+    "retries": 0
+  },
+  "planned_checks": [
+    "published source size/MD5 plus measured SHA256",
+    "safe opcode-only exact voxelwise crosswalk membership",
+    "source RawSources and orig declaration",
+    "binary finite source mask",
+    "shape, affine, physical units and qform/sform agreement versus original TOF; mismatch retained without modification"
+  ],
+  "scanner_frame_admission": false,
+  "spatial_planning_admission": false,
+  "learning_updates": 0,
+  "recorded_rl_transitions": 0
+}
