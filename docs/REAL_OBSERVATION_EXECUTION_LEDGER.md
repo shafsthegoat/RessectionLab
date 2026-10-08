@@ -40,6 +40,16 @@ The user's hourly push request is scheduled as the active thread heartbeat
 to `origin/main`, verify the remote, and preserve unfinished work and running transfers.
 No force push, paid infrastructure, billing change or external outreach is authorized.
 
+## Latest acquisition checkpoint
+
+The [full eligible Lausanne annotation intake](../artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
+completed all 144 masks from 106 people/117 sessions. Independent content checks
+verified all 13,977,015 compressed bytes and 1,134,965 positive voxels. At the
+historical processing checkpoint, reference-grid checks passed for 116 masks;
+27 awaited references and one retained an unresolved grid. Four metadata exclusions
+remain. This completed review does not gate continuous original-image downloads.
+Anatomical review, spatial admission and fitting contributions remain unestablished.
+
 ## Evidence and decisions before the October 8 steering
 
 - Existing planning/ML comparisons remain historical. Search exceeded frozen

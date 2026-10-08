@@ -18,6 +18,12 @@ The records below retain the earlier policy and acquisition checkpoints. The old
 execution guards are still installed pending a scoped prospective migration;
 their refusal behavior is not the new training objective.
 
+The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
+completed all 144 masks (13,977,015 bytes). Independent content checks passed for
+all 144; the historical grid checkpoint is 116 passed, 27 awaiting original
+references and one unresolved grid. Four metadata exclusions and the earlier
+sub022 failure remain preserved. No anatomical or training admission is implied.
+
 Known incompatible learning, model-loading and SynthStrip support paths now
 refuse execution; complete artifact admission and provenance enforcement remain
 unfinished. The refusal-only suite passes **42 checks**; independent source review

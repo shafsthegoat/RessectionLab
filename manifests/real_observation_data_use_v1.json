@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Continue remaining TRAIN originals and bounded full 144-mask acquisition/QC with reviewed extension reader; source-appropriate component learning remains unexecuted",
+      "next": "Finish remaining TRAIN originals continuously with download-only receipts; review reference grids and anatomy in a separate phase; component fitting remains unexecuted",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -44,9 +44,7 @@
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
       "remaining_train_sessions_to_acquire": 99,
       "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-21-summary.json",
-      "acquired_source_manual_aneurysm_masks": 2,
-      "manual_annotation_bytes": 118971,
-      "manual_annotation_positive_voxels": 193,
+      "manual_annotation_bytes": 13977015,
       "manual_annotation_receipt": "artifacts/lausanne-sub476-annotation-v1/acquisition.json",
       "manual_annotation_spatial_admissions": 0,
       "manual_annotation_geometry_gate": "Raw grid equality remains false; explicit source-reference precision normalization supports retrospective component inspection only; scanner-world/inter-scan and spatial-planning gates remain unresolved",
@@ -75,12 +73,22 @@
         "acquired_bytes_retained": 58454783,
         "receipt": "artifacts/lausanne-train-intake-v1/acquisition-batch-19-sub-253-ses-20110628.json"
       },
-      "manual_annotation_content_qc_passed_masks": 2,
+      "manual_annotation_content_qc_passed_masks": 144,
       "manual_annotation_content_qc_failed_or_incomplete_masks": 0,
-      "manual_annotation_latest_intake": "artifacts/lausanne-annotation-format-v1/RESULT.md",
-      "manual_annotation_counted_source_positive_voxels": 3092,
+      "manual_annotation_latest_intake": "artifacts/lausanne-annotation-full-intake-v1/RESULT.md",
+      "manual_annotation_counted_source_positive_voxels": 1134965,
       "manual_annotation_historical_failed_attempts": 1,
-      "manual_annotation_latest_content_receipt": "artifacts/lausanne-annotation-format-v1/cache-repeat/receipt.json"
+      "manual_annotation_latest_content_receipt": "artifacts/lausanne-annotation-full-intake-v1/independent-verification.json",
+      "acquired_source_annotation_masks": 144,
+      "manual_annotation_reference_grid_qc_passed_masks": 116,
+      "manual_annotation_historically_missing_reference_masks": 27,
+      "manual_annotation_grid_unresolved_masks": 1,
+      "manual_annotation_subtype_counts": {
+        "manual_region_subtype_unresolved": 111,
+        "source_voxelwise_person_date_mismatch": 31,
+        "source_voxelwise_exact_crosswalk": 2
+      },
+      "manual_annotation_grid_status_is_historical_checkpoint": true
     },
     {
       "accession": "TopCoW external Lausanne",

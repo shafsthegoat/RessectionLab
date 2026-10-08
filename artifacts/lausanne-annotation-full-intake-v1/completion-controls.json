@@ -1,0 +1,106 @@
+{
+  "schema": "lausanne-annotation-full-intake-metadata-completion-v1",
+  "verification_sha256": "756a12b35e2634efa5d53629903d25798fb434b2c82d397a6d20cf958aacfcd9",
+  "metadata_only_no_additional_payload_reads": true,
+  "original_TOF_receipt_bindings_checked": 117,
+  "original_receipt_statuses_for_passed_TOFs": {
+    "acquired": 117
+  },
+  "sub253_separation": [],
+  "sub476_old_real_mask_receipt": {
+    "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/acquisition.json",
+    "sha256": "ccc3c32eae4e3c2d0d7103c376b2a70f963f4ed35646108457f1f0c47c8ff4ea",
+    "old_and_new_positive_voxels": 193
+  },
+  "historical_missing_reference_masks": 27,
+  "historical_missing_reference_subjects": [
+    "sub-452",
+    "sub-453",
+    "sub-460",
+    "sub-461",
+    "sub-464",
+    "sub-466",
+    "sub-467",
+    "sub-470",
+    "sub-472",
+    "sub-473",
+    "sub-474",
+    "sub-475",
+    "sub-478",
+    "sub-480",
+    "sub-481",
+    "sub-484",
+    "sub-485",
+    "sub-486",
+    "sub-489",
+    "sub-491",
+    "sub-492"
+  ],
+  "historical_missing_reference_unique_people_and_sessions": 21,
+  "original_receipt_and_TOF_present_during_review_masks": 12,
+  "original_receipt_and_TOF_still_absent_during_review_masks": 15,
+  "absent_during_review_subjects": [
+    "sub-467",
+    "sub-474",
+    "sub-475",
+    "sub-478",
+    "sub-480",
+    "sub-481",
+    "sub-484",
+    "sub-485",
+    "sub-486",
+    "sub-489",
+    "sub-491",
+    "sub-492"
+  ],
+  "missing_reference_snapshot_is_historical_not_continuous_acquisition_status": true,
+  "PID_and_process_groups": {
+    "checked": 144,
+    "all_absent": true,
+    "basis": "Per-mask os.kill(pid,0) and os.killpg(pid,0) both raised ProcessLookupError during primary audit"
+  },
+  "preserved_metadata_exclusions": [
+    {
+      "path": "derivatives/manual_masks/sub-148/ses-20111106/anat/sub-148_ses-20111106_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-148",
+      "session": "ses-20111106",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-163",
+      "session": "ses-20111014",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-163",
+      "session": "ses-20111014",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-220/ses-20110626/anat/sub-220_ses-20110626_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-220",
+      "session": "ses-20110626",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      }
+    }
+  ],
+  "interpretation": "All 144 review_passed statuses mean recorded per-mask QC outcomes independently reproduced; 28 remain reference/grid-pending. Positive voxel sums are mask-wise, not a deduplicated patient vascular volume. No new anatomical, negative-domain, training or planning admission. Continuous acquisition proceeds independently.",
+  "no_tracked_edits": true
+}
