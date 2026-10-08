@@ -1,0 +1,67 @@
+{
+  "checks": {
+    "costs": "1280 loss forwards and30 diagnostic forwards required; preparation, four-prefix reconstruction, optimization/export, initial/final guarded inference and audits timed; inherited search/teacher/audit costs separate.",
+    "failure_accounting": "Initial and final methods start as null outcomes. Rejected initial audit stops before optimizer. Reproduction failure retains16 completed orchestration rows and no final result. Existing output directory refused.",
+    "immutability": "All frozen files,32 numerical source files and15 inherited originals rehashed after tests; no tracked writes.",
+    "learning": "Same architecture, normalization, horizon, labels, equal sample weights, Adam settings and clip. Fixed256 primary checkpoint; six readouts cannot select checkpoint.",
+    "lineage": "Exact prior declaration, original execution index, five accepted saved demonstration trajectories and teacher labels; zero patient or held-out inputs.",
+    "supervision": "Single subprocess process group, frozen raw declaration hash, one CPU/BLAS thread,60-second parent threshold,2-GiB sampled worker RSS, no automatic retry, persistent supervisor/failure/output index.",
+    "teacher": "Five unique audited observations in original order, four saved one-step prefixes, two STOP labels; runtime checks exact regenerated fingerprints, action inventory, source and nominal model.",
+    "weights": "Fresh seed-11 initialization must equal original initial tensor hash; no checkpoint or optimizer warm start. At update16 both final tensor hash and all16 original gradient/hash records must match."
+  },
+  "conclusion": "No concrete blocker found for one fixed seed-11 256-update BC diagnostic under the exact declaration; this review did not execute the fit.",
+  "controls": {
+    "deselected_native_or_gradient_controls": 7,
+    "independent_controls": 10,
+    "passed": 20,
+    "scope": "Metadata/refusal controls and pure orchestration stubs only. No native task factory, rollout, actual policy forward, optimizer update, search or256-update fit executed. Owner actual-gradient and prefix-reconstruction tests were read, not rerun.",
+    "seconds": 5.16,
+    "selected_owner_controls": 10
+  },
+  "declaration_sha256": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84",
+  "environment": {
+    "numpy": "2.5.3",
+    "pytest": "9.1.1",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "findings": [],
+  "frozen_files_sha256": {
+    "docs/native-opening-bc-capacity.md": "7ede45ba61e65453887607017fadbd574d6f0d3e11fbb2074207fd62c4efe136",
+    "manifests/experiments/native-opening-bc-capacity-v1.json": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84",
+    "scripts/run_native_opening_bc_capacity.py": "635d6267f7e28583617ab0c5a04a6ce49cbc8ea4290d82f993ac9fc3e8590156",
+    "tests/test_native_opening_bc_capacity.py": "bb683cb6a300ef7872ccc059e7c0be32047729967e845b56fdc0c4b14d2f9230"
+  },
+  "inherited_input_sha256": {
+    "BC-latest.pt": "35a60b529c0bc675f72955ea77d3e4b0090df2e0737bd890ff6eadca45c4fdbe",
+    "BC-updates.json": "5df5c0ec90a579fe4e2c9534a0a391008fdcb2953e20733bbb0b219fdc285c9b",
+    "declaration-input.json": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212",
+    "depth2-search-cost.json": "bb9fb6d8f623d2d634923042e4770df64a888894be54f1104f57dd40b5a658ca",
+    "initial.pt": "dc3c8e9fb00b4811d751814a9d9fc26b311c66b9b82faa8e1a21b9842ac26e17",
+    "output-sha256.json": "54136e02405df6ff61be23d9c5791a02ed36c97e0a1de56015a73da41b323eac",
+    "preparation.json": "63181c0754443730925e758019007ff472d58b9db1b72d9e3aacf9a28d8a3884",
+    "result.json": "ae038fac3f3e85a2aeaab709a2f078626c5bea9722edf53289b60346a6ee17e3",
+    "teacher-demonstration-checks.json": "abd9bef9e27913b9640bf77c8e9450a3fc5fadede14b1567a6b6eb9d04afc7f1",
+    "teacher-state-00.json": "7702dbb165ee1b2b1c7f68f5db4b8ce88ceb3118fce1ae626edd895d259b0c3c",
+    "teacher-state-01.json": "96de8bf553e7d336bc542154db1601cac5a383e3632afebdf54d52ceed6105eb",
+    "teacher-state-02.json": "73bc24abdadeca03d98ef957ab66482487e645c5a9ef903fac647772953f0285",
+    "teacher-state-03.json": "f1c9427b82096aa0d411fbf0290a7a97fb65b9c992eef951a010d82b35c94fa4",
+    "teacher-state-04.json": "eb972ffc5d961c8cac88200067dd297045267f18aacead663995c8bcfb4b9e6e",
+    "teacher.json": "d40c9e75fb47563212d1b2c88d5f96edc25de823e45d7e230f198a13547f1d87"
+  },
+  "inherited_inputs_verified": 15,
+  "limitations": [
+    "This is a prospective bounded-protocol review, not evidence that the256-update fit succeeds or improves action selection; inspect retained final outcomes even if worse.",
+    "The60-second parent threshold uses0.2-second polling, an RSS measurement subprocess with2-second timeout and up to2-second SIGTERM grace before SIGKILL. It is not a strict instantaneous wall or memory cap; parent preflight/snapshot/final index work is outside the worker envelope. Report actual supervision measurements and failures.",
+    "Exact source/input declarations authenticate the reviewed local files and saved ancestry, not adversarial in-process Python monkeypatching or external original authenticity. Third-party dependency versions are not frozen in the declaration; reproduction gate catches numerical divergence at16.",
+    "One generated six-cell task and five training states establish neither anatomical generalization, held-out patient performance, physical realism, clinical value nor RL improvement."
+  ],
+  "old_source_closure_unchanged": true,
+  "review_artifacts_sha256": {
+    "pytest.log": "a0ba7864cc8beee1c01a9cb28de61c082382a098e80ba0f95241780479df2b33",
+    "test_independent_capacity.py": "a6421394266847f91b99a6f6dd63021a32b30351113b8505acfa9cba09ff34af"
+  },
+  "source_files_verified": 32,
+  "status": "passed_bounded_protocol_review",
+  "version": "native-opening-bc-capacity-independent-pre-execution-review-v1"
+}
