@@ -1,0 +1,108 @@
+{
+  "audit_source": {
+    "path": "build/hbe-n36-preparation-review-v1/audit.py",
+    "sha256": "542aa85c8c64f31ab355a99e40b632c37baf7d84841cbd2f37d9842d2f0fe413"
+  },
+  "baseline_input_count": 266,
+  "blocking_findings": [],
+  "created_at": "2026-10-08T17:32:53.899829+00:00",
+  "declarations": 6,
+  "full_prepared_geometry_deck_loading_reconstruction_recheck": true,
+  "independent_geometry": {
+    "full_axial_layers": 18,
+    "full_hex8_cells": 69984,
+    "full_nodes": 75259,
+    "half_axial_layers": 9,
+    "half_coordinates_bit_exact_subset": true,
+    "half_hex8_cells": 34992,
+    "half_nodes": 39610,
+    "maximum_reflection_coordinate_error_m": 8.673617379884035e-19,
+    "midplane_nodes": 3961,
+    "reflection_node_and_cell_coverage_exact": true,
+    "retained_quality": {
+      "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+      "checks": {
+        "declared_cell_count": true,
+        "finest_boundary_sag": true,
+        "finest_volume": true,
+        "minimum_scaled_jacobian": true,
+        "positive_rest_jacobians": true
+      },
+      "connected_cell_count": 69984,
+      "exterior_face_count": 10368,
+      "hex8_cell_count": 69984,
+      "integrated_volume_m3": 2.458001192168491e-07,
+      "interior_face_count": 204768,
+      "maximum_radial_boundary_sag_m": 9.518916901790631e-07,
+      "maximum_radial_boundary_sag_over_R": 0.00023797292254476576,
+      "minimum_rest_determinant_m3": 1.7371081271953238e-13,
+      "minimum_rest_scaled_jacobian": 0.7071067811865464,
+      "node_count": 75259,
+      "passed": true,
+      "relative_volume_error": 0.00031727960799288386,
+      "sampled_site_count_per_cell": 17
+    },
+    "straddling_cells": 0
+  },
+  "input_hash_inventory": {
+    "path": "build/hbe-n36-preparation-review-v1/input-hashes.json",
+    "sha256": "0dbfd94a14459ced587c309176cf1f3f2a3b0b30fce51ae1c8018a3de3f4ca93"
+  },
+  "limits": [
+    "Review verifies saved preparation only; no spatial, temporal, physical or calibration gate passed.",
+    "No new mesh or solver was executed. Existing mesh arrays and deck were inspected and rechecked without writing derived geometry.",
+    "Original input and native primitive files were hash-checked only; no raw response parsing or measured curve access.",
+    "RSS/output maxima are sampled; cleanup evidence is the exact successful supervisor record, not a retrospective process census.",
+    "Solve remains unreleased here and must bind both result and publication plus this review. One solver call only under unchanged prospective caps.",
+    "The closing receipt explicitly excludes its own final fsync from the observed publication interval."
+  ],
+  "measured_curves_accessed": false,
+  "native_call_counts": {
+    "observed_preparation_gmsh_generation_calls": 1,
+    "observed_preparation_solver_calls": 0,
+    "review_gmsh_calls": 0,
+    "review_solver_calls": 0
+  },
+  "preparation_release": {
+    "path": "build/hbe-halfheight-global-n36-v1/prepare-release.json",
+    "sha256": "09f0f974f1e9a3d7e4765ac96c736eb72cc0c9ca250ba96336799e2c01689196"
+  },
+  "prepared_files_unchanged": true,
+  "publication": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/publication-check.json",
+    "sha256": "b30e8fb5d5f27ed557ce7b281a8e6a34b2501e4cfac7c1316ba6168e6bb87bd4"
+  },
+  "release_created": false,
+  "resources": {
+    "inclusive_prepare_cap_seconds": 60,
+    "native_mesh_generation_seconds": 9.475779208121821,
+    "output_watch": {
+      "maximum_active_bytes": 36994397,
+      "maximum_total_bytes": 66024930,
+      "sampling_interval_seconds": 0.1,
+      "sampling_limit": "Between-sample peaks may be missed.",
+      "status": "watching"
+    },
+    "publication_elapsed_seconds": 17.99547491595149,
+    "retained_bytes_including_closeout": 66029975,
+    "sampled_peak_worker_family_rss_B": 687112192,
+    "sampled_rss_cap_B": 3221225472,
+    "supervisor_completed_exit0_without_kill_cleanup_or_error": true
+  },
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/result.json",
+    "sha256": "a83b1278a21642a9961ca590d8207891c37fa6f8a84ec50744e8541e2b0b4930"
+  },
+  "review_elapsed_seconds": 12.556407375028357,
+  "review_runtime_is_not_native_performance": true,
+  "schema": "hbe-n36-independent-saved-preparation-review-v1",
+  "source_and_baseline_input_hashes_unchanged": true,
+  "source_archive": {
+    "path": "build/hbe-halfheight-global-n36-v1/source.tar",
+    "sha256": "dc2716fdbddbaa7738ed10a9229360e4d4d4dfff5db33725b73e57020f555a4e"
+  },
+  "source_commit": "169efad4d2cb3b53a80091082c9845a2c45e8b99",
+  "source_modules": 20,
+  "status": "actual_preparation_verified_for_separate_single_solve_release_review",
+  "tracked_edits": false
+}

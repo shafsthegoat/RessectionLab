@@ -40,6 +40,11 @@ All [Lausanne TRAIN originals](artifacts/lausanne-train-acquisition-complete-v1/
 are now complete: 840 files, 199 people, 210 sessions and 10,020,802,851 bytes.
 The final 26 images await separate header/scalar QC. Six earlier T1 frame conflicts
 remain unresolved; download completion does not establish anatomical admission.
+The [separate QC implementation](artifacts/lausanne-deferred-qc-preparation-v1/RESULT.md)
+now has independently verified lifecycle repairs; its 26-image and 27-reference
+review is running independently of downloads. The [N36 specimen preparation](artifacts/hbe-n36-preparation-v1/RESULT.md)
+passed independent geometry/source checks and the single capped FEBio solve is
+running. Physical and calibration gates remain closed pending its result.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
 now advances acquired phases/points and reopens bound snapshots. Independent review
 cleared transport and packaged-startup repairs. Sparse landmarks still provide no

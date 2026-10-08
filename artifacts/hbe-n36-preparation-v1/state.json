@@ -1,0 +1,63 @@
+{
+  "cases": {
+    "compression:N36:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/skyline.feb",
+        "sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/specimen.feb",
+        "sha256": "2f24c4af603c037a9929805d7243b9f4e93e9dd67644822e9d37c0d5f4ca3694"
+      },
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/generated/mesh.json",
+        "sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/loading.json",
+        "sha256": "6450d2aedf8902c9a02d73bf71d70f61d235ea82fe333a8ea1405df902595b69"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+        "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json",
+        "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+      }
+    }
+  },
+  "elapsed_seconds": 13.755256166914478,
+  "generation_receipt": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/generated/receipt.json",
+    "sha256": "dc54d981f41b04b5597841345448550ced6315e8f40fcf51a1b47cc8ba365280"
+  },
+  "gmsh_generation_calls": 1,
+  "levels": {
+    "N36": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/generated/mesh.json",
+        "sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+        "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json",
+        "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+      }
+    }
+  },
+  "measured_data_accessed": false,
+  "phase": "prepare",
+  "reused_runs": {},
+  "runs": {
+    "compression:N36:S60:reference": {
+      "status": "not_executed"
+    }
+  },
+  "schema": "hbe-halfheight-global-n36-state-v1",
+  "solver_invocations": 0,
+  "status": "prepared_not_solved"
+}

@@ -1,0 +1,45 @@
+{
+  "aggregate_cap_seconds": 60,
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/baseline.json",
+    "sha256": "948e1f4f823e5cfe1cdf2a992881e144feba87c3e7868e0938308bcfe7c4062b"
+  },
+  "measured_data_accessed": false,
+  "output_cap_bytes": 2147483648,
+  "phase": "prepare",
+  "phase_elapsed_before_result_publication_seconds": 17.993471040856093,
+  "schema": "hbe-halfheight-global-n36-supervised-result-v1",
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/state.json",
+    "sha256": "e6a8ace19d64657daabab2fe624b65190efabd154aec0785150f0be9f077e63c"
+  },
+  "status": "prepared_not_solved",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-global-n36-v1/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--worker-baseline",
+      "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/baseline.json",
+      "--worker-baseline-sha256",
+      "948e1f4f823e5cfe1cdf2a992881e144feba87c3e7868e0938308bcfe7c4062b",
+      "--phase-deadline",
+      "1221771.473966875"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 15.618263750104234,
+    "error": null,
+    "exit_code": 0,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 79398,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 687112192,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "completed",
+    "wall_cap_seconds": 58.39401041716337
+  },
+  "timing_scope": "payload_before_publication; acceptance_requires_publication-check.json"
+}
