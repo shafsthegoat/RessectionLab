@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Thirty-three TRAIN original
-pairs from 32 people and their sidecars are acquired (1,340,954,110 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Thirty-nine TRAIN original
+pairs from 38 people and their sidecars are acquired (1,608,462,974 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -52,7 +52,10 @@ receipts and originals passed root and independent verification; 177 sessions
 remain. Sub077's previous partial is now complete and verified; its timeout
 record remains unchanged. See [batch07](artifacts/lausanne-train-intake-v1/acquisition-batch-07-summary.json)
 and [batch08](artifacts/lausanne-train-intake-v1/acquisition-batch-08-summary.json).
-No acquisition batch is currently running.
+The ninth batch completed six more people/sessions in495.218seconds, adding
+267,508,864source bytes. Root and independent review reverified all39 source receipts. Closure totals are38people/39sessions;171sessions remain.
+See [batch09](artifacts/lausanne-train-intake-v1/acquisition-batch-09-summary.json).
+A tenth bounded600-second/268,435,456-source-byte batch is running.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -114,7 +117,10 @@ request failed because those tracks are absent. Native time origin contradicts
 the initial release-relative assumption and remains unresolved; replay preserves
 unshifted source timestamps with a null origin. Monitor-record age is not cuff
 measurement age. No dosing, physiological accuracy, fitting or RL result follows.
-Fresh-checkout cache preparation and desktop integration remain to be completed.
+Fresh-checkout cache preparation is now implemented:16focused checks pass,
+independently repeated. An isolated missing-cache reproduction using authenticated
+local bytes admitted all21,970records through the unchanged reader; the actual
+offline cache check made zero downloads. Desktop integration remains open.
 
 NFBS supplies source-reviewed brain-extraction labels with CC0 metadata, but
 release-specific BEaST augmentation ancestry remains unresolved. LPBA40 would
