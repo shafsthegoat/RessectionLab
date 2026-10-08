@@ -157,8 +157,8 @@
       "train_label_volumes": 25,
       "pilot_manifest": "manifests/resect-case3-cavity-pilot-v1.json",
       "pilot_patient": "RESECT:Case3",
-      "acquired_train_people": 13,
-      "acquired_train_bytes": 557790240,
+      "acquired_train_people": 14,
+      "acquired_train_bytes": 1230127097,
       "used_in_component_fitting_people": 0,
       "component_optimizer_updates": 0,
       "recorded_surgical_transitions": 0,
@@ -166,19 +166,19 @@
       "used_in_offline_rl_people": 0,
       "checkpoint_contributions": [],
       "receipt": "artifacts/resect-component-admission-v1/RESULT.md",
-      "next": "Perform separate cache-only QC for 24 newly acquired pairs; retain mirror transport provenance and original OSF failures; qualify intended component use before fitting",
+      "next": "Cache-only QC of24 remaining image/mask pairs, then original-image and landmark/frame qualification before intended component use; retain all rights, missing labels and historical failures",
       "exclusions": [
         "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
         "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
         "Later ultrasound is unavailable to preoperative policy inputs"
       ],
       "annotation_rights_receipt": "artifacts/resect-component-admission-v1/rights-review-02/README.txt",
-      "acquired_original_images": 25,
+      "acquired_original_images": 70,
       "acquired_annotation_masks": 25,
       "complete_image_annotation_pairs": 25,
       "qc_passed_pairs": 1,
-      "acquisition_scope": "All 25 frozen TRAIN pairs acquired and byte-verified; original Case3 pair retains prior header/scalar/binary/grid QC; 24 pairs await separate QC; anatomical review pending",
-      "latest_acquisition": "artifacts/resect-exact-mirror-acquisition-v1/IMPORT_RESULT.md",
+      "acquisition_scope": "All129 frozen TRAIN original files and25 masks acquired and byte-verified; new104 originals remain unreviewed,24 image/mask pairs await separate QC;13 cavity-labeled people; no additional roles or trajectories",
+      "latest_acquisition": "artifacts/resect-train-originals-execution-v1/RESULT.md",
       "development_correspondence_evaluation": {
         "patient": "RESECT:Case4",
         "role": "DEVELOPMENT",
@@ -221,7 +221,24 @@
       "header_qc_new_pairs": "not_run",
       "anatomy_qc": "not_run",
       "training_admitted": false,
-      "spatial_planning_admitted": false
+      "spatial_planning_admitted": false,
+      "previous_original_acquisition_checkpoint": {
+        "acquired_train_people": 13,
+        "acquired_train_bytes": 557790240,
+        "acquired_original_images": 25,
+        "latest_acquisition": "artifacts/resect-exact-mirror-acquisition-v1/IMPORT_RESULT.md"
+      },
+      "acquired_landmark_files": 59,
+      "acquired_original_files": 129,
+      "acquired_modalities": [
+        "T1w",
+        "FLAIR",
+        "intraoperative ultrasound"
+      ],
+      "original_acquisition_summary": "artifacts/resect-train-originals-execution-v1/summary.json",
+      "original_acquisition_summary_sha256": "37aafaa2ed9fb388704fc7c74210215fc4279ad689f3f1c30d450a17d1098301",
+      "new_original_header_qc": "not_run",
+      "new_landmark_qc": "not_run"
     },
     {
       "accession": "VitalDB",

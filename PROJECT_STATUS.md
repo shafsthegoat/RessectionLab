@@ -60,12 +60,12 @@ now passes its independently reproduced conditional consistency screen:
 only; spatial acceptance, physical validation and calibration remain unestablished.
 The [N36/S120 increment check](artifacts/hbe-n36-temporal-preparation-v1/EXECUTION.md)
 is now running from a verified committed archive. Its 13.3256-second preparation
-completed; no terminal comparison result is available at this checkpoint. A separate
-[104-file RESECT originals queue](artifacts/resect-train-originals-preparation-v1/RESULT.md)
-is running continuously: 28 MRI, 17 ultrasound and 59 correspondence files from
-exactly the existing 14 TRAIN people, excluding all protected people. Its 43 owner
-and seven independent controls passed. Download completion and scientific QC remain
-separate. The [TRAIN compatibility contract](artifacts/btc-train-transfer-readiness-v1/contract.json)
+completed; no terminal comparison result is available at this checkpoint. The additional
+[104-file RESECT originals queue is complete](artifacts/resect-train-originals-execution-v1/RESULT.md):
+28 MRI, 17 ultrasound and 59 correspondence files from the existing 14 TRAIN people.
+All 672,336,857 bytes passed independent size/MD5/SHA256 checks after a continuous
+265.1827-second run. Combined originals now comprise 70 images and 59 landmark files;
+cavity labels remain 25 masks for 13 people. Scientific QC remains separate. The [TRAIN compatibility contract](artifacts/btc-train-transfer-readiness-v1/contract.json)
 is archived for a two-forward PAT05 diagnostic without actions or optimization.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
 now advances acquired phases/points and reopens bound snapshots. Independent review

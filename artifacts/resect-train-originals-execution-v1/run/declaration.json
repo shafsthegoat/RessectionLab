@@ -1,0 +1,31 @@
+{
+  "runtime": {
+    "scripts/acquire_resect_train_originals.py": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50",
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "manifest_sha256": "1764a0ce75b449d542ef51578c54cab6202b66d72c71b811999cb51a55164135",
+  "bounds": {
+    "files": 104,
+    "people": 14,
+    "source_bytes": 672336857,
+    "compressed_cache_bytes": 1073741824,
+    "free_disk_reserve_bytes": 536870912,
+    "workers": 1,
+    "worker_seconds": 295,
+    "supervisor_seconds": 300,
+    "connect_seconds": 30,
+    "hash_chunk_bytes": 1048576,
+    "max_attempts_per_object": 3,
+    "minimum_cooldown_seconds": 900
+  },
+  "started_utc": "2026-10-08T19:26:52.642376+00:00",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "decoded_array_bytes": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0
+}

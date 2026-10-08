@@ -1,0 +1,11 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "scripts/acquire_resect_train_originals.py",
+    "run"
+  ],
+  "pid": 3557,
+  "started_utc": "2026-10-08T19:26:52.571498+00:00",
+  "source_commit": "85ac688d04839397051093a75ac6df41415f1725"
+}

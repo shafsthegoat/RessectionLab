@@ -1,0 +1,749 @@
+{
+  "schema": "resect-train-originals-publication-v1",
+  "staged_utc": "2026-10-08T19:39:31.772275+00:00",
+  "status": "metadata_staging_complete_for_root_integration",
+  "acquisition": {
+    "complete_files": 104,
+    "bytes": 672336857,
+    "elapsed_seconds": 265.18267458397895,
+    "source_commit": "85ac688d04839397051093a75ac6df41415f1725",
+    "exit_code": 0,
+    "landmark_files": 59,
+    "mri_files": 28,
+    "ultrasound_files": 17,
+    "existing_train_people": 14,
+    "new_roles": 0,
+    "newly_declared_people": 0
+  },
+  "coverage": {
+    "prior_queue_files": 890,
+    "new_queue_files": 104,
+    "combined_queue_files": 994,
+    "separate_lausanne_annotation_files": 144,
+    "file_counts_are_not_disjoint_person_counts": true,
+    "combined_unique_resect_train_original_files": 129,
+    "combined_resect_train_images": 70,
+    "combined_resect_train_landmark_files": 59,
+    "existing_original_files_not_downloaded_again": 25,
+    "protected_people_excluded": 9,
+    "resect_cavity_labeled_people_unchanged": 13,
+    "resect_cavity_mask_files_unchanged": 25,
+    "new_label_files": 0,
+    "new_verified_recorded_trajectories": 0
+  },
+  "fixity": {
+    "published_identity": "Exact source catalog size and MD5",
+    "local_fixity": "Measured SHA256 bound to each completion receipt; no published SHA256 claimed",
+    "independent_checks_passed": 104,
+    "independent_review_sha256": "c3a7e1f78879fd98035e74c7cb6ad18fbd5942e0e1da35654c910560c67a3199"
+  },
+  "rights": {
+    "original_release": "RESECT DOI10.11582/2017.00004 version1",
+    "original_license": "CC-BY-4.0",
+    "new_RESECT_SEG_labels_acquired": false,
+    "previous_cavity_masks_remain": "CC-BY-NC-SA-4.0; existing source/role constraints unchanged"
+  },
+  "source_transport_metadata_index": {
+    "path": "source-transport-metadata-index.json",
+    "bytes": 251704,
+    "sha256": "4ed35536b31349dde93884de110e847443c91c68810e1ca4cd108843556ac7b8"
+  },
+  "exact_completion_metadata_count": 104,
+  "included_files": [
+    {
+      "path": "independent-review/verification.json",
+      "bytes": 72393,
+      "sha256": "c3a7e1f78879fd98035e74c7cb6ad18fbd5942e0e1da35654c910560c67a3199",
+      "original_path": "build/resect-train-originals-output-review-v1/verification.json"
+    },
+    {
+      "path": "independent-review/audit.py",
+      "bytes": 14252,
+      "sha256": "8dd4b71e648e36476a735a1e5228264196be123d282f378a5a2b4fbe77a1136a",
+      "original_path": "build/resect-train-originals-output-review-v1/audit.py"
+    },
+    {
+      "path": "independent-review/metadata-sha256-index.json",
+      "bytes": 137505,
+      "sha256": "c2b7faccdb1029a4e40227ae6e2dba694399f792a43cb3c7b0d74328074eef4f",
+      "original_path": "build/resect-train-originals-output-review-v1/metadata-sha256-index.json"
+    },
+    {
+      "path": "independent-review/prior-history-sha256-index.json",
+      "bytes": 179932,
+      "sha256": "4d6e9bc2df01dd767d7e11710cd2284701709a8444d76bb802582d08b71743d9",
+      "original_path": "build/resect-train-originals-output-review-v1/prior-history-sha256-index.json"
+    },
+    {
+      "path": "execution/actual-launch.json",
+      "bytes": 247,
+      "sha256": "afe9ddd048d0e5b2bd882a0bcd36525f179dd384b2ec3131fae526f2ae0bd772",
+      "original_path": "build/resect-train-originals-execution-v1/actual-launch.json"
+    },
+    {
+      "path": "execution/actual-terminal.json",
+      "bytes": 360,
+      "sha256": "2c79d439ffec8234f61af93b75cc58f9421cbcb26b34c27f448fbcf064fb60d1",
+      "original_path": "build/resect-train-originals-execution-v1/actual-terminal.json"
+    },
+    {
+      "path": "execution/actual-run.log",
+      "bytes": 9206,
+      "sha256": "e5d83cd6f0809fc8a50196116de666bfe8879c6c1f9c6b094a631b93ae44eca4",
+      "original_path": "build/resect-train-originals-execution-v1/actual-run.log"
+    },
+    {
+      "path": "run/declaration.json",
+      "bytes": 1101,
+      "sha256": "454d825a4221147c5ff57cf971c32b2bedc778225f2fddd9188ab2e6e9df19b6",
+      "original_path": "data/acquisition/resect-originals-v1/runs/20261008T192652-c7707cae/declaration.json"
+    },
+    {
+      "path": "run/completion.json",
+      "bytes": 499,
+      "sha256": "77ef4bbeababa0d6fbd6c18172c684dacd09f30cf799a88ece1ee0d9619b1d6e",
+      "original_path": "data/acquisition/resect-originals-v1/runs/20261008T192652-c7707cae/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "c3c55696fea1e69d1d9f56062b39dc461cb514b476f6101cc32ae2c969317701",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "c736ed645d40b344ac6cfb2dd917be071bdc1a4db599af4a3328274aa8864a43",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "828b628683fdb8050a332be76eea32f7dd53960ef3a21d5f7184acc0f53c8b66",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "3ebac26fe2680f0a3456de6c2e2a95e12bbfd6324c237237b75cdd36f8bf6652",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "446dd6ebe1cab49319a0696bc62ba04e808a08809e32c31383fa70bf07c86d57",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "f007edc2193374ab22a1e48a98893eadac44e6a82bf404d56399d850e9374005",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "4d63e5c9093c39385b3e25eab12c711335ee4612330d75e696bd0e3a47373752",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case3-US-before.nii.gz.json",
+      "bytes": 471,
+      "sha256": "1c87d80c1ac8ba38599da8c1325e703031d57814a2ebd78c0e011a8c363195ff",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case3-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-MRI-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "6d23bd62ff25fb001009895332255a88cab2f817965f3e79eb5d7a79a40be745",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "cc55fa8e4035081980f4b26bb77e4a38c1f75a826f1b20224088db07bbef5f88",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "ca4424e19a9dea95cf81fa18b5ad071d5297b0163a4e1c89fbab8722fe6d48aa",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "faefae3b34612b24668dffa779ba232ee527d60dd58a485b61f15c5e1c218aa8",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "001413ffdb9e6240b1f1b668414348b9cfd8e69b3bb71ed80b4df1893e82e9dc",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "1cc9909674a68ae020ba1bbc497c6ee3e93333d153b6739e6d895e3f6d43eac7",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "6e862af047aac7b1672c3b8795c307759c2336e302b7e3b21a4273a992a7b8d0",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case2-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "dcde15b9ccc8ce7e8e54ffd5347ff65ac6b8b230ebcb92b7a988141805290cc5",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case2-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case5-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "6de3e6e9e65f297acce7171d11db8daf37fefe8f61a1e0eaf313294e94ff9b7d",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case5-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case5-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "d48fcfe9fc9b1b776449013deca7db67bd53f7895fad5f1ab798c2f9d4fa9a5f",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case5-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case5-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "1fa4fcc197fda0f78319b277c6dfea7b5c21650e41965c1651ebb87252c7d46c",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case5-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case5-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "26e4346c5787173d4b17f984d4dc00bd3ceaeda8dddcb50de5e4e7bc69fadd27",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case5-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "57400b50c013bebb8a8f6103853d2f440be488f45bbe372802d9af79a92f5374",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "68f5640b774aa25367b90fea648b58e84ccb44a6b5b05dee5ef67ec491625dd6",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-beforeUS-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "f0f5aaee259c9c030b649f41b4d97c23c6bd3a7f7f28ad7d0285fe336eb74d13",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "faa049e4b1e1ddd4dfc6ad6450caea64c06f59d6b1ec510cc804441af1913bfe",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-beforeUS-duringUS.tag.json",
+      "bytes": 468,
+      "sha256": "56b482f91c102c6b82e9dcf6d129c68c63229b0b2b2c017086c28d64757fe115",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "561d86f5c6218fdcda9e01591738976db19ce724daadc052ac01438b65013afc",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "1bcaebc8fa20f34cb0c993ae19f338cf7e914c8c5e609641703357ce0ded3d7f",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case7-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "df56f94cd299be30df134fa24ea5ea351ad2103d4de7103a038a51ca8f0dc53b",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case7-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case11-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "a6cd48ce4b4769d0d09c2a7844438cfe7b3feff2caad30582f5b994bd6bbb6e8",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case11-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case11-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "d9063dbed97eec8016cee9a786b3851fc6ae8a11fc6f86649754920129fc0027",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case11-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case11-T1.nii.gz.json",
+      "bytes": 471,
+      "sha256": "ae79d32b64fb14477bfc099ce9f7edc7856a9f5cdfbda817e9cc58a8c9ba7a93",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case11-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case11-US-after.nii.gz.json",
+      "bytes": 472,
+      "sha256": "db1114b59867caed0335279f5f2ec05775edafe87d05797d37fad146f39bcaeb",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case11-US-after.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case11-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "72cd9fc1857b15defc273106633a723b073e233db2d4481ecc29d777e800f100",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case11-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case11-US-during.nii.gz.json",
+      "bytes": 472,
+      "sha256": "2750a435d2b3760e584d1e2193a45b8c387b899c6c58f797a837ae7b37b5b90a",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case11-US-during.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "016b15338a3d137038c586ede722f3e28841feaaf7c017a2d8c60dbf496e22fc",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "6322390736869bf8ccd13f9a30ee816de7c8d71f264106756c9fd38b51aff352",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "f9b9b4ba87db6cb62a5dcab44ab2c83383acc8e32f9f54e44a6e4e855f1cb916",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "6a78822a0a1acbbdb7bf7422d63f5694ae0c67dc029103de57fdbfe43a0d5d63",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "e93eade30baf1f74901035dea389caff4268404acacdf40af6cef7b70f3962f4",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "8f2c461db63d80e3ecdc15f9c2762b0dd9fb3ceeb12a2e13fc3ff0887b75267c",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "91994cb62fd47134824c13e2bbcfaf5e3e2fcbc26ada3d285d63a6291b3e263a",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case12-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "62b1285befba16d12f14fa1a8ebe9f003cb1e30911fd7ce067612b8fe21a71dd",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case12-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "d063f03d2c45c76d8335e959c70f52886c9754bda200be106c8171b7e6e4ee85",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "a0a955b0cd8bc95ad7f50cece3315064acae538814ec1477796a118b5a9d807c",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-beforeUS-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "409e1e935a6b4692d59fae143c164ffc947a6d25b66193453864f3867e99d251",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "1d68cd505b5bebc63177a780dcb151521a300d90484ae687ae5155e7ffba59cf",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-beforeUS-duringUS.tag.json",
+      "bytes": 468,
+      "sha256": "7588261f2abaa972a423f43e327b6fd13fe154c7288118d164451697e7f83495",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "e55e96d42e10ccac025d7493d261e2cd67128c1dbd80966fac2aac5b0181fe6d",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "b1fa5c31e6e8279b655c98581845b175dceb56e204916e5324f8c43549b42c7e",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "34c94e912e3fde292819da00468154cd86ad7d09dff52a35d182bec34f11e1c5",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case15-US-during.nii.gz.json",
+      "bytes": 472,
+      "sha256": "cf82716008ae4fb1fd4da7eeb18e73e7c848e6d67cfd669cc0b894de8068740e",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case15-US-during.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "2154d3cd7b242b206e86174fc4ca2d7c803e2cb4d657b345142cf72cd5e85a7d",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "77264bf3bbabca293e48fb07dcf601f7691f142641ba10fc26781fee7ab7c68f",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-beforeUS-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "00a67a5f454f4cb8605a50a35508881dff7bfd89c7426347222b180088fb8352",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "eb472d1a552a58ea6a7ea8f7b6efcb2e985ab6f52d9b7557e6e2a21a3d4e7c97",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-beforeUS-duringUS.tag.json",
+      "bytes": 468,
+      "sha256": "11377dca17aba89bdb2943951ab389e743fc65070e2a7528509cd587588b5274",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "cd48a454427e4d595b113d3600e5706b39ee0e9a1cfdab36f15f4fad14782319",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-T1.nii.gz.json",
+      "bytes": 471,
+      "sha256": "b2ad7009ee51cc72acbc8dfd83d09d88cf8cf3a6ab7cae143af19fc328e8ed56",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case16-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "6649a7a110dbfac2a6eca3697d7522a15518136dd45b10f8f792c1f1565986ba",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case16-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "7689821ffc38c9511cb894c0ae2c6023edd531d722a6f4e95f773adb653450fb",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "fef0f290ddffff37a233fe30f1073feb45c7c2a409368131b8a9b8a2ed2c7a45",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "2f941d3dac0a2c1638bfa3c7ced64b4085d2af2d77657e08ef9989b96977abf6",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "e1c177d9bba7b176fb7128749ad713a4a3bb5985ccfeb1ea014518f10bde94dd",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "97bc5ee5bb99f6aba8b1c073a0e66766a12bb4409c3185b9d6aabe1e753a30ea",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "636206f0dca2b00e7c318cd5a6ee5c1e396b8337f6850de517cd82dc0f2d1776",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "a9c3f19b2d3d6d3167328a742087dc9c72a8b95deea5cdb66ad49a5c21b66cf7",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case17-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "ff4184acbb41a5ac2f2fe6b7225d6dbc59f4572e01289c83fbd36fd0c56a24ca",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case17-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-MRI-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "b55380448440ccfa8f5105ae9949555d879b83037a98e25f1fece6f2dd3fbe99",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "a0d78492c2f780d98e7c882b00f0e991276000ab062a1147497c3f6eff1e8f67",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "d2619c11583f6e15fcc7e38e2fdfc7c3c06ff78de8af5871f6d5dc4a34fea62d",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "9cbf5a838ca32216cd0b7ad36511ad264fc9255374ac2df4912990eef5c07f1f",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "f7a74b902635113d25f7037f4e69394d013138bab69340be5660be92cf3dc670",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "2c52bc4afaf2638b60a65db1c135cc2d9313e2166504a09999d74b35ae1a720e",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "9110077ff85140944c8622c9ab2feeddbb6518f8119cf2b31c1f3389ceb2ad86",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case18-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "7ebe65d74779ae65aa89269d06b1798a69b6d5453b875cf8bc0710d74b83c9e5",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case18-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "74aa74f5ffec13b17b087ff3631e36eef4400b19f8f1a7bb1f814ee8e12a66c5",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "04cedaa8c097982f7199dedcf22f2435cf9231912123b17729ce9abf276ea88f",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "b60f7d42fb6482b17c157bdf906b07caeb6e8cad0fd836681fafb1c90a8fcd85",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "623377a4891de5140e5e2288fdeb43b3c048b6cc90caff76cd75a10929e3282b",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "615adf597ef3604e78669b3167e6c874d6b88d5fedbaaae7fd2780fd8a3935a8",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "282b6b00acb961ecb6597493afc49672a7283d3d0cfcc3a2b7c9b07a7b3470dc",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "56fdd9ea88e79db384a6b0440a39d27171cf0b572bf5cb27863ee42e083a6f74",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case21-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "6bec71a3adbaed2974963e55be51bcb901a0d74fe32ab6210790e2ddd52d3960",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case21-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case23-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "8f0b91a24191d0e3256bf58761c3ddb9c17bbb13b399f67fecdbb24d1b9e2a15",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case23-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case23-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "9a0891982e20a76621311a693ae61ebf605d0b3bb6471cbe5bceed4fa493a9b0",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case23-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case23-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "ed0f3fbe658eceb6e264ec71166fca10908cefef8b0d3aae2f90fb9f5e91ce25",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case23-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case23-T1.nii.gz.json",
+      "bytes": 471,
+      "sha256": "4691c0097ac68c503663c353d3959a8dad1136f3bf529b81104d755087111395",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case23-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case23-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "4cd8d5b964e2d89e893c74973a1604093e4d5d3339b2ba023e6a03447604efc7",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case23-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-MRI-afterUS.tag.json",
+      "bytes": 468,
+      "sha256": "244b5cc42583f4683223674ec072a205830844e6dd95f97674b30feb2e8947dd",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "192e824cb767a7439d8d7b3d331bf74e18fd4855d2b7a3f0e37be5353307f4e1",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "b669e3fafe657a6c4f4e3bdad89396c4573af438c4ca72991a9137425cc8c8b1",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "518363ff89a4833ecc88dad5e022034c577f9b6d142f6507a8f09104917a414b",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "49bb87d4a7902de68f22c7d7715ba617f69c88efb169c326f5d7e15215f71d3d",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-FLAIR.nii.gz.json",
+      "bytes": 471,
+      "sha256": "7b70360c8ab7b6db71874b616bddf720ce50370b7b41087305b42bef12d8196f",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-T1.nii.gz.json",
+      "bytes": 471,
+      "sha256": "74db83a26136eb5f32b7d068b250c83485ca1be90829acbd0aa8402abeacb7b3",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case24-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "63253d9fc24203bbde0ec5b552fec3db52935bc836a8563ca189e20d0ad4b23d",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case24-US-before.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-MRI-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "77ad2e7c20c4e80610c8c7ff564e9d17289063c51a52966e5251f2f7aa44d74e",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-MRI-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-MRI-beforeUS.tag.json",
+      "bytes": 468,
+      "sha256": "2c8f253bcbceccc36907b12b7693f230875c2c140ee80787214a031997ae07d3",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-MRI-beforeUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-beforeUS-afterUS.tag.json",
+      "bytes": 467,
+      "sha256": "7d51062341d0e81bb6e3a2ccd3dbacc3a02640afca711d51beb3757f6f5041cb",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-beforeUS-afterUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-beforeUS-duringUS-full.tag.json",
+      "bytes": 468,
+      "sha256": "69b560facc5b0a5be3434cd2fda254d4823a2918d30a644e6b8f993aa5e56eb5",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-beforeUS-duringUS-full.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-beforeUS-duringUS.tag.json",
+      "bytes": 467,
+      "sha256": "fcbf7f654f00729dd5ce115407dab0c7306acc7086db75988a3a21631181b3ee",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-beforeUS-duringUS.tag/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-FLAIR.nii.gz.json",
+      "bytes": 472,
+      "sha256": "8c2fe339ae1c1a8159f219022e12531d9791f2a5e2a4265ba1f6d867ae8d697c",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-FLAIR.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-T1.nii.gz.json",
+      "bytes": 472,
+      "sha256": "487d6006368c0d04ce293f2da76cfd34ae4141816af7d20a0ac4343ddfd5043e",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-T1.nii.gz/completion.json"
+    },
+    {
+      "path": "completion-metadata/resect-original-Case25-US-before.nii.gz.json",
+      "bytes": 472,
+      "sha256": "0fe2c92bfe509bfbad2a0344bc5659092751419246321f2d360bc708d84f0eaa",
+      "original_path": "data/acquisition/resect-originals-v1/objects/resect-original-Case25-US-before.nii.gz/completion.json"
+    }
+  ],
+  "header_qc": false,
+  "geometry_qc": false,
+  "anatomy_qc": false,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "scientific_decoding": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "staging_activity": {
+    "network_requests": 0,
+    "scientific_body_reads": 0,
+    "response_headers_read_or_copied": 0,
+    "scientific_bodies_copied": 0,
+    "tracked_edits": 0
+  },
+  "interpretation": "This publication records byte availability and source fixity. Before/during/after observations and supplied landmarks do not establish new cavity labels, validated geometry, anatomical QC, surgical trajectories, or broadened training admission.",
+  "root_integration_note": "Copy this compact metadata staging after the active writer releases. Large local attempt JSON receipts are bound by path, exact bytes and SHA256; only the104 canonical completion receipts are duplicated here. Independent verification/auditor/two indices are unchanged."
+}
