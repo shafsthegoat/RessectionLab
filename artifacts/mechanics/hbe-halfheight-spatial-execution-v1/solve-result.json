@@ -1,0 +1,46 @@
+{
+  "aggregate_cap_seconds": 1200,
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/baseline.json",
+    "sha256": "c84dbb008da9c1adbdf20a7b3e34e739188d82702c8c3fe40cc7129d9f757b41"
+  },
+  "measured_data_accessed": false,
+  "output_cap_bytes": 2147483648,
+  "phase": "solve",
+  "phase_elapsed_seconds": 365.7986551250797,
+  "retained_bytes_before_result": 477484799,
+  "schema": "hbe-halfheight-spatial-supervised-result-v1",
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/state.json",
+    "sha256": "c9e4d76743b1781a75458191fef085ddc4ef6f679e44b3708115881f28db26b5"
+  },
+  "status": "failed_or_incomplete",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--worker-baseline",
+      "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/baseline.json",
+      "--worker-baseline-sha256",
+      "c84dbb008da9c1adbdf20a7b3e34e739188d82702c8c3fe40cc7129d9f757b41",
+      "--phase-deadline",
+      "1186781.266829125"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 363.66206237487495,
+    "error": null,
+    "exit_code": 1,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 49171,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 761856000,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "failed_or_incomplete",
+    "wall_cap_seconds": 1198.1637211248744
+  },
+  "timing_scope": "launch_preflight_through_final_checks_and_tree_scan; excludes_result_publication"
+}

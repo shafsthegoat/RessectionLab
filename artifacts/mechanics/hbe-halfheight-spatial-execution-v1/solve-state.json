@@ -1,0 +1,368 @@
+{
+  "cases": {},
+  "comparison": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/comparison.json",
+    "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+  },
+  "elapsed_seconds": 361.47493333299644,
+  "error": {
+    "message": "Both unchanged co-primary spatial comparisons must pass",
+    "type": "ValueError"
+  },
+  "extraction_invocations": 0,
+  "gmsh_generation_calls": 0,
+  "levels": {},
+  "measured_data_accessed": false,
+  "phase": "solve",
+  "reused_runs": {
+    "compression:N12:S60:reference": {
+      "complete_raw_replay_exact": true,
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json",
+        "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+      }
+    },
+    "compression:N16:S60:reference": {
+      "complete_raw_replay_exact": true,
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/readout.json",
+        "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+      }
+    },
+    "compression:N8:S60:reference": {
+      "complete_raw_replay_exact": true,
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json",
+        "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+      }
+    },
+    "tension:N12:S60:reference": {
+      "complete_raw_replay_exact": true,
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json",
+        "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+      }
+    },
+    "tension:N8:S60:reference": {
+      "complete_raw_replay_exact": true,
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json",
+        "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+      }
+    }
+  },
+  "runs": {
+    "compression:N24:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference",
+        "elapsed_seconds": 130.32527245907113,
+        "exit_code": 0,
+        "pid": 49377,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/specimen.feb",
+          "sha256": "aa64aa5f29d853acffc1c4e82be7821831820418b9d2cb953ffcf531c3ef429d"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/elements.log",
+          "sha256": "58a98ad1502dccf7df98083319260944b757032b34f7227f637181b9fea5fd5f"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/loading.json",
+          "sha256": "855c31f9d4604c8bcfda456f5b7fe464c1c92c911c63a8f36f69685aaab7c684"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+          "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/nodes.log",
+          "sha256": "2023fe0d1774c57bc6790931dbaa508385fd02d119b8354ed1f81c5f9913461f"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/solver.log",
+          "sha256": "3017021fe2e9f088d5f1b3241d0c224ae95cd07c012b18c2484b6b9fd716880c"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/readout.json",
+        "sha256": "57c879166fa79db87c4870d79854d60343ee33235cb0cd46802a12ce81c94aa2"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 195858,
+          "sha256": "7c67ce7a35460312347c31f4fe433b7bb626412a76fd6cefdd9c1febef5f56b1"
+        },
+        "elements.log": {
+          "bytes": 76301615,
+          "sha256": "58a98ad1502dccf7df98083319260944b757032b34f7227f637181b9fea5fd5f"
+        },
+        "execution.json": {
+          "bytes": 3855,
+          "sha256": "310eeb9555801c5105df88b0b7d84423c0ec950845cd02ddf01e9c913c3e5e42"
+        },
+        "loading.json": {
+          "bytes": 4328,
+          "sha256": "855c31f9d4604c8bcfda456f5b7fe464c1c92c911c63a8f36f69685aaab7c684"
+        },
+        "nodes.log": {
+          "bytes": 118904437,
+          "sha256": "2023fe0d1774c57bc6790931dbaa508385fd02d119b8354ed1f81c5f9913461f"
+        },
+        "readout.json": {
+          "bytes": 555519,
+          "sha256": "57c879166fa79db87c4870d79854d60343ee33235cb0cd46802a12ce81c94aa2"
+        },
+        "solver-execution.json": {
+          "bytes": 714,
+          "sha256": "f6dce0624cf8e849af921305d75cca6a104efa7359547b378e3615e9a2750a82"
+        },
+        "solver.log": {
+          "bytes": 720813,
+          "sha256": "3017021fe2e9f088d5f1b3241d0c224ae95cd07c012b18c2484b6b9fd716880c"
+        },
+        "specimen.feb": {
+          "bytes": 2458358,
+          "sha256": "aa64aa5f29d853acffc1c4e82be7821831820418b9d2cb953ffcf531c3ef429d"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    },
+    "tension:N16:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference",
+        "elapsed_seconds": 20.724548124941066,
+        "exit_code": 0,
+        "pid": 50579,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/specimen.feb",
+          "sha256": "4412a490c204c4124c64b42a10e547c51602b290b2842d3566b86e12400f0efa"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/elements.log",
+          "sha256": "29744c2136b87e02b50a0fb295b7a466e9fa66ed3ac9b650e5bbf1e873e72551"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/loading.json",
+          "sha256": "668cd340ab77a448ddffa50609f0c89c2b2d6cb35a6b4576603ac5b36b88c967"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N16/mesh.json",
+          "sha256": "c1665d5f107c5e20590d877e7613910a5a2aef1c54c9dff5f5229a8d4f8927ee"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/nodes.log",
+          "sha256": "5ffa742265346129ee458130126eeebaac91f2fd58c80b6817d47cc0e998d4e6"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/solver.log",
+          "sha256": "6dd9e377fb9edbb042bc42f357a7c6a968e48c0b374dc68568d5645fbcbcd7f7"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/readout.json",
+        "sha256": "2a93754c4ae837e57ecd1b3b4db728e7be095fbc9861eec7495bef10e427ebcc"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 169950,
+          "sha256": "5e50a126059e61552975c924053389ea6d178a0cc5f8afb883673343308c8653"
+        },
+        "elements.log": {
+          "bytes": 21959659,
+          "sha256": "29744c2136b87e02b50a0fb295b7a466e9fa66ed3ac9b650e5bbf1e873e72551"
+        },
+        "execution.json": {
+          "bytes": 3819,
+          "sha256": "7e9d0a6674236060ba150bbf9ac92515e1a1723af4335a1e2d0047c310633f6d"
+        },
+        "loading.json": {
+          "bytes": 4263,
+          "sha256": "668cd340ab77a448ddffa50609f0c89c2b2d6cb35a6b4576603ac5b36b88c967"
+        },
+        "nodes.log": {
+          "bytes": 36888366,
+          "sha256": "5ffa742265346129ee458130126eeebaac91f2fd58c80b6817d47cc0e998d4e6"
+        },
+        "readout.json": {
+          "bytes": 550145,
+          "sha256": "2a93754c4ae837e57ecd1b3b4db728e7be095fbc9861eec7495bef10e427ebcc"
+        },
+        "solver-execution.json": {
+          "bytes": 710,
+          "sha256": "56eec2d6a366499ae1790a87cc793e65aab2b209dfc567d170ad746de2fb88e4"
+        },
+        "solver.log": {
+          "bytes": 410106,
+          "sha256": "6dd9e377fb9edbb042bc42f357a7c6a968e48c0b374dc68568d5645fbcbcd7f7"
+        },
+        "specimen.feb": {
+          "bytes": 829900,
+          "sha256": "4412a490c204c4124c64b42a10e547c51602b290b2842d3566b86e12400f0efa"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    },
+    "tension:N24:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference",
+        "elapsed_seconds": 126.8612089578528,
+        "exit_code": 0,
+        "pid": 50824,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/specimen.feb",
+          "sha256": "eef01651bd04a7426934dee3fdfe04c70515208fb6b243059f50135e4845e613"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/elements.log",
+          "sha256": "f7641cbedeafc8fcd1e1ae04fa38e50676585cc0cfdde57e8f2c3b68fc26842b"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/loading.json",
+          "sha256": "aa208869148bb70d9138bf4f824a06c15d307ba7522adaccb65b3b2f209a52d4"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+          "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/nodes.log",
+          "sha256": "8c02d7bd449d5eb195e2b300bda7f9d8fc683e17494850b4320396379add4644"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/solver.log",
+          "sha256": "e596de211fc3dd1e593d609218f6c7aa2659d08fc127d0092e4526aaf97bb5a8"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/readout.json",
+        "sha256": "a99c627448268ce9a9130e7bbc68f038dad5fa49898d80f4362d12c638adb0f6"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 172281,
+          "sha256": "bacd835722fc56f1b4fce119d4ed206f36e5d720cfa519f6e83067dfad00974b"
+        },
+        "elements.log": {
+          "bytes": 74280577,
+          "sha256": "f7641cbedeafc8fcd1e1ae04fa38e50676585cc0cfdde57e8f2c3b68fc26842b"
+        },
+        "execution.json": {
+          "bytes": 3818,
+          "sha256": "78870007328a7a2f1bd8adf46b4b76388bc5152fbea9d11cf07d481efb9dd802"
+        },
+        "loading.json": {
+          "bytes": 4263,
+          "sha256": "aa208869148bb70d9138bf4f824a06c15d307ba7522adaccb65b3b2f209a52d4"
+        },
+        "nodes.log": {
+          "bytes": 118311269,
+          "sha256": "8c02d7bd449d5eb195e2b300bda7f9d8fc683e17494850b4320396379add4644"
+        },
+        "readout.json": {
+          "bytes": 550835,
+          "sha256": "a99c627448268ce9a9130e7bbc68f038dad5fa49898d80f4362d12c638adb0f6"
+        },
+        "solver-execution.json": {
+          "bytes": 709,
+          "sha256": "c7ad11953a132bee690ddcfae3702a39efc5b324b7beaf1b8013e775dce52059"
+        },
+        "solver.log": {
+          "bytes": 697238,
+          "sha256": "e596de211fc3dd1e593d609218f6c7aa2659d08fc127d0092e4526aaf97bb5a8"
+        },
+        "specimen.feb": {
+          "bytes": 2458297,
+          "sha256": "eef01651bd04a7426934dee3fdfe04c70515208fb6b243059f50135e4845e613"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    }
+  },
+  "schema": "hbe-halfheight-spatial-state-v1",
+  "solver_invocations": 3,
+  "status": "failed_or_incomplete"
+}

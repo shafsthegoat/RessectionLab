@@ -1,0 +1,25 @@
+{
+  "scope": "Independent archived-source and raw-log replay; not physical validation",
+  "source_commit": "3de9f373a6e5e66cfda2f3bd1b7e9f6c97454125",
+  "reviewer": "core_contracts",
+  "readout_records_reproduced": 8,
+  "new_native_calls": 3,
+  "states_reproduced": 488,
+  "whole_record_mismatches": 0,
+  "comparison_reproduced": true,
+  "input_hashes_rechecked": 209,
+  "new_retained_files_rechecked": 27,
+  "review_elapsed_seconds": 73.8477,
+  "review_budget_seconds": 150,
+  "review_threads": 1,
+  "review_native_calls": 0,
+  "measured_curves_opened": 0,
+  "result_sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a",
+  "comparison_sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7",
+  "accepted_spatial_convergence": false,
+  "failed_criteria": [
+    "compression:N12-N16-N24/reaction_trend"
+  ],
+  "passed_other_group_criteria": 15,
+  "final_output_bytes_including_result": 477486884
+}

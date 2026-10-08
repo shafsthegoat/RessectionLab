@@ -1,0 +1,46 @@
+{
+  "aggregate_cap_seconds": 60,
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/baseline.json",
+    "sha256": "775a7dc3c2ab9358aac0f3470ca93e2300fe184a132980ca510f9dc248a92d8d"
+  },
+  "measured_data_accessed": false,
+  "output_cap_bytes": 2147483648,
+  "phase": "prepare",
+  "phase_elapsed_seconds": 7.468963458901271,
+  "retained_bytes_before_result": 20921005,
+  "schema": "hbe-halfheight-spatial-supervised-result-v1",
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/state.json",
+    "sha256": "1528c431d502e349fb41143f6d080710b965006deb40e45905bedc875c139dc0"
+  },
+  "status": "prepared_not_solved",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--worker-baseline",
+      "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/baseline.json",
+      "--worker-baseline-sha256",
+      "775a7dc3c2ab9358aac0f3470ca93e2300fe184a132980ca510f9dc248a92d8d",
+      "--phase-deadline",
+      "1185449.072980791"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 6.391755875200033,
+    "error": null,
+    "exit_code": 0,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 49023,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 288538624,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "completed",
+    "wall_cap_seconds": 59.15526233310811
+  },
+  "timing_scope": "launch_preflight_through_final_checks_and_tree_scan; excludes_result_publication"
+}

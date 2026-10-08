@@ -33,5 +33,8 @@ Run the archived runner with `--phase prepare` or `--phase solve`, `--root` set
 to the primary checkout, and the respective release path/hash plus `--execute`.
 The release binds the committed archive, interpreter and repaired FEBio runtime.
 Execution results and complete raw-log review must be recorded separately.
-No measured response, fitting, RL or surgical-validity claim follows from these
-software checks or a future numerical pass.
+The [executed result](../artifacts/mechanics/hbe-halfheight-spatial-execution-v1/RESULT.md)
+retains a failed compression-force trend despite all three individually passing
+native runs and improved displacement differences. Independent replay matches
+all eight readouts. No measured response, fitting, RL or surgical-validity claim
+follows from these software checks or numerical outputs.

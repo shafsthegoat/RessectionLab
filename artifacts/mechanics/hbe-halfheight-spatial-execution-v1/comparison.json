@@ -1,0 +1,137 @@
+{
+  "calibration_released": false,
+  "co_primary_triplets": [
+    [
+      12,
+      16,
+      24
+    ],
+    [
+      8,
+      16,
+      24
+    ]
+  ],
+  "finest_level_step_convergence_evaluated": false,
+  "groups": {
+    "compression:N12-N16-N24": {
+      "motion": {
+        "actual": 4.7996799685768796e-06,
+        "limit": 8e-06,
+        "units": "m"
+      },
+      "motion_trend": {
+        "actual": 4.7996799685768796e-06,
+        "comparison": "lt",
+        "limit": 1.0927288298528378e-05,
+        "units": "m"
+      },
+      "reaction": {
+        "actual": 0.00024278095280086398,
+        "limit": 0.0007269313203546088,
+        "units": "N"
+      },
+      "reaction_trend": {
+        "actual": 0.00024278095280086398,
+        "comparison": "lt",
+        "limit": 0.00020345392111919408,
+        "units": "N"
+      }
+    },
+    "compression:N8-N16-N24": {
+      "motion": {
+        "actual": 4.7996799685768796e-06,
+        "limit": 8e-06,
+        "units": "m"
+      },
+      "motion_trend": {
+        "actual": 4.7996799685768796e-06,
+        "comparison": "lt",
+        "limit": 2.6575792945936975e-05,
+        "units": "m"
+      },
+      "reaction": {
+        "actual": 0.00024278095280086398,
+        "limit": 0.0007269313203546088,
+        "units": "N"
+      },
+      "reaction_trend": {
+        "actual": 0.00024278095280086398,
+        "comparison": "lt",
+        "limit": 0.0005250735768976972,
+        "units": "N"
+      }
+    },
+    "tension:N12-N16-N24": {
+      "motion": {
+        "actual": 3.6385681355813716e-06,
+        "limit": 8e-06,
+        "units": "m"
+      },
+      "motion_trend": {
+        "actual": 3.6385681355813716e-06,
+        "comparison": "lt",
+        "limit": 8.716502921432704e-06,
+        "units": "m"
+      },
+      "reaction": {
+        "actual": 0.00012035211271966759,
+        "limit": 0.0005316156870494607,
+        "units": "N"
+      },
+      "reaction_trend": {
+        "actual": 0.00012035211271966759,
+        "comparison": "lt",
+        "limit": 0.0001243693117838028,
+        "units": "N"
+      }
+    },
+    "tension:N8-N16-N24": {
+      "motion": {
+        "actual": 3.6385681355813716e-06,
+        "limit": 8e-06,
+        "units": "m"
+      },
+      "motion_trend": {
+        "actual": 3.6385681355813716e-06,
+        "comparison": "lt",
+        "limit": 2.390542583923037e-05,
+        "units": "m"
+      },
+      "reaction": {
+        "actual": 0.00012035211271966759,
+        "limit": 0.0005316156870494607,
+        "units": "N"
+      },
+      "reaction_trend": {
+        "actual": 0.00012035211271966759,
+        "comparison": "lt",
+        "limit": 0.00035211181368570085,
+        "units": "N"
+      }
+    }
+  },
+  "measured_data_accessed": false,
+  "passed": false,
+  "physical_validation_pass": null,
+  "preserved_failures": {
+    "full_domain_resolution_outcome": {
+      "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/outcome.json",
+      "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+    },
+    "full_domain_resolution_study": {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    "original_mesh_review": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-independent-review-v1/review.json",
+      "sha256": "289d72991067b84129ae86193420de91340b445de8ac60dadbde5c6b6e85d0ff"
+    },
+    "original_mesh_study": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    }
+  },
+  "schema": "hbe-halfheight-spatial-comparison-v1",
+  "study_sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+}
