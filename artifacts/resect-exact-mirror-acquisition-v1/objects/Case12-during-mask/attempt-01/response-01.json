@@ -1,0 +1,28 @@
+{
+  "request": 15,
+  "source_binding": "1be9100aa2704b48c66a422a37f20aa56dc1adc6254287d114c9a3a0b124559e",
+  "range_offset": 0,
+  "host": "huggingface.co",
+  "path": "/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case12/Case12-US-during-resection.nii.gz",
+  "full_url_sha256": "807633b8dad375c04af66f31dfe91d4d44472f1aa2b12002f9e648b1abb0bb4f",
+  "query_field_names": [],
+  "status": 302,
+  "retry_after_utc_epoch": null,
+  "redirect_destination": {
+    "host": "us.aws.cdn.hf.co",
+    "path": "/xet-bridge-us/6a775a2ad47b76d35d88f143/2c5a169db64bc822f2f680f2d061117a7168e747099c39775cfec1346c83f690",
+    "full_url_sha256": "139565ab0cbec25f28f77f9b3057ca0cbae5a839716cde2cfc181fc3a07976a4",
+    "query_field_names": [
+      "Expires",
+      "Hash-Algorithm",
+      "Key-Pair-Id",
+      "Policy",
+      "Signature",
+      "X-Xet-Cas-Uid",
+      "response-content-disposition",
+      "response-content-type",
+      "user_id",
+      "xip"
+    ]
+  }
+}

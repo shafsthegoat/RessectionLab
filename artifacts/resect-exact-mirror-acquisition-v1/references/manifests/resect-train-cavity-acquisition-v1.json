@@ -1,0 +1,1135 @@
+{
+  "schema": "resect-train-cavity-acquisition-v1",
+  "purpose": "Noncommercial acquisition and source qualification of observed visible-cavity components; no fitting or RL",
+  "cohort": {
+    "path": "manifests/resect-component-cohort-v1.json",
+    "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+  },
+  "qualification": {
+    "path": "artifacts/resect-train-expansion-v1/manifest-proposal.json",
+    "sha256": "7ac325349c77d678f511346d6fbe2ef5bf9b380ff0620c583ace4bc6aaac04d4"
+  },
+  "pilot": {
+    "path": "manifests/resect-case3-cavity-pilot-v1.json",
+    "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+  },
+  "rights_prerequisite": {
+    "path": "rights/README.txt",
+    "bytes": 1656,
+    "expected_md5": "bae7e9b837bfc3b53d7b74d750df0b4b",
+    "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+    "license": "CC-BY-NC-SA-4.0",
+    "source_url": "https://osf.io/download/4mkfg/?revision=2",
+    "acquisition_in_this_adapter": false,
+    "retained_evidence": "artifacts/resect-component-admission-v1/rights-review-02/README.txt"
+  },
+  "sources": [
+    {
+      "id": "Case2-during-image",
+      "pair_id": "Case2-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case2-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case2/US/Case2-US-during.nii.gz",
+      "bytes": 15970191,
+      "expected_md5": "cdf821aea3781ff7ecf1ea917a0dbccb",
+      "sha256": null
+    },
+    {
+      "id": "Case2-during-mask",
+      "pair_id": "Case2-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case2-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd21e0a2be6b3ade3147f5/?revision=2",
+      "bytes": 44010,
+      "expected_md5": "3b35891d3838349223b6bcdf6dd11b35",
+      "sha256": "fbf87d2a6c26f4d12e802eb4d85e28f411a2510ee210651e136e67f243062d40",
+      "file_revision": 2,
+      "osf_file_id": "64cd21e0a2be6b3ade3147f5",
+      "short_alias": null
+    },
+    {
+      "id": "Case2-after-image",
+      "pair_id": "Case2-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case2-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case2/US/Case2-US-after.nii.gz",
+      "bytes": 15482998,
+      "expected_md5": "0d23b98ea7031d28083b5d2161f7b6b5",
+      "sha256": null
+    },
+    {
+      "id": "Case2-after-mask",
+      "pair_id": "Case2-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case2-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd21dbc7ab292b21d4e006/?revision=2",
+      "bytes": 57321,
+      "expected_md5": "a5334fd082769458f7d7ca383e2eab93",
+      "sha256": "56092abbb40bdb4de150b0787420333837e7701bbd2cf2b2b728994709d50b8d",
+      "file_revision": 2,
+      "osf_file_id": "64cd21dbc7ab292b21d4e006",
+      "short_alias": null
+    },
+    {
+      "id": "Case3-during-image",
+      "pair_id": "Case3-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case3-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-during.nii.gz",
+      "bytes": 9156131,
+      "expected_md5": "5043491e6b4cea1fe3be1003a42a2cf5",
+      "sha256": null
+    },
+    {
+      "id": "Case3-during-mask",
+      "pair_id": "Case3-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case3-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd21fe2fe4962f1561b1e2/?revision=2",
+      "bytes": 28518,
+      "expected_md5": "569676cbc4bd98a800497c03f91959d9",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63",
+      "file_revision": 2,
+      "osf_file_id": "64cd21fe2fe4962f1561b1e2",
+      "short_alias": null
+    },
+    {
+      "id": "Case3-after-image",
+      "pair_id": "Case3-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case3-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-after.nii.gz",
+      "bytes": 12285987,
+      "expected_md5": "b6794875e56efe2d6549654ae0413ece",
+      "sha256": null
+    },
+    {
+      "id": "Case3-after-mask",
+      "pair_id": "Case3-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case3-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd21fcc7ab292b21d4e00a/?revision=2",
+      "bytes": 44564,
+      "expected_md5": "a7de4775c42dd2dd5219d02327dcb735",
+      "sha256": "2a8d15c1808df9a5028e4a3049a6af6164b1d300d6f08e5bdc632f7038687693",
+      "file_revision": 2,
+      "osf_file_id": "64cd21fcc7ab292b21d4e00a",
+      "short_alias": null
+    },
+    {
+      "id": "Case5-during-image",
+      "pair_id": "Case5-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case5-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case5/US/Case5-US-during.nii.gz",
+      "bytes": 14956524,
+      "expected_md5": "0591ab40bc0ee681a6c3977b7fe9aab8",
+      "sha256": null
+    },
+    {
+      "id": "Case5-during-mask",
+      "pair_id": "Case5-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case5-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd22344f0a443410994559/?revision=2",
+      "bytes": 37887,
+      "expected_md5": "b1177c22fb5a1f2c94495145678ec78f",
+      "sha256": "8209ba5d2d56b5494494309c1cdab78a5c2290ec9a394843fcd227e90204a2e3",
+      "file_revision": 2,
+      "osf_file_id": "64cd22344f0a443410994559",
+      "short_alias": null
+    },
+    {
+      "id": "Case5-after-image",
+      "pair_id": "Case5-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case5-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case5/US/Case5-US-after.nii.gz",
+      "bytes": 12390869,
+      "expected_md5": "c0f412e875de6f4d5730c52e05857913",
+      "sha256": null
+    },
+    {
+      "id": "Case5-after-mask",
+      "pair_id": "Case5-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case5-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd2230c7ab292b1dd4df76/?revision=2",
+      "bytes": 53414,
+      "expected_md5": "f64e8a67c1079b2516a0f988c24e4f97",
+      "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+      "file_revision": 2,
+      "osf_file_id": "64cd2230c7ab292b1dd4df76",
+      "short_alias": null
+    },
+    {
+      "id": "Case7-during-image",
+      "pair_id": "Case7-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case7-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case7/US/Case7-US-during.nii.gz",
+      "bytes": 21363715,
+      "expected_md5": "cdfa763c0b31aa7c6a0d08a022f90197",
+      "sha256": null
+    },
+    {
+      "id": "Case7-during-mask",
+      "pair_id": "Case7-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case7-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd226cc7ab292b22d4e116/?revision=2",
+      "bytes": 41837,
+      "expected_md5": "9672da0cf8e908b53ffec8fc15e5ae04",
+      "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+      "file_revision": 2,
+      "osf_file_id": "64cd226cc7ab292b22d4e116",
+      "short_alias": null
+    },
+    {
+      "id": "Case7-after-image",
+      "pair_id": "Case7-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case7-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case7/US/Case7-US-after.nii.gz",
+      "bytes": 19072334,
+      "expected_md5": "573c135399b986a7921629679a52fb72",
+      "sha256": null
+    },
+    {
+      "id": "Case7-after-mask",
+      "pair_id": "Case7-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case7-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd226ac7ab292b22d4e112/?revision=2",
+      "bytes": 52732,
+      "expected_md5": "b90d0840ac4ea09aa7183ac36cba0a24",
+      "sha256": "805e34af9982980a57a6ff6268a659999836e7ad5fadda4ea8cdb94fa95753d3",
+      "file_revision": 2,
+      "osf_file_id": "64cd226ac7ab292b22d4e112",
+      "short_alias": null
+    },
+    {
+      "id": "Case12-during-image",
+      "pair_id": "Case12-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case12-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case12/US/Case12-US-during.nii.gz",
+      "bytes": 23973313,
+      "expected_md5": "ab14d3689743e58d1bcbca75a5c1eb4d",
+      "sha256": null
+    },
+    {
+      "id": "Case12-during-mask",
+      "pair_id": "Case12-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case12-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/y5m4k/?revision=2",
+      "bytes": 57089,
+      "expected_md5": "de7b60f4d874de49c167fd9e9380240a",
+      "sha256": "8b0e0d3b5c253be3c83dc6ea6df2598e68b8e434c78695fcfe55efd26933d7b3",
+      "file_revision": 2,
+      "osf_file_id": "64cd22d3c7ab292b21d4e061",
+      "short_alias": "y5m4k"
+    },
+    {
+      "id": "Case12-after-image",
+      "pair_id": "Case12-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case12-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case12/US/Case12-US-after.nii.gz",
+      "bytes": 25282562,
+      "expected_md5": "fdca041ba8040b58e46c8ef3de01b5ed",
+      "sha256": null
+    },
+    {
+      "id": "Case12-after-mask",
+      "pair_id": "Case12-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case12-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/gfcnz/?revision=2",
+      "bytes": 80954,
+      "expected_md5": "f990900082d8e43c6a686dd68dbb43b9",
+      "sha256": "baaa1a7be5d8c6d818dd008d1406c1ed473df8eab55d6e68e0de73d41d03c882",
+      "file_revision": 2,
+      "osf_file_id": "64cd22ce2fe4962f1461b2ba",
+      "short_alias": "gfcnz"
+    },
+    {
+      "id": "Case15-after-image",
+      "pair_id": "Case15-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case15-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case15/US/Case15-US-after.nii.gz",
+      "bytes": 25165476,
+      "expected_md5": "01d68924eeeefc2a2e58ac428e01adcc",
+      "sha256": null
+    },
+    {
+      "id": "Case15-after-mask",
+      "pair_id": "Case15-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case15-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/6jx3n/?revision=2",
+      "bytes": 59346,
+      "expected_md5": "007324da20083cc8c195e58feb41b344",
+      "sha256": "3b24eabdc8cde6719a6aedcef8e0b207c6cfd8a44c898c9fe70a93550c8252d0",
+      "file_revision": 2,
+      "osf_file_id": "64cd233b9cbf033b051e4882",
+      "short_alias": "6jx3n"
+    },
+    {
+      "id": "Case16-during-image",
+      "pair_id": "Case16-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case16-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case16/US/Case16-US-during.nii.gz",
+      "bytes": 17442716,
+      "expected_md5": "a04f05bd4e5e95b9d38b5bc0bae2e3ba",
+      "sha256": null
+    },
+    {
+      "id": "Case16-during-mask",
+      "pair_id": "Case16-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case16-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/n5eu8/?revision=2",
+      "bytes": 36303,
+      "expected_md5": "fb91ccd6a556289c8815cee2ddb6c803",
+      "sha256": "05f82c7f56077aeb5967b647ec86ee150f730ea831f43c156bc846f0a423787d",
+      "file_revision": 2,
+      "osf_file_id": "64cd23562fe4962f0c61b12d",
+      "short_alias": "n5eu8"
+    },
+    {
+      "id": "Case16-after-image",
+      "pair_id": "Case16-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case16-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case16/US/Case16-US-after.nii.gz",
+      "bytes": 18158379,
+      "expected_md5": "2fa097661b257104ba2f7c236df789db",
+      "sha256": null
+    },
+    {
+      "id": "Case16-after-mask",
+      "pair_id": "Case16-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case16-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/5ktpy/?revision=2",
+      "bytes": 47175,
+      "expected_md5": "2532c53561bc6602795173050f339431",
+      "sha256": "6e3d16dd0fdf7998aaa486975fc62e27b9bce1898c7cf0a295bd243b2961aa9d",
+      "file_revision": 2,
+      "osf_file_id": "64cd2354c7ab292b22d4e183",
+      "short_alias": "5ktpy"
+    },
+    {
+      "id": "Case17-during-image",
+      "pair_id": "Case17-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case17-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case17/US/Case17-US-during.nii.gz",
+      "bytes": 15689935,
+      "expected_md5": "58bbb039dc22ab880d28b2674f4a9727",
+      "sha256": null
+    },
+    {
+      "id": "Case17-during-mask",
+      "pair_id": "Case17-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case17-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/kd37t/?revision=2",
+      "bytes": 83443,
+      "expected_md5": "324e3bd5f5d7f2b484721de60bdbab3d",
+      "sha256": "97f2a73ad19c0d629cd748faf75b4ee58af2d3f6c8b65a1dac6d0dc97eb2dd0a",
+      "file_revision": 2,
+      "osf_file_id": "64cd23739cbf033b051e48b3",
+      "short_alias": "kd37t"
+    },
+    {
+      "id": "Case17-after-image",
+      "pair_id": "Case17-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case17-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case17/US/Case17-US-after.nii.gz",
+      "bytes": 16765158,
+      "expected_md5": "e644f1ac372ed31c90749c8b49ea3ca9",
+      "sha256": null
+    },
+    {
+      "id": "Case17-after-mask",
+      "pair_id": "Case17-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case17-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/4m5nx/?revision=2",
+      "bytes": 99348,
+      "expected_md5": "e8305aafb8bd270b4ab14ec31e9a8473",
+      "sha256": "f7262ee41b9658dd852e2f8c25046ea34030162745d25e2d15ea0ceaaafeea4c",
+      "file_revision": 2,
+      "osf_file_id": "64cd236fc7ab292b22d4e18f",
+      "short_alias": "4m5nx"
+    },
+    {
+      "id": "Case18-during-image",
+      "pair_id": "Case18-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case18-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case18/US/Case18-US-during.nii.gz",
+      "bytes": 22479713,
+      "expected_md5": "4d17988ba90989efcb9749f4968e0496",
+      "sha256": null
+    },
+    {
+      "id": "Case18-during-mask",
+      "pair_id": "Case18-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case18-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/5cwfk/?revision=2",
+      "bytes": 91615,
+      "expected_md5": "cf4632c18af8915621a15a4b13edaa7b",
+      "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+      "file_revision": 2,
+      "osf_file_id": "64cd2385c7ab292b22d4e1a9",
+      "short_alias": "5cwfk"
+    },
+    {
+      "id": "Case18-after-image",
+      "pair_id": "Case18-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case18-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case18/US/Case18-US-after.nii.gz",
+      "bytes": 21033465,
+      "expected_md5": "b0391122d687a8f24148248e9e08962b",
+      "sha256": null
+    },
+    {
+      "id": "Case18-after-mask",
+      "pair_id": "Case18-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case18-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/mwtyz/?revision=2",
+      "bytes": 95332,
+      "expected_md5": "2aa55652340230ecbcfd3cc3cca06527",
+      "sha256": "6f3dcbd2d60772731280c5cdb2ba7a096f1f26e634dee9e7bda308c17705b231",
+      "file_revision": 2,
+      "osf_file_id": "64cd23832fe4962f1461b312",
+      "short_alias": "mwtyz"
+    },
+    {
+      "id": "Case21-during-image",
+      "pair_id": "Case21-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case21-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case21/US/Case21-US-during.nii.gz",
+      "bytes": 40283369,
+      "expected_md5": "c5a026291dd8cb16a642840967f547c1",
+      "sha256": null
+    },
+    {
+      "id": "Case21-during-mask",
+      "pair_id": "Case21-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case21-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd23c09cbf033b011e474f/?revision=2",
+      "bytes": 66753,
+      "expected_md5": "602605c954e797a1bfcc2b3ed0e5e497",
+      "sha256": "a3fba84f7af6191cfc889339d3aa35e601352fbe6d19072da19aea6c447dc8d2",
+      "file_revision": 2,
+      "osf_file_id": "64cd23c09cbf033b011e474f",
+      "short_alias": null
+    },
+    {
+      "id": "Case21-after-image",
+      "pair_id": "Case21-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case21-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case21/US/Case21-US-after.nii.gz",
+      "bytes": 36611111,
+      "expected_md5": "69af22360e22b426552835a1a4d1eab1",
+      "sha256": null
+    },
+    {
+      "id": "Case21-after-mask",
+      "pair_id": "Case21-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case21-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/n92zk/?revision=2",
+      "bytes": 89436,
+      "expected_md5": "5141f9bb1b796631fd70dde911a9ca6e",
+      "sha256": "e943ac5da95bd0c8245a57b4f6beac9426d2b20d152aa9ba0f4088eefd4fe335",
+      "file_revision": 2,
+      "osf_file_id": "64cd23bda2be6b3ada31479c",
+      "short_alias": "n92zk"
+    },
+    {
+      "id": "Case23-during-image",
+      "pair_id": "Case23-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case23-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case23/US/Case23-US-during.nii.gz",
+      "bytes": 27870850,
+      "expected_md5": "cfc525c6672e315209574fcb75785ea4",
+      "sha256": null
+    },
+    {
+      "id": "Case23-during-mask",
+      "pair_id": "Case23-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case23-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd23e3a2be6b3ade314980/?revision=2",
+      "bytes": 83625,
+      "expected_md5": "61ce14bcd3f5f051f5ce43d4248844bc",
+      "sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+      "file_revision": 2,
+      "osf_file_id": "64cd23e3a2be6b3ade314980",
+      "short_alias": null
+    },
+    {
+      "id": "Case23-after-image",
+      "pair_id": "Case23-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case23-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case23/US/Case23-US-after.nii.gz",
+      "bytes": 26426798,
+      "expected_md5": "92ab54c999b8f990ea5301a669f0da5b",
+      "sha256": null
+    },
+    {
+      "id": "Case23-after-mask",
+      "pair_id": "Case23-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case23-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd23dfa2be6b3add3148a2/?revision=2",
+      "bytes": 85556,
+      "expected_md5": "0458f8f96635db7277d83a4ae5283a68",
+      "sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+      "file_revision": 2,
+      "osf_file_id": "64cd23dfa2be6b3add3148a2",
+      "short_alias": null
+    },
+    {
+      "id": "Case24-during-image",
+      "pair_id": "Case24-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case24-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case24/US/Case24-US-during.nii.gz",
+      "bytes": 32603719,
+      "expected_md5": "74ae927bfc4981ffff636b50673b5f21",
+      "sha256": null
+    },
+    {
+      "id": "Case24-during-mask",
+      "pair_id": "Case24-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case24-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd24009cbf033b041e47f3/?revision=2",
+      "bytes": 49169,
+      "expected_md5": "fe7337943f5d0433fc3128014162ee6d",
+      "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+      "file_revision": 2,
+      "osf_file_id": "64cd24009cbf033b041e47f3",
+      "short_alias": null
+    },
+    {
+      "id": "Case24-after-image",
+      "pair_id": "Case24-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case24-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case24/US/Case24-US-after.nii.gz",
+      "bytes": 29799833,
+      "expected_md5": "e7adace53cf3f93301496bdcbaa9ccf1",
+      "sha256": null
+    },
+    {
+      "id": "Case24-after-mask",
+      "pair_id": "Case24-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case24-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd24004f0a443410994681/?revision=2",
+      "bytes": 69664,
+      "expected_md5": "afcf8b644eb86b2b6e7d60ffadd0acd0",
+      "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+      "file_revision": 2,
+      "osf_file_id": "64cd24004f0a443410994681",
+      "short_alias": null
+    },
+    {
+      "id": "Case25-during-image",
+      "pair_id": "Case25-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case25-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case25/US/Case25-US-during.nii.gz",
+      "bytes": 29442412,
+      "expected_md5": "c402e8168bb66f6ec932d06f2ca6b652",
+      "sha256": null
+    },
+    {
+      "id": "Case25-during-mask",
+      "pair_id": "Case25-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case25-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd24189cbf033b051e492d/?revision=2",
+      "bytes": 65295,
+      "expected_md5": "3fe057dc0e393c9532b6afb327914139",
+      "sha256": "ffc5b985713e61d73e63037eedf82b4fc168f3e19c4e179e771801c953ecd6ad",
+      "file_revision": 2,
+      "osf_file_id": "64cd24189cbf033b051e492d",
+      "short_alias": null
+    },
+    {
+      "id": "Case25-after-image",
+      "pair_id": "Case25-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case25-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case25/US/Case25-US-after.nii.gz",
+      "bytes": 26492415,
+      "expected_md5": "1cecf1cf555977f6bc021b522ff74ac8",
+      "sha256": null
+    },
+    {
+      "id": "Case25-after-mask",
+      "pair_id": "Case25-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case25-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd24154f0a44340b994498/?revision=2",
+      "bytes": 69881,
+      "expected_md5": "440f561c7cefcfd4622a1711c901089c",
+      "sha256": "e38a01207a2323d6b7d9d6f525c2fb01a0bae13ad053fd48f75dd97d0aef749a",
+      "file_revision": 2,
+      "osf_file_id": "64cd24154f0a44340b994498",
+      "short_alias": null
+    }
+  ],
+  "pairs": [
+    {
+      "id": "Case2-during",
+      "patient_group": "RESECT:Case2",
+      "phase": "during",
+      "source_ids": [
+        "Case2-during-image",
+        "Case2-during-mask"
+      ],
+      "bytes": 16014201,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case2-after",
+      "patient_group": "RESECT:Case2",
+      "phase": "after",
+      "source_ids": [
+        "Case2-after-image",
+        "Case2-after-mask"
+      ],
+      "bytes": 15540319,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case3-during",
+      "patient_group": "RESECT:Case3",
+      "phase": "during",
+      "source_ids": [
+        "Case3-during-image",
+        "Case3-during-mask"
+      ],
+      "bytes": 9184649,
+      "reuse_existing_pilot": true,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case3-after",
+      "patient_group": "RESECT:Case3",
+      "phase": "after",
+      "source_ids": [
+        "Case3-after-image",
+        "Case3-after-mask"
+      ],
+      "bytes": 12330551,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case5-during",
+      "patient_group": "RESECT:Case5",
+      "phase": "during",
+      "source_ids": [
+        "Case5-during-image",
+        "Case5-during-mask"
+      ],
+      "bytes": 14994411,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case5-after",
+      "patient_group": "RESECT:Case5",
+      "phase": "after",
+      "source_ids": [
+        "Case5-after-image",
+        "Case5-after-mask"
+      ],
+      "bytes": 12444283,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case7-during",
+      "patient_group": "RESECT:Case7",
+      "phase": "during",
+      "source_ids": [
+        "Case7-during-image",
+        "Case7-during-mask"
+      ],
+      "bytes": 21405552,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case7-after",
+      "patient_group": "RESECT:Case7",
+      "phase": "after",
+      "source_ids": [
+        "Case7-after-image",
+        "Case7-after-mask"
+      ],
+      "bytes": 19125066,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case12-during",
+      "patient_group": "RESECT:Case12",
+      "phase": "during",
+      "source_ids": [
+        "Case12-during-image",
+        "Case12-during-mask"
+      ],
+      "bytes": 24030402,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case12-after",
+      "patient_group": "RESECT:Case12",
+      "phase": "after",
+      "source_ids": [
+        "Case12-after-image",
+        "Case12-after-mask"
+      ],
+      "bytes": 25363516,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case15-after",
+      "patient_group": "RESECT:Case15",
+      "phase": "after",
+      "source_ids": [
+        "Case15-after-image",
+        "Case15-after-mask"
+      ],
+      "bytes": 25224822,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case16-during",
+      "patient_group": "RESECT:Case16",
+      "phase": "during",
+      "source_ids": [
+        "Case16-during-image",
+        "Case16-during-mask"
+      ],
+      "bytes": 17479019,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case16-after",
+      "patient_group": "RESECT:Case16",
+      "phase": "after",
+      "source_ids": [
+        "Case16-after-image",
+        "Case16-after-mask"
+      ],
+      "bytes": 18205554,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case17-during",
+      "patient_group": "RESECT:Case17",
+      "phase": "during",
+      "source_ids": [
+        "Case17-during-image",
+        "Case17-during-mask"
+      ],
+      "bytes": 15773378,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case17-after",
+      "patient_group": "RESECT:Case17",
+      "phase": "after",
+      "source_ids": [
+        "Case17-after-image",
+        "Case17-after-mask"
+      ],
+      "bytes": 16864506,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case18-during",
+      "patient_group": "RESECT:Case18",
+      "phase": "during",
+      "source_ids": [
+        "Case18-during-image",
+        "Case18-during-mask"
+      ],
+      "bytes": 22571328,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case18-after",
+      "patient_group": "RESECT:Case18",
+      "phase": "after",
+      "source_ids": [
+        "Case18-after-image",
+        "Case18-after-mask"
+      ],
+      "bytes": 21128797,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case21-during",
+      "patient_group": "RESECT:Case21",
+      "phase": "during",
+      "source_ids": [
+        "Case21-during-image",
+        "Case21-during-mask"
+      ],
+      "bytes": 40350122,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case21-after",
+      "patient_group": "RESECT:Case21",
+      "phase": "after",
+      "source_ids": [
+        "Case21-after-image",
+        "Case21-after-mask"
+      ],
+      "bytes": 36700547,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case23-during",
+      "patient_group": "RESECT:Case23",
+      "phase": "during",
+      "source_ids": [
+        "Case23-during-image",
+        "Case23-during-mask"
+      ],
+      "bytes": 27954475,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case23-after",
+      "patient_group": "RESECT:Case23",
+      "phase": "after",
+      "source_ids": [
+        "Case23-after-image",
+        "Case23-after-mask"
+      ],
+      "bytes": 26512354,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case24-during",
+      "patient_group": "RESECT:Case24",
+      "phase": "during",
+      "source_ids": [
+        "Case24-during-image",
+        "Case24-during-mask"
+      ],
+      "bytes": 32652888,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case24-after",
+      "patient_group": "RESECT:Case24",
+      "phase": "after",
+      "source_ids": [
+        "Case24-after-image",
+        "Case24-after-mask"
+      ],
+      "bytes": 29869497,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case25-during",
+      "patient_group": "RESECT:Case25",
+      "phase": "during",
+      "source_ids": [
+        "Case25-during-image",
+        "Case25-during-mask"
+      ],
+      "bytes": 29507707,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    {
+      "id": "Case25-after",
+      "patient_group": "RESECT:Case25",
+      "phase": "after",
+      "source_ids": [
+        "Case25-after-image",
+        "Case25-after-mask"
+      ],
+      "bytes": 26562296,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    }
+  ],
+  "missing_annotations": [
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "after",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case15",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    }
+  ],
+  "excluded_members": [
+    {
+      "patient_group": "RESECT:Case1",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "patient_group": "RESECT:Case6",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case8",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case13",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case14",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case19",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case26",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case27",
+      "role": "MEASUREMENT_EVAL"
+    }
+  ],
+  "summary": {
+    "frozen_train_people": 14,
+    "people_with_at_least_one_cavity_label": 13,
+    "qualified_pairs": 25,
+    "remaining_pairs": 24,
+    "remaining_scientific_files": 48,
+    "all_pair_bytes": 557790240,
+    "remaining_scientific_bytes": 548605591
+  },
+  "originals_published_sha256_available": false,
+  "training_admitted": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "release_by_kind": {
+    "original_ultrasound": {
+      "doi": "10.11582/2017.00004",
+      "version": 1,
+      "license": "CC-BY-4.0"
+    },
+    "cavity_annotation": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  },
+  "source_identity_rule": "Each source inherits patient_group, role and phase solely from its pair_id entry; release rights/version come from its kind. Runtime records must carry those resolved fields.",
+  "metadata_bindings": [
+    {
+      "path": "manifests/resect-component-cohort-v1.json",
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    {
+      "path": "manifests/resect-case3-cavity-pilot-v1.json",
+      "bytes": 2415,
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/manifest-proposal.json",
+      "bytes": 89122,
+      "sha256": "7ac325349c77d678f511346d6fbe2ef5bf9b380ff0620c583ace4bc6aaac04d4"
+    },
+    {
+      "path": "artifacts/resect-component-admission-v1/rights-review-02/README.txt",
+      "bytes": 1656,
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-acquisition-metadata-v1/table-of-contents.csv.gz",
+      "bytes": 26826,
+      "sha256": "23ffb564a45ce5e4c8c552b21ac650d1135698eb7523eeba44630440a7ec70b7"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-acquisition-metadata-v1/provider-dataset-metadata.json",
+      "bytes": 7250,
+      "sha256": "ee61c4c3382abbc3c9cc9905f11154cb4a36d9d48ed2e30acb5d8ce23e394796"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/independent-review.json",
+      "bytes": 9586,
+      "sha256": "34f20cf0a2a6beb53bab72ee73b96471df418c3798961769d03333d2bafdbcd1"
+    },
+    {
+      "path": "artifacts/resect-component-admission-v1/acquisition-complete-01/worker-result.json",
+      "bytes": 1940,
+      "sha256": "cc3e33c5a281b9567de89771fd4cd650ff32bc7b27ee9df3bfd4148be2194afd"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-03-metadata.json",
+      "bytes": 30877,
+      "sha256": "f9fe9766968e7f6d536e5a69b4359ecbcdaed4be55a27539a5fcf5bf0d06bb7d"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-04-metadata.json",
+      "bytes": 21529,
+      "sha256": "8fc09bec917318d3740781e39105085e2bec13098cf0a28dc2542e2d7d78a2ce"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-05-metadata.json",
+      "bytes": 21529,
+      "sha256": "191061b32dfcefbb30566af59fef34edf30922694c4952e155841ab73dafd845"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-06-metadata.json",
+      "bytes": 21531,
+      "sha256": "6b8e9a55a073e4a8dffc6f90267c0fc5eac112807e4cdec66effba23dd5efa2d"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-07-metadata.json",
+      "bytes": 16551,
+      "sha256": "d293cf0cc10cea19f2f28619a828c5086d507473410fe54d5f332f0497b049c0"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-08-metadata.json",
+      "bytes": 32911,
+      "sha256": "04afc9b6c7d8bebdc8d3b7130187ff9e2e655025c9a64f6cbddaa34b39988546"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-09-metadata.json",
+      "bytes": 29630,
+      "sha256": "aebc67999c2ccf39017d5758478b8e705ba930c440523d7e8cfdf91020607ad6"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-10-metadata.json",
+      "bytes": 23104,
+      "sha256": "ea86ef5be4037c7efa94fc5a7a7cdff59171ecb257283118ac301b142c2c3a24"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-11-metadata.json",
+      "bytes": 23107,
+      "sha256": "14f1296795ef3e7f2bfc8dacda895e21057b70af16f09874ecc80783b7bed889"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-12-metadata.json",
+      "bytes": 23107,
+      "sha256": "9ad3358ba5e0cd712aaf34ebbbc34cff777b2e9aa28e70383b014fed56bb77ee"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-13-metadata.json",
+      "bytes": 30912,
+      "sha256": "1b8abae22a0c32f49fd7735376adda1e87a6ac45cf1fde5385c5e06d0fce13bb"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-14-metadata.json",
+      "bytes": 30690,
+      "sha256": "55c73d28946680765a438de48cef348d14ce4f2fc39fd10cbafc52b02a2c107d"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-15-metadata.json",
+      "bytes": 21552,
+      "sha256": "b2aa30990020416858b9bb2a8d8d9edf8e49b8d422e6dc481f9df9f0516196ac"
+    },
+    {
+      "path": "artifacts/resect-train-expansion-v1/request-16-metadata.json",
+      "bytes": 21552,
+      "sha256": "3b7bc0176886fe3d2671b1e2415db8091f76705ce5565fca9af7b328616d5572"
+    }
+  ],
+  "pilot_acquisition_receipt": {
+    "path": "artifacts/resect-component-admission-v1/acquisition-complete-01/worker-result.json",
+    "bytes": 1940,
+    "sha256": "cc3e33c5a281b9567de89771fd4cd650ff32bc7b27ee9df3bfd4148be2194afd"
+  },
+  "bounds": {
+    "supervisor_seconds": 300,
+    "worker_seconds": 295,
+    "maximum_source_bytes": 40283369,
+    "maximum_pair_bytes": 40350122,
+    "metadata_file_bytes": 2097152,
+    "source_history_records": 100,
+    "annotation_requests": 5,
+    "network_chunk_bytes": 65536,
+    "hash_chunk_bytes": 1048576,
+    "decoded_array_bytes": 0
+  },
+  "rights_and_semantics": {
+    "noncommercial_only": true,
+    "commercial_clearance": false,
+    "annotations_license": "CC-BY-NC-SA-4.0",
+    "original_license": "CC-BY-4.0",
+    "financial_benefits_from_annotation_distribution_prohibited": true,
+    "attribution_citations_and_share_alike_required": true,
+    "manual_contours_morphological_interpolation_expert_review": true,
+    "learned_teacher": "none_reported_in_documented_protocol",
+    "visible_cavity_not_total_removed_tissue_or_reward": true,
+    "clinical_accuracy": "not_established",
+    "spatial_planning_admitted": false
+  }
+}

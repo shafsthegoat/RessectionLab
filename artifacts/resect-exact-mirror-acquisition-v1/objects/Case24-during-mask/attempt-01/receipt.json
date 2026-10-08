@@ -1,0 +1,50 @@
+{
+  "source_id": "Case24-during-mask",
+  "source_binding": "128248dbca158e79fe21faab2ba434922deb74df5eb90c0d4c6bac48cbf296bb",
+  "status": "downloaded_verified",
+  "source": {
+    "source_id": "Case24-during-mask",
+    "source_authority": {
+      "id": "Case24-during-mask",
+      "pair_id": "Case24-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case24-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd24009cbf033b041e47f3/?revision=2",
+      "bytes": 49169,
+      "expected_md5": "fe7337943f5d0433fc3128014162ee6d",
+      "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+      "file_revision": 2,
+      "osf_file_id": "64cd24009cbf033b041e47f3",
+      "short_alias": null
+    },
+    "patient_group": "RESECT:Case24",
+    "role": "TRAIN",
+    "source_release": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+    "mirror_path": "dataset/Case24/Case24-US-during-resection.nii.gz",
+    "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case24/Case24-US-during-resection.nii.gz",
+    "mirror_xet_hash": "b06ae5a4f683509ffb17b4a1cab01ecf1c8a5a9060798a9b4b372da6917420c2",
+    "expected_bytes": 49169,
+    "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+    "md5": "fe7337943f5d0433fc3128014162ee6d"
+  },
+  "declaration_sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+  "started_utc": "2026-10-08T18:02:16.526533+00:00",
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "bytes": 49169,
+  "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+  "md5": "fe7337943f5d0433fc3128014162ee6d",
+  "path": "build/resect-exact-mirror-acquisition-v1/objects/Case24-during-mask/Case24-US-during-resection.nii.gz",
+  "finished_utc": "2026-10-08T18:02:16.790496+00:00",
+  "retained_partial_bytes": 0
+}

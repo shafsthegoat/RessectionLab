@@ -1,0 +1,28 @@
+{
+  "request": 43,
+  "source_binding": "8d7e62ff136103c398071263f98960e21954550cc69ab4810c1cc5935abce769",
+  "range_offset": 0,
+  "host": "huggingface.co",
+  "path": "/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case24/Case24-US-after-resection.nii.gz",
+  "full_url_sha256": "888e09f10a5f7408a6ee9a2ca4e8bd6f57babed077a0ac45b24fe84f6cda7a70",
+  "query_field_names": [],
+  "status": 302,
+  "retry_after_utc_epoch": null,
+  "redirect_destination": {
+    "host": "us.aws.cdn.hf.co",
+    "path": "/xet-bridge-us/6a775a2ad47b76d35d88f143/781137d52be2b3b1cec4f3226d74a985952e028ea50a9e714a7d4b19120d9390",
+    "full_url_sha256": "d88a611015a9146e0a43df41be14327f1e9e4e8c47606b14c1e81db0920f4d2d",
+    "query_field_names": [
+      "Expires",
+      "Hash-Algorithm",
+      "Key-Pair-Id",
+      "Policy",
+      "Signature",
+      "X-Xet-Cas-Uid",
+      "response-content-disposition",
+      "response-content-type",
+      "user_id",
+      "xip"
+    ]
+  }
+}

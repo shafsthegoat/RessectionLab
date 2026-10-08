@@ -1,0 +1,22 @@
+{
+  "request": 8,
+  "source_binding": "f2424bb9a0b565a81707752cb202392c447229ad6bdc305cfe33e0c0fe86cb4a",
+  "range_offset": 0,
+  "host": "us.aws.cdn.hf.co",
+  "path": "/xet-bridge-us/6a775a2ad47b76d35d88f143/97e1ad4ca71aab831b8e36d76ab5fb6fc08bb5bf4fb891e3a13f3468db0dcca4",
+  "full_url_sha256": "ffb1cd7cb5a447dced8da0d981fd413d3fc17a37e49845a728251808941f6798",
+  "query_field_names": [
+    "Expires",
+    "Hash-Algorithm",
+    "Key-Pair-Id",
+    "Policy",
+    "Signature",
+    "X-Xet-Cas-Uid",
+    "response-content-disposition",
+    "response-content-type",
+    "user_id",
+    "xip"
+  ],
+  "status": 200,
+  "retry_after_utc_epoch": null
+}
