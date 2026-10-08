@@ -40,3 +40,28 @@ unchanged 60-second/3-GiB cap. No solver or mesher call is permitted. The phase
 creates an exclusive attempt marker; do not silently restart it. Solver
 equivalence requires a separate release bound to the accepted preparation.
 Original mesh-convergence failure and N24 timeout remain unchanged.
+
+## Completed preparation and bounded solve release
+
+Preparation completed once; [independent saved-output review](preparation-review.md)
+accepted the exact meshes, decks and source bindings. Compact original
+[supervision result](preparation-result.json) and [worker state](preparation-state.json)
+are retained. No preparation retry is permitted.
+
+Root releases the separately declared solve phase under the existing mechanics
+validation goal. The [solve release](solve-release.json), SHA256
+`55e1b221a2619a6ba99a24b1579b01bfb05d53fcf853d4eafb8e29aab61c399b`, binds
+preparation result `34fbd84994440a098c0b510a90e27b8b72a7cee8f20113d5e1d10ce944c5a629`.
+Its preflight completed with exit 0 using the same existing virtual environment.
+This authorizes the original four comparisons, at most 90 seconds each and
+420 seconds overall, one numerical thread, 3 GiB sampled process-group RSS,
+128 MiB active and 512 MiB total new output. Stop on first failure; no retries,
+curve access, calibration, finer-mesh promotion or relaxed acceptance criteria.
+
+```sh
+.venv/bin/python build/hbe-halfheight-v1/source/scripts/mechanics_hbe_halfheight_experiment.py \
+  --root "$PWD" --phase solve \
+  --release artifacts/mechanics/hbe-halfheight-execution-v1/solve-release.json \
+  --release-sha256 55e1b221a2619a6ba99a24b1579b01bfb05d53fcf853d4eafb8e29aab61c399b \
+  --execute
+```

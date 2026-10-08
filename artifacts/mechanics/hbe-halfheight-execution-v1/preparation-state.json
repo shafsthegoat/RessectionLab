@@ -1,0 +1,136 @@
+{
+  "cases": {
+    "compression:N12:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/compression-N12-S60-reference/skyline.feb",
+        "sha256": "90969e2559e5977e5416330671c6c340aef97ce4e0311b7d5a6d50c12f0a601e"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/compression-N12-S60-reference/specimen.feb",
+        "sha256": "e839631b9125fd31cd7d2d5d7088e04ff29007767776047f45339c980a19c4f5"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/compression-N12-S60-reference/loading.json",
+        "sha256": "f793e47b2e387e5962fee80bbdb8e5c1724ae431dbd26bdf9f5d016884c1522d"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N12/mesh.json",
+        "sha256": "84ffefd61204a5db1963c99bb69ff99dd2b550645c578fe8428716d6952c59a3"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N12/reconstruction.json",
+        "sha256": "8edfab44c906baf1e82f96550de4055c518738e4c56427171e5da225ce2e48d7"
+      }
+    },
+    "compression:N8:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/compression-N8-S60-reference/skyline.feb",
+        "sha256": "98496bb6e3d882cd10e612a54154aa5b0881f24f34b9d4b86d25614b838ad182"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/compression-N8-S60-reference/specimen.feb",
+        "sha256": "c965432bc004e561688638f3900ef915150bd14e1f427dffe60adf1ca15224c0"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/compression-N8-S60-reference/loading.json",
+        "sha256": "6fbbd59e4ce14630b16e4ef9bb157276472171964f8eb1ceed1dfa436c517031"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N8/mesh.json",
+        "sha256": "9bffa9f51ca6e9537d234668cf7a7ae0e2c2ad7562ec2839cb69d738c955c90a"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N8/reconstruction.json",
+        "sha256": "501eca5078b1a2044b2ca517a1964596947046856347c2896ff4703cc9e5f3d2"
+      }
+    },
+    "tension:N12:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/tension-N12-S60-reference/skyline.feb",
+        "sha256": "4231249f29ec9f14970e67cd73178b0c1bf182c59dcdfc170739e4087f89d04d"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/tension-N12-S60-reference/specimen.feb",
+        "sha256": "5809474e0fa29b960998f5b61ee5e9440720aa38f57f999866d4fd1dee3098af"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/tension-N12-S60-reference/loading.json",
+        "sha256": "2219a298d67c353ae4f5c668664ac3838b536f9e61c678269e495fe0fd415cfb"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N12/mesh.json",
+        "sha256": "84ffefd61204a5db1963c99bb69ff99dd2b550645c578fe8428716d6952c59a3"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N12/reconstruction.json",
+        "sha256": "8edfab44c906baf1e82f96550de4055c518738e4c56427171e5da225ce2e48d7"
+      }
+    },
+    "tension:N8:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/tension-N8-S60-reference/skyline.feb",
+        "sha256": "726b8f4842e3f57efa8942e75fde55cdf40333124d927d63d9d4110b77c60525"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/tension-N8-S60-reference/specimen.feb",
+        "sha256": "48508d879b02079aa33bad11dc9ad855bdae1496be7ed6e2b0a3f3a8ee05ff30"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/cases/tension-N8-S60-reference/loading.json",
+        "sha256": "8e17d199e94335877b26caa7cea85d6ee9e49e203a2eed0fd3e321d19ef7a65c"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N8/mesh.json",
+        "sha256": "9bffa9f51ca6e9537d234668cf7a7ae0e2c2ad7562ec2839cb69d738c955c90a"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N8/reconstruction.json",
+        "sha256": "501eca5078b1a2044b2ca517a1964596947046856347c2896ff4703cc9e5f3d2"
+      }
+    }
+  },
+  "elapsed_seconds": 1.0316726251039654,
+  "extraction_invocations": 2,
+  "gmsh_generation_calls": 0,
+  "levels": {
+    "12": {
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N12/mesh.json",
+        "sha256": "84ffefd61204a5db1963c99bb69ff99dd2b550645c578fe8428716d6952c59a3"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N12/reconstruction.json",
+        "sha256": "8edfab44c906baf1e82f96550de4055c518738e4c56427171e5da225ce2e48d7"
+      }
+    },
+    "8": {
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N8/mesh.json",
+        "sha256": "9bffa9f51ca6e9537d234668cf7a7ae0e2c2ad7562ec2839cb69d738c955c90a"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/N8/reconstruction.json",
+        "sha256": "501eca5078b1a2044b2ca517a1964596947046856347c2896ff4703cc9e5f3d2"
+      }
+    }
+  },
+  "measured_data_accessed": false,
+  "phase": "prepare",
+  "runs": {
+    "compression:N12:S60:reference": {
+      "status": "not_executed"
+    },
+    "compression:N8:S60:reference": {
+      "status": "not_executed"
+    },
+    "tension:N12:S60:reference": {
+      "status": "not_executed"
+    },
+    "tension:N8:S60:reference": {
+      "status": "not_executed"
+    }
+  },
+  "schema": "hbe-halfheight-state-v1",
+  "solver_invocations": 0,
+  "status": "prepared_not_solved"
+}

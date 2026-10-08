@@ -1,0 +1,8 @@
+{
+  "phase": "solve",
+  "exit_code": 0,
+  "invocation": ".venv/bin/python exact archived runner, without --execute",
+  "stdout": "Metadata verified; neither phase has executed.",
+  "qualification": "Saved numerical checkers rerun; accepted preparation verified; no solver invocation. Preparation has already executed, despite the generic CLI message.",
+  "solve_release_sha256": "55e1b221a2619a6ba99a24b1579b01bfb05d53fcf853d4eafb8e29aab61c399b"
+}
