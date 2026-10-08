@@ -369,6 +369,13 @@ control typo remain recorded. The next executable step is an explicit cache-only
 QC repeat, followed by bounded inventory processing; no optimizer update or
 clinical/planning admission is supplied by this repair.
 
+The separate sub022 cache-only repeat subsequently completed in 0.538385 seconds
+without a GET. Independent streaming reproduced 2,899 positive original voxels,
+gzip/fixity checks and exact coded-grid equality with its original TOF. Private
+extension hashes and the first failed receipt remain unchanged. Subtype is still
+unresolved; the passing source component has no new anatomical/planning or
+training admission. Full-inventory content/reference checks are next.
+
 The [RESECT TRAIN importer](../artifacts/resect-train-intake-preparation-v1/RESULT.md)
 now passes 75 independent/owner controls. Four initial counterexamples exposed
 two acceptance defects: incomplete file lists could report completion, and late

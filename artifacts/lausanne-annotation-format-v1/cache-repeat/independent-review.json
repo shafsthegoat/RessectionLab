@@ -1,0 +1,173 @@
+{
+  "schema": "lausanne-sub022-cache-qc-independent-review-v1",
+  "created_at": "2026-10-08T16:24:22.254265+00:00",
+  "conclusion": "Exact cached sub022 mask passes independently reproduced content, extension and same-source grid QC. This is a single-source result, not release of further masks.",
+  "blockers_for_this_recorded_QC": [],
+  "source_commit": "229990cf152cb53ada1c52c3f9072c87b1b06c31",
+  "manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+  "execution_source_sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01",
+  "execution_snapshots_verified": 14,
+  "receipt_sha256": "c15ead7b9bf05f76fd9f7d7956f75729d94ba1c9b757ba5ca6823467dc479389",
+  "batch_sha256": "b4d684c2b311b4715340d10fd82a5466b734a5b48b9203dd8e01888e8543b09c",
+  "compressed_fixity": {
+    "mask": {
+      "bytes": 36551,
+      "sha256": "ba83116ae5fa9744bb83eb338cd491b431691b3a54a5a5b3c8d6111a1d2eec11",
+      "md5": "bbadd4d37a8bc1fe44c9931438cb5f96"
+    },
+    "original_TOF": {
+      "bytes": 36003691,
+      "sha256": "ab3e10cfc0483efe93aa7fbc39d7d4aaf67df5d6e9a9cb9c18bf76d84beb83b5",
+      "md5": "8cc6ae2982ba08f8f7316f44449ce2f8"
+    }
+  },
+  "independent_content": {
+    "shape": [
+      512,
+      512,
+      140
+    ],
+    "voxel_count": 36700160,
+    "datatype": "uint8",
+    "scaling": [
+      1.0,
+      0.0
+    ],
+    "source_values": [
+      0,
+      1
+    ],
+    "positive_voxels": 2899,
+    "zero_voxels": 36697261,
+    "zero_semantics": "unknown; not negative vessel or safe tissue",
+    "count_chunk_bytes": 65536,
+    "full_mask_gzip_CRC32": "4237560e",
+    "full_mask_gzip_ISIZE": 36700752,
+    "gzip_CRC_size_and_EOF_verified": true,
+    "intake_count_reproduced": true
+  },
+  "extension": {
+    "framing_reproduced": true,
+    "bytes_including_extender": 244,
+    "record": {
+      "offset": 352,
+      "end_exclusive": 592,
+      "esize": 240,
+      "ecode": 0,
+      "block_sha256": "2ca06a34ad702c24d2bed0b5920e33ca014850b0aee45bdeac8f3c87ee4c34bf",
+      "payload_bytes": 232,
+      "payload_sha256": "a1fe3619a93340d6fa09e979fe51b758ebb287dee39b38baab1e237be47eb7ff"
+    },
+    "private_content_interpreted": false,
+    "private_content_copied_to_output": false,
+    "payload_used_as_anatomy_or_frame_evidence": false
+  },
+  "independent_reference_grid": {
+    "original_TOF_decompressed_output_bytes": 348,
+    "original_TOF_compressed_header_input_bytes": 1024,
+    "raw_mask_header_sha256": "b32c6d0ab5527cfeb7f864a7dced5aad99bff8d72bacff57801fc1b276d1d130",
+    "raw_TOF_header_sha256": "1b254d55f47e42cae6f7bff6174efe2723ce3ea3f1828e5c22dc28ac06b59746",
+    "qform_code": 1,
+    "sform_code": 0,
+    "spatial_units": "mm",
+    "matching_shape": [
+      512,
+      512,
+      140
+    ],
+    "qforms_exactly_equal": true,
+    "independently_reconstructed_qform": [
+      [
+        0.41015625,
+        0.0,
+        0.0,
+        -104.58984375
+      ],
+      [
+        0.0,
+        0.41015625,
+        0.0,
+        -104.58984375
+      ],
+      [
+        0.0,
+        0.0,
+        0.5500012636184692,
+        -38.50008773803711
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "raw_headers_identical": false,
+    "maximum_affine_difference": 0.0,
+    "proof_rule": "exact_coded_native_voxel_grid_v1",
+    "unit_inheritance": false,
+    "no_registration_or_resampling": true,
+    "source_sidecar_sha256": "7bbdd20c21ade21d7dd35002da19154ce94728427a858b59af5948894abc56e6"
+  },
+  "execution": {
+    "existing_only": true,
+    "recorded_GETs": 0,
+    "single_worker": true,
+    "worker_pid": 75837,
+    "worker_and_process_group_absent": true,
+    "exit_code": 0,
+    "batch_seconds": 0.5383852089289576,
+    "batch_limit_seconds": 60,
+    "worker_seconds": 0.3178503338713199,
+    "worker_limit_seconds": 58.91942233312875,
+    "source_byte_budget": 36551,
+    "outcomes": {
+      "all": 148,
+      "completed": 1,
+      "outside_this_scope": 143,
+      "metadata_failed_excluded": 4
+    }
+  },
+  "old_failure": {
+    "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/pilot-sub022-transfer-01/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz/receipt.json",
+    "sha256": "1a8ffdf58847b6468f884905e5101313d6799f2addeeaa0f68350dce705f1c09",
+    "unchanged": true,
+    "source_mask_sha256_unchanged": true,
+    "interpretation": "The earlier valid-source acquisition failed the then-zero-only padding gate. This new run uses separately committed extension framing; it does not overwrite or relabel that failure."
+  },
+  "admission": {
+    "annotation_subtype_status": "manual_region_subtype_unresolved",
+    "voxelwise_aneurysm_contour_established": false,
+    "whole_vascular_coverage": false,
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "review_resources": {
+    "elapsed_seconds": 1.3280940409749746,
+    "limit_seconds": 60,
+    "peak_rss_bytes": 26361856,
+    "bookkeeping_limit_bytes": 536870912,
+    "full_image_arrays_allocated": false
+  },
+  "review_actions": {
+    "network_requests": 0,
+    "transfers": 0,
+    "mask_scalar_sources_read": 1,
+    "other_scalar_images_read": 0,
+    "whole_image_readers": 0,
+    "tracked_edits": 0,
+    "original_modifications": 0
+  },
+  "limits": [
+    "No other mask is released by this audit; future scope and every file require separate source-bound QC.",
+    "No T1 bytes or TOF scalar data were decoded; full-pair current fixity is not asserted.",
+    "Exact native coded-grid equality does not establish scanner-world provenance, clinical accuracy or anatomical review.",
+    "Private extension content remains uninterpreted; foreground is the source manual region, not an established aneurysm contour."
+  ],
+  "audit_script_sha256": "5b27349436ee427f14f118483ed71596a14cec943a0cb8919672ca850528ba24"
+}

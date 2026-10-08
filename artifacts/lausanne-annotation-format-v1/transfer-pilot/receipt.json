@@ -1,0 +1,83 @@
+{
+  "schema": "lausanne-annotation-attempt-v1",
+  "manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+  "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+  "status": "failed_or_incomplete",
+  "acquisition": {
+    "status": "source_verified",
+    "transfer_status": "downloaded_and_verified",
+    "bytes": 36551,
+    "sha256": "ba83116ae5fa9744bb83eb338cd491b431691b3a54a5a5b3c8d6111a1d2eec11"
+  },
+  "content_qc": {
+    "status": "failed_or_incomplete"
+  },
+  "reference_qc": {
+    "status": "not_assessed"
+  },
+  "grid_qc": {
+    "status": "not_assessed"
+  },
+  "requests": [
+    {
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz?versionId=OtPLfnGeJb1wZKFw3FprS3ffUnqEVV_l",
+      "method": "GET",
+      "headers": {
+        "Accept-encoding": "identity",
+        "User-agent": "RessectionLab-BTC-queue/1"
+      },
+      "started_at": "2026-10-08T11:54:10.513138+00:00",
+      "status": 200,
+      "final_url": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz?versionId=OtPLfnGeJb1wZKFw3FprS3ffUnqEVV_l",
+      "response_headers": {
+        "x-amz-id-2": "jaWEuWDHOUDLw1yDvFZKi7OdzTJ2l33oa0ME9jasiz7N6IKJsz0y8E4T1URVUmG1f8+KWA63HBk=",
+        "x-amz-request-id": "97CM4E9V0GHJPZP6",
+        "Server": "AmazonS3",
+        "Date": "Thu, 08 Oct 2026 11:54:11 GMT",
+        "Last-Modified": "Wed, 19 Jan 2022 02:59:40 GMT",
+        "ETag": "\"bbadd4d37a8bc1fe44c9931438cb5f96\"",
+        "x-amz-version-id": "OtPLfnGeJb1wZKFw3FprS3ffUnqEVV_l",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "application/gzip",
+        "Content-Length": "36551",
+        "Connection": "close"
+      }
+    }
+  ],
+  "training_admitted": false,
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "subject": "sub-022",
+  "session": "ses-20101011",
+  "role": "TRAIN",
+  "annotation_subtype_status": "manual_region_subtype_unresolved",
+  "semantics": {
+    "positive_class": "source_manual_aneurysm_region_bag",
+    "background": "unknown; not a negative vascular or safe-tissue domain",
+    "weak_region": "Enclosing sphere or unresolved manual subtype is not a voxelwise aneurysm contour.",
+    "crosswalk_mismatch": "Exact released sidecar supports the same-session region; author date mismatch remains unresolved for contour use.",
+    "source_review": "Radiologist annotation with senior neuroradiologist double-check as reported in methods; not reviewer approval of this importer.",
+    "reference": "Only exact RawSources original TOF; no cross-person, atlas or registered substitute.",
+    "other_modality_qc": "Retain T1 QC separately; failed T1 does not overwrite passed referenced TOF, nor does passed TOF establish full-pair QC.",
+    "grid": "Native array order only; exact coded grid or existing bounded NIfTI serialization equivalence. No header repair, registration or resampling.",
+    "case_controls": "Source participants.tsv group=control, bound through participant_id/exam_date; not inferred from absent mask.",
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "execution_source_record": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/pilot-sub022-transfer-01/source.json",
+  "execution_source_sha256": "f2c1fda49379577db72ea41cf5e0d760bbfab4529541fbfb1fc96c383084bd15",
+  "existing_files_only": false,
+  "failed_stage": "content_qc",
+  "error": {
+    "type": "AcquisitionError",
+    "message": "Mask extensions/nonzero padding need separate qualification"
+  },
+  "elapsed_seconds": 2.3389268331229687
+}

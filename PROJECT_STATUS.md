@@ -1761,6 +1761,7 @@ and its source-specific grid proof. The first live sub022 transfer acquired its
 exact 36,551-byte source but failed content QC before counting labels: the
 initial parser refused a valid NIfTI extension. A strict, uninterpreted extension
 reader now passes 56 owner and 32 independent controls, including a bounded
-check of the real 592-byte prefix. The original failure is retained. A separate
-cache-only QC repeat and full-inventory processing remain next; no new fitting
-or planning admission follows. See [format evidence](artifacts/lausanne-annotation-format-v1/RESULT.md).
+check of the real 592-byte prefix. The original failure is retained. A separately
+recorded cache-only repeat now passes: 2,899 positive voxels and exact original
+TOF grid equality, independently reproduced. Full-inventory processing remains
+next; no new fitting or planning admission follows. See [format evidence](artifacts/lausanne-annotation-format-v1/RESULT.md).

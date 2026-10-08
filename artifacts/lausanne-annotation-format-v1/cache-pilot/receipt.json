@@ -1,0 +1,497 @@
+{
+  "schema": "lausanne-annotation-attempt-v1",
+  "manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+  "path": "derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz",
+  "status": "qc_complete",
+  "acquisition": {
+    "status": "source_verified",
+    "transfer_status": "existing_source_only",
+    "bytes": 82420,
+    "sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee"
+  },
+  "content_qc": {
+    "status": "passed",
+    "raw_grid": {
+      "source_file_sha256": "sha256:1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+      "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAMgGAAaAAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD///ws/AQAMP/YyMz8AAIA/AACAPwAAgD8AAIA/AACwQwAAgD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAN1e5z1D2Tk9TUsfvIJyvsIRpMzCRhDUwqdlCz8FZIQ8vfB7PYJyvsLBIaK7XmYIP+dgIb4RpMzCyqtOvc4t+j0P4y0/RhDUwgAAAAAAAAAAAAAAAAAAAABuKzEA",
+      "header_sha256": "8fb9dd12d0c444ca21780b9f3b745e93305376cc9deac190646808452a2dd23e",
+      "raw_grid": {
+        "shape": [
+          306,
+          384,
+          160
+        ],
+        "spatial_units": "unknown",
+        "xyzt_units_code": 0,
+        "pixdim": [
+          1.0,
+          0.5468749403953552,
+          0.5468750596046448,
+          0.6999963521957397,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "qform_code": 0,
+        "sform_code": 2,
+        "qform_numeric_including_inactive": [
+          [
+            0.5445198166196917,
+            0.01616097513823133,
+            0.061508883700758826,
+            -95.22364807128906
+          ],
+          [
+            -0.004947871782733344,
+            0.5328120238366006,
+            -0.15759620389905504,
+            -102.32044219970703
+          ],
+          [
+            -0.05045679642726255,
+            0.12215768889149352,
+            0.6792458957033426,
+            -106.03178405761719
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_numeric": [
+          [
+            0.54451984167099,
+            0.01616097427904606,
+            0.06150888279080391,
+            -95.22364807128906
+          ],
+          [
+            -0.004947871435433626,
+            0.5328119993209839,
+            -0.15759621560573578,
+            -102.32044219970703
+          ],
+          [
+            -0.05045679956674576,
+            0.12215767800807953,
+            0.6792458891868591,
+            -106.03178405761719
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "dtype": "|u1",
+    "source_scaling": [
+      1.0,
+      0.0
+    ],
+    "decoding_budget": {
+      "voxels": 18800640,
+      "native_payload_bytes": 18800640,
+      "logical_float64_bytes": 150405120,
+      "chunk_voxels": 262144,
+      "chunk_working_bytes_bound": 3145728
+    },
+    "positive_voxels": 193,
+    "background_voxels": 18800447,
+    "background_semantics": "unknown",
+    "array_operation": "none; source values counted only"
+  },
+  "reference_qc": {
+    "referenced_tof_qc": {
+      "path": "sub-476/ses-20140519/anat/sub-476_ses-20140519_angio.nii.gz",
+      "status": "header_and_scalar_checks_passed",
+      "header": {
+        "file": "sub-476_ses-20140519_angio.nii.gz",
+        "shape": [
+          306,
+          384,
+          160
+        ],
+        "affine_ras_mm": [
+          [
+            0.5445199012756348,
+            0.01616097427904606,
+            0.061508893966674805,
+            -95.22366333007812
+          ],
+          [
+            -0.004947871435433626,
+            0.5328119993209839,
+            -0.15759623050689697,
+            -102.3204574584961
+          ],
+          [
+            -0.050456803292036057,
+            0.12215769290924072,
+            0.6792460083961487,
+            -106.03179168701172
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_native": [
+          [
+            0.5445198763572054,
+            0.016160972268139565,
+            0.06150887852783623,
+            -95.22366333007812
+          ],
+          [
+            -0.004947871394456595,
+            0.5328119639432473,
+            -0.15759621403610596,
+            -102.3204574584961
+          ],
+          [
+            -0.05045679781355195,
+            0.1221576836686429,
+            0.6792458938198124,
+            -106.03179168701172
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": [
+          [
+            0.5445199012756348,
+            0.01616097427904606,
+            0.061508893966674805,
+            -95.22366333007812
+          ],
+          [
+            -0.004947871435433626,
+            0.5328119993209839,
+            -0.15759623050689697,
+            -102.3204574584961
+          ],
+          [
+            -0.050456803292036057,
+            0.12215769290924072,
+            0.6792460083961487,
+            -106.03179168701172
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.5468750253169548,
+          0.5468750365915238,
+          0.6999964684404397
+        ],
+        "voxel_volume_mm3": 0.2093495534452016,
+        "handedness": "right",
+        "anisotropic": true,
+        "obliquity_degrees": [
+          5.319324183472292,
+          13.02171631825275,
+          13.985638201846168
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "minimum": 0.0,
+      "maximum": 692.0,
+      "voxels": 18800640
+    },
+    "other_modality_qc": [
+      {
+        "path": "sub-476/ses-20140519/anat/sub-476_ses-20140519_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "header": {
+          "file": "sub-476_ses-20140519_T1w.nii.gz",
+          "shape": [
+            43,
+            290,
+            320
+          ],
+          "affine_ras_mm": [
+            [
+              -3.2849199771881104,
+              0.006643400993198156,
+              0.07430609315633774,
+              52.81129837036133
+            ],
+            [
+              0.04579389840364456,
+              0.7799496650695801,
+              0.04373246058821678,
+              -119.98794555664062
+            ],
+            [
+              0.31177568435668945,
+              -0.04456375539302826,
+              0.7764776945114136,
+              -161.0049591064453
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              -3.2849202167293177,
+              0.006643441518934607,
+              0.07430521740250814,
+              52.81129455566406
+            ],
+            [
+              0.045793869231258125,
+              0.7799496758316142,
+              0.04373249091778885,
+              -119.98794555664062
+            ],
+            [
+              0.3117719944948887,
+              -0.04456377850838578,
+              0.7764777951782598,
+              -161.00494384765625
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              -3.2849199771881104,
+              0.006643400993198156,
+              0.07430609315633774,
+              52.81129837036133
+            ],
+            [
+              0.04579389840364456,
+              0.7799496650695801,
+              0.04373246058821678,
+              -119.98794555664062
+            ],
+            [
+              0.31177568435668945,
+              -0.04456375539302826,
+              0.7764776945114136,
+              -161.0049591064453
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            3.3000000628813058,
+            0.7812499875927271,
+            0.7812499815443316
+          ],
+          "voxel_volume_mm3": 2.014160115061182,
+          "handedness": "left",
+          "anisotropic": true,
+          "obliquity_degrees": [
+            5.479590239280413,
+            3.3061946331374075,
+            6.336175845492165
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+        },
+        "minimum": 0.0,
+        "maximum": 1572.0,
+        "voxels": 3990400
+      }
+    ],
+    "referenced_tof_passed": true,
+    "full_pair_current_fixity_checked": false,
+    "source_receipt_pair_qc": "passed",
+    "original_receipt_sha256": "55d42e4392645478f6c0c50d325b3f0a23e3c1019e6c5100f8bed001d33f7dc6",
+    "original_receipt_snapshot": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/pilot-sub476-cache-01/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz/original-receipt.json",
+    "status": "passed",
+    "original_tof_sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+    "raw_grid": {
+      "source_file_sha256": "sha256:6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+      "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByNgMAMgGAAaAAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAQAEAAAAAAAgD8AAAw/AAAMP/YyMz/0/dQ8AAAAAAAAAAAAAAAAAACwQ60ALTytAK1DAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFRFPTc7VGltZT0xNTA4MzYuMTUyO3BoYXNlPTEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQABAN5e5z1C2Tk9TEsfvIRyvsITpMzCRxDUwqhlCz8FZIQ8wPB7PYRyvsLBIaK7XmYIP+hgIb4TpMzCy6tOvdAt+j0R4y0/RxDUwgAAAAAAAAAAAAAAAAAAAABuKzEA",
+      "header_sha256": "9e3223561a47bfc1606b9f8332d6086a4a3718df0b723227a318801a06a00aa2",
+      "raw_grid": {
+        "shape": [
+          306,
+          384,
+          160
+        ],
+        "spatial_units": "mm",
+        "xyzt_units_code": 10,
+        "pixdim": [
+          1.0,
+          0.546875,
+          0.546875,
+          0.6999963521957397,
+          0.026000000536441803,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_numeric_including_inactive": [
+          [
+            0.5445198763572054,
+            0.016160972268139565,
+            0.06150887852783623,
+            -95.22366333007812
+          ],
+          [
+            -0.004947871394456595,
+            0.5328119639432473,
+            -0.15759621403610596,
+            -102.3204574584961
+          ],
+          [
+            -0.05045679781355195,
+            0.1221576836686429,
+            0.6792458938198124,
+            -106.03179168701172
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_numeric": [
+          [
+            0.5445199012756348,
+            0.01616097427904606,
+            0.061508893966674805,
+            -95.22366333007812
+          ],
+          [
+            -0.004947871435433626,
+            0.5328119993209839,
+            -0.15759623050689697,
+            -102.3204574584961
+          ],
+          [
+            -0.050456803292036057,
+            0.12215769290924072,
+            0.6792460083961487,
+            -106.03179168701172
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "current_tof_fixity_checked": true
+  },
+  "grid_qc": {
+    "status": "passed",
+    "proof": {
+      "rule": "source_reference_serialization_equivalence",
+      "metrics": {
+        "rule": "nifti1_float32_four_ulp_and_unchanged_indices_v1",
+        "maximum_allowed_float32_steps": 4,
+        "maximum_observed_float32_steps": 3,
+        "maximum_support_displacement_reference_mm": 2.803332224464873e-05,
+        "maximum_support_displacement_voxels": 4.624365564998158e-05,
+        "maximum_support_component_voxels": 3.114035558745249e-05,
+        "serialization_component_bound_reference_mm": [
+          0.00010858848690986633,
+          0.00013202708214521408,
+          8.452683687210083e-05
+        ],
+        "serialization_component_bound_voxels": [
+          0.00021415156364677622,
+          0.0002756059674702636,
+          0.0001732683725374509
+        ],
+        "all_voxel_centres_keep_reference_index": true
+      },
+      "array_operation": "unchanged source voxel indices"
+    }
+  },
+  "requests": [],
+  "training_admitted": false,
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "subject": "sub-476",
+  "session": "ses-20140519",
+  "role": "TRAIN",
+  "annotation_subtype_status": "source_voxelwise_exact_crosswalk",
+  "semantics": {
+    "positive_class": "source_manual_aneurysm_region_bag",
+    "background": "unknown; not a negative vascular or safe-tissue domain",
+    "weak_region": "Enclosing sphere or unresolved manual subtype is not a voxelwise aneurysm contour.",
+    "crosswalk_mismatch": "Exact released sidecar supports the same-session region; author date mismatch remains unresolved for contour use.",
+    "source_review": "Radiologist annotation with senior neuroradiologist double-check as reported in methods; not reviewer approval of this importer.",
+    "reference": "Only exact RawSources original TOF; no cross-person, atlas or registered substitute.",
+    "other_modality_qc": "Retain T1 QC separately; failed T1 does not overwrite passed referenced TOF, nor does passed TOF establish full-pair QC.",
+    "grid": "Native array order only; exact coded grid or existing bounded NIfTI serialization equivalence. No header repair, registration or resampling.",
+    "case_controls": "Source participants.tsv group=control, bound through participant_id/exam_date; not inferred from absent mask.",
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "execution_source_record": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/pilot-sub476-cache-01/source.json",
+  "execution_source_sha256": "f2c1fda49379577db72ea41cf5e0d760bbfab4529541fbfb1fc96c383084bd15",
+  "existing_files_only": true,
+  "elapsed_seconds": 0.24629333289340138
+}

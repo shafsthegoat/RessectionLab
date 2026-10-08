@@ -29,11 +29,18 @@ called; the original eight parameterized failures and correction are retained
 separately. The largest allowed metadata chain fits the existing 2 MiB receipt
 bound. These are parser controls, not invented patient data.
 
-Next: a separately recorded existing-only sub022 QC repeat after this source
-freeze. No sub022 scalar values, reference-grid result, full-inventory content
-result, fitting or planning admission follows from the metadata diagnosis.
-Background remains unknown. Scanner-frame and surgical-use validation remain
-open even when a source-grid component check passes.
+After source commit `229990c`, a separately recorded existing-only sub022 repeat
+completed in 0.538385 seconds with no GET. It counted **2,899 positives** among
+36,700,160 original binary voxels. Mask and original TOF coded grids match exactly.
+The original private extension and first failed receipt are unchanged. Independent
+streaming in 1.33 seconds (25.1 MiB observed peak memory) reproduced the counts,
+gzip integrity, source hashes and exact grid proof. All 148 outcomes remain:
+one completed, 143 outside this invocation and four metadata failures.
+
+The mask subtype remains unresolved. No anatomical review, fitting or planning
+admission follows. Background stays unknown. Scanner-frame and surgical-use
+validation remain open even when a source-grid component check passes. Next:
+bounded full-inventory acquisition and per-source content/reference/grid QC.
 
 Historical scripts/receipts retain their original local paths and exact hashes.
 Raw image/mask files and execution snapshots stay in ignored local storage;
