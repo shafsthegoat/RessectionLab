@@ -1,0 +1,59 @@
+{
+  "proofs": [
+    {
+      "original_path": "manifests/resect-component-cohort-v1.json",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/manifests/resect-component-cohort-v1.json",
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    {
+      "original_path": "manifests/resect-train-cavity-acquisition-v1.json",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/manifests/resect-train-cavity-acquisition-v1.json",
+      "bytes": 39206,
+      "sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1"
+    },
+    {
+      "original_path": "data/mechanics/resect-metadata/table-of-contents.csv",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/data/mechanics/resect-metadata/table-of-contents.csv",
+      "bytes": 292738,
+      "sha256": "e635116017475a5253908598f9ad56ffb386e0fe74406abcbb6355444fdbb0ee"
+    },
+    {
+      "original_path": "data/mechanics/resect-metadata/next-data.json",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/data/mechanics/resect-metadata/next-data.json",
+      "bytes": 41305,
+      "sha256": "bd8ef3621108b31927ae38232404d5ce5bbef368403fc81f0f282a3ff33c8245"
+    },
+    {
+      "original_path": "docs/resect-selective-acquisition.md",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/docs/resect-selective-acquisition.md",
+      "bytes": 3427,
+      "sha256": "9d5759e30a24d6bb1c74f7d77da8c988e838098068f7994b6adaa5b6b02daa8c"
+    },
+    {
+      "original_path": "docs/tissue-mechanics-measurements.md",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/docs/tissue-mechanics-measurements.md",
+      "bytes": 14340,
+      "sha256": "1975b9667050bf48c3cfdc8a4f73dad79f123adafde4f2113b7e3bbb4dfb1ca5"
+    },
+    {
+      "original_path": "scripts/resect_train_intake.py",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/scripts/resect_train_intake.py",
+      "bytes": 38938,
+      "sha256": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa"
+    },
+    {
+      "original_path": "scripts/acquire_resect_cavity.py",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/scripts/acquire_resect_cavity.py",
+      "bytes": 22551,
+      "sha256": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51"
+    },
+    {
+      "original_path": "scripts/real_intake_io.py",
+      "path": "artifacts/resect-train-originals-preparation-v1/source-proofs/scripts/real_intake_io.py",
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    }
+  ],
+  "frozen_inventory_sha256": "300640aa859ca0aa15380990b2f5c892099056f8b95541cf201bf58a57f8c570"
+}

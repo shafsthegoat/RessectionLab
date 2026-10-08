@@ -1,0 +1,79 @@
+{
+  "schema": "resect-train-originals-preparation-v1",
+  "frozen_at_utc": "2026-10-08T19:20:44.629803+00:00",
+  "status": "ready_for_root_review_and_launch",
+  "files": [
+    {
+      "path": "manifests/resect-train-originals-v1.json",
+      "bytes": 107681,
+      "sha256": "1764a0ce75b449d542ef51578c54cab6202b66d72c71b811999cb51a55164135"
+    },
+    {
+      "path": "scripts/acquire_resect_train_originals.py",
+      "bytes": 35108,
+      "sha256": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50"
+    },
+    {
+      "path": "tests/test_resect_train_originals.py",
+      "bytes": 19814,
+      "sha256": "42dd0ebac9eaddd1a188167fe991b4ec77d95bb68f80424b1291402239fce21c"
+    }
+  ],
+  "metadata_preflight": {
+    "command": ".venv/bin/python -B scripts/acquire_resect_train_originals.py preflight",
+    "exit_code": 0,
+    "status": "metadata_identity_passed",
+    "files": 104,
+    "people": 14,
+    "source_bytes": 672336857,
+    "network_requests": 0,
+    "payload_reads": 0
+  },
+  "focused_controls": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_resect_train_originals.py",
+    "exit_code": 0,
+    "result": "43 passed in 1.45s",
+    "scientific_payloads_read": 0,
+    "fixtures": "Opaque byte protocol controls only; real network blocked."
+  },
+  "portable_proof_count": 9,
+  "existing_helpers_unchanged": true,
+  "scientific_source_scope_unchanged": true,
+  "runtime_bounds": {
+    "files": 104,
+    "people": 14,
+    "source_bytes": 672336857,
+    "compressed_cache_bytes": 1073741824,
+    "free_disk_reserve_bytes": 536870912,
+    "workers": 1,
+    "worker_seconds": 295,
+    "supervisor_seconds": 300,
+    "connect_seconds": 30,
+    "hash_chunk_bytes": 1048576,
+    "max_attempts_per_object": 3,
+    "minimum_cooldown_seconds": 900
+  },
+  "repair_history": [
+    "Corrected an escaped nested f-string in the initial test harness before collection.",
+    "Fixed interrupted merge recovery that rechecked a prefix after verified publication had moved it to its final path.",
+    "Added recovery of a validated suffix retained when a worker deadline expired before creating its merge journal.",
+    "Ensured a changed completed file yields unsuccessful run completion even when historical completion receipts exist."
+  ],
+  "launch_command": ".venv/bin/python -B scripts/acquire_resect_train_originals.py run",
+  "status_command": ".venv/bin/python -B scripts/acquire_resect_train_originals.py status",
+  "queue_cache": "data/acquisition/resect-originals-v1",
+  "body_cache": "data/anatomy/resect-v1",
+  "network_during_preparation": false,
+  "acquisition_started": false,
+  "source_writer_released": true,
+  "claims": {
+    "training_admitted": false,
+    "spatial_planning_admitted": false,
+    "header_qc": "not_run",
+    "geometry_qc": "not_run",
+    "anatomy_qc": "not_run",
+    "decoded_array_bytes": 0,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  }
+}

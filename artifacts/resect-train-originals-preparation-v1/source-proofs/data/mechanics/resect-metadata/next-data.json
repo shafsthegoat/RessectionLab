@@ -1,0 +1,1072 @@
+{
+  "props": {
+    "pageProps": {
+      "dataset": {
+        "access_rights": "public",
+        "author": null,
+        "author_email": null,
+        "creator_user_id": "5daa859c-2f5d-4518-a097-04d9b87ac17c",
+        "cron": {
+          "state": "succeeded",
+          "message": null,
+          "submitted_date": "2025-06-13T20:00:00",
+          "completed_date": "2025-06-13T20:00:00"
+        },
+        "dataset_size": "3335.720522",
+        "dataset_status": "complete",
+        "doi": "10.11582/2017.00004",
+        "id": "5686d8fa-2003-4837-8e66-8e887fabe21e",
+        "import_done": true,
+        "import_source": "project_area",
+        "isopen": true,
+        "language": "en",
+        "license_id": "CC-BY-4.0",
+        "license_title": "Creative Commons Attribution 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "maintainer": null,
+        "maintainer_email": null,
+        "metadata_created": "2025-06-09T14:18:46.339424",
+        "metadata_modified": "2025-12-08T09:43:03.724330",
+        "name": "5D6BFC33-F58D-4F56-88E8-C40AF269D6F2",
+        "notes": "This dataset contains pre-operative MR and intra-operative ultrasound data from 23 patients with low-grade gliomas (brain tumors). The dataset also contains homologous landmarks for validation of image registration methods. The image data are available in NIFTI and MINC formats.\n\nDATASET GUIDE:\nThe landmarks of the data are in MINC  tag file format with the extension \".tag\".\nThe easiest way to visualize the MINC image pair with the homologous landmarks is to use the software 'register' that comes with MINC Toolkit (https://bic-mni.github.io). To view the images, please use the following command in your terminal:\n\"register image1.mnc image2.mnc landmarks.tag\"\nEach row of the landmarks with six data entries represents a landmark pair. In each row, the first 3 columns are the x-, y-, and z-coordinate of landmarks belonging to image1 in world coordinates (unit = mm), and the latter 3 columns are  the x-, y-, and z-coordinate of landmarks belonging to image2 in world\ncoordinates (unit = mm).\nThe reference MRI volume is always put as image1. In the RESECT database, this is the ultrasound before resection.\nThe world coordinates of the corresponding MINC and NIFTI files are the same. You can find more information on the dataset at: https://yimingxiao.weebly.com/data-repositories.html",
+        "num_resources": 3,
+        "num_tags": 1,
+        "organization": null,
+        "owner_org": null,
+        "private": false,
+        "project": [],
+        "publisher": "NIRD RDA",
+        "release_date": "2017-05-30",
+        "source": [],
+        "state": "active",
+        "subject": [
+          "185bafe7-cce5-41d3-b843-9d18e125a339"
+        ],
+        "theme": [
+          {
+            "id": "1f862066-31aa-4a40-9dbd-4594be126fbb",
+            "name": "biota",
+            "vocabulary_id": "21774176-1a38-4fbc-950d-e8e816f1c37d",
+            "title": "Biota",
+            "url": "https://apps.usgs.gov/thesaurus/term-simple.php?thcode=15&code=002",
+            "display_name": "biota"
+          }
+        ],
+        "title": "RESECT: a clinical database of pre-operative MRI and intra-operative ultrasound in low-grade glioma surgeries",
+        "type": "dataset",
+        "url": null,
+        "version": 1,
+        "version_notes": "First version of the dataset.",
+        "version_type": "latest",
+        "contact_points": [
+          {
+            "email": "ingerid.reinertsen@sintef.no",
+            "first_name": "Ingerid",
+            "last_name": "Reinertsen",
+            "organisation": "SINTEF",
+            "type": "person"
+          }
+        ],
+        "contributors": [
+          {
+            "email": "ingerid.reinertsen@sintef.no",
+            "first_name": "Ingerid",
+            "last_name": "Reinertsen",
+            "organisation": "SINTEF",
+            "type": "RelatedPerson"
+          }
+        ],
+        "creators": [
+          {
+            "email": "xym6325@gmail.com",
+            "first_name": "Yiming",
+            "last_name": "Xiao",
+            "organisation": "GMAIL",
+            "type": "person"
+          },
+          {
+            "email": "maryse.fortin@mail.mcgill.ca",
+            "first_name": "Maryse",
+            "last_name": "Fortin",
+            "organisation": "MAIL",
+            "type": "person"
+          },
+          {
+            "email": "geirmund.unsgard@stolav.no",
+            "first_name": "Geirmund",
+            "last_name": "Unsg\u00e5rd",
+            "organisation": "STOLAV",
+            "type": "person"
+          },
+          {
+            "email": "hrivaz@gmail.com",
+            "first_name": "Hassan",
+            "last_name": "Rivaz",
+            "organisation": "GMAIL",
+            "type": "person"
+          },
+          {
+            "email": "Ingerid.Reinertsen@sintef.no",
+            "first_name": "Ingerid",
+            "last_name": "Reinertsen",
+            "organisation": "SINTEF",
+            "type": "person"
+          }
+        ],
+        "groups": [
+          {
+            "description": "",
+            "display_name": "Medical and health sciences",
+            "id": "185bafe7-cce5-41d3-b843-9d18e125a339",
+            "image_display_url": "",
+            "name": "medical-and-health-sciences",
+            "title": "Medical and health sciences",
+            "type": "subject"
+          }
+        ],
+        "resources": [
+          {
+            "cache_last_updated": null,
+            "cache_url": null,
+            "created": "2025-06-19T08:36:47.477456",
+            "format": "CSV",
+            "hash": "",
+            "id": "e9849032-2f4d-4fca-a720-2e7b1ed04fb3",
+            "last_modified": null,
+            "metadata_modified": "2025-06-19T08:36:47.471895",
+            "mimetype": "text/csv",
+            "mimetype_inner": null,
+            "name": "table_of_contents",
+            "package_id": "5686d8fa-2003-4837-8e66-8e887fabe21e",
+            "position": 0,
+            "resource_type": null,
+            "size": 292738,
+            "state": "active",
+            "url": "https://data.archive.sigma2.no/dataset/5686d8fa-2003-4837-8e66-8e887fabe21e/download/table_of_contents_10.11582_2017.00004.csv",
+            "url_type": null
+          },
+          {
+            "cache_last_updated": null,
+            "cache_url": null,
+            "created": "2025-06-19T08:36:47.477460",
+            "format": "CSV",
+            "hash": "",
+            "id": "19f30479-2203-48ae-b3e5-346c465f0f5f",
+            "last_modified": null,
+            "metadata_modified": "2025-06-19T08:36:47.472128",
+            "mimetype": "text/csv",
+            "mimetype_inner": null,
+            "name": "summary_contents",
+            "package_id": "5686d8fa-2003-4837-8e66-8e887fabe21e",
+            "position": 1,
+            "resource_type": null,
+            "size": 16380,
+            "state": "active",
+            "url": "https://data.archive.sigma2.no/dataset/5686d8fa-2003-4837-8e66-8e887fabe21e/download/summary_contents_10.11582_2017.00004.csv",
+            "url_type": null
+          },
+          {
+            "cache_last_updated": null,
+            "cache_url": null,
+            "created": "2025-06-19T08:36:47.477463",
+            "format": "JSON",
+            "hash": "",
+            "id": "6b9fbbd0-78ed-42e3-89c4-d38874ed44c5",
+            "last_modified": null,
+            "metadata_modified": "2025-06-19T08:36:47.472292",
+            "mimetype": "application/json",
+            "mimetype_inner": null,
+            "name": "dataset_metadata",
+            "package_id": "5686d8fa-2003-4837-8e66-8e887fabe21e",
+            "position": 2,
+            "resource_type": null,
+            "size": 4754,
+            "state": "active",
+            "url": "https://data.archive.sigma2.no/dataset/5686d8fa-2003-4837-8e66-8e887fabe21e/download/dataset_metadata_10.11582_2017.00004.json",
+            "url_type": null
+          }
+        ],
+        "tags": [
+          {
+            "display_name": "Health informatics",
+            "id": "37663fba-7dfc-4572-92af-96a17a86928d",
+            "name": "Health informatics",
+            "state": "active",
+            "title": null,
+            "url": null,
+            "vocabulary_id": null
+          }
+        ],
+        "relationships_as_subject": [],
+        "relationships_as_object": [],
+        "doi_status": true,
+        "domain": "https://data.archive.sigma2.no",
+        "creator_user_email": "adilhasan2@gmail.com"
+      },
+      "citation": "\n\n\n\n\n\n\n\n<section class=\"additional-info cite-container\">\n\n    <h3>Cite this as</h3>\n    <div class=\"doi-citation\">\n        <div id=\"citation-string\" class=\"citation-string\">\n            \n            Xiao, Y., Fortin, M., Unsg\u00e5rd, G., Rivaz, H., Reinertsen, I. (2017). <i>RESECT: a clinical database of pre-operative MRI and intra-operative ultrasound in low-grade glioma surgeries</i> [Data set]. NIRD RDA.\n            \n            <a href='https://doi.org/10.11582/2017.00004'' target=\"_blank\">\n                https://doi.org/10.11582/2017.00004\n            </a>\n            \n            \n        </div>\n\n        \n        <div id=\"citation-status\">\n            \n        <div>\n            <small>\n                Retrieved: 19:19 04 Oct 2026 (UTC)\n            </small>\n        </div>\n        \n        <div class=\"citation-download\">\n            \n            <a title=\"Download BibTeX\"\n                target=\"_blank\"\n                href=\"/dataset/doi/10.11582%252F2017.00004/x-bibtex\">\n                <small><i class=\"fa fa-file\"></i>BibTeX</small>\n            </a>\n            <a title=\"Download XML\"\n                target=\"_blank\"\n                href=\"/dataset/doi/10.11582%252F2017.00004/vnd.datacite.datacite%2Bxml\">\n                <small><i class=\"fa fa-file\"></i>XML</small>\n            </a>\n            <a title=\"Download RIS\"\n            target=\"_blank\"\n                href=\"/dataset/doi/10.11582%252F2017.00004/x-research-info-systems\">\n                <small><i class=\"fa fa-file\"></i>RIS</small>\n            </a>\n            <a title=\"crosscite citation\"\n                target=\"_blank\" \n                href=\"http://citation.crosscite.org?doi=10.11582/2017.00004\">\n                <small><i class=\"fa fa-link\"></i>Other formats</small>\n            </a>\n        </div>\n        \n        \n    </div>\n    \n    </div>\n</section>\n\n",
+      "groupedMetadata": [
+        {
+          "name": "descriptive",
+          "label": "Descriptive",
+          "fields": [
+            {
+              "name": "theme",
+              "label": "Theme",
+              "display_snippet": "themes_vocabulary.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": [
+                {
+                  "id": "1f862066-31aa-4a40-9dbd-4594be126fbb",
+                  "name": "biota",
+                  "vocabulary_id": "21774176-1a38-4fbc-950d-e8e816f1c37d",
+                  "title": "Biota",
+                  "url": "https://apps.usgs.gov/thesaurus/term-simple.php?thcode=15&code=002",
+                  "display_name": "biota"
+                }
+              ]
+            },
+            {
+              "name": "subject",
+              "label": "Subjects",
+              "display_snippet": "group.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": [
+                {
+                  "title": "Medical and health sciences",
+                  "id": "185bafe7-cce5-41d3-b843-9d18e125a339",
+                  "type": "subject",
+                  "name": "medical-and-health-sciences"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "label": "Type",
+              "display_snippet": "text.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "dataset"
+            },
+            {
+              "name": "language",
+              "label": "Language",
+              "display_snippet": "select.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": {
+                "value": "en",
+                "label": "English"
+              }
+            },
+            {
+              "name": "dataset_status",
+              "label": "Status",
+              "display_snippet": "select.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": {
+                "value": "complete",
+                "label": "COMPLETE"
+              }
+            },
+            {
+              "name": "project",
+              "label": "Projects",
+              "display_snippet": "multiple_text.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": []
+            },
+            {
+              "name": "dataset_size",
+              "label": "Dataset Size (MB)",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "3335.720522"
+            },
+            {
+              "name": "state",
+              "label": "State",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "active"
+            },
+            {
+              "name": "metadata_modified",
+              "label": "Last Modified",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "2025-12-08T09:43:03.724330"
+            }
+          ]
+        },
+        {
+          "name": "identifiers",
+          "label": "Identifiers",
+          "fields": [
+            {
+              "name": "id",
+              "label": "Identifier",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "5686d8fa-2003-4837-8e66-8e887fabe21e"
+            },
+            {
+              "name": "doi",
+              "label": "Other Identifier/DOI",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "10.11582/2017.00004"
+            }
+          ]
+        },
+        {
+          "name": "personnel",
+          "label": "Personnel (first name, last name, organisation, email)",
+          "fields": [
+            {
+              "name": "contact_points",
+              "label": "Contact points",
+              "display_snippet": "creators.html",
+              "repeating_subfields": [
+                {
+                  "field_name": "type",
+                  "label": "Type",
+                  "required": true,
+                  "react_input": "radio_group",
+                  "react_input_class_name": "col-span-2 mb-5",
+                  "react_input_default_value": "person",
+                  "choices": [
+                    {
+                      "label": "Person",
+                      "value": "person"
+                    },
+                    {
+                      "label": "Organisation",
+                      "value": "organisation"
+                    }
+                  ]
+                },
+                {
+                  "field_name": "first_name",
+                  "label": "First name",
+                  "required": true,
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "last_name",
+                  "label": "Last name",
+                  "required": true,
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "organisation",
+                  "label": "Organisation",
+                  "required": true,
+                  "react_input": "autocomplete_group_title",
+                  "react_input_group_type": "institution",
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "email",
+                  "label": "Email",
+                  "required": true,
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "orcid",
+                  "label": "ORCID",
+                  "help_text": "Free, unique, persistent identifier (PID) for individuals. Use the ID only and not the full URL (i.e. \"0000-000X-YYYY-ZZZZ\").",
+                  "mask": "/\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/",
+                  "validators": "creator_type_person_optional"
+                },
+                {
+                  "field_name": "name",
+                  "label": "Name",
+                  "required": true,
+                  "validators": "creator_type_organisation_required"
+                },
+                {
+                  "field_name": "acronym",
+                  "label": "Acronym",
+                  "validators": "creator_type_organisation_optional"
+                },
+                {
+                  "field_name": "contact_email",
+                  "label": "Contact email",
+                  "required": true,
+                  "validators": "creator_type_organisation_required"
+                },
+                {
+                  "field_name": "homepage_url",
+                  "label": "Homepage URL",
+                  "validators": "creator_type_organisation_optional url_validator"
+                },
+                {
+                  "field_name": "ror",
+                  "label": "ROR",
+                  "mask": "0 /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[0-9]/ /[0-9]/",
+                  "validators": "creator_type_organisation_optional"
+                }
+              ],
+              "repeating_label": "Contact point",
+              "value": [
+                {
+                  "type": "person",
+                  "first_name": "Ingerid",
+                  "last_name": "Reinertsen",
+                  "organisation": "SINTEF",
+                  "email": "ingerid.reinertsen@sintef.no",
+                  "orcid": null,
+                  "name": null,
+                  "acronym": null,
+                  "contact_email": null,
+                  "homepage_url": null,
+                  "ror": null
+                }
+              ]
+            },
+            {
+              "name": "creators",
+              "label": "Creators",
+              "display_snippet": "creators.html",
+              "repeating_subfields": [
+                {
+                  "field_name": "type",
+                  "label": "Type",
+                  "required": true,
+                  "react_input": "radio_group",
+                  "react_input_class_name": "col-span-2 mb-5",
+                  "react_input_default_value": "person",
+                  "choices": [
+                    {
+                      "label": "Person",
+                      "value": "person"
+                    },
+                    {
+                      "label": "Organisation",
+                      "value": "organisation"
+                    }
+                  ]
+                },
+                {
+                  "field_name": "first_name",
+                  "label": "First name",
+                  "required": true,
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "last_name",
+                  "label": "Last name",
+                  "required": true,
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "organisation",
+                  "label": "Organisation",
+                  "required": true,
+                  "react_input": "autocomplete_group_title",
+                  "react_input_group_type": "institution",
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "email",
+                  "label": "Email",
+                  "required": true,
+                  "validators": "creator_type_person_required"
+                },
+                {
+                  "field_name": "orcid",
+                  "label": "ORCID",
+                  "help_text": "Free, unique, persistent identifier (PID) for individuals. Use the ID only and not the full URL (i.e. \"0000-000X-YYYY-ZZZZ\").",
+                  "mask": "/\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/",
+                  "validators": "creator_type_person_optional"
+                },
+                {
+                  "field_name": "name",
+                  "label": "Name",
+                  "required": true,
+                  "validators": "creator_type_organisation_required"
+                },
+                {
+                  "field_name": "acronym",
+                  "label": "Acronym",
+                  "validators": "creator_type_organisation_optional"
+                },
+                {
+                  "field_name": "contact_email",
+                  "label": "Contact email",
+                  "required": true,
+                  "validators": "creator_type_organisation_required"
+                },
+                {
+                  "field_name": "homepage_url",
+                  "label": "Homepage URL",
+                  "validators": "creator_type_organisation_optional url_validator"
+                },
+                {
+                  "field_name": "ror",
+                  "label": "ROR",
+                  "mask": "0 /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[0-9]/ /[0-9]/",
+                  "validators": "creator_type_organisation_optional"
+                }
+              ],
+              "repeating_label": "Creator",
+              "value": [
+                {
+                  "type": "person",
+                  "first_name": "Yiming",
+                  "last_name": "Xiao",
+                  "organisation": "GMAIL",
+                  "email": "xym6325@gmail.com",
+                  "orcid": null,
+                  "name": null,
+                  "acronym": null,
+                  "contact_email": null,
+                  "homepage_url": null,
+                  "ror": null
+                },
+                {
+                  "type": "person",
+                  "first_name": "Maryse",
+                  "last_name": "Fortin",
+                  "organisation": "MAIL",
+                  "email": "maryse.fortin@mail.mcgill.ca",
+                  "orcid": null,
+                  "name": null,
+                  "acronym": null,
+                  "contact_email": null,
+                  "homepage_url": null,
+                  "ror": null
+                },
+                {
+                  "type": "person",
+                  "first_name": "Geirmund",
+                  "last_name": "Unsg\u00e5rd",
+                  "organisation": "STOLAV",
+                  "email": "geirmund.unsgard@stolav.no",
+                  "orcid": null,
+                  "name": null,
+                  "acronym": null,
+                  "contact_email": null,
+                  "homepage_url": null,
+                  "ror": null
+                },
+                {
+                  "type": "person",
+                  "first_name": "Hassan",
+                  "last_name": "Rivaz",
+                  "organisation": "GMAIL",
+                  "email": "hrivaz@gmail.com",
+                  "orcid": null,
+                  "name": null,
+                  "acronym": null,
+                  "contact_email": null,
+                  "homepage_url": null,
+                  "ror": null
+                },
+                {
+                  "type": "person",
+                  "first_name": "Ingerid",
+                  "last_name": "Reinertsen",
+                  "organisation": "SINTEF",
+                  "email": "Ingerid.Reinertsen@sintef.no",
+                  "orcid": null,
+                  "name": null,
+                  "acronym": null,
+                  "contact_email": null,
+                  "homepage_url": null,
+                  "ror": null
+                }
+              ]
+            },
+            {
+              "name": "contributors",
+              "label": "Contributors",
+              "display_snippet": null,
+              "repeating_subfields": [
+                {
+                  "field_name": "first_name",
+                  "label": "First name",
+                  "required": true,
+                  "validators": "not_empty"
+                },
+                {
+                  "field_name": "last_name",
+                  "label": "Last name",
+                  "required": true,
+                  "validators": "not_empty"
+                },
+                {
+                  "field_name": "organisation",
+                  "label": "Organisation",
+                  "react_input": "autocomplete_group_title",
+                  "react_input_group_type": "institution",
+                  "required": true,
+                  "validators": "not_empty"
+                },
+                {
+                  "field_name": "email",
+                  "label": "Email",
+                  "required": true,
+                  "validators": "not_empty email_validator"
+                },
+                {
+                  "field_name": "orcid",
+                  "label": "ORCID",
+                  "help_text": "Free, unique, persistent identifier (PID) for individuals. Use the ID only and not the full URL (i.e. \"0000-000X-YYYY-ZZZZ\").",
+                  "mask": "/\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/ - /\\d/ /\\d/ /\\d/ /\\d/"
+                },
+                {
+                  "form_snippet": "select.html",
+                  "display_snippet": "select.html",
+                  "validators": "scheming_required scheming_choices",
+                  "field_name": "type",
+                  "label": "Type",
+                  "preset": "select",
+                  "react_input": "select",
+                  "help_text": "The type of contributor of the resource (see the definitions on on documentation page).",
+                  "choices": [
+                    {
+                      "value": "DataCollector",
+                      "label": "Data Collector"
+                    },
+                    {
+                      "value": "DataCurator",
+                      "label": "Data Curator"
+                    },
+                    {
+                      "value": "ProjectLeader",
+                      "label": "Project Leader"
+                    },
+                    {
+                      "value": "ProjectManager",
+                      "label": "Project Manager"
+                    },
+                    {
+                      "value": "ProjectMember",
+                      "label": "Project Member"
+                    },
+                    {
+                      "value": "RelatedPerson",
+                      "label": "Related Person"
+                    },
+                    {
+                      "value": "Researcher",
+                      "label": "Researcher"
+                    },
+                    {
+                      "value": "ResearchGroup",
+                      "label": "Research Group"
+                    },
+                    {
+                      "value": "Supervisor",
+                      "label": "Supervisor"
+                    },
+                    {
+                      "value": "WorkPackageLeader",
+                      "label": "Work Package Leader"
+                    },
+                    {
+                      "value": "Other",
+                      "label": "Other"
+                    }
+                  ]
+                }
+              ],
+              "repeating_label": "Contributor",
+              "value": [
+                {
+                  "first_name": "Ingerid",
+                  "last_name": "Reinertsen",
+                  "organisation": "SINTEF",
+                  "email": "ingerid.reinertsen@sintef.no",
+                  "orcid": null,
+                  "type": {
+                    "value": "RelatedPerson",
+                    "label": "Related Person"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "dataset_owner",
+              "label": "Dataset owner",
+              "display_snippet": "dataset_owner.html",
+              "repeating_subfields": [
+                {
+                  "field_name": "organisation",
+                  "label": "Organisation",
+                  "react_input": "select_group",
+                  "react_input_group_type": "institution",
+                  "react_input_max_selected": 1,
+                  "display_snippet": "group.html",
+                  "validators": "institution_exists"
+                },
+                {
+                  "field_name": "ror",
+                  "label": "ROR",
+                  "disabled": true,
+                  "mask": "0 /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[a-z|0-9]/ /[0-9]/ /[0-9]/",
+                  "validators": "ignore"
+                }
+              ],
+              "repeating_label": "Owner",
+              "value": []
+            },
+            {
+              "name": "publisher",
+              "label": "Publisher",
+              "display_snippet": "text.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "NIRD RDA"
+            }
+          ]
+        },
+        {
+          "name": "constraints",
+          "label": "Constraints",
+          "fields": [
+            {
+              "name": "license_id",
+              "label": "License",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "CC-BY-4.0"
+            },
+            {
+              "name": "access_rights",
+              "label": "Access Rights",
+              "display_snippet": "embargo.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "public"
+            },
+            {
+              "name": "embargoed_until",
+              "label": "Embargo end date",
+              "display_snippet": "date.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            }
+          ]
+        },
+        {
+          "name": "extent",
+          "label": "Extent",
+          "fields": [
+            {
+              "name": "spatial",
+              "label": "Spatial",
+              "display_snippet": "spatial.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            },
+            {
+              "name": "temporal",
+              "label": "Temporal",
+              "display_snippet": "date_range.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            }
+          ]
+        },
+        {
+          "name": "reference_dates",
+          "label": "Reference Dates",
+          "fields": [
+            {
+              "name": "release_date",
+              "label": "Release date",
+              "display_snippet": "date.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "2017-05-30"
+            }
+          ]
+        },
+        {
+          "name": "related_urls",
+          "label": "Related URLs",
+          "fields": [
+            {
+              "name": "related_resources",
+              "label": "Related Resources",
+              "display_snippet": null,
+              "repeating_subfields": [
+                {
+                  "form_snippet": "select.html",
+                  "display_snippet": "select.html",
+                  "validators": "scheming_required scheming_choices",
+                  "field_name": "type",
+                  "required": true,
+                  "label": "Type",
+                  "preset": "select",
+                  "react_input": "select",
+                  "choices": [
+                    {
+                      "value": "algorithm_documentation",
+                      "label": "ALGORITHM DOCUMENTATION"
+                    },
+                    {
+                      "value": "algorithm_theoretical_basis_document_atbd_",
+                      "label": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)"
+                    },
+                    {
+                      "value": "anomalies",
+                      "label": "ANOMALIES"
+                    },
+                    {
+                      "value": "case_study",
+                      "label": "CASE STUDY"
+                    },
+                    {
+                      "value": "data_citation_policy",
+                      "label": "DATA CITATION POLICY"
+                    },
+                    {
+                      "value": "data_product_specification",
+                      "label": "DATA PRODUCT SPECIFICATION"
+                    },
+                    {
+                      "value": "data_quality",
+                      "label": "DATA QUALITY"
+                    },
+                    {
+                      "value": "data_recipe",
+                      "label": "DATA RECIPE"
+                    },
+                    {
+                      "value": "deliverables_checklist",
+                      "label": "DELIVERABLES CHECKLIST"
+                    },
+                    {
+                      "value": "general_documentation",
+                      "label": "GENERAL DOCUMENTATION"
+                    },
+                    {
+                      "value": "how_to",
+                      "label": "HOW-TO"
+                    },
+                    {
+                      "value": "important_notice",
+                      "label": "IMPORTANT NOTICE"
+                    },
+                    {
+                      "value": "instrument_sensor_calibration_documentation",
+                      "label": "INSTRUMENT/SENSOR CALIBRATION DOCUMENTATION"
+                    },
+                    {
+                      "value": "micro_article",
+                      "label": "MICRO ARTICLE"
+                    },
+                    {
+                      "value": "pi_documentation",
+                      "label": "PI DOCUMENTATION"
+                    },
+                    {
+                      "value": "processing_history",
+                      "label": "PROCESSING HISTORY"
+                    },
+                    {
+                      "value": "product_history",
+                      "label": "PRODUCT HISTORY"
+                    },
+                    {
+                      "value": "product_quality_assessment",
+                      "label": "PRODUCT QUALITY ASSESSMENT"
+                    },
+                    {
+                      "value": "product_usage",
+                      "label": "PRODUCT USAGE"
+                    },
+                    {
+                      "value": "production_history",
+                      "label": "PRODUCTION HISTORY"
+                    },
+                    {
+                      "value": "publications",
+                      "label": "PUBLICATIONS"
+                    },
+                    {
+                      "value": "read_me",
+                      "label": "READ-ME"
+                    },
+                    {
+                      "value": "related_articles",
+                      "label": "RELATED ARTICLES"
+                    },
+                    {
+                      "value": "requirements_and_design",
+                      "label": "REQUIREMENTS AND DESIGN"
+                    },
+                    {
+                      "value": "science_data_product_software_documentation",
+                      "label": "SCIENCE DATA PRODUCT SOFTWARE DOCUMENTATION"
+                    },
+                    {
+                      "value": "science_data_product_validation",
+                      "label": "SCIENCE DATA PRODUCT VALIDATION"
+                    },
+                    {
+                      "value": "user_feedback_page",
+                      "label": "USER FEEDBACK PAGE"
+                    },
+                    {
+                      "value": "user_s_guide",
+                      "label": "USER'S GUIDE"
+                    }
+                  ]
+                },
+                {
+                  "field_name": "url",
+                  "required": true,
+                  "label": "URL",
+                  "validators": "url_validator",
+                  "form_placeholder": "E.g. https://sigma2.no/my-related-resource",
+                  "display_snippet": "link.html"
+                }
+              ],
+              "repeating_label": "Related Resource",
+              "value": []
+            }
+          ]
+        },
+        {
+          "name": "versioning_info",
+          "label": "Versioning Info",
+          "fields": [
+            {
+              "name": "version",
+              "label": "Version",
+              "display_snippet": "text.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": 1
+            },
+            {
+              "name": "version_notes",
+              "label": "Version notes",
+              "display_snippet": "markdown.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "First version of the dataset."
+            },
+            {
+              "name": "has_version",
+              "label": "Has Version",
+              "display_snippet": "dataset_link.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            },
+            {
+              "name": "is_version_of",
+              "label": "Is version of",
+              "display_snippet": "dataset_link.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            },
+            {
+              "name": "version_type",
+              "label": "Version type",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": "latest"
+            }
+          ]
+        },
+        {
+          "name": null,
+          "label": "Others",
+          "fields": [
+            {
+              "name": "source",
+              "label": "Sources",
+              "display_snippet": "multiple_text.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": []
+            },
+            {
+              "name": "conforms_to",
+              "label": "Conforms to",
+              "display_snippet": null,
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            },
+            {
+              "name": "provenance",
+              "label": "Provenance",
+              "display_snippet": "json.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": null
+            },
+            {
+              "name": "cron",
+              "label": "Job state",
+              "display_snippet": "job_state.html",
+              "repeating_subfields": null,
+              "repeating_label": null,
+              "value": {
+                "state": "succeeded",
+                "message": null,
+                "submitted_date": "2025-06-13T20:00:00",
+                "completed_date": "2025-06-13T20:00:00"
+              }
+            }
+          ]
+        }
+      ],
+      "backHref": "/dataset"
+    },
+    "__N_SSP": true
+  },
+  "page": "/dataset/[dataset]",
+  "query": {
+    "dataset": "5D6BFC33-F58D-4F56-88E8-C40AF269D6F2"
+  },
+  "buildId": "t8OJwhey8CWEBAzs3x4FT",
+  "runtimeConfig": {
+    "DOMAINS": [
+      "demo.dev.datopian.com",
+      "admin.ckan-archive-test.sigma2.no",
+      "www.sigma2.no",
+      "fakeimg.pl",
+      "ckan"
+    ],
+    "DMS": "https://data.archive.sigma2.no",
+    "SITE_TITLE": "NIRD Research Data Archive",
+    "NEXT_PUBLIC_CONTACT_URL": "mailto:archive.manager@nris.no",
+    "NEXT_PUBLIC_FEEDBACK_URL": "mailto:archive.manager@nris.no",
+    "NEXT_PUBLIC_FAQ_URL": "https://documentation.sigma2.no/nird_archive/user-guide.html?test=1",
+    "NEXT_PUBLIC_DATA_POLICY_URL": "https://www.sigma2.no/data-policy",
+    "NEXT_PUBLIC_PRIVATE_POLICY_URL": "https://www.sigma2.no/processing-personal-information-research-data-archive",
+    "NEXT_PUBLIC_USER_GUIDE_URL": "https://documentation.sigma2.no/nird_archive/user-guide.html",
+    "NEXT_PUBLIC_ABOUT_URL": "https://www.sigma2.no/service/research-data-archive"
+  },
+  "isFallback": false,
+  "gssp": true,
+  "locale": "en",
+  "locales": [
+    "en"
+  ],
+  "defaultLocale": "en",
+  "scriptLoader": []
+}

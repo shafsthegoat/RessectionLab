@@ -1,0 +1,251 @@
+{
+  "schema": "resect-component-cohort-v1",
+  "declared_at": "2026-10-08T05:05:53.240244+00:00",
+  "purpose": "Source-linked visible cavity component learning; not RL experience or complete resection reward",
+  "image_source": {
+    "doi": "10.11582/2017.00004",
+    "version": 1,
+    "license": "CC-BY-4.0",
+    "inventory": "artifacts/mechanics/resect-case4-acquisition-metadata-v1/table-of-contents.csv.gz",
+    "uncompressed_inventory_sha256": "e635116017475a5253908598f9ad56ffb386e0fe74406abcbb6355444fdbb0ee"
+  },
+  "annotation_source": {
+    "doi": "10.17605/OSF.IO/JV8BK",
+    "release": "All-Labels v1 2024-02-15; updated masks revision 2",
+    "license": "CC-BY-NC-SA-4.0",
+    "rights_source": "https://osf.io/download/4mkfg/",
+    "methods": "https://doi.org/10.1002/mp.17317",
+    "intended_use": "noncommercial research only; no commercial rights assumed"
+  },
+  "selection": {
+    "namespace": "resect-component-cohort-v1|",
+    "rule": "Preserve Case4 DEVELOPMENT; Case3 metadata-selected TRAIN pilot; SHA256 rank remaining21, first4 MEASUREMENT_EVAL,next4 SELECT,rest TRAIN",
+    "pilot_basis": "minimum declared original during-US plus cavity mask bytes, no image/label values or performance inspected",
+    "outcome_based_reassignment_allowed": false,
+    "hash_encoding_and_order": "SHA256 of UTF-8 namespace + patient_group, ascending hexadecimal digest order"
+  },
+  "members": [
+    {
+      "patient_group": "RESECT:Case1",
+      "case_id": "Case1",
+      "role": "SELECT",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case2",
+      "case_id": "Case2",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case3",
+      "case_id": "Case3",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case4",
+      "case_id": "Case4",
+      "role": "DEVELOPMENT",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case5",
+      "case_id": "Case5",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case6",
+      "case_id": "Case6",
+      "role": "SELECT",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case7",
+      "case_id": "Case7",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case8",
+      "case_id": "Case8",
+      "role": "MEASUREMENT_EVAL",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case11",
+      "case_id": "Case11",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": false,
+      "cavity_after_label_reported": false,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case12",
+      "case_id": "Case12",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case13",
+      "case_id": "Case13",
+      "role": "MEASUREMENT_EVAL",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case14",
+      "case_id": "Case14",
+      "role": "SELECT",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case15",
+      "case_id": "Case15",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": false,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case16",
+      "case_id": "Case16",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case17",
+      "case_id": "Case17",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case18",
+      "case_id": "Case18",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case19",
+      "case_id": "Case19",
+      "role": "MEASUREMENT_EVAL",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case21",
+      "case_id": "Case21",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case23",
+      "case_id": "Case23",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case24",
+      "case_id": "Case24",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case25",
+      "case_id": "Case25",
+      "role": "TRAIN",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case26",
+      "case_id": "Case26",
+      "role": "SELECT",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    },
+    {
+      "patient_group": "RESECT:Case27",
+      "case_id": "Case27",
+      "role": "MEASUREMENT_EVAL",
+      "all_timepoints_and_derivatives_grouped": true,
+      "cavity_during_label_reported": true,
+      "cavity_after_label_reported": true,
+      "label_availability_source": "metadata-only RESECT-SEG audit; exact payload identity requires source index"
+    }
+  ],
+  "existing_case4_contract": "manifests/experiments/resect-case4-displacement-acquisition-v1.json",
+  "existing_case4_protected_partition_sha256": "cc9d7776cbb4bb6ba745519e24f008c53e556bfe60d3c0509917377c9db02982",
+  "case4_excluded_from_component_learner": true,
+  "preserve_case4_during_after_labels_and_motion_holdout": true,
+  "alias_rules": {
+    "RESECT_SEG": "inherit original RESECT:CaseN identity",
+    "CuRIOUS": "inherit for verified RESECT source cases",
+    "EASY_RESECT": "crosswalk unresolved; quarantine unmapped IDs"
+  },
+  "exposure": "Case4 acquired and anatomically inspected; remaining22 have metadata exposure. Published case-summary exposure is incompletely logged. Evaluation is locally payload-held-out component testing, not a pristine external clinical cohort.",
+  "new_payload_access_by_this_declaration": false,
+  "training_updates": 0,
+  "recorded_surgical_transitions": 0,
+  "remaining_admission": "Pin actual per-file metadata/hashes and rights records; verify original/mask identity, affine, labels, actual coverage and documented annotation ancestry before fitting.",
+  "missing_annotation_policy": "Missing cavity labels are not negative masks and must not be imputed."
+}

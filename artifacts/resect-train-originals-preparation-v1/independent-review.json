@@ -1,0 +1,47 @@
+{
+  "schema": "resect-train-originals-independent-review-v1",
+  "status": "narrow_metadata_and_publication_review_passed",
+  "frozen_sources": {
+    "scripts/acquire_resect_train_originals.py": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50",
+    "manifests/resect-train-originals-v1.json": "1764a0ce75b449d542ef51578c54cab6202b66d72c71b811999cb51a55164135",
+    "tests/test_resect_train_originals.py": "42dd0ebac9eaddd1a188167fe991b4ec77d95bb68f80424b1291402239fce21c"
+  },
+  "checks": [
+    "independent_exact_inventory_complement_104_no_duplicate25",
+    "exact14_train_and9_protected_roles",
+    "nine_portable_size_sha_bound_source_proofs",
+    "relocated_manifest_load_without_ignored_metadata",
+    "fixity_refusal_prevents_completion_new",
+    "fixity_refusal_prevents_completion_existing",
+    "canonical_receipt_follows_full_fixity_and_exclusive_publication"
+  ],
+  "check_count": 7,
+  "coverage": {
+    "new_sources": 104,
+    "bytes": 672336857,
+    "train_people": 14,
+    "protected_people_excluded": 9,
+    "existing_originals_excluded": 25,
+    "train_original_inventory_total": 129,
+    "kinds": {
+      "source_correspondence_landmarks": 59,
+      "original_mri": 28,
+      "original_ultrasound": 17
+    }
+  },
+  "portable_proofs_verified": 9,
+  "publication_review": "verify enforces exact catalog size and MD5 and prior measured SHA when present; publish requires successful verify before exclusive link and immutable completion receipt. Control ordering and refusal tested with verifier injection, not scientific bodies.",
+  "findings": [],
+  "harness_correction": "Initial os.link mock also intercepted atomic receipt publication; scoped ordering assertions to the body link and receipt link separately. Initial check source retained; production source unchanged.",
+  "scope_limits": [
+    "No scientific payload reads",
+    "No network",
+    "No decoding or admission",
+    "No broad owner-test rerun",
+    "Parent reviews transport/resume separately"
+  ],
+  "network_requests": 0,
+  "scientific_payload_reads": 0,
+  "tracked_edits": 0,
+  "source_sha256": "6caf5a2e97b42bcfd27af8454d2d1059a032352e26278bea62bf51c2face02f0"
+}
