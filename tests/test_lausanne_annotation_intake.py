@@ -4,6 +4,7 @@ import copy
 import json
 from pathlib import Path
 import sys
+import struct
 import time
 
 import pytest
@@ -61,6 +62,69 @@ def test_frozen_full_inventory_and_semantics(metadata):
     assert all(not manifest["semantics"][k] for k in
                ("training_admitted", "scanner_frame_admitted", "spatial_planning_admitted"))
     assert manifest["semantics"]["background"].startswith("unknown")
+
+
+def extension_record(size=16, code=0, *, endian="<"):
+    # Framing controls only: arbitrary bytes, never a patient image or label.
+    return struct.pack(endian + "ii", size, code) + b"x" * 8
+
+
+def check_extensions(region, *, endian="<", offset=None, maximum=65536):
+    return intake.inspect_extensions(region, data_offset=348 + len(region) if offset is None else offset,
+                                     endian=endian, maximum_offset=maximum)
+
+
+@pytest.mark.parametrize("endian", ["<", ">"])
+@pytest.mark.parametrize("indicator", [1, 2])
+def test_extension_framing_keeps_unknown_codes_and_exact_hashes(endian, indicator):
+    first = extension_record(endian=endian)
+    second = extension_record(code=12345, endian=endian)
+    region = bytes([indicator, 0, 0, 0]) + first + second
+    result = check_extensions(region, endian=endian)
+    assert result["status"] == "framed_uninterpreted"
+    assert result["extension_count"] == 2
+    assert result["records"] == [
+        {"offset": 352, "end_exclusive": 368, "esize": 16, "ecode": 0,
+         "block_sha256": intake.digest(first), "payload_bytes": 8,
+         "payload_sha256": intake.digest(first[8:])},
+        {"offset": 368, "end_exclusive": 384, "esize": 16, "ecode": 12345,
+         "block_sha256": intake.digest(second), "payload_bytes": 8,
+         "payload_sha256": intake.digest(second[8:])},
+    ]
+    assert result["payloads_interpreted"] is False
+    assert result["used_as_annotation_or_coordinate_evidence"] is False
+
+
+def test_extension_absent_zero_padding_and_present_terminal_nulls():
+    assert check_extensions(bytes(20))["status"] == "absent_zero_padding"
+    block = struct.pack("<ii", 32, 0) + b"x" * 8 + bytes(16)
+    result = check_extensions(b"\x01\0\0\0" + block)
+    assert result["records"][0]["payload_bytes"] == 24
+    assert result["records"][0]["payload_sha256"] == intake.digest(block[8:])
+
+
+@pytest.mark.parametrize("region", [
+    bytes(3), b"\0\0\0\0x", b"\x01\0\0\0",
+    b"\x01\x01\0\0" + extension_record(),
+    b"\x01\0\0\0" + bytes(4),
+    b"\x01\0\0\0" + extension_record(size=8),
+    b"\x01\0\0\0" + extension_record(size=24),
+    b"\x01\0\0\0" + extension_record(size=32),
+    b"\x01\0\0\0" + extension_record(code=-1),
+    b"\x01\0\0\0" + extension_record() + b"x",
+    b"\x01\0\0\0" + extension_record() + bytes(16),
+])
+def test_malformed_extension_or_unframed_padding_refused(region):
+    with pytest.raises(intake.AcquisitionError):
+        check_extensions(region)
+
+
+@pytest.mark.parametrize("kwargs", [
+    {"offset": 353}, {"offset": True}, {"maximum": 351}, {"endian": "="},
+])
+def test_extension_offset_and_byteorder_bounds(kwargs):
+    with pytest.raises(intake.AcquisitionError):
+        check_extensions(bytes(4), **kwargs)
 
 
 def record_validation_inputs(metadata):

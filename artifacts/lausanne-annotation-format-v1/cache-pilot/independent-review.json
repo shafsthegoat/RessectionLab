@@ -1,0 +1,131 @@
+{
+  "schema": "lausanne-annotation-pilot-independent-review-v1",
+  "created_at": "2026-10-08T11:49:49.783759+00:00",
+  "conclusion": "passed; ready for bounded expanded source acquisition and per-file QC only",
+  "blockers": [],
+  "source_commit": "ae309f965f5481f654e02e02318d1a1cfbe41b25",
+  "manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+  "batch_sha256": "d371958f62d6dab9895ff686241587837a7f84a64f0fcae523e2f42ea93f42aa",
+  "receipt_sha256": "e389853df5453f735211318dafffa8ec66e4eaaccd7110aa2b2deb61ecfd26fc",
+  "execution_source_sha256": "f2c1fda49379577db72ea41cf5e0d760bbfab4529541fbfb1fc96c383084bd15",
+  "execution_snapshots_and_commit_files_verified": 14,
+  "source_metadata_cache_verified": 13,
+  "pilot_scope": {
+    "total_outcomes": 148,
+    "completed": 1,
+    "outside_bounded_scope": 143,
+    "metadata_failed_excluded": 4,
+    "existing_files_only": true,
+    "requests_recorded": 0,
+    "reserved_source_bytes": 82420,
+    "original_mask_fixity": {
+      "bytes": 82420,
+      "sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+      "md5": "4b8717630500d48edb362542a283a07b"
+    },
+    "original_tof_compressed_fixity": {
+      "bytes": 16816195,
+      "sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+      "md5": "0eaeb346ac95008f4de08ee1b68a4cc7"
+    }
+  },
+  "process": {
+    "worker_pid": 71748,
+    "worker_and_process_group_absent_at_audit": true,
+    "single_worker_claim": true,
+    "exit_code": 0,
+    "batch_seconds": 0.4628609591163695,
+    "batch_limit_seconds": 60,
+    "worker_seconds": 0.24629333289340138,
+    "worker_limit_seconds": 58.91892220801674
+  },
+  "independent_mask_count": {
+    "shape": [
+      306,
+      384,
+      160
+    ],
+    "voxels": 18800640,
+    "stored_datatype": "uint8",
+    "scaling": [
+      1.0,
+      0.0
+    ],
+    "stored_and_scaled_labels": [
+      0,
+      1
+    ],
+    "positive_voxels": 193,
+    "zero_voxels": 18800447,
+    "zero_semantics": "unknown, not negative vessel or safe-tissue coverage",
+    "chunk_bytes": 65536,
+    "comparison": "193 matches older actual-source acquisition receipt and retained real component receipt; source mask SHA unchanged",
+    "source_positive_index_bounds": [
+      [
+        135,
+        243,
+        75
+      ],
+      [
+        145,
+        252,
+        78
+      ]
+    ]
+  },
+  "independent_grid": {
+    "untouched_mask_header_sha256": "8fb9dd12d0c444ca21780b9f3b745e93305376cc9deac190646808452a2dd23e",
+    "untouched_tof_header_sha256": "9e3223561a47bfc1606b9f8332d6086a4a3718df0b723227a318801a06a00aa2",
+    "tof_decompressed_output_bytes": 348,
+    "tof_header_compressed_input_bytes": 1024,
+    "mask_units": "unknown",
+    "mask_qform_code": 0,
+    "mask_sform_code": 2,
+    "tof_units": "mm",
+    "tof_qform_code": 1,
+    "tof_sform_code": 1,
+    "raw_affines_equal": false,
+    "maximum_affine_coefficient_difference": 1.52587890625e-05,
+    "maximum_float32_steps": 3,
+    "maximum_support_displacement_reference_mm": 2.803332224464873e-05,
+    "maximum_support_displacement_voxels": 4.624365564998158e-05,
+    "maximum_positive_centre_displacement_reference_mm": 1.825767359642242e-05,
+    "positive_indices_unchanged": true,
+    "full_support_fixed_four_ulp_bound_passes": true,
+    "matches_pilot_proof": true,
+    "source_link": "Exact sidecar RawSources/orig supports explicit source-reference interpretation; raw headers are not called identity_grid."
+  },
+  "review_bounds": {
+    "elapsed_seconds": 0.8525472090113908,
+    "limit_seconds": 60,
+    "peak_rss_bytes": 36995072,
+    "bookkeeping_limit_bytes": 536870912,
+    "full_image_arrays_allocated": false,
+    "scientific_transfers": 0,
+    "full_tof_decode": false,
+    "tracked_edits": 0,
+    "generated_patient_data": false
+  },
+  "admission": {
+    "ready_for_bounded_expanded_acquisition_and_QC": true,
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "limitations": [
+    "Pilot validates only sub476; every expanded source must independently pass its exact identity, binary content and grid checks.",
+    "Source aneurysm-positive mask is not whole vasculature or a negative background domain; manual subtype/date mismatches for other records remain unresolved.",
+    "No T1 payload or full TOF scalar data was decoded; historical other-modality QC is retained, and full-pair current fixity is not asserted.",
+    "No network occurred in this audit. Cache-only pilot receipts and reviewed execution branch support zero pilot requests; no independent external packet capture was performed."
+  ],
+  "older_real_mask_receipt": {
+    "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/acquisition.json",
+    "sha256": "ccc3c32eae4e3c2d0d7103c376b2a70f963f4ed35646108457f1f0c47c8ff4ea",
+    "positive_voxels": 193
+  },
+  "audit_script_sha256": "372d577d4b65df6f18ef70c876e852d684cd8ef0ee2bd96ea0c4eb1d48e02e16"
+}

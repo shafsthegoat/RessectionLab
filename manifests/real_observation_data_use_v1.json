@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Continue remaining 99 TRAIN sessions; independently review the prepared 144-mask intake before payload execution; source-appropriate component learning remains unexecuted",
+      "next": "Continue remaining TRAIN originals; run separately recorded cache-only sub022 QC with reviewed extension reader, then bounded 144-mask intake; source-appropriate component learning remains unexecuted",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -44,8 +44,8 @@
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
       "remaining_train_sessions_to_acquire": 99,
       "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-21-summary.json",
-      "acquired_source_manual_aneurysm_masks": 1,
-      "manual_annotation_bytes": 82420,
+      "acquired_source_manual_aneurysm_masks": 2,
+      "manual_annotation_bytes": 118971,
       "manual_annotation_positive_voxels": 193,
       "manual_annotation_receipt": "artifacts/lausanne-sub476-annotation-v1/acquisition.json",
       "manual_annotation_spatial_admissions": 0,
@@ -74,7 +74,10 @@
         "full_pair_qc": "failed",
         "acquired_bytes_retained": 58454783,
         "receipt": "artifacts/lausanne-train-intake-v1/acquisition-batch-19-sub-253-ses-20110628.json"
-      }
+      },
+      "manual_annotation_content_qc_passed_masks": 1,
+      "manual_annotation_content_qc_failed_or_incomplete_masks": 1,
+      "manual_annotation_latest_intake": "artifacts/lausanne-annotation-format-v1/RESULT.md"
     },
     {
       "accession": "TopCoW external Lausanne",

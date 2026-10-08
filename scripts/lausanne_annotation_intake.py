@@ -22,6 +22,7 @@ from pathlib import Path
 import re
 import shutil
 import signal
+import struct
 import sys
 import time
 from urllib.parse import parse_qs, urlsplit
@@ -278,6 +279,50 @@ def decoding_budget(shape, itemsize: int, bounds: dict) -> dict:
             "chunk_working_bytes_bound": chunk * (itemsize + 11)}
 
 
+def inspect_extensions(region: bytes, *, data_offset: int, endian: str,
+                       maximum_offset: int) -> dict:
+    """Validate bounded NIfTI framing without interpreting private extension data.
+
+    `region` begins at byte 348, including the four-byte extender. An unknown
+    nonnegative ecode is retained as metadata, never treated as label or frame
+    evidence. Hashes include original terminal padding inside each record.
+    """
+    if (type(data_offset) is not int or not 352 <= data_offset <= maximum_offset
+            or len(region) != data_offset - 348 or endian not in ("<", ">")):
+        raise AcquisitionError("Invalid bounded NIfTI extension region")
+    indicator = region[:4]
+    if any(indicator[1:]):
+        raise AcquisitionError("Unsupported reserved NIfTI extension indicator bytes")
+    records = []
+    if indicator[0] == 0:
+        if any(region[4:]):
+            raise AcquisitionError("Nonzero padding without a NIfTI extension indicator")
+    else:
+        cursor = 4
+        if cursor == len(region):
+            raise AcquisitionError("NIfTI extension indicator has no record")
+        while cursor < len(region):
+            if len(region) - cursor < 8:
+                raise AcquisitionError("Truncated NIfTI extension framing")
+            size, code = struct.unpack_from(endian + "ii", region, cursor)
+            if size < 16 or size % 16 or code < 0:
+                raise AcquisitionError("Invalid NIfTI extension size or code")
+            end = cursor + size
+            if end > len(region):
+                raise AcquisitionError("NIfTI extension overruns the data offset")
+            records.append({"offset": 348 + cursor, "end_exclusive": 348 + end,
+                            "esize": size, "ecode": code,
+                            "block_sha256": digest(region[cursor:end]),
+                            "payload_bytes": size - 8,
+                            "payload_sha256": digest(region[cursor + 8:end])})
+            cursor = end
+    return {"status": "framed_uninterpreted" if records else "absent_zero_padding",
+            "offset": 348, "bytes": len(region), "sha256": digest(region),
+            "indicator": list(indicator), "extension_count": len(records),
+            "records": records, "payloads_interpreted": False,
+            "used_as_annotation_or_coordinate_evidence": False}
+
+
 def inspect_mask(path: Path, sha: str, bounds: dict, deadline: float) -> dict:
     """Stream exact source values in bounded chunks; no image-sized allocation."""
     import nibabel as nib
@@ -298,9 +343,9 @@ def inspect_mask(path: Path, sha: str, bounds: dict, deadline: float) -> dict:
             raise AcquisitionError("Mask data offset exceeds bounded NIfTI contract")
         if int(offset) + budget["native_payload_bytes"] > bounds["max_uncompressed_mask_bytes"]:
             raise AcquisitionError("Full uncompressed mask exceeds declared byte allowance")
-        padding = stream.read(int(offset) - 348)
-        if len(padding) != int(offset) - 348 or any(padding):
-            raise AcquisitionError("Mask extensions/nonzero padding need separate qualification")
+        extensions = inspect_extensions(stream.read(int(offset) - 348),
+                                        data_offset=int(offset), endian=header.endianness,
+                                        maximum_offset=bounds["max_nifti_data_offset"])
         slope, intercept = header.get_slope_inter()
         slope, intercept = (1., 0.) if slope is None else (float(slope), float(intercept))
         if not math.isfinite(slope) or not math.isfinite(intercept):
@@ -326,6 +371,7 @@ def inspect_mask(path: Path, sha: str, bounds: dict, deadline: float) -> dict:
     if not 0 < positives < budget["voxels"]:
         raise AcquisitionError("Mask must contain foreground and background")
     return {"status": "passed", "raw_grid": nifti1_header_record(raw, sha),
+            "extensions": extensions,
             "dtype": dtype.str, "source_scaling": [slope, intercept], "decoding_budget": budget,
             "positive_voxels": positives, "background_voxels": budget["voxels"] - positives,
             "background_semantics": "unknown", "array_operation": "none; source values counted only"}

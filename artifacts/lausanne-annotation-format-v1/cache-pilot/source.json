@@ -1,0 +1,21 @@
+{
+  "files": {
+    "scripts/lausanne_train_intake.py": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/acquire_lausanne_pilot.py": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a",
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/data_policy.py": "72a9c5c5efc06bc1a028efa8e4f2da760b2fa7ce6e024975f92cf68e5ab6d282",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "scripts/lausanne_annotation_intake.py": "04b71e433847d98f0d567cf24d97af77144351d4094429a630cc9f758af3a46e",
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "manifests/lausanne-train-annotations-v1.json": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+    "manifests/lausanne-component-cohort-v1.json": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "manifests/lausanne-train-originals-v1.json": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "numpy": "2.5.3",
+  "nibabel": "5.4.2"
+}

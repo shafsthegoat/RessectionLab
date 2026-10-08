@@ -355,3 +355,16 @@ metadata checks pass after a real process-interruption bookkeeping defect was
 reproduced and repaired. Public metadata proofs are portable. The first cache-only
 real-mask pilot reproduced 193 positive voxels and passed independent source/grid
 checks; full-inventory acquisition/QC and actual component fitting remain open.
+
+## October 8: preserve a real annotation format failure before repair
+
+The [first annotation pilots](../artifacts/lausanne-annotation-format-v1/RESULT.md)
+separate acquired bytes from usable labels. Sub476 passed cache-only content/grid
+checks. Sub022's exact source downloaded successfully, but its first content check
+refused a valid private-format NIfTI extension before reading labels. The new
+strict framing reader preserves opaque hashes without interpreting those contents;
+56 owner and 32 independent controls pass. Independent metadata-only inspection
+confirms the actual 592-byte prefix. The original failed receipt and a reviewer
+control typo remain recorded. The next executable step is an explicit cache-only
+QC repeat, followed by bounded inventory processing; no optimizer update or
+clinical/planning admission is supplied by this repair.

@@ -1,0 +1,88 @@
+{
+  "schema": "lausanne-annotation-transfer-pilot-independent-review-v1",
+  "created_at": "2026-10-08T11:59:18.605876+00:00",
+  "conclusion": "Exact live acquisition passed; content QC correctly refused and remains unresolved. Negative result and full denominator retained.",
+  "source_commit": "ae309f965f5481f654e02e02318d1a1cfbe41b25",
+  "manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+  "execution_source_sha256": "f2c1fda49379577db72ea41cf5e0d760bbfab4529541fbfb1fc96c383084bd15",
+  "receipt_sha256": "1a8ffdf58847b6468f884905e5101313d6799f2addeeaa0f68350dce705f1c09",
+  "batch_sha256": "81ba534e4f90cb48c679c4307d51e0c127ff57d9702b3c8998f96f1ebebf7aea",
+  "reviewed_execution_snapshots": 14,
+  "source_metadata_cache_verified": 13,
+  "acquisition": {
+    "status": "passed",
+    "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+    "bytes": 36551,
+    "sha256": "ba83116ae5fa9744bb83eb338cd491b431691b3a54a5a5b3c8d6111a1d2eec11",
+    "published_annex_md5": "bbadd4d37a8bc1fe44c9931438cb5f96",
+    "annex_git_blob_sha1": "295b6006e3c38fc275b656cb2cb88e0f35d3c927",
+    "one_recorded_GET": true,
+    "url": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz?versionId=OtPLfnGeJb1wZKFw3FprS3ffUnqEVV_l",
+    "version_id": "OtPLfnGeJb1wZKFw3FprS3ffUnqEVV_l",
+    "HTTP_status": 200,
+    "final_url_exact": true,
+    "automatic_retries": 0,
+    "redirects": 0,
+    "response_content_length": 36551,
+    "response_content_encoding": "identity (header absent, identity requested)",
+    "response_etag": "\"bbadd4d37a8bc1fe44c9931438cb5f96\"",
+    "response_last_modified": "Wed, 19 Jan 2022 02:59:40 GMT",
+    "response_request_id": "97CM4E9V0GHJPZP6",
+    "complete_published_file_retained": true,
+    "partial_sibling_present": false,
+    "evidence_basis": "Immutable request/response receipt, source snapshot transport contract, independently hashed compressed file; no external packet capture."
+  },
+  "content": {
+    "status": "failed_or_incomplete",
+    "failed_stage": "content_qc",
+    "error": {
+      "type": "AcquisitionError",
+      "message": "Mask extensions/nonzero padding need separate qualification"
+    },
+    "count_started": false,
+    "reference_qc": "not_assessed",
+    "grid_qc": "not_assessed",
+    "interpretation": "Recorded padding/extension gate refused before scalar count. This review performs no decompression and makes no claim about extension contents or valid label values."
+  },
+  "denominator": {
+    "all_outcomes": 148,
+    "worker_failed": 1,
+    "outside_bounded_scope": 143,
+    "metadata_failed_excluded": 4,
+    "all_paths_and_roles_preserved": true,
+    "only_one_worker_claim": true
+  },
+  "process": {
+    "worker_pid": 71953,
+    "worker_and_process_group_absent": true,
+    "exit_code": 1,
+    "attempt_path_and_receipt_retained": true,
+    "batch_seconds": 2.5342714581638575,
+    "batch_limit_seconds": 120,
+    "worker_seconds": 2.3389268331229687,
+    "worker_limit_seconds": 118.91294045792893
+  },
+  "admission": {
+    "acquired_source_bytes_verified": true,
+    "content_qualified": false,
+    "reference_grid_qualified": false,
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "semantic_limit": "Manual-region subtype unresolved; no inferred voxelwise contour, negative background or whole-vessel coverage."
+  },
+  "next_dependency": "Retain this source and failure. Qualify the actual source extension/padding metadata separately before any narrowly scoped decoder revision and repeat QC; current receipt does not qualify this mask for use. Broad batch remains unexecuted in this run.",
+  "audit_actions": {
+    "compressed_payload_bytes_hashed": 36551,
+    "payload_decompression_calls": 0,
+    "network_requests": 0,
+    "transfers": 0,
+    "tracked_edits": 0,
+    "elapsed_seconds": 0.30073937494307756
+  },
+  "audit_script_sha256": "8042eca935fcd6938c697a963d118e45f1af1c4d6f0a9b1acb325f438fcfaf18"
+}

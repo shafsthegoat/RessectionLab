@@ -1,0 +1,155 @@
+{
+  "schema": "lausanne-extension-parser-independent-review-v1",
+  "created_at": "2026-10-08T16:14:11.002495+00:00",
+  "conclusion": "No defects found in reviewed extension framing change. Ready for a separately declared cached sub022 QC repeat under unchanged source/content/grid/admission gates.",
+  "blockers": [],
+  "frozen_sources": [
+    {
+      "path": "scripts/lausanne_annotation_intake.py",
+      "bytes": 40861,
+      "sha256": "2f698cd7dcccf76797b4e466b490903dbdd8d65e0c44e3091e149d8f2f49c0cf",
+      "snapshot": "build/lausanne-extension-parser-review-v1/source-snapshot/scripts/lausanne_annotation_intake.py"
+    },
+    {
+      "path": "tests/test_lausanne_annotation_intake.py",
+      "bytes": 21231,
+      "sha256": "3bf58ac1f9f70aa863a46f05b13928424562b3d024adbc8298ddc38027db18f4",
+      "snapshot": "build/lausanne-extension-parser-review-v1/source-snapshot/tests/test_lausanne_annotation_intake.py"
+    }
+  ],
+  "specification": {
+    "path": "build/lausanne-sub022-extension-diagnostic-v1/official-nifti1.h",
+    "sha256": "fb86abcab6dcb825da340a3252feb314832dc07b1286e25019dfb3dc07b99486",
+    "primary_url": "https://raw.githubusercontent.com/NIFTI-Imaging/nifti_clib/master/niftilib/nifti1.h",
+    "sections": "nifti1.h lines 213-301",
+    "version_limit": "Mutable upstream URL; review binds exact archived document bytes.",
+    "requirements_checked": "Signed int32 esize/ecode in header byte order; esize >=16 and divisible by16; nonnegative ecode; correct record extents and bounded data offset; multiple extension records; opaque contents may use unrelated byte order and are not interpreted."
+  },
+  "parser_policy": {
+    "private_content": "Records preserve offset/end, esize/ecode, complete block and unstripped payload SHA256/length. No payload text, content handler, annotation meaning or coordinate meaning is emitted.",
+    "malformed_and_trailer": "Unknown nonnegative codes and any nonzero first indicator are supported. Reserved indicator bytes, truncated framing, negative codes, invalid sizes, overrun and any unframed trailer are refused. Present chains must end exactly at vox_offset.",
+    "absent_extension": "Existing bounded all-zero padding branch remains. Extension-absent data offsets need not be 16-aligned; the spec recommends aligned data offsets, while extension-record alignment is mandatory.",
+    "maximum_metadata": "At 65536 maximum data offset, at most4074 minimum-size records; metadata receipt below the existing2MiB read bound.",
+    "maximum_record_count": 4074,
+    "maximum_chain_receipt_bytes": 1408762
+  },
+  "scope_comparison": {
+    "baseline_runner_sha256": "04b71e433847d98f0d567cf24d97af77144351d4094429a630cc9f758af3a46e",
+    "all_other_functions_AST_identical": [
+      "encoded",
+      "digest",
+      "safe_path",
+      "read_metadata",
+      "source_metadata",
+      "validate_record",
+      "preflight",
+      "execution_source",
+      "retain_source",
+      "validate_execution",
+      "original_receipt_contract",
+      "decoding_budget",
+      "grid_proof",
+      "verify_reference",
+      "transfer",
+      "worker",
+      "initial_outcomes",
+      "retain_worker_receipt",
+      "batch",
+      "main"
+    ],
+    "inspect_mask_after_removing_exact_framing_change_AST_identical": true,
+    "preserved_gates": "Same immutable source/rights/split checks, limits, dtype/scaling/binary-value checks, foreground/background requirement, gzip EOF/integrity behavior, reference/grid proof, unknown background/timing, and false training/scanner/planning admissions."
+  },
+  "tests": [
+    {
+      "suite": "tests/test_lausanne_annotation_intake.py",
+      "passed": 56,
+      "failed": 0,
+      "seconds": 0.43
+    },
+    {
+      "suite": "build/lausanne-extension-parser-review-v1/test_independent_framing.py",
+      "passed": 32,
+      "failed": 0,
+      "seconds": 0.09,
+      "junit": "build/lausanne-extension-parser-review-v1/adversarial-controls.xml"
+    }
+  ],
+  "reviewer_control_correction": {
+    "initial_result": "24 passed,8 failed before production invocation due to reviewer byte-string length assertion (25 actual bytes vs24 intended).",
+    "production_defect": false,
+    "repair": "Only the ignored control payload was shortened by one zero byte. Initial control source and XML are retained.",
+    "initial_source": "build/lausanne-extension-parser-review-v1/initial-reviewer-controls.py",
+    "initial_junit": "build/lausanne-extension-parser-review-v1/initial-reviewer-controls.xml"
+  },
+  "actual_prefix": {
+    "source_sha256": "ba83116ae5fa9744bb83eb338cd491b431691b3a54a5a5b3c8d6111a1d2eec11",
+    "compressed_bytes_read": 36551,
+    "decompressed_bytes": 592,
+    "authorized_maximum_decompressed_bytes": 592,
+    "prefix_sha256": "71ce043d73c953f330e80294d44ea35787d9c666b5373c971065116b3d7b044c",
+    "header_sha256": "b32c6d0ab5527cfeb7f864a7dced5aad99bff8d72bacff57801fc1b276d1d130",
+    "parsed_extensions": {
+      "status": "framed_uninterpreted",
+      "offset": 348,
+      "bytes": 244,
+      "sha256": "f394fee3827d7808c364753688927ea0fad2c62a13b23e82f1287379638a05b4",
+      "indicator": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "extension_count": 1,
+      "records": [
+        {
+          "offset": 352,
+          "end_exclusive": 592,
+          "esize": 240,
+          "ecode": 0,
+          "block_sha256": "2ca06a34ad702c24d2bed0b5920e33ca014850b0aee45bdeac8f3c87ee4c34bf",
+          "payload_bytes": 232,
+          "payload_sha256": "a1fe3619a93340d6fa09e979fe51b758ebb287dee39b38baab1e237be47eb7ff"
+        }
+      ],
+      "payloads_interpreted": false,
+      "used_as_annotation_or_coordinate_evidence": false
+    },
+    "matches_prior_diagnostic": true,
+    "private_payload_interpreted_or_copied_to_output": false,
+    "scalar_bytes_decoded": 0,
+    "scalar_values_counted": 0,
+    "header_only_budget": {
+      "voxels": 36700160,
+      "native_payload_bytes": 36700160,
+      "logical_float64_bytes": 293601280,
+      "chunk_voxels": 262144,
+      "chunk_working_bytes_bound": 3145728
+    },
+    "header_only_datatype_code": 2,
+    "scalar_QC_grid_quality_and_gzip_CRC_not_established": true
+  },
+  "first_failed_receipt": {
+    "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/pilot-sub022-transfer-01/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz/receipt.json",
+    "sha256": "1a8ffdf58847b6468f884905e5101313d6799f2addeeaa0f68350dce705f1c09",
+    "unchanged": true
+  },
+  "actions": {
+    "network_requests": 0,
+    "scientific_transfers": 0,
+    "scalar_decodes": 0,
+    "actual_intake_invocations": 0,
+    "whole_image_readers": 0,
+    "tracked_edits": 0,
+    "original_source_modifications": 0,
+    "elapsed_seconds": 0.14930720813572407
+  },
+  "admission": {
+    "content_QC_for_sub022_completed": false,
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false
+  },
+  "next_step_limit": "Only a separately recorded cache-only actual-source QC attempt can establish scalar content and reference/grid result. Preserve failed historical receipt and unqualified manual subtype/background/timing semantics.",
+  "review_script_sha256": "4f9aec3760281c5f5ef9f6ed51755c3a52ef15e2323dada856db16f42a1c8c78"
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "lausanne-sub022-extension-diagnostic-v1",
+  "created_at": "2026-10-08T12:03:15.597150+00:00",
+  "source": {
+    "path": "data/anatomy/ds003949-v1.0.1/derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+    "bytes": 36551,
+    "sha256": "ba83116ae5fa9744bb83eb338cd491b431691b3a54a5a5b3c8d6111a1d2eec11"
+  },
+  "original_failed_receipt": {
+    "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/pilot-sub022-transfer-01/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz/receipt.json",
+    "sha256": "1a8ffdf58847b6468f884905e5101313d6799f2addeeaa0f68350dce705f1c09"
+  },
+  "operation": {
+    "scientific_transfers": 0,
+    "documentation_requests_in_diagnostic_task": 1,
+    "header_prefix_bytes_this_run": 592,
+    "task_total_prefix_bytes_including_initial_probe": 1184,
+    "authorized_decompressed_ceiling": 65536,
+    "scalar_bytes_decompressed": 0,
+    "scalar_values_decoded_or_counted": 0,
+    "method": "zlib gzip decoder max_length=348, then max_length=vox_offset-348; no flush or unbounded decompression",
+    "no_payload_content_output": true,
+    "source_files_modified": false
+  },
+  "header": {
+    "format": "single-file NIfTI-1",
+    "endianness": "little",
+    "vox_offset": 592,
+    "header_sha256": "b32c6d0ab5527cfeb7f864a7dced5aad99bff8d72bacff57801fc1b276d1d130",
+    "prefix_sha256": "71ce043d73c953f330e80294d44ea35787d9c666b5373c971065116b3d7b044c",
+    "extension_indicator": [
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  "extension_region": {
+    "offset": 352,
+    "bytes": 240,
+    "sha256": "2ca06a34ad702c24d2bed0b5920e33ca014850b0aee45bdeac8f3c87ee4c34bf",
+    "extension_count": 1,
+    "extensions": [
+      {
+        "offset": 352,
+        "end_exclusive": 592,
+        "esize": 240,
+        "ecode": 0,
+        "official_classification": "unknown private format",
+        "nibabel_code_label": "ignore",
+        "block_sha256": "2ca06a34ad702c24d2bed0b5920e33ca014850b0aee45bdeac8f3c87ee4c34bf",
+        "payload_bytes": 232,
+        "payload_sha256": "a1fe3619a93340d6fa09e979fe51b758ebb287dee39b38baab1e237be47eb7ff",
+        "payload_terminal_zero_bytes": 16,
+        "payload_interpreted_or_copied_to_output": false
+      }
+    ],
+    "unframed_trailing_bytes": 0,
+    "interpretation": "Structurally valid extension chain ending exactly at vox_offset; zero suffix is inside the declared extension payload, not unframed padding."
+  },
+  "gzip_trailer": {
+    "stored_crc32_hex": "4237560e",
+    "stored_isize_mod_2pow32": 36700752,
+    "crc_or_total_uncompressed_size_validated": false,
+    "limitation": "Trailer fields are read from compressed bytes only. Full gzip integrity remains for authorized scalar intake; no scalar count is derived."
+  },
+  "primary_specification": {
+    "url": "https://raw.githubusercontent.com/NIFTI-Imaging/nifti_clib/master/niftilib/nifti1.h",
+    "retrieved_at": "2026-10-08T12:00:32.468372+00:00",
+    "path": "build/lausanne-sub022-extension-diagnostic-v1/official-nifti1.h",
+    "sha256": "fb86abcab6dcb825da340a3252feb314832dc07b1286e25019dfb3dc07b99486",
+    "sections": "nifti1.h lines 213-301: HEADER EXTENSIONS, nifti1_extender, nifti1_extension",
+    "version_limit": "Upstream master URL was mutable; exact returned document bytes and hash are retained."
+  },
+  "local_implementation": {
+    "path": ".venv/lib/python3.12/site-packages/nibabel/nifti1.py",
+    "sha256": "445b9584d25766be6383f1c76b021e9cb8b6bfadfc0c3a682705e2d7a0a8e8d9",
+    "nibabel_version": "5.4.2",
+    "sections": "nifti1.py lines 648-676 extension_codes; 728-790 Nifti1Extensions.from_fileobj; 856-877 Nifti1Header.from_fileobj",
+    "observations": [
+      "Code 0 maps to ignore.",
+      "Extension presence follows the first indicator byte; extent is bounded by vox_offset.",
+      "Nibabel swaps esize/ecode with header endianness and strips terminal NULLs from interpreted extension content.",
+      "Nibabel warns and continues for non-16-aligned esize. The proposed intake should retain its stricter framing refusal, not copy this permissive behavior."
+    ]
+  },
+  "next_code_contract": [
+    "Retain existing immutable object identity, header/data-offset bounds and untouched source file. No redownload or repair is needed for this format finding.",
+    "Separate bytes 348-351 from extension records. For this source [1,0,0,0] is present; do not treat it as required zero padding.",
+    "For each record before vox_offset, decode only the two signed int32 framing fields using header byte order. Require positive esize >=16, divisibility by16, nonnegative ecode, forward progress and end<=vox_offset.",
+    "The observed single code0 block occupies bytes352..591. Preserve its exact block/payload hash, length, range and code; leave its contents uninterpreted. Do not instantiate extension content handlers, execute payloads, expose comments, or use extensions as annotation/coordinate evidence.",
+    "Keep original payload bytes unchanged, including the 16 terminal zero bytes inside this declared record. Hash before any stripping; no reserialization is needed.",
+    "Require exact chain exhaustion at vox_offset for the new supported-extension branch. Unframed nonzero bytes, invalid sizes, negative codes, overrun, or ambiguous trailer remain failures. The existing extension-absent bounded all-zero-padding branch can remain separate.",
+    "This is standard extension preservation/skip support, not arbitrary acceptance of any bytes before vox_offset. The parser can report unknown nonnegative codes without interpreting them; acceptance policy must stay explicit.",
+    "After the parser change is independently reviewed, explicitly rerun this same cached immutable mask in existing-only mode. Only then perform content/scalar, same-TOF reference and grid QC; preserve the first failed receipt.",
+    "Passing extension framing changes no binary-content, regional-label, contour, scanner-frame, planning or training admission. Those checks remain outstanding for this mask."
+  ],
+  "assumptions_and_limits": [
+    "The private format itself has not been interpreted or validated; that is unnecessary for safely skipping a structurally valid NIfTI extension.",
+    "Terminal zero bytes are observed inside edata; their application-specific purpose is not inferred.",
+    "No scalar data, mask quality, anatomy, label location or counts were inspected in this diagnostic.",
+    "Compressed source SHA256 was checked before and after the diagnostic. Existing failed receipt bytes were unchanged."
+  ],
+  "diagnostic_source_sha256": "ab8306b6233709e0a356ec04dba394cfa58b0c9c20faac959801271ad91f66ca"
+}

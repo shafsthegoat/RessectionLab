@@ -1,0 +1,1217 @@
+{
+  "schema": "lausanne-annotation-batch-v1",
+  "manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+  "run_id": "pilot-sub022-transfer-01",
+  "max_seconds": 120,
+  "max_source_bytes": 36551,
+  "existing_files_only": false,
+  "automatic_retries": 0,
+  "outcomes": [
+    {
+      "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-022",
+      "session": "ses-20101011",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "deferred_not_attempted"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-034/ses-20101005/anat/sub-034_ses-20101005_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-034",
+      "session": "ses-20101005",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-051/ses-20100920/anat/sub-051_ses-20100920_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-051",
+      "session": "ses-20100920",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-052/ses-20100920/anat/sub-052_ses-20100920_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-052",
+      "session": "ses-20100920",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-062/ses-20100601/anat/sub-062_ses-20100601_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-062",
+      "session": "ses-20100601",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-062/ses-20100601/anat/sub-062_ses-20100601_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-062",
+      "session": "ses-20100601",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-066/ses-20100526/anat/sub-066_ses-20100526_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-066",
+      "session": "ses-20100526",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-074/ses-20100421/anat/sub-074_ses-20100421_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-074",
+      "session": "ses-20100421",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-074/ses-20101117/anat/sub-074_ses-20101117_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-074",
+      "session": "ses-20101117",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-075/ses-20100502/anat/sub-075_ses-20100502_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-075",
+      "session": "ses-20100502",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-099/ses-20100321/anat/sub-099_ses-20100321_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-099",
+      "session": "ses-20100321",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-103/ses-20100301/anat/sub-103_ses-20100301_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-103",
+      "session": "ses-20100301",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-104/ses-20100228/anat/sub-104_ses-20100228_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-104",
+      "session": "ses-20100228",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-120/ses-20100117/anat/sub-120_ses-20100117_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-120",
+      "session": "ses-20100117",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-120/ses-20100117/anat/sub-120_ses-20100117_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-120",
+      "session": "ses-20100117",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-121/ses-20100128/anat/sub-121_ses-20100128_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-121",
+      "session": "ses-20100128",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-121/ses-20100128/anat/sub-121_ses-20100128_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-121",
+      "session": "ses-20100128",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-126/ses-20100105/anat/sub-126_ses-20100105_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-126",
+      "session": "ses-20100105",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-126/ses-20100105/anat/sub-126_ses-20100105_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-126",
+      "session": "ses-20100105",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-129/ses-20120107/anat/sub-129_ses-20120107_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-129",
+      "session": "ses-20120107",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-130/ses-20111130/anat/sub-130_ses-20111130_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-130",
+      "session": "ses-20111130",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-140/ses-20111208/anat/sub-140_ses-20111208_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-140",
+      "session": "ses-20111208",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-141/ses-20111229/anat/sub-141_ses-20111229_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-141",
+      "session": "ses-20111229",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-147/ses-20111209/anat/sub-147_ses-20111209_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-147",
+      "session": "ses-20111209",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-148/ses-20111106/anat/sub-148_ses-20111106_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-148",
+      "session": "ses-20111106",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-153/ses-20111127/anat/sub-153_ses-20111127_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-153",
+      "session": "ses-20111127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-163",
+      "session": "ses-20111014",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-163",
+      "session": "ses-20111014",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-170/ses-20100422/anat/sub-170_ses-20100422_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-170",
+      "session": "ses-20100422",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-170/ses-20100422/anat/sub-170_ses-20100422_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-170",
+      "session": "ses-20100422",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-170/ses-20111112/anat/sub-170_ses-20111112_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-170",
+      "session": "ses-20111112",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-170/ses-20111112/anat/sub-170_ses-20111112_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-170",
+      "session": "ses-20111112",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-191/ses-20111010/anat/sub-191_ses-20111010_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-191",
+      "session": "ses-20111010",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-192/ses-20110930/anat/sub-192_ses-20110930_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-192",
+      "session": "ses-20110930",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-192/ses-20110930/anat/sub-192_ses-20110930_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-192",
+      "session": "ses-20110930",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-194/ses-20110911/anat/sub-194_ses-20110911_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-194",
+      "session": "ses-20110911",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-203/ses-20110727/anat/sub-203_ses-20110727_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-203",
+      "session": "ses-20110727",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-207/ses-20110729/anat/sub-207_ses-20110729_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-207",
+      "session": "ses-20110729",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-208/ses-20110808/anat/sub-208_ses-20110808_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-208",
+      "session": "ses-20110808",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-211/ses-20110817/anat/sub-211_ses-20110817_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-211",
+      "session": "ses-20110817",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-216/ses-20110729/anat/sub-216_ses-20110729_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-216",
+      "session": "ses-20110729",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-217/ses-20100819/anat/sub-217_ses-20100819_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-217",
+      "session": "ses-20100819",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-217/ses-20110811/anat/sub-217_ses-20110811_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-217",
+      "session": "ses-20110811",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-220/ses-20110626/anat/sub-220_ses-20110626_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-220",
+      "session": "ses-20110626",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "metadata_failed_excluded",
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-225/ses-20100515/anat/sub-225_ses-20100515_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-225",
+      "session": "ses-20100515",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-225/ses-20110617/anat/sub-225_ses-20110617_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-225",
+      "session": "ses-20110617",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-231/ses-20110617/anat/sub-231_ses-20110617_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-231",
+      "session": "ses-20110617",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-234/ses-20110613/anat/sub-234_ses-20110613_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-234",
+      "session": "ses-20110613",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-234/ses-20111203/anat/sub-234_ses-20111203_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-234",
+      "session": "ses-20111203",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-235/ses-20110528/anat/sub-235_ses-20110528_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-235",
+      "session": "ses-20110528",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-254/ses-20110622/anat/sub-254_ses-20110622_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-254",
+      "session": "ses-20110622",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-263/ses-20110611/anat/sub-263_ses-20110611_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-263",
+      "session": "ses-20110611",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-283/ses-20110505/anat/sub-283_ses-20110505_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-283",
+      "session": "ses-20110505",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-289/ses-20110420/anat/sub-289_ses-20110420_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-289",
+      "session": "ses-20110420",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-311/ses-20100925/anat/sub-311_ses-20100925_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-311",
+      "session": "ses-20100925",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-311/ses-20110406/anat/sub-311_ses-20110406_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-311",
+      "session": "ses-20110406",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-315/ses-20100817/anat/sub-315_ses-20100817_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-315",
+      "session": "ses-20100817",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-315/ses-20110320/anat/sub-315_ses-20110320_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-315",
+      "session": "ses-20110320",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-317/ses-20110228/anat/sub-317_ses-20110228_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-317",
+      "session": "ses-20110228",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-325/ses-20100414/anat/sub-325_ses-20100414_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-325",
+      "session": "ses-20100414",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-325/ses-20110127/anat/sub-325_ses-20110127_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-325",
+      "session": "ses-20110127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20101207/anat/sub-327_ses-20101207_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20101207",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20101207/anat/sub-327_ses-20101207_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20101207",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20101207/anat/sub-327_ses-20101207_desc-Lesion_3_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20101207",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20101207/anat/sub-327_ses-20101207_desc-Lesion_4_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20101207",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110124/anat/sub-327_ses-20110124_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110124",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110124/anat/sub-327_ses-20110124_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110124",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110124/anat/sub-327_ses-20110124_desc-Lesion_3_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110124",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110124/anat/sub-327_ses-20110124_desc-Lesion_4_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110124",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110923/anat/sub-327_ses-20110923_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110923",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110923/anat/sub-327_ses-20110923_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110923",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-327/ses-20110923/anat/sub-327_ses-20110923_desc-Lesion_3_mask.nii.gz",
+      "subject": "sub-327",
+      "session": "ses-20110923",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-329/ses-20110126/anat/sub-329_ses-20110126_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-329",
+      "session": "ses-20110126",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-329/ses-20110823/anat/sub-329_ses-20110823_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-329",
+      "session": "ses-20110823",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-331/ses-20110121/anat/sub-331_ses-20110121_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-331",
+      "session": "ses-20110121",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-332/ses-20110217/anat/sub-332_ses-20110217_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-332",
+      "session": "ses-20110217",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-333/ses-20110214/anat/sub-333_ses-20110214_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-333",
+      "session": "ses-20110214",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-335/ses-20110516/anat/sub-335_ses-20110516_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-335",
+      "session": "ses-20110516",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-336/ses-20110109/anat/sub-336_ses-20110109_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-336",
+      "session": "ses-20110109",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-340/ses-20121220/anat/sub-340_ses-20121220_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-340",
+      "session": "ses-20121220",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-341/ses-20121128/anat/sub-341_ses-20121128_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-341",
+      "session": "ses-20121128",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-343/ses-20121210/anat/sub-343_ses-20121210_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-343",
+      "session": "ses-20121210",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-350/ses-20121217/anat/sub-350_ses-20121217_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-350",
+      "session": "ses-20121217",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-401/ses-20140127/anat/sub-401_ses-20140127_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-401",
+      "session": "ses-20140127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-404/ses-20131216/anat/sub-404_ses-20131216_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-404",
+      "session": "ses-20131216",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-404/ses-20131216/anat/sub-404_ses-20131216_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-404",
+      "session": "ses-20131216",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-405/ses-20131225/anat/sub-405_ses-20131225_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-405",
+      "session": "ses-20131225",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-405/ses-20131225/anat/sub-405_ses-20131225_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-405",
+      "session": "ses-20131225",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-407/ses-20131207/anat/sub-407_ses-20131207_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-407",
+      "session": "ses-20131207",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-409/ses-20131203/anat/sub-409_ses-20131203_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-409",
+      "session": "ses-20131203",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-410/ses-20131015/anat/sub-410_ses-20131015_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-410",
+      "session": "ses-20131015",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-411/ses-20131109/anat/sub-411_ses-20131109_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-411",
+      "session": "ses-20131109",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-412/ses-20131030/anat/sub-412_ses-20131030_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-412",
+      "session": "ses-20131030",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-413/ses-20131005/anat/sub-413_ses-20131005_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-413",
+      "session": "ses-20131005",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-415/ses-20131031/anat/sub-415_ses-20131031_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-415",
+      "session": "ses-20131031",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-416/ses-20131029/anat/sub-416_ses-20131029_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-416",
+      "session": "ses-20131029",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-416/ses-20131029/anat/sub-416_ses-20131029_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-416",
+      "session": "ses-20131029",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-418/ses-20130908/anat/sub-418_ses-20130908_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-418",
+      "session": "ses-20130908",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-419/ses-20130912/anat/sub-419_ses-20130912_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-419",
+      "session": "ses-20130912",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-420/ses-20130912/anat/sub-420_ses-20130912_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-420",
+      "session": "ses-20130912",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-423/ses-20130819/anat/sub-423_ses-20130819_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-423",
+      "session": "ses-20130819",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-424/ses-20130818/anat/sub-424_ses-20130818_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-424",
+      "session": "ses-20130818",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-425/ses-20130724/anat/sub-425_ses-20130724_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-425",
+      "session": "ses-20130724",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-427/ses-20130810/anat/sub-427_ses-20130810_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-427",
+      "session": "ses-20130810",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-428/ses-20130629/anat/sub-428_ses-20130629_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-428",
+      "session": "ses-20130629",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-429/ses-20130531/anat/sub-429_ses-20130531_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-429",
+      "session": "ses-20130531",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-430/ses-20130525/anat/sub-430_ses-20130525_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-430",
+      "session": "ses-20130525",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-430/ses-20130525/anat/sub-430_ses-20130525_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-430",
+      "session": "ses-20130525",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-431/ses-20130526/anat/sub-431_ses-20130526_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-431",
+      "session": "ses-20130526",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-432/ses-20130521/anat/sub-432_ses-20130521_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-432",
+      "session": "ses-20130521",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-433/ses-20130414/anat/sub-433_ses-20130414_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-433",
+      "session": "ses-20130414",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-433/ses-20130414/anat/sub-433_ses-20130414_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-433",
+      "session": "ses-20130414",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-435/ses-20130425/anat/sub-435_ses-20130425_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-435",
+      "session": "ses-20130425",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-436/ses-20130402/anat/sub-436_ses-20130402_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-436",
+      "session": "ses-20130402",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-437/ses-20130325/anat/sub-437_ses-20130325_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-437",
+      "session": "ses-20130325",
+      "role": "TRAIN",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-450/ses-20141125/anat/sub-450_ses-20141125_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-450",
+      "session": "ses-20141125",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-451/ses-20141129/anat/sub-451_ses-20141129_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-451",
+      "session": "ses-20141129",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_3_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-453/ses-20141021/anat/sub-453_ses-20141021_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-453",
+      "session": "ses-20141021",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-454/ses-20141123/anat/sub-454_ses-20141123_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-454",
+      "session": "ses-20141123",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-458/ses-20140915/anat/sub-458_ses-20140915_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-458",
+      "session": "ses-20140915",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-458/ses-20140915/anat/sub-458_ses-20140915_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-458",
+      "session": "ses-20140915",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-460/ses-20140812/anat/sub-460_ses-20140812_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-460",
+      "session": "ses-20140812",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-461/ses-20140802/anat/sub-461_ses-20140802_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-461",
+      "session": "ses-20140802",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-464",
+      "session": "ses-20140724",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-464",
+      "session": "ses-20140724",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-466/ses-20140901/anat/sub-466_ses-20140901_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-466",
+      "session": "ses-20140901",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-467/ses-20140817/anat/sub-467_ses-20140817_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-470/ses-20140807/anat/sub-470_ses-20140807_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-470",
+      "session": "ses-20140807",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-472/ses-20140705/anat/sub-472_ses-20140705_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-472",
+      "session": "ses-20140705",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-473/ses-20140701/anat/sub-473_ses-20140701_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-473",
+      "session": "ses-20140701",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-474/ses-20140630/anat/sub-474_ses-20140630_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-475/ses-20140503/anat/sub-475_ses-20140503_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-476",
+      "session": "ses-20140519",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_exact_crosswalk",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-478/ses-20140513/anat/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_exact_crosswalk",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-484/ses-20140116/anat/sub-484_ses-20140116_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-485/ses-20140131/anat/sub-485_ses-20140131_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-489/ses-20151226/anat/sub-489_ses-20151226_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-491/ses-20151124/anat/sub-491_ses-20151124_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-492/ses-20151228/anat/sub-492_ses-20151228_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "status": "outside_bounded_mask_scope"
+    }
+  ],
+  "training_admitted": false,
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "execution_source_sha256": "f2c1fda49379577db72ea41cf5e0d760bbfab4529541fbfb1fc96c383084bd15"
+}
