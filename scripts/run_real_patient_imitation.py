@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 sys.path.insert(0, str(ROOT / 'scripts'))
 import run_real_patient_learning as rl
+from resectionlab.data_policy import DataPolicyError, historical_only
 from preflight_real_spatial_policy import sha256, write_json, read_declaration, supervise_worker, peak_rss_bytes
 
 VERSION = 'pat05-real-geometric-imitation-v1'
@@ -81,6 +82,7 @@ def teacher_diagnostics(policy, samples):
     return rows
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def worker(record, output):
     definition,cohort,previous,teacher=validate(record)
     import torch
@@ -189,6 +191,8 @@ def main():
     parser.add_argument('--worker',action='store_true',help=argparse.SUPPRESS)
     parser.add_argument('--expected-declaration-sha256',help=argparse.SUPPRESS)
     args=parser.parse_args()
+    if args.execute or args.worker:
+        raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", "run_real_patient_imitation.main")
     if args.write_declaration:
         if args.declaration.exists():raise SystemExit('Preserve existing declaration')
         write_json(args.declaration,declaration());return

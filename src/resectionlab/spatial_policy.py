@@ -7,6 +7,8 @@ No clinical or real-image transfer claim is made by this prototype.
 """
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 from dataclasses import asdict, dataclass
 import hashlib
 import json
@@ -278,6 +280,7 @@ def _chosen(observation, action_id: str) -> int:
     return index
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def imitation_loss(policy: SpatialPolicy, samples: Sequence[tuple[object, str]]) -> tuple[Tensor, dict]:
     """BC on simulated teacher actions, with teacher cost owned by the runner."""
     if not samples:
@@ -292,6 +295,7 @@ def imitation_loss(policy: SpatialPolicy, samples: Sequence[tuple[object, str]])
                   "loss_forward_calls": len(samples), "supervised_actions": len(samples)}
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def reinforce_loss(policy: SpatialPolicy, episodes: Sequence[Sequence[SpatialTransition]], *,
                    gamma: float = 1., entropy_weight: float = .01, value_weight: float = .5) -> tuple[Tensor, dict]:
     """Masked on-policy Monte Carlo policy gradient with a spatial value baseline.
@@ -343,6 +347,7 @@ collection. This is REINFORCE, not PPO, AWAC, or an off-policy replay algorithm.
         "completed_episodes": len(episodes), "loss_forward_calls": sum(map(len, episodes))}
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def gradient_step(policy: SpatialPolicy, optimizer, loss: Tensor, *, max_norm: float = 5.) -> dict:
     """One actual optimizer step; report submodule gradients before global clip."""
     if not np.isfinite(max_norm) or max_norm <= 0 or not torch.isfinite(loss):

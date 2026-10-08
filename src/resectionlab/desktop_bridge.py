@@ -7,6 +7,8 @@ IDs. Every geometry operation names a cached immutable case version.
 
 from __future__ import annotations
 
+from .data_policy import DataPolicyError, LEGACY_OPERATION_EXCLUSIONS, historical_only
+
 import argparse
 from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
@@ -740,6 +742,7 @@ class BridgeSession:
         except (ValueError, OSError, TypeError) as error:
             raise BridgeError("REPLAY_UNAVAILABLE", "This checkpoint has no completed matching selection panel") from error
 
+    @historical_only("RECORDED_EXPERIENCE_REQUIRED")
     def _train_patient(self, args: dict, request: _Request, progress: Callable) -> dict:
         _keys(args, {"caseHash", "budgetSeconds", "seed", "routeId", "resumeRunId"})
         entry = self._get_case(args.get("caseHash"))
@@ -832,6 +835,8 @@ class BridgeSession:
 
     def execute(self, operation: str, args: dict, request: _Request, progress: Callable[[float, str], None]) -> Any:
         request.check()
+        if operation in LEGACY_OPERATION_EXCLUSIONS:
+            raise DataPolicyError(LEGACY_OPERATION_EXCLUSIONS[operation], operation)
         if operation == "createSyntheticCase":
             _keys(args, {"shape"})
             shape = args.get("shape", [64, 64, 64])

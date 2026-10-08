@@ -7,6 +7,8 @@ the frozen six-channel policy does not yet observe prior contact history.
 """
 from __future__ import annotations
 
+from .data_policy import require_admitted_model
+
 import copy
 import math
 import time
@@ -834,6 +836,7 @@ def _provisional_proposal_support(case, acknowledgment):
     item = case.structural_evidence.get(acknowledgment["evidence_id"])
     if item is None:
         raise ValueError("PROVISIONAL_SUPPORT_UNKNOWN_PROPOSAL: select an existing source-bound proposal")
+    require_admitted_model(item.model_sha256, "_provisional_proposal_support")
     item.assert_matches(case)
     if item.review_status != "review_required" or item.provenance != "estimated" or item.model_sha256 is None:
         raise ValueError("PROVISIONAL_SUPPORT_INELIGIBLE: only an unreviewed model proposal can use this pathway")

@@ -5,6 +5,8 @@ probabilities, or permission to enter tissue. They never grant cortical access.
 """
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 import argparse
 from datetime import datetime, timezone
 import json
@@ -77,6 +79,7 @@ def mps_runner_source(original: str, maximum_memory_bytes: int) -> str:
     return notice + adapted
 
 
+@historical_only("SYNTHETIC_MODEL_INELIGIBLE")
 def ensure_model_assets(cache: Path, *, model: str, allow_download: bool = False) -> dict:
     if model not in {"nocsf", "main"}:
         raise BrainExtractionError("UNSUPPORTED_EXTRACTION_MODEL", "Choose the pinned main or no-CSF adult model.")
@@ -147,6 +150,7 @@ def validate_distance_map(distance_path: Path, image_path: Path) -> dict:
             "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"}
 
 
+@historical_only("SYNTHETIC_MODEL_INELIGIBLE")
 def run_synthstrip(image_path: Path, cache: Path, output: Path, *, model: str = "nocsf",
                    allow_download: bool = False, timeout_seconds: float = 300,
                    maximum_rss_bytes: int = 6 * 1024**3,
@@ -324,6 +328,7 @@ def extraction_qc(mask: np.ndarray, affine: np.ndarray, *, tumor: np.ndarray | N
     return result
 
 
+@historical_only("SYNTHETIC_MODEL_INELIGIBLE")
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--t1", type=Path, required=True)

@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT/'src'))
 sys.path.insert(0, str(ROOT/'scripts'))
 import run_real_patient_imitation as bc
 import run_real_patient_learning as rl
+from resectionlab.data_policy import DataPolicyError, historical_only
 from preflight_real_spatial_policy import write_json,sha256,read_declaration,supervise_worker,peak_rss_bytes
 
 VERSION='pat05-real-visited-imitation-v1'
@@ -180,6 +181,7 @@ def make_batches(original_samples,visited_samples):
     return {'control':original_samples*2,'augmented':original_samples+visited_samples}
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def worker(record,output):
     definition,cohort,original,teacher,previous,visited=validate(record)
     import torch
@@ -261,6 +263,8 @@ def main():
     parser.add_argument('--output',type=Path);parser.add_argument('--execute',action='store_true')
     parser.add_argument('--worker',action='store_true',help=argparse.SUPPRESS)
     parser.add_argument('--expected-declaration-sha256',help=argparse.SUPPRESS);args=parser.parse_args()
+    if args.execute or args.worker:
+        raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", "run_real_patient_visited_imitation.main")
     if args.write_declaration:
         if args.declaration.exists():raise SystemExit('Preserve existing declaration')
         write_json(args.declaration,declaration());return

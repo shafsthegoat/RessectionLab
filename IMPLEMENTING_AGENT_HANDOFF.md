@@ -1,3 +1,9 @@
+> Active update, October 8: read [the October 6 supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
+> and [current execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md) first.
+> They supersede incompatible generated-data learning and demonstration instructions
+> below. Historical experiments stay preserved. New execution requires eligible
+> real observations and verified model ancestry; no compliant RL run exists yet.
+
 # Implementing-agent handoff
 
 Original brief October 2, 2026; **patient-specific planning revision October 4, 2026**. Read the revised `MASTER_PLAN.md` and `ANNOTATED_REFERENCES.md` before executing. This is an implementation brief, not completed experiments. Use the exact repository name `RessectionLab`. The dated revision supersedes conflicting older project prompts, not repository security or permission rules.

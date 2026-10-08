@@ -19,6 +19,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'));sys.path.insert(0,str(ROOT/'scripts'))
 import run_real_patient_learning as rollout
 from preflight_real_spatial_policy import sha256,write_json,read_declaration,supervise_worker,peak_rss_bytes
+from resectionlab.data_policy import historical_only
 from resectionlab.real_patient_learning import COHORT_SHA256,read_development_cohort,require_development_role
 
 VERSION='remaining-training-frozen-spatial-comparison-v1'
@@ -81,6 +82,7 @@ def validate(record):
     return cohort
 
 
+@historical_only("GENERATED_POLICY_INELIGIBLE")
 def load_frozen_policy(path,expected_file_hash):
     """Verify before opening any patient; never construct an optimizer."""
     import torch

@@ -6,6 +6,8 @@ case adaptation. Procedural anatomy groups are not independent human patients.
 """
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 import copy
 from dataclasses import asdict, dataclass, replace
 import hashlib
@@ -112,6 +114,7 @@ def _identities(records: Sequence[dict[str, Any]]) -> tuple[PopulationIdentity, 
     return tuple(PopulationIdentity(**{**record, "aliases": tuple(record.get("aliases", ()))}) for record in records)
 
 
+@historical_only("GENERATED_POLICY_INELIGIBLE")
 def validate_population_checkpoint(checkpoint: str | Path, *, target_case_hash: str,
                                     target_group: str, target_aliases: tuple[str, ...] = (),
                                     expected_dimensions: tuple[int, int, int] | None = None,
@@ -201,6 +204,7 @@ def validate_population_checkpoint(checkpoint: str | Path, *, target_case_hash: 
         "scope": provenance["scope"]}
 
 
+@historical_only("GENERATED_POLICY_INELIGIBLE")
 def load_frozen_population_policy(checkpoint: str | Path, **validation: Any) -> learning.MaskedPatientPolicy:
     validate_population_checkpoint(checkpoint, **validation)
     policy = learning.clone_checkpoint_policy(checkpoint)
@@ -243,6 +247,7 @@ class _PopulationSimulator:
                 "population_scope": "analytic_synthetic_only"}
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 @learning._record_failures
 def train_population_policy(members: Sequence[PopulationMember], *, exclusions: Sequence[PopulationIdentity],
                             config: learning.TrainingConfig, output_dir: str | Path,
@@ -366,6 +371,7 @@ def train_population_policy(members: Sequence[PopulationMember], *, exclusions: 
     return record
 
 
+@historical_only("SYNTHETIC_CASE_DISABLED")
 def make_analytic_population_fixture() -> tuple[tuple[PopulationMember, ...], Callable[[], Any], PopulationIdentity]:
     """Two development anatomies; branching task excluded from shared training.
 

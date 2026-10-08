@@ -10,6 +10,8 @@ are not free. No final-evaluation manifest or evaluator enters this module.
 """
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 import copy
 import hashlib
 import inspect
@@ -187,6 +189,7 @@ def ppo_minibatch_loss(policy: MaskedPatientPolicy, batch: PPOBatch,
                   "clip_fraction": float(clip_fraction), "actor_sample_count": int(actor_valid.sum())}
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 @learning._record_failures
 def train_patient_ppo(simulator_factory: Callable[[], Simulator], optimization_manifest: Any,
                       selection_manifest: Any, *, config: PPOConfig = PPOConfig(),

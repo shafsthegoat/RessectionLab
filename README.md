@@ -3,22 +3,25 @@
 A local macOS research workspace for inspecting patient-specific glioma access
 routes and testing simulated resection strategies.
 
-Development is in progress. See [PROJECT_STATUS.md](PROJECT_STATUS.md) for what
-has actually been run. The October 4, 2026 [master plan](MASTER_PLAN.md),
-[annotated references](ANNOTATED_REFERENCES.md), and
-[implementation handoff](IMPLEMENTING_AGENT_HANDOFF.md) define the project.
+Development is in progress. The [October 6 real-observation supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
+is the active specification and supersedes incompatible earlier training rules.
+See the [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md) and
+[PROJECT_STATUS.md](PROJECT_STATUS.md) for executed work and remaining gates.
+The [master plan](MASTER_PLAN.md), [references](ANNOTATED_REFERENCES.md) and
+[handoff](IMPLEMENTING_AGENT_HANDOFF.md) remain historical implementation context.
 
 The active Mac application uses **Electron, React and TypeScript**. The Python
-engine handles physical geometry, patient-specific training, evidence and
-independent validation. The earlier Qt prototype is retained as a tested
+engine handles physical geometry, evidence and independent validation. Legacy
+simulator-trained policy entry points now refuse execution; eligible recorded
+offline RL and real-data component learning remain unfinished. The earlier Qt prototype is retained as a tested
 historical reference. Application source is in `desktop/`; the
 [desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
 inspecting evidence, comparing routes, refinement, replay and local saving.
 
-The standalone Electron app has passed real MRI loading, full-tool route
-comparison and native workspace-save checks on this Mac. Its Python training
-bridge separately passes actual patient-update and independent native-replay
-checks. See [Electron packaging](docs/electron-packaging.md) for building and
+Historical Electron snapshots passed MRI loading, full-tool route comparison
+and workspace-save checks on this Mac. Earlier training/replay checks used
+simulated experience and are historical evidence only. The current exclusion
+changes have protocol-level checks; this revised desktop has not been repackaged. See [Electron packaging](docs/electron-packaging.md) for building and
 validating each complete app snapshot.
 
 ## Local development
@@ -30,8 +33,12 @@ Python 3.12. Use an isolated environment:
 python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m pip install -e . --no-deps
-.venv/bin/python -m pytest
+.venv/bin/python -m pytest tests/test_real_observation_policy.py -q
 ```
+
+The command above checks policy refusals without patient fixtures. Do not run
+the historical generated-patient suites as new acceptance evidence. Each new
+real-case slice needs its own source-bound checks.
 
 `requirements-lock.txt` pins the current numerical engine, research tools,
 tests and build tools without Qt or VTK. The active Electron app does not need
@@ -104,9 +111,11 @@ pinned releases, licenses, checksums, coordinates and missing evidence.
 - Missing diffusion, functional mapping, vessels or skull anatomy remain
   unassessed. Public MRI plus a plausible visualization does not establish
   surgical safety or clinical readiness.
-- Patient-specific learning updates a policy under frozen simulator assumptions.
-  Optimization, checkpoint selection and independent evaluation use separate
-  worlds. Search remains a required comparator and may be the better planner.
+- New learning requires verified real observations and weight ancestry. Offline
+  RL additionally requires actual recorded actions, successor observations,
+  timing, censoring and supported observed endpoints. Plans and rehearsal
+  predictions cannot become training labels or recorded experience. Search
+  remains a required comparator and may be the better planner.
 
 ## Data and privacy
 

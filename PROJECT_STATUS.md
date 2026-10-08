@@ -1,5 +1,29 @@
 # Project status
 
+Updated October 8, 2026. The [October 6 real-observation supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
+is active and supersedes incompatible earlier priorities and generated-data
+training instructions. The [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md)
+tracks the complete operative goal and open evidence dependencies.
+
+Known incompatible learning, model-loading and SynthStrip support paths now
+refuse execution; complete artifact admission and provenance enforcement remain
+unfinished. The refusal-only suite passes **42 checks**; independent source review
+found and verified repair of two failure-logger ordering defects. No patient
+processing, model evaluation or optimization ran in this milestone. Historical
+results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RESULT.md).
+
+Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
+T1/TOF sessions. Source metadata is acquired; image acquisition/QC is next.
+Known TopCoW overlap will inherit the same subject roles. No newly compliant
+RL training has run: eligible recorded surgical transitions remain missing.
+The current branch, local main and remote main were verified at a4659cc before
+these code edits; unfinished desktop and other unrelated files were preserved.
+
+## Historical status through October 5
+
+The entries below retain their original decisions and experiment evidence.
+Their proposed future simulated-training work is superseded, not authorized.
+
 Updated October 5, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.

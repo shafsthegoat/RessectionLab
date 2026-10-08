@@ -7,6 +7,8 @@ the registered experiment or weakening the public-target provenance gate.
 """
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 import copy
 from dataclasses import asdict, dataclass
 from functools import partial
@@ -165,6 +167,7 @@ def _test_target_record() -> dict[str, Any]:
     return record
 
 
+@historical_only("SYNTHETIC_CASE_DISABLED")
 def make_procedural_test_target() -> tuple[TransferTarget, Callable[[], NativeSequentialSimulator]]:
     """A distinct domain for tiny contract tests; cannot stand in for a patient."""
     record = _test_target_record()
@@ -194,6 +197,7 @@ def _partition(record: dict[str, Any]) -> WorldPartitionManifest:
         WorldGeneratorConfig(**record["generator"]), tuple(record["seeds"]), record.get("planning_hash"))
 
 
+@historical_only("SYNTHETIC_CASE_DISABLED")
 def make_native_procedural_fixture(target: TransferTarget, *, input_profile: str = "RAW",
                                   study_id: str | None = None) -> tuple[ProceduralMember, ...]:
     _study_binding(input_profile, study_id)
@@ -340,6 +344,7 @@ class _ProceduralPool:
                 "procedural_source_hash": self.active.case_hash}
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 @learning._record_failures
 def train_procedural_native_policy(members: Sequence[ProceduralMember], *, excluded_targets: Sequence[TransferTarget],
         config: learning.TrainingConfig, output_dir: str | Path, cancelled=None, progress=None,
@@ -444,6 +449,7 @@ def _validate_target_simulator(target: TransferTarget, simulator: NativeSequenti
         raise ValueError("Target native anatomy/tool/window differs from declared model")
 
 
+@historical_only("GENERATED_POLICY_INELIGIBLE")
 def validate_procedural_checkpoint(checkpoint: str | Path, *, target: TransferTarget,
         simulator: NativeSequentialSimulator, hidden_features: int, input_profile: str = "RAW",
         study_id: str | None = None) -> dict[str, Any]:
@@ -572,6 +578,7 @@ def validate_procedural_checkpoint(checkpoint: str | Path, *, target: TransferTa
         "offline_pretraining": offline}
 
 
+@historical_only("GENERATED_POLICY_INELIGIBLE")
 def load_frozen_procedural_policy(checkpoint: str | Path, **validation: Any) -> learning.MaskedPatientPolicy:
     validated = validate_procedural_checkpoint(checkpoint, **validation)
     policy = learning.clone_checkpoint_policy(checkpoint)
@@ -631,6 +638,7 @@ def validate_procedural_adaptation(checkpoint, target, simulator, optimization, 
     return validation
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def train_procedural_adapted_policy(factory, optimization, selection, *, checkpoint, target,
         config, output_dir, cancelled=None, progress=None, resume=False,
         input_profile: str = "RAW", study_id: str | None = None):

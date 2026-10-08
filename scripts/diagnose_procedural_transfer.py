@@ -126,6 +126,11 @@ def _load_frozen_runtime(run: Path) -> dict[str, Any]:
     return snapshot
 
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from resectionlab.data_policy import historical_only as _historical_only
+
+
+@_historical_only("GENERATED_POLICY_INELIGIBLE")
 def diagnose(run: Path, output: Path) -> dict[str, Any]:
     started = time.perf_counter()
     summary = require_completed_run(run)

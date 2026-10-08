@@ -12,6 +12,8 @@ generator make local runs small and resumable without a shared GPU service.
 
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 import copy
 import functools
 import hashlib
@@ -446,6 +448,7 @@ def _atomic_checkpoint(path: Path, value: Any) -> None:
     os.replace(temporary, path)
 
 
+@historical_only("WEIGHT_LINEAGE_UNVERIFIED")
 def load_policy(checkpoint: str | Path, *, selected: bool = True,
                 expected_input_profile: str | None = None) -> MaskedPatientPolicy:
     """Load only tensor/primitive checkpoints, never arbitrary pickled classes."""
@@ -540,6 +543,7 @@ def _record_failures(function: Callable[..., TrainingResult]) -> Callable[..., T
     return run
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 @_record_failures
 def train_patient_policy(
     simulator_factory: Callable[[], Simulator],

@@ -6,6 +6,8 @@ The original label masks remain independent from reviewed working annotations.
 """
 from __future__ import annotations
 
+from .data_policy import historical_only
+
 from collections.abc import Mapping
 from dataclasses import fields, is_dataclass, replace
 from hashlib import sha256
@@ -519,6 +521,7 @@ def read_case_artifacts(path: str | Path) -> dict[str, Any]:
     return _read_bundle(path)[0]["artifacts"]
 
 
+@historical_only("SYNTHETIC_MODEL_INELIGIBLE")
 def import_brain_extraction_evidence(
     case: CaseData, *, source_image_path: str | Path, mask_path: str | Path,
     report_path: str | Path, variant: str, evidence_id: str | None = None,
@@ -616,6 +619,7 @@ def import_brain_extraction_evidence(
     return case.revised(structural_evidence=existing)
 
 
+@historical_only("SYNTHETIC_CASE_DISABLED")
 def create_synthetic_case(shape: tuple[int, int, int] = (64, 64, 64)) -> CaseData:
     """Deterministic, explicitly synthetic imaging fixture; never a patient case.
 

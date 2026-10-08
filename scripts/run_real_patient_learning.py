@@ -22,6 +22,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 import preflight_real_spatial_policy as support
 import compare_real_spatial_search as inputs
+from resectionlab.data_policy import DataPolicyError, historical_only
 
 VERSION = "pat05-real-geometric-learning-v1"
 SETTINGS = {"seed": 11, "optimizer_updates": 2, "episodes_per_update": 2,
@@ -199,6 +200,7 @@ def run_episode(base, policy, generator, *, mode, name, output, guard, audit, se
         raise
 
 
+@historical_only("RECORDED_EXPERIENCE_REQUIRED")
 def worker(record, output):
     cohort = validate_declaration(record)
     import torch
@@ -324,6 +326,8 @@ def main():
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--expected-declaration-sha256", help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if args.execute or args.worker:
+        raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", "run_real_patient_learning.main")
     if args.write_declaration:
         if args.declaration.exists():
             raise SystemExit("Preserve existing declarations")

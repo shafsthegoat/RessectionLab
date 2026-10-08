@@ -6,6 +6,8 @@ The caller must separately choose an exact reviewed mask as working support.
 """
 from __future__ import annotations
 
+from .data_policy import require_admitted_model
+
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -202,6 +204,8 @@ def validate_explicit_support(case: Any, support: np.ndarray, record: dict) -> d
     for item in getattr(case, "structural_evidence", {}).values():
         item._assert_mask_layout()
     matching = [item for item in getattr(case, "structural_evidence", {}).values() if np.array_equal(support, item.mask)]
+    for item in matching:
+        require_admitted_model(item.model_sha256, "validate_explicit_support")
     if any(item.review_status != "accepted" for item in matching):
         raise ValueError("BRAIN_MASK_REVIEW_REQUIRED: an extraction proposal cannot define working access support")
     if matching:
@@ -237,6 +241,7 @@ def planning_brain_support(case: Any) -> tuple[np.ndarray | None, dict]:
                                  "review_status": "not_applicable_synthetic_fixture"}
     matching = [item for item in getattr(case, "structural_evidence", {}).values() if item.mask_hash == base["source"]]
     for item in matching:
+        require_admitted_model(item.model_sha256, "planning_brain_support")
         item.assert_matches(case)
         if item.review_status == "accepted":
             return case.brain_mask, {**base, "method": "explicitly_selected_reviewed_brain_envelope",

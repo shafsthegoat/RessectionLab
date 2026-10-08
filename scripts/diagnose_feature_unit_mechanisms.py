@@ -172,6 +172,11 @@ def clipping_decomposition(training: dict, contract: dict) -> dict:
             "Scalar gradient shrinkage is not a prediction of Adam parameter-update shrinkage"]}
 
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from resectionlab.data_policy import historical_only as _historical_only
+
+
+@_historical_only("GENERATED_POLICY_INELIGIBLE")
 def diagnose(run: Path, observations: Path, output: Path) -> dict:
     if output.exists():
         raise FileExistsError("Preserve prior diagnostics; use a new output directory")
