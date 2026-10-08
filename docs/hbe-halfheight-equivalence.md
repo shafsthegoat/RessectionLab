@@ -1,5 +1,12 @@
 # HBE axial half-height equivalence
 
+Execution update, October 8, 2026: the separately released preparation and four
+solve cases have completed, with independent saved-output review. See the
+[result and scope](../artifacts/mechanics/hbe-halfheight-execution-v1/RESULT.md).
+All N8/N12 axial equivalence criteria passed; the original spatial-convergence
+and material-validation gates remain unresolved. The specification below
+preserves the prospective preparation contract; it is not a release for more runs.
+
 This preparation tests a computational cost hypothesis for the same declared axial specimen model. It does not authorize a solver run, measured-curve access, calibration or promotion to finer meshes. The original mesh-gate failure and subsequent full N24 timeout remain unchanged.
 
 The [exact-quarter draft](../artifacts/mechanics/hbe-quarter-abandoned-preparation-v1/README.md) was abandoned before solving: picometre x/y mesh-coordinate differences exceeded its prospective exact-reflection criterion. That is not a clinically meaningful geometry error or an invalidation of the full model. The [saved eligibility check](../artifacts/mechanics/hbe-quarter-eligibility-diagnosis-v1/README.md) found that the distinct z=H/2 cut passes the unchanged criterion on N8 and N12, with no straddling cells, complete node/cell reflection matches and maximum discrepancy below 4.34e-19 m. Geometric eligibility is not yet mechanical equivalence.

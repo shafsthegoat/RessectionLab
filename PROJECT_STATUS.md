@@ -50,6 +50,15 @@ stopped without a retry; no scientific payload was acquired. See
 The measured-interaction candidate is creator-accepted MULTIS donor004 run005;
 verified HTTPS/fixity and force/pose/surface pairing remain unresolved.
 
+The HBE half-height comparison now passes all four declared axial cases at
+61 states each. Independent readout replay and separate nodal/reaction
+reconstruction agree. The supervised solve phase took 40.9184 seconds, with
+164,626,432 bytes sampled peak memory and four native calls. This establishes
+N8/N12 symmetric-branch numerical equivalence only; the earlier spatial
+convergence failure, N24 timeout and missing material validation remain.
+No measured curves, fitting or finer-mesh run was released. See
+[result](artifacts/mechanics/hbe-halfheight-execution-v1/RESULT.md).
+
 ## Historical status through October 5
 
 The entries below retain their original decisions and experiment evidence.

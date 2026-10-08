@@ -1,0 +1,289 @@
+{
+  "schema": "hbe-halfheight-compact-result-v1",
+  "status": "completed_numerical_equivalence_only",
+  "source_result_sha256": "16093a8c85a39a365f439898be078c46e1daa0e4aac660b6fcf3d7998d7a5cf1",
+  "solver_calls": 4,
+  "gmsh_calls": 0,
+  "elapsed_seconds": 40.918404292082414,
+  "sampled_peak_rss_bytes": 164626432,
+  "cases": [
+    {
+      "case": "compression:N8:S60:reference",
+      "readout_binding": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/runs/compression-N8-S60-reference/readout.json",
+        "sha256": "a412ae8b31f874f59960952035b943e4396f361615329ece7a73bc6e96ebb93f"
+      },
+      "frame_count": 61,
+      "all_original_numerical_gates_passed": true,
+      "native_solve_seconds": 2.2374025841709226,
+      "equivalence": {
+        "criteria": {
+          "bottom_axial_force_scale_one": {
+            "actual": 4.5964609177710645e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "half_energy_scale_two": {
+            "actual": 2.0565221674755753e-09,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_axial_force": {
+            "actual": 4.5964609177710645e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_energy": {
+            "actual": 1.899504609820028e-09,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "midplane_axial_force_scale_one": {
+            "actual": 6.766213219685065e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "node_motion": {
+            "actual": 3.7421709926703827e-06,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "probe_motion": {
+            "actual": 1.7640805738360504e-06,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "raw_reaction": {
+            "actual": 8.828675362259947e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          }
+        },
+        "diagnostics": {
+          "full_motion_m": 0.0007337385,
+          "logged_J": 5.000000413701855e-12,
+          "logged_sed_Pa": 6.580000100342431e-09,
+          "logged_stress_Pa": 2.4060000214376487e-07,
+          "node_motion_m": 4.242643327973631e-14,
+          "probe_motion_m": 2.0000060636600232e-14,
+          "shared_displacement_mismatch_m": 7.589415207398531e-19,
+          "twice_half_vs_full_work_max_difference_J": 1.7710950707319068e-16
+        },
+        "logged_stress_J_sed_differences_are_diagnostic_only": true,
+        "maximum_rest_coordinate_mismatch_m": 0.0,
+        "motion_limit_m": 1.1337385000000001e-08,
+        "passed": true
+      }
+    },
+    {
+      "case": "compression:N12:S60:reference",
+      "readout_binding": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/runs/compression-N12-S60-reference/readout.json",
+        "sha256": "9376bd65a2fc41afdddd4e5beb3d168b107cdc002e533fe7efbb24e500b08fb8"
+      },
+      "frame_count": 61,
+      "all_original_numerical_gates_passed": true,
+      "native_solve_seconds": 7.817677290877327,
+      "equivalence": {
+        "criteria": {
+          "bottom_axial_force_scale_one": {
+            "actual": 2.087357919790124e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "half_energy_scale_two": {
+            "actual": 5.573691277491665e-10,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_axial_force": {
+            "actual": 2.087357919790124e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_energy": {
+            "actual": 4.991289072510868e-10,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "midplane_axial_force_scale_one": {
+            "actual": 2.5555126584784776e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "node_motion": {
+            "actual": 9.861467447622228e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "probe_motion": {
+            "actual": 7.750139828398252e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "raw_reaction": {
+            "actual": 1.9604058659600258e-06,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          }
+        },
+        "diagnostics": {
+          "full_motion_m": 0.0007337385,
+          "logged_J": 1.000000082740371e-11,
+          "logged_sed_Pa": 2.0000072709080996e-09,
+          "logged_stress_Pa": 1.2999976206629071e-08,
+          "node_motion_m": 1.1180325311866056e-14,
+          "probe_motion_m": 8.786631903838493e-15,
+          "shared_displacement_mismatch_m": 7.589415207398531e-19,
+          "twice_half_vs_full_work_max_difference_J": 1.818596678413928e-16
+        },
+        "logged_stress_J_sed_differences_are_diagnostic_only": true,
+        "maximum_rest_coordinate_mismatch_m": 4.336808689942018e-19,
+        "motion_limit_m": 1.1337385000000001e-08,
+        "passed": true
+      }
+    },
+    {
+      "case": "tension:N8:S60:reference",
+      "readout_binding": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/runs/tension-N8-S60-reference/readout.json",
+        "sha256": "8072c925eaab31fa7ac89f41ad3e02ed46d2a2b9fa2aaded900dfbb2f27dbb02"
+      },
+      "frame_count": 61,
+      "all_original_numerical_gates_passed": true,
+      "native_solve_seconds": 1.9249642919749022,
+      "equivalence": {
+        "criteria": {
+          "bottom_axial_force_scale_one": {
+            "actual": 4.2647653546218215e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "half_energy_scale_two": {
+            "actual": 3.489282933175204e-09,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_axial_force": {
+            "actual": 4.2647653546218215e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_energy": {
+            "actual": 3.442544556264936e-09,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "midplane_axial_force_scale_one": {
+            "actual": 5.7925352795161146e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "node_motion": {
+            "actual": 1.5277275487700262e-06,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "probe_motion": {
+            "actual": 8.864391371518005e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "raw_reaction": {
+            "actual": 4.297259044152003e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          }
+        },
+        "diagnostics": {
+          "full_motion_m": 0.0007337385,
+          "logged_J": 1.000000082740371e-11,
+          "logged_sed_Pa": 1.500001900467396e-09,
+          "logged_stress_Pa": 1.0136999950560721e-07,
+          "node_motion_m": 1.7320435395512066e-14,
+          "probe_motion_m": 1.0049901776957767e-14,
+          "shared_displacement_mismatch_m": 8.673617379884035e-19,
+          "twice_half_vs_full_work_max_difference_J": 1.5277340346562737e-15
+        },
+        "logged_stress_J_sed_differences_are_diagnostic_only": true,
+        "maximum_rest_coordinate_mismatch_m": 0.0,
+        "motion_limit_m": 1.1337385000000001e-08,
+        "passed": true
+      }
+    },
+    {
+      "case": "tension:N12:S60:reference",
+      "readout_binding": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/runs/tension-N12-S60-reference/readout.json",
+        "sha256": "5c0a4280dcbf878b0f55b54d01131b8e1f80cfc4e7a0ebfe50e0ed34057f94c2"
+      },
+      "frame_count": 61,
+      "all_original_numerical_gates_passed": true,
+      "native_solve_seconds": 7.239538208115846,
+      "equivalence": {
+        "criteria": {
+          "bottom_axial_force_scale_one": {
+            "actual": 2.6210850979310952e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "half_energy_scale_two": {
+            "actual": 1.3834261631993174e-09,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_axial_force": {
+            "actual": 2.6210852383801337e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "lifted_energy": {
+            "actual": 1.2961000752041764e-09,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "midplane_axial_force_scale_one": {
+            "actual": 1.8528110199956876e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "node_motion": {
+            "actual": 3.2479746227531175e-06,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "probe_motion": {
+            "actual": 2.4203044230545968e-06,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          },
+          "raw_reaction": {
+            "actual": 7.282805690989924e-05,
+            "limit": 1.0,
+            "units": "ratio_to_declared_equivalence_tolerance"
+          }
+        },
+        "diagnostics": {
+          "full_motion_m": 0.0007337385,
+          "logged_J": 1.000000082740371e-11,
+          "logged_sed_Pa": 2.1200001754095865e-08,
+          "logged_stress_Pa": 5.030000238548382e-07,
+          "node_motion_m": 3.6823538768381857e-14,
+          "probe_motion_m": 2.743992306137284e-14,
+          "shared_displacement_mismatch_m": 8.673617379884035e-19,
+          "twice_half_vs_full_work_max_difference_J": 1.1398323318458515e-15
+        },
+        "logged_stress_J_sed_differences_are_diagnostic_only": true,
+        "maximum_rest_coordinate_mismatch_m": 4.336808689942018e-19,
+        "motion_limit_m": 1.1337385000000001e-08,
+        "passed": true
+      }
+    }
+  ],
+  "independent_review": "Saved-output frozen readout replay plus separate NumPy/plain-text all-node and reflected raw-reaction reconstruction matched",
+  "original_mesh_convergence": "failed and unchanged",
+  "material_calibration": false,
+  "measured_curves_accessed": false,
+  "training_or_rl_transitions_generated": false,
+  "finer_mesh_promotion": false
+}

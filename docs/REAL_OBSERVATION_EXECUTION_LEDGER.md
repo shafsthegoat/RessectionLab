@@ -39,7 +39,7 @@ compact execution record, not a replacement specification.
 | Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | HBE numerical convergence and RESECT mesh fidelity unresolved; no calibrated cutting/bleeding response. MULTIS donor004 run005 is creator-accepted; earlier001 candidate was rejected. Core234 files/343.5 MB identified; pairing and spatial transform unverified. | Freeze donor role and acquire complete measurement support before force/displacement comparison. This is human cadaver leg evidence, not brain force validation. Retain FEBio; compare SOFA for later interaction. |
+| Tissue / vascular | HBE half-height N8/N12 axial equivalence passed with independent raw-log reconstruction; spatial convergence and RESECT mesh fidelity remain unresolved. No calibrated cutting/bleeding response. MULTIS donor004 run005 is creator-accepted; earlier001 candidate was rejected. Core234 files/343.5 MB identified; authenticated transfer, pairing and spatial transform unverified. | Prospectively declare/review the next HBE spatial-refinement test; no automatic promotion or curve access. Separately resolve MULTIS transfer, freeze donor role and acquire measurement support. Cadaver leg evidence cannot validate brain forces. Retain FEBio; compare SOFA for later interaction. |
 | Physiology | No Pulse/BioGears adapter or validated patient response. VitalDB provides real perioperative signals but is non-neurosurgical. | Inspect actual timestamped infusion/monitor records and rights; implement common-clock/units/conservation contracts without invented baselines. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
@@ -108,6 +108,22 @@ indentation run005. DataCite confirms the HTTP archive as the official DOI
 destination but supplies no byte fixity or authenticated alternate. The project
 download-index HTTPS attempt timed out. No TLS bypass or scientific payload
 access occurred; authenticated run005 source/fixity remains the next dependency.
+
+## Numerical mechanics evidence
+
+The [half-height comparison](../artifacts/mechanics/hbe-halfheight-execution-v1/RESULT.md)
+completed four native calls in 40.9184 supervised seconds and 164,626,432 bytes
+sampled peak memory. All four compression/tension N8/N12 comparisons passed
+61 states each and the unchanged original numerical gates. Independent replay
+matched every readout field; a separate NumPy/plain-text reconstruction matched
+all-node displacement and summed reflected raw-reaction discrepancies. All 193
+baseline input hashes remained exact. No measured response curve was opened.
+
+This is numerical equivalence for the tested symmetric axial branch. The
+earlier spatial-convergence failure and full N24 timeout remain, and the
+1000-Pa modulus is still a numerical gauge. No tissue-force/material accuracy,
+calibration, RL data or finer-mesh acceptance follows. The next spatial study
+requires its own prospective declaration; measured-response partitions stay closed.
 
 ## Remaining delivery gates
 

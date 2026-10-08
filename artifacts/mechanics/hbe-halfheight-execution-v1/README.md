@@ -65,3 +65,8 @@ curve access, calibration, finer-mesh promotion or relaxed acceptance criteria.
   --release-sha256 55e1b221a2619a6ba99a24b1579b01bfb05d53fcf853d4eafb8e29aab61c399b \
   --execute
 ```
+
+The released solve phase completed once. All four cases passed and an independent
+saved-output audit accepted them; see [result](RESULT.md). The original phase
+markers remain intact, so these commands are historical invocations, not retry
+instructions. Future spatial refinement needs a separate declaration.

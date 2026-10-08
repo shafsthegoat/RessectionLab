@@ -1,0 +1,39 @@
+{
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/baseline.json",
+    "sha256": "cc38fee1c0a73734897d824ed5ed4ca2f5b24999c1083f8f2d425589c783524c"
+  },
+  "measured_data_accessed": false,
+  "phase": "solve",
+  "schema": "hbe-halfheight-supervised-result-v1",
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/state.json",
+    "sha256": "ab0cdbc8e2349c277c54bdfb4a380391e4beb733f87400218d3f5727963cdbf3"
+  },
+  "status": "completed_numerical_equivalence_only",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-v1/source/scripts/mechanics_hbe_halfheight_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--worker-baseline",
+      "outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/experiment/baseline.json",
+      "--worker-baseline-sha256",
+      "cc38fee1c0a73734897d824ed5ed4ca2f5b24999c1083f8f2d425589c783524c"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 40.918404292082414,
+    "error": null,
+    "exit_code": 0,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 46541,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 164626432,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "completed",
+    "wall_cap_seconds": 420
+  }
+}
