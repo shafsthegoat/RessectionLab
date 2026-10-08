@@ -1,0 +1,236 @@
+{
+  "admission": {
+    "annotation_content_qc": false,
+    "planning": false,
+    "training": false
+  },
+  "audit_script_sha256": "dd2499b4528e350a83ff9102c2617bf6f23cc03611ce61e92ae4e09743b73e99",
+  "checks": {
+    "294_successful_http_responses": 1,
+    "all_candidate_paths_preserved": 1,
+    "all_valid_metadata_qualified": 144,
+    "bad_metadata_not_qualified": 4,
+    "bounded_response_body": 297,
+    "bounded_version_listing_query": 1,
+    "candidate_request_binding": 148,
+    "canonical_person_binding": 148,
+    "cohort_hash": 1,
+    "cohort_unique_people": 1,
+    "complete_version_listing": 1,
+    "completed_metadata_worker": 1,
+    "content_and_grid_uninspected": 144,
+    "crosswalk_entry_preserved_no_date_repair": 148,
+    "crosswalk_identity_syntax": 1,
+    "crosswalk_primitive_opcodes_only": 1,
+    "crosswalk_unique_entries": 1,
+    "derived_candidate_train_session": 148,
+    "derived_git_pointer_identity": 148,
+    "embedded_request_matches_raw_receipt": 296,
+    "exact_148_candidate_denominator": 1,
+    "exact_297_request_sequence": 1,
+    "exact_candidate_path": 148,
+    "exact_immutable_version_url": 144,
+    "exact_object_url": 148,
+    "exact_original_reference_identity": 144,
+    "exact_request_receipt_start_body_inventory": 1,
+    "exact_same_session_sidecar": 144,
+    "exact_two_candidate_metadata_requests": 148,
+    "failed_requests_retained_empty_body": 3,
+    "full_attempted_denominator": 1,
+    "git_blob_recomputed": 144,
+    "immutable_version_matching_size_md5": 144,
+    "independently_derived_annotation_category": 148,
+    "index_per_file_receipt_identity": 148,
+    "input_hash": 1,
+    "metadata_get_no_retries": 297,
+    "metadata_path_within_repository": 1496,
+    "missing_raw_git_tree_disclosed": 1,
+    "no_deferred_or_dropped_rows": 1,
+    "no_extra_duplicate_or_retry_requests": 1,
+    "no_negative_domain_or_contour_overclaim": 144,
+    "no_optimizer_or_invented_availability": 148,
+    "no_scientific_or_planning_admission": 592,
+    "no_scientific_payload_path": 1496,
+    "official_metadata_listing_origin": 1,
+    "only_train_candidate_pointer_sidecar_get": 296,
+    "original_annex_key_metadata_binding": 144,
+    "original_index_hash": 1,
+    "original_pointer_sha_recomputed": 144,
+    "original_reference_immutable_url": 144,
+    "original_role_train": 148,
+    "original_unique_sessions": 1,
+    "pinned_git_commit": 1,
+    "pinned_pointer_url": 148,
+    "pinned_sidecar_url": 148,
+    "pointer_sidecar_sha_recomputed": 144,
+    "producer_totals_match_independent_recount": 1,
+    "published_annex_key_syntax": 144,
+    "qualified_size_md5_metadata_only": 144,
+    "qualifier_script_hash": 1,
+    "raw_version_metadata_exact_match": 1,
+    "record_identity": 148,
+    "recorded_concurrency_bound": 1,
+    "recorded_metadata_resource_caps": 1,
+    "referenced_metadata_bytes": 738,
+    "referenced_metadata_sha256": 741,
+    "request_body_totals": 1,
+    "requested_crosswalk_counts_independently_recomputed": 1,
+    "requested_index_sha256": 1,
+    "requested_totals_independently_recomputed": 1,
+    "same_original_session": 148,
+    "started_completed_request_identity": 297,
+    "success_200_no_redirect": 294,
+    "top_level_no_admission": 1,
+    "train_only_person_role": 148,
+    "unique_candidate_request_url": 296,
+    "unique_request_number": 297,
+    "version_inventory_completeness": 1,
+    "version_proof_raw_metadata_binding": 144
+  },
+  "created_at": "2026-10-08T09:30:19.583829+00:00",
+  "exact_crosswalk_records": [
+    {
+      "path": "derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz",
+      "session": "ses-20140519",
+      "subject": "sub-476"
+    },
+    {
+      "path": "derivatives/manual_masks/sub-478/ses-20140513/anat/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz",
+      "session": "ses-20140513",
+      "subject": "sub-478"
+    }
+  ],
+  "failures_retained": [
+    {
+      "failed_request_numbers": [
+        51
+      ],
+      "observed_RawSources": null,
+      "path": "derivatives/manual_masks/sub-148/ses-20111106/anat/sub-148_ses-20111106_desc-Lesion_1_mask.nii.gz",
+      "reason": "metadata_request_failure",
+      "recorded_error": {
+        "message": "Metadata request failed; no retry",
+        "type": "ValueError"
+      },
+      "session": "ses-20111106",
+      "subject": "sub-148"
+    },
+    {
+      "failed_request_numbers": [
+        54,
+        55
+      ],
+      "observed_RawSources": null,
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_1_mask.nii.gz",
+      "reason": "metadata_request_failure",
+      "recorded_error": {
+        "message": "Metadata request failed; no retry",
+        "type": "ValueError"
+      },
+      "session": "ses-20111014",
+      "subject": "sub-163"
+    },
+    {
+      "failed_request_numbers": [],
+      "observed_RawSources": "sub-136_ses-20111014_angio.nii.gz",
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_2_mask.nii.gz",
+      "reason": "wrong_RawSources",
+      "recorded_error": {
+        "message": "Sidecar does not bind exact same-session original TOF",
+        "type": "ValueError"
+      },
+      "session": "ses-20111014",
+      "subject": "sub-163"
+    },
+    {
+      "failed_request_numbers": [],
+      "observed_RawSources": "sub-217_ses-20100812_angio.nii.gz",
+      "path": "derivatives/manual_masks/sub-220/ses-20110626/anat/sub-220_ses-20110626_desc-Lesion_1_mask.nii.gz",
+      "reason": "wrong_RawSources",
+      "recorded_error": {
+        "message": "Sidecar does not bind exact same-session original TOF",
+        "type": "ValueError"
+      },
+      "session": "ses-20110626",
+      "subject": "sub-220"
+    }
+  ],
+  "input_metadata_file_count": 1050,
+  "input_metadata_inventory_sha256": "fc0877902c1944b2b4e53d3bf877c6a54a3150d53805169bd2c24699571c9970",
+  "primary_sources": {
+    "build/lausanne-annotation-expansion-audit-v1/train-candidate-inventory.json": {
+      "bytes": 239146,
+      "sha256": "146c92904409c9a0dfdbe452352b4fd83cef366b40ea9e14d942cfe07523591d"
+    },
+    "build/lausanne-annotation-expansion-audit-v1/voxelwise-crosswalk.pkl": {
+      "bytes": 1034,
+      "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb"
+    },
+    "build/lausanne-annotation-expansion-qualification-v1/qualification-index.json": {
+      "bytes": 1230019,
+      "sha256": "11bc772164ad3308583c00cc813f1f7e93d22aa96bbfd79d3c721794aa04017b"
+    },
+    "build/lausanne-annotation-expansion-qualification-v1/requests/request-001-body.bin": {
+      "bytes": 460664,
+      "sha256": "9f1b46b405dfc4049dbce32c0fd362f70f341e5e8340da990f4e9c8a6e8af953"
+    },
+    "manifests/lausanne-component-cohort-v1.json": {
+      "bytes": 62650,
+      "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    "manifests/lausanne-train-originals-v1.json": {
+      "bytes": 1586099,
+      "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+    }
+  },
+  "qualification_index_sha256": "11bc772164ad3308583c00cc813f1f7e93d22aa96bbfd79d3c721794aa04017b",
+  "qualified_annotation_categories": {
+    "manual_region_subtype_unresolved": 111,
+    "source_voxelwise_exact_crosswalk": 2,
+    "source_voxelwise_person_date_mismatch": 31
+  },
+  "recomputed": {
+    "deferred_masks": 0,
+    "failed_masks": 4,
+    "qualified_mask_bytes": 13977015,
+    "qualified_masks": 144,
+    "qualified_people": 106,
+    "qualified_sessions": 117
+  },
+  "request_audit": {
+    "automatic_retries": 0,
+    "body_bytes": 494583,
+    "duplicate_requests": 0,
+    "failed": 3,
+    "kinds": {
+      "official_S3_version_inventory": 1,
+      "pinned_Git_annex_pointer": 148,
+      "pinned_same_session_sidecar": 148
+    },
+    "maximum_recorded_concurrency": 2,
+    "requests": 297,
+    "scientific_payload_requests": 0,
+    "successful": 294
+  },
+  "review_actions": {
+    "heldout_scientific_access": 0,
+    "network_requests": 0,
+    "scientific_payload_reads_or_decodes": 0,
+    "source_edits": 0,
+    "training_or_optimizer_steps": 0
+  },
+  "reviewer": "research_protocol independent subagent",
+  "schema": "lausanne-annotation-expansion-independent-metadata-review-v1",
+  "scope_limits": [
+    "144 is a metadata-qualified candidate mask count, not binary/grid QC, annotation review, training admission, or spatial-planning admission.",
+    "111 unresolved manual-region masks and 31 person/date-mismatched crosswalk masks must not be promoted to verified aneurysm contours. The two exact crosswalk matches establish source crosswalk identity only; their contents and grid were not inspected here.",
+    "Annex MD5/size and versioned S3 ETag/size are published metadata. No mask payload SHA256/MD5 or voxel validity was independently measured.",
+    "RawSources names an exact same-session original TOF reference; it does not establish array alignment or annotation accuracy.",
+    "Annotation and review availability timestamps remain unknown. No whole-image negative vascular domain is established.",
+    "The saved S3 version listing contains dataset-wide metadata; only the 148 fixed TRAIN candidate keys were interpreted. No reserved scientific payload was opened.",
+    "The original Git-tree raw response was not retained; its derived TRAIN candidate inventory and hash remain disclosed. This review verifies the supplied candidate set, all preserved pinned pointer/sidecar responses, and raw S3 version proofs, not independent Git-tree completeness.",
+    "Network-free review of saved provenance cannot newly authenticate the remote servers; it verifies local raw-response integrity and internal source bindings."
+  ],
+  "status": "passed_metadata_qualification_only",
+  "substantive_mismatches": []
+}

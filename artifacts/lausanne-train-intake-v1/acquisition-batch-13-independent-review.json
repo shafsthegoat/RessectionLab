@@ -1,0 +1,229 @@
+{
+  "schema": "lausanne-independent-batch-audit-v1",
+  "batch_number": 13,
+  "batch_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/batch.json",
+  "audit_completed_at": "2026-10-08T09:13:54.812021+00:00",
+  "record_created_at": "2026-10-08T09:24:17.020735+00:00",
+  "result": "passed_bounded_byte_receipt_audit",
+  "record_basis": "Archive of the completed independent audit; no source-file verification or QC rerun during archive creation. No batch14 outcomes included.",
+  "audit_method": {
+    "validator": "scripts/lausanne_train_intake.py:validated_index and validate_receipt",
+    "validated_receipts": 59,
+    "checks": [
+      "frozen index SHA256 and complete TRAIN inventory",
+      "original-file byte size, MD5 where declared, source SHA256 where declared, and receipt SHA256",
+      "retained execution-source record and all code snapshots",
+      "exact canonical cache receipt bytes equal originating acquisition receipt",
+      "batch/declaration binding and source-code identity",
+      "worker started/outcome records, watchdog bounds and saved acquisition elapsed times",
+      "unique person grouping across repeated sessions",
+      "partial and unreceipted originals excluded from acquired totals"
+    ],
+    "image_decoding": false,
+    "network_transfers": false,
+    "qc_rerun": false,
+    "model_or_training_execution": false,
+    "saved_qc_statuses": {
+      "acquired_qc_passed": 59
+    }
+  },
+  "identity": {
+    "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+    "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766",
+    "source_intact_at_audit": true,
+    "source_unchanged_at_closure": true,
+    "index_unchanged_at_closure": true,
+    "closure_check_errors": [],
+    "metadata_sha256_at_archive": {
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/batch.json": "a49087ad6b25655f714b3b94c4c44c64be94a9de45f29ff2e10740959c05fbc1",
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/declaration.json": "0df4f7a888e078c37823a62394aa3053d3e4ddfd1ee2064de615e59f44626815",
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/source.json": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    }
+  },
+  "denominator": {
+    "role": "TRAIN",
+    "people": 199,
+    "sessions": 210
+  },
+  "closure": {
+    "people": 58,
+    "sessions": 59,
+    "files": 236,
+    "bytes": 2611520354,
+    "image_files": 118,
+    "image_bytes": 2611336379,
+    "remaining_people": 141,
+    "remaining_sessions": 151,
+    "people_with_all_declared_visits_complete": 58,
+    "receipt_sessions": [
+      "sub-000/ses-20110101",
+      "sub-001/ses-20101222",
+      "sub-002/ses-20110127",
+      "sub-005/ses-20101215",
+      "sub-006/ses-20101217",
+      "sub-007/ses-20101225",
+      "sub-015/ses-20101111",
+      "sub-021/ses-20101111",
+      "sub-022/ses-20101011",
+      "sub-030/ses-20101012",
+      "sub-034/ses-20101005",
+      "sub-035/ses-20101019",
+      "sub-036/ses-20101030",
+      "sub-045/ses-20101006",
+      "sub-047/ses-20100908",
+      "sub-051/ses-20100920",
+      "sub-052/ses-20100920",
+      "sub-062/ses-20100601",
+      "sub-065/ses-20100703",
+      "sub-066/ses-20100526",
+      "sub-069/ses-20100513",
+      "sub-073/ses-20100426",
+      "sub-074/ses-20100421",
+      "sub-074/ses-20101117",
+      "sub-075/ses-20100502",
+      "sub-077/ses-20100414",
+      "sub-078/ses-20100430",
+      "sub-091/ses-20100405",
+      "sub-099/ses-20100321",
+      "sub-100/ses-20100213",
+      "sub-103/ses-20100301",
+      "sub-104/ses-20100228",
+      "sub-105/ses-20100212",
+      "sub-107/ses-20100206",
+      "sub-109/ses-20100120",
+      "sub-112/ses-20100121",
+      "sub-116/ses-20091229",
+      "sub-119/ses-20091226",
+      "sub-120/ses-20100117",
+      "sub-121/ses-20100128",
+      "sub-126/ses-20100105",
+      "sub-128/ses-20120124",
+      "sub-129/ses-20120107",
+      "sub-130/ses-20111130",
+      "sub-134/ses-20111127",
+      "sub-140/ses-20111208",
+      "sub-141/ses-20111229",
+      "sub-144/ses-20111211",
+      "sub-147/ses-20111209",
+      "sub-148/ses-20111106",
+      "sub-149/ses-20111126",
+      "sub-153/ses-20111127",
+      "sub-159/ses-20111127",
+      "sub-160/ses-20111010",
+      "sub-163/ses-20111014",
+      "sub-164/ses-20111124",
+      "sub-214/ses-20110901",
+      "sub-450/ses-20141125",
+      "sub-476/ses-20140519"
+    ],
+    "repeated_person_note": "sub-074 has two acquired sessions and counts as one person."
+  },
+  "newly_acquired": {
+    "people": 6,
+    "sessions": 6,
+    "files": 24,
+    "bytes": 268580816,
+    "image_files": 12,
+    "image_bytes": 268560863,
+    "session_ids": [
+      "sub-147/ses-20111209",
+      "sub-149/ses-20111126",
+      "sub-153/ses-20111127",
+      "sub-159/ses-20111127",
+      "sub-160/ses-20111010",
+      "sub-164/ses-20111124"
+    ]
+  },
+  "batch_accounting": {
+    "status": "time_budget_exhausted",
+    "problem": "Insufficient batch time to start another worker",
+    "verified_cached_sessions": 50,
+    "successful_workers": 6,
+    "timeout_workers": 1,
+    "explicit_deferrals": 0,
+    "unvisited_sessions": 153,
+    "not_verified_acquired_in_this_batch": 154,
+    "previously_acquired_but_unvisited": [
+      "sub-214/ses-20110901",
+      "sub-450/ses-20141125",
+      "sub-476/ses-20140519"
+    ],
+    "distinction": "The batch field 154 includes three previously acquired sessions not revisited before its deadline. All three passed this independent audit. Cumulative remaining is 151."
+  },
+  "bounds": {
+    "max_seconds": 600,
+    "elapsed_seconds": 599.1240020419937,
+    "strict_recorded_elapsed_within_600": true,
+    "seconds_remaining": 0.8759979580063373,
+    "max_attempted_source_bytes": 536870912,
+    "attempted_source_bytes": 307354763,
+    "source_budget_remaining": 229516149,
+    "byte_accounting": "Declared source-size budget, including the attempted timeout session; not measured network transfer."
+  },
+  "timeout": {
+    "session": "sub-167/ses-20111013",
+    "status": "timeout",
+    "exit_code": 124,
+    "worker_max_seconds": 27.369707541074604,
+    "expected_source_bytes": 38773947,
+    "acquisition_receipt_exists_at_audit": false,
+    "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-167_ses-20111013/outcome.json",
+    "meaning": "Process deadline; no dataset-quality failure inferred."
+  },
+  "excluded_leftovers_at_audit": [
+    {
+      "session": "sub-167/ses-20111013",
+      "file": "sub-167_ses-20111013_T1w.nii.gz",
+      "kind": "complete_without_receipt",
+      "bytes": 8459411
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "file": "sub-167_ses-20111013_T1w.json",
+      "kind": "complete_without_receipt",
+      "bytes": 1647
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "file": "sub-167_ses-20111013_angio.nii.gz.partial",
+      "kind": "partial",
+      "bytes": 3145728,
+      "expected_complete_bytes": 30311277
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_T1w.nii.gz",
+      "kind": "complete_without_receipt",
+      "bytes": 4172301
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_T1w.json",
+      "kind": "complete_without_receipt",
+      "bytes": 1755
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_angio.nii.gz.partial",
+      "kind": "partial",
+      "bytes": 2097152,
+      "expected_complete_bytes": 16295294
+    }
+  ],
+  "historical_timeouts_preserved": [
+    "sub-077/ses-20100414",
+    "sub-128/ses-20120124",
+    "sub-454/ses-20141123"
+  ],
+  "later_receipts_included": 0,
+  "claim_limits": {
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "registration": "unverified",
+    "anatomical_coverage": "unreviewed",
+    "component_optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "note": "Byte/receipt integrity and saved QC consistency only; no clinical, anatomical, source-frame, spatial or training admission."
+  }
+}

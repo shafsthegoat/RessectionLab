@@ -1,0 +1,102 @@
+{
+  "schema": "lausanne-annotation-metadata-qualification-verification-v1",
+  "qualified_masks": 144,
+  "qualified_people": 106,
+  "qualified_sessions": 117,
+  "qualified_source_bytes": 13977015,
+  "failed": [
+    {
+      "path": "derivatives/manual_masks/sub-148/ses-20111106/anat/sub-148_ses-20111106_desc-Lesion_1_mask.nii.gz",
+      "error": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      },
+      "request_errors": [
+        {
+          "number": 51,
+          "kind": "pinned_same_session_sidecar",
+          "error": {
+            "type": "URLError",
+            "message": "<urlopen error _ssl.c:1112: The handshake operation timed out>"
+          }
+        }
+      ],
+      "sidecar_text": []
+    },
+    {
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_1_mask.nii.gz",
+      "error": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      },
+      "request_errors": [
+        {
+          "number": 54,
+          "kind": "pinned_Git_annex_pointer",
+          "error": {
+            "type": "URLError",
+            "message": "<urlopen error _ssl.c:1112: The handshake operation timed out>"
+          }
+        },
+        {
+          "number": 55,
+          "kind": "pinned_same_session_sidecar",
+          "error": {
+            "type": "URLError",
+            "message": "<urlopen error _ssl.c:1112: The handshake operation timed out>"
+          }
+        }
+      ],
+      "sidecar_text": []
+    },
+    {
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_2_mask.nii.gz",
+      "error": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      },
+      "request_errors": [],
+      "sidecar_text": [
+        "{\"Type\": \"Lesion\", \"RawSources\": \"sub-136_ses-20111014_angio.nii.gz\", \"Space\": \"orig\"}"
+      ]
+    },
+    {
+      "path": "derivatives/manual_masks/sub-220/ses-20110626/anat/sub-220_ses-20110626_desc-Lesion_1_mask.nii.gz",
+      "error": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      },
+      "request_errors": [],
+      "sidecar_text": [
+        "{\"RawSources\": \"sub-217_ses-20100812_angio.nii.gz\", \"Space\": \"orig\", \"Type\": \"Lesion\"}"
+      ]
+    }
+  ],
+  "deferred_count": 0,
+  "request_kind_counts": {
+    "official_S3_version_inventory": 1,
+    "pinned_Git_annex_pointer": 148,
+    "pinned_same_session_sidecar": 148
+  },
+  "http_requests": 297,
+  "successful_http_responses": 294,
+  "exact_body_bytes": 494583,
+  "elapsed_seconds": 267.978919416,
+  "input_and_runner_hashes_still_match": true,
+  "all_raw_response_hashes_recomputed": true,
+  "all_qualified_pointer_sidecar_version_bindings_recomputed": true,
+  "independent_agent_review": false,
+  "scientific_payloads_opened": 0,
+  "optimizer_updates": 0,
+  "qualified_contour_statuses": {
+    "manual_region_subtype_unresolved": 111,
+    "source_voxelwise_person_date_mismatch": 31,
+    "source_voxelwise_exact_crosswalk": 2
+  },
+  "qualification_index": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/lausanne-annotation-expansion-qualification-v1/qualification-index.json",
+    "bytes": 1230019,
+    "sha256": "11bc772164ad3308583c00cc813f1f7e93d22aa96bbfd79d3c721794aa04017b"
+  },
+  "runner_sha256": "b1e1b4dd4389c7c1d1d0896f90841fafdc14bb1ba81f5ab696d97a6b934a8d1a"
+}

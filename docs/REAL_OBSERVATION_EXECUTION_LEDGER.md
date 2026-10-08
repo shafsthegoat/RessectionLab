@@ -34,12 +34,12 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Fifty-three pairs from52people acquired (2,342,939,538bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining157 TRAINsessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Fifty-nine pairs from58people acquired (2,611,520,354bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining151 TRAINsessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. The historical rights-only HTTP429 is preserved; exact1656byte rights text now archived, exact-object redirect fix independently verified. | Resolve original-image certificate/connectivity failure, then finish frozen Case3 image/mask acquisition and QC before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | Pure preparation of the reviewed plate-layer/matched-size interior diagnostic completed25.635seconds; review saved artifacts then run three fixedN24 native cases; preserve total-error and time-convergence gates. Retain FEBio; compare SOFA for later interaction. |
+| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | Pure preparation of the reviewed plate-layer/matched-size interior diagnostic completed25.635seconds; saved-artifact review passed and three fixedN24 native cases are running; preserve total-error and time-convergence gates. Retain FEBio; compare SOFA for later interaction. |
 | Physiology | Actual VitalDB case3/subject2861 DEVELOPMENT import/replay:21,970 pump/NIBP records and7,207 boundaries independently checked;15 focused checks pass. Original arterial task fails. Unshifted native clock supported, recording-start offset and cuff-measurement age unresolved. No validated response or learning. | Fresh-checkout cache preparation passes16independently repeated controls and real-record admission. Add observed-event integration; resolve release-specific native origin. Keep this separate patient's records separate from glioma anatomy, and qualify actual action/endpoint support before learning. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
@@ -246,3 +246,17 @@ physiology and rescue; information acquisition (9A), computation allocation (9B)
 and explicit branch assumptions (9C); navigation uncertainty (10A); functional
 desktop integration and independent real-case acceptance. Current metadata,
 guards and historical results do not satisfy those gates.
+
+## October 8: batch13 closure and annotation metadata review
+
+[Batch13](../artifacts/lausanne-train-intake-v1/acquisition-batch-13-summary.json)
+added six people/sessions. All59 receipts/originals/source snapshots passed root
+and independent checks; audited totals are58people/59sessions/2,611,520,354bytes.
+Its599.124second run retained the sub167 timeout. The three cached but unvisited
+sessions explain154not-verified-this-batch versus151cumulative remaining.
+Batch14 is a separate running600second/536,870,912source-byte attempt.
+
+The [annotation metadata review](../artifacts/lausanne-annotation-expansion-v1/RESULT.md)
+qualified144TRAIN masks across106people/117sessions (13,977,015prospective bytes).
+Four failures remain excluded, including two wrong-patient/session source links.
+No new mask payload, label-quality acceptance or optimizer update follows.

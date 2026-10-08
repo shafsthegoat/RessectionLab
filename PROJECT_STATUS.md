@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Fifty-three TRAIN original
-pairs from 52 people and their sidecars are acquired (2,342,939,538 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Fifty-nine TRAIN original
+pairs from 58 people and their sidecars are acquired (2,611,520,354 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -60,7 +60,10 @@ and independent rechecks;52people/53sessions/2,342,939,538bytes are complete.
 Sub128's timeout was resumed successfully; sub454's latest timeout has no
 admission and its partial remains. Historical failure records are unchanged.
 See [batch12](artifacts/lausanne-train-intake-v1/acquisition-batch-12-summary.json).
-A thirteenth serial intake is running with600seconds and536,870,912source bytes.
+Batch13 added six people/sessions; all59 receipts passed independent and root
+checks. Closure is58people/59sessions/2,611,520,354bytes;151sessions remain.
+Sub167 timed out; its original failure is retained. See [batch13](artifacts/lausanne-train-intake-v1/acquisition-batch-13-summary.json).
+A fourteenth serial intake is running with600seconds and536,870,912source bytes.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -118,7 +121,8 @@ versus matched-size interior-refinement diagnostic. Its scope is local numerical
 sensitivity, not proof of a singularity, total continuum accuracy or calibration
 release. Implementation passes18controls and independent review; actual pure
 preparation completed in25.635seconds with637.3MB sampled peak memory.
-Preparation artifact review is pending before the three native solves. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
+Preparation artifact review passed. The separately released three native solves
+are running; measured curves remain closed. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
 
 [VitalDB replay](artifacts/vitaldb-recorded-component-v1/RESULT.md) now imports
 21,970 actual pump/cuff-monitor records from one separate DEVELOPMENT person.

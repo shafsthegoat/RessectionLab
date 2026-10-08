@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T09:07:08.638004+00:00",
+  "updated_at": "2026-10-08T09:32:50.007894+00:00",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -16,14 +16,14 @@
       "discovered_people": 284,
       "declared_train_people": 199,
       "declared_train_sessions": 210,
-      "acquired_train_people": 52,
-      "acquired_train_sessions": 53,
+      "acquired_train_people": 58,
+      "acquired_train_sessions": 59,
       "acquired_modalities": [
         "T1w",
         "TOF-MRA"
       ],
-      "acquired_bytes": 2342939538,
-      "byte_and_scalar_qc_passed_people": 52,
+      "acquired_bytes": 2611520354,
+      "byte_and_scalar_qc_passed_people": 58,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Continue remaining157 TRAINsessions; qualify148TRAIN source-linked lesion-region annotations before component fitting; preserve source-frame and spatial gates",
+      "next": "Continue remaining151 TRAIN sessions; acquire and check144metadata-qualified TRAIN masks with annotation subtype and missingness retained; no component learning admission yet",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -42,8 +42,8 @@
       "indexed_source_files": 840,
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
-      "remaining_train_sessions_to_acquire": 157,
-      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-12-summary.json",
+      "remaining_train_sessions_to_acquire": 151,
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-13-summary.json",
       "acquired_source_manual_aneurysm_masks": 1,
       "manual_annotation_bytes": 82420,
       "manual_annotation_positive_voxels": 193,
@@ -51,7 +51,13 @@
       "manual_annotation_spatial_admissions": 0,
       "manual_annotation_geometry_gate": "Raw grid equality remains false; explicit source-reference precision normalization supports retrospective component inspection only; scanner-world/inter-scan and spatial-planning gates remain unresolved",
       "retrospective_positive_components_prepared": 1,
-      "positive_component_receipt": "artifacts/lausanne-sub476-annotation-v1/component.json"
+      "positive_component_receipt": "artifacts/lausanne-sub476-annotation-v1/component.json",
+      "metadata_qualified_train_masks": 144,
+      "metadata_qualified_annotation_people": 106,
+      "metadata_qualified_annotation_sessions": 117,
+      "metadata_qualified_annotation_source_bytes": 13977015,
+      "annotation_metadata_failures": 4,
+      "annotation_metadata_review": "artifacts/lausanne-annotation-expansion-v1/RESULT.md"
     },
     {
       "accession": "TopCoW external Lausanne",
@@ -72,7 +78,7 @@
       "version": "RESECT original v1; annotation v1 2024-02-15 / Case3 file revision2",
       "family": "RESECT",
       "image_license": "CC-BY-4.0",
-      "annotation_rights": "CC-BY-NC-SA-4.0 plus financial-benefit restriction observed by source research; exact README archival pending",
+      "annotation_rights": "CC-BY-NC-SA-4.0 plus financial-benefit restriction; exact1656byte README archived and hash verified",
       "declared_cohort": "manifests/resect-component-cohort-v1.json",
       "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
       "discovered_people": 23,
@@ -92,12 +98,13 @@
       "used_in_offline_rl_people": 0,
       "checkpoint_contributions": [],
       "receipt": "artifacts/resect-component-admission-v1/RESULT.md",
-      "next": "Archive pinned rights record when source permits; then acquire/QC Case3 pair before anatomy review or training; do not retry HTTP429 automatically",
+      "next": "Use reviewed native macOS trust for exact original-image source, then acquire/QC frozen Case3 pair; prior rights HTTP429 and Python certificate failure remain preserved",
       "exclusions": [
         "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
         "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
         "Later ultrasound is unavailable to preoperative policy inputs"
-      ]
+      ],
+      "annotation_rights_receipt": "artifacts/resect-component-admission-v1/rights-review-02/README.txt"
     },
     {
       "accession": "VitalDB",
