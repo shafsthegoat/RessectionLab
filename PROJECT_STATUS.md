@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Two TRAIN original pairs
-and their sidecars are acquired (69,376,670 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Six TRAIN original pairs
+and their sidecars are acquired (203,467,291 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -29,19 +29,24 @@ pilot replay and a cache-only resume each excluded all other 209 sessions;
 they add no new independent people. See [intake acceptance](artifacts/lausanne-train-intake-v1/RESULT.md).
 The first 600-second expansion batch completed one additional person, then
 timed out on the next with a resumable 6,291,456-byte partial. All workers exited;
-208 TRAIN sessions remain incomplete. [The closed batch](artifacts/lausanne-train-intake-v1/acquisition-batch-01-summary.json)
-retains the timeout and exact source bindings. No batch is currently running.
+The next batch resumed that partial and acquired four more people in 521.3543
+seconds. Now 204 TRAIN sessions remain incomplete. [The second closed batch](artifacts/lausanne-train-intake-v1/acquisition-batch-02-summary.json)
+retains its exact source bindings; the first timeout is preserved. No acquisition
+batch is currently running.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
-Before these code edits, a fresh fetch verified remote/local main at a4659cc;
-the working branch contained every main commit and two newer local milestones.
+Before further code edits, a fresh fetch again verified remote/local main at
+a4659cc; the working branch contained every main commit (zero behind).
 All 82 inventoried unfinished desktop/other files were preserved byte-for-byte.
 
 RESECT cavity-component roles are now frozen at14 TRAIN/four SELECT/four
 evaluation/Case4 protected DEVELOPMENT; an independent metadata review
 recomputed membership and preserved Case4's earlier measurement partition.
-No new RESECT image/label has been acquired. Archiving the rights record and
-resolving the exact OSF revision route remain pending after an HTTP429 response.
+No new RESECT image/label has been acquired. Rights-text archival remains pending
+after an HTTP429 response. The official revision-2 route is now resolved, and the
+bounded Case3 intake runner passes 24 combined controls. The rights-only attempt
+stopped without a retry; no scientific payload was acquired. See
+[intake result](artifacts/resect-component-admission-v1/RESULT.md).
 The measured-interaction candidate is creator-accepted MULTIS donor004 run005;
 verified HTTPS/fixity and force/pose/surface pairing remain unresolved.
 

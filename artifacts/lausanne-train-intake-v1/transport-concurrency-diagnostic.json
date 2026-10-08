@@ -1,0 +1,104 @@
+{
+  "diagnostic": "lausanne-sub000-single-versus-two-concurrent-ranges",
+  "date_utc": "2026-10-08",
+  "recording": "Root transcribed the independent agent report; no new requests for this receipt",
+  "client": "urllib, independent processes",
+  "request_range": "bytes=0-1048575",
+  "per_request_wall_limit_seconds": 45,
+  "redirects_allowed": false,
+  "retries": 0,
+  "sources": {
+    "T1": {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+      "version": "Fd_dldJuHqxHdkXkR8no4V7bSeXyhYuZ",
+      "object_bytes": 8250277,
+      "prefix_sha256": "bd7ee06564abe26e8e3ebb9aee742981ccaa1f1d819e7c9393a5be95603bb9cc"
+    },
+    "TOF": {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+      "version": "WcfGrEnFSmBdKz4mehhm24qZYBAf2Q5n",
+      "object_bytes": 28408253,
+      "prefix_sha256": "365feafbab8373bd4f733b85de2c955d4b8d37c44e2894c3480847972f9b69b5"
+    }
+  },
+  "base_url": "https://s3.amazonaws.com/openneuro.org/ds003949/",
+  "requests": [
+    {
+      "order": 1,
+      "source": "T1",
+      "group": "single",
+      "started_at_utc": "2026-10-08T05:25:13.101054+00:00",
+      "finished_at_utc": "2026-10-08T05:25:34.549265+00:00",
+      "elapsed_seconds": 21.448524250183254,
+      "headers_seconds": 7.439299791119993,
+      "body_seconds": 14.008498959010467,
+      "bytes": 1048576,
+      "http_status": 206,
+      "s3_request_id": "T75H55Z0TWTYVKCT"
+    },
+    {
+      "order": 2,
+      "source": "T1",
+      "group": "concurrent_pair",
+      "started_at_utc": "2026-10-08T05:25:34.554941+00:00",
+      "finished_at_utc": "2026-10-08T05:25:48.422924+00:00",
+      "elapsed_seconds": 13.86824091593735,
+      "headers_seconds": 1.3474254158791155,
+      "body_seconds": 12.520187583984807,
+      "bytes": 1048576,
+      "http_status": 206,
+      "s3_request_id": "WHM27E09MMY6EG2H"
+    },
+    {
+      "order": 3,
+      "source": "TOF",
+      "group": "concurrent_pair",
+      "started_at_utc": "2026-10-08T05:25:34.555687+00:00",
+      "finished_at_utc": "2026-10-08T05:25:47.301035+00:00",
+      "elapsed_seconds": 12.745575041975826,
+      "headers_seconds": 1.4455217090435326,
+      "body_seconds": 11.299554832978174,
+      "bytes": 1048576,
+      "http_status": 206,
+      "s3_request_id": "WHMARS7KN3C8K3NH"
+    }
+  ],
+  "groups_including_process_overhead": {
+    "single": {
+      "elapsed_seconds": 21.4558788749855,
+      "verified_bytes": 1048576,
+      "aggregate_bytes_per_second": 48871.26768889855
+    },
+    "concurrent_pair": {
+      "elapsed_seconds": 13.874332250095904,
+      "verified_bytes": 2097152,
+      "aggregate_bytes_per_second": 151153.36451493035
+    }
+  },
+  "aggregate_throughput_ratio_pair_over_single": 3.0928881459988378,
+  "validation": {
+    "all_passed": true,
+    "exact_final_urls": true,
+    "exact_content_ranges": true,
+    "exact_pinned_versions": true,
+    "content_length_each": 1048576,
+    "all_prefix_hashes_match_local_originals": true,
+    "server": "AmazonS3",
+    "via_age_x_cache_headers_present": false
+  },
+  "limits": {
+    "actual_gets": 3,
+    "total_response_body_bytes": 3145728,
+    "files_written_by_agent": false,
+    "images_decoded": false,
+    "other_patients_accessed": false,
+    "acquisition_concurrency_changed": false
+  },
+  "limitations": [
+    "One trial; no robust or sustained speedup established.",
+    "Fixed order and repeated T1 prefix permit warming or temporal effects.",
+    "Single-request header latency was substantially higher, confounding the aggregate ratio.",
+    "First-1-MiB transfers do not establish full-object or 10-GB throughput.",
+    "Header time includes connection establishment and response wait, not separately measured."
+  ]
+}

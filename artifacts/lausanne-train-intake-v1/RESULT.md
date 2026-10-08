@@ -70,3 +70,31 @@ spatial admissions. Resume the retained partial in the next bounded batch.
 [Batch summary](acquisition-batch-01-summary.json), [full closure](acquisition-batch-01-batch.json),
 [declaration](acquisition-batch-01-declaration.json), [new acquisition](acquisition-batch-01-sub-001.json),
 [executed source](acquisition-batch-01-source.json).
+
+## Second bounded expansion batch
+
+The next serial batch completed four additional TRAIN people in **521.3543
+seconds** under the same 600-second/134,217,728-source-byte limits. It resumed
+sub-002 and completed sub-005, sub-006 and sub-015. Attempted source sizes total
+134,090,621 bytes; this is not an independent network-byte measurement. Sessions
+that did not fit the remaining byte budget are deferred, not excluded from the
+full TRAIN source index. The next invocation considers them again.
+
+Root reverified all six complete source receipts, published MD5/SHA fixity and
+retained source snapshots. Current totals are **six people / six sessions /
+203,467,291 complete source bytes**; **204 TRAIN sessions remain incomplete**.
+All workers exited. Header/scalar checks passed, with no independent anatomical,
+scanner-frame or spatial-planning acceptance. No optimizer updates or eligible
+recorded RL transitions were added. The first batch timeout remains preserved.
+
+[Summary](acquisition-batch-02-summary.json), [closure](acquisition-batch-02-batch.json),
+[declaration](acquisition-batch-02-declaration.json), [source](acquisition-batch-02-source.json).
+
+A separate three-request transport diagnostic compared one first-MiB T1 request
+with concurrent first-MiB T1/TOF requests from the already acquired pilot. Exact
+range, version and local-prefix hashes matched. Observed aggregate throughput
+was 48,871 versus 151,153 bytes/second. This single fixed-order trial has large
+connection/header-time confounding and cannot establish sustained throughput or
+a 3.09-fold speedup. The acquisition runner remains serial. A bounded two-request
+full-object trial, with balanced timing, would be required before a performance
+claim. [Diagnostic record](transport-concurrency-diagnostic.json).

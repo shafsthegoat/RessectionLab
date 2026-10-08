@@ -111,3 +111,13 @@ authentication. Keep that dependency explicit. A first schema-only sample
 would be the TDMS plus its three configurations and donor CFG/XML: six files,
 7,022,670 bytes. Resolve source/fixity and freeze donor roles before opening it;
 keep the much larger surface exports closed until actual channel/timing checks.
+
+A later read-only metadata follow-up inspected the [official SVN Data listing](https://simtk.org/svn/multis/app/InstrumentedSurgicalTools/SMULTIS004-1/Data/)
+at revision1079. It exposes run027, a different dissection recording, not the
+accepted run005 indentation record; it cannot silently replace that target.
+The authenticated [DataCite DOI record](https://api.datacite.org/dois/10.18735/n217-mb65)
+returned HTTP200 and confirms the official HTTP archive destination. Version is
+null; sizes, formats and related identifiers are empty. This authenticates the
+location, not the bytes served there. The [project download index](https://simtk.org/frs/?group_id=1032)
+failed during TLS handshake and remains uninspected. No scientific payload was
+opened, TLS verification disabled or force-fit model released.

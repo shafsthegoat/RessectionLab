@@ -1,0 +1,1287 @@
+{
+  "status": "bounded_batch_finished",
+  "problem": null,
+  "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+  "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+  "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05",
+  "source_unchanged": true,
+  "index_unchanged": true,
+  "closure_check_errors": [],
+  "expected_inventory_resolved": true,
+  "max_seconds": 600,
+  "max_attempted_source_bytes": 134217728,
+  "only_session": null,
+  "existing_files_only": false,
+  "elapsed_seconds": 521.3543167919852,
+  "attempted_source_bytes": 134090621,
+  "byte_accounting": "source-size budget, not measured network transfer",
+  "outcomes": [
+    {
+      "session": "sub-002/ses-20110127",
+      "status": "acquired_qc_passed",
+      "exit_code": 0,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-002_ses-20110127/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-002_ses-20110127/worker.log"
+    },
+    {
+      "session": "sub-005/ses-20101215",
+      "status": "acquired_qc_passed",
+      "exit_code": 0,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-005_ses-20101215/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-005_ses-20101215/worker.log"
+    },
+    {
+      "session": "sub-006/ses-20101217",
+      "status": "acquired_qc_passed",
+      "exit_code": 0,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-006_ses-20101217/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-006_ses-20101217/worker.log"
+    },
+    {
+      "session": "sub-015/ses-20101111",
+      "status": "acquired_qc_passed",
+      "exit_code": 0,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-015_ses-20101111/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-015_ses-20101111/worker.log"
+    }
+  ],
+  "verified_cached": [
+    {
+      "session": "sub-000/ses-20110101",
+      "status": "acquired_qc_passed"
+    },
+    {
+      "session": "sub-001/ses-20101222",
+      "status": "acquired_qc_passed"
+    }
+  ],
+  "deferred": [
+    {
+      "session": "sub-007/ses-20101225",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 38124590
+    },
+    {
+      "session": "sub-021/ses-20101111",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 28510682
+    },
+    {
+      "session": "sub-022/ses-20101011",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 61220361
+    },
+    {
+      "session": "sub-030/ses-20101012",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58959795
+    },
+    {
+      "session": "sub-034/ses-20101005",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 36216807
+    },
+    {
+      "session": "sub-035/ses-20101019",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 28828442
+    },
+    {
+      "session": "sub-036/ses-20101030",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 60779989
+    },
+    {
+      "session": "sub-045/ses-20101006",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 56843274
+    },
+    {
+      "session": "sub-047/ses-20100908",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58257306
+    },
+    {
+      "session": "sub-051/ses-20100920",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 59637115
+    },
+    {
+      "session": "sub-052/ses-20100920",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 35185675
+    },
+    {
+      "session": "sub-062/ses-20100601",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 60751512
+    },
+    {
+      "session": "sub-065/ses-20100703",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 60057265
+    },
+    {
+      "session": "sub-066/ses-20100526",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 64757702
+    },
+    {
+      "session": "sub-069/ses-20100513",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27411019
+    },
+    {
+      "session": "sub-073/ses-20100426",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 56498451
+    },
+    {
+      "session": "sub-074/ses-20100421",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 26826212
+    },
+    {
+      "session": "sub-074/ses-20101117",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27363417
+    },
+    {
+      "session": "sub-075/ses-20100502",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 36858619
+    },
+    {
+      "session": "sub-077/ses-20100414",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 26282995
+    },
+    {
+      "session": "sub-078/ses-20100430",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 40648796
+    },
+    {
+      "session": "sub-091/ses-20100405",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 35384182
+    },
+    {
+      "session": "sub-099/ses-20100321",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 62168523
+    },
+    {
+      "session": "sub-100/ses-20100213",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 54125286
+    },
+    {
+      "session": "sub-103/ses-20100301",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 54580472
+    },
+    {
+      "session": "sub-104/ses-20100228",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 35830425
+    },
+    {
+      "session": "sub-105/ses-20100212",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 68017043
+    },
+    {
+      "session": "sub-107/ses-20100206",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 54200908
+    },
+    {
+      "session": "sub-109/ses-20100120",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 60383493
+    },
+    {
+      "session": "sub-112/ses-20100121",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 36797821
+    },
+    {
+      "session": "sub-116/ses-20091229",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 59789725
+    },
+    {
+      "session": "sub-119/ses-20091226",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32758182
+    },
+    {
+      "session": "sub-120/ses-20100117",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 66356949
+    },
+    {
+      "session": "sub-121/ses-20100128",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 66079957
+    },
+    {
+      "session": "sub-126/ses-20100105",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 60114096
+    },
+    {
+      "session": "sub-128/ses-20120124",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 44120151
+    },
+    {
+      "session": "sub-129/ses-20120107",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31048412
+    },
+    {
+      "session": "sub-130/ses-20111130",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 72910133
+    },
+    {
+      "session": "sub-134/ses-20111127",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 37914955
+    },
+    {
+      "session": "sub-140/ses-20111208",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 46081816
+    },
+    {
+      "session": "sub-141/ses-20111229",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 82953742
+    },
+    {
+      "session": "sub-144/ses-20111211",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 45669992
+    },
+    {
+      "session": "sub-147/ses-20111209",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 61058352
+    },
+    {
+      "session": "sub-148/ses-20111106",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 28294961
+    },
+    {
+      "session": "sub-149/ses-20111126",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 29240957
+    },
+    {
+      "session": "sub-153/ses-20111127",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 30505946
+    },
+    {
+      "session": "sub-159/ses-20111127",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33351344
+    },
+    {
+      "session": "sub-160/ses-20111010",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 46771914
+    },
+    {
+      "session": "sub-163/ses-20111014",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 9375825
+    },
+    {
+      "session": "sub-164/ses-20111124",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 67652303
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 38773947
+    },
+    {
+      "session": "sub-170/ses-20100422",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58422378
+    },
+    {
+      "session": "sub-170/ses-20111112",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31258353
+    },
+    {
+      "session": "sub-171/ses-20111105",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34438704
+    },
+    {
+      "session": "sub-172/ses-20111110",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 100019960
+    },
+    {
+      "session": "sub-178/ses-20111105",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33486767
+    },
+    {
+      "session": "sub-186/ses-20110925",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32430164
+    },
+    {
+      "session": "sub-187/ses-20111023",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 30549566
+    },
+    {
+      "session": "sub-188/ses-20111013",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33231824
+    },
+    {
+      "session": "sub-189/ses-20110927",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33278372
+    },
+    {
+      "session": "sub-191/ses-20111010",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 75625622
+    },
+    {
+      "session": "sub-192/ses-20110930",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33117139
+    },
+    {
+      "session": "sub-194/ses-20110911",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 75179162
+    },
+    {
+      "session": "sub-197/ses-20110914",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 139542790
+    },
+    {
+      "session": "sub-198/ses-20110922",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34428992
+    },
+    {
+      "session": "sub-203/ses-20110727",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 30666702
+    },
+    {
+      "session": "sub-207/ses-20110729",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 70142488
+    },
+    {
+      "session": "sub-208/ses-20110808",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 71299154
+    },
+    {
+      "session": "sub-209/ses-20110724",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 70827856
+    },
+    {
+      "session": "sub-211/ses-20110817",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27267859
+    },
+    {
+      "session": "sub-214/ses-20110901",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 18082195
+    },
+    {
+      "session": "sub-216/ses-20110729",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 73484827
+    },
+    {
+      "session": "sub-217/ses-20100819",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 61937796
+    },
+    {
+      "session": "sub-217/ses-20110811",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31011945
+    },
+    {
+      "session": "sub-220/ses-20110626",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34561265
+    },
+    {
+      "session": "sub-222/ses-20110808",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34018285
+    },
+    {
+      "session": "sub-225/ses-20100515",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33023977
+    },
+    {
+      "session": "sub-225/ses-20110617",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32154947
+    },
+    {
+      "session": "sub-228/ses-20110626",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34184703
+    },
+    {
+      "session": "sub-231/ses-20110617",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27474392
+    },
+    {
+      "session": "sub-234/ses-20110613",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32126655
+    },
+    {
+      "session": "sub-234/ses-20111203",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33982745
+    },
+    {
+      "session": "sub-235/ses-20110528",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 24505798
+    },
+    {
+      "session": "sub-239/ses-20110628",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58376823
+    },
+    {
+      "session": "sub-240/ses-20110701",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 26164301
+    },
+    {
+      "session": "sub-242/ses-20110710",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 59146798
+    },
+    {
+      "session": "sub-243/ses-20110620",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 53620131
+    },
+    {
+      "session": "sub-250/ses-20110525",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 60312417
+    },
+    {
+      "session": "sub-251/ses-20110702",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 42031320
+    },
+    {
+      "session": "sub-253/ses-20110628",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58454783
+    },
+    {
+      "session": "sub-254/ses-20110622",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 25380322
+    },
+    {
+      "session": "sub-255/ses-20110526",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 29128635
+    },
+    {
+      "session": "sub-262/ses-20110620",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 65037302
+    },
+    {
+      "session": "sub-263/ses-20110611",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32045895
+    },
+    {
+      "session": "sub-264/ses-20110622",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 54077138
+    },
+    {
+      "session": "sub-265/ses-20110507",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 61358122
+    },
+    {
+      "session": "sub-268/ses-20110522",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58084665
+    },
+    {
+      "session": "sub-270/ses-20110522",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 58336233
+    },
+    {
+      "session": "sub-271/ses-20110518",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 30808101
+    },
+    {
+      "session": "sub-275/ses-20110612",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 37718524
+    },
+    {
+      "session": "sub-276/ses-20110609",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 56434787
+    },
+    {
+      "session": "sub-279/ses-20110413",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 66976883
+    },
+    {
+      "session": "sub-280/ses-20110411",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 35420089
+    },
+    {
+      "session": "sub-283/ses-20110505",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 64681012
+    },
+    {
+      "session": "sub-284/ses-20110515",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 51222235
+    },
+    {
+      "session": "sub-286/ses-20110530",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32169255
+    },
+    {
+      "session": "sub-287/ses-20110506",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 54306805
+    },
+    {
+      "session": "sub-288/ses-20110503",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33829418
+    },
+    {
+      "session": "sub-289/ses-20110420",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 70090416
+    },
+    {
+      "session": "sub-291/ses-20110330",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27871727
+    },
+    {
+      "session": "sub-294/ses-20110429",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 51298780
+    },
+    {
+      "session": "sub-295/ses-20110505",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 28745104
+    },
+    {
+      "session": "sub-297/ses-20110316",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 36938418
+    },
+    {
+      "session": "sub-299/ses-20110422",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 52657333
+    },
+    {
+      "session": "sub-306/ses-20110328",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31887108
+    },
+    {
+      "session": "sub-308/ses-20110401",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 66097606
+    },
+    {
+      "session": "sub-311/ses-20100925",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 47001612
+    },
+    {
+      "session": "sub-311/ses-20110406",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 67187389
+    },
+    {
+      "session": "sub-315/ses-20100817",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 29872764
+    },
+    {
+      "session": "sub-315/ses-20110320",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 53280740
+    },
+    {
+      "session": "sub-316/ses-20110219",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 64716356
+    },
+    {
+      "session": "sub-317/ses-20110228",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31647169
+    },
+    {
+      "session": "sub-318/ses-20110202",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 26531064
+    },
+    {
+      "session": "sub-324/ses-20110210",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34760444
+    },
+    {
+      "session": "sub-325/ses-20100414",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34980442
+    },
+    {
+      "session": "sub-325/ses-20110127",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 52399726
+    },
+    {
+      "session": "sub-327/ses-20101207",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 41979394
+    },
+    {
+      "session": "sub-327/ses-20110124",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 62115598
+    },
+    {
+      "session": "sub-327/ses-20110923",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 55850897
+    },
+    {
+      "session": "sub-329/ses-20110126",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 63717598
+    },
+    {
+      "session": "sub-329/ses-20110823",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 38299220
+    },
+    {
+      "session": "sub-331/ses-20110121",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 59211531
+    },
+    {
+      "session": "sub-332/ses-20110217",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 35702304
+    },
+    {
+      "session": "sub-333/ses-20110214",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 39415633
+    },
+    {
+      "session": "sub-334/ses-20110101",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 30443848
+    },
+    {
+      "session": "sub-335/ses-20110516",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 55075048
+    },
+    {
+      "session": "sub-336/ses-20110109",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 29150001
+    },
+    {
+      "session": "sub-337/ses-20110120",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 30310977
+    },
+    {
+      "session": "sub-339/ses-20110125",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27284448
+    },
+    {
+      "session": "sub-340/ses-20121220",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 29119428
+    },
+    {
+      "session": "sub-341/ses-20121128",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 37293288
+    },
+    {
+      "session": "sub-343/ses-20121210",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 91777139
+    },
+    {
+      "session": "sub-344/ses-20121218",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 78897623
+    },
+    {
+      "session": "sub-347/ses-20121115",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32981104
+    },
+    {
+      "session": "sub-349/ses-20121111",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 57871646
+    },
+    {
+      "session": "sub-350/ses-20121217",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 76412058
+    },
+    {
+      "session": "sub-351/ses-20121116",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 80641051
+    },
+    {
+      "session": "sub-352/ses-20121128",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 38650558
+    },
+    {
+      "session": "sub-353/ses-20121011",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 82164722
+    },
+    {
+      "session": "sub-354/ses-20121111",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34813013
+    },
+    {
+      "session": "sub-401/ses-20140127",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 83034326
+    },
+    {
+      "session": "sub-404/ses-20131216",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 119185752
+    },
+    {
+      "session": "sub-405/ses-20131225",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31744407
+    },
+    {
+      "session": "sub-407/ses-20131207",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 76979157
+    },
+    {
+      "session": "sub-409/ses-20131203",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 84870316
+    },
+    {
+      "session": "sub-410/ses-20131015",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 50619896
+    },
+    {
+      "session": "sub-411/ses-20131109",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 39465424
+    },
+    {
+      "session": "sub-412/ses-20131030",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 26350385
+    },
+    {
+      "session": "sub-413/ses-20131005",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 37678490
+    },
+    {
+      "session": "sub-415/ses-20131031",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 88539948
+    },
+    {
+      "session": "sub-416/ses-20131029",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 23718837
+    },
+    {
+      "session": "sub-418/ses-20130908",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34084378
+    },
+    {
+      "session": "sub-419/ses-20130912",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34541609
+    },
+    {
+      "session": "sub-420/ses-20130912",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 34887120
+    },
+    {
+      "session": "sub-423/ses-20130819",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31157187
+    },
+    {
+      "session": "sub-424/ses-20130818",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32027131
+    },
+    {
+      "session": "sub-425/ses-20130724",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 108289539
+    },
+    {
+      "session": "sub-427/ses-20130810",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 29571786
+    },
+    {
+      "session": "sub-428/ses-20130629",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 69908661
+    },
+    {
+      "session": "sub-429/ses-20130531",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 36103221
+    },
+    {
+      "session": "sub-430/ses-20130525",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 33474040
+    },
+    {
+      "session": "sub-431/ses-20130526",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 45880124
+    },
+    {
+      "session": "sub-432/ses-20130521",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 92298929
+    },
+    {
+      "session": "sub-433/ses-20130414",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 36680557
+    },
+    {
+      "session": "sub-435/ses-20130425",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 37691123
+    },
+    {
+      "session": "sub-436/ses-20130402",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32697191
+    },
+    {
+      "session": "sub-437/ses-20130325",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 32140588
+    },
+    {
+      "session": "sub-450/ses-20141125",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 5362301
+    },
+    {
+      "session": "sub-451/ses-20141129",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 84245501
+    },
+    {
+      "session": "sub-452/ses-20141127",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 65482696
+    },
+    {
+      "session": "sub-453/ses-20141021",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 61515324
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 20471006
+    },
+    {
+      "session": "sub-458/ses-20140915",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 17394065
+    },
+    {
+      "session": "sub-460/ses-20140812",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 75341992
+    },
+    {
+      "session": "sub-461/ses-20140802",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 59748472
+    },
+    {
+      "session": "sub-464/ses-20140724",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 89011589
+    },
+    {
+      "session": "sub-466/ses-20140901",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 19191748
+    },
+    {
+      "session": "sub-467/ses-20140817",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 99340912
+    },
+    {
+      "session": "sub-470/ses-20140807",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 20192817
+    },
+    {
+      "session": "sub-472/ses-20140705",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 24013929
+    },
+    {
+      "session": "sub-473/ses-20140701",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 20458722
+    },
+    {
+      "session": "sub-474/ses-20140630",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 92288437
+    },
+    {
+      "session": "sub-475/ses-20140503",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 62025745
+    },
+    {
+      "session": "sub-476/ses-20140519",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 21050678
+    },
+    {
+      "session": "sub-478/ses-20140513",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 83358046
+    },
+    {
+      "session": "sub-480/ses-20140208",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 27022516
+    },
+    {
+      "session": "sub-481/ses-20140201",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 66225678
+    },
+    {
+      "session": "sub-482/ses-20140210",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 57470241
+    },
+    {
+      "session": "sub-484/ses-20140116",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 21648467
+    },
+    {
+      "session": "sub-485/ses-20140131",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 31964002
+    },
+    {
+      "session": "sub-486/ses-20140121",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 19302847
+    },
+    {
+      "session": "sub-489/ses-20151226",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 20316324
+    },
+    {
+      "session": "sub-491/ses-20151124",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 79456568
+    },
+    {
+      "session": "sub-492/ses-20151228",
+      "status": "deferred_byte_budget",
+      "required_source_bytes": 79455278
+    }
+  ],
+  "expected_session_count": 210,
+  "not_verified_acquired_in_this_batch": [
+    "sub-007/ses-20101225",
+    "sub-021/ses-20101111",
+    "sub-022/ses-20101011",
+    "sub-030/ses-20101012",
+    "sub-034/ses-20101005",
+    "sub-035/ses-20101019",
+    "sub-036/ses-20101030",
+    "sub-045/ses-20101006",
+    "sub-047/ses-20100908",
+    "sub-051/ses-20100920",
+    "sub-052/ses-20100920",
+    "sub-062/ses-20100601",
+    "sub-065/ses-20100703",
+    "sub-066/ses-20100526",
+    "sub-069/ses-20100513",
+    "sub-073/ses-20100426",
+    "sub-074/ses-20100421",
+    "sub-074/ses-20101117",
+    "sub-075/ses-20100502",
+    "sub-077/ses-20100414",
+    "sub-078/ses-20100430",
+    "sub-091/ses-20100405",
+    "sub-099/ses-20100321",
+    "sub-100/ses-20100213",
+    "sub-103/ses-20100301",
+    "sub-104/ses-20100228",
+    "sub-105/ses-20100212",
+    "sub-107/ses-20100206",
+    "sub-109/ses-20100120",
+    "sub-112/ses-20100121",
+    "sub-116/ses-20091229",
+    "sub-119/ses-20091226",
+    "sub-120/ses-20100117",
+    "sub-121/ses-20100128",
+    "sub-126/ses-20100105",
+    "sub-128/ses-20120124",
+    "sub-129/ses-20120107",
+    "sub-130/ses-20111130",
+    "sub-134/ses-20111127",
+    "sub-140/ses-20111208",
+    "sub-141/ses-20111229",
+    "sub-144/ses-20111211",
+    "sub-147/ses-20111209",
+    "sub-148/ses-20111106",
+    "sub-149/ses-20111126",
+    "sub-153/ses-20111127",
+    "sub-159/ses-20111127",
+    "sub-160/ses-20111010",
+    "sub-163/ses-20111014",
+    "sub-164/ses-20111124",
+    "sub-167/ses-20111013",
+    "sub-170/ses-20100422",
+    "sub-170/ses-20111112",
+    "sub-171/ses-20111105",
+    "sub-172/ses-20111110",
+    "sub-178/ses-20111105",
+    "sub-186/ses-20110925",
+    "sub-187/ses-20111023",
+    "sub-188/ses-20111013",
+    "sub-189/ses-20110927",
+    "sub-191/ses-20111010",
+    "sub-192/ses-20110930",
+    "sub-194/ses-20110911",
+    "sub-197/ses-20110914",
+    "sub-198/ses-20110922",
+    "sub-203/ses-20110727",
+    "sub-207/ses-20110729",
+    "sub-208/ses-20110808",
+    "sub-209/ses-20110724",
+    "sub-211/ses-20110817",
+    "sub-214/ses-20110901",
+    "sub-216/ses-20110729",
+    "sub-217/ses-20100819",
+    "sub-217/ses-20110811",
+    "sub-220/ses-20110626",
+    "sub-222/ses-20110808",
+    "sub-225/ses-20100515",
+    "sub-225/ses-20110617",
+    "sub-228/ses-20110626",
+    "sub-231/ses-20110617",
+    "sub-234/ses-20110613",
+    "sub-234/ses-20111203",
+    "sub-235/ses-20110528",
+    "sub-239/ses-20110628",
+    "sub-240/ses-20110701",
+    "sub-242/ses-20110710",
+    "sub-243/ses-20110620",
+    "sub-250/ses-20110525",
+    "sub-251/ses-20110702",
+    "sub-253/ses-20110628",
+    "sub-254/ses-20110622",
+    "sub-255/ses-20110526",
+    "sub-262/ses-20110620",
+    "sub-263/ses-20110611",
+    "sub-264/ses-20110622",
+    "sub-265/ses-20110507",
+    "sub-268/ses-20110522",
+    "sub-270/ses-20110522",
+    "sub-271/ses-20110518",
+    "sub-275/ses-20110612",
+    "sub-276/ses-20110609",
+    "sub-279/ses-20110413",
+    "sub-280/ses-20110411",
+    "sub-283/ses-20110505",
+    "sub-284/ses-20110515",
+    "sub-286/ses-20110530",
+    "sub-287/ses-20110506",
+    "sub-288/ses-20110503",
+    "sub-289/ses-20110420",
+    "sub-291/ses-20110330",
+    "sub-294/ses-20110429",
+    "sub-295/ses-20110505",
+    "sub-297/ses-20110316",
+    "sub-299/ses-20110422",
+    "sub-306/ses-20110328",
+    "sub-308/ses-20110401",
+    "sub-311/ses-20100925",
+    "sub-311/ses-20110406",
+    "sub-315/ses-20100817",
+    "sub-315/ses-20110320",
+    "sub-316/ses-20110219",
+    "sub-317/ses-20110228",
+    "sub-318/ses-20110202",
+    "sub-324/ses-20110210",
+    "sub-325/ses-20100414",
+    "sub-325/ses-20110127",
+    "sub-327/ses-20101207",
+    "sub-327/ses-20110124",
+    "sub-327/ses-20110923",
+    "sub-329/ses-20110126",
+    "sub-329/ses-20110823",
+    "sub-331/ses-20110121",
+    "sub-332/ses-20110217",
+    "sub-333/ses-20110214",
+    "sub-334/ses-20110101",
+    "sub-335/ses-20110516",
+    "sub-336/ses-20110109",
+    "sub-337/ses-20110120",
+    "sub-339/ses-20110125",
+    "sub-340/ses-20121220",
+    "sub-341/ses-20121128",
+    "sub-343/ses-20121210",
+    "sub-344/ses-20121218",
+    "sub-347/ses-20121115",
+    "sub-349/ses-20121111",
+    "sub-350/ses-20121217",
+    "sub-351/ses-20121116",
+    "sub-352/ses-20121128",
+    "sub-353/ses-20121011",
+    "sub-354/ses-20121111",
+    "sub-401/ses-20140127",
+    "sub-404/ses-20131216",
+    "sub-405/ses-20131225",
+    "sub-407/ses-20131207",
+    "sub-409/ses-20131203",
+    "sub-410/ses-20131015",
+    "sub-411/ses-20131109",
+    "sub-412/ses-20131030",
+    "sub-413/ses-20131005",
+    "sub-415/ses-20131031",
+    "sub-416/ses-20131029",
+    "sub-418/ses-20130908",
+    "sub-419/ses-20130912",
+    "sub-420/ses-20130912",
+    "sub-423/ses-20130819",
+    "sub-424/ses-20130818",
+    "sub-425/ses-20130724",
+    "sub-427/ses-20130810",
+    "sub-428/ses-20130629",
+    "sub-429/ses-20130531",
+    "sub-430/ses-20130525",
+    "sub-431/ses-20130526",
+    "sub-432/ses-20130521",
+    "sub-433/ses-20130414",
+    "sub-435/ses-20130425",
+    "sub-436/ses-20130402",
+    "sub-437/ses-20130325",
+    "sub-450/ses-20141125",
+    "sub-451/ses-20141129",
+    "sub-452/ses-20141127",
+    "sub-453/ses-20141021",
+    "sub-454/ses-20141123",
+    "sub-458/ses-20140915",
+    "sub-460/ses-20140812",
+    "sub-461/ses-20140802",
+    "sub-464/ses-20140724",
+    "sub-466/ses-20140901",
+    "sub-467/ses-20140817",
+    "sub-470/ses-20140807",
+    "sub-472/ses-20140705",
+    "sub-473/ses-20140701",
+    "sub-474/ses-20140630",
+    "sub-475/ses-20140503",
+    "sub-476/ses-20140519",
+    "sub-478/ses-20140513",
+    "sub-480/ses-20140208",
+    "sub-481/ses-20140201",
+    "sub-482/ses-20140210",
+    "sub-484/ses-20140116",
+    "sub-485/ses-20140131",
+    "sub-486/ses-20140121",
+    "sub-489/ses-20151226",
+    "sub-491/ses-20151124",
+    "sub-492/ses-20151228"
+  ]
+}

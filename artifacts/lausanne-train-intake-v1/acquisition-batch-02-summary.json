@@ -1,0 +1,23 @@
+{
+  "status": "bounded_batch_finished",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z",
+  "elapsed_seconds": 521.3543167919852,
+  "source_size_budget": 134217728,
+  "attempted_source_bytes": 134090621,
+  "new_complete_people": 4,
+  "total_complete_people": 6,
+  "total_complete_sessions": 6,
+  "total_complete_source_bytes": 203467291,
+  "remaining_incomplete_train_sessions": 204,
+  "new_sessions": [
+    "sub-002/ses-20110127",
+    "sub-005/ses-20101215",
+    "sub-006/ses-20101217",
+    "sub-015/ses-20101111"
+  ],
+  "root_reverified_published_fixity_and_receipt_sha256": true,
+  "header_scalar_checks": "Worker passes; no independent anatomical or scanner-frame acceptance",
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0
+}

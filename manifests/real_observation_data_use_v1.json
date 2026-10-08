@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T05:14:53.943962+00:00",
+  "updated_at": "2026-10-08T05:49:11.865930+00:00",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -16,14 +16,14 @@
       "discovered_people": 284,
       "declared_train_people": 199,
       "declared_train_sessions": 210,
-      "acquired_train_people": 2,
-      "acquired_train_sessions": 2,
+      "acquired_train_people": 6,
+      "acquired_train_sessions": 6,
       "acquired_modalities": [
         "T1w",
         "TOF-MRA"
       ],
-      "acquired_bytes": 69376670,
-      "byte_and_scalar_qc_passed_people": 2,
+      "acquired_bytes": 203467291,
+      "byte_and_scalar_qc_passed_people": 6,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Resume retained sub-002 partial and continue bounded TRAIN intake; source/frame and annotation admission still separate",
+      "next": "Continue remaining204 TRAIN sessions; source/frame and annotation admission remain separate",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -42,8 +42,8 @@
       "indexed_source_files": 840,
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
-      "remaining_train_sessions_to_acquire": 208,
-      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-01-summary.json"
+      "remaining_train_sessions_to_acquire": 204,
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-02-summary.json"
     },
     {
       "accession": "TopCoW external Lausanne",
@@ -58,6 +58,38 @@
       "annotation_rights": "unresolved independently of source MRI CC0",
       "annotation_model_ancestry": "per-case manual/model-assisted origin and initializer lineage unresolved",
       "next": "Resolve annotation rights and ancestry or use independently sourced eligible human labels; no outreach sent"
+    },
+    {
+      "accession": "RESECT / RESECT-SEG",
+      "version": "RESECT original v1; annotation v1 2024-02-15 / Case3 file revision2",
+      "family": "RESECT",
+      "image_license": "CC-BY-4.0",
+      "annotation_rights": "CC-BY-NC-SA-4.0 plus financial-benefit restriction observed by source research; exact README archival pending",
+      "declared_cohort": "manifests/resect-component-cohort-v1.json",
+      "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+      "discovered_people": 23,
+      "declared_train_people": 14,
+      "declared_select_people": 4,
+      "declared_measurement_eval_people": 4,
+      "protected_development_people": 1,
+      "train_label_volumes": 25,
+      "pilot_manifest": "manifests/resect-case3-cavity-pilot-v1.json",
+      "pilot_patient": "RESECT:Case3",
+      "acquired_train_people": 0,
+      "acquired_train_bytes": 0,
+      "used_in_component_fitting_people": 0,
+      "component_optimizer_updates": 0,
+      "recorded_surgical_transitions": 0,
+      "used_in_imitation_people": 0,
+      "used_in_offline_rl_people": 0,
+      "checkpoint_contributions": [],
+      "receipt": "artifacts/resect-component-admission-v1/RESULT.md",
+      "next": "Archive pinned rights record when source permits; then acquire/QC Case3 pair before anatomy review or training; do not retry HTTP429 automatically",
+      "exclusions": [
+        "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
+        "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
+        "Later ultrasound is unavailable to preoperative policy inputs"
+      ]
     }
   ],
   "preserved_roles": "Earlier BTC/UPenn/UTSW and other frozen assignments unchanged",
