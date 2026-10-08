@@ -1,0 +1,20 @@
+{
+  "execution": {
+    "files": {
+      "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+      "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+      "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+      "scripts/resect_exact_mirror_import.py": "48a73d0bebb4f75c92d1af56cd9e9716df52aca307f33666a3fece5e1e8da620"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python"
+  },
+  "pins": {
+    "declaration.json": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+    "summary.json": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76",
+    "source-snapshot.py": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+  },
+  "seconds": 120,
+  "evidence_root": "artifacts/resect-exact-mirror-acquisition-v1",
+  "staging_root": "build/resect-exact-mirror-acquisition-v1"
+}

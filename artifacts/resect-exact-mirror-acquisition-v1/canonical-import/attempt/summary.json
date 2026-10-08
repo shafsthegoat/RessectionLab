@@ -1,0 +1,190 @@
+{
+  "status": "all_24_mirror_bodies_imported",
+  "started_utc": "2026-10-08T18:32:00.989269+00:00",
+  "expected_files": 24,
+  "expected_bytes": 1561749,
+  "network_requests": 0,
+  "attempt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31",
+  "files": [
+    {
+      "source_id": "Case2-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case2-during-mask/receipt.json",
+      "receipt_sha256": "98baa1a3d91fb147975ef21432bba138f8782c57a7bbf1d0c1da7555ab396f5e"
+    },
+    {
+      "source_id": "Case2-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case2-after-mask/receipt.json",
+      "receipt_sha256": "1009b47fb9bc8616707c9677c9b127168887bda824fe7bb59d280c9d0ccd2afb"
+    },
+    {
+      "source_id": "Case3-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case3-after-mask/receipt.json",
+      "receipt_sha256": "8c84e041f49a5b1af798b8cb1e4ac2023f398399499264354c8cf83d0be7df72"
+    },
+    {
+      "source_id": "Case5-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case5-during-mask/receipt.json",
+      "receipt_sha256": "772b7d00a2c5678a71c666191e8bb019fc5743c115330cfb23d008d9204af649"
+    },
+    {
+      "source_id": "Case5-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case5-after-mask/receipt.json",
+      "receipt_sha256": "913d6c20cd1bc4461f2f5c3a91424d4ffdfde161625ea494818eb11de6433901"
+    },
+    {
+      "source_id": "Case7-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case7-during-mask/receipt.json",
+      "receipt_sha256": "93da5b07501bff9ed199f58a4df49a626469f2ad1942a9405e2c1a785dd9e1ab"
+    },
+    {
+      "source_id": "Case7-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case7-after-mask/receipt.json",
+      "receipt_sha256": "e9b5c394da97efacdca1c1b9e701938169c4447c67e5e8cae35d09da9b88a283"
+    },
+    {
+      "source_id": "Case12-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case12-during-mask/receipt.json",
+      "receipt_sha256": "536def18b2b6227a461f9dce95b3d83167a73f8a4bf8acb46da408ed51c1c581"
+    },
+    {
+      "source_id": "Case12-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case12-after-mask/receipt.json",
+      "receipt_sha256": "3d23976c3b13d144379ead185cccf88fb94d479c9c1c28d419b9c25a9386fb16"
+    },
+    {
+      "source_id": "Case15-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case15-after-mask/receipt.json",
+      "receipt_sha256": "921a6b5987224e9ca5b4b0a0d5ca88315d08b41995c88a5da386e78f451ac40d"
+    },
+    {
+      "source_id": "Case16-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case16-during-mask/receipt.json",
+      "receipt_sha256": "5e81efb37533ab3f82bef5f3331ccd33ed9cf031f58bae1428d1f55cb9fec961"
+    },
+    {
+      "source_id": "Case16-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case16-after-mask/receipt.json",
+      "receipt_sha256": "cef939a42fe6a354f8b4c0ebe17a9a351139e584969f4f6e9c9dae79ec01e176"
+    },
+    {
+      "source_id": "Case17-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case17-during-mask/receipt.json",
+      "receipt_sha256": "ee306965964aa19b788c31f7f93f00904e7b2d24b0f16c3bf6b9bb0ecae06441"
+    },
+    {
+      "source_id": "Case17-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case17-after-mask/receipt.json",
+      "receipt_sha256": "9c68ea7ef8683c38f07b0062a565a28f7aaf0e57758fad93790f99bf72f24f7a"
+    },
+    {
+      "source_id": "Case18-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case18-during-mask/receipt.json",
+      "receipt_sha256": "3286e20b289ea8b888099aa25f1d543ea9193dd1c337e1962b749b83ec4e94a5"
+    },
+    {
+      "source_id": "Case18-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case18-after-mask/receipt.json",
+      "receipt_sha256": "9ae335488449d5d3376e8c69d7e4efadec1671188c69a14f8584ce8fade47c64"
+    },
+    {
+      "source_id": "Case21-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case21-during-mask/receipt.json",
+      "receipt_sha256": "d3ab93a18afa5445e8724a99b829fdce992a5ac2baef5475f663ccc84200e5d1"
+    },
+    {
+      "source_id": "Case21-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case21-after-mask/receipt.json",
+      "receipt_sha256": "0b793cafbfccd46654745a9dabb2362319ac3523fed95e7be7ef336aa6fa02b1"
+    },
+    {
+      "source_id": "Case23-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case23-during-mask/receipt.json",
+      "receipt_sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a"
+    },
+    {
+      "source_id": "Case23-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case23-after-mask/receipt.json",
+      "receipt_sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23"
+    },
+    {
+      "source_id": "Case24-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case24-during-mask/receipt.json",
+      "receipt_sha256": "c80161219ac25dbfd5bae5771528ce01842a57c250337bc145c2042a39eb3e18"
+    },
+    {
+      "source_id": "Case24-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case24-after-mask/receipt.json",
+      "receipt_sha256": "8b6df1b655ecd08c5958cbdad8b9722537137db3cd526f7666cf89ea5e9bc6a3"
+    },
+    {
+      "source_id": "Case25-during-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case25-during-mask/receipt.json",
+      "receipt_sha256": "b53dd9382307e7e2cff17a4dc22b79dc1b7ac0c7d2780adb90f446268c423809"
+    },
+    {
+      "source_id": "Case25-after-mask",
+      "status": "installed_mirror_bytes_verified",
+      "canonical_published": true,
+      "receipt": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case25-after-mask/receipt.json",
+      "receipt_sha256": "eaced578ecaf33605aa0366f227c13e346424e2c3adf49a30fcd0c89a9cd2b33"
+    }
+  ],
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "verified_files": 24,
+  "unresolved_source_ids": [],
+  "finished_utc": "2026-10-08T18:32:01.155824+00:00",
+  "elapsed_seconds": 0.16995741706341505
+}

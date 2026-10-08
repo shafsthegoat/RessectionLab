@@ -43,14 +43,18 @@ references and one unresolved grid. Four metadata exclusions and the earlier
 sub022 failure remain preserved. No anatomical or training admission is implied.
 
 The [continuous download runner](artifacts/continuous-source-acquisition-v1/RESULT.md)
-passes 143 focused controls and is running the full frozen 890-file queue. New
-receipts report byte verification only, with all scientific QC separately pending.
+passes 143 focused controls. The [full frozen 890-file queue is now acquired](artifacts/resect-exact-mirror-acquisition-v1/IMPORT_RESULT.md),
+including 24 final masks through exact-checksum mirror transport. The old provider
+failures remain preserved; its unnecessary cooldown wait was stopped. Acquisition
+receipts establish byte identity, with scientific QC handled separately.
 All [Lausanne TRAIN originals](artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)
 are now complete: 840 files, 199 people, 210 sessions and 10,020,802,851 bytes.
 The [separate QC result](artifacts/lausanne-deferred-qc-execution-v1/RESULT.md)
 completes all 26 new images and 27 pending references. Across 420 images, 414 pass
 and six earlier T1 conflicts remain. Mask-grid checks now pass for 136 of 144;
-eight conflicts remain. Anatomical and spatial admission are still unestablished. The [single N36 specimen solve](artifacts/hbe-n36-execution-v1/RESULT.md)
+eight conflicts remain. RESECT now has 25 acquired image–mask pairs from 13 TRAIN
+people; 24 pairs still await separate image/label/grid QC. Anatomical and spatial
+admission remain unestablished. The [single N36 specimen solve](artifacts/hbe-n36-execution-v1/RESULT.md)
 now passes its independently reproduced conditional consistency screen:
 0.642702 mN envelope versus 0.723189 mN allowance. It supports temporal review
 only; spatial acceptance, physical validation and calibration remain unestablished.

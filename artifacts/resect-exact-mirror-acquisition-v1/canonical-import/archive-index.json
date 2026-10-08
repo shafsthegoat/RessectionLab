@@ -1,0 +1,329 @@
+{
+  "scope": "metadata only; no patient bodies",
+  "files": [
+    {
+      "original": "build/resect-exact-mirror-acquisition-v1/actual-import-result.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/actual-import-result.json",
+      "sha256": "e340b5e3db918afce2605ebbeaabba1564048bfb2c70ddecda4a7031a57db37b",
+      "bytes": 8715
+    },
+    {
+      "original": "build/resect-exact-mirror-completion-review-v1/verification.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/independent-verification.json",
+      "sha256": "8ea4a68ab3aa9c00875bfc36378252bd6f40511395555bda3c4d9fb6c19f2612",
+      "bytes": 45748
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/bindings.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/bindings.json",
+      "sha256": "2951181288ba03e4b15cc8af0d3f2ae90428b3673aef77521a90e7c0ce754f34",
+      "bytes": 2443
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case12-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-after-mask/intent.json",
+      "sha256": "f0f58704c4df13db7e8cc17eaa025175131e40e822d6ba034e576b3600e49619",
+      "bytes": 2850
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case12-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-after-mask/receipt.json",
+      "sha256": "3d23976c3b13d144379ead185cccf88fb94d479c9c1c28d419b9c25a9386fb16",
+      "bytes": 3111
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case12-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-during-mask/intent.json",
+      "sha256": "de985a1694c92a9da3c9f9103902bc481e65bb3ee8564bd73f0d3470b28953c2",
+      "bytes": 2864
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case12-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-during-mask/receipt.json",
+      "sha256": "536def18b2b6227a461f9dce95b3d83167a73f8a4bf8acb46da408ed51c1c581",
+      "bytes": 3125
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case15-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case15-after-mask/intent.json",
+      "sha256": "42a49cc13aad1b8720eb5e280a89532bc322c63e038e311acf842b15588ae102",
+      "bytes": 2850
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case15-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case15-after-mask/receipt.json",
+      "sha256": "921a6b5987224e9ca5b4b0a0d5ca88315d08b41995c88a5da386e78f451ac40d",
+      "bytes": 3111
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case16-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-after-mask/intent.json",
+      "sha256": "01bbc9bfaa7ebdf62daa138388cbf474e8dc032d7b9afe939c37f8900280525a",
+      "bytes": 2850
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case16-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-after-mask/receipt.json",
+      "sha256": "cef939a42fe6a354f8b4c0ebe17a9a351139e584969f4f6e9c9dae79ec01e176",
+      "bytes": 3111
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case16-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-during-mask/intent.json",
+      "sha256": "0591939795e303685140a89eced6c2eae1f65fdc77befb034c4404c192712295",
+      "bytes": 2864
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case16-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-during-mask/receipt.json",
+      "sha256": "5e81efb37533ab3f82bef5f3331ccd33ed9cf031f58bae1428d1f55cb9fec961",
+      "bytes": 3125
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case17-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-after-mask/intent.json",
+      "sha256": "129707a593292bbe47f9bc04e0e635ee5a668206d9e2019d44729f42c12fbdc1",
+      "bytes": 2850
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case17-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-after-mask/receipt.json",
+      "sha256": "9c68ea7ef8683c38f07b0062a565a28f7aaf0e57758fad93790f99bf72f24f7a",
+      "bytes": 3111
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case17-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-during-mask/intent.json",
+      "sha256": "e15b926c3e01d24ad60b61155c6629a63039d348716684d93d325368639fe907",
+      "bytes": 2864
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case17-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-during-mask/receipt.json",
+      "sha256": "ee306965964aa19b788c31f7f93f00904e7b2d24b0f16c3bf6b9bb0ecae06441",
+      "bytes": 3125
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case18-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-after-mask/intent.json",
+      "sha256": "8eac5a9438f7363ff7f2ef1afcf4a74418c76a4ddb32e4aee91784ca12be5a79",
+      "bytes": 2850
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case18-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-after-mask/receipt.json",
+      "sha256": "9ae335488449d5d3376e8c69d7e4efadec1671188c69a14f8584ce8fade47c64",
+      "bytes": 3111
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case18-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-during-mask/intent.json",
+      "sha256": "89aa9b46ef64467a8394f916d11834a4b4baafa9f0bafcace13668678e9c3dce",
+      "bytes": 2864
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case18-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-during-mask/receipt.json",
+      "sha256": "3286e20b289ea8b888099aa25f1d543ea9193dd1c337e1962b749b83ec4e94a5",
+      "bytes": 3125
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case2-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-after-mask/intent.json",
+      "sha256": "336915f83233a0e71ebb9970f65cf1c0fd6c0f07c5e5e1662d52400f879f57d7",
+      "bytes": 2865
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case2-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-after-mask/receipt.json",
+      "sha256": "1009b47fb9bc8616707c9677c9b127168887bda824fe7bb59d280c9d0ccd2afb",
+      "bytes": 3126
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case2-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-during-mask/intent.json",
+      "sha256": "df26e3d8e421ad38b493ba241d1bf769e1f74791dd3ce5a6f79624ef15d89ee0",
+      "bytes": 2879
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case2-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-during-mask/receipt.json",
+      "sha256": "98baa1a3d91fb147975ef21432bba138f8782c57a7bbf1d0c1da7555ab396f5e",
+      "bytes": 3140
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case21-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-after-mask/intent.json",
+      "sha256": "2e44ba60d2981b3144aa7866f16004bd4aa7bc88ba9b7908bca82289d6b8151e",
+      "bytes": 2850
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case21-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-after-mask/receipt.json",
+      "sha256": "0b793cafbfccd46654745a9dabb2362319ac3523fed95e7be7ef336aa6fa02b1",
+      "bytes": 3111
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case21-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-during-mask/intent.json",
+      "sha256": "8c1f379e3baa5e7ca698662c465ff899ec81ce05d146e7de29cbd819c9168fef",
+      "bytes": 2896
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case21-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-during-mask/receipt.json",
+      "sha256": "d3ab93a18afa5445e8724a99b829fdce992a5ac2baef5475f663ccc84200e5d1",
+      "bytes": 3157
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case23-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-after-mask/intent.json",
+      "sha256": "10e2150660fcae513ea5d8b5339d89b8218c89ee9613bcb57e32857c90b57c4e",
+      "bytes": 2882
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case23-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-after-mask/receipt.json",
+      "sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23",
+      "bytes": 3143
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case23-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-during-mask/intent.json",
+      "sha256": "eca22641e2167853a89d2d5b5f3849d88266a2e2a1cf446c55f905152ca65994",
+      "bytes": 2896
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case23-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-during-mask/receipt.json",
+      "sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a",
+      "bytes": 3157
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case24-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-after-mask/intent.json",
+      "sha256": "f4c68adc33d7642adf7e67beb3d69ce842c27334a7980f03d633ae82789bb776",
+      "bytes": 2882
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case24-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-after-mask/receipt.json",
+      "sha256": "8b6df1b655ecd08c5958cbdad8b9722537137db3cd526f7666cf89ea5e9bc6a3",
+      "bytes": 3143
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case24-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-during-mask/intent.json",
+      "sha256": "3720a0d5d50736f63f5b26c8c7099f6f79dca0dace90e24e55378359d80fecf4",
+      "bytes": 2896
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case24-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-during-mask/receipt.json",
+      "sha256": "c80161219ac25dbfd5bae5771528ce01842a57c250337bc145c2042a39eb3e18",
+      "bytes": 3157
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case25-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-after-mask/intent.json",
+      "sha256": "831867c489718b7e14dd0cb0f5a29c003b92ad6c492441b65d3ffd4b3e072b33",
+      "bytes": 2882
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case25-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-after-mask/receipt.json",
+      "sha256": "eaced578ecaf33605aa0366f227c13e346424e2c3adf49a30fcd0c89a9cd2b33",
+      "bytes": 3143
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case25-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-during-mask/intent.json",
+      "sha256": "ce7704bab8552fb9fe5ce3e1449307941f0b5bf413242feeddf0120bbca088c5",
+      "bytes": 2896
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case25-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-during-mask/receipt.json",
+      "sha256": "b53dd9382307e7e2cff17a4dc22b79dc1b7ac0c7d2780adb90f446268c423809",
+      "bytes": 3157
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case3-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case3-after-mask/intent.json",
+      "sha256": "30990db29abe0133daa0601530e425bd0d4d7293db76b256809af9547f43fa5b",
+      "bytes": 2865
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case3-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case3-after-mask/receipt.json",
+      "sha256": "8c84e041f49a5b1af798b8cb1e4ac2023f398399499264354c8cf83d0be7df72",
+      "bytes": 3126
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case5-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-after-mask/intent.json",
+      "sha256": "e5edb5e0ba3c2a445bcd783444001e3de87b754d26f36ab2a2eae27765f35d35",
+      "bytes": 2865
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case5-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-after-mask/receipt.json",
+      "sha256": "913d6c20cd1bc4461f2f5c3a91424d4ffdfde161625ea494818eb11de6433901",
+      "bytes": 3126
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case5-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-during-mask/intent.json",
+      "sha256": "e845826d9d4fd881093d0454fa25d98572a5d449e7f2b6a67899cf2a0c4ef1b8",
+      "bytes": 2879
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case5-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-during-mask/receipt.json",
+      "sha256": "772b7d00a2c5678a71c666191e8bb019fc5743c115330cfb23d008d9204af649",
+      "bytes": 3140
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case7-after-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-after-mask/intent.json",
+      "sha256": "8cb4317889eed9f02902a49e2adb203fb26fab9c7f5f10efedcd346d6a3e4794",
+      "bytes": 2865
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case7-after-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-after-mask/receipt.json",
+      "sha256": "e9b5c394da97efacdca1c1b9e701938169c4447c67e5e8cae35d09da9b88a283",
+      "bytes": 3126
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case7-during-mask/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-during-mask/intent.json",
+      "sha256": "20b1c893cf079b49948cd6f808b3959ba1514931cb77691fc0e167a57cad8078",
+      "bytes": 2879
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/files/Case7-during-mask/receipt.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-during-mask/receipt.json",
+      "sha256": "93da5b07501bff9ed199f58a4df49a626469f2ad1942a9405e2c1a785dd9e1ab",
+      "bytes": 3140
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/intent.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/intent.json",
+      "sha256": "a26bb53782326e08ae537693f8c0997509f6230601471332d74dd7fb184740d4",
+      "bytes": 1121
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/preflight.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/preflight.json",
+      "sha256": "b8ad455ff951dbf0ba7bdb7e2c1ffef4a2451f6004dd585f4f304c000b5aaea1",
+      "bytes": 4663
+    },
+    {
+      "original": "data/annotations/resect-seg-v1/mirror-import-v1/attempts/20261008T183200988627Z-3ce96a31/summary.json",
+      "archived": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/summary.json",
+      "sha256": "6a2e0700da33cea094e448fb590a42e6cc69a25ab3915676a90f1239c940fdb2",
+      "bytes": 9719
+    }
+  ]
+}

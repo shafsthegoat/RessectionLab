@@ -81,6 +81,13 @@ historical processing checkpoint, reference-grid checks passed for 116 masks;
 remain. This completed review does not gate continuous original-image downloads.
 Anatomical review, spatial admission and fitting contributions remain unestablished.
 
+The [remaining RESECT TRAIN acquisition](../artifacts/resect-exact-mirror-acquisition-v1/IMPORT_RESULT.md)
+is complete: 25 image–mask pairs from 13 people, 50 files and 557,790,240 bytes.
+The 24 final masks used an exact-checksum third-party mirror and a locked offline
+import; original OSF failures remain. All 890 files in the frozen continuous queue
+are now present. Twenty-four RESECT pairs await separate image/label/grid QC;
+the previous Case3 QC and all split, missing-label and rights constraints remain.
+
 ## Evidence and decisions before the October 8 steering
 
 - Existing planning/ML comparisons remain historical. Search exceeded frozen
@@ -109,7 +116,7 @@ Anatomical review, spatial admission and fitting contributions remain unestablis
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | All 840 Lausanne TRAIN original files and 144 eligible masks acquired. Separate QC is complete: 414/420 original images and 136/144 mask grids pass. Six historical T1 conflicts, eight mask-grid failures and four metadata exclusions remain. All 25 eligible RESECT original images are acquired; 24 masks await provider cooldown. | Finish the continuous frozen queue without QC pauses; record the separate QC result and then perform intended-use anatomical review. Resolve scanner-frame and interscan alignment evidence before spatial admission. Preserve all person-level partitions. |
+| Data and anatomy | All 840 Lausanne TRAIN original files and 144 masks acquired; 414/420 images and 136/144 mask grids pass separate QC. Six T1 conflicts, eight mask-grid failures and four metadata exclusions remain. All 25 eligible RESECT image–mask pairs are acquired; 24 await QC. | Run separate cache-only RESECT QC, continue any newly qualified acquisition, and perform intended-use anatomical review. Resolve scanner-frame and interscan alignment before spatial admission. Preserve person-level partitions. |
 | Learning | BC256 matches search at 1.100; scratch RL256 reaches 1.098 on the same generated task, with 1,024 audited episodes and exact first-16 reproduction. Earlier failed fits remain. Stochastic recovery and transfer remain unproved. | Check two frozen forwards on the unchanged, prospectively admitted PAT05 TRAIN initial observation. Preserve all default learning and support guards, perform no actions or updates, and report distribution changes rather than patient performance. |
 | Navigation / integration | Actual sub476 annotation evidence reaches canonical exclusions and desktop inspection. The observed six-B landmark API now advances and reopens immutable states; transport and packaged-startup repairs pass independent checks. Sparse landmarks do not establish dense tissue deformation or clearance. | Add a measurable observation-to-decision comparison once the required support is available. Keep missing clearance null and distinguish observed displacement from modeled interaction. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
