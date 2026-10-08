@@ -1,12 +1,46 @@
 # Real-observation execution ledger
 
 Updated October 8, 2026. The [October 6 supergoal](SUPERGOAL_REAL_OBSERVATIONS.md)
-is the active specification; its [source receipt](../manifests/real_observation_supergoal_source.json)
-records the supplied file and extraction hashes. It supersedes incompatible
-simulation-training and generated-case instructions in earlier plans. This is a
-compact execution record, not a replacement specification.
+defines the full surgical planning/rehearsal objective, subject to the later
+human instructions below. Its [source receipt](../manifests/real_observation_supergoal_source.json)
+binds the preserved original text; that historical copy is not rewritten.
+This is a compact execution record, not a replacement specification.
 
-## Current evidence and decisions
+## Active human steering, October 8
+
+The user explicitly superseded the earlier real-data-only training restriction:
+synthetic data and simulator-generated experience are permitted for RL development
+and training where useful. Keep generated experience separate from observed patient
+records, record simulator assumptions and model lineage, and evaluate transfer on
+held-out real patients and appropriate physical measurements. Generated outcomes
+are never clinical evidence. Historical experiments and failed validation remain
+unchanged; permission to train does not establish physical fidelity or patient benefit.
+
+Continue eligible acquisition using verified TLS, resumable transfers and checksums.
+Finish the queued files continuously, without per-batch review or bookkeeping pauses.
+Detailed image, geometry and anatomical reviews form a separate phase. Downloaded
+but unreviewed files must remain explicitly unreviewed and cannot satisfy intended-use
+QC or spatial admission. Preserve patient splits, source rights and original records.
+
+Parallel workstreams cover acquisition, QC preparation, simulator/RL development,
+integration and independent evaluation. Coordinate shared source edits without
+interrupting downloads. Compare search, imitation and RL under matched conditions,
+retain negative results, and prioritize working end-to-end capabilities and measured
+improvements. The original full goal remains open, including mechanical validation.
+
+The October 6 execution exclusions are still installed at this checkpoint. A scoped
+prospective migration is being implemented; this documentation does not claim a new
+optimizer update, model admission or benchmark result. Old guard-test results remain
+evidence of the old behavior, not acceptance criteria for all future generated training.
+
+For all new commits use `skamal23 <sayemkamal12@gmail.com>` as author and include
+`Co-authored-by: shafsthegoat <shafrir.p@gmail.com>`. Preserve existing history.
+The user's hourly push request is scheduled as the active thread heartbeat
+`push-ressectionlab-progress`: fetch first, push completed reviewed commits normally
+to `origin/main`, verify the remote, and preserve unfinished work and running transfers.
+No force push, paid infrastructure, billing change or external outreach is authorized.
+
+## Evidence and decisions before the October 8 steering
 
 - Existing planning/ML comparisons remain historical. Search exceeded frozen
   imitation on all four completed development cases; two cases were blocked.

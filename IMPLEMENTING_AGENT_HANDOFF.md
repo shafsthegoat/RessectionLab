@@ -1,8 +1,10 @@
 > Active update, October 8: read [the October 6 supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
-> and [current execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md) first.
-> They supersede incompatible generated-data learning and demonstration instructions
-> below. Historical experiments stay preserved. New execution requires eligible
-> real observations and verified model ancestry; no compliant RL run exists yet.
+> and [October 8 human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8) first.
+> The later user instruction permits separately labeled synthetic/simulator RL
+> development and training, superseding the older real-only restriction. Preserve
+> splits and history; evaluate transfer on held-out real patients and physical
+> measurements. Continuous acquisition and separate QC must proceed independently.
+> Installed historical guards are awaiting scoped migration; no new RL run is claimed.
 
 # Implementing-agent handoff
 

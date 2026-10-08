@@ -3,8 +3,11 @@
 A local macOS research workspace for inspecting patient-specific glioma access
 routes and testing simulated resection strategies.
 
-Development is in progress. The [October 6 real-observation supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
-is the active specification and supersedes incompatible earlier training rules.
+Development is in progress. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
+and [October 8 human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8)
+govern the work. The later steering permits separately labeled synthetic and
+simulator-generated experience for RL development/training, with transfer evaluated
+on held-out real patients and appropriate physical measurements.
 See the [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md) and
 [PROJECT_STATUS.md](PROJECT_STATUS.md) for executed work and remaining gates.
 The [master plan](MASTER_PLAN.md), [references](ANNOTATED_REFERENCES.md) and
@@ -12,8 +15,8 @@ The [master plan](MASTER_PLAN.md), [references](ANNOTATED_REFERENCES.md) and
 
 The active Mac application uses **Electron, React and TypeScript**. The Python
 engine handles physical geometry, evidence and independent validation. Legacy
-simulator-trained policy entry points now refuse execution; eligible recorded
-offline RL and real-data component learning remain unfinished. The earlier Qt prototype is retained as a tested
+simulator-trained policy entry points still refuse execution pending a scoped
+migration to the new policy; no new RL update is claimed. The earlier Qt prototype is retained as a tested
 historical reference. Application source is in `desktop/`; the
 [desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
 inspecting evidence, comparing routes, refinement, replay and local saving.
@@ -36,9 +39,10 @@ python3.12 -m venv .venv
 .venv/bin/python -m pytest tests/test_real_observation_policy.py -q
 ```
 
-The command above checks policy refusals without patient fixtures. Do not run
-the historical generated-patient suites as new acceptance evidence. Each new
-real-case slice needs its own source-bound checks.
+The command above checks the installed historical policy refusals. Generated
+development tests may verify software and simulator behavior, but do not establish
+real-patient transfer or physical fidelity. Each new real-case slice needs its own
+source-bound checks.
 
 `requirements-lock.txt` pins the current numerical engine, research tools,
 tests and build tools without Qt or VTK. The active Electron app does not need
@@ -111,11 +115,12 @@ pinned releases, licenses, checksums, coordinates and missing evidence.
 - Missing diffusion, functional mapping, vessels or skull anatomy remain
   unassessed. Public MRI plus a plausible visualization does not establish
   surgical safety or clinical readiness.
-- New learning requires verified real observations and weight ancestry. Offline
-  RL additionally requires actual recorded actions, successor observations,
-  timing, censoring and supported observed endpoints. Plans and rehearsal
-  predictions cannot become training labels or recorded experience. Search
-  remains a required comparator and may be the better planner.
+- Learning records must distinguish observed patient experience from generated
+  simulator experience and search-generated imitation labels. Record model
+  ancestry and simulator assumptions; keep hidden simulator properties out of
+  deployment inputs. Claims about recorded offline RL require actual actions,
+  successor observations, timing, censoring and supported observed endpoints.
+  Search remains a required comparator and may be the better planner.
 
 ## Data and privacy
 

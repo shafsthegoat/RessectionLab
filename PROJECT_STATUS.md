@@ -1,9 +1,22 @@
 # Project status
 
-Updated October 8, 2026. The [October 6 real-observation supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
-is active and supersedes incompatible earlier priorities and generated-data
-training instructions. The [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md)
-tracks the complete operative goal and open evidence dependencies.
+Updated October 8, 2026. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
+remains active, with the [later human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8)
+superseding its incompatible real-data-only training restriction. Synthetic data
+and simulator-generated RL experience are now permitted, separately labeled from
+observed patient records, with held-out real-patient and physical validation still
+required. No new RL update under this policy has run at this checkpoint.
+
+Eligible downloads will continue without small-batch review pauses; detailed image,
+geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
+The execution ledger tracks the complete operative goal and open evidence dependencies.
+New commits credit `skamal23 <sayemkamal12@gmail.com>` and co-author
+`shafsthegoat <shafrir.p@gmail.com>`. An hourly thread heartbeat is active for
+normal pushes of completed reviewed commits to `origin/main`.
+
+The records below retain the earlier policy and acquisition checkpoints. The old
+execution guards are still installed pending a scoped prospective migration;
+their refusal behavior is not the new training objective.
 
 Known incompatible learning, model-loading and SynthStrip support paths now
 refuse execution; complete artifact admission and provenance enforcement remain
