@@ -83,6 +83,12 @@ now advances acquired phases/points and reopens bound snapshots. Independent rev
 cleared transport and packaged-startup repairs. Sparse landmarks still provide no
 physical clearance or demonstrated surgical decision benefit; those fields stay null.
 
+The [real-annotation geometry probe](artifacts/lausanne-critical-geometry-probe-v1/RESULT.md)
+now detects three source-positive aneurysm cells among 27 queried cells using the
+canonical exclusion mask; 24 remain unknown. Independent saved-output review passes.
+This is a source-frame kernel check; a bound desktop probe entry and full route
+acceptance remain open.
+
 Known incompatible learning, model-loading and SynthStrip support paths now
 refuse execution; complete artifact admission and provenance enforcement remain
 unfinished. The refusal-only suite passes **42 checks**; independent source review

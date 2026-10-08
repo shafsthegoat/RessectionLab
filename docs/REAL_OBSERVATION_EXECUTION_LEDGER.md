@@ -117,6 +117,17 @@ was accessed. Next is the declared branch-specific common-scale calibration usin
 compression N36/S120, tension N24/S120 and torsion ± N12/S120. Two actual fitted
 axial confirmations must precede freezing and opening withheld torsion measurements.
 
+## Latest real-source integration checkpoint
+
+The [sub-476 geometry probe](../artifacts/lausanne-critical-geometry-probe-v1/RESULT.md)
+completed one actual existing-API check: canonical aneurysm positives produce
+FORBIDDEN_COLLISION, with three positive cells and 24 unknown cells in the same
+27-cell query. The zero-exclusion comparison is explicitly a software ablation.
+Independent saved-output review passes without a new image decode or geometry run.
+Source-frame, coverage and false scanner/spatial admission flags are preserved.
+No target/access/route or learning record was manufactured. A bound desktop probe
+entry is the remaining component integration gap; this is not full planner acceptance.
+
 ## Evidence and decisions before the October 8 steering
 
 - Existing planning/ML comparisons remain historical. Search exceeded frozen

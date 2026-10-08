@@ -1,0 +1,102 @@
+{
+  "schema": "bounded-component-probe-outcome-v1",
+  "status": "passed",
+  "completed_at": "2026-10-08T20:56:16.966364+00:00",
+  "elapsed_seconds": 2.3321410829667,
+  "worker_pid": 12813,
+  "worker_returncode": 0,
+  "termination": null,
+  "rss_samples": [
+    {
+      "elapsed_seconds": 0.0014439579099416733,
+      "rss_bytes": 507904
+    },
+    {
+      "elapsed_seconds": 0.10944566689431667,
+      "rss_bytes": 36634624
+    },
+    {
+      "elapsed_seconds": 0.2235400420613587,
+      "rss_bytes": 51658752
+    },
+    {
+      "elapsed_seconds": 0.3374989579897374,
+      "rss_bytes": 65093632
+    },
+    {
+      "elapsed_seconds": 0.4511156249791384,
+      "rss_bytes": 73760768
+    },
+    {
+      "elapsed_seconds": 0.5594537919387221,
+      "rss_bytes": 130400256
+    },
+    {
+      "elapsed_seconds": 0.6677488749846816,
+      "rss_bytes": 199983104
+    },
+    {
+      "elapsed_seconds": 0.7769899170380086,
+      "rss_bytes": 499613696
+    },
+    {
+      "elapsed_seconds": 0.9011555830948055,
+      "rss_bytes": 583155712
+    },
+    {
+      "elapsed_seconds": 1.0094338750932366,
+      "rss_bytes": 583204864
+    },
+    {
+      "elapsed_seconds": 1.1177725000306964,
+      "rss_bytes": 583401472
+    },
+    {
+      "elapsed_seconds": 1.2319871669169515,
+      "rss_bytes": 617725952
+    },
+    {
+      "elapsed_seconds": 1.3468940421007574,
+      "rss_bytes": 594919424
+    },
+    {
+      "elapsed_seconds": 1.4510901249013841,
+      "rss_bytes": 588333056
+    },
+    {
+      "elapsed_seconds": 1.5579259579535574,
+      "rss_bytes": 588333056
+    },
+    {
+      "elapsed_seconds": 1.671965332934633,
+      "rss_bytes": 588218368
+    },
+    {
+      "elapsed_seconds": 1.7871036250144243,
+      "rss_bytes": 588365824
+    },
+    {
+      "elapsed_seconds": 1.892815416911617,
+      "rss_bytes": 601276416
+    },
+    {
+      "elapsed_seconds": 2.0013772919774055,
+      "rss_bytes": 601407488
+    },
+    {
+      "elapsed_seconds": 2.110329250106588,
+      "rss_bytes": 601407488
+    },
+    {
+      "elapsed_seconds": 2.2177551249042153,
+      "rss_bytes": 621543424
+    }
+  ],
+  "maximum_sampled_rss_bytes": 621543424,
+  "worker_peak_rss_bytes": 621084672,
+  "worker_result_sha256": "10bed55b2884646f73729fa4bb8b0725487dd951374f0baf6ad60d44565d5701",
+  "intent_sha256": "542b15b7996120638f552fe8ab49f7ef0d300ffaaf2ed88b8122ad972797f034",
+  "worker_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "worker_reaped": true,
+  "scientific_workers": 1
+}
