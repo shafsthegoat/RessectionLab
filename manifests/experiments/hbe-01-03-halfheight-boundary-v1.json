@@ -1,0 +1,363 @@
+{
+  "baseline_P1": {
+    "comparison": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json",
+      "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+    },
+    "execution": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/execution.json",
+      "sha256": "310eeb9555801c5105df88b0b7d84423c0ec950845cd02ddf01e9c913c3e5e42"
+    },
+    "primitive_bindings": {
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/specimen.feb",
+        "sha256": "aa64aa5f29d853acffc1c4e82be7821831820418b9d2cb953ffcf531c3ef429d"
+      },
+      "elements": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/elements.log",
+        "sha256": "58a98ad1502dccf7df98083319260944b757032b34f7227f637181b9fea5fd5f"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/loading.json",
+        "sha256": "855c31f9d4604c8bcfda456f5b7fe464c1c92c911c63a8f36f69685aaab7c684"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+        "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+      },
+      "nodes": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/nodes.log",
+        "sha256": "2023fe0d1774c57bc6790931dbaa508385fd02d119b8354ed1f81c5f9913461f"
+      },
+      "solver": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/solver.log",
+        "sha256": "3017021fe2e9f088d5f1b3241d0c224ae95cd07c012b18c2484b6b9fd716880c"
+      }
+    },
+    "readout": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/readout.json",
+      "sha256": "57c879166fa79db87c4870d79854d60343ee33235cb0cd46802a12ce81c94aa2"
+    },
+    "reconstruction": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/reconstruction.json",
+      "sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+    },
+    "release": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-release.json",
+      "sha256": "4d1bb87690228fa52256594f00f1530cfb743a0a5976f1e20b1109b840ad1d7a"
+    },
+    "result": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-result.json",
+      "sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a"
+    },
+    "review": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json",
+      "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+    },
+    "run_id": "compression:N24:S60:reference",
+    "source_archive": {
+      "path": "build/hbe-halfheight-spatial-v1/source.tar",
+      "sha256": "50702506705e52f5ed2bbd056d93a0e1c0c85f9ceea08916ec222d1a2074328e"
+    },
+    "source_bindings": {
+      "access": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_access.py",
+        "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+      },
+      "backend_profile": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_backend.py",
+        "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+      },
+      "curve_evaluator": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_evaluation.py",
+        "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+      },
+      "halfheight_mesh": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_mesh.py",
+        "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+      },
+      "halfheight_readout": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_readout.py",
+        "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+      },
+      "halfheight_spatial": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial.py",
+        "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+      },
+      "halfheight_spatial_readout": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_readout.py",
+        "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+      },
+      "halfheight_spatial_runner": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+        "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+      },
+      "mesh_deck": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_mesh.py",
+        "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+      },
+      "orchestrator": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_experiment.py",
+        "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+      },
+      "physics": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_physics.py",
+        "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+      },
+      "primitive_parser": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_outputs.py",
+        "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+      },
+      "readout": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_readout.py",
+        "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+      },
+      "runtime_driver": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/febio_runtime.py",
+        "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+      }
+    },
+    "source_commit": "3de9f373a6e5e66cfda2f3bd1b7e9f6c97454125",
+    "source_root": "build/hbe-halfheight-spatial-v1/source"
+  },
+  "baseline_replay": "original_accepted_archived_source_context;whole_receipt_exact_match;no_solver;all_authentication_replay_regions_and_cleanup_inside_aggregate",
+  "branch": "compression",
+  "budgets": {
+    "aggregate_specimen_seconds": 1200,
+    "each_active_run_output_bytes": 536870912,
+    "each_solver_seconds": 420,
+    "generated_output_bytes": 2147483648,
+    "gmsh_generation_calls": 0,
+    "maximum_specimen_solver_calls": 3,
+    "pure_preparation_seconds": 60,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472
+  },
+  "calibration": false,
+  "diagnostics": {
+    "area_radial_bins_r_over_R": [
+      0.0,
+      0.5,
+      0.875,
+      1.0000000001
+    ],
+    "comparison_pairs_first_second": [
+      [
+        "P1",
+        "P2"
+      ],
+      [
+        "P1",
+        "I2"
+      ],
+      [
+        "I2",
+        "P2"
+      ],
+      [
+        "P2",
+        "P4"
+      ]
+    ],
+    "endpoint_fraction": 1.0,
+    "endpoint_strain": -0.15,
+    "force_limit_reference": "second_member_of_each_declared_pair;primary_reference=P2",
+    "limit_formula": "F_P4+delta24/(2**p-1);local_indicator_not_continuum_error_bound",
+    "order_condition": "both_signed_increments_same_sign;abs_each>1.6e-7N;abs_delta24<abs_delta12",
+    "order_formula": "log2(abs(delta12/delta24));otherwise_null",
+    "primary": "matched_size_P2_vs_I2;report_signed_force_changes_from_P1_and_P2_minus_I2_for_all_61_states",
+    "regional_energy_approximation": "independent_element_total_energy_apportioned_by_bin_volume;piecewise_constant_element_energy_density;not_exact_Gauss_energy_inside_radial_bins",
+    "regional_frame": "endpoint_only;no_peak_stress_acceptance",
+    "regional_weights": "reference_2x2x2_volume_and_2x2_face_quadrature_at_fixed_physical_bins;cell_average_stress_and_J;nodal_traction_proxy_interpolated_on_bottom",
+    "secondary": "signed_endpoint_P1_P2_P4_boundary_normal_fixed_grid_only",
+    "signed_difference": "second_minus_first;primary=P2_minus_I2",
+    "volume_axial_bins_z_over_H": [
+      0.0,
+      0.08333333333333333,
+      0.25,
+      0.3333333333333333,
+      0.5
+    ],
+    "volume_radial_bins_r_over_R": [
+      0.0,
+      0.5,
+      0.875,
+      1.0000000001
+    ],
+    "weight_conservation_relative_tolerance": 1e-11
+  },
+  "frame_count": 61,
+  "full_mesh": {
+    "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json",
+    "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+  },
+  "full_mesh_fingerprint": "278baa1292ca80874c459237a829fe5a46a8a7759d7e6177a438f5fe90d6a313",
+  "gates": {
+    "all_original_per_run_checks": true,
+    "calibration_release": false,
+    "diagnostic_completion_is_not_spatial_acceptance": true,
+    "mesh_motion_limit_m": 8e-06,
+    "mesh_reaction_absolute_floor_N": 1.6e-07,
+    "mesh_reaction_relative_to_max_abs_fine": 0.02,
+    "old_spatial_result_preserved_failed": true,
+    "probe_count": 75
+  },
+  "geometry": {
+    "coordinate_tolerance_m": 4.89159e-13,
+    "height_m": 0.00489159,
+    "radius_m": 0.004,
+    "retained_height_m": 0.002445795
+  },
+  "half_mesh": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+    "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+  },
+  "inherited_source_sha256": {
+    "access": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "backend_profile": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "curve_evaluator": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "halfheight_mesh": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "halfheight_readout": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "halfheight_spatial": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
+    "halfheight_spatial_readout": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c",
+    "halfheight_spatial_runner": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd",
+    "mesh_deck": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "orchestrator": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "physics": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "primitive_parser": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "readout": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "runtime_driver": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "interpreter": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "limits": [
+    "Numerical predictions on the measured specimen geometry; not patient observations or training data.",
+    "P2/I2 contrast isolates refinement placement, not a unique singularity diagnosis.",
+    "P1/P2/P4 local order leaves shared radial/circumferential/bulk error unbounded.",
+    "No continuum, calibration, temporal-convergence or physical-validation acceptance.",
+    "No prior aggregate failure may be relabeled passed.",
+    "No invented native-full comparison."
+  ],
+  "measured_data_access": false,
+  "mechanics": {
+    "artificial_midplane": "z=d/2;xy_free",
+    "energy_scale": 2.0,
+    "force_scale": 1.0,
+    "full_load": "d(t)=+/-0.15H*t;61_states",
+    "physical_bottom": "xyz_prescribed_zero",
+    "physical_model": "original_unchanged_three_field_hex8_Ogden_exponent2;K=149mu/3;laugon=0",
+    "reaction_reconstruction": "reflect_vector_then_sum_shared_contributions",
+    "side": "traction_free",
+    "upper_displacement": "(ux,uy,d-uz)"
+  },
+  "mu_Pa": 1000.0,
+  "native_half_parser_item_limit": 20000,
+  "no_retry_or_resume": true,
+  "ordered_variants": [
+    "P2",
+    "I2",
+    "P4"
+  ],
+  "original_backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "original_halfheight_declaration": {
+    "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+  },
+  "original_protocol": {
+    "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "original_resolution_declaration": {
+    "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+  },
+  "original_spatial_declaration": {
+    "path": "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+    "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+  },
+  "output_root": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1",
+  "patient_data_access": false,
+  "preserved_failures": {
+    "finer_spatial_comparison": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json",
+      "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+    },
+    "finer_spatial_result": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-result.json",
+      "sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a"
+    },
+    "finer_spatial_review": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json",
+      "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+    },
+    "full_domain_resolution_outcome": {
+      "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/outcome.json",
+      "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+    },
+    "full_domain_resolution_study": {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    "original_mesh_review": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-independent-review-v1/review.json",
+      "sha256": "289d72991067b84129ae86193420de91340b445de8ac60dadbde5c6b6e85d0ff"
+    },
+    "original_mesh_study": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    }
+  },
+  "release_required": "Separate source-archive/interpreter/runtime-bound preparation and solve releases; declaration grants neither phase.",
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "schema": "hbe-halfheight-boundary-v1",
+  "steps": 60,
+  "study_id": "hbe-01-03-halfheight-boundary-v1",
+  "transformation": {
+    "coordinate_tolerance_m": 4.89159e-13,
+    "gmsh_calls": 0,
+    "method": "fixed_saved_N24_vertical_edge_subdivision_and_reflected_slabs",
+    "new_entity_ancestry_required": true,
+    "original_nodes_and_unaffected_cell_slots_unchanged": true,
+    "relative_parent_volume_tolerance": 1e-11,
+    "shared_face_conformity_required": true,
+    "source_id_for_generated_entity": null,
+    "volume_absolute_floor_m3": 1e-24
+  },
+  "variants": {
+    "I2": {
+      "full_elements": 24192,
+      "full_nodes": 26655,
+      "half_elements": 12096,
+      "half_nodes": 14216,
+      "midplane_nodes": 1777,
+      "slab_index_from_bottom": 3,
+      "subdivisions": 2
+    },
+    "P2": {
+      "full_elements": 24192,
+      "full_nodes": 26655,
+      "half_elements": 12096,
+      "half_nodes": 14216,
+      "midplane_nodes": 1777,
+      "slab_index_from_bottom": 0,
+      "subdivisions": 2
+    },
+    "P4": {
+      "full_elements": 31104,
+      "full_nodes": 33763,
+      "half_elements": 15552,
+      "half_nodes": 17770,
+      "midplane_nodes": 1777,
+      "slab_index_from_bottom": 0,
+      "subdivisions": 4
+    }
+  }
+}

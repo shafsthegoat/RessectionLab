@@ -86,8 +86,10 @@ are estimated at about0.74GB before ancillary files. Thin-cell conditioning and
 factorization fill make runtime uncertain, and the aggregate cap cannot promise
 three full per-call allowances. The original force/motion/physics checks remain.
 
-No new implementation, source freeze, mesh preparation or solve has yet occurred.
-Next implement and independently verify the variant transformation and declared
-readouts, then separately release bounded execution. This diagnostic cannot
+The [new implementation](../artifacts/mechanics/hbe-halfheight-boundary-implementation-v1/RESULT.md)
+now passes18focused controls and independent geometry/XML plus runner review.
+No study mesh preparation or solve has occurred. Regional energy is allocated
+using element-average density and fixed physical bin volumes. Next archive the
+committed source and separately release preparation and solving. This diagnostic cannot
 release measured curves, establish total continuum accuracy, replace finest-mesh
 time convergence, or validate patient-specific material or clinical force.

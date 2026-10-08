@@ -1,0 +1,37 @@
+{
+  "schema": "hbe-boundary-implementation-review-v1",
+  "status": "reviewed_before_study_execution",
+  "files": {
+    "scripts/mechanics_hbe_halfheight_boundary.py": "e66ef87fd9c7c6de94525cee97b4b7d225e94be88958c7b4916f02ef7c6e1a33",
+    "scripts/mechanics_hbe_halfheight_boundary_readout.py": "4742cf75fc1fa8214825cd9f681cc4b5243649fc2b58dd25d7b2ade0705f2544",
+    "scripts/mechanics_hbe_halfheight_boundary_experiment.py": "47212cc5ed8f2f38d0583ed12187d6bd4ad651dac8dda74c77ac60b0fb0e842d",
+    "manifests/experiments/hbe-01-03-halfheight-boundary-v1.json": "5a0f355b73085f0ae0ffc677a16b9054bc8b40ee2f8a4f2da9db8800acf3a5bc",
+    "tests/test_mechanics_hbe_halfheight_boundary.py": "1964ea98f231c757391577f0cc1b97679620ad886ce80f82a519f1069d04b973"
+  },
+  "owner_controls": {
+    "passed": 18,
+    "seconds": 29.83
+  },
+  "independent_geometry_XML": {
+    "passed": true,
+    "seconds": 22.15,
+    "maximum_reflection_discrepancy_m": 4.33680869e-19,
+    "maximum_regional_volume_relative_difference": 7.22990314e-15
+  },
+  "independent_scalar_source_and_metadata_controls": {
+    "passed": 6,
+    "seconds": 0.48
+  },
+  "runner_review": "Exact17modules/fivedeclarations; P1 original-context whole-readout replay; complete inclusive phase budgets; no further blocker found",
+  "retained_development_findings": [
+    "Initial owner geometry control rejected equivalent reordered end-face lists; corrected to preserve exact original order after incidence/orientation verification",
+    "Independent review found primary signed contrast reversed; corrected to declared P2_minus_I2 before execution",
+    "Initial independent geometry harness exceeded60seconds due repeated-set overhead; incomplete review attempt, not study failure; corrected harness passed",
+    "Regional energy uses element-average density weighted by fixed physical bin volume, not exact subelement energy"
+  ],
+  "study_preparation_executed": false,
+  "native_solver_calls": 0,
+  "measured_curves_accessed": false,
+  "material_calibration_released": false,
+  "historical_spatial_study_still_failed": true
+}
