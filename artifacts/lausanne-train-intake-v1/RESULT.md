@@ -1,13 +1,19 @@
 # Full TRAIN source index and bounded intake acceptance
 
-Latest audited cumulative state: **58 people / 59 sessions / 236 files /
-2,611,520,354 bytes**. Batch13 added six people/sessions; all 59 receipts,
-originals and retained source snapshots passed root and independent checks.
-[Batch13](acquisition-batch-13-summary.json) closed in 599.124 seconds under
-600 seconds and a 536,870,912-source-byte limit. Sub167 timed out and remains
-excluded at that closure. Its failure and partial are retained. The 154 sessions
-not verified within this batch include three previously acquired sessions;
-**151 TRAIN sessions remain unacquired** at this audited closure.
+Latest audited cumulative state: **74 people / 76 sessions / 304 files /
+3,496,113,284 bytes**. Batches 14–16 added 17 sessions from 16 people; repeated
+visits remain grouped. All 76 receipts, originals and retained source snapshots
+passed root and independent checks. [Batch14](acquisition-batch-14-summary.json),
+[batch15](acquisition-batch-15-summary.json) and
+[batch16](acquisition-batch-16-summary.json) retain their individual closures.
+Each finished within 600 seconds and 536,870,912 declared source bytes.
+
+The cumulative image-only total is 152 files / 3,495,874,099 bytes. **134 TRAIN
+sessions from 125 people remain incomplete** at batch16 closure. Sub167, sub186
+and sub197 subsequently completed; their original timeout records remain.
+Sub208's batch16 timeout remains excluded from that closure, even if a later
+batch finishes it. Three previously acquired but unvisited sessions explain
+137 not verified within batch16 versus 134 cumulative remaining sessions.
 No spatial admission or learning contribution follows from intake checks.
 Earlier milestone totals below retain their historical meaning.
 

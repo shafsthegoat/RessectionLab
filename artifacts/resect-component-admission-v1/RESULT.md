@@ -82,3 +82,21 @@ and [supervision](acquire-attempt-01/supervision.json) preserve the failure.
 No mask, original image, QC or training result was created. A single subsequent
 system-curl HEAD diagnosis timed out during connection; it did not establish a
 working alternate trust path. TLS verification remains enabled.
+
+## Native Mac trust transfer, October 8
+
+The reviewed native trust fix acquired the exact frozen Case3 original image:
+**9,156,131 bytes**, published MD5 matched, SHA256
+`431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20`.
+It used existing macOS certificate trust without adding roots or disabling TLS.
+The annotation request then returned HTTP429 after the official OSF redirect.
+No mask or partial was published and no automatic retry ran.
+
+[Worker result](acquisition-native-trust-01/worker-result.json),
+[supervision](acquisition-native-trust-01/supervision.json) and
+[independent verification](acquisition-native-trust-01/independent-review.json)
+retain the partial acquisition and 17.266-second failed pair attempt. Original
+byte fixity, exact source binding and child cleanup passed independent review.
+No image arrays were opened for this review. Complete pairs, QC, component
+fitting and recorded RL transitions remain zero. The next step is a deliberate
+bounded mask resume after source service permits it, followed by separate QC.

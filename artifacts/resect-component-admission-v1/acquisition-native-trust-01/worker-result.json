@@ -1,0 +1,69 @@
+{
+  "scope": "acquire",
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "status": "failed",
+  "manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "execution_source_sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a",
+  "events": [
+    {
+      "source_path": "originals/Case3-US-during.nii.gz",
+      "host": "s3.nird.sigma2.no",
+      "path": "/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-during.nii.gz",
+      "full_url_sha256": "0a7613002616772ae0a29796db3d33f9f226f18604a1d6e5772f36a463855cc3",
+      "transport": {
+        "executable": "/usr/bin/curl",
+        "platform": "darwin",
+        "macos_version": "26.6",
+        "trust": "existing_macos_system_store",
+        "available": true,
+        "sha256": "9b3d0c8eae03bd1be5e5c13c35a2464fc9a7ec719eff5deb94b2905dad25244e",
+        "version": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.1"
+      },
+      "curl_exit_code": 0,
+      "status": 200,
+      "content_length": "9156131",
+      "content_encoding": "identity"
+    },
+    {
+      "source_path": "originals/Case3-US-during-resection.nii.gz",
+      "host": "osf.io",
+      "path": "/download/64cd21fe2fe4962f1561b1e2/",
+      "full_url_sha256": "752bbf7c4fbfff57634417733109b2e139b0454cd0bab6e0ea1fbc7c175b84c9",
+      "status": 302,
+      "retry_after": null
+    },
+    {
+      "source_path": "originals/Case3-US-during-resection.nii.gz",
+      "host": "files.de-1.osf.io",
+      "path": "/v1/resources/jv8bk/providers/osfstorage/64cd21fe2fe4962f1561b1e2",
+      "full_url_sha256": "92a19142434430a64b0dc9bc16db9607f5de5a04a8dd10258da15f66660f7ebd",
+      "status": 429,
+      "retry_after": null
+    }
+  ],
+  "files": [
+    {
+      "path": "originals/Case3-US-during.nii.gz",
+      "status": "downloaded_verified",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20",
+      "bytes": 9156131,
+      "transport": {
+        "executable": "/usr/bin/curl",
+        "platform": "darwin",
+        "macos_version": "26.6",
+        "trust": "existing_macos_system_store",
+        "available": true,
+        "sha256": "9b3d0c8eae03bd1be5e5c13c35a2464fc9a7ec719eff5deb94b2905dad25244e",
+        "version": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.1"
+      }
+    }
+  ],
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "training_admitted": false,
+  "error_type": "RuntimeError",
+  "error": "Source HTTP 429; no automatic retry",
+  "elapsed_seconds": 17.11353312502615
+}

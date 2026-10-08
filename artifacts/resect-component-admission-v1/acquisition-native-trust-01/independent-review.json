@@ -1,0 +1,46 @@
+{
+  "schema": "resectionlab.resect-native-trust-acquisition-independent-review.v1",
+  "status": "verified_original_transfer_success_pair_failed_mask_429",
+  "attempt": "data/annotations/resect-seg-v1/attempts/acquire-20261008T093500263482Z",
+  "source_binding_sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a",
+  "manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "original": {
+    "bytes": 9156131,
+    "md5": "5043491e6b4cea1fe3be1003a42a2cf5",
+    "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20",
+    "frozen_url_unchanged": true,
+    "http_status": 200,
+    "curl_exit_code": 0,
+    "published_md5_matches": true,
+    "computed_sha256_matches_acquisition_receipt": true,
+    "tls": "existing macOS SecureTransport trust; no bypass or added root",
+    "array_or_nifti_decoding_performed": false
+  },
+  "mask": {
+    "terminal_http_status": 429,
+    "published": false,
+    "partial_present": false,
+    "automatic_retry": false
+  },
+  "closure": {
+    "worker_status": "failed",
+    "supervision_status": "worker_failed",
+    "exit_code": 1,
+    "elapsed_seconds": 17.265716041903943,
+    "worker_pid_absent": true,
+    "supervised_process_group_absent": true,
+    "execution_source_current_and_retained_snapshots_match": true,
+    "runtime_binding_unchanged": true,
+    "signed_query_credentials_absent_from_worker_log": true
+  },
+  "qc_run_in_this_attempt": false,
+  "image_and_mask_pair_complete": false,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "review_network_requests": 0,
+  "review_scientific_access": "bounded hashing of acquired original compressed bytes only; no arrays",
+  "substantive_findings": []
+}

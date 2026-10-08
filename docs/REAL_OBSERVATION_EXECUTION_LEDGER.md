@@ -34,8 +34,8 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Fifty-nine pairs from58people acquired (2,611,520,354bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining151 TRAINsessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
-| Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. The historical rights-only HTTP429 is preserved; exact1656byte rights text now archived, exact-object redirect fix independently verified. | Resolve original-image certificate/connectivity failure, then finish frozen Case3 image/mask acquisition and QC before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Seventy-six pairs from 74 people acquired (3,496,113,284 bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 134 TRAIN sessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
+| Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. The historical rights-only HTTP429 is preserved; exact1656byte rights text now archived, exact-object redirect fix independently verified. | The native macOS trust fix acquired the exact 9,156,131-byte original; the mask returned HTTP429. Resume the frozen mask when source service permits, then complete independent pair QC before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
@@ -254,7 +254,7 @@ added six people/sessions. All59 receipts/originals/source snapshots passed root
 and independent checks; audited totals are58people/59sessions/2,611,520,354bytes.
 Its599.124second run retained the sub167 timeout. The three cached but unvisited
 sessions explain154not-verified-this-batch versus151cumulative remaining.
-Batch14 is a separate running600second/536,870,912source-byte attempt.
+Batch14 subsequently completed; the later closure is recorded below.
 
 The [annotation metadata review](../artifacts/lausanne-annotation-expansion-v1/RESULT.md)
 qualified144TRAIN masks across106people/117sessions (13,977,015prospective bytes).
@@ -274,3 +274,17 @@ but the conditional plate correction explains only part of the earlier global
 change. The old spatial study remains failed. One prospective global N32 check
 is being specified; it is not yet implemented or released. Final spatial and
 load-step acceptance are required before physical calibration.
+
+## October 8: expanded original-data closure and partial RESECT acquisition
+
+Batches 14–16 acquired 17 more sessions from 16 people. Root and independent
+checks agree on **74 people / 76 sessions / 3,496,113,284 source bytes**, including
+152 images. The remaining TRAIN denominator is 125 people / 134 sessions.
+All original failures are retained; later acquisitions do not alter past batch
+closures. Batch17 continues separately with the frozen source and roles.
+See the [intake result](../artifacts/lausanne-train-intake-v1/RESULT.md).
+
+The Case3 original ultrasound transfer succeeded after the reviewed native-trust
+repair. Its mask was rate-limited, leaving no complete pair or QC admission.
+The [partial failure](../artifacts/resect-component-admission-v1/acquisition-native-trust-01/worker-result.json)
+and independent review are retained. No component or RL update occurred.

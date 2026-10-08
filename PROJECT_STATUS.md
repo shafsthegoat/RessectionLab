@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Fifty-nine TRAIN original
-pairs from 58 people and their sidecars are acquired (2,611,520,354 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Seventy-six TRAIN original
+pairs from 74 people and their sidecars are acquired (3,496,113,284 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -63,7 +63,12 @@ See [batch12](artifacts/lausanne-train-intake-v1/acquisition-batch-12-summary.js
 Batch13 added six people/sessions; all59 receipts passed independent and root
 checks. Closure is58people/59sessions/2,611,520,354bytes;151sessions remain.
 Sub167 timed out; its original failure is retained. See [batch13](artifacts/lausanne-train-intake-v1/acquisition-batch-13-summary.json).
-A fourteenth serial intake is running with600seconds and536,870,912source bytes.
+Batches 14–16 added 17 sessions from 16 people. All 76 cumulative receipts,
+originals and source snapshots passed root and independent checks; 134 sessions
+remain. Sub167, sub186 and sub197 completed after earlier timeouts, whose records
+remain unchanged. Batch16 retained a sub208 timeout; later batch17 data are
+excluded from its closure. A seventeenth serial intake is in progress with
+600 seconds and 536,870,912 source bytes.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -88,15 +93,18 @@ brain support and surgical route acceptance remain unresolved. See
 RESECT cavity-component roles are now frozen at14 TRAIN/four SELECT/four
 evaluation/Case4 protected DEVELOPMENT; an independent metadata review
 recomputed membership and preserved Case4's earlier measurement partition.
-No new RESECT image/label has been acquired. The exact rights text is now archived after
+One original Case3 ultrasound image is now acquired and independently verified;
+the annotation pair remains incomplete. The exact rights text is now archived after
 the earlier HTTP429 response. The official revision-2 route is now resolved, and the
 bounded Case3 intake runner passes 24 combined controls. The historical rights-only attempt
 stopped without a retry. A later deliberate official redirect-chain retrieval
 verified all1656rights bytes; an exact-object redirect correction passes13checks
 and independent review. The subsequent Case3 scientific acquisition failed before any payload bytes
 with Python certificate-chain verification; the failure is retained and
-certificate verification remains enabled. Current official-source connectivity
-is being investigated. See
+certificate verification remains enabled. A reviewed native macOS trust path
+then acquired the exact 9,156,131-byte original with published MD5 verification.
+The mask source returned HTTP429; no mask, pair QC or training admission follows.
+The 17.266-second partial failure and independent review are preserved. See
 [intake result](artifacts/resect-component-admission-v1/RESULT.md).
 The measured-interaction candidate is creator-accepted MULTIS donor004 run005;
 verified HTTPS/fixity and force/pose/surface pairing remain unresolved.

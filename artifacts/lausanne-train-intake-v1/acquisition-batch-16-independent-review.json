@@ -1,0 +1,1004 @@
+{
+  "schema": "lausanne-independent-batch-audit-v1",
+  "batch_number": 16,
+  "batch_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/batch.json",
+  "audit_completed_at": "2026-10-08T10:12:45.766621+00:00",
+  "result": "passed_bounded_byte_receipt_audit",
+  "audit_method": {
+    "validator": "scripts/lausanne_train_intake.py:validated_index and validate_receipt",
+    "validated_closure_receipts": 76,
+    "closure_derivation": "Union of successful prior closed-batch outcomes/cache checks and current successful outcomes, independently matched to receipt execution-source run identities. Counts and bytes summed from revalidated receipts.",
+    "checks": [
+      "frozen TRAIN role and full index identity",
+      "original byte sizes and MD5/source SHA256/receipt SHA256",
+      "retained execution-source records and source snapshots",
+      "exact cache/origin receipt identity",
+      "batch/declaration/worker started and outcome consistency",
+      "strict recorded time and source-size budget",
+      "unique people across repeated visits",
+      "partial and unreceipted bytes excluded"
+    ],
+    "image_decoding": false,
+    "network_transfers": false,
+    "qc_rerun": false,
+    "model_or_training_execution": false,
+    "tests_run": false,
+    "saved_qc_statuses": {
+      "acquired_qc_passed": 76
+    }
+  },
+  "identity": {
+    "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+    "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766",
+    "source_intact_at_audit": true,
+    "source_unchanged_at_closure": true,
+    "index_unchanged_at_closure": true,
+    "closure_check_errors": [],
+    "metadata_sha256": {
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/batch.json": "52d6936681f9d5e61959707ddde29c2341e0be4ebc8a5f3d1cfbcd7dc7e4d54b",
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/declaration.json": "0df4f7a888e078c37823a62394aa3053d3e4ddfd1ee2064de615e59f44626815",
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/source.json": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    }
+  },
+  "denominator": {
+    "role": "TRAIN",
+    "people": 199,
+    "sessions": 210
+  },
+  "prior_batch_records": [
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T045323379079Z/batch.json",
+      "sha256": "772cdf9b126e79ccf673d35858eb3b952e9e7e6c1c845385ce68300badd2bec6"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T045430344872Z/batch.json",
+      "sha256": "0f216d79de75482fef6424dddae3a58a0a01ae3cf274947adb4939dcba9143de"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z/batch.json",
+      "sha256": "7a73659502b32c2365471280760c38ba549ee62f5f6661662250b1cbb61fb2af"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/batch.json",
+      "sha256": "1bd6b2909e2003d27f790c82e08cec782c0f507288dfaa90b8b95e4c7fada098"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/batch.json",
+      "sha256": "da8b6cded6f4e3afd8b57dffa4eec576c10d0c1eeca5b6b1d876c82441bb31fc"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/batch.json",
+      "sha256": "462611efd536869e65b6dd5bfe58acccfd2433934018796638a630146afaf867"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T064025830178Z/batch.json",
+      "sha256": "330af685ede12eb762594ca3bcb8bd95ad26d78a52c2af1d2c5964a1efc74c8e"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/batch.json",
+      "sha256": "f0a3568e0f6929a2c68806492ddb02a2174d859a75d861cadfa31e7356a71328"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/batch.json",
+      "sha256": "512effc4f4e41f02326ce11e5d5f0ba3c8ad3932fa2ac788ff199476fc285d97"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/batch.json",
+      "sha256": "67e07ae95002726dfdb07647a0678cbdf757aceacb3f4fc81eec6a9f11f40011"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/batch.json",
+      "sha256": "e5ecceef10f64157fd760d8bcac32df0d28e5282fa01778fc526d3f4f005f26f"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/batch.json",
+      "sha256": "c79f37b68fd904385f059fc5d46b555dd011e84ea2251a2023e46175e37dc0d2"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/batch.json",
+      "sha256": "07cc4e44c00c71193ddc2f150a06a71070fdcbc05ab84a2d2aa75f1e6ff63b8f"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/batch.json",
+      "sha256": "87d75bf6a82d58b1ca639a62155cc94a632dab6441582b6157fe7ee469ea38dd"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/batch.json",
+      "sha256": "a49087ad6b25655f714b3b94c4c44c64be94a9de45f29ff2e10740959c05fbc1"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/batch.json",
+      "sha256": "9369d09bf75706c0eb671e69da4e0f8c0ff055898fcbf25655fb6b1d6d6015fd"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/batch.json",
+      "sha256": "a27452351642d66108e23e46026028756d4d40cda09a6707211d309e17d9be22"
+    }
+  ],
+  "prior_closure": {
+    "people": 70,
+    "sessions": 72,
+    "files": 288,
+    "bytes": 3221332312,
+    "image_files": 144,
+    "image_bytes": 3221106326,
+    "people_with_all_declared_visits_complete": 70,
+    "remaining_people": 129,
+    "remaining_sessions": 138
+  },
+  "closure": {
+    "people": 74,
+    "sessions": 76,
+    "files": 304,
+    "bytes": 3496113284,
+    "image_files": 152,
+    "image_bytes": 3495874099,
+    "people_with_all_declared_visits_complete": 74,
+    "remaining_people": 125,
+    "remaining_sessions": 134,
+    "receipt_sessions": [
+      "sub-000/ses-20110101",
+      "sub-001/ses-20101222",
+      "sub-002/ses-20110127",
+      "sub-005/ses-20101215",
+      "sub-006/ses-20101217",
+      "sub-007/ses-20101225",
+      "sub-015/ses-20101111",
+      "sub-021/ses-20101111",
+      "sub-022/ses-20101011",
+      "sub-030/ses-20101012",
+      "sub-034/ses-20101005",
+      "sub-035/ses-20101019",
+      "sub-036/ses-20101030",
+      "sub-045/ses-20101006",
+      "sub-047/ses-20100908",
+      "sub-051/ses-20100920",
+      "sub-052/ses-20100920",
+      "sub-062/ses-20100601",
+      "sub-065/ses-20100703",
+      "sub-066/ses-20100526",
+      "sub-069/ses-20100513",
+      "sub-073/ses-20100426",
+      "sub-074/ses-20100421",
+      "sub-074/ses-20101117",
+      "sub-075/ses-20100502",
+      "sub-077/ses-20100414",
+      "sub-078/ses-20100430",
+      "sub-091/ses-20100405",
+      "sub-099/ses-20100321",
+      "sub-100/ses-20100213",
+      "sub-103/ses-20100301",
+      "sub-104/ses-20100228",
+      "sub-105/ses-20100212",
+      "sub-107/ses-20100206",
+      "sub-109/ses-20100120",
+      "sub-112/ses-20100121",
+      "sub-116/ses-20091229",
+      "sub-119/ses-20091226",
+      "sub-120/ses-20100117",
+      "sub-121/ses-20100128",
+      "sub-126/ses-20100105",
+      "sub-128/ses-20120124",
+      "sub-129/ses-20120107",
+      "sub-130/ses-20111130",
+      "sub-134/ses-20111127",
+      "sub-140/ses-20111208",
+      "sub-141/ses-20111229",
+      "sub-144/ses-20111211",
+      "sub-147/ses-20111209",
+      "sub-148/ses-20111106",
+      "sub-149/ses-20111126",
+      "sub-153/ses-20111127",
+      "sub-159/ses-20111127",
+      "sub-160/ses-20111010",
+      "sub-163/ses-20111014",
+      "sub-164/ses-20111124",
+      "sub-167/ses-20111013",
+      "sub-170/ses-20100422",
+      "sub-170/ses-20111112",
+      "sub-171/ses-20111105",
+      "sub-172/ses-20111110",
+      "sub-178/ses-20111105",
+      "sub-186/ses-20110925",
+      "sub-187/ses-20111023",
+      "sub-188/ses-20111013",
+      "sub-189/ses-20110927",
+      "sub-191/ses-20111010",
+      "sub-192/ses-20110930",
+      "sub-194/ses-20110911",
+      "sub-197/ses-20110914",
+      "sub-198/ses-20110922",
+      "sub-203/ses-20110727",
+      "sub-207/ses-20110729",
+      "sub-214/ses-20110901",
+      "sub-450/ses-20141125",
+      "sub-476/ses-20140519"
+    ],
+    "repeated_people": {
+      "sub-170": 2,
+      "sub-074": 2
+    }
+  },
+  "newly_acquired": {
+    "people": 4,
+    "sessions": 4,
+    "files": 16,
+    "bytes": 274780972,
+    "image_files": 8,
+    "image_bytes": 274767773,
+    "people_with_all_declared_visits_complete": 4,
+    "session_ids": [
+      "sub-197/ses-20110914",
+      "sub-198/ses-20110922",
+      "sub-203/ses-20110727",
+      "sub-207/ses-20110729"
+    ]
+  },
+  "batch_accounting": {
+    "status": "time_budget_exhausted",
+    "problem": "Insufficient batch time to start another worker",
+    "verified_cached_sessions": 69,
+    "successful_workers": 4,
+    "timeout_workers": 1,
+    "explicit_deferrals": 0,
+    "unvisited_sessions": 136,
+    "not_verified_acquired_in_this_batch": 137,
+    "previously_acquired_but_unvisited": [
+      "sub-214/ses-20110901",
+      "sub-450/ses-20141125",
+      "sub-476/ses-20140519"
+    ],
+    "distinction": "137 not verified in this batch includes 3 previously acquired sessions not revisited before the deadline. All passed this audit. Cumulative remaining is 134."
+  },
+  "bounds": {
+    "max_seconds": 600,
+    "elapsed_seconds": 599.0971091671381,
+    "strict_recorded_elapsed_within_600": true,
+    "seconds_remaining": 0.9028908328618854,
+    "max_attempted_source_bytes": 536870912,
+    "attempted_source_bytes": 346080126,
+    "source_budget_remaining": 190790786,
+    "byte_accounting": "source-size budget, not measured network transfer"
+  },
+  "timeouts": [
+    {
+      "session": "sub-208/ses-20110808",
+      "status": "timeout",
+      "exit_code": 124,
+      "worker_max_seconds": 80.74971954198554,
+      "expected_source_bytes": 71299154,
+      "originating_attempt_acquisition_receipt_exists": false,
+      "later_canonical_receipt_present_at_audit": true,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-208_ses-20110808/outcome.json"
+    }
+  ],
+  "excluded_leftovers_at_audit": [
+    {
+      "session": "sub-209/ses-20110724",
+      "file": "sub-209_ses-20110724_T1w.nii.gz",
+      "kind": "complete_without_receipt",
+      "bytes": 3339963,
+      "expected_complete_bytes": 3339963,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-209/ses-20110724",
+      "file": "sub-209_ses-20110724_T1w.json",
+      "kind": "complete_without_receipt",
+      "bytes": 1722,
+      "expected_complete_bytes": 1722,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-209/ses-20110724",
+      "file": "sub-209_ses-20110724_angio.nii.gz.partial",
+      "kind": "partial",
+      "bytes": 20971520,
+      "expected_complete_bytes": 67484486,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_T1w.nii.gz",
+      "kind": "complete_without_receipt",
+      "bytes": 4172301,
+      "expected_complete_bytes": 4172301,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_T1w.json",
+      "kind": "complete_without_receipt",
+      "bytes": 1755,
+      "expected_complete_bytes": 1755,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_angio.nii.gz.partial",
+      "kind": "partial",
+      "bytes": 2097152,
+      "expected_complete_bytes": 16295294,
+      "in_closed_batch": false
+    }
+  ],
+  "historical_timeouts_preserved": [
+    {
+      "session": "sub-002/ses-20110127",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z/sub-002_ses-20110127/outcome.json"
+    },
+    {
+      "session": "sub-077/ses-20100414",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-077_ses-20100414/outcome.json"
+    },
+    {
+      "session": "sub-128/ses-20120124",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-128_ses-20120124/outcome.json"
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-454_ses-20141123/outcome.json"
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-167_ses-20111013/outcome.json"
+    },
+    {
+      "session": "sub-186/ses-20110925",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-186_ses-20110925/outcome.json"
+    },
+    {
+      "session": "sub-197/ses-20110914",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-197_ses-20110914/outcome.json"
+    }
+  ],
+  "sub197": {
+    "completed": true,
+    "bytes": 139542790,
+    "file_statuses": [
+      "downloaded_and_verified",
+      "pinned_metadata_published",
+      "downloaded_and_verified",
+      "pinned_metadata_published"
+    ],
+    "no_partial_remaining_at_audit": true
+  },
+  "receipt_verifications": [
+    {
+      "session": "sub-000/ses-20110101",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-000_ses-20110101.json",
+      "receipt_sha256": "3f0fe27c225ad3e50695b5eb2f52f61d84caf2ed5dee6040e2cd5aa868caced5",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T045323379079Z/sub-000_ses-20110101/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-001/ses-20101222",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-001_ses-20101222.json",
+      "receipt_sha256": "235a0c6693799ec53803fe3d0efdc367c344c9599de8e5af94844c82b75404f4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z/sub-001_ses-20101222/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-002/ses-20110127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-002_ses-20110127.json",
+      "receipt_sha256": "c5dd56908f2224a263a2cd9a557b80984dbfd81afc5f99924a76f951b46064d1",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-002_ses-20110127/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-005/ses-20101215",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-005_ses-20101215.json",
+      "receipt_sha256": "0772e4c5b2059083395d5e056d4b5e17c2f1e3d9f4c2911c2fec8c542fe38e0f",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-005_ses-20101215/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-006/ses-20101217",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-006_ses-20101217.json",
+      "receipt_sha256": "da56a0649995e022c5765948e74eebdd9dacbc57d1aea1329f5e6c5f46620a1a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-006_ses-20101217/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-007/ses-20101225",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-007_ses-20101225.json",
+      "receipt_sha256": "94a2700876d51df0361f89b9306da6754a39cc1ef0dfccefa2f4053ca93e17bb",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-007_ses-20101225/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-015/ses-20101111",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-015_ses-20101111.json",
+      "receipt_sha256": "9cfa781643df2fbcde821aa0ac91ea0cdbd42b35d9d01e060e3e5e40f67fb0c4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-015_ses-20101111/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-021/ses-20101111",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-021_ses-20101111.json",
+      "receipt_sha256": "08e50bbd9f953072ea53f1abdb072d0c03d5fff2405063896a43ac559aed8b23",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-021_ses-20101111/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-022/ses-20101011",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-022_ses-20101011.json",
+      "receipt_sha256": "096b904cd1704c851781dfbdcd1cea3fbca71675f89618b193e7533124446ca7",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-022_ses-20101011/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-030/ses-20101012",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-030_ses-20101012.json",
+      "receipt_sha256": "f7546468182beb8f3f7668a1121a1f5372cd3452f2ac8c7eec59abd04605b1f3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-030_ses-20101012/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-034/ses-20101005",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-034_ses-20101005.json",
+      "receipt_sha256": "f878c2500f0dda3829438876bc339de1c4bf9a6295d26f6657ec08f84da4a855",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-034_ses-20101005/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-035/ses-20101019",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-035_ses-20101019.json",
+      "receipt_sha256": "f804ad6b4e74e1aa1ee611720dda32b86342a8536bc9f29d039e9e9db5c5fae0",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-035_ses-20101019/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-036/ses-20101030",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-036_ses-20101030.json",
+      "receipt_sha256": "1c0c540d36127e99f1d26dbfd7418f0f8903132eda1edbcb6e45ac3b67116964",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-036_ses-20101030/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-045/ses-20101006",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-045_ses-20101006.json",
+      "receipt_sha256": "56bc78179d2bca0de84c087765fb99284153b0482d2aaa76f45ed1e08be5f1fd",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-045_ses-20101006/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-047/ses-20100908",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-047_ses-20100908.json",
+      "receipt_sha256": "a5640881b52ce4b158fe8d1cf437cb031688a4b89caa0ea0add40117d6b2a9b5",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-047_ses-20100908/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-051/ses-20100920",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-051_ses-20100920.json",
+      "receipt_sha256": "a9786a409e80e0e3fce0d88b461f8a3b3d8690dba0fd7d9ac5e2a93df96dec09",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-051_ses-20100920/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-052/ses-20100920",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-052_ses-20100920.json",
+      "receipt_sha256": "d5feefb95881b5112f3c45dd2e199fb7f91ac64e08c46837f0d86fa6be0a291e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-052_ses-20100920/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-062/ses-20100601",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-062_ses-20100601.json",
+      "receipt_sha256": "d8d81e45bf6c70f926e4a6f0c81464c32f5b7d61efe43972b400b02c6b4c1270",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-062_ses-20100601/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-065/ses-20100703",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-065_ses-20100703.json",
+      "receipt_sha256": "ed2e8fe60c7fe5576212214a418d6dc62f3af0fc498b470a7bbfd25d982a2baa",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-065_ses-20100703/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-066/ses-20100526",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-066_ses-20100526.json",
+      "receipt_sha256": "8519d92020752e01ede4fafa49ce5857d8736e7117dd0d2448f9413674343a62",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-066_ses-20100526/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-069/ses-20100513",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-069_ses-20100513.json",
+      "receipt_sha256": "8385ebab25500389ea2442359a5f90d9682dc082474edcf09debfae173e78b22",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-069_ses-20100513/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-073/ses-20100426",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-073_ses-20100426.json",
+      "receipt_sha256": "819db43cc0d349f160ad9a8267a16570b4e59f687cd63659d8ae5d005b9396b9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-073_ses-20100426/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-074/ses-20100421",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-074_ses-20100421.json",
+      "receipt_sha256": "a611d87c323acc2a7aa0a2451c62a3244f80238beb689535180136e2a91b188b",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-074_ses-20100421/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-074/ses-20101117",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-074_ses-20101117.json",
+      "receipt_sha256": "6608aff68489990eb21624a8ea7c4a19bab25456de144744ac91e9fff833bf55",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-074_ses-20101117/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-075/ses-20100502",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-075_ses-20100502.json",
+      "receipt_sha256": "59d2b7fa47cefb947591dbcd47f221b0f5f0d2838fd7c0dd1664bd4a23884bcc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-075_ses-20100502/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-077/ses-20100414",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-077_ses-20100414.json",
+      "receipt_sha256": "66ac01a3dcb31bb196920a349aae5b2e254a7c98b044b0847e55b06ffe66c96a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-077_ses-20100414/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-078/ses-20100430",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-078_ses-20100430.json",
+      "receipt_sha256": "166766344d9378a117814db663cca3f21ffa8a9a9c4cada0ace2299e4a731175",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-078_ses-20100430/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-091/ses-20100405",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-091_ses-20100405.json",
+      "receipt_sha256": "6a76dbe5200db9180311d6f7072fdc1e99c25fec67bec77ecb6231851572f787",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-091_ses-20100405/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-099/ses-20100321",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-099_ses-20100321.json",
+      "receipt_sha256": "a27ca8768fd3173e0632cde9c66367fd97fa8529e16f4bd7992e51a88c121c63",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-099_ses-20100321/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-100/ses-20100213",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-100_ses-20100213.json",
+      "receipt_sha256": "7493e822488b708acc16abb095811d4d958cfd17501e687a355ef41807a4363b",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-100_ses-20100213/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-103/ses-20100301",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-103_ses-20100301.json",
+      "receipt_sha256": "1cf273d103553fa4d11e294074c670f0b4ec3b9f142e7885706941f2697a5e34",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-103_ses-20100301/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-104/ses-20100228",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-104_ses-20100228.json",
+      "receipt_sha256": "64ade94299339bd9e9d2e65d3add9b033ef8ca8ec94c67bdd7337efbf2ef7a2e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-104_ses-20100228/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-105/ses-20100212",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-105_ses-20100212.json",
+      "receipt_sha256": "fc2b7bf3bba1e4268266f54fe279e48d982c53699bbdd30bbc8bff18e4bba7d3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-105_ses-20100212/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-107/ses-20100206",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-107_ses-20100206.json",
+      "receipt_sha256": "df50c4a99315c2c163a4fcbde83d60836d7b620939bde9832ec209d7d0616d13",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-107_ses-20100206/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-109/ses-20100120",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-109_ses-20100120.json",
+      "receipt_sha256": "0b9b6d84c7a9455663188582caf12e62a676cc6277556569ed726ef39fb6b45f",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-109_ses-20100120/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-112/ses-20100121",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-112_ses-20100121.json",
+      "receipt_sha256": "fe76e574be8075c6b2fa134f16e3f21f18a33fe6222bf549d5ee27710b32238e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-112_ses-20100121/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-116/ses-20091229",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-116_ses-20091229.json",
+      "receipt_sha256": "206323d24d4a28aecbb2435864959acb2097e5c856b43d7a3630756b9f7f2371",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-116_ses-20091229/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-119/ses-20091226",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-119_ses-20091226.json",
+      "receipt_sha256": "4176c51f63b15eecf5eb21cbda1d19cfc3e2d736e4ce64388c53ad68bf35e9ee",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-119_ses-20091226/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-120/ses-20100117",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-120_ses-20100117.json",
+      "receipt_sha256": "2697f622f0e37a47ec9d4fb2fd5fb0293260ae88f23958379a4369061d269fe8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-120_ses-20100117/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-121/ses-20100128",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-121_ses-20100128.json",
+      "receipt_sha256": "d02eaf364ee3a5c71562582312f7f7d898dd3957b9102ebd57071400f024200a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-121_ses-20100128/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-126/ses-20100105",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-126_ses-20100105.json",
+      "receipt_sha256": "33b856bb74b17cbdd44e09241226db598d7f1ea13f69d512f78d6de271c04f01",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-126_ses-20100105/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-128/ses-20120124",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-128_ses-20120124.json",
+      "receipt_sha256": "48592e5764e80d40af9b28dd094e589f5e704a4dc2c39b9f7f09f9e37846bbaa",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-128_ses-20120124/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-129/ses-20120107",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-129_ses-20120107.json",
+      "receipt_sha256": "ec16b84b171dd0df3f2c210430f8636737c0017013a2f31b3a39a338f81fdc92",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-129_ses-20120107/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-130/ses-20111130",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-130_ses-20111130.json",
+      "receipt_sha256": "dc50a104109ffe6333bafb4cd2f899d6b9ef7e7a8d68918f110b0257acbd28d9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-130_ses-20111130/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-134/ses-20111127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-134_ses-20111127.json",
+      "receipt_sha256": "e33dc1b0146ecd5a35640ff3750c8602d24753c5989a47a73b6152ba46e070ae",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-134_ses-20111127/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-140/ses-20111208",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-140_ses-20111208.json",
+      "receipt_sha256": "fe07cd2ae0818f14f92ab2de2d5f4a048b25b8f703ba2588d9131a1564371494",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-140_ses-20111208/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-141/ses-20111229",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-141_ses-20111229.json",
+      "receipt_sha256": "82751603ba9b8a0094ae77cddc4c6e815074c206ebde9183ecf68ccb8b94b627",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-141_ses-20111229/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-144/ses-20111211",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-144_ses-20111211.json",
+      "receipt_sha256": "c894646498783d2e5db39d48d0f1ef421e4711f00ea704f915cd487bfe1142b8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-144_ses-20111211/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-147/ses-20111209",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-147_ses-20111209.json",
+      "receipt_sha256": "1bd3194afd5c7fc2c99212040b4896afca7cbfb72ee1519fb9acdaa792df76fd",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-147_ses-20111209/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-148/ses-20111106",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-148_ses-20111106.json",
+      "receipt_sha256": "27e2ed4ffdc69e811aced3d057bb867bf62ddde51e5187ddb85f64e998caa242",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-148_ses-20111106/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-149/ses-20111126",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-149_ses-20111126.json",
+      "receipt_sha256": "dab98875267487f4272b54c75533f4962e4b6c0af5a949431968f9f20f0047fc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-149_ses-20111126/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-153/ses-20111127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-153_ses-20111127.json",
+      "receipt_sha256": "0a559c3db604ab9cad66432fe8e1fe8d7f16aea1e11c01ff731eea10908ad412",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-153_ses-20111127/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-159/ses-20111127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-159_ses-20111127.json",
+      "receipt_sha256": "be1520ec1504a643f94ec10f5b1310959cb22507732bb6dd9dd8a48a5c24ef14",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-159_ses-20111127/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-160/ses-20111010",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-160_ses-20111010.json",
+      "receipt_sha256": "23cf54b594c04e6f826c0c67f0c9ad14242ccd9b65dfc9914dd77b20c1f77b17",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-160_ses-20111010/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-163/ses-20111014",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-163_ses-20111014.json",
+      "receipt_sha256": "c749414bd7c5b03a364e48ca9373c4627e64924448afbfdb3d9b943444309292",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-163_ses-20111014/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-164/ses-20111124",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-164_ses-20111124.json",
+      "receipt_sha256": "f8a4f06aae04e921a454c8506e43e5fbaaecd01e5106362ce2500b149c1cb701",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-164_ses-20111124/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-167_ses-20111013.json",
+      "receipt_sha256": "6bf4666a3f8872ed5b808a78bdc45e059b5ce7ca1d37c32e771aaa98d37b8599",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-167_ses-20111013/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-170/ses-20100422",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-170_ses-20100422.json",
+      "receipt_sha256": "3a407d558387c6a7c927dc6c13b9ac5fddd6e9c3298365fc8814be33c83a98fc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-170_ses-20100422/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-170/ses-20111112",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-170_ses-20111112.json",
+      "receipt_sha256": "d994969df25b8569bac53d1ff097076d85d4e4ddf67a20e276c391839fe320d9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-170_ses-20111112/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-171/ses-20111105",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-171_ses-20111105.json",
+      "receipt_sha256": "3341ee3ba12d1a91bca5e1da91e87554cd5e3ba79f19feddc1ea92520bcd998c",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-171_ses-20111105/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-172/ses-20111110",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-172_ses-20111110.json",
+      "receipt_sha256": "8dcaacde14dc2467cb73ee91228a84580cc126216c28b89b874ae98f339cacc6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-172_ses-20111110/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-178/ses-20111105",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-178_ses-20111105.json",
+      "receipt_sha256": "3b9bee5fdf5b4e0ddc6d0c2b20f4bd42ccd742c0f70d46ddcffa18d9d995b329",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-178_ses-20111105/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-186/ses-20110925",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-186_ses-20110925.json",
+      "receipt_sha256": "e5dcb1cc08baaf36df5c1e57863fd1f7e807db8a7e97e3acce810e3fb9c5e5c8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-186_ses-20110925/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-187/ses-20111023",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-187_ses-20111023.json",
+      "receipt_sha256": "cd8fe83ce9975097c5da7b69162ec809ca70c60f52debb0e3dd0c65438a76d45",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-187_ses-20111023/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-188/ses-20111013",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-188_ses-20111013.json",
+      "receipt_sha256": "d3a29dd6290cda48f61df3005cdf29bed0662b6bcc479c35104757e686969fdb",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-188_ses-20111013/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-189/ses-20110927",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-189_ses-20110927.json",
+      "receipt_sha256": "0d17ecd047cd3f800c2c9846ed80c8188f32bbd30175afef9a11662a34005d4a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-189_ses-20110927/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-191/ses-20111010",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-191_ses-20111010.json",
+      "receipt_sha256": "2af9da273586969574e934daad1bcd18fb00be824e0e906e911a8d4c82f6ae6e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-191_ses-20111010/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-192/ses-20110930",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-192_ses-20110930.json",
+      "receipt_sha256": "6af91075db0a7697351cce4ded73894f19ea4b27a8382cc4d6ab9ec732923790",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-192_ses-20110930/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-194/ses-20110911",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-194_ses-20110911.json",
+      "receipt_sha256": "691ad2b5f1472a783319ed6b302052fab5739daf636fb70c2e5e446f754ea3f5",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-194_ses-20110911/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-197/ses-20110914",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-197_ses-20110914.json",
+      "receipt_sha256": "a7a7709f3ebd08cac581592d023e097305c939f922fd7a63464b61c3694af7e3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-197_ses-20110914/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-198/ses-20110922",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-198_ses-20110922.json",
+      "receipt_sha256": "28b414e7d0d8f4aff430038c359ec84096526762054bac73c209be4ebe8d8cab",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-198_ses-20110922/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-203/ses-20110727",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-203_ses-20110727.json",
+      "receipt_sha256": "a5791b683d295a3d2c9b7e6ee958f24b6c49a7811fc4ebd3cebac3dc9f36422a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-203_ses-20110727/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-207/ses-20110729",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-207_ses-20110729.json",
+      "receipt_sha256": "4971f4db73edcd6889706e64d5713115b10cb4771d304fd50410622e612dd192",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-207_ses-20110729/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-214/ses-20110901",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-214_ses-20110901.json",
+      "receipt_sha256": "56943e06057cbbe95feaa10d3b94f58c1b215817716ee5bd0e9d0d499220ea32",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-214_ses-20110901/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-450/ses-20141125",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-450_ses-20141125.json",
+      "receipt_sha256": "ccd4587a3d205c815b5c9e69638895d8112746675e5028994533630b79dc92e9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-450_ses-20141125/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-476/ses-20140519",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-476_ses-20140519.json",
+      "receipt_sha256": "55d42e4392645478f6c0c50d325b3f0a23e3c1019e6c5100f8bed001d33f7dc6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T064025830178Z/sub-476_ses-20140519/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    }
+  ],
+  "later_receipts_excluded_from_closure": [
+    "sub-208/ses-20110808"
+  ],
+  "leftover_snapshot_scope": "Filesystem leftovers reflect the audit timestamp during the subsequent batch17 run, not a reconstructed snapshot at batch16 closure. Resumed partials may have grown or completed after batch16 closed. No unfinished or later batch17 session enters batch16 totals.",
+  "claim_limits": {
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "registration": "unverified",
+    "anatomical_coverage": "unreviewed",
+    "component_optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "note": "Byte/receipt integrity and saved QC consistency; no clinical, anatomical, source-frame, spatial or training admission. Timeout is a process deadline, not a dataset-quality failure."
+  }
+}
