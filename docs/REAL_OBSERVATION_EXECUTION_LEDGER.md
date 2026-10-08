@@ -88,6 +88,15 @@ import; original OSF failures remain. All 890 files in the frozen continuous que
 are now present. Twenty-four RESECT pairs await separate image/label/grid QC;
 the previous Case3 QC and all split, missing-label and rights constraints remain.
 
+The additional [104-file original-source queue](../artifacts/resect-train-originals-preparation-v1/RESULT.md)
+is committed and running continuously from October 8 at 19:26 UTC. It adds 28 MRI,
+17 ultrasound and 59 correspondence files (672,336,857 bytes) from the same 14 TRAIN
+people. Published MD5/size and measured local SHA256 are required; no decoding or
+admission occurs during transfer. Forty-three owner and seven independent controls
+passed. The [N36/S120 solve](../artifacts/hbe-n36-temporal-preparation-v1/EXECUTION.md)
+is also running after verified archive/preflight and 13.3256-second preparation;
+no result is claimed until terminal publication and independent review.
+
 ## Evidence and decisions before the October 8 steering
 
 - Existing planning/ML comparisons remain historical. Search exceeded frozen

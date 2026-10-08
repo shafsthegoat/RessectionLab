@@ -1,0 +1,559 @@
+{
+  "schema": "btc-train-transfer-readiness-audit-v1",
+  "status": "metadata_only_prospective_scope_proposal_no_admission",
+  "roles": {
+    "TRAIN": [
+      "sub-PAT05",
+      "sub-PAT16",
+      "sub-PAT20",
+      "sub-PAT22",
+      "sub-PAT25",
+      "sub-PAT28"
+    ],
+    "SELECT": [
+      "sub-PAT26",
+      "sub-PAT27"
+    ],
+    "unopened_frozen_development_transfer": [
+      "sub-PAT29",
+      "sub-PAT31"
+    ],
+    "external": "UPenn remains external; no access"
+  },
+  "cohort": {
+    "path": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+    "bytes": 34626,
+    "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+  },
+  "weights": {
+    "manifest": {
+      "path": "docs/synthstrip-model-manifest.json",
+      "bytes": 1992,
+      "sha256": "fda80ef26d8a96e849d3f28b78f903afcdcd278e8b35fa225add9c8b5f8dd869"
+    },
+    "main": {
+      "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.1.pt",
+      "bytes": 30851709,
+      "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33"
+    },
+    "nocsf": {
+      "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.nocsf.1.pt",
+      "bytes": 30851709,
+      "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28"
+    },
+    "lineage": "known synthetic-trained; must remain labelled on estimates, tasks, transitions and policies",
+    "pretrained_cohort_disjointness": "not verified; do not claim independent external model evaluation"
+  },
+  "train_records": [
+    {
+      "subject": "sub-PAT05",
+      "role": "TRAIN",
+      "bindings": {
+        "case_bundle": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+        "case_bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+        "case_semantic_hash": "sha256:2fd887043fc6c7d657e83cadd9f55f0f585940a82c0eefb50da8baa0b3c989ef",
+        "planning_hash": "sha256:8233172d1a9455ea69b1026636f4085e97c4fd7db323e4b3d103052667f200d0",
+        "evidence_id": "synthstrip_main_7be541d3d8f3",
+        "evidence_hash": "sha256:1d016c7cf0e799ca57d494445f78356dbad12298a0994894b8eb93066780ccfb",
+        "source_image_hash": "sha256:93e2812263872cbbd3f24de845c015b7dd418a4a89223887437a5f44fff35359",
+        "source_frame_hash": "sha256:6a956e22ef40ed2ce301f0583a7be3a1d655e0fa9ab2d9ed8c11d2f7b5a156b1",
+        "mask_hash": "sha256:436199eb3abc24e818e13e342f69bbae45b76b8be1dd6c2ce1071013fce43949",
+        "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "run_sha256": "sha256:7be541d3d8f3c2784006aae75cf8e3d420bff37790554eac9eb6990b84abd428",
+        "source_file_sha256": "sha256:016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+        "source_annotation_file_sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc",
+        "main_mask_output_hashes": {
+          "main_mask.nii.gz": "a8a950310f039aa2f7db7e233e123a2fa35340f9944d8596c0ca846a9d9b1836",
+          "main_distance_mm.nii.gz": "11ac6e7d50c8938dc0112d28d95756530ed24571b9927bd508ceaffe29da14ee"
+        },
+        "source_manifest": {
+          "path": "manifests/btc_pat05_acquisition.json",
+          "bytes": 5306,
+          "sha256": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf"
+        },
+        "acquired_source_files": [
+          {
+            "path": "sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+            "expected_bytes": 7360908,
+            "expected_md5": "eea6f777bc25a73306808634998c9678",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz?versionId=iQQSeLGTc1Zc9MIU3.cDdjAzWnmvuGRA",
+            "bytes": 7360908,
+            "sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e"
+          },
+          {
+            "path": "derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+            "expected_bytes": 10486112,
+            "expected_md5": "a63042fef197cc0392580cb087bc1999",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii?versionId=n16ELjZacMVWfmGHi93M88sQTQvXy.0W",
+            "bytes": 10486112,
+            "sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc"
+          }
+        ]
+      },
+      "evidence_records": [
+        {
+          "path": "artifacts/native-spatial-PAT05-input-v1/input-binding.json",
+          "bytes": 7594,
+          "sha256": "0d7e5aa78b792da2e8f9c0313e62a969c6d91c2c66b923f0affdb486a145e358"
+        },
+        {
+          "path": "docs/brain-extraction-pat05-independent-qc.json",
+          "bytes": 7766,
+          "sha256": "26a0775222d4265652366359da89a7f91612bc9aeb68674d8734af7168b13277"
+        }
+      ],
+      "source_target_cells_outside_main_support": 0,
+      "historical_preparation_status": "prior_provisional_native_input_declared_and_previously_exercised",
+      "native_grid_evidence": "exact_source_grid_passed",
+      "native_action_evidence": {
+        "scope": "prior PAT05 input binding and profiles retained; no new preview performed"
+      },
+      "current_lineage_guard": "SYNTHETIC_MODEL_INELIGIBLE at _provisional_proposal_support for known SynthStrip main hash",
+      "lineage": "real acquired T1/source annotation; synthetic-trained model-estimated support; simulator-derived native transitions if executed",
+      "anatomy_status": "estimated, review_required; no expert whole-volume/cortical approval",
+      "conclusion": "Candidate for exact-bound provisional TRAIN native diagnostic after explicit prospective model/source admission."
+    },
+    {
+      "subject": "sub-PAT16",
+      "role": "TRAIN",
+      "bindings": {
+        "case_bundle": "outputs/cases/BTC-sub-PAT16-structural-evidence.ressectionlab",
+        "case_bundle_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+        "case_semantic_hash": "sha256:a7104aa095f7c20c1b7fe732dbf540ded495e85854adc10b594e5039dde3c094",
+        "evidence_hash": "sha256:77b5da8ddc19a6f15c98c376f6ae530e691c876a642fed62a47cf4b7a6ceee06",
+        "evidence_id": "synthstrip_main_a3b03fb5ecfc",
+        "planning_hash": "sha256:1a9088e0fdee2f751e67c8778eba88fa4785dd267d76396b98082fe7933ccb05",
+        "role": "TRAIN",
+        "subject": "sub-PAT16",
+        "source_image_hash": "sha256:f54e4a15e69e797aed65a0315d87abfd712acabb5b385c0df5954947ebe175d0",
+        "source_frame_hash": "sha256:30129c664eccf050cf7dcc8088a4ac5c673b5d48cec83ff68f3955f4f5b2fb2f",
+        "source_file_sha256": "sha256:709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e",
+        "mask_hash": "sha256:9b9cf932b42acf555dfa7ea5c686861351dd745109843bc5c8d0e431f6fb2b3a",
+        "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "run_sha256": "sha256:a3b03fb5ecfca30fe9f2893501ede5d86c442a30f8a04c1ddde393ba316ba5ff",
+        "source_manifest": {
+          "path": "manifests/btc_pat16_acquisition.json",
+          "bytes": 4744,
+          "sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f"
+        },
+        "acquired_source_files": [
+          {
+            "path": "sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz?versionId=Dbm4LvlEQiJ3PtgfUP9Z.OHwmvEgaKLQ",
+            "bytes": 7708650,
+            "sha256": "709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e",
+            "expected_md5": "007ee49f198ff2fe3da375b21e3aa7fa",
+            "expected_bytes": 7708650
+          },
+          {
+            "path": "derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii?versionId=IDmVkLclbm3WeUJ_GG3sNeYvD3.s6RUl",
+            "bytes": 10486112,
+            "sha256": "89b610ce3cfa6acf3d23e59d42e3b04a593d7360b996ced10e0aaf060428b0c8",
+            "expected_md5": "39460dac3ecad3304d6fd61d3dc3de5f",
+            "expected_bytes": 10486112
+          }
+        ]
+      },
+      "evidence_records": [
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/declaration-input.json",
+          "bytes": 16093,
+          "sha256": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5"
+        },
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/compact-summary.json",
+          "bytes": 28250,
+          "sha256": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6"
+        },
+        {
+          "path": "docs/brain-extraction-pat16-pat20-bundle-integration.json",
+          "bytes": 8186,
+          "sha256": "006e223b8b6a2b689173c264584e007fdbce0e96da611b67fb74f4e841d88946"
+        }
+      ],
+      "source_target_cells_outside_main_support": 19,
+      "historical_preparation_status": "preparation_blocked",
+      "native_grid_evidence": "saved_source_grid_engineering_passed",
+      "native_action_evidence": {
+        "initial_legal_nonstop_actions": null,
+        "initial_preview_dispositions": null
+      },
+      "current_lineage_guard": "SYNTHETIC_MODEL_INELIGIBLE at _provisional_proposal_support for known SynthStrip main hash",
+      "lineage": "real acquired T1/source annotation; synthetic-trained model-estimated support; simulator-derived native transitions if executed",
+      "anatomy_status": "estimated, review_required; no expert whole-volume/cortical approval",
+      "conclusion": "Support conflict remains; permission does not admit this mask/task."
+    },
+    {
+      "subject": "sub-PAT20",
+      "role": "TRAIN",
+      "bindings": {
+        "case_bundle": "outputs/cases/BTC-sub-PAT20-structural-evidence.ressectionlab",
+        "case_bundle_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+        "case_semantic_hash": "sha256:578c1cfb984015b848ac3f044e1bd9e189d7a2688d360841384bdea1ad4e49a1",
+        "evidence_hash": "sha256:c3f886fc7b6cd3312e8ca2c38fa5abec3769f5d55ae577ab4dcb471157c746ab",
+        "evidence_id": "synthstrip_main_192161c23a1d",
+        "planning_hash": "sha256:c9550931a6b76b97832b4ddf2e7e8914edd50773952dff889d5a321b3b50d46c",
+        "role": "TRAIN",
+        "subject": "sub-PAT20",
+        "source_image_hash": "sha256:8401698f6c3379f009c9e9a63f70a68fbfe2f5cd3f0c7049a8d5685d9619e587",
+        "source_frame_hash": "sha256:806326446d7300f891a28d78b31d05a5699aeb55cd0849b8f2f3454e77176540",
+        "source_file_sha256": "sha256:f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+        "mask_hash": "sha256:aa8079a5c9c9bad78dd4ea09f8c3b79d5a0ffcc28de71b8709725dfe0ea9abb9",
+        "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "run_sha256": "sha256:192161c23a1dedca372050d66f6272f4c4e7d2532e83e6c3a3c0e07c3efefd2b",
+        "source_manifest": {
+          "path": "manifests/btc_pat20_acquisition.json",
+          "bytes": 4744,
+          "sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118"
+        },
+        "acquired_source_files": [
+          {
+            "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz?versionId=GwT6HXksPRjidtHgRIIBZwwUCpXxJjWH",
+            "bytes": 7044313,
+            "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+            "expected_md5": "5a773054340f6f84d68e93a676c9e389",
+            "expected_bytes": 7044313
+          },
+          {
+            "path": "derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii?versionId=dOJ3f23OM6ap.tRBlxmoevMp0_h.jyWL",
+            "bytes": 10486112,
+            "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36",
+            "expected_md5": "d126fda2aea36a594b966f2220716737",
+            "expected_bytes": 10486112
+          }
+        ]
+      },
+      "evidence_records": [
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/declaration-input.json",
+          "bytes": 16093,
+          "sha256": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5"
+        },
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/compact-summary.json",
+          "bytes": 28250,
+          "sha256": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6"
+        },
+        {
+          "path": "docs/brain-extraction-pat16-pat20-bundle-integration.json",
+          "bytes": 8186,
+          "sha256": "006e223b8b6a2b689173c264584e007fdbce0e96da611b67fb74f4e841d88946"
+        }
+      ],
+      "source_target_cells_outside_main_support": 125,
+      "historical_preparation_status": "preparation_blocked",
+      "native_grid_evidence": "saved_source_grid_engineering_passed",
+      "native_action_evidence": {
+        "initial_legal_nonstop_actions": null,
+        "initial_preview_dispositions": null
+      },
+      "current_lineage_guard": "SYNTHETIC_MODEL_INELIGIBLE at _provisional_proposal_support for known SynthStrip main hash",
+      "lineage": "real acquired T1/source annotation; synthetic-trained model-estimated support; simulator-derived native transitions if executed",
+      "anatomy_status": "estimated, review_required; no expert whole-volume/cortical approval",
+      "conclusion": "Support conflict remains; permission does not admit this mask/task."
+    },
+    {
+      "subject": "sub-PAT22",
+      "role": "TRAIN",
+      "bindings": {
+        "case_bundle": "outputs/cases/BTC-sub-PAT22-structural-evidence.ressectionlab",
+        "case_bundle_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+        "case_semantic_hash": "sha256:abd757850dce1a6c9b331dab9049ae68d90f4091bd314d6002108e0b18d0c7fc",
+        "evidence_hash": "sha256:9080358b0fbadb1b0ecb50073b332a7ed41a5f998d74492609fa6e0caebeeb11",
+        "evidence_id": "synthstrip_main_1f7284c4324d",
+        "planning_hash": "sha256:f8af18c982bc786f02086b98bbd7c54498d8af0f8ed52d20e0f89ce32047104b",
+        "role": "TRAIN",
+        "subject": "sub-PAT22",
+        "source_file_sha256": "sha256:6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+        "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "run_sha256": "sha256:1f7284c4324d835a37b6119f22c24816a219fbb27ab48076ec3248d3ae4a878f",
+        "qc_report": "outputs/brain-extraction/BTC-spatial-main-v1-qc/sub-PAT22/brain_extraction_report.json",
+        "qc_report_sha256": "1f7284c4324d835a37b6119f22c24816a219fbb27ab48076ec3248d3ae4a878f",
+        "main_mask_file_sha256": "be7440cdba7fc921cf32615fa632ebc58858bf205bdc688746540dfd73e81591",
+        "source_annotation_file_sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752",
+        "source_manifest": {
+          "path": "artifacts/btc-spatial-acquisition-v1/sub-PAT22-source-manifest.json",
+          "bytes": 6255,
+          "sha256": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb"
+        },
+        "acquired_source_files": [
+          {
+            "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz?versionId=ZnQfyRiqty_EoSSptUQvWyN.gMa7vKJD",
+            "bytes": 7549922,
+            "sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+            "expected_md5": "d0b4e260d84180ed35641855d8822f37",
+            "expected_bytes": 7549922
+          },
+          {
+            "path": "derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii?versionId=yGMmFzJZ0EgF0BC1XVzQ3NmV56sin4tA",
+            "bytes": 10486112,
+            "sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752",
+            "expected_md5": "a15102c95b3381219caae4d6a2c4af5b",
+            "expected_bytes": 10486112
+          }
+        ]
+      },
+      "evidence_records": [
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/declaration-input.json",
+          "bytes": 16093,
+          "sha256": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5"
+        },
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/compact-summary.json",
+          "bytes": 28250,
+          "sha256": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6"
+        },
+        {
+          "path": "artifacts/brain-extraction/BTC-spatial-main-v1-integration/attempt-02/integration-record.json",
+          "bytes": 46215,
+          "sha256": "548681883bfaeceb97176a59497be9d1c975b46d634f2f37d8b2357d6c4ee68e"
+        },
+        {
+          "path": "artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/independent-qc.json",
+          "bytes": 18065,
+          "sha256": "eb8e407a33c0395ea06c0c2b2aaebebcc1e3489d343e0859777783e14f5586e8"
+        }
+      ],
+      "source_target_cells_outside_main_support": 0,
+      "historical_preparation_status": "complete",
+      "native_grid_evidence": "saved_source_grid_engineering_passed",
+      "native_action_evidence": {
+        "initial_legal_nonstop_actions": 76,
+        "initial_preview_dispositions": {
+          "HARD_GEOMETRY:WORKING_REACH": 2,
+          "NATIVE_CONNECTED_STROKE": 76
+        }
+      },
+      "current_lineage_guard": "SYNTHETIC_MODEL_INELIGIBLE at _provisional_proposal_support for known SynthStrip main hash",
+      "lineage": "real acquired T1/source annotation; synthetic-trained model-estimated support; simulator-derived native transitions if executed",
+      "anatomy_status": "estimated, review_required; no expert whole-volume/cortical approval",
+      "conclusion": "Candidate for exact-bound provisional TRAIN native diagnostic after explicit prospective model/source admission."
+    },
+    {
+      "subject": "sub-PAT25",
+      "role": "TRAIN",
+      "bindings": {
+        "case_bundle": "outputs/cases/BTC-sub-PAT25-structural-evidence.ressectionlab",
+        "case_bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+        "case_semantic_hash": "sha256:4fbc6057bdb94179675694e2d284e3cfb1da18f9ed0b46161c4582f1ffa22da1",
+        "evidence_hash": "sha256:e3c7d31e80e4df68ae9ea3caf665a350b2bc9998f0434d90965aba781ab57958",
+        "evidence_id": "synthstrip_main_f78dc8260504",
+        "planning_hash": "sha256:d0f47da3323e22c1d53d1e62da753aca88bacb099fdbedb956d9653a4a84261b",
+        "role": "TRAIN",
+        "subject": "sub-PAT25",
+        "source_file_sha256": "sha256:40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+        "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "run_sha256": "sha256:f78dc8260504447b64bf1d40a7258a611032cde697d0c0c329e059baa2b8c88e",
+        "qc_report": "outputs/brain-extraction/BTC-spatial-main-v1-qc/sub-PAT25/brain_extraction_report.json",
+        "qc_report_sha256": "f78dc8260504447b64bf1d40a7258a611032cde697d0c0c329e059baa2b8c88e",
+        "main_mask_file_sha256": "70b2b1bfe1234a32946e82ac6525f6c6cbfeefa074d6c340ab0e27f5efce3fc7",
+        "source_annotation_file_sha256": "b064c64c1a24333ae9e6f61afaa57ea49e179dff66bc2e2e3cba124262cb0aae",
+        "source_manifest": {
+          "path": "artifacts/btc-spatial-acquisition-v1/sub-PAT25-source-manifest.json",
+          "bytes": 6255,
+          "sha256": "1473ee1d337bce1d09bb0ee0bb9bf21e9d84231db83c753b1e5a5b9fcf238920"
+        },
+        "acquired_source_files": [
+          {
+            "path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz?versionId=inch0kvziTPJp6fRUdoXA95jdwOCYIHL",
+            "bytes": 7840879,
+            "sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+            "expected_md5": "5cef3000e15d0c715424d3c19ead5ceb",
+            "expected_bytes": 7840879
+          },
+          {
+            "path": "derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii?versionId=lhe.Rs8LJrLnu3CdVEhlK_o.O.dYPScP",
+            "bytes": 10486112,
+            "sha256": "b064c64c1a24333ae9e6f61afaa57ea49e179dff66bc2e2e3cba124262cb0aae",
+            "expected_md5": "11678794420afa14b7419581b1aa1faa",
+            "expected_bytes": 10486112
+          }
+        ]
+      },
+      "evidence_records": [
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/declaration-input.json",
+          "bytes": 16093,
+          "sha256": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5"
+        },
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/compact-summary.json",
+          "bytes": 28250,
+          "sha256": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6"
+        },
+        {
+          "path": "artifacts/brain-extraction/BTC-spatial-main-v1-integration/attempt-02/integration-record.json",
+          "bytes": 46215,
+          "sha256": "548681883bfaeceb97176a59497be9d1c975b46d634f2f37d8b2357d6c4ee68e"
+        },
+        {
+          "path": "artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/independent-qc.json",
+          "bytes": 18065,
+          "sha256": "eb8e407a33c0395ea06c0c2b2aaebebcc1e3489d343e0859777783e14f5586e8"
+        }
+      ],
+      "source_target_cells_outside_main_support": 0,
+      "historical_preparation_status": "complete",
+      "native_grid_evidence": "saved_source_grid_engineering_passed",
+      "native_action_evidence": {
+        "initial_legal_nonstop_actions": 0,
+        "initial_preview_dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 78
+        }
+      },
+      "current_lineage_guard": "SYNTHETIC_MODEL_INELIGIBLE at _provisional_proposal_support for known SynthStrip main hash",
+      "lineage": "real acquired T1/source annotation; synthetic-trained model-estimated support; simulator-derived native transitions if executed",
+      "anatomy_status": "estimated, review_required; no expert whole-volume/cortical approval",
+      "conclusion": "Support passed historical engineering checks; fixed native access remains a valid zero-action diagnostic."
+    },
+    {
+      "subject": "sub-PAT28",
+      "role": "TRAIN",
+      "bindings": {
+        "case_bundle": "outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab",
+        "case_bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+        "case_semantic_hash": "sha256:69e57559a86b00a55c3b8b5e2b5e8cc7312d0170af6ba4496a951b76e7213228",
+        "evidence_hash": "sha256:438cc633203229fba184170563ce35bb0eec5c0a4419b5a7b670f1f5a6a9628b",
+        "evidence_id": "synthstrip_main_f59f40dea254",
+        "planning_hash": "sha256:8a2421f977f0639ee7560df445d2b81fdade3cc5b7bcdd747327b9eeef66dc70",
+        "role": "TRAIN",
+        "subject": "sub-PAT28",
+        "source_image_hash": "sha256:8dc0cee0d6a32bb2a32228fac0ee8d07aaceb9faccddf5c3e6e8620e05470d10",
+        "source_frame_hash": "sha256:e8bbb7e2b8bad5b91b87a2039504d861b5782c6908ae9edb4aa3fd5ab6cc477e",
+        "source_file_sha256": "sha256:70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+        "mask_hash": "sha256:fa0f3f7f4d07afa02d379eee63c2615eb420f9017265fa5edd7698a5c734cb7b",
+        "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "run_sha256": "sha256:f59f40dea25424d41407bfb018fd0ff0c7f81c9fca81acadc1bcd1ce2b64100e",
+        "source_annotation_file_sha256": "ff989398438cf6d628471acf1c5449e132c089bba07da3f2142757c21c3e8d71",
+        "main_mask_output_hashes": {
+          "main_mask.nii.gz": "f0df2a6c3531ee5949dc496047a6c9f3f67542a4613ce71728f8f19597c09428",
+          "main_distance_mm.nii.gz": "bd0570faa6ce2c273ca81d101930097283ca42b7f1f1edc29092ec0324cd6019"
+        },
+        "source_manifest": {
+          "path": "manifests/btc_acquisition.json",
+          "bytes": 9718,
+          "sha256": "f88d3a01a06e4e21c29de6ba49aff4a54bd230c9fdba4787170b10e19bdd18c4"
+        },
+        "acquired_source_files": [
+          {
+            "path": "derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+            "expected_bytes": 10486112,
+            "expected_md5": "15531588aad08c214c4e0613412a6502",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii?versionId=oylhu8qdf_OtewR.hAgwpKAHt1SjQvZI",
+            "bytes": 10486112,
+            "sha256": "ff989398438cf6d628471acf1c5449e132c089bba07da3f2142757c21c3e8d71"
+          },
+          {
+            "path": "sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+            "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+            "expected_bytes": 7444400,
+            "expected_md5": "2ba1aa890588b55f777b88da805d428e",
+            "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz?versionId=V6adVIQXeVlvM_3FSWbGxoZ68jlHDUmQ",
+            "bytes": 7444400,
+            "sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6"
+          }
+        ]
+      },
+      "evidence_records": [
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/declaration-input.json",
+          "bytes": 16093,
+          "sha256": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5"
+        },
+        {
+          "path": "artifacts/remaining-training-frozen-spatial-float64-v1/compact-summary.json",
+          "bytes": 28250,
+          "sha256": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6"
+        },
+        {
+          "path": "artifacts/brain-extraction/PAT28-structural-evidence-bridge-v1.json",
+          "bytes": 2899,
+          "sha256": "f627befcd04a7732e60a29261589dadd6ad93f06eaf065cc940dc326c3760354"
+        },
+        {
+          "path": "docs/brain-extraction-independent-qc.json",
+          "bytes": 5767,
+          "sha256": "a84495212f9afb4628ee5cf68ec97ebba674509f24131686d77fd0aa81a3c82b"
+        }
+      ],
+      "source_target_cells_outside_main_support": 0,
+      "historical_preparation_status": "complete",
+      "native_grid_evidence": "saved_source_grid_engineering_passed",
+      "native_action_evidence": {
+        "initial_legal_nonstop_actions": 70,
+        "initial_preview_dispositions": {
+          "HARD_GEOMETRY:WORKING_REACH": 8,
+          "NATIVE_CONNECTED_STROKE": 70
+        }
+      },
+      "current_lineage_guard": "SYNTHETIC_MODEL_INELIGIBLE at _provisional_proposal_support for known SynthStrip main hash",
+      "lineage": "real acquired T1/source annotation; synthetic-trained model-estimated support; simulator-derived native transitions if executed",
+      "anatomy_status": "estimated, review_required; no expert whole-volume/cortical approval",
+      "conclusion": "Candidate for exact-bound provisional TRAIN native diagnostic after explicit prospective model/source admission."
+    }
+  ],
+  "smallest_prospective_scope": {
+    "name": "btc-train-generated-to-real-diagnostic-v1",
+    "prerequisite": "Generated-development actor fitting succeeds under its separately reviewed declaration; bind the actual final checkpoint/hash/schema, not an old policy by filename.",
+    "source_set": "Keep all six TRAIN records in the denominator; PAT16/PAT20 remain support-blocked, PAT25 retains fixed-access no-action outcome.",
+    "allowed_support": "Only exact frozen main SynthStrip estimates in these TRAIN bundle/evidence/mask/run bindings, as hypothetical support; no cortex/working clinical mask approval.",
+    "first_execution": "One exact PAT05 metadata-bound input smoke check, then the same prospective source rule across all six frozen TRAIN records; no outcome-based replacement.",
+    "policy_mode": "Frozen inference diagnostic only; no real-patient optimizer updates or holdout access.",
+    "lineage_labels": {
+      "images": "real acquired",
+      "support": "synthetic-trained estimate, unreviewed anatomy",
+      "target": "threshold-derived source annotation scenario, not clinical probability",
+      "transitions_rewards": "simulator-generated/model-defined if executed",
+      "clinical_outcomes": "unavailable"
+    },
+    "contract_must_bind": [
+      "cohort bytes and person/role",
+      "source T1 and source annotation bytes",
+      "bundle byte/semantic/planning identities",
+      "main mask array/file/evidence and native frame identities",
+      "checkpoint, run/report, independent QC receipts and explicit support acknowledgment",
+      "generated actor checkpoint/architecture/observation schema and all native task/action/reward/horizon/runtime source hashes"
+    ],
+    "task_compatibility": "Earlier BTC preparation uses three-step horizon and64cubed crops; current generated opening study uses two-step analytical tasks. Freeze a compatible diagnostic task/schema prospectively; do not silently inherit mismatched horizons or reuse old policy training.",
+    "code_scope_after_writer_release": "Narrow explicit context at the exact known-model provisional-support consumption path; keep default require_admitted_model rejection, historical loaders/exclusions and anatomy/support gates intact. No blanket policy removal."
+  },
+  "preserved_gates": [
+    "PAT16/PAT20 target-outside-support19/125: do not fill, dilate, crop away, switch models or drop subjects to pass.",
+    "PAT25 zero legal actions is task/access geometry; do not silently replace the access rule or rank exits by reward.",
+    "Full-head/whole-brain estimates do not localize cortex or justify surgical access.",
+    "Motor/language/vascular coverage and operative outcomes remain unknown."
+  ],
+  "record_access": {
+    "individual_heldout_images_masks_bundles_weights_loaded": false,
+    "new_array_decoding": false,
+    "model_fitting": false,
+    "network_requests": 0,
+    "production_source_edits": 0,
+    "shared_metadata_records": "Role/cohort and combined historical integration/QC summaries were read; only TRAIN case bindings are included or used. No individual SELECT/transfer/external artifact was opened.",
+    "policy_scores_used_for_admission_or_selection": false
+  },
+  "limitations": [
+    "Saved byte/hash claims were joined from metadata; this audit did not reopen or rehash scientific payloads or checkpoints. Fresh prospective execution must verify exact bytes before use.",
+    "Synthetic-training permission does not independently validate any saved estimated support mask.",
+    "This would be an already-consulted TRAIN anatomy diagnostic, not clean held-out clinical transfer or final generalization evidence."
+  ]
+}

@@ -58,6 +58,15 @@ admission remain unestablished. The [single N36 specimen solve](artifacts/hbe-n3
 now passes its independently reproduced conditional consistency screen:
 0.642702 mN envelope versus 0.723189 mN allowance. It supports temporal review
 only; spatial acceptance, physical validation and calibration remain unestablished.
+The [N36/S120 increment check](artifacts/hbe-n36-temporal-preparation-v1/EXECUTION.md)
+is now running from a verified committed archive. Its 13.3256-second preparation
+completed; no terminal comparison result is available at this checkpoint. A separate
+[104-file RESECT originals queue](artifacts/resect-train-originals-preparation-v1/RESULT.md)
+is running continuously: 28 MRI, 17 ultrasound and 59 correspondence files from
+exactly the existing 14 TRAIN people, excluding all protected people. Its 43 owner
+and seven independent controls passed. Download completion and scientific QC remain
+separate. The [TRAIN compatibility contract](artifacts/btc-train-transfer-readiness-v1/contract.json)
+is archived for a two-forward PAT05 diagnostic without actions or optimization.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
 now advances acquired phases/points and reopens bound snapshots. Independent review
 cleared transport and packaged-startup repairs. Sparse landmarks still provide no

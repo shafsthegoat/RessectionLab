@@ -1,0 +1,104 @@
+{
+  "actions": {
+    "measured_curve_access": false,
+    "native_solver_calls": 0,
+    "new_mesher_calls": 0,
+    "old_raw_response_replays": 0,
+    "phase_execution": false,
+    "release_created": false,
+    "tracked_edits": false
+  },
+  "archive_verification": {
+    "archive": {
+      "path": "build/hbe-halfheight-global-n36-temporal-v1/source.tar",
+      "sha256": "0069e7d03e080dccec905d7625a4a5bdccaab38163df5a1dcd9225effc12eee9"
+    },
+    "archive_bytes": 716800,
+    "commit": "d131e8efe5a8cdf615ce403783654cae1b045079",
+    "declarations": 7,
+    "executing_module_origins_checked_from_archive": true,
+    "modules": 23,
+    "receipt": {
+      "bytes": 6325,
+      "path": "build/hbe-n36-temporal-independent-review-v1/archive-check.json",
+      "sha256": "57175e5a056eac1b02b0ebebc8782de732e15f94460562a536a914553685f084"
+    },
+    "regular_files": 30,
+    "source": {
+      "bytes": 2178,
+      "path": "build/hbe-n36-temporal-independent-review-v1/check_archive.py",
+      "sha256": "8a8c932d6f388f85206fae0b1e5d40a5ab5c36ad7e559dfc1bc3cc994545c32b"
+    }
+  },
+  "blocking_findings": [],
+  "created_at": "2026-10-08T19:05:14.823254+00:00",
+  "five_frozen_sources_unchanged": {
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json": {
+      "bytes": 22780,
+      "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": {
+      "bytes": 8765,
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py": {
+      "bytes": 27125,
+      "sha256": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": {
+      "bytes": 19175,
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    "tests/test_mechanics_hbe_halfheight_global_n36_temporal.py": {
+      "bytes": 8841,
+      "sha256": "3fa8d8675c741a33732b63e65245db1ed0e88eaaa6f65c06f688156a1bd46cb4"
+    }
+  },
+  "independent_tests": {
+    "errors": 0,
+    "failed": 0,
+    "junit": {
+      "bytes": 1566,
+      "path": "build/hbe-n36-temporal-independent-review-v1/tests.xml",
+      "sha256": "ca7eff2dff6b2aacf7a2df18b42a6519d9bbe483e6e341a96437a0f71be55ab2"
+    },
+    "log": {
+      "bytes": 98,
+      "path": "build/hbe-n36-temporal-independent-review-v1/tests.log",
+      "sha256": "36d79b4506934dd0a9d9a446970d04b03d95e121e9f5a917a88480e9ff7c3acc"
+    },
+    "passed": 8,
+    "pytest_seconds": 0.46,
+    "scope": "No response/geometry/native execution. Strict five-source/inherited20 identity and parser contracts; exact even-index mapping; nested subdeadline clipping and publication overrun refusal; timeout kill/reap; successful inclusive preparation timing; signed margin boundaries.",
+    "source": {
+      "bytes": 6376,
+      "path": "build/hbe-n36-temporal-independent-review-v1/test_review.py",
+      "sha256": "70aa897fd3ee5d321bac0b215fa3e9865c933b22841b103d8c78fb85d4267d73"
+    }
+  },
+  "limits": [
+    "Static/source and controlled software evidence do not establish an actual released preflight or successful native run. Root release remains separate.",
+    "Owner actual-geometry controls were not redundantly repeated. The eight independent controls use explicitly software-only child receipts and do not create scientific response fixtures.",
+    "The closing result receipt explicitly excludes its own final fsync; sampled memory/output peaks may miss brief excursions. These disclosed limits are unchanged.",
+    "Passing S120 could support only the declared static-compression load-increment candidate, not physical calibration, measured predictive accuracy or patient-specific material inference."
+  ],
+  "owner_evidence": "22 owner controls passed, including actual saved-geometry and exact S120 deck-preservation checks; evidence reviewed, broad suite not repeated.",
+  "owner_receipt": {
+    "bytes": 4883,
+    "path": "build/hbe-n36-temporal-implementation-v1/verification.json",
+    "sha256": "7aee1bb342d8d2d04af66255d9623f433c62b57820abe9fa22d765e7d8c133ca"
+  },
+  "schema": "hbe-n36-s120-independent-implementation-review-v1",
+  "source_findings": [
+    "One new solve and zero mesher calls. Accepted full/half geometry is hash-pinned and rechecked; no geometry generation path is called by the new runner.",
+    "The new deterministic deck changes only time_steps=120, step_size/dtmin/dtmax=1/120 and 121 samples of the same affine load path. Original material, mesh, constraints, solver tolerances, backend and output fields are canonically checked; true initial state and no retries/output thinning retained.",
+    "All 121 native node/element states and 120 nonzero residual states are required. Individual reconstructed/native physics and work-energy use the full 121-state sequence; no unavailable full-native equivalence is claimed.",
+    "Temporal comparison samples the fine record at exact even indices, yielding 61 common states and 75 probes without interpolation. Original force 1.6e-8+.002*max common fine force and motion 8e-7 m limits remain unchanged.",
+    "All 61 mixed-step classifications are recomputed with only N36 replaced. Directional margin reporting remains separate from temporal tolerances and all-state classification stability; no homogeneous new spatial-convergence claim is made.",
+    "One 2400 s aggregate clock begins before initial preflight. The 60 s pure-deck child stays in the supervised process group; its receipt publication is charged. Native solve receives min(2100s, remaining aggregate); cleanup/readout/comparison/result fsync+directory fsync+byte scan remain charged.",
+    "S120-specific parser/authentication caps of 768 MiB nodes/512 MiB elements preserve S60 and legacy limits. Streaming does not intentionally retain 121 complete field arrays. Sampled 3 GiB RSS, 1.5 GiB active and 2 GiB new-total caps are enforced through inherited fixed supervision.",
+    "Every phase uses exclusive new output paths. Publication acceptance is separate from payload status; incomplete preparation, supervision, temporal criteria, source or resource failures cannot promote a candidate. Calibration and spatial acceptance remain false; physical validation remains null.",
+    "Exact 30-file committed archive enforces 23 module identities and 7 declarations. All 20 inherited modules retain accepted hashes. Existing original negatives are bound and preserved."
+  ],
+  "status": "targeted_source_and_controls_clear_for_separate_root_preflight_release"
+}

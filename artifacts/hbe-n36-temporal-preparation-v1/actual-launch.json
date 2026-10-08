@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "build/hbe-halfheight-global-n36-temporal-v1/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "build/hbe-halfheight-global-n36-temporal-v1/solve-release.json",
+    "--release-sha256",
+    "b95f76c6999533f4ab1235e667a1f257242c5ad3be45253f36e799858ff6c705",
+    "--execute"
+  ],
+  "pid": 93106,
+  "started_utc": "2026-10-08T19:07:06.942014+00:00",
+  "source_commit": "d131e8efe5a8cdf615ce403783654cae1b045079",
+  "release_sha256": "b95f76c6999533f4ab1235e667a1f257242c5ad3be45253f36e799858ff6c705"
+}
