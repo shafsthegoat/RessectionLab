@@ -1,0 +1,51 @@
+{
+  "artifacts_sha256": {
+    "pytest.log": "16a0c06844c73fbb8ccf1f78330c1e5ab7069be600fc91e49bc1fef5c9bce267",
+    "test_independent_rl_capacity.py": "d0ca7a1954f2ea914e02c8aa57133b413d3af5bb946c4074a0f9c498af5f48b7"
+  },
+  "checks": {
+    "assessment_arithmetic": "Recomputed initial expected return from saved probability vectors only; degenerate STOP gives0 and deterministic teacher conditional probabilities give1.1 with2 target/4 normal. Original64 independent episode receipts cover all16 routes. No new tree search.",
+    "evaluation_separation": "Five cached reconstructed observations and16 authenticated terminal routes support privileged readouts only. Training calls reinforce_loss with four fresh complete audited episode objects; no teacher action, nominal return, cached state or stored episode enters the batch.",
+    "failure_accounting": "Rejected initial independent audit prevents optimizer construction. Rejected second collection episode prevents loss/gradient, retains first completed outcome, marks failed episode null and later slots not started. No partial batch training.",
+    "fixed_work": "256 updates, four fresh episodes/update,1024 complete training episodes, at most2048 training transitions/repeated loss forwards, six five-state readouts; no performance stopping/checkpoint selection/retry. New preparation, four evaluation prefix transitions, readouts, sampled episodes and audits are charged.",
+    "invariance_control": "Pure worker orchestration stubs confirmed that shifting every privileged route return by+1000 leaves the four fresh objects and RL hyperparameters passed to loss unchanged.",
+    "lineage": "Original simulator-generated task, original initial weights, same REINFORCE/Adam/reward/model/settings; no BC checkpoint initialization, real patient or held-out access.",
+    "original_reproduction": "First64 sampled episodes compare observation hashes, complete action inventory/mask, selected actions, logits/probabilities/value, rewards, termination and behavior weights; each first16 loss and gradient/hash record must exactly match; fixed16 final hash must match original RL16.",
+    "supervision": "180-second parent threshold,2-GiB sampled worker RSS, one CPU/BLAS thread, no automatic retry, new output directory required, frozen raw declaration hash and source snapshots; previous artifacts remain untouched."
+  },
+  "conclusion": "No concrete blocker found for exactly one declared fixed seed11 scratch RL256 run. No actual rollout, policy forward, native task or optimizer update executed during this review.",
+  "controls": {
+    "excluded_actual_forward_rollout_gradient_controls": 2,
+    "execution_scope": "Metadata, scalar probability arithmetic and fake orchestration dependencies only. No actual task, model construction, policy forward, scientific array generation, gradient or optimizer step.",
+    "independent_controls": 13,
+    "passed": 27,
+    "seconds": 22.63,
+    "selected_owner_controls": 14
+  },
+  "declaration_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+  "environment": {
+    "numpy": "2.5.3",
+    "pytest": "9.1.1",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "findings": [],
+  "frozen_files_and_inputs_unchanged_after_tests": true,
+  "frozen_files_sha256": {
+    "docs/native-opening-rl-capacity.md": "8cce154f0d415938ccb9102d6c5bd1004058123ede8680b4716756013c42d78b",
+    "manifests/experiments/native-opening-rl-capacity-v1.json": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+    "scripts/run_native_opening_rl_capacity.py": "8391c317dd7cf305747bde3c62de3f0b67d0c8b69e0ff0b196924c63f92e39e0",
+    "tests/test_native_opening_rl_capacity.py": "4803c66efceea4de7f368e1f351f5dc6e6e992b489d278670714dc65a118e906"
+  },
+  "inherited_inputs_verified": 81,
+  "limitations": [
+    "Prospective review does not establish success of the longer fit. Preserve fixed-final negative outcomes and all failed or timed-out attempts.",
+    "Expected reward and target probabilities are exact calculations over the already-authenticated finite generated tree, not fresh sampled evaluation, patient probabilities or unbiased generalization measurements.",
+    "The180-second supervisor threshold is polled with0.2-second cadence, up to2-second RSS measurement timeout and2-second termination grace;2GiB is sampled worker RSS. Report actual measurements and failures, not strict instantaneous caps.",
+    "Third-party dependency versions are not pinned by the declaration; the first16 full numerical reproduction gates detect early numerical divergence. Source declarations are not protection against arbitrary in-process monkeypatching.",
+    "One generated task and one seed do not establish seed robustness, anatomical generalization, clinical/physical validity or a computational advantage over search. Prior BC16/RL16 negative results remain part of the evidence."
+  ],
+  "source_files_verified": 33,
+  "status": "passed_bounded_protocol_review",
+  "version": "native-opening-rl-capacity-independent-pre-execution-review-v1"
+}
