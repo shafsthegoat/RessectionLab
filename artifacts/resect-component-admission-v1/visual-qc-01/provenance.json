@@ -1,0 +1,336 @@
+{
+  "annotated_cavity_voxels": 20005,
+  "clinical_or_expert_acceptance": false,
+  "complete_removed_tissue": false,
+  "declaration_sha256": "34f02291feb4cee8d0cfbba4bdbeaa5c45c750b3bd9619c7bc7b0479da2cc21e",
+  "decode_semantics": "One get_fdata(float32) payload-array decode per original; original NIfTI scaling only; header reads separate.",
+  "decoded_total_bytes": 200731440,
+  "decoded_total_limit_bytes": 536870912,
+  "display_percentiles": [
+    1,
+    99
+  ],
+  "display_window_percentile_values": [
+    0.0,
+    96.88258361816406
+  ],
+  "elapsed_seconds": 1.6382840829901397,
+  "finite_image_voxels": 25091430,
+  "fixed_indices": [
+    167,
+    135,
+    56
+  ],
+  "headers": {
+    "image": {
+      "effective_proxy_intercept": 0.0,
+      "effective_proxy_slope": 0.8980392217636108,
+      "qform": null,
+      "qform_code": 0,
+      "selected_affine_ras_mm": [
+        [
+          0.13445448875427246,
+          -0.09907855093479156,
+          0.11002469062805176,
+          -56.52254867553711
+        ],
+        [
+          0.12957128882408142,
+          0.15065573155879974,
+          -0.02267392724752426,
+          -34.465274810791016
+        ],
+        [
+          -0.07164684683084488,
+          0.08652336150407791,
+          0.16547027230262756,
+          -0.5235961079597473
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform": [
+        [
+          0.13445448875427246,
+          -0.09907855093479156,
+          0.11002469062805176,
+          -56.52254867553711
+        ],
+        [
+          0.12957128882408142,
+          0.15065573155879974,
+          -0.02267392724752426,
+          -34.465274810791016
+        ],
+        [
+          -0.07164684683084488,
+          0.08652336150407791,
+          0.16547027230262756,
+          -0.5235961079597473
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_code": 1,
+      "shape": [
+        338,
+        303,
+        245
+      ],
+      "stored_dtype": "float32",
+      "stored_pixdim": [
+        1.0,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.1999998837709427,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "units": "mm"
+    },
+    "mask": {
+      "effective_proxy_intercept": 0.0,
+      "effective_proxy_slope": 1.0,
+      "qform": [
+        [
+          0.13445445528927938,
+          -0.09907851158852793,
+          0.11002470066099956,
+          -56.52254867553711
+        ],
+        [
+          0.12957134884653132,
+          0.15065576178671283,
+          -0.022673940499703612,
+          -34.465274810791016
+        ],
+        [
+          -0.07164681572161154,
+          0.08652335623379435,
+          0.16547027278355447,
+          -0.5235961079597473
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "selected_affine_ras_mm": [
+        [
+          0.13445445528927938,
+          -0.09907851158852793,
+          0.11002470066099956,
+          -56.52254867553711
+        ],
+        [
+          0.12957134884653132,
+          0.15065576178671283,
+          -0.022673940499703612,
+          -34.465274810791016
+        ],
+        [
+          -0.07164681572161154,
+          0.08652335623379435,
+          0.16547027278355447,
+          -0.5235961079597473
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform": null,
+      "sform_code": 0,
+      "shape": [
+        338,
+        303,
+        245
+      ],
+      "stored_dtype": "uint8",
+      "stored_pixdim": [
+        1.0,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.1999998837709427,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "units": "mm"
+    }
+  },
+  "image_nonfinite_voxels": 0,
+  "inputs_unchanged": true,
+  "maximum_grid_corner_difference_mm": 3.067954999092867e-05,
+  "outline_semantics": "Exact voxel edges; no interpolated contours. No unobserved cavity or removed-tissue inference.",
+  "output": {
+    "bytes": 611414,
+    "path": "fixed-native-cavity-panel.png",
+    "sha256": "0f3cf33bcf51608d0c59d80a95a778e7c0563251a1b5fedba6c56b6f3e726756"
+  },
+  "patient_group": "RESECT:Case3",
+  "payload_array_decodes": {
+    "image": 1,
+    "mask": 1
+  },
+  "planes": [
+    {
+      "exact_voxel_outline_segments": 164,
+      "extent": [
+        -0.5,
+        302.5,
+        -0.5,
+        244.5
+      ],
+      "fixed_axis": 0,
+      "fixed_index": 167,
+      "horizontal_axis": 1,
+      "horizontal_spacing_mm": 0.2000000019820514,
+      "origin": "lower",
+      "positive_mask_pixels": 562,
+      "right_unit_ras": [
+        -0.4953927497644884,
+        0.7532786503288137,
+        0.43261680323304585
+      ],
+      "up_unit_ras": [
+        0.5501237932507529,
+        -0.1133697063277125,
+        0.8273518730181078
+      ],
+      "vertical_axis": 2,
+      "vertical_spacing_mm": 0.19999987635128738
+    },
+    {
+      "exact_voxel_outline_segments": 148,
+      "extent": [
+        -0.5,
+        337.5,
+        -0.5,
+        244.5
+      ],
+      "fixed_axis": 1,
+      "fixed_index": 135,
+      "horizontal_axis": 0,
+      "horizontal_spacing_mm": 0.1999999977362721,
+      "origin": "lower",
+      "positive_mask_pixels": 511,
+      "right_unit_ras": [
+        0.6722724513805718,
+        0.6478564514532607,
+        -0.35823423820894856
+      ],
+      "up_unit_ras": [
+        0.5501237932507529,
+        -0.1133697063277125,
+        0.8273518730181078
+      ],
+      "vertical_axis": 2,
+      "vertical_spacing_mm": 0.19999987635128738
+    },
+    {
+      "exact_voxel_outline_segments": 138,
+      "extent": [
+        -0.5,
+        337.5,
+        -0.5,
+        302.5
+      ],
+      "fixed_axis": 2,
+      "fixed_index": 56,
+      "horizontal_axis": 0,
+      "horizontal_spacing_mm": 0.1999999977362721,
+      "origin": "lower",
+      "positive_mask_pixels": 353,
+      "right_unit_ras": [
+        0.6722724513805718,
+        0.6478564514532607,
+        -0.35823423820894856
+      ],
+      "up_unit_ras": [
+        -0.4953927497644884,
+        0.7532786503288137,
+        0.43261680323304585
+      ],
+      "vertical_axis": 1,
+      "vertical_spacing_mm": 0.2000000019820514
+    }
+  ],
+  "plot_source_sha256": "e7578639502f33c4bc05466a90fd71cf99dd439700f06df5f5497f2db07ca6ab",
+  "positive_mask_bbox_inclusive": [
+    [
+      142,
+      193
+    ],
+    [
+      107,
+      163
+    ],
+    [
+      27,
+      85
+    ]
+  ],
+  "process_hard_rss_enforced": false,
+  "raw_affine_difference": [
+    [
+      3.3464993082210626e-08,
+      -3.93462636361086e-08,
+      -1.0032947805882486e-08,
+      0.0
+    ],
+    [
+      -6.00224498992219e-08,
+      -3.0227913089264646e-08,
+      1.3252179350414783e-08,
+      0.0
+    ],
+    [
+      -3.110923334215254e-08,
+      5.270283556790822e-09,
+      -4.809269094074864e-10,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "role": "TRAIN",
+  "saved_qc_corner_difference_mm": 3.067954999092867e-05,
+  "schema": "resect-case3-cavity-visual-qc.v1",
+  "shape": [
+    338,
+    303,
+    245
+  ],
+  "source_mask_labels": [
+    0.0,
+    1.0
+  ],
+  "status": "rendered_visual_review_pending",
+  "training_admitted": false,
+  "versions": {
+    "matplotlib": "3.11.2",
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3"
+  }
+}

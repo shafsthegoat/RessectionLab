@@ -1,0 +1,261 @@
+{
+  "subject": "sub-222",
+  "session": "ses-20110808",
+  "role": "TRAIN",
+  "status": "acquired",
+  "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+  "files": [
+    {
+      "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_T1w.nii.gz",
+      "bytes": 7826571,
+      "sha256": "66c8dcb3566f5a395a49b66adb94dfce941780e9817a23826fa7a6f545798995",
+      "status": "downloaded_and_verified"
+    },
+    {
+      "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_T1w.json",
+      "bytes": 1584,
+      "sha256": "d996921e41f342b4e111b987d2e4d22fb7d3bb39427dd80886f906567cef8905",
+      "status": "pinned_metadata_published"
+    },
+    {
+      "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_angio.nii.gz",
+      "bytes": 26188570,
+      "sha256": "54621b563bc0a4a5d4f1f608c055e53d7c4ad6d3c3985525c41133e2d2daab3d",
+      "status": "downloaded_and_verified"
+    },
+    {
+      "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_angio.json",
+      "bytes": 1560,
+      "sha256": "1d62ee2fa2323851c0afa71a7c64f41ef23ce01f35a1ad1851f86064bba489dc",
+      "status": "pinned_metadata_published"
+    }
+  ],
+  "integrity_qc": [
+    {
+      "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_T1w.nii.gz",
+      "status": "header_and_scalar_checks_passed",
+      "header": {
+        "file": "sub-222_ses-20110808_T1w.nii.gz",
+        "shape": [
+          35,
+          420,
+          448
+        ],
+        "affine_ras_mm": [
+          [
+            -3.9000015258789062,
+            0.0,
+            0.0,
+            66.30000305175781
+          ],
+          [
+            0.0,
+            0.5580357313156128,
+            0.0,
+            -111.22735595703125
+          ],
+          [
+            0.0,
+            0.0,
+            0.5580357313156128,
+            -64.08135986328125
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_native": [
+          [
+            -3.9000000953674316,
+            0.0,
+            0.0,
+            66.29995727539062
+          ],
+          [
+            0.0,
+            0.5580357313156128,
+            0.0,
+            -111.22735595703125
+          ],
+          [
+            0.0,
+            0.0,
+            0.5580357313156128,
+            -64.08135986328125
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": [
+          [
+            -3.9000015258789062,
+            0.0,
+            0.0,
+            66.30000305175781
+          ],
+          [
+            0.0,
+            0.5580357313156128,
+            0.0,
+            -111.22735595703125
+          ],
+          [
+            0.0,
+            0.0,
+            0.5580357313156128,
+            -64.08135986328125
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          3.9000015258789062,
+          0.5580357313156128,
+          0.5580357313156128
+        ],
+        "voxel_volume_mm3": 1.214475597121916,
+        "handedness": "left",
+        "anisotropic": true,
+        "obliquity_degrees": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "minimum": 0.0,
+      "maximum": 2593.0,
+      "voxels": 6585600
+    },
+    {
+      "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_angio.nii.gz",
+      "status": "header_and_scalar_checks_passed",
+      "header": {
+        "file": "sub-222_ses-20110808_angio.nii.gz",
+        "shape": [
+          350,
+          448,
+          144
+        ],
+        "affine_ras_mm": [
+          [
+            0.46875,
+            0.0,
+            0.0,
+            -81.5625
+          ],
+          [
+            0.0,
+            0.46875,
+            0.0,
+            -104.53125
+          ],
+          [
+            0.0,
+            0.0,
+            0.7000000476837158,
+            -50.400001525878906
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 0,
+        "qform_native": [
+          [
+            0.46875,
+            0.0,
+            0.0,
+            -81.5625
+          ],
+          [
+            0.0,
+            0.46875,
+            0.0,
+            -104.53125
+          ],
+          [
+            0.0,
+            0.0,
+            0.7000000476837158,
+            -50.400001525878906
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": null,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.46875,
+          0.46875,
+          0.7000000476837158
+        ],
+        "voxel_volume_mm3": 0.15380860422737896,
+        "handedness": "right",
+        "anisotropic": true,
+        "obliquity_degrees": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "minimum": 0.0,
+      "maximum": 1020.0,
+      "voxels": 22579200
+    }
+  ],
+  "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766",
+  "execution_source_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/source.json",
+  "existing_files_only": false,
+  "elapsed_seconds": 57.04358141706325,
+  "acquired_at": "2026-10-08T10:24:19.985470+00:00",
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "registration": "unverified",
+  "anatomical_coverage": "unreviewed",
+  "component_optimizer_updates": 0,
+  "recorded_rl_transitions": 0
+}

@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T10:32:05.405863+00:00",
+  "updated_at": "2026-10-08T10:48:00.900527+00:00",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -16,14 +16,14 @@
       "discovered_people": 284,
       "declared_train_people": 199,
       "declared_train_sessions": 210,
-      "acquired_train_people": 74,
-      "acquired_train_sessions": 76,
+      "acquired_train_people": 90,
+      "acquired_train_sessions": 95,
       "acquired_modalities": [
         "T1w",
         "TOF-MRA"
       ],
-      "acquired_bytes": 3496113284,
-      "byte_and_scalar_qc_passed_people": 74,
+      "acquired_bytes": 4315283541,
+      "byte_and_scalar_qc_passed_people": 90,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Continue remaining 134 TRAIN sessions; acquire and check 144 metadata-qualified TRAIN masks with annotation subtype and missingness retained; no component learning admission yet",
+      "next": "Continue remaining 115 TRAIN sessions; acquire and check 144 metadata-qualified TRAIN masks with annotation subtype and missingness retained; no component learning admission yet",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -42,8 +42,8 @@
       "indexed_source_files": 840,
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
-      "remaining_train_sessions_to_acquire": 134,
-      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-16-summary.json",
+      "remaining_train_sessions_to_acquire": 115,
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-18-summary.json",
       "acquired_source_manual_aneurysm_masks": 1,
       "manual_annotation_bytes": 82420,
       "manual_annotation_positive_voxels": 193,
@@ -90,7 +90,7 @@
       "pilot_manifest": "manifests/resect-case3-cavity-pilot-v1.json",
       "pilot_patient": "RESECT:Case3",
       "acquired_train_people": 1,
-      "acquired_train_bytes": 9156131,
+      "acquired_train_bytes": 9184649,
       "used_in_component_fitting_people": 0,
       "component_optimizer_updates": 0,
       "recorded_surgical_transitions": 0,
@@ -98,7 +98,7 @@
       "used_in_offline_rl_people": 0,
       "checkpoint_contributions": [],
       "receipt": "artifacts/resect-component-admission-v1/RESULT.md",
-      "next": "Preserve original-image success and mask HTTP429; deliberately resume the frozen mask after source service permits, then run separate pair QC",
+      "next": "Qualify full labeled TRAIN inventory, preserve absent labels and withheld patients, and define a source-faithful cavity component study before fitting",
       "exclusions": [
         "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
         "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
@@ -106,11 +106,11 @@
       ],
       "annotation_rights_receipt": "artifacts/resect-component-admission-v1/rights-review-02/README.txt",
       "acquired_original_images": 1,
-      "acquired_annotation_masks": 0,
-      "complete_image_annotation_pairs": 0,
-      "qc_passed_pairs": 0,
-      "acquisition_scope": "Verified original image only; annotation request HTTP429, pair incomplete",
-      "latest_acquisition": "artifacts/resect-component-admission-v1/acquisition-native-trust-01/worker-result.json",
+      "acquired_annotation_masks": 1,
+      "complete_image_annotation_pairs": 1,
+      "qc_passed_pairs": 1,
+      "acquisition_scope": "Exact original image and source annotation acquired; independent byte/header/scalar/binary/grid checks passed; anatomical review pending",
+      "latest_acquisition": "artifacts/resect-component-admission-v1/acquisition-complete-01/worker-result.json",
       "development_correspondence_evaluation": {
         "patient": "RESECT:Case4",
         "role": "DEVELOPMENT",
@@ -128,7 +128,9 @@
         "clinical_accuracy_verified": false,
         "optimizer_updates": 0,
         "recorded_rl_transitions": 0
-      }
+      },
+      "pair_qc": "artifacts/resect-component-admission-v1/pair-qc-01/independent-review.json",
+      "source_annotated_cavity_voxels": 20005
     },
     {
       "accession": "VitalDB",

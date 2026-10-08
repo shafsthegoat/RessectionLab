@@ -34,8 +34,8 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Seventy-six pairs from 74 people acquired (3,496,113,284 bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 134 TRAIN sessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
-| Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. The historical rights-only HTTP429 is preserved; exact1656byte rights text now archived, exact-object redirect fix independently verified. | The native macOS trust fix acquired the exact 9,156,131-byte original; the mask returned HTTP429. Resume the frozen mask when source service permits, then complete independent pair QC before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Ninety-five pairs from 90 people acquired (4,315,283,541 bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 115 TRAIN sessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
+| Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. The historical rights-only HTTP429 is preserved; exact1656byte rights text now archived, exact-object redirect fix independently verified. | The exact Case3 pair is acquired after the retained HTTP429. Independent grid/binary/count QC and fixed-slice engineering inspection pass; anatomical review and component fitting remain open. Qualify the full labeled TRAIN inventory without borrowing Case4 or withheld records. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
@@ -303,3 +303,17 @@ learned surgery, dense retained-tissue accuracy or demonstrated decision benefit
 The historical failures remain. Case4 V is consumed for future adapted methods.
 Next: observed-state replay and stale-result invalidation, with unsupported
 clearance/cavity decisions remaining unavailable.
+
+## October 8: ninety-person intake and completed Case3 pair QC
+
+[Batch18](../artifacts/lausanne-train-intake-v1/acquisition-batch-18-summary.json)
+closes at 90 people, 95 sessions and 4,315,283,541 bytes after root and independent
+original/source-snapshot checks. Nineteen sessions from sixteen people were added
+in batches17–18. The remaining denominator is 109 people / 115 sessions; the
+sub251 timeout remains visible and the nineteenth attempt is separate.
+
+[Case3](../artifacts/resect-component-admission-v1/RESULT.md) now has one complete
+real ultrasound/cavity pair. Independent source/grid/scalar checks reproduce
+20,005 binary positives and 0.00003068 mm maximum grid difference. Fixed native
+slice inspection preserves raw header differences and source/manual annotation
+limits. No anatomical acceptance, optimizer updates, training or RL follows.

@@ -1,0 +1,217 @@
+{
+  "scope": "qc",
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "status": "completed",
+  "manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "execution_source_sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a",
+  "events": [],
+  "files": [
+    {
+      "path": "originals/Case3-US-during.nii.gz",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20"
+    },
+    {
+      "path": "originals/Case3-US-during-resection.nii.gz",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63"
+    }
+  ],
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "training_admitted": false,
+  "structural_qc": {
+    "headers": [
+      {
+        "file": "Case3-US-during.nii.gz",
+        "shape": [
+          338,
+          303,
+          245
+        ],
+        "affine_ras_mm": [
+          [
+            0.13445448875427246,
+            -0.09907855093479156,
+            0.11002469062805176,
+            -56.52254867553711
+          ],
+          [
+            0.12957128882408142,
+            0.15065573155879974,
+            -0.02267392724752426,
+            -34.465274810791016
+          ],
+          [
+            -0.07164684683084488,
+            0.08652336150407791,
+            0.16547027230262756,
+            -0.5235961079597473
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 0,
+        "sform_code": 1,
+        "qform_native": null,
+        "sform_native": [
+          [
+            0.13445448875427246,
+            -0.09907855093479156,
+            0.11002469062805176,
+            -56.52254867553711
+          ],
+          [
+            0.12957128882408142,
+            0.15065573155879974,
+            -0.02267392724752426,
+            -34.465274810791016
+          ],
+          [
+            -0.07164684683084488,
+            0.08652336150407791,
+            0.16547027230262756,
+            -0.5235961079597473
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.1999999977362721,
+          0.2000000019820514,
+          0.19999987635128738
+        ],
+        "voxel_volume_mm3": 0.007999995042782926,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          47.75730310504378,
+          41.12481149937213,
+          34.17233542553334
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      {
+        "file": "Case3-US-during-resection.nii.gz",
+        "shape": [
+          338,
+          303,
+          245
+        ],
+        "affine_ras_mm": [
+          [
+            0.13445445528927938,
+            -0.09907851158852793,
+            0.11002470066099956,
+            -56.52254867553711
+          ],
+          [
+            0.12957134884653132,
+            0.15065576178671283,
+            -0.022673940499703612,
+            -34.465274810791016
+          ],
+          [
+            -0.07164681572161154,
+            0.08652335623379435,
+            0.16547027278355447,
+            -0.5235961079597473
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 0,
+        "qform_native": [
+          [
+            0.13445445528927938,
+            -0.09907851158852793,
+            0.11002470066099956,
+            -56.52254867553711
+          ],
+          [
+            0.12957134884653132,
+            0.15065576178671283,
+            -0.022673940499703612,
+            -34.465274810791016
+          ],
+          [
+            -0.07164681572161154,
+            0.08652335623379435,
+            0.16547027278355447,
+            -0.5235961079597473
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": null,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.20000000298023224,
+          0.20000000298023227,
+          0.1999998837709427
+        ],
+        "voxel_volume_mm3": 0.00799999558925615,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          47.75731741937896,
+          41.12479866033467,
+          34.172338311183914
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      }
+    ],
+    "maximum_grid_corner_difference_mm": 3.067954999092867e-05,
+    "image_minimum": 0.0,
+    "image_maximum": 205.65098571777344,
+    "label_values": [
+      0.0,
+      1.0
+    ],
+    "annotated_cavity_voxels": 20005,
+    "status": "passed_byte_header_scalar_and_binary_grid_checks",
+    "anatomical_review": "pending",
+    "clinical_accuracy": "not_established",
+    "training_admitted": false,
+    "spatial_planning_admitted": false
+  },
+  "elapsed_seconds": 0.620897457934916
+}

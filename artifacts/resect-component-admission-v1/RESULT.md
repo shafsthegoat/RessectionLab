@@ -100,3 +100,36 @@ byte fixity, exact source binding and child cleanup passed independent review.
 No image arrays were opened for this review. Complete pairs, QC, component
 fitting and recorded RL transitions remain zero. The next step is a deliberate
 bounded mask resume after source service permits it, followed by separate QC.
+
+## Complete Case3 pair and independently checked QC, October 8
+
+One later deliberate bounded attempt acquired the frozen 28,518-byte mask in
+3.957 seconds, reusing and rechecking the verified original image. The actual
+HTTP chain was 302 → 302 → 200. Source bytes, rights and role were unchanged;
+no retry ran inside the attempt. Both historical rate-limit failures remain.
+
+The separate 0.803-second QC run and independent calculations agree: both
+volumes are 338 × 303 × 245 (25,091,430 finite voxels), with **20,005 binary
+positive cavity voxels**. The maximum original grid-corner difference is
+**0.00003068 mm**, below the frozen 0.01 mm criterion. The raw headers differ
+(image qform0/sform1; mask qform1/sform0); they have not been replaced.
+
+[Acquisition](acquisition-complete-01/worker-result.json),
+[QC](pair-qc-01/worker-result.json),
+[independent review](pair-qc-01/independent-review.json),
+[fixed-slice visual QC](visual-qc-01/fixed-native-cavity-panel.png).
+
+Visualization used a prospectively declared single decode per volume, three
+full-field native slices through the source-mask bounding-box midpoints, and a
+fixed percentile display rule. It took 1.769 seconds and decoded 200,731,440
+float32 bytes; this is not a hard RSS measurement/limit. The original arrays and
+rights records remain unchanged. The byte-preserved plotting script retains its
+original ignored-build execution layout; it is historical evidence, not a new
+anatomical acceptance command.
+
+All three panel outlines are legible and remain source annotations. This is
+engineering inspection, not independent clinical/expert review. Visible cavity
+is not complete removed tissue or a force/action measurement. Noncommercial
+rights apply to labels. Training, spatial planning, clinical accuracy and RL
+admission remain false; next qualify the remaining eligible TRAIN annotations
+and define a source-faithful cavity component task with independent evaluation.

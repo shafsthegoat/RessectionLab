@@ -1,0 +1,57 @@
+{
+  "clinical_or_expert_acceptance": false,
+  "complete_removed_tissue": false,
+  "declaration": {
+    "bytes": 3391,
+    "path": "build/resect-case3-cavity-visual-qc-v1/declaration.json",
+    "sha256": "34f02291feb4cee8d0cfbba4bdbeaa5c45c750b3bd9619c7bc7b0479da2cc21e"
+  },
+  "decoded_float32_arrays_total_bytes": 200731440,
+  "decoded_limit_bytes": 536870912,
+  "execution": {
+    "bytes": 426,
+    "path": "build/resect-case3-cavity-visual-qc-v1/execution.json",
+    "sha256": "c791c2f4675a0f6a8868924dd1d7686662bf20834637a8d61c7abe32a80c058c"
+  },
+  "figure": {
+    "bytes": 611414,
+    "path": "build/resect-case3-cavity-visual-qc-v1/fixed-native-cavity-panel.png",
+    "sha256": "0f3cf33bcf51608d0c59d80a95a778e7c0563251a1b5fedba6c56b6f3e726756"
+  },
+  "fixed_indices": [
+    167,
+    135,
+    56
+  ],
+  "maximum_original_grid_corner_difference_mm": 3.067954999092867e-05,
+  "noncommercial_annotation_rights": "CC-BY-NC-SA-4.0",
+  "official_qc_modified": false,
+  "payload_array_decodes": {
+    "image": 1,
+    "mask": 1
+  },
+  "percentile_display_window": [
+    0.0,
+    96.88258361816406
+  ],
+  "process_hard_rss_claim": false,
+  "provenance": {
+    "bytes": 7351,
+    "path": "build/resect-case3-cavity-visual-qc-v1/provenance.json",
+    "sha256": "d3ab18e154c6e2dbc0468b3c7d45b7145b5655220711c5eb51de8868a4a1e42a"
+  },
+  "pseudo_labels": false,
+  "rerun_or_slice_sweep": false,
+  "schema": "resect-case3-cavity-panel-visual-inspection.v1",
+  "source_manual_annotation": true,
+  "status": "visual_engineering_inspection_completed",
+  "training_admission": false,
+  "visual_findings": [
+    "All three full-field native image panels and orange exact-voxel mask outlines are visible and legible.",
+    "The fixed outlines occupy darker local regions in these three displayed slices; this appearance is not an anatomical, expert or clinical accuracy finding.",
+    "No title, axis, direction-vector or footer overlap/clipping was observed. The native physical aspect produces different panel heights.",
+    "Bright image regions saturate at the declared finite-intensity99th-percentile display limit. No alternate window, slice or mask repair was attempted.",
+    "Raw image sform-only versus mask qform-only headers and their small measured mismatch remain explicitly labeled."
+  ],
+  "whole_volume_alignment_acceptance": false
+}

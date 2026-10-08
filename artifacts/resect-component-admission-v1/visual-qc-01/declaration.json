@@ -1,0 +1,91 @@
+{
+  "authorization": "Root task: single fixed TRAIN Case3 original-image/manual-cavity-mask visualization; no Case4 or training.",
+  "claims": {
+    "clinical_or_expert_acceptance": false,
+    "pseudo_labels": false,
+    "training_admitted": false,
+    "visual_engineering_inspection_only": true
+  },
+  "declared_before_array_decode": true,
+  "expected_outputs": [
+    "fixed-native-cavity-panel.png",
+    "plot.py",
+    "provenance.json",
+    "inspection.json"
+  ],
+  "geometry_display": {
+    "affine": "original selected coded NIfTI affine, checked against saved QC",
+    "aspect": "vertical affine-column norm / horizontal affine-column norm",
+    "labels": "native fixed axis/index and displayed native axes; right/up direction unit vectors in RAS+; explicitly oblique"
+  },
+  "image_display": {
+    "array_decode_dtype": "float32",
+    "intensity_transform": "none except display window clipping",
+    "population": "all finite original image intensities; zeros retained",
+    "quantile_method": "linear",
+    "spatial_interpolation": "none; native pixel display only",
+    "window_percentiles": [
+      1,
+      99
+    ]
+  },
+  "inputs": {
+    "acquisition_manifest": {
+      "bytes": 2415,
+      "path": "data/annotations/resect-seg-v1/attempts/acquire-20261008T103317633426Z/manifest.json",
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    "image": {
+      "bytes": 9156131,
+      "path": "data/annotations/resect-seg-v1/originals/Case3-US-during.nii.gz",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20"
+    },
+    "mask": {
+      "bytes": 28518,
+      "path": "data/annotations/resect-seg-v1/originals/Case3-US-during-resection.nii.gz",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63"
+    },
+    "rights": {
+      "bytes": 1656,
+      "path": "data/annotations/resect-seg-v1/rights/README.txt",
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    "saved_qc": {
+      "bytes": 5637,
+      "path": "data/annotations/resect-seg-v1/attempts/qc-20261008T103418850718Z/worker-result.json",
+      "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+    }
+  },
+  "limits": {
+    "decoded_total_bytes": 536870912,
+    "payload_array_decodes_per_file": 1,
+    "process_hard_rss_enforced": false,
+    "retry": false,
+    "wall_seconds": 120
+  },
+  "overlay": {
+    "maximum_grid_corner_difference_mm": 0.01,
+    "no_registration_or_reorientation": true,
+    "no_threshold_or_mask_repair": true,
+    "requires_equal_shape": true,
+    "rule": "same-index native voxel-edge outline only; positive mask remains the original binary annotation"
+  },
+  "patient_group": "RESECT:Case3",
+  "rights": {
+    "annotation": "CC-BY-NC-SA-4.0; noncommercial use",
+    "annotation_semantics": "source manual contours + morphological interpolation + expert review; visible cavity only, may omit blood-filled regions; not complete removed tissue",
+    "image": "CC-BY-4.0"
+  },
+  "role": "TRAIN",
+  "schema": "resect-case3-cavity-static-visualization-declaration.v1",
+  "slice_rule": {
+    "axes": [
+      0,
+      1,
+      2
+    ],
+    "full_field_of_view": true,
+    "indices": "floor((positive_mask_bbox_min_inclusive + positive_mask_bbox_max_inclusive)/2) independently for each native axis",
+    "slice_sweep": false
+  }
+}

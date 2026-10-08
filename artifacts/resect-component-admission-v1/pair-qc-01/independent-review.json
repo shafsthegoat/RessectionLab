@@ -1,0 +1,203 @@
+{
+  "schema": "resectionlab.resect-case3-pair-qc-independent-review.v1",
+  "status": "passed_structural_byte_header_grid_finite_binary_checks",
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "execution_source_sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a",
+  "closures": [
+    {
+      "scope": "acquire",
+      "attempt": "data/annotations/resect-seg-v1/attempts/acquire-20261008T103317633426Z",
+      "worker_receipt_sha256": "cc3e33c5a281b9567de89771fd4cd650ff32bc7b27ee9df3bfd4148be2194afd",
+      "supervision_receipt_sha256": "031ee247fbd99a0b943efb73b07319a2fd1cc1458eb82cf5c0b7f0a8681d774b",
+      "elapsed_seconds": 3.956551417009905,
+      "worker_and_process_group_absent": true,
+      "runtime_and_source_snapshots_match_current": true
+    },
+    {
+      "scope": "qc",
+      "attempt": "data/annotations/resect-seg-v1/attempts/qc-20261008T103418850718Z",
+      "worker_receipt_sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982",
+      "supervision_receipt_sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337",
+      "elapsed_seconds": 0.802691041957587,
+      "worker_and_process_group_absent": true,
+      "runtime_and_source_snapshots_match_current": true
+    }
+  ],
+  "verified_source_files": [
+    {
+      "path": "rights/README.txt",
+      "bytes": 1656,
+      "md5": "bae7e9b837bfc3b53d7b74d750df0b4b",
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    {
+      "path": "originals/Case3-US-during.nii.gz",
+      "bytes": 9156131,
+      "md5": "5043491e6b4cea1fe3be1003a42a2cf5",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20"
+    },
+    {
+      "path": "originals/Case3-US-during-resection.nii.gz",
+      "bytes": 28518,
+      "md5": "569676cbc4bd98a800497c03f91959d9",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63"
+    }
+  ],
+  "original_reused_without_network": true,
+  "mask_request_statuses": [
+    302,
+    302,
+    200
+  ],
+  "qc_network_requests": 0,
+  "independent_method": "bounded source byte hashes; direct nibabel header and data-proxy inspection; separate NumPy homogeneous corner and scalar/count calculations; no production QC helper invoked",
+  "headers": [
+    {
+      "file": "Case3-US-during.nii.gz",
+      "shape": [
+        338,
+        303,
+        245
+      ],
+      "storage_dtype": "float32",
+      "decoded_float32_bytes": 100365720,
+      "units": "mm",
+      "qform_code": 0,
+      "sform_code": 1,
+      "affine_ras_mm": [
+        [
+          0.13445448875427246,
+          -0.09907855093479156,
+          0.11002469062805176,
+          -56.52254867553711
+        ],
+        [
+          0.12957128882408142,
+          0.15065573155879974,
+          -0.02267392724752426,
+          -34.465274810791016
+        ],
+        [
+          -0.07164684683084488,
+          0.08652336150407791,
+          0.16547027230262756,
+          -0.5235961079597473
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "spacing_mm": [
+        0.1999999977362721,
+        0.2000000019820514,
+        0.19999987635128738
+      ],
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "finite_invertible_right_handed_grid": true
+    },
+    {
+      "file": "Case3-US-during-resection.nii.gz",
+      "shape": [
+        338,
+        303,
+        245
+      ],
+      "storage_dtype": "uint8",
+      "decoded_float32_bytes": 100365720,
+      "units": "mm",
+      "qform_code": 1,
+      "sform_code": 0,
+      "affine_ras_mm": [
+        [
+          0.13445445528927938,
+          -0.09907851158852793,
+          0.11002470066099956,
+          -56.52254867553711
+        ],
+        [
+          0.12957134884653132,
+          0.15065576178671283,
+          -0.022673940499703612,
+          -34.465274810791016
+        ],
+        [
+          -0.07164681572161154,
+          0.08652335623379435,
+          0.16547027278355447,
+          -0.5235961079597473
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "spacing_mm": [
+        0.20000000298023224,
+        0.20000000298023227,
+        0.1999998837709427
+      ],
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "finite_invertible_right_handed_grid": true
+    }
+  ],
+  "maximum_grid_corner_difference_mm": 3.067954998431139e-05,
+  "grid_tolerance_mm": 0.01,
+  "original_voxels": {
+    "finite_voxels": 25091430,
+    "nonfinite_voxels": 0,
+    "minimum": 0.0,
+    "maximum": 205.65098571777344
+  },
+  "mask_voxels": {
+    "finite_voxels": 25091430,
+    "nonfinite_voxels": 0,
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "label_values": [
+      0.0,
+      1.0
+    ],
+    "positive_voxels": 20005,
+    "background_voxels": 25071425
+  },
+  "prior_http429_failure_receipts_preserved": [
+    {
+      "attempt": "rights-20261008T053013749836Z",
+      "receipt_sha256": "078440d2d1d4ab044c73c6a3b854d9d439b59da619ca4e8baa1345f98dfc667b",
+      "status": "failed",
+      "http_429_preserved": true
+    },
+    {
+      "attempt": "acquire-20261008T093500263482Z",
+      "receipt_sha256": "21713dd3d6b842f66ba80d76dfa01cf12c612fa9291b9613fbfbe56504597654",
+      "status": "failed",
+      "http_429_preserved": true
+    }
+  ],
+  "anatomical_review": "pending",
+  "clinical_accuracy": "not_established",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "review_network_requests": 0,
+  "new_patients_accessed": 0,
+  "tracked_files_edited": false,
+  "substantive_findings": []
+}

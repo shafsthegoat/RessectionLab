@@ -1,0 +1,48 @@
+{
+  "status": "time_budget_exhausted",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z",
+  "elapsed_seconds": 599.1356064998545,
+  "attempted_source_bytes": 370390702,
+  "source_size_budget": 536870912,
+  "byte_accounting": "source-size budget, not measured network transfer",
+  "new_complete_people": 5,
+  "new_complete_sessions": 6,
+  "new_complete_source_bytes": 335829437,
+  "new_sessions": [
+    "sub-208/ses-20110808",
+    "sub-209/ses-20110724",
+    "sub-211/ses-20110817",
+    "sub-216/ses-20110729",
+    "sub-217/ses-20100819",
+    "sub-217/ses-20110811"
+  ],
+  "total_complete_people": 79,
+  "total_complete_sessions": 82,
+  "total_complete_source_bytes": 3831942721,
+  "total_source_files": 328,
+  "total_image_files": 164,
+  "total_image_bytes": 3831684067,
+  "remaining_incomplete_train_sessions": 128,
+  "remaining_train_people": 120,
+  "root_reverified_original_fixity_and_retained_source": true,
+  "independent_review": "acquisition-batch-17-independent-review.json",
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0,
+  "not_verified_this_batch": 130,
+  "previously_acquired_but_unvisited": [
+    "sub-450/ses-20141125",
+    "sub-476/ses-20140519"
+  ],
+  "new_worker_failures": 1,
+  "failed_outcomes": [
+    {
+      "session": "sub-220/ses-20110626",
+      "status": "timeout",
+      "exit_code": 124,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-220_ses-20110626/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-220_ses-20110626/worker.log"
+    }
+  ],
+  "explicit_deferrals": 0
+}

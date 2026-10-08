@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Seventy-six TRAIN original
-pairs from 74 people and their sidecars are acquired (3,496,113,284 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Ninety-five TRAIN original
+pairs from 90 people and their sidecars are acquired (4,315,283,541 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -67,8 +67,10 @@ Batches 14–16 added 17 sessions from 16 people. All 76 cumulative receipts,
 originals and source snapshots passed root and independent checks; 134 sessions
 remain. Sub167, sub186 and sub197 completed after earlier timeouts, whose records
 remain unchanged. Batch16 retained a sub208 timeout; later batch17 data are
-excluded from its closure. A seventeenth serial intake is in progress with
-600 seconds and 536,870,912 source bytes.
+excluded from its closure. Batches 17–18 subsequently added 19 sessions from
+16 people; all 95 cumulative receipts passed root and independent checks.
+There are 115 sessions remaining after batch18; its sub251 timeout is preserved.
+The nineteenth serial intake continues with 600 seconds and 536,870,912 source bytes.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -93,8 +95,8 @@ brain support and surgical route acceptance remain unresolved. See
 RESECT cavity-component roles are now frozen at14 TRAIN/four SELECT/four
 evaluation/Case4 protected DEVELOPMENT; an independent metadata review
 recomputed membership and preserved Case4's earlier measurement partition.
-One original Case3 ultrasound image is now acquired and independently verified;
-the annotation pair remains incomplete. The exact rights text is now archived after
+The original Case3 ultrasound and source cavity mask are now acquired and
+independently verified; their basic pair QC passes. The exact rights text is now archived after
 the earlier HTTP429 response. The official revision-2 route is now resolved, and the
 bounded Case3 intake runner passes 24 combined controls. The historical rights-only attempt
 stopped without a retry. A later deliberate official redirect-chain retrieval
@@ -104,7 +106,11 @@ with Python certificate-chain verification; the failure is retained and
 certificate verification remains enabled. A reviewed native macOS trust path
 then acquired the exact 9,156,131-byte original with published MD5 verification.
 The mask source returned HTTP429; no mask, pair QC or training admission follows.
-The 17.266-second partial failure and independent review are preserved. See
+The 17.266-second partial failure and independent review are preserved. A later
+bounded resume acquired the exact 28,518-byte mask in 3.957 seconds. Separate
+QC found 20,005 binary positive voxels and a 0.00003068 mm maximum grid difference;
+independent checks agree. Fixed native-slice visual engineering inspection is
+complete; anatomical review, component fitting and planning admission remain open. See
 [intake result](artifacts/resect-component-admission-v1/RESULT.md).
 The separately frozen Case4 ultrasound study now has an independently verified
 real result: thirteen held-out landmark RMS errors are 4.044969 mm without update,

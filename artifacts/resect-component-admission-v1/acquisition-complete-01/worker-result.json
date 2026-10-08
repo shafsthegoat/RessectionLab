@@ -1,0 +1,52 @@
+{
+  "scope": "acquire",
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "status": "completed",
+  "manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "execution_source_sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a",
+  "events": [
+    {
+      "source_path": "originals/Case3-US-during-resection.nii.gz",
+      "host": "osf.io",
+      "path": "/download/64cd21fe2fe4962f1561b1e2/",
+      "full_url_sha256": "752bbf7c4fbfff57634417733109b2e139b0454cd0bab6e0ea1fbc7c175b84c9",
+      "status": 302,
+      "retry_after": null
+    },
+    {
+      "source_path": "originals/Case3-US-during-resection.nii.gz",
+      "host": "files.de-1.osf.io",
+      "path": "/v1/resources/jv8bk/providers/osfstorage/64cd21fe2fe4962f1561b1e2",
+      "full_url_sha256": "92a19142434430a64b0dc9bc16db9607f5de5a04a8dd10258da15f66660f7ebd",
+      "status": 302,
+      "retry_after": null
+    },
+    {
+      "source_path": "originals/Case3-US-during-resection.nii.gz",
+      "host": "storage.googleapis.com",
+      "path": "/cos-osf-prod-files-de-1/88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63",
+      "full_url_sha256": "58eb8a5a3ce26064f68d82da49f3c43058156da468e5df4f9a7f009e57b0b7da",
+      "status": 200
+    }
+  ],
+  "files": [
+    {
+      "path": "originals/Case3-US-during.nii.gz",
+      "status": "existing_verified",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20",
+      "bytes": 9156131
+    },
+    {
+      "path": "originals/Case3-US-during-resection.nii.gz",
+      "status": "downloaded_verified",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63",
+      "bytes": 28518
+    }
+  ],
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "training_admitted": false,
+  "elapsed_seconds": 3.8056820831261575
+}
