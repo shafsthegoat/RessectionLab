@@ -1,0 +1,58 @@
+{
+  "approved_proposal_sha256": "6daf836532a40387e8ded69bebbc9b5a455b32778eeca487d749ccec88f5c2c5",
+  "checks": [
+    {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_native_opening_length_sensitivity.py --junitxml=build/native-opening-length-sensitivity-implementation-v1/owner-initial.xml",
+      "exit_code": 1,
+      "failed": 1,
+      "failure": "Test-only mutation changed length in one of two rows sharing one tool ID. The existing DTO correctly refused inconsistent dimensions before the test expected rejection. Corrected the test to mutate both same-tool rows, exercising the intervention guard. The not-yet-written manifest test was skipped. Initial source was not separately snapshotted; original failure log/XML are retained.",
+      "junit": "owner-initial.xml",
+      "log": "owner-initial.log",
+      "passed": 15,
+      "pytest_seconds": 4.27,
+      "skipped": 1
+    },
+    {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_native_opening_length_sensitivity.py --junitxml=build/native-opening-length-sensitivity-implementation-v1/owner-final.xml",
+      "exit_code": 0,
+      "failed": 0,
+      "junit": "owner-final.xml",
+      "log": "owner-final.log",
+      "passed": 19,
+      "pytest_seconds": 4.64,
+      "skipped": 0
+    }
+  ],
+  "created_at": "2026-10-08T20:59:23.185426+00:00",
+  "execution_release": "Await root source review/commit and explicit execution release; no automatic execution by tests/preflight.",
+  "files_sha256": {
+    "manifests/experiments/native-opening-length-sensitivity-v1.json": "92a3a640add6f8f0cfb67ee6a28479af728cb5c007dd495c77944166850d7c89",
+    "scripts/run_native_opening_length_sensitivity.py": "f3913a6946356a029bc4da31c2411e8932c5dd4af1fae22e8e9313c814c996aa",
+    "tests/test_native_opening_length_sensitivity.py": "e9d1db9985d03a12542c2afffb72a03863d62fe5232f1628d23d8e1d03459eec"
+  },
+  "guard_preservation": "No existing source files or default guard modified. Reused PAT-module pure DTO helper and loader idiom; no PAT authorities or patient arrays read.",
+  "launch_command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python scripts/run_native_opening_length_sensitivity.py --declaration manifests/experiments/native-opening-length-sensitivity-v1.json --output artifacts/native-opening-length-sensitivity-v1 --execute",
+  "metadata_preflight": {
+    "exit_code": 0,
+    "log": "metadata-preflight.log",
+    "new_forwards": 0,
+    "patient_inputs": 0
+  },
+  "native_engines_constructed": 0,
+  "native_previews": 0,
+  "new_actual_checkpoint_forwards": 0,
+  "optimizer_updates": 0,
+  "patient_inputs": 0,
+  "proposer_calls": 0,
+  "resources": {
+    "cpu_threads": 1,
+    "forward_calls": 2,
+    "new_baseline_calls": 0,
+    "seconds": 20,
+    "worker_rss_bytes": 1073741824
+  },
+  "runtime_source_files": 29,
+  "schema": "native-opening-length-sensitivity-owner-verification-v1",
+  "status": "focused_controls_and_metadata_preflight_passed_actual_checkpoint_forwards_not_executed",
+  "unit_scope": "Generated source/DTO reconstruction, exact single-column differences, spied tensor-returning controller calls, and serialization of a fresh analytical policy checkpoint. SpatialPolicy.forward was never called with an actual experiment checkpoint; no actual patient or generated trained-checkpoint inference was performed."
+}

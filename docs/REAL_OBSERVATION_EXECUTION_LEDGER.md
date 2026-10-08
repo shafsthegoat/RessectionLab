@@ -68,9 +68,15 @@ passed. RL256 ranks STOP first of 71 (0.813695 preference); initial ranks it las
 (0.009884). These are conditional model preferences, not clinical probabilities.
 No action, patient fit or planning endpoint was executed. The input is annotation-
 assisted and includes historical simulator-filtered candidates and estimated support.
-Generated-to-patient tool lengths, scale, horizon and inventory differ. The next
-mechanism test changes only the length descriptor on the familiar generated DTO,
-with two fixed forwards and no updates. The completed PAT05 run is unchanged;
+Generated-to-patient tool lengths, scale, horizon and inventory differ. The
+[length-only mechanism test](../artifacts/native-opening-length-sensitivity-v1/RESULT.md)
+now completes two fixed forwards on the familiar generated DTO, with no updates.
+Four length descriptors alone raise trained STOP preference from 6.7249% to
+99.3915%; its STOP score is unchanged while movement scores fall. Initial weights
+still favor movement. All 311 saved-output checks pass, and the same five choices
+remain. This does not certify altered physical tools or explain every PAT05 shift.
+Next prepare real tool geometries within generated contexts and recertify their
+action inventories/search baselines; substantial training awaits validated mechanics. The completed PAT05 run is unchanged;
 a future index-writer repair includes nested inherited index files, whose bytes
 were independently verified despite omission from the original outer index.
 

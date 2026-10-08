@@ -1,0 +1,86 @@
+FF......                                                                 [100%]
+=================================== FAILURES ===================================
+______ test_terminal_failure_closes_active_slot_preserves_prior[initial] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10f90bb30>
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-opening-length-sensitivity-independent-review-v1/initial-tmp/test_terminal_failure_closes_a0')
+prepared = (SpatialObservation(image_channels=_FrozenArray([[[[0., 0., 0., ..., 0., 0., 0.],
+                [0., 0., 0., ..., 0....its': [-1.811178207397461, -0.3554571866989136, -1.3783527612686157, -0.03377664089202881, -1.0566726922988892], ...}})
+failed_name = 'initial'
+
+    @pytest.mark.parametrize("failed_name", ["initial", "RL256"])
+    def test_terminal_failure_closes_active_slot_preserves_prior(monkeypatch, tmp_path, prepared, failed_name):
+        original, changed, baselines = prepared
+        monkeypatch.setattr(runner, "validate", lambda record: ({}, baselines))
+        monkeypatch.setattr(runner, "reconstruct_root", lambda *args: original)
+        def fake_forward(name, original, changed, baseline, ledger):
+            ledger["checkpoint_attempts"].append(name)
+            if name == failed_name:
+                raise ValueError("injected checkpoint load refusal")
+            # Pure controller completion, no checkpoint/model was loaded or called.
+            ledger["forward_attempts"].append(name)
+            ledger["completed_forwards"].append(name)
+            return {"margin_change": 0., "stop_probability": .2, "stop_logit_change": 0.,
+                    "highest_ranked_id_not_executed": "STOP", "scope": "test-controller-only"}
+        monkeypatch.setattr(runner, "forward_once", fake_forward)
+        with pytest.raises(ValueError, match="injected checkpoint"):
+            runner.worker({}, tmp_path, "0" * 64)
+        result = json.loads((tmp_path / "result.json").read_text())
+        assert result["status"] == "failed"
+        expected_attempts = ["initial"] if failed_name == "initial" else ["initial", "RL256"]
+        expected_completed = [] if failed_name == "initial" else ["initial"]
+        assert result["ledger"]["checkpoint_attempts"] == expected_attempts
+        assert result["ledger"]["completed_forwards"] == expected_completed
+>       assert result["methods"][failed_name] == {"status": "failed", "outputs": None}
+E       AssertionError: assert {'outputs': N...s': 'running'} == {'status': 'f...utputs': None}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'status': 'running'} != {'status': 'failed'}
+E         Use -v to get more diff
+
+build/native-opening-length-sensitivity-independent-review-v1/test_independent.py:71: AssertionError
+_______ test_terminal_failure_closes_active_slot_preserves_prior[RL256] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1112f2f90>
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-opening-length-sensitivity-independent-review-v1/initial-tmp/test_terminal_failure_closes_a1')
+prepared = (SpatialObservation(image_channels=_FrozenArray([[[[0., 0., 0., ..., 0., 0., 0.],
+                [0., 0., 0., ..., 0....its': [-1.811178207397461, -0.3554571866989136, -1.3783527612686157, -0.03377664089202881, -1.0566726922988892], ...}})
+failed_name = 'RL256'
+
+    @pytest.mark.parametrize("failed_name", ["initial", "RL256"])
+    def test_terminal_failure_closes_active_slot_preserves_prior(monkeypatch, tmp_path, prepared, failed_name):
+        original, changed, baselines = prepared
+        monkeypatch.setattr(runner, "validate", lambda record: ({}, baselines))
+        monkeypatch.setattr(runner, "reconstruct_root", lambda *args: original)
+        def fake_forward(name, original, changed, baseline, ledger):
+            ledger["checkpoint_attempts"].append(name)
+            if name == failed_name:
+                raise ValueError("injected checkpoint load refusal")
+            # Pure controller completion, no checkpoint/model was loaded or called.
+            ledger["forward_attempts"].append(name)
+            ledger["completed_forwards"].append(name)
+            return {"margin_change": 0., "stop_probability": .2, "stop_logit_change": 0.,
+                    "highest_ranked_id_not_executed": "STOP", "scope": "test-controller-only"}
+        monkeypatch.setattr(runner, "forward_once", fake_forward)
+        with pytest.raises(ValueError, match="injected checkpoint"):
+            runner.worker({}, tmp_path, "0" * 64)
+        result = json.loads((tmp_path / "result.json").read_text())
+        assert result["status"] == "failed"
+        expected_attempts = ["initial"] if failed_name == "initial" else ["initial", "RL256"]
+        expected_completed = [] if failed_name == "initial" else ["initial"]
+        assert result["ledger"]["checkpoint_attempts"] == expected_attempts
+        assert result["ledger"]["completed_forwards"] == expected_completed
+>       assert result["methods"][failed_name] == {"status": "failed", "outputs": None}
+E       AssertionError: assert {'outputs': N...s': 'running'} == {'status': 'f...utputs': None}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'status': 'running'} != {'status': 'failed'}
+E         Use -v to get more diff
+
+build/native-opening-length-sensitivity-independent-review-v1/test_independent.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED build/native-opening-length-sensitivity-independent-review-v1/test_independent.py::test_terminal_failure_closes_active_slot_preserves_prior[initial]
+FAILED build/native-opening-length-sensitivity-independent-review-v1/test_independent.py::test_terminal_failure_closes_active_slot_preserves_prior[RL256]
+2 failed, 6 passed in 2.41s

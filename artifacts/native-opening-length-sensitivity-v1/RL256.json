@@ -1,0 +1,62 @@
+{
+  "action_ids": [
+    "STOP",
+    "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+    "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+    "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+    "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+  ],
+  "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+  "checkpoint": {
+    "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+    "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+    "path": "artifacts/native-opening-rl-capacity-v1/RL-256.pt",
+    "updates": 256
+  },
+  "comparison_scope": "descriptor sensitivity only; no recertified physical actions or outcomes",
+  "entropy": 0.04537008957318479,
+  "forward_seconds": 0.001617874950170517,
+  "highest_ranked_id_not_executed": "STOP",
+  "intervention_observation_hash": "sha256:0884dab3770d635abfea2afd383bcfb1a30a103acfc42e256cb02614660d50cd",
+  "load_and_forward_seconds": 0.4150160001590848,
+  "logits": [
+    -1.811178207397461,
+    -8.40686321258545,
+    -8.654942512512207,
+    -7.990056037902832,
+    -8.238390922546387
+  ],
+  "margin_change": 7.956279397010803,
+  "original_observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+  "per_action_logit_change": [
+    0.0,
+    -8.051406025886536,
+    -7.276589751243591,
+    -7.956279397010803,
+    -7.181718230247498
+  ],
+  "per_action_probability_change": [
+    0.9266666993498802,
+    -0.28697518061380833,
+    -0.10261125455144793,
+    -0.3956792999524623,
+    -0.1414009555010125
+  ],
+  "probabilities": [
+    0.9939152598381042,
+    0.001357937348075211,
+    0.001059595844708383,
+    0.002060140250250697,
+    0.0016071127029135823
+  ],
+  "saved_original_margin": -1.7774015665054321,
+  "saved_original_stop_probability": 0.06724856048822403,
+  "status": "complete",
+  "stop_head_invariant_within_1e_minus6": true,
+  "stop_logit_change": 0.0,
+  "stop_minus_best_nonstop_logit": 6.178877830505371,
+  "stop_probability": 0.9939152598381042,
+  "stop_probability_change": 0.9266666993498802,
+  "value_uncalibrated": 1.591735601425171,
+  "weights_unchanged": true
+}

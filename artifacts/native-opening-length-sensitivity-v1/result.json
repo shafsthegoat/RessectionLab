@@ -1,0 +1,46 @@
+{
+  "declaration_sha256": "8b7d3859ec579005430efc4b80f3d884d5cd69015b9549284af6f5910865f010",
+  "elapsed_seconds": 2.364120249869302,
+  "executed_actions": 0,
+  "ledger": {
+    "checkpoint_attempts": [
+      "initial",
+      "RL256"
+    ],
+    "completed_forwards": [
+      "initial",
+      "RL256"
+    ],
+    "forward_attempts": [
+      "initial",
+      "RL256"
+    ]
+  },
+  "methods": {
+    "RL256": {
+      "highest_ranked_id_not_executed": "STOP",
+      "margin_change": 7.956279397010803,
+      "outputs": "RL256.json",
+      "status": "complete",
+      "stop_logit_change": 0.0,
+      "stop_probability": 0.9939152598381042
+    },
+    "initial": {
+      "highest_ranked_id_not_executed": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+      "margin_change": -0.06964679062366486,
+      "outputs": "initial.json",
+      "status": "complete",
+      "stop_logit_change": 0.0,
+      "stop_probability": 0.15375615656375885
+    }
+  },
+  "native_previews": 0,
+  "new_baseline_forwards": 0,
+  "optimizer_updates": 0,
+  "patient_inputs": 0,
+  "peak_worker_rss_bytes": 245383168,
+  "reconstruction_seconds": 0.23165412503294647,
+  "scope": "generated fixed-input model sensitivity; uncertified descriptor intervention, not changed physical legal actions",
+  "status": "complete",
+  "version": "native-opening-length-sensitivity-v1"
+}

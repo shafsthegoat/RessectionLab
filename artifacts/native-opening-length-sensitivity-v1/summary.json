@@ -1,0 +1,87 @@
+{
+  "comparison": {
+    "RL256": {
+      "forward_seconds": 0.001617874950170517,
+      "highest_ranked_id_not_executed": "STOP",
+      "margin_change": 7.956279397010803,
+      "per_action_logit_change": [
+        0.0,
+        -8.051406025886536,
+        -7.276589751243591,
+        -7.956279397010803,
+        -7.181718230247498
+      ],
+      "saved_original_margin": -1.7774015665054321,
+      "saved_original_stop_probability": 0.06724856048822403,
+      "stop_logit_change": 0.0,
+      "stop_minus_best_nonstop_logit": 6.178877830505371,
+      "stop_probability": 0.9939152598381042
+    },
+    "initial": {
+      "forward_seconds": 0.020372875034809113,
+      "highest_ranked_id_not_executed": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+      "margin_change": -0.06964679062366486,
+      "per_action_logit_change": [
+        0.0,
+        0.0837584137916565,
+        0.06870163977146149,
+        0.08590524643659592,
+        0.0743761956691742
+      ],
+      "saved_original_margin": -0.2510509639978409,
+      "saved_original_stop_probability": 0.16420266032218933,
+      "stop_logit_change": 0.0,
+      "stop_minus_best_nonstop_logit": -0.32069775462150574,
+      "stop_probability": 0.15375615656375885
+    }
+  },
+  "executed_actions": 0,
+  "finding": "Only four working-length descriptors changed; the trained model switches from movement to STOP while initial weights still favor movement.",
+  "independent_saved_output_checks": 311,
+  "independent_verification_sha256": "caced248fae89f8d963edd0754e7150e0e151e8ce11ef2f97c003045ea1fee16",
+  "interpretation_limits": [
+    "Descriptor change alone is sufficient for this fixed-input preference flip, not the complete cause of PAT05 behavior.",
+    "Longer physical tools require fresh geometry certification and action inventories before evaluating performance.",
+    "Model action probabilities are conditional preferences, not clinical risks.",
+    "Single ordered forwards provide no speed advantage or generalization estimate."
+  ],
+  "ledger": {
+    "checkpoint_attempts": [
+      "initial",
+      "RL256"
+    ],
+    "completed_forwards": [
+      "initial",
+      "RL256"
+    ],
+    "forward_attempts": [
+      "initial",
+      "RL256"
+    ]
+  },
+  "new_baseline_forwards": 0,
+  "next_step": "Prepare physically recertified generated tool contexts and matched search comparisons; substantial learning remains gated on validated mechanics.",
+  "optimizer_updates": 0,
+  "patient_inputs": 0,
+  "schema": "native-opening-length-sensitivity-publication-v1",
+  "scope": "Uncertified descriptor intervention on one generated root; not physically recertified longer tools or patient performance.",
+  "source_commit": "dcf894641fa7c9d6389b280df5978565b91fe09f",
+  "status": "completed_and_independently_verified",
+  "supervisor": {
+    "automatic_retry": false,
+    "declaration_sha256": "8b7d3859ec579005430efc4b80f3d884d5cd69015b9549284af6f5910865f010",
+    "measurement_timeout_seconds": 2,
+    "returncode": 0,
+    "rss_samples": 18,
+    "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+    "sampled_peak_rss_bytes": 249380864,
+    "sampling_interval_seconds": 0.2,
+    "sampling_limit": "transient peaks between samples can be missed",
+    "seconds": 3.836943124886602,
+    "status": "complete",
+    "termination_grace_seconds": 2,
+    "termination_reason": null,
+    "timed_out": false
+  },
+  "worker_seconds": 2.364120249869302
+}

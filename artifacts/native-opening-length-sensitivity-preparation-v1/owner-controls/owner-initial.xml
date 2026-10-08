@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="1" tests="17" time="4.261" timestamp="2026-10-08T16:57:11.437852-04:00" hostname="Sayems-MacBook-Pro-8.local"><testcase classname="tests.test_native_opening_length_sensitivity" name="test_exact_historical_root_reconstruction_without_engine_or_forward" time="0.369" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[rays]" time="0.007" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[mask]" time="0.007" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[state]" time="0.007" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[image]" time="0.006" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[ids]" time="0.008" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[source]" time="0.008" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[stop]" time="0.008" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_undeclared_changes_refused_before_loader[length]" time="0.007"><failure message="resectionlab.spatial_observations.SpatialInputError: A tool ID cannot name different instrument dimensions">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x10fec3140&gt;
+prepared = (SpatialObservation(image_channels=_FrozenArray([[[[0., 0., 0., ..., 0., 0., 0.],
+                [0., 0., 0., ..., 0....its': [-1.811178207397461, -0.3554571866989136, -1.3783527612686157, -0.03377664089202881, -1.0566726922988892], ...}})
+field = 'length'
+
+    @pytest.mark.parametrize("field",["rays","mask","state","image","ids","source","stop","length"])
+    def test_undeclared_changes_refused_before_loader(monkeypatch,prepared,field):
+        original,changed,baselines=prepared
+        monkeypatch.setattr(runner,"load_frozen_checkpoint",forbidden)
+        if field in {"rays","stop","length"}:
+            a=np.array(changed.action_geometry)
+            if field=="rays":
+                a[1,1]+=0.01;a[1,4]+=0.01
+            elif field=="stop": a[0,12]=1.
+            else: a[1,12]=119.
+            # STOP malformed rows fail at DTO construction rather than downstream.
+            if field=="stop":
+                with pytest.raises(ValueError): replace(changed,action_geometry=a)
+                return
+&gt;           bad=replace(changed,action_geometry=a)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_opening_length_sensitivity.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:1588: in replace
+    return obj.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;string&gt;:16: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SpatialObservation(image_channels=_FrozenArray([[[[0., 0., 0., ..., 0., 0., 0.],
+                [0., 0., 0., ..., 0.,..._from': ()}), 'nominal_language': mappingproxy({'source_kind': 'unavailable', 'derivation': '', 'derived_from': ()})}))
+
+    def __post_init__(self):
+        # This DTO is public: constructing/replacing it directly must not bypass
+        # the permitted-input gates applied by the convenience builder.
+        images = _real(self.image_channels, "image_channels")
+        if images.ndim != 4 or images.shape[0] != len(CHANNEL_NAMES):
+            raise SpatialInputError("Actor volumes require the exact six-channel XYZ schema")
+        coverage, available = np.asarray(self.coverage), np.asarray(self.channel_available)
+        if coverage.dtype != bool or coverage.shape != images.shape or available.dtype != bool or available.shape != (len(CHANNEL_NAMES),):
+            raise SpatialInputError("Coverage and channel availability require exact boolean schema")
+        if np.any(images[~coverage] != 0):
+            raise SpatialInputError("Uncovered samples must be zero with explicit false coverage")
+        if not isinstance(self.channel_provenance, Mapping) or set(self.channel_provenance) != set(CHANNEL_NAMES):
+            raise SpatialInputError("Every channel requires its exact provenance record")
+        channels = {}
+        for index, name in enumerate(CHANNEL_NAMES):
+            record = self.channel_provenance[name]
+            if not isinstance(record, Mapping) or set(record) != {"source_kind", "derivation", "derived_from"}:
+                raise SpatialInputError("Channel provenance has unknown or missing fields")
+            if not available[index] and (coverage[index].any() or images[index].any()):
+                raise SpatialInputError("Unavailable channels cannot carry values or coverage")
+            channels[name] = ObservedChannel(images[index] if available[index] else None,
+                coverage[index] if available[index] else None, **record)
+        permitted = SpatialInputs(channels, self.affine_ras_mm, self.track, self.source_id)
+        spacing = _real(self.spacing_mm, "spacing_mm", np.float64)
+        if spacing.shape != (3,) or not np.allclose(spacing, np.linalg.norm(permitted.affine_ras_mm[:3, :3], axis=0), rtol=1e-8, atol=1e-12):
+            raise SpatialInputError("Voxel spacing must match the declared physical affine")
+        identifiers, tool_ids = tuple(self.action_ids), tuple(self.action_tool_ids)
+        if not 1 &lt;= len(identifiers) &lt;= MAX_ACTIONS or len(tool_ids) != len(identifiers):
+            raise SpatialInputError("Bounded aligned action and tool identifiers are required")
+        for identifier in identifiers:
+            _text(identifier, "action_id", 128)
+        if identifiers[0] != "STOP" or len(set(identifiers)) != len(identifiers) or tool_ids[0] is not None:
+            raise SpatialInputError("Distinct action IDs must begin with geometry-free STOP")
+        for tool_id in tool_ids[1:]:
+            _text(tool_id, "action_tool_id", 128)
+        # Physical coordinates retain float64 until the policy transforms them
+        # into normalized source-grid coordinates. Float32 RAS rounding can
+        # move an exactly covered oblique-boundary ray outside the image.
+        geometry = _real(self.action_geometry, "action_geometry", np.float64)
+        if geometry.shape != (len(identifiers), len(ACTION_GEOMETRY_NAMES)):
+            raise SpatialInputError("Action geometry requires the exact sixteen-column schema")
+        if geometry[0, 0] != 1 or np.any(geometry[0, 1:] != 0) or np.any(geometry[1:, 0] != 0):
+            raise SpatialInputError("Only STOP may carry the stop flag; STOP has no tool geometry")
+        tool_dimensions = {}
+        for row, tool_id in zip(geometry[1:], tool_ids[1:]):
+            vector = row[4:7].astype(np.float64) - row[1:4]
+            distance = np.linalg.norm(vector)
+            if distance &lt;= 1e-9 or not np.allclose(row[7:10], vector / distance, rtol=2e-5, atol=2e-6):
+                raise SpatialInputError("Instrument axis must agree with the declared entry and tip")
+            if np.any(row[10:14] &lt;= 0) or row[13] &gt;= row[12] or not 0 &lt;= row[14] &lt; 90 or row[15] not in (0, 1):
+                raise SpatialInputError("Complete-tool dimensions or tool-change flag are invalid")
+            dimensions = tuple(float(v) for v in row[10:15])
+            if tool_id in tool_dimensions and dimensions != tool_dimensions[tool_id]:
+&gt;               raise SpatialInputError("A tool ID cannot name different instrument dimensions")
+E               resectionlab.spatial_observations.SpatialInputError: A tool ID cannot name different instrument dimensions
+
+src/resectionlab/spatial_observations.py:321: SpatialInputError</failure></testcase><testcase classname="tests.test_native_opening_length_sensitivity" name="test_wrong_root_cannot_be_relabelled_as_intervention" time="0.007" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_saved_baseline_order_and_finite_probabilities" time="0.006" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_two_call_ledger_with_small_spy_no_real_checkpoint_load" time="0.011" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_model_exception_retains_attempt_not_completion" time="0.006" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_checkpoint_byte_failure_before_deserialization" time="0.000" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_worker_failure_preserves_both_declared_slots" time="0.011" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_closed_declaration_no_patient_authority_reads" time="2.677" /><testcase classname="tests.test_native_opening_length_sensitivity" name="test_manifest_after_freeze" time="0.000"><skipped type="pytest.skip" message="written after final source freeze">/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/tests/test_native_opening_length_sensitivity.py:193: written after final source freeze</skipped></testcase></testsuite></testsuites>

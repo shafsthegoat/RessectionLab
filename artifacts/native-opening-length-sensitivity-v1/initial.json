@@ -1,0 +1,62 @@
+{
+  "action_ids": [
+    "STOP",
+    "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+    "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+    "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+    "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+  ],
+  "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+  "checkpoint": {
+    "file_sha256": "433c95336d11a5b3d2e5b98c1d53c2b989b63ae0e277e3b43f835c4cbc2a8257",
+    "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+    "path": "artifacts/native-opening-rl-capacity-v1/RL-000.pt",
+    "updates": 0
+  },
+  "comparison_scope": "descriptor sensitivity only; no recertified physical actions or outcomes",
+  "entropy": 1.6023120147673782,
+  "forward_seconds": 0.020372875034809113,
+  "highest_ranked_id_not_executed": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+  "intervention_observation_hash": "sha256:0884dab3770d635abfea2afd383bcfb1a30a103acfc42e256cb02614660d50cd",
+  "load_and_forward_seconds": 0.4283886661287397,
+  "logits": [
+    -0.12445300817489624,
+    0.19313816726207733,
+    0.19529959559440613,
+    0.19408336281776428,
+    0.1962447464466095
+  ],
+  "margin_change": -0.06964679062366486,
+  "original_observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+  "per_action_logit_change": [
+    0.0,
+    0.0837584137916565,
+    0.06870163977146149,
+    0.08590524643659592,
+    0.0743761956691742
+  ],
+  "per_action_probability_change": [
+    -0.010446503758430481,
+    0.0037733614444732666,
+    0.0006273984909057617,
+    0.004222244024276733,
+    0.00182342529296875
+  ],
+  "probabilities": [
+    0.15375615656375885,
+    0.21123243868350983,
+    0.21168948709964752,
+    0.21143218874931335,
+    0.21188966929912567
+  ],
+  "saved_original_margin": -0.2510509639978409,
+  "saved_original_stop_probability": 0.16420266032218933,
+  "status": "complete",
+  "stop_head_invariant_within_1e_minus6": true,
+  "stop_logit_change": 0.0,
+  "stop_minus_best_nonstop_logit": -0.32069775462150574,
+  "stop_probability": 0.15375615656375885,
+  "stop_probability_change": -0.010446503758430481,
+  "value_uncalibrated": 0.31600189208984375,
+  "weights_unchanged": true
+}

@@ -1,0 +1,242 @@
+{
+  "actual_experiment_accounting": {
+    "attempt_order": {
+      "checkpoint_attempts": [
+        "initial",
+        "RL256"
+      ],
+      "completed_forwards": [
+        "initial",
+        "RL256"
+      ],
+      "forward_attempts": [
+        "initial",
+        "RL256"
+      ]
+    },
+    "executed_actions": 0,
+    "native_engine_or_proposer_calls": 0,
+    "new_baseline_forwards": 0,
+    "new_forwards": 2,
+    "optimizer_updates": 0,
+    "patient_inputs": 0,
+    "same_choice_count": 5
+  },
+  "audit_scope": {
+    "checkpoint_deserializations": 0,
+    "engine_or_proposer_calls": 0,
+    "method": "stdlib saved JSON, independently computed scalar arithmetic, source/metadata/checkpoint byte hashes; no repository code imported",
+    "model_forwards": 0,
+    "patient_decodes": 0,
+    "rollouts": 0,
+    "tracked_writes": 0,
+    "updates": 0
+  },
+  "audit_script_sha256": "5eef79befa8108b15d359c4b2f5f5e1c19737ebaff8a6fcfc752660c78bed03d",
+  "audit_seconds": 0.6204395419918001,
+  "bindings": {
+    "RL256.json": "e5a15613c0d0d837c561243ad41e01fd15e185c8395ef344715a770b63097af8",
+    "declaration_sha256": "8b7d3859ec579005430efc4b80f3d884d5cd69015b9549284af6f5910865f010",
+    "initial.json": "c0d3d11cad61ea7bdca27a68c172f9d6813422ef8e6fc5499eadfdd50c6012eb",
+    "inputs_sha256": "9787aea2dea0b887ef7ac1b1f7989d51d9ceb7def9a802965dbf41de6c882b4b",
+    "launch_sha256": "0099519da999bdc08f1322e3ba6cf04fd6e3054ce1f18dcdd0f2ba913d0638bb",
+    "output_index_sha256": "e9bf4804e1d8b30c48f2f99546dffdfeb3ad2d1ec5b662bea3cbb9aba8b5611a",
+    "pre_execution_independent_review_sha256": "6ca66f6e1583ab19cd194fe96580cfa363b00fcae15ca7e8f1830b4fd0dd332d",
+    "proposal_sha256": "6daf836532a40387e8ded69bebbc9b5a455b32778eeca487d749ccec88f5c2c5",
+    "result.json": "71a44c9fdc91d0254bde907d108d1c0bb9737f21b8ff4c04be8140fbd4ee91e5",
+    "source_commit": "dcf894641fa7c9d6389b280df5978565b91fe09f",
+    "supervisor.json": "a6cc1481ccdeffa469fe358231862a14501bd2bbca35438b29adeef8ee20b994",
+    "terminal_sha256": "c91c04c363c67ab0e8079cbd1478ac7c280b88f4016dce4371acf93997a83bd5"
+  },
+  "checkpoint_bindings": {
+    "RL256": {
+      "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "path": "artifacts/native-opening-rl-capacity-v1/RL-256.pt",
+      "updates": 256
+    },
+    "initial": {
+      "file_sha256": "433c95336d11a5b3d2e5b98c1d53c2b989b63ae0e277e3b43f835c4cbc2a8257",
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "path": "artifacts/native-opening-rl-capacity-v1/RL-000.pt",
+      "updates": 0
+    }
+  },
+  "checks_passed": 311,
+  "claim_limits": [
+    "One trained checkpoint and one generated root, one fixed descriptor intervention; no generalization or interaction sweep.",
+    "Does not establish the full cause of PAT05 preference or a clinical error.",
+    "No executed planning endpoint, reward, removal, safety, clinical-risk probability or real transfer measured.",
+    "120mm descriptors were not certified as physical tools or a complete/legal modified action inventory.",
+    "Original negative and later positive simulator findings are unchanged."
+  ],
+  "conclusion": "Changing only the four nonSTOP working-length descriptors to120mm is sufficient to flip this trained frozen policy from movement to STOP on the familiar generated root. STOP logit is exactly unchanged; lowered movement logits produce the increased STOP probability. Initial weights remain movement-preferring.",
+  "created_at": "2026-10-08T21:11:08.330634+00:00",
+  "generated_metadata_file_count": 7,
+  "indexed_bytes": 1207382,
+  "indexed_file_count": 44,
+  "indexed_file_sha256": {
+    "RL256.json": "e5a15613c0d0d837c561243ad41e01fd15e185c8395ef344715a770b63097af8",
+    "declaration-input.json": "8b7d3859ec579005430efc4b80f3d884d5cd69015b9549284af6f5910865f010",
+    "initial.json": "c0d3d11cad61ea7bdca27a68c172f9d6813422ef8e6fc5499eadfdd50c6012eb",
+    "input-metadata/artifacts/native-opening-learning-v1/declaration-input.json": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212",
+    "input-metadata/artifacts/native-opening-learning-v1/preparation.json": "63181c0754443730925e758019007ff472d58b9db1b72d9e3aacf9a28d8a3884",
+    "input-metadata/artifacts/native-opening-rl-capacity-v1/declaration-input.json": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+    "input-metadata/artifacts/native-opening-rl-capacity-v1/independent-verification.json": "2489aff1b8a783f1fd6ad97a1085abb4b54aff30b44c337deb42a654d5afc95f",
+    "input-metadata/artifacts/native-opening-rl-capacity-v1/output-sha256.json": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d",
+    "input-metadata/artifacts/native-opening-rl-capacity-v1/result.json": "301e690fb87adff99b715c1371cb0fc692b0adc16fc3576ff7b0725336c56f68",
+    "input-metadata/artifacts/native-opening-rl-capacity-v1/summary.json": "f71c9d5e2c7e28692fefed904e57240c23f0fb00b7725a1fb83086bf1f4c78e8",
+    "inputs.json": "9787aea2dea0b887ef7ac1b1f7989d51d9ceb7def9a802965dbf41de6c882b4b",
+    "result.json": "71a44c9fdc91d0254bde907d108d1c0bb9737f21b8ff4c04be8140fbd4ee91e5",
+    "source-snapshot/scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "source-snapshot/scripts/run_native_opening_length_sensitivity.py": "85d8d86e87bdbc9a7dcaa3ff01d61a72492d16689e6cb74848fbd7dc9aac812e",
+    "source-snapshot/scripts/run_pat05_forward_diagnostic.py": "9e4b6fbf41937f5a48839754f9ddd7775d8eb2cfdc414b82208ed030e74326af",
+    "source-snapshot/src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "source-snapshot/src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "source-snapshot/src/resectionlab/brain_extraction.py": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+    "source-snapshot/src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "source-snapshot/src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "source-snapshot/src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "source-snapshot/src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "source-snapshot/src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "source-snapshot/src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "source-snapshot/src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "source-snapshot/src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "source-snapshot/src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+    "source-snapshot/src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "source-snapshot/src/resectionlab/native_resection.py": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+    "source-snapshot/src/resectionlab/native_simulation.py": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+    "source-snapshot/src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "source-snapshot/src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "source-snapshot/src/resectionlab/pat05_forward_diagnostic.py": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+    "source-snapshot/src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "source-snapshot/src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "source-snapshot/src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "source-snapshot/src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "source-snapshot/src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "source-snapshot/src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "source-snapshot/src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "source-snapshot/src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+    "supervisor-progress.json": "e8389af63a8e4312685c3a91a2d9fefde45bbcc13435e5a25ae5d4cb7af324ba",
+    "supervisor.json": "a6cc1481ccdeffa469fe358231862a14501bd2bbca35438b29adeef8ee20b994",
+    "worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "input_identity": {
+    "changed_coordinates": [
+      [
+        1,
+        12
+      ],
+      [
+        2,
+        12
+      ],
+      [
+        3,
+        12
+      ],
+      [
+        4,
+        12
+      ]
+    ],
+    "modified_dto_fingerprint": "sha256:0884dab3770d635abfea2afd383bcfb1a30a103acfc42e256cb02614660d50cd",
+    "modified_lengths_mm": [
+      120.0,
+      120.0,
+      120.0,
+      120.0
+    ],
+    "original_dto_fingerprint": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+    "original_lengths_mm": [
+      2.2,
+      12.0,
+      2.2,
+      12.0
+    ],
+    "other_arrays_evidence": "Full original/modified DTO fingerprints match the pre-execution independent byte-equality audit, joined to frozen runner assertions before/after each saved forward; no new array reconstruction or model call in this review.",
+    "source_ancestry": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+    "source_id_interpretation": "unchanged original-source ancestry; not modified physical-tool certification",
+    "task_model_ancestry": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+    "unchanged_action_ids": [
+      "STOP",
+      "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+      "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+      "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+      "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+    ],
+    "unchanged_action_mask": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "issues": [],
+  "numerical_results": {
+    "RL256": {
+      "baseline_softmax_max_abs_error": 2.6433089994615244e-08,
+      "forward_seconds": 0.001617874950170517,
+      "intervention_argmax": "STOP",
+      "intervention_entropy": 0.04537008957318479,
+      "intervention_stop_minus_best_nonstop_logit": 6.178877830505371,
+      "intervention_stop_probability": 0.9939152598381042,
+      "load_and_forward_seconds": 0.4150160001590848,
+      "margin_change": 7.956279397010803,
+      "nonstop_logit_changes": [
+        -8.051406025886536,
+        -7.276589751243591,
+        -7.956279397010803,
+        -7.181718230247498
+      ],
+      "original_argmax": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+      "original_stop_minus_best_nonstop_logit": -1.7774015665054321,
+      "original_stop_probability": 0.06724856048822403,
+      "saved_baseline_cached_margin_rounding_difference": 0.0,
+      "softmax_max_abs_error": 4.601982861451859e-08,
+      "stop_logit": -1.811178207397461,
+      "stop_logit_exactly_unchanged": true,
+      "stop_probability_change": 0.9266666993498802
+    },
+    "initial": {
+      "baseline_softmax_max_abs_error": 6.515014500108052e-09,
+      "forward_seconds": 0.020372875034809113,
+      "intervention_argmax": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+      "intervention_entropy": 1.6023120147673782,
+      "intervention_stop_minus_best_nonstop_logit": -0.32069775462150574,
+      "intervention_stop_probability": 0.15375615656375885,
+      "load_and_forward_seconds": 0.4283886661287397,
+      "margin_change": -0.06964679062366486,
+      "nonstop_logit_changes": [
+        0.0837584137916565,
+        0.06870163977146149,
+        0.08590524643659592,
+        0.0743761956691742
+      ],
+      "original_argmax": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+      "original_stop_minus_best_nonstop_logit": -0.2510509639978409,
+      "original_stop_probability": 0.16420266032218933,
+      "saved_baseline_cached_margin_rounding_difference": 1.4901161193847656e-08,
+      "softmax_max_abs_error": 1.948258351869292e-08,
+      "stop_logit": -0.12445300817489624,
+      "stop_logit_exactly_unchanged": true,
+      "stop_probability_change": -0.010446503758430481
+    }
+  },
+  "schema": "native-opening-length-sensitivity-saved-output-review-v1",
+  "source_file_count": 29,
+  "status": "passed",
+  "timing_and_resources": {
+    "interpretation": "Outer includes supervision; worker includes reconstruction and both load/forward/validation calls; forward clocks are nested. Do not add overlapping clocks. Prior baseline work is excluded. RSS is sampled with possible transient misses.",
+    "outer_wall_seconds": 4.67462229100056,
+    "rss_samples": 18,
+    "sum_of_two_disjoint_forward_seconds": 0.02199074998497963,
+    "sum_of_two_disjoint_load_forward_validation_seconds": 0.8434046662878245,
+    "supervisor_sampled_worker_peak_rss_bytes": 249380864,
+    "supervisor_seconds": 3.836943124886602,
+    "worker_reconstruction_seconds": 0.23165412503294647,
+    "worker_seconds": 2.364120249869302,
+    "worker_self_peak_rss_bytes": 245383168
+  }
+}

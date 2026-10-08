@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "checks": 311,
+  "indexed_files": 44,
+  "verification_sha256": "caced248fae89f8d963edd0754e7150e0e151e8ce11ef2f97c003045ea1fee16",
+  "numerical_results": {
+    "initial": {
+      "original_stop_probability": 0.16420266032218933,
+      "intervention_stop_probability": 0.15375615656375885,
+      "stop_probability_change": -0.010446503758430481,
+      "original_stop_minus_best_nonstop_logit": -0.2510509639978409,
+      "intervention_stop_minus_best_nonstop_logit": -0.32069775462150574,
+      "margin_change": -0.06964679062366486,
+      "stop_logit_exactly_unchanged": true,
+      "stop_logit": -0.12445300817489624,
+      "original_argmax": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+      "intervention_argmax": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+      "intervention_entropy": 1.6023120147673782,
+      "nonstop_logit_changes": [
+        0.0837584137916565,
+        0.06870163977146149,
+        0.08590524643659592,
+        0.0743761956691742
+      ],
+      "softmax_max_abs_error": 1.948258351869292e-08,
+      "baseline_softmax_max_abs_error": 6.515014500108052e-09,
+      "saved_baseline_cached_margin_rounding_difference": 1.4901161193847656e-08,
+      "forward_seconds": 0.020372875034809113,
+      "load_and_forward_seconds": 0.4283886661287397
+    },
+    "RL256": {
+      "original_stop_probability": 0.06724856048822403,
+      "intervention_stop_probability": 0.9939152598381042,
+      "stop_probability_change": 0.9266666993498802,
+      "original_stop_minus_best_nonstop_logit": -1.7774015665054321,
+      "intervention_stop_minus_best_nonstop_logit": 6.178877830505371,
+      "margin_change": 7.956279397010803,
+      "stop_logit_exactly_unchanged": true,
+      "stop_logit": -1.811178207397461,
+      "original_argmax": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+      "intervention_argmax": "STOP",
+      "intervention_entropy": 0.04537008957318479,
+      "nonstop_logit_changes": [
+        -8.051406025886536,
+        -7.276589751243591,
+        -7.956279397010803,
+        -7.181718230247498
+      ],
+      "softmax_max_abs_error": 4.601982861451859e-08,
+      "baseline_softmax_max_abs_error": 2.6433089994615244e-08,
+      "saved_baseline_cached_margin_rounding_difference": 0.0,
+      "forward_seconds": 0.001617874950170517,
+      "load_and_forward_seconds": 0.4150160001590848
+    }
+  },
+  "timing_and_resources": {
+    "outer_wall_seconds": 4.67462229100056,
+    "supervisor_seconds": 3.836943124886602,
+    "worker_seconds": 2.364120249869302,
+    "worker_reconstruction_seconds": 0.23165412503294647,
+    "sum_of_two_disjoint_forward_seconds": 0.02199074998497963,
+    "sum_of_two_disjoint_load_forward_validation_seconds": 0.8434046662878245,
+    "worker_self_peak_rss_bytes": 245383168,
+    "supervisor_sampled_worker_peak_rss_bytes": 249380864,
+    "rss_samples": 18,
+    "interpretation": "Outer includes supervision; worker includes reconstruction and both load/forward/validation calls; forward clocks are nested. Do not add overlapping clocks. Prior baseline work is excluded. RSS is sampled with possible transient misses."
+  }
+}

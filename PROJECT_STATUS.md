@@ -39,7 +39,11 @@ now verifies compatibility with one prepared TRAIN observation: RL256 ranks STOP
 first of 71 actions (81.3695% preference), versus last for the initial checkpoint
 (0.9884%). No action or planning endpoint ran, so useful patient transfer remains
 unestablished. Tool lengths, image/crop scale, horizon and proposal inventory differ
-from generated training; a fixed length-only input diagnostic is next.
+from generated training. The [length-only diagnostic](artifacts/native-opening-length-sensitivity-v1/RESULT.md)
+now isolates one sensitivity: changing four length descriptors alone raises trained
+STOP preference from 6.7249% to 99.3915%, while initial weights still prefer movement.
+All 311 independent saved-output checks pass. These modified descriptors are not
+physically recertified tools; useful patient planning remains unestablished.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for

@@ -1,0 +1,202 @@
+{
+  "checks_passed": [
+    "Only nonSTOP rows1..4,column12:2.2/12mm to120mm",
+    "All other tensor bytes, shapes, dtypes and metadata unchanged",
+    "Original full DTO fingerprint matches original audited preparation",
+    "Distinct deterministic new DTO identity; immutable buffers",
+    "Horizon/input mutations and unmodified baseline refused before checkpoint attempt",
+    "29-source/7-generated-metadata declaration; no PAT authority calls",
+    "Baseline scalar arithmetic uses saved records, no new baseline forwards",
+    "Inherited output-sha256.json included by root-only index exclusion"
+  ],
+  "created_at": "2026-10-08T21:05:25.454222+00:00",
+  "defect": {
+    "controls": [
+      "test_terminal_failure_closes_active_slot_preserves_prior[initial]",
+      "test_terminal_failure_closes_active_slot_preserves_prior[RL256]"
+    ],
+    "description": "Both first and second checkpoint exceptions leave the active method running after top-level failed. Expected failed/null while prior completed method survives.",
+    "function": "scripts/run_native_opening_length_sensitivity.py:worker"
+  },
+  "limitations": [
+    "Descriptor intervention is not certified tool geometry or action legality",
+    "Same source_id records original ancestry only; new DTO fingerprint records intervention",
+    "Parent supervises sampled worker RSS and wall time; transient peaks can be missed and termination adds bounded grace",
+    "This is a narrow two-call runner contract, not a sandbox against arbitrary Python mutation"
+  ],
+  "original_frozen_files_sha256": {
+    "build/native-opening-length-sensitivity-implementation-v1/verification.json": "389b338606747cbd0ef2bf0322cf3a395dd72bda2ede6f86f7a030ce70e3b2f9",
+    "manifests/experiments/native-opening-length-sensitivity-v1.json": "92a3a640add6f8f0cfb67ee6a28479af728cb5c007dd495c77944166850d7c89",
+    "scripts/run_native_opening_length_sensitivity.py": "f3913a6946356a029bc4da31c2411e8932c5dd4af1fae22e8e9313c814c996aa",
+    "tests/test_native_opening_length_sensitivity.py": "e9d1db9985d03a12542c2afffb72a03863d62fe5232f1628d23d8e1d03459eec"
+  },
+  "schema": "native-opening-length-sensitivity-independent-review-v1",
+  "scope": {
+    "actual_checkpoint_deserializations": 0,
+    "actual_model_forwards": 0,
+    "controller_results": "Fake dictionary returns solely to check first/second failure persistence; not scientific observations.",
+    "engine_or_proposer_calls": 0,
+    "generated_dto_reconstruction": true,
+    "optimizer_updates": 0,
+    "patient_reads": 0,
+    "tracked_writes": 0
+  },
+  "sources_at_receipt": {
+    "scripts/preflight_real_spatial_policy.py": {
+      "expected_sha256": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+      "observed_sha256": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f"
+    },
+    "scripts/run_native_opening_length_sensitivity.py": {
+      "expected_sha256": "f3913a6946356a029bc4da31c2411e8932c5dd4af1fae22e8e9313c814c996aa",
+      "observed_sha256": "85d8d86e87bdbc9a7dcaa3ff01d61a72492d16689e6cb74848fbd7dc9aac812e"
+    },
+    "scripts/run_pat05_forward_diagnostic.py": {
+      "expected_sha256": "9e4b6fbf41937f5a48839754f9ddd7775d8eb2cfdc414b82208ed030e74326af",
+      "observed_sha256": "9e4b6fbf41937f5a48839754f9ddd7775d8eb2cfdc414b82208ed030e74326af"
+    },
+    "src/resectionlab/__init__.py": {
+      "expected_sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "observed_sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "src/resectionlab/anatomy.py": {
+      "expected_sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "observed_sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37"
+    },
+    "src/resectionlab/brain_extraction.py": {
+      "expected_sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+      "observed_sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900"
+    },
+    "src/resectionlab/core.py": {
+      "expected_sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+      "observed_sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "src/resectionlab/critical_evidence.py": {
+      "expected_sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+      "observed_sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "src/resectionlab/data_policy.py": {
+      "expected_sha256": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+      "observed_sha256": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84"
+    },
+    "src/resectionlab/evaluation.py": {
+      "expected_sha256": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+      "observed_sha256": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b"
+    },
+    "src/resectionlab/functional_evidence.py": {
+      "expected_sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+      "observed_sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426"
+    },
+    "src/resectionlab/geometry.py": {
+      "expected_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "observed_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+    },
+    "src/resectionlab/imaging.py": {
+      "expected_sha256": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+      "observed_sha256": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2"
+    },
+    "src/resectionlab/independent_geometry_batch.py": {
+      "expected_sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+      "observed_sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+    },
+    "src/resectionlab/native_axis_simulation.py": {
+      "expected_sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+      "observed_sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf"
+    },
+    "src/resectionlab/native_proposals.py": {
+      "expected_sha256": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+      "observed_sha256": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee"
+    },
+    "src/resectionlab/native_resection.py": {
+      "expected_sha256": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+      "observed_sha256": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40"
+    },
+    "src/resectionlab/native_simulation.py": {
+      "expected_sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+      "observed_sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749"
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "expected_sha256": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+      "observed_sha256": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0"
+    },
+    "src/resectionlab/observed_search.py": {
+      "expected_sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+      "observed_sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd"
+    },
+    "src/resectionlab/pat05_forward_diagnostic.py": {
+      "expected_sha256": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+      "observed_sha256": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45"
+    },
+    "src/resectionlab/prior_proposals.py": {
+      "expected_sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+      "observed_sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f"
+    },
+    "src/resectionlab/real_patient_learning.py": {
+      "expected_sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+      "observed_sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512"
+    },
+    "src/resectionlab/simulation.py": {
+      "expected_sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+      "observed_sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253"
+    },
+    "src/resectionlab/spatial_observations.py": {
+      "expected_sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+      "observed_sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+    },
+    "src/resectionlab/spatial_policy.py": {
+      "expected_sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+      "observed_sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+    },
+    "src/resectionlab/spatial_policy_diagnostics.py": {
+      "expected_sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+      "observed_sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493"
+    },
+    "src/resectionlab/structural_evidence.py": {
+      "expected_sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+      "observed_sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "src/resectionlab/worlds.py": {
+      "expected_sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+      "observed_sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    }
+  },
+  "status": "blocked_on_terminal_method_failure_accounting",
+  "test": {
+    "failed": 2,
+    "log_sha256": "cebbb921c51f9d4c9776b069c8a6fccfbc25c2af46dfcb5147272e8897265cfd",
+    "passed": 6,
+    "path": "test_independent.py",
+    "seconds": 2.41,
+    "sha256": "0112ea7de336ed5e42320a932a73d3b398b0c736f83615668eb35c98c4f80675",
+    "xml_sha256": "15ce2b2fe80389127e95e79f5c2062497b282486ffe7eaa158778a9fade14676"
+  },
+  "verified_input_files": {
+    "artifacts/native-opening-learning-v1/declaration-input.json": {
+      "expected_sha256": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212",
+      "observed_sha256": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212"
+    },
+    "artifacts/native-opening-learning-v1/preparation.json": {
+      "expected_sha256": "63181c0754443730925e758019007ff472d58b9db1b72d9e3aacf9a28d8a3884",
+      "observed_sha256": "63181c0754443730925e758019007ff472d58b9db1b72d9e3aacf9a28d8a3884"
+    },
+    "artifacts/native-opening-rl-capacity-v1/declaration-input.json": {
+      "expected_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+      "observed_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285"
+    },
+    "artifacts/native-opening-rl-capacity-v1/independent-verification.json": {
+      "expected_sha256": "2489aff1b8a783f1fd6ad97a1085abb4b54aff30b44c337deb42a654d5afc95f",
+      "observed_sha256": "2489aff1b8a783f1fd6ad97a1085abb4b54aff30b44c337deb42a654d5afc95f"
+    },
+    "artifacts/native-opening-rl-capacity-v1/output-sha256.json": {
+      "expected_sha256": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d",
+      "observed_sha256": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d"
+    },
+    "artifacts/native-opening-rl-capacity-v1/result.json": {
+      "expected_sha256": "301e690fb87adff99b715c1371cb0fc692b0adc16fc3576ff7b0725336c56f68",
+      "observed_sha256": "301e690fb87adff99b715c1371cb0fc692b0adc16fc3576ff7b0725336c56f68"
+    },
+    "artifacts/native-opening-rl-capacity-v1/summary.json": {
+      "expected_sha256": "f71c9d5e2c7e28692fefed904e57240c23f0fb00b7725a1fb83086bf1f4c78e8",
+      "observed_sha256": "f71c9d5e2c7e28692fefed904e57240c23f0fb00b7725a1fb83086bf1f4c78e8"
+    }
+  }
+}

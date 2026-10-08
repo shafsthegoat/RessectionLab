@@ -1,0 +1,16 @@
+{
+  "automatic_retry": false,
+  "declaration_sha256": "8b7d3859ec579005430efc4b80f3d884d5cd69015b9549284af6f5910865f010",
+  "measurement_timeout_seconds": 2,
+  "returncode": 0,
+  "rss_samples": 18,
+  "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+  "sampled_peak_rss_bytes": 249380864,
+  "sampling_interval_seconds": 0.2,
+  "sampling_limit": "transient peaks between samples can be missed",
+  "seconds": 3.836943124886602,
+  "status": "complete",
+  "termination_grace_seconds": 2,
+  "termination_reason": null,
+  "timed_out": false
+}

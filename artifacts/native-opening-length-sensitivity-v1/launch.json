@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "scripts/run_native_opening_length_sensitivity.py",
+    "--declaration",
+    "manifests/experiments/native-opening-length-sensitivity-v1.json",
+    "--output",
+    "artifacts/native-opening-length-sensitivity-v1",
+    "--execute"
+  ],
+  "started_at_utc": "2026-10-08T21:07:24.322550+00:00",
+  "source_commit": "dcf894641fa7c9d6389b280df5978565b91fe09f",
+  "authorization": "User goal and root release after exact-source owner and independent controls; exactly two descriptor-intervention forwards, no physical-action or patient execution",
+  "automatic_retry": false
+}
