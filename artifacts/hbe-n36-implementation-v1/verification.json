@@ -1,0 +1,168 @@
+{
+  "blocking_findings": [],
+  "created_at": "2026-10-08T17:15:33.872131+00:00",
+  "five_source_hashes_verified_unchanged": {
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json": {
+      "bytes": 38776,
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36.py": {
+      "bytes": 12828,
+      "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py": {
+      "bytes": 42053,
+      "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": {
+      "bytes": 26682,
+      "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+    },
+    "tests/test_mechanics_hbe_halfheight_global_n36.py": {
+      "bytes": 14828,
+      "sha256": "d3eafad943d2cf374b0662ba094ffbde94c2540ce122c97eb6a9724e17bd203c"
+    }
+  },
+  "inherited_seventeen_sources_verified_unchanged": {
+    "scripts/febio_runtime.py": {
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "bytes": 28370,
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "bytes": 8744,
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts/mechanics_hbe_experiment.py": {
+      "bytes": 47907,
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    "scripts/mechanics_hbe_halfheight_global.py": {
+      "bytes": 12780,
+      "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+    },
+    "scripts/mechanics_hbe_halfheight_global_experiment.py": {
+      "bytes": 35804,
+      "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+    },
+    "scripts/mechanics_hbe_halfheight_global_readout.py": {
+      "bytes": 22887,
+      "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+    },
+    "scripts/mechanics_hbe_halfheight_mesh.py": {
+      "bytes": 12115,
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    "scripts/mechanics_hbe_halfheight_readout.py": {
+      "bytes": 27043,
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    "scripts/mechanics_hbe_halfheight_spatial.py": {
+      "bytes": 10144,
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    "scripts/mechanics_hbe_halfheight_spatial_experiment.py": {
+      "bytes": 29337,
+      "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+    },
+    "scripts/mechanics_hbe_halfheight_spatial_readout.py": {
+      "bytes": 13490,
+      "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "bytes": 8702,
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "bytes": 18789,
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    }
+  },
+  "release_created": false,
+  "review_actions": {
+    "actual_phase_preflights": 0,
+    "measured_curve_reads": 0,
+    "mesh_generation_calls": 0,
+    "native_calls": 0,
+    "new_meshes": 0,
+    "raw_primitive_parses": 0,
+    "releases": 0,
+    "tracked_source_edits": 0
+  },
+  "reviewed_bindings": {
+    "accepted_N32_comparison": {
+      "path": "artifacts/mechanics/hbe-global-n32-execution-v1/comparison.json",
+      "sha256": "0c989b6de65b14dfa4ef1d2f2ec5bf5ad76508e80220f4e4e56f638e11fa9c0e"
+    },
+    "accepted_N32_review": {
+      "path": "artifacts/mechanics/hbe-global-n32-execution-v1/independent-review.json",
+      "sha256": "10a9c97d61f954409474ddacbcb332e6d03c3521f409625537d5becf14aa5c67"
+    },
+    "accepted_prior_numerical_review": {
+      "path": "artifacts/mechanics/hbe-global-n32-execution-v1/next-diagnostic-review.json",
+      "sha256": "d4758f18892567210d556f6ba49cf8fd650067db9ec56dd510168d607125b47f"
+    },
+    "declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    }
+  },
+  "schema": "hbe-n36-independent-implementation-review-v1",
+  "scope_limits": [
+    "No new native or mesher call, generated geometry, measured curve access, raw primitive parsing, model fitting or release was performed.",
+    "No full workflow preflight was run here because it hashes saved raw primitives. The separate root preflight still must establish all actual archived paths/runtime inputs.",
+    "The closeout receipt explicitly excludes its own final fsync from the observed result-publication interval. No hard-real-time or power-loss guarantee is inferred.",
+    "RSS/output checks are sampled; between-sample peaks may be missed. Forecast capacities and scientific sensitivity remain as in the prior review, not newly established bounds.",
+    "A failed final uniform test is terminal; favorable execution can nominate only separate temporal review. Historical failed gates and physical-fidelity requirements remain unchanged."
+  ],
+  "status": "source_and_pure_controls_clear_for_separate_root_preflight_and_release_review",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "independent": 21,
+    "independent_source": {
+      "bytes": 5528,
+      "sha256": "1781dcee5518911dc73bc84d18e8712462817d6c3b9511584ec8435cfc22b89f"
+    },
+    "junit": {
+      "bytes": 12302,
+      "sha256": "40cce6ad0e707ef88ba3765d9b31bd51dd129683e464c7c6c3785467759a679c"
+    },
+    "log": {
+      "bytes": 179,
+      "sha256": "16c1bbaa3a0ae0bf20aaa65bec411c55d143f9633b190e7d509e9f57fbb13b16"
+    },
+    "owner": 56,
+    "pytest_reported_seconds": 0.43,
+    "scope": "Source metadata, strict declaration, scalar controls, parser dispatch without any log fixture, publication bytes/timing/refusals. Timings are software-test timing, not native performance.",
+    "total": 77
+  },
+  "verified_implementation": [
+    "Exact declaration bytes plus canonical fingerprint reject altered budgets, parser ceilings, flags or triplet window.",
+    "Twenty executing modules (17 unchanged and 3 new) plus six declarations must match an exact 26-file Git archive, paths and commit. Archive creation and actual preflight remain separate work.",
+    "No native imports or native calls at import. Only explicit --execute launches an authorized source/interpreter/runtime-bound phase; default performs metadata verification only.",
+    "Preparation and solve use fresh phase markers/directories; one Gmsh generation and one solve are counted. No resume, alternate mesh, retry or automatic continuation exists.",
+    "Solve release must bind both immutable preparation result and its accepted publication check; preparation source, runtime, mesh generation, counts and deck are reverified before solve.",
+    "1500 s per solve is clipped to remaining 1800 s aggregate allowance. Preparation has its own inclusive 60 s cap. Worker family RSS is sampled at 3 GiB; output watcher samples 768 MiB active and 2 GiB total.",
+    "New native primitive authentication and parser dispatch both require 39610 nodes/9 fields, 34992 elements/8 fields, 61 states; 384 MiB node, 256 MiB element and 16 MiB solver ceilings. Legacy limits remain unchanged.",
+    "Readout retains complete synchronized states, solver residual, half and reconstructed-full physics, force/energy reconstruction, sampled Jacobians, work-energy, primitive consistency and 75 physical probes.",
+    "All 60 nonrest states require both latest limits. Unequal-spacing history includes 8/12/16, 12/16/24, 16/24/32 and 24/32/36; older limits and N32 failed comparison remain explicit. Drift and limit disagreement stay separate.",
+    "Only candidate_for_temporal_review may become true. spatial_convergence_accepted, finest_level_step_convergence_evaluated and calibration_released remain false; physical_validation_pass remains null.",
+    "Durable result publication includes file fsync, directory fsync and retained-byte scan in the timing gate. A separate closeout binds exact result bytes and total bytes including itself; missing/failed closeout prevents acceptance."
+  ]
+}
