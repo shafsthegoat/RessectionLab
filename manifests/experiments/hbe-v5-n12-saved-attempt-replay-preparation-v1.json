@@ -1,0 +1,30 @@
+{
+  "schema": "hbe-v5-n12-saved-attempt-replay-preparation-v1",
+  "status": "source_only_not_released_or_executed",
+  "release": null,
+  "run_id": "compression:N12:S60:reference",
+  "ordinal": 1,
+  "original_attempt_directory": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/01-compression-N12-S60-reference/attempt-01",
+  "original_receipt_sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2",
+  "original_release_path": "build/hbe-v5-n12-one-shot-release/release.json",
+  "original_release_sha256": "b9e765529e98668e8fe675b61bc7084d48efddb1f431221174801d3bfe50acad",
+  "original_source_commit": "936cf2acb13cd01a80e88d8d5791afff9cf846f3",
+  "original_failure": {"type": "ValueError", "message": "Native output absent or above bound"},
+  "specific_packaging_defect": "The separately supervised saved-stream worker exited zero and wrote a passing 61-frame readout, but the parent refused its legitimate zero-byte readout-console.txt. Only that ancillary console may be empty.",
+  "closed_attempt_bytes": 50501397,
+  "closed_attempt_files": {
+    "console.txt": {"bytes": 181318, "sha256": "e72008a7988645e6ab073cc8b1e053025f73dc370aa49b13dd34f50bb1acb03d"},
+    "elements.log": {"bytes": 18985554, "sha256": "948e5f8226a19f5e061dccd106941e936b844342ded1109d96b79903c2fb0ee8"},
+    "nodes.log": {"bytes": 29435703, "sha256": "7978bb9806bddb5b0fd290048109fc20671e6fb9d95c2f73df0e958a1a51133a"},
+    "readout-console.txt": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "readout-work-order.json": {"bytes": 7151, "sha256": "75088e39e0288119a32da05de5592d9e4968815c121a734b2345a826b67879d7"},
+    "readout.json": {"bytes": 539665, "sha256": "960c7a4fdfb37b0823b07f88c19fe280b72583169fc73825a90b0dfe8c86772f"},
+    "receipt.json": {"bytes": 7949, "sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2"},
+    "solver.log": {"bytes": 584984, "sha256": "02351be0c565b07a1bbe239dddc42a93e712efc3957c81e66f089925fba3d3d3"},
+    "specimen.feb": {"bytes": 759073, "sha256": "4da9b4483fb23b3ac5fa710f9af6581ca36dcf4345d4ada7087314232b23023f"}
+  },
+  "output_directory": "outputs/mechanics/hbe-v5-n12-saved-attempt-replay-v1/attempt-01",
+  "caps": {"native_calls": 0, "replay_calls": 1, "attempts": 1, "replay_wall_seconds": 600, "sampled_process_group_rss_bytes": 3221225472, "active_output_bytes": 67108864, "preparation_wall_seconds": 150, "numerical_threads": 1},
+  "phase_gates": {"native_execution": false, "generic_failed_predecessor_admission": false, "twelve_row_comparator_admission": false, "fit": false, "held_out_torque_access": false, "physical_validation": false, "patient_or_measured_response_access": false},
+  "interpretation": "A separate reviewed release may authorize one bounded read-only replay of this exact failed saved attempt. It cannot launch FEBio, rewrite the original receipt, or silently turn any failed predecessor into a passing one. The original attempt lacked recorded post-run source/runtime guards because parent validation stopped early; current rechecks must be labeled current, not historical. A passing supplement requires independent review and a separate explicit future chain-admission declaration."
+}

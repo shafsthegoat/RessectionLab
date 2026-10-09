@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [N12 saved-attempt replay implementation](docs/hbe-v5-n12-saved-attempt-replay.md)
+has an [independent source-only GO](artifacts/hbe-v5-n12-saved-replay-v1/SOURCE_REVIEW.md):
+7 focused tests passed independently, and the writer reports 144 HBE tests passing.
+It can recheck the immutable failed attempt using one bounded Python-only replay,
+without rerunning FEBio. Execution, the supplemental result and explicit downstream
+admission remain separate; the original failed receipt cannot become a normal pass.
+
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131
 additional controls passed. A sealed two-action plan scores 2 versus 0 mm³
