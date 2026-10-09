@@ -1,0 +1,39 @@
+{
+  "schema": "hbe-v5-n8-one-shot-preparation-v1",
+  "status": "prepared_not_released_or_executed",
+  "release": null,
+  "run_id": "compression:N8:S60:reference",
+  "canary_manifest": "manifests/experiments/hbe-v5-n8-canary-source-only-v1.json",
+  "output_directory": "outputs/mechanics/hbe-v5-n8-one-shot-v1/attempt-01",
+  "caps": {
+    "native_calls": 1,
+    "attempts": 1,
+    "wall_seconds": 90,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "active_output_bytes": 67108864,
+    "numerical_threads": 1
+  },
+  "old_control": {
+    "solver_execution": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/solver-execution.json",
+      "sha256": "da65a8807143498d349705700dae37d8ea2bbb87f1ce986badd3926563b9d391"
+    },
+    "raw_output_index": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/raw-output-index.json",
+      "sha256": "385fdbf2a52972509a18a31a693aa139553ee02e99a62decfc0391fda8fe94e9"
+    },
+    "observed_old_endpoint_wall_seconds": 4.249919041059911,
+    "observed_old_endpoint_nodes_bytes": 9029128,
+    "observed_old_endpoint_elements_bytes": 5588831,
+    "observed_old_endpoint_solver_bytes": 363377,
+    "observed_old_endpoint_console_bytes": 175100
+  },
+  "cap_basis": "The historical same-N8 Accelerate old-endpoint call completed in 4.249919 s under a 90 s wall cap, with approximately 15 MiB of saved logs. The new endpoint and execution environment can differ; 90 s/3 GiB/64 MiB are prospective upper bounds, not predicted usage or proof of feasibility. RSS and active output are sampled and may miss brief peaks.",
+  "phase_gates": {
+    "other_v5_rows": false,
+    "fit": false,
+    "held_out_torque": false,
+    "physical_validation": false
+  },
+  "release_condition": "A separate root-reviewed one-call release must bind this exact preparation, pinned canary, current committed Python source closure, exact N8 old deck/mesh and adapted Accelerate deck, repaired runtime/profile, and one fresh output path. No release is present in this manifest."
+}

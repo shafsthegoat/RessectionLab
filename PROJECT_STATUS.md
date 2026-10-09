@@ -156,6 +156,13 @@ and the repaired runtime prerequisites. Independent XML/hash review and 57
 focused tests pass. Its release is null and execution gate remains closed:
 no extended-endpoint native solve, measured-force comparison or patient-force
 validation has occurred.
+The [HBE v5 N8 one-shot supervisor preparation](docs/hbe-v5-n8-one-shot-supervisor.md)
+now binds a future 61-frame extended-endpoint solve to the exact adapted deck,
+17-file source closure, repaired runtime and a fresh output path with one
+attempt under 90 s/3 GiB sampled RSS/64 MiB guards. Historical old-endpoint
+native logs pass the saved grammar but correctly fail the new-endpoint motion
+gate. Seventy-six focused/adjacent tests and independent source review pass.
+Its release remains null; no new N8 solve or measured-force fit has run.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
