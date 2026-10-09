@@ -1,0 +1,11 @@
+{
+  "error": {
+    "message": "Repository read outside exact frozen source closure: /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source/scripts/__pycache__/mechanics_hbe_access.cpython-312.pyc",
+    "type": "RuntimeError"
+  },
+  "schema": "hbe-v3-frozen-source-import-audit-v1",
+  "status": "failed",
+  "violations": [
+    "Repository read outside exact frozen source closure: /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source/scripts/__pycache__/mechanics_hbe_access.cpython-312.pyc"
+  ]
+}

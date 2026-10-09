@@ -1,0 +1,226 @@
+{
+  "git": {
+    "head": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+    "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_diff_sha256": "9da2323e111a2ce40c0a416e49d20efe76e37a808ccda046859964c6cc889057",
+    "tracked_status": [
+      " M desktop/src/App.tsx",
+      " M desktop/src/NeighboringPathsPanel.tsx",
+      " M desktop/src/neighboring-paths.ts"
+    ]
+  },
+  "measured_archive_opened": false,
+  "protected_bindings": [
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+      "sha256": "902286e195a673acb6384a864f0bb57f747eb0ba450be44d2451dc221cd7d1ce"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+      "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+      "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+      "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+      "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    {
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "path": "scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    {
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global.py",
+      "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36.py",
+      "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+      "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+      "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+      "sha256": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_readout.py",
+      "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_experiment.py",
+      "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_mesh.py",
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_spatial.py",
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_spatial_readout.py",
+      "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+      "sha256": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+      "sha256": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178"
+    },
+    {
+      "path": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    {
+      "path": "scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    {
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    {
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v3.py",
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "sha256": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "sha256": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    {
+      "path": "build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json",
+      "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
+    },
+    {
+      "path": "build/hbe-branch-calibration-v2-failure-review-v1/verification.json",
+      "sha256": "54512fb229ce5100cf22f2c93cad27897d66210c43e992fd79c5c2f62da5877b"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl",
+      "sha256": "2e60b888149039d9ad6536531a65ae3f813152b90cf17cda6a360df0553893cc"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/publication-check.json",
+      "sha256": "b639ade073a8b17df791c947ca7435e6eb8a0e8df0d5f186784c9c2c3dd9c048"
+    },
+    {
+      "path": "build/hbe-branch-calibration-v2/release.json",
+      "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/result.json",
+      "sha256": "ee8983ebaa6a423cae241a3333bcaaa685885d15913110247990992fdc80aff5"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/.started.json",
+      "sha256": "55df4a7025b042f4f8f82e75e0f448cec23cdca6c4f4cee26d02faa74efaeb97"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json",
+      "sha256": "0b3c284e541c47d6f8cd8640584d6b9d94c20b24d8abe1cd5c802f18675f49d5"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json",
+      "sha256": "18780ae62bd616a9dcbfed7c6dc1cf0dfe74e4c76db65305b054e938151e2b5f"
+    },
+    {
+      "path": "artifacts/hbe-branch-calibration-v3-preparation-v1/independent/verification.json",
+      "sha256": "a8eb3ed8093a92a8a2d7c4faa14c1905872099fcb195a11d1d9f81d4d01c37eb"
+    }
+  ],
+  "schema": "hbe-v3-release-preparation-baseline-v1",
+  "started_utc": "2026-10-09T01:44:26.952132+00:00",
+  "v3_output_root_exists": false
+}

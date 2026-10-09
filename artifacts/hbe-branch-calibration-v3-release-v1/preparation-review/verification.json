@@ -1,0 +1,218 @@
+{
+  "actual_execution_authorized": false,
+  "archive_verification": {
+    "path": "build/hbe-branch-calibration-v3-prep-review-v1/archive-verification.json",
+    "sha256": "50f6350bb399a7a4302064ece2ceecab1acf134849952b663076fb06894ae64f"
+  },
+  "candidate": {
+    "path": "build/hbe-branch-calibration-v3/release.candidate.json",
+    "sha256": "6df35c64105f979ebaa118c34444870666073b6daf80112547640ea39bd83da2"
+  },
+  "checks": {
+    "archive_exact_38_members": true,
+    "archive_global_comment_matches_exact_source_commit": true,
+    "authorized_release_absent": true,
+    "existing_inputs_rehashed_unchanged": true,
+    "fit_calls": 0,
+    "measured_archive_opened": false,
+    "measured_curve_or_torsion_opened": false,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "preflight_run": false,
+    "source_imports_all_frozen": true,
+    "synthrad_or_desktop_mutations": 0,
+    "tracked_edits_or_commits": 0,
+    "tracked_worktree_staging_and_head_unchanged": true,
+    "v3_output_root_absent": true
+  },
+  "commands": {
+    "path": "build/hbe-branch-calibration-v3-prep-review-v1/commands.json",
+    "sha256": "a30dd181e87392cb736ff3c582c3b8d8221f29080e417e6f083e453a3781366f"
+  },
+  "finished_utc": "2026-10-09T01:46:39.774268+00:00",
+  "go_no_go": "GO for root independent review and possible separate one-attempt release; NO-GO for execution with this unauthorized candidate.",
+  "import_guard_adjustment": "Allow absent .pyc probes only within frozen scripts/__pycache__; no cache bytes exist. Permit finite_array for import-time reference-element constants. Use exact v2 virtualenv invocation, allow its third-party site-packages, and exclude its editable live src path.",
+  "import_origin_verification": {
+    "path": "build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-03.stdout.json",
+    "sha256": "35a64ab489c13da726ad38febaee31b85c740d12a1b66d30b85be8bfba347468"
+  },
+  "initial_import_guard_stop": {
+    "path": "build/hbe-branch-calibration-v3-prep-review-v1/import-audit.stdout.json",
+    "sha256": "9f1a00de82625ff5932340900151025a0a64180327f08f5c79bf2795281ee978"
+  },
+  "interpreter_invocation": {
+    "origin": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json",
+      "sha256": "18780ae62bd616a9dcbfed7c6dc1cf0dfe74e4c76db65305b054e938151e2b5f"
+    },
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "resolved_path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+  },
+  "limitations": [
+    "This preparation audit does not call v3 preflight or verify all historical native input files.",
+    "No measured calibration, fitting, native confirmation or physical validation occurred.",
+    "The unchanged torsion framing remains uninspected and may later fail closed.",
+    "Read-only sealing uses filesystem modes plus recorded hashes; it is not a tamper-proof filesystem guarantee."
+  ],
+  "predecessor_metadata": {
+    "diagnosis": {
+      "bytes": 4103,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json",
+      "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
+    },
+    "failure_review": {
+      "bytes": 19058,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "build/hbe-branch-calibration-v2-failure-review-v1/verification.json",
+      "sha256": "54512fb229ce5100cf22f2c93cad27897d66210c43e992fd79c5c2f62da5877b"
+    },
+    "previous_access_ledger": {
+      "bytes": 361,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl",
+      "sha256": "2e60b888149039d9ad6536531a65ae3f813152b90cf17cda6a360df0553893cc"
+    },
+    "previous_publication": {
+      "bytes": 603,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/publication-check.json",
+      "sha256": "b639ade073a8b17df791c947ca7435e6eb8a0e8df0d5f186784c9c2c3dd9c048"
+    },
+    "previous_release": {
+      "bytes": 8910,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "build/hbe-branch-calibration-v2/release.json",
+      "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+    },
+    "previous_result": {
+      "bytes": 1837,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/result.json",
+      "sha256": "ee8983ebaa6a423cae241a3333bcaaa685885d15913110247990992fdc80aff5"
+    },
+    "previous_started": {
+      "bytes": 184,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/.started.json",
+      "sha256": "55df4a7025b042f4f8f82e75e0f448cec23cdca6c4f4cee26d02faa74efaeb97"
+    },
+    "previous_state": {
+      "bytes": 477,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json",
+      "sha256": "0b3c284e541c47d6f8cd8640584d6b9d94c20b24d8abe1cd5c802f18675f49d5"
+    },
+    "previous_study": {
+      "bytes": 42492,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    },
+    "previous_supervision": {
+      "bytes": 1200,
+      "committed_at": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json",
+      "sha256": "18780ae62bd616a9dcbfed7c6dc1cf0dfe74e4c76db65305b054e938151e2b5f"
+    }
+  },
+  "predecessor_receipts_commit": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+  "predecessor_state_retained": {
+    "automatic_retry": false,
+    "calibration_access_attempted": true,
+    "calibration_responses_accessed": null,
+    "error": {
+      "message": "could not convert string to float: 'displacement'",
+      "type": "ValueError"
+    },
+    "held_out_access_attempted": false,
+    "held_out_responses_accessed": false,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "physical_validation_pass": null,
+    "runs": {},
+    "schema": "hbe-branch-calibration-state-v2",
+    "status": "failed_or_incomplete"
+  },
+  "preserved": {
+    "backend_profile": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "budgets": {
+      "active_output_bytes_by_branch": {
+        "compression": 1610612736,
+        "tension": 536870912
+      },
+      "aggregate_includes": "Preflight/source+input hashing, member access, one fit, deck preparation, both native calls, all primitive readout/paired comparisons, final source/input rehash, fit+prediction freeze, conditional held-out evaluation and durable result publication. Outer sampled family supervisor begins before preflight.",
+      "aggregate_seconds": 3600,
+      "all_nested_deadlines": "min(stage_start+stage_cap, aggregate_deadline); native cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.",
+      "automatic_retry": false,
+      "combined_deck_preparation_seconds": 60,
+      "copy_old_raw_logs": false,
+      "hard_real_time_guarantee_claimed": false,
+      "maximum_mesher_calls": 0,
+      "maximum_native_calls": 2,
+      "native_seconds_by_branch": {
+        "compression": 2100,
+        "tension": 420
+      },
+      "new_total_output_bytes": 2147483648,
+      "old_inputs_counted_as_new_output": false,
+      "other_work_allocation_seconds": 420,
+      "paired_raw_streaming_seconds": 600,
+      "runtime_threads": 1,
+      "same_disk_new_source_archive_in_total": true,
+      "sampled_family_RSS_bytes": 3221225472
+    },
+    "calibration_members": [
+      "HBE_01/HBE_01_03/compression_c3.csv",
+      "HBE_01/HBE_01_03/tension_c3.csv"
+    ],
+    "conditional_held_out_members": [
+      "HBE_01/HBE_01_03/torsion_l1_c3_neg.csv",
+      "HBE_01/HBE_01_03/torsion_l1_c3_pos.csv"
+    ],
+    "interpreter": {
+      "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+    },
+    "roles": {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    "runtime_identity": {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    "study": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    "torsion_schema_uninspected_and_unchanged": true
+  },
+  "prior_import_audits": [
+    {
+      "path": "build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-02.stdout.json",
+      "sha256": "63617a5d8009963cafbb82b9d847e7cef22fb3789d3a789e3363b2cc21ed7aef"
+    },
+    {
+      "path": "build/hbe-branch-calibration-v3-prep-review-v1/import-audit.stdout.json",
+      "sha256": "9f1a00de82625ff5932340900151025a0a64180327f08f5c79bf2795281ee978"
+    }
+  ],
+  "protected_input_count": 52,
+  "reviewed_preparation": {
+    "path": "artifacts/hbe-branch-calibration-v3-preparation-v1/independent/verification.json",
+    "sha256": "a8eb3ed8093a92a8a2d7c4faa14c1905872099fcb195a11d1d9f81d4d01c37eb"
+  },
+  "reviewed_preparation_commit": "e8b7c52482218bb5ad14fd5d948a5d90162f8cdc",
+  "schema": "hbe-v3-release-preparation-audit-v1",
+  "source_archive": {
+    "path": "build/hbe-branch-calibration-v3/source.tar",
+    "sha256": "8fa980c20f1caeac6e47a96314fa6118efa5cad14424ea9ecb4f2a48b907f3ec"
+  },
+  "source_commit": "e96f706ff1857a5791ed69b5ac0d05aff5756e55",
+  "status": "prepared_unauthorized_candidate_for_root_review"
+}

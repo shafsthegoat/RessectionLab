@@ -1,0 +1,62 @@
+{
+  "RESULT.txt": {
+    "bytes": 376,
+    "sha256": "fc269654ed10c9f2d6e853295c7f6fba448d15949d98fdfdc27edb84ac7c3267"
+  },
+  "archive-members.json": {
+    "bytes": 16660,
+    "sha256": "951afbdb2cab8fe6df5fbe66cb6a0b4fbfde8f82f262cabe127e54b449c9119a"
+  },
+  "audit.py": {
+    "bytes": 21593,
+    "sha256": "4dc992506e03fd93ea5d7f37d044d196e9b1b8fb07e587133eaad56eb11cb686"
+  },
+  "commands.json": {
+    "bytes": 23149,
+    "sha256": "3f41b1cbd8aaf944d0013ac27a62339af54840dab6a2f899389d644647f80280"
+  },
+  "guarded_imports.py": {
+    "bytes": 5161,
+    "sha256": "3a362dad538f92f44efdbf7bcb3bb36c5356e5d2db3914805ab8fa61266dba99"
+  },
+  "guarded_launcher_imports.py": {
+    "bytes": 5217,
+    "sha256": "878680a05bd9783dd5c29b121a94114c950d6097eb826dea83124d37d7d8ec7c"
+  },
+  "guarded_worker_imports.py": {
+    "bytes": 5240,
+    "sha256": "1392c8d4d64eafeb867c549894f532b5f2a9a683c18ba09f37e83326cec8fd34"
+  },
+  "import-audit.stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "import-audit.stdout.json": {
+    "bytes": 21739,
+    "sha256": "35a64ab489c13da726ad38febaee31b85c740d12a1b66d30b85be8bfba347468"
+  },
+  "input-inventory.json": {
+    "bytes": 14742,
+    "sha256": "ac9f0b1151a98d223310ecfec0a7d5dffc179717333d7250284079c65dc0add8"
+  },
+  "launcher-import-audit.stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "launcher-import-audit.stdout.json": {
+    "bytes": 21844,
+    "sha256": "6d990ad570362762598aa719d421c2ca361c0eddd8326235b3b54410292d21e0"
+  },
+  "verification.json": {
+    "bytes": 18977,
+    "sha256": "5a11aa354679ef707cb26d7bc7f896505ca02dddbde67768119a04b8b5e8c14a"
+  },
+  "worker-import-audit.stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "worker-import-audit.stdout.json": {
+    "bytes": 21992,
+    "sha256": "b5ca327d7917ff38c35fc0f47549f340fad8e8d4fd450f1c25cea9d363be95cc"
+  }
+}

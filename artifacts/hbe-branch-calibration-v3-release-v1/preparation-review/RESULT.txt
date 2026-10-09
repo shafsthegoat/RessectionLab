@@ -1,0 +1,7 @@
+Prepared exact HBE_01_03 v3 source archive and unauthorized release candidate.
+GO for root independent review; NO-GO for execution until a separate root-authorized release exists.
+38 files (29 Python sources, 9 declarations), commit e96f706ff1857a5791ed69b5ac0d05aff5756e55.
+Archive SHA256: 8fa980c20f1caeac6e47a96314fa6118efa5cad14424ea9ecb4f2a48b907f3ec
+Candidate SHA256: 6df35c64105f979ebaa118c34444870666073b6daf80112547640ea39bd83da2
+Guarded imports verified all 29 modules came from frozen source; no live checkout imports.
+No preflight, measured archive/member read, fit, native call, output root, or tracked edit.

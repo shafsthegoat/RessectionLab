@@ -1,0 +1,329 @@
+{
+  "all_archive_and_extracted_hashes_match_commit_and_declaration": true,
+  "archive_bytes": 901120,
+  "archive_command_argv": [
+    "git",
+    "archive",
+    "--format=tar",
+    "--output=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source.tar",
+    "e96f706ff1857a5791ed69b5ac0d05aff5756e55",
+    "--",
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+    "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+    "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "scripts/febio_runtime.py",
+    "scripts/mechanics_hbe_access.py",
+    "scripts/mechanics_hbe_backend.py",
+    "scripts/mechanics_hbe_branch_calibration_v3.py",
+    "scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+    "scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "scripts/mechanics_hbe_evaluation.py",
+    "scripts/mechanics_hbe_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global.py",
+    "scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global_n36.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "scripts/mechanics_hbe_halfheight_global_readout.py",
+    "scripts/mechanics_hbe_halfheight_mesh.py",
+    "scripts/mechanics_hbe_halfheight_readout.py",
+    "scripts/mechanics_hbe_halfheight_spatial.py",
+    "scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+    "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "scripts/mechanics_hbe_mesh.py",
+    "scripts/mechanics_hbe_outputs.py",
+    "scripts/mechanics_hbe_physics.py",
+    "scripts/mechanics_hbe_readout.py"
+  ],
+  "archive_command_shell": "git archive --format=tar --output=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source.tar e96f706ff1857a5791ed69b5ac0d05aff5756e55 -- manifests/experiments/hbe-01-03-axial-resolution-v1.json manifests/experiments/hbe-01-03-branch-calibration-v3.json manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json manifests/experiments/hbe-01-03-halfheight-spatial-v1.json manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json manifests/experiments/hbe-01-03-mechanics-poc-v1.json scripts/febio_runtime.py scripts/mechanics_hbe_access.py scripts/mechanics_hbe_backend.py scripts/mechanics_hbe_branch_calibration_v3.py scripts/mechanics_hbe_branch_calibration_v3_experiment.py scripts/mechanics_hbe_branch_calibration_v3_readout.py scripts/mechanics_hbe_evaluation.py scripts/mechanics_hbe_experiment.py scripts/mechanics_hbe_halfheight_global.py scripts/mechanics_hbe_halfheight_global_experiment.py scripts/mechanics_hbe_halfheight_global_n36.py scripts/mechanics_hbe_halfheight_global_n36_experiment.py scripts/mechanics_hbe_halfheight_global_n36_readout.py scripts/mechanics_hbe_halfheight_global_n36_temporal.py scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py scripts/mechanics_hbe_halfheight_global_readout.py scripts/mechanics_hbe_halfheight_mesh.py scripts/mechanics_hbe_halfheight_readout.py scripts/mechanics_hbe_halfheight_spatial.py scripts/mechanics_hbe_halfheight_spatial_experiment.py scripts/mechanics_hbe_halfheight_spatial_readout.py scripts/mechanics_hbe_halfheight_temporal_common.py scripts/mechanics_hbe_halfheight_tension_n24_temporal.py scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py scripts/mechanics_hbe_mesh.py scripts/mechanics_hbe_outputs.py scripts/mechanics_hbe_physics.py scripts/mechanics_hbe_readout.py",
+  "declaration_count": 9,
+  "file_member_count": 38,
+  "global_commit_comment": "e96f706ff1857a5791ed69b5ac0d05aff5756e55",
+  "members": [
+    {
+      "bytes": 5411,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "git_blob": "b4ccef1b88595033df481c08cae87eb046636fb8",
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    {
+      "bytes": 45023,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "git_blob": "1c28e7fa5bfda0c7089e304b9ab6950f93784ae0",
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    {
+      "bytes": 18663,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+      "git_blob": "b4579e434cc613b725062fcbe73fb1b1fff6afbf",
+      "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+      "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+    },
+    {
+      "bytes": 25745,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+      "git_blob": "36f8fd8d10a744741af3d13f2d03d8ecc7943012",
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+      "sha256": "902286e195a673acb6384a864f0bb57f747eb0ba450be44d2451dc221cd7d1ce"
+    },
+    {
+      "bytes": 22780,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+      "git_blob": "6c6eb6a507c3ac0a0b46b1f874c6068ab3db45c7",
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+      "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+    },
+    {
+      "bytes": 38776,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "git_blob": "b557f017e66c44904dc7b9e8cc86d8814546c826",
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    {
+      "bytes": 19148,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+      "git_blob": "3d4a4e7eef0ed89de0b4bd5fec5c9f070e812e58",
+      "path": "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+      "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+    },
+    {
+      "bytes": 19460,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+      "git_blob": "e73017c6f369e711b48cfba4eb290066d5364dfe",
+      "path": "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+      "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+    },
+    {
+      "bytes": 13880,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "git_blob": "4ebf3e0255c9eaf77f5b6615da8e0b97adc6be26",
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    {
+      "bytes": 24801,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/febio_runtime.py",
+      "git_blob": "1f1a2e27d992c6a120c89ee35ea0b6e46030ead6",
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "bytes": 37769,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py",
+      "git_blob": "61c744f5d5c1331d4c476391c568b27d6eabdcc1",
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "bytes": 28370,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_backend.py",
+      "git_blob": "2f053984a0a651e632e86e0898bfa0e868e63286",
+      "path": "scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    {
+      "bytes": 40874,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py",
+      "git_blob": "a5e3f6dda62dbeee888fdef62d24685a4e50c8ac",
+      "path": "scripts/mechanics_hbe_branch_calibration_v3.py",
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    {
+      "bytes": 14868,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "git_blob": "494b63068bd41ab9152a79a85e24a8924f2fe09c",
+      "path": "scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "sha256": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3"
+    },
+    {
+      "bytes": 17937,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "git_blob": "2061ddc9663608d6fe2e1e9c0cf472f8633c7e7d",
+      "path": "scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "sha256": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205"
+    },
+    {
+      "bytes": 8744,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py",
+      "git_blob": "bb40ea03aa1e854cf54d4554c84ab4c1e5ad9775",
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "bytes": 47907,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py",
+      "git_blob": "da0d0106ebe7e563146a5795cfe9b49d1a94124a",
+      "path": "scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    {
+      "bytes": 12780,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global.py",
+      "git_blob": "5fbf56aa8a7bdbfa3da496fffd0abebf64d9e0e8",
+      "path": "scripts/mechanics_hbe_halfheight_global.py",
+      "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+    },
+    {
+      "bytes": 35804,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_experiment.py",
+      "git_blob": "0c6287eff3d9a516ab55b7c45a5cab10c9327cc2",
+      "path": "scripts/mechanics_hbe_halfheight_global_experiment.py",
+      "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+    },
+    {
+      "bytes": 12828,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36.py",
+      "git_blob": "686ef579783816be5dca4ed8768c1b222abf3586",
+      "path": "scripts/mechanics_hbe_halfheight_global_n36.py",
+      "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+    },
+    {
+      "bytes": 42053,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+      "git_blob": "1d02a15808b3c124ac8de696c011171e9b7f8819",
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+      "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+    },
+    {
+      "bytes": 26682,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+      "git_blob": "a3a2ad6555a08be65bd82075a8b739ca113825af",
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+      "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+    },
+    {
+      "bytes": 8765,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+      "git_blob": "12dc194ba4cca38dc2541c126867cac7451352c6",
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    {
+      "bytes": 27125,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+      "git_blob": "66d27a6f90b22bef5a43069c40604e25e4d6e3ac",
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+      "sha256": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e"
+    },
+    {
+      "bytes": 19175,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+      "git_blob": "f73b20d96aafd2adf8bdb043ba5bfcc26c272c93",
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    {
+      "bytes": 22887,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_readout.py",
+      "git_blob": "0cc5f51eb9e9ac2162984905f2ef22ab468820bc",
+      "path": "scripts/mechanics_hbe_halfheight_global_readout.py",
+      "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+    },
+    {
+      "bytes": 12115,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_mesh.py",
+      "git_blob": "801cbb159a6f257b27b858eab3e735b22a0fe313",
+      "path": "scripts/mechanics_hbe_halfheight_mesh.py",
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    {
+      "bytes": 27043,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py",
+      "git_blob": "52f568b7a1d765f0a1b85f151fae0cdba69e8bfa",
+      "path": "scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    {
+      "bytes": 10144,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial.py",
+      "git_blob": "124631b63fb46a86d4c787c12eb0a706698cfb74",
+      "path": "scripts/mechanics_hbe_halfheight_spatial.py",
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    {
+      "bytes": 29337,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "git_blob": "83b16ad8cb2f089fe0e3cc19a028d55aeae73ea4",
+      "path": "scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+    },
+    {
+      "bytes": 13490,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_readout.py",
+      "git_blob": "36428e9dcda53bcb4e085c58436964b999bbecc7",
+      "path": "scripts/mechanics_hbe_halfheight_spatial_readout.py",
+      "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+    },
+    {
+      "bytes": 9791,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "git_blob": "2fe977066f5068c6493de99f0b0df4aa9e5676f0",
+      "path": "scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+    },
+    {
+      "bytes": 10335,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+      "git_blob": "d9d2c4c39d49444287b7f4a8d3ce6959f92f6039",
+      "path": "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+      "sha256": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73"
+    },
+    {
+      "bytes": 19306,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+      "git_blob": "b04744c7340c1b969f79136a718cecd7d598c7eb",
+      "path": "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+      "sha256": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178"
+    },
+    {
+      "bytes": 48654,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_mesh.py",
+      "git_blob": "3c4dca055c4d3f6b83afabd46e6e42fab3d12cb7",
+      "path": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    {
+      "bytes": 8702,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_outputs.py",
+      "git_blob": "e4b837e701177f40a968a4050723ccb8eb429d41",
+      "path": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    {
+      "bytes": 17656,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py",
+      "git_blob": "3436b58eea2332aa045b58833bad4792ca310a42",
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    {
+      "bytes": 18789,
+      "extracted_path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_readout.py",
+      "git_blob": "e9a7cabe48ac1fd022edcded11dd09a30c7f289d",
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    }
+  ],
+  "python_source_count": 29,
+  "schema": "hbe-v3-source-archive-verification-v1",
+  "source_archive": {
+    "path": "build/hbe-branch-calibration-v3/source.tar",
+    "sha256": "8fa980c20f1caeac6e47a96314fa6118efa5cad14424ea9ecb4f2a48b907f3ec"
+  },
+  "source_commit": "e96f706ff1857a5791ed69b5ac0d05aff5756e55"
+}

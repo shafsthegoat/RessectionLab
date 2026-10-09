@@ -1,0 +1,26 @@
+{
+  "authorized": true,
+  "authorized_utc": "2026-10-09T01:52:39.634632+00:00",
+  "authorizer": "root",
+  "candidate": {
+    "path": "build/hbe-branch-calibration-v3/release.candidate.json",
+    "sha256": "6df35c64105f979ebaa118c34444870666073b6daf80112547640ea39bd83da2"
+  },
+  "completed_head_at_authorization": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+  "independent_review": {
+    "path": "build/hbe-branch-calibration-v3-release-audit-v1/verification.json",
+    "sha256": "5a11aa354679ef707cb26d7bc7f896505ca02dddbde67768119a04b8b5e8c14a"
+  },
+  "no_retry": true,
+  "one_attempt_only": true,
+  "release": {
+    "path": "build/hbe-branch-calibration-v3/release.json",
+    "sha256": "bf9cafb8297c49082dd5eb1b861c38d9d395de9abc3820e469ebd8c79e1851ed"
+  },
+  "schema": "hbe-v3-root-release-freeze-v1",
+  "source_archive": {
+    "path": "build/hbe-branch-calibration-v3/source.tar",
+    "sha256": "8fa980c20f1caeac6e47a96314fa6118efa5cad14424ea9ecb4f2a48b907f3ec"
+  },
+  "source_commit": "e96f706ff1857a5791ed69b5ac0d05aff5756e55"
+}

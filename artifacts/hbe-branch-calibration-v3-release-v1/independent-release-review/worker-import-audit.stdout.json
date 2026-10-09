@@ -1,0 +1,473 @@
+{
+  "dependency_environment": {
+    "numpy": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/__init__.py",
+      "sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+      "version": "2.5.3"
+    },
+    "scipy": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/__init__.py",
+      "sha256": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76",
+      "version": "1.18.1"
+    }
+  },
+  "environment_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv",
+  "fit_called": false,
+  "import_source_calls": [
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py"
+    },
+    {
+      "name": "Curve",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py"
+    },
+    {
+      "name": "ReleasedStudy",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_temporal_common.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_outputs.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "shape_derivatives",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "finite_array",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "HexMesh",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_readout.py"
+    },
+    {
+      "name": "HalfHeightReconstruction",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/febio_runtime.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_backend.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_mesh.py"
+    },
+    {
+      "name": "OutputWatch",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_mesh.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py"
+    },
+    {
+      "name": "Registry",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py"
+    },
+    {
+      "name": "BranchReleasedStudy",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py"
+    },
+    {
+      "name": "ScaleReduction",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal.py"
+    },
+    {
+      "name": "<module>",
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py"
+    }
+  ],
+  "imported_modules": {
+    "scripts.febio_runtime": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts.mechanics_hbe_access": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts.mechanics_hbe_backend": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts.mechanics_hbe_branch_calibration_v3": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py",
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    "scripts.mechanics_hbe_branch_calibration_v3_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "sha256": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3"
+    },
+    "scripts.mechanics_hbe_branch_calibration_v3_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "sha256": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205"
+    },
+    "scripts.mechanics_hbe_evaluation": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts.mechanics_hbe_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    "scripts.mechanics_hbe_halfheight_global": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global.py",
+      "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+    },
+    "scripts.mechanics_hbe_halfheight_global_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_experiment.py",
+      "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+    },
+    "scripts.mechanics_hbe_halfheight_global_n36": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36.py",
+      "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+    },
+    "scripts.mechanics_hbe_halfheight_global_n36_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+      "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+    },
+    "scripts.mechanics_hbe_halfheight_global_n36_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+      "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+    },
+    "scripts.mechanics_hbe_halfheight_global_n36_temporal": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    "scripts.mechanics_hbe_halfheight_global_n36_temporal_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+      "sha256": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e"
+    },
+    "scripts.mechanics_hbe_halfheight_global_n36_temporal_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    "scripts.mechanics_hbe_halfheight_global_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_readout.py",
+      "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+    },
+    "scripts.mechanics_hbe_halfheight_mesh": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_mesh.py",
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    "scripts.mechanics_hbe_halfheight_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    "scripts.mechanics_hbe_halfheight_spatial": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial.py",
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    "scripts.mechanics_hbe_halfheight_spatial_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+    },
+    "scripts.mechanics_hbe_halfheight_spatial_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_readout.py",
+      "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+    },
+    "scripts.mechanics_hbe_halfheight_temporal_common": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+    },
+    "scripts.mechanics_hbe_halfheight_tension_n24_temporal": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+      "sha256": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73"
+    },
+    "scripts.mechanics_hbe_halfheight_tension_n24_temporal_experiment": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+      "sha256": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178"
+    },
+    "scripts.mechanics_hbe_mesh": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts.mechanics_hbe_outputs": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts.mechanics_hbe_physics": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts.mechanics_hbe_readout": {
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    }
+  },
+  "interpreter": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+  "invocation_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "measured_archive_opened": false,
+  "measured_or_torsion_member_opened": false,
+  "module_count": 29,
+  "native_called": false,
+  "preflight_called": false,
+  "schema": "hbe-v3-frozen-source-import-audit-v1",
+  "scripts_namespace_paths": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source/scripts"
+  ],
+  "source_file_opens": [
+    "build/hbe-branch-calibration-v3/source/scripts/febio_runtime.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_backend.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_readout.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_mesh.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_mesh.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_outputs.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py",
+    "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_readout.py"
+  ],
+  "status": "passed",
+  "sys_path": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source/scripts",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/lib-dynload",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src"
+  ],
+  "violations": []
+}
