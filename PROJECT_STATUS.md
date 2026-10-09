@@ -116,6 +116,11 @@ from measured memory. The pinned FEBio/Accelerate backend has tiny controls,
 but no patient-size tet10 solve; a bounded non-patient cube convergence and
 memory benchmark is the next numerical qualification. It cannot admit the
 rejected Case4 mesh or establish physical fidelity.
+The [non-patient sparse benchmark preparation](artifacts/mechanics-nonpatient-sparse-feasibility-preparation-v1/RESULT.md)
+now fixes three idealized tet10 levels, seven calls and pure analytic/convergence
+checks. Ninety-four adjacent tests and 23 independent isolated controls pass;
+native mesh/deck generation, solver output validation and execution release
+remain missing. This is numerical preparation, not measured solver feasibility.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point

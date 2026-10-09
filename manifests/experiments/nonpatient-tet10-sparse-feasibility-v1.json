@@ -1,0 +1,109 @@
+{
+  "schema": "nonpatient-tet10-sparse-feasibility-v1",
+  "status": "prepared_not_released_or_executed",
+  "purpose": "Numerical feasibility of an idealized tet10 problem near the rejected Case4 mesh algebraic size; no patient, tissue-property, injury, or clinical validation.",
+  "execution_release": null,
+  "source_commit_for_execution": null,
+  "runtime": {
+    "framework": "FEBio 4.13.0",
+    "upstream_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+    "backend_profile_id": "accelerate_csc_v1",
+    "backend_profile": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "runtime_identity": {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    "verified_tet10_fixture": {
+      "path": "artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json",
+      "sha256": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330"
+    },
+    "tet10_fixture_source": {
+      "path": "scripts/mechanics_patient_constraints.py",
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    },
+    "solver_subtree": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+    "runtime_source_binding_policy": "Separate root release must pin exact committed benchmark source/decks and reverify profile, runtime identity, executable, linkage, patch and tet10 controls before and after each supervised call. No fallback backend."
+  },
+  "mesh": {
+    "geometry": "10 mm numerical cube; no anatomy",
+    "side_m": 0.01,
+    "recipe": "Structured n-by-n-by-n cubes; each split into the same six tetrahedra along local 0-to-6 body diagonal as the pinned one-cube tet10 control. Straight reference mid-edge nodes shared by integer half-grid identity; FEBio TET10G8 elastic-solid.",
+    "cube_vertex_order": [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]],
+    "local_tet4": [[0,1,2,6],[0,2,3,6],[0,3,7,6],[0,7,4,6],[0,4,5,6],[0,5,1,6]],
+    "tet10_edges": [[0,1],[1,2],[2,0],[0,3],[1,3],[2,3]],
+    "levels": [
+      {"subdivisions_per_axis": 5, "expected_nodes": 1331, "expected_tet10": 750},
+      {"subdivisions_per_axis": 9, "expected_nodes": 6859, "expected_tet10": 4374},
+      {"subdivisions_per_axis": 13, "expected_nodes": 19683, "expected_tet10": 13182}
+    ],
+    "acceptance": "Actual generated incidence, positive reference Jacobians at all eight integration points and additional nodes/edge midpoints/centroids, conforming shared midnodes, and boundary tags must be checked before any solve. Expected counts are predictions, not observations."
+  },
+  "numerical_gauge": {
+    "units": "m,N,Pa,J",
+    "material": "Uncoupled Ogden c1=2*mu, m1=2, c2..c6=0, pressure_model=1; numerical gauge only",
+    "mu_Pa": 1000.0,
+    "K_Pa": 9666.666666666666,
+    "reference_quadrature": "FEBio TET10G8",
+    "solver": "FEBio solid, symmetric stiffness, BFGS; dtol=etol=rtol=1e-10, min_residual=1e-20, max_refs=20, no time-step retries",
+    "time_steps": 4,
+    "step_size": 0.25
+  },
+  "cases": [
+    {"id": "n5_affine", "n": 5, "load": "affine"},
+    {"id": "n5_nonuniform", "n": 5, "load": "nonuniform"},
+    {"id": "n9_affine", "n": 9, "load": "affine"},
+    {"id": "n9_nonuniform", "n": 9, "load": "nonuniform"},
+    {"id": "n13_affine", "n": 13, "load": "affine"},
+    {"id": "n13_nonuniform", "n": 13, "load": "nonuniform"},
+    {"id": "n13_nonuniform_half_step", "n": 13, "load": "nonuniform", "time_steps": 8, "step_size": 0.125}
+  ],
+  "loads": {
+    "affine": {
+      "final_F": [[1.03,0.02,0.0],[0.0,0.99,0.01],[0.0,0.0,1.01]],
+      "boundary": "Prescribe u=(F-I)X on all six exterior faces; leave all interior nodes free. Compare displacement, stress, J, energy, reaction virtual work with independent analytic homogeneous solution."
+    },
+    "nonuniform": {
+      "bottom_z_m": 0.0,
+      "top_z_m": 0.01,
+      "bottom_displacement_m": [0.0,0.0,0.0],
+      "top_displacement_m": [0.0003,0.0,-0.0002],
+      "lateral_faces": "traction_free_except_top_and_bottom_intersections",
+      "sample_points_m": [[0.005,0.005,0.005],[0.0025,0.005,0.005],[0.0075,0.005,0.005],[0.005,0.0025,0.005],[0.005,0.0075,0.005],[0.005,0.005,0.0025],[0.005,0.005,0.0075]],
+      "reaction_quantity": "Net bottom and top reaction vectors in N, independently summed from signed FEBio nodal reactions."
+    }
+  },
+  "caps": {
+    "maximum_native_calls": 7,
+    "attempts_per_case": 1,
+    "automatic_retry_or_fallback": false,
+    "numerical_threads": 1,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "per_call_wall_seconds": 600,
+    "aggregate_native_wall_seconds": 1800,
+    "active_output_bytes": 536870912
+  },
+  "checks": {
+    "complete_states": true,
+    "finite_displacement_stress_reaction": true,
+    "positive_reference_element_jacobian": true,
+    "minimum_sampled_deformation_J": 0.2,
+    "maximum_affine_displacement_error_m": 1e-9,
+    "maximum_affine_stress_error_Pa": 0.01,
+    "maximum_affine_J_error": 1e-6,
+    "maximum_affine_energy_error_J": 1e-8,
+    "maximum_affine_boundary_virtual_work_error_J": 1e-7,
+    "maximum_independent_force_balance_N": 1e-5,
+    "maximum_independent_moment_balance_Nm": 1e-7,
+    "maximum_n9_to_n13_field_difference_m": 5e-6,
+    "maximum_n9_to_n13_reaction_difference_N": 1e-5,
+    "maximum_n13_half_step_field_difference_m": 1e-7,
+    "maximum_n13_half_step_reaction_difference_N": 1e-6,
+    "refinement_difference_ratio_max": 0.8,
+    "solver_residual": "Actual reported final norms must satisfy frozen FEBio tolerances on each completed step; missing or ambiguous residual evidence is inconclusive, not pass."
+  },
+  "stop_rule": "Stop after first geometry, numerical, backend, hash, wall, RSS or output-cap failure; preserve logs and unattempted statuses. No outcome-based mesh/cap/tolerance change in v1.",
+  "admission": "Success is idealized solver feasibility only. It cannot admit rejected Case4 geometry, patient material/force estimates, displacement fidelity, clinical use or RL rewards."
+}
