@@ -148,7 +148,11 @@ native solver output validation and execution release remain missing. The
 [source-only deck preparation](artifacts/mechanics-nonpatient-sparse-deck-preparation-v1/RESULT.md)
 now generates conforming incidence and deterministic FEBio XML for all seven
 frozen cases at three levels; 47 adjacent checks and independent source review
-pass. The decks have not been accepted or solved by FEBio. This is numerical
+pass. The [saved-output checker](docs/mechanics-nonpatient-sparse-output.md)
+now requires complete node/element states, the declared 1e-10 solver tolerances,
+unloaded initial state, sampled deformation and reaction balance. Independent
+adversarial review repaired several false passes; 80 adjacent checks pass. The
+new decks have not been accepted or solved by FEBio. This is numerical
 preparation, not measured solver feasibility.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
