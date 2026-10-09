@@ -715,3 +715,8 @@ The in-place normalization prototype diverged from the native operator by 1.7628
 ### October 9: Record bounded six-stage recomputation parity and unresolved memory benefit
 
 The untrained six-stage graph completed in 0.881 seconds with a 226,410,496-byte sampled peak. Reviewed worker code asserted exact baseline/recomputed logits, but no raw arrays were retained for independent reload. Five tiny controls pass; no measured memory reduction or trained-model benefit is established. The original mutable-stage counterexample and unsuitable tiny-controller failure paths remain documented. See the [preserved evidence](../artifacts/recompute-highres-skip-generated-v3/RESULT.md).
+
+
+### October 9: Validate bounded full-size tiled vessel-contact evaluation
+
+The [independently audited generated profile](../artifacts/private-vascular-streaming-profile-v1/RESULT.txt) evaluates a 256 × 256 × 192 rotated grid in 7.883 seconds with a 41.594 MiB process peak. It considers all 3,072 tiles, prunes 96.582%, preserves repeated-action unions and unknown coverage, and cleans up its single child. This is measured feasibility, not a measured speedup over the unexecuted dense baseline or patient/clinical validation.
