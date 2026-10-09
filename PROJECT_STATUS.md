@@ -13,6 +13,12 @@ found no verified accessible same-trial record combining tracked tool motion,
 force and independent brain displacement. HBE specimen force, RESECT patient
 displacement and simulator-generated labels must stay distinct. Direct brain
 retraction action-response validation remains a physical-data dependency.
+An [independently checked source follow-up](artifacts/brain-interaction-data-followup-v1/RESULT.md)
+identified open robot-motion, force and video from silicone bowel-phantom pulls,
+plus postmortem brain specimen loading curves. These can support narrow
+engineering or specimen-law checks after their own QC, but no verified public
+same-trial live-brain action, force and independent 3-D displacement record
+was found. The direct brain-interaction gate stays HOLD.
 
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131
