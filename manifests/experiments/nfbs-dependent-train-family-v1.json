@@ -1,0 +1,84 @@
+{
+  "schema": "nfbs-dependent-train-family-declaration-v1",
+  "declaration_status": "frozen_before_archive_payload_access",
+  "dataset": "Neurofeedback Skull-stripped (NFBS) repository",
+  "doi": "10.5524/100241",
+  "license": "CC0-1.0",
+  "source_family": "NKI Enhanced Rockland Sample Neurofeedback / NFBS",
+  "source_family_role": "TRAIN",
+  "dependent_family": true,
+  "publisher_reported_people": 125,
+  "local_person_inventory": "not inspected; no archive payload acquired",
+  "prospective_assignment": "Every person and every raw image or derivative in the exact declared archive belongs to this single dependent TRAIN family. No within-family SELECT, MEASUREMENT_EVAL, or external evaluation subset is created.",
+  "assignment_basis": "Entire published source family chosen before archive payload, image quality, label review, or patient-level response access. No patient-level filtering or outcome-based ranking.",
+  "person_alias_policy": "Any later-discovered person identifier and derivative inherits this source-family restriction. A discovered overlap with a previously reserved person retains that existing assignment and is quarantined from TRAIN use; no prior assignment is overwritten.",
+  "existing_assignment_audit": "No NFBS/NKI/Rockland/neurofeedback identifier or source-family assignment found in current manifests by targeted case-insensitive text search. This does not prove absent biological overlap.",
+  "cross_source_person_overlap": "unknown; no audited person-level crosswalk",
+  "pretrained_exposure": "unknown",
+  "independent_transfer_evaluation_eligible": false,
+  "payload": {
+    "file_name": "NFBS_Dataset.tar.gz",
+    "source_url": "https://s3.ap-northeast-1.wasabisys.com/gigadb-datasets/live/pub/10.5524/100001_101000/100241/NFBS_Dataset.tar.gz",
+    "size_bytes": 1751464473,
+    "checksum_type": "MD5",
+    "publisher_checksum_hex": "06c467ac9ab6cbdb8185e6643879721d",
+    "publisher_checksum_header": "x-amz-meta-md5chksum",
+    "publisher_checksum_base64": "BsRnrJq2y9uBheZkOHlyHQ==",
+    "etag_opaque_identity_only": "\"eda97fff56b5c9a8ec8f6ea3380e0b29-335\"",
+    "checksum_authority": "Object metadata at publisher GigaDB file-inventory-linked Wasabi mirror; multipart ETag is not used as MD5.",
+    "local_sha256": null,
+    "actual_fixity": "not yet acquired or verified"
+  },
+  "permitted_intake": "Original whole archive as unreviewed, undecoded bytes under the TRAIN-family acquisition restriction. No extraction, header or anatomy QC, label use, model fitting, or training is part of this declaration.",
+  "candidate_later_use": "Generic anatomical component research using real acquired defaced T1 images, subject to a separate intended-use protocol and overlap checks.",
+  "label_ancestry": {
+    "reported_pipeline": "BEaST 1.15.00 initialized from beast-library-1.1, iterative incorporation of corrected NFBS priors; source reports 85 manually edited masks and 125 accepted masks.",
+    "exact_seed_membership_and_augmentation": "unresolved",
+    "labels_admitted": false,
+    "library_archive_in_scope": false,
+    "real_acquisition_does_not_determine_label_generation_ancestry": true,
+    "manual_edits_preserve_upstream_ancestry": true,
+    "synthetic_and_simulator_learning_permission": "Latest user steering permits synthetic and simulator-generated learning data. Unknown BEaST ancestry is a provenance/dependence fact and does not create an automatic prohibition on generated labels. Label QC and intended-use admission remain deferred."
+  },
+  "scientific_limits": [
+    "Publisher reports 125 people; the original archive and person denominator have not been locally inspected.",
+    "The source is not a glioma, surgery, deformation, or resection-validation cohort.",
+    "Dependent label-generation ancestry prevents claims of untouched within-library evaluation.",
+    "Unknown cross-source person and pretrained exposure bar independent generalization claims.",
+    "Successful transfer will establish bytes and publisher fixity only."
+  ],
+  "all_payloads_unreviewed": true,
+  "training_admitted": false,
+  "clinical_or_planner_admitted": false,
+  "decoded_array_bytes": 0,
+  "optimizer_updates": 0,
+  "preexisting_patient_roles_changed": false,
+  "reserved_evaluation_roles_changed": false,
+  "source_metadata": {
+    "dataset_api": {
+      "url": "https://gigadb.org/gigadb/api/dataset/get_dataset/?dataset_id=100241",
+      "sha256": "06d30eb5d1b3cf04a7c102c0c74192cdb82472c8675a2de92529e3255e8a9498"
+    },
+    "file_inventory_api": {
+      "url": "https://gigadb.org/gigadb/api/dataset/list_dataset_files/?dataset_id=100241",
+      "sha256": "8b120f368cac6a181c0292944e19120e3ee8212c51f850fd1dd88b8c059641a4"
+    },
+    "mirror_head": {
+      "path": "build/nfbs-fixity-route-audit-v1/publisher-mirror-head.txt",
+      "sha256": "d50b26e237a32bbbd39c873394279a6c3446815f2fefee1037b1c3bad4cfe779"
+    },
+    "rights": {
+      "url": "https://api.datacite.org/dois/10.5524/100241",
+      "sha256": "f37a7f3b39f43b5a6a24158bbac6c98c5fbad5dd0bc1ed916a232ac1a8898210"
+    },
+    "readme": {
+      "url": "https://s3.ap-northeast-1.wasabisys.com/gigadb-datasets/live/pub/10.5524/100001_101000/100241/readme.txt",
+      "sha256": "2ef509c087661cb53cbc3cbabacc90a9052da02861ed8075954cb4aa58d29f13"
+    },
+    "source_audit": {
+      "path": "build/nfbs-fixity-route-audit-v1/RESULT.txt",
+      "sha256": "5a767ead523781dbd5dcec754515289cd65d1bdc12674e2bd82adf244815c580"
+    }
+  },
+  "frozen_at_utc": "2026-10-09T07:28:06.939353+00:00"
+}

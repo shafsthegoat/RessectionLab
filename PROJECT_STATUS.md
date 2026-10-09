@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [NFBS original-byte intake](artifacts/nfbs-intake-preparation-v1/RESULT.md)
+is prepared and independently reviewed, with its publisher-reported 125 people
+frozen as one dependent TRAIN family before payload access. Its 1.75 GB archive
+is queued after ReMIND, with publisher-linked fixity and resumable TLS transfer.
+Unknown overlap and label ancestry remain explicit; no anatomy or training
+admission follows from acquisition.
+
 The [ReMIND component expansion](artifacts/remind-cohort-expansion-preparation-v1/RESULT.md)
 has independently reviewed, frozen roles for the full source cohort: 79 TRAIN,
 17 SELECT, 17 MEASUREMENT_EVAL, with ReMIND001 retained as DEVELOPMENT. Exact
