@@ -447,6 +447,11 @@ def apply_backoff(outcome, records, providers, now):
             outcome.update(status='transport_attempts_exhausted', deferred_status=status)
 
 
+def transport_exhausted(records):
+    """Local verification receipts never reset a provider's retry boundary."""
+    return any(row['status'] == 'transport_attempts_exhausted' for row in records)
+
+
 def run_one(source, run, declaration, records, providers, *, launcher=supervise):
     trial = object_directory(source) / 'attempts' / new_id()
     trial.mkdir(parents=True, exist_ok=False)
@@ -455,7 +460,8 @@ def run_one(source, run, declaration, records, providers, *, launcher=supervise)
     deadline = started + budget
     intent = {'source_key': source['key'], 'source_binding': source_binding(source),
         'run': str(run.relative_to(ROOT)), 'declaration_sha256': digest(encode(declaration)),
-        'supervisor_pid': os.getpid(), 'deadline': deadline - 5, 'offline': declaration['offline'],
+        'supervisor_pid': os.getpid(), 'deadline': deadline - 5,
+        'offline': declaration['offline'] or transport_exhausted(records),
         'previous': records[-1]['attempt'] if records else None, 'created_utc': utc_now()}
     # Publish the active link before any worker can start; never remove it on error.
     save(trial / 'intent.json', intent)
@@ -464,7 +470,7 @@ def run_one(source, run, declaration, records, providers, *, launcher=supervise)
         'intent_sha256': digest(encode(intent)), 'status': 'setup_failed',
         'network_attempted': False, 'started_utc': utc_now(), **CLAIMS}
     try:
-        if target_path(source).exists() or source['provider'] == 'embedded' or declaration['offline']:
+        if target_path(source).exists() or source['provider'] == 'embedded' or intent['offline']:
             acquire_one(source, trial, intent, deadline=intent['deadline'])
             outcome['supervision'] = 'local_verification'
         else:
@@ -512,6 +518,11 @@ def choose_source(sources, histories, providers, now, checked, offline):
         if key in checked:
             continue
         last = records[-1] if records else None
+        # A mirror can supply this target after the provider is exhausted.
+        # run_one persists local-only intent for this history in every mode,
+        # including when the cache disappears between selection and hashing.
+        if transport_exhausted(records):
+            return source, None
         if last and last['status'] not in GOOD | DEFERRED | {'missing_offline', 'interrupted', 'setup_failed'}:
             continue
         present = target_path(source).exists()

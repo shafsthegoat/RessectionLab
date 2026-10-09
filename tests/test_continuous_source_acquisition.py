@@ -246,6 +246,60 @@ def test_offline_missing_stays_missing_and_does_not_call_transport(queue, source
     assert not queue.target_path(source).exists()
 
 
+@pytest.mark.parametrize('cached', ['valid', 'missing', 'corrupt', 'disappears'])
+def test_offline_reconciles_exhausted_mirror_without_retry_or_history_loss(
+        queue, sources, isolated, monkeypatch, cached):
+    source = sample(sources)
+    target = install_actual(queue, source)
+    if cached == 'missing':
+        target.unlink()
+    elif cached == 'corrupt':
+        raw = target.read_bytes()
+        target.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+    trial = queue.object_directory(source) / 'attempts' / '20000101T000000-old'
+    trial.mkdir(parents=True)
+    intent = {'source_key': source['key'], 'source_binding': queue.source_binding(source)}
+    previous = {'source_key': source['key'], 'source_binding': queue.source_binding(source),
+                'provider': source['provider'], 'attempt': str(trial.relative_to(ROOT)),
+                'intent_sha256': queue.digest(queue.encode(intent)),
+                'status': 'transport_attempts_exhausted', 'network_attempted': True,
+                **queue.CLAIMS}
+    queue.save(trial / 'intent.json', intent)
+    queue.save(trial / 'outcome.json', previous)
+    original_history = (trial / 'outcome.json').read_bytes()
+    monkeypatch.setattr(queue, 'catalog', lambda: [source])
+    original_run_one = queue.run_one
+    if cached == 'disappears':
+        def remove_before_worker(*args, **kwargs):
+            target.unlink()
+            return original_run_one(*args, **kwargs)
+        monkeypatch.setattr(queue, 'run_one', remove_before_worker)
+    result = queue.run(offline=True)
+    records = queue.history(source)
+    assert (trial / 'outcome.json').read_bytes() == original_history
+    assert records[0] == previous
+    assert all(row['network_attempted'] is False for row in records[1:])
+    assert result['byte_verified_files'] == int(cached == 'valid')
+    assert result['training_admitted'] is False and result['decoded_array_bytes'] == 0
+    expected = {'valid': 'existing_byte_verified', 'missing': 'missing_offline',
+                'corrupt': 'integrity_or_transport_failed', 'disappears': 'missing_offline'}
+    assert records[-1]['status'] == expected[cached]
+    assert len(records) == 2
+    # A later online run must still obey exhaustion even when a successful
+    # local verification is now followed by cache deletion or corruption.
+    monkeypatch.setattr(queue, 'run_one', original_run_one)
+    if target.exists():
+        target.unlink()
+    followup = queue.run(offline=False)
+    records = queue.history(source)
+    assert followup['byte_verified_files'] == 0
+    assert records[-1]['status'] == 'missing_offline'
+    assert all(row['network_attempted'] is False for row in records[1:])
+    assert (trial / 'outcome.json').read_bytes() == original_history
+    latest_intent = queue.read_json(ROOT / records[-1]['attempt'] / 'intent.json')
+    assert latest_intent['offline'] is True
+
+
 def test_real_annotation_via_optional_opener_is_exact_and_download_only(queue, sources, isolated):
     source = sample(sources)
     raw_path = REAL_RESECT/source['entry']['path']
