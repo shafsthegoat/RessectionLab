@@ -1,0 +1,7 @@
+# Bounded TRAIN header pilot
+
+One authorized pilot inspected 65 existing TRAIN objects (64 MR slices and one multiframe US object). Independent saved-only audit verified all paired per-object I/O records, 102,409,261 actual returned bytes, 137 output records, exit zero and reaping. Peak sampled memory was 395,149,312 bytes; supervised time was 2.43485 seconds. No pixels were decoded and no objects were reread by the independent audit.
+
+The MR header grid is 512×512×64 at approximately 0.430×0.430×3.300 mm. Its saved affine and extent are internally consistent. The original plane residual cannot be independently refit from the compact report because raw orientation/position/spacing rows were not retained. US functional groups remain unprojected and geometry unsupported. MR and US frame identifiers differ; both series carry intraoperative labels, acquisition timestamps are absent and date fields disagree. Preoperative availability, anatomy and coverage are unverified; no training or planning admission follows.
+
+The compressed evidence archive contains exact source snapshots, generated tests, release/runtime bindings, the 137 saved metadata records and independent audits. It contains no original DICOM, pixels, model weights or runtime binaries. evidence-index.json and summary.json retain byte hashes and source provenance. RESULT.md and the directly readable INDEPENDENT_REVIEW.md are additional root-facing summaries outside the original three-file package.

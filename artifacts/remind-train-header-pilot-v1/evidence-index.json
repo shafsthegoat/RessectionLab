@@ -1,0 +1,1179 @@
+{
+  "actual_release_sha256": "65c3f90df6e10028ae7c9939ed610cf332e1b368a56ed1235860a239db55aa29",
+  "archive": {
+    "bytes": 310127,
+    "members": 162,
+    "path": "evidence.tar.gz",
+    "sha256": "8b73a789a093f49555426c3b90b28f360ec5f6300880476e4391169e835f2d85",
+    "uncompressed_member_bytes": 1236471
+  },
+  "decision": "header_inventory_finished_anatomy_unreviewed",
+  "independent_saved_audit_decision": "PASS_SAVED_HEADER_INVENTORY_ONLY",
+  "limitations": [
+    "Only exact software source, saved metadata/receipts, generated-test records and independent review artifacts are packaged. No DICOM or image arrays are included.",
+    "External Python/runtime dependency identity is retained in the exact root release; external runtime/package binaries are not duplicated in this compact package.",
+    "Archive sources are historical snapshots with their original repository-relative paths, not newly authorized launchers or relocation-safe entry points.",
+    "Raw MR orientation/position/spacing and US nested functional-group contents were not retained by this pilot; the saved-only audit cannot repeat the original plane fit.",
+    "Both source series are intraoperative-label-only; anatomy, coverage, cross-frame registration and preoperative availability remain unverified.",
+    "MR conversion and US header extensions remain separate ignored preparation and are excluded from this completed-result package."
+  ],
+  "members": [
+    {
+      "archive_member": "bound-source-snapshots/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "bytes": 21303,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "sha256": "d51237a21ccac5bad3e0ea7c07a4c48968e6a061547bb168bf95efd0ba8e3a76"
+    },
+    {
+      "archive_member": "bound-source-snapshots/build/remind-qc-adapter-preparation-v1/header_pilot_bootstrap_v2.py",
+      "bytes": 4583,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_pilot_bootstrap_v2.py",
+      "sha256": "fc6f9661997f6bde4b215aeb69ac8427b07a15d7beac345d8404a18875dfb3ff"
+    },
+    {
+      "archive_member": "bound-source-snapshots/build/remind-qc-adapter-preparation-v1/header_pilot_io_v2.py",
+      "bytes": 4750,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_pilot_io_v2.py",
+      "sha256": "3319539ed3b0767c17d881d4cd9b79518964c68b51559f4c404f62b22e75cba7"
+    },
+    {
+      "archive_member": "bound-source-snapshots/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "bytes": 27747,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    {
+      "archive_member": "bound-source-snapshots/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "bytes": 12071,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "sha256": "f06331d64dd1669587cb5561c714cee093ac88f943e69894c89e6bbfea09237b"
+    },
+    {
+      "archive_member": "bound-source-snapshots/scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "archive_member": "bound-source-snapshots/scripts/real_intake_io.py",
+      "bytes": 4305,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "scripts/real_intake_io.py",
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "archive_member": "bound-source-snapshots/src/resectionlab/remind_header_inventory.py",
+      "bytes": 15666,
+      "kind": "bound-source-snapshots",
+      "original_repository_path": "src/resectionlab/remind_header_inventory.py",
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    {
+      "archive_member": "generated-tests/build/remind-qc-adapter-preparation-v1/test_header_pilot_launcher_v2.py",
+      "bytes": 17542,
+      "kind": "generated-tests",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/test_header_pilot_launcher_v2.py",
+      "sha256": "23438b2ea2a9317ee9f33c5a230df47239a07dc6a5c4c9e9c453b0c80de667b1"
+    },
+    {
+      "archive_member": "independent-postexecution-audit/build/remind-header-pilot-postrun-independent-v2/REPORT.md",
+      "bytes": 4758,
+      "kind": "independent-postexecution-audit",
+      "original_repository_path": "build/remind-header-pilot-postrun-independent-v2/REPORT.md",
+      "sha256": "8515e9f071c3dbcd10fe190dcff4d9e79070291800182d4328cb2ac59d901382"
+    },
+    {
+      "archive_member": "independent-postexecution-audit/build/remind-header-pilot-postrun-independent-v2/audit.json",
+      "bytes": 27801,
+      "kind": "independent-postexecution-audit",
+      "original_repository_path": "build/remind-header-pilot-postrun-independent-v2/audit.json",
+      "sha256": "8a23f644fdcee64b79ff8a7826cb9105b02ccbf8c6aba77fdc964c5f06765ba2"
+    },
+    {
+      "archive_member": "independent-postexecution-audit/build/remind-header-pilot-postrun-independent-v2/audit_saved.py",
+      "bytes": 13887,
+      "kind": "independent-postexecution-audit",
+      "original_repository_path": "build/remind-header-pilot-postrun-independent-v2/audit_saved.py",
+      "sha256": "9a54e00dc939c6934158ea1898b01156ddb066d884af6230020b9b47e2682c59"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/REPORT.md",
+      "bytes": 4459,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/REPORT.md",
+      "sha256": "40d6a3e73e5d7b17870a467d0cdd1f7be46877843f890c06d5b2e29e9e4dbd6c"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/audit.json",
+      "bytes": 2247,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/audit.json",
+      "sha256": "6e0acc3f3553667f8c34871d5da0da50c3fa1ab40b965e06ced120e28095fab6"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/audit_controls.py",
+      "bytes": 6504,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/audit_controls.py",
+      "sha256": "2a716512d4ca5fd9ec500873fcd638024d17916fb1a1a5c2b226c0c493ebe626"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/frozen-hashes.json",
+      "bytes": 522,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/frozen-hashes.json",
+      "sha256": "accb5002881445a63571cbc5e549f4c6aa3b3d8367fa1bba696c640e54fcc54b"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/review.json",
+      "bytes": 4740,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/review.json",
+      "sha256": "142e5fe0e39eb7319a052483a7345b4668b9ae98f00ed7d42f1de901d0c0fe20"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/startup-probe.stderr",
+      "bytes": 0,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/startup-probe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/startup-probe.stdout",
+      "bytes": 63750,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/startup-probe.stdout",
+      "sha256": "566122b38b07647e574a19142b2d38ce055cf930a1f86fc618c2261542b6bb3b"
+    },
+    {
+      "archive_member": "independent-preexecution-review/build/remind-header-pilot-independent-v2/supplied-tests.log",
+      "bytes": 2937,
+      "kind": "independent-preexecution-review",
+      "original_repository_path": "build/remind-header-pilot-independent-v2/supplied-tests.log",
+      "sha256": "5fd9d9854dd7c7518dd3bd8a7a8295098d76dd570dca683fcd5aea936c6e8b64"
+    },
+    {
+      "archive_member": "release-and-plan/build/remind-qc-adapter-preparation-v1/header-pilot-release-candidate-v2-r3.json",
+      "bytes": 233108,
+      "kind": "release-and-plan",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header-pilot-release-candidate-v2-r3.json",
+      "sha256": "074abb40252c73dd6267c16775b9563d0d8b3fb61182cb10d2e7fe8f8a748463"
+    },
+    {
+      "archive_member": "release-and-plan/build/remind-qc-adapter-preparation-v1/pilot-protocol-v2.json",
+      "bytes": 32660,
+      "kind": "release-and-plan",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-protocol-v2.json",
+      "sha256": "20d0d73e574eebefe245573ea256afbb9bef750cbcdbe920e44bb24ebd39ed27"
+    },
+    {
+      "archive_member": "release-and-plan/build/remind-qc-adapter-preparation-v1/root-release-v2-r3.json",
+      "bytes": 233294,
+      "kind": "release-and-plan",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/root-release-v2-r3.json",
+      "sha256": "65c3f90df6e10028ae7c9939ed610cf332e1b368a56ed1235860a239db55aa29"
+    },
+    {
+      "archive_member": "result-preparation-source/build/remind-qc-adapter-preparation-v1/package_actual_pilot_evidence_v1.py",
+      "bytes": 7497,
+      "kind": "result-preparation-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/package_actual_pilot_evidence_v1.py",
+      "sha256": "3625221e8a155b0bfa2aaefbe09169e7c59454c311de6f77f1a9ff389d5a62ff"
+    },
+    {
+      "archive_member": "result-preparation-source/build/remind-qc-adapter-preparation-v1/summarize_saved_pilot_v1.py",
+      "bytes": 14263,
+      "kind": "result-preparation-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/summarize_saved_pilot_v1.py",
+      "sha256": "544db5551468ff692322ccb9e11dc962beaff1eabe5d6abf03608a94ef80e38f"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/intent.json",
+      "bytes": 293,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/intent.json",
+      "sha256": "cfd664172e480fecd75e454ea10b64c80dc16f5da8efb694e34fd91896e4bd10"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/inventory-MR.json",
+      "bytes": 102723,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/inventory-MR.json",
+      "sha256": "25332ed8c5645426e800b23f4d8e8aafddcd2bd4e45ead9f1c0fc294599da563"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/inventory-US.json",
+      "bytes": 2705,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/inventory-US.json",
+      "sha256": "16c6cf9f2bd6d9f4f80f6c26ca779b9112da8867910ed883a83a70ac0056c738"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-001-intent.json",
+      "bytes": 484,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-001-intent.json",
+      "sha256": "87d6da8a7e5bce4c2da8c8424d5836c4a8b69b89341f9f85a93694832ad7f297"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-001-result.json",
+      "bytes": 419,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-001-result.json",
+      "sha256": "bbd23f5a4e01e232a6fa75b9c9aba2df7a29ec6e81ecb686de2b968d47e5eee2"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-002-intent.json",
+      "bytes": 499,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-002-intent.json",
+      "sha256": "9bba04204fa0347ff578a5ecfbc705e115af483ca5605d94c8b05de0512101b6"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-002-result.json",
+      "bytes": 421,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-002-result.json",
+      "sha256": "e769c66f23ad7ba1d5fc6d3e4e9ae3c5ae44b962879e2530dea2d945bb2fadf2"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-003-intent.json",
+      "bytes": 501,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-003-intent.json",
+      "sha256": "119a8197b0535e1dfb50199ec90274d279b34e61632a2478e797ac0db8b33e20"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-003-result.json",
+      "bytes": 421,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-003-result.json",
+      "sha256": "83254a37ad4130c64938d6027290d98ce9adff37e160ae76face73cc2e6543e3"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-004-intent.json",
+      "bytes": 501,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-004-intent.json",
+      "sha256": "900fab5baa3a4e7e90d67b95fb3093a03fd5ec8410ebab7c28195608d08dc389"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-004-result.json",
+      "bytes": 421,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-004-result.json",
+      "sha256": "914b737eaa3828e7d482622d0e4b52a492dc2424aab1b0835402252ecb59ab86"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-005-intent.json",
+      "bytes": 501,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-005-intent.json",
+      "sha256": "a120f03e12822b2f466cbcac51a5f80320393b245519de9e7a1aa54728642590"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-005-result.json",
+      "bytes": 422,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-005-result.json",
+      "sha256": "b0113b47520171ce493aec71e23b59c894602d730bfa8851210b9d04279ca744"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-006-intent.json",
+      "bytes": 502,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-006-intent.json",
+      "sha256": "fa8ded08927d2ee2dd66f0aa05ad7da8077ae4e25d0aef6220a1b39fefa792f6"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-006-result.json",
+      "bytes": 423,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-006-result.json",
+      "sha256": "1a5d71b80ccb71f947b569368efa7968baad352ab16ac43393b94d7d94824a6e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-007-intent.json",
+      "bytes": 503,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-007-intent.json",
+      "sha256": "7e1bf59168797058d301b51f0d41e24912c3f42500074caed0699321ee615f49"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-007-result.json",
+      "bytes": 423,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-007-result.json",
+      "sha256": "c0d4a9b4b8dc8608b02eab9b1643852a08885d8053da8b41140ad3c763585e23"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-008-intent.json",
+      "bytes": 503,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-008-intent.json",
+      "sha256": "1d856e92da6df71fb94fdb31081659249209379c545ef480f3c678f25825eb66"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-008-result.json",
+      "bytes": 423,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-008-result.json",
+      "sha256": "6c7a9ce9bf9858fcefc32b2f9e6eba37f78f71eb080b93c9e4737e02cc9576c3"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-009-intent.json",
+      "bytes": 503,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-009-intent.json",
+      "sha256": "6bf87f8ef8b85db9cb774771a42856223b1cf6ca13d3c7b74a99aa87496fc329"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-009-result.json",
+      "bytes": 423,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-009-result.json",
+      "sha256": "b03aa74bcdfa622173e7e0903c8d8a302c05b6295340e8d853a7ffa4d2f761ba"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-010-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-010-intent.json",
+      "sha256": "5aa0b594753ccff2fc0ad1eccc424b28f4df5aa5981cc4eae665754f594ab2e6"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-010-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-010-result.json",
+      "sha256": "b6ef05564ac3095a1e4be65bf70ca994f2b91fe94c4fd36a1543d0e98b4bdbce"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-011-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-011-intent.json",
+      "sha256": "56a7b62bcbe6f017307a2fd5f0506dbb0025de5bab046283e421d72ef1d1164c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-011-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-011-result.json",
+      "sha256": "5ee8fa980dff86d8289d3be08485f62242a5a71f0fd3bde7c5cc1ac72636a3ca"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-012-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-012-intent.json",
+      "sha256": "9f856926e7ffbdd42e9360c1643205d3ca8c506c35d679d0fd5d00eb601cfb1c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-012-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-012-result.json",
+      "sha256": "ba2871dfeafd438ebaec77388f3fdcd5731280710dd8eeb92c6c4d5de0206524"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-013-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-013-intent.json",
+      "sha256": "cd78f71e01287e26097974c033eae3fc9ee552808ef3345978844f1d8c0e2e7f"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-013-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-013-result.json",
+      "sha256": "8765946c9a00133643c83d4fac07b3baf435eb8143af14c3efe2fef37b853c62"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-014-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-014-intent.json",
+      "sha256": "615a58029aa7ea229279944891772c98ad059994ae978f855f98c8dbf0d79c6c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-014-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-014-result.json",
+      "sha256": "e1b55e60734efbdcbcd5487e3d4c416ea1a62e92f87958f60f70dfcc0f7eda4e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-015-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-015-intent.json",
+      "sha256": "6de6579797571b18b9dc27a9c18a2aed39dd2285a1b46fc5559949e2c22755c1"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-015-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-015-result.json",
+      "sha256": "8f357e4027f9fd033735ba6bc6b5f2e834ff04401f2db0926619e89a813d584a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-016-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-016-intent.json",
+      "sha256": "315e2270139a8bc1803ce9c398973a782076c9e8a51fc1b7c9ffc0f0ea8442ee"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-016-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-016-result.json",
+      "sha256": "955f08690234d1103317515420d627af39b4a336e07182697bfb57ddd2d2757c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-017-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-017-intent.json",
+      "sha256": "d5e2636dfdfc34f15ae327cc4aed993291a2187b3435af02ae221956c5e36321"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-017-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-017-result.json",
+      "sha256": "c7e3824e83459e597d1c219b653130188634eb90d450f21474e8fca632eded4a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-018-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-018-intent.json",
+      "sha256": "7c29f3857f482b714fd728991328138ec565ec6389dc7a8e402b10db10ce8347"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-018-result.json",
+      "bytes": 424,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-018-result.json",
+      "sha256": "54b71e5c34b6eaab47f344466aa89119e7c74af9fae048ff522e69420739402d"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-019-intent.json",
+      "bytes": 504,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-019-intent.json",
+      "sha256": "9e71d7dfbc7f1057f5bdb413eef1783ea78094fd383e1943fa45251f782f3316"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-019-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-019-result.json",
+      "sha256": "c839bf284fc82ea5bb63403bf346a4f07a225121ee010de0652fd906c2ca1872"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-020-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-020-intent.json",
+      "sha256": "ed514414055907c5e254ba8086b25e3eb0d8cd5cfba75d15bfa5e165c929fe47"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-020-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-020-result.json",
+      "sha256": "0104242c91e5f90fe8e25679dcc751edb3716f6348433d2219f526473684b8d5"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-021-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-021-intent.json",
+      "sha256": "3cd0e0ba77d168b12a7613fa78d38d8b21a04da637284b72064c003c8963952e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-021-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-021-result.json",
+      "sha256": "cc4a9a823b81184115fe7197b2c3fd19c3536c51c4ce72eb230aba801ad214a0"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-022-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-022-intent.json",
+      "sha256": "b26c2cda0204641c9c6ad67087041739201ccc75150123bdcdd2a28e67f194af"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-022-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-022-result.json",
+      "sha256": "78dc03b5efb3e2a4b16c14f41dbe8045ea15cf13def483a44e94c356a8ddb741"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-023-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-023-intent.json",
+      "sha256": "f287139bbb49343fd848f83d02b37649e90f3fedd1b6c316082eb3f90bd63d96"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-023-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-023-result.json",
+      "sha256": "c0368a3ba0c32b15a4b9c50b980c904f3b3f48ccaaa39822856d6935d3e53156"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-024-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-024-intent.json",
+      "sha256": "89638bd6fd8bfce662e53201167773ba0aa9cc489ef0f08af5d15aa31a35f091"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-024-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-024-result.json",
+      "sha256": "84254bf9dde3501c47022e0c3fd077a1ca267579dcf267318c112aa9958d127a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-025-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-025-intent.json",
+      "sha256": "b1fc8b995c1e2e83f440e46cff1f147d74423edb7d05570d28576edf35cb9875"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-025-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-025-result.json",
+      "sha256": "2016f4e4f3c5d75f230b4bfe77d81b7852fef5adeedf33ec658fb625b1bb6c58"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-026-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-026-intent.json",
+      "sha256": "3bbcea94ab69e52b6b8951c8d2aaff78055aa6d8a1c957ef0aa16845fa6a2a90"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-026-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-026-result.json",
+      "sha256": "a7576a1a346a1b63ff422b62caea5c432331a0d5d00dc1a13f6a0a6d9644fe4c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-027-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-027-intent.json",
+      "sha256": "4a6f8e28dffc4b2cc8aac982db05c20135e4155790f43e1039b1da46ed9fb06b"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-027-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-027-result.json",
+      "sha256": "27894197264d4c563e63e4f0c55942efac3ebab20e20e1ce9a6312e58a80111a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-028-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-028-intent.json",
+      "sha256": "8bed54abaebea68d9a8c6a58f239965fdc33f1cd5d64b885e0c1254b295eba9a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-028-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-028-result.json",
+      "sha256": "ad6f2ee41314250b1043c137faf6948b120a7162ea93e37aa4f525f1d8b35c43"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-029-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-029-intent.json",
+      "sha256": "df4cd5046870f27e9e0cb0dc9eeafed4effd11872e5c86ec8dfb657d401c9c4d"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-029-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-029-result.json",
+      "sha256": "5f1ad97a726fbacb3b79b021a324cf2284e9c0bf0792e83bf2a9b1bc6146d734"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-030-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-030-intent.json",
+      "sha256": "88d0c920ff204944d09252559a5f358a9d7b4ef85e31feb4f5a9d7818dbfdd5c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-030-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-030-result.json",
+      "sha256": "27abd77e0e9649fd63cb5dcec31a930eb433521f066c61f1f78c3885de55b540"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-031-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-031-intent.json",
+      "sha256": "2a6cc56febe82c0d62c117c2850dba5cb26e19f642605e4ef76a0dd9e350b7af"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-031-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-031-result.json",
+      "sha256": "6a065f082afb7c221db8c8ac710ce357584c63dd3f50c2473ca5471c85370ee4"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-032-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-032-intent.json",
+      "sha256": "0db3ca1f2147ed9b045f814b3a8b82c64d6b01bc4d45c2f07c04a6e4b016dde6"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-032-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-032-result.json",
+      "sha256": "2e83312c52562971205012ac21f9f7f96b8edfb60ed2c2fc024c9318136ae78e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-033-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-033-intent.json",
+      "sha256": "8e83412374377a8a4984922c0326a572ff18131c304f0b756187c87683c8b3e4"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-033-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-033-result.json",
+      "sha256": "c0a7c60f59c251cc3cc515892b040e31bf1ee7ea4d45929d97dc5e2c31d0bf70"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-034-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-034-intent.json",
+      "sha256": "267c0e84d3d298f9c32a19446f306b09bb8deeaca8e2cb1f35905533e3e544ea"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-034-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-034-result.json",
+      "sha256": "8f42b1df2b5a09023359a5c7ff706a8d3f161bab8ca9321fdf67113db6fdedd3"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-035-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-035-intent.json",
+      "sha256": "1d273e7e398c4f7f54c54cde0769aa91f0264899f704f4050308b2139b054e98"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-035-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-035-result.json",
+      "sha256": "3cd0746d46c2321077e24b905dd46d07027c4fe2e596be8691eba46e6797e2ad"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-036-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-036-intent.json",
+      "sha256": "611e53d8bdf3d62ce13ab0efe4c013fc2966307a5919380b8d067a1777ac6ce6"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-036-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-036-result.json",
+      "sha256": "eb680b93ef8a935477d041fdc771cc6479b21dbb0c51834ff5b06af3edc22b3c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-037-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-037-intent.json",
+      "sha256": "62d534b9518bd63b033553d6b1fedf65064b85a2c934ab79bd15ab423e574d08"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-037-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-037-result.json",
+      "sha256": "cbd2db1e9af71a9fe33eb6a695b894c53b91a682d45450c0488eb45291087135"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-038-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-038-intent.json",
+      "sha256": "46080bf42b7c85eea66cc007895557643ea145d7c711b2e9526f2401daf7c534"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-038-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-038-result.json",
+      "sha256": "603710d156ec4a201554e857d0e4fd04be3d88b52c9815c99ff1efded08bab81"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-039-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-039-intent.json",
+      "sha256": "2d6fb9680cce769ba0a60efe59d7c92ded32fa19c8ddc984407735a6933c8bed"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-039-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-039-result.json",
+      "sha256": "6adc505122c71a6658fdab4a4ff8039e6deb86ac06e6c35af7e6d93e08a4a31a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-040-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-040-intent.json",
+      "sha256": "094bb9bde18b8dec831fe93a27b41d04ffdf1e1137bfe770686b60c6366a35ae"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-040-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-040-result.json",
+      "sha256": "faccd469d0b9a03ec1c73aaeac3361375de2d7cfd0759fd7bd355059d89fd4d7"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-041-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-041-intent.json",
+      "sha256": "e448c72af02375bf99a3001a25357b25b897e66f351fa13f97cb0e9789d6329a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-041-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-041-result.json",
+      "sha256": "d693d012d37865c580718277f148b0af67ec0571d62eaf75dad65916982b4342"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-042-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-042-intent.json",
+      "sha256": "44ee0cc43a11655acb92decc8df58987ed29562aa498a989859c8798ef75e45c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-042-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-042-result.json",
+      "sha256": "b9f00c0f731d9a8af499a2823cf0d801e27ead8500efe69d80b4548e5f2d600c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-043-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-043-intent.json",
+      "sha256": "cac375eba5844384e33b46a863ed59ac4a32ead35065c3f97bcc37d2afc18c35"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-043-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-043-result.json",
+      "sha256": "edc6dc8a7d9b59e3086a00940716c3360223f8da3fa892aba8833e4cfb06f98f"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-044-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-044-intent.json",
+      "sha256": "f04a89f0759b7ecb75ff5fdbd2fcbf5b5a9840feb15773143eded316a7c5e2b4"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-044-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-044-result.json",
+      "sha256": "2cd94d9a39c3b4ecbec326fe606be35fcaf7a1455be8a386ae611edbcd8d2537"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-045-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-045-intent.json",
+      "sha256": "84ea419e6df271103acd97330eff0be5b1eda6e4c9faa37a7b19d52287bbd609"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-045-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-045-result.json",
+      "sha256": "a6394d4a9a1ca35ae51da51eb33b4d8ec05775cdaf41b065505771d17552e146"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-046-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-046-intent.json",
+      "sha256": "22ccb14b78af59610a413e35ea1c4c16963e1e48a62ad47d9325f4521745a912"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-046-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-046-result.json",
+      "sha256": "ddf692cc40d5dff60f6bec6ebc1526200dd6ab39c88b8f8fe489889965498091"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-047-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-047-intent.json",
+      "sha256": "6cfc55dda01660b6135e413196c4ad4e5d6816e3fcb9f9f443fb9302da5be1bf"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-047-result.json",
+      "bytes": 426,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-047-result.json",
+      "sha256": "ec8f846b08bcf3f71bc32962586fca5d8d505a7265b3ed2a8c5ba24b3f87e47a"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-048-intent.json",
+      "bytes": 506,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-048-intent.json",
+      "sha256": "8370258ed20ca6b75aeff332c9e2a1378d1ec5fb2401cbf1a56ea3bf12fed5f5"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-048-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-048-result.json",
+      "sha256": "47ff648cb4e1b3ea35b41f407dee6d89a92583d9246ef8b13f99eb289d0812a9"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-049-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-049-intent.json",
+      "sha256": "812f6f7b1be1e5e5ce5f4f4884d65271d67d3443f2bed04eb1be67931c351501"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-049-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-049-result.json",
+      "sha256": "ebd932f5737bdd7c4419f13ec0b0b03415d5d9a8d88bbc0cc86f8f5989fd8353"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-050-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-050-intent.json",
+      "sha256": "b4c15d8a06f4a7a008071c1cde750b1a2e955057a8cc21afd54e8782b7d40f59"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-050-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-050-result.json",
+      "sha256": "3c97848229cc4767e9971a285e0e415e99a4f5a6043914246aa379a3234855ec"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-051-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-051-intent.json",
+      "sha256": "d8964230d7d48ab888a8baed00ac0d24434f0808c4e512befa2ed62e81fb10e4"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-051-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-051-result.json",
+      "sha256": "c4fc920ed6deca4076b197c1560820d7a09668ec63c5b12909a10c788ed48f53"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-052-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-052-intent.json",
+      "sha256": "a362919756b1b41723f0ee32930041a66569106622b755fe20a1e48ce2f3b827"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-052-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-052-result.json",
+      "sha256": "4c6a5b50e2fd19cf3f04d7879f2ea67ef053ba42254ba419fde6d57608f46c68"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-053-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-053-intent.json",
+      "sha256": "6a2cd791958381d95698b3974080821fe2880856b2c6ca9869d28bb99bce4b2f"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-053-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-053-result.json",
+      "sha256": "277d82d7b07e25f35cd06f6c76224be70ac70ddf256ce97e122aa51199f2dd1e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-054-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-054-intent.json",
+      "sha256": "9bda8a96bfe59ae9a92deea212bd3b9a83dcd1d5ec147875e184fc5eb40e0b65"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-054-result.json",
+      "bytes": 427,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-054-result.json",
+      "sha256": "7b65e23b6b03ee80deb794e63cbe0ab3e93cddfcd9b8060be6549143b46a9bd5"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-055-intent.json",
+      "bytes": 507,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-055-intent.json",
+      "sha256": "111a551c4b1e6997f87e26c337b21694be423e01ff840d0e87dbeb5b422af390"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-055-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-055-result.json",
+      "sha256": "92732dd52bb7898fff67184333460899b25f721e45e283bf284e4db73aceca10"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-056-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-056-intent.json",
+      "sha256": "0418df2e0c4804681caf28d74931493125e36e086e735e4985654bf319e601d0"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-056-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-056-result.json",
+      "sha256": "fda46ec5ce43009f187d81a9a4ef0dd3367de39374612a611ec4e9ff4bea6e1b"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-057-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-057-intent.json",
+      "sha256": "78bec73c8bd12a71239b1cf7141d21ae2dd79b29273014b33c14d8ac79001cc2"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-057-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-057-result.json",
+      "sha256": "92d6b21972a85d9f3728baf3f50a41bab4fa371918ce23ee26d60856b16ca8c2"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-058-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-058-intent.json",
+      "sha256": "2f59270834676c83aa91116be79b11d3f65fdb5eace0db5ab7229a8092de02eb"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-058-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-058-result.json",
+      "sha256": "4b9d5658efb82b5dabe85be3a8916d306cd7e9c6e284e1655b42a905955b7f38"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-059-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-059-intent.json",
+      "sha256": "49bcfd63c0d52902b7a55b68f07e3f215ff896e32bf88b8754002815051d3150"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-059-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-059-result.json",
+      "sha256": "4b91942ad51fb300fd579017770b39e71b54cf5969ef9cacf698279a2a7648b1"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-060-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-060-intent.json",
+      "sha256": "f918d16a2752698b526726ee5be0a9e44978c0ab4ca5e281d984f1593386aed0"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-060-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-060-result.json",
+      "sha256": "cc19227ebaaacdbf055f833636313d12a615587f42772c8afeebed02f1825f1e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-061-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-061-intent.json",
+      "sha256": "50d1ed71aa8623893a33daa22130682050a11cda802968a21b555dd108e4b5e9"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-061-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-061-result.json",
+      "sha256": "0791a25efd156ed74fb40c953da08dae5e520ce356ca3706cf1b7bb231a0a1e0"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-062-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-062-intent.json",
+      "sha256": "a060d32bd5f8606b0b05e4e13feadbcda3f4bb1d43edd77446fd82cd91a42ded"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-062-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-062-result.json",
+      "sha256": "b5155fb9b25bb0139481323517b831847bbc6fef138b9605eabdc5f093d50b7c"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-063-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-063-intent.json",
+      "sha256": "eb4359033ad15f2a56c61735d170ce737dc8fdace55d15079e6497efaabb6737"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-063-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-063-result.json",
+      "sha256": "10403c13886db87afdff67a7b534f5716b689c489d9371fcdf16cf578e8fcd04"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-064-intent.json",
+      "bytes": 508,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-064-intent.json",
+      "sha256": "a7a561b36830a0f9f26bff60722a17a653c34eea296eccc936d21aa0cd52cdc9"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-064-result.json",
+      "bytes": 428,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-064-result.json",
+      "sha256": "24064592592d06a608046262170b331d832c1a24aeba72085d92166476acae68"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-065-intent.json",
+      "bytes": 510,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-065-intent.json",
+      "sha256": "74102c7bbd44f29f7190771346da65e08ee20ee505a7ded1b5707b62eccfeeb2"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-065-result.json",
+      "bytes": 430,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/io-065-result.json",
+      "sha256": "0cab81dae0dcaa1af9fee3e7db09ead6c3a61d3a248158769869fa6889a06e79"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/parent-result.json",
+      "bytes": 2225,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/parent-result.json",
+      "sha256": "ecb7179d7a4b1c295cb98b576fae573c3189d91e9d9f5496671304c17e956132"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/release-snapshot.json",
+      "bytes": 233294,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/release-snapshot.json",
+      "sha256": "65c3f90df6e10028ae7c9939ed610cf332e1b368a56ed1235860a239db55aa29"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/started.json",
+      "bytes": 104,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/started.json",
+      "sha256": "a28cf90928532d8dac9b397fca936f1dffd28f8c6d0b61024f258b11549bfb1e"
+    },
+    {
+      "archive_member": "saved-pilot-records/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/worker-result.json",
+      "bytes": 62822,
+      "kind": "saved-pilot-records",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/pilot-execution-v2/worker-result.json",
+      "sha256": "4d2246aa3354fbac4620643b89b5eaee1788cb3082696e67b7322ea7c13eb2ab"
+    }
+  ],
+  "new_patient_execution_authorized": false,
+  "packaging_validation": {
+    "DICOM_files_in_archive": 0,
+    "actual_run_bytes": 464673,
+    "actual_run_files": 137,
+    "all_archive_member_bytes_equal_original_files": true,
+    "all_release_bound_repository_source_hashes_checked": true,
+    "independent_raw_plane_refit_performed": false,
+    "patient_source_paths_opened": 0,
+    "pixel_decodes": 0,
+    "tracked_files_written": 0
+  },
+  "preoperative_input_admitted": false,
+  "schema": "remind-train-exact65-header-evidence-package-v1",
+  "scope": "Completed exact65-object ReMIND-002 TRAIN header inventory; no cohort or patient admission.",
+  "source_commit": "cb1929bf182ab3af1723e457bb2fe74c86c8f69a",
+  "split_changed": false,
+  "summary": {
+    "bytes": 11649,
+    "path": "summary.json",
+    "sha256": "aca8dad1f26822eeb0df8d2d65812defb8dee3e2b599abd960f149a401b66c05"
+  },
+  "training_admitted": false
+}

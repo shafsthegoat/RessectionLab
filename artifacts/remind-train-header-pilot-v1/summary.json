@@ -1,0 +1,296 @@
+{
+  "actual_release_sha256": "65c3f90df6e10028ae7c9939ed610cf332e1b368a56ed1235860a239db55aa29",
+  "anatomical_coverage": "unreviewed",
+  "anatomy_qc": "not_run",
+  "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "completion_receipt_sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d",
+  "execution": {
+    "actual_source_read_bytes": {
+      "definition": "bytes returned by unbuffered source reads; includes rereads and failed attempts",
+      "header": 174465,
+      "read_calls": 17351,
+      "total": 102409261,
+      "verification": 102234796
+    },
+    "completed_header_reads": 65,
+    "durable_io_accounting": {
+      "attempted_objects": 65,
+      "confirmed_budget": {
+        "definition": "bytes returned by unbuffered source reads; includes rereads and failed attempts",
+        "header": 174465,
+        "read_calls": 17351,
+        "total": 102409261,
+        "verification": 102234796
+      },
+      "unconfirmed_attempt_upper_bound_bytes": 0
+    },
+    "elapsed_seconds": 2.4348497500177473,
+    "exit_status": 0,
+    "network_requests": 0,
+    "optimizer_updates": 0,
+    "parent_completed": true,
+    "pixel_decode_calls": 0,
+    "recorded_loaded_module_origin_count": 356,
+    "worker_peak_RSS_MiB": 376.84375,
+    "worker_peak_RSS_bytes": 395149312,
+    "worker_reaped": true
+  },
+  "independent_saved_result_audit_reference": {
+    "path": "build/remind-header-pilot-postrun-independent-v2/audit.json",
+    "reference_provided_by_independent_reviewer": true,
+    "report_path": "build/remind-header-pilot-postrun-independent-v2/REPORT.md",
+    "report_sha256": "8515e9f071c3dbcd10fe190dcff4d9e79070291800182d4328cb2ac59d901382",
+    "sha256": "8a23f644fdcee64b79ff8a7826cb9105b02ccbf8c6aba77fdc964c5f06765ba2"
+  },
+  "input_sha256": {
+    "pilot-execution-v2/inventory-MR.json": "25332ed8c5645426e800b23f4d8e8aafddcd2bd4e45ead9f1c0fc294599da563",
+    "pilot-execution-v2/inventory-US.json": "16c6cf9f2bd6d9f4f80f6c26ca779b9112da8867910ed883a83a70ac0056c738",
+    "pilot-execution-v2/parent-result.json": "ecb7179d7a4b1c295cb98b576fae573c3189d91e9d9f5496671304c17e956132",
+    "pilot-execution-v2/worker-result.json": "4d2246aa3354fbac4620643b89b5eaee1788cb3082696e67b7322ea7c13eb2ab",
+    "pilot-protocol-v2.json": "20d0d73e574eebefe245573ea256afbb9bef750cbcdbe920e44bb24ebd39ed27"
+  },
+  "interpretation_limits": [
+    "This exact two-series pilot does not generalize header, geometry, timing, or anatomy quality to the completed TRAIN cohort.",
+    "MR physical bounds describe voxel-cell support, not verified brain/tumor/surgical coverage. Anatomy and coverage remain unreviewed.",
+    "MR ImageType includes MPR; ORIGINAL is a retained source label, not independently established scanner-native acquisition provenance.",
+    "US has one shared and 156 per-frame functional groups, but their nested geometry/dimension values were not saved. Geometry is uninterpreted, not proved absent. The 156 frames cannot yet be called spatial slices or time samples.",
+    "MR and US FrameOfReferenceUID values differ. No cross-frame registration or coordinate identity is established.",
+    "Actual acquisition timing fields are absent. StudyDate differs from SeriesDate/ContentDate; deidentification and export semantics are unverified. Clock values do not establish surgical order, elapsed interval, or availability.",
+    "Intraop and US_post_dura are source labels only. Neither series is admitted as input available at a preoperative decision time.",
+    "Saved inventories omit raw MR IOP/IPP/PixelSpacing and nested US functional-group contents, so an independent saved-only raw-plane fit cannot be reconstructed."
+  ],
+  "method": "Saved JSON interpretation and scalar arithmetic only; no patient paths opened, no DICOM imports or pixel decoding by this summarizer.",
+  "patient_group": "ReMIND:002",
+  "patient_id": "ReMIND-002",
+  "preoperative_input_admitted": false,
+  "role": "TRAIN",
+  "schema": "remind-exact65-saved-result-summary-v1",
+  "series": {
+    "MR": {
+      "available_at_preoperative_decision_time": "unverified",
+      "derived_from_saved_affine_only": {
+        "float32_array_bytes_if_converted": 67108864,
+        "independent_raw_plane_geometry_refit_performed": false,
+        "normalized_axis_dot_products": [
+          [
+            0.9999999999999999,
+            -6.084022786058093e-08,
+            7.044048242066641e-07
+          ],
+          [
+            -6.084022786058093e-08,
+            0.9999999999999999,
+            1.4918291864154826e-06
+          ],
+          [
+            7.044048242066641e-07,
+            1.4918291864154826e-06,
+            1.0000000000000002
+          ]
+        ],
+        "voxel_axis_step_lengths_mm": [
+          0.42968772925161064,
+          0.4296873819678566,
+          3.3000033596079907
+        ],
+        "voxel_count_if_converted": 16777216
+      },
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.140684330746332102512261127717937208623",
+      "geometry": {
+        "affine_xyz_to_ras_mm": [
+          [
+            0.42960589072114613,
+            -0.005493339768625376,
+            -0.048659386446886596,
+            -123.02710432692302
+          ],
+          [
+            -0.00750062554728231,
+            -0.3968997601971644,
+            -1.2630234203296713,
+            262.0252533653846
+          ],
+          [
+            -0.0037501924611323765,
+            0.16453464618739277,
+            -3.048348122710623,
+            25.510003990384597
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "anatomical_FOV_coverage": "unreviewed",
+        "conversion_status": "not_run",
+        "patient_space_geometry_established": true,
+        "physical_extent_ras_mm": {
+          "definition": "axis_aligned_bounds_of_voxel_cell_corners",
+          "maximum": [
+            96.743385140051,
+            262.8589652684216,
+            111.19552467282188
+          ],
+          "minimum": [
+            -129.14162160331276,
+            -25.02753113383403,
+            -170.06059256870287
+          ]
+        },
+        "reused_core": "scripts/convert_remind_development.py:regular_affine",
+        "reused_core_sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6",
+        "shape_xyz": [
+          512,
+          512,
+          64
+        ],
+        "slice_position_max_residual_mm": 0.0006610877478623446,
+        "source_pixel_values_checked": false,
+        "status": "classic_MR_header_grid_checked"
+      },
+      "series_instance_uid": "1.3.6.1.4.1.14519.5.2.1.98869651407581821493913411999147291108",
+      "series_uuid": "4301d666-34c4-48f3-9167-8c4b19725332",
+      "source_objects": 64,
+      "source_series_description": "2D_AX_T2_FLAIR",
+      "source_stage_hint": "intraoperative_label_only",
+      "source_study_description": "Intraop",
+      "uniform_object_header_fields": {
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.4",
+        "TransferSyntaxUID": "1.2.840.10008.1.2",
+        "acquisition_timing_raw": {
+          "AcquisitionDate": null,
+          "AcquisitionDateTime": null,
+          "AcquisitionNumber": null,
+          "AcquisitionTime": null,
+          "ContentDate": "20070308",
+          "ContentTime": "171037",
+          "EchoNumbers": null,
+          "EchoTime": null,
+          "FrameTime": null,
+          "FrameTimeVector": null,
+          "NumberOfTemporalPositions": null,
+          "SeriesDate": "20070308",
+          "SeriesTime": "171037",
+          "StudyDate": "19821225",
+          "StudyTime": "171037",
+          "TemporalPositionIdentifier": null,
+          "TriggerTime": null
+        },
+        "columns": 512,
+        "grouping_raw": {
+          "AcquisitionNumber": null,
+          "ComplexImageComponent": null,
+          "DiffusionBValue": null,
+          "EchoNumbers": null,
+          "EchoTime": null,
+          "ImageType": [
+            "ORIGINAL",
+            "PRIMARY",
+            "MPR"
+          ],
+          "SequenceName": null,
+          "TemporalPositionIdentifier": null
+        },
+        "number_of_frames": 1,
+        "per_frame_functional_group_count": 0,
+        "pixel_encoding_raw": {
+          "BitsAllocated": "16",
+          "BitsStored": "16",
+          "HighBit": "15",
+          "PhotometricInterpretation": "MONOCHROME2",
+          "PixelRepresentation": "1",
+          "PlanarConfiguration": null,
+          "RescaleIntercept": null,
+          "RescaleSlope": null,
+          "RescaleType": "",
+          "SamplesPerPixel": "1"
+        },
+        "rows": 512,
+        "shared_functional_group_count": 0
+      },
+      "verified_source_bytes": 33696106
+    },
+    "US": {
+      "available_at_preoperative_decision_time": "unverified",
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.317417072686719285062937392337165589869",
+      "geometry": {
+        "affine_xyz_to_ras_mm": null,
+        "frame_interpretation": "unresolved_spatial_or_temporal_frames",
+        "patient_space_geometry_established": false,
+        "physical_extent_ras_mm": null,
+        "reason": "US_patient_space_adapter_not_implemented",
+        "status": "unsupported"
+      },
+      "retained_ultrasound_regions": [],
+      "series_instance_uid": "1.3.6.1.4.1.14519.5.2.1.127716336791467921236642206758396730846",
+      "series_uuid": "8a0df802-e6da-44b6-a536-f1f3e8b02890",
+      "source_objects": 1,
+      "source_series_description": "US_post_dura",
+      "source_stage_hint": "intraoperative_label_only",
+      "source_study_description": "Intraop",
+      "uniform_object_header_fields": {
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.7.2",
+        "TransferSyntaxUID": "1.2.840.10008.1.2.1",
+        "acquisition_timing_raw": {
+          "AcquisitionDate": null,
+          "AcquisitionDateTime": null,
+          "AcquisitionNumber": null,
+          "AcquisitionTime": null,
+          "ContentDate": "20070308",
+          "ContentTime": "171035.184",
+          "EchoNumbers": null,
+          "EchoTime": null,
+          "FrameTime": null,
+          "FrameTimeVector": null,
+          "NumberOfTemporalPositions": null,
+          "SeriesDate": "20070308",
+          "SeriesTime": "171035.184",
+          "StudyDate": "19821225",
+          "StudyTime": "171035.184",
+          "TemporalPositionIdentifier": null,
+          "TriggerTime": null
+        },
+        "columns": 714,
+        "grouping_raw": {
+          "AcquisitionNumber": null,
+          "ComplexImageComponent": null,
+          "DiffusionBValue": null,
+          "EchoNumbers": null,
+          "EchoTime": null,
+          "ImageType": [
+            "DERIVED",
+            "PRIMARY",
+            "VOLUME",
+            "NONE"
+          ],
+          "SequenceName": null,
+          "TemporalPositionIdentifier": null
+        },
+        "number_of_frames": 156,
+        "per_frame_functional_group_count": 156,
+        "pixel_encoding_raw": {
+          "BitsAllocated": "8",
+          "BitsStored": "8",
+          "HighBit": "7",
+          "PhotometricInterpretation": "MONOCHROME2",
+          "PixelRepresentation": "0",
+          "PlanarConfiguration": null,
+          "RescaleIntercept": "0.0",
+          "RescaleSlope": "1.0",
+          "RescaleType": "US",
+          "SamplesPerPixel": "1"
+        },
+        "rows": 615,
+        "shared_functional_group_count": 1
+      },
+      "verified_source_bytes": 68538690
+    }
+  },
+  "source_commit": "cb1929bf182ab3af1723e457bb2fe74c86c8f69a",
+  "split_changed": false,
+  "status": "header_inventory_finished_anatomy_unreviewed",
+  "training_admitted": false,
+  "volume_conversion_performed": false
+}

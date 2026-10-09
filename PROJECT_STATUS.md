@@ -134,6 +134,13 @@ SHA-256 retained. Its publisher-reported 125 people remain one dependent TRAIN
 family; the archive has not been extracted or anatomically reviewed. Unknown
 overlap and label ancestry remain explicit. No training admission follows.
 
+The [first TRAIN header pilot](artifacts/remind-train-header-pilot-v1/INDEPENDENT_REVIEW.md)
+completed all 65 selected objects with no pixel decoding. Independent saved-only
+audit verifies complete I/O accounting and cleanup. MR provides a regular
+512×512×64 header grid; US geometry remains unsupported, frame IDs differ, and
+both series are labeled intraoperative with unresolved acquisition timing.
+No anatomy, routine preoperative availability, training or planning is admitted.
+
 The [reusable ReMIND header inventory](docs/remind-header-inventory.md) is now
 integrated. Six promoted generated tests pass in the optional runtime; the base
 environment cleanly skips six tests without its DICOM dependencies. Independent
