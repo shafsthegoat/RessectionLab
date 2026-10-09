@@ -54,6 +54,13 @@ Its automatic weight update path is unsuitable for a frozen local run. The
 current BTC/T1-only input does not match this two-sequence candidate, and a
 known BraTS-overlap case is not an independent test. No weights or patient
 scans were processed, and no inference-only patient target has been admitted.
+The subsequent [scan-only Case4 input check](artifacts/resect-case4-preoperative-input-qc-v1/RESULT.md)
+verified both original preoperative arrays and narrowed the modality question:
+the creator's cohort protocol specifies contrast-enhanced T1 and FLAIR. Three
+fixed views show gross correspondence, but local anatomical alignment remains
+unaccepted. No private labels, outcomes, weights, inference or planning were used.
+The next target-estimation path uses separately licensed weights and an
+independent nnU-Net adapter with scan-only registration and inverse-map QC.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
