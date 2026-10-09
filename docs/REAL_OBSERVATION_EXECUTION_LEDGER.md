@@ -670,3 +670,8 @@ The [generated 64³ lazy-concat comparison](../artifacts/lazy-concat-generated-p
 ### October 9: staged MR preparation and full generated control
 
 The [staged MR pipeline](../artifacts/remind-staged-full-generated-preparation-v1/RESULT.md) is prepared for a bounded full-size generated test. Metadata validation and selected-series conversion run in separate workers; v2 preserves read accounting even on the two injected supervisor failures. Fourteen generated controls and independent review pass. The next execution tests 59,520 generated metadata records and 64 × 512 × 512 image planes before any actual-patient conversion; no anatomical or training admission follows from this engineering check.
+
+
+### October 9: integrated sealed-strategy private vascular evaluator
+
+The [private vascular evaluator](../artifacts/private-vascular-evaluator-v1/RESULT.md) is now integrated into the reusable library. It seals and checks the complete strategy before loading an evaluator-owned vessel reference, then measures full shaft/tip exposure and separate removed-cell overlap. Unknown coverage remains unknown. All 125 focused author, independent and related regression tests passed; source snapshots were unchanged. This is generated-only interface validation, with real-person admission and hard process supervision still required before acquired-patient evaluation.

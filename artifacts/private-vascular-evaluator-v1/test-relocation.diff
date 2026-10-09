@@ -1,0 +1,52 @@
+--- frozen/test_generated.py
++++ tracked/test_private_vascular_evaluation.py
+@@ -5,14 +5,16 @@
+ import json
+ import os
+ import sys
++import tempfile
+ 
+ import numpy as np
+ import pytest
+ 
+-ROOT=Path(__file__).resolve().parents[2]
++ROOT=Path(__file__).resolve().parents[1]
+ PAYLOAD_OPENS=[]
++AUDIT_ACTIVE=False
+ def forbid(event,args):
+-    if event=='open' and isinstance(args[0],(str,bytes)):
++    if AUDIT_ACTIVE and event=='open' and isinstance(args[0],(str,bytes)):
+         p=str(args[0])
+         if p.endswith(('.nii','.nii.gz','.mat','.tar','.pt','.ckpt','.bin')):
+             PAYLOAD_OPENS.append(p);raise AssertionError('Patient/model payload forbidden')
+@@ -23,10 +25,29 @@
+     module=importlib.util.module_from_spec(spec);sys.modules[name]=module;spec.loader.exec_module(module)
+     return module
+ 
+-v=load('generated_private_vascular',Path(__file__).with_name('vascular_evaluator.py'))
++from resectionlab import private_vascular_evaluation as v
+ helpers=load('generated_research_fixture',ROOT/'tests/test_research_estimate_planning.py')
+ from resectionlab.core import array_digest,semantic_digest
+ from resectionlab.research_estimate_planning import research_planning_from_estimates
++
++
++@pytest.fixture(autouse=True)
++def scoped_payload_guard():
++    """Keep the permanent audit hook inert outside this module's test cases."""
++    global AUDIT_ACTIVE
++    AUDIT_ACTIVE = True
++    try:
++        yield
++    finally:
++        AUDIT_ACTIVE = False
++
++
++@pytest.fixture
++def tmp_path():
++    """Exercise the real build-only boundary without requiring pytest flags."""
++    (ROOT / 'build').mkdir(exist_ok=True)
++    with tempfile.TemporaryDirectory(prefix='vascular-test-', dir=ROOT / 'build') as directory:
++        yield Path(directory)
+ 
+ 
+ def identity(spec):

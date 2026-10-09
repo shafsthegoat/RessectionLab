@@ -1,0 +1,67 @@
+{
+  "files": [
+    {
+      "bytes": 6616,
+      "path": "CANDIDATE-INDEPENDENT-REVIEW.md",
+      "sha256": "b8624bd0b092e4cf4785b6e8e3430a19ef8e1a21d40714ddd2e01aff861a758b"
+    },
+    {
+      "bytes": 4280,
+      "path": "CANDIDATE-SCOPE.txt",
+      "sha256": "42853e1d2154f7bf75188367ac049a1b9e86a7e35452b5ceb0ca2bae685072c6"
+    },
+    {
+      "bytes": 4543,
+      "path": "REPORT.md",
+      "sha256": "ba6b8b83c52b21b287a93f019d5ed6b2bf8529b3ae6d2c35cc4b2f7f445a3b13"
+    },
+    {
+      "bytes": 2075,
+      "path": "RESULT.md",
+      "sha256": "77fa9d9f3054a39709a79577eb45479590a90bc22eddf3e46093cb729b44f313"
+    },
+    {
+      "bytes": 181,
+      "path": "pytest-output.txt",
+      "sha256": "071776b736fe1bb427a64b1b4caf2d968663fabbfe2c1d26db3d23f693ad0675"
+    },
+    {
+      "bytes": 1443,
+      "path": "run-receipt.json",
+      "sha256": "44b6f5d855c433f44bde4ec5cad8d06c88e1695015edaff076b1b0e86d957552"
+    },
+    {
+      "bytes": 3592,
+      "path": "run_review.py",
+      "sha256": "bafa1167706124e38c9937347e382b16060e868a24ad52fd2775cfadd4d765a8"
+    },
+    {
+      "bytes": 9658,
+      "path": "source-after.json",
+      "sha256": "462a30433db10ef6c29daeb66cfb8a462f09bd7437a7c987a30a3659c76b91cc"
+    },
+    {
+      "bytes": 9658,
+      "path": "source-before.json",
+      "sha256": "462a30433db10ef6c29daeb66cfb8a462f09bd7437a7c987a30a3659c76b91cc"
+    },
+    {
+      "bytes": 1777,
+      "path": "test-relocation.diff",
+      "sha256": "35b753ccfa37fd5fbf8189b604a6deb6596eaca6df39ee5cb81f2b4ea4007f69"
+    },
+    {
+      "bytes": 8359,
+      "path": "test_independent.py",
+      "sha256": "5ca33a8cd84b45cc021c178b9abb35cadcacda51a096e870825d6f2c12d94440"
+    }
+  ],
+  "implementation": {
+    "path": "src/resectionlab/private_vascular_evaluation.py",
+    "sha256": "30e9efaac9d0f4e311bedf9075362fcd488f1b31f76a3938f4224736d39e2eb7"
+  },
+  "tests": {
+    "path": "tests/test_private_vascular_evaluation.py",
+    "sha256": "ce3573a4f381baaf01b50ff0346ef883acf814a8193e14e1602c5821f431cec9"
+  }
+}
