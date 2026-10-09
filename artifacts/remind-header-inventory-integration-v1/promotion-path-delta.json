@@ -1,0 +1,20 @@
+{
+  "schema": "remind-header-promotion-path-delta-v1",
+  "patch": "build/remind-qc-adapter-preparation-v1/promote-header-inventory.patch",
+  "patch_sha256": "24171962f56df0f82cd14eea6e7b7daca2194175b7100a3a52b459d70a39a9a0",
+  "destinations": [
+    "src/resectionlab/remind_header_inventory.py",
+    "tests/test_remind_header_inventory.py"
+  ],
+  "numerical_or_identity_gate_changes": false,
+  "changes": [
+    "ROOT resolves from src/resectionlab location to repository root.",
+    "Metadata binding and pilot-plan CLI remain in ignored candidate; promoted module has no ignored helper dependency or execution CLI.",
+    "Tests import the promoted package module, skip missing optional numpy/nibabel/pydicom, and keep generated temporary files under ignored build/.",
+    "Only staging scripts symlinks are used for test reuse; they are excluded from patch."
+  ],
+  "source_sha256": {
+    "src/resectionlab/remind_header_inventory.py": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271",
+    "tests/test_remind_header_inventory.py": "4b925332dca844044ddde777d604cfc59c1484d8e661336eeb86f3d2f32600a9"
+  }
+}

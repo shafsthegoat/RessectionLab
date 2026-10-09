@@ -77,6 +77,13 @@ SHA-256 retained. Its publisher-reported 125 people remain one dependent TRAIN
 family; the archive has not been extracted or anatomically reviewed. Unknown
 overlap and label ancestry remain explicit. No training admission follows.
 
+The [reusable ReMIND header inventory](docs/remind-header-inventory.md) is now
+integrated. Six promoted generated tests pass in the optional runtime; the base
+environment cleanly skips six tests without its DICOM dependencies. Independent
+reader controls also pass. The module checks source identity before bounded
+header reads, reuses classic MR geometry, and leaves unsupported ultrasound and
+uncertain timing explicit. No acquired patient headers or pixels were opened.
+
 The [TRAIN annotation byte-intake extension](artifacts/remind-train-seg-intake-preparation-v1/RESULT.md)
 completed all 242 SEG objects (424,167,640 bytes) on October 9 at 09:01 UTC,
 with source MD5 and local SHA-256 for each object. The same 79 TRAIN people and

@@ -1,0 +1,10 @@
+{
+  "source_only": true,
+  "optional_runtime_command": "PYTHONPATH=src build/idc-acquisition-venv/bin/python -B -m unittest discover -s tests -p test_remind_header_inventory.py -v",
+  "passed": 6,
+  "seconds": 0.039,
+  "base_runtime_command": ".venv/bin/python -B -m pytest -q tests/test_remind_header_inventory.py -p no:cacheprovider",
+  "base_skipped_missing_optional_dependencies": 6,
+  "patient_headers_read": 0,
+  "pixel_decode_calls": 0
+}

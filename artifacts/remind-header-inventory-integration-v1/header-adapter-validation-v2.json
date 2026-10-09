@@ -1,0 +1,39 @@
+{
+  "acquired_DICOM_files_opened": 0,
+  "completion_receipt_read": true,
+  "completion_receipt_sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d",
+  "explicit_refusal_subcases": 44,
+  "generated_DICOM_files_read": 1,
+  "latest_pilot_protocol": "pilot-protocol-v2.json",
+  "missing_execution_release": "Bind reviewed protocol/candidate/dependency closure and resource limits in a supervised immutable pilot launcher; no actual header execution CLI is provided.",
+  "pilot_counts": {
+    "bytes_to_rehash": 102234796,
+    "objects": 65,
+    "people": 1,
+    "series": 2
+  },
+  "pixel_decoding_calls": 0,
+  "raw_payloads_independently_rehashed_this_task": false,
+  "real_patient_headers_read": 0,
+  "runtime": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "pydicom": "3.0.1",
+    "python": "3.12.14"
+  },
+  "schema": "remind-header-adapter-source-validation-v2",
+  "sha256": {
+    "header-adapter-candidate.patch": "849c4b81df956664b5f0cb6587836a306d2c7fc17dc8cc7d5c34888bef1cb051",
+    "header-adapter-tests.log": "eefef006e6c8261d3572dcb6ef70e7c9770a033d4e962bfeaeaab0faa68cb6f9",
+    "header_adapter.py": "d51237a21ccac5bad3e0ea7c07a4c48968e6a061547bb168bf95efd0ba8e3a76",
+    "pilot-protocol-v2.json": "20d0d73e574eebefe245573ea256afbb9bef750cbcdbe920e44bb24ebd39ed27",
+    "test_header_adapter.py": "a1dab341d88e90fb1ec043dd9c107c93ee5c10dcaec7ebf5921210aeadb62a9a"
+  },
+  "status": "generated_software_controls_passed_no_patient_header_execution",
+  "superseded_candidate_protocol": "pilot-protocol.json",
+  "tests_errored": 0,
+  "tests_failed": 0,
+  "tests_run": 10,
+  "training_admitted": false,
+  "unsupported_MR_route_cases": 2
+}
