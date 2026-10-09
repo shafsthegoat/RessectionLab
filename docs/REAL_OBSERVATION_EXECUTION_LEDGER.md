@@ -755,3 +755,8 @@ Both trained-network forwards on the same generated 64³ input completed with by
 ### October 9: selective paired-scan header preparation
 
 The [IXI265 header reader](../artifacts/ixi265-paired-header-preparation-v2/RESULT.txt) is independently checked using 26 generated controls. Selection is deterministic within the existing labeled TRAIN people. Original buffered read-ahead and stale helper-bytecode failures are preserved; v2 uses exact unbuffered member reads and verified source bytes. No actual archive was opened. All three verified archive bindings and a separately reviewed external launcher are still required; header inspection does not establish anatomy, registration, coverage or training admission. Downloads continue independently.
+
+
+### October 9: full128 recomputation host deferral before model loading
+
+The independently reviewed single-attempt generated release [deferred at host preflight](../artifacts/full128-recompute-host-deferral-v1/RESULT.md). Seven observations over 30.038 seconds showed normal/warning pressure, 38% minimum available memory and an 11-point spread; swap was flat and both exact downloaders remained live. No child, checkpoint load or forward occurred. This is not a model failure and does not trigger the separate during-forward stop rule. The earlier full128 forward failures remain preserved, with no automatic retry or relaxed resource guard.

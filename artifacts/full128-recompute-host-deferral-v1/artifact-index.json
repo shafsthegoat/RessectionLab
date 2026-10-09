@@ -1,0 +1,140 @@
+{
+  "payloads": [
+    {
+      "path": "RESULT.md",
+      "sha256": "9b58fe463450b971b7d3959c63328a6a05ef8598646c3aad5f12f120a8e11e23",
+      "size_bytes": 1749
+    },
+    {
+      "path": "payload/READINESS.md",
+      "sha256": "401c69e5389293f0119dcef538549e955549e868d4b56f21e121db77d7941f01",
+      "size_bytes": 2495
+    },
+    {
+      "path": "payload/acquisition-allowlist.json",
+      "sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "size_bytes": 927
+    },
+    {
+      "path": "payload/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "size_bytes": 9482
+    },
+    {
+      "path": "payload/dual-live-allowlist.json",
+      "sha256": "735d163d50ec49f3730c3aca387df90b8315b12eae7f82f6cd17a69180d1b2fd",
+      "size_bytes": 804
+    },
+    {
+      "path": "payload/generated-input-receipt.json",
+      "sha256": "b36db917af5a623681d9a18de45383f34ba3b2e34cae1a65d2ae77fca182cc84",
+      "size_bytes": 421
+    },
+    {
+      "path": "payload/independent/full128-recompute-feasibility-v1-preflight-deferral-audit.md",
+      "sha256": "f0cd53a88ddf3a2f4587a3f816fdc9fb44da78451271636f253e7be921e10e63",
+      "size_bytes": 1591
+    },
+    {
+      "path": "payload/independent/full128-recompute-feasibility-v1-prospective-review.md",
+      "sha256": "bf5b0fee6f3855fdd3d8f164227540875abfce0a5fbe13ecf53000c7379086a3",
+      "size_bytes": 3102
+    },
+    {
+      "path": "payload/ixi-exact-process.json",
+      "sha256": "c65d03b31713d7c26e38a60161b429cfc19edaa7067ceb029b7135cc8feb577c",
+      "size_bytes": 917
+    },
+    {
+      "path": "payload/launch_gate.py",
+      "sha256": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+      "size_bytes": 916
+    },
+    {
+      "path": "payload/lazy_concat.py",
+      "sha256": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+      "size_bytes": 11313
+    },
+    {
+      "path": "payload/monitor_primitives.py",
+      "sha256": "d945e7f993f798152ad24a1a1e5b82902ffea4068954fd0e96244496a100ae56",
+      "size_bytes": 4080
+    },
+    {
+      "path": "payload/pair-contract.json",
+      "sha256": "30ac21c7cf67af6f652453bb070ec10e55d88c806267af5f6ac6521fc9a61359",
+      "size_bytes": 5516
+    },
+    {
+      "path": "payload/pair_worker.py",
+      "sha256": "f0b7d258e9f9777582afa9a60233e8751fa312bd0f45d225bae6c33118cfc4fe",
+      "size_bytes": 13903
+    },
+    {
+      "path": "payload/preflight-deferred-recompute-20261009T130428269728Z.json",
+      "sha256": "be990511d339373c706c212c489f4cf9533846a6c4ebf0ac59b63398eedbea47",
+      "size_bytes": 21069
+    },
+    {
+      "path": "payload/recompute_skip.py",
+      "sha256": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+      "size_bytes": 11954
+    },
+    {
+      "path": "payload/root-release.json",
+      "sha256": "09b44cf0d8d5c279a6006a20f4cbed009d62d006ab9bbd8dd8423749e353b901",
+      "size_bytes": 484
+    },
+    {
+      "path": "payload/safe_finalize.py",
+      "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+      "size_bytes": 13744
+    },
+    {
+      "path": "payload/slow_inventory.py",
+      "sha256": "16c57744450f26a41249b54297c387bbc0136d52abf79042c143b260b28148b4",
+      "size_bytes": 13306
+    },
+    {
+      "path": "payload/supervise_pair.py",
+      "sha256": "8fbc0c64d6eb720b884731732300bbb97082788b0200e8e3f28b6b6445c380bf",
+      "size_bytes": 22633
+    },
+    {
+      "path": "payload/test_dual_live_allowlist.py",
+      "sha256": "4c95458ac219415f4fbffd1a0a7e27c890aa1b50fc4445ff91c721b48dd6fc5d",
+      "size_bytes": 4507
+    },
+    {
+      "path": "payload/test_feasibility_scope.py",
+      "sha256": "c9dae8ac890b1c56328b353f23d281ea1ba531e024f1b25d3a1737ef59f4d26f",
+      "size_bytes": 2396
+    },
+    {
+      "path": "payload/test_isolated_import.py",
+      "sha256": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968",
+      "size_bytes": 1547
+    },
+    {
+      "path": "payload/test_launch_control.py",
+      "sha256": "23c330c1f67fae3e9c0911c422e8e353f111057fb57077c81367d6ee7f19bcb4",
+      "size_bytes": 12857
+    },
+    {
+      "path": "payload/test_main_entry_precheckpoint.py",
+      "sha256": "5babbeec484b91c16d84a17383c7d8ac91886f44c0b0a9df7429aff03b58ef19",
+      "size_bytes": 3997
+    },
+    {
+      "path": "payload/test_phase_no_ps.py",
+      "sha256": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf",
+      "size_bytes": 893
+    },
+    {
+      "path": "payload/test_vanishing_pid.py",
+      "sha256": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35",
+      "size_bytes": 2365
+    }
+  ],
+  "scope": "full128 recompute host preflight deferral; no model child"
+}
