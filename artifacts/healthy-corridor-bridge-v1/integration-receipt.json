@@ -1,0 +1,72 @@
+{
+  "schema": "healthy-corridor-bridge-integration-v1",
+  "status": "independent_GO_generated_only_ready_for_root_integration",
+  "candidate_patch": "candidate.patch",
+  "candidate_patch_sha256": "55dd5822be5c2c0ba82f5801aea32aab4b2a18718e87b1ac187c91692e10f786",
+  "source_sha256": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+  "author_test_sha256": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d",
+  "api_path": [
+    "prepare_ixi_vascular_case supplies separately reviewed metadata projections",
+    "CorridorTask consumes actor projection plus exact generated T1/support/coverage arrays and frozen task definition",
+    "write_corridor_batch runs four fixed method slots on the same public candidate table and persists complete histories/statuses",
+    "evaluate_corridor_batch preflights every complete history independently before its single common private-reference callback"
+  ],
+  "implemented": {
+    "objective": "Public geometric waypoint reach credit minus round-trip path-length effort. No removal reward, cavity or tissue cutting is simulated.",
+    "candidate_generation": "Deterministic six-neighbor interior T1-support quantiles, support-bound hypothetical entry plane and fixed full tool catalogue. Private MRA, annotations, registration and coverage never affect candidate generation, legality or nominal ranking.",
+    "geometry": "Existing full-tool geometry checks require starting pose outside nominal support, public ROI/coverage containment, aperture/angle/reach and complete insertion plus reverse withdrawal. Ordinary tissue remains exposure. Independent motion checks certify every complete selected history before private loading.",
+    "methods": "SEARCH exhaustively ranks the common legal table plus STOP. HYBRID can order that full search but cannot prune it or replace the public optimum. IL/RL/HYBRID callable interfaces are exercised only by explicitly scripted generated controls; no learned policy/checkpoint result is claimed.",
+    "sealed_boundary": "All four statuses are fixed before scoring; complete action histories, tool dimensions, metrics, budgets and source hashes are bound. Failed/abstained slots remain null. STOP is complete but does not reach a waypoint. A modified SEARCH/HYBRID record cannot select STOP over a better public option.",
+    "private_scoring": "One common generated MRA/positive-mask/domain snapshot is loaded after all seals and independent preflights. Exact array hashes, directed rigid frame mapping and effective domain intersection are checked. The existing tiled segment-box contact kernel unions insertion/withdrawal exposure for shaft, tip and whole tool. Unknown coverage is retained; no vessel-free or injury claim.",
+    "tamper_controls": "Type-sensitive seals/budgets, complete and noncomplete accounting, public metadata invariants and shared source bytes are checked. A later seal or task mutation invalidates all batch scores. Caller private mapping/array mutation cannot change the captured scoring snapshot."
+  },
+  "generated_test_evidence": {
+    "author": "33 controls passed in 2.07 seconds",
+    "independent_combined": "47 controls passed in 2.41 seconds: 33 author plus 14 independent",
+    "verified_end_to_end_assertions": [
+      "Both insertion and reverse-withdrawal legs persist in each selected corridor strategy.",
+      "The generated reference includes two whole-tool/shaft positive cells, of which only one is touched by the active tip; the reused independent contact kernel distinguishes them.",
+      "Changing the private generated positive mask changes measured contacts while every actor contract, candidate and sealed method strategy stays identical.",
+      "No nominal generation or geometry preflight occurs after the private callback.",
+      "Public unknown coverage produces four abstention slots and no private load; failed and voluntary-abstention selectors do not become STOP.",
+      "A legitimate exhaustive STOP remains allowed when every legal corridor has negative public value."
+    ]
+  },
+  "science_review_limits": {
+    "reviewer": "scan_target_estimator_research",
+    "verdict": "Conditional GO for generated interface controls",
+    "waypoint_count_two": "Two waypoints in one batch define joint waypoint-and-tool selection, not route choice to a fixed target. All methods still receive the same candidates.",
+    "first_acquired_data_ablation": "Use one waypoint per sealed batch, with at most two prospectively fixed batches per person. Analyze target-choice separately if later enabled; do not replace an unreachable target using private labels.",
+    "waypoint_reached": "Public geometric tip-position proxy, not surgically achieved access.",
+    "one_step_scope": "Cannot establish sequential RL advantage, tissue penetration, surgical safety or clinical efficacy."
+  },
+  "supported_arrays_and_resources": {
+    "planning_ROI": "Entire supplied orthogonal RAS grid, each edge at most16 cells, exact float32 T1 and boolean support/coverage. No implicit crop/resample or hidden outside-ROI shaft permission.",
+    "private_ROI": "At most32 cells per edge; identical MRA/annotation grid with exact positive-mask and annotation/MRA/registration domain bindings.",
+    "decision": "Horizon1, at most2 waypoints and2 tools; at most4 corridor rows plus STOP. Three public geometry checks per generated candidate; two independent motion checks per selected non-STOP history.",
+    "private_scoring_budget": "Existing tiled contact budget,10-second cooperative cap per completed method. Arbitrary callbacks need separate process supervision; this is accidental-misuse protection, not hostile-code containment."
+  },
+  "actual_patient_dependencies_still_closed": [
+    "Accepted actual per-person byte/frame/anatomy/QC receipts and T1-only support with role/lineage/availability evidence",
+    "Accepted directed T1-to-MRA registration and measured validity/domain coverage",
+    "Explicit qualified source-to-ROI mapping or separately reviewed larger-array budget; neither source metadata nor a header-only pilot authorizes those",
+    "Separate reviewed real-person task/reference version and released experiment, including method/checkpoint compatibility and fair training/inference budgets"
+  ],
+  "not_authentication": "Actor role/source membership originates in the metadata preparation contract. Caller-supplied hashes and generated-domain declarations do not authenticate provenance. Real-source domains are refused. Zero model-forward/update counters describe the tested scripted-control protocol; arbitrary Python callables are not a security sandbox.",
+  "work_performed": {
+    "patient_payload_reads": 0,
+    "model_weight_reads": 0,
+    "model_forwards": 0,
+    "optimizer_updates": 0,
+    "tracked_writes_by_author": 0
+  },
+  "existing_semantics": "No existing tumor, generated strategy, metadata admission, matched private evaluator or streaming kernel source was changed.",
+  "independent_review": {
+    "directory": "independent-review",
+    "verdict": "GO",
+    "report_sha256": "cdb8e80f420e5d4c0fc68d1c20d105ebe1623f16372e2f07ad35976960bf2c37",
+    "review_sha256": "3d47b7d33553b052de7c8ff1d6a502da6742cfa1c069e504e4d0e614e00bc694",
+    "test_review_sha256": "f503ca4e89f572f5fbc7fded2eecbd47fda6635d23a4065ce4a7bf53aaf6f298",
+    "historical_findings_preserved": true
+  }
+}

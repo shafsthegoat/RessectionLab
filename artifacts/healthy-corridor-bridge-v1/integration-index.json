@@ -1,0 +1,100 @@
+{
+  "schema": "healthy-corridor-bridge-integration-index-v1",
+  "status": "independent_GO_generated_only",
+  "files": [
+    {
+      "path": "healthy_corridor.py",
+      "bytes": 31046,
+      "sha256": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277"
+    },
+    {
+      "path": "test_corridor.py",
+      "bytes": 18567,
+      "sha256": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d"
+    },
+    {
+      "path": "test_healthy_corridor.py",
+      "bytes": 18393,
+      "sha256": "20cf184a118b2efcce7ea1de89bc745eecdda1630118515d0be952013735004a"
+    },
+    {
+      "path": "candidate.patch",
+      "bytes": 50415,
+      "sha256": "55dd5822be5c2c0ba82f5801aea32aab4b2a18718e87b1ac187c91692e10f786"
+    },
+    {
+      "path": "author-check.json",
+      "bytes": 977,
+      "sha256": "fe76436d6150343bffe71e34e4bb08c3227ad14069b8feb4ef7e5153ad5b5b5e"
+    },
+    {
+      "path": "integration-receipt.json",
+      "bytes": 7371,
+      "sha256": "cb5b6509fb0ad582199dfd758c009eb41e9125afcbda024bcc4d54b4fc4e3bbf"
+    },
+    {
+      "path": "independent-review/REPORT.md",
+      "bytes": 3093,
+      "sha256": "cdb8e80f420e5d4c0fc68d1c20d105ebe1623f16372e2f07ad35976960bf2c37"
+    },
+    {
+      "path": "independent-review/combined-tests.txt",
+      "bytes": 208,
+      "sha256": "b0f4a47504d33972157ef3338abba8bf6773e41a73ffcc9a5024ee31eb10d23f"
+    },
+    {
+      "path": "independent-review/finalize_review.py",
+      "bytes": 9859,
+      "sha256": "75ff4b572774a8d849c39b70393a7feeb4443c8465d7089b0f65bfba25c23919"
+    },
+    {
+      "path": "independent-review/initial-findings-log.txt",
+      "bytes": 263,
+      "sha256": "3e69e32790362b4a7b41f7d384b58dae6700915ceedcca105daa8528fc983153"
+    },
+    {
+      "path": "independent-review/initial-findings.json",
+      "bytes": 335,
+      "sha256": "1b429c425807d7b7bc137faae683a62d9fef61b95f10339ffa9348969c588cdd"
+    },
+    {
+      "path": "independent-review/patch-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "independent-review/reproduce_initial_findings.py",
+      "bytes": 2092,
+      "sha256": "d0512e448b7e54e508fbc4c18af419486d6129007ff293e8ef3314be6189ca36"
+    },
+    {
+      "path": "independent-review/review.json",
+      "bytes": 7330,
+      "sha256": "3d47b7d33553b052de7c8ff1d6a502da6742cfa1c069e504e4d0e614e00bc694"
+    },
+    {
+      "path": "independent-review/run_review_tests.py",
+      "bytes": 2337,
+      "sha256": "5be587cc6c856f0c5d4e4df628c57ab9cda3ac1dba2ee73ad6adf4e78cbd4cc0"
+    },
+    {
+      "path": "independent-review/test-review.json",
+      "bytes": 3108,
+      "sha256": "f503ca4e89f572f5fbc7fded2eecbd47fda6635d23a4065ce4a7bf53aaf6f298"
+    },
+    {
+      "path": "independent-review/test_independent_corridor.py",
+      "bytes": 5274,
+      "sha256": "c9f5fb624f6d76ddcb5615c36bc749ff0726421a99b37787b472def451587fd9"
+    }
+  ],
+  "file_count": 17,
+  "total_bytes": 160668,
+  "index_excluded_from_self_hash": true,
+  "promotion": {
+    "patch": "candidate.patch",
+    "new_source": "src/resectionlab/healthy_corridor.py",
+    "new_tests": "tests/test_healthy_corridor.py"
+  },
+  "scope": "Generated-only executable interface bridge. Root owns tracked integration; no actual-array/model admission."
+}

@@ -760,3 +760,8 @@ The [IXI265 header reader](../artifacts/ixi265-paired-header-preparation-v2/RESU
 ### October 9: full128 recomputation host deferral before model loading
 
 The independently reviewed single-attempt generated release [deferred at host preflight](../artifacts/full128-recompute-host-deferral-v1/RESULT.md). Seven observations over 30.038 seconds showed normal/warning pressure, 38% minimum available memory and an 11-point spread; swap was flat and both exact downloaders remained live. No child, checkpoint load or forward occurred. This is not a model failure and does not trigger the separate during-forward stop rule. The earlier full128 forward failures remain preserved, with no automatic retry or relaxed resource guard.
+
+
+### October 9: integrate generated limited-input corridor strategy comparison
+
+The [generated bridge](../artifacts/healthy-corridor-bridge-v1/RESULT.md) connects actor-only imaging/support, exhaustive public SEARCH and scripted IL/RL/HYBRID slots, complete insertion/withdrawal histories, all-method sealing and independent private full-tool contact scoring. Root integration passes 150 tests in 30.83 seconds; independent candidate controls pass 47. Duplicate waypoints, resealed suboptimal search and weakened role assertions were reproduced and repaired, with negative records retained. Two-waypoint batches are joint target/tool selection; the first acquired-data comparison requires one fixed target per batch. This is a geometric exposure query, not tissue penetration, removal, mechanics or learned-policy efficacy. Actual patient admission remains closed.

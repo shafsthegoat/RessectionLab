@@ -1,0 +1,23 @@
+{
+  "command": ".venv/bin/python -m pytest -q build/healthy-corridor-bridge-v1/test_corridor.py",
+  "executed_scope": "generated source arrays and scripted method callbacks only",
+  "exit_code": 0,
+  "latest_result": "33 passed in 2.07s",
+  "model_forwards": 0,
+  "model_weight_reads": 0,
+  "optimizer_updates": 0,
+  "patient_payload_reads": 0,
+  "previous_result": "18 passed in 1.20s before independent boundary findings were repaired",
+  "repairs": [
+    "distinct two-cell waypoint quantiles",
+    "type-sensitive strategy seals and budgets",
+    "exhaustive SEARCH/HYBRID optimum",
+    "strict complete/noncomplete accounting",
+    "revalidation of public support/fit/time assertions",
+    "bind segment-box oracle source"
+  ],
+  "schema": "healthy-corridor-author-tests-v1",
+  "source_sha256": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+  "test_sha256": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d",
+  "tracked_writes": 0
+}

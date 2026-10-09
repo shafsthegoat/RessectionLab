@@ -1,0 +1,93 @@
+{
+  "candidate_sha256": {
+    "candidate.patch": "55dd5822be5c2c0ba82f5801aea32aab4b2a18718e87b1ac187c91692e10f786",
+    "healthy_corridor.py": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+    "test_corridor.py": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d"
+  },
+  "decision": "GO_generated_only_source_integration",
+  "evidence_sha256": {
+    "combined-tests.txt": "b0f4a47504d33972157ef3338abba8bf6773e41a73ffcc9a5024ee31eb10d23f",
+    "initial-findings.json": "1b429c425807d7b7bc137faae683a62d9fef61b95f10339ffa9348969c588cdd",
+    "reproduce_initial_findings.py": "d0512e448b7e54e508fbc4c18af419486d6129007ff293e8ef3314be6189ca36",
+    "run_review_tests.py": "5be587cc6c856f0c5d4e4df628c57ab9cda3ac1dba2ee73ad6adf4e78cbd4cc0",
+    "test-review.json": "f503ca4e89f572f5fbc7fded2eecbd47fda6635d23a4065ce4a7bf53aaf6f298",
+    "test_independent_corridor.py": "c9f5fb624f6d76ddcb5615c36bc749ff0726421a99b37787b472def451587fd9"
+  },
+  "limits": [
+    "This is an executable generated interface/control bridge, not an IL/RL efficacy experiment or real-person admission. Selectors are explicitly scripted; old learned checkpoints are not validated for this objective.",
+    "Actor role/source membership derives from metadata preparation; actor mapping/content hashes are not provenance authentication or hostile-Python isolation. Real evidence domains are refused.",
+    "Ordinary support exposure does not certify surgical penetration, tissue mechanics, cavity feasibility, biological vessel absence or clinical injury.",
+    "Continuous axial sweeps cover full insertion and reverse withdrawal; contact volumes are cell-based exposure surrogates, not tissue removal or dose/damage.",
+    "The supplied ROI caps remain 16^3 public and 32^3 private, with at most 2 tools, 2 waypoints, 4 candidate rows and horizon 1. No full real-volume claim.",
+    "Callbacks are synchronous. Per-contact cooperative budget is not an overall hard time/memory supervisor for arbitrary selector/loader code. Zero model-forward/update fields describe the scripted protocol rather than instrumenting hostile callbacks.",
+    "Successful contact work counters are supplied by the reused kernel; failed batch reports retain null endpoints and the fixed denominator, not a complete benchmark resource ledger.",
+    "No new anatomy/QC gate is added to continuous opaque intake. Real patient execution would require separately reviewed admission, objective/estimator/policy compatibility, frame/domain evidence and supervision."
+  ],
+  "resolved_findings": [
+    {
+      "issue": "Two requested interior waypoints collapsed to the same cell when only two interior cells existed.",
+      "original_reproduction": [
+        [
+          7.0,
+          7.0,
+          11.0
+        ],
+        [
+          7.0,
+          7.0,
+          11.0
+        ]
+      ],
+      "repair": "Deterministic n*(index+1)//(count+1) quantiles select distinct eligible cells."
+    },
+    {
+      "issue": "A resealed SEARCH record could select suboptimal STOP and supply arbitrary nonnegative comparison counts; noncomplete rows skipped accounting checks.",
+      "repair": "Derived exhaustive optimum, semantic payload seal, exact complete and bounded noncomplete method-specific callback/comparison/zero-forward/update accounting. Manifest budget identity is type-sensitive."
+    },
+    {
+      "issue": "A public actor mapping altered after preparation could bypass support fit-role/kind/exposure and dependency-availability assertions.",
+      "original_reproduction": "support.project_fit_roles=[SELECT] accepted by original constructor",
+      "repair": "Recheck existing actor-only metadata invariants; private metadata stays out of task construction."
+    },
+    {
+      "issue": "Source identity omitted the contact wrapper underlying segment-box oracle.",
+      "repair": "Include independent_geometry_batch.py hash in task/source binding."
+    }
+  ],
+  "reviewed_boundaries": [
+    "Generated-only exact public actor fields and immutable T1/support/coverage inputs on whole supplied <=16^3 ROI; no silent crop or GENERATED_T1/tumor aliases.",
+    "At most2 tools x2 deterministic interior waypoints; one-step objective is reach_credit minus round-trip physical-mm effort. No removal reward or cavity evolution.",
+    "Ordinary brain support is an exposure mask; unknown public coverage is forbidden. Full tool starts outside support and stays within the supplied ROI. This is hypothetical geometric corridor feasibility only.",
+    "SEARCH and HYBRID choose the exact complete public-table optimum including STOP; scripted IL/RL callbacks return one legal action or abstain. STOP, failed and abstained slots stay distinct.",
+    "All four terminal slots and complete versioned insertion/reverse-withdrawal histories are durable before private input; every complete history receives independent motion checks before the single private callback.",
+    "Private contract is copied, source/frame/directed rigid registration/domain identities checked; common <=32^3 generated MRA/mask/domain arrays are snapshotted and hash checked.",
+    "Reused tiled capsule scorer evaluates complete shaft/tip insertion/withdrawal unions; caller array mutation cannot retarget later methods. Failed private/batch checks clear all endpoint scores without dropping method slots.",
+    "No post-private nominal generation, policy decision or independent planning preflight; no policy checkpoint/model/training/patient or external native solver operation."
+  ],
+  "root_only_integration": true,
+  "schema": "healthy-corridor-independent-review-v1",
+  "source_sha256": {
+    "build/healthy-corridor-bridge-v1/healthy_corridor.py": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+    "build/healthy-corridor-bridge-v1/test_corridor.py": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d",
+    "build/healthy-corridor-independent-v1/test_independent_corridor.py": "c9f5fb624f6d76ddcb5615c36bc749ff0726421a99b37787b472def451587fd9",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/ixi_vascular_admission.py": "7c93cf8faf48ac55b0add1558d47f691ab63dc69672df8cd6fab83fc439ca28d",
+    "src/resectionlab/private_vascular_evaluation.py": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8",
+    "src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+  },
+  "tests": {
+    "actual_payload_or_network_attempts": 0,
+    "author_controls": 33,
+    "independent_controls": 14,
+    "passed": 47,
+    "policy_or_image_library_imported": false,
+    "promotion_source_exact_and_test_functions_unchanged": true,
+    "pytest_seconds": 2.41,
+    "source_and_reused_kernel_bytes_unchanged": true
+  },
+  "tracked_edits_by_reviewer": false
+}

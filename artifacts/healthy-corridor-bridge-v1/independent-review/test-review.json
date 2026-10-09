@@ -1,0 +1,36 @@
+{
+  "blocked_payload_or_network_attempts": [],
+  "elapsed_seconds": 2.4718381247948855,
+  "files_unchanged": true,
+  "image_library_imported": false,
+  "policy_library_imported": false,
+  "pytest_exit_code": 0,
+  "scope": "Generated16-cubed public/reference arrays, scripted callbacks and reused geometric queries only; no patient/model/archive payloads, model forwards, training, network or external native solver.",
+  "source_hashes_after": {
+    "build/healthy-corridor-bridge-v1/healthy_corridor.py": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+    "build/healthy-corridor-bridge-v1/test_corridor.py": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d",
+    "build/healthy-corridor-independent-v1/test_independent_corridor.py": "c9f5fb624f6d76ddcb5615c36bc749ff0726421a99b37787b472def451587fd9",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/ixi_vascular_admission.py": "7c93cf8faf48ac55b0add1558d47f691ab63dc69672df8cd6fab83fc439ca28d",
+    "src/resectionlab/private_vascular_evaluation.py": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8",
+    "src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+  },
+  "source_hashes_before": {
+    "build/healthy-corridor-bridge-v1/healthy_corridor.py": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+    "build/healthy-corridor-bridge-v1/test_corridor.py": "ab2af99c99a59b1a7a333c148868261bd708acf54f5173aa046f324ad19c941d",
+    "build/healthy-corridor-independent-v1/test_independent_corridor.py": "c9f5fb624f6d76ddcb5615c36bc749ff0726421a99b37787b472def451587fd9",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/ixi_vascular_admission.py": "7c93cf8faf48ac55b0add1558d47f691ab63dc69672df8cd6fab83fc439ca28d",
+    "src/resectionlab/private_vascular_evaluation.py": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8",
+    "src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+  },
+  "status": "PASS"
+}

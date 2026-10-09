@@ -1,0 +1,480 @@
+"""Generated execution bridge for retrospective hypothetical corridor queries.
+
+The objective is geometric waypoint reach and round-trip effort, never removal.
+Ordinary brain support is exposure, not a pre-carved cavity or certified surgical
+penetration. No model loader, training or real-person array admission is supplied.
+Public preparation and complete four-method seals precede one private callback.
+"""
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass, field
+import hashlib
+from pathlib import Path
+from types import MappingProxyType
+
+import numpy as np
+
+from resectionlab import core, evaluation, functional_events, geometry, ixi_vascular_admission as admission
+from resectionlab import independent_geometry_batch
+from resectionlab import private_vascular_evaluation as transport
+from resectionlab import vascular_contact_streaming as contact
+from resectionlab.core import array_digest, freeze_json, immutable_array, semantic_digest, thaw_json
+from resectionlab.functional_events import AxialToolSweep
+
+VERSION = "generated-retrospective-healthy-corridor-v1"
+STRATEGY_VERSION = "healthy-corridor-complete-strategy-v1"
+METHODS = admission.METHODS
+BUDGET = {"planning_grid_max_edge": 16, "reference_grid_max_edge": 32,
+          "waypoints": 2, "tools": 2, "candidate_rows": 4, "horizon": 1,
+          "method_policy_callbacks": 1, "contact_wall_seconds": 10.}
+
+
+def need(condition, reason):
+    if not condition:
+        raise ValueError(reason)
+
+
+def _copy(value):
+    return thaw_json(freeze_json(value))
+
+
+def _code_identity():
+    modules = {"geometry": geometry, "independent_geometry": evaluation,
+               "contact_kernel": contact, "admission": admission, "core": core,
+               "seal_transport": transport, "axial_sweeps": functional_events,
+               "segment_box_oracle": independent_geometry_batch}
+    paths = {name: Path(module.__file__) for name, module in modules.items()}
+    paths["corridor_bridge"] = Path(__file__)
+    return {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in paths.items()}
+
+
+def _binary(value, shape, expected):
+    value = np.asarray(value)
+    need(value.dtype == np.bool_ and value.shape == shape, "binary_same_grid_required")
+    value = immutable_array(value, bool)
+    need(array_digest(value) == expected, "array_receipt_mismatch")
+    return value
+
+
+def _image(value, shape, expected):
+    value = np.asarray(value)
+    need(value.shape == shape and value.dtype == np.float32 and np.isfinite(value).all(), "finite_float32_image_required")
+    value = immutable_array(value, np.float32)
+    need(array_digest(value) == expected, "array_receipt_mismatch")
+    return value
+
+
+def _scene(task):
+    return geometry.GeometryScene(~task.coverage, task.affine, exposure_mask=task.support,
+        enforce_tip_in_bounds=True, unknowns=("hypothetical_corridor_no_tissue_mechanics",))
+
+
+def _definition(value, actor):
+    value = _copy(value)
+    admission._fields(value, "version waypoint_rule access_axis access_margin_voxels access_radius_mm tools reach_credit effort_per_mm horizon", "corridor_definition_fields")
+    need(value["version"] == VERSION and value["waypoint_rule"] == "six_neighbor_interior_lexicographic_quantiles_v1"
+         and type(value["horizon"]) is int and value["horizon"] == 1, "versioned_one_step_definition_required")
+    need(type(value["access_axis"]) is int and value["access_axis"] in (0, 1, 2)
+         and type(value["access_margin_voxels"]) is int and 1 <= value["access_margin_voxels"] <= 3, "hypothetical_access_rule")
+    for name, upper in (("access_radius_mm", 10.), ("reach_credit", 100.), ("effort_per_mm", 10.)):
+        number = value[name]
+        need(type(number) in (int, float) and np.isfinite(number) and 0 < number <= upper, "finite_positive_objective_or_access")
+    need(isinstance(value["tools"], list) and 1 <= len(value["tools"]) <= BUDGET["tools"], "bounded_tool_catalog")
+    tools = tuple(geometry.ToolGeometry(**row) for row in value["tools"])
+    need(len({t.tool_id for t in tools}) == len(tools) and all(t.working_length_mm <= 100
+         and t.envelope_radius_mm <= 10 for t in tools), "bounded_unique_full_tools")
+    need(actor["task"]["definition_sha256"] == semantic_digest(value), "task_definition_changed")
+    return value, tools
+
+
+@dataclass(frozen=True, slots=True)
+class CorridorTask:
+    """Permitted inputs only: no reference contract or private loader field.
+
+    The role/source membership assertion originates in prepare_ixi_vascular_case.
+    This mapping is not provenance authentication; no real arrays are admitted.
+    """
+    actor_contract: Mapping
+    t1: np.ndarray
+    support: np.ndarray
+    coverage: np.ndarray
+    definition: Mapping
+    affine: np.ndarray = field(init=False)
+    tools: tuple = field(init=False)
+    access: object = field(init=False)
+    waypoints: tuple = field(init=False)
+    candidates: tuple = field(init=False)
+    code_identity: Mapping = field(init=False)
+    fingerprint: str = field(init=False)
+
+    def __post_init__(self):
+        actor = _copy(self.actor_contract)
+        admission._fields(actor, "schema evidence_domain person_id role cohort_sha256 purpose observation_regime decision_cutoff T1 support task method_order preoperative_claim clinical_use", "exact_public_actor_fields_required")
+        need(actor.get("schema") == admission.VERSION and actor.get("evidence_domain") == "generated_metadata_control",
+             "real_person_array_admission_not_implemented")
+        need(actor.get("observation_regime") == "retrospective_dataset" and actor.get("preoperative_claim") is False
+             and actor.get("clinical_use") is False and actor.get("method_order") == list(METHODS), "retrospective_actor_contract_required")
+        need(actor["task"]["kind"] == admission.TASK_KIND and actor["task"]["target_semantics"] == admission.TARGET_MEANING
+             and type(actor["task"]["horizon"]) is int and actor["task"]["horizon"] == 1, "healthy_waypoint_task_required")
+        need(actor.get("cohort_sha256") == admission.COHORT_SHA256 and actor["role"] in admission.ROLE_USE
+             and actor["purpose"] in admission.ROLE_USE[actor["role"]], "actor_role_or_cohort")
+        for name in ("support", "task"):
+            admission._checked(actor[name], "generated_metadata_control", name)
+            need(actor[name]["source_file_sha256"] == actor["T1"]["source_file_sha256"]
+                 and actor[name]["frame_sha256"] == actor["T1"]["grid"]["frame_sha256"], "public_T1_ancestry_required")
+        admission._source(actor["T1"], domain="generated_metadata_control", member=actor["T1"]["member"], kind="acquired_T1")
+        admission._fields(actor["support"], "evidence_domain kind source_file_sha256 frame_sha256 output_sha256 coverage_sha256 estimator_record_sha256 estimator_model_sha256 project_fit_roles pretrained_exposure available_at availability_record_sha256 qc_status qc_scope qc_record_sha256", "exact_public_support_fields_required")
+        admission._fields(actor["task"], "evidence_domain kind target_semantics source_file_sha256 support_output_sha256 frame_sha256 definition_sha256 waypoint_count horizon available_at availability_record_sha256 qc_status qc_scope qc_record_sha256", "exact_public_task_fields_required")
+        need(actor["support"]["kind"] == "T1_derived_brain_envelope"
+             and actor["support"]["project_fit_roles"] in ([], ["TRAIN"])
+             and actor["support"]["pretrained_exposure"] in {"unknown", "known_overlap", "audited_no_overlap"},
+             "public_support_kind_fit_role_or_exposure")
+        for name in ("output_sha256", "coverage_sha256", "estimator_record_sha256", "estimator_model_sha256", "availability_record_sha256"):
+            admission._sha(actor["support"][name])
+        for name in ("definition_sha256", "availability_record_sha256"):
+            admission._sha(actor["task"][name])
+        cutoff = admission._time(actor["decision_cutoff"])
+        for name in ("T1", "support", "task"):
+            admission._actor_available(actor[name], cutoff)
+        need(admission._time(actor["T1"]["available_at"]) <= admission._time(actor["support"]["available_at"])
+             <= admission._time(actor["task"]["available_at"]), "public_dependency_availability_order")
+        need(actor["task"]["support_output_sha256"] == actor["support"]["output_sha256"], "task_support_binding")
+        admission._grid(actor["T1"]["grid"])
+        shape = tuple(actor["T1"]["grid"]["shape"])
+        need(max(shape) <= BUDGET["planning_grid_max_edge"], "whole_supplied_planning_ROI_exceeds_16_cubed")
+        image = _image(self.t1, shape, actor["T1"]["array_sha256"])
+        support = _binary(self.support, shape, actor["support"]["output_sha256"])
+        coverage = _binary(self.coverage, shape, actor["support"]["coverage_sha256"])
+        need(support.any() and not np.any(support & ~coverage), "qualified_support_required")
+        definition, tools = _definition(self.definition, actor)
+        affine = immutable_array(actor["T1"]["grid"]["affine_ras_mm"], float)
+        for name, value in (("actor_contract", freeze_json(actor)), ("t1", image), ("support", support),
+                ("coverage", coverage), ("definition", freeze_json(definition)), ("affine", affine), ("tools", tools)):
+            object.__setattr__(self, name, value)
+        interior = support.copy()
+        interior[[0, -1], :, :] = False
+        interior[:, [0, -1], :] = False
+        interior[:, :, [0, -1]] = False
+        for axis in range(3):
+            interior &= np.roll(support, 1, axis) & np.roll(support, -1, axis)
+        cells = np.argwhere(interior)
+        count = actor["task"]["waypoint_count"]
+        need(type(count) is int and 1 <= count <= BUDGET["waypoints"] and len(cells) >= count, "qualified_interior_waypoints_required")
+        points = [cells[len(cells) * (index + 1) // (count + 1)] for index in range(count)]
+        waypoints = tuple(tuple(affine[:3, :3] @ point + affine[:3, 3]) for point in points)
+        support_cells = np.argwhere(support)
+        center = (support_cells.min(axis=0) + support_cells.max(axis=0)) / 2
+        axis = definition["access_axis"]
+        center[axis] = support_cells[:, axis].min() - definition["access_margin_voxels"]
+        normal = affine[:3, axis] / np.linalg.norm(affine[:3, axis])
+        access = geometry.AccessWindow(affine[:3, :3] @ center + affine[:3, 3], normal,
+                                      definition["access_radius_mm"], "T1-hypothetical-access")
+        object.__setattr__(self, "access", access)
+        object.__setattr__(self, "waypoints", waypoints)
+        object.__setattr__(self, "candidates", tuple(freeze_json(row) for row in _generate_candidates(self)))
+        object.__setattr__(self, "code_identity", freeze_json(_code_identity()))
+        object.__setattr__(self, "fingerprint", semantic_digest(self._identity()))
+
+    def _identity(self):
+        return {"schema": VERSION, "actor_contract": self.actor_contract, "t1": array_digest(self.t1),
+            "support": array_digest(self.support), "coverage": array_digest(self.coverage), "definition": self.definition,
+            "affine": self.affine.tolist(), "waypoints": self.waypoints, "access": _access(self.access),
+            "tools": [asdict(tool) for tool in self.tools], "candidates": self.candidates,
+            "source_hashes": self.code_identity, "budgets": BUDGET}
+
+    def assert_intact(self):
+        need(self.fingerprint == semantic_digest(self._identity()) and self.code_identity == _code_identity(), "public_task_or_code_changed")
+
+    def observation(self):
+        self.assert_intact()
+        return MappingProxyType({"task_hash": self.fingerprint, "T1": self.t1, "support": self.support,
+            "coverage": self.coverage, "candidates": self.candidates, "waypoints_ras_mm": self.waypoints,
+            "STOP": freeze_json({"action_id": "STOP", "nominal_score": 0., "waypoint_reached": False})})
+
+
+def _access(value):
+    return {"center_mm": value.center_mm.tolist(), "normal_inward": value.normal_inward.tolist(),
+            "radius_mm": value.radius_mm, "window_id": value.window_id}
+
+
+def _generate_candidates(task):
+    """Deterministic public table; ordinary support is exposure, never removed."""
+    scene = _scene(task)
+    rows = []
+    for index, point in enumerate(task.waypoints):
+        entry, tip = task.access.center_mm, np.asarray(point)
+        delta = tip - entry
+        length = float(np.linalg.norm(delta))
+        need(length > 0, "distinct_waypoint_and_entry_required")
+        axis = delta / length
+        start, end = geometry.ToolPose(entry, axis), geometry.ToolPose(tip, axis)
+        for tool_index, tool in enumerate(task.tools):
+            starting = geometry.check_pose(tool, start, scene, task.access)
+            insertion = geometry.check_motion(tool, start, end, scene, task.access)
+            withdrawal = geometry.check_motion(tool, end, start, scene, task.access)
+            # Entire tool must stay in the declared public ROI and coverage. A
+            # missing proximal source region cannot be made free by omission.
+            unknown_geometry = "tool_geometry_outside_image_unassessed" in set(insertion.unknowns + withdrawal.unknowns)
+            legal = (starting.feasible and starting.exposure_volume_mm3 == 0.
+                     and insertion.feasible and withdrawal.feasible and not unknown_geometry)
+            action = f"corridor_{index}_{tool_index}"
+            legs = [{"phase": "insertion", "tip_start_mm": entry.tolist(), "tip_end_mm": tip.tolist()},
+                    {"phase": "withdrawal", "tip_start_mm": tip.tolist(), "tip_end_mm": entry.tolist()}]
+            rows.append({"action_id": action, "waypoint_id": index, "tool_id": tool.tool_id,
+                "axis_unit": axis.tolist(), "motion_legs": legs, "tool": asdict(tool), "legal": bool(legal),
+                "waypoint_reached": True, "round_trip_mm": 2 * length,
+                "nominal_score": task.definition["reach_credit"] - task.definition["effort_per_mm"] * 2 * length,
+                "geometry": {"starting_pose": starting.to_dict(), "insertion": insertion.to_dict(), "withdrawal": withdrawal.to_dict()},
+                "interpretation": "hypothetical_geometric_corridor_no_removal_or_penetration_model"})
+    need(len(rows) <= BUDGET["candidate_rows"], "candidate_budget")
+    return rows
+
+
+def _strategy(task, method, action, accounting):
+    legal = {row["action_id"]: row for row in task.candidates if row["legal"]}
+    need(action == "STOP" or action in legal, "selection_not_publicly_legal")
+    physical = {"action_id": "STOP", "motion_legs": []} if action == "STOP" else _copy(legal[action])
+    metrics = {"waypoint_reached": False, "round_trip_mm": 0., "nominal_score": 0.} if action == "STOP" else {
+        key: physical[key] for key in ("waypoint_reached", "round_trip_mm", "nominal_score")}
+    payload = {"schema": STRATEGY_VERSION, "scope": VERSION, "task_hash": task.fingerprint,
+        "observation_hash": task.fingerprint, "method": method, "horizon": 1,
+        "terminal_reason": "STOP" if action == "STOP" else "HORIZON", "action_ids": [action],
+        "physical_history": [physical], "public_metrics": metrics, "method_accounting": accounting,
+        "policy_lineage": "scripted_generated_interface_control_not_trained_IL_or_RL",
+        "clinical_injury_probability": None, "tissue_removal_assessed": False}
+    return {**payload, "seal_hash": semantic_digest(payload)}
+
+
+def write_corridor_batch(task, *, selectors, output_directory):
+    """Run four fixed slots on one public table, then durably seal every slot.
+
+    Selectors implement generated interface controls only. IL/RL return one ID
+    or None to abstain; HYBRID returns a permutation for exhaustive search order.
+    SEARCH/HYBRID optimize the same complete public candidate table, including
+    STOP. No learned checkpoint compatibility or performance is asserted.
+    """
+    need(type(task) is CorridorTask and set(selectors) == {"IL", "RL", "HYBRID"}, "fixed_method_selectors_required")
+    selectors = dict(selectors)
+    need(all(callable(value) for value in selectors.values()), "callable_selectors_required")
+    task.assert_intact()
+    expected = task.fingerprint
+    rows = {}
+    legal = {row["action_id"]: row["nominal_score"] for row in task.candidates if row["legal"]}
+    scores = {**legal, "STOP": 0.}
+    for method in METHODS:
+        accounting = {"policy_callback_calls": 0, "nominal_candidate_comparisons": 0, "actor_forward_calls": 0, "optimizer_updates": 0}
+        status, strategy, reason = "abstained", None, "no_qualified_corridor"
+        if legal:
+            try:
+                if method == "SEARCH":
+                    action = min(scores, key=lambda key: (-scores[key], key))
+                    accounting["nominal_candidate_comparisons"] = len(scores)
+                else:
+                    accounting["policy_callback_calls"] = 1
+                    selected = selectors[method](task.observation())
+                    if selected is None:
+                        raise _Abstain()
+                    if method == "HYBRID":
+                        need(isinstance(selected, (list, tuple)) and len(selected) == len(scores)
+                             and set(selected) == set(scores), "complete_hybrid_order_required")
+                        # Ranking order cannot silently prune the strong baseline.
+                        action = min(selected, key=lambda key: (-scores[key], key))
+                        accounting["nominal_candidate_comparisons"] = len(scores)
+                    else:
+                        action = selected
+                task.assert_intact()
+                need(task.fingerprint == expected, "public_task_changed_during_method")
+                strategy = _strategy(task, method, action, accounting)
+                status, reason = "complete", None
+            except _Abstain:
+                reason = "policy_abstained"
+            except Exception:
+                status, reason = "failed", "method_selection_failed"
+        rows[method] = {"status": status, "reason": reason, "strategy": strategy, "accounting": accounting}
+    task.assert_intact()
+    need(task.fingerprint == expected, "public_task_changed_during_batch")
+    directory = transport._safe_path(output_directory)
+    directory.mkdir(parents=False, exist_ok=False)
+    transport._sync_directory(directory.parent)
+    manifest = {"schema": VERSION, "task_hash": expected, "actor_contract_hash": semantic_digest(task.actor_contract),
+        "source_hashes": _copy(task.code_identity), "budgets": dict(BUDGET), "method_order": list(METHODS),
+        "common_candidate_geometry_checks": 3 * len(task.candidates), "methods": {},
+        "patient_admission": False, "private_input_supplied": False, "optimizer_updates": 0}
+    for method, row in rows.items():
+        filename = method + "-corridor-strategy.json" if row["strategy"] is not None else None
+        sha = transport._write_new(directory / filename, row["strategy"]) if filename else None
+        manifest["methods"][method] = {"status": row["status"], "reason": row["reason"], "accounting": row["accounting"],
+            "strategy_filename": filename, "strategy_file_sha256": sha}
+    sha = transport._write_new(directory / "corridor-batch.json", manifest)
+    return {"manifest_path": str(directory / "corridor-batch.json"), "manifest_sha256": sha}
+
+
+class _Abstain(Exception):
+    pass
+
+
+def _preflight(task, record, method):
+    accounting = record.get("method_accounting")
+    _accounting(task, method, "complete", accounting)
+    need(record.get("seal_hash") == semantic_digest({key: value for key, value in record.items() if key != "seal_hash"}), "strategy_semantic_seal_changed")
+    actions = record.get("action_ids")
+    need(isinstance(actions, list) and len(actions) == 1, "complete_one_step_record_required")
+    if method in ("SEARCH", "HYBRID"):
+        scores = {row["action_id"]: row["nominal_score"] for row in task.candidates if row["legal"]}
+        scores["STOP"] = 0.
+        need(actions[0] == min(scores, key=lambda key: (-scores[key], key)), "exhaustive_method_must_choose_public_optimum")
+    need(record == _strategy(task, method, actions[0], accounting), "strategy_record_changed")
+    history = record["physical_history"][0]
+    if actions[0] == "STOP":
+        return (), []
+    tool = geometry.ToolGeometry(**history["tool"])
+    axis = history["axis_unit"]
+    scene = _scene(task)
+    certificates, sweeps = [], []
+    for leg in history["motion_legs"]:
+        start, end = geometry.ToolPose(leg["tip_start_mm"], axis), geometry.ToolPose(leg["tip_end_mm"], axis)
+        check = evaluation.independent_check_motion(tool, start, end, scene, task.access)
+        need(check.feasible, "independent_corridor_geometry_failed")
+        certificates.append(asdict(check))
+        sweeps.append(AxialToolSweep(tool, tuple(start.tip_mm), tuple(end.tip_mm), tuple(start.axis_unit)))
+    return tuple(sweeps), certificates
+
+
+def _accounting(task, method, status, value):
+    need(isinstance(value, Mapping) and set(value) == {"policy_callback_calls", "nominal_candidate_comparisons", "actor_forward_calls", "optimizer_updates"}
+         and all(type(v) is int and v >= 0 for v in value.values())
+         and value["actor_forward_calls"] == value["optimizer_updates"] == 0, "method_accounting_invalid")
+    count = sum(row["legal"] for row in task.candidates)
+    expected_callback = int(bool(count) and method != "SEARCH")
+    full = count + 1 if count and method in ("SEARCH", "HYBRID") else 0
+    allowed = {full} if status == "complete" else {0, full} if status == "failed" else {0}
+    need(value["policy_callback_calls"] == expected_callback and value["nominal_candidate_comparisons"] in allowed,
+         "method_specific_accounting_mismatch")
+    need(bool(count) or status == "abstained", "no_qualified_corridor_requires_abstention")
+    need(not (count and method == "SEARCH" and status == "abstained"), "exhaustive_search_cannot_policy_abstain")
+
+
+def _loaded_reference(value, private):
+    admission._fields(value, "MRA mask annotation_domain mra_domain registration_domain", "exact_private_arrays_required")
+    grid = private["MRA"]["grid"]
+    admission._grid(grid)
+    shape = tuple(grid["shape"])
+    need(max(shape) <= BUDGET["reference_grid_max_edge"], "reference_ROI_exceeds_32_cubed")
+    image = _image(value["MRA"], shape, private["MRA"]["array_sha256"])
+    mask = _binary(value["mask"], shape, private["vessel_annotation"]["array_sha256"])
+    domains = tuple(_binary(value[name], shape, private["coverage"][key]) for name, key in
+        (("annotation_domain", "annotation_domain_sha256"), ("mra_domain", "mra_valid_domain_sha256"),
+         ("registration_domain", "registration_valid_domain_sha256")))
+    coverage = immutable_array(domains[0] & domains[1] & domains[2], bool)
+    need(array_digest(coverage) == private["coverage"]["coverage_sha256"] and not np.any(mask & ~coverage), "effective_coverage_or_positive_domain_mismatch")
+    return image, mask, coverage
+
+
+def _private_contract(value, actor):
+    private = _copy(value)
+    need(private.get("schema") == admission.VERSION and private.get("evidence_domain") == "generated_metadata_control"
+         and private.get("actor_contract_sha256") == semantic_digest(actor), "private_world_actor_binding")
+    need(private.get("person_id") == actor["person_id"] and private.get("role") == actor["role"]
+         and private.get("private_until_all_methods_sealed") is True, "private_person_role_or_phase")
+    mra, label, registration, coverage = (private[name] for name in ("MRA", "vessel_annotation", "registration", "coverage"))
+    for row, scope in ((mra, "acquired_MRA"), (label, "derived_model_assisted_manually_refined_reference"),
+                       (registration, "registration"), (coverage, "coverage")):
+        admission._checked(row, "generated_metadata_control", scope)
+    admission._grid(mra["grid"])
+    need(max(mra["grid"]["shape"]) <= BUDGET["reference_grid_max_edge"] and label["grid"] == mra["grid"], "qualified_reference_grid_required")
+    need(registration["direction"] == "T1_RAS_mm_to_MRA_RAS_mm"
+         and registration["from_source_sha256"] == actor["T1"]["source_file_sha256"]
+         and registration["from_frame_sha256"] == actor["T1"]["grid"]["frame_sha256"]
+         and registration["to_source_sha256"] == mra["source_file_sha256"]
+         and registration["to_frame_sha256"] == mra["grid"]["frame_sha256"], "private_registration_binding")
+    need(coverage["annotation_source_sha256"] == label["source_file_sha256"]
+         and coverage["mask_sha256"] == label["array_sha256"] and coverage["frame_sha256"] == mra["grid"]["frame_sha256"]
+         and coverage["registration_valid_domain_sha256"] == registration["valid_domain_sha256"], "private_coverage_binding")
+    need(coverage["meaning"] == "intersection_of_annotation_MRA_and_registration_domains_not_vessel_completeness"
+         and coverage["unlabelled_meaning"] == "unknown_biological_vessel_status"
+         and type(coverage["positive_outside_domain_cells"]) is int and coverage["positive_outside_domain_cells"] == 0,
+         "private_coverage_semantics")
+    transport._rigid(registration["matrix_ras_mm"])
+    return private
+
+
+def evaluate_corridor_batch(task, *, manifest_path, manifest_sha256, private_contract,
+                            load_reference, output_directory):
+    """Preflight ALL complete strategies, then load one common private world.
+
+    Array/hash/domain checks are performed only on explicitly generated arrays.
+    A reference callback needs an external supervisor for time/memory containment;
+    this boundary protects accidental misuse, not hostile in-process code.
+    """
+    need(type(task) is CorridorTask and callable(load_reference), "typed_task_loader_required")
+    task.assert_intact()
+    expected_task = task.fingerprint
+    private = _private_contract(private_contract, task.actor_contract)
+    expected_private = semantic_digest(private)
+    transform = transport._rigid(private["registration"]["matrix_ras_mm"])
+    manifest = transport._read_bound(manifest_path, manifest_sha256)
+    need(manifest.get("schema") == VERSION and manifest.get("task_hash") == expected_task
+         and manifest.get("actor_contract_hash") == semantic_digest(task.actor_contract)
+         and manifest.get("source_hashes") == _code_identity() and semantic_digest(manifest.get("budgets")) == semantic_digest(BUDGET)
+         and manifest.get("method_order") == list(METHODS) and set(manifest.get("methods", {})) == set(METHODS), "batch_manifest_mismatch")
+    contexts, sealed = {}, {}
+    for method in METHODS:
+        row = manifest["methods"][method]
+        need(row["status"] in {"complete", "abstained", "failed"}, "method_terminal_status_required")
+        _accounting(task, method, row["status"], row["accounting"])
+        if row["status"] != "complete":
+            need(row["strategy_filename"] is row["strategy_file_sha256"] is None, "noncomplete_strategy_must_be_null")
+            continue
+        need(row["strategy_filename"] == method + "-corridor-strategy.json", "strategy_filename_mismatch")
+        path = Path(manifest_path).parent / row["strategy_filename"]
+        record = transport._read_bound(path, row["strategy_file_sha256"])
+        need(row["accounting"] == record["method_accounting"], "method_accounting_mismatch")
+        sweeps, certificates = _preflight(task, record, method)
+        capsules = []
+        for sweep in sweeps:
+            mapped = AxialToolSweep(sweep.tool, tuple(transform[:3, :3] @ sweep.tip_start_mm + transform[:3, 3]),
+                tuple(transform[:3, :3] @ sweep.tip_end_mm + transform[:3, 3]), tuple(transform[:3, :3] @ sweep.axis_unit))
+            for part, (start, end, radius) in zip(("shaft", "tip"), mapped.capsules()):
+                capsules.append(contact.Capsule(record["action_ids"][0], part, tuple(start), tuple(end), radius))
+        contexts[method] = (record, tuple(capsules), certificates)
+        sealed[method] = (path, row["strategy_file_sha256"], record)
+    def intact():
+        task.assert_intact()
+        need(task.fingerprint == expected_task and semantic_digest(private) == expected_private, "batch_context_changed")
+        need(transport._read_bound(manifest_path, manifest_sha256) == manifest, "batch_manifest_changed")
+        for path, sha, record in sealed.values():
+            need(transport._read_bound(path, sha) == record, "sealed_strategy_changed")
+    intact()
+    directory = transport._safe_path(output_directory)
+    directory.mkdir(parents=False, exist_ok=False)
+    transport._sync_directory(directory.parent)
+    base = {"schema": VERSION, "manifest_sha256": manifest_sha256, "task_hash": expected_task,
+        "private_world_hash": expected_private, "method_order": list(METHODS), "all_complete_methods_preflighted": True,
+        "patient_admission": False, "clinical_injury_probability": None, "tissue_removal_assessed": False,
+        "private_loader_calls": 0, "planning_after_private_load": False,
+        "pre_private_independent_motion_checks": sum(len(v[2]) for v in contexts.values())}
+    transport._write_new(directory / "attempt.json", {**base, "status": "reserved_before_private_load"})
+    result = {**base, "methods": {m: {"planning_status": manifest["methods"][m]["status"], "evaluation": None} for m in METHODS}}
+    try:
+        if contexts:
+            result["private_loader_calls"] = 1
+            image, mask, coverage = _loaded_reference(load_reference(), private)
+            intact()
+            grid = contact.Grid(mask.shape, private["MRA"]["grid"]["affine_ras_mm"])
+            def sample(indices):
+                return mask[tuple(indices.T)], coverage[tuple(indices.T)]
+            for method, (record, capsules, certificates) in contexts.items():
+                counted = contact.evaluate_contacts(grid, capsules, sample_reference=sample,
+                    budget=contact.Budget(wall_seconds=BUDGET["contact_wall_seconds"]))
+                result["methods"][method]["evaluation"] = {"strategy_seal_hash": record["seal_hash"],
+                    "public_metrics": record["public_metrics"], "corridor_selected": record["terminal_reason"] != "STOP",
+                    "physical_history_hash": semantic_digest(record["physical_history"]),
+                    "independent_motion_certificates": certificates, "contacts": counted,
+                    "interpretation": "annotated_positive_contact_not_vessel_absence_or_injury"}
+        intact()
+        result["status"] = "evaluated_generated_corridor_batch"
+    except Exception as error:
+        result.update(status="evaluation_failed", error_type=type(error).__name__, reason="private_reference_or_batch_integrity_failed")
+        for row in result["methods"].values():
+            row["evaluation"] = None
+    transport._write_new(directory / "report.json", result)
+    return result
