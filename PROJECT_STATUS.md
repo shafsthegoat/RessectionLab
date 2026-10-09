@@ -95,10 +95,16 @@ validate patient retraction or cutting forces.
 The [v5 source-deck gate audit](artifacts/hbe-v5-source-deck-gate-v1/RESULT.md)
 found ten local old-domain decks covering the twelve proposed runs and
 independently matched their mesh and complete top/bottom boundary topology.
-The pure adapter accepted all twelve in memory. Execution remains blocked by
-an immutable source binding, new-endpoint primitive checks, a twelve-run
-comparator and a supervised release; no new physical result or patient-force
-validation exists.
+The pure adapter accepted all twelve in memory. This audit identified the
+then-missing immutable source binding and the still-missing new-endpoint
+primitive checks, twelve-run comparator and supervised release; no new
+physical result or patient-force validation exists.
+The [non-executable v5 source-binding preparation](artifacts/hbe-v5-source-binding-preparation-v1/RESULT.md)
+now binds all ten old-domain decks and seven meshes to the twelve proposed
+reference runs and checks full/half specimen boundary topology. Forty-three
+focused v5 tests and fifteen independent controls pass. It still does not
+release FEBio: new-endpoint native primitives, the twelve-run comparator and
+resource-bounded execution remain unimplemented.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,

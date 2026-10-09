@@ -1,0 +1,51 @@
+{
+  "schema": "hbe-v5-source-deck-bindings-v1",
+  "status": "non_executable_source_and_mesh_identity_preparation",
+  "specimen": "HBE_01_03",
+  "v5_declaration": {
+    "path": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
+    "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+  },
+  "phase_gates": {
+    "native_execution": false,
+    "automatic_reference_release": false,
+    "fit": false,
+    "held_out_torque_access": false
+  },
+  "meshes": {
+    "full:N8": {"path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json", "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"},
+    "full:N12": {"path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json", "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"},
+    "full:N16": {"path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/mesh.json", "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"},
+    "half:N16": {"path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N16/mesh.json", "sha256": "c1665d5f107c5e20590d877e7613910a5a2aef1c54c9dff5f5229a8d4f8927ee"},
+    "half:N24": {"path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json", "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"},
+    "half:N32": {"path": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/mesh.json", "sha256": "edbb95dd61e2f1ba94faf405bbd263a2d995dcc87ebd298a8e072595ecc6009a"},
+    "half:N36": {"path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json", "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"}
+  },
+  "source_decks": {
+    "compression:N8": {"path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/compression-60-reference/specimen.feb", "sha256": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506", "mesh": "full:N8"},
+    "compression:N12": {"path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-60-reference/specimen.feb", "sha256": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440", "mesh": "full:N12"},
+    "compression:N16": {"path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/compression-60-reference/specimen.feb", "sha256": "706a323f0bc0a6b34264b34c4f137529f4583aff7375416286925c773005ef7b", "mesh": "full:N16"},
+    "compression:N24": {"path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/cases/compression-N24-S60-reference/skyline.feb", "sha256": "d6b87f944d3cc2f9ab1d5849a806cfa762f6d810ddde88308ec8c9906fd98706", "mesh": "half:N24"},
+    "compression:N32": {"path": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/cases/compression-N32-S60-reference/skyline.feb", "sha256": "f481b4bb872ad1982eddd16544e579bef3caf96bbf1a91a2e2ad01f9446740e3", "mesh": "half:N32"},
+    "compression:N36": {"path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/skyline.feb", "sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847", "mesh": "half:N36"},
+    "tension:N8": {"path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/tension-60-reference/specimen.feb", "sha256": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a", "mesh": "full:N8"},
+    "tension:N12": {"path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-60-reference/specimen.feb", "sha256": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294", "mesh": "full:N12"},
+    "tension:N16": {"path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/cases/tension-N16-S60-reference/skyline.feb", "sha256": "43079eb759809ffffc16c4df329c73b23fc3ff4c8f985838397736162d2b9982", "mesh": "half:N16"},
+    "tension:N24": {"path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/cases/tension-N24-S60-reference/skyline.feb", "sha256": "0b66988b46c7d9af1286b24a646ba6279975f17c9bda9d3c78a7b242bdc670c5", "mesh": "half:N24"}
+  },
+  "run_source_keys": {
+    "compression:N8:S60:reference": "compression:N8",
+    "compression:N12:S60:reference": "compression:N12",
+    "compression:N16:S60:reference": "compression:N16",
+    "compression:N24:S60:reference": "compression:N24",
+    "compression:N32:S60:reference": "compression:N32",
+    "compression:N36:S60:reference": "compression:N36",
+    "compression:N36:S120:reference": "compression:N36",
+    "tension:N8:S60:reference": "tension:N8",
+    "tension:N12:S60:reference": "tension:N12",
+    "tension:N16:S60:reference": "tension:N16",
+    "tension:N24:S60:reference": "tension:N24",
+    "tension:N24:S120:reference": "tension:N24"
+  },
+  "interpretation": "Old-domain source decks only; S120 rows reuse old S60 source bytes for pure schedule adaptation. Topology and fixture BC checks do not qualify native solves, physical force response, patient mechanics, fitting or policy decisions."
+}
