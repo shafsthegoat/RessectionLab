@@ -1,0 +1,372 @@
+{
+  "adapted_deck_sha256": "3b30c25d63be4d5346398808bed2e76c705894621cee6ba700e300c1ec6d49b8",
+  "adapter_receipt": {
+    "N": 36,
+    "adapted_deck_sha256": "3b30c25d63be4d5346398808bed2e76c705894621cee6ba700e300c1ec6d49b8",
+    "branch": "compression",
+    "endpoint_decimal_literal_m": "-0.00073726",
+    "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+    "frame_count": 61,
+    "full_load_coordinates_m": [
+      -0.0,
+      -1.2287666666666666e-05,
+      -2.4575333333333332e-05,
+      -3.6863e-05,
+      -4.9150666666666663e-05,
+      -6.143833333333332e-05,
+      -7.3726e-05,
+      -8.601366666666667e-05,
+      -9.830133333333333e-05,
+      -0.000110589,
+      -0.00012287666666666665,
+      -0.00013516433333333333,
+      -0.000147452,
+      -0.00015973966666666666,
+      -0.00017202733333333335,
+      -0.000184315,
+      -0.00019660266666666665,
+      -0.00020889033333333333,
+      -0.000221178,
+      -0.00023346566666666664,
+      -0.0002457533333333333,
+      -0.000258041,
+      -0.00027032866666666666,
+      -0.00028261633333333334,
+      -0.000294904,
+      -0.0003071916666666667,
+      -0.00031947933333333333,
+      -0.000331767,
+      -0.0003440546666666667,
+      -0.0003563423333333333,
+      -0.00036863,
+      -0.0003809176666666667,
+      -0.0003932053333333333,
+      -0.00040549300000000004,
+      -0.00041778066666666667,
+      -0.00043006833333333335,
+      -0.000442356,
+      -0.0004546436666666667,
+      -0.0004669313333333333,
+      -0.000479219,
+      -0.0004915066666666666,
+      -0.0005037943333333334,
+      -0.000516082,
+      -0.0005283696666666666,
+      -0.0005406573333333333,
+      -0.000552945,
+      -0.0005652326666666667,
+      -0.0005775203333333334,
+      -0.000589808,
+      -0.0006020956666666666,
+      -0.0006143833333333334,
+      -0.000626671,
+      -0.0006389586666666667,
+      -0.0006512463333333333,
+      -0.000663534,
+      -0.0006758216666666666,
+      -0.0006881093333333334,
+      -0.000700397,
+      -0.0007126846666666666,
+      -0.0007249723333333333,
+      -0.00073726
+    ],
+    "native_boundary_coordinates_m": [
+      -0.0,
+      -6.143833333333333e-06,
+      -1.2287666666666666e-05,
+      -1.84315e-05,
+      -2.4575333333333332e-05,
+      -3.071916666666666e-05,
+      -3.6863e-05,
+      -4.3006833333333336e-05,
+      -4.9150666666666663e-05,
+      -5.52945e-05,
+      -6.143833333333332e-05,
+      -6.758216666666666e-05,
+      -7.3726e-05,
+      -7.986983333333333e-05,
+      -8.601366666666667e-05,
+      -9.21575e-05,
+      -9.830133333333333e-05,
+      -0.00010444516666666667,
+      -0.000110589,
+      -0.00011673283333333332,
+      -0.00012287666666666665,
+      -0.0001290205,
+      -0.00013516433333333333,
+      -0.00014130816666666667,
+      -0.000147452,
+      -0.00015359583333333335,
+      -0.00015973966666666666,
+      -0.0001658835,
+      -0.00017202733333333335,
+      -0.00017817116666666666,
+      -0.000184315,
+      -0.00019045883333333334,
+      -0.00019660266666666665,
+      -0.00020274650000000002,
+      -0.00020889033333333333,
+      -0.00021503416666666668,
+      -0.000221178,
+      -0.00022732183333333336,
+      -0.00023346566666666664,
+      -0.0002396095,
+      -0.0002457533333333333,
+      -0.0002518971666666667,
+      -0.000258041,
+      -0.0002641848333333333,
+      -0.00027032866666666666,
+      -0.0002764725,
+      -0.00028261633333333334,
+      -0.0002887601666666667,
+      -0.000294904,
+      -0.0003010478333333333,
+      -0.0003071916666666667,
+      -0.0003133355,
+      -0.00031947933333333333,
+      -0.00032562316666666667,
+      -0.000331767,
+      -0.0003379108333333333,
+      -0.0003440546666666667,
+      -0.0003501985,
+      -0.0003563423333333333,
+      -0.00036248616666666666,
+      -0.00036863
+    ],
+    "native_boundary_factor": 0.5,
+    "native_domain": "lower_half_reconstructed",
+    "reference_mu_Pa": 1000.0,
+    "run_id": "compression:N36:S60:reference",
+    "skyline_sha256": "a30534cd47f466ab24a6e925e9a393249ebe969bd3fb6bb3e5e642518d48b0b3",
+    "source_deck_identity_approved_for_execution": false,
+    "source_deck_sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847",
+    "status": "pure_deck_preparation_no_native_execution",
+    "steps": 60,
+    "times": [
+      0.0,
+      0.016666666666666666,
+      0.03333333333333333,
+      0.05,
+      0.06666666666666667,
+      0.08333333333333333,
+      0.1,
+      0.11666666666666667,
+      0.13333333333333333,
+      0.15,
+      0.16666666666666666,
+      0.18333333333333332,
+      0.2,
+      0.21666666666666667,
+      0.23333333333333334,
+      0.25,
+      0.26666666666666666,
+      0.2833333333333333,
+      0.3,
+      0.31666666666666665,
+      0.3333333333333333,
+      0.35,
+      0.36666666666666664,
+      0.38333333333333336,
+      0.4,
+      0.4166666666666667,
+      0.43333333333333335,
+      0.45,
+      0.4666666666666667,
+      0.48333333333333334,
+      0.5,
+      0.5166666666666667,
+      0.5333333333333333,
+      0.55,
+      0.5666666666666667,
+      0.5833333333333334,
+      0.6,
+      0.6166666666666667,
+      0.6333333333333333,
+      0.65,
+      0.6666666666666666,
+      0.6833333333333333,
+      0.7,
+      0.7166666666666667,
+      0.7333333333333333,
+      0.75,
+      0.7666666666666667,
+      0.7833333333333333,
+      0.8,
+      0.8166666666666667,
+      0.8333333333333334,
+      0.85,
+      0.8666666666666667,
+      0.8833333333333333,
+      0.9,
+      0.9166666666666666,
+      0.9333333333333333,
+      0.95,
+      0.9666666666666667,
+      0.9833333333333333,
+      1.0
+    ]
+  },
+  "aggregate_caps": {
+    "active_output_bytes_all_12": 6442450944,
+    "known_stage_total_wall_seconds": 18000,
+    "maximum_native_calls_all_12": 12,
+    "native_wall_seconds_all_12": 9600,
+    "remaining_prep_wall_seconds": 1800,
+    "remaining_readout_wall_seconds": 6600,
+    "storage_free_reserve_bytes": 2147483648
+  },
+  "backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "caps": {
+    "active_output_bytes": 1073741824,
+    "attempts": 1,
+    "native_calls": 1,
+    "native_sampled_process_group_rss_bytes": 3221225472,
+    "native_wall_seconds": 2400,
+    "numerical_threads": 1,
+    "prep_wall_seconds": 150,
+    "readout_sampled_process_group_rss_bytes": 3221225472,
+    "readout_wall_seconds": 600
+  },
+  "native_mesh": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+    "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+  },
+  "old_source_deck": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/skyline.feb",
+    "sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847"
+  },
+  "ordinal": 5,
+  "output_directory": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/05-compression-N36-S60-reference/attempt-01",
+  "preparation": {
+    "path": "manifests/experiments/hbe-v5-remaining-one-shot-preparation-v1.json",
+    "sha256": "42a66a35bb9aaa70d994189b4f7f7459510c360d3c6c3c1e6f407b6083edbbda"
+  },
+  "prior_receipts": [
+    {
+      "path": "outputs/mechanics/hbe-v5-n8-one-shot-v1/attempt-01/receipt.json",
+      "run_id": "compression:N8:S60:reference",
+      "sha256": "8099c438caadf120d7269c14025fb92932fdda12a05f5ac8e8ade981cb20d45d"
+    },
+    {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/01-compression-N12-S60-reference/attempt-01/receipt.json",
+      "run_id": "compression:N12:S60:reference",
+      "sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2"
+    },
+    {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/02-compression-N16-S60-reference/attempt-01/receipt.json",
+      "run_id": "compression:N16:S60:reference",
+      "sha256": "9c5fb86a1264c1ff3bea06800b16fef7b3248908971d88cc543bcee0692d0f96"
+    },
+    {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/receipt.json",
+      "run_id": "compression:N24:S60:reference",
+      "sha256": "823ab0b8260a56d62147dd4cc44dcc2e37ef2bf72092aa4c206d576f3831097d"
+    },
+    {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/04-compression-N32-S60-reference/attempt-01/receipt.json",
+      "run_id": "compression:N32:S60:reference",
+      "sha256": "f6830c11c551f548b22152f1b2582f151072163f65e8250e40a41be768194168"
+    }
+  ],
+  "run_id": "compression:N36:S60:reference",
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "schema": "hbe-v5-remaining-one-call-release-v1",
+  "source_bindings": {
+    "scripts/febio_runtime.py": {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/mechanics_febio_verification.py": {
+      "path": "scripts/mechanics_febio_verification.py",
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "path": "scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v4.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v5.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v5.py",
+      "sha256": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts/mechanics_hbe_halfheight_readout.py": {
+      "path": "scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "path": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    "scripts/mechanics_hbe_v5_frame.py": {
+      "path": "scripts/mechanics_hbe_v5_frame.py",
+      "sha256": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9"
+    },
+    "scripts/mechanics_hbe_v5_n12_admission.py": {
+      "path": "scripts/mechanics_hbe_v5_n12_admission.py",
+      "sha256": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a"
+    },
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": {
+      "path": "scripts/mechanics_hbe_v5_n12_saved_replay.py",
+      "sha256": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d"
+    },
+    "scripts/mechanics_hbe_v5_n8_canary.py": {
+      "path": "scripts/mechanics_hbe_v5_n8_canary.py",
+      "sha256": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a"
+    },
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": {
+      "path": "scripts/mechanics_hbe_v5_n8_one_shot.py",
+      "sha256": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0"
+    },
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": {
+      "path": "scripts/mechanics_hbe_v5_remaining_one_shot.py",
+      "sha256": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+    },
+    "scripts/mechanics_hbe_v5_source_bindings.py": {
+      "path": "scripts/mechanics_hbe_v5_source_bindings.py",
+      "sha256": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208"
+    },
+    "scripts/mechanics_hbe_v5_stream.py": {
+      "path": "scripts/mechanics_hbe_v5_stream.py",
+      "sha256": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a"
+    },
+    "scripts/mechanics_patient_constraints.py": {
+      "path": "scripts/mechanics_patient_constraints.py",
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    }
+  },
+  "source_commit": "05d4fddf897de20b49f1651b96f57d29e8e29f32",
+  "source_map": {
+    "path": "manifests/experiments/hbe-01-03-v5-source-deck-bindings-v1.json",
+    "sha256": "65ab3d9b2056e43e3a193b6d0288078f3617159483e271d0ab3cd0d624fb02e0"
+  },
+  "status": "root_released_one_native_call",
+  "v5_declaration": {
+    "path": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
+    "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+  }
+}

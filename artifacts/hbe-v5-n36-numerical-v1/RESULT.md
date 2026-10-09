@@ -1,0 +1,9 @@
+# N36 compression: numerical specimen result
+
+The declared row `compression:N36:S60:reference` completed one FEBio call in 481.205380 seconds, with 1,830,125,568 bytes peak sampled process-group RSS. Its original readout took 41.294305 seconds; a separately bounded independent replay took 40.720741 seconds and reproduced the entire 61-frame JSON byte for byte. The closed native attempt contains 657,160,204 bytes; bulk logs remain outside Git.
+
+The native fixture contains 39,610 nodes and 34,992 Hex8 elements on a lower half-height domain. Reported full response is reflected from that native half. All frozen numerical checks passed. The reconstructed full simulated endpoint force is −0.03635127953163304 N at −0.00073726 m; the N32→N36 force step is 49.4426 µN, or 0.136013% relative to N36. The smaller recent force steps do not establish convergence; earlier adjacent steps were nonmonotonic and representations differ across the sequence. Six declared native rows and the full comparator remain.
+
+Independent direct checks reproduced complete stream counts and work integration. Maximum full work–energy error is 1.85410825e−10 J versus a 2.54636669e−7 J limit. Positive sampled Jacobians do not prove positivity everywhere. Both logs retain 32 no-force warnings under prescribed displacement. This is numerical software evidence using fixed specimen assumptions, not measured tissue response, patient validity or clinical accuracy.
+
+Source commit `05d4fddf897de20b49f1651b96f57d29e8e29f32`, release SHA-256 `ffe757b78dfcf82ff81ceb3016ab724615a8338d84283335831f984ac7449034`, receipt SHA-256 `b7f59dada629cd1fb8e61eac48a6eda86724b755055bdb7aa5dbf812d83fb013`. The six-row ledger records 946.628108 seconds native and 1,071.995304 seconds of known combined stages including the separately accounted N12 supplement. This independent audit is additional overhead. Original N12 failure/missing postrun guards and missing historical N8 timings remain preserved.
