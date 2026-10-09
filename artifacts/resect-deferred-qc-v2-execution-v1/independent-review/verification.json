@@ -1,0 +1,3218 @@
+{
+  "all_24_image_header_geometry_from_saved_prefix_passed": true,
+  "all_24_image_scalar_content_checks_reported_completed": true,
+  "all_24_mask_binary_content_checks_reported_passed": true,
+  "all_24_mask_count_arithmetic_budget_raw_header_geometry_rechecked": true,
+  "binding_count": 498,
+  "bindings": {
+    "artifacts/resect-component-admission-v1/pair-qc-01/independent-review.json": {
+      "bytes": 5844,
+      "sha256": "21ddcdb6e46d1a0f69a6c64f5d4ac185d2ded9369e85c546e63a7e2548b938d3"
+    },
+    "artifacts/resect-component-admission-v1/pair-qc-01/manifest.json": {
+      "bytes": 2415,
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    "artifacts/resect-component-admission-v1/pair-qc-01/source.json": {
+      "bytes": 1168,
+      "sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a"
+    },
+    "artifacts/resect-component-admission-v1/pair-qc-01/supervision.json": {
+      "bytes": 311,
+      "sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337"
+    },
+    "artifacts/resect-component-admission-v1/pair-qc-01/worker-result.json": {
+      "bytes": 5637,
+      "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+    },
+    "artifacts/resect-component-admission-v1/rights-review-02/README.txt": {
+      "bytes": 1656,
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/actual-import-result.json": {
+      "bytes": 8715,
+      "sha256": "e340b5e3db918afce2605ebbeaabba1564048bfb2c70ddecda4a7031a57db37b"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/bindings.json": {
+      "bytes": 2443,
+      "sha256": "2951181288ba03e4b15cc8af0d3f2ae90428b3673aef77521a90e7c0ce754f34"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-after-mask/receipt.json": {
+      "bytes": 3111,
+      "sha256": "3d23976c3b13d144379ead185cccf88fb94d479c9c1c28d419b9c25a9386fb16"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-during-mask/receipt.json": {
+      "bytes": 3125,
+      "sha256": "536def18b2b6227a461f9dce95b3d83167a73f8a4bf8acb46da408ed51c1c581"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case15-after-mask/receipt.json": {
+      "bytes": 3111,
+      "sha256": "921a6b5987224e9ca5b4b0a0d5ca88315d08b41995c88a5da386e78f451ac40d"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-after-mask/receipt.json": {
+      "bytes": 3111,
+      "sha256": "cef939a42fe6a354f8b4c0ebe17a9a351139e584969f4f6e9c9dae79ec01e176"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-during-mask/receipt.json": {
+      "bytes": 3125,
+      "sha256": "5e81efb37533ab3f82bef5f3331ccd33ed9cf031f58bae1428d1f55cb9fec961"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-after-mask/receipt.json": {
+      "bytes": 3111,
+      "sha256": "9c68ea7ef8683c38f07b0062a565a28f7aaf0e57758fad93790f99bf72f24f7a"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-during-mask/receipt.json": {
+      "bytes": 3125,
+      "sha256": "ee306965964aa19b788c31f7f93f00904e7b2d24b0f16c3bf6b9bb0ecae06441"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-after-mask/receipt.json": {
+      "bytes": 3111,
+      "sha256": "9ae335488449d5d3376e8c69d7e4efadec1671188c69a14f8584ce8fade47c64"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-during-mask/receipt.json": {
+      "bytes": 3125,
+      "sha256": "3286e20b289ea8b888099aa25f1d543ea9193dd1c337e1962b749b83ec4e94a5"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-after-mask/receipt.json": {
+      "bytes": 3126,
+      "sha256": "1009b47fb9bc8616707c9677c9b127168887bda824fe7bb59d280c9d0ccd2afb"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-during-mask/receipt.json": {
+      "bytes": 3140,
+      "sha256": "98baa1a3d91fb147975ef21432bba138f8782c57a7bbf1d0c1da7555ab396f5e"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-after-mask/receipt.json": {
+      "bytes": 3111,
+      "sha256": "0b793cafbfccd46654745a9dabb2362319ac3523fed95e7be7ef336aa6fa02b1"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-during-mask/receipt.json": {
+      "bytes": 3157,
+      "sha256": "d3ab93a18afa5445e8724a99b829fdce992a5ac2baef5475f663ccc84200e5d1"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-after-mask/receipt.json": {
+      "bytes": 3143,
+      "sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-during-mask/receipt.json": {
+      "bytes": 3157,
+      "sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-after-mask/receipt.json": {
+      "bytes": 3143,
+      "sha256": "8b6df1b655ecd08c5958cbdad8b9722537137db3cd526f7666cf89ea5e9bc6a3"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-during-mask/receipt.json": {
+      "bytes": 3157,
+      "sha256": "c80161219ac25dbfd5bae5771528ce01842a57c250337bc145c2042a39eb3e18"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-after-mask/receipt.json": {
+      "bytes": 3143,
+      "sha256": "eaced578ecaf33605aa0366f227c13e346424e2c3adf49a30fcd0c89a9cd2b33"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-during-mask/receipt.json": {
+      "bytes": 3157,
+      "sha256": "b53dd9382307e7e2cff17a4dc22b79dc1b7ac0c7d2780adb90f446268c423809"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case3-after-mask/receipt.json": {
+      "bytes": 3126,
+      "sha256": "8c84e041f49a5b1af798b8cb1e4ac2023f398399499264354c8cf83d0be7df72"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-after-mask/receipt.json": {
+      "bytes": 3126,
+      "sha256": "913d6c20cd1bc4461f2f5c3a91424d4ffdfde161625ea494818eb11de6433901"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-during-mask/receipt.json": {
+      "bytes": 3140,
+      "sha256": "772b7d00a2c5678a71c666191e8bb019fc5743c115330cfb23d008d9204af649"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-after-mask/receipt.json": {
+      "bytes": 3126,
+      "sha256": "e9b5c394da97efacdca1c1b9e701938169c4447c67e5e8cae35d09da9b88a283"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-during-mask/receipt.json": {
+      "bytes": 3140,
+      "sha256": "93da5b07501bff9ed199f58a4df49a626469f2ad1942a9405e2c1a785dd9e1ab"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/independent-verification.json": {
+      "bytes": 45748,
+      "sha256": "8ea4a68ab3aa9c00875bfc36378252bd6f40511395555bda3c4d9fb6c19f2612"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/declaration.json": {
+      "bytes": 36459,
+      "sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case12-after-mask/attempt-01/receipt.json": {
+      "bytes": 2196,
+      "sha256": "0200586968b0f5b1f7d20e477f73a23b39c2a81b853b0a22a604ec5bdfd56506"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case12-during-mask/attempt-01/receipt.json": {
+      "bytes": 2205,
+      "sha256": "09700fbe5a2521144f462959d3b52cf2a24bc80c1aa32af09384fa8b734eb210"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case15-after-mask/attempt-01/receipt.json": {
+      "bytes": 2196,
+      "sha256": "755252812bcc715846903e29cd8d8729939d8457f7cb777635d7583ab1ba845f"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case16-after-mask/attempt-01/receipt.json": {
+      "bytes": 2196,
+      "sha256": "94bd7148b148af35a60ec454f0b31444d766a60ddc3ad5e2a1e100bc5d92f247"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case16-during-mask/attempt-01/receipt.json": {
+      "bytes": 2205,
+      "sha256": "6226fe869ae066146a117c874ebde1c139cd37cd39b3394e35a4d3c016217c71"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case17-after-mask/attempt-01/receipt.json": {
+      "bytes": 2196,
+      "sha256": "0b296dc867574cb669cc20d4fd17dc5d628e7d76a8200a665521093eaa5b5a2a"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case17-during-mask/attempt-01/receipt.json": {
+      "bytes": 2205,
+      "sha256": "f4dd07c801db305721032589f7e66786a9e0a25b1b7dee0703920eef0cfcbf2d"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case18-after-mask/attempt-01/receipt.json": {
+      "bytes": 2196,
+      "sha256": "32c54641e8d09d9c1510ef34a6ce67723c6e54b72bcd811d57b48c488cb34388"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case18-during-mask/attempt-01/receipt.json": {
+      "bytes": 2205,
+      "sha256": "81ba967b5866a0f09e09aa4fb03120027b9ad207ada8a8c4c75665dac1108ddb"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case2-after-mask/attempt-01/receipt.json": {
+      "bytes": 2200,
+      "sha256": "9e995eaa28d9d073d45ec292fa7cd4b30711accb5a232e0aed14dd0977bf2cca"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case2-during-mask/attempt-01/receipt.json": {
+      "bytes": 2209,
+      "sha256": "b2f21436183f98c114bbae6b3ee95034e26037c0a2b27f139f841e375081aaf8"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case21-after-mask/attempt-01/receipt.json": {
+      "bytes": 2196,
+      "sha256": "75dff145083df2fb51398cc2ca7a50730b3afde79c8780368ae7055ec5cb7acd"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case21-during-mask/attempt-01/receipt.json": {
+      "bytes": 2221,
+      "sha256": "6941bc26731265a53174bd061fc92d8a8e9a7c63c973ce67c9a4b94f7e8318a1"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case23-after-mask/attempt-01/receipt.json": {
+      "bytes": 2212,
+      "sha256": "f21b8f396928c41350c2f7b07465b6572fb2346450099a27a806f30468c24ebc"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case23-during-mask/attempt-01/receipt.json": {
+      "bytes": 2221,
+      "sha256": "d64ba7e42ccab9b0cce2aaa38e22718edbe31e0023ea6361b63dfc8735363963"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case24-after-mask/attempt-01/receipt.json": {
+      "bytes": 2212,
+      "sha256": "465636b52a3090ad8ec69bdcf8eaa413233015df51b6d538a4f3d5d48a70a0c3"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case24-during-mask/attempt-01/receipt.json": {
+      "bytes": 2221,
+      "sha256": "a62dcc13cdbadefd258177b91496750a59febfb55ba09cf814729b95ed727f61"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case25-after-mask/attempt-01/receipt.json": {
+      "bytes": 2212,
+      "sha256": "63daba1896f3d018b83a15bc62d16dc24abab77e8aa61b99a7d9d4ca72ee6d75"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case25-during-mask/attempt-01/receipt.json": {
+      "bytes": 2221,
+      "sha256": "208ecd1fbcc95d4778ea6e52916dd16cc6c2bfa70010c52f2e6a3912b0196952"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case3-after-mask/attempt-01/receipt.json": {
+      "bytes": 2200,
+      "sha256": "93f42766f6c6c70cac65b5d4606711702b67fecbd3cac6d67b5a20a79288092f"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case5-after-mask/attempt-01/receipt.json": {
+      "bytes": 2200,
+      "sha256": "0882a93d72d8df3d69f9a3c4809d3b2f115149884e6bf4c034abdba7cddf7fd5"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case5-during-mask/attempt-01/receipt.json": {
+      "bytes": 2209,
+      "sha256": "c99b7931c76f312794752e478dfbdda7bf527e84ba92176108e016d0be10e13a"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case7-after-mask/attempt-01/receipt.json": {
+      "bytes": 2200,
+      "sha256": "226367f4cfa069dabbcbd7babdce8dfa426d1589672dd203412d401e19d2813b"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/objects/Case7-during-mask/attempt-01/receipt.json": {
+      "bytes": 2209,
+      "sha256": "2c38b661ddace1afdd020fb2b90f66d4c1828b60b6dab6bd0dc90b00bef20978"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/source-snapshot.py": {
+      "bytes": 16487,
+      "sha256": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+    },
+    "artifacts/resect-exact-mirror-acquisition-v1/summary.json": {
+      "bytes": 7136,
+      "sha256": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76"
+    },
+    "build/resect-deferred-qc-continuity-fix-v1/review.json": {
+      "bytes": 3534,
+      "sha256": "c1efc55722f13dab0be3c847ad93f25f6351043bf73131a4210ccd56ba97daf2"
+    },
+    "build/resect-deferred-qc-output-review-v1/verification.json": {
+      "bytes": 106599,
+      "sha256": "d39ca107ea3ac10b84d6271c61d2d9776bdf31015abb455687fe04137401e633"
+    },
+    "build/resect-deferred-qc-v2-execution-v1/launch.json": {
+      "bytes": 622,
+      "sha256": "9e33b200614b6767a4b994b34ecfb1a189aabcc51f6e664aaaf54dca89b926f9"
+    },
+    "build/resect-deferred-qc-v2-execution-v1/run.log": {
+      "bytes": 15779,
+      "sha256": "4aa7d2b85991a4b3f25ea6d1a8620bfbc5007f4c0ac4d2a492c8904e7cfbf0cd"
+    },
+    "build/resect-deferred-qc-v2-execution-v1/terminal.json": {
+      "bytes": 200,
+      "sha256": "8ff5eedcaea7c0fee57d3ebcb9d59c60726e63354119fd46930f674dd5434162"
+    },
+    "build/resect-header-recorder-v2-implementation-v1/review.json": {
+      "bytes": 17300,
+      "sha256": "07321c1073ec1a8152f307d0c8e23807e94444753475447dd5fce64f3f22c269"
+    },
+    "build/resect-header-recorder-v2-independent-review-v1/verification.json": {
+      "bytes": 25943,
+      "sha256": "72d7b5668848fa14fbd6dedeabbfb5338701af34024b72d7e39aaa563ef776c2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/batch.json": {
+      "bytes": 8025,
+      "sha256": "8a5482c48df4ddf3cf91eb50e81221b70f298d475785f242381296cb92bc2a01"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/outcome.json": {
+      "bytes": 479,
+      "sha256": "aa1f08f1216b368b934b8badd66d108b7fa6d7f9f1e91ad3a5fe6b92b719d6b5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/receipt.json": {
+      "bytes": 3294,
+      "sha256": "29771a7898c152ab8661047bc1126ad9001e89ad08f9c5b29806568afc7d03c1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/batch.json": {
+      "bytes": 17745,
+      "sha256": "c66a8ff436332de747461dcdb431ab3bdbb074a5564d7150b436fa306621a03d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/declaration.json": {
+      "bytes": 3402,
+      "sha256": "60133aeb4ea39915ddb9bb9ff2ff9147430c4f9290f13c733898570273912015"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case12-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "3d23976c3b13d144379ead185cccf88fb94d479c9c1c28d419b9c25a9386fb16"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case12-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "0200586968b0f5b1f7d20e477f73a23b39c2a81b853b0a22a604ec5bdfd56506"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case12-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "536def18b2b6227a461f9dce95b3d83167a73f8a4bf8acb46da408ed51c1c581"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case12-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "09700fbe5a2521144f462959d3b52cf2a24bc80c1aa32af09384fa8b734eb210"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case15-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "921a6b5987224e9ca5b4b0a0d5ca88315d08b41995c88a5da386e78f451ac40d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case15-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "755252812bcc715846903e29cd8d8729939d8457f7cb777635d7583ab1ba845f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case16-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "cef939a42fe6a354f8b4c0ebe17a9a351139e584969f4f6e9c9dae79ec01e176"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case16-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "94bd7148b148af35a60ec454f0b31444d766a60ddc3ad5e2a1e100bc5d92f247"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case16-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "5e81efb37533ab3f82bef5f3331ccd33ed9cf031f58bae1428d1f55cb9fec961"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case16-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "6226fe869ae066146a117c874ebde1c139cd37cd39b3394e35a4d3c016217c71"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case17-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "9c68ea7ef8683c38f07b0062a565a28f7aaf0e57758fad93790f99bf72f24f7a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case17-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "0b296dc867574cb669cc20d4fd17dc5d628e7d76a8200a665521093eaa5b5a2a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case17-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "ee306965964aa19b788c31f7f93f00904e7b2d24b0f16c3bf6b9bb0ecae06441"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case17-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "f4dd07c801db305721032589f7e66786a9e0a25b1b7dee0703920eef0cfcbf2d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case18-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "9ae335488449d5d3376e8c69d7e4efadec1671188c69a14f8584ce8fade47c64"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case18-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "32c54641e8d09d9c1510ef34a6ce67723c6e54b72bcd811d57b48c488cb34388"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case18-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "3286e20b289ea8b888099aa25f1d543ea9193dd1c337e1962b749b83ec4e94a5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case18-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "81ba967b5866a0f09e09aa4fb03120027b9ad207ada8a8c4c75665dac1108ddb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case2-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "1009b47fb9bc8616707c9677c9b127168887bda824fe7bb59d280c9d0ccd2afb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case2-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "9e995eaa28d9d073d45ec292fa7cd4b30711accb5a232e0aed14dd0977bf2cca"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case2-during-import_receipt.bin": {
+      "bytes": 3140,
+      "sha256": "98baa1a3d91fb147975ef21432bba138f8782c57a7bbf1d0c1da7555ab396f5e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case2-during-mirror_receipt.bin": {
+      "bytes": 2209,
+      "sha256": "b2f21436183f98c114bbae6b3ee95034e26037c0a2b27f139f841e375081aaf8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case21-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "0b793cafbfccd46654745a9dabb2362319ac3523fed95e7be7ef336aa6fa02b1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case21-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "75dff145083df2fb51398cc2ca7a50730b3afde79c8780368ae7055ec5cb7acd"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case21-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "d3ab93a18afa5445e8724a99b829fdce992a5ac2baef5475f663ccc84200e5d1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case21-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "6941bc26731265a53174bd061fc92d8a8e9a7c63c973ce67c9a4b94f7e8318a1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case23-after-import_receipt.bin": {
+      "bytes": 3143,
+      "sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case23-after-mirror_receipt.bin": {
+      "bytes": 2212,
+      "sha256": "f21b8f396928c41350c2f7b07465b6572fb2346450099a27a806f30468c24ebc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case23-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case23-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "d64ba7e42ccab9b0cce2aaa38e22718edbe31e0023ea6361b63dfc8735363963"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case24-after-import_receipt.bin": {
+      "bytes": 3143,
+      "sha256": "8b6df1b655ecd08c5958cbdad8b9722537137db3cd526f7666cf89ea5e9bc6a3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case24-after-mirror_receipt.bin": {
+      "bytes": 2212,
+      "sha256": "465636b52a3090ad8ec69bdcf8eaa413233015df51b6d538a4f3d5d48a70a0c3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case24-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "c80161219ac25dbfd5bae5771528ce01842a57c250337bc145c2042a39eb3e18"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case24-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "a62dcc13cdbadefd258177b91496750a59febfb55ba09cf814729b95ed727f61"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case25-after-import_receipt.bin": {
+      "bytes": 3143,
+      "sha256": "eaced578ecaf33605aa0366f227c13e346424e2c3adf49a30fcd0c89a9cd2b33"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case25-after-mirror_receipt.bin": {
+      "bytes": 2212,
+      "sha256": "63daba1896f3d018b83a15bc62d16dc24abab77e8aa61b99a7d9d4ca72ee6d75"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case25-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "b53dd9382307e7e2cff17a4dc22b79dc1b7ac0c7d2780adb90f446268c423809"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case25-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "208ecd1fbcc95d4778ea6e52916dd16cc6c2bfa70010c52f2e6a3912b0196952"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case3-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "8c84e041f49a5b1af798b8cb1e4ac2023f398399499264354c8cf83d0be7df72"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case3-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "93f42766f6c6c70cac65b5d4606711702b67fecbd3cac6d67b5a20a79288092f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case5-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "913d6c20cd1bc4461f2f5c3a91424d4ffdfde161625ea494818eb11de6433901"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case5-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "0882a93d72d8df3d69f9a3c4809d3b2f115149884e6bf4c034abdba7cddf7fd5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case5-during-import_receipt.bin": {
+      "bytes": 3140,
+      "sha256": "772b7d00a2c5678a71c666191e8bb019fc5743c115330cfb23d008d9204af649"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case5-during-mirror_receipt.bin": {
+      "bytes": 2209,
+      "sha256": "c99b7931c76f312794752e478dfbdda7bf527e84ba92176108e016d0be10e13a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case7-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "e9b5c394da97efacdca1c1b9e701938169c4447c67e5e8cae35d09da9b88a283"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case7-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "226367f4cfa069dabbcbd7babdce8dfa426d1589672dd203412d401e19d2813b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case7-during-import_receipt.bin": {
+      "bytes": 3140,
+      "sha256": "93da5b07501bff9ed199f58a4df49a626469f2ad1942a9405e2c1a785dd9e1ab"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/Case7-during-mirror_receipt.bin": {
+      "bytes": 2209,
+      "sha256": "2c38b661ddace1afdd020fb2b90f66d4c1828b60b6dab6bd0dc90b00bef20978"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/acquisition_manifest.bin": {
+      "bytes": 39206,
+      "sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/canonical_review.bin": {
+      "bytes": 45748,
+      "sha256": "8ea4a68ab3aa9c00875bfc36378252bd6f40511395555bda3c4d9fb6c19f2612"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/cohort.bin": {
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/import_bindings.bin": {
+      "bytes": 2443,
+      "sha256": "2951181288ba03e4b15cc8af0d3f2ae90428b3673aef77521a90e7c0ce754f34"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/import_summary.bin": {
+      "bytes": 8715,
+      "sha256": "e340b5e3db918afce2605ebbeaabba1564048bfb2c70ddecda4a7031a57db37b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/mirror_declaration.bin": {
+      "bytes": 36459,
+      "sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/mirror_source.bin": {
+      "bytes": 16487,
+      "sha256": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/mirror_summary.bin": {
+      "bytes": 7136,
+      "sha256": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/pilot_manifest.bin": {
+      "bytes": 2415,
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/pilot_parent.bin": {
+      "bytes": 311,
+      "sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/pilot_review.bin": {
+      "bytes": 5844,
+      "sha256": "21ddcdb6e46d1a0f69a6c64f5d4ac185d2ded9369e85c546e63a7e2548b938d3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/pilot_source.bin": {
+      "bytes": 1168,
+      "sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/pilot_worker.bin": {
+      "bytes": 5637,
+      "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/input-snapshot/rights.bin": {
+      "bytes": 1656,
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-after/intent.json": {
+      "bytes": 181,
+      "sha256": "506084a4a81cef42e5235d7b1a1da84bf19b7a17b70a0bcd167f0866c2658e9d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "d64403b8e1b8eb6856f4b51a1702d8b9ff4f1d319852f55ada8243148f64081f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-after/receipt.json": {
+      "bytes": 10241,
+      "sha256": "b8a584412b5b251b6e4a03230319d84a3b63ab03110002daae9abf2320c54932"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-after/started.json": {
+      "bytes": 106,
+      "sha256": "f5f28177e8c66d6d2d2caa9b8dafd8e151e53c97cb811df7901ccecf1a2f7b2c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-after/worker.log": {
+      "bytes": 7937,
+      "sha256": "b164a713f2599c9e3b1acb4b39ee43b67ed9210c6562ac1a03249f7f1e280d49"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-during/intent.json": {
+      "bytes": 185,
+      "sha256": "349e7c8796dd6bd39b05164cd2c2f6c105bbdf785bbcbbb398d368e49fe4db09"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "0e469500cde71222e16e2a1047a8c377ded0794543fbb171a4aa044055abcdb2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-during/receipt.json": {
+      "bytes": 10262,
+      "sha256": "7d06387b217004a5beee7aee9b5119d66674f991cf7adf45c15ff2bef3202462"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-during/started.json": {
+      "bytes": 106,
+      "sha256": "238e4f0b5edb4e8fcacadbbd29226ccda2c27571fce36f580a726971caacc8c4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-during/worker.log": {
+      "bytes": 7958,
+      "sha256": "78e3a1500274d04d29407937c00dbccf2e78a79f4b305c48bb61e2242f12c645"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case15-after/intent.json": {
+      "bytes": 184,
+      "sha256": "9e9dbb36ed190bc053cb9fdf8d14110a9f20e882b7214a4e5f4dcd8e00ac48bc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case15-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "932c3ab29be8a01fbca4526c6da41ab896417a3d0ab95a58bc28b3ecf5f41ef4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case15-after/receipt.json": {
+      "bytes": 10241,
+      "sha256": "0326d9b8c804a874ce57e7eb3dbf585bcba4130d0cd446165353db048e7a6a81"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case15-after/started.json": {
+      "bytes": 106,
+      "sha256": "0e64cd588f9206844286dd42fb239c6aadedc8c0d9600e53a4b87060550e9b72"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case15-after/worker.log": {
+      "bytes": 7937,
+      "sha256": "ed3940f2df377de956237a97260a0c3f319acce435349f9f991b45781a309652"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-after/intent.json": {
+      "bytes": 184,
+      "sha256": "71339975c584ce40998a6b6aeb77b2a0de0a550996096249cd72ba10a2586ee2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "e562b477d340660ecc2adeec3111021f71d85606ead06102abd040201aa0f42c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-after/receipt.json": {
+      "bytes": 10231,
+      "sha256": "05be58f092fed1c747fe3dcac50a5cde415b215ee881ad06e4fab1e0cf2d954d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-after/started.json": {
+      "bytes": 106,
+      "sha256": "21846b7d46c2807e7f49142dd13d49e88de14bf03eecd782453de331aca31450"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-after/worker.log": {
+      "bytes": 7927,
+      "sha256": "e7fb193913bf62e09e32a6798b393b01fa7fafb3ee50f0bc2e3018578da2c0d9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-during/intent.json": {
+      "bytes": 185,
+      "sha256": "170bd98cd32950205128e9beae1679f001fb5cc43ce279ac6bb115117a11cbf7"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "72cacf60d1ad91754c7581c3216fcb939fea2c72c204f8dadb7a7e9c822ab556"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-during/receipt.json": {
+      "bytes": 10250,
+      "sha256": "7f440f1a6a2f9d440885b83db3483abdb2389811481a2187e08cae9ccc99c12a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-during/started.json": {
+      "bytes": 106,
+      "sha256": "bffc04e67e505fd53e2d6dcfa55d74c4abab3aab47eaf8026ceb8dbec0398e60"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-during/worker.log": {
+      "bytes": 7946,
+      "sha256": "ad81caf0fade9eadd892c6603dc91a116141bb31f803f46d20f6f73c8d81549b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-after/intent.json": {
+      "bytes": 184,
+      "sha256": "bddeb5ceeda3eb136285dda6ac53156661023ad4a18c4d7f680a54cb8cbd66b4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "3d56bdf5e990e94c8937c6159439d836a6d69642cf61be815c6bcd49f0438c1c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-after/receipt.json": {
+      "bytes": 10247,
+      "sha256": "94ddbd4fdf658f4d2094cc32fe97c69fb42cf64415ff6319d8cfef01dd7e8ad4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-after/started.json": {
+      "bytes": 106,
+      "sha256": "5950285aabb68290aac92d3a14ecde8dd337a3f93b9996fcfcf18854fb15fd23"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-after/worker.log": {
+      "bytes": 7943,
+      "sha256": "e09245592a0393b228d78248ac840079615c27e599702b19e5216dbd1b6b1798"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-during/intent.json": {
+      "bytes": 185,
+      "sha256": "c43591492880d7de633f217b6877dfb8b65996ef2237995d13d25517561b05c9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "2ca8db50e8f64c7e66966a07c54e165551a053e7d4c2a0273c860035f5a76b41"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-during/receipt.json": {
+      "bytes": 10249,
+      "sha256": "198c12f145860e1f72d8772f246576c5a7d0b222d8dfc713638e3faac3f862ff"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-during/started.json": {
+      "bytes": 106,
+      "sha256": "78d4f118264305abd21fb17cbc5064562eca9754280eab5ef4a0d4b718d31c5e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-during/worker.log": {
+      "bytes": 7945,
+      "sha256": "a7cf4990bb9713907a835f8338b90fe5b4df734f5cbc50988ffb2038837dfb67"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-after/intent.json": {
+      "bytes": 184,
+      "sha256": "f9519c8f808d2fd3d693eee7b79f8e5b8ac8eac95757b8c6a43eceb3288bf565"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "08c60cbf4695642ac12d9343e4148f1905058fe3567860360a30d3b3ada3048e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-after/receipt.json": {
+      "bytes": 10240,
+      "sha256": "ee3b8317232514ddb31510041af6ef79be82809aa222af77519ac79dbc36a722"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-after/started.json": {
+      "bytes": 106,
+      "sha256": "b0fd1981af247a4b9290093806b803b923f88a1d7dacb826ec1751ff75f706f6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-after/worker.log": {
+      "bytes": 7936,
+      "sha256": "432b541e993c7202eef6a213362bc37f0f28606c10abbd33c0d5d3d04dcdb25b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-during/intent.json": {
+      "bytes": 184,
+      "sha256": "9c9d581cc8476161a7a1ffa53f8f40172c4343b5003f88f244e232d7d297ab29"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "2b863ae49baeb353d9036f03c1a18b54f19afc74cf02694708f9e75185993ed3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-during/receipt.json": {
+      "bytes": 10257,
+      "sha256": "d4a17e54711dedbfe06c3b4d2045e3edc7318ae74537754b772a38aec3ca54e8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-during/started.json": {
+      "bytes": 106,
+      "sha256": "548f1ace6ec9061f99c225ef3e3b5317409c76af99ea9fdd742a52228b91b745"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-during/worker.log": {
+      "bytes": 7953,
+      "sha256": "dc90204fcfd7a288ac577f044cf1f6e9e10a86b9c3f89c3f00a0eff65674453b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-after/intent.json": {
+      "bytes": 183,
+      "sha256": "39897be555f9360d123aaead2129163de83208d6bb90fd9590484e0b2103ce01"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-after/outcome.json": {
+      "bytes": 459,
+      "sha256": "d7ff9bd774dd8bcbc77aae4240dd92735aa1902a25fcc0461ebd1c227e5172c9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-after/receipt.json": {
+      "bytes": 10238,
+      "sha256": "342a5d1a4399b3fc7f2b7f2baad0264ecc97d0036ac9cdb3625860cb2b257cdd"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-after/started.json": {
+      "bytes": 106,
+      "sha256": "67af879351f24de7b4b8acf301bd2ba32f29117f77a57d16ef572c0a5efee04c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-after/worker.log": {
+      "bytes": 7934,
+      "sha256": "4aa8af1f1a763abbd9ba298679db3f47879ee0ccb4cad7216ddf5207dba9b83a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-during/intent.json": {
+      "bytes": 184,
+      "sha256": "67895f2c19b8cc5a688f46aec794eac5f487f46241128ffdd9572c8368dd3ca6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-during/outcome.json": {
+      "bytes": 461,
+      "sha256": "35010ba89be3cebf0fcb21805ddb099e8e2080852544fcaebc4ef41ba934b5a1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-during/receipt.json": {
+      "bytes": 10246,
+      "sha256": "99452792e8626e2a214cc45f534a936b2876e586a11e8034c3c7c0c8786bbea4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-during/started.json": {
+      "bytes": 106,
+      "sha256": "fa7fbddc39c238d6bbc710c2a13d920dbbdc2cfe25cf78ed37d1f8756275a0a8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-during/worker.log": {
+      "bytes": 7942,
+      "sha256": "03b5317e8aa9d535efe057336853725a4933fc377a3d95c379b3e731cea76601"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-after/intent.json": {
+      "bytes": 184,
+      "sha256": "c2b589878420466aa409581444a67e391731eb83e3a0f5be581d777a36e37fbc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "494a4f873c043d796ff4c3bbd65c8e0cf2f74955dc1cd77413df0cf2c4d3ccf4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-after/receipt.json": {
+      "bytes": 10235,
+      "sha256": "9755500ed297d0387062638d960264c68646fa0f0a24f7bf9c0858f1d7729aa0"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-after/started.json": {
+      "bytes": 106,
+      "sha256": "abdb80a0c1f56a57bc26e685db777b259492a93408cdd2cba95b4ddd466d3d04"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-after/worker.log": {
+      "bytes": 7931,
+      "sha256": "c1a9750321f19d8dc1fe894f0e1c6c0360d7f681c90b1ecc76ba4c46e5b2b9a8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-during/intent.json": {
+      "bytes": 185,
+      "sha256": "d709a6df048328f44a2dc36ae6d9b528aef06209a4a1b0a4d74525fc8afbf011"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "5336ae1450598749080d41804435baf3e3c6f2b0adaaf9ba520fad4b2c6ac957"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-during/receipt.json": {
+      "bytes": 10269,
+      "sha256": "51f9a4af6da93d703243085357aed0c0bc91f17272eb6cb4a5b8bbd8ec55d5ac"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-during/started.json": {
+      "bytes": 106,
+      "sha256": "de373896f76a8b3d0d138382947724779d32ae5472d0e9d38f1d831ec7620b41"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-during/worker.log": {
+      "bytes": 7965,
+      "sha256": "24cdcf0f64875879e3f0fa23f93cad00bd3287c0610ec67b4a181b282db1683a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-after/intent.json": {
+      "bytes": 184,
+      "sha256": "772270e69abf8bfc9ef0d2fdc08f8d3229e1e47c200ddedf4d7b63312fb93423"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "40277034ef1200157f2c4cea8c2edd3583834ba40bebcdc3415e94f43ef5e888"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-after/receipt.json": {
+      "bytes": 10240,
+      "sha256": "01bab33bafa3bde80f9353d572e139be4fa4246c36c00fd8a92ffeaf276e7839"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-after/started.json": {
+      "bytes": 106,
+      "sha256": "100cd2623219174c82ff3fca38657539592cb53224a26a3e2a9c8670d0d21f42"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-after/worker.log": {
+      "bytes": 7936,
+      "sha256": "0815a8d717cd966351a3a36e2263a59bf31b005de9e22b7f38177549f5a7db79"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-during/intent.json": {
+      "bytes": 185,
+      "sha256": "28467a0df5c0d6120769283eeb22e622265ef18383086295b71ea38489552035"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "8a138dd30e76448679da09caea904ec40fb11f65df8a3c0809d3154d0c102763"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-during/receipt.json": {
+      "bytes": 10266,
+      "sha256": "f372532d29e81467867d1f209762182302616228cce2952e85312be50415051e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-during/started.json": {
+      "bytes": 106,
+      "sha256": "86e3a75d61b79310a4f309e0708bb53d6d43c771f57b9ed91a584cb72025825f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-during/worker.log": {
+      "bytes": 7962,
+      "sha256": "ed7c4bb8d2b152b85b23b41a9ac817d592ae26b7e9782a7358ffa4488d22d9f9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-after/intent.json": {
+      "bytes": 183,
+      "sha256": "68b5ce9300ba044f6cc9073ceedfde74c89f8818c1fbc6e37a0ff41697670f1a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "292691029210b1abf4cc6cc5cb4d5a7f6c0fdada6c4f0cd41bc474018e8b7150"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-after/receipt.json": {
+      "bytes": 10258,
+      "sha256": "51322426ba4c5365ece6dc53c35f963de9fbd84edd88ee87bd78b7dcbdf09f51"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-after/started.json": {
+      "bytes": 106,
+      "sha256": "80f61f2ff4d00fdadcfaf9d6f8bc8906a3f7e333688f2252c53e71ebf7169bf6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-after/worker.log": {
+      "bytes": 7954,
+      "sha256": "b09ca92fd63c685c71ce1923f5f2a30ede5dd601a2c43b6d156cca6eae92fe9e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-during/intent.json": {
+      "bytes": 184,
+      "sha256": "da79f06aa69d02cf436984cba593b4b877c928fae24e8fe4dc7fc4955046c437"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "d0832f40d2fe4a03ffbcb4c671e995115eb82044662c8dd9fda5fe671972fa06"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-during/receipt.json": {
+      "bytes": 10274,
+      "sha256": "21017bf7f6df5292977cc097de3b4f9b18d467dd0e3d51e2441062c2c361ac21"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-during/started.json": {
+      "bytes": 106,
+      "sha256": "67d0ce018c2bdb01bfef89fe2924639d9227693fac04b10ab568ca24d5c2924f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-during/worker.log": {
+      "bytes": 7970,
+      "sha256": "7863761560b24215a136f20ff3b364e56bda91f39ddfe1055ffea4a86c973176"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-after/intent.json": {
+      "bytes": 184,
+      "sha256": "0194d670820ed3e71b9c934f59190826ef397de098d2ed0dd5c337d10e2e87ec"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-after/outcome.json": {
+      "bytes": 461,
+      "sha256": "5993ffb1197979c5d1ba64dde8f87370f13faef66730e938706073ff970c3c79"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-after/receipt.json": {
+      "bytes": 10258,
+      "sha256": "3169e76996626ae2b6a7b74e70f6e2c5bdc83550386ea226d9fe52d461e581f5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-after/started.json": {
+      "bytes": 106,
+      "sha256": "4faf27224217d28587d3b519a7924da100deb069880801e372eadb89883ba855"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-after/worker.log": {
+      "bytes": 7954,
+      "sha256": "c7862477d7f1db53965cf539d778569a8055b4301b0bb6c3fdc35dffc993ad02"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-during/intent.json": {
+      "bytes": 185,
+      "sha256": "3848f2fe2bd4f0fe4ebbb10d87d3e412b11e7e6fef0d120233ab05d36a068641"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-during/outcome.json": {
+      "bytes": 463,
+      "sha256": "4992fce5757fcedc896e5c3f6cb15e5062b27d09d228579d9650c779f92d6d6a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-during/receipt.json": {
+      "bytes": 10278,
+      "sha256": "8cb2c33726749f991d5926f511ecee903cc9da4848d743f13a1f52603966fca1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-during/started.json": {
+      "bytes": 106,
+      "sha256": "2a5279e78f174433a2c4a96c8ac9cbddd987a680b2fb5b77e846655d852b77ef"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-during/worker.log": {
+      "bytes": 7974,
+      "sha256": "63abb1998907a733a21dfb30ae49036a65ce0f80138f06e2e5a55d46cf0f3dc3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case3-after/intent.json": {
+      "bytes": 180,
+      "sha256": "56148b98ab181772e6d3d1fa32e98c6b4ef1e88a38decded11303d278b1fee05"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case3-after/outcome.json": {
+      "bytes": 459,
+      "sha256": "a9b41fe5a8e5611d25a6e6fdb7d8c2b0bcce54ca32df192c4ef516a01c36c2f2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case3-after/receipt.json": {
+      "bytes": 10222,
+      "sha256": "f013cda8d628a0fea34d8f5b0c4c125e96506d662161ec0e8d71bdcf7ff956c4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case3-after/started.json": {
+      "bytes": 106,
+      "sha256": "7c97ed0bf28d23031f3878ccf9213996ffc9a65da2ef6ea8d514cae340c799ae"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case3-after/worker.log": {
+      "bytes": 7918,
+      "sha256": "512b543d8ff8f0e58eb955e8a9d5e9bc725deaea7d99a789f7fa3191a66164f8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-after/intent.json": {
+      "bytes": 183,
+      "sha256": "f61c4f24dc2b8a244f7e13a530c63c3a7de4dc0b18c31b40026d4380eec4fa44"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-after/outcome.json": {
+      "bytes": 459,
+      "sha256": "f637e098a12c56b0b78e01e3c40d60b880738b117572340752753bd159c7291b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-after/receipt.json": {
+      "bytes": 10221,
+      "sha256": "8d2ff36fdb132f99fdaf1246ad30d17b0231ee6ea383675090fade10d3b9aff0"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-after/started.json": {
+      "bytes": 106,
+      "sha256": "789d37fc632360aabfade9a8ca4aafcdffe0d623d28556b87d6fa48d12fc3f65"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-after/worker.log": {
+      "bytes": 7917,
+      "sha256": "b93fbdf0496112f2a19fb32ae367c46f910ad851163a894ac6788c382e6f89c4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-during/intent.json": {
+      "bytes": 184,
+      "sha256": "8948733c19825ef154a6e8f3fa7adf2a7e912630e0a0f7a373da3902ada5f394"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-during/outcome.json": {
+      "bytes": 461,
+      "sha256": "3c1be7fc5b4e8fa472448d2ef62990dd0b1e88e2fc6a21961b59ee7df3fc272b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-during/receipt.json": {
+      "bytes": 10247,
+      "sha256": "0c784904812ec6aa033fffe7ccb23a4f163653b984af1cd41008fd1577ee1cb6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-during/started.json": {
+      "bytes": 106,
+      "sha256": "a6e44d07b1c2c84976a12872efbd3b316c35e166a7e23eed9d962c35bd5d0ef9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-during/worker.log": {
+      "bytes": 7943,
+      "sha256": "d1414c8ff2a4954de06f1e045d82143f758442be3f55c30d6defa5901ddd2a95"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-after/intent.json": {
+      "bytes": 183,
+      "sha256": "d66ddcfbdd75203f773339d5b8811d05d13e46e79d7a799e4decb44035574850"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-after/outcome.json": {
+      "bytes": 459,
+      "sha256": "3108c1ed6d6612e57065ec9e3884df9348f25c118afe530071b078cd023fcd26"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-after/receipt.json": {
+      "bytes": 10227,
+      "sha256": "75e06a854a834325e44b965e9ee4464242161e720aa29c47d96875c3d9cea87c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-after/started.json": {
+      "bytes": 106,
+      "sha256": "dbdb0d1ce66e93363cba0ca5f024d7a6a038618a0e02376981b18f923ffd114d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-after/worker.log": {
+      "bytes": 7923,
+      "sha256": "092a873fabc1e6bd1698eb6ba0fa7b43440cd2bbea8cf9c1f5d2c3ab8733e677"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-during/intent.json": {
+      "bytes": 184,
+      "sha256": "b580398f1752e11cda6c33ddf33ae61d18185fbbe4e0ff62f3ab976c9053ff38"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-during/outcome.json": {
+      "bytes": 461,
+      "sha256": "f2da03db26bd53ce6e0256fb3e928424cdc2a9f833032622b52a322ab4fd02fc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-during/receipt.json": {
+      "bytes": 10251,
+      "sha256": "d52973b38d893b605f8cd35d97850cedccaaaa06b47ce39aadddf50ea757aa3c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-during/started.json": {
+      "bytes": 106,
+      "sha256": "8267e4b3dda748b9b48d80808ba38dbbe18a9134be8a4e1e0d8014c87ee3eafb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-during/worker.log": {
+      "bytes": 7947,
+      "sha256": "730ee1e12e312aaecedaa9de0b2f7759c0dedb13a7ed8663e83f878681b55564"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/manifests/resect-deferred-qc-v1.json": {
+      "bytes": 58690,
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/acquire_btc_case.py": {
+      "bytes": 27807,
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/acquire_lausanne_pilot.py": {
+      "bytes": 13051,
+      "sha256": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/acquire_public_case.py": {
+      "bytes": 11170,
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/acquire_resect_cavity.py": {
+      "bytes": 22551,
+      "sha256": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/lausanne_annotation_intake.py": {
+      "bytes": 41250,
+      "sha256": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/lausanne_deferred_qc.py": {
+      "bytes": 40686,
+      "sha256": "2e2b49718889afbc1bf4451f35a88493df3a651db00ccb8971530bdab912b860"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/lausanne_train_intake.py": {
+      "bytes": 30850,
+      "sha256": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/real_intake_io.py": {
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/resect_deferred_qc.py": {
+      "bytes": 35255,
+      "sha256": "55328556f4719a9509effb10b4ef899a0dc1665dfa4ae61ee4c68bdd3c360fd8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/scripts/resect_train_intake.py": {
+      "bytes": 38938,
+      "sha256": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/src/resectionlab/core.py": {
+      "bytes": 30914,
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/src/resectionlab/data_policy.py": {
+      "bytes": 7841,
+      "sha256": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/src/resectionlab/imaging.py": {
+      "bytes": 41941,
+      "sha256": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/source-snapshot/src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/batch.json": {
+      "bytes": 18201,
+      "sha256": "81a3a5befad7b21c9412f710a6ef8d2783c256d6ca2488748e1cd96ff83db2d6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/declaration.json": {
+      "bytes": 3904,
+      "sha256": "2fa4151d85168b37768a89e6bd0cb8cb29d6d793d8b3a606a710a36fc5785c69"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case12-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "3d23976c3b13d144379ead185cccf88fb94d479c9c1c28d419b9c25a9386fb16"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case12-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "0200586968b0f5b1f7d20e477f73a23b39c2a81b853b0a22a604ec5bdfd56506"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case12-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "536def18b2b6227a461f9dce95b3d83167a73f8a4bf8acb46da408ed51c1c581"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case12-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "09700fbe5a2521144f462959d3b52cf2a24bc80c1aa32af09384fa8b734eb210"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case15-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "921a6b5987224e9ca5b4b0a0d5ca88315d08b41995c88a5da386e78f451ac40d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case15-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "755252812bcc715846903e29cd8d8729939d8457f7cb777635d7583ab1ba845f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case16-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "cef939a42fe6a354f8b4c0ebe17a9a351139e584969f4f6e9c9dae79ec01e176"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case16-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "94bd7148b148af35a60ec454f0b31444d766a60ddc3ad5e2a1e100bc5d92f247"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case16-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "5e81efb37533ab3f82bef5f3331ccd33ed9cf031f58bae1428d1f55cb9fec961"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case16-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "6226fe869ae066146a117c874ebde1c139cd37cd39b3394e35a4d3c016217c71"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case17-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "9c68ea7ef8683c38f07b0062a565a28f7aaf0e57758fad93790f99bf72f24f7a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case17-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "0b296dc867574cb669cc20d4fd17dc5d628e7d76a8200a665521093eaa5b5a2a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case17-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "ee306965964aa19b788c31f7f93f00904e7b2d24b0f16c3bf6b9bb0ecae06441"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case17-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "f4dd07c801db305721032589f7e66786a9e0a25b1b7dee0703920eef0cfcbf2d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case18-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "9ae335488449d5d3376e8c69d7e4efadec1671188c69a14f8584ce8fade47c64"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case18-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "32c54641e8d09d9c1510ef34a6ce67723c6e54b72bcd811d57b48c488cb34388"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case18-during-import_receipt.bin": {
+      "bytes": 3125,
+      "sha256": "3286e20b289ea8b888099aa25f1d543ea9193dd1c337e1962b749b83ec4e94a5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case18-during-mirror_receipt.bin": {
+      "bytes": 2205,
+      "sha256": "81ba967b5866a0f09e09aa4fb03120027b9ad207ada8a8c4c75665dac1108ddb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case2-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "1009b47fb9bc8616707c9677c9b127168887bda824fe7bb59d280c9d0ccd2afb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case2-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "9e995eaa28d9d073d45ec292fa7cd4b30711accb5a232e0aed14dd0977bf2cca"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case2-during-import_receipt.bin": {
+      "bytes": 3140,
+      "sha256": "98baa1a3d91fb147975ef21432bba138f8782c57a7bbf1d0c1da7555ab396f5e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case2-during-mirror_receipt.bin": {
+      "bytes": 2209,
+      "sha256": "b2f21436183f98c114bbae6b3ee95034e26037c0a2b27f139f841e375081aaf8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case21-after-import_receipt.bin": {
+      "bytes": 3111,
+      "sha256": "0b793cafbfccd46654745a9dabb2362319ac3523fed95e7be7ef336aa6fa02b1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case21-after-mirror_receipt.bin": {
+      "bytes": 2196,
+      "sha256": "75dff145083df2fb51398cc2ca7a50730b3afde79c8780368ae7055ec5cb7acd"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case21-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "d3ab93a18afa5445e8724a99b829fdce992a5ac2baef5475f663ccc84200e5d1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case21-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "6941bc26731265a53174bd061fc92d8a8e9a7c63c973ce67c9a4b94f7e8318a1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case23-after-import_receipt.bin": {
+      "bytes": 3143,
+      "sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case23-after-mirror_receipt.bin": {
+      "bytes": 2212,
+      "sha256": "f21b8f396928c41350c2f7b07465b6572fb2346450099a27a806f30468c24ebc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case23-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case23-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "d64ba7e42ccab9b0cce2aaa38e22718edbe31e0023ea6361b63dfc8735363963"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case24-after-import_receipt.bin": {
+      "bytes": 3143,
+      "sha256": "8b6df1b655ecd08c5958cbdad8b9722537137db3cd526f7666cf89ea5e9bc6a3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case24-after-mirror_receipt.bin": {
+      "bytes": 2212,
+      "sha256": "465636b52a3090ad8ec69bdcf8eaa413233015df51b6d538a4f3d5d48a70a0c3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case24-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "c80161219ac25dbfd5bae5771528ce01842a57c250337bc145c2042a39eb3e18"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case24-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "a62dcc13cdbadefd258177b91496750a59febfb55ba09cf814729b95ed727f61"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case25-after-import_receipt.bin": {
+      "bytes": 3143,
+      "sha256": "eaced578ecaf33605aa0366f227c13e346424e2c3adf49a30fcd0c89a9cd2b33"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case25-after-mirror_receipt.bin": {
+      "bytes": 2212,
+      "sha256": "63daba1896f3d018b83a15bc62d16dc24abab77e8aa61b99a7d9d4ca72ee6d75"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case25-during-import_receipt.bin": {
+      "bytes": 3157,
+      "sha256": "b53dd9382307e7e2cff17a4dc22b79dc1b7ac0c7d2780adb90f446268c423809"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case25-during-mirror_receipt.bin": {
+      "bytes": 2221,
+      "sha256": "208ecd1fbcc95d4778ea6e52916dd16cc6c2bfa70010c52f2e6a3912b0196952"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case3-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "8c84e041f49a5b1af798b8cb1e4ac2023f398399499264354c8cf83d0be7df72"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case3-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "93f42766f6c6c70cac65b5d4606711702b67fecbd3cac6d67b5a20a79288092f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case5-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "913d6c20cd1bc4461f2f5c3a91424d4ffdfde161625ea494818eb11de6433901"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case5-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "0882a93d72d8df3d69f9a3c4809d3b2f115149884e6bf4c034abdba7cddf7fd5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case5-during-import_receipt.bin": {
+      "bytes": 3140,
+      "sha256": "772b7d00a2c5678a71c666191e8bb019fc5743c115330cfb23d008d9204af649"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case5-during-mirror_receipt.bin": {
+      "bytes": 2209,
+      "sha256": "c99b7931c76f312794752e478dfbdda7bf527e84ba92176108e016d0be10e13a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case7-after-import_receipt.bin": {
+      "bytes": 3126,
+      "sha256": "e9b5c394da97efacdca1c1b9e701938169c4447c67e5e8cae35d09da9b88a283"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case7-after-mirror_receipt.bin": {
+      "bytes": 2200,
+      "sha256": "226367f4cfa069dabbcbd7babdce8dfa426d1589672dd203412d401e19d2813b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case7-during-import_receipt.bin": {
+      "bytes": 3140,
+      "sha256": "93da5b07501bff9ed199f58a4df49a626469f2ad1942a9405e2c1a785dd9e1ab"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/Case7-during-mirror_receipt.bin": {
+      "bytes": 2209,
+      "sha256": "2c38b661ddace1afdd020fb2b90f66d4c1828b60b6dab6bd0dc90b00bef20978"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/acquisition_manifest.bin": {
+      "bytes": 39206,
+      "sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/canonical_review.bin": {
+      "bytes": 45748,
+      "sha256": "8ea4a68ab3aa9c00875bfc36378252bd6f40511395555bda3c4d9fb6c19f2612"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/cohort.bin": {
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/import_bindings.bin": {
+      "bytes": 2443,
+      "sha256": "2951181288ba03e4b15cc8af0d3f2ae90428b3673aef77521a90e7c0ce754f34"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/import_summary.bin": {
+      "bytes": 8715,
+      "sha256": "e340b5e3db918afce2605ebbeaabba1564048bfb2c70ddecda4a7031a57db37b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/mirror_declaration.bin": {
+      "bytes": 36459,
+      "sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/mirror_source.bin": {
+      "bytes": 16487,
+      "sha256": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/mirror_summary.bin": {
+      "bytes": 7136,
+      "sha256": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/pilot_manifest.bin": {
+      "bytes": 2415,
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/pilot_parent.bin": {
+      "bytes": 311,
+      "sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/pilot_review.bin": {
+      "bytes": 5844,
+      "sha256": "21ddcdb6e46d1a0f69a6c64f5d4ac185d2ded9369e85c546e63a7e2548b938d3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/pilot_source.bin": {
+      "bytes": 1168,
+      "sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/pilot_worker.bin": {
+      "bytes": 5637,
+      "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/previous_manifest.bin": {
+      "bytes": 58690,
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/input-snapshot/rights.bin": {
+      "bytes": 1656,
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-after/intent.json": {
+      "bytes": 184,
+      "sha256": "27fc2f16052b4f174ea695a819465b4b03a67c30c39112652c8edfbc5cc0c76e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "464d7768e45ab65742c24e3862243dc4185e4cc11c0111685b125934baef6d7f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-after/receipt.json": {
+      "bytes": 15388,
+      "sha256": "b01e8161a2f8cecd6167dd1faa6ff9bd8a4ce1c937fe6a1114c6315f73547bc7"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-after/started.json": {
+      "bytes": 106,
+      "sha256": "9b642d0c1bc88b6275dc9329bfc67e886a2187499a71169bbdad4556e171f764"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-after/worker.log": {
+      "bytes": 11306,
+      "sha256": "d97141d731270d520d4b6422992de4bd142d7d5d29e532f4a26678a294266720"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-during/intent.json": {
+      "bytes": 185,
+      "sha256": "051071ec0db699be2bfc3375b882a07c373c0de663c9d95b40ecbc3501633a6a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "46f698c1405ee31fc92533e819beaf618457c4692dbdca16281e0a84276917b5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-during/receipt.json": {
+      "bytes": 15411,
+      "sha256": "4addeb675b17ea8b99d7bf694ac680391e43ad0989e7df8388637d8c30e65459"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-during/started.json": {
+      "bytes": 106,
+      "sha256": "6d32b53a2b736b266aa9443a9a8a60c0db2e70cd14b9d945bcfffd93ba45daaf"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-during/worker.log": {
+      "bytes": 11329,
+      "sha256": "2396865e92be9319a74c65b7484d27a772710e89199ae745d581586f5a8c2071"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case15-after/intent.json": {
+      "bytes": 184,
+      "sha256": "8e3e94dbe25ded2b71eb6483c25a910748ae25054fa67c54858b724c7ec1e8ae"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case15-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "ff2fc5e3efe6906437535d0c8852dd0997fe95090050e0b12cbcd4c70d92edda"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case15-after/receipt.json": {
+      "bytes": 15384,
+      "sha256": "414adee803df842c1d734486c569fddf2d4963be728cb1fe286940b4c46de564"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case15-after/started.json": {
+      "bytes": 106,
+      "sha256": "21904bb9a775c591037a95a81794437c424b96a2990322fff39dd34a340adc6a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case15-after/worker.log": {
+      "bytes": 11302,
+      "sha256": "031da997c56963d24df9cf82f6bbcc1470fb750cea1f290d09dee258e637e85e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-after/intent.json": {
+      "bytes": 182,
+      "sha256": "0869ad301da8b67e21018dc7281b996cd42b32040b3b006509d9fd0dafbb8454"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "f5ffa1a18a2b7f5585dd32122d77d323af65d74b47a1fefba9d37dc9ac4b03d6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-after/receipt.json": {
+      "bytes": 15369,
+      "sha256": "8714e667432eafaec84cad716b7711aab42fdd6dc89c842b803ba26ea011a110"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-after/started.json": {
+      "bytes": 106,
+      "sha256": "f9354c2e7118c8baf9491592a0c78bb9b656f51ec3afa68551208eee83d50327"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-after/worker.log": {
+      "bytes": 11287,
+      "sha256": "eca58eac46fc7ec5df123e927bfddb65223ca0ac198c0fdf2d368abe0a6ff8a2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-during/intent.json": {
+      "bytes": 183,
+      "sha256": "1324a1b036a7d3d6386a85156b15dfafc7b08263980c90936465bc2212189de5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "bf3850c6c269b02c13d558da6e48efbbacedf634bac176f12a45ed39b5217daa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-during/receipt.json": {
+      "bytes": 15394,
+      "sha256": "d379bccee982f10a4eac18204b56c2eab0770d70a3a0ea53992df1a4f82d021a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-during/started.json": {
+      "bytes": 106,
+      "sha256": "7cab82503c0401c36c7ff03569b28a7df793d029c9fb44734f4b838a3329d0b1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-during/worker.log": {
+      "bytes": 11312,
+      "sha256": "5a2839d027e0484d50c6aad817fe4743680a486d6f19ac4b028fa34121eddfa8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-after/intent.json": {
+      "bytes": 184,
+      "sha256": "2461204a16227efc8b3a2b4d1f161b39de1cc36db203ec7dbc47052ce86153f9"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "7e3910b86e45c9614875209f42c5be9e1f82d802771f32aa5588064b0e1b8b0a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-after/receipt.json": {
+      "bytes": 15400,
+      "sha256": "112609443c48005684ebef0ab1b2f13f9dd80d4694de44c23e5620782f1a0543"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-after/started.json": {
+      "bytes": 106,
+      "sha256": "e8d32b16ed216a990d6e09ea484c46400e42235d1e31d1792234975b2dd5d1cb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-after/worker.log": {
+      "bytes": 11318,
+      "sha256": "d0d55ff2e0818dcd536d1b43c50e9ec668b15e893cd507374cbbbb3c7e9bfa12"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-during/intent.json": {
+      "bytes": 182,
+      "sha256": "4aabb7e42c278a737391efc1089bfa54232b95fde6bd9b153873ea6072088dfa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "5c9212cb5bc7a64aee23aa60acf178df84429723d3361f3f05cef0c9b08df04a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-during/receipt.json": {
+      "bytes": 15402,
+      "sha256": "94cf5e55af328c2066be0c51f4278075ac4e0edd8490b3d7511e282dd09c1cd1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-during/started.json": {
+      "bytes": 106,
+      "sha256": "0f0e33de4148e1200a3c950da6ee57bb9d071f2e4977c68fdbecf59370b7b90e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-during/worker.log": {
+      "bytes": 11320,
+      "sha256": "74e42bb88a4d7a63affa3d8f9a61adb61e22ecc481d31139581a223dacf8c2cc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-after/intent.json": {
+      "bytes": 183,
+      "sha256": "8fae9cc24343517226d3a40f4de6cfd171becc53abedb9cb56733d12ca6783d1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "3011be37ac848b7ca66a1d5a042570fe149891d051d85590beec06c2892d0237"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-after/receipt.json": {
+      "bytes": 15380,
+      "sha256": "4505246fd1b98694f438f7b70940934637118676820a7458dc64c4a88c6ff807"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-after/started.json": {
+      "bytes": 106,
+      "sha256": "3f9d66dfd51ebc7f7ef6ba1bf6c96e61bd9382fcfd237fb2e139a099574987fa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-after/worker.log": {
+      "bytes": 11298,
+      "sha256": "7d0f7b7ef3a0fbf6dd260797f920ef9728daa0fecc244422737e8366508007e2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-during/intent.json": {
+      "bytes": 185,
+      "sha256": "fa1cc6424ec7388354d490434205aa209da197d9c9e09656b98e62b09b67bdd2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "1e2b2dd24e900a68a42a5bfac3ba56bbbf64e25b9e9750b0beb1497a20dc22ea"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-during/receipt.json": {
+      "bytes": 15405,
+      "sha256": "1512392e97c07b553d87c3d188149bbe04cdc39e9b98e613cf21af943a931117"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-during/started.json": {
+      "bytes": 106,
+      "sha256": "b0670b36111ed7d41eedfa323f2b7341817ad734ed462eb04b31bf87194b8806"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-during/worker.log": {
+      "bytes": 11323,
+      "sha256": "2f4e7bac75041dc91ee4f3531f325bbe65655035900e478fd229ff6479a69672"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-after/intent.json": {
+      "bytes": 183,
+      "sha256": "b029a1e69496116b7f7fceeafff3b4211658fe0744e3ab900e75ef252cb320b6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-after/outcome.json": {
+      "bytes": 462,
+      "sha256": "22d0f61bca07e5dd32f0876afa4ef71c6334683ba0881038692dd0a59df3fe7e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-after/receipt.json": {
+      "bytes": 15381,
+      "sha256": "4f19c4c006e540a6e0f5047c6f2841245029236ee3e41581be6a0badce24171e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-after/started.json": {
+      "bytes": 106,
+      "sha256": "134b95ad4bc7c1db5dce7ce620d65d476816af00baf5690c83c23f8357448aaa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-after/worker.log": {
+      "bytes": 11299,
+      "sha256": "92c94b0f7154a42cbe753672311d8ebafccc09d139a62e4ae0e829c8fa5406aa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-during/intent.json": {
+      "bytes": 184,
+      "sha256": "cd3522c5d64decaf7a51b8862f95e2270e896e90272fd384808328cb2acb609e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-during/outcome.json": {
+      "bytes": 464,
+      "sha256": "8f25daa2eb4de3e99873721bd8608dd3802a31544c50a64066738624f4d47aeb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-during/receipt.json": {
+      "bytes": 15383,
+      "sha256": "1c4a99244c1f70e8023d80f4ef4451cd0763375bc94d43e3269d57507159f410"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-during/started.json": {
+      "bytes": 106,
+      "sha256": "24efd59470e3f88fe9b53402d74209364abc7e9bc182d19ed7d08ecbfd34a4f4"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-during/worker.log": {
+      "bytes": 11301,
+      "sha256": "fa4bd775636256bd6cfbb7a521d1280872b7277151e0eade3ef91cbd46f0221c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-after/intent.json": {
+      "bytes": 184,
+      "sha256": "4e7ea70583fab75f511c0a9c3f8dd486b69dbceabc7bc28e3ce2cb0a7b964f8d"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "23f8ec7aa8b5b88380d69094c915b267e80f8097b8a54b8c6e1c3bddb0c7cf8e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-after/receipt.json": {
+      "bytes": 15373,
+      "sha256": "84025110a805e7cb784c67d429c6f6c53e5ba7e4a0e4e50b4ec684f230338d4f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-after/started.json": {
+      "bytes": 106,
+      "sha256": "0a62bf668fc9fbb1ac7d3fe428c634d3d237c0849c2bcc36d24de294a7699701"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-after/worker.log": {
+      "bytes": 11291,
+      "sha256": "680795bc7781749f6c18b16eb8034d8110660d2d0f76395348a31f2a1a252054"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-during/intent.json": {
+      "bytes": 185,
+      "sha256": "ce79d261e35881756b05731e576563bc216c035587fa86a82028d1802157e593"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "a7b2615da5fd5dce72577333fa9c034553a301ce9189bb7b796ce4cb63e6903c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-during/receipt.json": {
+      "bytes": 15418,
+      "sha256": "7a4e58d1b5f2bad7fc4a6c081e27f3e8888ace372452343b36736ffb93bd3cb6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-during/started.json": {
+      "bytes": 106,
+      "sha256": "8b69df6d9c53c9b454f522c91e2c0a3fe2b3e32ba06817cdfbe9c5c1345c2c2c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-during/worker.log": {
+      "bytes": 11336,
+      "sha256": "86561778305b45efe781f6aa6e967116d077c48c4b6089dc0d62daabcf2c2a54"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-after/intent.json": {
+      "bytes": 183,
+      "sha256": "659b647318eda78d15d1a99a568658a67e7a39ee10398b5c87422bf3a96e0d85"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "e2ae79e7beb6572d137f8ad4d484346a8af232875fbefd777c5cbd02314cc02c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-after/receipt.json": {
+      "bytes": 15382,
+      "sha256": "926d96782c23bbde831517709bd19e3523f09e12bf2c33e13a225ba1cec80090"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-after/started.json": {
+      "bytes": 106,
+      "sha256": "aa51e08fbf21aef574dcd82f025e39e7f486468be7afceeeed656075409bfe70"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-after/worker.log": {
+      "bytes": 11300,
+      "sha256": "8ba35b394fac7ff6d0a02da655548ab5fc01cbcc54b68c9088a705eca320f622"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-during/intent.json": {
+      "bytes": 185,
+      "sha256": "33582849ea7bcd654b99d9ba3bd5a9f4cb8e56b0f32d9b159be3c51af1d672e8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "f243c1f097dd91269d6f943d42594164a4ba0bb4b194cc1e93d71bb17400c87f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-during/receipt.json": {
+      "bytes": 15414,
+      "sha256": "43eb36d360cf8cbf384ac9c3c8afe4e8acc432e37bf1ae048716b0b0b032103b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-during/started.json": {
+      "bytes": 106,
+      "sha256": "6f9fa487d16cee0a87078e13192ba6ab3b484550db9d8479ee0f30a0b95c48ee"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-during/worker.log": {
+      "bytes": 11332,
+      "sha256": "bbef20254ac47ba2a6b43da0e6813daeb7639a891359e155d044daa10db8965e"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-after/intent.json": {
+      "bytes": 184,
+      "sha256": "d758134412cccf5769ecad58a444608048f5019afc300eacea33fa3c10480af5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "9397ba46578955d073572e67eeff07fda00178aede1f916434ed5cf96b7e6f95"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-after/receipt.json": {
+      "bytes": 15401,
+      "sha256": "886938190ea5a03bf68ebd092b42f16fe85c418df9bb13a141009cb5707deb98"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-after/started.json": {
+      "bytes": 106,
+      "sha256": "d7f2d9affc62ee2152a64b0e3b100ba4b5abfc18473d56232185588d7afbc4c8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-after/worker.log": {
+      "bytes": 11319,
+      "sha256": "f67a00f0c80c621109e636b4e713ee6d3629e7abfecd6400630bdca5c48c0609"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-during/intent.json": {
+      "bytes": 185,
+      "sha256": "2ef6cb184915001a30d4ae5e216dac628d5963fdd828ad26f34923a057a5fd35"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "10dcf0dbad6860e72eabf35bf159cec9f595f806bd339145bad25ee99deaba15"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-during/receipt.json": {
+      "bytes": 15425,
+      "sha256": "3e618813daa9d3c35d18a15f6c1fc40d0c7eca996b576a065850d567ea2072bb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-during/started.json": {
+      "bytes": 106,
+      "sha256": "3846d190985b255b1d418ed8a17bd721ac8c451b2e65776ad4776fedd59fd488"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-during/worker.log": {
+      "bytes": 11343,
+      "sha256": "6cb3275ad6451484df31cd63143ec9f8bef6bdae07a738590c2395cfc79fcad5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-after/intent.json": {
+      "bytes": 184,
+      "sha256": "8ad6a94ebb60439848b3aaf409948a2e9e5f5aaf3f9f9a40c059fa50b5bf9efe"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-after/outcome.json": {
+      "bytes": 464,
+      "sha256": "87ddcda27ddf07dce010093f874453b6a9502f8d66a1df4275677a075dbcdf38"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-after/receipt.json": {
+      "bytes": 15410,
+      "sha256": "307109d4de79b403362e852da8bdf1faa751baac7357e95bfa7adc00b77153bc"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-after/started.json": {
+      "bytes": 106,
+      "sha256": "6b95e8c7625f787f46a815cafbe45485aff7caf6cbdf66d2880bfdabb3de110f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-after/worker.log": {
+      "bytes": 11328,
+      "sha256": "8c47cbe8f68274ca0f3191022492f83af9f4870ba8ba06bee18558e16c903e91"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-during/intent.json": {
+      "bytes": 185,
+      "sha256": "955b0df2e549e9eac593779576814ed5ac3f120081f8db4889bf006baa283bc1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-during/outcome.json": {
+      "bytes": 466,
+      "sha256": "b76b91f2592f10c87d7357cc28259e0daa1211189009a9252723697ba25b6ab8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-during/receipt.json": {
+      "bytes": 15436,
+      "sha256": "fdff575906d9cdf88dc6565b4e745638ad15bb864c380f64c4c9b4c083851372"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-during/started.json": {
+      "bytes": 106,
+      "sha256": "11f71a83c63c5e038ccad13fe737130e4e9fc49e104742dbfe8a10cc9174970c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-during/worker.log": {
+      "bytes": 11354,
+      "sha256": "f2ff1f6648795ffa84509c07aec5da2f2716a9dbf719e76bba25ab962bbfc930"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case3-after/intent.json": {
+      "bytes": 183,
+      "sha256": "a63e16a7af669356ca7d126ae19dde66c47445d0398c09a697e4f9e3b45680df"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case3-after/outcome.json": {
+      "bytes": 462,
+      "sha256": "a122704f7d99b4d1a89b6166d4e9f9cc9b32a475ed51c7c96935af92e6eee969"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case3-after/receipt.json": {
+      "bytes": 15360,
+      "sha256": "248e882e6745e76425a50f8b563701044e9fcc9c004e88336fad620bb4f5f3ac"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case3-after/started.json": {
+      "bytes": 106,
+      "sha256": "9bfa3ed710c0c2c6bb63b0ba54e05f8662cd50e2c5f678a23acc760d65f997cb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case3-after/worker.log": {
+      "bytes": 11278,
+      "sha256": "5e2b99ede223374de667a720fef7754fd53f70f57a2f675ed12adea3400d5788"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-after/intent.json": {
+      "bytes": 183,
+      "sha256": "29d4c08ee7e82adbbb1f46a26336021d78873ddf33665ae8bf017fc71a9d7c79"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-after/outcome.json": {
+      "bytes": 462,
+      "sha256": "c6d7e9401f8c393e9ebd22f41b96597511b53211ddb2b49ffbba551479af79b5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-after/receipt.json": {
+      "bytes": 15356,
+      "sha256": "3aa35024487329433e8a732fbf723d3a02c454297363581114c072bf223c42ef"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-after/started.json": {
+      "bytes": 106,
+      "sha256": "bb3c4512aa4eac60b26fc58b6501ad396a10c44d585bf0dbc6d8c9081d53dc99"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-after/worker.log": {
+      "bytes": 11274,
+      "sha256": "14ae0fa3a831d802d44f379ad37478e5e217b31d002c12c8e862c806782d1449"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-during/intent.json": {
+      "bytes": 184,
+      "sha256": "cace8fbef6ffc63a292a92755cfad65c1e8d072934ae38d0dceac667f9abfef3"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-during/outcome.json": {
+      "bytes": 464,
+      "sha256": "2a02bd013eab2869df072c2a9f0c3a12d0a37a10568cb9cb09a29cabf96a3782"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-during/receipt.json": {
+      "bytes": 15379,
+      "sha256": "1a00755d07612478dc4e8f33d40eaf17d7ea3809fbbc15674b6cc1329c45a7b2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-during/started.json": {
+      "bytes": 106,
+      "sha256": "dc92a715f3f10255e466a02b5802fe9d280fb3d309abcefaf83a9fcda9be5866"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-during/worker.log": {
+      "bytes": 11297,
+      "sha256": "066a7bd776995733b1d489587375171354adecff7228ea32c9088ce04a8efa8a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-after/intent.json": {
+      "bytes": 183,
+      "sha256": "0cae2ad7cce11d485ff7e901328f463dbbe9b2657bc0f89028ecab320f8d5fd1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-after/outcome.json": {
+      "bytes": 462,
+      "sha256": "22db76587bcb073a5b5af4bac61e23f4682aa7abfd9fd43a54ba01f7ceb6824b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-after/receipt.json": {
+      "bytes": 15369,
+      "sha256": "415256a1424438fb4a8e3eb576faa0f0d80a07d9150fc384bcbb6a79a6353e91"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-after/started.json": {
+      "bytes": 106,
+      "sha256": "39d5221d45b926550e9c0d3885d5b9dd970bcb5a37a74b6f8bfb40cce7179a52"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-after/worker.log": {
+      "bytes": 11287,
+      "sha256": "869353c9182e31a04f9aae4ff4b381bf399273aca09c6cece5c14697496e6bc6"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-during/intent.json": {
+      "bytes": 183,
+      "sha256": "1204a6d69765b13d6da78b02593fcbabdd833d207fd1b9700e7102f2af732465"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-during/outcome.json": {
+      "bytes": 464,
+      "sha256": "8b1cadbf7960dd6c85d76d76059a0fbc4aba4fd3bce73a3cc8c7cc5cdf89e4bb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-during/receipt.json": {
+      "bytes": 15395,
+      "sha256": "5f5240a5f7953c0450ff0ef34ebbfaa12e013a62d1b18bc1ac3d73b519f7bf31"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-during/started.json": {
+      "bytes": 106,
+      "sha256": "9edd8457f1204d070c5466f8af82dd873b8f95078d770c210fbcdf95310ba15c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-during/worker.log": {
+      "bytes": 11313,
+      "sha256": "571401735e5b948ae70e1bf0c05d94195946e85440ba8bcba150140c489c3930"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/manifests/resect-deferred-qc-v2.json": {
+      "bytes": 59430,
+      "sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/acquire_btc_case.py": {
+      "bytes": 27807,
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/acquire_lausanne_pilot.py": {
+      "bytes": 13051,
+      "sha256": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/acquire_public_case.py": {
+      "bytes": 11170,
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/acquire_resect_cavity.py": {
+      "bytes": 22551,
+      "sha256": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/lausanne_annotation_intake.py": {
+      "bytes": 41250,
+      "sha256": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/lausanne_deferred_qc.py": {
+      "bytes": 41038,
+      "sha256": "035223a487df9494f812869bc194a405c43f931c4b5643e09acf62ce86131b99"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/lausanne_train_intake.py": {
+      "bytes": 30850,
+      "sha256": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/real_intake_io.py": {
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/resect_deferred_qc.py": {
+      "bytes": 37261,
+      "sha256": "e5ec5a109a236255421d95ffddd3cfc921ab931831747e80a92ab27e3ac20ccf"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/scripts/resect_train_intake.py": {
+      "bytes": 38938,
+      "sha256": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/core.py": {
+      "bytes": 30914,
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/data_policy.py": {
+      "bytes": 7841,
+      "sha256": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/imaging.py": {
+      "bytes": 41941,
+      "sha256": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/nifti_header_records.py": {
+      "bytes": 2533,
+      "sha256": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1"
+    },
+    "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/source-snapshot/src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "manifests/resect-component-cohort-v1.json": {
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    "manifests/resect-deferred-qc-v1.json": {
+      "bytes": 58690,
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    },
+    "manifests/resect-deferred-qc-v2.json": {
+      "bytes": 59430,
+      "sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c"
+    },
+    "manifests/resect-train-cavity-acquisition-v1.json": {
+      "bytes": 39206,
+      "sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1"
+    },
+    "scripts/acquire_btc_case.py": {
+      "bytes": 27807,
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+    },
+    "scripts/acquire_lausanne_pilot.py": {
+      "bytes": 13051,
+      "sha256": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a"
+    },
+    "scripts/acquire_public_case.py": {
+      "bytes": 11170,
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    "scripts/acquire_resect_cavity.py": {
+      "bytes": 22551,
+      "sha256": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51"
+    },
+    "scripts/lausanne_annotation_intake.py": {
+      "bytes": 41250,
+      "sha256": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1"
+    },
+    "scripts/lausanne_deferred_qc.py": {
+      "bytes": 41038,
+      "sha256": "035223a487df9494f812869bc194a405c43f931c4b5643e09acf62ce86131b99"
+    },
+    "scripts/lausanne_train_intake.py": {
+      "bytes": 30850,
+      "sha256": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f"
+    },
+    "scripts/real_intake_io.py": {
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    "scripts/resect_deferred_qc.py": {
+      "bytes": 37261,
+      "sha256": "e5ec5a109a236255421d95ffddd3cfc921ab931831747e80a92ab27e3ac20ccf"
+    },
+    "scripts/resect_train_intake.py": {
+      "bytes": 38938,
+      "sha256": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa"
+    },
+    "src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "src/resectionlab/core.py": {
+      "bytes": 30914,
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "src/resectionlab/data_policy.py": {
+      "bytes": 7841,
+      "sha256": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84"
+    },
+    "src/resectionlab/imaging.py": {
+      "bytes": 41941,
+      "sha256": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2"
+    },
+    "src/resectionlab/nifti_header_records.py": {
+      "bytes": 2533,
+      "sha256": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1"
+    },
+    "src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "tests/test_lausanne_deferred_qc.py": {
+      "bytes": 20181,
+      "sha256": "24f6cd5941af0843f627ca7d53f39742535e4c5274305fb0bda357cc13c16def"
+    },
+    "tests/test_nifti_header_records.py": {
+      "bytes": 3451,
+      "sha256": "848b11969d1c848b297f386ea15649d26ade34e9581a528478b55dac7ad92f3b"
+    },
+    "tests/test_resect_deferred_qc.py": {
+      "bytes": 18441,
+      "sha256": "098e57d4988f8f56df02d276a70d6abf5cc6d472fcf7afdd714cadedf9fd43a4"
+    }
+  },
+  "claims": {
+    "anatomical_admission": false,
+    "anatomy_qc": "not_run",
+    "annotation_available_at": null,
+    "array_operation": "source_values_counted_only_no_array_retained",
+    "clinical_accuracy": "not_established",
+    "geometric_admission": false,
+    "network_requests": 0,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "review_available_at": null,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "training_admitted": false
+  },
+  "cleanup_pid_observations": [
+    {
+      "pid": 20107,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20108,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20109,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20110,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20111,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20112,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20113,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20116,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20117,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20118,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20120,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20121,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20122,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20123,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20124,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20125,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20126,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20127,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20128,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20129,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20130,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20131,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20132,
+      "present_at_audit": false
+    },
+    {
+      "pid": 20133,
+      "present_at_audit": false
+    }
+  ],
+  "denominator": {
+    "frozen_train_people": 14,
+    "inherited_pairs": 1,
+    "missing_annotation_timepoints": 3,
+    "new_pairs": 24,
+    "people_with_pairs": 13,
+    "qualified_pairs": 25
+  },
+  "image_or_mask_array_decodes": 0,
+  "input_metadata_snapshots_verified": 63,
+  "limitations": [
+    "All24 worker receipts establish source fixity plus completed bounded finite-scalar, exact-binary mask and coded-grid checks under the pinned implementation. This independent audit verifies chain/arithmetic/header consistency, not a second voxel pass.",
+    "Scalar extrema and binary counts are authenticated original worker outputs; no payload was independently recounted.",
+    "Structural QC is not anatomy/label-accuracy or clinical validation. Scanner-frame, anatomical, training and planning admissions remain false.",
+    "Mask foreground is visible cavity; correlated during/after counts are not total removed tissue or independent patient outcomes.",
+    "Inactive qform bytes remain unchanged with code0/qfac0 and are explicitly unselected. Historicalv1 failures remain unchanged under their original recorder."
+  ],
+  "mask_foreground_voxels_sum_across_24_correlated_timepoints": 8294753,
+  "mask_voxels_total_across_24_correlated_timepoints": 1016845534,
+  "maximum_corner_difference_mm": 4.9486663169497134e-05,
+  "missing_annotations": [
+    {
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false,
+      "patient_group": "RESECT:Case11",
+      "phase": "during",
+      "role": "TRAIN"
+    },
+    {
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false,
+      "patient_group": "RESECT:Case11",
+      "phase": "after",
+      "role": "TRAIN"
+    },
+    {
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false,
+      "patient_group": "RESECT:Case15",
+      "phase": "during",
+      "role": "TRAIN"
+    }
+  ],
+  "network_requests": 0,
+  "new_QC_execution": 0,
+  "original_payload_reads": 0,
+  "outcome_counts": {
+    "inherited_structural_pass": 1,
+    "review_passed": 24
+  },
+  "pair_header_status_counts": {
+    "passed": 24
+  },
+  "prior_attempt01_and_attempt02_metadata_hashes_unchanged": true,
+  "resources": {
+    "audit_elapsed_seconds": 1.301140374969691,
+    "batch_elapsed_seconds": 24.401772416895255,
+    "max_mask_explicit_chunk_workspace_bytes": 786432,
+    "outer_elapsed_seconds": 24.655389625113457,
+    "peak_single_worker_rss_bytes_observed": 71860224,
+    "rss_scope": "single worker observed high-water, not hard cap or aggregate process RSS",
+    "worker_reported_seconds_max": 0.9129982499871403,
+    "worker_reported_seconds_min": 0.53504683310166,
+    "worker_reported_seconds_sum": 17.528476123698056
+  },
+  "rows": [
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.6869812500663102,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 119812480,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 29953120
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 200.29804074764252,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "46cd89c704234834486f7726c23374c1350182b8af556ca73e39da2d4b8b2970",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        295,
+        334,
+        304
+      ],
+      "image_voxels_reported": 29953120,
+      "independent_corner_difference_mm": 1.1108202544775664e-05,
+      "mask_background_voxels_reported": 29734763,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 218357,
+      "mask_raw_header_sha256": "258797aafd2679f44f8daf33a372746df06c8f043fca099f04ed4ac4a4997ae6",
+      "pair_id": "Case2-during",
+      "patient_group": "RESECT:Case2",
+      "peak_rss_bytes_observed": 69763072,
+      "receipt_sha256": "1c4a99244c1f70e8023d80f4ef4451cd0763375bc94d43e3269d57507159f410",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.1108202541813099e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.5852173329330981,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 107922780,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 26980695
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 189.80392336845398,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "476cd1ce10fcdf90d9a84cc522204e6b1cdc3682ffed98fd4ffb2ac43d45863f",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        307,
+        315,
+        279
+      ],
+      "image_voxels_reported": 26980695,
+      "independent_corner_difference_mm": 6.718051517659187e-06,
+      "mask_background_voxels_reported": 26431012,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 549683,
+      "mask_raw_header_sha256": "921fd6f4e85b27e254aed5b366e820077a81d23ca1ae8ed502c71bada7b00f24",
+      "pair_id": "Case2-after",
+      "patient_group": "RESECT:Case2",
+      "peak_rss_bytes_observed": 69550080,
+      "receipt_sha256": "4f19c4c006e540a6e0f5047c6f2841245029236ee3e41581be6a0badce24171e",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 6.718051516143599e-06,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.53504683310166,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 119864376,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 29966094
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 216.5686285495758,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "c0b729bd15cb53b33f74eb18a71f85a157029b81d5610b6c0af50aa268904e69",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        311,
+        318,
+        303
+      ],
+      "image_voxels_reported": 29966094,
+      "independent_corner_difference_mm": 2.6727330449358683e-05,
+      "mask_background_voxels_reported": 29774375,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 191719,
+      "mask_raw_header_sha256": "143df1aff8ae905d8d27c5eeca6f125754d19f940032b978028223b89ec79a83",
+      "pair_id": "Case3-after",
+      "patient_group": "RESECT:Case3",
+      "peak_rss_bytes_observed": 69435392,
+      "receipt_sha256": "248e882e6745e76425a50f8b563701044e9fcc9c004e88336fad620bb4f5f3ac",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.672733045648732e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.5899591248016804,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 120135400,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 30033850
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 214.72941291332245,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "2bb4816d5ad2a28b336da16abc481b01745c877435772d24b9bf4f86ac23b3ed",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        319,
+        350,
+        269
+      ],
+      "image_voxels_reported": 30033850,
+      "independent_corner_difference_mm": 4.306514789715091e-05,
+      "mask_background_voxels_reported": 29954240,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 79610,
+      "mask_raw_header_sha256": "03cba568516a0972b86349406835b01f27efca81223e66e2d6753212b57f358c",
+      "pair_id": "Case5-during",
+      "patient_group": "RESECT:Case5",
+      "peak_rss_bytes_observed": 70238208,
+      "receipt_sha256": "1a00755d07612478dc4e8f33d40eaf17d7ea3809fbbc15674b6cc1329c45a7b2",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 4.306514789715091e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.5478567499667406,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 119845008,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 29961252
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 224.00392246246338,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "5d281ccb1baa069b8985e656ca51701ea01866ac4e1985452166f909047f35c4",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        342,
+        314,
+        279
+      ],
+      "image_voxels_reported": 29961252,
+      "independent_corner_difference_mm": 4.380686597181361e-05,
+      "mask_background_voxels_reported": 29543932,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 417320,
+      "mask_raw_header_sha256": "0393aaa6327c3ec42c7ac67f545629e7db0a8fc7b9d151b1e4994dea8d2dc9c6",
+      "pair_id": "Case5-after",
+      "patient_group": "RESECT:Case5",
+      "peak_rss_bytes_observed": 69402624,
+      "receipt_sha256": "3aa35024487329433e8a732fbf723d3a02c454297363581114c072bf223c42ef",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 4.380686596169925e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.9129982499871403,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 119533520,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 29883380
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 191.53333508968353,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "6d17816373b9719fd74640a0de341df0c2d777b3c77ab153e8b33f5c931a7447",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        310,
+        307,
+        314
+      ],
+      "image_voxels_reported": 29883380,
+      "independent_corner_difference_mm": 2.2313882834119934e-05,
+      "mask_background_voxels_reported": 29770317,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 113063,
+      "mask_raw_header_sha256": "5eab92a0941d2d64aadb7e7431aeeb66b61295ad570fb04453c1318d19ecab35",
+      "pair_id": "Case7-during",
+      "patient_group": "RESECT:Case7",
+      "peak_rss_bytes_observed": 69861376,
+      "receipt_sha256": "5f5240a5f7953c0450ff0ef34ebbfaa12e013a62d1b18bc1ac3d73b519f7bf31",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.2313882831590148e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.6468902500346303,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 120315948,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 30078987
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 205.65098178386688,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "acf5b653e504cadcf98442e4f2b40dd1989be3928f14a07634cdf3df2da9c408",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        309,
+        311,
+        313
+      ],
+      "image_voxels_reported": 30078987,
+      "independent_corner_difference_mm": 2.6041725485815805e-05,
+      "mask_background_voxels_reported": 29793117,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 285870,
+      "mask_raw_header_sha256": "e8db3d10ea186100939675eb5cae062973cb45bcb00da00892c39b414cf4004c",
+      "pair_id": "Case7-after",
+      "patient_group": "RESECT:Case7",
+      "peak_rss_bytes_observed": 70615040,
+      "receipt_sha256": "415256a1424438fb4a8e3eb576faa0f0d80a07d9150fc384bcbb6a79a6353e91",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.6041725485815805e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.7884301249869168,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199851040,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49962760
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 239.25098085403442,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "77ab89f59c82139e249b93bb791deeba3358a853f82484d839e997fcc84165c0",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        326,
+        395,
+        388
+      ],
+      "image_voxels_reported": 49962760,
+      "independent_corner_difference_mm": 8.516092152735847e-06,
+      "mask_background_voxels_reported": 49892551,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 70209,
+      "mask_raw_header_sha256": "e9cdbbeec571f4470931195d21d6188d7ed8b423655d9b8961e031463aff8992",
+      "pair_id": "Case12-during",
+      "patient_group": "RESECT:Case12",
+      "peak_rss_bytes_observed": 70172672,
+      "receipt_sha256": "4addeb675b17ea8b99d7bf694ac680391e43ad0989e7df8388637d8c30e65459",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 8.51609214767839e-06,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.7839143329765648,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200063456,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50015864
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 243.14117681980133,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "b4485054bafab932eacf415929dc69f0bb3639703c97a1ac10f75c14365bd3ed",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        356,
+        398,
+        353
+      ],
+      "image_voxels_reported": 50015864,
+      "independent_corner_difference_mm": 1.540917180876736e-05,
+      "mask_background_voxels_reported": 49670469,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 345395,
+      "mask_raw_header_sha256": "592520c6bd528b010e7c1689a72dcd4d9dc7c00249833241d0746056e74e64d0",
+      "pair_id": "Case12-after",
+      "patient_group": "RESECT:Case12",
+      "peak_rss_bytes_observed": 70041600,
+      "receipt_sha256": "b01e8161a2f8cecd6167dd1faa6ff9bd8a4ce1c937fe6a1114c6315f73547bc7",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.5409171810196608e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.7868454169947654,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200203380,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50050845
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 203.858824968338,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "46d854b7e38222eca9522128700d6289d81543ef93d3dcad55bded2207f395f8",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        351,
+        395,
+        361
+      ],
+      "image_voxels_reported": 50050845,
+      "independent_corner_difference_mm": 1.7913162785085585e-05,
+      "mask_background_voxels_reported": 49987927,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 62918,
+      "mask_raw_header_sha256": "947f27357f605abe806eb0d91c3a7b9f9dd4ccfa91c5f52ff6d8cbd0c84a06bb",
+      "pair_id": "Case15-after",
+      "patient_group": "RESECT:Case15",
+      "peak_rss_bytes_observed": 71335936,
+      "receipt_sha256": "414adee803df842c1d734486c569fddf2d4963be728cb1fe286940b4c46de564",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.7913162785085585e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.5887918339576572,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 120150096,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 30037524
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 207.45098173618317,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "b4194543fa6e6c355bd14a170ef0d4a901ae7da6d2e29c18cca82b12a9bfcfcb",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        242,
+        411,
+        302
+      ],
+      "image_voxels_reported": 30037524,
+      "independent_corner_difference_mm": 2.2744947538306573e-05,
+      "mask_background_voxels_reported": 29996308,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 41216,
+      "mask_raw_header_sha256": "7be2a15e61ffa1bc5dd3a099c6e58502a80b15829f5cf34024dd0b79c0d5161d",
+      "pair_id": "Case16-during",
+      "patient_group": "RESECT:Case16",
+      "peak_rss_bytes_observed": 71860224,
+      "receipt_sha256": "d379bccee982f10a4eac18204b56c2eab0770d70a3a0ea53992df1a4f82d021a",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.274494753475165e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.5997405829839408,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 120120000,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 30030000
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 200.29804074764252,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "70b30f4503b2f3465d40fb82feead172bb6bdce2e7bb653f47c0dd17a7eade9e",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        250,
+        385,
+        312
+      ],
+      "image_voxels_reported": 30030000,
+      "independent_corner_difference_mm": 1.496385473312427e-05,
+      "mask_background_voxels_reported": 29878901,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 151099,
+      "mask_raw_header_sha256": "5d013d96a919d4f2a94764f6d310d5d4311420e82e29f6791c182d7fafffdde7",
+      "pair_id": "Case16-after",
+      "patient_group": "RESECT:Case16",
+      "peak_rss_bytes_observed": 70582272,
+      "receipt_sha256": "8714e667432eafaec84cad716b7711aab42fdd6dc89c842b803ba26ea011a110",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.4963854745108078e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.6555294999852777,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199682280,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49920570
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 214.72941291332245,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "3c5029f8f9ba15e16f9699e1c8569fe2eb3a5085213e6335bad0aca4a42dabff",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        305,
+        433,
+        378
+      ],
+      "image_voxels_reported": 49920570,
+      "independent_corner_difference_mm": 1.1947759021541141e-05,
+      "mask_background_voxels_reported": 49315976,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 604594,
+      "mask_raw_header_sha256": "2f536723036d68b2a345b85d0e99faff3bf05cc751e52523646a0f23a46560b1",
+      "pair_id": "Case17-during",
+      "patient_group": "RESECT:Case17",
+      "peak_rss_bytes_observed": 69156864,
+      "receipt_sha256": "94cf5e55af328c2066be0c51f4278075ac4e0edd8490b3d7511e282dd09c1cd1",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.1947759021541141e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.7349231659900397,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199765368,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49941342
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 207.45098173618317,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "60980f7433848ab4c6be1defaea9584143067de591b0e3e1710c78aa8b1910ca",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        306,
+        407,
+        401
+      ],
+      "image_voxels_reported": 49941342,
+      "independent_corner_difference_mm": 1.3402755095026389e-05,
+      "mask_background_voxels_reported": 49027245,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 914097,
+      "mask_raw_header_sha256": "d8c8ac0eca2acbffa75fc608e7d46b5f973364fd985ed01e42e7c282c056b54f",
+      "pair_id": "Case17-after",
+      "patient_group": "RESECT:Case17",
+      "peak_rss_bytes_observed": 70483968,
+      "receipt_sha256": "112609443c48005684ebef0ab1b2f13f9dd80d4694de44c23e5620782f1a0543",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.3402755097629588e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.7171632910612971,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200155200,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50038800
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 224.00392246246338,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "094b4ee5d9a72219bf69474a5959070146bce2c1c4e98ed6a256acad864bfb7c",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        392,
+        370,
+        345
+      ],
+      "image_voxels_reported": 50038800,
+      "independent_corner_difference_mm": 1.1300964383133235e-05,
+      "mask_background_voxels_reported": 49354769,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 684031,
+      "mask_raw_header_sha256": "99fc8893b74dc1ad6b5bcc17c19e37de6c97723a482f1cfc658794a6838f688a",
+      "pair_id": "Case18-during",
+      "patient_group": "RESECT:Case18",
+      "peak_rss_bytes_observed": 70025216,
+      "receipt_sha256": "1512392e97c07b553d87c3d188149bbe04cdc39e9b98e613cf21af943a931117",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.1300964392095916e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.697417207993567,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200060928,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50015232
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 212.8980404138565,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "52d55883c4edd25de5f5b974582a02b1b07cb45b10d7466583045848a1465dfe",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        402,
+        384,
+        324
+      ],
+      "image_voxels_reported": 50015232,
+      "independent_corner_difference_mm": 8.7481295868931e-06,
+      "mask_background_voxels_reported": 49259644,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 755588,
+      "mask_raw_header_sha256": "f2f61a11f11bf8d9d6f2b957e5196adc2eddf965d2d1a6b566dc3da0330a17e9",
+      "pair_id": "Case18-after",
+      "patient_group": "RESECT:Case18",
+      "peak_rss_bytes_observed": 69828608,
+      "receipt_sha256": "4505246fd1b98694f438f7b70940934637118676820a7458dc64c4a88c6ff807",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 8.748129582485048e-06,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.9085272920783609,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199784904,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49946226
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 196.76862907409668,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "1eafa18f522bc74aa76f47ea0fbbc6ee0d78e84bfa9c60da73b88de725fe6c88",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        362,
+        407,
+        339
+      ],
+      "image_voxels_reported": 49946226,
+      "independent_corner_difference_mm": 4.218752501128792e-05,
+      "mask_background_voxels_reported": 49637202,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 309024,
+      "mask_raw_header_sha256": "8c4e54e8c324b937b26ca68c3520a9cff0952b1329c9f4cb8ac202d2322e6467",
+      "pair_id": "Case21-during",
+      "patient_group": "RESECT:Case21",
+      "peak_rss_bytes_observed": 70516736,
+      "receipt_sha256": "7a4e58d1b5f2bad7fc4a6c081e27f3e8888ace372452343b36736ffb93bd3cb6",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 4.218752501813731e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.8709926248993725,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200403456,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50100864
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 209.25882482528687,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "9728bcadc5fce3c3d0cdc11ab61915ccb08e1cf9341f4d63b4166e9e9e35c491",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        409,
+        348,
+        352
+      ],
+      "image_voxels_reported": 50100864,
+      "independent_corner_difference_mm": 4.244553311715807e-05,
+      "mask_background_voxels_reported": 49472675,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 628189,
+      "mask_raw_header_sha256": "8ecce4eeb5cafdb17ee2a25f3ec7973ef12494b99d656410c6a3a68ed607d5d0",
+      "pair_id": "Case21-after",
+      "patient_group": "RESECT:Case21",
+      "peak_rss_bytes_observed": 70451200,
+      "receipt_sha256": "84025110a805e7cb784c67d429c6f6c53e5ba7e4a0e4e50b4ec684f230338d4f",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 4.244553310637879e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.810427833115682,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199721172,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49930293
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 179.59215891361237,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "f0299f6ee02c0ce3c2fbe7403c04e9bee06a4150899c52dfdd47379c2d3150e4",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        371,
+        397,
+        339
+      ],
+      "image_voxels_reported": 49930293,
+      "independent_corner_difference_mm": 2.2227590146412996e-05,
+      "mask_background_voxels_reported": 49318539,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 611754,
+      "mask_raw_header_sha256": "ccfce1db8233308619c7f787cd04c920d274c6439343034cc3793ba085baf62b",
+      "pair_id": "Case23-during",
+      "patient_group": "RESECT:Case23",
+      "peak_rss_bytes_observed": 69484544,
+      "receipt_sha256": "43eb36d360cf8cbf384ac9c3c8afe4e8acc432e37bf1ae048716b0b0b032103b",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.222759014503307e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.8066376249771565,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200275200,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50068800
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 214.72941291332245,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "e71b3405d283010d983c3ef20f15a6bbc6f3b5f71b02ce6567a855d82bc908b5",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        380,
+        432,
+        305
+      ],
+      "image_voxels_reported": 50068800,
+      "independent_corner_difference_mm": 1.9455699594587508e-05,
+      "mask_background_voxels_reported": 49324605,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 744195,
+      "mask_raw_header_sha256": "8b24216bb01b4f5e6148c767a69543c3570f376b6ef5769fa87222f385c62e2d",
+      "pair_id": "Case23-after",
+      "patient_group": "RESECT:Case23",
+      "peak_rss_bytes_observed": 69795840,
+      "receipt_sha256": "926d96782c23bbde831517709bd19e3523f09e12bf2c33e13a225ba1cec80090",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 1.9455699594587508e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.8306399590801448,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199694560,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49923640
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 160.0156887769699,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "45f914011bc77b7f6b6486ef1e9a4d66de984879d53db083f24a16a93cbc2f18",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        326,
+        403,
+        380
+      ],
+      "image_voxels_reported": 49923640,
+      "independent_corner_difference_mm": 2.116636409927708e-05,
+      "mask_background_voxels_reported": 49921509,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 2131,
+      "mask_raw_header_sha256": "4a93b8cc442f0e66eba36fa4a442c2655f0a655a318caa491ba9e8d4a81bbeca",
+      "pair_id": "Case24-during",
+      "patient_group": "RESECT:Case24",
+      "peak_rss_bytes_observed": 69419008,
+      "receipt_sha256": "3e618813daa9d3c35d18a15f6c1fc40d0c7eca996b576a065850d567ea2072bb",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.1166364088137677e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.8047322498168796,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199823440,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49955860
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 171.29804146289825,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "d2cb6ac1ed49de4143f34a9a57df826758874d8efe427ec8b84872875a0c0a25",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        340,
+        421,
+        349
+      ],
+      "image_voxels_reported": 49955860,
+      "independent_corner_difference_mm": 2.246723441156686e-05,
+      "mask_background_voxels_reported": 49770994,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 184866,
+      "mask_raw_header_sha256": "66b515640e108aa65fae688f84d42410637199133147a397ba8f63dd7c810450",
+      "pair_id": "Case24-after",
+      "patient_group": "RESECT:Case24",
+      "peak_rss_bytes_observed": 69517312,
+      "receipt_sha256": "886938190ea5a03bf68ebd092b42f16fe85c418df9bb13a141009cb5707deb98",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 2.2467234410887806e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.8270322498865426,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 200250880,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 50062720
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 177.91764914989471,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "686ce3093ae0125fd8bb41c8da7d4cd9728db50aab6a6ee70c3a31e3d47008c8",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        358,
+        380,
+        368
+      ],
+      "image_voxels_reported": 50062720,
+      "independent_corner_difference_mm": 4.6611121447637196e-05,
+      "mask_background_voxels_reported": 49875066,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 187654,
+      "mask_raw_header_sha256": "0df03d549631877653d0bfdba82295b579dba58d90a0e29f19f46a4ae0f924a8",
+      "pair_id": "Case25-during",
+      "patient_group": "RESECT:Case25",
+      "peak_rss_bytes_observed": 69517312,
+      "receipt_sha256": "fdff575906d9cdf88dc6565b4e745638ad15bb864c380f64c4c9b4c083851372",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 4.6611121447637196e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    },
+    {
+      "anatomical_training_or_planning_admission": false,
+      "elapsed_seconds": 0.8117810420226306,
+      "fixity_before_and_after_reported": "passed",
+      "image_budget_from_saved_header": {
+        "chunk_voxels": 65536,
+        "native_payload_bytes": 199947264,
+        "scalar_workspace_bytes_bound": 851968,
+        "voxels": 49986816
+      },
+      "image_content_review": "completed_finite_full_voxel_count_reported",
+      "image_dtype": "<f4",
+      "image_header_only_review": "passed_unchanged_active_sform_rules",
+      "image_maximum_reported": 196.76862907409668,
+      "image_minimum_reported": 0.0,
+      "image_raw_header_sha256": "ec102b8062e8baf6af1a7b826ed53dc3709a6463ce82e09867680b7df0c5cd6f",
+      "image_scalar_workspace_bytes": 851968,
+      "image_shape": [
+        352,
+        366,
+        388
+      ],
+      "image_voxels_reported": 49986816,
+      "independent_corner_difference_mm": 4.9486663169497134e-05,
+      "mask_background_voxels_reported": 49844645,
+      "mask_count_sum_and_budget_recomputed": true,
+      "mask_geometry_recomputed": true,
+      "mask_positive_voxels_reported": 142171,
+      "mask_raw_header_sha256": "528396ddac89754f61667e5d3365750093262bb2cc692232a7f9e7900c67d3d8",
+      "pair_id": "Case25-after",
+      "patient_group": "RESECT:Case25",
+      "peak_rss_bytes_observed": 71516160,
+      "receipt_sha256": "307109d4de79b403362e852da8bdf1faa751baac7357e95bfa7adc00b77153bc",
+      "recorded_pair_structural_content_QC_pass": true,
+      "reported_header_pair_relation": {
+        "geometric_admission": false,
+        "interpretation": "source_coded_grid_correspondence_only",
+        "maximum_corner_difference_mm": 4.948666316291375e-05,
+        "status": "passed",
+        "tolerance_mm": 0.01
+      },
+      "status": "review_passed"
+    }
+  ],
+  "run_id": "remaining-train-pairs-v2-01",
+  "schema": "resect-deferred-qc-v2-saved-output-audit-v1",
+  "source_commit": "004bdcfe69d1f11a9866a5882e5f202ef9358926",
+  "source_files_verified": 18,
+  "status": "passed_saved_output_audit_of_completed_structural_QC"
+}

@@ -1,0 +1,50 @@
+{
+  "source_id": "Case7-during-mask",
+  "source_binding": "6a08f2f6a436f471fa127e7e4aeaab1a1d462f585486412e7b74bd528dfe653b",
+  "status": "downloaded_verified",
+  "source": {
+    "source_id": "Case7-during-mask",
+    "source_authority": {
+      "id": "Case7-during-mask",
+      "pair_id": "Case7-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case7-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd226cc7ab292b22d4e116/?revision=2",
+      "bytes": 41837,
+      "expected_md5": "9672da0cf8e908b53ffec8fc15e5ae04",
+      "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+      "file_revision": 2,
+      "osf_file_id": "64cd226cc7ab292b22d4e116",
+      "short_alias": null
+    },
+    "patient_group": "RESECT:Case7",
+    "role": "TRAIN",
+    "source_release": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+    "mirror_path": "dataset/Case7/Case7-US-during-resection.nii.gz",
+    "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case7/Case7-US-during-resection.nii.gz",
+    "mirror_xet_hash": "ad28a9f9d42757fae5c4ac42c7f7a6cfdff7eda46e70bd9b5a02c69a01aaf18f",
+    "expected_bytes": 41837,
+    "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+    "md5": "9672da0cf8e908b53ffec8fc15e5ae04"
+  },
+  "declaration_sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+  "started_utc": "2026-10-08T18:02:10.998862+00:00",
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "bytes": 41837,
+  "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+  "md5": "9672da0cf8e908b53ffec8fc15e5ae04",
+  "path": "build/resect-exact-mirror-acquisition-v1/objects/Case7-during-mask/Case7-US-during-resection.nii.gz",
+  "finished_utc": "2026-10-08T18:02:11.347776+00:00",
+  "retained_partial_bytes": 0
+}

@@ -1,0 +1,513 @@
+{
+  "schema": "resect-pair-review-v2",
+  "manifest_sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c",
+  "header_recorders": {
+    "image": {
+      "schema": "resectionlab.nifti1-header-record/2",
+      "module": "src/resectionlab/nifti_header_records.py",
+      "function": "nifti1_header_record_coded_v2"
+    },
+    "mask": {
+      "schema": "legacy_nifti1_header_record",
+      "module": "src/resectionlab/critical_evidence.py",
+      "function": "nifti1_header_record"
+    }
+  },
+  "run_id": "remaining-train-pairs-v2-01",
+  "pair": {
+    "id": "Case23-after",
+    "patient_group": "RESECT:Case23",
+    "phase": "after",
+    "source_ids": [
+      "Case23-after-image",
+      "Case23-after-mask"
+    ],
+    "bytes": 26512354,
+    "reuse_existing_pilot": false,
+    "role": "TRAIN"
+  },
+  "sources": {
+    "pair": {
+      "id": "Case23-after",
+      "patient_group": "RESECT:Case23",
+      "phase": "after",
+      "source_ids": [
+        "Case23-after-image",
+        "Case23-after-mask"
+      ],
+      "bytes": 26512354,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    "image": {
+      "id": "Case23-after-image",
+      "pair_id": "Case23-after",
+      "kind": "original_ultrasound",
+      "path": "originals/Case23-US-after.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case23/US/Case23-US-after.nii.gz",
+      "bytes": 26426798,
+      "expected_md5": "92ab54c999b8f990ea5301a669f0da5b",
+      "sha256": null
+    },
+    "mask": {
+      "id": "Case23-after-mask",
+      "pair_id": "Case23-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case23-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd23dfa2be6b3add3148a2/?revision=2",
+      "bytes": 85556,
+      "expected_md5": "0458f8f96635db7277d83a4ae5283a68",
+      "sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+      "file_revision": 2,
+      "osf_file_id": "64cd23dfa2be6b3add3148a2",
+      "short_alias": null
+    },
+    "image_sha256": "60aac5029efd855a14e25d19dc0628579db58db85291a630132bc155329a3b8b",
+    "mask_sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+    "import_receipt": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-after-mask/receipt.json",
+      "bytes": 3143,
+      "sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23"
+    },
+    "mirror_receipt": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case23-after-mask/attempt-01/receipt.json",
+      "bytes": 2212,
+      "sha256": "f21b8f396928c41350c2f7b07465b6572fb2346450099a27a806f30468c24ebc"
+    }
+  },
+  "intent_sha256": "659b647318eda78d15d1a99a568658a67e7a39ee10398b5c87422bf3a96e0d85",
+  "declaration_sha256": "2fa4151d85168b37768a89e6bd0cb8cb29d6d793d8b3a606a710a36fc5785c69",
+  "status": "review_passed",
+  "anatomy_qc": "not_run",
+  "clinical_accuracy": "not_established",
+  "geometric_admission": false,
+  "anatomical_admission": false,
+  "scanner_frame_admitted": false,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "network_requests": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "array_operation": "source_values_counted_only_no_array_retained",
+  "fixity_before": "passed",
+  "image_qc": {
+    "header_qc": {
+      "status": "passed",
+      "extensions": {
+        "status": "absent_zero_padding",
+        "offset": 348,
+        "bytes": 4,
+        "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "indicator": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "extension_count": 0,
+        "records": [],
+        "payloads_interpreted": false,
+        "used_as_annotation_or_coordinate_evidence": false
+      },
+      "dtype": "<f4",
+      "source_scaling": [
+        0.9176470637321472,
+        0.0
+      ]
+    },
+    "scalar_qc": {
+      "status": "passed",
+      "voxels": 50068800,
+      "minimum": 0.0,
+      "maximum": 214.72941291332245,
+      "dtype_after_scaling": "float64",
+      "array_retained": false
+    },
+    "geometry_qc": {
+      "status": "passed",
+      "header": {
+        "file": "Case23-US-after.nii.gz",
+        "shape": [
+          380,
+          432,
+          305
+        ],
+        "affine_ras_mm": [
+          [
+            0.12174966931343079,
+            0.09886188805103302,
+            0.11383961141109467,
+            -43.35371780395508
+          ],
+          [
+            -0.11229446530342102,
+            0.15709680318832397,
+            -0.016330435872077942,
+            4.302290439605713
+          ],
+          [
+            -0.1006135419011116,
+            -0.055705223232507706,
+            0.1559806913137436,
+            7.907491683959961
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 0,
+        "sform_code": 1,
+        "qform_native": null,
+        "sform_native": [
+          [
+            0.12174966931343079,
+            0.09886188805103302,
+            0.11383961141109467,
+            -43.35371780395508
+          ],
+          [
+            -0.11229446530342102,
+            0.15709680318832397,
+            -0.016330435872077942,
+            4.302290439605713
+          ],
+          [
+            -0.1006135419011116,
+            -0.055705223232507706,
+            0.1559806913137436,
+            7.907491683959961
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.19379399817744025,
+          0.19379409272831177,
+          0.1937940048729951
+        ],
+        "voxel_volume_mm3": 0.00727815323808706,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          51.07940742964397,
+          35.841713880634835,
+          36.401445397073104
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      }
+    },
+    "raw_grid": {
+      "schema": "resectionlab.nifti1-header-record/2",
+      "source_file_sha256": "sha256:60aac5029efd855a14e25d19dc0628579db58db85291a630132bc155329a3b8b",
+      "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAfAGwATEBAQABAAAAAAAAAAAAAAAAAAAAAAAAABAAIAAAAAAAAADvcUY+9XFGPu9xRj4AAAAAAACAPwAAAAAAAAAAAACwQ+vqaj8AAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1uYzJuaWkgQ2FzZTIzL1VTL0Nhc2UyMy1VUy1hZnRlci5tbmMgQ2FzZTIzLVVTLWFmdGVyLm5paQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAORX+T0aeMo9viTpPTVqLcKk+uW9/N0gPmjHhbxdrIlAeQ7OvSkrZL1nuR8+LAr9QAAAAAAAAAAAAAAAAAAAAABuKzEA",
+      "header_sha256": "e71b3405d283010d983c3ef20f15a6bbc6f3b5f71b02ce6567a855d82bc908b5",
+      "raw_grid": {
+        "shape": [
+          380,
+          432,
+          305
+        ],
+        "spatial_units": "mm",
+        "xyzt_units_code": 10,
+        "pixdim": [
+          0.0,
+          0.19379399716854095,
+          0.19379408657550812,
+          0.19379399716854095,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "qform_code": 0,
+        "sform_code": 1,
+        "qform_status": "inactive_not_decoded",
+        "qform_numeric": null,
+        "quaternion_encoding": {
+          "quatern_b": 0.0,
+          "quatern_c": 0.0,
+          "quatern_d": 0.0,
+          "qoffset_x": 0.0,
+          "qoffset_y": 0.0,
+          "qoffset_z": 0.0
+        },
+        "sform_numeric": [
+          [
+            0.12174966931343079,
+            0.09886188805103302,
+            0.11383961141109467,
+            -43.35371780395508
+          ],
+          [
+            -0.11229446530342102,
+            0.15709680318832397,
+            -0.016330435872077942,
+            4.302290439605713
+          ],
+          [
+            -0.1006135419011116,
+            -0.055705223232507706,
+            0.1559806913137436,
+            7.907491683959961
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "decoding_budget": {
+      "voxels": 50068800,
+      "native_payload_bytes": 200275200,
+      "chunk_voxels": 65536,
+      "scalar_workspace_bytes_bound": 851968
+    }
+  },
+  "mask_qc": {
+    "status": "passed",
+    "raw_grid": {
+      "source_file_sha256": "sha256:f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+      "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAfAGwATEBAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD/vcUY+9XFGPu9xRj4AAAAAAAAAAAAAAAAAAAAAAACwQwAAgD8AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAKwJZ73bSp0+09+avjVqLcJdrIlALAr9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABuKzEA",
+      "header_sha256": "8b24216bb01b4f5e6148c767a69543c3570f376b6ef5769fa87222f385c62e2d",
+      "raw_grid": {
+        "shape": [
+          380,
+          432,
+          305
+        ],
+        "spatial_units": "mm",
+        "xyzt_units_code": 2,
+        "pixdim": [
+          1.0,
+          0.19379399716854095,
+          0.19379408657550812,
+          0.19379399716854095,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_code": 1,
+        "sform_code": 0,
+        "qform_numeric_including_inactive": [
+          [
+            0.1217496928230184,
+            0.09886188253008041,
+            0.11383963649292457,
+            -43.35371780395508
+          ],
+          [
+            -0.11229447018060476,
+            0.15709679863486115,
+            -0.0163304603668483,
+            4.302290439605713
+          ],
+          [
+            -0.10061350606612611,
+            -0.0557052244670283,
+            0.15598066087155182,
+            7.907491683959961
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_numeric": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "extensions": {
+      "status": "absent_zero_padding",
+      "offset": 348,
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "indicator": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "extension_count": 0,
+      "records": [],
+      "payloads_interpreted": false,
+      "used_as_annotation_or_coordinate_evidence": false
+    },
+    "dtype": "|u1",
+    "source_scaling": [
+      1.0,
+      0.0
+    ],
+    "decoding_budget": {
+      "voxels": 50068800,
+      "native_payload_bytes": 50068800,
+      "logical_float64_bytes": 400550400,
+      "chunk_voxels": 65536,
+      "chunk_working_bytes_bound": 786432
+    },
+    "positive_voxels": 744195,
+    "background_voxels": 49324605,
+    "background_semantics": "unknown",
+    "array_operation": "none; source values counted only"
+  },
+  "mask_geometry": {
+    "status": "passed",
+    "header": {
+      "file": "Case23-US-after-resection.nii.gz",
+      "shape": [
+        380,
+        432,
+        305
+      ],
+      "affine_ras_mm": [
+        [
+          0.1217496928230184,
+          0.09886188253008041,
+          0.11383963649292457,
+          -43.35371780395508
+        ],
+        [
+          -0.11229447018060476,
+          0.15709679863486115,
+          -0.0163304603668483,
+          4.302290439605713
+        ],
+        [
+          -0.10061350606612611,
+          -0.0557052244670283,
+          0.15598066087155182,
+          7.907491683959961
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_units": "mm",
+      "physical_units": "mm",
+      "unit_scale_to_mm": 1.0,
+      "qform_code": 1,
+      "sform_code": 0,
+      "qform_native": [
+        [
+          0.1217496928230184,
+          0.09886188253008041,
+          0.11383963649292457,
+          -43.35371780395508
+        ],
+        [
+          -0.11229447018060476,
+          0.15709679863486115,
+          -0.0163304603668483,
+          4.302290439605713
+        ],
+        [
+          -0.10061350606612611,
+          -0.0557052244670283,
+          0.15598066087155182,
+          7.907491683959961
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_native": null,
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        0.19379399716854098,
+        0.19379408657550815,
+        0.19379399716854098
+      ],
+      "voxel_volume_mm3": 0.007278152679772583,
+      "handedness": "right",
+      "anisotropic": false,
+      "obliquity_degrees": [
+        51.07939825494466,
+        35.84171366138395,
+        36.40145747402315
+      ],
+      "status": "passed_header_checks",
+      "visual_alignment_review": "pending",
+      "frame": "RAS+",
+      "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+    }
+  },
+  "pair_geometry": {
+    "status": "passed",
+    "maximum_corner_difference_mm": 1.9455699594587508e-05,
+    "tolerance_mm": 0.01,
+    "interpretation": "source_coded_grid_correspondence_only",
+    "geometric_admission": false
+  },
+  "image_prefix": {
+    "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAfAGwATEBAQABAAAAAAAAAAAAAAAAAAAAAAAAABAAIAAAAAAAAADvcUY+9XFGPu9xRj4AAAAAAACAPwAAAAAAAAAAAACwQ+vqaj8AAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1uYzJuaWkgQ2FzZTIzL1VTL0Nhc2UyMy1VUy1hZnRlci5tbmMgQ2FzZTIzLVVTLWFmdGVyLm5paQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAORX+T0aeMo9viTpPTVqLcKk+uW9/N0gPmjHhbxdrIlAeQ7OvSkrZL1nuR8+LAr9QAAAAAAAAAAAAAAAAAAAAABuKzEA",
+    "header_sha256": "e71b3405d283010d983c3ef20f15a6bbc6f3b5f71b02ce6567a855d82bc908b5"
+  },
+  "mask_prefix": {
+    "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAfAGwATEBAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD/vcUY+9XFGPu9xRj4AAAAAAAAAAAAAAAAAAAAAAACwQwAAgD8AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAKwJZ73bSp0+09+avjVqLcJdrIlALAr9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABuKzEA",
+    "header_sha256": "8b24216bb01b4f5e6148c767a69543c3570f376b6ef5769fa87222f385c62e2d"
+  },
+  "fixity_after": "passed",
+  "elapsed_seconds": 0.8066376249771565,
+  "peak_rss_bytes": 69795840,
+  "rss_is_observed_not_hard_limit": true,
+  "numerical_library_threads": 1
+}

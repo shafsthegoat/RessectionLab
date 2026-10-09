@@ -1,0 +1,444 @@
+{
+  "schema": "resect-deferred-qc-batch-v2",
+  "run_id": "remaining-train-pairs-v2-01",
+  "manifest_sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c",
+  "header_recorders": {
+    "image": {
+      "schema": "resectionlab.nifti1-header-record/2",
+      "module": "src/resectionlab/nifti_header_records.py",
+      "function": "nifti1_header_record_coded_v2"
+    },
+    "mask": {
+      "schema": "legacy_nifti1_header_record",
+      "module": "src/resectionlab/critical_evidence.py",
+      "function": "nifti1_header_record"
+    }
+  },
+  "status": "bounded_reviews_finished",
+  "denominator": {
+    "frozen_train_people": 14,
+    "people_with_pairs": 13,
+    "qualified_pairs": 25,
+    "new_pairs": 24,
+    "inherited_pairs": 1,
+    "missing_annotation_timepoints": 3
+  },
+  "outcomes": [
+    {
+      "pair_id": "Case3-during",
+      "status": "inherited_structural_pass",
+      "receipt": {
+        "path": "artifacts/resect-component-admission-v1/pair-qc-01/worker-result.json",
+        "bytes": 5637,
+        "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+      },
+      "parent": {
+        "path": "artifacts/resect-component-admission-v1/pair-qc-01/supervision.json",
+        "bytes": 311,
+        "sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337"
+      },
+      "current_source_redecoded": false,
+      "anatomy_qc": "not_run",
+      "clinical_accuracy": "not_established",
+      "geometric_admission": false,
+      "anatomical_admission": false,
+      "scanner_frame_admitted": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "network_requests": 0,
+      "optimizer_updates": 0,
+      "recorded_rl_transitions": 0,
+      "array_operation": "source_values_counted_only_no_array_retained"
+    },
+    {
+      "pair_id": "Case2-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-during",
+      "intent_sha256": "cd3522c5d64decaf7a51b8862f95e2270e896e90272fd384808328cb2acb609e",
+      "worker_pid": 20107,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "1c4a99244c1f70e8023d80f4ef4451cd0763375bc94d43e3269d57507159f410",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case2-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case2-after",
+      "intent_sha256": "b029a1e69496116b7f7fceeafff3b4211658fe0744e3ab900e75ef252cb320b6",
+      "worker_pid": 20108,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "4f19c4c006e540a6e0f5047c6f2841245029236ee3e41581be6a0badce24171e",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case3-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case3-after",
+      "intent_sha256": "a63e16a7af669356ca7d126ae19dde66c47445d0398c09a697e4f9e3b45680df",
+      "worker_pid": 20109,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "248e882e6745e76425a50f8b563701044e9fcc9c004e88336fad620bb4f5f3ac",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case5-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-during",
+      "intent_sha256": "cace8fbef6ffc63a292a92755cfad65c1e8d072934ae38d0dceac667f9abfef3",
+      "worker_pid": 20110,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "1a00755d07612478dc4e8f33d40eaf17d7ea3809fbbc15674b6cc1329c45a7b2",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case5-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case5-after",
+      "intent_sha256": "29d4c08ee7e82adbbb1f46a26336021d78873ddf33665ae8bf017fc71a9d7c79",
+      "worker_pid": 20111,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "3aa35024487329433e8a732fbf723d3a02c454297363581114c072bf223c42ef",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case7-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-during",
+      "intent_sha256": "1204a6d69765b13d6da78b02593fcbabdd833d207fd1b9700e7102f2af732465",
+      "worker_pid": 20112,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "5f5240a5f7953c0450ff0ef34ebbfaa12e013a62d1b18bc1ac3d73b519f7bf31",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case7-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case7-after",
+      "intent_sha256": "0cae2ad7cce11d485ff7e901328f463dbbe9b2657bc0f89028ecab320f8d5fd1",
+      "worker_pid": 20113,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "415256a1424438fb4a8e3eb576faa0f0d80a07d9150fc384bcbb6a79a6353e91",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case12-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-during",
+      "intent_sha256": "051071ec0db699be2bfc3375b882a07c373c0de663c9d95b40ecbc3501633a6a",
+      "worker_pid": 20116,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "4addeb675b17ea8b99d7bf694ac680391e43ad0989e7df8388637d8c30e65459",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case12-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case12-after",
+      "intent_sha256": "27fc2f16052b4f174ea695a819465b4b03a67c30c39112652c8edfbc5cc0c76e",
+      "worker_pid": 20117,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "b01e8161a2f8cecd6167dd1faa6ff9bd8a4ce1c937fe6a1114c6315f73547bc7",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case15-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case15-after",
+      "intent_sha256": "8e3e94dbe25ded2b71eb6483c25a910748ae25054fa67c54858b724c7ec1e8ae",
+      "worker_pid": 20118,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "414adee803df842c1d734486c569fddf2d4963be728cb1fe286940b4c46de564",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case16-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-during",
+      "intent_sha256": "1324a1b036a7d3d6386a85156b15dfafc7b08263980c90936465bc2212189de5",
+      "worker_pid": 20120,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "d379bccee982f10a4eac18204b56c2eab0770d70a3a0ea53992df1a4f82d021a",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case16-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case16-after",
+      "intent_sha256": "0869ad301da8b67e21018dc7281b996cd42b32040b3b006509d9fd0dafbb8454",
+      "worker_pid": 20121,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "8714e667432eafaec84cad716b7711aab42fdd6dc89c842b803ba26ea011a110",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case17-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-during",
+      "intent_sha256": "4aabb7e42c278a737391efc1089bfa54232b95fde6bd9b153873ea6072088dfa",
+      "worker_pid": 20122,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "94cf5e55af328c2066be0c51f4278075ac4e0edd8490b3d7511e282dd09c1cd1",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case17-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case17-after",
+      "intent_sha256": "2461204a16227efc8b3a2b4d1f161b39de1cc36db203ec7dbc47052ce86153f9",
+      "worker_pid": 20123,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "112609443c48005684ebef0ab1b2f13f9dd80d4694de44c23e5620782f1a0543",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case18-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-during",
+      "intent_sha256": "fa1cc6424ec7388354d490434205aa209da197d9c9e09656b98e62b09b67bdd2",
+      "worker_pid": 20124,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "1512392e97c07b553d87c3d188149bbe04cdc39e9b98e613cf21af943a931117",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case18-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case18-after",
+      "intent_sha256": "8fae9cc24343517226d3a40f4de6cfd171becc53abedb9cb56733d12ca6783d1",
+      "worker_pid": 20125,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "4505246fd1b98694f438f7b70940934637118676820a7458dc64c4a88c6ff807",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case21-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-during",
+      "intent_sha256": "ce79d261e35881756b05731e576563bc216c035587fa86a82028d1802157e593",
+      "worker_pid": 20126,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "7a4e58d1b5f2bad7fc4a6c081e27f3e8888ace372452343b36736ffb93bd3cb6",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case21-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case21-after",
+      "intent_sha256": "4e7ea70583fab75f511c0a9c3f8dd486b69dbceabc7bc28e3ce2cb0a7b964f8d",
+      "worker_pid": 20127,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "84025110a805e7cb784c67d429c6f6c53e5ba7e4a0e4e50b4ec684f230338d4f",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case23-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-during",
+      "intent_sha256": "33582849ea7bcd654b99d9ba3bd5a9f4cb8e56b0f32d9b159be3c51af1d672e8",
+      "worker_pid": 20128,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "43eb36d360cf8cbf384ac9c3c8afe4e8acc432e37bf1ae048716b0b0b032103b",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case23-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case23-after",
+      "intent_sha256": "659b647318eda78d15d1a99a568658a67e7a39ee10398b5c87422bf3a96e0d85",
+      "worker_pid": 20129,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "926d96782c23bbde831517709bd19e3523f09e12bf2c33e13a225ba1cec80090",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case24-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-during",
+      "intent_sha256": "2ef6cb184915001a30d4ae5e216dac628d5963fdd828ad26f34923a057a5fd35",
+      "worker_pid": 20130,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "3e618813daa9d3c35d18a15f6c1fc40d0c7eca996b576a065850d567ea2072bb",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case24-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case24-after",
+      "intent_sha256": "d758134412cccf5769ecad58a444608048f5019afc300eacea33fa3c10480af5",
+      "worker_pid": 20131,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "886938190ea5a03bf68ebd092b42f16fe85c418df9bb13a141009cb5707deb98",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case25-during",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-during",
+      "intent_sha256": "955b0df2e549e9eac593779576814ed5ac3f120081f8db4889bf006baa283bc1",
+      "worker_pid": 20132,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "fdff575906d9cdf88dc6565b4e745638ad15bb864c380f64c4c9b4c083851372",
+      "review_status": "review_passed"
+    },
+    {
+      "pair_id": "Case25-after",
+      "status": "review_passed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v2/runs/remaining-train-pairs-v2-01/pairs/Case25-after",
+      "intent_sha256": "8ad6a94ebb60439848b3aaf409948a2e9e5f5aaf3f9f9a40c059fa50b5bf9efe",
+      "worker_pid": 20133,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "307109d4de79b403362e852da8bdf1faa751baac7357e95bfa7adc00b77153bc",
+      "review_status": "review_passed"
+    }
+  ],
+  "missing_annotations": [
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "after",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case15",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    }
+  ],
+  "excluded_members": [
+    {
+      "patient_group": "RESECT:Case1",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "patient_group": "RESECT:Case6",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case8",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case13",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case14",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case19",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case26",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case27",
+      "role": "MEASUREMENT_EVAL"
+    }
+  ],
+  "rights": {
+    "noncommercial_only": true,
+    "commercial_clearance": false,
+    "annotations_license": "CC-BY-NC-SA-4.0",
+    "original_license": "CC-BY-4.0",
+    "financial_benefits_from_annotation_distribution_prohibited": true,
+    "attribution_citations_and_share_alike_required": true,
+    "manual_contours_morphological_interpolation_expert_review": true,
+    "learned_teacher": "none_reported_in_documented_protocol",
+    "visible_cavity_not_total_removed_tissue_or_reward": true,
+    "clinical_accuracy": "not_established",
+    "spatial_planning_admitted": false
+  },
+  "historical_status_receipts": [
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T170443035954Z-e7bc18e5/outcome.json",
+      "status": "rate_deferred",
+      "sha256": "c558a2d876ad0168b0d030c5b8aef5abebee248286b4aa88bfb2bbeccc0d44fb"
+    },
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T171943773377Z-600ced29/outcome.json",
+      "status": "rate_deferred",
+      "sha256": "b3e10751d2f7b0e48c800223e08847a5b21f435aa9312dcfaabbfd81386bc3b4"
+    },
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T174944572869Z-e1003436/outcome.json",
+      "status": "transport_attempts_exhausted",
+      "sha256": "9e90df8fec3980c1049b019ac6a557e1644ee2566a556254b0b908f3d289c943"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/files/Case2-during-image/receipt.json",
+      "status": "downloaded_verified",
+      "sha256": "e2fa36bd24a7f1b3e7f8e6b0877ecadf829b8ddc04dcb781786f3deef55ca8bc"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/files/Case2-during-mask/receipt.json",
+      "status": "failed",
+      "sha256": "cac06ff101a75093db9177420af985b7c45cbe88aa63485a7be44c40fcccfd60"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/supervision.json",
+      "status": "worker_failed",
+      "sha256": "056fc30466c8e42e7d1d6d2b51e33797bdce87936fc4d6dd40e78976d7528a13"
+    }
+  ],
+  "anatomy_qc": "not_run",
+  "clinical_accuracy": "not_established",
+  "geometric_admission": false,
+  "anatomical_admission": false,
+  "scanner_frame_admitted": false,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "network_requests": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "array_operation": "source_values_counted_only_no_array_retained",
+  "elapsed_seconds": 24.401772416895255,
+  "outcome_counts": {
+    "inherited_structural_pass": 1,
+    "review_passed": 24
+  }
+}

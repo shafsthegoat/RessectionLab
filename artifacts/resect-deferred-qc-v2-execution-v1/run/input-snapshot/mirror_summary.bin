@@ -1,0 +1,139 @@
+{
+  "status": "all_24_bodies_verified",
+  "files": 24,
+  "expected_bytes": 1561749,
+  "declaration_sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "finished_utc": "2026-10-08T18:02:17.887655+00:00",
+  "elapsed_seconds": 9.122385749826208,
+  "bytes_read": 1561749,
+  "requests": 48,
+  "outcomes": {
+    "Case2-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case2-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "b2f21436183f98c114bbae6b3ee95034e26037c0a2b27f139f841e375081aaf8",
+      "status": "downloaded_verified"
+    },
+    "Case2-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case2-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "9e995eaa28d9d073d45ec292fa7cd4b30711accb5a232e0aed14dd0977bf2cca",
+      "status": "downloaded_verified"
+    },
+    "Case3-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case3-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "93f42766f6c6c70cac65b5d4606711702b67fecbd3cac6d67b5a20a79288092f",
+      "status": "downloaded_verified"
+    },
+    "Case5-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case5-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "c99b7931c76f312794752e478dfbdda7bf527e84ba92176108e016d0be10e13a",
+      "status": "downloaded_verified"
+    },
+    "Case5-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case5-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "0882a93d72d8df3d69f9a3c4809d3b2f115149884e6bf4c034abdba7cddf7fd5",
+      "status": "downloaded_verified"
+    },
+    "Case7-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case7-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "2c38b661ddace1afdd020fb2b90f66d4c1828b60b6dab6bd0dc90b00bef20978",
+      "status": "downloaded_verified"
+    },
+    "Case7-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case7-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "226367f4cfa069dabbcbd7babdce8dfa426d1589672dd203412d401e19d2813b",
+      "status": "downloaded_verified"
+    },
+    "Case12-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case12-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "09700fbe5a2521144f462959d3b52cf2a24bc80c1aa32af09384fa8b734eb210",
+      "status": "downloaded_verified"
+    },
+    "Case12-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case12-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "0200586968b0f5b1f7d20e477f73a23b39c2a81b853b0a22a604ec5bdfd56506",
+      "status": "downloaded_verified"
+    },
+    "Case15-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case15-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "755252812bcc715846903e29cd8d8729939d8457f7cb777635d7583ab1ba845f",
+      "status": "downloaded_verified"
+    },
+    "Case16-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case16-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "6226fe869ae066146a117c874ebde1c139cd37cd39b3394e35a4d3c016217c71",
+      "status": "downloaded_verified"
+    },
+    "Case16-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case16-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "94bd7148b148af35a60ec454f0b31444d766a60ddc3ad5e2a1e100bc5d92f247",
+      "status": "downloaded_verified"
+    },
+    "Case17-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case17-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "f4dd07c801db305721032589f7e66786a9e0a25b1b7dee0703920eef0cfcbf2d",
+      "status": "downloaded_verified"
+    },
+    "Case17-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case17-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "0b296dc867574cb669cc20d4fd17dc5d628e7d76a8200a665521093eaa5b5a2a",
+      "status": "downloaded_verified"
+    },
+    "Case18-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case18-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "81ba967b5866a0f09e09aa4fb03120027b9ad207ada8a8c4c75665dac1108ddb",
+      "status": "downloaded_verified"
+    },
+    "Case18-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case18-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "32c54641e8d09d9c1510ef34a6ce67723c6e54b72bcd811d57b48c488cb34388",
+      "status": "downloaded_verified"
+    },
+    "Case21-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case21-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "6941bc26731265a53174bd061fc92d8a8e9a7c63c973ce67c9a4b94f7e8318a1",
+      "status": "downloaded_verified"
+    },
+    "Case21-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case21-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "75dff145083df2fb51398cc2ca7a50730b3afde79c8780368ae7055ec5cb7acd",
+      "status": "downloaded_verified"
+    },
+    "Case23-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case23-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "d64ba7e42ccab9b0cce2aaa38e22718edbe31e0023ea6361b63dfc8735363963",
+      "status": "downloaded_verified"
+    },
+    "Case23-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case23-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "f21b8f396928c41350c2f7b07465b6572fb2346450099a27a806f30468c24ebc",
+      "status": "downloaded_verified"
+    },
+    "Case24-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case24-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "a62dcc13cdbadefd258177b91496750a59febfb55ba09cf814729b95ed727f61",
+      "status": "downloaded_verified"
+    },
+    "Case24-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case24-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "465636b52a3090ad8ec69bdcf8eaa413233015df51b6d538a4f3d5d48a70a0c3",
+      "status": "downloaded_verified"
+    },
+    "Case25-during-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case25-during-mask/attempt-01/receipt.json",
+      "receipt_sha256": "208ecd1fbcc95d4778ea6e52916dd16cc6c2bfa70010c52f2e6a3912b0196952",
+      "status": "downloaded_verified"
+    },
+    "Case25-after-mask": {
+      "receipt": "build/resect-exact-mirror-acquisition-v1/objects/Case25-after-mask/attempt-01/receipt.json",
+      "receipt_sha256": "63daba1896f3d018b83a15bc62d16dc24abab77e8aa61b99a7d9d4ca72ee6d75",
+      "status": "downloaded_verified"
+    }
+  },
+  "pending": []
+}

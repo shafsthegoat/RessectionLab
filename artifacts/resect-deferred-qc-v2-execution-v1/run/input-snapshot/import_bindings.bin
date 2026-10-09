@@ -1,0 +1,45 @@
+{
+  "execution": {
+    "files": {
+      "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+      "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+      "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+      "scripts/resect_exact_mirror_import.py": "48a73d0bebb4f75c92d1af56cd9e9716df52aca307f33666a3fece5e1e8da620"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python"
+  },
+  "pins": {
+    "declaration.json": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+    "summary.json": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76",
+    "source-snapshot.py": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+  },
+  "seconds": 120,
+  "evidence_root": "artifacts/resect-exact-mirror-acquisition-v1",
+  "staging_root": "build/resect-exact-mirror-acquisition-v1",
+  "source_evidence": {
+    "authoritative_manifest_sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1",
+    "authoritative_cohort": {
+      "path": "manifests/resect-component-cohort-v1.json",
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    "rights": {
+      "path": "rights/README.txt",
+      "bytes": 1656,
+      "expected_md5": "bae7e9b837bfc3b53d7b74d750df0b4b",
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+      "license": "CC-BY-NC-SA-4.0",
+      "source_url": "https://osf.io/download/4mkfg/?revision=2",
+      "acquisition_in_this_adapter": false,
+      "retained_evidence": "artifacts/resect-component-admission-v1/rights-review-02/README.txt"
+    },
+    "mirror_evidence": {
+      "declaration.json": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+      "summary.json": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76",
+      "source-snapshot.py": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+    },
+    "transport_trace_index_sha256": "9ff805a8f6c718023e400576f22d090e5c852cc403ec6f377fc87d11e3d1421d",
+    "evidence_root": "artifacts/resect-exact-mirror-acquisition-v1",
+    "staging_root": "build/resect-exact-mirror-acquisition-v1"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "resect-case3-cavity-pilot-v1",
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "image_release_doi": "10.11582/2017.00004",
+  "annotation_release_doi": "10.17605/OSF.IO/JV8BK",
+  "annotation_dataset_version": "v1 2024-02-15",
+  "files": [
+    {
+      "path": "rights/README.txt",
+      "bytes": 1656,
+      "source_url": "https://osf.io/download/4mkfg/",
+      "metadata_url": "https://api.osf.io/v2/files/65cddcd16d0cb801d21a96bc/",
+      "expected_md5": "bae7e9b837bfc3b53d7b74d750df0b4b",
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+      "kind": "annotation_rights_and_release_notes",
+      "file_revision": 2
+    },
+    {
+      "path": "originals/Case3-US-during.nii.gz",
+      "bytes": 9156131,
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-during.nii.gz",
+      "expected_md5": "5043491e6b4cea1fe3be1003a42a2cf5",
+      "sha256": null,
+      "kind": "acquired_during_resection_ultrasound",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "path": "originals/Case3-US-during-resection.nii.gz",
+      "bytes": 28518,
+      "source_url": "https://osf.io/download/64cd21fe2fe4962f1561b1e2/?revision=2",
+      "metadata_url": "https://api.osf.io/v2/files/64cd21fe2fe4962f1561b1e2/versions/2/",
+      "expected_md5": "569676cbc4bd98a800497c03f91959d9",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63",
+      "kind": "human_reviewed_visible_cavity_annotation",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  ],
+  "scientific_payload_bytes": 9184649,
+  "purpose": "Noncommercial visible-cavity observation-component research",
+  "annotation_ancestry": "manual_contours + morphological_interpolation + expert_review",
+  "learned_teacher": "none_reported_in_documented_protocol",
+  "methods": "https://doi.org/10.1002/mp.17317 sections2.3 and2.7",
+  "limits": "Visible dark US cavity may omit blood-filled regions; not complete removed tissue or surgical reward",
+  "time_availability": "during-resection acquisition; not available to preoperative planning",
+  "max_float32_image_bytes": 536870912,
+  "maximum_grid_corner_difference_mm": 0.01,
+  "training_admitted": false,
+  "recorded_rl_transitions": 0,
+  "optimizer_updates": 0
+}

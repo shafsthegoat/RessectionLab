@@ -1,0 +1,50 @@
+{
+  "source_id": "Case18-during-mask",
+  "source_binding": "53065388c5b451c8a1fc62f00569ef006325a1619ab19ff5d266aee636532186",
+  "status": "downloaded_verified",
+  "source": {
+    "source_id": "Case18-during-mask",
+    "source_authority": {
+      "id": "Case18-during-mask",
+      "pair_id": "Case18-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case18-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/5cwfk/?revision=2",
+      "bytes": 91615,
+      "expected_md5": "cf4632c18af8915621a15a4b13edaa7b",
+      "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+      "file_revision": 2,
+      "osf_file_id": "64cd2385c7ab292b22d4e1a9",
+      "short_alias": "5cwfk"
+    },
+    "patient_group": "RESECT:Case18",
+    "role": "TRAIN",
+    "source_release": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+    "mirror_path": "dataset/Case18/Case18-US-during-resection.nii.gz",
+    "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case18/Case18-US-during-resection.nii.gz",
+    "mirror_xet_hash": "e541df426700d47dce55dc3231d5df30061f9167021abe3a4165dd39e3accf13",
+    "expected_bytes": 91615,
+    "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+    "md5": "cf4632c18af8915621a15a4b13edaa7b"
+  },
+  "declaration_sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+  "started_utc": "2026-10-08T18:02:14.676239+00:00",
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "bytes": 91615,
+  "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+  "md5": "cf4632c18af8915621a15a4b13edaa7b",
+  "path": "build/resect-exact-mirror-acquisition-v1/objects/Case18-during-mask/Case18-US-during-resection.nii.gz",
+  "finished_utc": "2026-10-08T18:02:14.933308+00:00",
+  "retained_partial_bytes": 0
+}

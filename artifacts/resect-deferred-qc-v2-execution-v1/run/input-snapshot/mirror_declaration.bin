@@ -1,0 +1,791 @@
+{
+  "schema": "resect-exact-mirror-acquisition-v1",
+  "created_utc": "2026-10-08T18:02:08.761356+00:00",
+  "source_sha256": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4",
+  "bindings": {
+    "build/resect-osf-bottleneck-investigation-v1/mirror-metadata-comparison.json": "031a97a9588c2dd36054d8c7b19b3916a034dfa1fc4db9432a7259bbe71f00d7",
+    "manifests/resect-train-cavity-acquisition-v1.json": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1",
+    "artifacts/resect-component-admission-v1/rights-review-02/README.txt": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+    "build/resect-osf-bottleneck-investigation-v1/hf-tree-metadata.json": "6f3a9c90b3848e7ff367acf72d8764a95660cf9b3466efd8bf6d582e09719776",
+    "build/resect-osf-bottleneck-investigation-v1/hf-README.md": "f28e590b6b35f781f57f3be333eba75a4826542326054872c507de1b45104023"
+  },
+  "rows": [
+    {
+      "source_id": "Case2-during-mask",
+      "source_authority": {
+        "id": "Case2-during-mask",
+        "pair_id": "Case2-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case2-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd21e0a2be6b3ade3147f5/?revision=2",
+        "bytes": 44010,
+        "expected_md5": "3b35891d3838349223b6bcdf6dd11b35",
+        "sha256": "fbf87d2a6c26f4d12e802eb4d85e28f411a2510ee210651e136e67f243062d40",
+        "file_revision": 2,
+        "osf_file_id": "64cd21e0a2be6b3ade3147f5",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case2",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case2/Case2-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case2/Case2-US-during-resection.nii.gz",
+      "mirror_xet_hash": "1266368e02e2767440a97cc61b468acdff5bd63ef0a0d1d15735f58892e417e9",
+      "expected_bytes": 44010,
+      "sha256": "fbf87d2a6c26f4d12e802eb4d85e28f411a2510ee210651e136e67f243062d40",
+      "md5": "3b35891d3838349223b6bcdf6dd11b35"
+    },
+    {
+      "source_id": "Case2-after-mask",
+      "source_authority": {
+        "id": "Case2-after-mask",
+        "pair_id": "Case2-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case2-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd21dbc7ab292b21d4e006/?revision=2",
+        "bytes": 57321,
+        "expected_md5": "a5334fd082769458f7d7ca383e2eab93",
+        "sha256": "56092abbb40bdb4de150b0787420333837e7701bbd2cf2b2b728994709d50b8d",
+        "file_revision": 2,
+        "osf_file_id": "64cd21dbc7ab292b21d4e006",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case2",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case2/Case2-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case2/Case2-US-after-resection.nii.gz",
+      "mirror_xet_hash": "196c23d049ae125012140e6dffab8b3b5eb4ee1c55004fba6a081e9fdc130d8e",
+      "expected_bytes": 57321,
+      "sha256": "56092abbb40bdb4de150b0787420333837e7701bbd2cf2b2b728994709d50b8d",
+      "md5": "a5334fd082769458f7d7ca383e2eab93"
+    },
+    {
+      "source_id": "Case3-after-mask",
+      "source_authority": {
+        "id": "Case3-after-mask",
+        "pair_id": "Case3-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case3-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd21fcc7ab292b21d4e00a/?revision=2",
+        "bytes": 44564,
+        "expected_md5": "a7de4775c42dd2dd5219d02327dcb735",
+        "sha256": "2a8d15c1808df9a5028e4a3049a6af6164b1d300d6f08e5bdc632f7038687693",
+        "file_revision": 2,
+        "osf_file_id": "64cd21fcc7ab292b21d4e00a",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case3",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case3/Case3-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case3/Case3-US-after-resection.nii.gz",
+      "mirror_xet_hash": "8eb858a50f6f8c050133d81a52f7070a5a441aa8df9c7751198e3b4fe2d043c4",
+      "expected_bytes": 44564,
+      "sha256": "2a8d15c1808df9a5028e4a3049a6af6164b1d300d6f08e5bdc632f7038687693",
+      "md5": "a7de4775c42dd2dd5219d02327dcb735"
+    },
+    {
+      "source_id": "Case5-during-mask",
+      "source_authority": {
+        "id": "Case5-during-mask",
+        "pair_id": "Case5-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case5-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd22344f0a443410994559/?revision=2",
+        "bytes": 37887,
+        "expected_md5": "b1177c22fb5a1f2c94495145678ec78f",
+        "sha256": "8209ba5d2d56b5494494309c1cdab78a5c2290ec9a394843fcd227e90204a2e3",
+        "file_revision": 2,
+        "osf_file_id": "64cd22344f0a443410994559",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case5",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case5/Case5-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case5/Case5-US-during-resection.nii.gz",
+      "mirror_xet_hash": "97e1ad4ca71aab831b8e36d76ab5fb6fc08bb5bf4fb891e3a13f3468db0dcca4",
+      "expected_bytes": 37887,
+      "sha256": "8209ba5d2d56b5494494309c1cdab78a5c2290ec9a394843fcd227e90204a2e3",
+      "md5": "b1177c22fb5a1f2c94495145678ec78f"
+    },
+    {
+      "source_id": "Case5-after-mask",
+      "source_authority": {
+        "id": "Case5-after-mask",
+        "pair_id": "Case5-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case5-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd2230c7ab292b1dd4df76/?revision=2",
+        "bytes": 53414,
+        "expected_md5": "f64e8a67c1079b2516a0f988c24e4f97",
+        "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+        "file_revision": 2,
+        "osf_file_id": "64cd2230c7ab292b1dd4df76",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case5",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case5/Case5-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case5/Case5-US-after-resection.nii.gz",
+      "mirror_xet_hash": "1e015cbefa84aac6b3cc986794f32a0cdff02bacb6015037977d9e3d73c4fac1",
+      "expected_bytes": 53414,
+      "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+      "md5": "f64e8a67c1079b2516a0f988c24e4f97"
+    },
+    {
+      "source_id": "Case7-during-mask",
+      "source_authority": {
+        "id": "Case7-during-mask",
+        "pair_id": "Case7-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case7-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd226cc7ab292b22d4e116/?revision=2",
+        "bytes": 41837,
+        "expected_md5": "9672da0cf8e908b53ffec8fc15e5ae04",
+        "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+        "file_revision": 2,
+        "osf_file_id": "64cd226cc7ab292b22d4e116",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case7",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case7/Case7-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case7/Case7-US-during-resection.nii.gz",
+      "mirror_xet_hash": "ad28a9f9d42757fae5c4ac42c7f7a6cfdff7eda46e70bd9b5a02c69a01aaf18f",
+      "expected_bytes": 41837,
+      "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+      "md5": "9672da0cf8e908b53ffec8fc15e5ae04"
+    },
+    {
+      "source_id": "Case7-after-mask",
+      "source_authority": {
+        "id": "Case7-after-mask",
+        "pair_id": "Case7-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case7-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd226ac7ab292b22d4e112/?revision=2",
+        "bytes": 52732,
+        "expected_md5": "b90d0840ac4ea09aa7183ac36cba0a24",
+        "sha256": "805e34af9982980a57a6ff6268a659999836e7ad5fadda4ea8cdb94fa95753d3",
+        "file_revision": 2,
+        "osf_file_id": "64cd226ac7ab292b22d4e112",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case7",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case7/Case7-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case7/Case7-US-after-resection.nii.gz",
+      "mirror_xet_hash": "38dfd48b39e2d843d6f946c3f0c5f633b804e332a818aedb9ade89cbe38259d5",
+      "expected_bytes": 52732,
+      "sha256": "805e34af9982980a57a6ff6268a659999836e7ad5fadda4ea8cdb94fa95753d3",
+      "md5": "b90d0840ac4ea09aa7183ac36cba0a24"
+    },
+    {
+      "source_id": "Case12-during-mask",
+      "source_authority": {
+        "id": "Case12-during-mask",
+        "pair_id": "Case12-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case12-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/y5m4k/?revision=2",
+        "bytes": 57089,
+        "expected_md5": "de7b60f4d874de49c167fd9e9380240a",
+        "sha256": "8b0e0d3b5c253be3c83dc6ea6df2598e68b8e434c78695fcfe55efd26933d7b3",
+        "file_revision": 2,
+        "osf_file_id": "64cd22d3c7ab292b21d4e061",
+        "short_alias": "y5m4k"
+      },
+      "patient_group": "RESECT:Case12",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case12/Case12-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case12/Case12-US-during-resection.nii.gz",
+      "mirror_xet_hash": "2c5a169db64bc822f2f680f2d061117a7168e747099c39775cfec1346c83f690",
+      "expected_bytes": 57089,
+      "sha256": "8b0e0d3b5c253be3c83dc6ea6df2598e68b8e434c78695fcfe55efd26933d7b3",
+      "md5": "de7b60f4d874de49c167fd9e9380240a"
+    },
+    {
+      "source_id": "Case12-after-mask",
+      "source_authority": {
+        "id": "Case12-after-mask",
+        "pair_id": "Case12-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case12-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/gfcnz/?revision=2",
+        "bytes": 80954,
+        "expected_md5": "f990900082d8e43c6a686dd68dbb43b9",
+        "sha256": "baaa1a7be5d8c6d818dd008d1406c1ed473df8eab55d6e68e0de73d41d03c882",
+        "file_revision": 2,
+        "osf_file_id": "64cd22ce2fe4962f1461b2ba",
+        "short_alias": "gfcnz"
+      },
+      "patient_group": "RESECT:Case12",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case12/Case12-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case12/Case12-US-after-resection.nii.gz",
+      "mirror_xet_hash": "50a396b373b263a0363144cb5184465627aef6dcc71070c95b58c7b6f0ba6cad",
+      "expected_bytes": 80954,
+      "sha256": "baaa1a7be5d8c6d818dd008d1406c1ed473df8eab55d6e68e0de73d41d03c882",
+      "md5": "f990900082d8e43c6a686dd68dbb43b9"
+    },
+    {
+      "source_id": "Case15-after-mask",
+      "source_authority": {
+        "id": "Case15-after-mask",
+        "pair_id": "Case15-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case15-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/6jx3n/?revision=2",
+        "bytes": 59346,
+        "expected_md5": "007324da20083cc8c195e58feb41b344",
+        "sha256": "3b24eabdc8cde6719a6aedcef8e0b207c6cfd8a44c898c9fe70a93550c8252d0",
+        "file_revision": 2,
+        "osf_file_id": "64cd233b9cbf033b051e4882",
+        "short_alias": "6jx3n"
+      },
+      "patient_group": "RESECT:Case15",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case15/Case15-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case15/Case15-US-after-resection.nii.gz",
+      "mirror_xet_hash": "0d372eb2b32d91df9d02a92c1e53d1397afdb14064d2edf434d8e53cbe889167",
+      "expected_bytes": 59346,
+      "sha256": "3b24eabdc8cde6719a6aedcef8e0b207c6cfd8a44c898c9fe70a93550c8252d0",
+      "md5": "007324da20083cc8c195e58feb41b344"
+    },
+    {
+      "source_id": "Case16-during-mask",
+      "source_authority": {
+        "id": "Case16-during-mask",
+        "pair_id": "Case16-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case16-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/n5eu8/?revision=2",
+        "bytes": 36303,
+        "expected_md5": "fb91ccd6a556289c8815cee2ddb6c803",
+        "sha256": "05f82c7f56077aeb5967b647ec86ee150f730ea831f43c156bc846f0a423787d",
+        "file_revision": 2,
+        "osf_file_id": "64cd23562fe4962f0c61b12d",
+        "short_alias": "n5eu8"
+      },
+      "patient_group": "RESECT:Case16",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case16/Case16-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case16/Case16-US-during-resection.nii.gz",
+      "mirror_xet_hash": "b534c9a9811ec011b277a18fcbaedd53b8a072670305f4a7894bb20184f6356e",
+      "expected_bytes": 36303,
+      "sha256": "05f82c7f56077aeb5967b647ec86ee150f730ea831f43c156bc846f0a423787d",
+      "md5": "fb91ccd6a556289c8815cee2ddb6c803"
+    },
+    {
+      "source_id": "Case16-after-mask",
+      "source_authority": {
+        "id": "Case16-after-mask",
+        "pair_id": "Case16-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case16-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/5ktpy/?revision=2",
+        "bytes": 47175,
+        "expected_md5": "2532c53561bc6602795173050f339431",
+        "sha256": "6e3d16dd0fdf7998aaa486975fc62e27b9bce1898c7cf0a295bd243b2961aa9d",
+        "file_revision": 2,
+        "osf_file_id": "64cd2354c7ab292b22d4e183",
+        "short_alias": "5ktpy"
+      },
+      "patient_group": "RESECT:Case16",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case16/Case16-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case16/Case16-US-after-resection.nii.gz",
+      "mirror_xet_hash": "0c206ec22f385d951a63ef1191a76474a8e36bccb2355f72aee8c62df723cd27",
+      "expected_bytes": 47175,
+      "sha256": "6e3d16dd0fdf7998aaa486975fc62e27b9bce1898c7cf0a295bd243b2961aa9d",
+      "md5": "2532c53561bc6602795173050f339431"
+    },
+    {
+      "source_id": "Case17-during-mask",
+      "source_authority": {
+        "id": "Case17-during-mask",
+        "pair_id": "Case17-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case17-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/kd37t/?revision=2",
+        "bytes": 83443,
+        "expected_md5": "324e3bd5f5d7f2b484721de60bdbab3d",
+        "sha256": "97f2a73ad19c0d629cd748faf75b4ee58af2d3f6c8b65a1dac6d0dc97eb2dd0a",
+        "file_revision": 2,
+        "osf_file_id": "64cd23739cbf033b051e48b3",
+        "short_alias": "kd37t"
+      },
+      "patient_group": "RESECT:Case17",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case17/Case17-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case17/Case17-US-during-resection.nii.gz",
+      "mirror_xet_hash": "cdb6ff7a7f0069cc36acb9b900d67e0ec246ccb7a09470ed5defe893ac4ac238",
+      "expected_bytes": 83443,
+      "sha256": "97f2a73ad19c0d629cd748faf75b4ee58af2d3f6c8b65a1dac6d0dc97eb2dd0a",
+      "md5": "324e3bd5f5d7f2b484721de60bdbab3d"
+    },
+    {
+      "source_id": "Case17-after-mask",
+      "source_authority": {
+        "id": "Case17-after-mask",
+        "pair_id": "Case17-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case17-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/4m5nx/?revision=2",
+        "bytes": 99348,
+        "expected_md5": "e8305aafb8bd270b4ab14ec31e9a8473",
+        "sha256": "f7262ee41b9658dd852e2f8c25046ea34030162745d25e2d15ea0ceaaafeea4c",
+        "file_revision": 2,
+        "osf_file_id": "64cd236fc7ab292b22d4e18f",
+        "short_alias": "4m5nx"
+      },
+      "patient_group": "RESECT:Case17",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case17/Case17-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case17/Case17-US-after-resection.nii.gz",
+      "mirror_xet_hash": "509b62af44ae699d8050c509604e818e1e67678abad1db529dec4e86a581f1a2",
+      "expected_bytes": 99348,
+      "sha256": "f7262ee41b9658dd852e2f8c25046ea34030162745d25e2d15ea0ceaaafeea4c",
+      "md5": "e8305aafb8bd270b4ab14ec31e9a8473"
+    },
+    {
+      "source_id": "Case18-during-mask",
+      "source_authority": {
+        "id": "Case18-during-mask",
+        "pair_id": "Case18-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case18-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/5cwfk/?revision=2",
+        "bytes": 91615,
+        "expected_md5": "cf4632c18af8915621a15a4b13edaa7b",
+        "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+        "file_revision": 2,
+        "osf_file_id": "64cd2385c7ab292b22d4e1a9",
+        "short_alias": "5cwfk"
+      },
+      "patient_group": "RESECT:Case18",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case18/Case18-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case18/Case18-US-during-resection.nii.gz",
+      "mirror_xet_hash": "e541df426700d47dce55dc3231d5df30061f9167021abe3a4165dd39e3accf13",
+      "expected_bytes": 91615,
+      "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+      "md5": "cf4632c18af8915621a15a4b13edaa7b"
+    },
+    {
+      "source_id": "Case18-after-mask",
+      "source_authority": {
+        "id": "Case18-after-mask",
+        "pair_id": "Case18-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case18-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/mwtyz/?revision=2",
+        "bytes": 95332,
+        "expected_md5": "2aa55652340230ecbcfd3cc3cca06527",
+        "sha256": "6f3dcbd2d60772731280c5cdb2ba7a096f1f26e634dee9e7bda308c17705b231",
+        "file_revision": 2,
+        "osf_file_id": "64cd23832fe4962f1461b312",
+        "short_alias": "mwtyz"
+      },
+      "patient_group": "RESECT:Case18",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case18/Case18-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case18/Case18-US-after-resection.nii.gz",
+      "mirror_xet_hash": "29425299a87e25fd83468374e7719a777a87aed14895360a7c4542a90b207589",
+      "expected_bytes": 95332,
+      "sha256": "6f3dcbd2d60772731280c5cdb2ba7a096f1f26e634dee9e7bda308c17705b231",
+      "md5": "2aa55652340230ecbcfd3cc3cca06527"
+    },
+    {
+      "source_id": "Case21-during-mask",
+      "source_authority": {
+        "id": "Case21-during-mask",
+        "pair_id": "Case21-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case21-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd23c09cbf033b011e474f/?revision=2",
+        "bytes": 66753,
+        "expected_md5": "602605c954e797a1bfcc2b3ed0e5e497",
+        "sha256": "a3fba84f7af6191cfc889339d3aa35e601352fbe6d19072da19aea6c447dc8d2",
+        "file_revision": 2,
+        "osf_file_id": "64cd23c09cbf033b011e474f",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case21",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case21/Case21-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case21/Case21-US-during-resection.nii.gz",
+      "mirror_xet_hash": "39c902acfc6e69965a2d75fff9bee7d6bdb0526e4696318ce7ab2ad80347e4e5",
+      "expected_bytes": 66753,
+      "sha256": "a3fba84f7af6191cfc889339d3aa35e601352fbe6d19072da19aea6c447dc8d2",
+      "md5": "602605c954e797a1bfcc2b3ed0e5e497"
+    },
+    {
+      "source_id": "Case21-after-mask",
+      "source_authority": {
+        "id": "Case21-after-mask",
+        "pair_id": "Case21-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case21-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/n92zk/?revision=2",
+        "bytes": 89436,
+        "expected_md5": "5141f9bb1b796631fd70dde911a9ca6e",
+        "sha256": "e943ac5da95bd0c8245a57b4f6beac9426d2b20d152aa9ba0f4088eefd4fe335",
+        "file_revision": 2,
+        "osf_file_id": "64cd23bda2be6b3ada31479c",
+        "short_alias": "n92zk"
+      },
+      "patient_group": "RESECT:Case21",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case21/Case21-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case21/Case21-US-after-resection.nii.gz",
+      "mirror_xet_hash": "f2232f565e3ab729ea0ce95111100bdffbbcaa7c2cf804d96d5f77f74687baf3",
+      "expected_bytes": 89436,
+      "sha256": "e943ac5da95bd0c8245a57b4f6beac9426d2b20d152aa9ba0f4088eefd4fe335",
+      "md5": "5141f9bb1b796631fd70dde911a9ca6e"
+    },
+    {
+      "source_id": "Case23-during-mask",
+      "source_authority": {
+        "id": "Case23-during-mask",
+        "pair_id": "Case23-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case23-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd23e3a2be6b3ade314980/?revision=2",
+        "bytes": 83625,
+        "expected_md5": "61ce14bcd3f5f051f5ce43d4248844bc",
+        "sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+        "file_revision": 2,
+        "osf_file_id": "64cd23e3a2be6b3ade314980",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case23",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case23/Case23-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case23/Case23-US-during-resection.nii.gz",
+      "mirror_xet_hash": "59bd0bcb5c60c144f2347e548b45a2f99bab4604c271fd43bae973230862cb69",
+      "expected_bytes": 83625,
+      "sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+      "md5": "61ce14bcd3f5f051f5ce43d4248844bc"
+    },
+    {
+      "source_id": "Case23-after-mask",
+      "source_authority": {
+        "id": "Case23-after-mask",
+        "pair_id": "Case23-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case23-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd23dfa2be6b3add3148a2/?revision=2",
+        "bytes": 85556,
+        "expected_md5": "0458f8f96635db7277d83a4ae5283a68",
+        "sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+        "file_revision": 2,
+        "osf_file_id": "64cd23dfa2be6b3add3148a2",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case23",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case23/Case23-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case23/Case23-US-after-resection.nii.gz",
+      "mirror_xet_hash": "cb454185493fae45e8d1c6963a4d559fc787e7c881c6e62051cb3f13087efa61",
+      "expected_bytes": 85556,
+      "sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+      "md5": "0458f8f96635db7277d83a4ae5283a68"
+    },
+    {
+      "source_id": "Case24-during-mask",
+      "source_authority": {
+        "id": "Case24-during-mask",
+        "pair_id": "Case24-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case24-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24009cbf033b041e47f3/?revision=2",
+        "bytes": 49169,
+        "expected_md5": "fe7337943f5d0433fc3128014162ee6d",
+        "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+        "file_revision": 2,
+        "osf_file_id": "64cd24009cbf033b041e47f3",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case24",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case24/Case24-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case24/Case24-US-during-resection.nii.gz",
+      "mirror_xet_hash": "b06ae5a4f683509ffb17b4a1cab01ecf1c8a5a9060798a9b4b372da6917420c2",
+      "expected_bytes": 49169,
+      "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+      "md5": "fe7337943f5d0433fc3128014162ee6d"
+    },
+    {
+      "source_id": "Case24-after-mask",
+      "source_authority": {
+        "id": "Case24-after-mask",
+        "pair_id": "Case24-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case24-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24004f0a443410994681/?revision=2",
+        "bytes": 69664,
+        "expected_md5": "afcf8b644eb86b2b6e7d60ffadd0acd0",
+        "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+        "file_revision": 2,
+        "osf_file_id": "64cd24004f0a443410994681",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case24",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case24/Case24-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case24/Case24-US-after-resection.nii.gz",
+      "mirror_xet_hash": "781137d52be2b3b1cec4f3226d74a985952e028ea50a9e714a7d4b19120d9390",
+      "expected_bytes": 69664,
+      "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+      "md5": "afcf8b644eb86b2b6e7d60ffadd0acd0"
+    },
+    {
+      "source_id": "Case25-during-mask",
+      "source_authority": {
+        "id": "Case25-during-mask",
+        "pair_id": "Case25-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case25-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24189cbf033b051e492d/?revision=2",
+        "bytes": 65295,
+        "expected_md5": "3fe057dc0e393c9532b6afb327914139",
+        "sha256": "ffc5b985713e61d73e63037eedf82b4fc168f3e19c4e179e771801c953ecd6ad",
+        "file_revision": 2,
+        "osf_file_id": "64cd24189cbf033b051e492d",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case25",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case25/Case25-US-during-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case25/Case25-US-during-resection.nii.gz",
+      "mirror_xet_hash": "fa40f479de37979c2f28493f398b99b1b6a70a71769b7186a611ed12ce8e0021",
+      "expected_bytes": 65295,
+      "sha256": "ffc5b985713e61d73e63037eedf82b4fc168f3e19c4e179e771801c953ecd6ad",
+      "md5": "3fe057dc0e393c9532b6afb327914139"
+    },
+    {
+      "source_id": "Case25-after-mask",
+      "source_authority": {
+        "id": "Case25-after-mask",
+        "pair_id": "Case25-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case25-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24154f0a44340b994498/?revision=2",
+        "bytes": 69881,
+        "expected_md5": "440f561c7cefcfd4622a1711c901089c",
+        "sha256": "e38a01207a2323d6b7d9d6f525c2fb01a0bae13ad053fd48f75dd97d0aef749a",
+        "file_revision": 2,
+        "osf_file_id": "64cd24154f0a44340b994498",
+        "short_alias": null
+      },
+      "patient_group": "RESECT:Case25",
+      "role": "TRAIN",
+      "source_release": {
+        "doi": "10.17605/OSF.IO/JV8BK",
+        "version": "All-Labels v1 2024-02-15",
+        "file_revision": 2,
+        "license": "CC-BY-NC-SA-4.0"
+      },
+      "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+      "mirror_path": "dataset/Case25/Case25-US-after-resection.nii.gz",
+      "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case25/Case25-US-after-resection.nii.gz",
+      "mirror_xet_hash": "19dd759fb6279f4cabf0a2ed7b9ead0fb0cef16d869bc0a6dad47755b7b109f9",
+      "expected_bytes": 69881,
+      "sha256": "e38a01207a2323d6b7d9d6f525c2fb01a0bae13ad053fd48f75dd97d0aef749a",
+      "md5": "440f561c7cefcfd4622a1711c901089c"
+    }
+  ],
+  "mirror_is_third_party_transport_only": true,
+  "rights": {
+    "noncommercial_only": true,
+    "commercial_clearance": false,
+    "annotations_license": "CC-BY-NC-SA-4.0",
+    "original_license": "CC-BY-4.0",
+    "financial_benefits_from_annotation_distribution_prohibited": true,
+    "attribution_citations_and_share_alike_required": true,
+    "manual_contours_morphological_interpolation_expert_review": true,
+    "learned_teacher": "none_reported_in_documented_protocol",
+    "visible_cavity_not_total_removed_tissue_or_reward": true,
+    "clinical_accuracy": "not_established",
+    "spatial_planning_admitted": false
+  },
+  "caps": {
+    "bytes": 10485760,
+    "seconds": 900,
+    "requests": 144,
+    "workers": 1,
+    "per_file_attempts": 3
+  },
+  "url_provenance": "host/path/full-url-SHA256/query-key-names; transient signed query values are never retained",
+  "tls": {
+    "verification": true,
+    "custom_ca": false,
+    "openssl": "OpenSSL 3.5.8 25 Aug 2026"
+  },
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0
+}

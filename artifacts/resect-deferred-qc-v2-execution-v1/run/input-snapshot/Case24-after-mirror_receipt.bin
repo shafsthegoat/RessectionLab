@@ -1,0 +1,50 @@
+{
+  "source_id": "Case24-after-mask",
+  "source_binding": "8d7e62ff136103c398071263f98960e21954550cc69ab4810c1cc5935abce769",
+  "status": "downloaded_verified",
+  "source": {
+    "source_id": "Case24-after-mask",
+    "source_authority": {
+      "id": "Case24-after-mask",
+      "pair_id": "Case24-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case24-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd24004f0a443410994681/?revision=2",
+      "bytes": 69664,
+      "expected_md5": "afcf8b644eb86b2b6e7d60ffadd0acd0",
+      "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+      "file_revision": 2,
+      "osf_file_id": "64cd24004f0a443410994681",
+      "short_alias": null
+    },
+    "patient_group": "RESECT:Case24",
+    "role": "TRAIN",
+    "source_release": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+    "mirror_path": "dataset/Case24/Case24-US-after-resection.nii.gz",
+    "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case24/Case24-US-after-resection.nii.gz",
+    "mirror_xet_hash": "781137d52be2b3b1cec4f3226d74a985952e028ea50a9e714a7d4b19120d9390",
+    "expected_bytes": 69664,
+    "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+    "md5": "afcf8b644eb86b2b6e7d60ffadd0acd0"
+  },
+  "declaration_sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+  "started_utc": "2026-10-08T18:02:16.792034+00:00",
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "bytes": 69664,
+  "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+  "md5": "afcf8b644eb86b2b6e7d60ffadd0acd0",
+  "path": "build/resect-exact-mirror-acquisition-v1/objects/Case24-after-mask/Case24-US-after-resection.nii.gz",
+  "finished_utc": "2026-10-08T18:02:17.009193+00:00",
+  "retained_partial_bytes": 0
+}

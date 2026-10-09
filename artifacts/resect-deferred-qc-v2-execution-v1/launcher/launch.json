@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "scripts/resect_deferred_qc.py",
+    "batch",
+    "--run-id",
+    "remaining-train-pairs-v2-01",
+    "--max-seconds",
+    "600",
+    "--execute",
+    "--manifest-sha",
+    "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c"
+  ],
+  "source_commit": "004bdcfe69d1f11a9866a5882e5f202ef9358926",
+  "manifest_sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c",
+  "independent_review_sha256": "72d7b5668848fa14fbd6dedeabbfb5338701af34024b72d7e39aaa563ef776c2",
+  "started_utc": "2026-10-09T01:14:02.611667+00:00",
+  "retry": false
+}

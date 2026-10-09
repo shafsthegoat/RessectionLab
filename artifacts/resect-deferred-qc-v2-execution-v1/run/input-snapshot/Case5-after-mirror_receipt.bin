@@ -1,0 +1,50 @@
+{
+  "source_id": "Case5-after-mask",
+  "source_binding": "3674746d8eaabadf46637d70ede73bd3534f289946ef9ca1a7726593c5916354",
+  "status": "downloaded_verified",
+  "source": {
+    "source_id": "Case5-after-mask",
+    "source_authority": {
+      "id": "Case5-after-mask",
+      "pair_id": "Case5-after",
+      "kind": "cavity_annotation",
+      "path": "originals/Case5-US-after-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd2230c7ab292b1dd4df76/?revision=2",
+      "bytes": 53414,
+      "expected_md5": "f64e8a67c1079b2516a0f988c24e4f97",
+      "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+      "file_revision": 2,
+      "osf_file_id": "64cd2230c7ab292b1dd4df76",
+      "short_alias": null
+    },
+    "patient_group": "RESECT:Case5",
+    "role": "TRAIN",
+    "source_release": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    "mirror_commit": "e86fb37dd93f7a9c64e48952f71410af59b04b9b",
+    "mirror_path": "dataset/Case5/Case5-US-after-resection.nii.gz",
+    "mirror_url": "https://huggingface.co/datasets/MedOtter/RESECT-SEG/resolve/e86fb37dd93f7a9c64e48952f71410af59b04b9b/dataset/Case5/Case5-US-after-resection.nii.gz",
+    "mirror_xet_hash": "1e015cbefa84aac6b3cc986794f32a0cdff02bacb6015037977d9e3d73c4fac1",
+    "expected_bytes": 53414,
+    "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+    "md5": "f64e8a67c1079b2516a0f988c24e4f97"
+  },
+  "declaration_sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f",
+  "started_utc": "2026-10-08T18:02:10.681832+00:00",
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "decoded_array_bytes": 0,
+  "bytes": 53414,
+  "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+  "md5": "f64e8a67c1079b2516a0f988c24e4f97",
+  "path": "build/resect-exact-mirror-acquisition-v1/objects/Case5-after-mask/Case5-US-after-resection.nii.gz",
+  "finished_utc": "2026-10-08T18:02:10.997566+00:00",
+  "retained_partial_bytes": 0
+}
