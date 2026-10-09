@@ -1,0 +1,3195 @@
+{
+  "schema": "nfbs-source-name-size-pairing-audit-v1",
+  "created_utc": "2026-10-09T10:11:20.767830+00:00",
+  "status": "archive_member_inventory_and_name_pairing_verified",
+  "scope": "Member names/sizes/types only; no extraction, per-member decoding, image geometry or label-QC admission.",
+  "source_archive": {
+    "path": "data/acquisition/nfbs-originals-v1/verified/NFBS_Dataset.tar.gz",
+    "bytes": 1751464473,
+    "sha256": "fd616b9ea21aad3d0d4cd05a25a71f4a3c251140df38188e58e499254440d2cc",
+    "md5": "06c467ac9ab6cbdb8185e6643879721d"
+  },
+  "supervision_receipt": {
+    "path": "build/nfbs-member-inventory-execution-v1/receipt.json",
+    "sha256": "7c27256339cb858f1a4c6c5c757ff83274971fb130819739202f899e681df2ea"
+  },
+  "inventory": {
+    "path": "build/nfbs-member-inventory-execution-v1/inventory.json",
+    "sha256": "2e4db48a19f55bb4f06e3fca88200829d130948746bc1c9922534c105b39d37f"
+  },
+  "launcher_review": {
+    "path": "build/nfbs-member-inventory-launch-independent-v1/REPORT.md",
+    "sha256": "6feacb019a6f42482e56379793ad6443403b57298af29704d0db777d3fc1cb27"
+  },
+  "cohort": {
+    "path": "manifests/experiments/nfbs-dependent-train-family-v1.json",
+    "sha256": "c1a1b3cbc0b03cc07c6909137a98fa9c120b34891754ad5a8e14a8eee05320a7",
+    "role": "TRAIN dependent source family",
+    "role_changes": false
+  },
+  "members": 501,
+  "directories": 126,
+  "files": 375,
+  "source_identifiers": 125,
+  "biological_independence_verified": false,
+  "category_counts": {
+    "T1w": 125,
+    "brainmask": 125,
+    "brain": 125
+  },
+  "file_session_counts": {
+    "NFB3": 375
+  },
+  "each_source_id_has_exactly_one_T1w_brain_and_brainmask_name": true,
+  "declared_member_bytes": 1778826347,
+  "decompressed_bytes_traversed": 1779179520,
+  "supervision": {
+    "session": 57928,
+    "worker_pid": 95700,
+    "attempts": 1,
+    "worker_seconds": 5.722246375167742,
+    "lifecycle_seconds": 5.74251166684553,
+    "peak_sampled_rss_bytes": 26460160,
+    "final_aggregate_output_bytes": 70297,
+    "cleanup_contained": true
+  },
+  "image_headers_decoded": 0,
+  "image_arrays_decoded": 0,
+  "extracted_files": 0,
+  "individual_member_hashes_computed": false,
+  "inner_NIfTI_gzip_integrity_checked": false,
+  "names_are_not_proof_of_pixel_alignment_or_label_quality": true,
+  "all_payloads_unreviewed": true,
+  "labels_admitted": false,
+  "training_admitted": false,
+  "independent_evaluation_claim": false,
+  "ancestry": "BEaST and library/source ancestry remains incompletely audited. Synthetic learning is allowed; this name inventory establishes neither independent labels nor image/label validity.",
+  "next_bounded_step": "A separately declared safe extraction/header-intended-use QC of these exact375 named TRAIN-family members, with archive binding, atomic outputs/local hashes and resource/storage caps. No diagnosis, independent evaluation or training admission follows automatically.",
+  "source_members": [
+    {
+      "source_identifier": "A00028185",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00028185/sub-A00028185_ses-NFB3_T1w.nii.gz",
+          "bytes": 11044393,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00028185/sub-A00028185_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2293568,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00028185/sub-A00028185_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 119606,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00028352",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00028352/sub-A00028352_ses-NFB3_T1w.nii.gz",
+          "bytes": 11156273,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00028352/sub-A00028352_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1988038,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00028352/sub-A00028352_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110845,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00032875",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00032875/sub-A00032875_ses-NFB3_T1w.nii.gz",
+          "bytes": 9819784,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00032875/sub-A00032875_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2046512,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00032875/sub-A00032875_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 112517,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00033747",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00033747/sub-A00033747_ses-NFB3_T1w.nii.gz",
+          "bytes": 11247085,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00033747/sub-A00033747_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1953909,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00033747/sub-A00033747_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110112,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00034854",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00034854/sub-A00034854_ses-NFB3_T1w.nii.gz",
+          "bytes": 11642707,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00034854/sub-A00034854_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2263442,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00034854/sub-A00034854_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122329,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00035072",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00035072/sub-A00035072_ses-NFB3_T1w.nii.gz",
+          "bytes": 11266881,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00035072/sub-A00035072_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1970910,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00035072/sub-A00035072_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113341,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00035827",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00035827/sub-A00035827_ses-NFB3_T1w.nii.gz",
+          "bytes": 12660111,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00035827/sub-A00035827_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2267371,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00035827/sub-A00035827_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121773,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00035840",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00035840/sub-A00035840_ses-NFB3_T1w.nii.gz",
+          "bytes": 12376366,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00035840/sub-A00035840_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2121358,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00035840/sub-A00035840_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 112054,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00037112",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00037112/sub-A00037112_ses-NFB3_T1w.nii.gz",
+          "bytes": 11799254,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00037112/sub-A00037112_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2015187,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00037112/sub-A00037112_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115277,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00037511",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00037511/sub-A00037511_ses-NFB3_T1w.nii.gz",
+          "bytes": 12669718,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00037511/sub-A00037511_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2546884,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00037511/sub-A00037511_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122147,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00037848",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00037848/sub-A00037848_ses-NFB3_T1w.nii.gz",
+          "bytes": 10821516,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00037848/sub-A00037848_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2210251,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00037848/sub-A00037848_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114577,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00038642",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00038642/sub-A00038642_ses-NFB3_T1w.nii.gz",
+          "bytes": 10323542,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00038642/sub-A00038642_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2442854,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00038642/sub-A00038642_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 126952,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00038998",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00038998/sub-A00038998_ses-NFB3_T1w.nii.gz",
+          "bytes": 13023409,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00038998/sub-A00038998_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2641924,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00038998/sub-A00038998_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 127193,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00039391",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00039391/sub-A00039391_ses-NFB3_T1w.nii.gz",
+          "bytes": 12231459,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00039391/sub-A00039391_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2016857,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00039391/sub-A00039391_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117090,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00039431",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00039431/sub-A00039431_ses-NFB3_T1w.nii.gz",
+          "bytes": 12903788,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00039431/sub-A00039431_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2163432,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00039431/sub-A00039431_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118072,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040151",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040151/sub-A00040151_ses-NFB3_T1w.nii.gz",
+          "bytes": 11793891,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040151/sub-A00040151_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2174762,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040151/sub-A00040151_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115198,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040193",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040193/sub-A00040193_ses-NFB3_T1w.nii.gz",
+          "bytes": 12532328,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040193/sub-A00040193_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2080981,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040193/sub-A00040193_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114379,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040524",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040524/sub-A00040524_ses-NFB3_T1w.nii.gz",
+          "bytes": 12605368,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040524/sub-A00040524_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2297139,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040524/sub-A00040524_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116190,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040573",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040573/sub-A00040573_ses-NFB3_T1w.nii.gz",
+          "bytes": 12588016,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040573/sub-A00040573_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1991408,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040573/sub-A00040573_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113926,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040623",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040623/sub-A00040623_ses-NFB3_T1w.nii.gz",
+          "bytes": 13536108,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040623/sub-A00040623_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1787782,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040623/sub-A00040623_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 105901,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040628",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040628/sub-A00040628_ses-NFB3_T1w.nii.gz",
+          "bytes": 9823272,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040628/sub-A00040628_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2354652,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040628/sub-A00040628_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117767,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040640",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040640/sub-A00040640_ses-NFB3_T1w.nii.gz",
+          "bytes": 10466496,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040640/sub-A00040640_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2177630,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040640/sub-A00040640_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113459,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00040944",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00040944/sub-A00040944_ses-NFB3_T1w.nii.gz",
+          "bytes": 12697391,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00040944/sub-A00040944_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2005583,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00040944/sub-A00040944_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113491,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043299",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043299/sub-A00043299_ses-NFB3_T1w.nii.gz",
+          "bytes": 11014760,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043299/sub-A00043299_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2067864,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043299/sub-A00043299_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113677,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043520",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043520/sub-A00043520_ses-NFB3_T1w.nii.gz",
+          "bytes": 12912752,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043520/sub-A00043520_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2299232,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043520/sub-A00043520_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 123066,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043677",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043677/sub-A00043677_ses-NFB3_T1w.nii.gz",
+          "bytes": 11177823,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043677/sub-A00043677_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2371711,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043677/sub-A00043677_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118851,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043704",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043704/sub-A00043704_ses-NFB3_T1w.nii.gz",
+          "bytes": 11954514,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043704/sub-A00043704_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2041738,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043704/sub-A00043704_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110993,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043721",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043721/sub-A00043721_ses-NFB3_T1w.nii.gz",
+          "bytes": 12366590,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043721/sub-A00043721_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2170110,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043721/sub-A00043721_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115515,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043722",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043722/sub-A00043722_ses-NFB3_T1w.nii.gz",
+          "bytes": 12440895,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043722/sub-A00043722_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2321502,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043722/sub-A00043722_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117976,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00043998",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00043998/sub-A00043998_ses-NFB3_T1w.nii.gz",
+          "bytes": 12232568,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00043998/sub-A00043998_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2273291,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00043998/sub-A00043998_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118252,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00045590",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00045590/sub-A00045590_ses-NFB3_T1w.nii.gz",
+          "bytes": 12577669,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00045590/sub-A00045590_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2391738,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00045590/sub-A00045590_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 119674,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00050940",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00050940/sub-A00050940_ses-NFB3_T1w.nii.gz",
+          "bytes": 12798697,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00050940/sub-A00050940_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 3088717,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00050940/sub-A00050940_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 131512,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00051539",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00051539/sub-A00051539_ses-NFB3_T1w.nii.gz",
+          "bytes": 10559827,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00051539/sub-A00051539_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2140945,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00051539/sub-A00051539_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115087,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00051548",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00051548/sub-A00051548_ses-NFB3_T1w.nii.gz",
+          "bytes": 12276672,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00051548/sub-A00051548_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2223691,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00051548/sub-A00051548_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117022,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00051676",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00051676/sub-A00051676_ses-NFB3_T1w.nii.gz",
+          "bytes": 12794117,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00051676/sub-A00051676_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2385384,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00051676/sub-A00051676_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118395,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00051927",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00051927/sub-A00051927_ses-NFB3_T1w.nii.gz",
+          "bytes": 12165020,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00051927/sub-A00051927_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2022351,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00051927/sub-A00051927_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110566,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00052125",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00052125/sub-A00052125_ses-NFB3_T1w.nii.gz",
+          "bytes": 10391733,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00052125/sub-A00052125_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2181578,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00052125/sub-A00052125_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116229,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00052181",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00052181/sub-A00052181_ses-NFB3_T1w.nii.gz",
+          "bytes": 10263675,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00052181/sub-A00052181_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2164175,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00052181/sub-A00052181_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116388,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00052340",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00052340/sub-A00052340_ses-NFB3_T1w.nii.gz",
+          "bytes": 12033725,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00052340/sub-A00052340_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2322836,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00052340/sub-A00052340_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121867,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00052500",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00052500/sub-A00052500_ses-NFB3_T1w.nii.gz",
+          "bytes": 12495047,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00052500/sub-A00052500_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2240818,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00052500/sub-A00052500_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122772,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00052560",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00052560/sub-A00052560_ses-NFB3_T1w.nii.gz",
+          "bytes": 13939007,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00052560/sub-A00052560_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2955796,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00052560/sub-A00052560_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 133995,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00053455",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00053455/sub-A00053455_ses-NFB3_T1w.nii.gz",
+          "bytes": 12272237,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00053455/sub-A00053455_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2330703,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00053455/sub-A00053455_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118613,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00053473",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00053473/sub-A00053473_ses-NFB3_T1w.nii.gz",
+          "bytes": 12515673,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00053473/sub-A00053473_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2394521,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00053473/sub-A00053473_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122020,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00053475",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00053475/sub-A00053475_ses-NFB3_T1w.nii.gz",
+          "bytes": 12250014,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00053475/sub-A00053475_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2474359,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00053475/sub-A00053475_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121007,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00053850",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00053850/sub-A00053850_ses-NFB3_T1w.nii.gz",
+          "bytes": 9682406,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00053850/sub-A00053850_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2273762,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00053850/sub-A00053850_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115783,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00053851",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00053851/sub-A00053851_ses-NFB3_T1w.nii.gz",
+          "bytes": 12922093,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00053851/sub-A00053851_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2327183,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00053851/sub-A00053851_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 119358,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00053902",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00053902/sub-A00053902_ses-NFB3_T1w.nii.gz",
+          "bytes": 11015637,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00053902/sub-A00053902_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2257412,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00053902/sub-A00053902_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115406,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00054019",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00054019/sub-A00054019_ses-NFB3_T1w.nii.gz",
+          "bytes": 12138865,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00054019/sub-A00054019_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2547123,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00054019/sub-A00054019_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122950,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00054441",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00054441/sub-A00054441_ses-NFB3_T1w.nii.gz",
+          "bytes": 13134165,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00054441/sub-A00054441_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2573243,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00054441/sub-A00054441_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 126979,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00054504",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00054504/sub-A00054504_ses-NFB3_T1w.nii.gz",
+          "bytes": 12078821,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00054504/sub-A00054504_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2252627,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00054504/sub-A00054504_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117636,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00054857",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00054857/sub-A00054857_ses-NFB3_T1w.nii.gz",
+          "bytes": 11917584,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00054857/sub-A00054857_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2009561,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00054857/sub-A00054857_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111106,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00054914",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00054914/sub-A00054914_ses-NFB3_T1w.nii.gz",
+          "bytes": 12297306,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00054914/sub-A00054914_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2048225,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00054914/sub-A00054914_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114055,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055121",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055121/sub-A00055121_ses-NFB3_T1w.nii.gz",
+          "bytes": 9494353,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055121/sub-A00055121_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2350570,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055121/sub-A00055121_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 119536,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055373",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055373/sub-A00055373_ses-NFB3_T1w.nii.gz",
+          "bytes": 10198908,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055373/sub-A00055373_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2563465,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055373/sub-A00055373_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122471,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055446",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055446/sub-A00055446_ses-NFB3_T1w.nii.gz",
+          "bytes": 12116990,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055446/sub-A00055446_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2023754,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055446/sub-A00055446_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111600,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055447",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055447/sub-A00055447_ses-NFB3_T1w.nii.gz",
+          "bytes": 12700101,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055447/sub-A00055447_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2431901,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055447/sub-A00055447_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 123708,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055542",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055542/sub-A00055542_ses-NFB3_T1w.nii.gz",
+          "bytes": 12053979,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055542/sub-A00055542_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2053876,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055542/sub-A00055542_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113621,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055738",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055738/sub-A00055738_ses-NFB3_T1w.nii.gz",
+          "bytes": 12776041,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055738/sub-A00055738_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2053169,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055738/sub-A00055738_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 109757,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055763",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055763/sub-A00055763_ses-NFB3_T1w.nii.gz",
+          "bytes": 12735210,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055763/sub-A00055763_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2462156,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055763/sub-A00055763_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 119131,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00055806",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00055806/sub-A00055806_ses-NFB3_T1w.nii.gz",
+          "bytes": 12456012,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00055806/sub-A00055806_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1976589,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00055806/sub-A00055806_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111478,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056097",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056097/sub-A00056097_ses-NFB3_T1w.nii.gz",
+          "bytes": 12453949,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056097/sub-A00056097_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2376935,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056097/sub-A00056097_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 120298,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056306",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056306/sub-A00056306_ses-NFB3_T1w.nii.gz",
+          "bytes": 11685698,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056306/sub-A00056306_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2042814,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056306/sub-A00056306_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111689,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056452",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056452/sub-A00056452_ses-NFB3_T1w.nii.gz",
+          "bytes": 11907551,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056452/sub-A00056452_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1947216,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056452/sub-A00056452_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 108360,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056556",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056556/sub-A00056556_ses-NFB3_T1w.nii.gz",
+          "bytes": 12361489,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056556/sub-A00056556_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2223514,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056556/sub-A00056556_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117407,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056627",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056627/sub-A00056627_ses-NFB3_T1w.nii.gz",
+          "bytes": 12931489,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056627/sub-A00056627_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2581746,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056627/sub-A00056627_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121186,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056898",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056898/sub-A00056898_ses-NFB3_T1w.nii.gz",
+          "bytes": 12666085,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056898/sub-A00056898_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2336312,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056898/sub-A00056898_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 120566,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00056949",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00056949/sub-A00056949_ses-NFB3_T1w.nii.gz",
+          "bytes": 9676997,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00056949/sub-A00056949_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2244431,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00056949/sub-A00056949_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116391,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057005",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057005/sub-A00057005_ses-NFB3_T1w.nii.gz",
+          "bytes": 10398235,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057005/sub-A00057005_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2143584,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057005/sub-A00057005_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115343,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057035",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057035/sub-A00057035_ses-NFB3_T1w.nii.gz",
+          "bytes": 9638879,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057035/sub-A00057035_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2161145,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057035/sub-A00057035_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111699,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057182",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057182/sub-A00057182_ses-NFB3_T1w.nii.gz",
+          "bytes": 10130324,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057182/sub-A00057182_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2235120,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057182/sub-A00057182_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117613,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057203",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057203/sub-A00057203_ses-NFB3_T1w.nii.gz",
+          "bytes": 12334948,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057203/sub-A00057203_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2341469,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057203/sub-A00057203_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116918,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057235",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057235/sub-A00057235_ses-NFB3_T1w.nii.gz",
+          "bytes": 12405808,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057235/sub-A00057235_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2219971,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057235/sub-A00057235_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117965,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057372",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057372/sub-A00057372_ses-NFB3_T1w.nii.gz",
+          "bytes": 13058405,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057372/sub-A00057372_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2637596,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057372/sub-A00057372_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 124962,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057444",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057444/sub-A00057444_ses-NFB3_T1w.nii.gz",
+          "bytes": 13016686,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057444/sub-A00057444_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2062159,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057444/sub-A00057444_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111014,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057786",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057786/sub-A00057786_ses-NFB3_T1w.nii.gz",
+          "bytes": 12102223,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057786/sub-A00057786_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2253335,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057786/sub-A00057786_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114250,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057808",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057808/sub-A00057808_ses-NFB3_T1w.nii.gz",
+          "bytes": 11986711,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057808/sub-A00057808_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1891745,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057808/sub-A00057808_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110872,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00057965",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00057965/sub-A00057965_ses-NFB3_T1w.nii.gz",
+          "bytes": 12059366,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00057965/sub-A00057965_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2343084,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00057965/sub-A00057965_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122033,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058214",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058214/sub-A00058214_ses-NFB3_T1w.nii.gz",
+          "bytes": 12181959,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058214/sub-A00058214_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2315875,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058214/sub-A00058214_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121432,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058218",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058218/sub-A00058218_ses-NFB3_T1w.nii.gz",
+          "bytes": 12033945,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058218/sub-A00058218_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1986397,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058218/sub-A00058218_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 108741,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058503",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058503/sub-A00058503_ses-NFB3_T1w.nii.gz",
+          "bytes": 12374122,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058503/sub-A00058503_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2312822,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058503/sub-A00058503_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116433,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058552",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058552/sub-A00058552_ses-NFB3_T1w.nii.gz",
+          "bytes": 12677566,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058552/sub-A00058552_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2255578,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058552/sub-A00058552_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114063,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058667",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058667/sub-A00058667_ses-NFB3_T1w.nii.gz",
+          "bytes": 11976786,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058667/sub-A00058667_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1985836,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058667/sub-A00058667_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 108988,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058952",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058952/sub-A00058952_ses-NFB3_T1w.nii.gz",
+          "bytes": 12140501,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058952/sub-A00058952_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2114830,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058952/sub-A00058952_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111919,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00058999",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00058999/sub-A00058999_ses-NFB3_T1w.nii.gz",
+          "bytes": 11582118,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00058999/sub-A00058999_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1897686,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00058999/sub-A00058999_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 108956,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00059344",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00059344/sub-A00059344_ses-NFB3_T1w.nii.gz",
+          "bytes": 12841003,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00059344/sub-A00059344_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2561341,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00059344/sub-A00059344_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 126783,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00059346",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00059346/sub-A00059346_ses-NFB3_T1w.nii.gz",
+          "bytes": 12660581,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00059346/sub-A00059346_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2109767,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00059346/sub-A00059346_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113718,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00059428",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00059428/sub-A00059428_ses-NFB3_T1w.nii.gz",
+          "bytes": 11680038,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00059428/sub-A00059428_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2108099,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00059428/sub-A00059428_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113191,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00059756",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00059756/sub-A00059756_ses-NFB3_T1w.nii.gz",
+          "bytes": 12234778,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00059756/sub-A00059756_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2051024,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00059756/sub-A00059756_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114456,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00059845",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00059845/sub-A00059845_ses-NFB3_T1w.nii.gz",
+          "bytes": 12317257,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00059845/sub-A00059845_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2407327,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00059845/sub-A00059845_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121016,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00059911",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00059911/sub-A00059911_ses-NFB3_T1w.nii.gz",
+          "bytes": 11750747,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00059911/sub-A00059911_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1946181,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00059911/sub-A00059911_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 112929,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060006",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060006/sub-A00060006_ses-NFB3_T1w.nii.gz",
+          "bytes": 13935275,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060006/sub-A00060006_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1927673,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060006/sub-A00060006_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113079,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060093",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060093/sub-A00060093_ses-NFB3_T1w.nii.gz",
+          "bytes": 12341508,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060093/sub-A00060093_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2585321,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060093/sub-A00060093_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 125049,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060169",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060169/sub-A00060169_ses-NFB3_T1w.nii.gz",
+          "bytes": 11818815,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060169/sub-A00060169_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2298398,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060169/sub-A00060169_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122492,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060259",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060259/sub-A00060259_ses-NFB3_T1w.nii.gz",
+          "bytes": 12227668,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060259/sub-A00060259_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2340091,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060259/sub-A00060259_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117532,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060279",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060279/sub-A00060279_ses-NFB3_T1w.nii.gz",
+          "bytes": 12256643,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060279/sub-A00060279_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2016331,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060279/sub-A00060279_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110925,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060372",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060372/sub-A00060372_ses-NFB3_T1w.nii.gz",
+          "bytes": 12124864,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060372/sub-A00060372_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2277583,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060372/sub-A00060372_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 119132,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060407",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060407/sub-A00060407_ses-NFB3_T1w.nii.gz",
+          "bytes": 10818505,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060407/sub-A00060407_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2310817,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060407/sub-A00060407_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 120111,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060430",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060430/sub-A00060430_ses-NFB3_T1w.nii.gz",
+          "bytes": 11405802,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060430/sub-A00060430_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1785672,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060430/sub-A00060430_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 108073,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060471",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060471/sub-A00060471_ses-NFB3_T1w.nii.gz",
+          "bytes": 12053108,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060471/sub-A00060471_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2508967,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060471/sub-A00060471_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 127183,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060480",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060480/sub-A00060480_ses-NFB3_T1w.nii.gz",
+          "bytes": 13785492,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060480/sub-A00060480_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2588651,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060480/sub-A00060480_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 129052,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060516",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060516/sub-A00060516_ses-NFB3_T1w.nii.gz",
+          "bytes": 10423157,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060516/sub-A00060516_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2526818,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060516/sub-A00060516_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122524,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060632",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060632/sub-A00060632_ses-NFB3_T1w.nii.gz",
+          "bytes": 12894436,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060632/sub-A00060632_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2295778,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060632/sub-A00060632_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118309,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060848",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060848/sub-A00060848_ses-NFB3_T1w.nii.gz",
+          "bytes": 12564663,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060848/sub-A00060848_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2347278,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060848/sub-A00060848_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 122458,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00060925",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00060925/sub-A00060925_ses-NFB3_T1w.nii.gz",
+          "bytes": 12417053,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00060925/sub-A00060925_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2177189,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00060925/sub-A00060925_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116593,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00061204",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00061204/sub-A00061204_ses-NFB3_T1w.nii.gz",
+          "bytes": 12323159,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00061204/sub-A00061204_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2096909,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00061204/sub-A00061204_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111136,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00061276",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00061276/sub-A00061276_ses-NFB3_T1w.nii.gz",
+          "bytes": 12502547,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00061276/sub-A00061276_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2163254,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00061276/sub-A00061276_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 111759,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00061387",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00061387/sub-A00061387_ses-NFB3_T1w.nii.gz",
+          "bytes": 12995234,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00061387/sub-A00061387_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1848191,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00061387/sub-A00061387_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 109132,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00061709",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00061709/sub-A00061709_ses-NFB3_T1w.nii.gz",
+          "bytes": 10707174,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00061709/sub-A00061709_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2321641,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00061709/sub-A00061709_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 118488,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00061711",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00061711/sub-A00061711_ses-NFB3_T1w.nii.gz",
+          "bytes": 12143414,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00061711/sub-A00061711_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2121200,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00061711/sub-A00061711_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116670,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00061806",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00061806/sub-A00061806_ses-NFB3_T1w.nii.gz",
+          "bytes": 13340811,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00061806/sub-A00061806_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2434737,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00061806/sub-A00061806_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 123794,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062210",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062210/sub-A00062210_ses-NFB3_T1w.nii.gz",
+          "bytes": 12106366,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062210/sub-A00062210_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1974230,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062210/sub-A00062210_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 108646,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062248",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062248/sub-A00062248_ses-NFB3_T1w.nii.gz",
+          "bytes": 12340748,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062248/sub-A00062248_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2051641,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062248/sub-A00062248_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114198,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062266",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062266/sub-A00062266_ses-NFB3_T1w.nii.gz",
+          "bytes": 11726099,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062266/sub-A00062266_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1925453,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062266/sub-A00062266_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 113575,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062282",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062282/sub-A00062282_ses-NFB3_T1w.nii.gz",
+          "bytes": 10843017,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062282/sub-A00062282_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2455478,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062282/sub-A00062282_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 123709,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062288",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062288/sub-A00062288_ses-NFB3_T1w.nii.gz",
+          "bytes": 10109856,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062288/sub-A00062288_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2198781,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062288/sub-A00062288_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115285,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062351",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062351/sub-A00062351_ses-NFB3_T1w.nii.gz",
+          "bytes": 10738308,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062351/sub-A00062351_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2405897,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062351/sub-A00062351_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 121907,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062917",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062917/sub-A00062917_ses-NFB3_T1w.nii.gz",
+          "bytes": 12081353,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062917/sub-A00062917_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2261488,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062917/sub-A00062917_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 114902,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062934",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062934/sub-A00062934_ses-NFB3_T1w.nii.gz",
+          "bytes": 12923366,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062934/sub-A00062934_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2583654,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062934/sub-A00062934_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 125871,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00062942",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00062942/sub-A00062942_ses-NFB3_T1w.nii.gz",
+          "bytes": 10065976,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00062942/sub-A00062942_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1963070,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00062942/sub-A00062942_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 109083,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00063008",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00063008/sub-A00063008_ses-NFB3_T1w.nii.gz",
+          "bytes": 10947401,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00063008/sub-A00063008_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2242210,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00063008/sub-A00063008_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115721,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00063103",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00063103/sub-A00063103_ses-NFB3_T1w.nii.gz",
+          "bytes": 10129796,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00063103/sub-A00063103_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2165439,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00063103/sub-A00063103_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 115573,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00063326",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00063326/sub-A00063326_ses-NFB3_T1w.nii.gz",
+          "bytes": 9823079,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00063326/sub-A00063326_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2282310,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00063326/sub-A00063326_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 120283,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00063368",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00063368/sub-A00063368_ses-NFB3_T1w.nii.gz",
+          "bytes": 12311708,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00063368/sub-A00063368_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 1815369,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00063368/sub-A00063368_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 110398,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00063589",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00063589/sub-A00063589_ses-NFB3_T1w.nii.gz",
+          "bytes": 10488774,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00063589/sub-A00063589_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2333793,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00063589/sub-A00063589_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 117243,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    },
+    {
+      "source_identifier": "A00064081",
+      "role": "TRAIN",
+      "session": "NFB3",
+      "members": [
+        {
+          "path": "NFBS_Dataset/A00064081/sub-A00064081_ses-NFB3_T1w.nii.gz",
+          "bytes": 10214418,
+          "session": "NFB3",
+          "category": "T1w"
+        },
+        {
+          "path": "NFBS_Dataset/A00064081/sub-A00064081_ses-NFB3_T1w_brain.nii.gz",
+          "bytes": 2213210,
+          "session": "NFB3",
+          "category": "brain"
+        },
+        {
+          "path": "NFBS_Dataset/A00064081/sub-A00064081_ses-NFB3_T1w_brainmask.nii.gz",
+          "bytes": 116973,
+          "session": "NFB3",
+          "category": "brainmask"
+        }
+      ]
+    }
+  ]
+}

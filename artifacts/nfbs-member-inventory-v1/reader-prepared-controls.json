@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "reader_sha256": "0488f36b8da0d176f4e53ca20c75c21e4ad0d62ff7f26a9d3894f6f3f2d3069f",
+  "protocol_sha256": "fcee25707c30ddae9ac38fb5cec0dfd10cd3712327b8df981b6cdb3e6ec5b724",
+  "check_only": {
+    "status": "prepared_protocol_valid",
+    "archive_opens": 0,
+    "execution_released": false
+  },
+  "false_release_refused_before_archive_path_open": true,
+  "actual_archive_opens": 0
+}

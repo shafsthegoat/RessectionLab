@@ -67,6 +67,14 @@ response-value access; every region and trial inherits its parent role. No timin
 or motion fields were found. Response reading, alignment, fitting and physical
 validation remain pending; source aliases do not authenticate donor independence.
 
+The [NFBS archive inventory](artifacts/nfbs-member-inventory-v1/RESULT.txt)
+completed one independently reviewed names-and-sizes-only pass. All 125 source
+IDs have one T1w, brain and brainmask filename, totaling 375 files; archive
+checksums and end-of-stream checks passed. No image was extracted or decoded.
+These names do not establish biological independence, label validity or aligned
+geometry. The whole archive retains its existing dependent TRAIN role, with
+intended-use QC still required before training admission.
+
 The [complete strategy-record interface](artifacts/research-estimate-strategy-record-v1/RESULT.md)
 now preserves full nominal action histories and resulting modeled state in JSON,
 and verifies them by replay using only permitted inputs. Root integration passed

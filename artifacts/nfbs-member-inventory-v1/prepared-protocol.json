@@ -1,0 +1,48 @@
+{
+  "schema": "nfbs-sealed-archive-member-inventory-v1",
+  "execution_released": false,
+  "archive": "data/acquisition/nfbs-originals-v1/verified/NFBS_Dataset.tar.gz",
+  "archive_sha256": "fd616b9ea21aad3d0d4cd05a25a71f4a3c251140df38188e58e499254440d2cc",
+  "archive_md5": "06c467ac9ab6cbdb8185e6643879721d",
+  "archive_bytes": 1751464473,
+  "reader": "build/nfbs-member-inventory-preparation-v1/inventory.py",
+  "reader_sha256": "0488f36b8da0d176f4e53ca20c75c21e4ad0d62ff7f26a9d3894f6f3f2d3069f",
+  "cohort_path": "manifests/experiments/nfbs-dependent-train-family-v1.json",
+  "cohort_sha256": "c1a1b3cbc0b03cc07c6909137a98fa9c120b34891754ad5a8e14a8eee05320a7",
+  "source_role": "TRAIN dependent source family",
+  "limits": {
+    "members": 2048,
+    "member_name_bytes": 1024,
+    "single_member_bytes": 1073741824,
+    "uncompressed_bytes": 68719476736,
+    "wall_seconds": 120
+  },
+  "max_output_bytes": 4194304,
+  "threads": 1,
+  "intended_sampled_RSS_guard_bytes": 268435456,
+  "RSS_guard_status": "Require separate independently reviewed launch supervisor before actual inventory; reader itself limits chunks, member metadata and deadline but does not enforce RSS. No actual archive pass authorized.",
+  "output": "build/nfbs-member-inventory-execution-v1/inventory.json",
+  "allowed_metadata": [
+    "member name",
+    "member byte size",
+    "regular file or directory type"
+  ],
+  "sequential_gzip_cost": "Original1.75GB source fixity pass, then sequential gzip inflation through archive while bodies are skipped opaquely. This is not a zero-decompression or random-access operation. Count all inflated bytes; retain no image data.",
+  "unsupported_archive_features": "Link/special/GNU-longname/PAX/sparse records rejected before extension body processing; do not relax after seeing payloads without a separately reviewed format amendment.",
+  "original_mutation_allowed": false,
+  "extraction_allowed": false,
+  "image_decode_allowed": false,
+  "subject_role_changes_allowed": false,
+  "anatomy_QC_admitted": false,
+  "labels_admitted": false,
+  "training_admitted": false,
+  "independent_evaluation_claim": false,
+  "125_person_denominator": "Publisher-reported only; no local person inventory yet. Member names alone do not verify biological independence.",
+  "ancestry": "Preserve unknown BEaST library/source lineage. Synthetic data are allowed, but neither manual edits nor real acquisition establish independent labels.",
+  "python_version": "3.12.14",
+  "stdlib_source_sha256": {
+    "tarfile": "41a9f1930e5285455b4b0db2b9394247cce312c3fa1ef586a58e66c0100668d5",
+    "gzip": "ea6e194b9df26398bf0d5215e63320c7b9d801b2d8b723fb9c80619df48076e9"
+  },
+  "tar_end_contract": "Require two complete zero end records. Reject malformed/truncated/missing later headers rather than interpreting them as EOF. Drain through tarfile read-ahead buffer before close; all remaining uncompressed bytes must be zero, and gzip trailerCRC must validate."
+}

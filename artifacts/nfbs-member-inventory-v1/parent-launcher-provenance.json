@@ -1,0 +1,5 @@
+{
+  "source": "build/menichetti-structure-launch-preparation-v1/launch.py",
+  "source_sha256": "2f93c7fd776014417677ed7ea12112a8f237218e76d288ad04297b651816fea2",
+  "adaptation": "Exact existing supervisor/OwnedWorker lifecycle; only NFBS worker/protocol/review/output/semantics and caps, plus stdlib version/source binding changed. No actual archive execution."
+}

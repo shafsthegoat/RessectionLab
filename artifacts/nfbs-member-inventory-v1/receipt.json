@@ -1,0 +1,56 @@
+{
+  "caps": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "cleanup_and_finalization_reserve_seconds": 10,
+    "numerical_threads": 1,
+    "sampled_process_group_rss_bytes": 268435456,
+    "wall_seconds": 130,
+    "worker_stage_wall_seconds": 120
+  },
+  "child_protocol_sha256": "097e84b282fa8b45a86ea7759de70f2e8a9e0426368b39ae641f44bdf2725286",
+  "historical_executing_source_commit": "0f7eee3a17b6743fe15549cf8aba396fa4e98a2c",
+  "image_decode_allowed": false,
+  "independent_review_sha256": "727fe71699da19c16eaa4a7d05e84d142cdb817e19fef31665c7998bc14aab8d",
+  "inventory_bytes": 64596,
+  "inventory_sha256": "2e4db48a19f55bb4f06e3fca88200829d130948746bc1c9922534c105b39d37f",
+  "launcher_cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "observed_head_at_launch": "e21c71d32c4939ec210d9ec18124d5c1c78214c4",
+  "observed_head_at_root_release": "e21c71d32c4939ec210d9ec18124d5c1c78214c4",
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 4194304,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/nfbs-member-inventory-preparation-v1/inventory.py",
+      "--protocol",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/nfbs-member-inventory-execution-v1/released-protocol.json",
+      "--protocol-sha256",
+      "097e84b282fa8b45a86ea7759de70f2e8a9e0426368b39ae641f44bdf2725286"
+    ],
+    "elapsed_seconds": 5.722246375167742,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 69900,
+    "peak_sampled_process_group_rss_bytes": 26460160,
+    "pid": 95700,
+    "sampled_process_group_rss_cap_bytes": 268435456,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 120
+  },
+  "release_sha256": "892a2e2933815db33cf0b230b7e4666ebffc41c42df0d97a830c59be9494026b",
+  "role_assignments_changed": false,
+  "sampling_note": "RSS/output are sampled; brief between-sample peaks may be missed.",
+  "schema": "nfbs-supervised-member-inventory-one-shot-v1",
+  "status": "supervision_complete_inventory_uninterpreted",
+  "supervised_lifecycle_seconds": 5.74251166684553,
+  "worker_sha256": "0488f36b8da0d176f4e53ca20c75c21e4ad0d62ff7f26a9d3894f6f3f2d3069f"
+}

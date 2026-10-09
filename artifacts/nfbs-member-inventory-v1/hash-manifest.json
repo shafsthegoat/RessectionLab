@@ -1,0 +1,160 @@
+{
+  "schema": "nfbs-member-inventory-integration-package-v1",
+  "created_utc": "2026-10-09T10:22:12.345867+00:00",
+  "status": "independently_passed_metadata_only_result_ready_for_root_integration",
+  "intended_tracked_destination": "artifacts/nfbs-member-inventory-v1",
+  "files": [
+    {
+      "package_path": "RESULT.txt",
+      "original_path": "build/nfbs-member-inventory-audit-v1/RESULT.txt",
+      "bytes": 2023,
+      "sha256": "a1a7e873ace61f4c9a5aa66fbed5ba51c534e38c169a05e3c367efdd9e6a58b1"
+    },
+    {
+      "package_path": "summary.json",
+      "original_path": "build/nfbs-member-inventory-audit-v1/summary.json",
+      "bytes": 90803,
+      "sha256": "1b24ad293a7ff334d7cb1b054100d21174fda665b2d4de40449b7edf8c3775ab"
+    },
+    {
+      "package_path": "inventory.json",
+      "original_path": "build/nfbs-member-inventory-execution-v1/inventory.json",
+      "bytes": 64596,
+      "sha256": "2e4db48a19f55bb4f06e3fca88200829d130948746bc1c9922534c105b39d37f"
+    },
+    {
+      "package_path": "receipt.json",
+      "original_path": "build/nfbs-member-inventory-execution-v1/receipt.json",
+      "bytes": 2529,
+      "sha256": "7c27256339cb858f1a4c6c5c757ff83274971fb130819739202f899e681df2ea"
+    },
+    {
+      "package_path": "released-protocol.json",
+      "original_path": "build/nfbs-member-inventory-execution-v1/released-protocol.json",
+      "bytes": 2952,
+      "sha256": "097e84b282fa8b45a86ea7759de70f2e8a9e0426368b39ae641f44bdf2725286"
+    },
+    {
+      "package_path": "root-released.json",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/root-released.json",
+      "bytes": 2409,
+      "sha256": "892a2e2933815db33cf0b230b7e4666ebffc41c42df0d97a830c59be9494026b"
+    },
+    {
+      "package_path": "root-release-host-check.json",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/root-release-host-check.json",
+      "bytes": 288,
+      "sha256": "d345801f83940a37782b3b52d12462b3e5a99ee83645c9198f18e61660cd2b01"
+    },
+    {
+      "package_path": "prepared-protocol.json",
+      "original_path": "build/nfbs-member-inventory-preparation-v1/prepared-protocol.json",
+      "bytes": 2953,
+      "sha256": "fcee25707c30ddae9ac38fb5cec0dfd10cd3712327b8df981b6cdb3e6ec5b724"
+    },
+    {
+      "package_path": "authorized-template.json",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/authorized-template.json",
+      "bytes": 2416,
+      "sha256": "8236e87e763327456842f555777cc0afa8dc0b90c2b9da2b215933c849b196f5"
+    },
+    {
+      "package_path": "READER_REVIEW.md",
+      "original_path": "build/nfbs-member-inventory-independent-v1/REPORT.md",
+      "bytes": 3853,
+      "sha256": "727fe71699da19c16eaa4a7d05e84d142cdb817e19fef31665c7998bc14aab8d"
+    },
+    {
+      "package_path": "LAUNCHER_REVIEW.md",
+      "original_path": "build/nfbs-member-inventory-launch-independent-v1/REPORT.md",
+      "bytes": 3247,
+      "sha256": "6feacb019a6f42482e56379793ad6443403b57298af29704d0db777d3fc1cb27"
+    },
+    {
+      "package_path": "RESULT_REVIEW.md",
+      "original_path": "build/nfbs-member-inventory-result-independent-v1/REPORT.md",
+      "bytes": 3331,
+      "sha256": "183fc7d2c0ee30edfff9e4174d53d8c0df67a63720430f966ecea18b057c148c"
+    },
+    {
+      "package_path": "reader-generated-controls.json",
+      "original_path": "build/nfbs-member-inventory-preparation-v1/generated-controls.json",
+      "bytes": 1465,
+      "sha256": "47afc421a61b3e9b63deb00b090a5f13b73b2b1229088970cf1dec1e8e43fa99"
+    },
+    {
+      "package_path": "reader-prepared-controls.json",
+      "original_path": "build/nfbs-member-inventory-preparation-v1/prepared-controls.json",
+      "bytes": 406,
+      "sha256": "78c3a4bdbc6415cfec2375b19995bb36200fb532baa7d787f125622826d0951d"
+    },
+    {
+      "package_path": "launcher-generated-controls.json",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/generated-process-controls-14hcqz3w/summary.json",
+      "bytes": 123,
+      "sha256": "6413f1a3d3be59d2b6db6fb21abc47dcd58d16feef2a8b3d9e4d6f28d860ff01"
+    },
+    {
+      "package_path": "parent-launcher-provenance.json",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/parent-launcher-provenance.json",
+      "bytes": 365,
+      "sha256": "a28cdfaf0d702b06432274e4d5aa14cf4179233fee8bad4a7e06cb607ea8c9ed"
+    },
+    {
+      "package_path": "source/reader.py",
+      "original_path": "build/nfbs-member-inventory-preparation-v1/inventory.py",
+      "bytes": 9676,
+      "sha256": "0488f36b8da0d176f4e53ca20c75c21e4ad0d62ff7f26a9d3894f6f3f2d3069f"
+    },
+    {
+      "package_path": "source/launcher.py",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/launch.py",
+      "bytes": 13380,
+      "sha256": "e73953b40a33e77bbae823acfb9d5759cf962c7d9fc979855bcd9a82531abef4"
+    },
+    {
+      "package_path": "source/test-reader-generated.py",
+      "original_path": "build/nfbs-member-inventory-preparation-v1/test-generated.py",
+      "bytes": 4011,
+      "sha256": "87a6bd14758651fd6b703893b94d929ef1163ca2732b194734168277346c983b"
+    },
+    {
+      "package_path": "source/test-launcher-generated.py",
+      "original_path": "build/nfbs-member-inventory-launch-preparation-v1/test_generated_processes.py",
+      "bytes": 6342,
+      "sha256": "8dede4b450666c1bbb9a810a9bd2bbe015c5f085914f3530423086ccb734f3a1"
+    },
+    {
+      "package_path": "source/mechanics_hbe_v5_remaining_one_shot.py",
+      "original_path": "scripts/mechanics_hbe_v5_remaining_one_shot.py",
+      "bytes": 61999,
+      "sha256": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+    },
+    {
+      "package_path": "source/mechanics_hbe_v5_n8_one_shot.py",
+      "original_path": "scripts/mechanics_hbe_v5_n8_one_shot.py",
+      "bytes": 28373,
+      "sha256": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0"
+    },
+    {
+      "package_path": "source/febio_runtime.py",
+      "original_path": "scripts/febio_runtime.py",
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "package_path": "source/nfbs-dependent-train-family-v1.json",
+      "original_path": "manifests/experiments/nfbs-dependent-train-family-v1.json",
+      "bytes": 5507,
+      "sha256": "c1a1b3cbc0b03cc07c6909137a98fa9c120b34891754ad5a8e14a8eee05320a7"
+    }
+  ],
+  "file_count_excluding_manifest": 24,
+  "bytes_excluding_manifest": 337848,
+  "archive_or_images_included": false,
+  "original_archive_opened_by_packager": false,
+  "all_copied_bytes_match_originals": true,
+  "source_person_role_changes": false,
+  "training_or_label_admission": false,
+  "reproducibility_note": "Copied source files preserve original bytes and relative path constants for audit; do not execute the relocated snapshots directly. Original reviewed paths and hashes remain explicit. Runtime stdlib sources are bound by hash in the protocol, not copied. No measured image arrays or archive bytes are in this package."
+}

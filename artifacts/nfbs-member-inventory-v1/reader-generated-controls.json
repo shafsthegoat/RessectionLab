@@ -1,0 +1,79 @@
+{
+  "status": "pass",
+  "reader_sha256": "0488f36b8da0d176f4e53ca20c75c21e4ad0d62ff7f26a9d3894f6f3f2d3069f",
+  "actual_NFBS_archive_opens": 0,
+  "generated_archive_controls": [
+    {
+      "case": "regular_names_sizes_only",
+      "status": "pass"
+    },
+    {
+      "case": "traversal",
+      "status": "pass"
+    },
+    {
+      "case": "duplicate",
+      "status": "pass"
+    },
+    {
+      "case": "link",
+      "status": "pass"
+    },
+    {
+      "case": "member_cap",
+      "status": "pass"
+    },
+    {
+      "case": "decompression_cap",
+      "status": "pass"
+    },
+    {
+      "case": "checksum",
+      "status": "pass"
+    },
+    {
+      "case": "deadline",
+      "status": "pass"
+    },
+    {
+      "case": "invalid_gzip",
+      "status": "pass"
+    },
+    {
+      "case": "crc_corrupt",
+      "status": "pass"
+    },
+    {
+      "case": "pax_huge_declared_body_refused_before_read",
+      "status": "pass"
+    },
+    {
+      "case": "nonzero_trailer_in_read_ahead",
+      "status": "pass"
+    },
+    {
+      "case": "malformed_later_header",
+      "status": "pass"
+    },
+    {
+      "case": "truncated_later_header",
+      "status": "pass"
+    },
+    {
+      "case": "missing_end_records",
+      "status": "pass"
+    },
+    {
+      "case": "only_one_end_record",
+      "status": "pass"
+    },
+    {
+      "case": "nonzero_second_end_record",
+      "status": "pass"
+    },
+    {
+      "case": "extractfile_forbidden",
+      "status": "pass"
+    }
+  ]
+}
