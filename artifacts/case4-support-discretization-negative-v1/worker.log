@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-target-estimator-research/case4-support-contract-v1/make_support_map.py", line 215, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-target-estimator-research/case4-support-contract-v1/make_support_map.py", line 152, in main
+    raise ValueError("independent saved-transform coverage reconstruction disagrees voxelwise")
+ValueError: independent saved-transform coverage reconstruction disagrees voxelwise

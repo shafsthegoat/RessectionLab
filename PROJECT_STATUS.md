@@ -74,6 +74,13 @@ peak sampled memory. The final decoder concatenation boundary added about
 optimization candidates; they do not prove the cause of the preserved full-128³
 pressure stop or establish patient accuracy. No patient inference or RL training ran.
 
+The [first Case4 source-coverage replay](artifacts/case4-support-discretization-negative-v1/RESULT.md)
+stopped with 49,293 T1 and 24,923 FLAIR voxel mismatches between independent
+resampling implementations. No map was saved. Resource monitoring and cleanup
+completed correctly. Generated edge tests identify a plausible half-voxel
+boundary convention difference; the original failure is preserved while a
+strict patient-scan comparison of the corrected rule is prepared.
+
 The [scan support contract](docs/scan-support-unknown-contract.md) now keeps
 scan field of view, estimated anatomy and prediction coverage separate. Five
 generated controls pass: unobserved locations stay unknown, and predicted

@@ -1,0 +1,83 @@
+{
+  "attempt": "01",
+  "case_id": "RESECT-Case4",
+  "contains_model_outputs": false,
+  "contains_patient_arrays": false,
+  "files": [
+    {
+      "bytes": 12040,
+      "file": "supervision-result.json",
+      "original_path": "build/scan-target-estimator-research/case4-support-cleanup-v2/support-map-supervision-result.json",
+      "sha256": "01870da186e6c37a707cea60a304d4febcfef9a5d2ab72a704d2511cad0f4756"
+    },
+    {
+      "bytes": 381,
+      "file": "discretization-hold.json",
+      "original_path": "build/scan-target-estimator-research/case4-support-contract-v1/discretization-hold.json",
+      "sha256": "3c64662024efccbfc990922460294d2c9cb6cfc830ad562d9d9f9174268856f1"
+    },
+    {
+      "bytes": 640,
+      "file": "worker.log",
+      "original_path": "build/scan-target-estimator-research/case4-support-cleanup-v2/support-map-worker.log",
+      "sha256": "b37c439f0ee1d54856c5d1bfb5da7e755064d53b84ab7d14a3858bd3bd9e688c"
+    },
+    {
+      "bytes": 3741,
+      "file": "release.json",
+      "original_path": "build/scan-target-estimator-research/case4-support-cleanup-v2/support-map-release.json",
+      "sha256": "36ba92b204746131b86cc56e3f13d46db3a6e3a1d664c486e6f681dab40e5759"
+    },
+    {
+      "bytes": 28029,
+      "file": "supervisor.py",
+      "original_path": "build/scan-target-estimator-research/case4-support-cleanup-v2/support_map_supervise.py",
+      "sha256": "5c768868ec642bb6807363698174aa64dc82c1723717d1ca2111be464609873c"
+    },
+    {
+      "bytes": 11296,
+      "file": "original-generator.py",
+      "original_path": "build/scan-target-estimator-research/case4-support-contract-v1/make_support_map.py",
+      "sha256": "82e205d2c47b46d0d65e15055a73ec15ba65f0010352fb236597623ccf2ddd6d"
+    },
+    {
+      "bytes": 2923,
+      "file": "original-support-contract.py",
+      "original_path": "build/scan-target-estimator-research/case4-support-contract-v1/support_contract.py",
+      "sha256": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a"
+    },
+    {
+      "bytes": 2895,
+      "file": "independent-postrun-review.md",
+      "original_path": "build/scan-target-estimator-research/case4-support-cleanup-v2/POSTRUN-INDEPENDENT-REVIEW.md",
+      "sha256": "aeb97ec4a0509a3c424788b39b15f405981d7ec86dd7422a912afbda5674f6b7"
+    },
+    {
+      "bytes": 2816,
+      "file": "independent-release-review.md",
+      "original_path": "build/scan-target-estimator-research/case4-support-cleanup-v2/INDEPENDENT-RELEASE-REVIEW.md",
+      "sha256": "f758a07881684f84c5ddb338ba834da64af504a92e79b9d6ad0e6463fedf8eee"
+    },
+    {
+      "bytes": 4167,
+      "file": "generated-edge-test.py",
+      "original_path": "build/scan-target-estimator-research/case4-discretization-diagnosis-v1/test_replay.py",
+      "sha256": "de39381f2c8a119c3750f4d10be06170241043e3187008dde0e2b92ed0783702"
+    },
+    {
+      "bytes": 1109,
+      "file": "generated-edge-result.md",
+      "original_path": "build/scan-target-estimator-research/case4-discretization-diagnosis-v1/GENERATED-EDGE-RESULT.md",
+      "sha256": "8ba7f6faf5328f0598e2b4b7bb0f2825f3f66f31fdfbe0b7873cdb186dbe8a76"
+    },
+    {
+      "bytes": 6986,
+      "file": "read-only-replay-draft.py",
+      "original_path": "build/scan-target-estimator-research/case4-discretization-diagnosis-v1/replay.py",
+      "sha256": "85fbf2928d54cd7713a770c0548ec144cc1abf0bcb9b5d8b57a3c29015179767"
+    }
+  ],
+  "schema_version": "case4-source-support-negative-package-v1",
+  "split_role": "DEVELOPMENT",
+  "status": "discretization_hold_no_map"
+}
