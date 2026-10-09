@@ -1,0 +1,296 @@
+{
+  "actual_parent_result": {
+    "RSS_accounting_note": "Workers are sequential/reaped; parent+largest worker RSS is a conservative process-sum upper bound, not unique physical memory. Missing worker terminal RSS remains unknown/null; the largest recorded value is only partial evidence in that case.",
+    "elapsed_seconds": 2.0157049170229584,
+    "max_recorded_worker_peak_RSS_bytes": 438386688,
+    "max_worker_peak_RSS_bytes": 438386688,
+    "output_bytes_before_parent_receipt": 67504685,
+    "parent_peak_RSS_bytes": 55246848,
+    "parent_plus_worker_RSS_upper_bound_bytes": 493633536,
+    "patient_execution": true,
+    "preoperative_input_admitted": false,
+    "read_accounting_scope": "Acquisition metadata, selected source bytes and separately identified memory parser reads; runtime/code/control-JSON reads are source-bound but excluded from these data-read counters.",
+    "release_sha256": "7b2514b0f57516802c0ed5db912fa2f43fc6d3c6cb9da2c2252bd3f838b6eecf",
+    "schema": "remind-staged-MR-parent-v1",
+    "stages": [
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 372948992,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1277955.284289916,
+          "worker_exit_status": 0,
+          "worker_pid": 8142
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 6,
+          "confirmed_returned_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 74942776,
+            "source_file": 0
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "validator",
+        "worker_elapsed_seconds": 0.5131918340921402,
+        "worker_peak_RSS_bytes": 373751808
+      },
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 431947776,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1277956.558111708,
+          "worker_exit_status": 0,
+          "worker_pid": 8152
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 135,
+          "confirmed_returned_bytes": {
+            "memory_header": 133418,
+            "memory_payload": 33698346,
+            "metadata_file": 75045499,
+            "source_file": 33696106
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "conversion",
+        "worker_elapsed_seconds": 1.0982532501220703,
+        "worker_peak_RSS_bytes": 438386688
+      }
+    ],
+    "status": "conversion_finished_anatomy_unreviewed",
+    "termination_requested": false,
+    "total_confirmed_returned_bytes": {
+      "memory_header": 133418,
+      "memory_payload": 33698346,
+      "metadata_file": 149988275,
+      "source_file": 33696106
+    },
+    "total_unconfirmed_upper_bound_bytes": {
+      "memory_header": 0,
+      "memory_payload": 0,
+      "metadata_file": 0,
+      "source_file": 0
+    },
+    "training_admitted": false,
+    "unknown_worker_peak_RSS_stages": []
+  },
+  "clinical_limits": {
+    "MR_US_frame_of_reference": "Different saved identifiers; no registration performed or implied",
+    "US_geometry": "Unsupported; no US source reopened or converted in this MR run",
+    "acquisition_timing": "AcquisitionDate, AcquisitionTime and AcquisitionDateTime absent on all64 saved planes; remain unavailable",
+    "actor_admitted": false,
+    "anatomical_coverage": "unreviewed",
+    "anatomy_qc": "not_run",
+    "available_at_preoperative_decision_time": "unverified",
+    "clinical_validity": "unreviewed",
+    "image_upload": false,
+    "preoperative_input_admitted": false,
+    "source_stage_hint": "intraoperative_label_only",
+    "split_changed": false,
+    "training_admitted": false
+  },
+  "data_read_totals": {
+    "all141_pairs_included": true,
+    "returned_bytes": 217516145,
+    "scope": "Metadata/source returns and separate in-memory parser returns only. Runtime/code/control JSON and native output audit/hash reads are outside these counters; output size/hash and global wall/RSS are separately recorded.",
+    "unknown_bytes": 0
+  },
+  "geometry": {
+    "affine_xyz_to_ras_mm": [
+      [
+        0.42960589072114613,
+        -0.005493339768625376,
+        -0.048659386446886596,
+        -123.02710432692302
+      ],
+      [
+        -0.00750062554728231,
+        -0.3968997601971644,
+        -1.2630234203296713,
+        262.0252533653846
+      ],
+      [
+        -0.0037501924611323765,
+        0.16453464618739277,
+        -3.048348122710623,
+        25.510003990384597
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "physical_extent_ras_mm": {
+      "definition": "axis_aligned_bounds_of_voxel_cell_corners",
+      "maximum": [
+        96.743385140051,
+        262.8589652684216,
+        111.19552467282188
+      ],
+      "minimum": [
+        -129.14162160331276,
+        -25.02753113383403,
+        -170.06059256870287
+      ]
+    },
+    "shape_xyz": [
+      512,
+      512,
+      64
+    ],
+    "slice_position_max_residual_mm": 0.0006610877478623446
+  },
+  "header_inventory_stage_note": "Nested header inventory not_run/unchecked fields describe its pre-conversion projection; completed worker plus serialized audit record the later array conversion.",
+  "independent_bounded_native_samples": {
+    "all_finite": true,
+    "all_integer_signed16_range": true,
+    "header_bytes": 352,
+    "independent_source_pixel_equality_proven": false,
+    "note": "Original DICOMs were not reopened; bounded native values are consistency checks, not independent original-pixel equality.",
+    "planes": 64,
+    "sample_bytes": 13308,
+    "sample_maximum": 563.0,
+    "sample_minimum": 0.0,
+    "sample_sha256": "905f8790c5035fa0b588b82c1df9c6c1320a37f21e6a5134eb46fd18b404c482",
+    "samples": 3327
+  },
+  "independent_geometry_refit": {
+    "affine_ras_mm": [
+      [
+        0.42960589072114613,
+        -0.005493339768625376,
+        -0.04865938644688648,
+        -123.02710432692308
+      ],
+      [
+        -0.00750062554728231,
+        -0.3968997601971644,
+        -1.2630234203296702,
+        262.02525336538463
+      ],
+      [
+        -0.0037501924611323765,
+        0.16453464618739277,
+        -3.0483481227106224,
+        25.510003990384604
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "max_affine_element_difference_from_saved_fit": 5.684341886080802e-14,
+    "maximum_position_residual_mm": 0.0006610877478796303,
+    "method": "closed-form centred ordinary least squares from all 64 saved raw IPP values ordered by IOP normal; no converter fitting code/numpy used",
+    "slice_step_length_mm": 3.3000033596079903,
+    "slice_thickness_tags": [
+      "3.3"
+    ],
+    "spacing_between_slices_tags": [
+      "1"
+    ],
+    "spacing_tag_note": "Saved SpacingBetweenSlices is 1 while IPP-derived plane step is about 3.300003 mm; preserve this inconsistency. Geometry is verified from all IOP/IPP/PixelSpacing values, not that spacing tag."
+  },
+  "independent_postrun_decision": "PASS_EXACT64_PATIENT_NATIVE_SAVED_OUTPUTS_ANATOMY_UNREVIEWED",
+  "independent_postrun_review_sha256": "c64f598febf16341eb5a7d8f3c922efcc0e4ff4977031177fd615c0eb738a2e0",
+  "memory_interpretation": "Real mixed TRAIN metadata validation now completed for these exact frozen descriptors; conversion completed for this exact64 MR series. This does not establish resource feasibility for other series, US, model inference or larger scopes.",
+  "native_output_digest_binding_only": {
+    "bytes": 67109216,
+    "included_in_package": false,
+    "packager_image_reads": 0,
+    "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/native.nii",
+    "sha256": "3f6d8dc286a538ddf47cde0cce29985c0f4a7cad91d2e1d632afc628a68d4194"
+  },
+  "packaging_scope": "Saved release/JSON ledgers/reviews and prior compact source package only; no original DICOM, image array or large acquisition metadata opens.",
+  "preserved_prospective_source_package": {
+    "archive_sha256": "f71fe727c7ddb8c83793820ce42e1b693118501afaafe653df59898414f38d70",
+    "contains_v1_negative_v2_fix_exact_source_and_review": true,
+    "nested": true
+  },
+  "raw_plane_geometry_retained": true,
+  "retained_source_tag_inconsistency": "All64 SpacingBetweenSlices tags say 1 mm while IPP-derived plane step is 3.3000033596079903 mm and SliceThickness tags say 3.3 mm. Preserve the discrepancy; patient-space geometry is checked from IOP/IPP/PixelSpacing and is not overridden by the spacing tag.",
+  "root_release_sha256": "7b2514b0f57516802c0ed5db912fa2f43fc6d3c6cb9da2c2252bd3f838b6eecf",
+  "schema": "remind-exact64-patient-MR-conversion-saved-result-v1",
+  "selection": {
+    "bytes": 33696106,
+    "modality": "MR",
+    "objects": 64,
+    "patient_group": "ReMIND:002",
+    "patient_id": "ReMIND-002",
+    "record_sha256": "5c56086955da94661a76f8888a9793a6ab9392736e672fb7cc324513ca8ceb6a",
+    "role": "TRAIN",
+    "series_uuid": "4301d666-34c4-48f3-9167-8c4b19725332"
+  },
+  "serialized_native_audit": {
+    "audit_core": "scripts/audit_remind_native.py:check_plane",
+    "direct_source_corner_max_error_mm": 0.0006747846077350448,
+    "expected_samples_method": "immutable_PixelData_signed16_little_endian_frombuffer; independent_of_pydicom_cache",
+    "qform_sform_max_corner_error_mm": 0.0002845350553939539,
+    "source_planes_checked": 64,
+    "source_rescaled_samples_equal": true
+  },
+  "status": "LOCAL_PATIENT_COORDINATE_ARRAY_COMPLETE_ANATOMY_UNREVIEWED",
+  "worker_results": {
+    "conversion": {
+      "blocked_io_events": [],
+      "data_read_accounting": {
+        "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+        "read_calls": 24845,
+        "returned_bytes": {
+          "memory_header": 133418,
+          "memory_payload": 33698346,
+          "metadata_file": 75045499,
+          "source_file": 33696106
+        },
+        "total_returned_bytes": 142573369
+      },
+      "elapsed_seconds": 1.0982532501220703,
+      "generated_source_attempts": 0,
+      "patient_source_attempts": 64,
+      "peak_RSS_bytes": 438386688,
+      "pixel_decode_status": "completed",
+      "status": "completed"
+    },
+    "validator": {
+      "blocked_io_events": [],
+      "data_read_accounting": {
+        "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+        "read_calls": 76,
+        "returned_bytes": {
+          "memory_header": 0,
+          "memory_payload": 0,
+          "metadata_file": 74942776,
+          "source_file": 0
+        },
+        "total_returned_bytes": 74942776
+      },
+      "elapsed_seconds": 0.5131918340921402,
+      "generated_source_attempts": 0,
+      "patient_source_attempts": 0,
+      "peak_RSS_bytes": 373751808,
+      "pixel_decode_status": "not_started",
+      "status": "completed"
+    }
+  }
+}

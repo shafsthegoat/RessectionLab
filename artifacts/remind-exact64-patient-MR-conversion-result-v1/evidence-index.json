@@ -1,0 +1,1564 @@
+{
+  "acquisition_metadata_bindings_only": {
+    "cohort": {
+      "bytes": 70925,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/remind-component-cohort-v1.json",
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    "completion": {
+      "bytes": 27792379,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/completion.json",
+      "sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d"
+    },
+    "declaration": {
+      "bytes": 3993,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/declaration.json",
+      "sha256": "a8cdd554542088d7887f78d973938418d16cde2a7348834052b9db7d3065964c"
+    },
+    "objects": {
+      "bytes": 46163813,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/source/train-exact-object-manifest.json",
+      "sha256": "5b1e51bb923825b96f53f789f2cf464fccb64fc2515b9b47d70c37cc693ae0f5"
+    },
+    "series_index": {
+      "bytes": 485756,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/source/train-raw-series-index.json",
+      "sha256": "5fbf9239e9fe51eb4ac23fa604875c2652b07194ec2dfbdbf33a40b21c496e3f"
+    },
+    "us_checksums": {
+      "bytes": 425910,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/source/train-us-checksum-manifest.json",
+      "sha256": "26fbfee4903ec049401876adda266fe2fc3a0e29fe70e440509a7c9128c73be6"
+    }
+  },
+  "archive": {
+    "bytes": 345522,
+    "file": "evidence.tar.gz",
+    "members": 301,
+    "sha256": "caea28a81dba1c32ef0108e3e054926ddbde31fba691c2394a34315767e051f0"
+  },
+  "members": [
+    {
+      "bytes": 4334,
+      "path": "build/remind-patient-exact64-postrun-independent-v1/REPORT.txt",
+      "sha256": "d349fe721193043474e5e0655d19d345b3a639515ba83c785213ea8d4674b275"
+    },
+    {
+      "bytes": 66188,
+      "path": "build/remind-patient-exact64-postrun-independent-v1/audit.json",
+      "sha256": "c64f598febf16341eb5a7d8f3c922efcc0e4ff4977031177fd615c0eb738a2e0"
+    },
+    {
+      "bytes": 19541,
+      "path": "build/remind-patient-exact64-postrun-independent-v1/audit_saved_patient.py",
+      "sha256": "6247d36b7e50f67e57752de0cc0c2d8b943d008eff42fc0a2b9ca11504d636f8"
+    },
+    {
+      "bytes": 11079,
+      "path": "build/remind-qc-adapter-preparation-v1/package_patient_result_v1.py",
+      "sha256": "0bd24c6a3ef3ba8187a36b2c84d0eeb1489a5fc91eb45e1a2da3aa02ff5f4d07"
+    },
+    {
+      "bytes": 9944,
+      "path": "build/remind-qc-adapter-preparation-v1/promotion-patient-exact64-proposal-v2/artifacts/remind-exact64-patient-conversion-proposal-v2/evidence-index.json",
+      "sha256": "2594aec785278b1a94946669fa50474b9c48267ffe824c5a372e8c92ca83a4fd"
+    },
+    {
+      "bytes": 192687,
+      "path": "build/remind-qc-adapter-preparation-v1/promotion-patient-exact64-proposal-v2/artifacts/remind-exact64-patient-conversion-proposal-v2/evidence.tar.gz",
+      "sha256": "f71fe727c7ddb8c83793820ce42e1b693118501afaafe653df59898414f38d70"
+    },
+    {
+      "bytes": 2647,
+      "path": "build/remind-qc-adapter-preparation-v1/promotion-patient-exact64-proposal-v2/artifacts/remind-exact64-patient-conversion-proposal-v2/summary.json",
+      "sha256": "547b9e673a8d40dc1dcd70447c90b9dde268863467a64f9da5835f08c3296330"
+    },
+    {
+      "bytes": 122880,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/conversion.json",
+      "sha256": "ef2be70a3713ca533ad331c18ca702c035e65f411a5ad6e9423f33ec3f5fc535"
+    },
+    {
+      "bytes": 198,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/monitor.json",
+      "sha256": "0f9e7e5fb8360859da7d4d18827b089011c73c9152d0fe14139df1010ee31d87"
+    },
+    {
+      "bytes": 564,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0001-intent.json",
+      "sha256": "97b0ad9987da927225797c34146d47f2565d9c901d704b09cd180b776da0e2c8"
+    },
+    {
+      "bytes": 472,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0001-result.json",
+      "sha256": "1e1b1a18c86ce8d676976a106555c4735e58547b7dbd0a26c5aaf5146267861e"
+    },
+    {
+      "bytes": 576,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0002-intent.json",
+      "sha256": "378607f75314fd4cbc6d2a508d08d6a968695d1e329930d5b7c35c380575772a"
+    },
+    {
+      "bytes": 471,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0002-result.json",
+      "sha256": "1db7af769df7c3d105cccb52e4894ea484f8e960f773cfea468d681f2eb14038"
+    },
+    {
+      "bytes": 598,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0003-intent.json",
+      "sha256": "c6540588e321b5eefa44cd85f8252ec9cb54a364453e7fc092f7708bd372d743"
+    },
+    {
+      "bytes": 475,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0003-result.json",
+      "sha256": "7251413c6ac7300655df38286ce8d1b2247b8dd01363b3897f1a8a8af141e8fd"
+    },
+    {
+      "bytes": 609,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0004-intent.json",
+      "sha256": "a34e983491a6343c3bb3e6f98bf8d6d0566139064c9d3712c734a68d45077fe5"
+    },
+    {
+      "bytes": 482,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0004-result.json",
+      "sha256": "790d2d3dedb054f392e1a4b8433aae806446d6a2009fcf920efd330c640d9912"
+    },
+    {
+      "bytes": 609,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0005-intent.json",
+      "sha256": "5d67c6a1407322dff5f612f81d0cfa31f0ebd03c0929b24dcab2d433687e50f3"
+    },
+    {
+      "bytes": 480,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0005-result.json",
+      "sha256": "0ae2b73a93c7d1aa8728a0b9aa743164d81123fc41ae878cc4af519f763e753d"
+    },
+    {
+      "bytes": 590,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0006-intent.json",
+      "sha256": "9a462b42651e16684772f6c41ee808cc78f31ac71c2a417e94650ce8745f8615"
+    },
+    {
+      "bytes": 482,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0006-result.json",
+      "sha256": "817ddee072264f386a66a0e0627dcb4f2fda32d4010b30e4b47e7d4c2f73224a"
+    },
+    {
+      "bytes": 603,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0007-intent.json",
+      "sha256": "f061cefe662f6bd25ca0d168adb67257bfc11de8c42bdd8e8f84cbb15cbd77e4"
+    },
+    {
+      "bytes": 480,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0007-result.json",
+      "sha256": "0a22096fdf68ccda0fbff6ce1a197103ebc3172e1d1fbec751078ac341909c81"
+    },
+    {
+      "bytes": 798,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0008-intent.json",
+      "sha256": "51d531f4e9deae3227427fdc2b88ed9a6510a1e3028e201b73d6be22e1a1be48"
+    },
+    {
+      "bytes": 485,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0008-result.json",
+      "sha256": "49d86e0f159a2525f63d9c8deef30285dd63428fe26d2e021926c0e9c55618f2"
+    },
+    {
+      "bytes": 560,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0009-intent.json",
+      "sha256": "487028c3ebc960b69f713e7502786276bbc8555e6d2fa71d1c1d3acfaf522949"
+    },
+    {
+      "bytes": 522,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0009-result.json",
+      "sha256": "5ab48e7b3dbb1b01a72d60ef899971caaa6dbef7ced023b2b8313781a1b5d124"
+    },
+    {
+      "bytes": 812,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0010-intent.json",
+      "sha256": "90e16727241c52606d7ded996d4768604473b160cf308da0054701e0d1cbd51d"
+    },
+    {
+      "bytes": 495,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0010-result.json",
+      "sha256": "0bca047fe50f885e5825f211a40986c95a85a0eda11e446c482f943524849b4e"
+    },
+    {
+      "bytes": 570,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0011-intent.json",
+      "sha256": "d2f00b356886e97fd22779bec96ea706bae2fdb9b93e9f55a19a42aa740106b6"
+    },
+    {
+      "bytes": 524,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0011-result.json",
+      "sha256": "ad272685662b223869ebedb129c0fad27e70dd7010548f44961a7ee4a39ce62f"
+    },
+    {
+      "bytes": 814,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0012-intent.json",
+      "sha256": "89b86fa78cd2ca9068985b8976b40fc7b831c48ddaead5996f6b884bed53d932"
+    },
+    {
+      "bytes": 496,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0012-result.json",
+      "sha256": "b7bafeb412ad0efef04c25bd83a334d67d6f6b8d8327548eb33597464ef7ad7a"
+    },
+    {
+      "bytes": 571,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0013-intent.json",
+      "sha256": "dadb77c042ed16de542915dac4b7be77ed10bc9f1120c1d2db946dc5bd41949c"
+    },
+    {
+      "bytes": 525,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0013-result.json",
+      "sha256": "4081006bc731b2cfaa0ef11d9f6c768b24dfb8b71342323fb237e5e7d9f06813"
+    },
+    {
+      "bytes": 815,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0014-intent.json",
+      "sha256": "1306fe18445e41bb767cb4e56d6cc2e41aee3d0a342f450292972c36953e2677"
+    },
+    {
+      "bytes": 497,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0014-result.json",
+      "sha256": "d56191ff9fa618c753b7765a9fd4dc0937b57951c0f8c165594a307aa4f7c3d7"
+    },
+    {
+      "bytes": 572,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0015-intent.json",
+      "sha256": "7817fe3388c0ecc79487de1f43027151a2f4c18074c211bc787c521f53ebc0d0"
+    },
+    {
+      "bytes": 525,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0015-result.json",
+      "sha256": "982615d123c2e7023eaef4578a301058f0c993a6c05826141caf786cb76b8cac"
+    },
+    {
+      "bytes": 815,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0016-intent.json",
+      "sha256": "522aaba9ba3ddc7828249f3a270aeb1a9d844ecc91824a042b118b3921317736"
+    },
+    {
+      "bytes": 497,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0016-result.json",
+      "sha256": "ba131046c82701314065cfcddd33552991de145e20833710037058d4b87751b2"
+    },
+    {
+      "bytes": 572,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0017-intent.json",
+      "sha256": "711725c456fc44d91de31783aed54ba112007f04755760b5a31949ef7695ebcb"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0017-result.json",
+      "sha256": "45dbb08cd178dd8362ee0a2bd700b267ad41a3cc83b4236a2cbf0d30d0bdd72b"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0018-intent.json",
+      "sha256": "ed63b40384470c3a7cb62cdde2218e4f14c50801bdaaaeca98392cc85e70a932"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0018-result.json",
+      "sha256": "9cf5427efa6637804dcc76f4452bfecec03de71a3a21a8195caad998a6a9de8a"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0019-intent.json",
+      "sha256": "77b1fa87f2c5f5c0b28901b61f77f0de7fab07610cc2614b9640fae71d742c1b"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0019-result.json",
+      "sha256": "3e40b3cee967a58c3101e08acdb7d84c39318fe8546d209fa64c8cffc2e3fcd8"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0020-intent.json",
+      "sha256": "d921779d5bba833a64b663dad3321e980ef567c2da478bb0aae5e6286bbbfd57"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0020-result.json",
+      "sha256": "93bd55bfb04c64b870f3d57ff6e52cab16fe2e69a9a6cac0b27dbe1de0d2c3e7"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0021-intent.json",
+      "sha256": "695d92d6d41c20355aa3c36463b49c65d9266f8b54f637bf1ca6e0ab219d82c7"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0021-result.json",
+      "sha256": "fa2c6721cd10526714e8eeade1b61f9b30e7871693e4e1ad177f72b040657712"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0022-intent.json",
+      "sha256": "7bf14849b3770e9f8143a72a373b9284d68c96e2ca3c43b13c9fdd36ba8c22a1"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0022-result.json",
+      "sha256": "64204e45b0f62297aef757ec18a00ac2ec84ac9dd97fa94ca2dbe7258138be28"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0023-intent.json",
+      "sha256": "3103e191bd05fc22cd27cebf2d646b6eec941652b710528b12238afd439b8e92"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0023-result.json",
+      "sha256": "4763fec3eaa32d5a5b43a68719aadde800811e4fcaa53e1ea5450e99105f615b"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0024-intent.json",
+      "sha256": "6885417d0bc9498d14c16b042b41cf45b2a1cafc3c1f5f998a2231b64564fbdf"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0024-result.json",
+      "sha256": "14bb99e2b6d5edb415a1aa17a482e1a9a398679af8354265f21d72dfd3cd5435"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0025-intent.json",
+      "sha256": "74f0357685cdafa666cc480fc21c0696fbd5476c7768b75c452c4969c1ad5d92"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0025-result.json",
+      "sha256": "54e0de1a18731a345b0bcd5f7d1e1ef7ea347d2b2d4ce0b5c630f527d738f59d"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0026-intent.json",
+      "sha256": "0a84a20ff8fc8128908baa531b3039dc07fdfc0c78e5f5d3791b109119e504fb"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0026-result.json",
+      "sha256": "5cf596eb63f0e2302c5bd71e55bd32b0bd4d53d291626d6a8f7d56fe3f6320fc"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0027-intent.json",
+      "sha256": "72081c34727d55ef32cba5d1a2e9852f8c8483630f72643b015c3ed74ee80873"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0027-result.json",
+      "sha256": "13fb0dc86e604bdf3044bbb1994e4a113a001d0306ee34a4f24907e6f72593c5"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0028-intent.json",
+      "sha256": "5b58d278b5b26f52187a2e1038499b5e4de688e8548d4a64d7cb4605290a7227"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0028-result.json",
+      "sha256": "31b46f6004cbaf0a6882a8156331d191a6e005da52557cf19933033128d9f8f2"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0029-intent.json",
+      "sha256": "7ac45c1df7542c9760c9e87a82d2f5ae158f6dd0f3fe67d61c87280026caf3d8"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0029-result.json",
+      "sha256": "fe4200789ade35207125f4f8478e6a916491ecc5de9ce08bba7240f369bee6d2"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0030-intent.json",
+      "sha256": "503450d7061ed58d3357e9b91ce8f3df0313f0ea0b11ddc90e3fef8155fb02c3"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0030-result.json",
+      "sha256": "4166d7c78f35193753868b4c33b9137d561648004dbf25055e8dbb3c80b06a58"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0031-intent.json",
+      "sha256": "8b3f6721474c78e5a59ea56b39a92d86aba06c272e59b397077a3ed841a19a50"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0031-result.json",
+      "sha256": "c9f4f4e4e705ee493518a6506849b1ea5eada9505b52791b43ffe64db920d4a0"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0032-intent.json",
+      "sha256": "310db57545371a23f007f19f4a0f37b93da9bd3cbc068871ff6aa2634fdd74c6"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0032-result.json",
+      "sha256": "211fc1e595818e67ef25b3b238bc8a48d692fbfb98f4d0d69fdd0ab560becd94"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0033-intent.json",
+      "sha256": "fa1d6c4e7bc983893c27a6ec04b705fa349439dfb57c2f09f57aca4e7d18dc15"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0033-result.json",
+      "sha256": "8ee821e791ef8b5d3bbceab1ac5f4b224a773c44449ea94e74b8249f0e71f683"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0034-intent.json",
+      "sha256": "43811d668e2345f2121ef211b22dad29beb9629aaf2c60d54685c4efd1390ddb"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0034-result.json",
+      "sha256": "97ed4be56808e3090e4617b0ad30e4074d24a2de7ff42df0ce19a074df3f5e7a"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0035-intent.json",
+      "sha256": "ffe7cfc9702bfc7fee6e49215bb1dce7c39e2e7e0984ce56d29bdf56d84ddcfe"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0035-result.json",
+      "sha256": "b6080dbe35ad821c7ccb3f58bf139f1601b33dea21ee4f3b1f375c0406d4a525"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0036-intent.json",
+      "sha256": "979320b6c81b049e4ea60e59ab3a6d24ddf460aefb306adda25e92d5d859459c"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0036-result.json",
+      "sha256": "db10e943739a51c27108cbb33d6afe0368c7b386eaf280e407dae36d64004a65"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0037-intent.json",
+      "sha256": "aef1a4b0163037055709015a536c75e47acf54703253bb52089a2c2cbf8348af"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0037-result.json",
+      "sha256": "b4e481d5a7db068140ac5c6ea6ff72db7f4e3b8f085e107feaa42476ed822a96"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0038-intent.json",
+      "sha256": "8f0b69c76646984f473334b105e0ceed995685c8c4728bc230ca43b0f855af78"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0038-result.json",
+      "sha256": "1b61942a7e790b24a9285c84c50d05064945279f7c680f768bed4b621ecc1369"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0039-intent.json",
+      "sha256": "e0d9e7604db57fc35c7f578b0735543045caf1fa4c7d253079cb18c5d2acd800"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0039-result.json",
+      "sha256": "3cfd5d46117eaa1dc5a1724dc1feeaf5db9850199a490f166387b1536eb47af3"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0040-intent.json",
+      "sha256": "ad3975dee1426640a5f7befe257062a7e529247e79fc8ef8ddd0801667e4beb2"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0040-result.json",
+      "sha256": "bd913f6d685b2eba4627968ee3959e648a523684924f1bd5acbce52aa0202fea"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0041-intent.json",
+      "sha256": "bbba59f6d1350680468cf0f10bac58e76946673c55dc86270a1082010a810f38"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0041-result.json",
+      "sha256": "c1ef14272d2c18eba9520f52a7c9d4f4aa701d31fcfe939821f9de111bc35f44"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0042-intent.json",
+      "sha256": "41ce2246dcc972283efcafbb4c9434b30df75c3dba05fbe462fe36557c2426a3"
+    },
+    {
+      "bytes": 498,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0042-result.json",
+      "sha256": "2d1019c9a2e8e7eea8ffe935e429919567e1579129f11f012c20d2ddc84bebea"
+    },
+    {
+      "bytes": 573,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0043-intent.json",
+      "sha256": "ceda7325ff0de4c394cb25c4e5f7126c3a3fd2cf258bd21fbea8e0967a1a4270"
+    },
+    {
+      "bytes": 526,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0043-result.json",
+      "sha256": "55f8d9f0168e5a2e95fe856901a9bcb665429943cce0dcfe49129189131e785b"
+    },
+    {
+      "bytes": 816,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0044-intent.json",
+      "sha256": "244387576fbf9d872b8d0f2159ae22c4fdebb1396d1e782b6da467424911fc44"
+    },
+    {
+      "bytes": 499,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0044-result.json",
+      "sha256": "a8d463fe969f2a480885415dbb64b91baaa43a9fed5196e7550abfbfdcc342fa"
+    },
+    {
+      "bytes": 574,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0045-intent.json",
+      "sha256": "87c6245892d40ee4e713613a5a82eb04c4c74a2040b3df7cbdd58d3583d5baab"
+    },
+    {
+      "bytes": 528,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0045-result.json",
+      "sha256": "8515d50604fef4aab4c781f72fad8cc2953ac566a64607d7c6ae4fba338c7481"
+    },
+    {
+      "bytes": 818,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0046-intent.json",
+      "sha256": "19c44ed2c8de123489606e0771a202f82eef1cad12f686acd197fc03db9a50d2"
+    },
+    {
+      "bytes": 500,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0046-result.json",
+      "sha256": "384b9574f841c9c741321dee33c184587b771aa49ac5f656a362e67266887668"
+    },
+    {
+      "bytes": 575,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0047-intent.json",
+      "sha256": "8769731f53115b52571fae2d56764451f0a39ffde2b6b76b0d14dad050511cff"
+    },
+    {
+      "bytes": 528,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0047-result.json",
+      "sha256": "1a7533949639a97e19e1fb319f3789f1c213260d9383095139ac0e98349a2317"
+    },
+    {
+      "bytes": 818,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0048-intent.json",
+      "sha256": "21995f126b767f1f5e1f1433b7efe5f97782f8ca3705449a747ec135996bb843"
+    },
+    {
+      "bytes": 500,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0048-result.json",
+      "sha256": "95395aa6f4153baf96004fd51859518919b1fe6916019740c900867920cfacfa"
+    },
+    {
+      "bytes": 575,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0049-intent.json",
+      "sha256": "e6bfed560b6423591f2b5417bf64ec4f742da246acae7f6e725266d84d52a2bf"
+    },
+    {
+      "bytes": 528,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0049-result.json",
+      "sha256": "3a5054894270851be7dbdecacc47b10a78f354411cbf7f2e6c0fdd63bdf8fb04"
+    },
+    {
+      "bytes": 818,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0050-intent.json",
+      "sha256": "25da295b44917d3f96f20d2b69c85546de323ae5fb20092072acc694727e0bc2"
+    },
+    {
+      "bytes": 500,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0050-result.json",
+      "sha256": "2848766e12a4fc2b8f4d5c5ee5b3f382685b76e8e9c931e6b6b160850e0f90f8"
+    },
+    {
+      "bytes": 575,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0051-intent.json",
+      "sha256": "1abb05032714a24e9c2550d0726b6e6e407d4bef4cf0d0174318b3319ca187e9"
+    },
+    {
+      "bytes": 528,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0051-result.json",
+      "sha256": "5b68f45cb00d2933ff91e525b7a3a8cbb9c0f479f1b2967fbc417dbac4cfe995"
+    },
+    {
+      "bytes": 818,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0052-intent.json",
+      "sha256": "ef099708e67cee4ae181d03743a23f08655bb4e8640c5915b9096bbb68d73672"
+    },
+    {
+      "bytes": 500,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0052-result.json",
+      "sha256": "f998f0d3d649804c6bb55cffea06bffbbf1e040a89820a03fe37d87db9fd0345"
+    },
+    {
+      "bytes": 575,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0053-intent.json",
+      "sha256": "94028414464a620d8b56bcc9de37ba2d8ede54c316ede73b55802e0a88599b9c"
+    },
+    {
+      "bytes": 528,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0053-result.json",
+      "sha256": "0321ede05735cb21344fc8972934ae4650bdf41de527e1457351802cb7448226"
+    },
+    {
+      "bytes": 818,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0054-intent.json",
+      "sha256": "3163b37f2876fa47f2008edfd8faa0815092eed6ce657de3f1c83640c93add5c"
+    },
+    {
+      "bytes": 500,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0054-result.json",
+      "sha256": "c1ff94cb4a63d6c222e403debd0626aa1483440738feef784e3c160124e164ff"
+    },
+    {
+      "bytes": 575,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0055-intent.json",
+      "sha256": "3807dcd71cdce1255196e6bf08e0b20492f907f53858686b2a78eb7ef2975cf2"
+    },
+    {
+      "bytes": 529,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0055-result.json",
+      "sha256": "04745c4476b48aef58a65091d7553d7ab262c83bd7e023b5b7eef4bb57ea0979"
+    },
+    {
+      "bytes": 819,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0056-intent.json",
+      "sha256": "45f79a0dbf5374368bb02c744b9e60c50f28cf2cb97050bee20506d4f8f6d108"
+    },
+    {
+      "bytes": 501,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0056-result.json",
+      "sha256": "66e4730ec1b1b17bbcb6af7677244b167388fea044ddf2208f7d13c709dd0c32"
+    },
+    {
+      "bytes": 576,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0057-intent.json",
+      "sha256": "a46dc63e0c53daa08e3cef3bc2f56a97c46f33caa8d1ec15c8f6aa81d72e74ee"
+    },
+    {
+      "bytes": 529,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0057-result.json",
+      "sha256": "dc3de08ecc1f3091139c56ef3db8f6d6de95befb25e517342019c33b6521cb7b"
+    },
+    {
+      "bytes": 819,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0058-intent.json",
+      "sha256": "9caaa5e486c1f623633925fcd9d77c0a224c4a37fc21d4fb41e750130cd02f1c"
+    },
+    {
+      "bytes": 501,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0058-result.json",
+      "sha256": "66c76e1380811fe1a9925120ab1a296e47d570d8acafcec9004bbae2b20284b1"
+    },
+    {
+      "bytes": 576,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0059-intent.json",
+      "sha256": "9c440d96c2c99f96b7b3d3602647c5e9f99b34b0b1744181e52d4f49379551ca"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0059-result.json",
+      "sha256": "7529527f7a02b08734ce474569966716fe0604fc492102d40696fb5c90edf8c7"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0060-intent.json",
+      "sha256": "929c9d3941133a62134cea1ab3cce3888ee7564e64d47a3da68f214aa99fe4bc"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0060-result.json",
+      "sha256": "e90eccb3b6843b6cd974be061981a6a1efff02824b4a0e50f2b974aa15c28543"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0061-intent.json",
+      "sha256": "9bc8aa294295f84f877af8df747e318c3eb218df0186823ec97113f7cd6d7964"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0061-result.json",
+      "sha256": "574279ef0a6cb60efde4129c99a9d7e2bf7cfb6897ae62cec55dbcb92119a3e7"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0062-intent.json",
+      "sha256": "b17489e8d71b94f5c8110ca6d5204d5136f0e8bc04bbf96917d7dd8e5c5b3a92"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0062-result.json",
+      "sha256": "b723ea75a7e10ac718896739819ce0d611085ff9a022e46072323faf089d0d78"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0063-intent.json",
+      "sha256": "5ec74b6579e27565c9081b0e4a3974906442468b79ad3a26b8b295709aff101f"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0063-result.json",
+      "sha256": "d88187d7f665da327f1374f126abed97ab53840a6eebeea91d3f955f69de4422"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0064-intent.json",
+      "sha256": "cfcc23d0dbeae4a07ebbd48ca522a147d50339cc7a5afabbfea86e4b525505d1"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0064-result.json",
+      "sha256": "d8aa33243c0142dde5b96a087c07156943f60bec6bf272b0a65de957602fc5ee"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0065-intent.json",
+      "sha256": "395c5d51171750276e058ddf0e5362b7ae58551b3a1223dfbf829e06542f12ef"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0065-result.json",
+      "sha256": "8edbd76622f19e145418c8842b9dccf446e5fb3dbbfff142f3da2446efbf622e"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0066-intent.json",
+      "sha256": "0583b910a13c5c0a951de0fd0a93aac014056a3e8e4ae46c82218daaf6fc3e14"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0066-result.json",
+      "sha256": "3d0d94749539639316c0b9e59f5b210ddf9e2010e43dbef51739f819c247e35e"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0067-intent.json",
+      "sha256": "729842afab3ac753364d7fb3cc6eff9e891068384b8dfc9a31a70507552d7812"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0067-result.json",
+      "sha256": "bac17ae6ea9c499a1ffc574de877876815c260a27fa0e2063e9fc8a09b5a08e1"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0068-intent.json",
+      "sha256": "7f34d08e2e0cfb78fd21e0b6001901336f537f774d8e1f60e33e3179481a6f89"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0068-result.json",
+      "sha256": "8911d68e5bf8c4837f9570b5a75da00f150afd42bd0f453471a7a570c4ec41a8"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0069-intent.json",
+      "sha256": "1f32c01af3dd4567144ddfe8242f631c389de93ee6ca778aad80634f61b41136"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0069-result.json",
+      "sha256": "194ff78ace0014945e63ba291ec7038a262195c1791ddd9456b01418a184740c"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0070-intent.json",
+      "sha256": "7693e203aeea00f9edc9182a45afe9c5f932a4b2b740b56baa3a73f0e4392f2f"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0070-result.json",
+      "sha256": "df1049f564fe01c21208ad9c2ddc0dd80b43e9dcdbcf3c7d74ca6efa56617e30"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0071-intent.json",
+      "sha256": "8e3f6b46ce41e9e9f6b98dbc1450ad4abe2baeb4f41ab45d2a2088ce4df83626"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0071-result.json",
+      "sha256": "751f4e7aecffdf2f71a3d42247a2738467e5868cf144a445119791d08c44e122"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0072-intent.json",
+      "sha256": "4aed8acef55b1562cfd422f552f0a82882941a19722c609f781beb727c794f3c"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0072-result.json",
+      "sha256": "11a7e2b6cb0bc02188465edd70aa4288522f172e54bd2c47cdeee2e36620705b"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0073-intent.json",
+      "sha256": "5966f4c59490bd6578c20ef5ce42c00497237092a4f50a8b12cf511120d5b9da"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0073-result.json",
+      "sha256": "f520d6c978cfa0d0326fcdea61d37283b2d83e0865440f085ff0fcd04d92f675"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0074-intent.json",
+      "sha256": "1763f6a2d95dcc7b9e291ad1d6af601c1ae54725719e2e57632df08c3add8145"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0074-result.json",
+      "sha256": "fd430547794374e79a42b376e481586088d1c2871ef767341e72762f8f5a858b"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0075-intent.json",
+      "sha256": "cbfbcceeb1d1df7d576971eaa47c0c5ed62c30f6056d524361c4a127dcbbed1c"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0075-result.json",
+      "sha256": "3a3160e67c6dd0834298c353d796426db7a4a1e9900245fb578355ccea2fd3b4"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0076-intent.json",
+      "sha256": "53c0b981b94648a6adc91f9a9636961a3aa772376e12028ab2274aa6ce8a002f"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0076-result.json",
+      "sha256": "e243439b48711bf3303b7a8305c95c37d2ce52bb94fab6a58cf68504a89d9efa"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0077-intent.json",
+      "sha256": "b14cf8c42cc2da2de411bd9a1d407bc1ad9a4399c7c783424b10e16b4bb5d6b6"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0077-result.json",
+      "sha256": "ae46b90d06f3fb025f64648c642a10735b877e464683503d6e1ab15cb68d6c8d"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0078-intent.json",
+      "sha256": "b0e5271189d7beebb351dbe2a6acc6cbbc0cc0bd697895f125436d9493ea8743"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0078-result.json",
+      "sha256": "937ff70f20de7b2c8a3198f17b562fd9a7ab7a22a06870f12a92be6b002b7a84"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0079-intent.json",
+      "sha256": "3f430c7f0c432d26bb0326ac100b9e856fae5f90279d2fd8ce6ce55c7762f87a"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0079-result.json",
+      "sha256": "295611dd0739bcea6e0754734ca4b9fdbe4f2363739049fc5234b7deede62088"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0080-intent.json",
+      "sha256": "36dc06edfc774e736540cd12dd30a61a6c0f2d06c4c27117f70089fd3ab65bce"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0080-result.json",
+      "sha256": "1bab374907e3b1e3f3b0e12adc41483fcc265b7f7ab3ef2bc72199a87df71c86"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0081-intent.json",
+      "sha256": "5a44fde1311d0307caf3c2c56f6692f146ae90384e7d0115d500119f6ea3f0f5"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0081-result.json",
+      "sha256": "261fcb269bd500ebfbc6215d6269492af54655d7cea111519b85ddc65a987102"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0082-intent.json",
+      "sha256": "d296b6a37dec259656c5d79c5a46532b2a681f5cd13f9dc5774e158ac6000625"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0082-result.json",
+      "sha256": "0369009974538ae79e577306a47d0fc28f7ffc9a035535b2a3357446f7ea2110"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0083-intent.json",
+      "sha256": "6e2bd6f99ecfeda63c1f6e3cdf31498567956442204767cb362232e5562669ee"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0083-result.json",
+      "sha256": "a9ec35e78d8a5d1ee9d0e3d9950ea4e22df10376577753a30f1e550fe5f80f07"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0084-intent.json",
+      "sha256": "1ed6ef517fdefe9362c57d4e40b88507d421d320b2626057eac758497479ab83"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0084-result.json",
+      "sha256": "f248853a12da158de34ab6d0db86805e9db0aa71798605a107f491473f2c73a1"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0085-intent.json",
+      "sha256": "df3ce3aa253706387d3d1adaf313227ecdad486e7d78f61c7db3ad749613c140"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0085-result.json",
+      "sha256": "681bffcac9dcad07dbd93036f00672693d6c0aa0e11c99a19e8d487c04abc6f0"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0086-intent.json",
+      "sha256": "f434d6e7c4ea0232076676d1e3fedbb68b12ab8e4654a8a1b94a62832fd3e5b4"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0086-result.json",
+      "sha256": "c96e8d1c3ef1d1067ce64506523e8cd917c2e004142b70dd8bf8a018c4f139c1"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0087-intent.json",
+      "sha256": "11943aa999af8798dd192ff6cc913716bf26076ac3f03a822279156c5fb72530"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0087-result.json",
+      "sha256": "bed490dba4c6c5e995c14bf8455876821fb1534046596894361e56c2cdb1a727"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0088-intent.json",
+      "sha256": "d290e8482174fe3523552e98225c685b186efeb707108b342ea551160689174d"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0088-result.json",
+      "sha256": "aef7cb0ecfec8bdea603781c20d8ef81a1ededa336f45e1234bcd0aaab1441e2"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0089-intent.json",
+      "sha256": "3ca6a5ff53a1387028ecd64f94e67e59bcca5f3518cbd89fe9d44378963c7443"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0089-result.json",
+      "sha256": "28a87507c073a4ef77e667bb9d1beb0d3950e9a535e9072722c11f94d61ba9fe"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0090-intent.json",
+      "sha256": "b9f7aa8b881e3c8efe4f228ac3b4896527a9a92ae5475afdafdf32a7c18993ed"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0090-result.json",
+      "sha256": "21a414e86041dc9c1695369fac9be15b7f29ddbcf9f289b9d24840722a469f65"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0091-intent.json",
+      "sha256": "bb850ed22ea5dd837cde95dc773d41f0ad96eb1d4854741cb292c6cc60558f6e"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0091-result.json",
+      "sha256": "e36d4dde1032774caa748a34b850575765f1091da4d879397b8f19dd1758e945"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0092-intent.json",
+      "sha256": "9d281400a148f9f23e66dd8d13f4c6556403f20f4eeef0a187016f1e2cf6cfc0"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0092-result.json",
+      "sha256": "236b2346cafd1ce6c1fceeab19d1bec75162e63180e83a6390c2156f577ee93a"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0093-intent.json",
+      "sha256": "e65cab5e671ecd925137951a634564480f77ac16059f3ab810096d70ed666be2"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0093-result.json",
+      "sha256": "a866cf5383abe0639ec60e1d7eef4ea6020ac025fe748db26fc57f29048b2121"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0094-intent.json",
+      "sha256": "9462676864c0b25d090a7445222ceda3f8d84ee8a3ed30b1fbc9712fe98adf6d"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0094-result.json",
+      "sha256": "b7e5e8fab3c98fcef7750e82ecb4d3fbf7f9f8bbbb5c71893f1d93703d40fcca"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0095-intent.json",
+      "sha256": "35ad1e75dd47a5240c06dc87821e24db593d74137f2d4aa08c2d1caf9c6c5640"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0095-result.json",
+      "sha256": "e9acc4d7e3e909e5a9d6744f461a5e81e88d0f36b9cc7708ee5d8813b8bdbf2d"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0096-intent.json",
+      "sha256": "aff69892f4c11c6f17025d717b4d10e85925883afeb69c38b8c77a0b8e34a412"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0096-result.json",
+      "sha256": "9ded5c52242cd0927a763d3dab97e3fd0e3fff319c723db851c13a7e53966ff5"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0097-intent.json",
+      "sha256": "e534e0fc369a0eaba7d694bba56b493696bb8cb265bc2798ce24a4a8117ef837"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0097-result.json",
+      "sha256": "244cfee0f26cd198548419dad50c18abf90d451cba71114ceacf826fdc90d8aa"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0098-intent.json",
+      "sha256": "bdbb8ca3882f90ba045a8d47f4399e6a765da5000fc07421ae825f4863ddb8a8"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0098-result.json",
+      "sha256": "9b6c9e2fbe999b83ed19cc7848d3f442aa9cb72756e5a9b0505a72449a209a24"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0099-intent.json",
+      "sha256": "2b3519969aff8ecc3492454deeb8921bac8b6b4d29632c7d1bb8e50c9b1554ed"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0099-result.json",
+      "sha256": "63de54c472d6ad854316b59911a752a02c6d324850539481de57593796b39fbd"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0100-intent.json",
+      "sha256": "13422518179f0eddea38ea40e5ca0c773bf70e15d50abc84a91a0520ac6f5c65"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0100-result.json",
+      "sha256": "4043f1c1919c1950d4caff34eceee37287d4e5415cd07d0768cada9e9d7d8853"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0101-intent.json",
+      "sha256": "7d113e0fd024b406b9985cdad6366cf83a3f356a535b4ecd35d9cfb85b001c47"
+    },
+    {
+      "bytes": 530,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0101-result.json",
+      "sha256": "ed17515c4de7d413751eb5006aa7dea12bb913bce74271fd6e461f3cf3bff2f9"
+    },
+    {
+      "bytes": 820,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0102-intent.json",
+      "sha256": "42c868745a005fd7531c7c5c7e91a22afd3adaf55ec31b212d0f84e9334f01a6"
+    },
+    {
+      "bytes": 502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0102-result.json",
+      "sha256": "d737831d12c5649b7a5bf137a9c878c3b43ab48d55a4bd1c245d4a2ab83cf109"
+    },
+    {
+      "bytes": 577,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0103-intent.json",
+      "sha256": "d6873f406544191e7f3d2c50cb836b58623a484dd1d2d727e21580d319b892a8"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0103-result.json",
+      "sha256": "c54bb9f7b397f3987d931ed20f5e75cf041a1ac88e4305b46def65148af22004"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0104-intent.json",
+      "sha256": "da9dd0754d048e557762a329bb6f4be68abcf8118fca1bd4d182d44c2c6da297"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0104-result.json",
+      "sha256": "573ce6873702d527d6067f622f42b7a625d2f9d2f30aba3554a63e1bb40aa3d8"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0105-intent.json",
+      "sha256": "e328f106a8491d7fee182a76b5193ad97c39526cf6645d06c6394576ed33c9fa"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0105-result.json",
+      "sha256": "e9fdf07948382aa49a25e7f17f15ffe11f1a1f8a5f481d1603f6c294d2c76120"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0106-intent.json",
+      "sha256": "2317759a64abbe6e367265bd206936abfa920af99ea91d98c5f153cf31987c5a"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0106-result.json",
+      "sha256": "01524442ac8c09526c9b611139c710a07590934eac051be4074b1cf1d5858aac"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0107-intent.json",
+      "sha256": "97d7a63be327fcf662dd73a40bcdbeb88d15c14b5bd787535a81cf5dbac2d0d8"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0107-result.json",
+      "sha256": "44a8bab4c1e1e62455e863fe0e9225bae627274d02c03f0d16876b2757c8fcf3"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0108-intent.json",
+      "sha256": "7612b02b7e19a5e3392ce107d421e11b0adc45f307e588514f9fcd0c91efc72b"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0108-result.json",
+      "sha256": "dfcdc86f7ca82356daa01c53b1f30daf9eb597780a31418da7525043fe5ee23e"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0109-intent.json",
+      "sha256": "1cfb49e3d1cbaa6ff8117dc20d1caebfb4035b860e090fc8adba168d9c96a6d0"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0109-result.json",
+      "sha256": "3252aaa7cf5a39de8cfed735b1d67385062df03b7f0dbd21f442a7c214df8a4c"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0110-intent.json",
+      "sha256": "1cd0e052ebb1f687f84acfe734f6e45a46a95f55c4ee067b6617d7d2ae683589"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0110-result.json",
+      "sha256": "9e38a2ce657e821df733bc1ceef75dada1d405fc2a7de37c69f2eb4dce9687bd"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0111-intent.json",
+      "sha256": "322c78a3dfb49044e663d9408add0213c1f5560ce2867f81b875edeccd42dc81"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0111-result.json",
+      "sha256": "96e67ef22bbf779cb3df2f03ccee3ffe00ae6ce52768d7e3ad050e2b6375f774"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0112-intent.json",
+      "sha256": "599352a5ce6430c8f63d0f858b1a2a24c8fa946ab0c663d38eae5dc72eec4830"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0112-result.json",
+      "sha256": "52d2ab41debd0efd23d1ff57ddb139eca018891a4ca351ec4ed8b87adb9df618"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0113-intent.json",
+      "sha256": "f0a5e88e9e2cab9a68485f8e60ea9cf7bc72e2e9da30b994ea926c147f9a7a3a"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0113-result.json",
+      "sha256": "3777b9ae9820348eb87b124f5f863511160596ddfcd7c9ebf5be3cf774d83f8f"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0114-intent.json",
+      "sha256": "305d37dba8258667320de08a60d1c0c30f230a639325e5c29ec6f7b707e590b3"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0114-result.json",
+      "sha256": "6fe703f18b112b9ac0d5b82a10b2d3751ec12775ba1e104cbecb11cda2f544c6"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0115-intent.json",
+      "sha256": "9690862253a8b50e5e1f772b9e4682bf43a176cf401d072091bf4df486c30938"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0115-result.json",
+      "sha256": "924d0c94e6f2690ad0dc7764c1b3331b23b79567905b8bbae10a12c9ab25a2d1"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0116-intent.json",
+      "sha256": "88d55746731f925ace13113d57d70552c80ee9370c14beef063f1341c86394a3"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0116-result.json",
+      "sha256": "c8a9709cfdeece2914ecacf60fd31693db761368cf8fd84ed27ca7a89c5db805"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0117-intent.json",
+      "sha256": "7a09334f6fb572fcefc0632899b37b220b88e991c11347a232061f4bf47e6223"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0117-result.json",
+      "sha256": "f38b51bda904da897dd8c7e4eeb44ff1b039a13a3c7627226669f6ef3ba0dd44"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0118-intent.json",
+      "sha256": "a586f2a45b55b239c78a427c598822882c34e07b5d881084a601643b9df6e088"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0118-result.json",
+      "sha256": "45c74fdac9df031044ff8ff856e052e44ee2274c8f6c3692809569db27c3b66a"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0119-intent.json",
+      "sha256": "041a5b922af1611a7ba221acec147b6242e7068b41cf66bdd1208fe89ee6c586"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0119-result.json",
+      "sha256": "9e5f528a01ca7ed4bd3138742f7daa347ddc3f82830f84ebe88ed9940ee39bea"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0120-intent.json",
+      "sha256": "0d50696745580c7f8612e10aba0239165b614dca8b7d59134e6643c08a4cf3c5"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0120-result.json",
+      "sha256": "7a2c08d2bcaf9792622a307244697492fadd9d2729701fdf3b83e546ce00eb62"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0121-intent.json",
+      "sha256": "9035207673925c92866559235b4a0d0ca41a3358b96c7de447e20c773358ff51"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0121-result.json",
+      "sha256": "4d1bffd2870fd3ac74b095f4f443b02e6d24f9588c0392f482e72efe49931b8c"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0122-intent.json",
+      "sha256": "ecd986e7ad411bd8c57227941525a6fd9ffdb7634334f9fe5f6e9550e7ccbfb1"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0122-result.json",
+      "sha256": "6190137226ca891fa1b1ab3be4ed893d3575bc896feff3d0064defa294e28b1a"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0123-intent.json",
+      "sha256": "a60f7da7b826bd85c77bffb7149eca56d0b1e889c2641905cb5dd7e7afb0feca"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0123-result.json",
+      "sha256": "b54dabea20e01a0501f6c1e62175a1174ffd5bb1af765ea0eef67c70fde7ef4e"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0124-intent.json",
+      "sha256": "5beef60026361dbe0cc6780690eff92942df998ccf816cf7cd2351b853c81395"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0124-result.json",
+      "sha256": "344591d9433be25dfa8a743c0535bf14b74e69f62f0de96ef50dac6ac76ce413"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0125-intent.json",
+      "sha256": "f91be4e0422a48da8c23c9a440efc8aa7c4649b2cc8d26328a4d4e357ebf9e29"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0125-result.json",
+      "sha256": "51a502be6f758d90cee23da7a38fd278215ee63f81372bd523e576f5fb849fab"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0126-intent.json",
+      "sha256": "560a64b7629e885540bca28c012363ed63f1efbf445aa53da9613593bb2963af"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0126-result.json",
+      "sha256": "059e4af48dc7c996936429206a2bcc9c3b18ea21eb9cef43431fe0699cabf7b8"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0127-intent.json",
+      "sha256": "6822c80dff664dfab06526f22d9bad319112117a7b333a394c4485b489af4515"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0127-result.json",
+      "sha256": "634496de018ea4b201546844c5108b4e8df4a68bae49e79091b83d9b852b82c3"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0128-intent.json",
+      "sha256": "c7cfd9050a2470627adb5eef41790d7670eda4c4c2e9a70b10c6c743aa38888d"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0128-result.json",
+      "sha256": "d32d9a48281f564c03fafc5cf213b1bce5a3cf8efe9b6dca5e519676fe42e2af"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0129-intent.json",
+      "sha256": "44b92831eee2abb1d91b1523af55745db069a4c3ca987df32c6790cc6709e372"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0129-result.json",
+      "sha256": "a76288981005237779cdb0a52d67eb8c73d38a0d54d84bb0d3eeaaf4a3ac9012"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0130-intent.json",
+      "sha256": "adf54c7d2566ffbab272006a93f28b9980804a8806846f54f2009e0cc8bf4e4b"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0130-result.json",
+      "sha256": "5011dc6a0dcec514233710c9ece59ffa0a26ae046a1aca3bd48d2b9482823fdb"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0131-intent.json",
+      "sha256": "c9988562d57520525a4c13f9589aee9d5c2cbcd01b26172cc47d41de028fed88"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0131-result.json",
+      "sha256": "a523d12cb24f2e263e2a8223a435dc9ffdd729de57f4f70d5d7372eddd535623"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0132-intent.json",
+      "sha256": "0564bf4f2a80820b511d6e211fed66ef5852581b8f3803d900b6985a8fdc3a5c"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0132-result.json",
+      "sha256": "0e7887d6487bbbfa66367f937425b814c76d07c94eb91133445e529e10fcc131"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0133-intent.json",
+      "sha256": "25320b4f7371bd94b79f3f6ea6128ad59244d26422cf8df5b271261d710a0755"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0133-result.json",
+      "sha256": "c2b4b9c6bba08593adaf6819a4214d6b22ff0324dfd02a7c65c9384c429e49f3"
+    },
+    {
+      "bytes": 821,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0134-intent.json",
+      "sha256": "24dd8dc31198a03727e4b1fa094a495604af42c035cf3722cafb9b1846b6782b"
+    },
+    {
+      "bytes": 503,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0134-result.json",
+      "sha256": "94a39cf720c6c68f911e7791e75e8bf51f73afce4e9bc743ae773f16df48b2df"
+    },
+    {
+      "bytes": 578,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0135-intent.json",
+      "sha256": "05ea063f50fdf9ca5597e4f265c6b591eb535e81becd070f917df96b944027da"
+    },
+    {
+      "bytes": 531,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/read-0135-result.json",
+      "sha256": "1fc624e83baea2744a3e6c2252594abf6c1e6913ca8f2ae087fca1a75328c27d"
+    },
+    {
+      "bytes": 79,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/started.json",
+      "sha256": "b48bc21a0277363a24b02ffabee0c17314e2a12e469ed8463ce6babd98cb39c5"
+    },
+    {
+      "bytes": 62570,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/conversion/worker-result.json",
+      "sha256": "c5aa051e0772c8184e4788f77ca9193bea1dfb97e0d55c96afa1d83fee4b9197"
+    },
+    {
+      "bytes": 143,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/intent.json",
+      "sha256": "237ecec215d908c59659bf97321520687da82049362a49bdd443cd9b161122a2"
+    },
+    {
+      "bytes": 2502,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/parent-result.json",
+      "sha256": "36ffaaa3803913c29f0ee599220d629daf30b21deec62c0ffe92f3acfa9929f7"
+    },
+    {
+      "bytes": 457,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/transition.json",
+      "sha256": "86025529b24764cd7112f60935f6d400647b45068d83489dad6073d12e267e1a"
+    },
+    {
+      "bytes": 24173,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/handoff.json",
+      "sha256": "342823cac193da21a07d4436fa6c071947c610dd5b5717ec86af1cb4546400d6"
+    },
+    {
+      "bytes": 198,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/monitor.json",
+      "sha256": "e821a3f19827d0329b8360ee7c92906b2301aefcaadcbf6a6081fe2c5c704266"
+    },
+    {
+      "bytes": 564,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0001-intent.json",
+      "sha256": "97b0ad9987da927225797c34146d47f2565d9c901d704b09cd180b776da0e2c8"
+    },
+    {
+      "bytes": 472,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0001-result.json",
+      "sha256": "1e1b1a18c86ce8d676976a106555c4735e58547b7dbd0a26c5aaf5146267861e"
+    },
+    {
+      "bytes": 576,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0002-intent.json",
+      "sha256": "378607f75314fd4cbc6d2a508d08d6a968695d1e329930d5b7c35c380575772a"
+    },
+    {
+      "bytes": 471,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0002-result.json",
+      "sha256": "1db7af769df7c3d105cccb52e4894ea484f8e960f773cfea468d681f2eb14038"
+    },
+    {
+      "bytes": 598,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0003-intent.json",
+      "sha256": "c6540588e321b5eefa44cd85f8252ec9cb54a364453e7fc092f7708bd372d743"
+    },
+    {
+      "bytes": 475,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0003-result.json",
+      "sha256": "7251413c6ac7300655df38286ce8d1b2247b8dd01363b3897f1a8a8af141e8fd"
+    },
+    {
+      "bytes": 609,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0004-intent.json",
+      "sha256": "a34e983491a6343c3bb3e6f98bf8d6d0566139064c9d3712c734a68d45077fe5"
+    },
+    {
+      "bytes": 482,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0004-result.json",
+      "sha256": "790d2d3dedb054f392e1a4b8433aae806446d6a2009fcf920efd330c640d9912"
+    },
+    {
+      "bytes": 609,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0005-intent.json",
+      "sha256": "5d67c6a1407322dff5f612f81d0cfa31f0ebd03c0929b24dcab2d433687e50f3"
+    },
+    {
+      "bytes": 480,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0005-result.json",
+      "sha256": "0ae2b73a93c7d1aa8728a0b9aa743164d81123fc41ae878cc4af519f763e753d"
+    },
+    {
+      "bytes": 590,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0006-intent.json",
+      "sha256": "9a462b42651e16684772f6c41ee808cc78f31ac71c2a417e94650ce8745f8615"
+    },
+    {
+      "bytes": 482,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/read-0006-result.json",
+      "sha256": "817ddee072264f386a66a0e0627dcb4f2fda32d4010b30e4b47e7d4c2f73224a"
+    },
+    {
+      "bytes": 78,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/started.json",
+      "sha256": "d312c6b1cece19440857be0aba77ba156ce45e2f42fd8d839602c488689e0a6f"
+    },
+    {
+      "bytes": 15693,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/patient-exact64-NOT-RELEASED/validator/worker-result.json",
+      "sha256": "17b19dafae563922c2bae3d26f0652a6747af595eb90862663bef934a1f51e31"
+    },
+    {
+      "bytes": 235583,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root-release-patient-exact64-v1.json",
+      "sha256": "7b2514b0f57516802c0ed5db912fa2f43fc6d3c6cb9da2c2252bd3f838b6eecf"
+    }
+  ],
+  "original_header_binding": {
+    "bytes": 102723,
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/pilot-execution-v2/inventory-MR.json",
+    "sha256": "25332ed8c5645426e800b23f4d8e8aafddcd2bd4e45ead9f1c0fc294599da563"
+  },
+  "schema": "remind-exact64-patient-MR-result-index-v1",
+  "summary": {
+    "bytes": 11343,
+    "file": "summary.json",
+    "sha256": "63973d15cd41eb08344506a44884de7829b256a2e82c12ce53a62ac47ed64b15"
+  },
+  "validation": {
+    "DICOM_image_arrays_large_acquisition_metadata_included": false,
+    "all141_read_pairs_included": true,
+    "all_archived_bytes_verified": true,
+    "patient_source_or_image_reads_by_packager": 0
+  }
+}

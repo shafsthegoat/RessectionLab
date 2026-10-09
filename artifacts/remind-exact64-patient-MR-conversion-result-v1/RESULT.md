@@ -1,0 +1,3 @@
+# Exact64 patient MRI conversion
+
+One exact 64-plane ReMIND-002 TRAIN MRI conversion finished in 2.016 seconds at a 438,386,688-byte (418.1 MiB) worker peak. The [saved-output audit](summary.json) reconciles all 141 read intents, independently reproduces raw-plane geometry and checks NIfTI units/forms, hash and 3,327 bounded samples. A spacing-tag inconsistency remains recorded: SpacingBetweenSlices says 1 mm while image positions imply approximately 3.3 mm. The verified grid uses physical positions/orientations. Worker all-source pixel equality and independent bounded sampling remain distinct. Anatomy, coverage, preoperative timing, MR-US registration and training/planning admission remain unverified or closed.

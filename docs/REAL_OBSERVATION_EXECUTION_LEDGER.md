@@ -720,3 +720,8 @@ The untrained six-stage graph completed in 0.881 seconds with a 226,410,496-byte
 ### October 9: Validate bounded full-size tiled vessel-contact evaluation
 
 The [independently audited generated profile](../artifacts/private-vascular-streaming-profile-v1/RESULT.txt) evaluates a 256 × 256 × 192 rotated grid in 7.883 seconds with a 41.594 MiB process peak. It considers all 3,072 tiles, prunes 96.582%, preserves repeated-action unions and unknown coverage, and cleans up its single child. This is measured feasibility, not a measured speedup over the unexecuted dense baseline or patient/clinical validation.
+
+
+### October 9: Verify first bounded real MRI conversion and retain spacing discrepancy
+
+One exact 64-plane ReMIND-002 TRAIN MRI conversion finished in 2.016 seconds at a 438,386,688-byte (418.1 MiB) worker peak. The [saved-output audit](../artifacts/remind-exact64-patient-MR-conversion-result-v1/summary.json) reconciles all 141 read intents, independently reproduces raw-plane geometry and checks NIfTI units/forms, hash and 3,327 bounded samples. A spacing-tag inconsistency remains recorded: SpacingBetweenSlices says 1 mm while image positions imply approximately 3.3 mm. The verified grid uses physical positions/orientations. Worker all-source pixel equality and independent bounded sampling remain distinct. Anatomy, coverage, preoperative timing, MR-US registration and training/planning admission remain unverified or closed.
