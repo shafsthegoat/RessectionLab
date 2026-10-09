@@ -325,6 +325,10 @@ passes 143 focused controls. The [full frozen 890-file queue is now acquired](ar
 including 24 final masks through exact-checksum mirror transport. The old provider
 failures remain preserved; its unnecessary cooldown wait was stopped. Acquisition
 receipts establish byte identity, with scientific QC handled separately.
+The [complete cache reconciliation](artifacts/continuous-source-reconciliation-v1/RESULT.md)
+has independently rebound all 890 files and fixed the stale exhausted-provider
+status without reopening transport. All 61 focused controls pass; old failures
+remain, and the completed cache-only run reports zero unresolved files.
 All [Lausanne TRAIN originals](artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)
 are now complete: 840 files, 199 people, 210 sessions and 10,020,802,851 bytes.
 The [separate QC result](artifacts/lausanne-deferred-qc-execution-v1/RESULT.md)

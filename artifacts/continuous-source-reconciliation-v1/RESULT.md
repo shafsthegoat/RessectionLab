@@ -1,0 +1,9 @@
+# Completed cache reconciliation preserves exhausted transport history
+
+2026-10-09: the committed runner reverified **890 files / 10,578,593,091 bytes**, with zero unresolved files, network attempts or image decoding. These are existing acquisitions, not additional independent patients or new downloads.
+
+The audit found one status defect: a verified mirror copy was present, but the runner skipped its historically exhausted provider entry. The first offline-only repair passed its immediate checks but independent review found that a subsequent online invocation could reopen transport after an intervening local receipt. The final repair makes historical exhaustion a durable local-only restriction in the saved operation intent. Present, missing, corrupt and disappearing cache cases are rechecked without transport; all old attempts remain intact. Sixty-one focused tests and independent review pass, including the later online invocation after cache deletion.
+
+The complete cache run used committed runner `aec6ecc` and ended with `all_bytes_verified`, 890 `existing_byte_verified` outcomes and exit 0. Its final receipt is local at `data/acquisition/continuous-source-v1/runs/20261009T045908903716Z-77a8fc86/finished.json`, SHA-256 `03f7fba8b481d9c62db94e2225d683c6a1ac2dd1b7c3cefbefe22afd746e0609`. The independent binding audit of all 890 attempts is local at `build/acquisition-continuity-audit-v1/committed-result.json`, SHA-256 `ada94f4c0909671752d643acecd53bad8cb536a8333c7b509fad235d3adae657`. The earlier Case2 exhausted-provider outcome retains SHA-256 `9e90df8fec3980c1049b019ac6a557e1644ee2566a556254b0b908f3d289c943`.
+
+This verifies source bytes and current acquisition accounting only. It grants no image/anatomy QC, training or planning admission and changes no patient partition.
