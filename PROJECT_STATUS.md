@@ -56,9 +56,16 @@ relaxation test; actual depth and contact/hold sample alignment remain unresolve
 Its [sealed byte-intake scope](artifacts/menichetti-sealed-intake-preparation-v1/INDEPENDENT_REVIEW.md)
 completed its single 6,427,434-byte transfer on October 9 at 09:10 UTC.
 The [independent completion audit](artifacts/menichetti-sealed-completion-v1/RESULT.md)
-rehashed the whole file and matched the publisher SHA-256. Response values and
-MAT structure remain closed; donor grouping and roles are not yet established. Nominal motor commands are
+rehashed the whole file and matched the publisher SHA-256. Response values remain closed. The later structural inventory and grouped roles
+are recorded below. Nominal motor commands are
 not measured per-trial displacement, and neither source establishes live surgery.
+
+The [measurement structure inventory](artifacts/menichetti-structure-and-grouping-v1/RESULT.md)
+passed independent review and identified ten brain aliases with 595 trial columns.
+Six training, two development and two sealed-test aliases are now frozen before
+response-value access; every region and trial inherits its parent role. No timing
+or motion fields were found. Response reading, alignment, fitting and physical
+validation remain pending; source aliases do not authenticate donor independence.
 
 The [complete strategy-record interface](artifacts/research-estimate-strategy-record-v1/RESULT.md)
 now preserves full nominal action histories and resulting modeled state in JSON,

@@ -1,0 +1,2015 @@
+{
+  "bindings": {
+    "creator_metadata": {
+      "bytes": 126652,
+      "path": "build/greiner-measurement-schema-v1/menichetti-record.html",
+      "sha256": "9e7dd950a4b89777df15d737aba8e7dbf2414e2b0b968c688af80979809509b6"
+    },
+    "prior_source_qualification": {
+      "bytes": 2739,
+      "path": "build/greiner-measurement-schema-v1/menichetti-candidate.json",
+      "sha256": "140ff7f43a4f71303ea9d9fa873466d533a9389b683dbed59ff52508d1c18116"
+    },
+    "structure_report": {
+      "bytes": 50399,
+      "path": "build/menichetti-structure-inventory-v1/inventory.json",
+      "sha256": "963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e"
+    },
+    "supervision_receipt": {
+      "bytes": 2533,
+      "path": "build/menichetti-structure-inventory-v1/receipt.json",
+      "sha256": "10634e9352ff96478e50713deed254c25e248760ac34c3a06b52ee53776840f8"
+    }
+  },
+  "brain_groups": {
+    "Brain1": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            6
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            4
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            2
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "training",
+      "trial_columns": 57
+    },
+    "Brain10": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "training",
+      "trial_columns": 60
+    },
+    "Brain2": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            4
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "development",
+      "trial_columns": 59
+    },
+    "Brain3": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            4
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "role": "sealed_test",
+      "trial_columns": 59
+    },
+    "Brain4": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "training",
+      "trial_columns": 60
+    },
+    "Brain5": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "training",
+      "trial_columns": 60
+    },
+    "Brain6": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "sealed_test",
+      "trial_columns": 60
+    },
+    "Brain7": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "training",
+      "trial_columns": 60
+    },
+    "Brain8": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "training",
+      "trial_columns": 60
+    },
+    "Brain9": {
+      "regions": {
+        "BG": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CB": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CC": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "CR": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "LFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "MO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "PO": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "SFCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "TCx": {
+          "mat_class": "double",
+          "shape": [
+            10350,
+            5
+          ],
+          "source_interpretation": "one force-relaxation trial per column",
+          "trial_column_indices_1based": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "role": "development",
+      "trial_columns": 60
+    }
+  },
+  "candidate_motion_field_paths": [],
+  "candidate_time_field_paths": [],
+  "cross_release_overlap": "unknown; preserve existing protected assignments and quarantine conflicts before intended-use admission if biological aliases are discovered",
+  "existing_roles_unchanged": [
+    "HBE",
+    "Greiner",
+    "patient-data splits"
+  ],
+  "future_test_rule": "Freeze all transforms, models, baselines, prefix length, score interval and exclusion rules before test exposure. Hold test suffixes inaccessible to fitting or preprocessing choice. Aggregate by brain group and region, never treat 595 columns as independent donors.",
+  "group_identity": "Creator-declared brain specimen aliases Brain1 through Brain10; all regions/sites/columns sharing an alias are inseparable. No private donor linkage or cross-alias donor authentication has been established.",
+  "grouping_review": {
+    "path": "build/menichetti-structure-result-independent-v1/GROUPING-REVIEW.txt",
+    "sha256": "e5fe8e8dacc3071e0d425cadd19ea9b6ebe9af9f6357eacf734fa0c4a99d2691"
+  },
+  "interpretation_boundary": "10350 rows are consistent with nominal 350 ramp samples plus 10000 hold samples, but shape agreement does not certify this segmentation. No contact/hold truth inferred.",
+  "next_supported_scope": "After root freezes this grouping and a separate measured-access protocol, open training groups only for validity checks. Certified mechanical relaxation prediction requires independently specified hold alignment. Without that evidence, any fixed-prefix future-force forecast must be explicitly a conditional sampled-force forecast, not absolute contact-force or indentation validation.",
+  "not_established": [
+    "numeric validity, finite values, zero-padding, dropped samples and sign conventions",
+    "measured per-trial depth or actual contact geometry",
+    "contact, ramp onset or hold onset sample indices",
+    "independent mapping of aliases to unique human donors beyond creator brain-specimen numbering"
+  ],
+  "original_response_file": {
+    "bytes": 6427434,
+    "opened_during_this_saved_result_analysis": false,
+    "path": "data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat",
+    "publisher_sha256": "ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6"
+  },
+  "physical_validation_pass": null,
+  "region_names_from_creator_metadata": {
+    "BG": "basal ganglia",
+    "CB": "cerebellum",
+    "CC": "corpus callosum",
+    "CR": "corona radiata",
+    "LFCx": "postero-lateral frontal cortex",
+    "MFCx": "superior mid-frontal cortex",
+    "MO": "medulla oblongata",
+    "OCx": "posterior occipital cortex",
+    "PFCx": "prefrontal cortex",
+    "PO": "pons",
+    "SFCx": "postero-superior frontal cortex",
+    "TCx": "inferior temporal cortex"
+  },
+  "response_values_permitted": false,
+  "role_assignment_algorithm": {
+    "first_6": "training",
+    "formula": "sha256(UTF8(salt + newline + original_response_sha256 + newline + exact_brain_alias))",
+    "last_2": "sealed_test",
+    "next_2": "development",
+    "region_or_trial_balancing_used": false,
+    "response_values_or_demographics_used": false,
+    "salt": "menichetti-brain-group-split-v1",
+    "sort": "ascending lowercase hexadecimal digest"
+  },
+  "role_assignment_order": [
+    {
+      "brain_alias": "Brain5",
+      "role": "training",
+      "sha256_sort_key": "0770ca90da3e6d70d3160de5b16f013b2fae64c87904c07143fd6e5d2e26ac07"
+    },
+    {
+      "brain_alias": "Brain7",
+      "role": "training",
+      "sha256_sort_key": "148e6d229b2dc32aec65f6efc044d4bf59fe23350309893dfb9dd2f363290d61"
+    },
+    {
+      "brain_alias": "Brain4",
+      "role": "training",
+      "sha256_sort_key": "1a9dd24368ce54a9e1b8b75d1583d7772208e38fb13623344c193b46ec09140d"
+    },
+    {
+      "brain_alias": "Brain8",
+      "role": "training",
+      "sha256_sort_key": "7b687d39b46ee89a5a40bfab41c306234d1d68b3c97990b2083027ec716eb444"
+    },
+    {
+      "brain_alias": "Brain10",
+      "role": "training",
+      "sha256_sort_key": "a71548343245ac17bddb27b5bb531d18b4cf004e223bc8cd6dce6c20c34391da"
+    },
+    {
+      "brain_alias": "Brain1",
+      "role": "training",
+      "sha256_sort_key": "c3b1d79df6f199e5d6f74c4ce97268dbb67cb951b2464c9fc0733698c130669f"
+    },
+    {
+      "brain_alias": "Brain9",
+      "role": "development",
+      "sha256_sort_key": "d3ac277cbfb7ab092189c614a9488d9e8ae6b79af333651c6d881a68a43dafff"
+    },
+    {
+      "brain_alias": "Brain2",
+      "role": "development",
+      "sha256_sort_key": "d5bb5d82a733f6717eab13fa5966258496574bf86588330fadc3f5b8aeaaac4a"
+    },
+    {
+      "brain_alias": "Brain6",
+      "role": "sealed_test",
+      "sha256_sort_key": "f045e21dbbfa9d33513a17681b537d1822c568f462f972c23f504f3c308812ba"
+    },
+    {
+      "brain_alias": "Brain3",
+      "role": "sealed_test",
+      "sha256_sort_key": "fbfd72f62c8868666f106890cacec9f18020cb1d8b5822bad53452ec393d3181"
+    }
+  ],
+  "role_freeze_performed": true,
+  "schema": "menichetti-source-brain-group-roles-v1",
+  "scientific_fit_performed": false,
+  "source_proposal_sha256": "79e6a03cb08912b904ab9f927aeaab0fbfa24217c1040c94fecba35dddd94f26",
+  "source_urls": [
+    "https://data.mendeley.com/datasets/7sjcn229cw/1",
+    "https://doi.org/10.17632/7sjcn229cw.1",
+    "https://lirias.kuleuven.be/3147268"
+  ],
+  "statistics_tables_excluded": true,
+  "status": "frozen_before_response_values",
+  "structure_totals": {
+    "brain_aliases": 10,
+    "classes": {
+      "double": 120,
+      "struct": 11
+    },
+    "region_matrices": 120,
+    "rows_per_matrix": 10350,
+    "source_described_trial_columns": 595
+  },
+  "units_from_creator_metadata": {
+    "force": "micronewtons",
+    "nominal_sample_spacing_seconds": 0.0001,
+    "nominal_sampling_frequency_hz": 10000,
+    "scale_to_newtons": 1e-06,
+    "units_not_read_from_MAT_values": true
+  }
+}

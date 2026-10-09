@@ -1,0 +1,56 @@
+{
+  "caps": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "cleanup_and_finalization_reserve_seconds": 10,
+    "numerical_threads": 1,
+    "sampled_process_group_rss_bytes": 536870912,
+    "wall_seconds": 45,
+    "worker_stage_wall_seconds": 35
+  },
+  "child_protocol_sha256": "20fe32c42039662c233e378c756aaa3c8d4900dfe8e9d59866a944f4cfaccbee",
+  "donor_roles_assigned": false,
+  "force_values_permitted": false,
+  "historical_executing_source_commit": "0f7eee3a17b6743fe15549cf8aba396fa4e98a2c",
+  "independent_review_sha256": "6c78ba3511afb1df18284c345c93daaa1fc4ed4434571a4ebc381a0bed2e5d8f",
+  "inventory_bytes": 50399,
+  "inventory_sha256": "963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e",
+  "launcher_cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "observed_head_at_launch": "2023242c9352e91887852bc5521cc6c824d3516b",
+  "observed_head_at_root_release": "2023242c9352e91887852bc5521cc6c824d3516b",
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 4194304,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/menichetti-structure-inventory-preparation-v1/inventory.py",
+      "--protocol",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/menichetti-structure-inventory-v1/released-protocol.json",
+      "--protocol-sha256",
+      "20fe32c42039662c233e378c756aaa3c8d4900dfe8e9d59866a944f4cfaccbee"
+    ],
+    "elapsed_seconds": 0.220519291004166,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 56432,
+    "peak_sampled_process_group_rss_bytes": 1409024,
+    "pid": 94112,
+    "sampled_process_group_rss_cap_bytes": 536870912,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 35
+  },
+  "release_sha256": "5a659d6f1a65c96abaa6bb99e8072c77f29adb80c39ff97f1189b161ee8326a4",
+  "sampling_note": "RSS/output are sampled; brief between-sample peaks may be missed.",
+  "schema": "menichetti-supervised-structure-one-shot-v1",
+  "status": "supervision_complete_inventory_uninterpreted",
+  "supervised_lifecycle_seconds": 0.23726145806722343,
+  "worker_sha256": "05866df06361a1151ff8efa6d7d5a1bd7198dfad3e19936b5eff43817ce72d9d"
+}

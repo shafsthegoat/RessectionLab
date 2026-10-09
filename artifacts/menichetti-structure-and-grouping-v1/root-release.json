@@ -1,0 +1,40 @@
+{
+  "caps": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "cleanup_and_finalization_reserve_seconds": 10,
+    "numerical_threads": 1,
+    "sampled_process_group_rss_bytes": 536870912,
+    "wall_seconds": 45,
+    "worker_stage_wall_seconds": 35
+  },
+  "donor_roles_assigned": false,
+  "executing_source_commit": "0f7eee3a17b6743fe15549cf8aba396fa4e98a2c",
+  "execution_released": true,
+  "force_values_permitted": false,
+  "independent_review": {
+    "path": "build/menichetti-structure-independent-v1/REPORT.md",
+    "sha256": "6c78ba3511afb1df18284c345c93daaa1fc4ed4434571a4ebc381a0bed2e5d8f"
+  },
+  "interpretation_rule": "Completion means supervised structure inventory exists; root must separately inspect its metadata status. No force, time, position or character values; no donor roles, fitting, native solve or physical validation.",
+  "launcher_sha256": "2f93c7fd776014417677ed7ea12112a8f237218e76d288ad04297b651816fea2",
+  "observed_head": "2023242c9352e91887852bc5521cc6c824d3516b",
+  "output_directory": "build/menichetti-structure-inventory-v1",
+  "prepared_protocol": {
+    "path": "build/menichetti-structure-inventory-preparation-v1/prepared-protocol.json",
+    "sha256": "62a2a0063a7cef5c1cd28d1421f9b1302ab0482f06011e50e041cefd76781b0f"
+  },
+  "released_child_protocol_sha256": "20fe32c42039662c233e378c756aaa3c8d4900dfe8e9d59866a944f4cfaccbee",
+  "root_release_rule": "Root may create a separate released document changing execution_released to true, status to root_released_structure_inventory_once, and observed_head to current HEAD. Preserve this template and the original prepared protocol. Unrelated HEAD advances are recorded; all executing source hashes remain fixed, with reused helpers checked against the declared historical commit.",
+  "schema": "menichetti-root-only-structure-launch-v1",
+  "status": "root_released_structure_inventory_once",
+  "supervisor_files_sha256": {
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+  },
+  "worker": {
+    "path": "build/menichetti-structure-inventory-preparation-v1/inventory.py",
+    "sha256": "05866df06361a1151ff8efa6d7d5a1bd7198dfad3e19936b5eff43817ce72d9d"
+  }
+}

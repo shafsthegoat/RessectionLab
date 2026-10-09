@@ -1,0 +1,250 @@
+"""Narrow MAT5 structural inventory using SciPy headers and field-name readers.
+
+No scientific numeric/character-array reader is called. Primitive bodies are
+skipped. Compressed bodies may be traversed as opaque bytes by SciPy's stream.
+This is an inventory, not a MAT validator, response QC, or timing qualification.
+"""
+from pathlib import Path
+import argparse, hashlib, json, math, re, signal, sys, time
+
+import scipy
+from scipy.io.matlab._mio5 import MatFile5Reader
+from scipy.io.matlab._mio5_utils import VarReader5
+from scipy.io.matlab._streams import ZlibInputStream
+from scipy.io.matlab import _mio5_params as mp
+
+ROOT = Path(__file__).resolve().parents[2]
+ORIGINAL = 'data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat'
+ORIGINAL_SHA = 'ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6'
+ORIGINAL_BYTES = 6427434
+RECEIPT = 'data/acquisition/menichetti-mechanics-v1/completion.json'
+RECEIPT_SHA = 'c8a219659c5ab68419ab448ac3431c2690de01e681a0d5c1f5b8dba6c796afc0'
+LIMITS = {'max_depth': 16, 'max_nodes': 10000, 'max_fields': 128,
+          'max_name_bytes': 128, 'max_metadata_read_bytes': 65536,
+          'max_opaque_traversal_bytes': 134217728, 'max_output_bytes': 4194304,
+          'wall_seconds': 45}
+NUMERIC = {mp.mxDOUBLE_CLASS, mp.mxSINGLE_CLASS, mp.mxINT8_CLASS,
+           mp.mxUINT8_CLASS, mp.mxINT16_CLASS, mp.mxUINT16_CLASS,
+           mp.mxINT32_CLASS, mp.mxUINT32_CLASS, mp.mxINT64_CLASS, mp.mxUINT64_CLASS}
+CLASS = {v: k.removeprefix('mx').removesuffix('_CLASS').lower()
+         for k, v in vars(mp).items() if k.startswith('mx') and k.endswith('_CLASS')}
+
+class Refusal(RuntimeError):
+    pass
+
+def need(condition, reason):
+    if not condition:
+        raise Refusal(reason)
+
+def sha(path):
+    h = hashlib.sha256()
+    with path.open('rb') as source:
+        while block := source.read(1024 ** 2):
+            h.update(block)
+    return h.hexdigest()
+
+class Budget:
+    def __init__(self, limits):
+        self.limits, self.advance = limits, 0
+        self.deadline = time.monotonic() + limits['wall_seconds']
+    def check(self, advance=0):
+        self.advance += advance
+        need(time.monotonic() < self.deadline, 'wall_budget')
+        need(self.advance <= self.limits['max_opaque_traversal_bytes'], 'opaque_traversal_budget')
+
+class MetadataStream:
+    """Cap library metadata reads and forward opaque skips, including zlib."""
+    def __init__(self, stream, budget, end):
+        self.stream, self.budget, self.end = stream, budget, end
+    def tell(self):
+        return self.stream.tell()
+    def read(self, count=-1):
+        need(isinstance(count, int) and 0 <= count <= self.budget.limits['max_metadata_read_bytes'], 'metadata_read_budget')
+        need(self.tell() + count <= self.end, 'read_outside_container')
+        self.budget.check(count)
+        result = self.stream.read(count)
+        need(len(result) == count, 'truncated_metadata')
+        return result
+    def seek(self, offset, whence=0):
+        need(whence in (0, 1), 'unsupported_seek')
+        target = offset if whence == 0 else self.tell() + offset
+        need(0 <= target <= self.end, 'seek_outside_container')
+        self.budget.check(max(0, target - self.tell()))
+        self.stream.seek(target)
+        need(self.tell() == target, 'incomplete_opaque_skip')
+        return target
+
+def safe_name(raw, limits, allow_empty=False):
+    if raw is None:
+        raw = b''
+    if isinstance(raw, str):
+        raw = raw.encode('ascii', errors='strict')
+    need(len(raw) <= limits['max_name_bytes'], 'name_length')
+    name = raw.decode('ascii', errors='strict')
+    need((allow_empty and not name) or re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', name), 'unsupported_name_encoding')
+    return name
+
+def header_reader(stream, byte_order):
+    # These existing library methods parse only flags, dimensions, names and
+    # structural field-name tables; never call array_from_header/read_struct.
+    parent = MatFile5Reader(stream, byte_order=byte_order, chars_as_strings=False)
+    return VarReader5(parent)
+
+def inspect_mat5(path, limits=None):
+    limits = dict(LIMITS if limits is None else limits)
+    budget, nodes = Budget(limits), []
+    time_candidates, motion_candidates = [], []
+    compressed_containers = 0
+    def matrix(stream, reader, container_end, path_tokens, depth):
+        budget.check()
+        need(depth <= limits['max_depth'], 'nesting_budget')
+        need(len(nodes) < limits['max_nodes'], 'node_budget')
+        kind, byte_count = reader.read_full_tag()
+        need(kind == mp.miMATRIX and byte_count > 0, 'unsupported_nested_element')
+        end = stream.tell() + byte_count
+        need(end <= container_end, 'matrix_outside_container')
+        # Restrict header/field-table reads to this matrix before invoking the
+        # library. A malformed child may not borrow bytes from its next sibling.
+        previous_end, stream.end = stream.end, end
+        header = reader.read_header(False)
+        need(stream.tell() <= end, 'header_outside_matrix')
+        name = safe_name(header.name, limits, allow_empty=bool(path_tokens))
+        shape = [int(d) for d in header.dims]
+        need(1 <= len(shape) <= 8 and all(0 <= d <= 10000000 for d in shape), 'dimension_budget')
+        count = math.prod(shape)
+        mclass = int(header.mclass)
+        tokens = path_tokens if path_tokens else [name]
+        node = {'path': tokens, 'name': name, 'shape': shape, 'class': CLASS.get(mclass, 'unsupported')}
+        nodes.append(node)
+        if mclass == mp.mxSTRUCT_CLASS:
+            fields = [safe_name(f, limits) for f in reader.read_fieldnames()]
+            need(len(fields) <= limits['max_fields'] and len(set(fields)) == len(fields), 'field_budget_or_duplicates')
+            need(count * len(fields) <= limits['max_nodes'] - len(nodes), 'child_count_budget')
+            node['field_names'] = fields
+            for element in range(1, count + 1):
+                for field in fields:
+                    matrix(stream, reader, end, tokens + [{'element_1based_matlab_linear': element, 'field': field}], depth + 1)
+        elif mclass == mp.mxCELL_CLASS:
+            need(count <= limits['max_nodes'] - len(nodes), 'cell_count_budget')
+            for element in range(1, count + 1):
+                matrix(stream, reader, end, tokens + [{'cell_1based_matlab_linear': element}], depth + 1)
+        elif mclass in NUMERIC or mclass == mp.mxCHAR_CLASS:
+            # No numeric-array or character-value parsing, even for time-like
+            # variables. Their presence is all this first inventory can claim.
+            node['values_interpreted'] = False
+            labels = [t if isinstance(t, str) else t.get('field', '') for t in tokens]
+            label = labels[-1].lower()
+            if re.search(r'(^|_)(t|time|timestamp|timestamps)($|_)', label):
+                time_candidates.append(tokens)
+            if re.search(r'displ|position|depth|command', label):
+                motion_candidates.append(tokens)
+            stream.seek(end)
+        else:
+            raise Refusal('unsupported_matrix_class')
+        need(stream.tell() == end, 'structural_container_length_mismatch')
+        stream.end = previous_end
+    with path.open('rb') as source:
+        size = path.stat().st_size
+        need(128 <= size <= ORIGINAL_BYTES, 'input_size_limit')
+        prefix = source.read(128)
+        need(prefix.startswith(b'MATLAB 5.0 MAT-file') and prefix[126:128] in (b'IM', b'MI'), 'unsupported_format_not_mat5')
+        order = '<' if prefix[126:128] == b'IM' else '>'
+        raw = MetadataStream(source, budget, size)
+        top_reader = header_reader(raw, order)
+        names = set()
+        while raw.tell() < size:
+            start = raw.tell()
+            kind, length = top_reader.read_full_tag()
+            end = raw.tell() + length
+            need(length > 0 and end <= size, 'top_container_length')
+            if kind == mp.miCOMPRESSED:
+                compressed_containers += 1
+                # SciPy owns the bounded compressed container. Its opaque
+                # compressed reads are not metadata reads; apply the small
+                # metadata-read cap to the decompressed stream below.
+                zstream = ZlibInputStream(source, length)
+                stream = MetadataStream(zstream, budget, limits['max_opaque_traversal_bytes'])
+                reader = header_reader(stream, order)
+                old_len = len(nodes)
+                matrix(stream, reader, stream.end, [], 0)
+                need(zstream.all_data_read(), 'compressed_stream_trailing_or_unread')
+            elif kind == mp.miMATRIX:
+                raw.seek(start)
+                old_len = len(nodes)
+                matrix(raw, top_reader, end, [], 0)
+            else:
+                raise Refusal('unsupported_top_element')
+            top_name = nodes[old_len]['name']
+            need(top_name not in names, 'duplicate_top_variable')
+            names.add(top_name)
+            raw.seek(end)
+    report = {'schema': 'menichetti-mat5-structure-only-v1', 'status': 'structure_inventory_only',
+              'format': 'MAT5', 'scipy_version': scipy.__version__, 'nodes': nodes,
+              'candidate_time_field_paths': time_candidates, 'candidate_motion_field_paths': motion_candidates,
+              'compressed_top_containers': compressed_containers,
+              'numeric_or_character_array_values_interpreted': 0,
+              'opaque_compressed_body_traversal': bool(compressed_containers),
+              'time_units_or_contact_alignment_established': False,
+              'donor_identity_mapping_established': False, 'donor_roles_assigned': False,
+              'force_qc_or_fitting_performed': False,
+              'limits': 'Names, classes and shapes only. No scientific leaf-body validity, force statistics, response values, time values, or interpretation of donor identity.'}
+    need(len(json.dumps(report).encode()) <= limits['max_output_bytes'], 'output_budget')
+    return report
+
+def serialize_bounded(report, protocol_sha256, limits=None):
+    limits = LIMITS if limits is None else limits
+    report = dict(report, original_sha256=ORIGINAL_SHA, protocol_sha256=protocol_sha256)
+    encoded = (json.dumps(report, sort_keys=True, indent=2) + '\n').encode('utf-8')
+    if len(encoded) > limits['max_output_bytes']:
+        report = {'status': 'structure_inventory_refused', 'reason': 'output_budget',
+                  'numeric_or_character_array_values_interpreted': 0, 'donor_roles_assigned': False,
+                  'original_sha256': ORIGINAL_SHA, 'protocol_sha256': protocol_sha256}
+        encoded = (json.dumps(report, sort_keys=True, indent=2) + '\n').encode('utf-8')
+    need(len(encoded) <= limits['max_output_bytes'], 'refusal_output_budget')
+    return report, encoded
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--protocol', type=Path, required=True)
+    ap.add_argument('--protocol-sha256', required=True)
+    ap.add_argument('--check-only', action='store_true')
+    args = ap.parse_args()
+    need(sha(args.protocol) == args.protocol_sha256, 'protocol_changed')
+    protocol = json.loads(args.protocol.read_text())
+    need(protocol['input'] == {'path': ORIGINAL, 'bytes': ORIGINAL_BYTES, 'sha256': ORIGINAL_SHA}, 'wrong_original')
+    need(protocol['receipt'] == {'path': RECEIPT, 'sha256': RECEIPT_SHA}, 'wrong_receipt_binding')
+    need(sha(ROOT / RECEIPT) == RECEIPT_SHA, 'receipt_changed')
+    need(protocol['limits'] == LIMITS, 'limits_changed')
+    need(protocol['runner_sha256'] == sha(Path(__file__)), 'runner_changed')
+    need(protocol['scipy_version'] == scipy.__version__, 'library_version_changed')
+    for rel, digest in protocol['library_files_sha256'].items():
+        need(sha(ROOT / rel) == digest, 'library_code_changed')
+    if args.check_only:
+        print(json.dumps({'status': 'protocol_valid_without_mat_access', 'execution_released': protocol['execution_released'], 'original_bytes_read': 0}))
+        return
+    need(protocol['execution_released'] is True, 'structure_execution_not_released')
+    target = ROOT / ORIGINAL
+    need(not target.is_symlink() and target.stat().st_size == ORIGINAL_BYTES and sha(target) == ORIGINAL_SHA, 'original_fixity')
+    output = ROOT / 'build/menichetti-structure-inventory-v1/inventory.json'
+    need(not output.exists(), 'preserve_existing_inventory')
+    def timed_out(signum, frame):
+        raise Refusal('wall_budget')
+    signal.signal(signal.SIGALRM, timed_out)
+    signal.setitimer(signal.ITIMER_REAL, LIMITS['wall_seconds'])
+    try:
+        report = inspect_mat5(target)
+    except Exception as error:
+        # Do not include exception strings: external parsers can include data.
+        report = {'status': 'structure_inventory_refused', 'error_type': type(error).__name__,
+                  'reason': str(error) if isinstance(error, Refusal) else 'library_or_format_error',
+                  'numeric_or_character_array_values_interpreted': 0, 'donor_roles_assigned': False}
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+    report, encoded = serialize_bounded(report, args.protocol_sha256)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open('xb') as stream:
+        stream.write(encoded)
+    print(json.dumps({'status': report['status'], 'output': str(output), 'force_values_emitted': 0}))
+
+if __name__ == '__main__':
+    main()

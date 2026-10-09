@@ -1,0 +1,2733 @@
+{
+  "candidate_motion_field_paths": [],
+  "candidate_time_field_paths": [],
+  "compressed_top_containers": 1,
+  "donor_identity_mapping_established": false,
+  "donor_roles_assigned": false,
+  "force_qc_or_fitting_performed": false,
+  "format": "MAT5",
+  "limits": "Names, classes and shapes only. No scientific leaf-body validity, force statistics, response values, time values, or interpretation of donor identity.",
+  "nodes": [
+    {
+      "class": "struct",
+      "field_names": [
+        "Brain1",
+        "Brain2",
+        "Brain3",
+        "Brain4",
+        "Brain5",
+        "Brain6",
+        "Brain7",
+        "Brain8",
+        "Brain9",
+        "Brain10"
+      ],
+      "name": "F_t_curves",
+      "path": [
+        "F_t_curves"
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        6
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        4
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        2
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain1"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        4
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain2"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        4
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain3"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain4"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain5"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain6"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain7"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain8"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain9"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "struct",
+      "field_names": [
+        "BG",
+        "CB",
+        "CC",
+        "CR",
+        "PFCx",
+        "MO",
+        "OCx",
+        "MFCx",
+        "SFCx",
+        "PO",
+        "TCx",
+        "LFCx"
+      ],
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        }
+      ],
+      "shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "BG"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CB"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CC"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "CR"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "OCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "MFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "SFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "PO"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "TCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    },
+    {
+      "class": "double",
+      "name": "",
+      "path": [
+        "F_t_curves",
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "Brain10"
+        },
+        {
+          "element_1based_matlab_linear": 1,
+          "field": "LFCx"
+        }
+      ],
+      "shape": [
+        10350,
+        5
+      ],
+      "values_interpreted": false
+    }
+  ],
+  "numeric_or_character_array_values_interpreted": 0,
+  "opaque_compressed_body_traversal": true,
+  "original_sha256": "ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6",
+  "protocol_sha256": "20fe32c42039662c233e378c756aaa3c8d4900dfe8e9d59866a944f4cfaccbee",
+  "schema": "menichetti-mat5-structure-only-v1",
+  "scipy_version": "1.18.1",
+  "status": "structure_inventory_only",
+  "time_units_or_contact_alignment_established": false
+}

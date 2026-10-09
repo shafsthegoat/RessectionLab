@@ -1,0 +1,84 @@
+Menichetti saved structural result and proposed brain-group roles
+
+The saved report is a complete supported structural inventory, not a parser
+refusal: 131 nodes comprise 11 scalar structs and 120 double matrices. One root
+F_t_curves struct contains Brain1 through Brain10. Each brain contains the same
+12 region fields. Every leaf is directly a 10,350-row numeric matrix; no cells,
+character arrays, timing arrays, motion arrays, or further metadata fields occur.
+No original MAT was reopened for this analysis. Numeric/character array values,
+validity, padding, contact and measured position remain unexamined.
+
+Creator metadata supports the interpretation of each column as one force test;
+it declares force in micronewtons at 10 kHz. Thus nominal conversion is 1e-6 N/µN
+and sample spacing 0.0001 s. These come from the public creator description, not
+from reading leaf values. All shapes together contain 595 source-described trial
+columns. They are dependent observations from 10 source-declared brain groups,
+not 595 independent donors.
+
+Regions (creator labels)
+  BG: basal ganglia                 CB: cerebellum
+  CC: corpus callosum               CR: corona radiata
+  PFCx: prefrontal cortex           MO: medulla oblongata
+  OCx: posterior occipital cortex   MFCx: superior mid-frontal cortex
+  SFCx: postero-superior frontal cortex
+  PO: pons                         TCx: inferior temporal cortex
+  LFCx: postero-lateral frontal cortex
+
+Concrete column counts
+  All region matrices have 5 columns except:
+  Brain1/CB: 6; Brain1/CC: 4; Brain1/SFCx: 2; Brain2/SFCx: 4; Brain3/TCx: 4.
+  Brain1 totals 57 columns; Brain2 and Brain3 each 59; other brains each 60.
+  Exact inclusive MATLAB one-based column indices are recorded per region in
+  grouping-proposal.json. Each brain's regions and every column stay together.
+
+Proposed roles, not frozen and not a response-access release
+  Training: Brain1, Brain4, Brain5, Brain7, Brain8, Brain10 (357 columns).
+  Development: Brain2, Brain9 (119 columns).
+  Sealed test: Brain3, Brain6 (119 columns).
+  Assignment sorts SHA256(salt + newline + original response SHA256 + newline
+  + exact brain alias), with fixed salt menichetti-brain-group-split-v1, and takes
+  the first 6 / next 2 / last 2 groups. No response, demographic, or trial-count balancing
+  enters the selection. This is a source-declared brain-specimen split. The
+  inventory does not independently authenticate donor identities across aliases.
+  HBE, Greiner and patient splits remain unchanged.
+
+Timing consequence and next supported step
+  The complete schema has no timing or displacement fields. The uniform 10,350
+  rows are consistent with about 350 nominal ramp samples plus 10,000 hold samples,
+  but that arithmetic does not establish actual contact, ramp onset, hold onset,
+  contiguous sampling or measured indentation. Do not impose sample 351 as a
+  certified hold boundary. Published motor depth/speed remain nominal commands.
+  After root freezes groups and separately reviews a measured-access protocol,
+  training-only validity checks can proceed. An independent relaxation-law test
+  still needs a defensible hold-alignment rule declared before test access. With
+  no independent alignment evidence, the accessible narrower test is fixed-prefix
+  prediction of future sampled force; it must carry that limited claim. Freeze
+  prefix/horizon, preprocessing, exclusions, nuisance handling, models/baselines
+  and scoring before exposing test responses. Do not optimize alignment on test
+  suffixes. Aggregate by brain and region, acknowledging only 2 test brain groups.
+  No fitting, measured-response interpretation, or physical validation occurred.
+
+Population scope remains 10 postmortem human brains aged 64–94, PBS/4°C storage,
+about 4±1 days postmortem, tested at about 22°C without preconditioning. Destructive
+sites within regions and regions within brains remain grouped. This is not
+living surgical tissue evidence. StatisticsTables stays excluded.
+
+Evidence
+  Saved inventory: build/menichetti-structure-inventory-v1/inventory.json
+    SHA256 963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e
+    50,399 bytes; status structure_inventory_only.
+  Supervision receipt: build/menichetti-structure-inventory-v1/receipt.json
+    SHA256 10634e9352ff96478e50713deed254c25e248760ac34c3a06b52ee53776840f8
+    Child exited 0; no cleanup fallback/errors; group empty and child reaped.
+    Saved worker elapsed 0.22052 s; lifecycle 0.23726 s. Sampled RSS is not a true
+    continuous peak and may miss this short worker's maximum.
+  Creator metadata: build/greiner-measurement-schema-v1/menichetti-record.html
+    SHA256 9e7dd950a4b89777df15d737aba8e7dbf2414e2b0b968c688af80979809509b6
+  https://data.mendeley.com/datasets/7sjcn229cw/1
+  https://doi.org/10.17632/7sjcn229cw.1
+  Primary methods record: https://lirias.kuleuven.be/3147268
+  Scientific response file remains bound to publisher SHA256
+    ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6
+  Independent saved-result review PASS:
+  build/menichetti-structure-result-independent-v1/REPORT.md
+  SHA256 47076b611d3c39566ec4ca65a59f5ae7740c1e7e5633774180ea96d8235c048d.
