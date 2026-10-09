@@ -169,7 +169,12 @@ now binds a future 61-frame extended-endpoint solve to the exact adapted deck,
 attempt under 90 s/3 GiB sampled RSS/64 MiB guards. Historical old-endpoint
 native logs pass the saved grammar but correctly fail the new-endpoint motion
 gate. Seventy-six focused/adjacent tests and independent source review pass.
-Its release remains null; no new N8 solve or measured-force fit has run.
+The subsequent [one-call HBE v5 N8 execution](artifacts/hbe-v5-n8-extended-endpoint-execution-v1/RESULT.md)
+passed its frozen numerical software checks: 61 saved frames and 60 converged
+steps at the extended endpoint, with independent replay of reaction, residual,
+sampled deformation and work–energy readouts. The simulated final force is
+-0.037315 N. No measured-force fit, mesh/time-step convergence or patient-force
+validation has occurred; the remaining 11 frozen rows are unrun.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
