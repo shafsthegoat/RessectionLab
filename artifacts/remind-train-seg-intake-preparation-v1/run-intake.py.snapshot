@@ -1,0 +1,127 @@
+"""Continuous, declared TRAIN-only ReMIND SEG byte acquisition, all labels unreviewed and unavailable for training.
+No DICOM decoder, clinical table, model or anatomy-QC dependency is imported.
+"""
+from pathlib import Path
+from datetime import datetime, timezone
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
+from urllib.request import build_opener, HTTPSHandler
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
+from email.utils import parsedate_to_datetime
+import argparse, base64, fcntl, hashlib, http.client, json, os, shutil, socket, ssl, sys, threading, time, uuid
+
+def sha(p):
+ h=hashlib.sha256()
+ with p.open('rb') as f:
+  while b:=f.read(1024**2):h.update(b)
+ return h.hexdigest()
+def utc():return datetime.now(timezone.utc).isoformat()
+def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--declaration',type=Path,required=True);parser.add_argument('--declaration-sha256',required=True);parser.add_argument('--check-only',action='store_true');args=parser.parse_args()
+ root=Path(__file__).resolve().parents[2];base=root/'data/acquisition/remind-train-seg-v1';out=base/'verified';assert sha(args.declaration)==args.declaration_sha256;D=json.loads(args.declaration.read_text());assert sha(Path(__file__))==D['runner_sha256']
+ for relative,digest in D['source_files_sha256'].items():assert sha(base/'source'/relative)==digest
+ assert sha(root/D['canonical_cohort_path'])==D['canonical_cohort_sha256']==D['source_files_sha256']['cohort.json']
+ assert sha(root/D['scope_path'])==D['scope_sha256']==D['source_files_sha256']['scope.json']
+ scope=json.loads((base/'source/scope.json').read_text());assert scope['cohort_sha256']==D['canonical_cohort_sha256']
+ assert scope['all_payloads_unreviewed'] and not scope['labels_admitted'] and not scope['training_admitted']
+ assert D['max_workers']==2 and D['max_transport_attempts_per_object_across_restarts']==3 and D['free_space_reserve_bytes']==100*1024**3
+ cohort=json.loads((base/'source/cohort.json').read_text());role_map={m['subject']:m['role'] for m in cohort['members']};train={p for p,r in role_map.items() if r=='TRAIN'};assert len(train)==79 and role_map['ReMIND-001']=='DEVELOPMENT'
+ raw=json.loads((base/'source/train-exact-object-manifest.json').read_text());entries=[]
+ for row in raw['objects']:
+  assert row['patient_id'] in train and row['role']=='TRAIN' and row['modality']=='SEG';key=row['key'];assert key.count('/')==1 and key.startswith(row['series_uuid']+'/') and key.endswith('.dcm') and '..' not in key
+  entry={'path':row['patient_id']+'/'+key,'key':key,'patient_id':row['patient_id'],'patient_group':row['patient_group'],'role':'TRAIN','size_bytes':row['bytes'],'bytes':row['bytes'],'sha256':None,'modality':row['modality']}
+  assert row['etag_md5'] and row['url']=='https://idc-open-data.s3.amazonaws.com/'+key and row['etag']==row['etag_md5'];entry.update(source_url=row['url'],checksum_type='MD5',expected_md5=row['etag_md5'],etag_opaque='\"'+row['etag']+'\"')
+  entries.append(entry)
+ assert len(entries)==242 and len({e['path'] for e in entries})==242 and sum(e['bytes'] for e in entries)==424167640
+ assert {e['patient_id'] for e in entries}==train
+ assert raw['cohort_sha256']==D['canonical_cohort_sha256'] and raw['status']=='all_series_listed'
+ assert scope['object_contract']['manifest_sha256']==D['source_files_sha256']['train-exact-object-manifest.json']
+ assert scope['files']==242 and scope['exact_total_bytes']==424167640 and scope['people']==79 and scope['new_people']==0
+ if args.check_only:
+  print(json.dumps({'status':'prepared_contract_valid','network_requests':0,'payload_access':False,'files':242,'bytes':424167640,'people':79,'cohort_sha256':D['canonical_cohort_sha256'],'execution_released':D['execution_released']}));return
+ assert D['execution_released'] is True and D['scope_commit'] and scope['declaration_status']=='frozen_before_seg_payload_access'
+ for previous in D['preceding_terminal_receipts']:
+  p=root/previous['path'];assert sha(p)==previous['sha256'];assert json.loads(p.read_text())['status']=='all_bytes_verified'
+ for relative in ['data/acquisition/remind-train-originals-v1/queue.lock','data/acquisition/nfbs-originals-v1/queue.lock']:
+  with (root/relative).open('a+') as lock:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ queue_lock=(base/'queue.lock').open('a+');fcntl.flock(queue_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ sys.path[:0]=[str(base/'source')]
+ import acquire_public_case as transport
+ import acquire_btc_case as sourceguards
+ import real_intake_io as io
+ for module in [transport,sourceguards,io]:assert Path(module.__file__).resolve().parent==base/'source'
+ verify=sourceguards.verify_file
+ transport.verify_file=verify
+ ctx=ssl.create_default_context();assert ctx.verify_mode==ssl.CERT_REQUIRED and ctx.check_hostname
+ run_id=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')+'-'+uuid.uuid4().hex[:8];run=base/'runs'/run_id;run.mkdir(parents=True);out.mkdir(exist_ok=True)
+ def save(p,v):io.atomic_preserve(p,(json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode())
+ def hashes(p,e):
+  h=hashlib.sha256();m=hashlib.md5()
+  with p.open('rb') as f:
+   while b:=f.read(1024**2):h.update(b);m.update(b)
+  value=m.hexdigest();assert value==e['expected_md5'] and p.stat().st_size==e['bytes'];return {'bytes':p.stat().st_size,'sha256':h.hexdigest(),'source_checksum_type':e['checksum_type'],'source_checksum':value}
+ provider_next={};provider_lock=threading.Lock();cooldowns=base/'provider-cooldowns';cooldowns.mkdir(exist_ok=True)
+ for prior in cooldowns.glob('*.json'):
+  record=json.loads(prior.read_text());provider_next[record['host']]=max(provider_next.get(record['host'],0),record['next_attempt_unix'])
+ def honor_cooldown(host):
+  while True:
+   with provider_lock:delay=provider_next.get(host,0)-time.time()
+   if delay<=0:return
+   time.sleep(min(delay,2))
+ def cooldown(host,headers):
+  value=headers.get('Retry-After','');delay=60
+  try:delay=max(1,int(value))
+  except ValueError:
+   try:delay=max(1,parsedate_to_datetime(value).timestamp()-time.time())
+   except Exception:pass
+  with provider_lock:provider_next[host]=max(provider_next.get(host,0),time.time()+delay);next_time=provider_next[host]
+  save(cooldowns/(uuid.uuid4().hex+'.json'),{'host':host,'next_attempt_unix':next_time,'retry_after':value,'recorded_utc':utc(),'run_id':run_id})
+  return delay
+ def process(e):
+  keyhash=hashlib.sha256((e['source_url']+'|'+str(e['bytes'])+'|'+str(e['expected_md5'])).encode()).hexdigest();journal=base/'attempts'/keyhash[:2]/keyhash;journal.mkdir(parents=True,exist_ok=True);p=transport.checked_path(out,e['path']);partial=transport.checked_path(out,e['path']+'.partial');host=urlparse(e['source_url']).netloc
+  if shutil.disk_usage(base).free-D['total_source_bytes']<D['free_space_reserve_bytes']:return {'path':e['path'],'status':'storage_reserve_refusal'}
+  if p.exists():
+   try:verify(p,e);return {'path':e['path'],'patient_id':e['patient_id'],'status':'existing_byte_verified',**hashes(p,e),'http_requests':0,'finished_utc':utc()}
+   except Exception as err:return {'path':e['path'],'status':'existing_byte_integrity_failure','error_type':type(err).__name__,'error':str(err)}
+  previous=sorted(journal.glob('*-intent.json'))
+  prior_results=[json.loads(p.read_text()) for p in journal.glob('*-result.json')]
+  if any(r['status']=='integrity_or_scope_refusal' for r in prior_results):return {'path':e['path'],'status':'prior_integrity_or_scope_refusal_no_network','attempts_before_run':len(previous)}
+  if len(previous)>=3:return {'path':e['path'],'status':'transport_exhausted','attempts_before_run':len(previous)}
+  for attempt in range(len(previous)+1,4):
+   honor_cooldown(host);aid=f'{attempt:02d}-{run_id}';offset=partial.stat().st_size if partial.exists() else 0;save(journal/(aid+'-intent.json'),{'run_id':run_id,'entry':e,'started_utc':utc(),'resume_offset':offset,'declaration_sha256':args.declaration_sha256,'tls_verified':True});events=[];opener=build_opener(sourceguards.RejectRedirects(),HTTPSHandler(context=ctx))
+   def observed(request,*,timeout):
+    assert request.full_url==e['source_url'];request.add_header('If-Match',e['etag_opaque'])
+    event={'url':request.full_url,'method':request.get_method(),'range':request.get_header('Range'),'requested_utc':utc(),'tls_verified':True}
+    try:r=opener.open(request,timeout=timeout)
+    except HTTPError as err:
+     event.update(status=err.code,retry_after=err.headers.get('Retry-After'));events.append(event);save(journal/(aid+'-http.json'),event)
+     if err.code in [429,503]:cooldown(host,err.headers)
+     raise
+    h=r.headers;event.update(status=r.status,effective_url=r.geturl(),headers={k:h.get(k) for k in ['Content-Length','Content-Range','Content-Encoding','ETag','x-goog-generation','x-goog-hash']});events.append(event);save(journal/(aid+'-http.json'),event)
+    valid=r.geturl()==e['source_url'] and r.status==(206 if offset else 200) and h.get('ETag')==e['etag_opaque'] and int(h.get('Content-Length','-1'))==e['bytes']-offset
+    if not valid:r.close();raise transport.AcquisitionError('source_identity_size_checksum_header_or_resume_contract_failed')
+    return r
+   try:
+    state=transport.acquire_file(e,out,opener=observed);result={'path':e['path'],'patient_id':e['patient_id'],'status':'byte_verified','transport_status':state,**hashes(p,e),'attempt':attempt,'resume_offset':offset,'http_requests':len(events),'finished_utc':utc()};save(journal/(aid+'-result.json'),result);return result
+   except Exception as err:
+    transient=(isinstance(err,HTTPError) and err.code in [429,500,502,503,504]) or isinstance(err,(TimeoutError,socket.timeout,ConnectionResetError,http.client.IncompleteRead)) or (isinstance(err,URLError) and not isinstance(err.reason,ssl.SSLError))
+    truncated=(isinstance(err,transport.AcquisitionError) and (str(err).startswith('Pending source size/checksum contract mismatch:') or str(err)=='source_size_mismatch') and partial.exists() and partial.stat().st_size<e['bytes'] and bool(events) and events[-1].get('status') in [200,206])
+    transient=transient or truncated
+    result={'path':e['path'],'patient_id':e['patient_id'],'status':'transport_deferred' if transient and attempt<3 else 'transport_exhausted' if transient else 'integrity_or_scope_refusal','attempt':attempt,'error_type':type(err).__name__,'error':str(err)[:300],'partial_bytes':partial.stat().st_size if partial.exists() else 0,'http_requests':len(events),'finished_utc':utc()};save(journal/(aid+'-result.json'),result)
+    if not transient or attempt==3:return result
+    time.sleep(5 if attempt==1 else 15)
+ started={'run_id':run_id,'pid':os.getpid(),'started_utc':utc(),'declaration_sha256':args.declaration_sha256,'runner_sha256':sha(Path(__file__)),'cohort_sha256':D['source_files_sha256']['cohort.json'],'role_commit':D['role_commit'],'scope_sha256':D['scope_sha256'],'scope_commit':D['scope_commit'],'people':79,'files':242,'bytes':424167640,'workers':2,'storage_before':shutil.disk_usage(base)._asdict(),'decoded_array_bytes':0,'training_admitted':False};save(run/'started.json',started);print(json.dumps({'event':'started',**started}),flush=True);results=[];iterator=iter(entries)
+ with io.termination_cleanup(),ThreadPoolExecutor(max_workers=2) as executor:
+  pending={executor.submit(process,next(iterator)) for _ in range(2)}
+  while pending:
+   done,pending=wait(pending,return_when=FIRST_COMPLETED)
+   for future in done:
+    result=future.result();results.append(result)
+    if len(results)%100==0 or result['status'] not in ['byte_verified','existing_byte_verified']:print(json.dumps({'event':'progress','finished':len(results),'total':242,'verified':sum(r['status'] in ['byte_verified','existing_byte_verified'] for r in results),'verified_bytes':sum(r.get('bytes',0) for r in results),'latest_status':result['status']}),flush=True)
+    try:entry=next(iterator)
+    except StopIteration:continue
+    pending.add(executor.submit(process,entry))
+ good=[r for r in results if r['status'] in ['byte_verified','existing_byte_verified']];completion={'status':'all_bytes_verified' if len(good)==242 else 'completed_with_unresolved_files','run_id':run_id,'finished_utc':utc(),'declaration_sha256':args.declaration_sha256,'cohort_sha256':D['source_files_sha256']['cohort.json'],'verified_files':len(good),'verified_bytes':sum(r['bytes'] for r in good),'unresolved_files':242-len(good),'planned_people':79,'role':'TRAIN','all_payloads_unreviewed':True,'header_qc':'not_run','anatomy_qc':'not_run','source_modality':'SEG','new_patients':0,'labels_admitted':False,'preoperative_inputs_admitted':False,'training_admitted':False,'decoded_array_bytes':0,'optimizer_updates':0,'storage_after':shutil.disk_usage(base)._asdict(),'files':sorted(results,key=lambda r:r['path'])};save(run/'completion.json',completion)
+ if completion['status']=='all_bytes_verified':save(base/'completion.json',completion)
+ print(json.dumps({'event':'completed','status':completion['status'],'verified_files':len(good),'verified_bytes':completion['verified_bytes'],'receipt':str(run/'completion.json')}),flush=True)
+if __name__=='__main__':main()

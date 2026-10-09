@@ -1,0 +1,25 @@
+{
+  "schema": "remind-seg-preflight-zero-network-controls-v1",
+  "created_utc": "2026-10-09T08:56:16.671970+00:00",
+  "runner_sha256": "8afdb0ebeea18c3e1a487c0fb9f4d02d141a9165460d5fe5f35c20725bd56830",
+  "declaration_sha256": "2c1eed8fbf576d9b961b64bf8c2c68f7a11b1c316cb58cc13797e179ba808da8",
+  "tests": [
+    {
+      "case": "check_only",
+      "status": "pass",
+      "error_type": null,
+      "network_open_calls": 0,
+      "stdout": "{\"status\": \"prepared_contract_valid\", \"network_requests\": 0, \"payload_access\": false, \"files\": 242, \"bytes\": 424167640, \"people\": 79, \"cohort_sha256\": \"326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05\", \"execution_released\": false}"
+    },
+    {
+      "case": "unreleased_execution",
+      "status": "pass",
+      "error_type": "AssertionError",
+      "network_open_calls": 0,
+      "stdout": ""
+    }
+  ],
+  "queue_files_created_or_changed": false,
+  "payload_bytes_read": 0,
+  "status": "pass"
+}

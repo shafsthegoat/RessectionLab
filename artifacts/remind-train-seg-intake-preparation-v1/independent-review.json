@@ -1,0 +1,35 @@
+{
+  "decision": "GO_for_root_freeze_and_byte_intake_only",
+  "reviewed_sha256": {
+    "proposed-scope.json": "d04c2581a37a089b2f74d26053be5ce50904bcad56df32072506b1ff8df059eb",
+    "prepared-declaration.json": "2c1eed8fbf576d9b961b64bf8c2c68f7a11b1c316cb58cc13797e179ba808da8",
+    "run-intake.py": "8afdb0ebeea18c3e1a487c0fb9f4d02d141a9165460d5fe5f35c20725bd56830",
+    "train-exact-object-manifest.json": "87eb3b3fc1b78276f1d58ae873665d89b62e21f65244084cb77a7ee34b736525",
+    "train-seg-series-index.json": "703ff1c298588b57c425ff88de0b63a3f80cbda62a9605382d15603009d325a5",
+    "source-authority-audit.json": "0fcbe8540ef5004e9e1d572e4f8586495eb0ed780ad753b9d1321aac039a340b"
+  },
+  "unchanged_cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "metadata_projection_is_all_existing_TRAIN_SEG": true,
+  "people": 79,
+  "files": 242,
+  "bytes": 424167640,
+  "single_part_source_md5_count": 242,
+  "independently_checked_listing_proofs": 242,
+  "transport_helpers_unchanged": true,
+  "offline_transport_controls": [
+    "fresh exact-size MD5-verified atomic publish",
+    "strict resumed Range with whole-object MD5",
+    "ignored resumed Range refused without overwriting partial",
+    "same-size wrong MD5 never published",
+    "wrong source ETag refused",
+    "exactly three transient attempts; restart adds zero requests"
+  ],
+  "control_count": 6,
+  "actual_network_requests": 0,
+  "payload_bytes_accessed": 0,
+  "headers_or_anatomy_qc_performed": false,
+  "labels_or_training_admitted": false,
+  "prepared_release_still_false": true,
+  "freeze_required_before_launch": true,
+  "free_bytes_observed": 660546527232
+}

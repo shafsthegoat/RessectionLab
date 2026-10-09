@@ -1,0 +1,16 @@
+{
+  "reviewed_scope_sha256": "d04c2581a37a089b2f74d26053be5ce50904bcad56df32072506b1ff8df059eb",
+  "frozen_scope_sha256": "70ec6fff9710cea8cd45a77a1790df6f082e183eee41358c9a9defd700025064",
+  "allowed_changes": {
+    "declaration_status": [
+      "prepared_before_seg_payload_access",
+      "frozen_before_seg_payload_access"
+    ],
+    "intake.execution_released": [
+      false,
+      true
+    ]
+  },
+  "payloads_read": false,
+  "admission_flags_unchanged": true
+}

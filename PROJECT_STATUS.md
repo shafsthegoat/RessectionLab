@@ -53,6 +53,13 @@ SHA-256 retained. Its publisher-reported 125 people remain one dependent TRAIN
 family; the archive has not been extracted or anatomically reviewed. Unknown
 overlap and label ancestry remain explicit. No training admission follows.
 
+The [TRAIN annotation byte-intake extension](artifacts/remind-train-seg-intake-preparation-v1/RESULT.md)
+is frozen for 242 SEG objects (424,167,640 bytes) belonging to the same 79 TRAIN
+people. Independent source reconciliation and six offline transport controls
+pass. No protected patient roles change. Download release adds no label QC,
+preoperative availability, planner rewards or training admission; source study
+names alone cannot establish when an annotation was available.
+
 The [ReMIND component expansion](artifacts/remind-cohort-expansion-preparation-v1/RESULT.md)
 has independently reviewed, frozen roles for the full source cohort: 79 TRAIN,
 17 SELECT, 17 MEASUREMENT_EVAL, with ReMIND001 retained as DEVELOPMENT. Exact
