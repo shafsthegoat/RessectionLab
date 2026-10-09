@@ -1,0 +1,29 @@
+{
+  "base_head": "b306e9948879010cb8614e2332d89b23a3a1be6c",
+  "files": {
+    "src/resectionlab/research_estimate_planning.py": {
+      "sha256": "1c9d862018a7432915fe94942e7d6cde26167be9bb56d32de7dfe66909b1dd23",
+      "bytes": 25052
+    },
+    "build/limited-observation-next-experiment-v1/candidate/research_estimate_planning.py": {
+      "sha256": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+      "bytes": 30612
+    },
+    "build/limited-observation-next-experiment-v1/candidate/test_strategy_record.py": {
+      "sha256": "fd60fd4ba3d583d589f996e3703197eb1823b6e3262715f791865523304af394",
+      "bytes": 8724
+    },
+    "build/limited-observation-next-experiment-v1/candidate/generated_fixture.py": {
+      "sha256": "222c7d1e9c60ff9847669db1180714b3cbd03584ea45579bb3661f57879975f3",
+      "bytes": 3689
+    },
+    "build/limited-observation-next-experiment-v1/candidate/run_generated_strategy_record.py": {
+      "sha256": "f9e649171db9a342adb1947a560c2b8f90f5d988091f26578deb8e4036b7a593",
+      "bytes": 3871
+    },
+    "build/limited-observation-next-experiment-v1/candidate.patch": {
+      "sha256": "02bd373bb47161c03ae111f48663fb3d60ebf5846804ed9aef9e4625ee6c3cac",
+      "bytes": 15659
+    }
+  }
+}

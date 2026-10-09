@@ -11,3 +11,19 @@ A bounded native-grid ROI preserves the original physical affine. Planning absta
 `evaluate_sealed_research_plan` repeats the same input/coverage/footprint preflight and validates nominal replay **before** calling a zero-argument private target loader. It then replays the fixed route for a generated target-only diagnostic. A forged STOP seal cannot bypass an abstention. The boundary is an accidental-misuse interface within one Python process, not file/process isolation: a future evaluator needs its own authenticated private-reference binding and isolation. A future patient loader must verify actual source-file bytes, source-backed preoperative status, modality registration, model and adapter rights/lineage, person-grouped split, estimate QC and the ROI selection rule before issuing any scoped research release. No patient inference is authorized by this module.
 
 Generated-only controls: `.venv/bin/python -B -m pytest -q tests/test_research_estimate_planning.py -p no:cacheprovider`. The historical 9×9×7 limited-observation fixture remains separate regression evidence and is not a patient admission path.
+
+## Complete strategy records
+
+`research_strategy_to_record(plan, spec)` returns detached JSON-compatible data
+for the complete nominal strategy. It includes tool changes, physical microsteps,
+removed/contact cells, the planning grid/affine and resulting STOP-or-horizon
+state. `research_strategy_from_record(record, spec)` verifies the existing seal
+and replays the same permitted-input world before returning `FrozenResearchPlan`.
+Neither helper receives a private-reference loader. Sparse state changes require
+the exact bound input specification for reconstruction; they are simulated
+consequences, not observed operative anatomy. Export/import replay is recorded as
+overhead separately from the caller-declared planner costs.
+
+Focused regression: `.venv/bin/python -B -m pytest -q tests/test_research_estimate_strategy_record.py -p no:cacheprovider`.
+The generated example and independent review are retained in
+`artifacts/research-estimate-strategy-record-v1/`.

@@ -1,0 +1,100 @@
+{
+  "scope": "generated_development_strategy_recording_experiment",
+  "patient_files_opened": false,
+  "models_loaded_or_trained": false,
+  "clinical_validation": null,
+  "patient_generalization": null,
+  "generated_source_shape": [
+    9,
+    9,
+    7
+  ],
+  "input_hash": "sha256:72d8b0d72d4f7322496c945dc32b9fccd613ddb095aea1af163869bd383364f4",
+  "methods": {
+    "complete_nominal_search": {
+      "action_ids": [
+        "NATIVE-SPATIAL:e0886b731616006915b0d645",
+        "NATIVE-SPATIAL:fc970d6b3a9f85a0b919c533"
+      ],
+      "seal_hash": "sha256:e7a613646e8c0b3db258a711ffd6e2872e61ee9da232413653452bb1af73bede",
+      "serialized_record_hash": "sha256:794cc40c70fee73f5f02331bb9659c9ceae8cc5761a55170822081575389d0b4",
+      "method_accounting": {
+        "model_transition_calls": 15,
+        "actor_forward_calls": 0
+      },
+      "sealing_replay_transition_calls": 2,
+      "record_export_transition_calls": 2,
+      "record_import_transition_calls": 2,
+      "two_generated_world_evaluation_transition_calls": 8,
+      "terminal_reason": "HORIZON",
+      "recorded_removed_cells": 6,
+      "recorded_contact_cells": 6,
+      "generated_target_only_evaluation": {
+        "status": "generated_target_only_diagnostic",
+        "plan_seal_hash": "sha256:e7a613646e8c0b3db258a711ffd6e2872e61ee9da232413653452bb1af73bede",
+        "reference_hash": "sha256:8fc18ff04864c62d3376348f098b70eba891440d53408b3032d54e29fdc51e02",
+        "physical_history_hash": "sha256:f5063eceba0585b1be00826ff3c639e58cf415df2dee97fb61d727217a581fad",
+        "target_removed_mm3": 2.0,
+        "coverage_scope": "native_grid_in_image_tool_supercover_only",
+        "outside_source_fov_tool_feasibility_assessed": false,
+        "clinical_use_permitted": false,
+        "clinical_deficit_probability": null,
+        "patient_generalization": null
+      },
+      "generated_zero_target_counterfactual": {
+        "status": "generated_target_only_diagnostic",
+        "plan_seal_hash": "sha256:e7a613646e8c0b3db258a711ffd6e2872e61ee9da232413653452bb1af73bede",
+        "reference_hash": "sha256:cc01306fe032833d721d0a698b9c647c857fd24e300101cd2ffef0371f0a3d2b",
+        "physical_history_hash": "sha256:f5063eceba0585b1be00826ff3c639e58cf415df2dee97fb61d727217a581fad",
+        "target_removed_mm3": 0.0,
+        "coverage_scope": "native_grid_in_image_tool_supercover_only",
+        "outside_source_fov_tool_feasibility_assessed": false,
+        "clinical_use_permitted": false,
+        "clinical_deficit_probability": null,
+        "patient_generalization": null
+      }
+    },
+    "immediate_stop": {
+      "action_ids": [
+        "STOP"
+      ],
+      "seal_hash": "sha256:0c4f22b66ed70e152ea35eae50e77f0e9c165529532e4e6c09703231a21ac134",
+      "serialized_record_hash": "sha256:2fd3e2544640009d24493084d1c996fdb07bb97f34d407cb4c2e4eb847678096",
+      "method_accounting": {
+        "model_transition_calls": 0,
+        "actor_forward_calls": 0
+      },
+      "sealing_replay_transition_calls": 1,
+      "record_export_transition_calls": 1,
+      "record_import_transition_calls": 1,
+      "two_generated_world_evaluation_transition_calls": 4,
+      "terminal_reason": "STOP",
+      "recorded_removed_cells": 0,
+      "recorded_contact_cells": 0,
+      "generated_target_only_evaluation": {
+        "status": "generated_target_only_diagnostic",
+        "plan_seal_hash": "sha256:0c4f22b66ed70e152ea35eae50e77f0e9c165529532e4e6c09703231a21ac134",
+        "reference_hash": "sha256:8fc18ff04864c62d3376348f098b70eba891440d53408b3032d54e29fdc51e02",
+        "physical_history_hash": "sha256:d5642cdf90a78a3e281ee68749aa6429888e32c46c0eb2b9bf6f01354591faf8",
+        "target_removed_mm3": 0.0,
+        "coverage_scope": "native_grid_in_image_tool_supercover_only",
+        "outside_source_fov_tool_feasibility_assessed": false,
+        "clinical_use_permitted": false,
+        "clinical_deficit_probability": null,
+        "patient_generalization": null
+      },
+      "generated_zero_target_counterfactual": {
+        "status": "generated_target_only_diagnostic",
+        "plan_seal_hash": "sha256:0c4f22b66ed70e152ea35eae50e77f0e9c165529532e4e6c09703231a21ac134",
+        "reference_hash": "sha256:cc01306fe032833d721d0a698b9c647c857fd24e300101cd2ffef0371f0a3d2b",
+        "physical_history_hash": "sha256:d5642cdf90a78a3e281ee68749aa6429888e32c46c0eb2b9bf6f01354591faf8",
+        "target_removed_mm3": 0.0,
+        "coverage_scope": "native_grid_in_image_tool_supercover_only",
+        "outside_source_fov_tool_feasibility_assessed": false,
+        "clinical_use_permitted": false,
+        "clinical_deficit_probability": null,
+        "patient_generalization": null
+      }
+    }
+  }
+}

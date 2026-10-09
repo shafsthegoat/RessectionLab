@@ -60,6 +60,13 @@ rehashed the whole file and matched the publisher SHA-256. Response values and
 MAT structure remain closed; donor grouping and roles are not yet established. Nominal motor commands are
 not measured per-trial displacement, and neither source establishes live surgery.
 
+The [complete strategy-record interface](artifacts/research-estimate-strategy-record-v1/RESULT.md)
+now preserves full nominal action histories and resulting modeled state in JSON,
+and verifies them by replay using only permitted inputs. Root integration passed
+99 tests; independent review passed 105 including fresh adversarial controls.
+This supports complete-strategy evaluation and replay. The saved demonstration
+is explicitly generated DEVELOPMENT evidence, with no training or patient transfer.
+
 The [tile-depth-1 comparison attempt](artifacts/tile1-cleanup-negative-v1/INDEPENDENT_REVIEW.md)
 saved outputs byte-identical to tile depth 4 (786,432 logits, zero decoded-label
 disagreements), but its controller raised PermissionError during cleanup before

@@ -1,0 +1,75 @@
+{
+  "version": "research-estimate-strategy-record-v1",
+  "plan": {
+    "input_hash": "sha256:72d8b0d72d4f7322496c945dc32b9fccd613ddb095aea1af163869bd383364f4",
+    "method": "SEARCH",
+    "configuration_hash": "sha256:6b3a83b116672e9971f832aa948440263b1f5995b3d36d6f8db3b10922e74c92",
+    "initial_observation_hash": "sha256:78544a1fc06d3241ab207417411541910f697b8b1cc9ef1b238b79b8af8b3615",
+    "decision_model_hash": "sha256:c55e8c46ae246b116b1ce6896efd5de3e66804d6dd039dbe85f2347d20242b2b",
+    "action_ids": [
+      "STOP"
+    ],
+    "physical_history_hash": "sha256:d5642cdf90a78a3e281ee68749aa6429888e32c46c0eb2b9bf6f01354591faf8",
+    "horizon": 2,
+    "method_accounting": {
+      "model_transition_calls": 0,
+      "actor_forward_calls": 0
+    },
+    "coverage_scope": "native_grid_in_image_tool_supercover_only",
+    "outside_source_fov_tool_feasibility_assessed": false,
+    "clinical_use_permitted": false,
+    "seal_hash": "sha256:0c4f22b66ed70e152ea35eae50e77f0e9c165529532e4e6c09703231a21ac134"
+  },
+  "physical_history": [
+    {
+      "action_id": "STOP",
+      "insertion_distance_mm": 0.0,
+      "complete_tool_path_length_mm": 0.0
+    }
+  ],
+  "terminal_state": {
+    "lineage": "nominal_simulation_replay_not_observed_patient_state",
+    "steps_taken": 1,
+    "remaining_steps": 1,
+    "terminated": true,
+    "terminal_reason": "STOP",
+    "current_tool_id": null,
+    "source_shape": [
+      9,
+      9,
+      7
+    ],
+    "affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "removed_indices_native": [],
+    "contact_indices_native": [],
+    "retained_contact_indices_native": []
+  },
+  "recording_accounting": {
+    "nominal_replay_transition_calls": 1
+  }
+}

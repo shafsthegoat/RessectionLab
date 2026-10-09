@@ -1,0 +1,10 @@
+{
+  "command": ".venv/bin/python -B -m pytest -q tests/test_research_estimate_planning.py tests/test_limited_observation_boundary.py tests/test_research_estimate_strategy_record.py -p no:cacheprovider",
+  "patient_data_opened": false,
+  "policy_updates": 0,
+  "seconds": 6.32,
+  "source_sha256": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+  "status": "passed",
+  "test_sha256": "4d820b701ea61e792a4885cfa39cbbb288acbb8b99a1ac4dfed4149b476c8a7d",
+  "tests": 99
+}

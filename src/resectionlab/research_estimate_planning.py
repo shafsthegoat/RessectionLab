@@ -7,13 +7,13 @@ receipts have independent review. There is no clinical or patient admission.
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from datetime import datetime
 import re
 
 import numpy as np
 
-from resectionlab.core import array_digest, freeze_json, immutable_array, semantic_digest
+from resectionlab.core import array_digest, freeze_json, immutable_array, semantic_digest, thaw_json
 from resectionlab.geometry import AccessWindow, GeometryScene, ToolGeometry, capsule_voxel_indices
 from resectionlab.native_spatial_task import NativeSpatialCase, NativeSpatialTask
 from resectionlab.simulation import RewardSpec
@@ -460,3 +460,99 @@ def evaluate_sealed_research_plan(plan: FrozenResearchPlan, spec: ResearchEstima
         "outside_source_fov_tool_feasibility_assessed": False,
         "clinical_use_permitted": False,
         "clinical_deficit_probability": None, "patient_generalization": None})
+
+
+_STRATEGY_RECORD_VERSION = "research-estimate-strategy-record-v1"
+
+
+def _replay_strategy_nominal(plan: FrozenResearchPlan,
+        spec: ResearchEstimatePlanningSpec) -> NativeSpatialTask:
+    """Recover the existing sealed route without any reference loader."""
+    if type(plan) is not FrozenResearchPlan or type(spec) is not ResearchEstimatePlanningSpec:
+        raise ValueError("Exact sealed plan and research input spec are required")
+    if type(plan.horizon) is not int:
+        raise ValueError("Strategy replay requires an exact integer horizon")
+    plan.assert_intact()
+    spec.assert_intact()
+    task = _preflight_nominal_task(spec)
+    if type(task) is Abstention:
+        raise ValueError("Research estimate abstains before strategy replay: " + task.reason)
+    if (plan.input_hash != spec.fingerprint or plan.initial_observation_hash != task.observation().fingerprint
+            or plan.decision_model_hash != task.decision_model_hash or plan.horizon != spec.horizon):
+        raise ValueError("Plan/source/observation binding mismatch before strategy replay")
+    for action in plan.action_ids:
+        task.advance_planning(action)
+    if not task.terminated or _physical_hash(task.metrics()["history"]) != plan.physical_history_hash:
+        raise ValueError("Nominal physical replay mismatch")
+    return task
+
+
+def _strategy_record(plan: FrozenResearchPlan, task: NativeSpatialTask) -> dict:
+    """Sparse state changes plus exact bound support reconstruct the modeled state.
+
+    These are consequences of a nominal simulation, not observed operative
+    cavity, retained tissue, or measured instrument contact. Native indices use
+    the declared planning ROI grid; each stroke also carries its physical affine.
+    No evaluator target, outcome score, future observation, or private loader is
+    read or exported. The original plan seal binds every physical history row.
+    """
+    history = [{key: value for key, value in row.items() if key not in _OUTCOME_FIELDS}
+               for row in task.metrics()["history"]]
+    removed = {tuple(cell) for row in history for cell in row.get("removed_indices_native", ())}
+    contact = {tuple(cell) for row in history for cell in row.get("contact_indices_native", ())}
+    current_tool = next((row["tool_id"] for row in reversed(history) if "tool_id" in row), None)
+    record = {"version": _STRATEGY_RECORD_VERSION,
+        "plan": {**plan._payload(), "seal_hash": plan.seal_hash},
+        "physical_history": history,
+        "terminal_state": {
+            "lineage": "nominal_simulation_replay_not_observed_patient_state",
+            "steps_taken": len(history), "remaining_steps": plan.horizon - len(history),
+            "terminated": True, "terminal_reason": "STOP" if plan.action_ids[-1] == "STOP" else "HORIZON",
+            "current_tool_id": current_tool,
+            "source_shape": list(task.case.structural_intensity.shape),
+            "affine_ras_mm": task.case.affine_ras_mm.tolist(),
+            "removed_indices_native": sorted(removed),
+            "contact_indices_native": sorted(contact),
+            "retained_contact_indices_native": sorted(contact - removed)},
+        "recording_accounting": {"nominal_replay_transition_calls": len(history)}}
+    return thaw_json(freeze_json(record))
+
+
+def research_strategy_to_record(plan: FrozenResearchPlan,
+        spec: ResearchEstimatePlanningSpec) -> dict:
+    """Export the complete sealed nominal strategy as detached JSON data.
+
+    One extra nominal replay is needed to recover full microsteps and state
+    changes from the existing plan hash. Its transitions are recording overhead,
+    separately reported from caller-declared online method accounting.
+    """
+    return _strategy_record(plan, _replay_strategy_nominal(plan, spec))
+
+
+def research_strategy_from_record(record: Mapping,
+        spec: ResearchEstimatePlanningSpec) -> FrozenResearchPlan:
+    """Round-trip the existing plan after checking its full recorded replay.
+
+    Import executes one fresh nominal replay and returns the original plan type.
+    It neither accepts nor invokes an evaluator loader. Exact content checks are
+    accidental-corruption protection, not authentication or clinical admission.
+    """
+    expected = {"version", "plan", "physical_history", "terminal_state", "recording_accounting"}
+    if not isinstance(record, Mapping) or set(record) != expected:
+        raise ValueError("Exact research strategy record fields are required")
+    if record["version"] != _STRATEGY_RECORD_VERSION or not isinstance(record["plan"], Mapping):
+        raise ValueError("Unsupported research strategy record")
+    payload = dict(record["plan"])
+    init_names = {item.name for item in fields(FrozenResearchPlan) if item.init}
+    fixed_names = {item.name for item in fields(FrozenResearchPlan) if not item.init}
+    if set(payload) != init_names | fixed_names:
+        raise ValueError("Exact frozen research plan fields are required")
+    arguments = {name: payload[name] for name in init_names}
+    arguments["action_ids"] = tuple(arguments["action_ids"])
+    plan = FrozenResearchPlan(**arguments)
+    if semantic_digest(payload) != semantic_digest({**plan._payload(), "seal_hash": plan.seal_hash}):
+        raise ValueError("Frozen research plan record changed")
+    expected_record = research_strategy_to_record(plan, spec)
+    if semantic_digest(record) != semantic_digest(expected_record):
+        raise ValueError("Recorded physical strategy or resulting state differs from nominal replay")
+    return plan
