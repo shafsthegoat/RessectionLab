@@ -1,0 +1,205 @@
+{
+  "actual_execution_authorized": false,
+  "candidate_sources": {
+    "manifests/experiments/hbe-01-03-branch-calibration-v3.json": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c",
+    "scripts/mechanics_hbe_branch_calibration_v3.py": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d",
+    "scripts/mechanics_hbe_branch_calibration_v3_experiment.py": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3",
+    "scripts/mechanics_hbe_branch_calibration_v3_readout.py": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205",
+    "tests/test_mechanics_hbe_branch_calibration_v3.py": "f4c4b4a92d235b02724460c946cbb3508ad063c2911155c62fa46efa55b9dcca"
+  },
+  "exact_manifest_delta": [
+    {
+      "kind": "added",
+      "path": "/csv_header_migration"
+    },
+    {
+      "after": [
+        "displacement",
+        "force"
+      ],
+      "before": null,
+      "path": "/csv_schemas/compression/header"
+    },
+    {
+      "after": [
+        "displacement",
+        "force"
+      ],
+      "before": null,
+      "path": "/csv_schemas/tension/header"
+    },
+    {
+      "after": "outputs/mechanics/hbe-01-03-branch-calibration-v3",
+      "before": "outputs/mechanics/hbe-01-03-branch-calibration-v2",
+      "path": "/output_root"
+    },
+    {
+      "after": "hbe-branch-calibration-v3",
+      "before": "hbe-branch-calibration-v2",
+      "path": "/schema"
+    },
+    {
+      "after": "hbe-01-03-branch-calibration-v3",
+      "before": "hbe-01-03-branch-calibration-v2",
+      "path": "/study_id"
+    }
+  ],
+  "failure_lineage": {
+    "evidence_committed_in_ancestor": {
+      "diagnosis": {
+        "bound_build_path": "build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json",
+        "committed_in": "eabe64b",
+        "committed_mirror": "artifacts/hbe-branch-calibration-v2-failure-audit-v1/axial-diagnostic/diagnosis.json",
+        "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
+      },
+      "failure_review": {
+        "bound_build_path": "build/hbe-branch-calibration-v2-failure-review-v1/verification.json",
+        "committed_in": "eabe64b",
+        "committed_mirror": "artifacts/hbe-branch-calibration-v2-failure-audit-v1/failure-review/verification.json",
+        "sha256": "54512fb229ce5100cf22f2c93cad27897d66210c43e992fd79c5c2f62da5877b"
+      }
+    },
+    "metadata_bindings_verified_and_rehashed_count": 19,
+    "v1": "Interpreter drift before measured-data access, zero fit/native calls; exact saved failed state retained.",
+    "v2": "Compression member 1,222 bytes decoded, parse failed on displacement header before a numeric curve or fit; tension payload unread; torsion unread; calibration_responses_accessed remains null."
+  },
+  "final_head": "e52fe4e170358932c1f7af0926447d56486d5cb2",
+  "findings": [],
+  "go_no_go": "GO for exact reviewed v3 header-only preparation; no execution release is issued by this review.",
+  "integrity": {
+    "candidate_sources_still_untracked": true,
+    "candidate_sources_unchanged": true,
+    "desktop_preexisting_diff_unchanged": true,
+    "existing_files_unchanged_during_review": 217,
+    "fit_calls": 0,
+    "measured_archive_opens": 0,
+    "native_calls": 0,
+    "new_v3_output_root_exists": false,
+    "output_reruns": 0,
+    "owner_baseline_mismatch_interpretation": "Only PROJECT_STATUS.md changed in unrelated committed research/docs activity before this review; the other 216 owner-baseline files match.",
+    "owner_baseline_mismatches": [
+      "PROJECT_STATUS.md"
+    ],
+    "prior_output_files_unchanged": 14,
+    "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "torsion_payload_opens": 0,
+    "tracked_diff_paths": [
+      "desktop/src/App.tsx",
+      "desktop/src/NeighboringPathsPanel.tsx",
+      "desktop/src/neighboring-paths.ts"
+    ],
+    "tracked_diff_sha256": "9da2323e111a2ce40c0a416e49d20efe76e37a808ccda046859964c6cc889057",
+    "v1_v2_tracked_source_changes": []
+  },
+  "limitations": [
+    "Preparation verification is not an executed calibration or numerical/physical validation result.",
+    "The inherited access ledger remains batch-attempt/completion accounting; v2 per-member exposure is source/traceback-derived, not a durable per-member read receipt.",
+    "The corrected axial header schema was tested only on synthetic numeric rows; measured numeric curves remain unexamined in this review."
+  ],
+  "preserved": {
+    "all_csv_nonheader_fields_unchanged": true,
+    "bounds": {
+      "active_output_bytes_by_branch": {
+        "compression": 1610612736,
+        "tension": 536870912
+      },
+      "aggregate_includes": "Preflight/source+input hashing, member access, one fit, deck preparation, both native calls, all primitive readout/paired comparisons, final source/input rehash, fit+prediction freeze, conditional held-out evaluation and durable result publication. Outer sampled family supervisor begins before preflight.",
+      "aggregate_seconds": 3600,
+      "all_nested_deadlines": "min(stage_start+stage_cap, aggregate_deadline); native cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.",
+      "automatic_retry": false,
+      "combined_deck_preparation_seconds": 60,
+      "copy_old_raw_logs": false,
+      "hard_real_time_guarantee_claimed": false,
+      "maximum_mesher_calls": 0,
+      "maximum_native_calls": 2,
+      "native_seconds_by_branch": {
+        "compression": 2100,
+        "tension": 420
+      },
+      "new_total_output_bytes": 2147483648,
+      "old_inputs_counted_as_new_output": false,
+      "other_work_allocation_seconds": 420,
+      "paired_raw_streaming_seconds": 600,
+      "runtime_threads": 1,
+      "same_disk_new_source_archive_in_total": true,
+      "sampled_family_RSS_bytes": 3221225472
+    },
+    "fitted_parameters": [
+      "common_positive_mu_scale_only"
+    ],
+    "interpreter": {
+      "resolved_path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+    },
+    "numerical_access_freeze_runtime_functions": "AST-equal to v2 after explicit branch namespace/schema normalization; only preflight lineage hook changes and new migration verifier.",
+    "physical_binary_threshold": null,
+    "runner_readout": "Entire source text equal after version namespace/schema normalization.",
+    "scientific_historical_field_count": 23,
+    "scientific_historical_fields": [
+      "axial_references",
+      "backend_profile",
+      "branches",
+      "budgets",
+      "design",
+      "fitted_parameters",
+      "historical_failures_preserved",
+      "inherited_declarations",
+      "inherited_sources",
+      "interpretation",
+      "interpreter",
+      "legacy",
+      "no_mesher_no_retry",
+      "parser",
+      "physical_binary_threshold",
+      "prior_executions",
+      "protocol",
+      "readiness",
+      "roles",
+      "runtime_identity",
+      "scale_proof",
+      "scale_proof_review",
+      "torsion_references"
+    ],
+    "source_binding_closure": "26 inherited source bindings plus 3 v3 sources; 8 inherited declarations and v3 study remain exact-hash checked against committed source archive before data access.",
+    "split": "Both axial branches remain calibration; both torsion branches remain conditional held-out validation after durable parameter/prediction freeze and numerical confirmation.",
+    "torsion_schema_unchanged_and_uninspected": true,
+    "v1_runtime_migration_unchanged_and_full_chain_reverified": true
+  },
+  "review_head": "e52fe4e170358932c1f7af0926447d56486d5cb2",
+  "schema": "hbe-branch-calibration-v3-independent-review-v1",
+  "source_commit_created": false,
+  "status": "go_for_candidate_source_commit_and_separate_fresh_execution_release",
+  "torsion_header_judgment": {
+    "current_v3_recommendation": "Preserve inherited header:null and strict uninspected holdout for this exact scope; accept that an unexpected literal torsion header can cause a fail-closed parse after the durable freeze and native confirmation.",
+    "current_v3_risk": "A syntax mismatch could spend the two bounded native runs before failing; no completed torque-validation claim is warranted until conditional reveal succeeds.",
+    "provenance_tradeoff": "A CSV header is member payload, not ZIP central-directory metadata. Calling this metadata-only must not imply no torsion payload access. A separate authorized diagnostic must record scope, exact member/hash identity, actual plaintext exposure and decompressor buffering limits; any earlier complete-sealing claim needs an explicit amendment.",
+    "rationale": "Header syntax alone can resolve a format contract without exposing response values or fitting to hold-out outcomes; independence of numerical torque-response evaluation is preserved if the scientific model, objective, roles, thresholds and prediction-freeze rules are fixed beforehand.",
+    "required_separate_scope": "Bounded first-record inspection with no numeric-row parsing or display, no fitting, no native run and no schema autodetection; save literal headers and provenance only, review any declared schema amendment, then issue a fresh explicit execution release. This is outside the present exact two-axial-header migration.",
+    "reviewer_torsion_inspection_performed": false,
+    "separately_declared_check_scientifically_justifiable": true
+  },
+  "verification": {
+    "command": ".venv/bin/python -B build/hbe-branch-calibration-v3-independent-v1/run_guarded_checks.py",
+    "deselected": "The v2 synthetic analytical-fit test, to honor a literal no-fit restriction.",
+    "fixture_scope": "Only authenticated literal displacement,force header reused; all numeric rows independently invented; no archive reopened.",
+    "focused_test_result": "227 passed, 1 deselected in 0.96s",
+    "guard_audit": {
+      "forbidden_file_attempts": [],
+      "forbidden_process_attempts": [],
+      "forbidden_scientific_execution_attempts": []
+    },
+    "guarded_check_result": {
+      "path": "build/hbe-branch-calibration-v3-independent-v1/guarded-checks.json",
+      "sha256": "bcc80e2b05f28ecc0cd0b3496f6b5fbddafab5cabebdb1e4ff798dc33c471cac"
+    },
+    "independent_strict_header_fixture_checks": 28,
+    "real_header_evidence": {
+      "path": "build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json",
+      "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
+    },
+    "test_log": {
+      "path": "build/hbe-branch-calibration-v3-independent-v1/pytest-independent.log",
+      "sha256": "d1703f50151f43e9899905ebbaaf65a6040abce2583c7279233cfe0631443f1c"
+    }
+  }
+}

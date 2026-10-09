@@ -125,7 +125,12 @@ allowed-axial diagnostic](../artifacts/hbe-branch-calibration-v2-failure-audit-v
 show compression's full member was read before the header error; tension was not
 reached. The batch ledger cannot resolve member-level reads, so partial access
 remains explicit. This negative result is preserved without a retry; a new
-version requires the exact checked axial header contract.
+version requires the exact checked axial header contract. The
+[v3 preparation](../artifacts/hbe-branch-calibration-v3-preparation-v1/RESULT.md)
+now changes only the two allowed axial CSV headers plus explicit predecessor
+lineage; its owner and guarded independent controls pass. No measured v3 fit,
+native solve or held-out torque reveal has occurred. A new root-controlled
+release remains the next gate; torsion framing is still uninspected.
 The archive download continues with an unverified growing partial file and active
 worker and curl processes.
 

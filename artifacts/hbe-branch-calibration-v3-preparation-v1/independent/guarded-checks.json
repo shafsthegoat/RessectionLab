@@ -1,0 +1,148 @@
+{
+  "excluded_test_reason": "One v2 analytical fitting test deselected to honor no fitting, including synthetic fitting.",
+  "fit_called": false,
+  "guard_audit": {
+    "forbidden_file_attempts": [],
+    "forbidden_process_attempts": [],
+    "forbidden_scientific_execution_attempts": []
+  },
+  "header_fixtures": [
+    {
+      "all_numeric_rows_synthetic": true,
+      "branch": "compression",
+      "fixture_sha256": "c1bb7650f89ba5dbf178d3b6e70f4c855616e146998c512de74a6fffdbaec966",
+      "invalid_cases_rejected": 13,
+      "only_literal_header_from_real_evidence": true,
+      "valid_cases_passed": 1
+    },
+    {
+      "all_numeric_rows_synthetic": true,
+      "branch": "tension",
+      "fixture_sha256": "2e5cbfa1a50092b69c29f4ac5c695afd8876fdc3611518f56a4fbc6d9a16e8e4",
+      "invalid_cases_rejected": 13,
+      "only_literal_header_from_real_evidence": true,
+      "valid_cases_passed": 1
+    }
+  ],
+  "lineage_bound_and_rehashed": [
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json",
+      "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json",
+      "sha256": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "build/hbe-branch-calibration-v1/release.json",
+      "sha256": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "build/hbe-branch-calibration-v2-failure-review-v1/verification.json",
+      "sha256": "54512fb229ce5100cf22f2c93cad27897d66210c43e992fd79c5c2f62da5877b"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "build/hbe-branch-calibration-v2/release.json",
+      "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+      "sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json",
+      "sha256": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json",
+      "sha256": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json",
+      "sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json",
+      "sha256": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json",
+      "sha256": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/.started.json",
+      "sha256": "55df4a7025b042f4f8f82e75e0f448cec23cdca6c4f4cee26d02faa74efaeb97"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl",
+      "sha256": "2e60b888149039d9ad6536531a65ae3f813152b90cf17cda6a360df0553893cc"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/publication-check.json",
+      "sha256": "b639ade073a8b17df791c947ca7435e6eb8a0e8df0d5f186784c9c2c3dd9c048"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/result.json",
+      "sha256": "ee8983ebaa6a423cae241a3333bcaaa685885d15913110247990992fdc80aff5"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json",
+      "sha256": "0b3c284e541c47d6f8cd8640584d6b9d94c20b24d8abe1cd5c802f18675f49d5"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json",
+      "sha256": "18780ae62bd616a9dcbfed7c6dc1cf0dfe74e4c76db65305b054e938151e2b5f"
+    }
+  ],
+  "measured_archive_opened": false,
+  "native_called": false,
+  "pytest_exit_code": 0,
+  "schema": "hbe-branch-calibration-v3-independent-guarded-checks-v1",
+  "torsion_content_opened": false
+}

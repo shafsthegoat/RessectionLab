@@ -51,9 +51,11 @@ versioned run with unchanged scientific settings passed 82 owner and 15
 independent controls. Its [committed-source preflight and first bounded attempt](artifacts/hbe-branch-calibration-runtime-v2-preparation-v1/RESULT.md)
 then stopped on a real CSV header mismatch before fitting or native solves. The
 [independent failure audit and allowed-axial header diagnostic](artifacts/hbe-branch-calibration-v2-failure-audit-v1/RESULT.md)
-confirm that compression was read but tension and held-out torsion were not;
-a separately versioned correction is under development. Physical agreement and
-withheld torque remain unmeasured.
+confirm that compression was read but tension and held-out torsion were not.
+The [separately versioned v3 correction](artifacts/hbe-branch-calibration-v3-preparation-v1/RESULT.md)
+is committed with 146 owner and 227 guarded independent controls, but a fresh
+execution release has not yet run. Physical agreement and withheld torque
+remain unmeasured.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)

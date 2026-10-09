@@ -1,0 +1,426 @@
+--- manifests/experiments/hbe-01-03-branch-calibration-v2.json
++++ manifests/experiments/hbe-01-03-branch-calibration-v3.json
+@@ -255,12 +255,63 @@
+     "same_disk_new_source_archive_in_total": true,
+     "sampled_family_RSS_bytes": 3221225472
+   },
++  "csv_header_migration": {
++    "automatic_retry": false,
++    "diagnosis": {
++      "path": "build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json",
++      "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
++    },
++    "failure_review": {
++      "path": "build/hbe-branch-calibration-v2-failure-review-v1/verification.json",
++      "sha256": "54512fb229ce5100cf22f2c93cad27897d66210c43e992fd79c5c2f62da5877b"
++    },
++    "payload_accounting": "v2 first-member exposure is source/traceback-derived; inherited access ledger remains batch-level",
++    "previous_access_ledger": {
++      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl",
++      "sha256": "2e60b888149039d9ad6536531a65ae3f813152b90cf17cda6a360df0553893cc"
++    },
++    "previous_publication": {
++      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/publication-check.json",
++      "sha256": "b639ade073a8b17df791c947ca7435e6eb8a0e8df0d5f186784c9c2c3dd9c048"
++    },
++    "previous_release": {
++      "path": "build/hbe-branch-calibration-v2/release.json",
++      "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
++    },
++    "previous_result": {
++      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/result.json",
++      "sha256": "ee8983ebaa6a423cae241a3333bcaaa685885d15913110247990992fdc80aff5"
++    },
++    "previous_started": {
++      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/.started.json",
++      "sha256": "55df4a7025b042f4f8f82e75e0f448cec23cdca6c4f4cee26d02faa74efaeb97"
++    },
++    "previous_state": {
++      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json",
++      "sha256": "0b3c284e541c47d6f8cd8640584d6b9d94c20b24d8abe1cd5c802f18675f49d5"
++    },
++    "previous_study": {
++      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
++      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
++    },
++    "previous_supervision": {
++      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json",
++      "sha256": "18780ae62bd616a9dcbfed7c6dc1cf0dfe74e4c76db65305b054e938151e2b5f"
++    },
++    "reason": "exact_axial_literal_headers_after_pre_fit_csv_failure",
++    "schema": "hbe-branch-csv-header-migration-v1",
++    "scientific_fields_except_axial_headers_unchanged": true,
++    "torsion_header_inspected": false
++  },
+   "csv_schemas": {
+     "compression": {
+       "coordinate_column": 0,
+       "coordinate_unit": "m",
+       "delimiter": ",",
+-      "header": null,
++      "header": [
++        "displacement",
++        "force"
++      ],
+       "response_column": 1,
+       "response_unit": "N"
+     },
+@@ -268,7 +319,10 @@
+       "coordinate_column": 0,
+       "coordinate_unit": "m",
+       "delimiter": ",",
+-      "header": null,
++      "header": [
++        "displacement",
++        "force"
++      ],
+       "response_column": 1,
+       "response_unit": "N"
+     },
+@@ -457,7 +511,7 @@
+     }
+   },
+   "no_mesher_no_retry": true,
+-  "output_root": "outputs/mechanics/hbe-01-03-branch-calibration-v2",
++  "output_root": "outputs/mechanics/hbe-01-03-branch-calibration-v3",
+   "parser": {
+     "N24": {
+       "deck_bytes": 16777216,
+@@ -772,8 +826,8 @@
+     "path": "artifacts/hbe-n36-temporal-preparation-v1/scale-homogeneity-review.json",
+     "sha256": "06234924a7867b8842dab467cf3eda6c1ca41bb6e7a75685bf5f3f48d55fc33f"
+   },
+-  "schema": "hbe-branch-calibration-v2",
+-  "study_id": "hbe-01-03-branch-calibration-v2",
++  "schema": "hbe-branch-calibration-v3",
++  "study_id": "hbe-01-03-branch-calibration-v3",
+   "torsion_references": {
+     "torsion_neg": {
+       "execution": {
+--- scripts/mechanics_hbe_branch_calibration_v2.py
++++ scripts/mechanics_hbe_branch_calibration_v3.py
+@@ -15,13 +15,13 @@
+ 
+ receipts, inherited = common.receipts, common.inherited
+ old, runtime, backend = receipts.old, receipts.runtime, receipts.backend
+-DECLARATION_PATH = 'manifests/experiments/hbe-01-03-branch-calibration-v2.json'
+-DECLARATION_SHA256 = '49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102'
++DECLARATION_PATH = 'manifests/experiments/hbe-01-03-branch-calibration-v3.json'
++DECLARATION_SHA256 = 'e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c'
+ AXIAL = ('compression', 'tension')
+ TORSION = ('torsion_neg', 'torsion_pos')
+-NEW_SOURCES = {'branch_calibration': 'mechanics_hbe_branch_calibration_v2.py',
+-               'branch_calibration_readout': 'mechanics_hbe_branch_calibration_v2_readout.py',
+-               'branch_calibration_runner': 'mechanics_hbe_branch_calibration_v2_experiment.py'}
++NEW_SOURCES = {'branch_calibration': 'mechanics_hbe_branch_calibration_v3.py',
++               'branch_calibration_readout': 'mechanics_hbe_branch_calibration_v3_readout.py',
++               'branch_calibration_runner': 'mechanics_hbe_branch_calibration_v3_experiment.py'}
+ META_BYTES = 64*1024**2
+ 
+ 
+@@ -307,17 +307,173 @@
+     return records
+ 
+ 
++def verify_csv_header_migration(study, registry):
++    """Authenticate axial header evidence and both failures without measured IO."""
++    migration = study.get('csv_header_migration', {})
++    bindings = ('previous_study', 'previous_release', 'previous_state', 'previous_result',
++                'previous_supervision', 'previous_publication', 'previous_started',
++                'previous_access_ledger', 'diagnosis', 'failure_review')
++    if (set(migration) != set(bindings) | {'schema', 'reason', 'automatic_retry',
++            'scientific_fields_except_axial_headers_unchanged', 'torsion_header_inspected',
++            'payload_accounting'}
++            or migration.get('schema') != 'hbe-branch-csv-header-migration-v1'
++            or migration.get('reason') != 'exact_axial_literal_headers_after_pre_fit_csv_failure'
++            or migration.get('automatic_retry') is not False
++            or migration.get('scientific_fields_except_axial_headers_unchanged') is not True
++            or migration.get('torsion_header_inspected') is not False
++            or migration.get('payload_accounting') !=
++               'v2 first-member exposure is source/traceback-derived; inherited access ledger remains batch-level'):
++        raise ValueError('Exact axial-header-only migration declaration required')
++    records = {key: registry.bound(migration[key]) for key in bindings}
++    previous = records['previous_study']
++    changed = {'schema', 'study_id', 'output_root', 'csv_schemas'}
++    old_fixed = {key: value for key, value in previous.items() if key not in changed}
++    new_fixed = {key: value for key, value in study.items()
++                 if key not in changed | {'csv_header_migration'}}
++    expected_schemas = deepcopy(previous['csv_schemas'])
++    for branch in AXIAL:
++        if expected_schemas[branch]['header'] is not None:
++            raise ValueError('Predecessor axial schema must retain the failed headerless declaration')
++        expected_schemas[branch]['header'] = ['displacement', 'force']
++    if (access.canonical_json(old_fixed) != access.canonical_json(new_fixed)
++            or access.canonical_json(study['csv_schemas']) != access.canonical_json(expected_schemas)
++            or (previous.get('schema'), previous.get('study_id'), previous.get('output_root')) !=
++               ('hbe-branch-calibration-v2', 'hbe-01-03-branch-calibration-v2',
++                'outputs/mechanics/hbe-01-03-branch-calibration-v2')
++            or (study.get('schema'), study.get('study_id'), study.get('output_root')) !=
++               ('hbe-branch-calibration-v3', 'hbe-01-03-branch-calibration-v3',
++                'outputs/mechanics/hbe-01-03-branch-calibration-v3')):
++        raise ValueError('Migration must preserve every scientific and historical field except two axial headers')
++    # Retain the exact original v1 -> v2 runtime verification and register its evidence.
++    verify_runtime_migration(previous, registry)
++    prior_release = records['previous_release']
++    if (prior_release.get('schema') != 'hbe-branch-calibration-release-v2'
++            or prior_release.get('authorized') is not True
++            or prior_release.get('phase') != 'calibrate_and_validate'
++            or type(prior_release.get('authorized_native_calls')) is not int
++            or prior_release['authorized_native_calls'] != 2
++            or prior_release.get('study') != migration['previous_study']
++            or prior_release.get('interpreter') != previous['interpreter']
++            or prior_release.get('backend_profile') != previous['backend_profile']
++            or prior_release.get('predecessor_failure') != previous['runtime_migration']['previous_state']
++            or prior_release.get('execution') != {
++                'access_ledger_path': migration['previous_access_ledger']['path'],
++                'csv_schemas': previous['csv_schemas']}):
++        raise ValueError('CSV-failure predecessor release identity differs')
++    state = records['previous_state']
++    error = {'type': 'ValueError', 'message': "could not convert string to float: 'displacement'"}
++    if (state.get('schema') != 'hbe-branch-calibration-state-v2'
++            or state.get('status') != 'failed_or_incomplete' or state.get('error') != error
++            or state.get('calibration_access_attempted') is not True
++            or state.get('calibration_responses_accessed', False) is not None
++            or any(state.get(key) is not False for key in
++                   ('held_out_access_attempted', 'held_out_responses_accessed', 'automatic_retry'))
++            or any(type(state.get(key)) is not int or state[key] != 0
++                   for key in ('native_calls', 'mesher_calls'))
++            or state.get('runs') != {} or state.get('physical_validation_pass', False) is not None
++            or any(key in state for key in ('fit', 'predictions', 'freeze', 'held_out_metrics',
++                                            'calibration_metrics', 'preparation_seconds'))):
++        raise ValueError('Predecessor must retain partial axial access, pre-fit failure and zero native calls')
++    supervision, result, publication = (records[key] for key in
++        ('previous_supervision', 'previous_result', 'previous_publication'))
++    if (supervision.get('status') != 'failed_or_incomplete'
++            or type(supervision.get('exit_code')) is not int or supervision['exit_code'] != 1
++            or supervision.get('no_retry') is not True
++            or supervision.get('kill_reason', False) is not None
++            or supervision.get('cleanup_error', False) is not None
++            or result.get('schema') != 'hbe-branch-calibration-result-v2'
++            or result.get('status') != 'failed_or_incomplete'
++            or result.get('release') != migration['previous_release']
++            or result.get('state') != migration['previous_state']
++            or access.canonical_json(result.get('supervision')) != access.canonical_json(supervision)
++            or result.get('physical_validation_pass', False) is not None
++            or publication.get('schema') != 'hbe-branch-calibration-publication-v2'
++            or publication.get('accepted') is not False
++            or publication.get('result') != migration['previous_result']
++            or records['previous_started'] != {'release': migration['previous_release'], 'no_retry': True}
++            or records['previous_started'].get('no_retry') is not True):
++        raise ValueError('CSV-failure terminal, publication or no-retry binding differs')
++    ledger = records['previous_access_ledger']
++    roles = registry.bound(study['roles'])
++    members = roles['calibration']['members']
++    names = [item['path'] for item in members]
++    if (set(ledger) != {'members', 'phase', 'protocol_sha256', 'release_sha256', 'sequence', 'timestamp_utc'}
++            or ledger.get('phase') != 'calibration_attempt' or ledger.get('members') != names
++            or type(ledger.get('sequence')) is not int or ledger['sequence'] != 0
++            or ledger.get('protocol_sha256') != study['protocol']['sha256']
++            or ledger.get('release_sha256') != migration['previous_release']['sha256']
++            or prior_release.get('permitted_members') != names
++            or prior_release.get('conditional_held_out_members') !=
++               [item['path'] for item in roles['held_out_validation']['members']]):
++        raise ValueError('Exact attempted axial batch and sealed held-out ledger required')
++    diagnosis = records['diagnosis']
++    if (diagnosis.get('schema') != 'hbe-axial-csv-header-diagnosis-v1'
++            or diagnosis.get('study') != migration['previous_study']
++            or diagnosis.get('release') != migration['previous_release']
++            or diagnosis.get('roles') != study['roles']
++            or diagnosis.get('frozen_v2_state') != state
++            or diagnosis.get('access_ledger_records') != [ledger]
++            or diagnosis.get('opened_member_names') != names
++            or diagnosis.get('torsion_member_content_opened') is not False
++            or diagnosis.get('fitted') is not False
++            or type(diagnosis.get('native_calls')) is not int or diagnosis['native_calls'] != 0
++            or diagnosis.get('archive_unchanged') is not True
++            or diagnosis.get('original_inputs_unchanged') is not True
++            or diagnosis.get('archive') != {'path': roles['source']['archive_path'],
++                'sha256': roles['source']['archive_sha256'], 'bytes': roles['source']['archive_bytes']}
++            or len(diagnosis.get('members', [])) != 2):
++        raise ValueError('Pinned axial-only header diagnostic identity differs')
++    for branch, item, evidence in zip(AXIAL, members, diagnosis['members'], strict=True):
++        if (evidence.get('branch') != branch or evidence.get('member') != item['path']
++                or evidence.get('bytes') != item['bytes'] or evidence.get('crc32') != item['crc32']
++                or not isinstance(evidence.get('sha256'), str)
++                or not access.HEX64.fullmatch(evidence['sha256'])
++                or evidence.get('raw_first_line') != 'displacement,force\n'
++                or evidence.get('header_fields') != study['csv_schemas'][branch]['header']
++                or evidence.get('header_field_count') != 2
++                or evidence.get('v2_declared_schema') != previous['csv_schemas'][branch]
++                or evidence.get('diagnostic_used_numeric_values') is not False
++                or evidence.get('utf8_bom_present') is not False
++                or evidence.get('record_widths') != [2]):
++            raise ValueError('Exact literal axial header evidence required')
++    review = records['failure_review']
++    exposure = review.get('exposure', {})
++    compression, tension, held = (exposure.get(key, {}) for key in ('compression', 'tension', 'held_out_torsion'))
++    if (review.get('schema') != 'hbe-branch-calibration-v2-failure-independent-review-v1'
++            or review.get('status') != 'failed_attempt_verified_no_retry_no_fit_no_native_calls_holdout_sealed'
++            or review.get('failure') != error
++            or compression.get('path') != names[0]
++            or compression.get('uncompressed_bytes_read') != members[0]['bytes']
++            or compression.get('full_payload_read_and_csv_rows_decoded') is not True
++            or compression.get('numeric_curve_parse_completed') is not False
++            or tension.get('path') != names[1] or tension.get('uncompressed_member_payload_read') is not False
++            or held.get('remained_sealed') is not True
++            or type(held.get('uncompressed_response_member_reads')) is not int
++            or held['uncompressed_response_member_reads'] != 0):
++        raise ValueError('Honest predecessor payload exposure and sealed torque history required')
++    for key, name in [('previous_state', 'experiment/state.json'),
++                      ('previous_result', 'experiment/result.json'),
++                      ('previous_supervision', 'experiment/supervision/supervision.json'),
++                      ('previous_publication', 'experiment/publication-check.json'),
++                      ('previous_started', '.started.json'),
++                      ('previous_access_ledger', 'experiment/access.jsonl')]:
++        binding = review.get('output_bindings', {}).get(name, {})
++        if {field: binding.get(field) for field in ('path', 'sha256')} != migration[key]:
++            raise ValueError('Independent failure review output binding differs')
++    return records
++
++
+ def preflight(root, release_binding, *, deadline=None):
+     root=Path(root).resolve(); study=declaration(root); reg=Registry(root)
+     reg.add({'path':DECLARATION_PATH,'sha256':DECLARATION_SHA256}); release=reg.bound(release_binding)
+-    if (release.get('schema') != 'hbe-branch-calibration-release-v2' or release.get('authorized') is not True
++    if (release.get('schema') != 'hbe-branch-calibration-release-v3' or release.get('authorized') is not True
+             or release.get('phase') != 'calibrate_and_validate'
+             or release.get('study') != {'path':DECLARATION_PATH,'sha256':DECLARATION_SHA256}
+             or release.get('authorized_native_calls') != 2 or release.get('backend_profile') != study['backend_profile']
+             or release.get('interpreter') != study['interpreter']
+-            or release.get('predecessor_failure') != study['runtime_migration']['previous_state']):
++            or release.get('predecessor_failure') != study['csv_header_migration']['previous_state']):
+         raise ValueError('Exact committed branch-calibration release required')
+-    verify_runtime_migration(study, reg)
++    verify_csv_header_migration(study, reg)
+     sources=release['source_bindings']; expected={k:Path(v['path']).name for k,v in study['inherited_sources'].items()}; expected.update(NEW_SOURCES)
+     if set(sources) != set(expected): raise ValueError('Exact branch source closure required')
+     wanted={}
+@@ -401,7 +557,7 @@
+         return result
+ 
+     def freeze_predictions(self, *, fit_binding, prediction_binding, fitted_runs, output_path):
+-        from scripts.mechanics_hbe_branch_calibration_v2_readout import paired_evidence
++        from scripts.mechanics_hbe_branch_calibration_v3_readout import paired_evidence
+         self._before_reveal()
+         if self._calibration is None or any(e['phase']=='freeze_saved' for e in self._events()):
+             raise ValueError('One prior calibration and no existing freeze required')
+@@ -417,7 +573,7 @@
+         reg.add(numeric_binding)
+         if numeric['passed'] is not True:raise ValueError('Actual fitted confirmation failed; held-out remains sealed')
+         reg.verify_all(self.deadline)
+-        freeze={'schema':'hbe-branch-parameter-prediction-freeze-v2','protocol':self.protocol_binding,
++        freeze={'schema':'hbe-branch-parameter-prediction-freeze-v3','protocol':self.protocol_binding,
+                 'roles':self.protocol['roles'],'release':self.release_binding,'declaration_sha256':DECLARATION_SHA256,
+                 'fit':fit_binding,'predictions':prediction_binding,'numerical':numeric_binding,
+                 'mu_Pa':fit['mu_Pa'],'verified_file_bindings':reg.snapshot(),'held_out_responses_accessed':False,
+@@ -434,7 +590,7 @@
+         if len(events)!=1 or events[0].get('freeze')!=freeze_binding:
+             raise ValueError('Audited durable freeze required before held-out')
+         freeze=access.verify_binding(self.root,freeze_binding,maximum_bytes=META_BYTES,read_json=True)
+-        if (freeze.get('schema')!='hbe-branch-parameter-prediction-freeze-v2'
++        if (freeze.get('schema')!='hbe-branch-parameter-prediction-freeze-v3'
+                 or freeze.get('release')!=self.release_binding or freeze.get('protocol')!=self.protocol_binding
+                 or freeze.get('declaration_sha256')!=DECLARATION_SHA256
+                 or freeze.get('held_out_responses_accessed') is not False
+--- scripts/mechanics_hbe_branch_calibration_v2_experiment.py
++++ scripts/mechanics_hbe_branch_calibration_v3_experiment.py
+@@ -9,7 +9,7 @@
+ 
+ ROOT=Path(__file__).resolve().parents[1]
+ if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
+-from scripts import mechanics_hbe_branch_calibration_v2 as core
++from scripts import mechanics_hbe_branch_calibration_v3 as core
+ 
+ common,old,runtime,access=core.common,core.old,core.runtime,core.access
+ DONE='completed_descriptive_one_specimen_comparison'
+@@ -27,14 +27,14 @@
+         prepared[branch]={k:old.binding(context['root'],target/v) for k,v in
+                           [('source','skyline.feb'),('deck','specimen.feb'),('loading','loading.json')]}
+     return core.receipts.durable_json(context['root'],context['directory']/'preparation'/'prepared.json',
+-        {'schema':'hbe-branch-fitted-preparation-v2','fit':fit_binding,'mu_Pa':mu,'cases':prepared,
++        {'schema':'hbe-branch-fitted-preparation-v3','fit':fit_binding,'mu_Pa':mu,'cases':prepared,
+          'declaration_sha256':core.DECLARATION_SHA256,'native_calls':0,'mesher_calls':0})
+ 
+ 
+ def worker(root,release_binding,deadline):
+     # Supervision already covers this preflight, imports, hashing and all later stages.
+     study=core.declaration(root);directory=root/study['output_root']/'experiment'
+-    state={'schema':'hbe-branch-calibration-state-v2','status':'preflight','native_calls':0,'mesher_calls':0,
++    state={'schema':'hbe-branch-calibration-state-v3','status':'preflight','native_calls':0,'mesher_calls':0,
+            'calibration_access_attempted':False,'calibration_responses_accessed':False,
+            'held_out_access_attempted':False,'held_out_responses_accessed':False,'runs':{},
+            'physical_validation_pass':None,'automatic_retry':False}
+@@ -65,7 +65,7 @@
+                      '--prepare-fit',state['fit']['path'],'--fit-sha256',state['fit']['sha256']]
+             common.pure_child(command,prepdir,subdeadline,60)
+             prep_binding=old.binding(root,prepdir/'prepared.json');prep=reg.bound(prep_binding)
+-            if (prep.get('schema')!='hbe-branch-fitted-preparation-v2' or prep.get('fit')!=state['fit']
++            if (prep.get('schema')!='hbe-branch-fitted-preparation-v3' or prep.get('fit')!=state['fit']
+                     or prep.get('mu_Pa')!=fit['mu_Pa'] or prep.get('declaration_sha256')!=core.DECLARATION_SHA256
+                     or prep.get('native_calls')!=0 or prep.get('mesher_calls')!=0 or set(prep['cases'])!=set(core.AXIAL)):
+                 raise ValueError('Complete exact fitted deck preparation required')
+@@ -97,7 +97,7 @@
+                 primitives={k:old.binding(root,target/v) for k,v in
+                             [('deck','specimen.feb'),('loading','loading.json'),('nodes','nodes.log'),('elements','elements.log'),('solver','solver.log')]}
+                 q=study['axial_references'][branch];primitives['mesh']=q['native_primitives']['mesh']
+-                record={'schema':'hbe-branch-fitted-execution-v2','branch':branch,
++                record={'schema':'hbe-branch-fitted-execution-v3','branch':branch,
+                         'run_id':f'{branch}:N{q["counts"]["N"]}:S120:fitted','mu_Pa':fit['mu_Pa'],
+                         'declaration_sha256':core.DECLARATION_SHA256,'release':release_binding,
+                         'runtime_identity':study['runtime_identity'],'backend_profile':study['backend_profile'],
+@@ -132,7 +132,7 @@
+     if not 0<=result['seconds_before_publication']<cap:result['status']='failed_or_incomplete'
+     rb=core.receipts.durable_json(root,directory/'result.json',result)
+     retained=old.meshing.tree_bytes(raw_root)+archive_bytes;elapsed=time.monotonic()-started
+-    close={'schema':'hbe-branch-calibration-publication-v2','result':rb,'accepted':result['status']==DONE and elapsed<cap,
++    close={'schema':'hbe-branch-calibration-publication-v3','result':rb,'accepted':result['status']==DONE and elapsed<cap,
+            'elapsed_through_result_fsync_and_scan_seconds':elapsed,'cap_seconds':cap,'output_cap_bytes':output_cap,
+            'retained_including_source_archive_before_closeout':retained,'retained_including_closeout':0,
+            'closeout_own_publication_inside_clock_claim':False,'hard_real_time_or_power_loss_guarantee':False}
+@@ -148,7 +148,7 @@
+ def launch(root,release_binding):
+     started=time.monotonic();deadline=started+3600
+     study=core.declaration(root);release=access.verify_binding(root,release_binding,maximum_bytes=1024**2,read_json=True)
+-    if (release.get('authorized') is not True or release.get('schema')!='hbe-branch-calibration-release-v2'
++    if (release.get('authorized') is not True or release.get('schema')!='hbe-branch-calibration-release-v3'
+             or release.get('study')!={'path':core.DECLARATION_PATH,'sha256':core.DECLARATION_SHA256}):
+         raise ValueError('Explicit branch calibration source release required')
+     archive=release['source_archive'];access.verify_binding(root,archive)
+@@ -164,7 +164,7 @@
+     env.update(PYTHONNOUSERSITE='1',PYTHONDONTWRITEBYTECODE='1')
+     supervision=runtime.supervise(command,directory/'supervision',cwd=root,environment=env,
+         seconds=common.remaining_seconds(deadline,3600),rss_bytes=3*1024**3)
+-    result={'schema':'hbe-branch-calibration-result-v2','release':release_binding,'supervision':supervision,
++    result={'schema':'hbe-branch-calibration-result-v3','release':release_binding,'supervision':supervision,
+             'status':'failed_or_incomplete','physical_validation_pass':None,'charged_source_archive_bytes':archive_bytes}
+     try:
+         result['state']=old.binding(root,directory/'state.json');state=access.verify_binding(root,result['state'],read_json=True)
+--- scripts/mechanics_hbe_branch_calibration_v2_readout.py
++++ scripts/mechanics_hbe_branch_calibration_v3_readout.py
+@@ -5,7 +5,7 @@
+ from pathlib import Path
+ import time
+ import numpy as np
+-from scripts import mechanics_hbe_branch_calibration_v2 as core
++from scripts import mechanics_hbe_branch_calibration_v3 as core
+ from scripts import mechanics_hbe_outputs as outputs
+ 
+ common, inherited, access = core.common, core.inherited, core.access
+@@ -201,7 +201,7 @@
+     reg=context['registry'];study=context['study'];record=reg.bound(binding)
+     expected_directory=context['directory']/'runs'/branch
+     q=study['axial_references'][branch];primitives=record['primitive_bindings']
+-    if (record.get('schema')!='hbe-branch-fitted-execution-v2' or record.get('branch')!=branch
++    if (record.get('schema')!='hbe-branch-fitted-execution-v3' or record.get('branch')!=branch
+             or record.get('mu_Pa')!=mu or record.get('run_id')!=f'{branch}:N{q["counts"]["N"]}:S120:fitted'
+             or record.get('declaration_sha256')!=core.DECLARATION_SHA256
+             or record.get('release')!=context['release_binding']
+@@ -262,7 +262,7 @@
+             for binding in primitives.values():reg.read(binding,json_value=False)
+         del streams,model,reports,pair,native
+     reg.verify_all(deadline);common.remaining_seconds(deadline,600)
+-    return {'schema':'hbe-branch-fitted-paired-evidence-v2','declaration_sha256':core.DECLARATION_SHA256,
++    return {'schema':'hbe-branch-fitted-paired-evidence-v3','declaration_sha256':core.DECLARATION_SHA256,
+             'mu_Pa':mu,'branches':rows,'passed':all(row['passed'] for row in rows.values()),
+             'states_per_native_run':121,'paired_stream_seconds':time.monotonic()-started,
+             'historical_failures_preserved':True,'physical_validation_pass':None,

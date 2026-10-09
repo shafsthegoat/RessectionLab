@@ -1,0 +1,140 @@
+{
+  "schema": "compact-publication-index-v1",
+  "files": [
+    {
+      "path": "RESULT.md",
+      "bytes": 1831,
+      "sha256": "973e3d0471838f301959df1b0d8b68024b2a58307e16680aa7ca268ec31cbc86"
+    },
+    {
+      "path": "independent/artifact-index.json",
+      "bytes": 1702,
+      "sha256": "e31bebe53b09829d4175cb50e32911dd1c580c318f2f1fdadb1df56f0ae9303c"
+    },
+    {
+      "path": "independent/baseline.json",
+      "bytes": 33782,
+      "sha256": "4997daf685db5358ed609a532e2bd47f84d6df8c932ff828101b4994240c5779"
+    },
+    {
+      "path": "independent/candidate-v2-to-v3.diff",
+      "bytes": 27904,
+      "sha256": "84845fdbc188acc18ef17e982c6a2e539c550a82c399a04e0fc911796360aace"
+    },
+    {
+      "path": "independent/finalize_review.py",
+      "bytes": 10812,
+      "sha256": "62cb6408aaa130adb2dab3fdc41e3c7f8f133c96036e1a3db3c8deb34e4646b7"
+    },
+    {
+      "path": "independent/guarded-checks.json",
+      "bytes": 5717,
+      "sha256": "bcc80e2b05f28ecc0cd0b3496f6b5fbddafab5cabebdb1e4ff798dc33c471cac"
+    },
+    {
+      "path": "independent/pytest-independent.log",
+      "bytes": 354,
+      "sha256": "d1703f50151f43e9899905ebbaaf65a6040abce2583c7279233cfe0631443f1c"
+    },
+    {
+      "path": "independent/run_guarded_checks.py",
+      "bytes": 6506,
+      "sha256": "7a5ca41101f51f4177cffd55893665086a2c8dec95e87d7cca2c4b56c19e4635"
+    },
+    {
+      "path": "independent/source-snapshot/manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "bytes": 45023,
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    {
+      "path": "independent/source-snapshot/scripts/mechanics_hbe_branch_calibration_v3.py",
+      "bytes": 40874,
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    {
+      "path": "independent/source-snapshot/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "bytes": 14868,
+      "sha256": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3"
+    },
+    {
+      "path": "independent/source-snapshot/scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "bytes": 17937,
+      "sha256": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205"
+    },
+    {
+      "path": "independent/source-snapshot/tests/test_mechanics_hbe_branch_calibration_v3.py",
+      "bytes": 23811,
+      "sha256": "f4c4b4a92d235b02724460c946cbb3508ad063c2911155c62fa46efa55b9dcca"
+    },
+    {
+      "path": "independent/synthetic-compression-real-header.csv",
+      "bytes": 55,
+      "sha256": "c1bb7650f89ba5dbf178d3b6e70f4c855616e146998c512de74a6fffdbaec966"
+    },
+    {
+      "path": "independent/synthetic-tension-real-header.csv",
+      "bytes": 51,
+      "sha256": "2e5cbfa1a50092b69c29f4ac5c695afd8876fdc3611518f56a4fbc6d9a16e8e4"
+    },
+    {
+      "path": "independent/verification.json",
+      "bytes": 10721,
+      "sha256": "a8eb3ed8093a92a8a2d7c4faa14c1905872099fcb195a11d1d9f81d4d01c37eb"
+    },
+    {
+      "path": "owner/artifact-index.json",
+      "bytes": 1266,
+      "sha256": "9be10afe8d2e8154f896a2f222d9d3ed25786a435756b61b6ca0bdaf05e7ec1f"
+    },
+    {
+      "path": "owner/pytest-v2-v3.log",
+      "bytes": 340,
+      "sha256": "3b74618bbd895fff20355bb878d14f4aadc76cb52d3b349e3c8f57f6a7a43963"
+    },
+    {
+      "path": "owner/pytest-v3.log",
+      "bytes": 260,
+      "sha256": "ee1bd704cce785ef9baef327aa65db585162e325beb8c2f5983f78f9f6ba468b"
+    },
+    {
+      "path": "owner/review.json",
+      "bytes": 5518,
+      "sha256": "a8ba683b7f6c05a7c5fb18aa15c27e99038251e15cbca06e20c62dbc1678db12"
+    },
+    {
+      "path": "owner/source-integrity-before.json",
+      "bytes": 30678,
+      "sha256": "9ad8bdedba395cb2dfd7c6e1baaacffb1aff6db4f568d655876412e6ba56327e"
+    },
+    {
+      "path": "owner/source-integrity-final.json",
+      "bytes": 2141,
+      "sha256": "a1638756fe93eb15e936734831eb8fb5c3c4627cec0142fc16ce4f3d66f8b45d"
+    },
+    {
+      "path": "owner/source-snapshot/manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "bytes": 45023,
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    {
+      "path": "owner/source-snapshot/scripts/mechanics_hbe_branch_calibration_v3.py",
+      "bytes": 40874,
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    {
+      "path": "owner/source-snapshot/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "bytes": 14868,
+      "sha256": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3"
+    },
+    {
+      "path": "owner/source-snapshot/scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "bytes": 17937,
+      "sha256": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205"
+    },
+    {
+      "path": "owner/source-snapshot/tests/test_mechanics_hbe_branch_calibration_v3.py",
+      "bytes": 23811,
+      "sha256": "f4c4b4a92d235b02724460c946cbb3508ad063c2911155c62fa46efa55b9dcca"
+    }
+  ]
+}

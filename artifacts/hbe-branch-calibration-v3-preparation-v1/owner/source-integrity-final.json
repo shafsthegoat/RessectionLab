@@ -1,0 +1,65 @@
+{
+  "actual_release_created": false,
+  "actual_v3_output_root_created": false,
+  "existing_file_mismatches": [],
+  "existing_files_verified": 217,
+  "existing_manifest_keys_changed": [
+    "csv_schemas",
+    "output_root",
+    "schema",
+    "study_id"
+  ],
+  "existing_tracked_diff_unchanged": true,
+  "measured_fits": 0,
+  "measured_member_reads": 0,
+  "native_solver_calls": 0,
+  "new_candidate_sources": {
+    "manifests/experiments/hbe-01-03-branch-calibration-v3.json": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c",
+    "scripts/mechanics_hbe_branch_calibration_v3.py": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d",
+    "scripts/mechanics_hbe_branch_calibration_v3_experiment.py": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3",
+    "scripts/mechanics_hbe_branch_calibration_v3_readout.py": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205",
+    "tests/test_mechanics_hbe_branch_calibration_v3.py": "f4c4b4a92d235b02724460c946cbb3508ad063c2911155c62fa46efa55b9dcca"
+  },
+  "new_manifest_keys": [
+    "csv_header_migration"
+  ],
+  "schema": "hbe-branch-v3-owner-source-integrity-final-v1",
+  "scientific_historical_field_count": 23,
+  "scientific_historical_fields_canonical_equal": [
+    "axial_references",
+    "backend_profile",
+    "branches",
+    "budgets",
+    "design",
+    "fitted_parameters",
+    "historical_failures_preserved",
+    "inherited_declarations",
+    "inherited_sources",
+    "interpretation",
+    "interpreter",
+    "legacy",
+    "no_mesher_no_retry",
+    "parser",
+    "physical_binary_threshold",
+    "prior_executions",
+    "protocol",
+    "readiness",
+    "roles",
+    "runtime_identity",
+    "scale_proof",
+    "scale_proof_review",
+    "torsion_references"
+  ],
+  "torsion_schemas_unchanged": true,
+  "tracked_diff_after": [
+    "desktop/src/App.tsx",
+    "desktop/src/NeighboringPathsPanel.tsx",
+    "desktop/src/neighboring-paths.ts"
+  ],
+  "tracked_diff_before": [
+    "desktop/src/App.tsx",
+    "desktop/src/NeighboringPathsPanel.tsx",
+    "desktop/src/neighboring-paths.ts"
+  ],
+  "v1_runtime_migration_unchanged": true
+}

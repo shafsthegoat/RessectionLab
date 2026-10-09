@@ -1,0 +1,97 @@
+{
+  "actual_execution_authorized": false,
+  "authorized": false,
+  "automatic_retry": false,
+  "candidate_sources": {
+    "manifests/experiments/hbe-01-03-branch-calibration-v3.json": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c",
+    "scripts/mechanics_hbe_branch_calibration_v3.py": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d",
+    "scripts/mechanics_hbe_branch_calibration_v3_experiment.py": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3",
+    "scripts/mechanics_hbe_branch_calibration_v3_readout.py": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205",
+    "tests/test_mechanics_hbe_branch_calibration_v3.py": "f4c4b4a92d235b02724460c946cbb3508ad063c2911155c62fa46efa55b9dcca"
+  },
+  "change": "Set only compression and tension CSV headers to the authenticated exact displacement,force framing; introduce separate v3 artifact/source identities and explicit v2 pre-fit failure lineage.",
+  "existing_files_preserved": 217,
+  "known_limitations": [
+    "The inherited access ledger records batch attempt/completion, not durable per-member payload read receipts. This remains unchanged to honor the strictly limited v3 header correction; adding live per-member accounting is a separately scoped access-behavior change. The failure-isolation test records synthetic payload openings only.",
+    "V2 failure review exposure is explicitly source/traceback-derived: 1,222 compression bytes decoded, numeric curve parse incomplete, tension payload not read, held-out torque payloads not read. State calibration_responses_accessed=null is preserved.",
+    "No actual axial numerical curve parse or fitting is performed in this preparation. Tests use the real pinned header with synthetic values.",
+    "Torque framing is uninspected. The inherited torsion header:null declarations are preserved without claiming validation; conditional reveal may fail closed after the existing durable freeze and native confirmation."
+  ],
+  "meaningful_controls": [
+    "The saved hash-pinned real axial first line is parsed with invented numerical rows under both branch schemas, and rejected by the original headerless schema.",
+    "Wrong, duplicate, missing, prefixed, BOM or repeated headers fail closed; no autodetection or arbitrary row skipping.",
+    "Injected wrong first-member header in an entirely synthetic archive reaches the actual v3 worker and inherited reader; only compression is opened, no second or held-out member, fit, preparation or solver is reached, and failed partial-access state is retained.",
+    "Existing started marker refuses reuse before supervision.",
+    "V2 release cannot authorize v3; bad predecessor, changed scientific field or changed interpreter stops preflight.",
+    "All v1/v2 failure records and axial diagnostic/member identity joins are registered for later rehash."
+  ],
+  "prohibited_execution_counts": {
+    "actual_release_writes": 0,
+    "actual_v3_output_root_created": false,
+    "measured_archive_member_reads": 0,
+    "measured_fits": 0,
+    "native_solver_calls": 0
+  },
+  "required_next_gate": "Root independent source review and source commit before any fresh explicit v3 execution release.",
+  "schema": "hbe-branch-calibration-v3-owner-review-v1",
+  "scope_preserved": {
+    "csv_nonheader_fields": "all unchanged",
+    "field_count": 23,
+    "material_reward_backend_timeouts_controls": "unchanged",
+    "numerical_and_access_implementations": "AST-equal to v2 after explicit branch namespace/schema normalization; entire runner/readout text equal after normalization",
+    "scientific_historical_fields": [
+      "axial_references",
+      "backend_profile",
+      "branches",
+      "budgets",
+      "design",
+      "fitted_parameters",
+      "historical_failures_preserved",
+      "inherited_declarations",
+      "inherited_sources",
+      "interpretation",
+      "interpreter",
+      "legacy",
+      "no_mesher_no_retry",
+      "parser",
+      "physical_binary_threshold",
+      "prior_executions",
+      "protocol",
+      "readiness",
+      "roles",
+      "runtime_identity",
+      "scale_proof",
+      "scale_proof_review",
+      "torsion_references"
+    ],
+    "torsion_schemas": "unchanged, uninspected and not guessed",
+    "v1_runtime_failure_lineage": "unchanged and reverified by literal v2 verifier applied to pinned v2 study"
+  },
+  "source_integrity": {
+    "path": "build/hbe-branch-calibration-v3-owner-v1/source-integrity-final.json",
+    "sha256": "a1638756fe93eb15e936734831eb8fb5c3c4627cec0142fc16ce4f3d66f8b45d"
+  },
+  "status": "candidate_prepared_owner_controls_passed_pending_independent_review_and_commit",
+  "validation": [
+    {
+      "command": ".venv/bin/python -B -m pytest -q tests/test_mechanics_hbe_branch_calibration_v3.py",
+      "log": {
+        "path": "build/hbe-branch-calibration-v3-owner-v1/pytest-v3.log",
+        "sha256": "ee1bd704cce785ef9baef327aa65db585162e325beb8c2f5983f78f9f6ba468b"
+      },
+      "result": "146 passed in 0.64s"
+    },
+    {
+      "command": ".venv/bin/python -B -m pytest -q tests/test_mechanics_hbe_branch_calibration_v2.py tests/test_mechanics_hbe_branch_calibration_v3.py",
+      "log": {
+        "path": "build/hbe-branch-calibration-v3-owner-v1/pytest-v2-v3.log",
+        "sha256": "3b74618bbd895fff20355bb878d14f4aadc76cb52d3b349e3c8f57f6a7a43963"
+      },
+      "result": "228 passed in 0.76s"
+    },
+    {
+      "check": "git diff --check and AST parse of four new Python files",
+      "result": "passed"
+    }
+  ]
+}

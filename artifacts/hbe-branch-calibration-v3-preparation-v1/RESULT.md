@@ -1,0 +1,9 @@
+# Exact axial-header calibration correction, frozen before execution
+
+Commit `e96f706` adds a separately versioned HBE_01_03 specimen study after the first v2 measured attempt failed at an observed axial CSV header. The two allowed compression/tension members both have the exact header `displacement,force`, established by the saved metadata-only axial diagnostic. V3 changes only these two schema headers, version identities and explicit v2 partial-access failure lineage. All 23 scientific fields, the v1 interpreter-drift verification, calibration/held-out split, geometry, material law, numeric bounds and backend remain unchanged. V1 and v2 attempts are preserved.
+
+Owner controls passed 146/146, combined v2/v3 controls 228/228. A separate guarded review passed 227 controls with one synthetic analytical-fit test intentionally excluded, plus 28 strict-header checks. Its guards blocked measured archive reads, actual fitting and native calls; source hashes matched the committed candidate. The reviewer recommended committing and then preparing a fresh root-controlled release.
+
+This is **preparation, not physical validation**. No measured v3 curves, fit, solver output, or withheld torque response has been accessed. The torsion schema remains unchanged and uninspected, so a later withheld parse can fail closed. The inherited access ledger records batch attempts rather than per-member payload completions; the v2 compression partial exposure is explicitly bound by this study. The independent review discusses why a separate metadata-only torsion framing check would itself constitute holdout access and require amended provenance and a new release; none was performed here.
+
+The subdirectories preserve owner and independent source snapshots, exact hashes, validation logs, negative-test controls and decision notes.
