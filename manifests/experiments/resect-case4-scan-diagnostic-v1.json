@@ -1,0 +1,64 @@
+{
+  "schema_version": "case4-scan-diagnostic-inputs-v1",
+  "case_id": "RESECT-Case4",
+  "split_role": "DEVELOPMENT",
+  "scope": "source_only_adapter_and_future_limited_diagnostic_pilot",
+  "patient_processing_admitted": false,
+  "model_inference_admitted": false,
+  "planning_admitted": false,
+  "clinical_use_admitted": false,
+  "source_evidence": "artifacts/resect-case4-preoperative-input-qc-v1/RESULT.md",
+  "preoperative_t1c": {
+    "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+    "bytes": 8763797,
+    "sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787",
+    "channel_index": 0,
+    "model_channel_name": "t1c",
+    "availability_basis": "preoperative_source",
+    "acquisition_time_utc": null,
+    "contrast_evidence": "RESECT cohort protocol, not per-file injection metadata"
+  },
+  "preoperative_flair": {
+    "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz",
+    "bytes": 6550243,
+    "sha256": "e4b2e09f6d47e256a0af3e515d321a393cfc1b5d6c704a6b23bbfeed8c712d26",
+    "channel_index": 1,
+    "model_channel_name": "t2f",
+    "availability_basis": "preoperative_source",
+    "acquisition_time_utc": null
+  },
+  "atlas": {
+    "path": "data/models/sri24-v2.0.0/brats_sri24.nii",
+    "bytes": 17856352,
+    "sha256": "50ceb5c1f1b727bf578110bea92d80ed801cf6d3207e08b619db548a27023b1b",
+    "original_shape_xyz_singleton": [240, 240, 155, 1],
+    "spatial_units": "mm",
+    "source_receipt": "artifacts/scan-target-estimator-inputs-v1/root-atlas-verification.json"
+  },
+  "limited_scan_derived_t1_mask": {
+    "path": "outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz",
+    "bytes": 127182,
+    "sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759",
+    "generation_record_path": "artifacts/mechanics/resect-case4-brain-envelope-v1/attempt-01/main_inference_record.json",
+    "generation_record_bytes": 6677,
+    "generation_record_sha256": "b0d3546848bc40f04a1b8ccd886f92b63e5c81225b111a23d5bdc2e013c3c11c",
+    "input_scan_sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787",
+    "status": "documented_limited_scan_derived",
+    "limitations": "Prior local review found inferior/cerebellar omissions; whole-brain and cortical-access use were not accepted. Suitable only for an explicitly scoped research diagnostic preparation pending local QC."
+  },
+  "model_extraction": {
+    "receipt_path": "artifacts/scan-target-estimator-inputs-v1/extracted-t1c-t2f-receipt.json",
+    "receipt_bytes": 1004,
+    "receipt_sha256": "970783ca50deac456bc9f7846046514021e514f35c8dd5979f485c3653c651a3",
+    "model_dir": "data/models/gliomoda-v1.0.2/t1c-t2f-pinned-v1",
+    "dataset_json_sha256": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "plans_json_sha256": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+    "checkpoint_final_sha256": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "training_lineage_status": "unknown",
+    "case_overlap_status": "unknown",
+    "rights_boundary": "CC-BY-4.0 weights; unlicensed GlioMODA wrapper excluded; licensed nnU-Net adapter only"
+  },
+  "transform_policy": "ANTsPyx rigid scan-only FLAIR-to-T1c then T1c-to-SRI24; generated transform receipts required; local anatomical QC remains pending",
+  "native_estimate_frame": "original preoperative FLAIR RAS-mm",
+  "protected_reference_rule": "No tumor annotation, postoperative image, displacement measurement, outcome, or route endpoint may be opened by the adapter."
+}

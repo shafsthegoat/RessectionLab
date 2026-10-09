@@ -1,0 +1,26 @@
+{
+  "archive_path": "data/models/gliomoda-v1.0.2/weights.zip",
+  "archive_sha256": "067ea69d5fb4d6a000aa7cda0396380a4212b05bce85b846da43eefc09c13855",
+  "extracted_at_utc": "2026-10-09T05:32:03.969438+00:00",
+  "files": {
+    "dataset.json": {
+      "bytes": 727,
+      "crc32": "0b1da2af",
+      "sha256": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+      "source_member_path": "t1c-t2f/dataset.json"
+    },
+    "fold_all/checkpoint_final.pth": {
+      "bytes": 250184062,
+      "crc32": "d2be14e0",
+      "sha256": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+      "source_member_path": "t1c-t2f/fold_all/checkpoint_final.pth"
+    },
+    "plans.json": {
+      "bytes": 10802,
+      "crc32": "368748a1",
+      "sha256": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+      "source_member_path": "t1c-t2f/plans.json"
+    }
+  },
+  "scope": "Only exact t1c-t2f metadata and fold_all final checkpoint bytes; no unpickling or inference"
+}

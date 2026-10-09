@@ -1,0 +1,59 @@
+{
+  "schema": "sri24-root-byte-header-check-v1",
+  "path": "data/models/sri24-v2.0.0/brats_sri24.nii",
+  "bytes": 17856352,
+  "md5": "605c659c2976f055cf3a43a88a7ad6f3",
+  "sha256": "50ceb5c1f1b727bf578110bea92d80ed801cf6d3207e08b619db548a27023b1b",
+  "shape": [
+    240,
+    240,
+    155,
+    1
+  ],
+  "zooms": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "units": [
+    "mm",
+    "unknown"
+  ],
+  "axis_codes": [
+    "L",
+    "P",
+    "S"
+  ],
+  "affine": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -1.0,
+      0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "finite_affine": true,
+  "spatial_determinant": 1.0,
+  "patient_data_accessed": false,
+  "registration_or_inference_run": false,
+  "planning_admitted": false
+}

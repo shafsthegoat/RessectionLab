@@ -79,6 +79,13 @@ adjacent tests. The subsequent N16 row has now completed; nine native rows and t
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
+The [scan-only diagnostic adapter](artifacts/scan-target-estimator-inputs-v1/RESULT.md)
+is integrated with exact scan/atlas/mask/model-metadata bindings and source-only
+registration receipts. All **nine generated controls** pass in its isolated
+runtime; base tests handle absent optional packages without collection errors.
+No patient processing or model inference ran. The next separate preparation
+attempt can generate real registration outputs for local QC before inference.
+
 The [research-estimate planning interface](artifacts/research-estimate-planning-v1/RESULT.md)
 now gives search, imitation, RL and hybrid callbacks the same nominal geometry,
 then seals complete routes before private target evaluation. Root's integrated
