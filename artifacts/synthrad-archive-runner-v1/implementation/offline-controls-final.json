@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=build/synthrad-archive-implementation-v1/final-tmp",
+    "tests/test_synthrad_task1_archive.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.0032969168387353,
+  "network_calls": 0,
+  "scientific_payload_reads": 0,
+  "scope": "opaque local protocol fixtures and frozen metadata"
+}

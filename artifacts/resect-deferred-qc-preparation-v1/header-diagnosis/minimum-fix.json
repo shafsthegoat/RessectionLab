@@ -1,0 +1,39 @@
+{
+  "diagnostic_report": {
+    "path": "build/resect-deferred-qc-header-diagnostic-v1/diagnosis.json",
+    "sha256": "9552dc88276dc30140f503dfd87cadf5e43b9f90ed74be0fbf3c559e63f49079"
+  },
+  "exact_failure": {
+    "source": "Case2-during-image",
+    "qform_code": 0,
+    "sform_code": 1,
+    "pixdim0_qfac": 0.0,
+    "call_chain": [
+      "resect_deferred_qc.inspect_pair",
+      "lausanne_deferred_qc.inspect_original",
+      "critical_evidence.nifti1_header_record",
+      "critical_evidence._header_summary",
+      "header.get_qform() with coded=False"
+    ],
+    "exception": "nibabel.spatialimages.HeaderDataError: qfac (pixdim[0]) should be 1 or -1",
+    "timing": "raw_grid construction before image scalar loop; record assignment never completes",
+    "class_is_ValueError": false
+  },
+  "classification": "Source contains invalid inactive-qform qfac, while its declared active sform passes unchanged geometry semantics. The adapter unnecessarily reconstructs the inactive qform when preserving a raw header; the uncaught scientific exception becomes a lifecycle abort. This does not establish bad active geometry or anatomical validity.",
+  "minimum_continuation_fix": "Catch nibabel.spatialimages.HeaderDataError at the per-file inspect_pair boundary, retain explicit failed header/content stage and reason, return review_failed after the ordinary after-fixity/source validation, continue independent pairs. Keep its content/geometry unknown when those stages did not complete. Do not convert to pass or relabel the old attempt.",
+  "separate_semantic_gap": "To QC a source with a valid active sform despite uninterpretable inactive qform, raw-header recording would need to preserve raw348bytes/pixdim/quaternion fields and explicitly record inactive qform decode unavailable, while keeping active-form validation unchanged. Existing reused inspect_original hardcodes critical_evidence.nifti1_header_record; fixing that route is a separately reviewed helper contract/pin change, not a tolerance override or header repair.",
+  "focused_controls": [
+    "Retained actual348byte header reproduces raw recorder HeaderDataError and passes coded-form geometry without any scalar payload.",
+    "Inject HeaderDataError in per-file inspection; assert retained review_failed and reason, after-fixity checks, subsequent pair attempted, total25 outcomes including inheritedCase3.",
+    "Keep timeouts, bytefixity/sourcefreeze changes and true supervisor failures aborting; do not catch every Exception as scientific failure.",
+    "All earlier original execution receipt/outcome/batch hashes unchanged; new invocation uses a newrunid."
+  ],
+  "preserved_actual_denominator": {
+    "qualified_pairs": 25,
+    "inherited_Case3": 1,
+    "attempted_failed_or_incomplete": 1,
+    "not_attempted": 23
+  },
+  "array_reads_or_retry": false,
+  "tracked_edits": 0
+}

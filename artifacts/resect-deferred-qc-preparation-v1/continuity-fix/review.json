@@ -1,0 +1,80 @@
+{
+  "status": "minimum_header_error_continuity_fix_frozen",
+  "files": [
+    {
+      "path": "scripts/resect_deferred_qc.py",
+      "bytes": 35255,
+      "sha256": "55328556f4719a9509effb10b4ef899a0dc1665dfa4ae61ee4c68bdd3c360fd8"
+    },
+    {
+      "path": "tests/test_resect_deferred_qc.py",
+      "bytes": 16553,
+      "sha256": "534328029422fce124addf0d9ff0784cf5493863bbc48e26c0029691d554ebb4"
+    },
+    {
+      "path": "manifests/resect-deferred-qc-v1.json",
+      "bytes": 58690,
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    }
+  ],
+  "scope": "Only runner and owner tests changed; sharedhelpers/headerbytes/geometrythresholds/manifest unchanged. No scalar decoding or realQC retry.",
+  "change": "Explicit per-file HeaderDataError retains exact exception/callpath, raw_header_recording stage when observed, adapter interpretation limitation and unknown unreturned stages. The worker still performs afterfixity/source validation; ordinary review_failed can continue; integrity/lifecycle/deadline failures still stop.",
+  "tests": {
+    "passed": 86,
+    "failures": 0,
+    "errors": 0,
+    "seconds": "8.971",
+    "owner_controls": 69,
+    "original_independent_controls": 17,
+    "independent_control_file": {
+      "path": "build/resect-deferred-qc-independent-review-v1/test_independent.py",
+      "bytes": 7083,
+      "sha256": "782db45443f83c12c4daa28a54799dfaed94e558e6a06c82c8f4430276e89b25"
+    },
+    "metadata_preflight_passed": true,
+    "regression": "Real worker/batch methods under metadata-only I/O seams:24 HeaderDataError refusals preserve25 outcomes and48 before/afterfixity calls; byteintegrity failure stops after firstpair with23 notattempted."
+  },
+  "preserved_actual_negative": [
+    {
+      "path": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/batch.json",
+      "bytes": 8025,
+      "sha256": "8a5482c48df4ddf3cf91eb50e81221b70f298d475785f242381296cb92bc2a01"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/receipt.json",
+      "bytes": 3294,
+      "sha256": "29771a7898c152ab8661047bc1126ad9001e89ad08f9c5b29806568afc7d03c1"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/outcome.json",
+      "bytes": 479,
+      "sha256": "aa1f08f1216b368b934b8badd66d108b7fa6d7f9f1e91ad3a5fe6b92b719d6b5"
+    }
+  ],
+  "retained_outputs": [
+    {
+      "path": "build/resect-deferred-qc-continuity-fix-v1/controls.log",
+      "bytes": 179,
+      "sha256": "0043bb70b20cc921911650b3446758a921ccff5907b77b0ec4e91f6f376dcb64"
+    },
+    {
+      "path": "build/resect-deferred-qc-continuity-fix-v1/controls.xml",
+      "bytes": 12192,
+      "sha256": "084f8953f607b56e8baab4570ef4c389a68757c9ecb9d323b693ab2da6b04b9f"
+    },
+    {
+      "path": "build/resect-deferred-qc-continuity-fix-v1/preflight.json",
+      "bytes": 723,
+      "sha256": "868fa207d8828b3ac77ee8f9a3957768228f943d37a5e11f5eea52c867d61abf"
+    }
+  ],
+  "patient_payload_reads": 0,
+  "patient_array_decodes": 0,
+  "network_requests": 0,
+  "patient_qc_runs": 0,
+  "header_repairs": 0,
+  "admission_changes": 0,
+  "writer_ownership": "released",
+  "next_run_requires_new_identity": true,
+  "command_after_independent_review": ".venv/bin/python -B scripts/resect_deferred_qc.py batch --run-id remaining-train-pairs-02 --max-seconds 600 --execute --manifest-sha 9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+}

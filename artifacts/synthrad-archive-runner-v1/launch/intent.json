@@ -1,0 +1,31 @@
+{
+  "source_id": "synthrad-2023-task1-archive",
+  "source_binding": "d9839028f42501a600700f15b8b0a2f356ec78ce1bfd16d11c01a27249f5870b",
+  "manifest_sha256": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b",
+  "attempt": 1,
+  "prefix": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "supervisor_pid": 17647,
+  "network_deadline": 1256600.141683333,
+  "network_deadline_epoch": 1791527182.759676,
+  "campaign_deadline": 1321400.1364435514,
+  "campaign_deadline_epoch": 1791591982.754434,
+  "runtime": {
+    "scripts/acquire_synthrad_task1_archive.py": "b1c62acd45232c113f882c11f3b209d20b33befb208189a88e4bdda194c5ba6d",
+    "scripts/acquire_resect_train_originals.py": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50",
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "client": {
+    "executable": "/usr/bin/curl",
+    "platform": "darwin",
+    "macos_version": "26.6",
+    "trust": "existing_macos_system_store",
+    "available": true,
+    "sha256": "9b3d0c8eae03bd1be5e5c13c35a2464fc9a7ec719eff5deb94b2905dad25244e",
+    "version": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.1"
+  },
+  "created_utc": "2026-10-09T00:26:22.760015+00:00"
+}

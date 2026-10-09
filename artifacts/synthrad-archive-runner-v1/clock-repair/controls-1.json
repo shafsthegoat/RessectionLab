@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=build/synthrad-archive-implementation-v1/deadline-repair/controls-tmp",
+    "tests/test_synthrad_task1_archive.py"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 2.026393875014037,
+  "scientific_payload_requests": 0
+}

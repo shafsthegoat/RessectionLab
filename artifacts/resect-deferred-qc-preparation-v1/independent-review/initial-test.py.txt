@@ -1,0 +1,125 @@
+"""Independent metadata/header-only controls: no images, arrays, network or native runs."""
+import base64
+import copy
+import importlib
+import json
+import socket
+import sys
+import time
+from pathlib import Path
+import pytest
+
+ROOT=Path(__file__).resolve().parents[2]
+sys.path[:0]=[str(ROOT/'scripts'),str(ROOT/'src')]
+
+@pytest.fixture
+def q(monkeypatch):
+    q=importlib.import_module('resect_deferred_qc')
+    monkeypatch.setattr(socket,'create_connection',lambda *a,**k: pytest.fail('network forbidden'))
+    monkeypatch.setattr(q,'verify_pair_files',lambda *a,**k: pytest.fail('patient bytes forbidden'))
+    monkeypatch.setattr(q,'inspect_pair',lambda *a,**k: pytest.fail('patient decoding forbidden'))
+    return q
+
+@pytest.fixture
+def metadata(q):
+    return q.preflight()
+
+@pytest.fixture
+def receipt(q):
+    # Valid identity-grid HEADER CONTROL only; no image or voxel payload exists.
+    import nibabel as nib
+    from resectionlab.critical_evidence import nifti1_header_record
+    header=nib.Nifti1Header();header.set_data_shape((2,2,2));header.set_xyzt_units('mm')
+    matrix=[[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]]
+    header.set_sform(matrix,code=1);header['vox_offset']=352
+    raw=header.binaryblock
+    row={'pair':{'id':'control','role':'TRAIN'},'image_sha256':'a'*64,'mask_sha256':'b'*64}
+    d={'run_id':'header-control'}; intent={}
+    r=q.base_receipt(row,intent,d)
+    geometry={'file':'control.nii.gz','shape':[2,2,2],'affine_ras_mm':matrix,
+      'source_units':'mm','physical_units':'mm','unit_scale_to_mm':1.0,'qform_code':0,'sform_code':1,
+      'qform_native':None,'sform_native':matrix,'orientation':['R','A','S'],'spacing_mm':[1.,1.,1.],
+      'voxel_volume_mm3':1.,'handedness':'right','anisotropic':False,'obliquity_degrees':[0.,0.,0.],
+      'status':'passed_header_checks','visual_alignment_review':'pending','frame':'RAS+',
+      'simulation_frame':'source_coded_frame_native_status_requires_source_provenance'}
+    b=json.loads((ROOT/'manifests/resect-deferred-qc-v1.json').read_bytes())['bounds']
+    r.update(status='review_passed',fixity_before='passed',fixity_after='passed',
+      image_qc={'raw_grid':nifti1_header_record(raw,'a'*64),
+        'header_qc':{'status':'passed'},'decoding_budget':q.streaming.scalar_budget([2,2,2],4,b),
+        'scalar_qc':{'status':'passed','voxels':8,'minimum':0.,'maximum':1.},
+        'geometry_qc':{'status':'passed','header':copy.deepcopy(geometry)}},
+      mask_qc={'status':'passed','raw_grid':nifti1_header_record(raw,'b'*64),
+        'decoding_budget':q.streaming.annotations.decoding_budget([2,2,2],4,b),
+        'positive_voxels':1,'background_voxels':7,'background_semantics':'unknown'},
+      mask_geometry={'status':'passed','header':copy.deepcopy(geometry)},
+      pair_geometry=q.pair_geometry(geometry,geometry))
+    for kind in ('image','mask'):
+        r[kind+'_prefix']={'header_base64':base64.b64encode(raw).decode(),'header_sha256':q.digest(raw)}
+    q.receipt_contract(r,row,intent,d)
+    return r,row,intent,d
+
+
+def test_exact_metadata_counts_roles_and_missing(q,metadata):
+    rows=[metadata['inherited_pair']]+[r['pair'] for r in metadata['pairs']]
+    assert len(rows)==len({r['id'] for r in rows})==25
+    assert len({r['patient_group'] for r in rows})==13
+    assert all(r['role']=='TRAIN' for r in rows)
+    assert [(r['patient_group'],r['phase']) for r in metadata['missing_annotations']]==[
+      ('RESECT:Case11','during'),('RESECT:Case11','after'),('RESECT:Case15','during')]
+    assert not set(r['patient_group'] for r in rows)&set(r['patient_group'] for r in metadata['excluded_members'])
+    assert len(q.initial_outcomes(metadata))==25
+    assert metadata['rights']['visible_cavity_not_total_removed_tissue_or_reward'] is True
+    assert metadata['rights']['commercial_clearance'] is False
+
+@pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+    r,row,i,d=receipt
+    if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+    elif mutation=='geometry_translation':
+        for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+            h['affine_ras_mm'][0][3]=1234.
+    elif mutation=='geometry_shape':
+        for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+        r['image_qc']['scalar_qc']['voxels']=12
+        r['mask_qc']['decoding_budget']['voxels']=12
+        r['mask_qc']['background_voxels']=11
+    elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+    r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+    with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+
+@pytest.mark.parametrize('field,value',[('training_admitted',1),('network_requests',False),
+ ('review_available_at','2026-01-01'),('geometric_admission',True)])
+def test_receipt_claims_are_typed_and_never_admit(q,receipt,field,value):
+    r,row,i,d=receipt;r[field]=value
+    with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+
+@pytest.mark.parametrize('mutation',['header_hash','source_hash','prefix','nonfinite','binary_total'])
+def test_source_and_scalar_inconsistencies_refused(q,receipt,mutation):
+    r,row,i,d=receipt
+    if mutation=='header_hash':r['mask_qc']['raw_grid']['header_sha256']='c'*64
+    elif mutation=='source_hash':r['mask_qc']['raw_grid']['source_file_sha256']='sha256:'+'c'*64
+    elif mutation=='prefix':r['image_prefix']['header_sha256']='c'*64
+    elif mutation=='nonfinite':r['image_qc']['scalar_qc']['maximum']=float('inf')
+    else:r['mask_qc']['positive_voxels']=8
+    with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+
+@pytest.mark.parametrize('status,code',[('timeout',None),('worker_failed',1),('completed',1)])
+def test_parent_failure_never_promotes_saved_scientific_receipt(q,metadata,monkeypatch,status,code):
+    import tempfile
+    with tempfile.TemporaryDirectory(dir=ROOT/'build') as directory:
+        run=Path(directory);row=metadata['pairs'][0]
+        declaration={'run_id':run.name}
+        monkeypatch.setattr(q,'validate_execution',lambda *a,**k:None)
+        monkeypatch.setattr(q,'validate_inputs',lambda *a,**k:None)
+        def supervisor(command,log,*,deadline,on_start):
+            on_start(987654321)
+            trial=run/'pairs'/row['pair']['id'];intent=json.loads((trial/'intent.json').read_bytes())
+            r=q.base_receipt(row,intent,declaration)
+            r.update(status='review_failed',fixity_before='passed',fixity_after='passed')
+            q.save(trial/'receipt.json',r)
+            return status,code
+        monkeypatch.setattr(q,'supervise',supervisor)
+        outcome={'status':'not_attempted'}
+        assert q.run_pair(run,row,metadata,declaration,outcome,time.monotonic()+60) is False
+        assert outcome['review_status']=='review_failed' and outcome['receipt_sha256']
+        assert outcome['status']=='failed_or_incomplete'

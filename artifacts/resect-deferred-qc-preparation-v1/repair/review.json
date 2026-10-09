@@ -1,0 +1,79 @@
+{
+  "status": "four_independent_receipt_binding_defects_repaired_source_frozen",
+  "files": [
+    {
+      "path": "manifests/resect-deferred-qc-v1.json",
+      "bytes": 58690,
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    },
+    {
+      "path": "scripts/resect_deferred_qc.py",
+      "bytes": 33860,
+      "sha256": "93599b1b0b577c9b74fad75229b78d8204d323a201241166866f824224ae4e2f"
+    },
+    {
+      "path": "tests/test_resect_deferred_qc.py",
+      "bytes": 13438,
+      "sha256": "da0b93e07b5d46c967c3254e069b208778c3f8c8d66c840fc85ffa6a27af5d38"
+    }
+  ],
+  "initial_negative_evidence": {
+    "path": "build/resect-deferred-qc-independent-review-v1/verification-initial.json",
+    "bytes": 4143,
+    "sha256": "5250018370602b2d092f109e66b9f61984af5619b569691ae5af304cbd595134"
+  },
+  "initial_evidence_all_hashes_unchanged": true,
+  "repairs": [
+    "Complete raw_grid record equals critical_evidence.nifti1_header_record reconstructed from retained348bytes/sourceSHA.",
+    "Every reported geometry field is independently recomputed from rawshape,codedq/sforms,units,spacing and established geometry gates; sourcebasename checked for actual frozenrows.",
+    "Image and mask decoding budgets are recomputed from rawdtype/dimensions and exact frozenmanifestbounds; prefix/fullmask bounds retained.",
+    "Mutual pairgeometry and scalarcount checks remain separate; no admission upgrades."
+  ],
+  "tests": {
+    "passed": 84,
+    "failures": 0,
+    "errors": 0,
+    "seconds": "5.089",
+    "original_independent_controls": 17,
+    "owner_controls": 67,
+    "original_four_failure_cases_now_pass": true,
+    "independent_control_file": {
+      "path": "build/resect-deferred-qc-independent-review-v1/test_independent.py",
+      "bytes": 7083,
+      "sha256": "782db45443f83c12c4daa28a54799dfaed94e558e6a06c82c8f4430276e89b25"
+    },
+    "metadata_preflight_passed": true,
+    "outputs": [
+      {
+        "path": "build/resect-deferred-qc-implementation-v2/repair-tests.xml",
+        "bytes": 11886,
+        "sha256": "50aa63032f2a5badf18216f43050c45df834be52c8e04425eb4c991727e570ea"
+      },
+      {
+        "path": "build/resect-deferred-qc-implementation-v2/repair-tests.log",
+        "bytes": 179,
+        "sha256": "06a616e1b1809321d8c7f3c5a0afde79c2b7ea1ad845c4b1bdcecf51f1c0583c"
+      },
+      {
+        "path": "build/resect-deferred-qc-implementation-v2/preflight.json",
+        "bytes": 723,
+        "sha256": "868fa207d8828b3ac77ee8f9a3957768228f943d37a5e11f5eea52c867d61abf"
+      }
+    ]
+  },
+  "scope": {
+    "tracked_edits": [
+      "scripts/resect_deferred_qc.py",
+      "tests/test_resect_deferred_qc.py"
+    ],
+    "manifest_unchanged": true,
+    "shared_helpers_unchanged": true,
+    "patient_payload_reads": 0,
+    "patient_array_decodes": 0,
+    "network_requests": 0,
+    "actual_qc_runs": 0,
+    "commits": 0
+  },
+  "command_after_independent_recheck": ".venv/bin/python -B scripts/resect_deferred_qc.py batch --run-id remaining-train-pairs-01 --max-seconds 600 --execute --manifest-sha 9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+  "writer_ownership": "released"
+}

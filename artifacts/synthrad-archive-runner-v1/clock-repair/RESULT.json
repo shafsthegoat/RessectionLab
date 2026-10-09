@@ -1,0 +1,114 @@
+{
+  "status": "DUAL_CLOCK_REPAIR_FROZEN_WRITER_RELEASED",
+  "finished_utc": "2026-10-09T00:23:09.589294+00:00",
+  "files": [
+    {
+      "path": "scripts/acquire_synthrad_task1_archive.py",
+      "bytes": 23693,
+      "sha256": "b1c62acd45232c113f882c11f3b209d20b33befb208189a88e4bdda194c5ba6d"
+    },
+    {
+      "path": "tests/test_synthrad_task1_archive.py",
+      "bytes": 21358,
+      "sha256": "4b4862478cb46be463192849e4daf97bd0b1d083e1ad621f678cf0de5a808a4f"
+    }
+  ],
+  "controls": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp=build/synthrad-archive-implementation-v1/deadline-repair/controls-final-tmp",
+      "tests/test_synthrad_task1_archive.py"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 1.9545104999560863,
+    "scientific_payload_requests": 0
+  },
+  "control_summary": "32 passed in 1.73s",
+  "reviewer_replay": {
+    "finding_repaired": true,
+    "campaign_expired_wall_seconds": 1.0,
+    "supervisor_now_reported": {
+      "state": "timeout",
+      "returncode": -15,
+      "log_bytes": 0,
+      "expiration_clock": "wall",
+      "sigterm_sent": true,
+      "termination_grace_seconds": 30,
+      "elapsed_seconds": 0.006689874920994043,
+      "finished_utc": "2026-10-09T00:22:25.570024+00:00"
+    },
+    "parent_closed_after_expiry_status": "interrupted",
+    "local_children": 1,
+    "network_requests": 0,
+    "patient_payload_reads": 0,
+    "method": "Real run_one/supervise with harmless local child replacing worker; fake wall time crosses campaign end after on_start while monotonic deadline remains in future."
+  },
+  "metadata_preflight": {
+    "status": "metadata_identity_passed",
+    "files": 1,
+    "source_bytes": 14471900926,
+    "runtime": {
+      "scripts/acquire_synthrad_task1_archive.py": "b1c62acd45232c113f882c11f3b209d20b33befb208189a88e4bdda194c5ba6d",
+      "scripts/acquire_resect_train_originals.py": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50",
+      "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+      "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    "client": {
+      "executable": "/usr/bin/curl",
+      "platform": "darwin",
+      "macos_version": "26.6",
+      "trust": "existing_macos_system_store",
+      "available": true,
+      "sha256": "9b3d0c8eae03bd1be5e5c13c35a2464fc9a7ec719eff5deb94b2905dad25244e",
+      "version": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.1"
+    },
+    "bounds": {
+      "workers": 1,
+      "compressed_cache_bytes": 34359738368,
+      "free_disk_reserve_bytes": 8589934592,
+      "max_attempts_per_object": 3,
+      "network_attempt_seconds": 21600,
+      "supervisor_termination_grace_seconds": 30,
+      "hash_or_recovery_phase_seconds": 1800,
+      "total_campaign_seconds": 86400,
+      "minimum_cooldown_seconds": 900,
+      "retry_after": "Honor longer server Retry-After; persist and defer if beyond campaign deadline.",
+      "memory_stream_chunk_bytes": 1048576,
+      "streaming_rss_target_bytes": 536870912,
+      "headers_per_attempt_bytes": 65536,
+      "worker_log_bytes": 65536,
+      "source_metadata_file_bytes": 2097152,
+      "scope_includes": "All retained partial, staged, verified and metadata/log files, hardlink-inode deduplicated; no decompression allocation.",
+      "disk_reservation": "Existing helper conservatively reserves two times remaining source bytes plus 65,536 before each attempt; initial reservation 28,943,867,388 bytes fits 32 GiB."
+    },
+    "network_requests": 0,
+    "payload_reads": 0,
+    "training_admitted": false,
+    "spatial_planning_admitted": false,
+    "header_qc": "not_run",
+    "geometry_qc": "not_run",
+    "anatomy_qc": "not_run",
+    "decoded_array_bytes": 0,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "existing_helpers_and_frozen_inputs_unchanged": true,
+  "original_failures_preserved": [
+    "initial-review-reproduction.json",
+    "controls-1.log",
+    "reviewer-replay.log"
+  ],
+  "implementation": "A local DualDeadline implements the unchanged helpers comparison/subtraction contract. Parent and worker hash/recovery phases, native transfer polling, and supervisor use current monotonic plus current wall time. Intent values remain numeric. Local/network wall phase caps are 1800/21600 seconds; campaign end remains the original persisted epoch. Supervisor reserves declared grace and cleanup uses remaining time on both clocks.",
+  "network_requests": 0,
+  "scientific_payload_reads": 0,
+  "remaining_unknowns": [
+    "Real transfer throughput",
+    "Provider HTTP 206 support"
+  ],
+  "source_writer_released": true
+}

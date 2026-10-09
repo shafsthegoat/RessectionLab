@@ -1,0 +1,61 @@
+{
+  "created_utc": "2026-10-09T00:18:57.626529+00:00",
+  "denominator": {
+    "frozen_train_people": 14,
+    "inherited_pairs": 1,
+    "missing_timepoints": 3,
+    "new_pairs": 24,
+    "people_with_pairs": 13,
+    "unique_pair_ids": 25
+  },
+  "final_source_after_controls_verified": true,
+  "independent_controls": {
+    "failed": 0,
+    "junit_sha256": "df700b5a689d2c045abf90257d49ea2ba04f78bf807efdf74230ed86022f7b61",
+    "log_sha256": "dcd3c62ec1aa95c643b0f40cd7c7f3b96c072dab18a1dd8bc16b8f356d491b2d",
+    "passed": 17,
+    "seconds": 0.58,
+    "source_unchanged_from_harness_corrected_initial_controls": true,
+    "test_sha256": "782db45443f83c12c4daa28a54799dfaed94e558e6a06c82c8f4430276e89b25"
+  },
+  "initial_negative_preserved": {
+    "genuine_failures": 4,
+    "harness_correction_was_prior_to_production_repair": true,
+    "initial_harness_exception_class_errors": 2,
+    "now_all_rejected": true,
+    "receipt_sha256": "5250018370602b2d092f109e66b9f61984af5619b569691ae5af304cbd595134"
+  },
+  "native_runs": 0,
+  "network_requests": 0,
+  "no_execution_release_from_reviewer": true,
+  "owner_evidence_not_repeated": {
+    "includes_same17_independent_controls": true,
+    "receipt_sha256": "8a5a5a0ec1d63f1de2d03cff707dbeadac2629817dd05437089e3c026cbe256a",
+    "reported_passed": 84,
+    "separate_owner_controls": 67
+  },
+  "patient_arrays_decoded": 0,
+  "patient_payloads_read": 0,
+  "repair_review": "Complete raw-grid record is independently reconstructed from saved348-byte header; full reported geometry is compared to header-derived coded transforms, units, shape and spacing; both decoding budgets and offset/full-mask limits bind raw shape/dtype and frozen manifest bounds. Pair correspondence remains separate and grants no anatomical admission. No source/helper numerical rule altered.",
+  "resource_limits": {
+    "publication": "Atomic no-overwrite receipts; filesystem failure or SIGKILL cannot guarantee final receipt",
+    "rss": "Observed high-water only; no hard process RSS guarantee claimed",
+    "working_array_bound": "Explicit chunk bounds, not total interpreter/library RSS"
+  },
+  "reviewed_source_sha256": {
+    "build/resect-deferred-qc-implementation-v2/review.json": "8a5a5a0ec1d63f1de2d03cff707dbeadac2629817dd05437089e3c026cbe256a",
+    "manifests/resect-deferred-qc-v1.json": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+    "scripts/resect_deferred_qc.py": "93599b1b0b577c9b74fad75229b78d8204d323a201241166866f824224ae4e2f",
+    "tests/test_resect_deferred_qc.py": "da0b93e07b5d46c967c3254e069b208778c3f8c8d66c840fc85ffa6a27af5d38"
+  },
+  "schema": "resect-deferred-qc-independent-review-v1",
+  "scientific_operations": "Metadata plus header-control bytes and mocked process/refusal paths only",
+  "scope_checks": [
+    "Exact24 new plus1 inherited Case3-during receipt retained",
+    "Fixed14 TRAIN people;13 people with pairs;3 missing timepoints remain unavailable, not negative masks",
+    "No role, rights, source authority, third-party mirror transport or original failure-history changes",
+    "One worker; worker60s/cohort600s checked; bounded streaming; child group kill/reap and receipt preservation",
+    "Header, scalar/binary content and source-coded grid checks are separate; all training, scanner-frame and anatomical/planning admissions remain false"
+  ],
+  "status": "implementation_ready_for_separate_root_release"
+}

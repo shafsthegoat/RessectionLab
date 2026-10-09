@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "reviewed_utc": "2026-10-09T00:25:38.685242+00:00",
+  "status": "READY_FOR_FROZEN_BYTE_ONLY_ARCHIVE_ACQUISITION",
+  "scope": "Narrow re-review of live wall-clock repair; prior blocked review and reproduction retained unchanged.",
+  "runtime_bindings": {
+    "scripts/acquire_synthrad_task1_archive.py": "b1c62acd45232c113f882c11f3b209d20b33befb208189a88e4bdda194c5ba6d",
+    "scripts/acquire_resect_train_originals.py": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50",
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "test_binding": {
+    "path": "tests/test_synthrad_task1_archive.py",
+    "bytes": 21358,
+    "sha256": "4b4862478cb46be463192849e4daf97bd0b1d083e1ad621f678cf0de5a808a4f"
+  },
+  "resolved_finding": "SYNTHRAD-RUNNER-01",
+  "repair_verified": [
+    "DualDeadline comparison dispatch supports unchanged io.check_deadline(time.monotonic() >= deadline); subtraction returns minimum live monotonic and wall remaining time.",
+    "Worker transfer polling, prefix validation and all parent/worker hash or recovery paths receive live dual-clock guards; numeric intent fields retain persisted campaign identity.",
+    "Parent loop, retry waits and launch boundaries recheck wall clock; phase guards cap both clocks at1800s and network at21600s.",
+    "Supervisor checks expiry before completion and caps SIGTERM grace against its pre-reserved monotonic/wall endpoints; campaign minus30s reservation prevents extending fixed campaign for cleanup.",
+    "Darwin EPERM on group query does not claim cleanup; signaling retry requires owned-child reap and retries process-group signal. Local replay reaped child and preserved interruption.",
+    "Existing helper and source/role/proof/root-freeze hashes remain unchanged and load/runtime bindings pass."
+  ],
+  "independent_controls": {
+    "original_live_supervisor_reproduction": {
+      "finding_repaired": true,
+      "campaign_expired_wall_seconds": 1.0,
+      "supervisor_now_reported": {
+        "state": "timeout",
+        "returncode": -15,
+        "log_bytes": 0,
+        "expiration_clock": "wall",
+        "sigterm_sent": true,
+        "termination_grace_seconds": 30,
+        "elapsed_seconds": 0.00612508412450552,
+        "finished_utc": "2026-10-09T00:24:44.379171+00:00"
+      },
+      "parent_closed_after_expiry_status": "interrupted",
+      "local_children": 1,
+      "network_requests": 0,
+      "patient_payload_reads": 0,
+      "method": "Real run_one/supervise with harmless local child replacing worker; fake wall time crosses campaign end after on_start while monotonic deadline remains in future."
+    },
+    "midstream_hash_wall_expiry": {
+      "wall_hash_expiry_refused": true,
+      "sha_bytes_processed_before_stop": 1048576,
+      "block_updates": 1,
+      "source_unchanged": true,
+      "completion_published": false,
+      "phase_wall_cap_seconds": 1800,
+      "monotonic_elapsed_seconds": 0.005945415934547782,
+      "network_requests": 0,
+      "patient_payload_reads": 0,
+      "method": "Real unchanged recover/verify/file_hash; independent SHA update wrapper advances only wall clock after first1MiB, before helper next deadline check."
+    },
+    "focused_repair_tests": "4 passed,28 deselected in0.13s",
+    "prior_independent_lifecycle_range_tls_tests": "27 passed before narrow repair; no unrelated changes identified."
+  },
+  "evidence": [
+    {
+      "path": "build/synthrad-archive-runner-independent-review-v1/verification.json",
+      "bytes": 4632,
+      "sha256": "ccb098860b78ff5307c7908708655e5f7c70864305390f7321a2565404f88593"
+    },
+    {
+      "path": "build/synthrad-archive-runner-independent-review-v1/live-campaign-repair-reproduction.json",
+      "bytes": 677,
+      "sha256": "5950f4e65da0217884dd991990c258561cec6b38d584e65460a15d7b877720fc"
+    },
+    {
+      "path": "build/synthrad-archive-runner-independent-review-v1/hash-wall-repair-reproduction.json",
+      "bytes": 474,
+      "sha256": "82435c07e913d8c00e0981528e777ba4f9b456e60ae77ef63101f37df7a2dc3b"
+    },
+    {
+      "path": "build/synthrad-archive-runner-independent-review-v1/repair-controls.log",
+      "bytes": 113,
+      "sha256": "9036e134ad34117ac33716f6dcb38dbf3547b51f155856098af834588cb479da"
+    }
+  ],
+  "remaining_blocking_findings": [],
+  "limits": [
+    "Readiness covers exact frozen archive byte acquisition only; no extraction, patient image decoding, scientific admission or training.",
+    "Actual14,471,900,926-byte throughput, provider206resume support and streaming RSS remain unmeasured; refusal/failure must preserve state within declared bounds.",
+    "A sleeping host cannot execute cleanup until resume; live checks now stop work at the next polling/block boundary after resume.",
+    "Minor scheduling/system-call cleanup latency is not evidence of a renewed campaign; no extension or reset is permitted."
+  ],
+  "review_actions": {
+    "network_requests": 0,
+    "patient_payload_reads": 0,
+    "tracked_files_edited": 0,
+    "commits": 0
+  }
+}

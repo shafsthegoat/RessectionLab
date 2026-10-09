@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "reviewed_utc": "2026-10-09T00:17:42.751398+00:00",
+  "status": "NOT_READY_LIVE_WALL_CAMPAIGN_BOUND_REQUIRES_FIX",
+  "source_bindings": [
+    {
+      "path": "scripts/acquire_synthrad_task1_archive.py",
+      "bytes": 20387,
+      "sha256": "34ab41aa18c47a17c4dbfa89fb736a6d6c97526986e76f32cc3c46a12c4e94df"
+    },
+    {
+      "path": "tests/test_synthrad_task1_archive.py",
+      "bytes": 17813,
+      "sha256": "0bf74688fd2c0fc61dc50811d870e75645477e5fb11771b004a4b9d948c6e518"
+    }
+  ],
+  "scope": "Focused independent read-only runner review; all output confined to ignored build directory; no new metadata audit, archive payload or network request.",
+  "verified_controls": [
+    "Exact frozen source/role/proof/root-freeze hashes and unchanged helper bindings loaded successfully.",
+    "64KiB child log cap is enforced while continuously draining the pipe; overflow stops process group.",
+    "SIGTERM grace precedes forced process-group SIGKILL; cooperative and uncooperative controls pass.",
+    "Immutable persisted campaign epoch is retained across restart; three sequential source/manifest-bound intents prevent fourth attempt.",
+    "Monotonic network deadline is capped to21600s and hash/recovery calls to1800s; network includes worker prefix-check overhead conservatively.",
+    "32GiB inode-deduplicated retained cache,8GiB free reserve and double remaining-byte reservation accommodate14.47GB source; no smaller archive cap.",
+    "Exact200initial/206resume framing,identityencoding,fullpublishedMD5 and measuredSHA256 precede no-overwrite publication; invalid ranges and finalfixity preserveprefix.",
+    "Verified/usr/bin/curl systemtrust,-q,no redirects,no retries,HTTPSonly and no insecure flags; actual native request was blocked in tests.",
+    "No extraction,decoding,trainingor scientificadmission performed or enabled."
+  ],
+  "test_results": {
+    "owner_suite_independently_run": "27 passed in1.71s",
+    "log": {
+      "path": "build/synthrad-archive-runner-independent-review-v1/owner-controls.log",
+      "bytes": 99,
+      "sha256": "4dc7bff85035fe9cb5dd1a0e5e331eafe070acc965ab2e1a45bab2999292eed3"
+    },
+    "independent_live_clock_reproduction": {
+      "path": "build/synthrad-archive-runner-independent-review-v1/live-campaign-reproduction.json",
+      "bytes": 650,
+      "sha256": "3ac4169a268bff59a6c8d8d8366f623f59655018b0bd40d699803f8e4136d1af"
+    }
+  },
+  "findings": [
+    {
+      "id": "SYNTHRAD-RUNNER-01",
+      "priority": 1,
+      "title": "Recheck persisted wall-clock campaign cap after live host sleep",
+      "file": "scripts/acquire_synthrad_task1_archive.py",
+      "lines": [
+        190,
+        193,
+        243,
+        324,
+        333
+      ],
+      "trigger": "Existing parent/worker survives macOS sleep or a wall-clock advance beyond persisted deadline_epoch while monotonic elapsed time remains below its once-mapped deadline.",
+      "behavior": "run() and worker() convert wall remaining once; supervise() and reused hash/recovery helpers subsequently check only monotonic values. Live transfer/hash can continue after the declared24-hour wall campaign, despite correct restart accounting.",
+      "independent_evidence": "Real run_one/supervise with one harmless local child; fake wall time advances to campaign deadline+1 in on_start. Supervisor still returns completed/code0/noSIGTERM. No network or payload involved.",
+      "required_fix": "Enforce a live absolute wall deadline in supervisor polling, cap cleanup grace to remaining campaign time, recheck it before launch/recovery and during long parent-side hash/recovery. Preserve existing attempt/campaign history; add offline control advancing wall time independently of monotonic during active work."
+    }
+  ],
+  "retained_review_harness_failures": [
+    "First owner-suite invocation had1passed/26setup errors because reviewer had not yet created the parent basetemp directory; corrected onlyreview setup,then27pass.",
+    "First independent clock-control script expected transport_deferred for absentheaders but actual safeparentstatus wasinterrupted; originalscript/localreceipts retained. Corrected onlyreview assertion and reran in freshv2 directory; clockgap reproduced."
+  ],
+  "limits": [
+    "Provider206support,14.47GB throughput and512MiBRSS target remain unmeasured; noactualtransfer was attempted.",
+    "Only the livewallcampaign issue blocks readiness; no further broad audit is requested after its focused fix/review."
+  ],
+  "actions": {
+    "network_requests": 0,
+    "patient_payload_bytes_read": 0,
+    "tracked_files_edited": 0,
+    "commits": 0
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "status": "implemented_controls_passed_ready_for_independent_frozen_source_review",
+  "files": [
+    {
+      "path": "manifests/resect-deferred-qc-v1.json",
+      "bytes": 58690,
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    },
+    {
+      "path": "scripts/resect_deferred_qc.py",
+      "bytes": 29064,
+      "sha256": "867d0d6e62ceda4df993d723ba8ec40eb0405f4f70fbe362bef4a7dee92333db"
+    },
+    {
+      "path": "tests/test_resect_deferred_qc.py",
+      "bytes": 11858,
+      "sha256": "2a55e3eaa1a2fb1efb5697eb64fc2d9e20bbb49c3abe0cdbd7617212abd1846b"
+    }
+  ],
+  "design_basis": {
+    "path": "build/resect-deferred-qc-preparation-v1/executable-design.json",
+    "bytes": 9249,
+    "sha256": "4a1e43f0414179c818db587047b09cd108d23a3518e5fd7cf8a40c31100e890e"
+  },
+  "tests": {
+    "passed": 77,
+    "failures": 0,
+    "errors": 0,
+    "seconds": "4.363",
+    "new_adapter_controls": 57,
+    "existing_extension_framing_controls": 20,
+    "actual_process_control": "generic child callback failure terminated/reaped, no patient operation",
+    "metadata_only_preflight_passed": true,
+    "initial_failures": []
+  },
+  "retained_test_artifacts": [
+    {
+      "path": "build/resect-deferred-qc-implementation-v1/initial-tests.log",
+      "bytes": 99,
+      "sha256": "c29d7920d41393bcd42d8ab863461c14b100409c9c675020c9e88a80f35fd347"
+    },
+    {
+      "path": "build/resect-deferred-qc-implementation-v1/initial-tests.xml",
+      "bytes": 6875,
+      "sha256": "ff2fc588f88facada3004b58628541810b8d80e9cacf736d7a4fdc407fbf4a89"
+    },
+    {
+      "path": "build/resect-deferred-qc-implementation-v1/final-tests.log",
+      "bytes": 179,
+      "sha256": "deae2067c0bd3b911764560bf4aaa226cb5c1fe3249e7f24f2a05fb63ebc0bd0"
+    },
+    {
+      "path": "build/resect-deferred-qc-implementation-v1/final-tests.xml",
+      "bytes": 10850,
+      "sha256": "1c1d5b0407ec369b8e7a12800f93a5f9cc0cd6039f6f15d7ee1c87ce92bb86dc"
+    },
+    {
+      "path": "build/resect-deferred-qc-implementation-v1/preflight-initial.json",
+      "bytes": 723,
+      "sha256": "868fa207d8828b3ac77ee8f9a3957768228f943d37a5e11f5eea52c867d61abf"
+    },
+    {
+      "path": "build/resect-deferred-qc-implementation-v1/preflight-final.json",
+      "bytes": 723,
+      "sha256": "868fa207d8828b3ac77ee8f9a3957768228f943d37a5e11f5eea52c867d61abf"
+    }
+  ],
+  "scope": {
+    "new_pairs": 24,
+    "inherited_case3_during_pairs": 1,
+    "total_qualified_pairs": 25,
+    "people_with_pairs": 13,
+    "frozen_train_people": 14,
+    "missing_label_timepoints_retained": 3,
+    "mirror_import_metadata_receipts_joined": 24,
+    "original_provider_failures_preserved": true,
+    "all_shared_helper_pins_unchanged": true
+  },
+  "controls": [
+    "Exact scope/roles/missing labels/rights/parent receipts/source and published versus measured fixity",
+    "Explicit frozen execution and budget refusal",
+    "Bounded header-only control bytes and chunk-budget algebra; no patient fixtures or arrays",
+    "Interrupted before/after child start retains attempted path, intent, pid if known and raw receipt hash even if rejected",
+    "Late parent bookkeeping cannot promote child completion; remaining denominator retained",
+    "All scientific refusals can finish the bounded phase while remaining review_failed",
+    "Reported pass requires consistent raw header/source binding, scalar counts, geometry, and no admission claims"
+  ],
+  "resource_contract": {
+    "workers": 1,
+    "cohort_seconds": 600,
+    "worker_seconds": 60,
+    "chunk_voxels": 65536,
+    "max_explicit_chunk_working_bytes": 1245184,
+    "decoded_size_bound_is_refusal_not_all_files_guarantee": true,
+    "total_process_rss": "actual per-worker high-water reported on future execution; not a hard guarantee",
+    "separate_qc_lock": true
+  },
+  "claims": {
+    "anatomy_qc": "not_run",
+    "clinical_accuracy": "not_established",
+    "geometric_admission": false,
+    "anatomical_admission": false,
+    "scanner_frame_admitted": false,
+    "training_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "network_requests": 0,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "array_operation": "source_values_counted_only_no_array_retained"
+  },
+  "execution_this_implementation": {
+    "network_requests": 0,
+    "scientific_payload_reads": 0,
+    "scientific_array_decodes": 0,
+    "source_image_or_mask_writes": 0,
+    "actual_intake_or_qc_runs": 0,
+    "commits": 0,
+    "tracked_source_scope": [
+      "manifests/resect-deferred-qc-v1.json",
+      "scripts/resect_deferred_qc.py",
+      "tests/test_resect_deferred_qc.py"
+    ]
+  },
+  "command_after_independent_review": ".venv/bin/python -B scripts/resect_deferred_qc.py batch --run-id remaining-train-pairs-01 --max-seconds 600 --execute --manifest-sha 9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+  "preflight_command": ".venv/bin/python -B scripts/resect_deferred_qc.py preflight",
+  "writer_ownership": "released_after_this_report"
+}

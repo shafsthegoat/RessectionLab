@@ -1,0 +1,170 @@
+{
+  "scope": "read-only original image header diagnosis; no mask payload read, no scalar decoding, no QC retry",
+  "source_path": "data/annotations/resect-seg-v1/originals/Case2-US-during.nii.gz",
+  "original_file_sha256_from_retained_fixity_receipt": "8b5560b8b777316d1ba0cb4b8b48ebb577818b0e300e149d51e0274f376d7251",
+  "compressed_prefix_bytes_read": 65536,
+  "maximum_returned_and_decoded_bytes": 348,
+  "raw_header_sha256": "46cd89c704234834486f7726c23374c1350182b8af556ca73e39da2d4b8b2970",
+  "header": {
+    "qform_code": 0,
+    "sform_code": 1,
+    "shape": [
+      295,
+      334,
+      304
+    ],
+    "dtype": "float32",
+    "units": [
+      "mm",
+      "sec"
+    ],
+    "quaternion_bcd": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "quaternion_w_squared": 1.0,
+    "nibabel_quaternion_threshold": 3.5762786865234375e-07
+  },
+  "steps": {
+    "get_data_dtype": {
+      "status": "passed",
+      "value": "float32"
+    },
+    "get_data_shape": {
+      "status": "passed",
+      "value": [
+        295,
+        334,
+        304
+      ]
+    },
+    "get_qform_coded": {
+      "status": "passed",
+      "value": "(None, 0)"
+    },
+    "get_sform_coded": {
+      "status": "passed",
+      "value": "(array([[ 1.43377736e-01,  6.87274709e-02,  1.43260241e-01,\n        -3.75131073e+01],\n       [-7.85449669e-02,  1.98394343e-01, -1.65680666e-02,\n         3.98794289e+01],\n       [-1.38121858e-01, -4.14770581e-02,  1.58133283e-01,\n         5.88608551e+01],\n       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,\n         1.00000000e+00]]), 1)"
+    },
+    "get_qform_uncoded": {
+      "status": "failed",
+      "error_type": "HeaderDataError",
+      "message": "qfac (pixdim[0]) should be 1 or -1",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 22, in <module>\n  File \"<stdin>\", line 20, in <lambda>\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel/nifti1.py\", line 1151, in get_qform\n    raise HeaderDataError('qfac (pixdim[0]) should be 1 or -1')\nnibabel.spatialimages.HeaderDataError: qfac (pixdim[0]) should be 1 or -1\n"
+    },
+    "source_header_record": {
+      "status": "failed",
+      "error_type": "HeaderDataError",
+      "message": "qfac (pixdim[0]) should be 1 or -1",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 22, in <module>\n  File \"<stdin>\", line 20, in <lambda>\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/critical_evidence.py\", line 45, in nifti1_header_record\n    \"raw_grid\": _header_summary(header)}\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/critical_evidence.py\", line 52, in _header_summary\n    \"qform_numeric_including_inactive\": header.get_qform().tolist(),\n                                        ^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel/nifti1.py\", line 1151, in get_qform\n    raise HeaderDataError('qfac (pixdim[0]) should be 1 or -1')\nnibabel.spatialimages.HeaderDataError: qfac (pixdim[0]) should be 1 or -1\n"
+    },
+    "geometry_from_header": {
+      "status": "passed",
+      "value": {
+        "file": "Case2-US-during.nii.gz",
+        "shape": [
+          295,
+          334,
+          304
+        ],
+        "affine_ras_mm": [
+          [
+            0.14337773621082306,
+            0.06872747093439102,
+            0.14326024055480957,
+            -37.51310729980469
+          ],
+          [
+            -0.0785449668765068,
+            0.19839434325695038,
+            -0.01656806655228138,
+            39.87942886352539
+          ],
+          [
+            -0.1381218582391739,
+            -0.041477058082818985,
+            0.15813328325748444,
+            58.86085510253906
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 0,
+        "sform_code": 1,
+        "qform_native": null,
+        "sform_native": [
+          [
+            0.14337773621082306,
+            0.06872747093439102,
+            0.14326024055480957,
+            -37.51310729980469
+          ],
+          [
+            -0.0785449668765068,
+            0.19839434325695038,
+            -0.01656806655228138,
+            39.87942886352539
+          ],
+          [
+            -0.1381218582391739,
+            -0.041477058082818985,
+            0.15813328325748444,
+            58.86085510253906
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.21401900566541832,
+          0.2140189875796065,
+          0.21401900062119375
+        ],
+        "voxel_volume_mm3": 0.009802954322816264,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          47.93834346195247,
+          22.02900144049994,
+          42.36433150503224
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      }
+    }
+  },
+  "error_mro": [
+    "HeaderDataError",
+    "Exception",
+    "BaseException",
+    "object"
+  ],
+  "preserved_record_hashes": {
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/batch.json": "8a5482c48df4ddf3cf91eb50e81221b70f298d475785f242381296cb92bc2a01",
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/receipt.json": "29771a7898c152ab8661047bc1126ad9001e89ad08f9c5b29806568afc7d03c1",
+    "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/outcome.json": "aa1f08f1216b368b934b8badd66d108b7fa6d7f9f1e91ad3a5fe6b92b719d6b5",
+    "scripts/resect_deferred_qc.py": "93599b1b0b577c9b74fad75229b78d8204d323a201241166866f824224ae4e2f"
+  },
+  "all_protected_metadata_and_source_unchanged": true,
+  "patient_scalar_arrays_decoded": 0,
+  "new_network_requests": 0,
+  "tracked_edits": 0
+}

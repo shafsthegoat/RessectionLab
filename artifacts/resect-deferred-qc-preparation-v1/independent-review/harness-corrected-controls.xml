@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="17" time="0.777" timestamp="2026-10-08T17:22:16.617064-04:00" hostname="Sayems-MacBook-Pro-8.local"><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_exact_metadata_counts_roles_and_missing" time="0.074" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_raw_header_and_reported_geometry_are_same_record[raw_summary]" time="0.442"><failure message="Failed: DID NOT RAISE Refusal">q = &lt;module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'&gt;
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'raw_summary'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+&gt;       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed</failure></testcase><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_raw_header_and_reported_geometry_are_same_record[geometry_translation]" time="0.002"><failure message="Failed: DID NOT RAISE Refusal">q = &lt;module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'&gt;
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'geometry_translation'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+&gt;       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed</failure></testcase><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_raw_header_and_reported_geometry_are_same_record[geometry_shape]" time="0.002"><failure message="Failed: DID NOT RAISE Refusal">q = &lt;module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'&gt;
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'geometry_shape'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+&gt;       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed</failure></testcase><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_raw_header_and_reported_geometry_are_same_record[image_budget]" time="0.002"><failure message="Failed: DID NOT RAISE Refusal">q = &lt;module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'&gt;
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'image_budget'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+&gt;       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed</failure></testcase><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_receipt_claims_are_typed_and_never_admit[training_admitted-1]" time="0.002" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_receipt_claims_are_typed_and_never_admit[network_requests-False]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_receipt_claims_are_typed_and_never_admit[review_available_at-2026-01-01]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_receipt_claims_are_typed_and_never_admit[geometric_admission-True]" time="0.002" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_source_and_scalar_inconsistencies_refused[header_hash]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_source_and_scalar_inconsistencies_refused[source_hash]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_source_and_scalar_inconsistencies_refused[prefix]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_source_and_scalar_inconsistencies_refused[nonfinite]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_source_and_scalar_inconsistencies_refused[binary_total]" time="0.001" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_parent_failure_never_promotes_saved_scientific_receipt[timeout-None]" time="0.045" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_parent_failure_never_promotes_saved_scientific_receipt[worker_failed-1]" time="0.042" /><testcase classname="build.resect-deferred-qc-independent-review-v1.test_independent" name="test_parent_failure_never_promotes_saved_scientific_receipt[completed-1]" time="0.040" /></testsuite></testsuites>

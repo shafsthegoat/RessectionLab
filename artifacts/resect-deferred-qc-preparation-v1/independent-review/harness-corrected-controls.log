@@ -1,0 +1,108 @@
+.FFFF............                                                        [100%]
+=================================== FAILURES ===================================
+______ test_raw_header_and_reported_geometry_are_same_record[raw_summary] ______
+
+q = <module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'>
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'raw_summary'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+>       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed
+_ test_raw_header_and_reported_geometry_are_same_record[geometry_translation] __
+
+q = <module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'>
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'geometry_translation'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+>       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed
+____ test_raw_header_and_reported_geometry_are_same_record[geometry_shape] _____
+
+q = <module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'>
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'geometry_shape'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+>       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed
+_____ test_raw_header_and_reported_geometry_are_same_record[image_budget] ______
+
+q = <module 'resect_deferred_qc' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_deferred_qc.py'>
+receipt = ({'schema': 'resect-pair-review-v1', 'manifest_sha256': '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcaf..., 'mask_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, {}, {'run_id': 'header-control'})
+mutation = 'image_budget'
+
+    @pytest.mark.parametrize('mutation',['raw_summary','geometry_translation','geometry_shape','image_budget'])
+    def test_raw_header_and_reported_geometry_are_same_record(q,receipt,mutation):
+        r,row,i,d=receipt
+        if mutation=='raw_summary': r['image_qc']['raw_grid']['raw_grid']['shape']=[9,9,9]
+        elif mutation=='geometry_translation':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):
+                h['affine_ras_mm'][0][3]=1234.
+        elif mutation=='geometry_shape':
+            for h in (r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header']):h['shape']=[2,2,3]
+            r['image_qc']['scalar_qc']['voxels']=12
+            r['mask_qc']['decoding_budget']['voxels']=12
+            r['mask_qc']['background_voxels']=11
+        elif mutation=='image_budget':r['image_qc']['decoding_budget']['voxels']=999
+        r['pair_geometry']=q.pair_geometry(r['image_qc']['geometry_qc']['header'],r['mask_geometry']['header'])
+>       with pytest.raises(q.Refusal):q.receipt_contract(r,row,i,d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Refusal
+
+build/resect-deferred-qc-independent-review-v1/test_independent.py:88: Failed
+=========================== short test summary info ============================
+FAILED build/resect-deferred-qc-independent-review-v1/test_independent.py::test_raw_header_and_reported_geometry_are_same_record[raw_summary]
+FAILED build/resect-deferred-qc-independent-review-v1/test_independent.py::test_raw_header_and_reported_geometry_are_same_record[geometry_translation]
+FAILED build/resect-deferred-qc-independent-review-v1/test_independent.py::test_raw_header_and_reported_geometry_are_same_record[geometry_shape]
+FAILED build/resect-deferred-qc-independent-review-v1/test_independent.py::test_raw_header_and_reported_geometry_are_same_record[image_budget]
+4 failed, 13 passed in 0.78s

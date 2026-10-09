@@ -1,0 +1,45 @@
+............................F...                                         [100%]
+=================================== FAILURES ===================================
+________ test_real_supervisor_checks_wall_jump_and_retains_interruption ________
+
+archive = <module 'synthrad_controls' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/acquire_synthrad_task1_archive.py'>
+case = (<synthrad_controls.Queue object at 0x10b650290>, {'id': 'synthrad-2023-task1-archive', 'source_url': 'https://example...est-fixture', 'source_path': 'Task1.zip', 'destination': 'data/acquisition/synthrad-task1-v1/verified/Task1.zip', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b653530>
+
+    def test_real_supervisor_checks_wall_jump_and_retains_interruption(archive,case,monkeypatch):
+        queue,source=case
+        wall=[time.time()]
+        monkeypatch.setattr(archive.time,'time',lambda:wall[0])
+        active=archive.campaign(queue,create=True)
+        def launcher(command,log,**kwargs):
+            started=kwargs['on_start']
+            def advance(pid):
+                started(pid)
+                wall[0]=active['deadline_epoch']+1
+            return archive.supervise([sys.executable,'-B','-c','import time;time.sleep(5)'],log,
+                deadline=kwargs['deadline'],grace_seconds=kwargs['grace_seconds'],
+                log_bytes=kwargs['log_bytes'],on_start=advance)
+>       result=archive.run_one(queue,source,{}, {'available':True},time.monotonic()+86400,active,launcher=launcher)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_synthrad_task1_archive.py:393: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/acquire_synthrad_task1_archive.py:336: in run_one
+    supervision = launcher(command, trial / 'worker.log', deadline=supervisor_deadline,
+tests/test_synthrad_task1_archive.py:390: in launcher
+    return archive.supervise([sys.executable,'-B','-c','import time;time.sleep(5)'],log,
+scripts/acquire_synthrad_task1_archive.py:241: in supervise
+    group_signal(signal.SIGKILL)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+signum = <Signals.SIGKILL: 9>
+
+    def group_signal(signum):
+        try:
+>           os.killpg(process.pid, signum)
+E           PermissionError: [Errno 1] Operation not permitted
+
+scripts/acquire_synthrad_task1_archive.py:190: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_synthrad_task1_archive.py::test_real_supervisor_checks_wall_jump_and_retains_interruption
+1 failed, 31 passed in 1.77s

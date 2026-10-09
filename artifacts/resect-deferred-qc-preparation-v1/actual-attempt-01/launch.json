@@ -1,0 +1,23 @@
+{
+  "started_utc": "2026-10-09T00:19:03.538271+00:00",
+  "source_commit": "da9cdaafbc0e94d1579607c6460034e1b2d88ed7",
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "scripts/resect_deferred_qc.py",
+    "batch",
+    "--run-id",
+    "remaining-train-pairs-01",
+    "--max-seconds",
+    "600",
+    "--execute",
+    "--manifest-sha",
+    "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+  ],
+  "files_sha256": {
+    "scripts/resect_deferred_qc.py": "93599b1b0b577c9b74fad75229b78d8204d323a201241166866f824224ae4e2f",
+    "tests/test_resect_deferred_qc.py": "da0b93e07b5d46c967c3254e069b208778c3f8c8d66c840fc85ffa6a27af5d38",
+    "manifests/resect-deferred-qc-v1.json": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+  },
+  "scope": "Actual24remainingacquiredTRAINpairs; existingrolesandmissingannotationspreserved; noanatomicalortrainingadmission"
+}

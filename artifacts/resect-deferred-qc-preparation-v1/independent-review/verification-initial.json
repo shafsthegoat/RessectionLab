@@ -1,0 +1,101 @@
+{
+  "created_utc": "2026-10-08T21:23:06.438846+00:00",
+  "direct_tests": [
+    {
+      "failed": 6,
+      "genuine_failures": 4,
+      "harness_exception_class_mismatches": 2,
+      "name": "initial-controls",
+      "passed": 11,
+      "seconds": 0.66
+    },
+    {
+      "failed": 4,
+      "genuine_failures": 4,
+      "harness_only_change": "Accept either adapter Refusal or inherited streaming Refusal when source/header hash correctly rejects.",
+      "name": "harness-corrected-controls",
+      "passed": 13,
+      "seconds": 0.78
+    }
+  ],
+  "evidence": {
+    "harness-corrected-controls.log": {
+      "bytes": 7869,
+      "sha256": "7857196e57890fa45b3a508a3cb6064ee30223735a3530c60c753e37bac7e114"
+    },
+    "harness-corrected-controls.xml": {
+      "bytes": 10223,
+      "sha256": "39cc40c9459b1423ffba5595f49d38314ee5016d3f95df337ec92f5a9a2b4055"
+    },
+    "initial-controls.log": {
+      "bytes": 13181,
+      "sha256": "f1c3c0c4cec3c68e799266c650a903111ca81d80f6b541edf4ea9d8e5e827b95"
+    },
+    "initial-controls.xml": {
+      "bytes": 15367,
+      "sha256": "54f6a8e251c23e172f359db308325333aa3ff0a61d3e51ca0d23432056241785"
+    },
+    "initial-runner.py.txt": {
+      "bytes": 29064,
+      "sha256": "867d0d6e62ceda4df993d723ba8ec40eb0405f4f70fbe362bef4a7dee92333db"
+    },
+    "initial-test.py.txt": {
+      "bytes": 7061,
+      "sha256": "9e73cbc42915957fe516a453785d939de772d758e3e876d775bcf3d07dab442a"
+    },
+    "test_independent.py": {
+      "bytes": 7083,
+      "sha256": "782db45443f83c12c4daa28a54799dfaed94e558e6a06c82c8f4430276e89b25"
+    }
+  },
+  "findings": [
+    {
+      "id": "raw_summary",
+      "observed": "Changed raw_grid.shape accepted despite original 348-byte header unchanged."
+    },
+    {
+      "id": "geometry_translation",
+      "observed": "Both returned affines shifted 1234 mm accepted while raw header transform unchanged."
+    },
+    {
+      "id": "geometry_shape",
+      "observed": "Returned shape and matched counts changed from 8 to 12 voxels accepted while raw dimensions unchanged."
+    },
+    {
+      "id": "image_budget",
+      "observed": "Image decoding_budget.voxels=999 accepted with source/header/scalar count 8."
+    }
+  ],
+  "metadata_preflight": "passed",
+  "native_runs": 0,
+  "network_requests": 0,
+  "owner_evidence_not_repeated": {
+    "receipt": "build/resect-deferred-qc-implementation-v1/review.json",
+    "reported_passed": 77,
+    "reported_seconds": 4.37
+  },
+  "patient_arrays_decoded": 0,
+  "patient_payloads_read": 0,
+  "recomputed_denominator": {
+    "frozen_train_people": 14,
+    "inherited_pairs": 1,
+    "missing_timepoints": 3,
+    "new_pairs": 24,
+    "people_with_pairs": 13,
+    "unique_pair_ids": 25
+  },
+  "resource_scope": "One worker; bounded 348-byte prefix then offset<=1MiB; streaming scalar chunks<=65536; per-child60s and cohort600s deadlines. RSS is observed, not a hard memory guarantee. Immutable final receipt writes and kill/reap cleanup are separate publication overhead.",
+  "reviewed_source_sha256": {
+    "manifests/resect-deferred-qc-v1.json": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+    "scripts/resect_deferred_qc.py": "867d0d6e62ceda4df993d723ba8ec40eb0405f4f70fbe362bef4a7dee92333db",
+    "tests/test_resect_deferred_qc.py": "2a55e3eaa1a2fb1efb5697eb64fc2d9e20bbb49c3abe0cdbd7617212abd1846b"
+  },
+  "rights_and_mirror_scope": "Unchanged noncommercial annotations, published original/mask bytes, third-party mirror is transport only; original failed/deferred OSF attempts retained. Cavity mask is not total removed tissue or reward.",
+  "roles_all_train": true,
+  "schema": "resect-deferred-qc-independent-review-v1",
+  "scope": "metadata, header-control bytes and mocked process/refusal paths only",
+  "source_unchanged_during_controls": true,
+  "status": "four_receipt_binding_defects_require_repair",
+  "suggested_repair": "Reconstruct complete nifti1_header_record from preserved bytes; bind geometry to raw coded transforms/units/shape and both budgets to raw dimensions/dtype plus frozen bounds. Keep mutual grid check separate and all admissions false.",
+  "training_or_planning_admissions": 0
+}

@@ -1,0 +1,18 @@
+{
+  "started_utc": "2026-10-09T00:26:22.647306+00:00",
+  "source_commit": "aafa5c57b9916480e270f894ea71abf8b6f7ea7d",
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "scripts/acquire_synthrad_task1_archive.py",
+    "run"
+  ],
+  "files_sha256": {
+    "scripts/acquire_synthrad_task1_archive.py": "b1c62acd45232c113f882c11f3b209d20b33befb208189a88e4bdda194c5ba6d",
+    "tests/test_synthrad_task1_archive.py": "4b4862478cb46be463192849e4daf97bd0b1d083e1ad621f678cf0de5a808a4f",
+    "manifests/synthrad-task1-original-archive-v1.json": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b",
+    "manifests/synthrad-component-cohort-v1.json": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+    "build/synthrad-archive-runner-independent-review-v1/verification-deadline-repair.json": "2d179758cff123161415c21e945c9356eb795d6d9b4aaadef27f4c637ff3e4eb"
+  },
+  "scope": "Continuous opaque archive acquisition only; no extraction, decode, training or role changes"
+}

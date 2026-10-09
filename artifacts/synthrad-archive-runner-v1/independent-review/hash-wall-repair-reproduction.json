@@ -1,0 +1,12 @@
+{
+  "wall_hash_expiry_refused": true,
+  "sha_bytes_processed_before_stop": 1048576,
+  "block_updates": 1,
+  "source_unchanged": true,
+  "completion_published": false,
+  "phase_wall_cap_seconds": 1800,
+  "monotonic_elapsed_seconds": 0.005945415934547782,
+  "network_requests": 0,
+  "patient_payload_reads": 0,
+  "method": "Real unchanged recover/verify/file_hash; independent SHA update wrapper advances only wall clock after first1MiB, before helper next deadline check."
+}

@@ -1,0 +1,74 @@
+{
+  "status": "IMPLEMENTATION_READY_FOR_ROOT_REVIEW_AND_COMMIT_NO_PAYLOAD_LAUNCHED",
+  "finished_utc": "2026-10-08T21:29:10.975161+00:00",
+  "files": [
+    {
+      "path": "scripts/acquire_synthrad_task1_archive.py",
+      "bytes": 20387,
+      "sha256": "34ab41aa18c47a17c4dbfa89fb736a6d6c97526986e76f32cc3c46a12c4e94df"
+    },
+    {
+      "path": "tests/test_synthrad_task1_archive.py",
+      "bytes": 17813,
+      "sha256": "0bf74688fd2c0fc61dc50811d870e75645477e5fb11771b004a4b9d948c6e518"
+    }
+  ],
+  "frozen_source_inputs_unchanged": true,
+  "existing_helpers_unchanged": true,
+  "offline_controls": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp=build/synthrad-archive-implementation-v1/final-tmp",
+      "tests/test_synthrad_task1_archive.py"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.0032969168387353,
+    "network_calls": 0,
+    "scientific_payload_reads": 0,
+    "scope": "opaque local protocol fixtures and frozen metadata"
+  },
+  "offline_result": "27 passed in 1.73s",
+  "preflight": {
+    "executed_utc": "2026-10-08T21:29:10.974103+00:00",
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/acquire_synthrad_task1_archive.py preflight",
+    "record_kind": "summary of successful tool-visible command result, not a repeated execution",
+    "exit_code": 0,
+    "status": "metadata_identity_passed",
+    "network_requests": 0,
+    "payload_reads": 0,
+    "source_bytes": 14471900926,
+    "system_curl_available": true,
+    "system_curl_sha256": "9b3d0c8eae03bd1be5e5c13c35a2464fc9a7ec719eff5deb94b2905dad25244e",
+    "system_curl_trust": "existing_macos_system_store",
+    "script_sha256": "34ab41aa18c47a17c4dbfa89fb736a6d6c97526986e76f32cc3c46a12c4e94df"
+  },
+  "implemented_bounds": {
+    "one_worker": true,
+    "compressed_cache_bytes": 34359738368,
+    "free_disk_reserve_bytes": 8589934592,
+    "network_attempt_seconds": 21600,
+    "persisted_attempt_limit": 3,
+    "persisted_campaign_seconds": 86400,
+    "local_hash_or_recovery_phase_seconds": 1800,
+    "worker_log_cap_bytes": 65536,
+    "termination_grace_seconds": 30
+  },
+  "retained_initial_failures": [
+    "initial-control-failure.json",
+    "offline-controls-1.log"
+  ],
+  "repair_evidence": "Darwin signal-0 process-group query can transiently return EPERM during exit; query now conservatively keeps waiting rather than claiming cleanup completion. Tests cover cooperative cleanup, forced kill after grace, and noisy-process log bound.",
+  "scope": "Whole archive byte acquisition only; no extraction, decode, registration, models or training.",
+  "scientific_payload_requests": 0,
+  "remaining_unknowns": [
+    "Actual archive transfer throughput",
+    "Provider 206 resume support; refusal preserves prefix",
+    "Streaming RSS target not measured on real transfer"
+  ],
+  "review_launch_command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/acquire_synthrad_task1_archive.py run"
+}

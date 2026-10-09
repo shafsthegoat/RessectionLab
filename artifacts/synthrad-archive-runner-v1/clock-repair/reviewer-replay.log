@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/synthrad-archive-implementation-v1/deadline-repair/check_live_campaign_repaired.py", line 39, in <module>
+    result=a.run_one(q,s,{}, {'available':True},monotonic_campaign_end,active,launcher=launcher)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/acquire_synthrad_task1_archive.py", line 336, in run_one
+    supervision = launcher(command, trial / 'worker.log', deadline=supervisor_deadline,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/synthrad-archive-implementation-v1/deadline-repair/check_live_campaign_repaired.py", line 36, in launcher
+    return a.supervise([sys.executable,'-B','-c','import time; time.sleep(0.1)'],log,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/acquire_synthrad_task1_archive.py", line 241, in supervise
+    group_signal(signal.SIGKILL)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/acquire_synthrad_task1_archive.py", line 190, in group_signal
+    os.killpg(process.pid, signum)
+PermissionError: [Errno 1] Operation not permitted

@@ -1,0 +1,135 @@
+{
+  "files": [
+    {
+      "path": "clock-repair/RESULT.json",
+      "bytes": 4808,
+      "sha256": "98b6d1bb77af5a0e2190e20b14b7a727b533d8046094a18540a1baea39785f89"
+    },
+    {
+      "path": "clock-repair/before-acquire_synthrad_task1_archive.py",
+      "bytes": 20387,
+      "sha256": "34ab41aa18c47a17c4dbfa89fb736a6d6c97526986e76f32cc3c46a12c4e94df"
+    },
+    {
+      "path": "clock-repair/before-test_synthrad_task1_archive.py",
+      "bytes": 17813,
+      "sha256": "0bf74688fd2c0fc61dc50811d870e75645477e5fb11771b004a4b9d948c6e518"
+    },
+    {
+      "path": "clock-repair/check_live_campaign_repaired.py",
+      "bytes": 2712,
+      "sha256": "041fd09967305f29a480dcfa18b3035cd856ac14917d2a00d7648bb76ac1c793"
+    },
+    {
+      "path": "clock-repair/check_live_campaign_repaired_final.py",
+      "bytes": 2718,
+      "sha256": "3335cc040f578b825e11bd8fad0aaf9bd411f054c37eb21d1dc190258d90c261"
+    },
+    {
+      "path": "clock-repair/controls-1.json",
+      "bytes": 340,
+      "sha256": "b4360206472c601f5705f9b76da21ec57450744244924f821b66c342e32b2c3c"
+    },
+    {
+      "path": "clock-repair/controls-1.log",
+      "bytes": 2730,
+      "sha256": "99933cb1e872732c1b05b68623cb06773bab8c14e7efd8069edbe5ccae1690cf"
+    },
+    {
+      "path": "clock-repair/controls-final.json",
+      "bytes": 347,
+      "sha256": "7d302ac6f9363bd3430846f16d03db28b39ee47692267b380d0097e4979f1d90"
+    },
+    {
+      "path": "clock-repair/controls-final.log",
+      "bytes": 99,
+      "sha256": "74571f6530884763f21f7d3697aa989ce4542352288f07e8e2f1e2910b9e54fa"
+    },
+    {
+      "path": "clock-repair/initial-review-reproduction.json",
+      "bytes": 650,
+      "sha256": "3ac4169a268bff59a6c8d8d8366f623f59655018b0bd40d699803f8e4136d1af"
+    },
+    {
+      "path": "clock-repair/live-campaign-reproduction.json",
+      "bytes": 678,
+      "sha256": "5ccd9fafc840c1dcc0943816533312a8acc6f48f0a393e75a03061053c6171f4"
+    },
+    {
+      "path": "clock-repair/preflight-final.json",
+      "bytes": 2056,
+      "sha256": "11853efc401a7e01ef40afc647afa3283869773fdeef9f3e7f9b3592a9fe041e"
+    },
+    {
+      "path": "clock-repair/reviewer-replay-final.log",
+      "bytes": 678,
+      "sha256": "5ccd9fafc840c1dcc0943816533312a8acc6f48f0a393e75a03061053c6171f4"
+    },
+    {
+      "path": "clock-repair/reviewer-replay.log",
+      "bytes": 1632,
+      "sha256": "9a49cfafe64874e6dc31f345baedeb027eb1f45662c167575d3ea769fa8d2f03"
+    },
+    {
+      "path": "implementation/RESULT.json",
+      "bytes": 2998,
+      "sha256": "1d796997079d3a89a42437e51873081ec844c76932e1bbcd60fff874711a1241"
+    },
+    {
+      "path": "implementation/initial-control-failure.json",
+      "bytes": 196,
+      "sha256": "898366cd2d76f7068a3c53a883fabbd43ad780c49a3bfe4e433ef1700cff3f32"
+    },
+    {
+      "path": "implementation/offline-controls-1.log",
+      "bytes": 1689,
+      "sha256": "473278d804f6d10c17bfe37a1b985dfb9165a5d9af17d8878cb0c1ef409a02d0"
+    },
+    {
+      "path": "implementation/offline-controls-2.log",
+      "bytes": 99,
+      "sha256": "8bf263c02f281c9842caeca328a5814173b6835048b09705c34e5698557085ac"
+    },
+    {
+      "path": "implementation/offline-controls-final.json",
+      "bytes": 406,
+      "sha256": "1cacab985b2c6c7d1a928f88352a5fd116e607a65c261fe3f948265363c91b33"
+    },
+    {
+      "path": "implementation/offline-controls-final.log",
+      "bytes": 99,
+      "sha256": "4eb91d715dd6e7abfd581dd07e3ac29dbe51ad0c16cf446eb413169c01bfa743"
+    },
+    {
+      "path": "implementation/preflight-summary.json",
+      "bytes": 666,
+      "sha256": "f1ebc5148bdae740f17695a7f43ffea248aafa8a8397413b88ccba2170546d3f"
+    },
+    {
+      "path": "independent-review/check_live_campaign.py",
+      "bytes": 2676,
+      "sha256": "157b7e1375231ea627bc07cea1bb9437f0be3ef8e42d281f936be4ca2e19f8ae"
+    },
+    {
+      "path": "independent-review/check_live_campaign_v2.py",
+      "bytes": 2672,
+      "sha256": "f3c780eb2ec7e7a54ff179538705e1fbb2d6937306fccef6ec9e93a30d3273fc"
+    },
+    {
+      "path": "independent-review/live-campaign-reproduction.json",
+      "bytes": 650,
+      "sha256": "3ac4169a268bff59a6c8d8d8366f623f59655018b0bd40d699803f8e4136d1af"
+    },
+    {
+      "path": "independent-review/owner-controls.log",
+      "bytes": 99,
+      "sha256": "4dc7bff85035fe9cb5dd1a0e5e331eafe070acc965ab2e1a45bab2999292eed3"
+    },
+    {
+      "path": "independent-review/verification.json",
+      "bytes": 4632,
+      "sha256": "ccb098860b78ff5307c7908708655e5f7c70864305390f7321a2565404f88593"
+    }
+  ],
+  "scope": "Offline runner preparation only; final independent clock repair review pending"
+}

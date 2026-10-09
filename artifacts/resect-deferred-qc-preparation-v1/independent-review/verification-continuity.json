@@ -1,0 +1,65 @@
+{
+  "actual_attempt01_metadata_unchanged": [
+    {
+      "bytes": 8025,
+      "path": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/batch.json",
+      "sha256": "8a5482c48df4ddf3cf91eb50e81221b70f298d475785f242381296cb92bc2a01"
+    },
+    {
+      "bytes": 3294,
+      "path": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/receipt.json",
+      "sha256": "29771a7898c152ab8661047bc1126ad9001e89ad08f9c5b29806568afc7d03c1"
+    },
+    {
+      "bytes": 479,
+      "path": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-01/pairs/Case2-during/outcome.json",
+      "sha256": "aa1f08f1216b368b934b8badd66d108b7fa6d7f9f1e91ad3a5fe6b92b719d6b5"
+    }
+  ],
+  "actual_attempt01_scope": "1 attempted failed_or_incomplete,23 unattempted,1 inherited; retained as a separate actual negative, never relabelled",
+  "actual_qc_attempts": 0,
+  "created_utc": "2026-10-09T00:28:47.708005+00:00",
+  "direct_controls": {
+    "failed": 0,
+    "junit_sha256": "f10df4408373e2514b1361e989ebcaf48afd8d7aa7812340ca9c0dfbbc773819",
+    "log_sha256": "4f036119abec1c59ba40e6ecc4d78386dce6c785bd1bf01527a636253a44be6b",
+    "new_independent_exception_controls": 4,
+    "new_test_sha256": "da572a146b54baa779265f98fd152618245de9a10b6c3048a912f82bd4ec4782",
+    "original_independent_controls_unchanged": 17,
+    "original_test_sha256": "782db45443f83c12c4daa28a54799dfaed94e558e6a06c82c8f4430276e89b25",
+    "passed": 23,
+    "seconds": 4.66,
+    "targeted_owner_batch_worker_controls": 2
+  },
+  "frozen_source_sha256": {
+    "build/resect-deferred-qc-continuity-fix-v1/review.json": "c1efc55722f13dab0be3c847ad93f25f6351043bf73131a4210ccd56ba97daf2",
+    "manifests/resect-deferred-qc-v1.json": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+    "scripts/resect_deferred_qc.py": "55328556f4719a9509effb10b4ef899a0dc1665dfa4ae61ee4c68bdd3c360fd8",
+    "tests/test_resect_deferred_qc.py": "534328029422fce124addf0d9ff0784cf5493863bbc48e26c0029691d554ebb4"
+  },
+  "functions_changed_from_previously_reviewed_source": [
+    "inspect_pair"
+  ],
+  "header_repairs": 0,
+  "limitations": [
+    "This continuity change does not allow these inactive-qform sources to pass QC; raw-header recorder compatibility remains separately unresolved.",
+    "All stage/admission limits and worker60s/cohort600s bounds unchanged; RSS is observed rather than hard-enforced.",
+    "A second actual attempt must use a new namespace and needs root release."
+  ],
+  "manifest_roles_rights_mirror_and_helpers_unchanged": true,
+  "network_requests": 0,
+  "patient_array_decodes": 0,
+  "patient_payloads_read": 0,
+  "prior_receipt_validation_repair_preserved": true,
+  "review_findings": [
+    "Catch is specifically nibabel HeaderDataError, not every exception; unknown source anatomical validity is preserved.",
+    "Observed raw-recording traceback is labelled an adapter recording limitation; other header failure remains unresolved. No inactive header field is repaired or silently ignored.",
+    "If geometry fails after mask content returns, mask content/counts remain retained and pair grid remains unreviewed.",
+    "Ordinary structural refusal still receives after-fixity/source checks and continues all24 reviews, preserving25total including inherited Case3.",
+    "Fixity, timeout, source/lifecycle and unexpected implementation failures remain failures; no invalid source class is inferred from parser limitations."
+  ],
+  "schema": "resect-deferred-qc-continuity-independent-review-v1",
+  "source_unchanged_after_controls": true,
+  "status": "ready_for_separate_root_commit_and_release",
+  "tolerance_changes": 0
+}

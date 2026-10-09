@@ -1,0 +1,19 @@
+{
+  "finding_repaired": true,
+  "campaign_expired_wall_seconds": 1.0,
+  "supervisor_now_reported": {
+    "state": "timeout",
+    "returncode": -15,
+    "log_bytes": 0,
+    "expiration_clock": "wall",
+    "sigterm_sent": true,
+    "termination_grace_seconds": 30,
+    "elapsed_seconds": 0.00612508412450552,
+    "finished_utc": "2026-10-09T00:24:44.379171+00:00"
+  },
+  "parent_closed_after_expiry_status": "interrupted",
+  "local_children": 1,
+  "network_requests": 0,
+  "patient_payload_reads": 0,
+  "method": "Real run_one/supervise with harmless local child replacing worker; fake wall time crosses campaign end after on_start while monotonic deadline remains in future."
+}

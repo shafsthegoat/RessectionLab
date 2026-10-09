@@ -1,0 +1,29 @@
+.....................F...                                                [100%]
+=================================== FAILURES ===================================
+_______________ test_supervisor_caps_log_and_stops_noisy_process _______________
+
+archive = <module 'synthrad_controls' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/acquire_synthrad_task1_archive.py'>
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/synthrad-archive-implementation-v1/tmp/test_supervisor_caps_log_and_s0')
+
+    def test_supervisor_caps_log_and_stops_noisy_process(archive,tmp_path):
+>       result=archive.supervise([sys.executable,'-B','-c','import os,time; os.write(1,b"x"*200000); time.sleep(10)'],
+            tmp_path/'worker.log',deadline=time.monotonic()+2,grace_seconds=.15,log_bytes=65536,on_start=lambda pid:None)
+
+tests/test_synthrad_task1_archive.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/acquire_synthrad_task1_archive.py:200: in supervise
+    if not group_signal(0):
+           ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+signum = 0
+
+    def group_signal(signum):
+        try:
+>           os.killpg(process.pid, signum)
+E           PermissionError: [Errno 1] Operation not permitted
+
+scripts/acquire_synthrad_task1_archive.py:167: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_synthrad_task1_archive.py::test_supervisor_caps_log_and_stops_noisy_process
+1 failed, 24 passed in 1.55s

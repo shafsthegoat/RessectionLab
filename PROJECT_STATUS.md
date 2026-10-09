@@ -16,6 +16,20 @@ New commits credit `skamal23 <sayemkamal12@gmail.com>` and co-author
 `shafsthegoat <shafrir.p@gmail.com>`. An hourly thread heartbeat is active for
 normal pushes of completed reviewed commits to `origin/main`.
 
+The [14.47 GB acquired CT/MRI archive transfer](artifacts/synthrad-archive-runner-v1/RESULT.md)
+started at 00:26 UTC on October 9 and is running independently of QC and model
+work. The runner passes 32 controls plus independent live-clock and mid-hash
+expiry checks. Its first HTTP 200 response matches the frozen size/checksum;
+partial bytes are unverified, images unopened, and prospective roles unchanged.
+The [first remaining RESECT QC batch](artifacts/resect-deferred-qc-preparation-v1/RESULT.md)
+preserves a real recorder failure: Case2's active sform passes, but recording its
+inactive qform raises a header error. One new pair is incomplete and 23 remain
+unattempted in that first batch. The continuity fix passes 23 focused independent
+controls and a second batch is running; no source header or tolerance has been
+changed. Both specimen step-size qualifications now support the next
+bounded common-stiffness calibration implementation, with physical agreement
+and withheld torsion still unmeasured.
+
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
 is enabled and independently checked. The [fixed comparison](artifacts/native-opening-learning-v1/RESULT.md)
