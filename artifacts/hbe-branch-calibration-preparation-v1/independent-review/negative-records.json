@@ -1,0 +1,44 @@
+{
+  "file_sha256": {
+    "initial-tests.txt": "96c68b016996ddf971f89fadc61b0b399f54e81138b63cd813748329f6eec9c2",
+    "intermediate-runner-fixed-fixture.txt": "d198d15e1ae9a28510001be34de4df8d95918a896d7a3ea91cf638fe4805d8c4",
+    "intermediate-runner-tests.txt": "1e0b6dc056c21a0f77987095dc7d659dc00104798741cfd75d530ac6ab60ba4b",
+    "intermediate-tests.txt": "f05c57d1ada6bacb60013513040188f81172a9178b11ab9a80f44a6d89bcadde",
+    "original-roundoff-negative.txt": "63c85d84cdde69a2d7daaa0ad3c668a611d7c7df9947afe94dafbdfe8454cbd8",
+    "streaming-controls.txt": "b332a7019d56bf2ab3a54fe547bb8e2decfea3fc15b937fce6ff758074de5c6e",
+    "test_branch_review.py": "1b6029db430148ebf1bd645027e5a813fd108ad6358d93a972d68fe5d8debaae",
+    "test_branch_review_before_fixture_directory_fix.py.txt": "711938b38fc9049646bd98d037ea56973ee97cd335cf19f83498be012c0a2e5b",
+    "test_original_roundoff_negative.py": "89d3c27a22e369dcf3515ebd8beef43e8290d327765dffd9aeec7f2bd53708f3"
+  },
+  "production_finding": {
+    "cause": "T0=mu*R**3 differed by floating arithmetic order from original T0=(mu*R**2)*R; exact reference canonical reproduction can reject.",
+    "log": "original-roundoff-negative.txt",
+    "observed": "1 failed in0.38s",
+    "preserved_readout": "initial-source/mechanics_hbe_branch_calibration_readout.py",
+    "repair": "Restore original arithmetic order, actual mu retained; no tolerance change.",
+    "sha256": "bdda5bf052ce29058f7c5ec99de8e56a0f63240bb5e2739af6ba23f547aa0887",
+    "test": "test_original_roundoff_negative.py",
+    "test_scope": "Tiny constructed ratio; no actual saved primitive or measured data access."
+  },
+  "review_harness_events": [
+    {
+      "cause": "zsh reserves variable status; tests had already completed. Later wrappers use review_exit.",
+      "log": "initial-tests.txt",
+      "observed": "15passed0.45s, followed by shell wrapper exit1",
+      "source_freeze_claim": false
+    },
+    {
+      "cause": "Mocked worker fixture omitted directory normally created by launcher; five FileNotFoundError failures before target branches.",
+      "log": "intermediate-runner-tests.txt",
+      "observed": "18passed5failed0.64s",
+      "production_change_needed": false,
+      "repair": "Create the expected output directory in fixtures only.",
+      "test_snapshot": "test_branch_review_before_fixture_directory_fix.py.txt"
+    }
+  ],
+  "schema": "hbe-branch-review-negative-records-v1",
+  "subsequent_intermediate_logs": [
+    "intermediate-runner-fixed-fixture.txt",
+    "streaming-controls.txt"
+  ]
+}

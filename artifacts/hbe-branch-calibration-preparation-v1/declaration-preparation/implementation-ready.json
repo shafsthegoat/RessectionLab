@@ -1,0 +1,404 @@
+{
+  "actual_mu_contract": {
+    "implementation": "Add small actual-mu half_frame/full-frame-ratio adapters in the new branch readout. Reuse unmodified HalfHeightReconstruction initializer/lift and HexMesh.deformation/read_frame with explicit mu_Pa. Never monkeypatch MU globals, relabel a1000Pa report, or scale a reference primitive to stand in for a native fitted run.",
+    "propagate_mu_to": [
+      "Ogden c1=2mu",
+      "K=149mu/3",
+      "squared native residual floor=(1e-10*mu*R^2)^2",
+      "half and reconstructed-full independent energy/stress",
+      "F0=mu*R^2 and T0=mu*R^3 denominators",
+      "initial/primitive stress and energy consistency denominators",
+      "energy_work_check(mu_Pa=mu,radius_m=R,height_m=H/2 orH)",
+      "scale-pair tolerance floors use fittedmu, not reference1000"
+    ],
+    "scalar_deck_guard": "Clone each accepted actual S120 source deck and change only c1,k,min_residual; use original check_fitted_deck for source and adapted deck, and verify unchanged backend transformation. Corresponding loading metadata contains actualmu,K,residual,newdeckhash, same branch/grid/geometry/reconstruction.",
+    "source_inspection": {
+      "scripts/mechanics_hbe_halfheight_readout.py": {
+        "binding": {
+          "path": "scripts/mechanics_hbe_halfheight_readout.py",
+          "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+        },
+        "functions": {
+          "_frame_ratios": {
+            "arguments": "mesh, state, raw",
+            "line": 200
+          },
+          "half_frame": {
+            "arguments": "self, current, raw, *, full_displacement_m",
+            "line": 156
+          },
+          "lift": {
+            "arguments": "self, current_nodes_m, raw_reactions_N, elements, full_displacement_m",
+            "line": 116
+          }
+        }
+      },
+      "scripts/mechanics_hbe_outputs.py": {
+        "binding": {
+          "path": "scripts/mechanics_hbe_outputs.py",
+          "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+        },
+        "functions": {
+          "check_solver_records": {
+            "arguments": "lines, *, expected_times, residual_floor_N2, maximum_bytes=16 * 1024 ** 2",
+            "line": 106
+          }
+        }
+      },
+      "scripts/mechanics_hbe_physics.py": {
+        "binding": {
+          "path": "scripts/mechanics_hbe_physics.py",
+          "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+        },
+        "functions": {
+          "deformation": {
+            "arguments": "self, current_nodes_m, mu_Pa",
+            "line": 144
+          },
+          "energy_work_check": {
+            "arguments": "coordinate, applied_response, energy_J, *, mu_Pa, radius_m, height_m",
+            "line": 251
+          },
+          "read_frame": {
+            "arguments": "self, current_nodes_m, raw_reactions_N, *, mu_Pa, branch, fraction",
+            "line": 202
+          }
+        }
+      }
+    },
+    "unsafe_to_call_unchanged": [
+      "HalfHeightReconstruction.half_frame uses MU_PA=1000 for force/moment/free-DOF denominators and half.deformation",
+      "halfheight_readout._frame_ratios uses MU_PA=1000",
+      "temporal_common.read_frames uses MU=1000 and records caps256MiB"
+    ]
+  },
+  "actual_reference_qualifications": {
+    "compression": {
+      "artifact_bindings": {
+        "comparison.json": {
+          "path": "artifacts/hbe-n36-temporal-execution-v1/comparison.json",
+          "sha256": "ddb18d15aecc4b687fcf22a195dbb3d707a357c7394358247a78be6bb8c5ebe8"
+        },
+        "execution.json": {
+          "path": "artifacts/hbe-n36-temporal-execution-v1/execution.json",
+          "sha256": "fdc1487ba8445f756109a0e8cfdcd1388da0fcf6e497b09f750951e4d91c70af"
+        },
+        "independent-review/verification.json": {
+          "path": "artifacts/hbe-n36-temporal-execution-v1/independent-review/verification.json",
+          "sha256": "a2f6be26d3f7b7f302da5385bdbda43749a82ebde93067754181cb11bf42b24b"
+        },
+        "publication-check.json": {
+          "path": "artifacts/hbe-n36-temporal-execution-v1/publication-check.json",
+          "sha256": "3e129926d7d0fcf5f6ad441b849b70e347c644491e723c1f0039fd642bcd5598"
+        },
+        "result.json": {
+          "path": "artifacts/hbe-n36-temporal-execution-v1/result.json",
+          "sha256": "70f48871636d594939bce9198d983b0437ee19a8a0d45c8194aa96621fb82faa"
+        },
+        "state.json": {
+          "path": "artifacts/hbe-n36-temporal-execution-v1/state.json",
+          "sha256": "b243d0c9b57f2fef3989564c6ead0c0b20e0836aa018e637fd225217f370415c"
+        }
+      },
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "formal_original_spatial_pass_relabelled": false,
+      "native_primitives": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/specimen.feb",
+          "sha256": "cf0f2502dc5ea77ac79fd44ad879095c21c69d4e535df830756b1e8ab1d84efb"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/elements.log",
+          "sha256": "349080d67840997b0ab6b3067dcd60b6f1a84fd9a9744cd584ad732df265fe0c"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/loading.json",
+          "sha256": "958a940b002ddf75657e25297bb206f151227ec320eb07ea670ef32b6965b31c"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+          "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/nodes.log",
+          "sha256": "28c3a405b72151dcaffe2d61d7f40faffecc4ae2515b59c43f321327d5981276"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/solver.log",
+          "sha256": "a40339ae178377e8dcd8ab6b4ea179d5cc461159f91a003b11cfc1961049a64e"
+        }
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json",
+        "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+      },
+      "run_execution": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/execution.json",
+        "sha256": "fdc1487ba8445f756109a0e8cfdcd1388da0fcf6e497b09f750951e4d91c70af"
+      },
+      "run_id": "compression:N36:S120:reference",
+      "run_readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/readout.json",
+        "sha256": "b8eb882c68e4aa79bdc9d4057429b1e57412e86f28af7617ca312cb7ae34cb85"
+      },
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "source_archive": {
+        "path": "build/hbe-halfheight-global-n36-temporal-v1/source.tar",
+        "sha256": "0069e7d03e080dccec905d7625a4a5bdccaab38163df5a1dcd9225effc12eee9"
+      },
+      "source_commit": "d131e8efe5a8cdf615ce403783654cae1b045079",
+      "source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/preparation/skyline.feb",
+        "sha256": "dd7e39a37a424c4121e43c7adc6b680b2aea595eb5b7e743ca3aae1fc1b1f4fa"
+      },
+      "study": {
+        "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+        "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+      },
+      "temporal_candidate": true
+    },
+    "tension": {
+      "artifact_bindings": {
+        "comparison.json": {
+          "path": "artifacts/hbe-tension-n24-temporal-execution-v1/comparison.json",
+          "sha256": "52ed06cfec8486771d166646cf90b8e8499f43535d6cec8b56972fda6b81da65"
+        },
+        "execution.json": {
+          "path": "artifacts/hbe-tension-n24-temporal-execution-v1/execution.json",
+          "sha256": "a1365536813a5db43665cc42d5adf291891c756b76274c64a43df06d530e6e97"
+        },
+        "independent-review/verification.json": {
+          "path": "artifacts/hbe-tension-n24-temporal-execution-v1/independent-review/verification.json",
+          "sha256": "34fc2905d21fb449772dc90245bd706880b17653fc3126d693ca2a116918fb21"
+        },
+        "publication-check.json": {
+          "path": "artifacts/hbe-tension-n24-temporal-execution-v1/publication-check.json",
+          "sha256": "3f8c6716cf308ff89de379cecf8185991d4b20117ba84cd6f901b7b7a6de609c"
+        },
+        "result.json": {
+          "path": "artifacts/hbe-tension-n24-temporal-execution-v1/result.json",
+          "sha256": "51dcd02916322c80218776f098f7c6553a26e95887db9b19103761c72db0bfdf"
+        },
+        "state.json": {
+          "path": "artifacts/hbe-tension-n24-temporal-execution-v1/state.json",
+          "sha256": "9d514ac9f0dcca5199250037df3678f559543cf1a1533eb809f07c199e7a22bd"
+        }
+      },
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "formal_original_spatial_pass_relabelled": false,
+      "native_primitives": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/specimen.feb",
+          "sha256": "32f2a595b9cd1f22bb4bd16d32e0ec2d72293c6d037debd05fa38ace6423e3d8"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/elements.log",
+          "sha256": "37d680966aaaa4e8d8eb90537664ae20402b0728b22b497f7060fd8fc5279cd3"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/loading.json",
+          "sha256": "58c90046e99c8068ec4da671a66002b80023674fab6a4508b0ccc7ce201c463f"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+          "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/nodes.log",
+          "sha256": "16d302e6e00b40d7549a579abcb9f1324253212cce8c29b5ebc6f4a6e9e2e291"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/solver.log",
+          "sha256": "f759819af256de9076917918ae0bc6f188df0b370a6748737adc571aa699a81e"
+        }
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/reconstruction.json",
+        "sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+      },
+      "run_execution": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/execution.json",
+        "sha256": "a1365536813a5db43665cc42d5adf291891c756b76274c64a43df06d530e6e97"
+      },
+      "run_id": "tension:N24:S120:reference",
+      "run_readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/readout.json",
+        "sha256": "f0292911e9e221906a3f112722b32d51d28cfcbd2682cdd74c5c094cff3fdfd2"
+      },
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "source_archive": {
+        "path": "build/hbe-halfheight-tension-n24-temporal-v1/source.tar",
+        "sha256": "860527629a93f34f4a331c7b29dce0a845e7b16b997b47bdd269c37659e7c5b6"
+      },
+      "source_commit": "2911d310a880c5bbdf121acb470f06c8d2bd58a8",
+      "source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/preparation/skyline.feb",
+        "sha256": "7cb01e65143d8defb88830d179607e729c74ef04cd36aa281c01e862117ecb69"
+      },
+      "study": {
+        "path": "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+        "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+      },
+      "temporal_candidate": true
+    }
+  },
+  "authorization": "User authorizes measured-specimen calibration/validation; root will freeze exact source/run release after implementation controls. No new human approval requested.",
+  "branch_map": {
+    "compression": {
+      "N": 36,
+      "fitted_native_required": true,
+      "native_domain": "lower_half",
+      "steps": 120
+    },
+    "tension": {
+      "N": 24,
+      "fitted_native_required": true,
+      "native_domain": "lower_half",
+      "steps": 120
+    },
+    "torsion_neg": {
+      "N": 12,
+      "fitted_native_required": false,
+      "native_domain": "full",
+      "steps": 120
+    },
+    "torsion_pos": {
+      "N": 12,
+      "fitted_native_required": false,
+      "native_domain": "full",
+      "steps": 120
+    }
+  },
+  "budget_evidence": {
+    "aggregate_arithmetic": "2100+420+600+60+420=3600 seconds. Actual native total2012.4997166672256 s and two-reference pair-replay forecast429.3301484999247 s leave explicit overhead and native margins.",
+    "forecast_formula": "2*(164.95520645799115+49.70986779197119): replay both reference and fitted complete121-state records, using observed one-run independent audit costs. These audits also include hashing/summary comparisons; paired raw-node arithmetic adds work, while exact geometry is shared.",
+    "forecast_pair_replay_seconds": 429.3301484999247,
+    "new_output_forecast_bytes": 1713572001,
+    "new_output_headroom_bytes": 433911647,
+    "observed": {
+      "compression": {
+        "independent_complete121_state_replay_seconds": 164.95520645799115,
+        "native_seconds": 1766.5480909170583,
+        "peak_sampled_RSS_bytes": 1918550016,
+        "phase_seconds": 1946.3350613329094,
+        "retained_bytes": 1319056649
+      },
+      "tension": {
+        "independent_complete121_state_replay_seconds": 49.70986779197119,
+        "native_seconds": 245.9516257501673,
+        "peak_sampled_RSS_bytes": 557350912,
+        "phase_seconds": 301.9558984998148,
+        "retained_bytes": 394515352
+      }
+    },
+    "paired_allowance_over_forecast": 1.3975258949235083,
+    "runtime_claim": "Fitted modulus may change nonlinear iterations/conditioning or printable output; observed reference timing/output is a forecast basis only. Any deadline, RSS, byte, state or physical-consistency failure is terminal; no automatic retry, cap increase or refit."
+  },
+  "budgets": {
+    "active_output_bytes_by_branch": {
+      "compression": 1610612736,
+      "tension": 536870912
+    },
+    "aggregate_includes": "Preflight/source+input hashing, member access, one fit, deck preparation, both native calls, all primitive readout/paired comparisons, final source/input rehash, fit+prediction freeze, conditional held-out evaluation and durable result publication. Outer sampled family supervisor begins before preflight.",
+    "aggregate_seconds": 3600,
+    "all_nested_deadlines": "min(stage_start+stage_cap, aggregate_deadline); native cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.",
+    "automatic_retry": false,
+    "combined_deck_preparation_seconds": 60,
+    "copy_old_raw_logs": false,
+    "hard_real_time_guarantee_claimed": false,
+    "maximum_mesher_calls": 0,
+    "maximum_native_calls": 2,
+    "native_seconds_by_branch": {
+      "compression": 2100,
+      "tension": 420
+    },
+    "new_total_output_bytes": 2147483648,
+    "old_inputs_counted_as_new_output": false,
+    "other_work_allocation_seconds": 420,
+    "paired_raw_streaming_seconds": 600,
+    "runtime_threads": 1,
+    "same_disk_new_source_archive_in_total": true,
+    "sampled_family_RSS_bytes": 3221225472
+  },
+  "exact_raw_caps": {
+    "N24": {
+      "deck_bytes": 16777216,
+      "element_bytes": 268435456,
+      "element_count": 10368,
+      "element_fields": 8,
+      "mesh_bytes": 16777216,
+      "node_bytes": 268435456,
+      "node_count": 12439,
+      "node_fields": 9
+    },
+    "N36": {
+      "deck_bytes": 33554432,
+      "element_bytes": 536870912,
+      "element_count": 34992,
+      "element_fields": 8,
+      "mesh_bytes": 33554432,
+      "node_bytes": 805306368,
+      "node_count": 39610,
+      "node_fields": 9
+    },
+    "all_uses": "A single exact path/hash/kind cap registry follows every reference/fitted binding through preflight, parse, post-parse check, freeze inventory, and final pre-reveal rehash. Do not pass N36 logs through access.verify_binding default256MiB; do not raise a global default or trust caller-chosen caps. Preserve original N12 bound parser/execution contracts.",
+    "loading_bytes": 1048576,
+    "probes": 75,
+    "solver_bytes": 16777216,
+    "states": 121
+  },
+  "focused_controls": [
+    "Actual saved deck scalar-only acceptance and BC/material/schedule/backend mutation rejection, using algebra scales only.",
+    "Bound map/qualification and missing fitted-confirmation failures must occur before spy member-open/held-out callbacks. All historical failures remain in preserved evidence.",
+    "Actual-mu floors/energy/stress/residual tests against original1000Pa behavior and homogeneity algebra, without generating native logs or claiming empirical fitted behavior.",
+    "Streaming scale maxima equality to original _scale_group on expressly labeled algebra-only arrays; missing/reordered state or single-node reaction mismatch rejection.",
+    "Exact N36 path/kind caps exercised through preflight, freeze and reveal registry; unknown path, changedhash, wrongcase/count and exhaustednestedclock fail closed.",
+    "Original common-positive objective/weights/no extrapolation and immutable access-ledger refusal controls reused; no physical/clinical threshold added."
+  ],
+  "interpretation": "New branch qualification permits descriptive one-specimen fitting within user authorization; original failed aggregate receipts remain unchanged. Conditional spatial screens/mixed-step sensitivity are not rigorous continuum accuracy or empirical material calibration. Held-out positive/negative torsion are branches of the same specimen, not independent subjects. Report fixed RMSE/MAE/normalizedRMSE/endpoint/work/symmetry as originally defined, including agreement or disagreement; no invented clinical or physical binary threshold. No patient-specific material, instrument contact/retraction/cutting/damage/injury or vascular/fluid validation follows.",
+  "minimal_code_reuse": "Keep all historical helpers immutable. New access subclass reuses unchanged ledger chronology, exact member parser/roles and schema checks, but exact new release provenance/reference map, numerical freeze dispatch and file-cap registry must be explicit. Existing fit_scale/interpolate/quadrature/scale_prediction/paired_metrics, fitted-deck guard, backend transformation, raw parsers, HexMesh math, reflection map and supervision are reused. No new physical engine or copied whole temporal/original experiment runner.",
+  "one_raw_pass_per_pair": {
+    "no_auto_further_study": true,
+    "scale_checks": "Original _scale_group formulas applied to every same-mesh node/state (native and reconstructed full), plus all121 torques; max-motion floor1e-6R+1e-5max|u_ref|; component reaction floor1e-7*mu_hat*R^2+1e-4|a*r_ref|; torque floor1e-7*mu_hat*R^3+1e-4|a*T_ref|. Shared-midplane force factor1 and energy factor2 fixed.",
+    "stages": [
+      "Bind actual reference results/independent qualifications before opening only two authorized axial calibration members. Compute unchanged common-positive fit_scale once; save fit and stop on invalid/nonpositive/unidentified scale.",
+      "Prepare and run actual fitted compression then tension once each; retain native receipts even on failure. Before each next stage check remaining inclusive time/output limits.",
+      "For each branch stream reference/fitted node+element+solver logs in lockstep for all121 states; one model geometry, two transient frames. Independently reconstruct/evaluate both at their actualmu; reproduce saved reference numerical readout and compute fitted individual+scale maxima. Do not retain121 full nodal arrays or replay all historical grids.",
+      "The paired pass supplies the independent primitive evidence used by freeze; combine validation and evidence construction instead of an earlier redundant readout followed by the same full replay. Bind its source and exact inputs; save criteria before evaluating pass; rehash inputs at freeze and before reveal. No summary-only or boolean substitute for either actual fitted confirmation.",
+      "After both actual confirmations pass, recompute saved fit from in-memory originally read calibration and bound branch references; save two N12 torsion scaled predictions and durable parameter/prediction freeze. Conditional authorized held-out read only after audited freeze; expose original metrics/curves."
+    ]
+  },
+  "previous_change_list": {
+    "path": "build/hbe-branch-calibration-next-v1/change-list.json",
+    "sha256": "203362bcb593a6445f2208ab8a890f01e71d525f5ba389e04438a7271eb4ac87"
+  },
+  "schema": "hbe-branch-calibration-implementation-ready-v1",
+  "scope_new_files_only": [
+    "scripts/mechanics_hbe_branch_calibration.py",
+    "scripts/mechanics_hbe_branch_calibration_readout.py",
+    "scripts/mechanics_hbe_branch_calibration_experiment.py",
+    "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+    "tests/test_mechanics_hbe_branch_calibration.py"
+  ],
+  "status": "both_reference_temporal_qualifications_verified_ready_for_five_file_implementation",
+  "work_performed_now": {
+    "fit_calls": 0,
+    "measured_curve_reads": 0,
+    "mesher_calls": 0,
+    "scientific_payload_replays": 0,
+    "solver_calls": 0,
+    "tracked_edits": 0
+  }
+}

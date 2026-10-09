@@ -1,0 +1,73 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "build/hbe-branch-calibration-independent-review-v1/test_branch_review.py"
+  ],
+  "created_at": "2026-10-09T00:50:43.754371+00:00",
+  "exit_code": 0,
+  "harness_seconds": 0.7806794999632984,
+  "independent_controls": [
+    "Exact1000Pa half-frame reproduction retains original operation order.",
+    "Actual123.456Pa reaches constitutive energy, half/full force and moment floors, residual floor, and both half/full work scales through all121 streamed states.",
+    "Real tiny analytic hex geometry preserves scale proportionality and reflected energy factor2; no native solutions or response records fabricated.",
+    "All121-state component scale maxima, one nodal reaction corruption, invalid mu, incomplete or reordered pair.",
+    "N36 exact-kind caps preserved through metadata upgrade, verify_all, frozen inventory and pre-reveal checks; changed or unregistered hashes reject.",
+    "Genuine durable calibration/freeze chronology rejects second freeze, refit after freeze, changed release and changed source before member callbacks.",
+    "Failed confirmation produces no freeze and cannot reach held-out member callback.",
+    "Mocked worker refuses failed qualification before access, stops after failed first or second native invocation, and never reveals after failed confirmation; success order calibration then confirmations/freeze then reveal."
+  ],
+  "limitations": [
+    "No committed source archive/release existed for a full new preflight or launch in this review; root must bind exact38-member closure and execute metadata preflight before any measured read.",
+    "Paired evidence uses authentic actual native fitted runs only in a separately released experiment. The mock confirmations here test control flow and are visibly analytical fixtures.",
+    "The runner makes two native solves before paired physical confirmation. Native execution failure stops subsequent calls; any failed numerical confirmation prevents freeze/reveal. It is not a claim that the second solve is avoided when a first-run physical error is discovered later.",
+    "Owner27 controls separately cover actual saved qualification/archive/deck/mesh identities. This reviewer did not duplicate those saved-science reads or broad suites.",
+    "Both prior qualifications preserve conditional numerical scope and historical failures. No empirical fitted or held-out predictive performance is established."
+  ],
+  "log_sha256": "6a4c857372dc5b7218c7e31753efd4be65980046a1e7006637a4b203a7be5794",
+  "negative_records": {
+    "path": "build/hbe-branch-calibration-independent-review-v1/negative-records.json",
+    "sha256": "122fc079f3e5a7c1446e499cf9c918b655a95ad0542880122898e030ca08a31d"
+  },
+  "owner_verification": {
+    "path": "build/hbe-branch-calibration-implementation-v1/verification.json",
+    "reported_controls": 27,
+    "reported_seconds": 9.74,
+    "rerun_by_this_review": false,
+    "sha256": "eae4d544a067cb8e2c089c6e709edb042e32cb7519472efe27c9a5f691a5c8e5"
+  },
+  "pytest_count": 24,
+  "schema": "hbe-branch-calibration-independent-review-v1",
+  "source_sha256": {
+    "manifests/experiments/hbe-01-03-branch-calibration-v1.json": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1",
+    "scripts/mechanics_hbe_branch_calibration.py": "4289a8b7ff3c96c823ad9ca4b17f80977734ccac2db704c317ad8292e5d282c6",
+    "scripts/mechanics_hbe_branch_calibration_experiment.py": "1d2b58366ccc2e7bd16fdd0983c168b956eb2295d40eb6096865bc4e59533345",
+    "scripts/mechanics_hbe_branch_calibration_readout.py": "1fe54d936d6b3b0a80f46d965d2ea5cbde99590a68e72acdcaab6570bee92d33",
+    "tests/test_mechanics_hbe_branch_calibration.py": "a4b7ec2093b3ba9cb8d8dc96ece9a2e6ac94f8f8a69bef0a2d599b94cdcba8e0"
+  },
+  "sources_unchanged_after": true,
+  "static_process_review": {
+    "limits": "Inherited source behavior inspected; mocks do not establish real OS resource enforcement or fitted-run completion.",
+    "native": "old.solve persists solver-execution.json, kills and reaps on timeout/error and refuses late completion.",
+    "new_os_process_cleanup_tested": false,
+    "parent": "runtime.supervise starts its own worker session, samples group RSS, rejects descendants outliving parent, kills group on failure, waits for leader and retains cleanup errors."
+  },
+  "status": "passed_frozen_source_controls",
+  "test_sha256": "1b6029db430148ebf1bd645027e5a813fd108ad6358d93a972d68fe5d8debaae",
+  "work_performed": {
+    "analytical_objective_and_geometry_checks": true,
+    "checkpoint_or_policy_execution": 0,
+    "mesher_calls": 0,
+    "mocked_execution_dispatch_only": true,
+    "native_solver_calls": 0,
+    "patient_array_reads": 0,
+    "real_measured_curve_reads": 0,
+    "real_specimen_fit_calls": 0,
+    "tracked_edits": 0
+  }
+}

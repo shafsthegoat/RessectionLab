@@ -1,0 +1,374 @@
+{
+  "authorized": false,
+  "branch_reference_map": {
+    "compression": {
+      "coordinate_key": "load_coordinate_m",
+      "coordinate_units": "m",
+      "domain": "native_lower_half_with_bound_full_reconstruction",
+      "fitted_run_id": "compression:N36:S120:fitted",
+      "frame_count": 121,
+      "mesh_N": 36,
+      "reference_mu_Pa": 1000.0,
+      "reference_run_id": "compression:N36:S120:reference",
+      "response_key": "applied_force_N",
+      "response_units": "N",
+      "steps": 120
+    },
+    "tension": {
+      "coordinate_key": "load_coordinate_m",
+      "coordinate_units": "m",
+      "domain": "native_lower_half_with_bound_full_reconstruction",
+      "fitted_run_id": "tension:N24:S120:fitted",
+      "frame_count": 121,
+      "mesh_N": 24,
+      "reference_mu_Pa": 1000.0,
+      "reference_run_id": "tension:N24:S120:reference",
+      "response_key": "applied_force_N",
+      "response_units": "N",
+      "steps": 120
+    },
+    "torsion_neg": {
+      "coordinate_key": "load_coordinate",
+      "coordinate_units": "rad",
+      "domain": "native_full",
+      "fitted_run_id": null,
+      "frame_count": 121,
+      "mesh_N": 12,
+      "reference_mu_Pa": 1000.0,
+      "reference_run_id": "torsion_neg:N12:S120:reference",
+      "response_key": "applied_torque_Nm",
+      "response_units": "Nm",
+      "steps": 120
+    },
+    "torsion_pos": {
+      "coordinate_key": "load_coordinate",
+      "coordinate_units": "rad",
+      "domain": "native_full",
+      "fitted_run_id": null,
+      "frame_count": 121,
+      "mesh_N": 12,
+      "reference_mu_Pa": 1000.0,
+      "reference_run_id": "torsion_pos:N12:S120:reference",
+      "response_key": "applied_torque_Nm",
+      "response_units": "Nm",
+      "steps": 120
+    }
+  },
+  "evidence_bindings": [
+    {
+      "path": "artifacts/hbe-n36-temporal-preparation-v1/scale-homogeneity.md",
+      "sha256": "e7c5f4aaf0693299f20d872b95de18a28f568cba7fa95520c48994f1105c57b0"
+    },
+    {
+      "path": "artifacts/hbe-n36-temporal-preparation-v1/scale-homogeneity-review.json",
+      "sha256": "06234924a7867b8842dab467cf3eda6c1ca41bb6e7a75685bf5f3f48d55fc33f"
+    },
+    {
+      "path": "artifacts/hbe-n36-temporal-execution-v1/RESULT.md",
+      "sha256": "bd8c08a1a7e27b57f93d3e8ee6cd07b3803e3428fb9e816ec19e6f0c7645a4b0"
+    },
+    {
+      "path": "artifacts/hbe-n36-temporal-execution-v1/independent-review/verification.json",
+      "sha256": "a2f6be26d3f7b7f302da5385bdbda43749a82ebde93067754181cb11bf42b24b"
+    },
+    {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    },
+    {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json",
+      "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+      "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+    }
+  ],
+  "fit_calls": 0,
+  "fitted_confirmation_contract": {
+    "count": 2,
+    "decks": "Only c1=2mu, K=149mu/3 and min_residual=(1e-10*mu*R^2)^2 may change. Reuse mechanics_hbe_experiment.check_fitted_deck on both source and adapted decks; mesh/loading coordinates/BC/formulation/backend untouched. Loading metadata must also carry actualmu,K,residual and new deck hash.",
+    "each_states": 121,
+    "failure": "Any incomplete native/confirmation gate keeps torsion sealed, saves negative result and stops without refitting.",
+    "homogeneity_limit": "E_mu=mu E1 on each fixed discrete geometry and same equilibrium branch, not uniqueness or an empirical fine-mesh scaling result. Both actual confirmations mandatory even with proof.",
+    "new_mesher_calls": 0,
+    "per_state": "Real successful execution plus node/element/solver primitives; independently reconstructed half/full positive sampledJ, force/moment balance, prescribed/free-DOF motion, primitive stress/energy consistency, work and convergence checks. Compare original reference and actual fitted same-node current coordinates/raw reactions, and full reconstructed nodal reactions/torque.",
+    "scale_limits": "motion<=1e-6*R+1e-5*maxabs(u_ref); each reaction |r_fit-a*r_ref|<=1e-7*mu_hat*R^2+1e-4*abs(a*r_ref); torque |T_fit-a*T_ref|<=1e-7*mu_hat*R^3+1e-4*abs(a*T_ref). Same original maxima and all121 states; no force-only surrogate."
+  },
+  "function_lines": {
+    "scripts/mechanics_hbe_access.py": {
+      "ReleasedStudy": 438,
+      "__init__": 440,
+      "_audit": 530,
+      "_before_reveal": 526,
+      "_check_report": 203,
+      "_check_schema_release": 601,
+      "_events": 481,
+      "_metric_record": 178,
+      "_read_bound_deck": 349,
+      "_read_selected": 552,
+      "_release": 449,
+      "_replay_evidence": 358,
+      "_verified_backend": 44,
+      "_verify_run_execution": 276,
+      "canonical_json": 59,
+      "check_archive": 562,
+      "check_numeric_report": 256,
+      "collect": 661,
+      "digest": 55,
+      "evaluate_held_out": 696,
+      "exclusive_json": 93,
+      "expected_runs": 195,
+      "freeze_predictions": 607,
+      "local_path": 63,
+      "parse_member_csv": 415,
+      "read_calibration": 588,
+      "source_files_for_release": 33,
+      "validate_numerical_evidence": 389,
+      "validate_reference_evidence": 407,
+      "verify_binding": 73,
+      "verify_release_provenance": 109,
+      "verify_run_execution": 270
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "Curve": 14,
+      "_positive": 72,
+      "branch_metrics": 79,
+      "checked_curve": 37,
+      "curve": 22,
+      "fit_scale": 101,
+      "interpolate": 60,
+      "paired_metrics": 132,
+      "quadrature_weights": 46,
+      "scale_prediction": 126
+    },
+    "scripts/mechanics_hbe_experiment.py": {
+      "OutputWatch": 365,
+      "__enter__": 403,
+      "__exit__": 414,
+      "__init__": 367,
+      "aggregate": 590,
+      "binding": 60,
+      "bound": 82,
+      "check_fitted_deck": 546,
+      "continuation_inputs": 76,
+      "curves": 541,
+      "experiment_worker": 571,
+      "launch": 687,
+      "main": 726,
+      "preflight": 217,
+      "recheck": 70,
+      "remaining_seconds": 180,
+      "reuse_coarse": 157,
+      "run_case": 471,
+      "sample": 377,
+      "saved": 65,
+      "signature": 564,
+      "solve": 422,
+      "source_inventory": 185,
+      "watch": 407
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": {
+      "_records": 57,
+      "comparison_report": 198,
+      "iter_global_records": 41,
+      "metric_pass": 194,
+      "primitive_limit": 26,
+      "read_temporal_run": 64,
+      "signed_margin_report": 172,
+      "state_classification": 188,
+      "verify_native_bindings": 32
+    },
+    "scripts/mechanics_hbe_halfheight_readout.py": {
+      "HalfHeightReconstruction": 45,
+      "__init__": 48,
+      "_criteria": 193,
+      "_fingerprint": 32,
+      "_frame_ratios": 200,
+      "_ids": 36,
+      "_load_contract": 218,
+      "_maxima": 185,
+      "_records": 213,
+      "half_frame": 156,
+      "lift": 116,
+      "read_halfheight_equivalence": 290
+    },
+    "scripts/mechanics_hbe_halfheight_temporal_common.py": {
+      "pure_child": 33,
+      "read_frames": 69,
+      "records": 63,
+      "remaining_seconds": 23
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "_read_run": 85,
+      "_refinement_group": 186,
+      "_scale_group": 208,
+      "build_numerical_evidence": 228,
+      "read_resolution_run": 39,
+      "read_run": 21,
+      "sample": 190
+    }
+  },
+  "hardcoded_sites": [
+    {
+      "file": "scripts/mechanics_hbe_experiment.py",
+      "functions": [
+        "preflight",
+        "run_case",
+        "curves",
+        "experiment_worker"
+      ],
+      "issue": "preflight fixes20calls,mesh4/8/12 and18preparedcases; run_case retains onlyN12S120; curves resolves every branch toN12; fitted loop fixes mesh12, run IDs and reference deck."
+    },
+    {
+      "file": "scripts/mechanics_hbe_readout.py",
+      "functions": [
+        "read_run",
+        "build_numerical_evidence",
+        "_scale_group"
+      ],
+      "issue": "read_run restrictsN4/8/12; evidence requires18/20 original runs and N12 step/scale/fitted references. _scale_group mathematics is reusable but requires full121-node caches; use equivalent streaming maxima for fine pairs."
+    },
+    {
+      "file": "scripts/mechanics_hbe_access.py",
+      "functions": [
+        "source_files_for_release",
+        "verify_release_provenance",
+        "expected_runs",
+        "_check_report",
+        "_verify_run_execution",
+        "_replay_evidence",
+        "validate_numerical_evidence",
+        "validate_reference_evidence",
+        "ReleasedStudy._release",
+        "ReleasedStudy.freeze_predictions",
+        "ReleasedStudy.evaluate_held_out"
+      ],
+      "issue": "Exact legacy source inventory,18/20 run identities, original evidence schema,90s execution cap, N12 replay/cache and freeze references. Default256MiB freeze binding reads reject the real N36 node log; new exact-kind caps must apply through final freeze and reveal rehash, not just parser."
+    },
+    {
+      "file": "scripts/mechanics_hbe_halfheight_readout.py",
+      "functions": [
+        "HalfHeightReconstruction.half_frame",
+        "_frame_ratios"
+      ],
+      "issue": "Both force/energy physics and tolerance scales use module MU_PA=1000. Cannot merely label the new report mu_hat. Reuse geometry/lift but evaluate actual fitted-mu deformation and all F0/T0/residual/work scales explicitly."
+    },
+    {
+      "file": "scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "functions": [
+        "read_frames",
+        "records"
+      ],
+      "issue": "Reference-only MU=1000 and256MiB parser; not directly valid for N36 fitted confirmation. Exact new-case adapter must use declared N36 counts/caps and real fitted mu without mutating globals."
+    }
+  ],
+  "limits": "Calibration remains closed until separate branch qualification and release. Passing fits/held-out torque would be descriptive validation for this measured human specimen and prescribed bonded-plate loading only; no patient-specific modulus, tool-contact/cutting/damage/injury threshold, vascular/fluid fidelity, population generalization or clinically validated surgical interaction follows. Prior failed studies remain immutable.",
+  "measured_curve_reads": 0,
+  "minimal_new_scope": [
+    {
+      "file": "scripts/mechanics_hbe_branch_calibration.py",
+      "work": "Frozen map plus exact reference/qualification/source validators and BranchReleasedStudy adapter. Reuse original ledger chronology, member-selection parser, schema checks and durable JSON. Override legacy release provenance, freeze reference resolution and final bound-file rehash with exact branch-aware dispatch. Require numerical prerequisites before inherited read_calibration can open either axial member. Do not widen or monkeypatch historical access functions."
+    },
+    {
+      "file": "scripts/mechanics_hbe_branch_calibration_readout.py",
+      "work": "Exact N36 andN24 fitted half adapters; reuse validated HalfHeightReconstruction geometry/lift, HexMesh.deformation/read_frame, existing work/energy/probe algorithms and parsers. One paired streaming pass per reference/fitted pair independently checks all121 states at their actual mu, plus original raw-node scale tolerances. Native provenance remains half with explicit reconstructed-full provenance. Bind final compact evidence, never invent full-native fine equivalence."
+    },
+    {
+      "file": "scripts/mechanics_hbe_branch_calibration_experiment.py",
+      "work": "Thin existing-supervisor runner: authenticate references; released read of two axial curves; fit once; persist fit; make two exact scalar-only fitted decks from bound accepted S120 decks; two sequential native solves; paired readout; freeze fit and both scaled N12 torque predictions; only then explicitly authorized held-out evaluation. No reference reruns/remeshing, automatic retries, refitting or extra uniform refinement. Copy existing supervision primitives, not old20-case state machine."
+    },
+    {
+      "file": "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+      "work": "Freeze exact map, actual reference/review hashes, qualification criteria, scale proof, parser/file caps, resource declaration and original roles before member access. Filled after actual tension result; no placeholder passing receipt."
+    },
+    {
+      "file": "tests/test_mechanics_hbe_branch_calibration.py",
+      "work": "Focused algebra, real saved geometry/deck and access refusal controls below; no fabricated native response fixtures."
+    }
+  ],
+  "parser_and_resource_notes": {
+    "N24": {
+      "each_log_maximum_bytes": 268435456,
+      "element_fields": 8,
+      "elements": 10368,
+      "node_fields": 9,
+      "nodes": 12439
+    },
+    "N36": {
+      "element_fields": 8,
+      "element_maximum_bytes": 536870912,
+      "elements": 34992,
+      "node_fields": 9,
+      "node_maximum_bytes": 805306368,
+      "nodes": 39610
+    },
+    "all_states": 121,
+    "budget_decision": "Freeze a new two-confirmation aggregate/total-output cap from this actual N36 cost plus the actual pending N24 cost and streaming replay/publication allowance; do not reuse original90s/1GiB aggregate or silently borrow standalone temporal budgets. No proposed solver launched here.",
+    "observed_compression_output_bytes": 1319056649,
+    "observed_compression_peak_family_RSS_bytes": 1918550016,
+    "observed_compression_reference_seconds": 1766.5481,
+    "observed_compression_whole_phase_seconds": 1946.3351,
+    "solver_maximum_bytes": 16777216,
+    "strategy": "Stream matched reference/fitted frame pairs; do not allocate121 complete full-node caches. Match same-state/node IDs and binding hashes before/after. Reuse exact-kind file caps for source authentication, freeze inventory and final reveal; no global parser relaxation."
+  },
+  "qualification_before_member_access": [
+    "Bind a new prospective branch qualification declaration to the original protocol/roles, exact backend/interpreter and committed source. Authenticate actual reference readout, primitive, mesh, reconstruction, execution, declaration and independent-review bindings. Tension S120 completion and independent verification are still prerequisites; no assumed pass.",
+    "Compression: accepted N36 S60 conditional spatial screen plus N36 S120 all121-state temporal and mixed-step qualification. Tension: both original 8/16/24 and12/16/24 gates plus actual N24 S120 temporal and both mixed-triplet classifications. Torsion signs: original N4/8/12 spatial and N12 S60/S120 step criteria and each original completed run. Retain original N12 compression/positive-torsion scale controls and the reviewed fixed-discretization homogeneity argument.",
+    "Record original failed aggregates unchanged. The new branch selection is a separately declared eligibility policy for descriptive one-specimen calibration, not a rewritten original numerical pass or rigorous continuum error bound. No new tolerance, observed-force-dependent mesh choice or post-fit branch selection."
+  ],
+  "schema": "hbe-branch-calibration-change-list-v1",
+  "solver_calls": 0,
+  "source_bindings": [
+    {
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "path": "scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    {
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    {
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    }
+  ],
+  "source_changes_made": false,
+  "status": "prospective_implementation_scope_only_tension_result_pending",
+  "strongest_pure_controls": [
+    "Exact four-branch map accepts only declared run/domain/schedule and binds unchanged measured-member roles. Wrong N12 axial substitution, swapped branch, S60, missing temporal/spatial review, failed criterion or modified hash rejects before the archive-open/member-read callback.",
+    "Using actual saved S120 decks, apply arbitrary positive dimensionless algebra scale only; check_fitted_deck must accept only three allowed scalar changes and reject mesh, midpoint BC, schedule, exponent, backend, loadpoint or other solver mutation. No fitted patient mu inferred by this control.",
+    "Reuse existing fit_scale algebra controls: equal total mode weights0.5 despite different sampling, descending compression sign preserved, positive unique scalar, no extrapolation/offset/sign fit and zero/nonpositive denominator or scale rejection. Branch-map routing must select distinct axial reference bindings before invoking unchanged evaluator.",
+    "At identity and hand-constructed algebraic arrays expressly labeled scalar/array controls (not native logs), test running-max scale reduction against original _scale_group mathematics and mu-dependent tolerance/residual scaling; an omitted state/node or a single mismatched reaction must fail. Do not create fabricated FEBio response logs.",
+    "Test exact parser dispatch counts and caps, including N36 >256MiB authentication at freeze/reveal, refusal of extra/missing121 states and all bindings outside declared cases. Saved geometry controls verify same mesh fingerprints/reconstruction maps for reference/fitted selection.",
+    "Gate chronology with spy archive/solver functions: either missing/failed real confirmation prevents freeze and held-out access; no homogeneous-proof boolean replaces confirmations; a changed fit/map/reference/deck/runtime binding or unrecorded freeze rejects; any held-out attempt permanently seals refitting. Assert exactly two prospective native calls and no automatic retry/remesh."
+  ],
+  "unchanged_fit": {
+    "functions": [
+      "mechanics_hbe_evaluation.curve",
+      "mechanics_hbe_evaluation.interpolate",
+      "mechanics_hbe_evaluation.quadrature_weights",
+      "mechanics_hbe_evaluation.fit_scale",
+      "mechanics_hbe_evaluation.scale_prediction",
+      "mechanics_hbe_evaluation.paired_metrics"
+    ],
+    "objective": "a=sum_b sum_i w_bi*g_bi*y_bi / sum_b sum_i w_bi*g_bi^2; mu_hat=1000*a; w_bi=0.5*normalized trapezoidal coordinate quadrature, each axial branch total weight0.5",
+    "rules": "One common finite positive scale; interpolate each selected reference onto its own measured coordinates without extrapolation; denominator >1e-12*(1000*R^2)^2. Reject nonpositive/unidentified fit, no clipping, intercept, sign, pressure, geometry or branch-specific modulus fitting."
+  }
+}

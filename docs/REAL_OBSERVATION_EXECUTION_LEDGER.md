@@ -43,7 +43,7 @@ The user's hourly push request is scheduled as the active thread heartbeat
 to `origin/main`, verify the remote, and preserve unfinished work and running transfers.
 No force push, paid infrastructure, billing change or external outreach is authorized.
 
-## Acquisition and QC checkpoint, October 9 at 00:26 UTC
+## Acquisition, QC and mechanics checkpoint, October 9 at 01:01 UTC
 
 The [source-frozen CT/MRI archive transfer](../artifacts/synthrad-archive-runner-v1/RESULT.md)
 is active: exact HTTP 200 length/publisher MD5, no scientific decoding. Its 32
@@ -57,16 +57,22 @@ retain four initially failed receipt controls and their repair, then the first
 real execution failure. Case2's inactive qform cannot be reconstructed by the
 shared raw-header recorder although its active sform passes the unchanged
 geometry rules. No scalar loop completed; 23 further pairs remain unattempted.
-The minimum continuation repair passes 23 focused independent controls and a
-second actual batch is running. It retains this adapter limitation, after-fixity
-checks and unfinished stages without altering headers or admitting unreviewed data.
-Completing this encoding's scalar review needs a later recorder-contract change.
+The minimum continuation repair passes 23 focused independent controls. The
+[second actual batch](../artifacts/resect-deferred-qc-execution-v2/RESULT.md)
+finished all 24 new pairs in 19.063570 seconds. All recorded mask checks passed;
+all 24 image scalar reviews remain unfinished. Independent review authenticated
+288 bindings and verified the saved active transforms and grid corners without
+changing failed outcomes. Completing scalar review requires the versioned recorder
+compatibility change; source headers, tolerances and admissions remain unchanged.
 
-Mechanics is ready for a separate branch-aware calibration implementation using
-the accepted compression N36/S120 and tension N24/S120 references. The proposed
-one-hour budget includes two actual fitted confirmations and streamed comparison;
-measured axial responses and withheld torque remain unopened. Physical-error
-metrics will remain distinct from numerical acceptance and patient validity.
+The [branch-specific calibration implementation](../artifacts/hbe-branch-calibration-preparation-v1/RESULT.md)
+is committed as `de420c3`, with 27 owner and 24 independent controls passing.
+Its exact 38-file source archive passed metadata preflight in 4.388249 seconds.
+The first actual supervised child failed with `Interpreter identity differs`
+before any measured response access, fit or native call. The failed attempt is
+preserved and the launch environment is being diagnosed. The fixed one-hour
+experiment still requires both actual fitted axial confirmations before freeze
+and withheld torque access. Physical agreement and patient validity remain open.
 
 ## Latest generated-learning checkpoint
 

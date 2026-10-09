@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_mechanics_hbe_branch_calibration.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 10.114178374875337
+}

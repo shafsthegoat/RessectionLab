@@ -21,14 +21,17 @@ started at 00:26 UTC on October 9 and is running independently of QC and model
 work. The runner passes 32 controls plus independent live-clock and mid-hash
 expiry checks. Its first HTTP 200 response matches the frozen size/checksum;
 partial bytes are unverified, images unopened, and prospective roles unchanged.
-The [first remaining RESECT QC batch](artifacts/resect-deferred-qc-preparation-v1/RESULT.md)
-preserves a real recorder failure: Case2's active sform passes, but recording its
-inactive qform raises a header error. One new pair is incomplete and 23 remain
-unattempted in that first batch. The continuity fix passes 23 focused independent
-controls and a second batch is running; no source header or tolerance has been
-changed. Both specimen step-size qualifications now support the next
-bounded common-stiffness calibration implementation, with physical agreement
-and withheld torsion still unmeasured.
+The [second RESECT QC batch](artifacts/resect-deferred-qc-execution-v2/RESULT.md)
+finished all 24 new pairs. All recorded mask-content checks pass, but image-value
+checks remain unfinished because the recorder tries to reconstruct an inactive
+qform. Independent review verified 288 bindings and the saved active transforms;
+the failed outcomes remain unchanged. A versioned recorder repair is next, with
+no source-header changes, tolerance changes or anatomical admission.
+The [specimen calibration implementation](artifacts/hbe-branch-calibration-preparation-v1/RESULT.md)
+passes 27 owner and 24 independent controls. Exact committed-source preflight
+passed, but the first supervised execution stopped on an interpreter-identity
+mismatch before measured access or native solves. The failed attempt is preserved;
+runtime correction is next. Physical agreement and withheld torque remain unmeasured.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
@@ -76,7 +79,8 @@ The [separate QC result](artifacts/lausanne-deferred-qc-execution-v1/RESULT.md)
 completes all 26 new images and 27 pending references. Across 420 images, 414 pass
 and six earlier T1 conflicts remain. Mask-grid checks now pass for 136 of 144;
 eight conflicts remain. RESECT now has 25 acquired image–mask pairs from 13 TRAIN
-people; 24 pairs still await separate image/label/grid QC. Anatomical and spatial
+people; 24 image-content reviews remain unfinished after their mask checks passed.
+Anatomical and spatial
 admission remain unestablished. The [single N36 specimen solve](artifacts/hbe-n36-execution-v1/RESULT.md)
 now passes its independently reproduced conditional consistency screen:
 0.642702 mN envelope versus 0.723189 mN allowance. It supports temporal review

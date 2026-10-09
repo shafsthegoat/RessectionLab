@@ -1,0 +1,1060 @@
+.EEE..EEEE.......EE.....EEE                                              [100%]
+==================================== ERRORS ====================================
+________ ERROR at setup of test_real_qualifications_preserve_negatives _________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+_______ ERROR at setup of test_wrong_axial_identity_refused[compression] _______
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+_________ ERROR at setup of test_wrong_axial_identity_refused[tension] _________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+_________ ERROR at setup of test_saved_decks_scalar_only[compression] __________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+___________ ERROR at setup of test_saved_decks_scalar_only[tension] ____________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+___ ERROR at setup of test_actual_saved_geometry_at_reference_mu_exact_math ____
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+_________ ERROR at setup of test_actual_mu_changes_physics_and_floors __________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+__________ ERROR at setup of test_missing_confirmation_cannot_freeze ___________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+__ ERROR at setup of test_unregistered_large_hash_and_no_reveal_before_freeze __
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+____________ ERROR at setup of test_full_frame_scales_at_actual_mu _____________
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+_ ERROR at setup of test_unrepresentable_fitted_scalars_refused_before_preparation[1e-300] _
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+_ ERROR at setup of test_unrepresentable_fitted_scalars_refused_before_preparation[1e+308] _
+
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+
+    @pytest.fixture(scope='module')
+    def context(study):
+>       reg=c.Registry(ROOT);refs=c.qualify(ROOT,study,reg)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_branch_calibration.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+registry = <scripts.mechanics_hbe_branch_calibration.Registry object at 0x106e65970>
+
+    def qualify(root, study, registry):
+        """Authenticate prior successful branches while retaining failed aggregates."""
+        references = {}
+        for branch in AXIAL:
+            q = study['axial_references'][branch]
+            registry.primitives(branch, q['native_primitives'])
+            records = {name:registry.bound(binding) for name,binding in q['artifact_bindings'].items()}
+            review, result, comparison = (records[k] for k in ('independent-review/verification.json','result.json','comparison.json'))
+            if (review.get('blocking_record_mismatches') != [] or review.get('status') != 'saved_execution_and_temporal_diagnostic_verified'
+                    or review.get('complete_comparison_canonical_equal') is not True
+                    or review['conclusion'].get(branch+'_temporal_candidate') is not True
+                    or review['conclusion'].get('calibration_released') is not False
+                    or review['conclusion'].get('spatial_convergence_accepted') is not False
+                    or result.get('status') != 'completed_numerical_diagnostic_only'
+                    or comparison.get(branch+'_temporal_candidate') is not True):
+                raise ValueError('Actual independent branch qualification required')
+            if registry.bound(review['comparison']) != comparison or registry.bound(review['result']) != result:
+                raise ValueError('Independent result origin differs')
+            execution = registry.bound(q['run_execution'])
+            if (execution != records['execution.json'] or execution['run_id'] != q['run_id']
+                    or execution['primitive_bindings'] != q['native_primitives']
+                    or execution['reconstruction'] != q['reconstruction']
+                    or execution['runtime_identity'] != study['runtime_identity']
+                    or execution['backend_profile'] != study['backend_profile']):
+                raise ValueError('Reference native execution origin differs')
+            receipts.require_completed_native(execution['execution'], 2100 if branch == 'compression' else 420)
+            row = registry.bound(q['run_readout']); checked_reference(branch, row)
+            if row['primitive_bindings'] != q['native_primitives'] or row['execution_binding'] != q['run_execution']:
+                raise ValueError('Reference readout primitive origin differs')
+            references[branch] = row
+            for key in ('reconstruction','full_mesh','source_deck','study'):
+                registry.bound(q[key], json_value=key != 'source_deck')
+            prior = study['prior_executions'][branch]
+            plan, release = registry.bound(prior['baseline']), registry.bound(prior['release'])
+            if (plan['source_bindings'] != prior['source_bindings'] or plan['release_binding'] != prior['release']
+                    or release.get('authorized') is not True or release['source_archive'] != prior['archive']
+                    or release['source_commit'] != prior['commit'] or release['source_bindings'] != prior['source_bindings']):
+                raise ValueError('Reference committed source release differs')
+            prior_study = registry.bound(q['study'])
+            wanted = {}
+            for key,binding in prior['source_bindings'].items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                    raise ValueError('Historical source identity differs')
+                registry.bound(binding, json_value=False)
+                wanted['scripts/'+Path(binding['path']).name] = binding['sha256']
+            declarations = (list(prior_study['original_declarations'].values())+[prior_study['baseline']['declaration']]
+                            if branch == 'compression' else prior_study['inherited_declarations'])
+            for binding in declarations+[q['study']]:
+                registry.bound(binding)
+                wanted[binding['path']] = binding['sha256']
+            receipts.verify_archive(root, prior['archive'], prior['commit'], wanted, len(wanted))
+            registry.bound(prior['archive'], json_value=False)
+        legacy = registry.bound(study['legacy']['aggregate'])
+        outcome = registry.bound(study['legacy']['outcome'])
+        if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
+            raise ValueError('Original failed aggregate must remain preserved')
+        legacy_release = registry.bound(study['legacy']['release'])
+        if legacy_release['execution']['backend_profile'] != study['backend_profile']:
+            raise ValueError('Original torsion backend differs')
+        original_sources = legacy_release['execution']['source_bindings']
+        original_archive = legacy_release['execution']['source_archive']
+        registry.bound(original_archive,json_value=False)
+        with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
+            if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
+                raise ValueError('Original torsion archive commit differs')
+            for key,binding in original_sources.items():
+                if binding['sha256'] != study['inherited_sources'][key]['sha256']:
+>                   raise ValueError('Original torsion helper changed')
+E                   ValueError: Original torsion helper changed
+
+scripts/mechanics_hbe_branch_calibration.py:195: ValueError
+=========================== short test summary info ============================
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_real_qualifications_preserve_negatives
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_wrong_axial_identity_refused[compression]
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_wrong_axial_identity_refused[tension]
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_saved_decks_scalar_only[compression]
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_saved_decks_scalar_only[tension]
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_actual_saved_geometry_at_reference_mu_exact_math
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_actual_mu_changes_physics_and_floors
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_missing_confirmation_cannot_freeze
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_unregistered_large_hash_and_no_reveal_before_freeze
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_full_frame_scales_at_actual_mu
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_unrepresentable_fitted_scalars_refused_before_preparation[1e-300]
+ERROR tests/test_mechanics_hbe_branch_calibration.py::test_unrepresentable_fitted_scalars_refused_before_preparation[1e+308]
+15 passed, 12 errors in 1.30s

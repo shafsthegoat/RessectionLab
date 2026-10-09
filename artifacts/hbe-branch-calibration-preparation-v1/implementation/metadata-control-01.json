@@ -1,0 +1,8 @@
+{
+  "native_calls": 0,
+  "measured_member_reads": 0,
+  "status": "failed",
+  "error": "KeyError('inherited_declarations')",
+  "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 9, in <module>\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_branch_calibration.py\", line 172, in qualify\n    for binding in prior_study['inherited_declarations']+[q['study']]:\n                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'inherited_declarations'\n",
+  "elapsed_seconds": 0.2880065841600299
+}

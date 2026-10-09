@@ -1,0 +1,378 @@
+..................FFFFF                                                  [100%]
+=================================== FAILURES ===================================
+____________ test_worker_rejects_failed_qualification_before_access ____________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_rejects_failed_qua0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ebafc0>
+
+    def test_worker_rejects_failed_qualification_before_access(tmp_path,monkeypatch):
+        from scripts import mechanics_hbe_branch_calibration_experiment as runner
+        monkeypatch.setattr(core,'declaration',lambda root:{'output_root':'study'})
+        monkeypatch.setattr(core,'preflight',lambda *a,**k:(_ for _ in ()).throw(ValueError('qualification failed')))
+        monkeypatch.setattr(core.BranchReleasedStudy,'read_calibration',lambda *a,**k:pytest.fail('calibration member path reached'))
+        monkeypatch.setattr(core.old,'solve',lambda *a,**k:pytest.fail('native entry reached'))
+>       with pytest.raises(ValueError,match='qualification failed'):runner.worker(tmp_path,{},time.monotonic()+60)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-branch-calibration-independent-review-v1/test_branch_review.py:213: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_branch_calibration_experiment.py:41: in worker
+    runtime.write_json(directory/'state.json',state)
+scripts/febio_runtime.py:39: in write_json
+    with temporary.open("w") as stream:
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_rejects_failed_qua0/study/experiment/state.json.tmp')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_rejects_failed_qua0/study/experiment/state.json.tmp'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[compression] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ebbc50>
+failure = 'compression'
+
+    @pytest.mark.parametrize('failure',['compression','tension','confirmation','none'])
+    def test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal(tmp_path,monkeypatch,failure):
+        from scripts import mechanics_hbe_branch_calibration_experiment as runner
+        obj,fb,pb,schemas=analytical_study(tmp_path)
+        context=obj.context;reg=context['registry'];events=[];native=[]
+        context['directory']=tmp_path/'study/experiment'
+        archive=binding(tmp_path,'archive.tar','analytic metadata only')
+        context['release']['source_archive']=archive
+        context['context']={'runtime':{'executable':'never-invoked-analytic-solver'}}
+        mesh=binding(tmp_path,'mesh.json',{'analytic':True})
+        caps={'new_total_output_bytes':2*1024**3,'active_output_bytes_by_branch':{'compression':1536*1024**2,'tension':512*1024**2},'native_seconds_by_branch':{'compression':2100,'tension':420}}
+        study=context['study'];study.update(output_root='study',budgets=caps,csv_schemas=schemas,runtime_identity={'analytic':True},backend_profile={'analytic':True},axial_references={b:{'counts':{'N':36 if b=='compression' else 24},'native_primitives':{'mesh':mesh},'reconstruction':{'analytic':True}} for b in core.AXIAL})
+        monkeypatch.setattr(core,'declaration',lambda root:study)
+        monkeypatch.setattr(core,'preflight',lambda *a,**k:context)
+        class Watch:
+            active=None
+            def __init__(self,*a,**k):pass
+            def __enter__(self):return self
+            def __exit__(self,*a):pass
+        monkeypatch.setattr(runner.old,'OutputWatch',Watch)
+        class Released:
+            def __init__(self,*a):pass
+            def read_calibration(self,schemas):events.append('calibration');return obj._calibration
+            def freeze_predictions(self,**kw):
+                events.append('confirm-and-freeze')
+                assert set(kw['fitted_runs'])==set(core.AXIAL)
+                if failure=='confirmation':raise ValueError('analytical confirmation failure')
+                return {'path':'fixture-freeze','sha256':'a'*64}
+            def evaluate_held_out(self,**kw):events.append('heldout');return {'analytic':True}
+        monkeypatch.setattr(core,'BranchReleasedStudy',Released)
+        monkeypatch.setattr(core,'fitted_contents',lambda *a:('analytic source','analytic transformed deck',{'analytic':True}))
+        def child(command,prepdir,deadline,seconds):
+            assert seconds==60
+            fit=json.loads((context['directory']/'fit.json').read_text());cases={}
+            for branch in core.AXIAL:
+                base='study/experiment/runs/'+branch+'/'
+                cases[branch]={'source':binding(tmp_path,base+'skyline.feb','analytic source'),'deck':binding(tmp_path,base+'specimen.feb','analytic transformed deck'),'loading':binding(tmp_path,base+'loading.json',{'analytic':True})}
+            core.receipts.durable_json(tmp_path,prepdir/'prepared.json',{'schema':'hbe-branch-fitted-preparation-v1','fit':core.old.binding(tmp_path,context['directory']/'fit.json'),'mu_Pa':fit['mu_Pa'],'cases':cases,'declaration_sha256':core.DECLARATION_SHA256,'native_calls':0,'mesher_calls':0})
+        monkeypatch.setattr(core.common,'pure_child',child)
+        def solve(command,target,seconds):
+            native.append(target.name)
+            assert 0<seconds<=caps['native_seconds_by_branch'][target.name]
+            if failure==target.name:raise TimeoutError('analytical native failure')
+            for name in ['nodes.log','elements.log','solver.log']:(target/name).write_text('analytic dispatch fixture, no primitive data')
+            return {'analytic':True}
+        monkeypatch.setattr(core.old,'solve',solve)
+        monkeypatch.setattr(core.receipts,'require_completed_native',lambda *a:None)
+        if failure=='none':runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+        else:
+>           with pytest.raises((ValueError,TimeoutError),match='analytical'):runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-branch-calibration-independent-review-v1/test_branch_review.py:267: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_branch_calibration_experiment.py:41: in worker
+    runtime.write_json(directory/'state.json',state)
+scripts/febio_runtime.py:39: in write_json
+    with temporary.open("w") as stream:
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or0/study/experiment/state.json.tmp')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or0/study/experiment/state.json.tmp'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[tension] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ebbdd0>
+failure = 'tension'
+
+    @pytest.mark.parametrize('failure',['compression','tension','confirmation','none'])
+    def test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal(tmp_path,monkeypatch,failure):
+        from scripts import mechanics_hbe_branch_calibration_experiment as runner
+        obj,fb,pb,schemas=analytical_study(tmp_path)
+        context=obj.context;reg=context['registry'];events=[];native=[]
+        context['directory']=tmp_path/'study/experiment'
+        archive=binding(tmp_path,'archive.tar','analytic metadata only')
+        context['release']['source_archive']=archive
+        context['context']={'runtime':{'executable':'never-invoked-analytic-solver'}}
+        mesh=binding(tmp_path,'mesh.json',{'analytic':True})
+        caps={'new_total_output_bytes':2*1024**3,'active_output_bytes_by_branch':{'compression':1536*1024**2,'tension':512*1024**2},'native_seconds_by_branch':{'compression':2100,'tension':420}}
+        study=context['study'];study.update(output_root='study',budgets=caps,csv_schemas=schemas,runtime_identity={'analytic':True},backend_profile={'analytic':True},axial_references={b:{'counts':{'N':36 if b=='compression' else 24},'native_primitives':{'mesh':mesh},'reconstruction':{'analytic':True}} for b in core.AXIAL})
+        monkeypatch.setattr(core,'declaration',lambda root:study)
+        monkeypatch.setattr(core,'preflight',lambda *a,**k:context)
+        class Watch:
+            active=None
+            def __init__(self,*a,**k):pass
+            def __enter__(self):return self
+            def __exit__(self,*a):pass
+        monkeypatch.setattr(runner.old,'OutputWatch',Watch)
+        class Released:
+            def __init__(self,*a):pass
+            def read_calibration(self,schemas):events.append('calibration');return obj._calibration
+            def freeze_predictions(self,**kw):
+                events.append('confirm-and-freeze')
+                assert set(kw['fitted_runs'])==set(core.AXIAL)
+                if failure=='confirmation':raise ValueError('analytical confirmation failure')
+                return {'path':'fixture-freeze','sha256':'a'*64}
+            def evaluate_held_out(self,**kw):events.append('heldout');return {'analytic':True}
+        monkeypatch.setattr(core,'BranchReleasedStudy',Released)
+        monkeypatch.setattr(core,'fitted_contents',lambda *a:('analytic source','analytic transformed deck',{'analytic':True}))
+        def child(command,prepdir,deadline,seconds):
+            assert seconds==60
+            fit=json.loads((context['directory']/'fit.json').read_text());cases={}
+            for branch in core.AXIAL:
+                base='study/experiment/runs/'+branch+'/'
+                cases[branch]={'source':binding(tmp_path,base+'skyline.feb','analytic source'),'deck':binding(tmp_path,base+'specimen.feb','analytic transformed deck'),'loading':binding(tmp_path,base+'loading.json',{'analytic':True})}
+            core.receipts.durable_json(tmp_path,prepdir/'prepared.json',{'schema':'hbe-branch-fitted-preparation-v1','fit':core.old.binding(tmp_path,context['directory']/'fit.json'),'mu_Pa':fit['mu_Pa'],'cases':cases,'declaration_sha256':core.DECLARATION_SHA256,'native_calls':0,'mesher_calls':0})
+        monkeypatch.setattr(core.common,'pure_child',child)
+        def solve(command,target,seconds):
+            native.append(target.name)
+            assert 0<seconds<=caps['native_seconds_by_branch'][target.name]
+            if failure==target.name:raise TimeoutError('analytical native failure')
+            for name in ['nodes.log','elements.log','solver.log']:(target/name).write_text('analytic dispatch fixture, no primitive data')
+            return {'analytic':True}
+        monkeypatch.setattr(core.old,'solve',solve)
+        monkeypatch.setattr(core.receipts,'require_completed_native',lambda *a:None)
+        if failure=='none':runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+        else:
+>           with pytest.raises((ValueError,TimeoutError),match='analytical'):runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-branch-calibration-independent-review-v1/test_branch_review.py:267: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_branch_calibration_experiment.py:41: in worker
+    runtime.write_json(directory/'state.json',state)
+scripts/febio_runtime.py:39: in write_json
+    with temporary.open("w") as stream:
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or1/study/experiment/state.json.tmp')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or1/study/experiment/state.json.tmp'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[confirmation] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ee1160>
+failure = 'confirmation'
+
+    @pytest.mark.parametrize('failure',['compression','tension','confirmation','none'])
+    def test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal(tmp_path,monkeypatch,failure):
+        from scripts import mechanics_hbe_branch_calibration_experiment as runner
+        obj,fb,pb,schemas=analytical_study(tmp_path)
+        context=obj.context;reg=context['registry'];events=[];native=[]
+        context['directory']=tmp_path/'study/experiment'
+        archive=binding(tmp_path,'archive.tar','analytic metadata only')
+        context['release']['source_archive']=archive
+        context['context']={'runtime':{'executable':'never-invoked-analytic-solver'}}
+        mesh=binding(tmp_path,'mesh.json',{'analytic':True})
+        caps={'new_total_output_bytes':2*1024**3,'active_output_bytes_by_branch':{'compression':1536*1024**2,'tension':512*1024**2},'native_seconds_by_branch':{'compression':2100,'tension':420}}
+        study=context['study'];study.update(output_root='study',budgets=caps,csv_schemas=schemas,runtime_identity={'analytic':True},backend_profile={'analytic':True},axial_references={b:{'counts':{'N':36 if b=='compression' else 24},'native_primitives':{'mesh':mesh},'reconstruction':{'analytic':True}} for b in core.AXIAL})
+        monkeypatch.setattr(core,'declaration',lambda root:study)
+        monkeypatch.setattr(core,'preflight',lambda *a,**k:context)
+        class Watch:
+            active=None
+            def __init__(self,*a,**k):pass
+            def __enter__(self):return self
+            def __exit__(self,*a):pass
+        monkeypatch.setattr(runner.old,'OutputWatch',Watch)
+        class Released:
+            def __init__(self,*a):pass
+            def read_calibration(self,schemas):events.append('calibration');return obj._calibration
+            def freeze_predictions(self,**kw):
+                events.append('confirm-and-freeze')
+                assert set(kw['fitted_runs'])==set(core.AXIAL)
+                if failure=='confirmation':raise ValueError('analytical confirmation failure')
+                return {'path':'fixture-freeze','sha256':'a'*64}
+            def evaluate_held_out(self,**kw):events.append('heldout');return {'analytic':True}
+        monkeypatch.setattr(core,'BranchReleasedStudy',Released)
+        monkeypatch.setattr(core,'fitted_contents',lambda *a:('analytic source','analytic transformed deck',{'analytic':True}))
+        def child(command,prepdir,deadline,seconds):
+            assert seconds==60
+            fit=json.loads((context['directory']/'fit.json').read_text());cases={}
+            for branch in core.AXIAL:
+                base='study/experiment/runs/'+branch+'/'
+                cases[branch]={'source':binding(tmp_path,base+'skyline.feb','analytic source'),'deck':binding(tmp_path,base+'specimen.feb','analytic transformed deck'),'loading':binding(tmp_path,base+'loading.json',{'analytic':True})}
+            core.receipts.durable_json(tmp_path,prepdir/'prepared.json',{'schema':'hbe-branch-fitted-preparation-v1','fit':core.old.binding(tmp_path,context['directory']/'fit.json'),'mu_Pa':fit['mu_Pa'],'cases':cases,'declaration_sha256':core.DECLARATION_SHA256,'native_calls':0,'mesher_calls':0})
+        monkeypatch.setattr(core.common,'pure_child',child)
+        def solve(command,target,seconds):
+            native.append(target.name)
+            assert 0<seconds<=caps['native_seconds_by_branch'][target.name]
+            if failure==target.name:raise TimeoutError('analytical native failure')
+            for name in ['nodes.log','elements.log','solver.log']:(target/name).write_text('analytic dispatch fixture, no primitive data')
+            return {'analytic':True}
+        monkeypatch.setattr(core.old,'solve',solve)
+        monkeypatch.setattr(core.receipts,'require_completed_native',lambda *a:None)
+        if failure=='none':runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+        else:
+>           with pytest.raises((ValueError,TimeoutError),match='analytical'):runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-branch-calibration-independent-review-v1/test_branch_review.py:267: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_branch_calibration_experiment.py:41: in worker
+    runtime.write_json(directory/'state.json',state)
+scripts/febio_runtime.py:39: in write_json
+    with temporary.open("w") as stream:
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or2/study/experiment/state.json.tmp')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or2/study/experiment/state.json.tmp'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[none] __
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ee1790>
+failure = 'none'
+
+    @pytest.mark.parametrize('failure',['compression','tension','confirmation','none'])
+    def test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal(tmp_path,monkeypatch,failure):
+        from scripts import mechanics_hbe_branch_calibration_experiment as runner
+        obj,fb,pb,schemas=analytical_study(tmp_path)
+        context=obj.context;reg=context['registry'];events=[];native=[]
+        context['directory']=tmp_path/'study/experiment'
+        archive=binding(tmp_path,'archive.tar','analytic metadata only')
+        context['release']['source_archive']=archive
+        context['context']={'runtime':{'executable':'never-invoked-analytic-solver'}}
+        mesh=binding(tmp_path,'mesh.json',{'analytic':True})
+        caps={'new_total_output_bytes':2*1024**3,'active_output_bytes_by_branch':{'compression':1536*1024**2,'tension':512*1024**2},'native_seconds_by_branch':{'compression':2100,'tension':420}}
+        study=context['study'];study.update(output_root='study',budgets=caps,csv_schemas=schemas,runtime_identity={'analytic':True},backend_profile={'analytic':True},axial_references={b:{'counts':{'N':36 if b=='compression' else 24},'native_primitives':{'mesh':mesh},'reconstruction':{'analytic':True}} for b in core.AXIAL})
+        monkeypatch.setattr(core,'declaration',lambda root:study)
+        monkeypatch.setattr(core,'preflight',lambda *a,**k:context)
+        class Watch:
+            active=None
+            def __init__(self,*a,**k):pass
+            def __enter__(self):return self
+            def __exit__(self,*a):pass
+        monkeypatch.setattr(runner.old,'OutputWatch',Watch)
+        class Released:
+            def __init__(self,*a):pass
+            def read_calibration(self,schemas):events.append('calibration');return obj._calibration
+            def freeze_predictions(self,**kw):
+                events.append('confirm-and-freeze')
+                assert set(kw['fitted_runs'])==set(core.AXIAL)
+                if failure=='confirmation':raise ValueError('analytical confirmation failure')
+                return {'path':'fixture-freeze','sha256':'a'*64}
+            def evaluate_held_out(self,**kw):events.append('heldout');return {'analytic':True}
+        monkeypatch.setattr(core,'BranchReleasedStudy',Released)
+        monkeypatch.setattr(core,'fitted_contents',lambda *a:('analytic source','analytic transformed deck',{'analytic':True}))
+        def child(command,prepdir,deadline,seconds):
+            assert seconds==60
+            fit=json.loads((context['directory']/'fit.json').read_text());cases={}
+            for branch in core.AXIAL:
+                base='study/experiment/runs/'+branch+'/'
+                cases[branch]={'source':binding(tmp_path,base+'skyline.feb','analytic source'),'deck':binding(tmp_path,base+'specimen.feb','analytic transformed deck'),'loading':binding(tmp_path,base+'loading.json',{'analytic':True})}
+            core.receipts.durable_json(tmp_path,prepdir/'prepared.json',{'schema':'hbe-branch-fitted-preparation-v1','fit':core.old.binding(tmp_path,context['directory']/'fit.json'),'mu_Pa':fit['mu_Pa'],'cases':cases,'declaration_sha256':core.DECLARATION_SHA256,'native_calls':0,'mesher_calls':0})
+        monkeypatch.setattr(core.common,'pure_child',child)
+        def solve(command,target,seconds):
+            native.append(target.name)
+            assert 0<seconds<=caps['native_seconds_by_branch'][target.name]
+            if failure==target.name:raise TimeoutError('analytical native failure')
+            for name in ['nodes.log','elements.log','solver.log']:(target/name).write_text('analytic dispatch fixture, no primitive data')
+            return {'analytic':True}
+        monkeypatch.setattr(core.old,'solve',solve)
+        monkeypatch.setattr(core.receipts,'require_completed_native',lambda *a:None)
+>       if failure=='none':runner.worker(tmp_path,context['release_binding'],time.monotonic()+60)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-branch-calibration-independent-review-v1/test_branch_review.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_branch_calibration_experiment.py:41: in worker
+    runtime.write_json(directory/'state.json',state)
+scripts/febio_runtime.py:39: in write_json
+    with temporary.open("w") as stream:
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or3/study/experiment/state.json.tmp')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-711/test_worker_stops_on_native_or3/study/experiment/state.json.tmp'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ============================
+FAILED build/hbe-branch-calibration-independent-review-v1/test_branch_review.py::test_worker_rejects_failed_qualification_before_access
+FAILED build/hbe-branch-calibration-independent-review-v1/test_branch_review.py::test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[compression]
+FAILED build/hbe-branch-calibration-independent-review-v1/test_branch_review.py::test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[tension]
+FAILED build/hbe-branch-calibration-independent-review-v1/test_branch_review.py::test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[confirmation]
+FAILED build/hbe-branch-calibration-independent-review-v1/test_branch_review.py::test_worker_stops_on_native_or_confirmation_failure_and_orders_reveal[none]
+5 failed, 18 passed in 0.64s

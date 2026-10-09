@@ -1,0 +1,34 @@
+# HBE calibration: interpretation and the next physical bridge
+
+Read-only evidence interpretation, 2026-10-08. No measured force/torque curves, patient arrays, solver or model were accessed. This note uses existing audited source notes and saved numerical summaries; it grants no execution or data-access release.
+
+**The imminent result is a within-specimen cross-mode prediction test.** The accepted [compression N36/S120](/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/hbe-n36-temporal-execution-v1/RESULT.md) and [tension N24/S120](/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/hbe-tension-n24-temporal-execution-v1/RESULT.md) checks support the proposed branch-specific qualification. They remain numerical checks on native lower-half domains with explicit full-field reconstruction. They do not replace the preserved earlier failures, prove unrestricted continuum convergence, or measure tissue accuracy. Qualification, calibration and actual fitted-scale confirmations remain distinct gates.
+
+## What withheld torsion tests
+
+The [original protocol](/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/docs/hbe-specimen-mechanics-poc.md) fixes one homogeneous isotropic, quasi-static law:
+`W = μ/2(Ī₁−3) + K/4(J²−1−2lnJ)`, with exponent 2 and `K=149μ/3` (initial ν=.49). One positive μ is fitted jointly to third-cycle compression and tension, with equal total mode weights and normalized trapezoidal coordinate weights. There is no fitted offset, sign, geometry, compressibility, exponent or branch-specific modulus. The [unchanged evaluator](/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_evaluation.py:101) implements that scalar fit.
+
+The [prospective branch map](/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-next-v1/change-list.json) uses axial N36/N24 S120 references and full-domain N12/S120 torsion of both signs. Two genuine fitted axial confirmations must precede the durable parameter/prediction freeze and torque reveal. The scale-homogeneity argument applies on each fixed discretization/equilibrium branch; it does not prove uniqueness or replace those confirmations. Its earlier “tension pending” status is historical; the separately saved tension result supplies the newer evidence.
+
+After that freeze, previously unopened low-amplitude third-cycle torque tests the fixed model’s axial-to-torsional coupling in **HBE_01_03**, under bonded plates and the declared angular range. A close match would support this particular specimen/fixture approximation. A mismatch challenges the combined constitutive, geometry, fixture and processed-data approximation; it does not uniquely diagnose one cause. Both signs also expose signed bias and departures from the model’s approximate odd symmetry. They are correlated branches of one specimen, not independent donors or replications.
+
+Report each sign’s RMSE/MAE in N·m, signed endpoint bias, normalized error with its actual observed-RMS denominator, and observed/predicted symmetry discrepancies. Keep calibration-force error separate. The evaluator deliberately returns `physical_validation_pass=null`: instrument/geometry uncertainty and an application-specific empirical tolerance are unavailable. Numerical tolerance is not a physical-accuracy threshold. Processed rows are not IID samples for a confidence interval.
+
+The [creator experiment](https://pmc.ncbi.nlm.nih.gov/articles/PMC10511383/) and [release](https://zenodo.org/records/8095559) concern postmortem specimens bonded to sandpaper-covered plates; released curves approximate quasi-static hyperelastic behavior. Torsion followed earlier testing, so the common cycle suffix does not remove loading-history uncertainty. Success would not identify patient-specific stiffness, the assumed compressibility, viscoelasticity, friction/contact, cutting, damage, ischemia or neurological injury. Donor01 remains DEVELOPMENT; other modes/specimens/donors retain their existing roles.
+
+## Smallest defensible bridge to patient retraction
+
+**Available next patient component:** use the existing real-anatomy conditional-displacement interface with supplied B observations and separately frozen V landmarks, preserving patient/family roles. Compare the same allowed information with no-shift, proper-rigid and simple interpolation baselines; report physical error, coverage and exclusions. RESECT snapshots/correspondences can test retained-anatomy updating. They do not identify the intervening instrument trajectory or forces. The existing 5 mm averaging operator is a declared approximation to point observations, not a measured volume average. HBE μ must not become a measured patient modulus.
+
+**Controlled retraction requires additional paired observations:**
+
+| Claim | Required evidence currently missing from the patient imaging records |
+|---|---|
+| Tissue response to a known retractor motion | Actual blade geometry and time-resolved pose in the anatomy frame; initial engagement/contact region; known exposed/fixed/support boundaries; independent tissue displacement measurements with registration and timing uncertainty. |
+| Contact-based prediction | Observed or independently characterized slip/tie/friction and contact onset/separation, with uncertainty; a prescribed surface displacement bypasses contact and therefore cannot validate it. |
+| Retraction-force prediction | Calibrated synchronized force/torque, sensor-to-tool transforms, baseline/tare and uncertainty. Force measurement is not mandatory for a displacement-only comparison, but is mandatory to assess predicted loads. |
+
+The smallest physical interaction case is one prescribed, non-cutting retraction with retained topology and independent displacement validation; add measured loads only for a load claim. Real patient geometry alone supplies none of these interaction observations. Skull/meningeal support, opening, cavity, fluid/gravity conditions and any clamps must be measured, documented or explicit uncertain assumptions—not invented to make a solve converge.
+
+A [tracked-retractor/CT-bead phantom study](https://pmc.ncbi.nlm.nih.gov/articles/PMC4082653/) demonstrates the relevant measurement design; our notes establish no accessible raw brain-retraction dataset. MULTIS is a separate cadaver-limb interaction candidate, with no independent surface-motion acquisition in its later retraction trials. Neither supplies patient-specific brain validation. Conditional displacement and geometric RL can continue under their own claims; neither should inherit a retraction-force or injury reward from this specimen result.
