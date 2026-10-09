@@ -1,0 +1,190 @@
+{
+  "schema": "btc-pat16-pat20-diffusion-byte-intake-summary-v1",
+  "verified_at_utc": "2026-10-09T06:27:56.045938+00:00",
+  "status": "all_bytes_verified",
+  "files": 16,
+  "bytes": 94311092,
+  "patient_groups": [
+    {
+      "patient_group": "BTC:sub-PAT16",
+      "canonical_patient_split": "TRAIN",
+      "files": 8,
+      "bytes": 47854915
+    },
+    {
+      "patient_group": "BTC:sub-PAT20",
+      "canonical_patient_split": "TRAIN",
+      "files": 8,
+      "bytes": 46456177
+    }
+  ],
+  "outer_use_restriction": "development_only",
+  "receipt_role_development_meaning": "Outer-use restriction; not a reassignment of the canonical TRAIN patient split.",
+  "patient_roles_changed": false,
+  "new_files_admission": "byte_verified_unreviewed",
+  "source_release": "BTC_preop ds001226 v5.0.1",
+  "source_git_commit": "359d372c5e972a161966312128adb365870df949",
+  "license": "CC0",
+  "completion": "data/acquisition/btc-pat16-pat20-diffusion-v1/completion.json",
+  "completion_sha256": "e62a963c502ceb0e374945f4228ef91dc26f3fcf5b9933c976fc008476ed64b1",
+  "declaration_sha256": "4ff929ca17ddbe595ca0aeff690f6362e538b080b43fc3b44b63b218b4f6f94e",
+  "independent_fixity_audit": "build/btc-pat16-pat20-diffusion-intake-v1/fixity-audit.json",
+  "independent_fixity_sha256": "5a4990226dd7fea8ce1820dfe9941143c96411ba41f14e778dfee3e183da4f0a",
+  "transport": {
+    "verified_tls": true,
+    "resumption_supported": true,
+    "all_transfers_started_at_offset": 0,
+    "http_requests": 16,
+    "image_payload_decode_bytes": 0
+  },
+  "anatomy_qc": "not_run",
+  "diffusion_reconstruction_qc": "not_run",
+  "training_admitted": false,
+  "eligible_for_outer_final": false,
+  "optimizer_updates": 0,
+  "current_live_transfer_handles": [],
+  "current_free_bytes": 696230674432,
+  "reserve_bytes": 107374182400,
+  "role_evidence": [
+    {
+      "path": "src/resectionlab/real_patient_learning.py",
+      "sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+      "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/experiments/remaining-training-frozen-spatial-v1.json",
+      "sha256": "3e46a2bba38f0b2bea127d49c831c6af597a51aad360afdcdfdadf82b27c23f3",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/experiments/training-observation-coverage-v1.json",
+      "sha256": "227468bc212fbd13b1d8ef63b19d63f396b0d860e74476685e4778aa45c1c7ae",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/cohort_registry.json",
+      "sha256": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/development_acquisition_queue.json",
+      "sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+      "matches_HEAD": true
+    }
+  ],
+  "preserved_TRAIN_subjects": [
+    "sub-PAT05",
+    "sub-PAT16",
+    "sub-PAT20",
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT28"
+  ],
+  "preserved_SELECT_subjects": [
+    "sub-PAT26",
+    "sub-PAT27"
+  ],
+  "file_proofs": [
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz",
+      "bytes": 46711430,
+      "sha256": "403d630772a6203dd67cc498235846a57a82ff62a5dfd2b33b689dbfac366c36",
+      "md5": "df0336601e359838c2b8d274e6184e99"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json",
+      "bytes": 1644,
+      "sha256": "3f3b5b5f3a485f9e70501c7e23d5c48711e85282b9d60f9452963c9b1ab2099d",
+      "md5": "5ff0054c44e592aca33dc82350faf2cb"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval",
+      "bytes": 476,
+      "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+      "md5": "3e3ce19eb2acfb89a116f43219d649e6"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec",
+      "bytes": 2773,
+      "sha256": "79aef7283c3ec6c1889c2d3090ca8c971d50db41ba768b3ccbea9c66a76443b4",
+      "md5": "d039d7b5b18f829cd09a022200afdc37"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz",
+      "bytes": 1137510,
+      "sha256": "1d9f24f816c04c3676ecb19aeddfc1c3163e11203addc7dc2311eea9690ddcf8",
+      "md5": "032af0922a6fa1773763ac2f3a9f7a24"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json",
+      "bytes": 1066,
+      "sha256": "336a04320f8086c9de3ddc8cc82e4a3a515e9c5ea6feec7cc33a1be2ad220ceb",
+      "md5": "1fcd998ebce681115b3de3c30e4b06c6"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval",
+      "bytes": 4,
+      "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101",
+      "md5": "5928dd99059f0c73963285d86f359fdb"
+    },
+    {
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec",
+      "bytes": 12,
+      "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4",
+      "md5": "7570a20aceb862108a9b05fe61ee5f27"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz",
+      "bytes": 45361486,
+      "sha256": "a32b4af4fd96b6f2742563931b1f6817a8799ad868cd4df2ad6fdce3690e19ee",
+      "md5": "89f4bcb6da1c5bbeb7d31f9a5a3b57f2"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json",
+      "bytes": 1628,
+      "sha256": "ae4571f6fb0b8a98c969af56cbaeb04b6fd1f3f6d2bc7b63f01ffff43d34679e",
+      "md5": "9fa3204fc1d0b6f55be79b6a3c1e4153"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval",
+      "bytes": 476,
+      "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+      "md5": "3e3ce19eb2acfb89a116f43219d649e6"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec",
+      "bytes": 2762,
+      "sha256": "9cb0b6ce8c1107ce5ea4af258a1082df07e83898c7f47dbcc5b10391acd50a12",
+      "md5": "0481dfe346bdb295694dcf00a8fbaf7a"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz",
+      "bytes": 1088759,
+      "sha256": "196546dbbba5cc1d1d445151532b6ad78aaf33b76613d89b7b777eb53b5a51c0",
+      "md5": "68904e75eb00a7c971ba43ea19e56889"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json",
+      "bytes": 1050,
+      "sha256": "c3d8c4c0d6b07d9bf7cdcf63975dcda2eed8f1434e1551f9be7701d2dc2ee46d",
+      "md5": "6c463de31ef16c3e55015c16dfd86c49"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval",
+      "bytes": 4,
+      "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101",
+      "md5": "5928dd99059f0c73963285d86f359fdb"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec",
+      "bytes": 12,
+      "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4",
+      "md5": "7570a20aceb862108a9b05fe61ee5f27"
+    }
+  ]
+}

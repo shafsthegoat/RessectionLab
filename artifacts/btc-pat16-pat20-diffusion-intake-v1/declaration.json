@@ -1,0 +1,162 @@
+{
+  "accession": "ds001226",
+  "anatomy_qc": "not_run",
+  "authorization": "Current user continuous acquisition and root explicit16-file94,311,092-byte intake authorization; historical structural-only CLI remains unchanged.",
+  "dataset": "BTC_preop",
+  "decoded_array_bytes": 0,
+  "diffusion_reconstruction_qc": "not_run",
+  "eligible_for_outer_final": false,
+  "file_count": 16,
+  "files": [
+    {
+      "bytes": 46711430,
+      "expected_md5": "df0336601e359838c2b8d274e6184e99",
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": null,
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz?versionId=SRzm45cxSVON3NC6GTyWAhhYOMtV7hPe",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 1644,
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": "3f3b5b5f3a485f9e70501c7e23d5c48711e85282b9d60f9452963c9b1ab2099d",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 476,
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 2773,
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": "79aef7283c3ec6c1889c2d3090ca8c971d50db41ba768b3ccbea9c66a76443b4",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 1137510,
+      "expected_md5": "032af0922a6fa1773763ac2f3a9f7a24",
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": null,
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz?versionId=viNG95HVkXPEncnUMIv3BuZsGuSc5EfC",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 1066,
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": "336a04320f8086c9de3ddc8cc82e4a3a515e9c5ea6feec7cc33a1be2ad220ceb",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 4,
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 12,
+      "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec",
+      "patient_group": "BTC:sub-PAT16",
+      "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec",
+      "subject": "sub-PAT16"
+    },
+    {
+      "bytes": 45361486,
+      "expected_md5": "89f4bcb6da1c5bbeb7d31f9a5a3b57f2",
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": null,
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz?versionId=fVP4kdrIMpOoKQMrXmYDVXxHXDS8YNJV",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 1628,
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": "ae4571f6fb0b8a98c969af56cbaeb04b6fd1f3f6d2bc7b63f01ffff43d34679e",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 476,
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 2762,
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": "9cb0b6ce8c1107ce5ea4af258a1082df07e83898c7f47dbcc5b10391acd50a12",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 1088759,
+      "expected_md5": "68904e75eb00a7c971ba43ea19e56889",
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": null,
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz?versionId=Txd13AVIo.stHFvoTVyb.sOzRQEKKY6r",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 1050,
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": "c3d8c4c0d6b07d9bf7cdcf63975dcda2eed8f1434e1551f9be7701d2dc2ee46d",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 4,
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval",
+      "subject": "sub-PAT20"
+    },
+    {
+      "bytes": 12,
+      "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec",
+      "patient_group": "BTC:sub-PAT20",
+      "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec",
+      "subject": "sub-PAT20"
+    }
+  ],
+  "free_space_reserve_bytes": 107374182400,
+  "header_qc": "not_run",
+  "helper_sha256": {
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "license": "CC0",
+  "license_file_sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+  "outer_role": "development",
+  "output_root": "data/acquisition/btc-pat16-pat20-diffusion-v1/verified",
+  "release": "5.0.1",
+  "schema": "btc-reviewed-diffusion-byte-intake-v1",
+  "source_git_commit": "359d372c5e972a161966312128adb365870df949",
+  "source_queue": "manifests/development_acquisition_queue.json",
+  "source_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+  "total_bytes": 94311092,
+  "training_admitted": false
+}
