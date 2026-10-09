@@ -36,8 +36,9 @@ The [ReMIND component expansion](artifacts/remind-cohort-expansion-preparation-v
 has independently reviewed, frozen roles for the full source cohort: 79 TRAIN,
 17 SELECT, 17 MEASUREMENT_EVAL, with ReMIND001 retained as DEVELOPMENT. Exact
 checksums are bound for 59,520 raw TRAIN MRI/US objects (30,173,493,690 bytes).
-No new patient payload was read before this freeze; acquisition must bind the
-committed declaration. Diagnosis strata, unknown pretraining overlap and all
+No new patient payload was read before this freeze. The acquisition launched
+against the committed declaration on October 9 at 07:08 UTC and is in progress;
+unreviewed payloads remain separate from training admission. Diagnosis strata, unknown pretraining overlap and all
 training/clinical admission limits remain explicit.
 
 The [completed BTC training modality intake](artifacts/btc-train-modalities-intake-v1/RESULT.md)
@@ -60,6 +61,13 @@ and PAT20. Root independently rehashed every payload and confirmed unchanged
 patient-role and queue files. Anatomy and reconstruction QC are deferred; the
 new modalities remain unreviewed and do not increase patient counts or admit training.
 
+The [N16 compression numerical run](artifacts/hbe-v5-n16-numerical-v1/RESULT.md)
+completed one native call in **46.446 seconds**, with about 306 MiB peak sampled
+RSS. Independent reconstruction reproduced all 61 saved frames and the passing
+numerical gates. Its endpoint reaction differs from N12 by 0.558%; the remaining
+mesh/load-step study is still needed before claiming convergence. This uses a
+specimen fixture with no measured-force or patient validation.
+
 The [N12 saved numerical replay](artifacts/hbe-v5-n12-saved-replay-v1/RESULT.md)
 now has an independently audited supplemental pass: one Python worker reproduced
 all 61 saved frames byte for byte, with zero new FEBio calls. It took 2.847 seconds
@@ -67,7 +75,7 @@ and 200,769,536 bytes peak sampled RSS. The original failed receipt and missing
 historical post-run guard observations remain explicit. The [exact supplement integration](docs/hbe-v5-n12-exact-supplement-admission.md)
 now admits this specific reviewed pair as a numerical predecessor; all other
 failed receipts remain rejected. Independent checks pass 29 focused and 14
-adjacent tests. The remaining ten native rows and comparator are still unrun.
+adjacent tests. The subsequent N16 row has now completed; nine native rows and the comparator remain unrun.
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
