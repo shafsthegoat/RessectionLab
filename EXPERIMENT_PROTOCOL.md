@@ -53,6 +53,35 @@ performance, transfer against acquired withheld patient anatomy, and physical
 or clinical validation against independent measurements or observed outcomes.
 No present generated fixture or within-case pilot satisfies this full benchmark.
 
+### Prospective IXI vascular component
+
+Use the frozen IXI cohort for a separately named retrospective healthy-brain
+corridor task. T1 supplies the actor inputs and hypothetical geometric waypoints;
+same-person MRA-derived annotations remain private. Unknown acquisition times do
+not become preoperative evidence. This single-decision component can examine
+transfer of anatomical information, but cannot establish sequential surgical
+skill, glioma planning, vessel-free corridors or neurological benefit.
+
+After source, registration, coverage and T1-derived support checks pass, the
+initial pilot may use at most 12 eligible labeled TRAIN people and four SELECT
+people, ordered by SHA-256 of their frozen person-group identifiers. Preserve
+attrition; never replace an unfavorable person or move a waypoint using private
+labels. Freeze up to two T1-only waypoints and eight full-tool corridors plus
+STOP per person. An uninformative fixed task with no annotation-encounter
+variation is a retained negative result. No patient execution is authorized by
+this protocol text alone; an exact run manifest must bind inputs and resources.
+
+Compare T1-only search, symmetric and privileged-critic actor–critic, privileged
+teacher imitation, and learned annotation prediction plus search. Match patient
+and reference exposure, action inventories and online budgets, while accounting
+separately for voxel supervision, teacher queries and optimization cost. Prefer
+scratch models while pretrained overlap is unresolved. Preserve the existing
+15 labeled MEASUREMENT_EVAL people until all methods and selection choices are
+frozen; seal every method before opening their private references. Report
+annotated-positive encounters, unknown coverage, waypoint reach, abstention and
+compute separately. No current generated-only planner record may be relabeled
+as an acquired IXI case to bypass an incompatible interface.
+
 Use three labels without interchange: `synthetic_smoke` for software/analytic fixtures, `development_patient` for inspected public cases used in method development, and `locked_patient_evaluation` only after the outer procedure and cohort are frozen. Held-out worlds within a development patient do not make that patient an external validation cohort. A deterministic case is deterministic optimization even if it has many seeds.
 
 ## Eligibility and frozen record
