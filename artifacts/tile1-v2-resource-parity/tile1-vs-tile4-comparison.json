@@ -1,0 +1,57 @@
+{
+  "allclose": true,
+  "atol": 0.001,
+  "control_pass": true,
+  "decoded_disagreement_cells": 0,
+  "decoded_total_cells": 262144,
+  "interpretation": "Generated software comparison only; one run per tile and phase hooks perturb timing. No full128 feasibility, patient accuracy, or clinical evidence.",
+  "max_absolute_error": 0.0,
+  "out_of_tolerance_elements": 0,
+  "per_region_threshold_margins": [
+    {
+      "maximum_abs_difference_on_crossings": null,
+      "minimum_tile1_abs_logit": 9.016916737891734e-05,
+      "minimum_tile4_abs_logit": 9.016916737891734e-05,
+      "near_zero_band_abs_logit": 0.001,
+      "region": "whole tumor",
+      "threshold_crossing_cells": 0,
+      "tile1_near_zero_cells": 4,
+      "tile4_near_zero_cells": 4
+    },
+    {
+      "maximum_abs_difference_on_crossings": null,
+      "minimum_tile1_abs_logit": 0.0004919283092021942,
+      "minimum_tile4_abs_logit": 0.0004919283092021942,
+      "near_zero_band_abs_logit": 0.001,
+      "region": "tumor core",
+      "threshold_crossing_cells": 0,
+      "tile1_near_zero_cells": 2,
+      "tile4_near_zero_cells": 2
+    },
+    {
+      "maximum_abs_difference_on_crossings": null,
+      "minimum_tile1_abs_logit": 0.012711480259895325,
+      "minimum_tile4_abs_logit": 0.012711480259895325,
+      "near_zero_band_abs_logit": 0.001,
+      "region": "enhancing tumor",
+      "threshold_crossing_cells": 0,
+      "tile1_near_zero_cells": 0,
+      "tile4_near_zero_cells": 0
+    }
+  ],
+  "regions_class_order": [
+    2,
+    1,
+    3
+  ],
+  "rmse": 0.0,
+  "rtol": 0.001,
+  "scope": "Generated identical-input/checkpoint 64-cubed tile1-vs-saved-tile4 software parity and guarded single-run resources only",
+  "tile1_forward_seconds_single_run_instrumented": 0.5526355840265751,
+  "tile1_raw_logits_sha256": "52252550d12d7fc0ddd930c044f58cd6e1bca00606646bbd9780687bce3f2853",
+  "tile1_sampled_peak_process_group_rss_bytes": 795983872,
+  "tile4_forward_seconds_single_run_instrumented": 0.5745945419184864,
+  "tile4_raw_logits_sha256": "52252550d12d7fc0ddd930c044f58cd6e1bca00606646bbd9780687bce3f2853",
+  "tile4_sampled_peak_process_group_rss_bytes": 956301312,
+  "total_logit_elements": 786432
+}

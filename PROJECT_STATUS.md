@@ -67,6 +67,14 @@ and verifies them by replay using only permitted inputs. Root integration passed
 This supports complete-strategy evaluation and replay. The saved demonstration
 is explicitly generated DEVELOPMENT evidence, with no training or patient transfer.
 
+The [repaired tile-depth-1 control](artifacts/tile1-v2-resource-parity/INDEPENDENT_REVIEW.md)
+completed with a full resource trace and independent acceptance. All 786,432
+64³ generated logits match the saved tile-depth-4 output byte for byte, with
+zero decoded-label differences. Sampled peak memory was 795,983,872 bytes versus
+956,301,312 bytes (16.8% lower). This is one instrumented generated control,
+not a robust benchmark, full-128³ feasibility or patient accuracy result.
+The previous cleanup failure remains preserved separately.
+
 The [tile-depth-1 comparison attempt](artifacts/tile1-cleanup-negative-v1/INDEPENDENT_REVIEW.md)
 saved outputs byte-identical to tile depth 4 (786,432 logits, zero decoded-label
 disagreements), but its controller raised PermissionError during cleanup before
@@ -99,8 +107,8 @@ The [TractoInferno byte-intake scope](artifacts/tractoinferno-train-intake-prepa
 now freezes all 198 publisher TRAIN identifiers: 7,622 files and
 273,788,367,039 bytes. The publisher's 58 validation and 28 test identifiers
 remain protected and excluded. Independent metadata and 13 generated transport
-checks pass; continuous checksum-verified acquisition is released after its
-separate runtime declaration binds this commit. Detailed anatomy QC is deferred.
+checks pass; continuous checksum-verified acquisition began at 09:46 UTC after its
+separate runtime declaration bound the scope commit. Detailed anatomy QC is deferred.
 These derivative tractography candidates are not verified glioma cases or
 functional ground truth; unknown biological overlap and model exposure remain.
 

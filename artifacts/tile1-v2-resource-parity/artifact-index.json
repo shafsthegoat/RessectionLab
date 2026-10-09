@@ -1,0 +1,94 @@
+{
+  "CONTROLLER_REVIEW.md": {
+    "bytes": 4632,
+    "sha256": "1b562edc4cc0c825d2dce010cf457eefa2dafbe604f6fe5ab2ff3f1ffdbe6bce"
+  },
+  "INDEPENDENT_REVIEW.md": {
+    "bytes": 2897,
+    "sha256": "d75bf8db50ae5602819fe4f454a1670c04faa90b7444bf278f1574ae5758b369"
+  },
+  "PROSPECTIVE_REVIEW.md": {
+    "bytes": 1549,
+    "sha256": "c3b73ccab20a42e6624abab7625f540ca8cb4d0c1af9e07b328f3c20410946c0"
+  },
+  "RESULT.md": {
+    "bytes": 2607,
+    "sha256": "74541f6c73bcccb4e4b7ec0a3322d57b1714fe1f86f5b699f117fded32edbbba"
+  },
+  "generated-input-receipt.json": {
+    "bytes": 417,
+    "sha256": "83772be6ffdf2d6e0baeaf09349583f9b0df708ab6c31c8f8a0d3092e628fb36"
+  },
+  "source/compare_saved_tile4.py.snapshot": {
+    "bytes": 8726,
+    "sha256": "c2f9ff49786fe7e28fa1b8994149355b0399ee9fdbe9df85c9a5c04eedc263f8"
+  },
+  "source/darwin_fast_sampler.py.snapshot": {
+    "bytes": 8426,
+    "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+  },
+  "source/launch_gate.py.snapshot": {
+    "bytes": 916,
+    "sha256": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f"
+  },
+  "source/monitor_primitives.py.snapshot": {
+    "bytes": 4084,
+    "sha256": "ae3d42f94765219b0e5daa817c5ec8677d3171f1b7f9af7cfc5e4b90f35955c9"
+  },
+  "source/safe_finalize.py.snapshot": {
+    "bytes": 13744,
+    "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4"
+  },
+  "source/slow_inventory.py.snapshot": {
+    "bytes": 10441,
+    "sha256": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1"
+  },
+  "source/supervise_tile1_v2.py.snapshot": {
+    "bytes": 21985,
+    "sha256": "323b628663fca238b764d05d74f386974321ebcdf7707e83f82dc06ecd4b07fe"
+  },
+  "source/test_launch_control.py.snapshot": {
+    "bytes": 11545,
+    "sha256": "9725fecbff38af7223b46a0ab80fe87de6c3fbc95c8da09422da702402800ea8"
+  },
+  "source/tile1_worker.py.snapshot": {
+    "bytes": 14753,
+    "sha256": "64134bd7563b46953453c040eebc37ed1a930d1a423e0ab8a80fdd26a7ac1916"
+  },
+  "tile1-contract.json": {
+    "bytes": 4336,
+    "sha256": "27bb2d589ed8dfa4d5a848db217f9eea02388c710131396062c604daf6e4fab5"
+  },
+  "tile1-vs-tile4-comparison.json": {
+    "bytes": 2171,
+    "sha256": "3a08a726711ca875650281ab0e53a5f05559122b4df7f9a19613782ad1010153"
+  },
+  "tiled/finalization.json": {
+    "bytes": 556,
+    "sha256": "9d0e837a73469e3bf7b4c544e61ffe14f63e82c8ce0df1ebad6ee3a7b409fd45"
+  },
+  "tiled/host-preflight.json": {
+    "bytes": 12526,
+    "sha256": "527e5e5c26b73892eef95d3d8aaa6da7dc6932e2e1a58e8856d91071f1dcdb63"
+  },
+  "tiled/launch-binding.json": {
+    "bytes": 498,
+    "sha256": "b332ff51e4766930e9f2742e0a14dbfc411ad2587d530b110c42205848600024"
+  },
+  "tiled/provisional-supervision.json": {
+    "bytes": 34079,
+    "sha256": "01979184261a5752963220ad1917b802b71a2e048cf592e2b3f6e9132c4e1502"
+  },
+  "tiled/result.json": {
+    "bytes": 1805,
+    "sha256": "ae7492549a9b6f90d6684b377c11b5e32711b83a9d3f42f28e9a11257047ca98"
+  },
+  "tiled/supervision.json": {
+    "bytes": 36166,
+    "sha256": "91396e051668265acbc48f5c7fbdc7a06f66b89f0bf0258a3bc2ec08dddcbd90"
+  },
+  "tiled/worker.log": {
+    "bytes": 29273,
+    "sha256": "d23428226a7cb43dbb862ca133e2707ca1fb0d2e6ca4c95f83b02758af6beadb"
+  }
+}
