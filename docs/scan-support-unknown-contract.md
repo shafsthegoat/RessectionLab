@@ -1,0 +1,9 @@
+# Source FOV and unknown-state contract
+
+Three bits represent original T1 scan field of view (`1`), original FLAIR scan field of view (`2`), and an **unreviewed estimated** brain mask (`4`) on one declared grid. A mask voxel outside either scan FOV fails. Code `3` means both scans sample that voxel while the estimated mask excludes it; the anatomy and tumor state are unknown. Code `7` is only a candidate diagnostic input domain, not qualified brain anatomy. Codes `4`, `5`, and `6` are invalid. Outside the grid is unassessed, never background.
+
+The helper receives three arrays and no patient files, postoperative labels, target-derived ROI, model, or planner. The Case4 scan-only preparation documented inferior/cerebellar omissions in its SynthStrip mask, so this bitfield must not be treated as whole-brain support. The future prediction display accepts a **separate output-coverage array**: a zero prediction is negative only where output coverage is true; all other voxels remain unknown. Positive predictions outside actual output coverage are counted rather than silently clipped.
+
+This bitfield is not a `research_estimate_planning.ScanEstimate.coverage` with `qc_status="pass"`. Before any estimate can be used in a declared DEVELOPMENT comparison, the existing planning interface requires separately qualified mask, output coverage, physical frame, source identity, and bounded ROI checks. Source-FOV samples from a saved rigid transform are nearest-neighbor atlas voxel-center samples, not continuous cell or tool-shaft coverage. No route or clinical claim follows from this helper.
+
+The pure generated tests are `tests/test_scan_support_contract.py`. The patient-specific replay and its optional ANTs/SimpleITK geometry control remain ignored until a separately bounded, reviewed run is authorized.

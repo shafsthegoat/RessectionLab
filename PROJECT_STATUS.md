@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [scan support contract](docs/scan-support-unknown-contract.md) now keeps
+scan field of view, estimated anatomy and prediction coverage separate. Five
+generated controls pass: unobserved locations stay unknown, and predicted
+positives outside coverage are counted rather than silently discarded. The
+Case4 mask's inferior omissions remain unresolved; no patient map, model run or
+planner admission follows from this source-only integration.
+
 The [NFBS original-byte intake](artifacts/nfbs-completion-v1/RESULT.md)
 completed after ReMIND on October 9 at 08:45 UTC: one sealed archive,
 1,751,464,473 bytes, verified against publisher-linked whole-file MD5 with local
