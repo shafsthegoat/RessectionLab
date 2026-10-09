@@ -1,0 +1,223 @@
+{
+  "closed_files": {
+    "readout-console.txt": 0,
+    "receipt.json": 1802,
+    "worker-result.json": 569,
+    "worker-samples.json": 61498
+  },
+  "compact_manifest_entries_verified": 9,
+  "copied_raw_and_source_files_byte_exact": 6,
+  "decision": "GO_compact_evidence_integration_HOLD_native_release",
+  "full_predecessor_files_read": 0,
+  "hbe_replays": 0,
+  "historical_git_source_bytes_read": 431005,
+  "historical_source_commit": "4b8156c766069d793e1d7c48b241e6e07ae81010",
+  "independent_closed_output_bytes": 63869,
+  "input_bindings": {
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/RESULT_ANALYSIS.md": {
+      "bytes": 4929,
+      "sha256": "c031c5e88a6920ec48862ce04e826c4fd4ee1f63f53cf8c329db66d8f64b8838"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/receipt.json": {
+      "bytes": 1802,
+      "sha256": "0af1e221b8fb656163387b58c99180dfda9c944244d63f5c4bce92bd5deb4b27"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/worker-result.json": {
+      "bytes": 569,
+      "sha256": "865911f8ee95b60009420d24d28c642914a33d3f8b67d24268a4bb2dd008a1d6"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/worker-samples.json": {
+      "bytes": 61498,
+      "sha256": "321c9c0fbaca1807c41db400682bfbbcf1703eb0b6f2288cbdd3e3ca1fbef8b5"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/diagnose.py": {
+      "bytes": 16818,
+      "sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/MANIFEST.json": {
+      "bytes": 1703,
+      "sha256": "56faea5cf8bb7c23ce15df8857a659acc5e3106a6a43f3669c46afd6a7556d88"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/README.md": {
+      "bytes": 1227,
+      "sha256": "1a77588aad89c814d761fbd48c1ac57bfedb64a196a21cba84b92d58b09ed3c8"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/attempt-01/readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/attempt-01/receipt.json": {
+      "bytes": 1802,
+      "sha256": "0af1e221b8fb656163387b58c99180dfda9c944244d63f5c4bce92bd5deb4b27"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/attempt-01/worker-result.json": {
+      "bytes": 569,
+      "sha256": "865911f8ee95b60009420d24d28c642914a33d3f8b67d24268a4bb2dd008a1d6"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/attempt-01/worker-samples.json": {
+      "bytes": 61498,
+      "sha256": "321c9c0fbaca1807c41db400682bfbbcf1703eb0b6f2288cbdd3e3ca1fbef8b5"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/diagnose.py": {
+      "bytes": 16818,
+      "sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/snapshots.json": {
+      "bytes": 4099,
+      "sha256": "2220d28f8d161fa10610539ebd5af1a3418f77eabb925350183a614f37c19632"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/summary.json": {
+      "bytes": 3413,
+      "sha256": "255bb91791c13cc8c34f5f7ee4215e3f68e69be14ffe6aa0886c6b9fb1de4d9b"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/integration/artifacts/hbe-v5-n12-preflight-memory-v1/test_generated_cleanup.py": {
+      "bytes": 7167,
+      "sha256": "521e1f5f52a3ccd007a5a7d3f2514d04cbf4ce13203350b4b0e76b82257b8b8c"
+    },
+    "build/hbe-v5-n12-preflight-memory-diagnostic-v1/test_generated_cleanup.py": {
+      "bytes": 7167,
+      "sha256": "521e1f5f52a3ccd007a5a7d3f2514d04cbf4ce13203350b4b0e76b82257b8b8c"
+    },
+    "build/hbe-v5-tension-n12-s60-release-prep/RELEASE_TEMPLATE.json": {
+      "bytes": 14068,
+      "sha256": "32d7566d10d1a671fe1d7fcd2cb3bfc73dc70c3632d286480fd860e2e15d2feb"
+    },
+    "build/hbe-v5-tension-n12-s60-root-preflight-hold-v1/RESULT.json": {
+      "bytes": 692,
+      "sha256": "c6a39faa7c734d53896d3d8519d05c831a47c70e1f798a7ba5486dcbc992653d"
+    },
+    "build/hbe-v5-tension-n12-s60-root-preflight-hold-v1/SECOND-PREFLIGHT.json": {
+      "bytes": 707,
+      "sha256": "ff3a9bb8a2dcccb2f3b527277320e2dbb68b182ce2aa0f75c4db1140a6fde0c9"
+    },
+    "build/limited-input-guard-design/gliomoda-tile1-parity-64-v2/darwin_fast_sampler.py": {
+      "bytes": 8426,
+      "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+    },
+    "scripts/febio_runtime.py": {
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/mechanics_febio_verification.py": {
+      "bytes": 20494,
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "bytes": 28370,
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v4.py": {
+      "bytes": 18988,
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v5.py": {
+      "bytes": 17567,
+      "sha256": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "bytes": 8744,
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts/mechanics_hbe_halfheight_readout.py": {
+      "bytes": 27043,
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "bytes": 8702,
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "bytes": 18789,
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    "scripts/mechanics_hbe_v5_frame.py": {
+      "bytes": 14985,
+      "sha256": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9"
+    },
+    "scripts/mechanics_hbe_v5_n12_admission.py": {
+      "bytes": 13711,
+      "sha256": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a"
+    },
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": {
+      "bytes": 28179,
+      "sha256": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d"
+    },
+    "scripts/mechanics_hbe_v5_n8_canary.py": {
+      "bytes": 8949,
+      "sha256": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a"
+    },
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": {
+      "bytes": 28373,
+      "sha256": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0"
+    },
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": {
+      "bytes": 61999,
+      "sha256": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+    },
+    "scripts/mechanics_hbe_v5_source_bindings.py": {
+      "bytes": 14511,
+      "sha256": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208"
+    },
+    "scripts/mechanics_hbe_v5_stream.py": {
+      "bytes": 12369,
+      "sha256": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a"
+    },
+    "scripts/mechanics_patient_constraints.py": {
+      "bytes": 19006,
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    }
+  },
+  "native_calls": 0,
+  "outer_interval_seconds": 2.883542540948838,
+  "outer_rss_delta_bytes": -93650944,
+  "outer_vm_delta_pages": {
+    "anonymous_pages": -283375,
+    "compressor_occupied_pages": 153949,
+    "compressor_stored_pages": 273403,
+    "file_backed_pages": 139470,
+    "pageins": 173521,
+    "pageouts": 221
+  },
+  "patient_or_measured_data_reads": 0,
+  "raw_samples": 24,
+  "raw_to_compact_snapshots_exact": 6,
+  "receipt_recorded_output_snapshot_bytes": 63829,
+  "review_head": "2cd2f0c45869df3b2ef94389790b9c65daf029d4",
+  "small_file_bytes_read_including_repeats": 823257,
+  "status": "passed_small_saved_evidence_audit",
+  "twenty_sources_match_current_and_historical": {
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+    "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_v5_frame.py": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+    "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+    "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+    "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+    "scripts/mechanics_hbe_v5_stream.py": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "unique_bound_input_bytes": 645977
+}

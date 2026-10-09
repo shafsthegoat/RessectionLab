@@ -1,0 +1,133 @@
+{
+  "schema": "hbe-v5-n12-preflight-compact-snapshots-v1",
+  "source_snapshot_sha256": "321c9c0fbaca1807c41db400682bfbbcf1703eb0b6f2288cbdd3e3ca1fbef8b5",
+  "page_size_bytes": 16384,
+  "selected_snapshots": [
+    {
+      "index": 0,
+      "label": "stdlib_host_before_hbe_import",
+      "elapsed_seconds": 0.009871665854007006,
+      "direct_kernel_host": {
+        "available_percent": 56,
+        "host_read_seconds": 0.000025124987587332726,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7356481536
+      },
+      "process_rss_bytes": 23330816,
+      "vm_pages": {
+        "pageins": 952228245,
+        "file_backed_pages": 131982,
+        "anonymous_pages": 424769,
+        "compressor_occupied_pages": 262457,
+        "compressor_stored_pages": 1115886,
+        "pageouts": 3592338
+      }
+    },
+    {
+      "index": 2,
+      "label": "before_validate_release",
+      "elapsed_seconds": 0.07614620798267424,
+      "direct_kernel_host": {
+        "available_percent": 56,
+        "host_read_seconds": 0.000028084032237529755,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7356481536
+      },
+      "process_rss_bytes": 36601856,
+      "vm_pages": {
+        "pageins": 952228420,
+        "file_backed_pages": 132367,
+        "anonymous_pages": 425466,
+        "compressor_occupied_pages": 262457,
+        "compressor_stored_pages": 1115886,
+        "pageouts": 3592338
+      }
+    },
+    {
+      "index": 7,
+      "label": "before_predecessor_chain_hashing",
+      "elapsed_seconds": 0.7983351249713451,
+      "direct_kernel_host": {
+        "available_percent": 55,
+        "host_read_seconds": 0.00002337503246963024,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7356481536
+      },
+      "process_rss_bytes": 131465216,
+      "vm_pages": {
+        "pageins": 952232776,
+        "file_backed_pages": 120814,
+        "anonymous_pages": 426852,
+        "compressor_occupied_pages": 262454,
+        "compressor_stored_pages": 1115873,
+        "pageouts": 3592403
+      }
+    },
+    {
+      "index": 16,
+      "label": "after_predecessor_chain_hashing",
+      "elapsed_seconds": 3.681877665920183,
+      "direct_kernel_host": {
+        "available_percent": 40,
+        "host_read_seconds": 0.00005679088644683361,
+        "kernel_pressure_mask": 2,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7356481536
+      },
+      "process_rss_bytes": 37814272,
+      "vm_pages": {
+        "pageins": 952406297,
+        "file_backed_pages": 260284,
+        "anonymous_pages": 143477,
+        "compressor_occupied_pages": 416403,
+        "compressor_stored_pages": 1389276,
+        "pageouts": 3592624
+      }
+    },
+    {
+      "index": 21,
+      "label": "after_validate_release_result_retained",
+      "elapsed_seconds": 4.328482624841854,
+      "direct_kernel_host": {
+        "available_percent": 42,
+        "host_read_seconds": 0.00002600019797682762,
+        "kernel_pressure_mask": 2,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7356481536
+      },
+      "process_rss_bytes": 47218688,
+      "vm_pages": {
+        "pageins": 952406751,
+        "file_backed_pages": 248470,
+        "anonymous_pages": 171474,
+        "compressor_occupied_pages": 402486,
+        "compressor_stored_pages": 1362544,
+        "pageouts": 3592709
+      }
+    },
+    {
+      "index": 23,
+      "label": "after_gc_result_dropped",
+      "elapsed_seconds": 4.344046415993944,
+      "direct_kernel_host": {
+        "available_percent": 42,
+        "host_read_seconds": 0.000013499986380338669,
+        "kernel_pressure_mask": 2,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7356481536
+      },
+      "process_rss_bytes": 52150272,
+      "vm_pages": {
+        "pageins": 952406757,
+        "file_backed_pages": 248470,
+        "anonymous_pages": 171868,
+        "compressor_occupied_pages": 402206,
+        "compressor_stored_pages": 1362084,
+        "pageouts": 3592709
+      }
+    }
+  ]
+}

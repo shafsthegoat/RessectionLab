@@ -1,0 +1,50 @@
+{
+  "caps": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "numerical_threads": 1,
+    "outer_wall_seconds": 150,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "worker_wall_seconds": 147
+  },
+  "final_retained_output_bytes": 63829,
+  "hbe_output_reserved": false,
+  "hbe_readout_calls": 0,
+  "head_required": "4b8156c766069d793e1d7c48b241e6e07ae81010",
+  "native_calls": 0,
+  "outer_elapsed_seconds": 4.578971124952659,
+  "owned_worker_cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 4194304,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-n12-preflight-memory-diagnostic-v1/diagnose.py",
+      "worker",
+      "4b8156c766069d793e1d7c48b241e6e07ae81010"
+    ],
+    "elapsed_seconds": 4.558470958145335,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 63436,
+    "peak_sampled_process_group_rss_bytes": 143982592,
+    "pid": 98606,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 147
+  },
+  "release_written": false,
+  "schema": "hbe-v5-n12-read-only-memory-diagnostic-v1",
+  "status": "completed_read_only_diagnostic",
+  "supervisor_stage_label": "readout_api_only_not_hbe_readout",
+  "template_sha256": "32d7566d10d1a671fe1d7fcd2cb3bfc73dc70c3632d286480fd860e2e15d2feb",
+  "worker_result_status": "read_only_validation_memory_diagnostic_complete"
+}

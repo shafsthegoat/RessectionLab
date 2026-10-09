@@ -1,0 +1,72 @@
+{
+  "schema": "hbe-v5-n12-preflight-memory-compact-evidence-v1",
+  "status": "read_only_validation_passed_host_guard_failed_native_held",
+  "source_commit": "4b8156c766069d793e1d7c48b241e6e07ae81010",
+  "run_id": "tension:N12:S60:reference",
+  "template_sha256": "32d7566d10d1a671fe1d7fcd2cb3bfc73dc70c3632d286480fd860e2e15d2feb",
+  "adapted_deck_sha256": "6dbf980c8d60309f62d4d6e8e395d881b4bacfd1be73796eedfad6112f9505a9",
+  "decision": "HOLD_native_release",
+  "no_execution_claims": {
+    "native_calls": 0,
+    "hbe_readout_calls": 0,
+    "release_written": false,
+    "hbe_output_reserved": false,
+    "measured_response_accessed": false,
+    "patient_data_accessed": false
+  },
+  "read_only_diagnostic": {
+    "validate_release_completed": true,
+    "supervised_wall_seconds": 4.578971124952659,
+    "sampled_peak_process_group_rss_bytes": 143982592,
+    "receipt_recorded_output_snapshot_bytes": 63829,
+    "independently_recounted_closed_output_bytes": 63869,
+    "source_samples": 24,
+    "initial_direct_available_percent": 56,
+    "outer_predecessor_before_direct_available_percent": 55,
+    "outer_predecessor_after_direct_available_percent": 40,
+    "outer_predecessor_before_pressure_mask": 1,
+    "outer_predecessor_after_pressure_mask": 2,
+    "postvalidation_direct_available_percent": 42,
+    "postvalidation_pressure_mask": 2,
+    "pageins_during_outer_predecessor_pages": 173521,
+    "file_backed_delta_during_outer_predecessor_pages": 139470,
+    "anonymous_delta_during_outer_predecessor_pages": -283375,
+    "compressor_occupied_delta_during_outer_predecessor_pages": 153949,
+    "swap_used_delta_bytes": 0,
+    "one_predecessor_primary_closed_output_bytes": 2822230478
+  },
+  "historical_preflights": [
+    {
+      "source_commit": "3643e05c77e37fa4e72475a94c92715713500da8",
+      "postvalidation_available_percent": 44,
+      "postvalidation_pressure_mask": 1,
+      "native_calls": 0,
+      "source_path": "build/hbe-v5-tension-n12-s60-root-preflight-hold-v1/RESULT.json",
+      "source_sha256": "c6a39faa7c734d53896d3d8519d05c831a47c70e1f798a7ba5486dcbc992653d"
+    },
+    {
+      "source_commit": "e7ee678e27205ddbdcc26bc833861559942a5064",
+      "postvalidation_available_percent": 44,
+      "postvalidation_pressure_mask": 1,
+      "initial_numeric_host_value_saved": false,
+      "native_calls": 0,
+      "source_path": "build/hbe-v5-tension-n12-s60-root-preflight-hold-v1/SECOND-PREFLIGHT.json",
+      "source_sha256": "ff3a9bb8a2dcccb2f3b527277320e2dbb68b182ce2aa0f75c4db1140a6fde0c9"
+    }
+  ],
+  "raw_evidence_bindings": {
+    "diagnostic_receipt": {
+      "path": "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/receipt.json",
+      "sha256": "0af1e221b8fb656163387b58c99180dfda9c944244d63f5c4bce92bd5deb4b27"
+    },
+    "worker_result": {
+      "path": "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/worker-result.json",
+      "sha256": "865911f8ee95b60009420d24d28c642914a33d3f8b67d24268a4bb2dd008a1d6"
+    },
+    "worker_samples": {
+      "path": "build/hbe-v5-n12-preflight-memory-diagnostic-v1/attempt-01/worker-samples.json",
+      "sha256": "321c9c0fbaca1807c41db400682bfbbcf1703eb0b6f2288cbdd3e3ca1fbef8b5"
+    }
+  },
+  "interpretation_limit": "Global VM counters localize host pressure in time and are consistent with file-backed residency during predecessor rehash; they do not prove F_NOCACHE will prevent it or exclude other processes."
+}

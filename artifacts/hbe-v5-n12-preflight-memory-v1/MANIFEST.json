@@ -1,0 +1,53 @@
+{
+  "schema": "hbe-v5-n12-preflight-memory-compact-manifest-v1",
+  "status": "ignored_integration_candidate_root_review_required",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1227,
+      "sha256": "1a77588aad89c814d761fbd48c1ac57bfedb64a196a21cba84b92d58b09ed3c8"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 3413,
+      "sha256": "255bb91791c13cc8c34f5f7ee4215e3f68e69be14ffe6aa0886c6b9fb1de4d9b"
+    },
+    {
+      "path": "snapshots.json",
+      "bytes": 4099,
+      "sha256": "2220d28f8d161fa10610539ebd5af1a3418f77eabb925350183a614f37c19632"
+    },
+    {
+      "path": "diagnose.py",
+      "bytes": 16818,
+      "sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16"
+    },
+    {
+      "path": "test_generated_cleanup.py",
+      "bytes": 7167,
+      "sha256": "521e1f5f52a3ccd007a5a7d3f2514d04cbf4ce13203350b4b0e76b82257b8b8c"
+    },
+    {
+      "path": "attempt-01/receipt.json",
+      "bytes": 1802,
+      "sha256": "0af1e221b8fb656163387b58c99180dfda9c944244d63f5c4bce92bd5deb4b27"
+    },
+    {
+      "path": "attempt-01/worker-result.json",
+      "bytes": 569,
+      "sha256": "865911f8ee95b60009420d24d28c642914a33d3f8b67d24268a4bb2dd008a1d6"
+    },
+    {
+      "path": "attempt-01/worker-samples.json",
+      "bytes": 61498,
+      "sha256": "321c9c0fbaca1807c41db400682bfbbcf1703eb0b6f2288cbdd3e3ca1fbef8b5"
+    },
+    {
+      "path": "attempt-01/readout-console.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "raw_evidence": "summary.json#raw_evidence_bindings",
+  "validation_boundary": "read_only_preflight_memory; no native solve or HBE force/patient validity"
+}

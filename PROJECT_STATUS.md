@@ -69,6 +69,13 @@ or motion fields were found. The later TRAIN-only numerical screen is recorded
 below; alignment, fitting and physical validation remain pending. Source aliases
 do not authenticate donor independence.
 
+The [mechanics preflight memory diagnostic](artifacts/hbe-v5-n12-preflight-memory-v1/RESULT.md)
+passed full input validation at only 144 MB sampled worker RSS, but host pressure
+rose during the 2.88-second predecessor-file verification interval. Independent
+review matched all saved counters and selected samples. The native solve stayed
+held; no mechanics result was produced. A per-file uncached-read control is
+prepared to test the cache hypothesis while preserving every integrity check.
+
 The [MR conversion preparation](artifacts/remind-mr-conversion-preparation-v2/RESULT.md)
 now fixes missing spatial units and shared decoder-cache verification. Twelve
 controls pass. A generated 512×512×64 conversion and saved-file check completed
