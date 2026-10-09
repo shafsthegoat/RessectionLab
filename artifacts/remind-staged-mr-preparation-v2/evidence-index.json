@@ -1,0 +1,1052 @@
+{
+  "archive": {
+    "bytes": 733983,
+    "file": "evidence.tar.gz",
+    "members": 147,
+    "sha256": "462de7cf0e624d35b126dfb740694d951ac175a9d4c411582128c13bf9945db4"
+  },
+  "members": [
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "bytes": 21303,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "sha256": "d51237a21ccac5bad3e0ea7c07a4c48968e6a061547bb168bf95efd0ba8e3a76"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "bytes": 27747,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "bytes": 12021,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "sha256": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "bytes": 12071,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "sha256": "f06331d64dd1669587cb5561c714cee093ac88f943e69894c89e6bbfea09237b"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "bytes": 8572,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "bytes": 27921,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "sha256": "339053cc6c81c540b441c8dae97fa8e39e0fa5e53945a3cd29c7f48349dc5cbd"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/scripts/audit_remind_native.py",
+      "bytes": 10186,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/scripts/audit_remind_native.py",
+      "sha256": "59fa3cf7298386bbaed7f33ce4540760bd9ab7b16739fc00c22f77a75f59c1ad"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/scripts/real_intake_io.py",
+      "bytes": 4305,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/scripts/real_intake_io.py",
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "archive_member": "actual-generated-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/src/resectionlab/remind_header_inventory.py",
+      "bytes": 15666,
+      "kind": "actual-generated-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/source-snapshot/src/resectionlab/remind_header_inventory.py",
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/baseline.json",
+      "bytes": 5507,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/baseline.json",
+      "sha256": "23f987738a52a8db48927aa474ac8ce536300c98ca156560f723c2ea811bbd91"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/cohort.json",
+      "bytes": 250,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/cohort.json",
+      "sha256": "b7df8e97847b5b3c8d04cc44717fa7a534e349a0063e44ee660dd9b59509fb6b"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/completion.json",
+      "bytes": 1239,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/completion.json",
+      "sha256": "8f10294a9a1df321f7df26b29bff9f30ea7ff819539441d5889764e62219b297"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/declaration.json",
+      "bytes": 715,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/declaration.json",
+      "sha256": "19f87ae1c713afa94efaee9938198bd7a1d1347903e13194bb2faa9b6c6cb4cb"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/objects.json",
+      "bytes": 1015,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/objects.json",
+      "sha256": "fa03a1f77a23655c784667746a632fb8befad320ba258dbe77fc350b2e44fb7b"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/release.json",
+      "bytes": 235565,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/release.json",
+      "sha256": "8169d1f8af230c7254485ab229337d89f7f1cd65973c609fcf38490a59c0e979"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/series_index.json",
+      "bytes": 315,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/series_index.json",
+      "sha256": "30f244e22fb0176de7f8fbbbc7a83661316be8ba3b7bca0504a2108b4e5d968e"
+    },
+    {
+      "archive_member": "actual-generated-tiny-input-metadata/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/us_checksums.json",
+      "bytes": 203,
+      "kind": "actual-generated-tiny-input-metadata",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/tiny-v2-r1/us_checksums.json",
+      "sha256": "fd9377e165b0ba36c7ff574f4a7ee6023fe086a930445e111dd7aeac667acf5d"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/conversion.json",
+      "bytes": 8534,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/conversion.json",
+      "sha256": "c2b2feae489113446d2dfe4350231608307c4fd3f9c5063290e133435b096817"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/monitor.json",
+      "bytes": 198,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/monitor.json",
+      "sha256": "51d5870b1565d699cf52a1880f94553e5c947811b9540b9d37ed7cf6f1a8a86b"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0001-intent.json",
+      "bytes": 601,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0001-intent.json",
+      "sha256": "8a6bd83e0d9609c0b7c69db72d6a818f5e6f69375aa351adb71575d6b2d7922f"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0001-result.json",
+      "bytes": 466,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0001-result.json",
+      "sha256": "a10af83bbc2653b21accfe4748e689f594b28e8f248eaa141d3bc3cbe6f3b25d"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0002-intent.json",
+      "bytes": 610,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0002-intent.json",
+      "sha256": "d0966832bdf7850b609131ff26bdfa445d3806f9f13e90565c7069e95c2d2c2a"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0002-result.json",
+      "bytes": 466,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0002-result.json",
+      "sha256": "c07c91dc24a1fbdd43bfc50385b6b16321b2ce2d02fb957f867e8633ce151a39"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0003-intent.json",
+      "bytes": 611,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0003-intent.json",
+      "sha256": "27fae2b14aad8522d3f1a7c3de2803ed811cea9fffc82256ffde5c9d7974652f"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0003-result.json",
+      "bytes": 468,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0003-result.json",
+      "sha256": "ca789f1c84cf1dddcf8d4b49cbb2436314babad9391d6f34c04e5f74803efa95"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0004-intent.json",
+      "bytes": 610,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0004-intent.json",
+      "sha256": "1c2126b46809aa61e7d3563c5747ff59ca6de4f92149cbdcff0120b5f6066dfe"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0004-result.json",
+      "bytes": 469,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0004-result.json",
+      "sha256": "3fc892bfd5f5fc10b6a56ffa741b5c47b9961f23c0cb390848f5b7af735665b4"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0005-intent.json",
+      "bytes": 613,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0005-intent.json",
+      "sha256": "0c32092763b6382d14adaabfc7b7710ed4ca146838a18a6a83783100d4da4995"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0005-result.json",
+      "bytes": 468,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0005-result.json",
+      "sha256": "07127ebf0782de6668755ed034b82343e531cb15ff715fe6caa95648ef5da475"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0006-intent.json",
+      "bytes": 613,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0006-intent.json",
+      "sha256": "2c4ab95b38d57500fac38540b42676307911d36c1b646c69d8955f6ca40d8ece"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0006-result.json",
+      "bytes": 469,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0006-result.json",
+      "sha256": "4534effd8930babc78cdc86185d018473f34dc3113a0347c07084ec4b6e867d5"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0007-intent.json",
+      "bytes": 611,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0007-intent.json",
+      "sha256": "e89eec5651d43bc2da0b31cbbfbef212ab0de2630a905a4ae6baf306239446a8"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0007-result.json",
+      "bytes": 469,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0007-result.json",
+      "sha256": "53cedc5f2c32c36c9a488166abe5027ef51789cd87f116a903c079e2ab3e33de"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0008-intent.json",
+      "bytes": 765,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0008-intent.json",
+      "sha256": "e6d154d0a9c7442944be7fe9889db7cf450890c307d8a007d5473d5cc0bc424e"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0008-result.json",
+      "bytes": 470,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0008-result.json",
+      "sha256": "26517e854f8b3e18a810baefb3abdf88034062d7ad7bf419c7af0a509aa3ad3e"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0009-intent.json",
+      "bytes": 483,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0009-intent.json",
+      "sha256": "ae86d1543f9989aa2270307fd0ba53a45f4df7f76f255f5e123a3c8380b70900"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0009-result.json",
+      "bytes": 504,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0009-result.json",
+      "sha256": "6bac1bbca9efc76abb6ed717bb964a97c6787757cfb4774b28c6acb7ecc91294"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0010-intent.json",
+      "bytes": 774,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0010-intent.json",
+      "sha256": "ff5782e9adfbbb1e5ac40014832f5ceb5db7f3bb93f34d99236b49281e80efa7"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0010-result.json",
+      "bytes": 478,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0010-result.json",
+      "sha256": "699f5b3bf626725230f327b8c40c6df6473a557cc32c74d703b645a24e57c399"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0011-intent.json",
+      "bytes": 491,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0011-intent.json",
+      "sha256": "8a9c449ca34b0c178ef6e65b030bed2e3e3d8093d0427eca150ea4e24d68af66"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0011-result.json",
+      "bytes": 507,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0011-result.json",
+      "sha256": "0fbc713823ad5bfddc0b8d0b8c0b8057172e52ed678b3432d024861360dae1e3"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0012-intent.json",
+      "bytes": 777,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0012-intent.json",
+      "sha256": "47e1ac6239fc06e50cccc80fc7d5a907e8b64d903e020d52ae8c8b678fdc2263"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0012-result.json",
+      "bytes": 480,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0012-result.json",
+      "sha256": "3fb0584c193084f646c91b104ad1f018078cc7638d3193f6abc831726ac794a1"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0013-intent.json",
+      "bytes": 493,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0013-intent.json",
+      "sha256": "23280ebae9dd537094973a999f256dd023076a174e17fbc26034b61b1b050922"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0013-result.json",
+      "bytes": 507,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/read-0013-result.json",
+      "sha256": "84e3c44a87afedc2a4d9c2231c3d8c827daf468aa0acb073b5a7e38b71663d97"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/started.json",
+      "bytes": 79,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/started.json",
+      "sha256": "79251ec31d5c5c4aad07b9330d1ad702ec148c484696ba2a691d3c0283da7a9b"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/worker-result.json",
+      "bytes": 62543,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/conversion/worker-result.json",
+      "sha256": "bdc160425554d1d1d508a14824c7b05ec282ba20341e3c09e254236334adb2fb"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/intent.json",
+      "bytes": 143,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/intent.json",
+      "sha256": "0a2db933a0566bcb657f56d3c2ea0c0ecddf243b6f91e4b7e047d6ae6b333cc2"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/parent-result.json",
+      "bytes": 2468,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/parent-result.json",
+      "sha256": "ba54f89b145a121b9209170aba5057702ce80199743eac4bb69a941835a124f7"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/transition.json",
+      "bytes": 457,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/transition.json",
+      "sha256": "abc3ba6a7c9a3d94f119223470f165969a4991f62aed080e990736b37deae758"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/handoff.json",
+      "bytes": 4333,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/handoff.json",
+      "sha256": "dbb7fcabb11061c2596072360afd0b1a48529d1979dcd613001f6dc722e18157"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/monitor.json",
+      "bytes": 197,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/monitor.json",
+      "sha256": "4bb4912bad4bcfcc681bb76e84788571c39d81dac4a32b874fbdc5bd21207d96"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0001-intent.json",
+      "bytes": 601,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0001-intent.json",
+      "sha256": "8a6bd83e0d9609c0b7c69db72d6a818f5e6f69375aa351adb71575d6b2d7922f"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0001-result.json",
+      "bytes": 466,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0001-result.json",
+      "sha256": "a10af83bbc2653b21accfe4748e689f594b28e8f248eaa141d3bc3cbe6f3b25d"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0002-intent.json",
+      "bytes": 610,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0002-intent.json",
+      "sha256": "d0966832bdf7850b609131ff26bdfa445d3806f9f13e90565c7069e95c2d2c2a"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0002-result.json",
+      "bytes": 466,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0002-result.json",
+      "sha256": "c07c91dc24a1fbdd43bfc50385b6b16321b2ce2d02fb957f867e8633ce151a39"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0003-intent.json",
+      "bytes": 611,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0003-intent.json",
+      "sha256": "27fae2b14aad8522d3f1a7c3de2803ed811cea9fffc82256ffde5c9d7974652f"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0003-result.json",
+      "bytes": 468,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0003-result.json",
+      "sha256": "ca789f1c84cf1dddcf8d4b49cbb2436314babad9391d6f34c04e5f74803efa95"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0004-intent.json",
+      "bytes": 610,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0004-intent.json",
+      "sha256": "1c2126b46809aa61e7d3563c5747ff59ca6de4f92149cbdcff0120b5f6066dfe"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0004-result.json",
+      "bytes": 469,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0004-result.json",
+      "sha256": "3fc892bfd5f5fc10b6a56ffa741b5c47b9961f23c0cb390848f5b7af735665b4"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0005-intent.json",
+      "bytes": 613,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0005-intent.json",
+      "sha256": "0c32092763b6382d14adaabfc7b7710ed4ca146838a18a6a83783100d4da4995"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0005-result.json",
+      "bytes": 468,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0005-result.json",
+      "sha256": "07127ebf0782de6668755ed034b82343e531cb15ff715fe6caa95648ef5da475"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0006-intent.json",
+      "bytes": 613,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0006-intent.json",
+      "sha256": "2c4ab95b38d57500fac38540b42676307911d36c1b646c69d8955f6ca40d8ece"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0006-result.json",
+      "bytes": 469,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/read-0006-result.json",
+      "sha256": "4534effd8930babc78cdc86185d018473f34dc3113a0347c07084ec4b6e867d5"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/started.json",
+      "bytes": 78,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/started.json",
+      "sha256": "ba3512128bb18b9992cb8ae4377bb175524c9ea955a2a67a43977660d476fa0d"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/worker-result.json",
+      "bytes": 15671,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated-run-tiny-v2-r1/validator/worker-result.json",
+      "sha256": "2f1a88364b80e95dea658b520f2912a352758848bb197884d16602a285281cca"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "bytes": 21303,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "sha256": "d51237a21ccac5bad3e0ea7c07a4c48968e6a061547bb168bf95efd0ba8e3a76"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "bytes": 27747,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "bytes": 12021,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "sha256": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "bytes": 12071,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "sha256": "f06331d64dd1669587cb5561c714cee093ac88f943e69894c89e6bbfea09237b"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_io.py",
+      "bytes": 8572,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_runner.py",
+      "bytes": 27125,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_runner.py",
+      "sha256": "2d84a93285f7400fc2b19c8e25a760305d14ddb65cf57f7d07fe75760001e947"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/scripts/audit_remind_native.py",
+      "bytes": 10186,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/scripts/audit_remind_native.py",
+      "sha256": "59fa3cf7298386bbaed7f33ce4540760bd9ab7b16739fc00c22f77a75f59c1ad"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/scripts/real_intake_io.py",
+      "bytes": 4305,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/scripts/real_intake_io.py",
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/src/resectionlab/remind_header_inventory.py",
+      "bytes": 15666,
+      "kind": "earlier-relative-path-negative-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/source-snapshot/src/resectionlab/remind_header_inventory.py",
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    {
+      "archive_member": "earlier-relative-path-negative/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/preflight-negative.json",
+      "bytes": 770,
+      "kind": "earlier-relative-path-negative",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated/tiny-frozen-r3/preflight-negative.json",
+      "sha256": "0b64069f54da76ee54f51facf8824d8a749d571b5ba2988fea781c7860d7369d"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/REPORT.txt",
+      "bytes": 2721,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/REPORT.txt",
+      "sha256": "bf74c441dde8f64ae4c17537037499479455bf38f520a714da9594f49dcde510"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/audit.json",
+      "bytes": 12077,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/audit.json",
+      "sha256": "f60f898dd1df02bceba7048a5803b0c7902c249682f82dcc0c17d52091f17dec"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/audit_staged_v1.py",
+      "bytes": 10640,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/audit_staged_v1.py",
+      "sha256": "7c6bcec82539b863348b088811cfe16e3a9f5bbc7641e10bae3c3ea7010b33cd"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/monitor_write_PermissionError/intent.json",
+      "bytes": 143,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/monitor_write_PermissionError/intent.json",
+      "sha256": "8e3675e26164ea8251fd3b95d2489376f9415d450d720cbe274299a0523f67e6"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/monitor_write_PermissionError/parent-result.json",
+      "bytes": 1123,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/monitor_write_PermissionError/parent-result.json",
+      "sha256": "b2922786bf680976ce417e74f2592cfb626818ac52c15124d105fc1b4fbda785"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/read-0001-intent.json",
+      "bytes": 596,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/read-0001-intent.json",
+      "sha256": "b9036c646221d5f8d2538811bfad5522e23aae0597316f20122608a19e16ac3c"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/read-0001-result.json",
+      "bytes": 460,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/read-0001-result.json",
+      "sha256": "13785bdf50695e081615ac12bcb44661c43d192878453f07275d60ea17f0b10b"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/started.json",
+      "bytes": 80,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/started.json",
+      "sha256": "fcd9b8a7570d745c382549a454411ab503cde90730569e82b8f2d0b56c82c55c"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/worker-result.json",
+      "bytes": 482,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/monitor_write_PermissionError/validator/worker-result.json",
+      "sha256": "b7fce8379fa56bf0505ef4124bccee798e58b95b1bcb93f6144f6a7c2c7c31c3"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/provided-test-output.txt",
+      "bytes": 1706,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/provided-test-output.txt",
+      "sha256": "9660b0c7f5cac541272d8fab6a12b5edc98950814bfd4946fb557a99194d7043"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/generated/tiny-frozen-r4/release.json",
+      "bytes": 235601,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/generated/tiny-frozen-r4/release.json",
+      "sha256": "b3c4bea6353451cb84981715ecaed113b150016110311a8a8cd5225e2ffb0b7e"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/generated_fixture.py",
+      "bytes": 7891,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/generated_fixture.py",
+      "sha256": "cfd1b8a8e5af9fb846599d77534f39c59b51f1f8b6597a919c89d6c714941bfd"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "bytes": 235397,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "sha256": "d273a9c79f900077292b972de7f60e0181a2e5cdc92fe634c5439868b02a2b0b"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/prepare_patient_candidate.py",
+      "bytes": 3860,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/prepare_patient_candidate.py",
+      "sha256": "b9406f8f16a14dfe67f8fb8f57e2eb439d4970d2cac2e6305e6c48036b0cd8bc"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/staged_io.py",
+      "bytes": 8572,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/staged_runner.py",
+      "bytes": 27135,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/staged_runner.py",
+      "sha256": "a5e11e8ec350aecfb81cbbff146e7f36be3dedb0bb87875e363c24183fd02789"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/snapshots/test_staged.py",
+      "bytes": 14352,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/snapshots/test_staged.py",
+      "sha256": "29168c2c6b9672f00e1f7e6305dbb666b4ad4c8a9a25324aa0bc751d62ef50f1"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/intent.json",
+      "bytes": 143,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/intent.json",
+      "sha256": "5c056808f33a7d2213708403b2ae7185de3a74619505c143ec6bad0c877f202a"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/parent-result.json",
+      "bytes": 1131,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/parent-result.json",
+      "sha256": "e0cf63bf4be8cc191336b7c56ddf06ff31979b1d2e3d8dab67bbbf792b5c82de"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/read-0001-intent.json",
+      "bytes": 603,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/read-0001-intent.json",
+      "sha256": "87adb95a2cb7b395b5f4f0076a659edda47c4ba26ea617e8f0dc6004a9b442aa"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/read-0001-result.json",
+      "bytes": 460,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/read-0001-result.json",
+      "sha256": "a904cd2e04005c44d92ea69418c9ab622907814babe55eb289eb384743d366cc"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/started.json",
+      "bytes": 80,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/started.json",
+      "sha256": "4d3e1a38d0fe054c6192785083b2792bc8f66dbda4e8cabea3957768578da5b7"
+    },
+    {
+      "archive_member": "independent-v1-HOLD/build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/worker-result.json",
+      "bytes": 482,
+      "kind": "independent-v1-HOLD",
+      "original_repository_path": "build/remind-staged-MR-independent-v1/supervise_after_read_PermissionError/validator/worker-result.json",
+      "sha256": "b7fce8379fa56bf0505ef4124bccee798e58b95b1bcb93f6144f6a7c2c7c31c3"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/REPORT.txt",
+      "bytes": 4256,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/REPORT.txt",
+      "sha256": "60a27f25184044dc96a3a28c3003cde401db66fce613ea29baf3384b45731651"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/audit.json",
+      "bytes": 12228,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/audit.json",
+      "sha256": "3a3622f60959ab63df08b675790ecd5f9bb39e43a2038754fb67aa8e50d9c5f8"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/audit_staged_v2.py",
+      "bytes": 11418,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/audit_staged_v2.py",
+      "sha256": "fd8fa789af8b596662b7b9906f6c440767c665ef5167b9c429f75f9ca83b1db6"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/monitor_write_PermissionError/intent.json",
+      "bytes": 143,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/monitor_write_PermissionError/intent.json",
+      "sha256": "1824d858a248a374cba5ba19c1252bb5e0e90b820981673aec5d34be21c7583d"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/monitor_write_PermissionError/parent-result.json",
+      "bytes": 1895,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/monitor_write_PermissionError/parent-result.json",
+      "sha256": "bb339ca6d3801951e46c46f16764bf76f98ce14d82409077a744d533f89ea891"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/read-0001-intent.json",
+      "bytes": 596,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/read-0001-intent.json",
+      "sha256": "f68674b85b5d3f6035aa253ac9d419d314c0dd80b70a47190d68354904d25d27"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/read-0001-result.json",
+      "bytes": 460,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/read-0001-result.json",
+      "sha256": "0ccede23bce977602d40cdf4b67616c13b6ed439eafb07b29c5e6fb0885e330b"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/started.json",
+      "bytes": 80,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/started.json",
+      "sha256": "6f5848f9d6a391e8ddf40274998f7877eb6076a71418c590478a61559acb73d8"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/worker-result.json",
+      "bytes": 482,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/monitor_write_PermissionError/validator/worker-result.json",
+      "sha256": "00d9cb84fb31108d7eaad6f4aa79190ce0bef755b7ec19ca392633325e8d2d26"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/provided-test-output.txt",
+      "bytes": 1865,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/provided-test-output.txt",
+      "sha256": "6000058ecb615f60f8b8790b99e2e60557a24e48a9321291e6e8d01fad092097"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/generated/tiny-v2-r1/release.json",
+      "bytes": 235565,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/generated/tiny-v2-r1/release.json",
+      "sha256": "8169d1f8af230c7254485ab229337d89f7f1cd65973c609fcf38490a59c0e979"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/generated_fixture.py",
+      "bytes": 7891,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/generated_fixture.py",
+      "sha256": "cfd1b8a8e5af9fb846599d77534f39c59b51f1f8b6597a919c89d6c714941bfd"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "bytes": 235397,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "sha256": "eaf1849a1acb613e7e7cb249015e32781ea378773c8a107248d960d27c0e03aa"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/prepare_patient_candidate.py",
+      "bytes": 3860,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/prepare_patient_candidate.py",
+      "sha256": "b9406f8f16a14dfe67f8fb8f57e2eb439d4970d2cac2e6305e6c48036b0cd8bc"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/staged_io.py",
+      "bytes": 8572,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/staged_runner.py",
+      "bytes": 27921,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/staged_runner.py",
+      "sha256": "339053cc6c81c540b441c8dae97fa8e39e0fa5e53945a3cd29c7f48349dc5cbd"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/snapshots/test_staged.py",
+      "bytes": 17375,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/snapshots/test_staged.py",
+      "sha256": "1ef7cf7c7a542d51c195c5b3f82ad8f75f2e9fe5e6d1b322a61242b373f150a6"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/intent.json",
+      "bytes": 143,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/intent.json",
+      "sha256": "942f5b14a99a846ecfbd740874faadc1f5ab645f9bb406a95fdee1e6f264326f"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/parent-result.json",
+      "bytes": 1727,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/parent-result.json",
+      "sha256": "7b016cb14d6c3d50c1671571b3f7de30b37d48161fbb448ad2d7c7c3693b3889"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/read-0001-intent.json",
+      "bytes": 603,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/read-0001-intent.json",
+      "sha256": "cb6d6e2a009f790c0bb37dbd2a455da45678214e0fbcf7ea9a7d529715dde142"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/read-0001-result.json",
+      "bytes": 460,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/read-0001-result.json",
+      "sha256": "3fee85bb942d6d9f1135232bb2d1fabab8fd583c8d298d9b88e1a8f7addeca6b"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/started.json",
+      "bytes": 80,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/started.json",
+      "sha256": "6c26d9e63529a59ef82a8e472c0190802e5fd67692e40f37051ec7cd99f3c6e2"
+    },
+    {
+      "archive_member": "independent-v2-review/build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/worker-result.json",
+      "bytes": 482,
+      "kind": "independent-v2-review",
+      "original_repository_path": "build/remind-staged-MR-independent-v2/supervise_after_read_PermissionError/validator/worker-result.json",
+      "sha256": "00d9cb84fb31108d7eaad6f4aa79190ce0bef755b7ec19ca392633325e8d2d26"
+    },
+    {
+      "archive_member": "packaging-source/build/remind-qc-adapter-preparation-v1/package_staged_MR_v2.py",
+      "bytes": 9637,
+      "kind": "packaging-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/package_staged_MR_v2.py",
+      "sha256": "087eaa4e17c442fc46def26578beb434b659f9115868d5c44990f21ab3f0e211"
+    },
+    {
+      "archive_member": "preserved-v1-candidate/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "bytes": 235397,
+      "kind": "preserved-v1-candidate",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "sha256": "d273a9c79f900077292b972de7f60e0181a2e5cdc92fe634c5439868b02a2b0b"
+    },
+    {
+      "archive_member": "preserved-v1-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated_fixture.py",
+      "bytes": 7891,
+      "kind": "preserved-v1-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/generated_fixture.py",
+      "sha256": "cfd1b8a8e5af9fb846599d77534f39c59b51f1f8b6597a919c89d6c714941bfd"
+    },
+    {
+      "archive_member": "preserved-v1-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/prepare_patient_candidate.py",
+      "bytes": 3860,
+      "kind": "preserved-v1-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/prepare_patient_candidate.py",
+      "sha256": "b9406f8f16a14dfe67f8fb8f57e2eb439d4970d2cac2e6305e6c48036b0cd8bc"
+    },
+    {
+      "archive_member": "preserved-v1-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_io.py",
+      "bytes": 8572,
+      "kind": "preserved-v1-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "preserved-v1-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_runner.py",
+      "bytes": 27135,
+      "kind": "preserved-v1-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/staged_runner.py",
+      "sha256": "a5e11e8ec350aecfb81cbbff146e7f36be3dedb0bb87875e363c24183fd02789"
+    },
+    {
+      "archive_member": "preserved-v1-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/test_staged.py",
+      "bytes": 14352,
+      "kind": "preserved-v1-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v1/test_staged.py",
+      "sha256": "29168c2c6b9672f00e1f7e6305dbb666b4ad4c8a9a25324aa0bc751d62ef50f1"
+    },
+    {
+      "archive_member": "reused-source-closure/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "bytes": 21303,
+      "kind": "reused-source-closure",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "sha256": "d51237a21ccac5bad3e0ea7c07a4c48968e6a061547bb168bf95efd0ba8e3a76"
+    },
+    {
+      "archive_member": "reused-source-closure/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "bytes": 27747,
+      "kind": "reused-source-closure",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    {
+      "archive_member": "reused-source-closure/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "bytes": 12021,
+      "kind": "reused-source-closure",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "sha256": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d"
+    },
+    {
+      "archive_member": "reused-source-closure/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "bytes": 12071,
+      "kind": "reused-source-closure",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "sha256": "f06331d64dd1669587cb5561c714cee093ac88f943e69894c89e6bbfea09237b"
+    },
+    {
+      "archive_member": "reused-source-closure/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "bytes": 8572,
+      "kind": "reused-source-closure",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "reused-source-closure/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "bytes": 27921,
+      "kind": "reused-source-closure",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "sha256": "339053cc6c81c540b441c8dae97fa8e39e0fa5e53945a3cd29c7f48349dc5cbd"
+    },
+    {
+      "archive_member": "reused-source-closure/scripts/audit_remind_native.py",
+      "bytes": 10186,
+      "kind": "reused-source-closure",
+      "original_repository_path": "scripts/audit_remind_native.py",
+      "sha256": "59fa3cf7298386bbaed7f33ce4540760bd9ab7b16739fc00c22f77a75f59c1ad"
+    },
+    {
+      "archive_member": "reused-source-closure/scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "kind": "reused-source-closure",
+      "original_repository_path": "scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "archive_member": "reused-source-closure/scripts/real_intake_io.py",
+      "bytes": 4305,
+      "kind": "reused-source-closure",
+      "original_repository_path": "scripts/real_intake_io.py",
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "archive_member": "reused-source-closure/src/resectionlab/remind_header_inventory.py",
+      "bytes": 15666,
+      "kind": "reused-source-closure",
+      "original_repository_path": "src/resectionlab/remind_header_inventory.py",
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    {
+      "archive_member": "unapproved-patient-candidate/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "bytes": 235397,
+      "kind": "unapproved-patient-candidate",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/patient-release-CANDIDATE-NOT-APPROVED-v3.json",
+      "sha256": "eaf1849a1acb613e7e7cb249015e32781ea378773c8a107248d960d27c0e03aa"
+    },
+    {
+      "archive_member": "v2-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated_fixture.py",
+      "bytes": 7891,
+      "kind": "v2-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated_fixture.py",
+      "sha256": "cfd1b8a8e5af9fb846599d77534f39c59b51f1f8b6597a919c89d6c714941bfd"
+    },
+    {
+      "archive_member": "v2-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/prepare_patient_candidate.py",
+      "bytes": 3860,
+      "kind": "v2-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/prepare_patient_candidate.py",
+      "sha256": "b9406f8f16a14dfe67f8fb8f57e2eb439d4970d2cac2e6305e6c48036b0cd8bc"
+    },
+    {
+      "archive_member": "v2-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "bytes": 8572,
+      "kind": "v2-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "v2-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "bytes": 27921,
+      "kind": "v2-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "sha256": "339053cc6c81c540b441c8dae97fa8e39e0fa5e53945a3cd29c7f48349dc5cbd"
+    },
+    {
+      "archive_member": "v2-source/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/test_staged.py",
+      "bytes": 17375,
+      "kind": "v2-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/test_staged.py",
+      "sha256": "1ef7cf7c7a542d51c195c5b3f82ad8f75f2e9fe5e6d1b322a61242b373f150a6"
+    }
+  ],
+  "schema": "remind-staged-MR-evidence-index-v2",
+  "summary": {
+    "bytes": 8687,
+    "file": "summary.json",
+    "sha256": "448394e1dc299a53df34fa5133b18085183dc8f1d1afb451ee3e4ca9b54b68a8"
+  },
+  "validation": {
+    "acquired_data_or_image_files_included": 0,
+    "archive_members_equal_original_bytes": true,
+    "patient_files_opened_by_packager": 0,
+    "source_and_review_pins_checked": true,
+    "tracked_edits": 0
+  }
+}

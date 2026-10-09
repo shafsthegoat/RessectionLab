@@ -1,0 +1,198 @@
+{
+  "generated_controls": {
+    "base_optional_skips": 8,
+    "base_passed": 6,
+    "scope": "Tiny2rows3columns3planes plus generated failure injection; no full-shape staged run",
+    "tests_passed": 14
+  },
+  "implemented_behavior": [
+    "Full six-document source/cohort/transport coverage is validated in a decoder-free process using the existing metadata core.",
+    "Validator terminal receipt, successful monitor, reaping and exact compact handoff are checked before starting conversion.",
+    "Conversion streams fresh metadata digest checks and never parses or retains the large metadata documents.",
+    "One strict bounded source-file read yields immutable bytes for separate header/payload parsers; fresh header comparison precedes pixel decoding.",
+    "Existing repaired MR conversion and raw signed16 sample/corner audits are reused; saved geometry includes raw plane coordinates and millimetre units.",
+    "Complete source/runtime closure is enforced by the reviewed clean bootstrap in both workers.",
+    "Stage accounting exists before supervise; monitor-persistence failures retain observed reads/RSS and missing terminal RSS remains explicitly unknown."
+  ],
+  "independent_review": {
+    "decision": "GO_FOR_SOURCE_AND_TINY_GENERATED_ONLY",
+    "path": "build/remind-staged-MR-independent-v2",
+    "sha256": "3a3622f60959ab63df08b675790ecd5f9bb39e43a2038754fb67aa8e50d9c5f8"
+  },
+  "limits": {
+    "conversion_wall_seconds": 50,
+    "global_wall_seconds": 90,
+    "maximum_RSS_bytes": 536870912,
+    "maximum_handoff_bytes": 262144,
+    "maximum_output_bytes": 100663296,
+    "validator_wall_seconds": 35
+  },
+  "not_established": [
+    "Full59520-object metadata plus512x512x64 immutable-file parsing resource feasibility remains unmeasured in this staged launcher.",
+    "Earlier generated array-only memory was measured without this loader and cannot be reused as the patient budget.",
+    "No patient source/header/pixel opens, native patient volume, anatomical coverage review, cohort admission or split change occurred.",
+    "Acquisition timing is still unavailable where absent; intraoperative labels do not establish routine preoperative availability.",
+    "US functional-group geometry remains unsupported and the observed MR/US reference-frame mismatch remains unresolved.",
+    "Source snapshots retain ignored paths and require reviewed path adjustment before tracked module promotion.",
+    "Only root may issue a separately reviewed exact patient release and serialize its bounded execution."
+  ],
+  "patient_conversion_performed": false,
+  "patient_execution_authorized": false,
+  "patient_scope_not_executed": {
+    "bytes": 33696106,
+    "modality": "MR",
+    "objects": 64,
+    "patient_group": "ReMIND:002",
+    "patient_id": "ReMIND-002",
+    "record_sha256": "5c56086955da94661a76f8888a9793a6ab9392736e672fb7cc324513ca8ceb6a",
+    "role": "TRAIN",
+    "series_uuid": "4301d666-34c4-48f3-9167-8c4b19725332"
+  },
+  "preoperative_input_admitted": false,
+  "preserved_negative": "v1 omitted completed stage accounting if monitor persistence failed before outcome creation; generated reproduction and original source retained.",
+  "schema": "remind-staged-MR-preparation-result-v2",
+  "source_sha256": {
+    "generated_fixture.py": "cfd1b8a8e5af9fb846599d77534f39c59b51f1f8b6597a919c89d6c714941bfd",
+    "prepare_patient_candidate.py": "b9406f8f16a14dfe67f8fb8f57e2eb439d4970d2cac2e6305e6c48036b0cd8bc",
+    "staged_io.py": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f",
+    "staged_runner.py": "339053cc6c81c540b441c8dae97fa8e39e0fa5e53945a3cd29c7f48349dc5cbd",
+    "test_staged.py": "1ef7cf7c7a542d51c195c5b3f82ad8f75f2e9fe5e6d1b322a61242b373f150a6"
+  },
+  "status": "GENERATED_STAGED_PREPARATION_ONLY",
+  "tiny_parent_result": {
+    "RSS_accounting_note": "Workers are sequential/reaped; parent+largest worker RSS is a conservative process-sum upper bound, not unique physical memory. Missing worker terminal RSS remains unknown/null; the largest recorded value is only partial evidence in that case.",
+    "elapsed_seconds": 0.799854249926284,
+    "max_recorded_worker_peak_RSS_bytes": 137920512,
+    "max_worker_peak_RSS_bytes": 137920512,
+    "output_bytes_before_parent_receipt": 113394,
+    "parent_peak_RSS_bytes": 55083008,
+    "parent_plus_worker_RSS_upper_bound_bytes": 193003520,
+    "patient_execution": false,
+    "preoperative_input_admitted": false,
+    "read_accounting_scope": "Acquisition metadata, selected source bytes and separately identified memory parser reads; runtime/code/control-JSON reads are source-bound but excluded from these data-read counters.",
+    "release_sha256": "8169d1f8af230c7254485ab229337d89f7f1cd65973c609fcf38490a59c0e979",
+    "schema": "remind-staged-MR-parent-v1",
+    "stages": [
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 54427648,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1274248.819046791,
+          "worker_exit_status": 0,
+          "worker_pid": 2929
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 6,
+          "confirmed_returned_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 3737,
+            "source_file": 0
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "validator",
+        "worker_elapsed_seconds": 0.016027665929868817,
+        "worker_peak_RSS_bytes": 54411264
+      },
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 137887744,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1274249.390215041,
+          "worker_exit_status": 0,
+          "worker_pid": 2930
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 13,
+          "confirmed_returned_bytes": {
+            "memory_header": 2115,
+            "memory_payload": 2151,
+            "metadata_file": 9244,
+            "source_file": 2046
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "conversion",
+        "worker_elapsed_seconds": 0.41407895903103054,
+        "worker_peak_RSS_bytes": 137920512
+      }
+    ],
+    "status": "conversion_finished_anatomy_unreviewed",
+    "termination_requested": false,
+    "total_confirmed_returned_bytes": {
+      "memory_header": 2115,
+      "memory_payload": 2151,
+      "metadata_file": 12981,
+      "source_file": 2046
+    },
+    "total_unconfirmed_upper_bound_bytes": {
+      "memory_header": 0,
+      "memory_payload": 0,
+      "metadata_file": 0,
+      "source_file": 0
+    },
+    "training_admitted": false,
+    "unknown_worker_peak_RSS_stages": []
+  },
+  "tiny_worker_summary": {
+    "conversion": {
+      "blocked_io_events": [],
+      "data_read_accounting": {
+        "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+        "read_calls": 448,
+        "returned_bytes": {
+          "memory_header": 2115,
+          "memory_payload": 2151,
+          "metadata_file": 9244,
+          "source_file": 2046
+        },
+        "total_returned_bytes": 15556
+      },
+      "elapsed_seconds": 0.41407895903103054,
+      "generated_source_attempts": 3,
+      "patient_source_attempts": 0,
+      "peak_RSS_bytes": 137920512,
+      "pixel_decode_status": "completed",
+      "status": "completed"
+    },
+    "validator": {
+      "blocked_io_events": [],
+      "data_read_accounting": {
+        "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+        "read_calls": 6,
+        "returned_bytes": {
+          "memory_header": 0,
+          "memory_payload": 0,
+          "metadata_file": 3737,
+          "source_file": 0
+        },
+        "total_returned_bytes": 3737
+      },
+      "elapsed_seconds": 0.016027665929868817,
+      "generated_source_attempts": 0,
+      "patient_source_attempts": 0,
+      "peak_RSS_bytes": 54411264,
+      "pixel_decode_status": "not_started",
+      "status": "completed"
+    }
+  },
+  "training_admitted": false,
+  "unapproved_exact64_candidate_sha256": "eaf1849a1acb613e7e7cb249015e32781ea378773c8a107248d960d27c0e03aa"
+}

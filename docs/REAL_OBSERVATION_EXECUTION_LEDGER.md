@@ -665,3 +665,8 @@ Prepared proposals and review evidence are preserved in the artifact directory. 
 ### October 9: exact generated inference parity with modest peak reduction
 
 The [generated 64³ lazy-concat comparison](../artifacts/lazy-concat-generated-parity-v4/RESULT.md) completed both baseline and modified forwards. All 786,432 logits and decoded labels are identical to each other and the earlier accepted reference. The final decoder avoids a 67.1 MB allocation, but sampled whole-process peak falls only 7,995,392 bytes (1.06%) in this single ordered pair. Both workers exited cleanly; no robust speed, full128 feasibility or patient-accuracy claim follows. The next engineering test is the separately reviewed full128 lazy arm, with both active downloaders included in its host monitor.
+
+
+### October 9: staged MR preparation and full generated control
+
+The [staged MR pipeline](../artifacts/remind-staged-full-generated-preparation-v1/RESULT.md) is prepared for a bounded full-size generated test. Metadata validation and selected-series conversion run in separate workers; v2 preserves read accounting even on the two injected supervisor failures. Fourteen generated controls and independent review pass. The next execution tests 59,520 generated metadata records and 64 × 512 × 512 image planes before any actual-patient conversion; no anatomical or training admission follows from this engineering check.

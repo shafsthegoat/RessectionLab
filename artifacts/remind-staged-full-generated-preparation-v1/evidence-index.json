@@ -1,0 +1,177 @@
+{
+  "archive": {
+    "bytes": 447309,
+    "file": "evidence.tar.gz",
+    "sha256": "c7296c877ee8e10530f9303a1fb7cf3794beace4e6c5d875d4020b38fff4252e"
+  },
+  "candidate_sha256": "5149a78a6801fcd2dab5a936cd11dec22081a1080a84416603db1bbfe465502d",
+  "members": [
+    {
+      "bytes": 233564,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-full-generated-v1/full-staged-v1-candidate.json",
+      "sha256": "5149a78a6801fcd2dab5a936cd11dec22081a1080a84416603db1bbfe465502d"
+    },
+    {
+      "bytes": 16257,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-full-generated-v1/full_generated.py",
+      "sha256": "0ad77fa92d7c4c0dac903561a675c93c217c050bb249738f517e1decc08ed6c3"
+    },
+    {
+      "bytes": 4691,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-full-generated-v1/protocol-v1.json",
+      "sha256": "e31fa506c6c22b2017baff3cbee2dd5daa252ed1d52694f45010674c1577b195"
+    },
+    {
+      "bytes": 5927,
+      "path": "build/remind-qc-adapter-preparation-v1/staged-MR-full-generated-v1/test_full_generated.py",
+      "sha256": "2b1c4e3f7345259d58b8cf1a2e01b8f99ed4d8c3176f3e39a44abdaf08cdbb75"
+    },
+    {
+      "bytes": 2928,
+      "path": "build/remind-staged-full-generated-independent-v1/REPORT.txt",
+      "sha256": "714cbd30e42c3f719528b7086ca717d5cf4ee82fe0b852222b99da1d6651f8a7"
+    },
+    {
+      "bytes": 5405,
+      "path": "build/remind-staged-full-generated-independent-v1/audit.json",
+      "sha256": "5e8e092d51a690d3c4d87117f6b0d5916cd79b9ebb1e8d5f6864bcfa30a47b30"
+    },
+    {
+      "bytes": 8206,
+      "path": "build/remind-staged-full-generated-independent-v1/audit_full_generated.py",
+      "sha256": "e9f2ca7ddcdcbd8b5c44afca37c85653c1ecedab445e14d5682c8acba9309292"
+    },
+    {
+      "bytes": 104,
+      "path": "build/remind-staged-full-generated-independent-v1/fixture_output_cap-control/intent.json",
+      "sha256": "5581d47402590b10ae9843d2d3edb9557673a4504db4737cb2203a9e357fa528"
+    },
+    {
+      "bytes": 996,
+      "path": "build/remind-staged-full-generated-independent-v1/fixture_output_cap-control/parent-result.json",
+      "sha256": "626c10b0605e1b587926cb3bc5fe46e7da0e0f826a3da3ec21391b8e9d5a6da7"
+    },
+    {
+      "bytes": 22,
+      "path": "build/remind-staged-full-generated-independent-v1/fixture_output_cap-control/started.json",
+      "sha256": "250fe3b8c3eeccca8f7fbfc013379ef01860ba5d145a5bb4e90151b3af705c63"
+    },
+    {
+      "bytes": 515,
+      "path": "build/remind-staged-full-generated-independent-v1/fixture_output_cap-control/worker-result.json",
+      "sha256": "bd061d159eb8ddfdfddcf5f227c7c4696d5d447c3f2ec197a09438c4bcba5b39"
+    },
+    {
+      "bytes": 245800,
+      "path": "build/remind-staged-full-generated-independent-v1/fixture_output_cap-release.json",
+      "sha256": "277860bad3d9beb2a7af8ccaaf980d472712f4be69fe7f0b19938415cc496a29"
+    },
+    {
+      "bytes": 104,
+      "path": "build/remind-staged-full-generated-independent-v1/post_supervision_SIGTERM-control/intent.json",
+      "sha256": "40aa1b4bd0a91ce43ae40c30d31249328f38fb942c2eafbf2a2213d7150e09ed"
+    },
+    {
+      "bytes": 993,
+      "path": "build/remind-staged-full-generated-independent-v1/post_supervision_SIGTERM-control/parent-result.json",
+      "sha256": "3fc55c80446110a4a7632c6813fd9510b8a47515781703f24fd0c79a6bf26f6b"
+    },
+    {
+      "bytes": 22,
+      "path": "build/remind-staged-full-generated-independent-v1/post_supervision_SIGTERM-control/started.json",
+      "sha256": "250fe3b8c3eeccca8f7fbfc013379ef01860ba5d145a5bb4e90151b3af705c63"
+    },
+    {
+      "bytes": 521,
+      "path": "build/remind-staged-full-generated-independent-v1/post_supervision_SIGTERM-control/worker-result.json",
+      "sha256": "6ded76e0bf24c24b3baf0fc851a1e3ccb0f9bd7da4c433dc08620fd60b22415a"
+    },
+    {
+      "bytes": 245818,
+      "path": "build/remind-staged-full-generated-independent-v1/post_supervision_SIGTERM-release.json",
+      "sha256": "e31a9833311e8acd10cd3361d4e3366c72a8ddc10fe7503596e56a63084d6695"
+    },
+    {
+      "bytes": 753,
+      "path": "build/remind-staged-full-generated-independent-v1/provided-test-output.txt",
+      "sha256": "c4d8f5299599cf9b14c7e60b898d818c3f56f68a196eaf3c742dd98583674cb2"
+    },
+    {
+      "bytes": 104,
+      "path": "build/remind-staged-full-generated-independent-v1/receipt_read_PermissionError-control/intent.json",
+      "sha256": "d9daba084f098dc0016e9586e84cd1a67e70731f4ebbd0010ec4ebd8364fd8f6"
+    },
+    {
+      "bytes": 613,
+      "path": "build/remind-staged-full-generated-independent-v1/receipt_read_PermissionError-control/parent-result.json",
+      "sha256": "0a394e94320cd2914c38616b9f7586e42eaf9ea41cc2850c331e7a39fa46c2dd"
+    },
+    {
+      "bytes": 22,
+      "path": "build/remind-staged-full-generated-independent-v1/receipt_read_PermissionError-control/started.json",
+      "sha256": "250fe3b8c3eeccca8f7fbfc013379ef01860ba5d145a5bb4e90151b3af705c63"
+    },
+    {
+      "bytes": 525,
+      "path": "build/remind-staged-full-generated-independent-v1/receipt_read_PermissionError-control/worker-result.json",
+      "sha256": "b2109117a03a4e50c7b929541b7cb43a224276877918d0522c6c2f9f29e5715f"
+    },
+    {
+      "bytes": 245830,
+      "path": "build/remind-staged-full-generated-independent-v1/receipt_read_PermissionError-release.json",
+      "sha256": "d4276a4aa2de144fca7e7951a95faa5c298cf39ee1d615a3bc44393d8d510b84"
+    },
+    {
+      "bytes": 233564,
+      "path": "build/remind-staged-full-generated-independent-v1/snapshots/full-staged-v1-candidate.json",
+      "sha256": "5149a78a6801fcd2dab5a936cd11dec22081a1080a84416603db1bbfe465502d"
+    },
+    {
+      "bytes": 16257,
+      "path": "build/remind-staged-full-generated-independent-v1/snapshots/full_generated.py",
+      "sha256": "0ad77fa92d7c4c0dac903561a675c93c217c050bb249738f517e1decc08ed6c3"
+    },
+    {
+      "bytes": 5927,
+      "path": "build/remind-staged-full-generated-independent-v1/snapshots/test_full_generated.py",
+      "sha256": "2b1c4e3f7345259d58b8cf1a2e01b8f99ed4d8c3176f3e39a44abdaf08cdbb75"
+    },
+    {
+      "bytes": 104,
+      "path": "build/remind-staged-full-generated-independent-v1/supervisor_exception-control/intent.json",
+      "sha256": "8a73d14c2dbb6c0595d11d4b941dc2a03a4a1033b83482ba8143ac94643b3456"
+    },
+    {
+      "bytes": 454,
+      "path": "build/remind-staged-full-generated-independent-v1/supervisor_exception-control/parent-result.json",
+      "sha256": "06e883e4689a7fe4cb9342c0fcab1722968eeeed254085164a5eec03264e7d81"
+    },
+    {
+      "bytes": 22,
+      "path": "build/remind-staged-full-generated-independent-v1/supervisor_exception-control/started.json",
+      "sha256": "250fe3b8c3eeccca8f7fbfc013379ef01860ba5d145a5bb4e90151b3af705c63"
+    },
+    {
+      "bytes": 517,
+      "path": "build/remind-staged-full-generated-independent-v1/supervisor_exception-control/worker-result.json",
+      "sha256": "79257a4455f3f0d02c0908157eba65cc3341f314d6cc70687640ef8b5d6a66a1"
+    },
+    {
+      "bytes": 245806,
+      "path": "build/remind-staged-full-generated-independent-v1/supervisor_exception-release.json",
+      "sha256": "f8f8f1b85d169a3f35e8c84e56c864befcbdfd9e17bc575e050a1e504ca4dc29"
+    }
+  ],
+  "prior_staged_source_package_index_sha256": "712e43e54a0d9b9bf2eb05ec7c3a891d78acc18da2fe0d591094d6f351d09cc9",
+  "review_sha256": "5e8e092d51a690d3c4d87117f6b0d5916cd79b9ebb1e8d5f6864bcfa30a47b30",
+  "schema": "remind-full-generated-staged-preparation-index-v1",
+  "status": "GO_FOR_EXACT_FULL_GENERATED_STAGED_CONTROL",
+  "validation": {
+    "DICOM_or_NIfTI_files_included": false,
+    "archive_members_equal_original_bytes": true,
+    "full_fixture_created": false,
+    "full_pipeline_executed": false,
+    "patient_files_opened": false,
+    "tracked_edits": false
+  }
+}
