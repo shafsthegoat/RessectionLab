@@ -705,3 +705,8 @@ The [saved-output result](../artifacts/remind-staged-full-generated-success-v1/R
 ### October 9: all-method sealing before private vascular scoring
 
 The [matched-method adapter](../artifacts/matched-private-vascular-adapter-v1/RESULT.md) now connects existing four-method strategy records to the private evaluator. All complete strategies undergo preflight before any reference callback. An independently reproduced cross-method reference-substitution defect was corrected with captured bindings and final integrity checks. Fifty-two candidate controls and the root integrated 88-test set pass; both the original finding and test-harness errors remain preserved. No learned forward, training, patient admission or real-geometry registration is added.
+
+
+### October 9: Preserve normalization numerical counterexample before model attachment
+
+The in-place normalization prototype diverged from the native operator by 1.7628903 on a large-offset generated input, with 43 activation sign disagreements. The independently reviewed negative remains excluded from the trained model; mathematical equivalence did not establish numerical or alias safety. See the [preserved evidence](../artifacts/inplace-instance-norm-numerical-negative-v1/RESULT.md).

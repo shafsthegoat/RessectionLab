@@ -1,0 +1,8 @@
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.021s
+
+OK
+{'generated_low_variance': {'max_abs_error': 2.4415552616119385e-05, 'near_zero_reference': 0, 'sign_mismatches': 0}}
+{'generated_random_cases': [{'max_abs_error': 9.5367431640625e-07, 'near_zero_reference': 1, 'sign_mismatches': 0}, {'max_abs_error': 9.5367431640625e-07, 'near_zero_reference': 1, 'sign_mismatches': 0}, {'max_abs_error': 4.76837158203125e-07, 'near_zero_reference': 5, 'sign_mismatches': 0}]}
+{'generated_large_offset_counterexample': {'max_abs_error': 1.762890338897705, 'near_zero_reference': 159, 'sign_mismatches': 43}}

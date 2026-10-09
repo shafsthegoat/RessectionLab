@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "bytes": 3354,
+      "path": "INDEPENDENT_HOLD.md",
+      "sha256": "54801209d1fca55e958ae8cd3f780be23d3e4c7e2caea92fad4b3e574c080d8d"
+    },
+    {
+      "bytes": 1321,
+      "path": "RESULT.md",
+      "sha256": "fa1fd914ec793dc926a1bf099861569ac615be904a48746b18e32d0cce1e4f81"
+    },
+    {
+      "bytes": 2524,
+      "path": "inplace_instance_norm.py",
+      "sha256": "89f32b947e9882784bc835e12002468c1616e43c134549cee703952c0af8d795"
+    },
+    {
+      "bytes": 4181,
+      "path": "test_inplace_instance_norm.py",
+      "sha256": "e6e651d3ca600eab68cffa4b24cf5b50d04d1ab1407e7a800d004bb68aac6986"
+    },
+    {
+      "bytes": 646,
+      "path": "tiny-test.log",
+      "sha256": "f2a08ad1d37fb85670327df58605ec57cd3d9c5008da383b619d8692b2c8dfe1"
+    }
+  ],
+  "schema": "compact-generated-encoder-memory-evidence-v1",
+  "scope": "source/tests/receipts only; no arrays, weights or patient records"
+}
