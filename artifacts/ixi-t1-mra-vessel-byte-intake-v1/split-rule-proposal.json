@@ -1,0 +1,33 @@
+{
+  "schema": "ixi-prospective-person-role-rule-v1",
+  "status": "proposed_before_archive_body_intake",
+  "namespace": "RessectionLab/IXI-component-cohort-v1/",
+  "identity": "IXI followed by its exact three-digit source identifier; all modalities, visits, labels and known derivative aliases inherit one role",
+  "population": "Union of original T1 and MRA source IDs from the complete authenticated TAR metadata inventory; retain missing-modality cases in their role and denominator",
+  "strata": ["source site code in original filenames", "annotation ID present in publisher label preview"],
+  "stratum_ambiguity": "A person with multiple site codes stays grouped; use a distinct unresolved or multi-site stratum, do not invent a site or remove the person to improve counts",
+  "role_order": ["TRAIN", "SELECT", "MEASUREMENT_EVAL"],
+  "role_percentages": [70, 15, 15],
+  "stratum_counts": "Hamilton largest remainder: floor(n * percentage / 100), distribute remaining people by descending integer remainder; ties use role_order",
+  "ranking": "Ascending SHA256 of UTF-8(namespace + exact IXI identifier), then exact identifier; allocate contiguous ranks in role_order within each stratum",
+  "role_preservation": "Preserve every existing assignment and alias restriction; do not rerank a frozen cohort after QC failure, missing modality, future source addition or source correction",
+  "existing_IXI_assignment_found": false,
+  "payload_role_boundary": "Root may authorize opaque mixed-role source archive staging. No member extraction, NIfTI header read, image array, annotation value or outcome access follows from byte intake. Later readers must enforce each role and declared input/private-reference fields.",
+  "held_out_claim": "Internal person holdout only. No established unseen-pretrained, external-site or clinical evaluation claim; SynthStrip evaluation includes the IXI family and exact released-checkpoint exposure remains unresolved.",
+  "evidence_types": {
+    "T1": "Genuinely acquired structural image; prospective limited input after intended-use QC",
+    "MRA": "Genuinely acquired same-person vascular measurement; private reference, not automatically an actor channel",
+    "vessel_mask": "Derived SynthStrip/Frangi/manual-edited reference with reported surgeon review and incomplete sensitivity/coverage; distinct from acquired MRA"
+  },
+  "prohibitions": [
+    "No unlabelled voxel interpreted as proven vessel-free",
+    "No vessel-mask intersection interpreted as clinical injury",
+    "For any held-out scored case, private MRA or annotation cannot affect actor features, action generation, action legality, stopping or nominal prediction before that strategy is frozen",
+    "TRAIN may support separately authorized privileged learning; this permission never makes private held-out anatomy available at deployment",
+    "SELECT may support declared method/checkpoint selection after frozen candidate scoring; no optimizer updates or population preprocessing fitted on SELECT",
+    "MEASUREMENT_EVAL cannot support calibration, method/hyperparameter selection, optimizer updates or population preprocessing fitting",
+    "No change to other collections' protected roles"
+  ],
+  "canonical_roles_changed": false,
+  "execution_released": false
+}

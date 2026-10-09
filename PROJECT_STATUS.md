@@ -1,5 +1,7 @@
 # Project status
 
+The [IXI paired vascular-component intake](artifacts/ixi-t1-mra-vessel-byte-intake-v1/RESULT.txt) is independently reviewed and frozen before archive-body intake. Metadata identifies 569 paired T1/MRA people, including all 100 vessel-label IDs; all 582 source people retain prospective TRAIN/SELECT/MEASUREMENT_EVAL roles (407/88/87). The authorized three opaque archives total 17.23 GB. Nineteen generated transport controls pass; verified TLS, resumable transfers, checksum provenance and storage reservations are enforced. This is a healthy vascular component, with acquired MRA separated from derived vessel labels. Image/frame/coverage review, patient admission and unknown pretrained overlap remain unresolved. Acquisition will continue without per-batch QC pauses.
+
 Updated October 9, 2026. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
 remains active, with the [later human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8)
 superseding its incompatible real-data-only training restriction. Synthetic data

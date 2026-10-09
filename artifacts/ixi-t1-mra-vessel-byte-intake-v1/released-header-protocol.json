@@ -1,0 +1,43 @@
+{
+  "schema": "ixi-t1-mra-header-metadata-protocol-v1",
+  "reader_sha256": "633a73d51d0e35f5b9d993b0f09b5e7b00d821e0f05c403bc0d6f8da1ec99842",
+  "source_contract_sha256": "159a4bba5fd9b8b5db0a4195b089f42850da4f3dae86bf101efc1a72de4ab387",
+  "execution_released": true,
+  "archives": [
+    {
+      "filename": "IXI-T1.tar",
+      "url": "https://biomedic.doc.ic.ac.uk/brain-development/downloads/IXI/IXI-T1.tar",
+      "bytes": 4840816640,
+      "etag_opaque": "\"120890000-504d8cd6ce25a\"",
+      "last_modified": "Tue, 07 Oct 2014 17:48:09 GMT",
+      "expected_md5": "34901a0593b41dd19c1a1f746eac2d58",
+      "checksum_authority": "TorchIO maintained downloader reference for the exact original archive URL; not an IXI-publisher checksum",
+      "checksum_reference_sha256": "81210aa4efff1f1c42442fd00e9bc887aaaeea648bb7a68fa9f0c791ff61db4b",
+      "head_proof_sha256": "6f20c536ec24393bb8819445bec428fd48b54537b27085a057ba0b412a65c612",
+      "publisher_md5_available": false,
+      "accept_ranges": "bytes",
+      "head_TLS_verified": true
+    },
+    {
+      "filename": "IXI-MRA.tar",
+      "url": "https://biomedic.doc.ic.ac.uk/brain-development/downloads/IXI/IXI-MRA.tar",
+      "bytes": 12377712640,
+      "etag_opaque": "\"2e1c4e800-504d8ae7e6cfa\"",
+      "last_modified": "Tue, 07 Oct 2014 17:39:30 GMT",
+      "expected_md5": "29be7d2fee3998f978a55a9bdaf3407e",
+      "checksum_authority": "TorchIO maintained downloader reference for the exact original archive URL; not an IXI-publisher checksum",
+      "checksum_reference_sha256": "81210aa4efff1f1c42442fd00e9bc887aaaeea648bb7a68fa9f0c791ff61db4b",
+      "head_proof_sha256": "093f484afdb366883064e9a5aa2e0f8eac07c13b8dba82882368d532a5a9bc4d",
+      "publisher_md5_available": false,
+      "accept_ranges": "bytes",
+      "head_TLS_verified": true
+    }
+  ],
+  "output_path": "build/ixi-t1-mra-header-metadata-execution-v1",
+  "max_headers_per_archive": 1024,
+  "max_response_body_bytes": 1100000,
+  "max_requests": 2100,
+  "deadline_seconds": 1800,
+  "member_body_reads_permitted": false,
+  "image_headers_or_arrays_permitted": false
+}

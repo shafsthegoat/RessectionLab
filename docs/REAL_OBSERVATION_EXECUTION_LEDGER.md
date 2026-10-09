@@ -653,3 +653,10 @@ and a final elapsed-time gate repair both. Authentic Case3 compressed-cache
 controls and fresh-checkout metadata preflight passed without downloads or
 decompression. The first new-pair acquisition, independent source check and
 separate label/image QC remain the next steps; all patient roles and rights remain.
+
+
+### October 9: freeze paired IXI component intake
+
+The [IXI paired vascular-component intake](../artifacts/ixi-t1-mra-vessel-byte-intake-v1/RESULT.txt) is independently reviewed and frozen before archive-body intake. Metadata identifies 569 paired T1/MRA people, including all 100 vessel-label IDs; all 582 source people retain prospective TRAIN/SELECT/MEASUREMENT_EVAL roles (407/88/87). The authorized three opaque archives total 17.23 GB. Nineteen generated transport controls pass; verified TLS, resumable transfers, checksum provenance and storage reservations are enforced. This is a healthy vascular component, with acquired MRA separated from derived vessel labels. Image/frame/coverage review, patient admission and unknown pretrained overlap remain unresolved. Acquisition will continue without per-batch QC pauses.
+
+Prepared proposals and review evidence are preserved in the artifact directory. Only the documented declaration-status, canonical cohort binding and execution flag changed at freeze; prior patient roles and all payload-access gates are preserved. A separate runtime declaration binds the freeze commit before launch.

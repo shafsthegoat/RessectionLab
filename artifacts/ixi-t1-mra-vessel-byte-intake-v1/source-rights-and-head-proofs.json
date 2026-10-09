@@ -1,0 +1,56 @@
+{
+  "head_proofs": [
+    {
+      "selected_headers": [
+        "HTTP/1.1 200 OK",
+        "Last-Modified: Tue, 07 Oct 2014 17:48:09 GMT",
+        "ETag: \"120890000-504d8cd6ce25a\"",
+        "Accept-Ranges: bytes",
+        "Content-Length: 4840816640",
+        "Content-Type: application/x-tar"
+      ],
+      "source_path": "build/ixi-vessel-source-preparation-v1/ixi-t1-https-head.txt",
+      "source_sha256": "6f20c536ec24393bb8819445bec428fd48b54537b27085a057ba0b412a65c612"
+    },
+    {
+      "selected_headers": [
+        "HTTP/1.1 200 OK",
+        "Last-Modified: Tue, 07 Oct 2014 17:39:30 GMT",
+        "ETag: \"2e1c4e800-504d8ae7e6cfa\"",
+        "Accept-Ranges: bytes",
+        "Content-Length: 12377712640",
+        "Content-Type: application/x-tar"
+      ],
+      "source_path": "build/ixi-vessel-source-preparation-v1/ixi-mra-https-head.txt",
+      "source_sha256": "093f484afdb366883064e9a5aa2e0f8eac07c13b8dba82882368d532a5a9bc4d"
+    },
+    {
+      "selected_headers": [
+        "HTTP/1.1 200 OK",
+        "content-type: application/octet-stream",
+        "content-length: 6580597",
+        "last-modified: Sun, 13 Sep 2026 23:56:21 GMT"
+      ],
+      "source_path": "build/ixi-vessel-source-preparation-v1/vessel-label-https-head.txt",
+      "source_sha256": "6c0bccd39af5ccdccaff58c33fbaa8f4e60bed52b25ed6fa39ec2c29834dd401"
+    }
+  ],
+  "labels": {
+    "declared_license": "CC BY4.0",
+    "doi": "10.5281/zenodo.17393202",
+    "full_creator_attribution_and_seven_requested_citations": "Preserved in original Zenodo metadata at build/ixi-vessel-source-preparation-v1/zenodo-record.json",
+    "license_snapshot_sha256": "58230517b7895aa219ff46a6ed63e67057a1582fb9ea054b16728a8c13525650",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+    "metadata_sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798",
+    "record": "https://zenodo.org/records/17393202"
+  },
+  "primary_methods": "https://www.nature.com/articles/s41597-025-06354-1",
+  "raw": {
+    "declared_license": "CC BY-SA3.0",
+    "license_snapshot_sha256": "c33d7ebdbcc5c8db073e69a794b2ac44805f5d7d9edcfb8b5181a71869a9b7d5",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/legalcode",
+    "page": "https://brain-development.org/ixi-dataset/",
+    "source_html_sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c"
+  },
+  "scope": "Original source snapshots remain ignored; selected noncredential headers only are copied here. No license merge or redistribution claim."
+}

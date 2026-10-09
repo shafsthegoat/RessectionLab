@@ -1,0 +1,98 @@
+{
+  "MRA": 570,
+  "T1": 581,
+  "all_modalities_and_labels_grouped_by_exact_person": true,
+  "canonical_prior_manifests_unchanged": 120,
+  "checksum_authorities": {
+    "labels": "Zenodo version-specific record17393202 publisher metadata MD5",
+    "raw": "Pinned TorchIO reference MD5, not IXI-publisher checksum. HTTP URL in reference upgraded to verified HTTPS at identical host/path. ETag remains opaque."
+  },
+  "existing_IXI_role_hits": [],
+  "header_receipt_sha256": "5c751c2131654628709a8b75ead3b284a8aa9aae326ffe34501e4610c5b5066e",
+  "image_or_member_payload_bytes_opened": 0,
+  "label_roles": {
+    "MEASUREMENT_EVAL": 15,
+    "SELECT": 15,
+    "TRAIN": 70
+  },
+  "limits": [
+    "Source identifiers establish linkage, not independent biological identity, matching grid or registration",
+    "Prior canonical roles unchanged; unknown biological aliases cannot be proved absent by metadata search",
+    "Prospective internal person holdouts, not publisher splits or demonstrated unseen-pretrained evaluation",
+    "Runtime transport review/release remains separate; no network or payload launch performed"
+  ],
+  "metadata_blocks_checked": 1171,
+  "network_requests_by_reviewer": 0,
+  "no_new_qc_gate": "Header/anatomy QC and training admission remain deferred; opaque mixed-role archive transport does not decode or extract members.",
+  "paired_labels": 100,
+  "pairs": 569,
+  "people": 582,
+  "proposal_hashes": {
+    "pairing-summary.json": "19cd8e6e056b2e9257295561e28791bda941e25cfcc29c36ed45418989a9036b",
+    "prior-role-audit.json": "da8562be2d0cdb82d126977e5e6cc34d1394563ee01613d2d57cf0b046feb7b9",
+    "proposed-cohort.json": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716",
+    "proposed-scope.json": "7a09c828609cc0f7f91ab6f1466c902ac1ca1dfc91da7db307e0942f66e1e586",
+    "storage-Tracto-snapshot.json": "f5ee28de6c4a6fe894bd4ac0faa5aa9f29e2279ef4823597389634c3c421e104"
+  },
+  "roles": {
+    "MEASUREMENT_EVAL": 87,
+    "SELECT": 88,
+    "TRAIN": 407
+  },
+  "snapshot_immutable_path": "build/ixi-paired-intake-preparation-v1/storage-Tracto-snapshot.json",
+  "status": "PASS_pairing_roles_storage_checksum_metadata_only_transport_review_pending",
+  "storage_headroom_bytes": 186630264558,
+  "strata": [
+    {
+      "annotation_available": false,
+      "people": 269,
+      "roles": {
+        "MEASUREMENT_EVAL": 40,
+        "SELECT": 41,
+        "TRAIN": 188
+      },
+      "site_code": "Guys"
+    },
+    {
+      "annotation_available": true,
+      "people": 53,
+      "roles": {
+        "MEASUREMENT_EVAL": 8,
+        "SELECT": 8,
+        "TRAIN": 37
+      },
+      "site_code": "Guys"
+    },
+    {
+      "annotation_available": false,
+      "people": 138,
+      "roles": {
+        "MEASUREMENT_EVAL": 21,
+        "SELECT": 21,
+        "TRAIN": 96
+      },
+      "site_code": "HH"
+    },
+    {
+      "annotation_available": true,
+      "people": 47,
+      "roles": {
+        "MEASUREMENT_EVAL": 7,
+        "SELECT": 7,
+        "TRAIN": 33
+      },
+      "site_code": "HH"
+    },
+    {
+      "annotation_available": false,
+      "people": 75,
+      "roles": {
+        "MEASUREMENT_EVAL": 11,
+        "SELECT": 11,
+        "TRAIN": 53
+      },
+      "site_code": "IOP"
+    }
+  ],
+  "tar_metadata_bytes_checked": 599552
+}

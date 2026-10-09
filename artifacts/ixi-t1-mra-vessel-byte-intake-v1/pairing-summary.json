@@ -1,0 +1,52 @@
+{
+  "MRA_only": [
+    "IXI580"
+  ],
+  "MRA_people": 570,
+  "NIfTI_headers_arrays_read": 0,
+  "T1_only": [
+    "IXI014",
+    "IXI116",
+    "IXI182",
+    "IXI213",
+    "IXI225",
+    "IXI233",
+    "IXI255",
+    "IXI302",
+    "IXI309",
+    "IXI578",
+    "IXI589",
+    "IXI651"
+  ],
+  "T1_people": 581,
+  "all_paired_filename_prefixes_equal": true,
+  "annotated_site_counts": {
+    "Guys": 53,
+    "HH": 47
+  },
+  "annotation_people": 100,
+  "annotation_roles": {
+    "MEASUREMENT_EVAL": 15,
+    "SELECT": 15,
+    "TRAIN": 70
+  },
+  "annotations_with_one_T1_and_one_MRA": 100,
+  "cohort_sha256": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716",
+  "metadata_requests": 1171,
+  "paired_people": 569,
+  "people": 582,
+  "raw_member_bodies_read": 0,
+  "receipt_sha256": "5c751c2131654628709a8b75ead3b284a8aa9aae326ffe34501e4610c5b5066e",
+  "roles": {
+    "MEASUREMENT_EVAL": 87,
+    "SELECT": 88,
+    "TRAIN": 407
+  },
+  "schema": "ixi-pairing-metadata-summary-v1",
+  "site_counts": {
+    "Guys": 322,
+    "HH": 185,
+    "IOP": 75
+  },
+  "tar_metadata_response_bytes": 599552
+}

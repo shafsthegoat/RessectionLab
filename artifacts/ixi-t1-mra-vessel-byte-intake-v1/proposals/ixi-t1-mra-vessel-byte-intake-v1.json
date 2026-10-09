@@ -1,0 +1,112 @@
+{
+  "acquired_vs_derived": {
+    "MRA": "Original acquired same-person angiography, private measured reference after intended-use/frame QC; not automatically observed by T1-only actor",
+    "T1": "Original acquired structural MRI, candidate permitted input after intended-use QC",
+    "vessel_mask": "Derived SynthStrip/Frangi/manual-refined labels with reported surgeon review and incomplete coverage; distinct from acquired MRA"
+  },
+  "cohort_path": "build/ixi-paired-intake-preparation-v1/proposed-cohort.json",
+  "cohort_sha256": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716",
+  "created_utc": "2026-10-09T11:18:30.133907+00:00",
+  "declaration_status": "proposed_before_archive_body_intake",
+  "files": [
+    {
+      "accept_ranges": "bytes",
+      "byte_intake_only": true,
+      "bytes": 4840816640,
+      "checksum_authority": "Pinned TorchIO downloader MD5 for the same original host/path/archive; TorchIO spells HTTP and this intake upgrades transport to verified HTTPS. Not an IXI-publisher checksum.",
+      "checksum_reference_sha256": "81210aa4efff1f1c42442fd00e9bc887aaaeea648bb7a68fa9f0c791ff61db4b",
+      "etag_opaque": "\"120890000-504d8cd6ce25a\"",
+      "expected_md5": "34901a0593b41dd19c1a1f746eac2d58",
+      "filename": "IXI-T1.tar",
+      "head_TLS_verified": true,
+      "head_proof_sha256": "6f20c536ec24393bb8819445bec428fd48b54537b27085a057ba0b412a65c612",
+      "last_modified": "Tue, 07 Oct 2014 17:48:09 GMT",
+      "local_path": "IXI-T1.tar",
+      "publisher_md5_available": false,
+      "url": "https://biomedic.doc.ic.ac.uk/brain-development/downloads/IXI/IXI-T1.tar"
+    },
+    {
+      "accept_ranges": "bytes",
+      "byte_intake_only": true,
+      "bytes": 12377712640,
+      "checksum_authority": "Pinned TorchIO downloader MD5 for the same original host/path/archive; TorchIO spells HTTP and this intake upgrades transport to verified HTTPS. Not an IXI-publisher checksum.",
+      "checksum_reference_sha256": "81210aa4efff1f1c42442fd00e9bc887aaaeea648bb7a68fa9f0c791ff61db4b",
+      "etag_opaque": "\"2e1c4e800-504d8ae7e6cfa\"",
+      "expected_md5": "29be7d2fee3998f978a55a9bdaf3407e",
+      "filename": "IXI-MRA.tar",
+      "head_TLS_verified": true,
+      "head_proof_sha256": "093f484afdb366883064e9a5aa2e0f8eac07c13b8dba82882368d532a5a9bc4d",
+      "last_modified": "Tue, 07 Oct 2014 17:39:30 GMT",
+      "local_path": "IXI-MRA.tar",
+      "publisher_md5_available": false,
+      "url": "https://biomedic.doc.ic.ac.uk/brain-development/downloads/IXI/IXI-MRA.tar"
+    },
+    {
+      "byte_intake_only": true,
+      "bytes": 6580597,
+      "checksum_authority": "Publisher Zenodo version-specific record17393202 metadata",
+      "expected_md5": "96be3dd9d1413e8890f89721829a79f7",
+      "filename": "vessel_dataset.zip",
+      "head_proof_sha256": "6c0bccd39af5ccdccaff58c33fbaa8f4e60bed52b25ed6fa39ec2c29834dd401",
+      "license": "cc-by-4.0",
+      "local_path": "vessel_dataset.zip",
+      "metadata_sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798",
+      "url": "https://zenodo.org/api/records/17393202/files/vessel_dataset.zip/content",
+      "version": "1.0"
+    }
+  ],
+  "initial_source_contract_preserved_sha256": "159a4bba5fd9b8b5db0a4195b089f42850da4f3dae86bf101efc1a72de4ab387",
+  "pairing_summary_sha256": "19cd8e6e056b2e9257295561e28791bda941e25cfcc29c36ed45418989a9036b",
+  "reference_limits": {
+    "endpoint": "No mask-intersection-to-clinical-injury interpretation",
+    "review": "Do not assert three independent surgeon reviews per volume; primary prose is inconsistent",
+    "runtime": "Current T1-only interfaces need the separately reviewed evaluator-owned private-reference boundary; acquisition does not establish that boundary",
+    "subset": "100 annotations selected from one intensity-histogram cluster; selection and Frangi tuning dependence retained",
+    "unknown_background": "Unlabelled voxels and unresolved MRA regions are unknown, not proven vessel-free"
+  },
+  "rights": {
+    "labels": "Declared CC BY4.0, retain all publisher-requested citations",
+    "raw": "CC BY-SA3.0, retain publisher attribution and share-alike obligations",
+    "scope": "Local research copying/use with separate notices; no claim of merged-dataset relicensing. Source links and legal-code snapshots retained.",
+    "synthetic_permission": "Allows model-assisted/synthetic lineage in training; preserves ancestry and evaluation limits"
+  },
+  "schema": "ixi-t1-mra-vessel-opaque-byte-intake-v1",
+  "scientific_scope": "Healthy vascular component candidate for declared limited-T1 planning and withheld same-person MRA/reference evaluation; no glioma, tumor, clinical injury or operative outcome claim.",
+  "source_bytes": 17225109877,
+  "source_files": 3,
+  "source_review": {
+    "path": "build/ixi-limited-observation-independent-v1/REPORT.md",
+    "sha256": "dfb98270331ea728535e9ddc00d437faf2c90ce55b025516024459cb59d9812c"
+  },
+  "storage": {
+    "active_model_output_allowance_bytes": 68719476736,
+    "concurrent_Tracto_remaining_upper_bound_bytes": 238121084829,
+    "concurrent_Tracto_status_sha256": "f5ee28de6c4a6fe894bd4ac0faa5aa9f29e2279ef4823597389634c3c421e104",
+    "concurrent_Tracto_status_source": "build/ixi-paired-intake-preparation-v1/storage-Tracto-snapshot.json",
+    "free_bytes_at_preparation": 618070118400,
+    "headroom_after_all_declared_unwritten_bytes_reserve_and_allowance": 186630264558,
+    "required_runtime_policy": "Before every transfer attempt recheck all remaining IXI bytes plus remaining declared Tracto unwritten bytes, retaining100GiB free and64GiB model-output allowance. No source originals may be deleted to satisfy this check.",
+    "reserve_bytes": 107374182400,
+    "source_bytes": 17225109877
+  },
+  "transport": {
+    "NIfTI_headers_or_arrays_released": false,
+    "all_payloads_unreviewed": true,
+    "annotation_checksum_authority": "Zenodo publisher metadata MD5",
+    "execution_released": false,
+    "immutable_attempt_history": true,
+    "labels_admitted": false,
+    "local_SHA256_after_verification": true,
+    "max_attempts_per_file_across_restarts": 3,
+    "max_workers": 1,
+    "member_extraction_released": false,
+    "opaque_mixed_roles": true,
+    "raw_checksum_authority": "Pinned TorchIO maintained-downloader MD5 for the identical original host/path/archive, with HTTP upgraded to verified HTTPS. Apache ETags are opaque identity, never MD5.",
+    "raw_reference_MD5_is_publisher_checksum": false,
+    "redirects": false,
+    "resume_required": true,
+    "source_size_and_expected_MD5_before_atomic_publish": true,
+    "training_admitted": false,
+    "verified_TLS": true
+  }
+}

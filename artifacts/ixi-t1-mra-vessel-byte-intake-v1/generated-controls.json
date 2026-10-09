@@ -1,0 +1,121 @@
+{
+  "schema": "ixi-generated-transport-controls-v1",
+  "runner_sha256": "8101d3c3edfea9d9099848468dbbfe24157bcd552bb16854f94b9c2c5a297dc2",
+  "prepared_declaration_sha256": "1d3435db6f164855a654939e72ba90e222b7e6cd9388defea7f1004a1d9b7f0a",
+  "status": "pass",
+  "controls": [
+    {
+      "case": "fresh",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "label_no_etag",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "strict_resume",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "label_resume_no_etag",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "ignored_range",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_md5",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_etag",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_length",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_content_range",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_encoding",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_effective_url",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "three_attempt_exhaustion",
+      "status": "pass",
+      "fake_open_calls": 3,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "tls_failure",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "orphaned_attempt",
+      "status": "pass",
+      "fake_open_calls": 0,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "truncated_then_resume",
+      "status": "pass",
+      "fake_open_calls": 2,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "existing_immutable",
+      "status": "pass",
+      "fake_open_calls": 0,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "fully_received_partial",
+      "status": "pass",
+      "fake_open_calls": 0,
+      "actual_network_requests": 0
+    },
+    {
+      "case": "both_queues_plus_output_allowance_budget",
+      "status": "pass",
+      "actual_network_requests": 0
+    },
+    {
+      "case": "concurrent_source_stat_accounting_partial_complete_deleted",
+      "status": "pass",
+      "actual_network_requests": 0
+    }
+  ],
+  "boundary": "Generated eight-byte files, fake opener and isolated ignored roots. Exact execute function and unchanged helpers; no source payloads, decoding, model or network."
+}

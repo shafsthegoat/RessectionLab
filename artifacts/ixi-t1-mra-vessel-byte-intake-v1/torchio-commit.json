@@ -1,0 +1,84 @@
+[
+  {
+    "sha": "b021782bf6f65565484c69fbb25a2d697218e09e",
+    "node_id": "C_kwDODVw9AtoAKGIwMjE3ODJiZjZmNjU1NjU0ODRjNjlmYmIyNWEyZDY5NzIxOGUwOWU",
+    "commit": {
+      "author": {
+        "name": "Fernando Pérez-García",
+        "email": "fepegar@gmail.com",
+        "date": "2026-06-11T22:52:39Z"
+      },
+      "committer": {
+        "name": "Fernando Pérez-García",
+        "email": "fepegar@gmail.com",
+        "date": "2026-06-11T22:52:39Z"
+      },
+      "message": "Remove double backticks",
+      "tree": {
+        "sha": "157d87e95fdb16280d7cbb3bb5b6a9c99123f245",
+        "url": "https://api.github.com/repos/TorchIO-project/torchio/git/trees/157d87e95fdb16280d7cbb3bb5b6a9c99123f245"
+      },
+      "url": "https://api.github.com/repos/TorchIO-project/torchio/git/commits/b021782bf6f65565484c69fbb25a2d697218e09e",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/TorchIO-project/torchio/commits/b021782bf6f65565484c69fbb25a2d697218e09e",
+    "html_url": "https://github.com/TorchIO-project/torchio/commit/b021782bf6f65565484c69fbb25a2d697218e09e",
+    "comments_url": "https://api.github.com/repos/TorchIO-project/torchio/commits/b021782bf6f65565484c69fbb25a2d697218e09e/comments",
+    "author": {
+      "login": "fepegar",
+      "id": 12688084,
+      "node_id": "MDQ6VXNlcjEyNjg4MDg0",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12688084?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/fepegar",
+      "html_url": "https://github.com/fepegar",
+      "followers_url": "https://api.github.com/users/fepegar/followers",
+      "following_url": "https://api.github.com/users/fepegar/following{/other_user}",
+      "gists_url": "https://api.github.com/users/fepegar/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/fepegar/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/fepegar/subscriptions",
+      "organizations_url": "https://api.github.com/users/fepegar/orgs",
+      "repos_url": "https://api.github.com/users/fepegar/repos",
+      "events_url": "https://api.github.com/users/fepegar/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/fepegar/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "fepegar",
+      "id": 12688084,
+      "node_id": "MDQ6VXNlcjEyNjg4MDg0",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12688084?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/fepegar",
+      "html_url": "https://github.com/fepegar",
+      "followers_url": "https://api.github.com/users/fepegar/followers",
+      "following_url": "https://api.github.com/users/fepegar/following{/other_user}",
+      "gists_url": "https://api.github.com/users/fepegar/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/fepegar/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/fepegar/subscriptions",
+      "organizations_url": "https://api.github.com/users/fepegar/orgs",
+      "repos_url": "https://api.github.com/users/fepegar/repos",
+      "events_url": "https://api.github.com/users/fepegar/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/fepegar/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "1f30feaa62789f73aefb0e81fc8ce4f94b31da3a",
+        "url": "https://api.github.com/repos/TorchIO-project/torchio/commits/1f30feaa62789f73aefb0e81fc8ce4f94b31da3a",
+        "html_url": "https://github.com/TorchIO-project/torchio/commit/1f30feaa62789f73aefb0e81fc8ce4f94b31da3a"
+      }
+    ]
+  }
+]

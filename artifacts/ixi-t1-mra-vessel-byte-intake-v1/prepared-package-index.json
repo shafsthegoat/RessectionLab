@@ -1,0 +1,166 @@
+{
+  "files": [
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/RESULT.txt",
+      "bytes": 4769,
+      "sha256": "75c0d433a5dfb282cf5ef15cfac7219e8e7ae243f51dbf0b82f9cf62fe186565"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/annotation-subject-metadata.json",
+      "bytes": 1965,
+      "sha256": "683b815ccf5f1b77196b9f3c0545e9a21a71f5e72c30bb529a49d716036eae67"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/check-prepared.py",
+      "bytes": 1867,
+      "sha256": "fa78196720efbb019b791b2c68d4c93940d71af22117ed6c6276ed18dd613d27"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/generated-controls.json",
+      "bytes": 3004,
+      "sha256": "3b9e114125a6101c2c6794772ec271f9fac92b67474a17364f65dcb458e50983"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/generated-header-controls.json",
+      "bytes": 758,
+      "sha256": "73fd696cead6618520f6c2c8f636fe9f255d8a136922a2b53a5d0432ece59604"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/header-metadata-receipt.json",
+      "bytes": 294418,
+      "sha256": "5c751c2131654628709a8b75ead3b284a8aa9aae326ffe34501e4610c5b5066e"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/header-metadata-release.json",
+      "bytes": 744,
+      "sha256": "fafb5f65a6cf9a2ecdfb24da2a8972b903f1214b25329335bb8a8780757a1079"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/independent-review/REPORT.md",
+      "bytes": 3105,
+      "sha256": "d05fa83e49448701d6e50d95e58f9ce30325c53eeaa688587cbc4d6002bc4eb5"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/independent-review/generated-controls.json",
+      "bytes": 3324,
+      "sha256": "5113981a4321524a7b6089a04eca065bf70f240445a991f619a127f53aa1d9bb"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/independent-review/metadata-audit.json",
+      "bytes": 3260,
+      "sha256": "fb8a4f8ea068cd66e3111c33c765dff10f3b5c7a014f41739b9a4374e600a5f1"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/independent-review/prepared-review.json",
+      "bytes": 3756,
+      "sha256": "990076f8c4998fbf9343fe9a943cbaf9889ef9acddf15ec394ba729e0ab4fc19"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/independent-review/review.json",
+      "bytes": 4858,
+      "sha256": "b68c1b7d24380e47169989083a39a5266bbf474c717e918fcfadf4ecacad6ce4"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/pairing-summary.json",
+      "bytes": 1088,
+      "sha256": "19cd8e6e056b2e9257295561e28791bda941e25cfcc29c36ed45418989a9036b"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/prepared-controls.json",
+      "bytes": 683,
+      "sha256": "50ac4c79fe8078b393f044f8deb17040b43537d2afdcaf1c5f06d40da84b28c7"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/prepared-declaration.json",
+      "bytes": 4722,
+      "sha256": "1d3435db6f164855a654939e72ba90e222b7e6cd9388defea7f1004a1d9b7f0a"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/prepared-header-protocol.json",
+      "bytes": 2103,
+      "sha256": "358d6ee513b598602c3e0813130dfb7f5b7dd907f1242aeb10f0b73ae67e8cd2"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/prior-role-audit.json",
+      "bytes": 20806,
+      "sha256": "da8562be2d0cdb82d126977e5e6cc34d1394563ee01613d2d57cf0b046feb7b9"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/released-header-protocol.json",
+      "bytes": 2102,
+      "sha256": "8eac539d21792e3cb306478558c3bc383d24380221212dc24452256e2ad16dbf"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/run-intake.py",
+      "bytes": 21609,
+      "sha256": "8101d3c3edfea9d9099848468dbbfe24157bcd552bb16854f94b9c2c5a297dc2"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/source-contract.json",
+      "bytes": 6760,
+      "sha256": "159a4bba5fd9b8b5db0a4195b089f42850da4f3dae86bf101efc1a72de4ab387"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/source-interface-review.md",
+      "bytes": 8197,
+      "sha256": "dfb98270331ea728535e9ddc00d437faf2c90ce55b025516024459cb59d9812c"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/source-rights-and-head-proofs.json",
+      "bytes": 2541,
+      "sha256": "1354808cdee53bbb8681196a22ece34514e1f4a763de58c6b534692a67c4fdee"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/split-rule-proposal.json",
+      "bytes": 3273,
+      "sha256": "7d64b4456d9e5a4cf556675d2b78d78816d012c3e38d72ab6a9508e1f59c44ba"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/storage-Tracto-snapshot.json",
+      "bytes": 1087,
+      "sha256": "f5ee28de6c4a6fe894bd4ac0faa5aa9f29e2279ef4823597389634c3c421e104"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/test-generated.py",
+      "bytes": 8608,
+      "sha256": "ed222cdc79dacb088b31c4b469e40688035b0cb88b00ff6d9b00605d1889792c"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/test-tar-metadata.py",
+      "bytes": 3850,
+      "sha256": "564c21a93a4121e4614d870b09e90c695dc143c98ddb5ddba24aaff162310511"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/torchio-commit.json",
+      "bytes": 3923,
+      "sha256": "8f69f834f523f046cbb67319dda2c7814d12204cef674abc562f0eec5ceb8d55"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/torchio-ixi-source.txt",
+      "bytes": 5684,
+      "sha256": "81210aa4efff1f1c42442fd00e9bc887aaaeea648bb7a68fa9f0c791ff61db4b"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/torchio-source-receipt.json",
+      "bytes": 352,
+      "sha256": "915bd184fd2e6acd577d81b93b6a366e401b456068fef3390c60a7f3e682c641"
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/walk-tar-metadata.py",
+      "bytes": 7928,
+      "sha256": "633a73d51d0e35f5b9d993b0f09b5e7b00d821e0f05c403bc0d6f8da1ec99842"
+    },
+    {
+      "path": "manifests/experiments/ixi-component-person-cohort-v1.json",
+      "bytes": 788727,
+      "sha256": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716"
+    },
+    {
+      "path": "manifests/experiments/ixi-t1-mra-vessel-byte-intake-v1.json",
+      "bytes": 6657,
+      "sha256": "7a09c828609cc0f7f91ab6f1466c902ac1ca1dfc91da7db307e0942f66e1e586"
+    }
+  ],
+  "source_payloads_included": false,
+  "archive_bodies_or_images_included": false
+}

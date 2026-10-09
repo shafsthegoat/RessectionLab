@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "tests": [
+    "header_offsets_skip_body_and_padding",
+    "body_value_invariance",
+    "bad_checksum_refused",
+    "no_end_records_refused",
+    "nonzero_trailer_refused",
+    "link_refused",
+    "pax_refused",
+    "traversal_refused",
+    "strict_exact_range_two_archives",
+    "ignored_range_refused_before_body_read",
+    "wrong_etag_refused_before_body_read",
+    "wrong_length_refused_before_body_read",
+    "wrong_contentrange_refused_before_body_read",
+    "encoded_body_refused_before_body_read",
+    "false_release_zero_network"
+  ],
+  "count": 15,
+  "generated_only": true,
+  "network_requests": 0,
+  "actual_archive_bytes_read": 0,
+  "reader_sha256": "633a73d51d0e35f5b9d993b0f09b5e7b00d821e0f05c403bc0d6f8da1ec99842"
+}

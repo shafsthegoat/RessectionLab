@@ -1,0 +1,82 @@
+{
+  "binding": {
+    "prepared-declaration.json": "1d3435db6f164855a654939e72ba90e222b7e6cd9388defea7f1004a1d9b7f0a",
+    "proposed-cohort.json": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716",
+    "proposed-scope.json": "7a09c828609cc0f7f91ab6f1466c902ac1ca1dfc91da7db307e0942f66e1e586",
+    "run-intake.py": "8101d3c3edfea9d9099848468dbbfe24157bcd552bb16854f94b9c2c5a297dc2"
+  },
+  "checks": {
+    "MRA_files": 570,
+    "T1_files": 581,
+    "actual_network_attempts": 0,
+    "additional_prepared_and_path_controls": [
+      "exact_metadata_contract",
+      "check_only_no_transport_import",
+      "false_release_no_transport_import_or_output_creation",
+      "three_helpers_unchanged_from_tracked_scripts",
+      "redirect_rejected_before_followup",
+      "partial_symlink_rejected",
+      "parent_path_rejected"
+    ],
+    "generated_transport_controls": 19,
+    "image_or_archive_member_payload_bytes_read": 0,
+    "label_roles": {
+      "MEASUREMENT_EVAL": 15,
+      "SELECT": 15,
+      "TRAIN": 70
+    },
+    "metadata_bytes": 599552,
+    "paired_label_people": 100,
+    "paired_people": 569,
+    "people": 582,
+    "prepared_storage_headroom_bytes": 186630264558,
+    "roles": {
+      "MEASUREMENT_EVAL": 87,
+      "SELECT": 88,
+      "TRAIN": 407
+    },
+    "saved_tar_metadata_blocks": 1171,
+    "source_bytes": 17225109877,
+    "unchanged_prior_canonical_manifests": 120
+  },
+  "decision": "GO_for_root_manifest_freeze_and_exact_opaque_three_archive_intake",
+  "evidence": {
+    "audit_metadata.py": "e221744adeb8cde58f2130083d51bf54fbed13e3c9feec0ef936d24f05fc2dc4",
+    "generated-controls.json": "5113981a4321524a7b6089a04eca065bf70f240445a991f619a127f53aa1d9bb",
+    "metadata-audit.json": "fb8a4f8ea068cd66e3111c33c765dff10f3b5c7a014f41739b9a4374e600a5f1",
+    "prepared-review.json": "990076f8c4998fbf9343fe9a943cbaf9889ef9acddf15ec394ba729e0ab4fc19",
+    "run_generated_review.py": "f91881e5e855194d9a0e49607191d1cb6b63d5a08f72e9602c0c22637e23f947",
+    "verify_prepared.py": "a0ffd9444693849003c1d4636d02c5a4515e8e7fab34dbbc89f854f8747afee6"
+  },
+  "execution_by_reviewer": false,
+  "limits": [
+    "GO applies to unchanged cohort assignments, exact three archives and reviewed runner/helpers; root owns canonical manifest freeze, release fields/commit bindings and launch. Prepared declaration remains unreleased.",
+    "Raw MD5 is a pinned maintained-downloader reference; Zenodo label MD5 is version-specific publisher metadata. ETags are opaque identity.",
+    "All source-ID modalities, labels, visits and known derivatives inherit the frozen person role. Unknown biological aliases/pretraining overlap remain unresolved; internal holdout is not a demonstrated unseen external test.",
+    "No extraction, NIfTI/image/array read, anatomy QC, label admission or training is authorized by this review. Those are not gates for this opaque byte intake.",
+    "Single worker; at most three durable attempt intents per exact URL/size/MD5 across restarts. Per-attempt http_requests records opener invocations, not proof of successful network transmission.",
+    "Runtime disk checks reserve active IXI queue bytes and stat-derived unwritten Tracto bytes plus 100 GiB reserve and 64 GiB model-output allowance; terminal unresolved objects require fresh reservation on a later run.",
+    "256 MiB RSS is an external overlap allowance, not a self-enforced or measured bound. This adapter does not call the helper subprocess supervisor."
+  ],
+  "resolved_findings": [
+    {
+      "control_status": "PASS",
+      "issue": "Generic opener errors omitted from request events and per-attempt http_requests.",
+      "old_runner_sha256": "eb04732e3c516e275517126aeaf253fc147e521f443a3bd643ef3cda5310a521",
+      "resolution": "Generic errors now durable with error type/message and no fabricated status; all three timeout attempts and one TLS failure counted; restart never renews exhausted/refused allowance."
+    },
+    {
+      "issue": "TorchIO reference uses HTTP, selected transport uses HTTPS.",
+      "resolution": "Successor scope explicitly records verified HTTPS upgrade at same host/path/archive; raw MD5 authority remains pinned TorchIO reference, not IXI publisher."
+    }
+  ],
+  "schema": "ixi-paired-intake-independent-review-v1",
+  "source_files_sha256": {
+    "acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "cohort.json": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716",
+    "real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scope.json": "7a09c828609cc0f7f91ab6f1466c902ac1ca1dfc91da7db307e0942f66e1e586",
+    "source-contract.json": "159a4bba5fd9b8b5db0a4195b089f42850da4f3dae86bf101efc1a72de4ab387"
+  }
+}

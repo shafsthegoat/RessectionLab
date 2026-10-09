@@ -1,0 +1,488 @@
+{
+  "canonical_manifest_files": [
+    {
+      "path": "manifests/btc_acquisition.json",
+      "sha256": "f88d3a01a06e4e21c29de6ba49aff4a54bd230c9fdba4787170b10e19bdd18c4"
+    },
+    {
+      "path": "manifests/btc_pat05_acquisition.json",
+      "sha256": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf"
+    },
+    {
+      "path": "manifests/btc_pat05_selection.json",
+      "sha256": "edd2d5ace4db04615ac948f339beb058eb5f637a7a588325fb714e360fd887f3"
+    },
+    {
+      "path": "manifests/btc_pat16_acquisition.json",
+      "sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f"
+    },
+    {
+      "path": "manifests/btc_pat20_acquisition.json",
+      "sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118"
+    },
+    {
+      "path": "manifests/cohort_registry.json",
+      "sha256": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5"
+    },
+    {
+      "path": "manifests/data_acquisition_ucsf.json",
+      "sha256": "b05552355f2099058e9d25bc93faf9f2981fe1c00ffb4f24443edfabeda4c6f6"
+    },
+    {
+      "path": "manifests/data_acquisition_ucsf_v5_official_0004.json",
+      "sha256": "69e22829fd239b0d8699940aa5dd16310feb789683478656e3f9383e58b6bfc0"
+    },
+    {
+      "path": "manifests/development_acquisition_queue.json",
+      "sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898"
+    },
+    {
+      "path": "manifests/experiments/brain-extraction-btc-spatial-main-v1.json",
+      "sha256": "f6560e7d35a3c85d3e56f2abfbaa487337f22405a4be20dc28ddeb368f78450f"
+    },
+    {
+      "path": "manifests/experiments/brain-extraction-pat16-pat20-repeatability-v1.json",
+      "sha256": "5be3ade2eb6b383e796cdc34def48dae66a4fb68649b282723daa83e771477db"
+    },
+    {
+      "path": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+      "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+    },
+    {
+      "path": "manifests/experiments/febio-accelerate-csc-runtime-v1.json",
+      "sha256": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2"
+    },
+    {
+      "path": "manifests/experiments/febio-accelerate-csc-runtime-v2.json",
+      "sha256": "6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06"
+    },
+    {
+      "path": "manifests/experiments/febio-accelerate-csc-runtime-v3.json",
+      "sha256": "273db5b32077017730bb8c2fafe9fb360d19439005ddfc977d84c45f7c379763"
+    },
+    {
+      "path": "manifests/experiments/gmsh-discrete-unit-control-v1.json",
+      "sha256": "d5862c623fa29c8afadded72a85bc5a32ec28ead86eb0a6cb762da92fba138eb"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+      "sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
+      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
+      "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-boundary-v1.json",
+      "sha256": "5a0f355b73085f0ae0ffc677a16b9054bc8b40ee2f8a4f2da9db8800acf3a5bc"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+      "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+      "sha256": "902286e195a673acb6384a864f0bb57f747eb0ba450be44d2451dc221cd7d1ce"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+      "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+      "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+      "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-header-continuation-v1.json",
+      "sha256": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-v5-source-deck-bindings-v1.json",
+      "sha256": "65ab3d9b2056e43e3a193b6d0288078f3617159483e271d0ab3cd0d624fb02e0"
+    },
+    {
+      "path": "manifests/experiments/hbe-v5-n12-exact-supplement-admission-v1.json",
+      "sha256": "84cd645a10d70c07613e12d9548076336326b8e97510cfe83e39e261ec0eaa5e"
+    },
+    {
+      "path": "manifests/experiments/hbe-v5-n12-saved-attempt-replay-preparation-v1.json",
+      "sha256": "45c6728ee2ce183990a1110c4ca333e22ed175b597d9e5378a131d2d60577329"
+    },
+    {
+      "path": "manifests/experiments/hbe-v5-n8-canary-source-only-v1.json",
+      "sha256": "2d74b090e9cef22a74d4daaf74309a26391f66f12bd7f872c6615c72e974f0b7"
+    },
+    {
+      "path": "manifests/experiments/hbe-v5-n8-one-shot-preparation-v1.json",
+      "sha256": "1ccb1f5af68aed13cc2b544516d7f32a2473d3d6ba4ad43727312300db5a5d12"
+    },
+    {
+      "path": "manifests/experiments/hbe-v5-remaining-one-shot-preparation-v1.json",
+      "sha256": "42a66a35bb9aaa70d994189b4f7f7459510c360d3c6c3c1e6f407b6083edbbda"
+    },
+    {
+      "path": "manifests/experiments/independent-native-batch-history-v1.json",
+      "sha256": "76533ab14eaa9d922e2c148e2b40d745804a0cee85fee397d1a1c4b50c11a5d6"
+    },
+    {
+      "path": "manifests/experiments/independent-native-batch-history-v2.json",
+      "sha256": "a65509aa64bfcc04c796f143b22aaca16868e78ea904e1b84efa1169c1f5b2ad"
+    },
+    {
+      "path": "manifests/experiments/limited-input-leakage-canary-v1.json",
+      "sha256": "0fc778261c892aa7410b2819640e80007120de3eb8954c5492c5e28ceb038333"
+    },
+    {
+      "path": "manifests/experiments/menichetti-brain-group-roles-v1.json",
+      "sha256": "f69a7d65571a685ad1ce2b1f762dd3a587f83087c475fb6916afd755a17dfa64"
+    },
+    {
+      "path": "manifests/experiments/menichetti-sealed-byte-intake-v1.json",
+      "sha256": "75bc001557983341fd171a7a596550bf787e1c5b4078fbe9da3868023e9f389b"
+    },
+    {
+      "path": "manifests/experiments/native-axis-capsule-cache-v1.json",
+      "sha256": "28a6e9a170717a9047e481a88d9704bd18eee11ff0fe9d5acd8753a102a9a901"
+    },
+    {
+      "path": "manifests/experiments/native-axis-preflight-v1.json",
+      "sha256": "5299b25533e0701ca96ee99e2f50a048a205768f416e49e0275390a81e1cef71"
+    },
+    {
+      "path": "manifests/experiments/native-axis-preflight-v2.json",
+      "sha256": "35402cd0634e1db0798189e41a1dbbd4c880988b3e107ce38338eb8c966fb955"
+    },
+    {
+      "path": "manifests/experiments/native-axis-raw-update-pilot-v1.json",
+      "sha256": "057fe7cf5d2e770c34314ed081db129452f451067891a37bc3e6e9b5f6e9bc61"
+    },
+    {
+      "path": "manifests/experiments/native-axis-scratch-feature-units-v1.json",
+      "sha256": "a0b6ee8849b36b2cea921cf02c6a4beaa890385ead741b5c46bbce71ba9154b4"
+    },
+    {
+      "path": "manifests/experiments/native-cache-payload-v1.json",
+      "sha256": "a66b1b10dd3a5e23987e29e8cd0d2c5ba73f89be164015db827a798638679037"
+    },
+    {
+      "path": "manifests/experiments/native-cache-query-keys-v1.json",
+      "sha256": "28096bde87eca2cac3c2b66590c81905d8729cb7e135ebd0c39563bd4ef18a78"
+    },
+    {
+      "path": "manifests/experiments/native-discretization-control-v1.json",
+      "sha256": "e0f528064ef68f0c4c54452318e72935a1e3f7b000951bb68b07a4ea9fb053b8"
+    },
+    {
+      "path": "manifests/experiments/native-opening-bc-capacity-v1.json",
+      "sha256": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84"
+    },
+    {
+      "path": "manifests/experiments/native-opening-learning-v1.json",
+      "sha256": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212"
+    },
+    {
+      "path": "manifests/experiments/native-opening-length-sensitivity-v1.json",
+      "sha256": "8b7d3859ec579005430efc4b80f3d884d5cd69015b9549284af6f5910865f010"
+    },
+    {
+      "path": "manifests/experiments/native-opening-rl-capacity-v1.json",
+      "sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285"
+    },
+    {
+      "path": "manifests/experiments/nfbs-dependent-train-family-v1.json",
+      "sha256": "c1a1b3cbc0b03cc07c6909137a98fa9c120b34891754ad5a8e14a8eee05320a7"
+    },
+    {
+      "path": "manifests/experiments/nonpatient-n5-nonuniform-supervisor-preparation-v1.json",
+      "sha256": "348de15a6a2a99a78205556cf29f907e632704f5367333daff8d514d7caf9afc"
+    },
+    {
+      "path": "manifests/experiments/nonpatient-n5-supervisor-preparation-v1.json",
+      "sha256": "4761fdef1adcd97248cabcd01724250d8104b002414df6ef6d76c92eeb84cfb6"
+    },
+    {
+      "path": "manifests/experiments/nonpatient-n9-affine-supervisor-preparation-v1.json",
+      "sha256": "c70470758fb239d14ca22e40014015769304e53c8a4e987d807d13d0b3a4d30d"
+    },
+    {
+      "path": "manifests/experiments/nonpatient-sparse-continuation-preparation-v1.json",
+      "sha256": "c205a2539a86280c589f4542e909a649d73aa0022ca89f752c71630c271f06a8"
+    },
+    {
+      "path": "manifests/experiments/nonpatient-tet10-sparse-feasibility-v1.json",
+      "sha256": "718088d41d9c7c8a7dd7dce79ffa887e7a7e39aa47c96403e7ac2ab9c088faaa"
+    },
+    {
+      "path": "manifests/experiments/pat05-forward-diagnostic-v1.json",
+      "sha256": "44a8c1fafecb308c5a00c5858f54f34beaffba2e885c4001a3acc739367b4a4f"
+    },
+    {
+      "path": "manifests/experiments/pat05-real-spatial-profile-v1.json",
+      "sha256": "b6df568ba40a2102be633acc1c896985b692e44a19313857021144b37c13c732"
+    },
+    {
+      "path": "manifests/experiments/pat05-real-spatial-profile-v2.json",
+      "sha256": "30213ab0174a77f5df50afc1bd93bafa0a38e442419d22d5933af9c52f25ad94"
+    },
+    {
+      "path": "manifests/experiments/pat05-real-spatial-profile-v3-fixed64.json",
+      "sha256": "92e4ababa7ad3a4c4b05ade06cabe6134c34e7155964457728d45e7435a43aea"
+    },
+    {
+      "path": "manifests/experiments/pat05-real-spatial-profile-v3-nominal64.json",
+      "sha256": "5a27d1815a728d05c9d6d69d3f04e7ac9b87edb61c5f7ff752ab9bcb0b00df64"
+    },
+    {
+      "path": "manifests/experiments/pat05-real-spatial-search-comparison-v1.json",
+      "sha256": "c1203b8234554dbdff4775ee05de773ab727bb4b3ec374f456eb2ca4728f3c2d"
+    },
+    {
+      "path": "manifests/experiments/pat25-six-exit-access-diagnostic-v1.json",
+      "sha256": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123"
+    },
+    {
+      "path": "manifests/experiments/prepared-training-planner-comparison-v1.json",
+      "sha256": "9e4447bbad9f6d77040bfcd51e1d446abb6f57c1821e1fdfa3b2096994e7fc21"
+    },
+    {
+      "path": "manifests/experiments/prepared-training-planner-comparison-v2.json",
+      "sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4"
+    },
+    {
+      "path": "manifests/experiments/procedural-native-feature-units-v1.json",
+      "sha256": "df60f8331cb553b016feddf8401eba9b590e70e3fb7c8fb3097d3599601d07a1"
+    },
+    {
+      "path": "manifests/experiments/procedural-native-to-ucsf-v1.json",
+      "sha256": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0"
+    },
+    {
+      "path": "manifests/experiments/procedural-native-to-ucsf-v2-attempt.json",
+      "sha256": "5db9c5cbce8630ff08ad53bdf2f7b8d3be50cddc1d92e2dbb34ea106509a5bb1"
+    },
+    {
+      "path": "manifests/experiments/remaining-training-frozen-spatial-float64-v1.json",
+      "sha256": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5"
+    },
+    {
+      "path": "manifests/experiments/remaining-training-frozen-spatial-v1.json",
+      "sha256": "3e46a2bba38f0b2bea127d49c831c6af597a51aad360afdcdfdadf82b27c23f3"
+    },
+    {
+      "path": "manifests/experiments/remind-001-structural-development-v1.json",
+      "sha256": "3dad212f49655937d8ef3d0dff998eb796de9f885c4328e9f4202503157ac08f"
+    },
+    {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "path": "manifests/experiments/remind-train-seg-byte-intake-v1.json",
+      "sha256": "70ec6fff9710cea8cd45a77a1790df6f082e183eee41358c9a9defd700025064"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-boundary6-fidelity-witness-v1.json",
+      "sha256": "3a0790914b33159a3a09c275716f04f6deec6c9bd19de497b1b56dd22798a4d4"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-brain-envelope-v1.json",
+      "sha256": "2a6fadfa1eed72399580b2a6eda2aa3f5d97063c973f5b531da0d3ff4472dabe"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-displacement-acquisition-v1.json",
+      "sha256": "2babb675a77d48bfd7f7df2748956b0de7e268a6a4ee731df508b3376401830d"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-patient-mesh-boundary6-v4.json",
+      "sha256": "0cc7058ce0fbb58a8000bfa69d94dbf2d1f158c91b7a303c7943248eb0ec771a"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-patient-mesh-curvature-v3.json",
+      "sha256": "4aa5c95f22ccfe89ab49c376a3437f8d1f7184004481f1d4d6404e978510da8d"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-patient-mesh-graded-v2.json",
+      "sha256": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-patient-mesh-v1.json",
+      "sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json",
+      "sha256": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-scan-diagnostic-v1.json",
+      "sha256": "d37948a4dc7acd16bdfac0244b926cfda5c684c60da1f6e4dfccb09ddcf21b26"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-source-support-preparation-v1.json",
+      "sha256": "6d4b306881c6514e9a6b3255535baa147d84fd0437e769ddd82332180dc37402"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-sparse-update-v1.json",
+      "sha256": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e"
+    },
+    {
+      "path": "manifests/experiments/rhuh-preoperative-baseline-v1.json",
+      "sha256": "c73547faa86074a1293787c56f623a8d665ee61455085dd7eccb50be8857e87b"
+    },
+    {
+      "path": "manifests/experiments/rhuh-preoperative-baseline-v1.release.json",
+      "sha256": "a87dd3457e8aa33fd043e9df71cf58fe3aee3cbc26b22f2a9766159f404682df"
+    },
+    {
+      "path": "manifests/experiments/spatial-opening-learning-v1.json",
+      "sha256": "c94fbef6e3a47b8db07762112bc78d3b5396aa97d7150151b80a4a4c38538cd1"
+    },
+    {
+      "path": "manifests/experiments/spatial-policy-feasibility-v1.json",
+      "sha256": "5cec06bdce9a9f23c854087032c3839f4e95e85f0deb721ab99037abe17b7823"
+    },
+    {
+      "path": "manifests/experiments/tractoinferno-full-train-byte-intake-v1.json",
+      "sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053"
+    },
+    {
+      "path": "manifests/experiments/tractoinferno-publisher-person-splits-v1.json",
+      "sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30"
+    },
+    {
+      "path": "manifests/experiments/training-observation-coverage-v1.json",
+      "sha256": "227468bc212fbd13b1d8ef63b19d63f396b0d860e74476685e4778aa45c1c7ae"
+    },
+    {
+      "path": "manifests/experiments/training-observation-coverage-v1.release.json",
+      "sha256": "2dc9081a42205d6ba0dc20af5726164bf2c0e04a38e9bcb80b51cdcf2eaf566c"
+    },
+    {
+      "path": "manifests/experiments/ucsf-functional-sensitivity-v1.json",
+      "sha256": "b904b340fc47e488403312da7f222568756eb39a547db5ea84d762c73d10164d"
+    },
+    {
+      "path": "manifests/functional_priors.json",
+      "sha256": "5058f629102e290ba7120797ccb4c4b8d73886a6932491636e648a45c8f8a37d"
+    },
+    {
+      "path": "manifests/hbe_8095559_acquisition.json",
+      "sha256": "dd3ebc07046834d6ae002524bbdfa0073ab8c7fa7a1cea8239b497266078b6b4"
+    },
+    {
+      "path": "manifests/lausanne-component-cohort-v1.json",
+      "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    {
+      "path": "manifests/lausanne-deferred-qc-v1.json",
+      "sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19"
+    },
+    {
+      "path": "manifests/lausanne-original-pilot-v1.json",
+      "sha256": "6231a8e86b418f0706a05300765aa3667848bf836656e926edf88980f8f16f00"
+    },
+    {
+      "path": "manifests/lausanne-sub476-manual-annotation-v1.json",
+      "sha256": "39537b60333a22e8e8e81f792ac5ba9dad306ef72ff3a4a4f768f6b7ab59230f"
+    },
+    {
+      "path": "manifests/lausanne-train-annotations-v1.json",
+      "sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624"
+    },
+    {
+      "path": "manifests/lausanne-train-originals-v1.json",
+      "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+    },
+    {
+      "path": "manifests/real_observation_data_use_v1.json",
+      "sha256": "f04949422edbf4dd09c5daeaa7a9eb012d4df51cc8ba1d4f3fcf80c9e2a1789a"
+    },
+    {
+      "path": "manifests/real_observation_supergoal_source.json",
+      "sha256": "513e4bed5390e562c67ed8778cfb93b29d7aa599e4797849cadd310c6bf659bd"
+    },
+    {
+      "path": "manifests/resect-case3-cavity-pilot-v1.json",
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    {
+      "path": "manifests/resect-component-cohort-v1.json",
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    {
+      "path": "manifests/resect-deferred-qc-v1.json",
+      "sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+    },
+    {
+      "path": "manifests/resect-deferred-qc-v2.json",
+      "sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c"
+    },
+    {
+      "path": "manifests/resect-train-cavity-acquisition-v1.json",
+      "sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1"
+    },
+    {
+      "path": "manifests/resect-train-originals-v1.json",
+      "sha256": "1764a0ce75b449d542ef51578c54cab6202b66d72c71b811999cb51a55164135"
+    },
+    {
+      "path": "manifests/synthrad-component-cohort-v1.json",
+      "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    {
+      "path": "manifests/synthrad-task1-original-archive-v1.json",
+      "sha256": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b"
+    },
+    {
+      "path": "manifests/vitaldb-development-v1.json",
+      "sha256": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0"
+    },
+    {
+      "path": "manifests/vitaldb-native-clock-v1.json",
+      "sha256": "11bf6b1b97cdf894a64f4c0110a2d52f053bcb6ca52237bf2515c417df253dc8"
+    },
+    {
+      "path": "manifests/vitaldb-native-component-v1.json",
+      "sha256": "7170c6d5c521b845e937eb69b16d0083650823ae8da4a6da201eeff71bfe9679"
+    },
+    {
+      "path": "manifests/vitaldb-official-mirror-attempt-v1.json",
+      "sha256": "3cf0fb91715286e3cad2425aa58eb12acf4811becbd96bc40d2f4e96640ae2a5"
+    }
+  ],
+  "hits": [],
+  "result": "No existing IXI role declaration found; references in docs are prior source research and SynthStrip evaluation-family exposure. Existing data-path search found no IXI filename path. Unknown aliases are not proved absent.",
+  "schema": "ixi-prior-role-search-v1",
+  "search": "case-insensitive IXI family token / IXI three-digit ID / IXI prefix across all canonical JSON manifests"
+}
