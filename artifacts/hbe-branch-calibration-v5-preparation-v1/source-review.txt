@@ -1,0 +1,46 @@
+HBE_01_03 v5 corrected pure-deck preparation: independent exact-source re-review
+2026-10-09 UTC. No measured member, patient payload, mesher or native solver opened.
+
+Disposition: GO for the corrected non-executable preparation only. NO-GO for
+native execution, fitted calibration, held-out torsion access, force or tissue
+fidelity, patient-specific material parameters or clinical inference.
+
+Exact reviewed source SHA256:
+manifest 50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce
+script   1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016
+tests    3bfc231510fc301b1f7a93577746f8fd77045ede63ad093c8dcb890a09c9c68a
+
+The only changes from the prior NO-GO candidate are the manifest's addition of
+LoadData/zero_load_controller/points to the permitted change list and explicit
+scoping of that list to old-Skyline -> new-Skyline; the script's matching pin
+and contract assertion; and the test's corresponding assertion. Both zero and
+axial arrays are indeed regenerated for S120, and the existing backend then
+performs its separately stated canonical Skyline-to-Accelerate substitution.
+The declared change inventory now matches the implementation.
+
+Independent checks:
+* 243 v3-v5 focused controls passed in a clean git-archive checkout containing
+  committed baseline files plus only the three reviewed v5 files. The imported
+  v5 module came from that checkout; validate_preparation resolved all metadata
+  and the corrected change inventory there. Prior v3/v4 tracked files have no
+  worktree diff and the committed v4 declaration hash remains
+  85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b.
+* The prior review established the 12 exact run/representation rows, the two
+  fixed coordinate-only endpoints, half/full boundary factors, 60/120 shared
+  even states, 17g float/XML round trips, historical NumPy multiplication order
+  adversarial rejection, and unconditional closed execution/fit/torque gates.
+  The corrected diff does not alter those functions or runs.
+* All 12 source_deck_sha256 values remain null; all run source binding states
+  still require a separate preexecution release. The adapter receipt says
+  source_deck_identity_approved_for_execution=false. All five phase gates are
+  false. No v5 native primitive checker or qualification comparator exists.
+
+Boundary to preserve in status and next release:
+The pure adapter can transform an invented old Skyline deck with a whole top
+node's BCs removed, because this phase does not authenticate the source deck or
+mesh topology. This remains acceptable only as a non-executable adapter test.
+Before any solve, bind the exact actual source deck and mesh bytes, validate
+complete top NodeSet and BC identity, propagate the new endpoint through the
+native primitive checker, preregister all 12 comparison gates, and obtain a
+separately reviewed bounded execution release. Passing these fixture controls
+does not establish numerical convergence or physical measurement agreement.

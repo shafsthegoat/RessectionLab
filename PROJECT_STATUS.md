@@ -84,6 +84,14 @@ fitting and held-out torsion remain closed: the proposed six solves are only a
 diagnostic design, while twelve fresh same-endpoint references, native primitive
 reconstruction and a supervised resource contract are still missing. No new
 measurement or physical-fidelity result was produced.
+The [v5 pure deck-adapter preparation](artifacts/hbe-branch-calibration-v5-preparation-v1/RESULT.md)
+now freezes twelve same-endpoint reference schedules and checks only declared
+FEBio load/time transformations. An initial change-inventory error was found
+and corrected; 243 focused tests and a fresh-checkout independent review pass.
+Actual source decks, full boundary topology, native primitives and resource
+release are still unbound; execution, fit and torsion access remain closed.
+Independent scope review confirms that this specimen work cannot by itself
+validate patient retraction or cutting forces.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)

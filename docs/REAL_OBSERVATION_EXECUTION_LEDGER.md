@@ -99,6 +99,12 @@ execution, fitting, and held-out gates remain closed. Independent isolated
 controls and focused tests pass, but twelve new same-endpoint references and a
 native reconstruction/resource protocol are still required; no physical
 calibration or patient interaction was validated.
+The [v5 deck-only preparation](../artifacts/hbe-branch-calibration-v5-preparation-v1/RESULT.md)
+freezes twelve candidate same-endpoint schedules but no actual deck identity or
+native result. Independent review accepted 243 fixture/source controls after a
+declared-curve correction. Execution and fit remain refused. This specimen
+track does not substitute for patient-anatomy displacement or measured tool
+interaction validation.
 
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 

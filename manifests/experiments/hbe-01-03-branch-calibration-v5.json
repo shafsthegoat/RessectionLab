@@ -1,0 +1,287 @@
+{
+  "coordinate_provenance": "v4_hash_bound_retrospectively_exposed_axial_inputs_only_no_response_reopen",
+  "coordinates": {
+    "compression": {
+      "coordinate_sha256": "881665105d646fbc47a116b0e6bcad7d4ad79f26d43b386c8f297e3b4624fa2e",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "member_sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43",
+      "row_count": 30
+    },
+    "tension": {
+      "coordinate_sha256": "a1690a5cff8fb75fc619984074ba53dbb044f3ea6894f72f698cb36b1edc0731",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "member_sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8",
+      "row_count": 30
+    }
+  },
+  "deck_adapter_contract": {
+    "force_native_backend": "pinned_existing_FEBio_4.13_Accelerate_CSC_only_after_separate_release",
+    "full_native_top_z_boundary_factor": 1.0,
+    "half_native_top_z_boundary_factor": 0.5,
+    "new_steps_allowed": [
+      60,
+      120
+    ],
+    "only_changes_scope": "old_Skyline_to_new_Skyline_before_existing_Accelerate_backend_transform",
+    "old_curve_full_coordinate_even_for_half_native": true,
+    "old_endpoint_formula": "signed_0.15_times_original_full_height_m",
+    "only_changes": [
+      "Control/time_steps",
+      "Control/step_size",
+      "Control/time_stepper/dtmin",
+      "Control/time_stepper/dtmax",
+      "LoadData/zero_load_controller/points",
+      "LoadData/axial_load_controller/points"
+    ],
+    "source_steps": 60
+  },
+  "mesh_identities": {
+    "12": {
+      "full_elements": 2592,
+      "full_mesh_sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "full_nodes": 3199,
+      "native_representation": "full_native",
+      "origin_receipt": {
+        "path": "artifacts/mechanics/hbe-01-03-mesh-preparation-v1/N12-preparation-receipt.json",
+        "sha256": "923f0e8151c4c5c4dbedaa48e35c9463918049ebcfd7c9b1e17b7a1cf8c38199"
+      }
+    },
+    "16": {
+      "full_mesh_sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b",
+      "half_elements": 3072,
+      "half_mesh_sha256": "c1665d5f107c5e20590d877e7613910a5a2aef1c54c9dff5f5229a8d4f8927ee",
+      "half_nodes": 4005,
+      "identity_origin": "v4_declaration_hash_bound_not_geometry_payload",
+      "reconstruction_sha256": "4c0766462d11513bc077c31dd96f3062c854f57130f397346245bfd638b7006d"
+    },
+    "24": {
+      "full_mesh_sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b",
+      "half_elements": 10368,
+      "half_mesh_sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2",
+      "half_nodes": 12439,
+      "identity_origin": "v4_declaration_hash_bound_not_geometry_payload",
+      "reconstruction_sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+    },
+    "32": {
+      "full_mesh_sha256": "5680a53bb8fa9c5303b23bd9036a6e67ebb2d0cb8604a08106211490c5b2116a",
+      "half_elements": 24576,
+      "half_mesh_sha256": "edbb95dd61e2f1ba94faf405bbd263a2d995dcc87ebd298a8e072595ecc6009a",
+      "half_nodes": 28233,
+      "identity_origin": "v4_declaration_hash_bound_not_geometry_payload",
+      "reconstruction_sha256": "fa853fa294277d0f468b977d5e83506c693f49ae4d7c74864f3eefdddac9084c"
+    },
+    "36": {
+      "full_mesh_sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74",
+      "half_elements": 34992,
+      "half_mesh_sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075",
+      "half_nodes": 39610,
+      "identity_origin": "v4_declaration_hash_bound_not_geometry_payload",
+      "reconstruction_sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+    },
+    "8": {
+      "full_elements": 768,
+      "full_mesh_sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "full_nodes": 1045,
+      "native_representation": "full_native",
+      "origin_receipt": {
+        "path": "artifacts/mechanics/hbe-01-03-mesh-preparation-v1/N8-preparation-receipt.json",
+        "sha256": "5b3de49ff4d7c4353ef675f3caa82f45a51f54cbbef7739ff85845864561ba53"
+      }
+    }
+  },
+  "missing_release_evidence": [
+    "bound_actual_source_deck_bytes_and_hashes_for_each_mesh_representation",
+    "full_new_domain_primitive_readout",
+    "complete_12_row_qualification_comparator",
+    "independent_source_review",
+    "separately_bounded_one_shot_supervised_release"
+  ],
+  "ordered_reference_runs": [
+    {
+      "N": 8,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 61,
+      "native_domain": "full_native",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N8:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 12,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 61,
+      "native_domain": "full_native",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N12:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 16,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 61,
+      "native_domain": "full_native",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N16:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 24,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 61,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N24:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 32,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 61,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N32:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 36,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 61,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N36:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 36,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "frame_count": 121,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "compression:N36:S120:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 120
+    },
+    {
+      "N": 8,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "frame_count": 61,
+      "native_domain": "full_native",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "tension:N8:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 12,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "frame_count": 61,
+      "native_domain": "full_native",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "tension:N12:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 16,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "frame_count": 61,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "tension:N16:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 24,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "frame_count": 61,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "tension:N24:S60:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 24,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "frame_count": 121,
+      "native_domain": "lower_half_reconstructed",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "tension:N24:S120:reference",
+      "source_deck_binding_status": "requires_separate_preexecution_release",
+      "source_deck_sha256": null,
+      "start_from_rest": true,
+      "steps": 120
+    }
+  ],
+  "phase_gates": {
+    "automatic_reference_release": false,
+    "fit": false,
+    "held_out_torque_access": false,
+    "mesher": false,
+    "native_execution": false
+  },
+  "previous_v4": {
+    "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
+    "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+  },
+  "schema": "hbe-branch-calibration-v5-deck-preparation",
+  "scientific_interpretation": "Fixture-tested schedule and XML adapter only; no native convergence, force or tissue fidelity established. Prior global spatial failure remains.",
+  "specimen": "HBE_01_03",
+  "status": "non_executable_pure_adapter_preparation",
+  "study_id": "hbe-01-03-branch-calibration-v5"
+}
