@@ -93,6 +93,13 @@ adjacent tests. The subsequent N16 and N24 rows have completed; eight native row
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
+The [generated Conv3d depth-tiling control](artifacts/depth-tiled-conv3d-microkernel-v1/RESULT.md)
+matched native outputs exactly in six small cases and one independently audited
+operator experiment. Peak sampled RSS fell from 351.4 MB to 241.3 MB in that
+single experiment, about **31%**. This is operator evidence only; a separate
+full-network comparison must verify weights, normalizations and outputs before
+claiming model-level savings. No trained network or patient was used here.
+
 The [generated CPU Gate A v3](artifacts/scan-target-generated-gate-a-v3/RESULT.md)
 ended on an independently confirmed macOS pressure warning during the first
 forward pass, after **2.064 seconds** at 1.43 GB sampled RSS. The monitor had no

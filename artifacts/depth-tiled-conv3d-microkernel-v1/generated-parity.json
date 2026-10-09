@@ -1,0 +1,330 @@
+{
+  "scope": "Generated FP32 small Conv3d operator only; no checkpoint/model/patient",
+  "torch_version": "2.14.1",
+  "cases": [
+    {
+      "name": "model_first_stride1",
+      "input_shape": [
+        1,
+        2,
+        13,
+        17,
+        19
+      ],
+      "weight_shape": [
+        8,
+        2,
+        3,
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1,
+        1
+      ],
+      "groups": 1,
+      "tile_output_depth": 3,
+      "native_output_shape": [
+        1,
+        8,
+        13,
+        17,
+        19
+      ],
+      "tiled_output_shape": [
+        1,
+        8,
+        13,
+        17,
+        19
+      ],
+      "max_absolute_error": 0.0,
+      "rmse": 0.0,
+      "rtol_atol_1e_3_violations": 0,
+      "exact_equal": true,
+      "native_seconds": 0.002945832908153534,
+      "tiled_seconds": 0.0027188339736312628
+    },
+    {
+      "name": "model_down_stride2",
+      "input_shape": [
+        1,
+        8,
+        14,
+        16,
+        18
+      ],
+      "weight_shape": [
+        16,
+        8,
+        3,
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2,
+        2
+      ],
+      "padding": [
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1,
+        1
+      ],
+      "groups": 1,
+      "tile_output_depth": 2,
+      "native_output_shape": [
+        1,
+        16,
+        7,
+        8,
+        9
+      ],
+      "tiled_output_shape": [
+        1,
+        16,
+        7,
+        8,
+        9
+      ],
+      "max_absolute_error": 0.0,
+      "rmse": 0.0,
+      "rtol_atol_1e_3_violations": 0,
+      "exact_equal": true,
+      "native_seconds": 4.0125101804733276e-05,
+      "tiled_seconds": 0.0001152500044554472
+    },
+    {
+      "name": "model_large_channels_small_spatial",
+      "input_shape": [
+        1,
+        32,
+        7,
+        9,
+        11
+      ],
+      "weight_shape": [
+        32,
+        32,
+        3,
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1,
+        1
+      ],
+      "groups": 1,
+      "tile_output_depth": 2,
+      "native_output_shape": [
+        1,
+        32,
+        7,
+        9,
+        11
+      ],
+      "tiled_output_shape": [
+        1,
+        32,
+        7,
+        9,
+        11
+      ],
+      "max_absolute_error": 0.0,
+      "rmse": 0.0,
+      "rtol_atol_1e_3_violations": 0,
+      "exact_equal": true,
+      "native_seconds": 0.0003086668439209461,
+      "tiled_seconds": 0.00024212501011788845
+    },
+    {
+      "name": "asymmetric_stride_boundary",
+      "input_shape": [
+        1,
+        4,
+        11,
+        12,
+        13
+      ],
+      "weight_shape": [
+        6,
+        4,
+        3,
+        2,
+        3
+      ],
+      "stride": [
+        2,
+        1,
+        2
+      ],
+      "padding": [
+        1,
+        0,
+        1
+      ],
+      "dilation": [
+        1,
+        1,
+        1
+      ],
+      "groups": 1,
+      "tile_output_depth": 2,
+      "native_output_shape": [
+        1,
+        6,
+        6,
+        11,
+        7
+      ],
+      "tiled_output_shape": [
+        1,
+        6,
+        6,
+        11,
+        7
+      ],
+      "max_absolute_error": 0.0,
+      "rmse": 0.0,
+      "rtol_atol_1e_3_violations": 0,
+      "exact_equal": true,
+      "native_seconds": 2.1792016923427582e-05,
+      "tiled_seconds": 5.837506614625454e-05
+    },
+    {
+      "name": "dilated_grouped",
+      "input_shape": [
+        1,
+        8,
+        12,
+        14,
+        13
+      ],
+      "weight_shape": [
+        12,
+        4,
+        3,
+        3,
+        2
+      ],
+      "stride": [
+        2,
+        1,
+        1
+      ],
+      "padding": [
+        2,
+        1,
+        0
+      ],
+      "dilation": [
+        2,
+        2,
+        1
+      ],
+      "groups": 2,
+      "tile_output_depth": 2,
+      "native_output_shape": [
+        1,
+        12,
+        6,
+        12,
+        12
+      ],
+      "tiled_output_shape": [
+        1,
+        12,
+        6,
+        12,
+        12
+      ],
+      "max_absolute_error": 0.0,
+      "rmse": 0.0,
+      "rtol_atol_1e_3_violations": 0,
+      "exact_equal": true,
+      "native_seconds": 0.0007046251557767391,
+      "tiled_seconds": 0.00012866687029600143
+    },
+    {
+      "name": "single_output_tile",
+      "input_shape": [
+        1,
+        3,
+        9,
+        9,
+        10
+      ],
+      "weight_shape": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1,
+        1
+      ],
+      "groups": 1,
+      "tile_output_depth": 1,
+      "native_output_shape": [
+        1,
+        5,
+        9,
+        9,
+        10
+      ],
+      "tiled_output_shape": [
+        1,
+        5,
+        9,
+        9,
+        10
+      ],
+      "max_absolute_error": 0.0,
+      "rmse": 0.0,
+      "rtol_atol_1e_3_violations": 0,
+      "exact_equal": true,
+      "native_seconds": 2.600019797682762e-05,
+      "tiled_seconds": 0.00015675020404160023
+    }
+  ]
+}

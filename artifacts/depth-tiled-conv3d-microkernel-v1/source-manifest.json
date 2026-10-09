@@ -1,0 +1,18 @@
+{
+  "build/limited-input-guard-design/gliomoda-depth-tiling-v1/depth_tiled_conv3d.py": {
+    "snapshot_path": "artifacts/depth-tiled-conv3d-microkernel-v1/source/depth_tiled_conv3d.py.snapshot",
+    "sha256": "83c9660278d219bae10aa2f0ca7e8d5b21ed948cab639706a1720c27685c098c"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-tiling-v1/microkernel_worker.py": {
+    "snapshot_path": "artifacts/depth-tiled-conv3d-microkernel-v1/source/microkernel_worker.py.snapshot",
+    "sha256": "f677e43836275a5d92b6cf08475d6df171fe528cb813892728e8f3c6ecdc8a05"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-tiling-v1/supervise_microkernel.py": {
+    "snapshot_path": "artifacts/depth-tiled-conv3d-microkernel-v1/source/supervise_microkernel.py.snapshot",
+    "sha256": "078946618aa1a848868ae8e8cc94507912ad60c188a5dccff734ac66d3021974"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-tiling-v1/test_generated.py": {
+    "snapshot_path": "artifacts/depth-tiled-conv3d-microkernel-v1/source/test_generated.py.snapshot",
+    "sha256": "63ac7717d013b6126505eae2dca4d92c53130cc90ad341ae7f29ee7e80673874"
+  }
+}

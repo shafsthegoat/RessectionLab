@@ -1,0 +1,46 @@
+"""One generated FP32 Conv3d call; no checkpoint or patient input."""
+import hashlib
+import json
+import resource
+import sys
+import time
+from pathlib import Path
+import numpy as np
+import torch
+import torch.nn.functional as F
+from depth_tiled_conv3d import conv3d_tiled_depth
+
+HERE=Path(__file__).resolve().parent
+mode=sys.argv[1]
+if mode not in ('native','tiled'):
+    raise ValueError('mode must be native or tiled')
+out=HERE/('micro-'+mode)
+if out.exists():
+    raise FileExistsError('microkernel mode already attempted')
+out.mkdir(mode=0o700)
+torch.manual_seed(20261009)
+torch.set_num_threads(2)
+x=torch.randn((1,16,32,48,48),dtype=torch.float32)
+w=torch.randn((16,16,3,3,3),dtype=torch.float32)/(16*27)**.5
+b=torch.randn((16,),dtype=torch.float32)*.1
+before=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+with torch.inference_mode():
+    start=time.perf_counter()
+    if mode=='native':
+        y=F.conv3d(x,w,b,stride=1,padding=1,dilation=1,groups=1)
+    else:
+        y=conv3d_tiled_depth(x,w,b,stride=1,padding=1,dilation=1,groups=1,output_depth_tile=4)
+    seconds=time.perf_counter()-start
+arr=y.numpy().copy()
+assert np.isfinite(arr).all()
+raw=arr.tobytes(order='C')
+np.save(out/'output.npy',arr,allow_pickle=False)
+report={'scope':'One generated FP32 16->16,32x48x48,3^3 Conv3d; no model/patient',
+        'mode':mode,'input_shape':list(x.shape),'weight_shape':list(w.shape),
+        'output_shape':list(arr.shape),'tile_output_depth':4 if mode=='tiled' else None,
+        'forward_seconds':seconds,'ru_maxrss_before_bytes':before,
+        'ru_maxrss_after_bytes':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+        'raw_output_sha256':hashlib.sha256(raw).hexdigest(),'all_finite':True,
+        'torch_version':torch.__version__}
+(out/'worker.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+print(json.dumps(report,sort_keys=True),flush=True)

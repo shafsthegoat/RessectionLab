@@ -1,0 +1,66 @@
+"""Inference-only output-depth tiling for FP32 torch Conv3d.
+
+This prototypes a lower-temporary-workspace operator. It is not a complete
+network adapter, does not change weights, and is not an in-place convolution.
+"""
+
+import torch
+import torch.nn.functional as F
+
+
+def triple(value):
+    if isinstance(value, int):
+        return (value, value, value)
+    if len(value) != 3:
+        raise ValueError("expected 3 spatial values")
+    return tuple(int(v) for v in value)
+
+
+def output_dim(length, kernel, stride, padding, dilation):
+    return (length + 2 * padding - dilation * (kernel - 1) - 1) // stride + 1
+
+
+def conv3d_tiled_depth(x, weight, bias=None, stride=1, padding=0,
+                       dilation=1, groups=1, output_depth_tile=4):
+    """Compute exact output coordinates in depth slabs with native Conv3d.
+
+    Each slab includes the whole input receptive-field halo for its requested
+    output coordinates. Only depth is tiled; height/width remain full size.
+    Call with `torch.inference_mode()` for the intended bounded-memory use.
+    """
+    if x.ndim != 5 or weight.ndim != 5:
+        raise ValueError("expected N,C,D,H,W input and O,I,kD,kH,kW weight")
+    if x.device.type != "cpu" or weight.device.type != "cpu":
+        raise ValueError("this prototype is CPU-only")
+    if x.dtype != torch.float32 or weight.dtype != torch.float32:
+        raise ValueError("this prototype is FP32-only")
+    if output_depth_tile <= 0:
+        raise ValueError("output_depth_tile must be positive")
+    stride, padding, dilation = triple(stride), triple(padding), triple(dilation)
+    if min(stride) <= 0 or min(dilation) <= 0 or min(padding) < 0:
+        raise ValueError("invalid convolution geometry")
+    n, cin, depth, height, width = x.shape
+    cout, cpergroup, kd, kh, kw = weight.shape
+    if groups <= 0 or cin != cpergroup * groups or cout % groups:
+        raise ValueError("input/output channels and groups do not match")
+    output_shape = tuple(output_dim(s, k, st, p, d) for s, k, st, p, d in zip(
+        (depth, height, width), (kd, kh, kw), stride, padding, dilation))
+    if min(output_shape) <= 0:
+        raise ValueError("convolution has empty output")
+    result = torch.empty((n, cout, *output_shape), dtype=x.dtype, device=x.device)
+    for out_begin in range(0, output_shape[0], output_depth_tile):
+        out_end = min(out_begin + output_depth_tile, output_shape[0])
+        needed_begin = out_begin * stride[0] - padding[0]
+        needed_end = (out_end - 1) * stride[0] - padding[0] + dilation[0] * (kd - 1) + 1
+        slab = x[:, :, max(0, needed_begin):min(depth, needed_end), :, :]
+        left = max(0, -needed_begin)
+        right = max(0, needed_end - depth)
+        if left or right:
+            slab = F.pad(slab, (0, 0, 0, 0, left, right))
+        tile = F.conv3d(slab, weight, bias=bias, stride=stride,
+                        padding=(0, padding[1], padding[2]),
+                        dilation=dilation, groups=groups)
+        if tile.shape[2] != out_end - out_begin or tile.shape[3:] != output_shape[1:]:
+            raise RuntimeError("tiled convolution produced unexpected output geometry")
+        result[:, :, out_begin:out_end] = tile
+    return result

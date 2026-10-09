@@ -1,0 +1,414 @@
+{
+  "initial_host": {
+    "available_percent": 52,
+    "host_read_seconds": 1.816699999999949e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 8589934592,
+    "swap_used_bytes": 7574585344
+  },
+  "records": [
+    {
+      "exit_code": 0,
+      "host_after": {
+        "available_percent": 52,
+        "host_read_seconds": 3.6665999999963006e-05,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7574585344
+      },
+      "host_before": {
+        "available_percent": 52,
+        "host_read_seconds": 5.8339999999997005e-06,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7574585344
+      },
+      "mode": "native",
+      "peak_sampled_rss_bytes": 351387648,
+      "samples": [
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.0010436249999999994,
+          "group_read_seconds": 7.049999999999765e-05,
+          "host_read_seconds": 2.941599999999739e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 606208,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.0594815,
+          "group_read_seconds": 7.291700000000567e-05,
+          "host_read_seconds": 2.5374999999994152e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 33193984,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.11654995799999998,
+          "group_read_seconds": 7.558399999998966e-05,
+          "host_read_seconds": 2.89579999999956e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 78872576,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.175465042,
+          "group_read_seconds": 7.095800000000985e-05,
+          "host_read_seconds": 2.1415999999996327e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 113721344,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.23143658299999997,
+          "group_read_seconds": 7.433400000000923e-05,
+          "host_read_seconds": 2.2458000000002976e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 134053888,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.29158070799999997,
+          "group_read_seconds": 7.712500000001121e-05,
+          "host_read_seconds": 3.137500000000015e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 148176896,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.342415458,
+          "group_read_seconds": 8.27919999999982e-05,
+          "host_read_seconds": 2.75410000000198e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 158269440,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.402557875,
+          "group_read_seconds": 8.120799999999928e-05,
+          "host_read_seconds": 3.208300000001607e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 169852928,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.462672875,
+          "group_read_seconds": 7.070900000000213e-05,
+          "host_read_seconds": 2.0165999999988138e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 177012736,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.522812083,
+          "group_read_seconds": 7.616699999990484e-05,
+          "host_read_seconds": 3.679099999998048e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 189677568,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.578339542,
+          "group_read_seconds": 7.7208999999967e-05,
+          "host_read_seconds": 2.187499999994902e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 200654848,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 51,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.637382042,
+          "group_read_seconds": 0.00015054100000000403,
+          "host_read_seconds": 4.187499999996902e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 351338496,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.693899792,
+          "group_read_seconds": 8.558299999994468e-05,
+          "host_read_seconds": 3.191600000007622e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 351387648,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.750024458,
+          "group_read_seconds": 9.445799999996396e-05,
+          "host_read_seconds": 3.620799999992652e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69680,
+          "pids": [
+            69680
+          ],
+          "process_group_resident_bytes": 215252992,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        }
+      ],
+      "stop_reason": null,
+      "wall_seconds": 0.80365325,
+      "worker_log_path": "build/limited-input-guard-design/gliomoda-depth-tiling-v1/micro-native.log"
+    },
+    {
+      "exit_code": 0,
+      "host_after": {
+        "available_percent": 52,
+        "host_read_seconds": 2.670800000004192e-05,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7574585344
+      },
+      "host_before": {
+        "available_percent": 52,
+        "host_read_seconds": 1.2583000000065958e-05,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7574585344
+      },
+      "mode": "tiled",
+      "peak_sampled_rss_bytes": 241319936,
+      "samples": [
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.0013799589999999862,
+          "group_read_seconds": 7.737499999993513e-05,
+          "host_read_seconds": 2.587499999995302e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 458752,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.058125874999999994,
+          "group_read_seconds": 7.891700000006718e-05,
+          "host_read_seconds": 2.545799999997822e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 76890112,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.11554712499999997,
+          "group_read_seconds": 8.429200000004133e-05,
+          "host_read_seconds": 3.575000000000106e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 139067392,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.17568450000000002,
+          "group_read_seconds": 7.895800000001785e-05,
+          "host_read_seconds": 2.7874999999788486e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 160301056,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.22793608399999998,
+          "group_read_seconds": 7.59580000000426e-05,
+          "host_read_seconds": 2.691700000001518e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 176046080,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.28807541699999994,
+          "group_read_seconds": 8.429200000015236e-05,
+          "host_read_seconds": 2.812499999982343e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 189497344,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.348217459,
+          "group_read_seconds": 8.554099999980025e-05,
+          "host_read_seconds": 2.737499999994064e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 201195520,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        },
+        {
+          "available_percent": 52,
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "elapsed_seconds": 0.406439792,
+          "group_read_seconds": 8.949999999985359e-05,
+          "host_read_seconds": 2.762500000019763e-05,
+          "kernel_pressure_mask": 1,
+          "pgid": 69681,
+          "pids": [
+            69681
+          ],
+          "process_group_resident_bytes": 241319936,
+          "swap_total_bytes": 8589934592,
+          "swap_used_bytes": 7574585344
+        }
+      ],
+      "stop_reason": null,
+      "wall_seconds": 0.466551167,
+      "worker_log_path": "build/limited-input-guard-design/gliomoda-depth-tiling-v1/micro-tiled.log"
+    }
+  ],
+  "scope": "Generated operator microbenchmark only; no checkpoint/model/patient/MPS",
+  "status": "complete",
+  "worker_sha256": "f677e43836275a5d92b6cf08475d6df171fe528cb813892728e8f3c6ecdc8a05"
+}

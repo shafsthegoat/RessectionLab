@@ -1,0 +1,77 @@
+"""Bound two independent generated Conv3d calls at 1 GiB/30s each."""
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[2]
+sys.path.insert(0,str(ROOT/'build/limited-input-guard-design/gliomoda-mps-gate-a-v3'))
+from darwin_fast_sampler import FastDarwinSampler
+PYTHON=ROOT/'.tools/scan-target-runtime/venv/bin/python'
+WORKER=HERE/'microkernel_worker.py'
+OUT=HERE/'microkernel-supervision.json'
+if OUT.exists():
+    raise FileExistsError('microkernel pair already attempted')
+fast=FastDarwinSampler()
+initial=fast.host()
+if initial['kernel_pressure_mask']!=1 or initial['available_percent']<45:
+    OUT.write_text(json.dumps({'status':'deferred_no_child','initial_host':initial},indent=2)+'\n')
+    raise SystemExit(2)
+records=[]
+for mode in ('native','tiled'):
+    before=fast.host()
+    if before['kernel_pressure_mask']!=1 or before['available_percent']<45:
+        records.append({'mode':mode,'status':'deferred_no_child','host':before})
+        break
+    start=time.monotonic()
+    log=HERE/('micro-'+mode+'.log')
+    with log.open('xb') as handle:
+        child=subprocess.Popen([str(PYTHON),str(WORKER),mode],cwd=ROOT,
+                               stdout=handle,stderr=subprocess.STDOUT,
+                               stdin=subprocess.DEVNULL,start_new_session=True)
+        pgid=os.getpgid(child.pid)
+        samples=[]
+        reason=None
+        try:
+            while child.poll() is None:
+                s=fast.sample(pgid,child.pid)
+                s['elapsed_seconds']=time.monotonic()-start
+                samples.append(s)
+                if s['process_group_resident_bytes']>1024**3:
+                    reason='rss_over_1_gib'
+                elif s['kernel_pressure_mask']!=1:
+                    reason='host_pressure_not_normal'
+                elif s['available_percent']<45:
+                    reason='host_available_below_45'
+                elif s['swap_used_bytes']-before['swap_used_bytes']>128*1024**2:
+                    reason='swap_growth_over_128_mib'
+                elif s['elapsed_seconds']>30:
+                    reason='wall_over_30_seconds'
+                elif s['detached_descendant_pids']:
+                    reason='unexpected_detached_descendant'
+                if reason: break
+                time.sleep(.05)
+        except Exception as exc:
+            reason='%s: %s'%(type(exc).__name__,exc)
+        finally:
+            if child.poll() is None:
+                try: os.killpg(pgid,signal.SIGKILL)
+                except ProcessLookupError: pass
+            exit_code=child.wait()
+    record={'mode':mode,'exit_code':exit_code,'stop_reason':reason,'samples':samples,
+            'peak_sampled_rss_bytes':max((s['process_group_resident_bytes'] for s in samples),default=0),
+            'wall_seconds':time.monotonic()-start,'host_before':before,'host_after':fast.host(),
+            'worker_log_path':str(log.relative_to(ROOT))}
+    records.append(record)
+    if reason or exit_code: break
+status='complete' if len(records)==2 and all(r.get('exit_code')==0 and r.get('stop_reason') is None for r in records) else 'stopped'
+report={'scope':'Generated operator microbenchmark only; no checkpoint/model/patient/MPS',
+        'status':status,'initial_host':initial,'records':records,
+        'worker_sha256':hashlib.sha256(WORKER.read_bytes()).hexdigest()}
+OUT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'status':status,'runs':[{k:r.get(k) for k in ('mode','exit_code','stop_reason','peak_sampled_rss_bytes','wall_seconds')} for r in records]},sort_keys=True))
+if status!='complete': raise SystemExit(1)
