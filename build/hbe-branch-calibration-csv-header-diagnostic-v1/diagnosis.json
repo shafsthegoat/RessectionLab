@@ -1,0 +1,130 @@
+{
+  "access_ledger_records": [
+    {
+      "members": [
+        "HBE_01/HBE_01_03/compression_c3.csv",
+        "HBE_01/HBE_01_03/tension_c3.csv"
+      ],
+      "phase": "calibration_attempt",
+      "protocol_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+      "release_sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7",
+      "sequence": 0,
+      "timestamp_utc": "2026-10-09T01:22:44.966508+00:00"
+    }
+  ],
+  "archive": {
+    "bytes": 12968598,
+    "path": "data/mechanics/zenodo-8095559/HBE_Data.zip",
+    "sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c"
+  },
+  "archive_unchanged": true,
+  "finished_utc": "2026-10-09T01:24:18.659691+00:00",
+  "fitted": false,
+  "frozen_v2_state": {
+    "automatic_retry": false,
+    "calibration_access_attempted": true,
+    "calibration_responses_accessed": null,
+    "error": {
+      "message": "could not convert string to float: 'displacement'",
+      "type": "ValueError"
+    },
+    "held_out_access_attempted": false,
+    "held_out_responses_accessed": false,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "physical_validation_pass": null,
+    "runs": {},
+    "schema": "hbe-branch-calibration-state-v2",
+    "status": "failed_or_incomplete"
+  },
+  "members": [
+    {
+      "CRLF_count": 0,
+      "LF_count": 31,
+      "blank_record_count": 0,
+      "branch": "compression",
+      "bytes": 1222,
+      "content_retained": "first header line only; full source bytes not copied",
+      "crc32": "c7b7a162",
+      "diagnostic_used_numeric_values": false,
+      "encoding": "UTF-8 strict decode succeeded",
+      "following_records": 30,
+      "header_field_count": 2,
+      "header_fields": [
+        "displacement",
+        "force"
+      ],
+      "member": "HBE_01/HBE_01_03/compression_c3.csv",
+      "raw_first_line": "displacement,force\n",
+      "record_widths": [
+        2
+      ],
+      "sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43",
+      "total_csv_records": 31,
+      "trailing_newline": true,
+      "utf8_bom_present": false,
+      "v2_declared_schema": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "N"
+      }
+    },
+    {
+      "CRLF_count": 0,
+      "LF_count": 31,
+      "blank_record_count": 0,
+      "branch": "tension",
+      "bytes": 1170,
+      "content_retained": "first header line only; full source bytes not copied",
+      "crc32": "03927483",
+      "diagnostic_used_numeric_values": false,
+      "encoding": "UTF-8 strict decode succeeded",
+      "following_records": 30,
+      "header_field_count": 2,
+      "header_fields": [
+        "displacement",
+        "force"
+      ],
+      "member": "HBE_01/HBE_01_03/tension_c3.csv",
+      "raw_first_line": "displacement,force\n",
+      "record_widths": [
+        2
+      ],
+      "sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8",
+      "total_csv_records": 31,
+      "trailing_newline": true,
+      "utf8_bom_present": false,
+      "v2_declared_schema": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "N"
+      }
+    }
+  ],
+  "native_calls": 0,
+  "opened_member_names": [
+    "HBE_01/HBE_01_03/compression_c3.csv",
+    "HBE_01/HBE_01_03/tension_c3.csv"
+  ],
+  "original_inputs_unchanged": true,
+  "release": {
+    "path": "build/hbe-branch-calibration-v2/release.json",
+    "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+  },
+  "roles": {
+    "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+    "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+  },
+  "schema": "hbe-axial-csv-header-diagnosis-v1",
+  "study": {
+    "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+    "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+  },
+  "torsion_member_content_opened": false
+}
