@@ -1,0 +1,29 @@
+{
+  "schema": "nonpatient-n5-nonuniform-supervisor-preparation-v1",
+  "status": "prepared_not_released_or_executed",
+  "release": null,
+  "case_id": "n5_nonuniform",
+  "parent_declaration": "manifests/experiments/nonpatient-tet10-sparse-feasibility-v1.json",
+  "output_directory": "outputs/mechanics/nonpatient-n5-nonuniform-supervisor-v1/attempt-01",
+  "prior_receipt": {
+    "path": "outputs/mechanics/nonpatient-n5-supervisor-v1/attempt-01/receipt.json",
+    "sha256": "9d26c0c57eefad06c53fe67b2bd64d9572778f23ed8b4356660654f88746f0ce"
+  },
+  "prior_native_wall_seconds": 0.5189758341293782,
+  "caps": {
+    "native_calls": 1,
+    "attempts": 1,
+    "wall_seconds": 600,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "active_output_bytes": 536870912,
+    "numerical_threads": 1
+  },
+  "aggregate_caps": {
+    "maximum_native_calls": 7,
+    "aggregate_native_wall_seconds": 1800,
+    "prior_calls": 1,
+    "case_index": 1
+  },
+  "release_condition": "A separate root-issued one-call release must bind this preparation, the frozen seven-case declaration, the first case's passing receipt, a committed source closure, the exact n5_nonuniform generated deck, existing repaired runtime/profile, and a fresh case-specific output directory. This file is not a release.",
+  "scope": "Second frozen numerical 10 mm cube case only. Prior n5_affine consumed one call and 0.5189758341293782 native-supervisor wall seconds. No new native call, patient data, tissue-property fit, clinical validity or mesh convergence is established by preparation."
+}

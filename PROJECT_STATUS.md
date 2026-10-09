@@ -213,6 +213,12 @@ altered nonuniform stress and energy went unchecked. Fourteen focused tests
 and an independent native-affine mathematical control pass. No nonuniform
 FEBio solve or mesh/time-step convergence result exists yet; a distinct
 one-call release and saved-output audit are still required.
+The [second-case n5 nonuniform supervisor preparation](docs/mechanics-nonpatient-n5-nonuniform-supervisor.md)
+now binds that readout, exact first-call receipt, frozen deck/runtime and the
+remaining seven-call wall budget under a separate one-use path. Ninety-nine
+adjacent source-only tests and independent review pass. Its release is null;
+no second FEBio call has occurred. A committed-source release and fresh
+independent preflight remain required before execution.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
