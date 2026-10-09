@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".tools/scan-target-runtime/venv/bin/python",
+    "-I",
+    "build/limited-input-guard-design/gliomoda-full128-lazy-feasibility-v2/supervise_pair.py",
+    "lazy"
+  ],
+  "correction": "Supervisor requires script directory in sys.path; use -B without -I. Its child gate and worker retain isolated launch.",
+  "error": "No module named darwin_fast_sampler",
+  "error_type": "ModuleNotFoundError",
+  "exit_code": 1,
+  "frozen_source_modified": false,
+  "location": "supervise_pair.py:13",
+  "model_forward_calls": 0,
+  "output_directory_created": false,
+  "preflight_started": false,
+  "recorded_utc": "2026-10-09T11:53:48.550591+00:00",
+  "schema": "root-launch-entry-negative-v1"
+}

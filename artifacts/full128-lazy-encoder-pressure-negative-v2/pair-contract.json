@@ -1,0 +1,103 @@
+{
+  "acquisition_allowlist_path": "build/limited-input-guard-design/gliomoda-full128-lazy-feasibility-v2/dual-live-allowlist.json",
+  "acquisition_allowlist_sha256": "735d163d50ec49f3730c3aca387df90b8315b12eae7f82f6cd17a69180d1b2fd",
+  "arm_order": [
+    "lazy"
+  ],
+  "expected_observer_samples": 110,
+  "full128_parity_claim": "not_tested_no_native_full_patch_reference",
+  "gate": "CPU_FULL128_LAZY_CONCAT_FEASIBILITY_V2",
+  "host_abort_free_drop_points": 20,
+  "host_abort_kernel_pressure_masks": [
+    2,
+    4
+  ],
+  "host_abort_min_free_percent": 30,
+  "host_abort_swap_growth_mib": 128,
+  "host_compressor_occupied": "diagnostic_only_no_standalone_stop",
+  "host_preflight_max_free_spread_points": 5,
+  "host_preflight_min_free_percent": 45,
+  "host_preflight_required_kernel_pressure_mask": 1,
+  "host_preflight_seconds": 30,
+  "host_preflight_swap_growth_measurement_tolerance_mib": 0.0,
+  "host_sample_max_interval_seconds": 0.2,
+  "host_sample_target_interval_seconds": 0.05,
+  "input_npy_sha256": "daa9ffd646347a94c89afe8357b5eb321ecc56cf8b17116b12f45ebe43858712",
+  "input_raw_sha256": "f490284195bd84ace5bf3f75d83094b6c74c7af7f276cd582ff811009ec971bb",
+  "input_shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "launch_ancestor_exemption": "Only exact PID ancestry of this supervisor is excluded and recorded at each sample",
+  "log_cap_bytes": 2097152,
+  "model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "model_patch_size": [
+    128,
+    128,
+    128
+  ],
+  "model_training_or_patient_inference": false,
+  "monitor_revision": "identity-bound-closeout-v2",
+  "native_arm_enabled": false,
+  "output_depth_tile": 1,
+  "output_shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "pageouts_swapouts_policy": "diagnostic_counters_only; no automatic hold from isolated system-wide increments",
+  "phase_probe_expected_counts": {
+    "conv3d": 27,
+    "convtranspose3d": 5,
+    "decoder_stage": 5,
+    "instancenorm3d": 22
+  },
+  "phase_probe_semantics": "Matched pre/post hooks use direct libproc RSS; worker phase markers also use direct self libproc without ps subprocess; independent watchdog remains resource authority",
+  "phase_rss_source": "direct_libproc_self_pid_no_subprocess",
+  "process_group_rss_cap_kib": 3145728,
+  "project_compute_policy": "Only exact live Tracto PID/start/source/declaration <=512MiB and IXI byte-intake PID/start/source/declaration <=256MiB are allowed; both strong kernel start identities are rechecked; absence, mismatch, excess RSS or other project compute block; controller never signals either transfer",
+  "region_order": [
+    "WT",
+    "TC",
+    "ET"
+  ],
+  "regions_class_order": [
+    2,
+    1,
+    3
+  ],
+  "runner_source_sha256": {
+    "darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "launch_gate.py": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+    "lazy_concat.py": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+    "monitor_primitives.py": "0fbb1ff95a38f26081b88163b85c79be940229ffe8cf615999f8ea854931c448",
+    "pair_worker.py": "20426be7e7a9fb6bddb5313d9e93cb9d87f41e33d821f0477b11a32b8b0d9c8f",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "16c57744450f26a41249b54297c387bbc0136d52abf79042c143b260b28148b4",
+    "supervise_pair.py": "70254b6603737b55897c71054e0dc2aefcc9a23fc207f0c5cab8f48c3f40357e",
+    "test_dual_live_allowlist.py": "4c95458ac219415f4fbffd1a0a7e27c890aa1b50fc4445ff91c721b48dd6fc5d",
+    "test_isolated_import.py": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968",
+    "test_launch_control.py": "af8aff05f4a0d405ff4ec47f904c12562b52d60489adb4f67ab51ba383f83b22",
+    "test_main_entry_precheckpoint.py": "4a2627b6e8e6ea95e7f8e8921efdb2d9715029d6eb2451b896fe5436bb6316ca",
+    "test_phase_no_ps.py": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf",
+    "test_vanishing_pid.py": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35"
+  },
+  "scope": "Prospective one-shot generated full128 tiled CPU lazy-final-decoder-concat resource feasibility with 110 layer probes under exact two-live-acquisition allowance; all original model/input/host caps unchanged; no native full-patch parity, patient accuracy or deployment admission",
+  "single_full_patch_forward": true,
+  "single_generated_forward": true,
+  "slow_inventory_interval_seconds": 0.5,
+  "slow_inventory_max_age_seconds": 1.5,
+  "tracked_adapter_path": "src/resectionlab/low_memory_conv3d.py",
+  "tracked_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "tta_sliding_window_autocast": false,
+  "wall_time_cap_seconds": 120
+}
