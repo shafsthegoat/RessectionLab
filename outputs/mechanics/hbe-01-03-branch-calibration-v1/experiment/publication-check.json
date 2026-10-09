@@ -1,0 +1,15 @@
+{
+  "accepted": false,
+  "cap_seconds": 3600,
+  "closeout_own_publication_inside_clock_claim": false,
+  "elapsed_through_result_fsync_and_scan_seconds": 0.5438864580355585,
+  "hard_real_time_or_power_loss_guarantee": false,
+  "output_cap_bytes": 2147483648,
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json",
+    "sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3"
+  },
+  "retained_including_closeout": 886193,
+  "retained_including_source_archive_before_closeout": 885589,
+  "schema": "hbe-branch-calibration-publication-v1"
+}

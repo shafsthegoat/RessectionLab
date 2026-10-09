@@ -1,0 +1,30 @@
+{
+  "actual": {
+    "ctime_utc": "2026-10-09T01:00:26.038554+00:00",
+    "mtime_utc": "2026-10-07T19:31:43+00:00",
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+  },
+  "first_execution": {
+    "calibration_responses_accessed": false,
+    "native_calls": 0,
+    "state": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json",
+    "supervision": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json"
+  },
+  "inference": "Pinned interpreter executable was replaced after exact-source metadata preflight and before supervised worker preflight; worker properly refused. This does not diagnose other installed solver components.",
+  "pinned": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "preflight_before_replacement": {
+    "passed": true,
+    "receipt": "build/hbe-branch-calibration-v1/preflight.json"
+  },
+  "sanitized_child": {
+    "launcher_env": null,
+    "resolved": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb",
+    "sys_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python"
+  },
+  "schema": "hbe-branch-interpreter-drift-diagnostic-v1"
+}

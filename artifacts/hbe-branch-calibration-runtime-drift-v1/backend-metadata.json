@@ -1,0 +1,15 @@
+{
+  "schema": "hbe-branch-current-backend-metadata-check-v1",
+  "backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "interpreter_actual_sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb",
+  "elapsed_seconds": 0.5470599168911576,
+  "native_solver_calls": 0,
+  "scope": "Existing FEBio binary/library/control receipts match; no current numerical execution or cross-interpreter equivalence was established."
+}

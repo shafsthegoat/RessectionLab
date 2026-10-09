@@ -1,0 +1,17 @@
+{
+  "automatic_retry": false,
+  "calibration_access_attempted": false,
+  "calibration_responses_accessed": false,
+  "error": {
+    "message": "Interpreter identity differs",
+    "type": "ValueError"
+  },
+  "held_out_access_attempted": false,
+  "held_out_responses_accessed": false,
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "physical_validation_pass": null,
+  "runs": {},
+  "schema": "hbe-branch-calibration-state-v1",
+  "status": "failed_or_incomplete"
+}

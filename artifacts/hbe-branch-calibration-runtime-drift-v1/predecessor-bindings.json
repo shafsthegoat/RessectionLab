@@ -1,0 +1,47 @@
+{
+  "schema": "hbe-branch-predecessor-bindings-v1",
+  "bindings": [
+    {
+      "role": "previous_release",
+      "path": "build/hbe-branch-calibration-v1/release.json",
+      "bytes": 8701,
+      "sha256": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957"
+    },
+    {
+      "role": "previous_state",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json",
+      "bytes": 458,
+      "sha256": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7"
+    },
+    {
+      "role": "previous_result",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json",
+      "bytes": 1831,
+      "sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3"
+    },
+    {
+      "role": "previous_supervision",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json",
+      "bytes": 1195,
+      "sha256": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f"
+    },
+    {
+      "role": "previous_publication",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json",
+      "bytes": 604,
+      "sha256": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d"
+    },
+    {
+      "role": "previous_started",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json",
+      "bytes": 184,
+      "sha256": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0"
+    },
+    {
+      "role": "diagnosis",
+      "path": "build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json",
+      "bytes": 1613,
+      "sha256": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9"
+    }
+  ]
+}
