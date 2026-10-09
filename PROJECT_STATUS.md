@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [completed BTC training modality intake](artifacts/btc-train-modalities-intake-v1/RESULT.md)
+adds 36 further files (371,219,704 bytes), completing the catalogued raw preoperative
+anatomy/diffusion/resting-state paths for all six existing TRAIN patients. Root
+independently rehashed these new payloads. The acquisition continuation totals
+452 files and 878,317,000 bytes including earlier BTC and ReMIND additions, with
+no new patient counts, QC acceptance, policy updates or training admission.
+
 The [ReMIND001 extension](artifacts/remind001-extension-intake-v1/RESULT.md)
 completed 400 additional objects (412,786,204 bytes), including three staged
 ultrasound objects verified through official generation-pinned CRC32C metadata.

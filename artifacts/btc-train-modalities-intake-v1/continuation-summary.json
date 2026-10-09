@@ -1,0 +1,119 @@
+{
+  "schema": "acquisition-continuity-20261009-v1",
+  "checked_utc": "2026-10-09T06:45:20.862762+00:00",
+  "status": "all_five_intakes_byte_verified",
+  "new_source_files": 452,
+  "new_source_bytes": 878317000,
+  "groups": [
+    {
+      "intake": "btc-pat16-pat20-diffusion-v1",
+      "files": 16,
+      "bytes": 94311092,
+      "completion": "data/acquisition/btc-pat16-pat20-diffusion-v1/completion.json",
+      "completion_sha256": "e62a963c502ceb0e374945f4228ef91dc26f3fcf5b9933c976fc008476ed64b1",
+      "declaration_sha256": "4ff929ca17ddbe595ca0aeff690f6362e538b080b43fc3b44b63b218b4f6f94e"
+    },
+    {
+      "intake": "remind001-extension-v1",
+      "files": 397,
+      "bytes": 114589348,
+      "completion": "data/acquisition/remind001-extension-v1/completion.json",
+      "completion_sha256": "a171ae0a5ded6adc27e904ea044b765d4dc7ae86e4009712d2c27d14db015af4",
+      "declaration_sha256": "ec9cdce41c266f2fec5b08c8f01ab1dbb7498ceea0901a605e02a8fe6aa73f43"
+    },
+    {
+      "intake": "remind001-ultrasound-v1",
+      "files": 3,
+      "bytes": 298196856,
+      "completion": "data/acquisition/remind001-ultrasound-v1/completion.json",
+      "completion_sha256": "70715dd6fff50f2ab1a65df24c8679a704e08d5aee88d55209c979c3bafdb7a4",
+      "declaration_sha256": "278fff64b04a52116fdc0ef841a3e0f8a049ec28457d455f2f92938dea87ff56"
+    },
+    {
+      "intake": "btc-train-diffusion-extension-v1",
+      "files": 24,
+      "bytes": 143478173,
+      "completion": "data/acquisition/btc-train-diffusion-extension-v1/completion.json",
+      "completion_sha256": "e4151bc5632806af5ae8624ab0cc97ef4f7a384c95d35180fdfcb6be8bd8581f",
+      "declaration_sha256": "bd082adeedf891c6a3dfb74fd97524bcc5080a44aade81b0bc216631497f3e94"
+    },
+    {
+      "intake": "btc-train-restfmri-intake-v1",
+      "files": 12,
+      "bytes": 227741531,
+      "completion": "data/acquisition/btc-train-restfmri-intake-v1/completion.json",
+      "completion_sha256": "5c0c1dc1600a92541674f80867670be72201887f5f41f7dbe12bc88f7a2d131f",
+      "declaration_sha256": "1ba94b9067c8f0fb7fa30e40cede4f81d5795137b85f45663bf505e4c0a1ad81"
+    }
+  ],
+  "patient_roles_changed": false,
+  "BTC_canonical_split": "TRAIN for PAT05/16/20/22/25/28; development-only outer use",
+  "ReMIND001_existing_role": "development_annotation_assisted_geometry",
+  "protected_SELECT_transfer_external_payloads_accessed": false,
+  "role_proofs": [
+    {
+      "path": "src/resectionlab/real_patient_learning.py",
+      "sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+      "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/experiments/remind-001-structural-development-v1.json",
+      "sha256": "3dad212f49655937d8ef3d0dff998eb796de9f885c4328e9f4202503157ac08f",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/cohort_registry.json",
+      "sha256": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5",
+      "matches_HEAD": true
+    }
+  ],
+  "all_new_files_independently_rehashed": true,
+  "byte_verification_is_not_QC_or_admission": true,
+  "all_new_payloads_unreviewed": true,
+  "header_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "decoded_array_bytes": 0,
+  "optimizer_updates": 0,
+  "current_live_transfer_handles": [],
+  "free_bytes": 695453675520,
+  "reserve_bytes": 107374182400,
+  "bounded_queue_state": {
+    "continuous890": "Latest journal890 existing_byte_verified; correct-environment status confirms890 targets present; no payload reread by status",
+    "BTC_TRAIN_raw_preop": "All72 pinned raw anat/dwi/func paths across six TRAIN patients present; new files rehashed; old originals not rehashed in directory coverage",
+    "ReMIND001": "All12 index-listed series now acquired across386 prior and400 new objects; new400 rehashed; prior386 not rehashed in this extension"
+  },
+  "raw_BTC_coverage": "build/btc-train-restfmri-intake-v1/raw-source-coverage.json",
+  "raw_BTC_coverage_sha256": "b35db5dda7e373faaf5d0a25d04e5bf3e29e73528ed91eae903800ab4218c58a",
+  "next_catalog_bottlenecks": [
+    {
+      "source": "BTC_postop ds002080 v4.0.1 candidate same-ID TRAIN pairs",
+      "constraint": "Existing source audit did not establish explicit individual preop/postop stable-ID crosswalk; keep outcome/derivative joins and uncertain patient-role linkage blocked; no postop payloads accessed",
+      "evidence": "docs/btc-longitudinal-outcome-audit.md"
+    },
+    {
+      "source": "UCSF officialv5",
+      "constraint": "Historical targeted metadata provider reported files_on_server=no and package server/downloadspec failures; no new network probe in this pass",
+      "evidence": "docs/ucsf-v5-targeted-acquisition-2026-10-04.md"
+    },
+    {
+      "source": "MULTIS acceptedrun005 / CFB",
+      "constraint": "Previously audited authenticated HTTPS/checksum payload route unavailable; no new provider probe or substituted run",
+      "evidence": "docs/REAL_OBSERVATION_EXECUTION_LEDGER.md"
+    },
+    {
+      "source": "Additional ReMIND/VitalDB people",
+      "constraint": "No extra patient role/cohort assignment made; this continuation used only already selected ReMIND001 and frozen BTC TRAIN patients"
+    },
+    {
+      "source": "15GB bowel dataset",
+      "constraint": "Explicit parent deferral until a specific task and role is selected remains in force"
+    }
+  ],
+  "tracked_edits_by_this_agent": false
+}

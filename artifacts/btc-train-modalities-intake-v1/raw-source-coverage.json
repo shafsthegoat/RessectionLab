@@ -1,0 +1,665 @@
+{
+  "status": "all_raw_source_files_present",
+  "source_commit": "359d372c5e972a161966312128adb365870df949",
+  "patient_split": "TRAIN",
+  "people": 6,
+  "raw_files": 72,
+  "missing": [],
+  "only_raw_directories": [
+    "anat",
+    "dwi",
+    "func"
+  ],
+  "image_decode_bytes": 0,
+  "existing_files_rehashed_by_this_directory_check": false,
+  "file_inventory": [
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.bval"
+      ],
+      "bytes": [
+        476
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.bvec"
+      ],
+      "bytes": [
+        2769
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.json"
+      ],
+      "bytes": [
+        1644
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-AP_dwi.nii.gz"
+      ],
+      "bytes": [
+        46052880
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.bval"
+      ],
+      "bytes": [
+        4
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.bvec"
+      ],
+      "bytes": [
+        12
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.json"
+      ],
+      "bytes": [
+        1063
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT05/ses-preop/dwi/sub-PAT05_ses-preop_acq-PA_dwi.nii.gz"
+      ],
+      "bytes": [
+        1082313
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval"
+      ],
+      "bytes": [
+        476
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec"
+      ],
+      "bytes": [
+        2773
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json"
+      ],
+      "bytes": [
+        1644
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz"
+      ],
+      "bytes": [
+        46711430
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval"
+      ],
+      "bytes": [
+        4
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec"
+      ],
+      "bytes": [
+        12
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json"
+      ],
+      "bytes": [
+        1066
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz"
+      ],
+      "bytes": [
+        1137510
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval"
+      ],
+      "bytes": [
+        476
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec"
+      ],
+      "bytes": [
+        2762
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json"
+      ],
+      "bytes": [
+        1628
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz"
+      ],
+      "bytes": [
+        45361486
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval"
+      ],
+      "bytes": [
+        4
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec"
+      ],
+      "bytes": [
+        12
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json"
+      ],
+      "bytes": [
+        1050
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-pat16-pat20-diffusion-v1/verified/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz"
+      ],
+      "bytes": [
+        1088759
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.bval"
+      ],
+      "bytes": [
+        476
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.bvec"
+      ],
+      "bytes": [
+        2771
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.json"
+      ],
+      "bytes": [
+        1650
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-AP_dwi.nii.gz"
+      ],
+      "bytes": [
+        47981010
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.bval"
+      ],
+      "bytes": [
+        4
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.bvec"
+      ],
+      "bytes": [
+        12
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.json"
+      ],
+      "bytes": [
+        1072
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT22/ses-preop/dwi/sub-PAT22_ses-preop_acq-PA_dwi.nii.gz"
+      ],
+      "bytes": [
+        1172543
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.bval"
+      ],
+      "bytes": [
+        476
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.bvec"
+      ],
+      "bytes": [
+        2766
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.json"
+      ],
+      "bytes": [
+        1651
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-AP_dwi.nii.gz"
+      ],
+      "bytes": [
+        46079159
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.bval",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.bval"
+      ],
+      "bytes": [
+        4
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.bvec",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.bvec"
+      ],
+      "bytes": [
+        12
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.json"
+      ],
+      "bytes": [
+        1069
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-diffusion-extension-v1/verified/sub-PAT25/ses-preop/dwi/sub-PAT25_ses-preop_acq-PA_dwi.nii.gz"
+      ],
+      "bytes": [
+        1092337
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bval",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bval"
+      ],
+      "bytes": [
+        476
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bvec",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bvec"
+      ],
+      "bytes": [
+        2766
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.json"
+      ],
+      "bytes": [
+        1647
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.nii.gz"
+      ],
+      "bytes": [
+        45750278
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bval",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bval"
+      ],
+      "bytes": [
+        4
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bvec",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bvec"
+      ],
+      "bytes": [
+        12
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.json"
+      ],
+      "bytes": [
+        1068
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.nii.gz"
+      ],
+      "bytes": [
+        1106184
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.json"
+      ],
+      "bytes": [
+        920
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz"
+      ],
+      "bytes": [
+        7360908
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.json"
+      ],
+      "bytes": [
+        923
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz"
+      ],
+      "bytes": [
+        7708650
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json"
+      ],
+      "bytes": [
+        907
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz"
+      ],
+      "bytes": [
+        7044313
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json"
+      ],
+      "bytes": [
+        929
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz"
+      ],
+      "bytes": [
+        7549922
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.json"
+      ],
+      "bytes": [
+        926
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz"
+      ],
+      "bytes": [
+        7840879
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.json",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.json"
+      ],
+      "bytes": [
+        925
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+      "present_local_files": [
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz"
+      ],
+      "bytes": [
+        7444400
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/func/sub-PAT05_ses-preop_task-rest_bold.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT05/ses-preop/func/sub-PAT05_ses-preop_task-rest_bold.json"
+      ],
+      "bytes": [
+        1480
+      ]
+    },
+    {
+      "source_path": "sub-PAT05/ses-preop/func/sub-PAT05_ses-preop_task-rest_bold.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT05/ses-preop/func/sub-PAT05_ses-preop_task-rest_bold.nii.gz"
+      ],
+      "bytes": [
+        36480410
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/func/sub-PAT16_ses-preop_task-rest_bold.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT16/ses-preop/func/sub-PAT16_ses-preop_task-rest_bold.json"
+      ],
+      "bytes": [
+        1480
+      ]
+    },
+    {
+      "source_path": "sub-PAT16/ses-preop/func/sub-PAT16_ses-preop_task-rest_bold.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT16/ses-preop/func/sub-PAT16_ses-preop_task-rest_bold.nii.gz"
+      ],
+      "bytes": [
+        38868014
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/func/sub-PAT20_ses-preop_task-rest_bold.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT20/ses-preop/func/sub-PAT20_ses-preop_task-rest_bold.json"
+      ],
+      "bytes": [
+        1466
+      ]
+    },
+    {
+      "source_path": "sub-PAT20/ses-preop/func/sub-PAT20_ses-preop_task-rest_bold.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT20/ses-preop/func/sub-PAT20_ses-preop_task-rest_bold.nii.gz"
+      ],
+      "bytes": [
+        36395592
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/func/sub-PAT22_ses-preop_task-rest_bold.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT22/ses-preop/func/sub-PAT22_ses-preop_task-rest_bold.json"
+      ],
+      "bytes": [
+        1487
+      ]
+    },
+    {
+      "source_path": "sub-PAT22/ses-preop/func/sub-PAT22_ses-preop_task-rest_bold.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT22/ses-preop/func/sub-PAT22_ses-preop_task-rest_bold.nii.gz"
+      ],
+      "bytes": [
+        40200929
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/func/sub-PAT25_ses-preop_task-rest_bold.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT25/ses-preop/func/sub-PAT25_ses-preop_task-rest_bold.json"
+      ],
+      "bytes": [
+        1485
+      ]
+    },
+    {
+      "source_path": "sub-PAT25/ses-preop/func/sub-PAT25_ses-preop_task-rest_bold.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT25/ses-preop/func/sub-PAT25_ses-preop_task-rest_bold.nii.gz"
+      ],
+      "bytes": [
+        37777808
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/func/sub-PAT28_ses-preop_task-rest_bold.json",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT28/ses-preop/func/sub-PAT28_ses-preop_task-rest_bold.json"
+      ],
+      "bytes": [
+        1482
+      ]
+    },
+    {
+      "source_path": "sub-PAT28/ses-preop/func/sub-PAT28_ses-preop_task-rest_bold.nii.gz",
+      "present_local_files": [
+        "data/acquisition/btc-train-restfmri-intake-v1/verified/sub-PAT28/ses-preop/func/sub-PAT28_ses-preop_task-rest_bold.nii.gz"
+      ],
+      "bytes": [
+        38009898
+      ]
+    }
+  ]
+}
