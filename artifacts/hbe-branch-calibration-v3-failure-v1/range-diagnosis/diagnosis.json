@@ -1,0 +1,368 @@
+{
+  "branches": {
+    "compression": {
+      "classification": "genuine_load_window_mismatch_not_float_rounding",
+      "coordinate_unit": "m",
+      "data_row_count": 30,
+      "full_curve_covered": false,
+      "implicit_unit_conversion": false,
+      "measured_coordinate_sha256": "881665105d646fbc47a116b0e6bcad7d4ad79f26d43b386c8f297e3b4624fa2e",
+      "measured_coordinates_m": [
+        -1.3110338983051408e-05,
+        -3.808101694915308e-05,
+        -6.305169491525487e-05,
+        -8.802237288135644e-05,
+        -0.0001129930508474,
+        -0.0001379637288135,
+        -0.0001629344067796,
+        -0.0001879050847457,
+        -0.0002128757627118,
+        -0.0002378464406779,
+        -0.000262817118644,
+        -0.0002877877966101,
+        -0.0003127584745762,
+        -0.0003377291525423,
+        -0.0003626998305084,
+        -0.0003876705084745,
+        -0.0004126411864406,
+        -0.0004376118644067,
+        -0.0004625825423728,
+        -0.0004875532203389,
+        -0.000512523898305,
+        -0.0005374945762711,
+        -0.0005624652542372,
+        -0.0005874359322033,
+        -0.0006124066101694,
+        -0.0006373772881355,
+        -0.0006623479661016,
+        -0.0006873186440677,
+        -0.0007122893220338,
+        -0.00073726
+      ],
+      "measured_max_m": -1.3110338983051408e-05,
+      "measured_max_mm": -0.013110338983051409,
+      "measured_min_m": -0.00073726,
+      "measured_min_mm": -0.73726,
+      "measured_span_m": 0.0007241496610169486,
+      "measurement_coordinate_column": 0,
+      "member": {
+        "bytes": 1222,
+        "crc32": "c7b7a162",
+        "path": "HBE_01/HBE_01_03/compression_c3.csv",
+        "sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43"
+      },
+      "outside_count": 1,
+      "outside_fraction": 0.03333333333333333,
+      "outside_rows": [
+        {
+          "coordinate_literal_m": "-0.00073726",
+          "coordinate_m": -0.00073726,
+          "csv_line_1based": 31,
+          "data_row_1based": 30,
+          "excess_in_solved_steps": 0.5759272547372105,
+          "excess_m_decimal_from_source_literal": "0.0000035215",
+          "excess_m_float64": 3.52149999999999e-06,
+          "excess_over_endpoint_ulp": 32480104627784.0,
+          "excess_over_reference_grid_acceptance_tolerance": 239969689473.83774,
+          "excess_percent_of_solved_endpoint_magnitude": 0.47993937894767547,
+          "excess_um": 3.52149999999999,
+          "side": "below_minimum",
+          "strain_magnitude": 0.1507199090684215,
+          "strain_percent": 15.071990906842151
+        }
+      ],
+      "reference": {
+        "coordinate_field": "load_coordinate_m",
+        "endpoint_ulp_m": 1.0842021724855044e-19,
+        "frame_count": 121,
+        "grid_check_endpoint_tolerance_m": 1.467477e-17,
+        "max_m": -0.0,
+        "mesh_N": 36,
+        "min_m": -0.0007337385,
+        "nominal_strain_magnitude": 0.15,
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/readout.json",
+        "sha256": "b8eb882c68e4aa79bdc9d4057429b1e57412e86f28af7617ca312cb7ae34cb85",
+        "span_m": 0.0007337385,
+        "step_m": 6.1144875000000005e-06
+      },
+      "response_values_used": false,
+      "sign": "negative",
+      "strict_support_in_range_count": 29,
+      "zero_endpoint_is_missing_from_measured_data": true
+    },
+    "tension": {
+      "classification": "genuine_load_window_mismatch_not_float_rounding",
+      "coordinate_unit": "m",
+      "data_row_count": 30,
+      "full_curve_covered": false,
+      "implicit_unit_conversion": false,
+      "measured_coordinate_sha256": "a1690a5cff8fb75fc619984074ba53dbb044f3ea6894f72f698cb36b1edc0731",
+      "measured_coordinates_m": [
+        1.186033898305027e-05,
+        3.683101694915195e-05,
+        6.180169491525362e-05,
+        8.67723728813553e-05,
+        0.0001117430508474,
+        0.0001367137288135,
+        0.0001616844067796,
+        0.0001866550847457,
+        0.0002116257627118,
+        0.0002365964406779,
+        0.000261567118644,
+        0.0002865377966101,
+        0.0003115084745762,
+        0.0003364791525423,
+        0.0003614498305084,
+        0.0003864205084745,
+        0.0004113911864406,
+        0.0004363618644067,
+        0.0004613325423728,
+        0.0004863032203389,
+        0.000511273898305,
+        0.0005362445762711,
+        0.0005612152542372,
+        0.0005861859322033,
+        0.0006111566101694,
+        0.0006361272881355,
+        0.0006610979661016,
+        0.0006860686440677,
+        0.0007110393220338,
+        0.0007360099999999
+      ],
+      "measured_max_m": 0.0007360099999999,
+      "measured_max_mm": 0.7360099999999,
+      "measured_min_m": 1.186033898305027e-05,
+      "measured_min_mm": 0.01186033898305027,
+      "measured_span_m": 0.0007241496610168498,
+      "measurement_coordinate_column": 0,
+      "member": {
+        "bytes": 1170,
+        "crc32": "03927483",
+        "path": "HBE_01/HBE_01_03/tension_c3.csv",
+        "sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8"
+      },
+      "outside_count": 1,
+      "outside_fraction": 0.03333333333333333,
+      "outside_rows": [
+        {
+          "coordinate_literal_m": "0.0007360099999999",
+          "coordinate_m": 0.0007360099999999,
+          "csv_line_1based": 31,
+          "data_row_1based": 30,
+          "excess_in_solved_steps": 0.3714947491347343,
+          "excess_m_decimal_from_source_literal": "0.0000022714999999",
+          "excess_m_float64": 2.271499999899969e-06,
+          "excess_over_endpoint_ulp": 20950889580793.0,
+          "excess_over_reference_grid_acceptance_tolerance": 154789478806.1393,
+          "excess_percent_of_solved_endpoint_magnitude": 0.3095789576122786,
+          "excess_um": 2.271499999899969,
+          "side": "above_maximum",
+          "strain_magnitude": 0.15046436843641842,
+          "strain_percent": 15.04643684364184
+        }
+      ],
+      "reference": {
+        "coordinate_field": "load_coordinate_m",
+        "endpoint_ulp_m": 1.0842021724855044e-19,
+        "frame_count": 121,
+        "grid_check_endpoint_tolerance_m": 1.467477e-17,
+        "max_m": 0.0007337385,
+        "mesh_N": 24,
+        "min_m": 0.0,
+        "nominal_strain_magnitude": 0.15,
+        "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/readout.json",
+        "sha256": "f0292911e9e221906a3f112722b32d51d28cfcbd2682cdd74c5c094cff3fdfd2",
+        "span_m": 0.0007337385,
+        "step_m": 6.1144875000000005e-06
+      },
+      "response_values_used": false,
+      "sign": "positive",
+      "strict_support_in_range_count": 29,
+      "zero_endpoint_is_missing_from_measured_data": true
+    }
+  },
+  "conclusion": "Full declared axial curves are not supported by the frozen reference domains. Retain v3 as failed_or_incomplete; no common modulus or validation score is available.",
+  "created_utc": "2026-10-09T01:58:15.755072+00:00",
+  "diagnostic_scope": {
+    "fit_calls": 0,
+    "force_values_converted_used_or_emitted": false,
+    "mesher_calls": 0,
+    "model_schema_input_changes": false,
+    "native_calls": 0,
+    "only_reference_data_used": "axial load_coordinate_m",
+    "opened_csv_members": [
+      "HBE_01/HBE_01_03/compression_c3.csv",
+      "HBE_01/HBE_01_03/tension_c3.csv"
+    ],
+    "synthetic_guard_controls": 8,
+    "torque_responses_read": false,
+    "torsion_members_opened": [],
+    "writes": "this build diagnostic directory only"
+  },
+  "diagnostic_script": {
+    "path": "build/hbe-branch-calibration-v3-range-diagnostic-v1/diagnose.py",
+    "sha256": "92e4849f7d9d705d34fceba0bf0e74b14e5622e850dc1a35bdf93657900deda8"
+  },
+  "endpoint_policy": {
+    "absolute_tolerance_m": 0,
+    "clipping": false,
+    "closed_interval": true,
+    "coordinate_unit": "m",
+    "extrapolation": false,
+    "protocol_out_of_range_rule": "stop_and_report_no_extrapolation_no_endpoint_change",
+    "reference_grid_verification_is_separate": {
+      "abs_tol_m": 1e-18,
+      "rel_tol": 2e-14
+    },
+    "relative_tolerance": 0,
+    "test": "any(query < solved_min) or any(query > solved_max)"
+  },
+  "first_failing_branch": "compression",
+  "first_failure_basis": "Frozen fit_scale iterates compression then tension; interpolate rejects compression before numerator accumulation. Tension is independently outside support but was not reached by v3 fit_scale.",
+  "geometry": {
+    "height_m": 0.00489159,
+    "height_provenance": "creator_determined_from_test_data_not_independent_geometry_measurement"
+  },
+  "inputs": [
+    {
+      "bytes": 9082,
+      "expected_hash_verified": false,
+      "path": "build/hbe-branch-calibration-v3/release.json",
+      "sha256": "bf9cafb8297c49082dd5eb1b861c38d9d395de9abc3820e469ebd8c79e1851ed"
+    },
+    {
+      "bytes": 901120,
+      "expected_hash_verified": true,
+      "path": "build/hbe-branch-calibration-v3/source.tar",
+      "sha256": "8fa980c20f1caeac6e47a96314fa6118efa5cad14424ea9ecb4f2a48b907f3ec"
+    },
+    {
+      "bytes": 37769,
+      "expected_hash_verified": true,
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "bytes": 40874,
+      "expected_hash_verified": true,
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py",
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    {
+      "bytes": 14868,
+      "expected_hash_verified": true,
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "sha256": "06316f78c9fb11e6e8d1764c116de164c00687a1bffccfa834368f8c100b2ed3"
+    },
+    {
+      "bytes": 8744,
+      "expected_hash_verified": true,
+      "path": "build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "bytes": 12968598,
+      "expected_hash_verified": true,
+      "path": "data/mechanics/zenodo-8095559/HBE_Data.zip",
+      "sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c"
+    },
+    {
+      "bytes": 45023,
+      "expected_hash_verified": true,
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+      "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+    },
+    {
+      "bytes": 13880,
+      "expected_hash_verified": true,
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    {
+      "bytes": 6123,
+      "expected_hash_verified": true,
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    {
+      "bytes": 905,
+      "expected_hash_verified": false,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/access.jsonl",
+      "sha256": "d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288"
+    },
+    {
+      "bytes": 604,
+      "expected_hash_verified": false,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/publication-check.json",
+      "sha256": "f97dcb6534bafd6f4f203c9c90b18ffd6fb1797694939472848a7e70d9f18f2c"
+    },
+    {
+      "bytes": 1837,
+      "expected_hash_verified": false,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/result.json",
+      "sha256": "595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c"
+    },
+    {
+      "bytes": 486,
+      "expected_hash_verified": false,
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/state.json",
+      "sha256": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd"
+    },
+    {
+      "bytes": 1098177,
+      "expected_hash_verified": true,
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/readout.json",
+      "sha256": "b8eb882c68e4aa79bdc9d4057429b1e57412e86f28af7617ca312cb7ae34cb85"
+    },
+    {
+      "bytes": 1087831,
+      "expected_hash_verified": true,
+      "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/readout.json",
+      "sha256": "f0292911e9e221906a3f112722b32d51d28cfcbd2682cdd74c5c094cff3fdfd2"
+    }
+  ],
+  "preserved_v3_outcome": {
+    "calibration_responses_accessed": true,
+    "error": {
+      "message": "Measured coordinate outside solved range; no extrapolation",
+      "type": "ValueError"
+    },
+    "fit_saved": false,
+    "freeze_saved": false,
+    "held_out_access_attempted": false,
+    "held_out_responses_accessed": false,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "original_output_tree_unchanged": true,
+    "physical_validation_pass": null,
+    "status": "failed_or_incomplete"
+  },
+  "recommended_next_step": {
+    "forbidden_repairs": [
+      "extrapolation",
+      "endpoint clipping or snapping",
+      "enlarging tolerance to micrometres",
+      "discarding final rows",
+      "coordinate rescaling or shifting",
+      "changing specimen height or sign to force coverage",
+      "editing prior failures",
+      "torsion access before a valid durable freeze"
+    ],
+    "immediate": "Preserve no-fit terminal result under the current protocol. Do not retry v3.",
+    "limitation": "Any next version remains development using already-exposed axial calibration data and cannot restore an unexposed calibration status. New reference qualification must not inherit old endpoint acceptance automatically.",
+    "negative_gate": "If new coverage or numerical qualification fails, stop with no fit; do not manufacture support.",
+    "prerequisite": "Use only already-authorized axial calibration coordinates to choose and freeze a support-covering schedule. Generate and qualify new axial reference solutions across the extended domain under a separately authorized bounded native execution, then require coverage of every original axial row before any fit.",
+    "separate_version_only": "If further work is desired, first declare and independently review a new coordinate-coverage protocol and explicit bounded load-domain extension. This is a scientific loading-protocol change, not a CSV header or rounding correction."
+  },
+  "recommended_tests": [
+    "Coordinate-only preflight records counts, units, signs, exact min/max and all out-of-range rows for both branches before fitting or native fitted confirmation.",
+    "Exact endpoints pass; nextafter outward fails; each actual endpoint gap fails. No silent clipping, snapping, extrapolation, row dropping, or coordinate conversion.",
+    "Full 30-row compression and 30-row tension vectors must be covered by any new reference; fail closed independently for each branch.",
+    "Any newly extended axial reference has hash-bound mesh, schedule, units, reconstruction and numerical qualification across its complete new range, with declared budgets and no automatic retries.",
+    "A coverage failure creates no fit, prediction freeze, fitted native run, or held-out access; preserve both negative history and an audited exact two-member axial allowlist."
+  ],
+  "schema": "hbe-branch-calibration-v3-range-diagnostic-v1",
+  "source_commit_of_v3": "e96f706ff1857a5791ed69b5ac0d05aff5756e55",
+  "status": "coordinate_support_mismatch_verified_no_fit",
+  "workspace_head_at_diagnostic": "fed330185fb7a5cfe9eafa50c40c544b8888eb1c"
+}

@@ -78,12 +78,20 @@ is byte-verified but awaits separate image and anatomy QC. A bounded existing
 manifest review found no further ready declared download; CFB remains deferred
 for lack of an authoritative verified-HTTPS payload route.
 
+The [first v3 mechanics execution](../artifacts/hbe-branch-calibration-v3-failure-v1/RESULT.md)
+is a terminal negative result under its frozen no-extrapolation protocol. Both
+allowed axial curves parsed, but final displacements exceeded the solved domain
+by 3.5215 µm in compression and 2.2715 µm in tension. Independent failure and
+coordinate audits verified no completed fit, native solve, parameter freeze or
+held-out torsion access. Any corrected domain requires a separately versioned
+and reviewed protocol; v3 will not be retried or patched in place.
+
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 
 At this checkpoint, the [source-frozen CT/MRI archive transfer](../artifacts/synthrad-archive-runner-v1/RESULT.md)
 was active: exact HTTP 200 length/publisher MD5, no scientific decoding. Its 32
 offline controls and independent process/hash expiry checks include a repaired
-sleep-related campaign deadline defect. The full 14.47 GB archive runs continuously
+sleep-related campaign deadline defect. The full 14.47 GB archive was running continuously
 within persisted attempts and deadlines; partial bytes do not establish fixity or
 intended-use QC. Noncommercial rights and all prospective patient roles remain.
 

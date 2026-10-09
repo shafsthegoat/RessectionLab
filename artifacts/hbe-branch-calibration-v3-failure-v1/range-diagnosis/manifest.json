@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "bytes": 19718,
+      "path": "build/hbe-branch-calibration-v3-range-diagnostic-v1/diagnose.py",
+      "sha256": "92e4849f7d9d705d34fceba0bf0e74b14e5622e850dc1a35bdf93657900deda8"
+    },
+    {
+      "bytes": 15585,
+      "path": "build/hbe-branch-calibration-v3-range-diagnostic-v1/diagnosis.json",
+      "sha256": "572b20b3255abdd19513372dc034b54a08330991152d23154d03954b27f23397"
+    },
+    {
+      "bytes": 3171,
+      "path": "build/hbe-branch-calibration-v3-range-diagnostic-v1/report.txt",
+      "sha256": "d8a36c9d8c79d38ade8374ba418ea6e54d7368d984383d482c3d1778ad60394e"
+    },
+    {
+      "bytes": 3953,
+      "path": "build/hbe-branch-calibration-v3-range-diagnostic-v1/verification.json",
+      "sha256": "7aff58f34d69f91a26762d37d6961539212f8eb07fb9e5829563901eb7f04d9f"
+    }
+  ],
+  "schema": "hbe-range-diagnostic-artifact-manifest-v1"
+}

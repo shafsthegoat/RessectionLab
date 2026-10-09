@@ -1,0 +1,17 @@
+{
+  "automatic_retry": false,
+  "calibration_access_attempted": true,
+  "calibration_responses_accessed": true,
+  "error": {
+    "message": "Measured coordinate outside solved range; no extrapolation",
+    "type": "ValueError"
+  },
+  "held_out_access_attempted": false,
+  "held_out_responses_accessed": false,
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "physical_validation_pass": null,
+  "runs": {},
+  "schema": "hbe-branch-calibration-state-v3",
+  "status": "failed_or_incomplete"
+}

@@ -1,0 +1,52 @@
+HBE_01_03 v3 coordinate-range diagnostic
+
+Result: genuine load-window mismatch on both axial branches. No fit is available.
+Compression is the first failing branch in the frozen fit order. Tension would
+also fail its range gate, but v3 never reaches that interpolation.
+
+All coordinates are signed displacement in metres, with compression negative
+and tension positive. No conversion, sign fit, or coordinate shift occurs.
+
+Compression: 30 measured rows; min -0.00073726 m, max -0.000013110338983051408 m.
+Solved domain: [-0.0007337385, 0] m; 121 frames. Row 30 (CSV line 31) lies
+3.5215 micrometres below the minimum. 29/30 rows lie inside the solved domain.
+Its final displacement is 15.0719909068% of the specimen height.
+
+Tension: 30 measured rows; min 0.00001186033898305027 m,
+max 0.0007360099999999 m. Solved domain: [0, 0.0007337385] m; 121 frames.
+Row 30 (CSV line 31) lies 2.2714999999 micrometres above the maximum.
+29/30 rows lie inside the solved domain. Its final displacement is
+15.0464368436% of the specimen height.
+
+The solved endpoint is exactly the declared 15% of height 0.00489159 m.
+The interpolation guard has zero absolute and relative tolerance. Its closed
+interval check is separate from the reference-grid consistency check (relative
+2e-14, absolute 1e-18 m). The measured gaps are tens of trillions of endpoint
+float64 ULPs, so these are physical coordinate differences, not roundoff.
+The supplied geometry is creator-inferred; this diagnosis does not claim the
+reason that the experimental endpoints differ from the nominal loading window.
+
+The original protocol says stop_and_report_no_extrapolation_no_endpoint_change
+and forbids outcome-based row removal. The scientifically honest immediate
+result is therefore no fit. Do not patch tolerances, clip endpoints, drop rows,
+change height/sign/units, extrapolate, or retry v3.
+
+A possible future separately versioned study would first declare and review a
+coordinate-coverage protocol and bounded extension of the axial loading domain.
+That is a scientific protocol change, not a schema or rounding fix. Endpoint
+selection can use the already-released axial coordinates only, then be frozen
+before new model calculations. New reference solves and their complete extended
+domain require separate authorization and numerical qualification. Every
+original row must be supported before a fit; failed coverage remains no fit.
+Held-out torsion remains sealed until an actual valid durable parameter freeze.
+
+Eight controls on the frozen interpolator used artificial zero responses:
+both actual coordinate vectors reject, both in-domain subsets accept as a
+guard-only control, exact endpoints accept, and one ULP outward rejects.
+No fit used a subset or any response. No fit/solver/mesher was called. Only the
+two permitted axial ZIP members were decompressed; torque was not read.
+All input hashes and the complete v3 output inventory were unchanged afterward.
+
+See diagnosis.json for source hashes, full coordinate evidence, exact endpoint
+gap calculations, protocol pointers, next-step requirements and test proposals.
+See verification.json for guard controls and before/after v3 output hashes.

@@ -1,0 +1,2022 @@
+[
+  {
+    "name": "authorized exact release",
+    "passed": true
+  },
+  {
+    "name": "candidate-to-release changes only authorization",
+    "passed": true
+  },
+  {
+    "name": "candidate frozen binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "authorized release frozen binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "independent release review binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "source archive root-freeze binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "study binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "roles binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "interpreter binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "backend profile binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "root freeze one attempt no retry",
+    "passed": true
+  },
+  {
+    "name": "prior release review positive with no blockers",
+    "passed": true
+  },
+  {
+    "name": "reviewed source commit retained",
+    "passed": true
+  },
+  {
+    "name": "source access:sha256",
+    "passed": true
+  },
+  {
+    "name": "source backend_profile:sha256",
+    "passed": true
+  },
+  {
+    "name": "source branch_calibration:sha256",
+    "passed": true
+  },
+  {
+    "name": "source branch_calibration_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source branch_calibration_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "source curve_evaluator:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_n36:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_n36_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_n36_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_n36_temporal:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_n36_temporal_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_n36_temporal_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_global_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_mesh:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_spatial:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_spatial_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_spatial_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_temporal_common:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_tension_n24_temporal:sha256",
+    "passed": true
+  },
+  {
+    "name": "source halfheight_tension_n24_temporal_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "source mesh_deck:sha256",
+    "passed": true
+  },
+  {
+    "name": "source orchestrator:sha256",
+    "passed": true
+  },
+  {
+    "name": "source physics:sha256",
+    "passed": true
+  },
+  {
+    "name": "source primitive_parser:sha256",
+    "passed": true
+  },
+  {
+    "name": "source readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "source runtime_driver:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-mechanics-poc-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-axial-resolution-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-halfheight-spatial-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "declaration manifests/experiments/hbe-01-03-branch-calibration-v3.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "source archive release binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "Git archive commit comment matches source commit",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "passed": true
+  },
+  {
+    "name": "archive member hash manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/febio_runtime.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/febio_runtime.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/febio_runtime.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/febio_runtime.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_access.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_access.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_access.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_access.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_backend.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_backend.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_backend.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_backend.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_branch_calibration_v3.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_branch_calibration_v3.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_branch_calibration_v3.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_branch_calibration_v3.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_evaluation.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_evaluation.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_evaluation.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_evaluation.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_n36.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_n36.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_n36.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_n36.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_global_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_global_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_global_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_global_readout.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_readout.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_spatial.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_spatial.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_spatial.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_spatial.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_mesh.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_outputs.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_outputs.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_outputs.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_outputs.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_physics.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_physics.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_physics.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_physics.py",
+    "passed": true
+  },
+  {
+    "name": "regular declared unique archive member scripts/mechanics_hbe_readout.py",
+    "passed": true
+  },
+  {
+    "name": "archive member hash scripts/mechanics_hbe_readout.py",
+    "passed": true
+  },
+  {
+    "name": "extracted member same bytes scripts/mechanics_hbe_readout.py",
+    "passed": true
+  },
+  {
+    "name": "committed member same bytes scripts/mechanics_hbe_readout.py",
+    "passed": true
+  },
+  {
+    "name": "exact archive member set",
+    "passed": true
+  },
+  {
+    "name": "exact extracted file set",
+    "passed": true
+  },
+  {
+    "name": "release bound through preflight launch and worker",
+    "passed": true
+  },
+  {
+    "name": "source archive bound at launch",
+    "passed": true
+  },
+  {
+    "name": "preflight exact frozen runner",
+    "passed": true
+  },
+  {
+    "name": "worker exact frozen runner",
+    "passed": true
+  },
+  {
+    "name": "resolved interpreter exact in preflight and worker",
+    "passed": true
+  },
+  {
+    "name": "preflight successful no member/solver access recorded",
+    "passed": true
+  },
+  {
+    "name": "preflight log binding",
+    "passed": true
+  },
+  {
+    "name": "outer terminal log binding",
+    "passed": true
+  },
+  {
+    "name": "preflight then one launch then terminal chronology",
+    "passed": true
+  },
+  {
+    "name": "harness single subprocess no retry loop",
+    "passed": true
+  },
+  {
+    "name": "outer and worker terminal failures",
+    "passed": true
+  },
+  {
+    "name": "result-to-state binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "closeout-to-result binding:sha256",
+    "passed": true
+  },
+  {
+    "name": "supervision receipt matches result",
+    "passed": true
+  },
+  {
+    "name": "failed closeout not accepted",
+    "passed": true
+  },
+  {
+    "name": "exact two-event access ledger",
+    "passed": true
+  },
+  {
+    "name": "ledger exact permitted members and release",
+    "passed": true
+  },
+  {
+    "name": "complete axial member hash ledger",
+    "passed": true
+  },
+  {
+    "name": "axial accessed held-out not attempted",
+    "passed": true
+  },
+  {
+    "name": "exact failure",
+    "passed": true
+  },
+  {
+    "name": "traceback at fit_scale interpolation before estimate",
+    "passed": true
+  },
+  {
+    "name": "authenticated stage ordering",
+    "passed": true
+  },
+  {
+    "name": "compression first and interpolation before accumulation",
+    "passed": true
+  },
+  {
+    "name": "zero native mesher runs retry",
+    "passed": true
+  },
+  {
+    "name": "only eight failure output files exist",
+    "passed": true
+  },
+  {
+    "name": "no preparation native or fitting output directories",
+    "passed": true
+  },
+  {
+    "name": "fit prediction freeze absent in terminal state",
+    "passed": true
+  },
+  {
+    "name": "clean supervisor closure",
+    "passed": true
+  },
+  {
+    "name": "no current harness worker descendants or group members",
+    "passed": true
+  },
+  {
+    "name": "resource caps not reached",
+    "passed": true
+  },
+  {
+    "name": "charged source size matches",
+    "passed": true
+  },
+  {
+    "name": "retained bytes exact",
+    "passed": true
+  },
+  {
+    "name": "precloseout accounting exact",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-csv-header-diagnostic-v1/diagnosis.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v1/release.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v1/release.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v2-failure-review-v1/verification.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v2-failure-review-v1/verification.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v2/release.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v2/release.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/RESULT.txt:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/RESULT.txt:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/archive-verification.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/archive-verification.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/artifact-index.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/artifact-index.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/baseline.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/baseline.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/commands.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/commands.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/guarded_imports.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/guarded_imports.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-02.stderr.txt:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-02.stderr.txt:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-02.stdout.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-02.stdout.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-03.stderr.txt:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-03.stderr.txt:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-03.stdout.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit-attempt-03.stdout.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit.stderr.txt:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit.stderr.txt:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit.stdout.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/import-audit.stdout.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/prepare.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/prepare.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/verification.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3-prep-review-v1/verification.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/release.candidate.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/release.candidate.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source.tar:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source.tar:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-axial-resolution-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-axial-resolution-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-branch-calibration-v3.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-branch-calibration-v3.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-spatial-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-spatial-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/febio_runtime.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/febio_runtime.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_access.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_backend.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_backend.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_evaluation.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_global_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_mesh.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_mesh.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_spatial_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_temporal_common.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_temporal_common.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_mesh.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_mesh.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_outputs.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_outputs.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_physics.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_readout.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_readout.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-branch-calibration-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-branch-calibration-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-branch-calibration-v2.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-branch-calibration-v2.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-branch-calibration-v3.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-branch-calibration-v3.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-specimen-roles-v1.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved manifests/experiments/hbe-01-03-specimen-roles-v1.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/.started.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/.started.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/publication-check.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/publication-check.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/result.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/result.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "prelaunch preserved outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/supervision/supervision.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/execution.log:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/execution.log:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/launch.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/launch.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/preflight.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/preflight.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/preflight.log:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/preflight.log:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/release.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/release.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/run-detached-once.py:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/run-detached-once.py:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/terminal.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved execution_bindings/terminal.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/.started.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/.started.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/access.jsonl:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/access.jsonl:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/output-watch.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/output-watch.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/publication-check.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/publication-check.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/result.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/result.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/state.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/state.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/supervision/combined.log:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/supervision/combined.log:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/supervision/supervision.json:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved output_bindings/experiment/supervision/supervision.json:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/diagnosis:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/diagnosis:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_publication:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_publication:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_release:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_release:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_result:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_result:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_started:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_started:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_state:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_state:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_study:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_study:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_supervision:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved predecessor_v1_and_diagnosis_unchanged/previous_supervision:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/access:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/access:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/backend_profile:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/backend_profile:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/branch_calibration:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/branch_calibration:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/branch_calibration_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/branch_calibration_readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/branch_calibration_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/branch_calibration_runner:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/curve_evaluator:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/curve_evaluator:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_runner:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_temporal:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_temporal:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_temporal_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_temporal_readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_temporal_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_n36_temporal_runner:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_global_runner:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_mesh:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_mesh:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_spatial:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_spatial:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_spatial_readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_spatial_readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_spatial_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_spatial_runner:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_temporal_common:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_temporal_common:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_tension_n24_temporal:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_tension_n24_temporal:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_tension_n24_temporal_runner:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/halfheight_tension_n24_temporal_runner:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/mesh_deck:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/mesh_deck:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/orchestrator:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/orchestrator:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/physics:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/physics:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/primitive_parser:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/primitive_parser:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/readout:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/readout:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/runtime_driver:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior audit preserved source_bindings_verified/runtime_driver:bytes",
+    "passed": true
+  },
+  {
+    "name": "v2 prior archive preserved:sha256",
+    "passed": true
+  },
+  {
+    "name": "v2 prior archive preserved:bytes",
+    "passed": true
+  },
+  {
+    "name": "complete v2 output file set preserved",
+    "passed": true
+  },
+  {
+    "name": "v1 terminal-only output set preserved",
+    "passed": true
+  },
+  {
+    "name": "v1 no access ledger",
+    "passed": true
+  },
+  {
+    "name": "tracked workspace unchanged during audit",
+    "passed": true
+  },
+  {
+    "name": "tracked diff unchanged since release review",
+    "passed": true
+  }
+]

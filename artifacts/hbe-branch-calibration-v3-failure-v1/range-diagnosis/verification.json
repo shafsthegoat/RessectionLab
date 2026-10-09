@@ -1,0 +1,72 @@
+{
+  "all_input_hashes_unchanged_after_diagnostic": true,
+  "controls": [
+    {
+      "branch": "compression",
+      "name": "actual_coordinate_vector_rejected_using_synthetic_zero_response",
+      "passed": true
+    },
+    {
+      "branch": "compression",
+      "name": "all_in_support_coordinates_accepted_control_only_no_rows_removed_from_any_fit",
+      "passed": true
+    },
+    {
+      "branch": "compression",
+      "name": "exact_solved_endpoints_accepted",
+      "passed": true
+    },
+    {
+      "branch": "compression",
+      "name": "one_float64_ulp_outward_rejected",
+      "passed": true
+    },
+    {
+      "branch": "tension",
+      "name": "actual_coordinate_vector_rejected_using_synthetic_zero_response",
+      "passed": true
+    },
+    {
+      "branch": "tension",
+      "name": "all_in_support_coordinates_accepted_control_only_no_rows_removed_from_any_fit",
+      "passed": true
+    },
+    {
+      "branch": "tension",
+      "name": "exact_solved_endpoints_accepted",
+      "passed": true
+    },
+    {
+      "branch": "tension",
+      "name": "one_float64_ulp_outward_rejected",
+      "passed": true
+    }
+  ],
+  "diagnosis": {
+    "path": "build/hbe-branch-calibration-v3-range-diagnostic-v1/diagnosis.json",
+    "sha256": "572b20b3255abdd19513372dc034b54a08330991152d23154d03954b27f23397"
+  },
+  "no_actual_response_used_in_controls": true,
+  "passed": true,
+  "schema": "hbe-coordinate-range-verification-v1",
+  "v3_output_inventory_after": {
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/.started.json": "8f7953e0c84967494df4817e3474a48b5daabfba19a1b00349ee9e6d3957034b",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/access.jsonl": "d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/output-watch.json": "b922778f82d5c626ae091b8178f30b250c26eab2ba389c1961305b573afeb01c",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/publication-check.json": "f97dcb6534bafd6f4f203c9c90b18ffd6fb1797694939472848a7e70d9f18f2c",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/result.json": "595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/state.json": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/supervision/combined.log": "84fe07641e13be5e6c1850d6b1004fdc17c87eea8f5524d8649952c9fa3e3e63",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/supervision/supervision.json": "642f5e5c4cc514250b90bfa5cca193dc0e681df24da914dd87a74f1f589d1175"
+  },
+  "v3_output_inventory_before": {
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/.started.json": "8f7953e0c84967494df4817e3474a48b5daabfba19a1b00349ee9e6d3957034b",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/access.jsonl": "d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/output-watch.json": "b922778f82d5c626ae091b8178f30b250c26eab2ba389c1961305b573afeb01c",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/publication-check.json": "f97dcb6534bafd6f4f203c9c90b18ffd6fb1797694939472848a7e70d9f18f2c",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/result.json": "595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/state.json": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/supervision/combined.log": "84fe07641e13be5e6c1850d6b1004fdc17c87eea8f5524d8649952c9fa3e3e63",
+    "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/supervision/supervision.json": "642f5e5c4cc514250b90bfa5cca193dc0e681df24da914dd87a74f1f589d1175"
+  }
+}

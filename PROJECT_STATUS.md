@@ -60,12 +60,14 @@ then stopped on a real CSV header mismatch before fitting or native solves. The
 [independent failure audit and allowed-axial header diagnostic](artifacts/hbe-branch-calibration-v2-failure-audit-v1/RESULT.md)
 confirm that compression was read but tension and held-out torsion were not.
 The [separately versioned v3 correction](artifacts/hbe-branch-calibration-v3-preparation-v1/RESULT.md)
-passed 146 owner and 227 guarded independent controls. Its first authorized,
-supervised execution parsed both allowed axial curves, then stopped before a
-completed material fit because a measured displacement lay outside the frozen
-solved range. No native solves ran; held-out torsion stayed sealed. Physical
-agreement and withheld torque remain unmeasured. The failed attempt is being
-preserved for independent diagnosis before any separately versioned correction.
+passed 146 owner and 227 guarded independent controls. Its [first authorized,
+supervised execution](artifacts/hbe-branch-calibration-v3-failure-v1/RESULT.md)
+parsed both allowed axial curves, then stopped before a completed material fit.
+Independent review passed 505 controls and located a real coordinate-coverage
+mismatch: the last compression and tension rows exceed the frozen solve range by
+3.5215 and 2.2715 µm. No native solve or held-out torsion access occurred.
+Physical agreement remains unmeasured. V3 is terminal; any larger solve domain
+needs a separately versioned, independently reviewed study.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)

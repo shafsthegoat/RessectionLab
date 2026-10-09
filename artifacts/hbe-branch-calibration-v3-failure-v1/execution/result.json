@@ -1,0 +1,44 @@
+{
+  "charged_source_archive_bytes": 901120,
+  "physical_validation_pass": null,
+  "release": {
+    "path": "build/hbe-branch-calibration-v3/release.json",
+    "sha256": "bf9cafb8297c49082dd5eb1b861c38d9d395de9abc3820e469ebd8c79e1851ed"
+  },
+  "schema": "hbe-branch-calibration-result-v3",
+  "seconds_before_publication": 2.883089500013739,
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-branch-calibration-v3/experiment/state.json",
+    "sha256": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd"
+  },
+  "status": "failed_or_incomplete",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v3/source/scripts/mechanics_hbe_branch_calibration_v3_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--release",
+      "build/hbe-branch-calibration-v3/release.json",
+      "--release-sha256",
+      "bf9cafb8297c49082dd5eb1b861c38d9d395de9abc3820e469ebd8c79e1851ed",
+      "--worker",
+      "--deadline",
+      "1243886.730682125"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 2.880125667201355,
+    "error": null,
+    "exit_code": 1,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 24991,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 215400448,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "failed_or_incomplete",
+    "wall_cap_seconds": 3599.9979128341656
+  }
+}
