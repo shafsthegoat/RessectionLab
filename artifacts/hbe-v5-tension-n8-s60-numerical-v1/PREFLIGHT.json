@@ -1,0 +1,17 @@
+{
+  "host": {
+    "available_percent": 54,
+    "host_read_seconds": 2.0541949197649956e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 8589934592,
+    "swap_used_bytes": 7390035968
+  },
+  "native_calls_in_preflight": 0,
+  "ongoing_acquisition_pid": 92434,
+  "review_path": "build/hbe-v5-tension-n8-s60-independent-v1/REPORT.md",
+  "review_sha256": "bdc7322696fa953a51d91c09cf743dc076f4c00d18b448cf21fcc97c86db2bec",
+  "scope": "one ordinal7 tension N8 S60 numerical run; unchanged caps; no measured response or fit",
+  "source_commit": "4e89ef83805ea9282f59fc4ff1c4543b60110908",
+  "source_files": 20,
+  "validate_release": "passed"
+}

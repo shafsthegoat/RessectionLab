@@ -1,0 +1,563 @@
+{
+  "force_decrease_states": [],
+  "initial_force_N": -0.0,
+  "loaded_force_positive": true,
+  "negative_loaded_force_states": [],
+  "physical_validation_pass": null,
+  "readout_sha256": "7e572166c5734bbdab14c468c18d8bb6253e6525c70505935bc7ff55d5127bd6",
+  "receipt_sha256": "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5",
+  "reference_release_or_mesh_convergence": false,
+  "run_id": "tension:N8:S60:reference",
+  "schema": "hbe-v5-tension-n8-s60-signed-path-diagnostic-v1",
+  "states": [
+    {
+      "full_and_native_coordinate_m": 0.0,
+      "full_stored_energy_J": -5.4521059585730456e-21,
+      "maximum_probe_vector_norm_m": 3.0710655679520655e-15,
+      "pseudotime": 0.0,
+      "signed_simulated_force_N": -0.0,
+      "state": 0,
+      "trapezoidal_work_J": 0.0
+    },
+    {
+      "full_and_native_coordinate_m": 1.2266833333331666e-05,
+      "full_stored_energy_J": 3.2123438763371127e-09,
+      "maximum_probe_vector_norm_m": 1.1171392858268068e-05,
+      "pseudotime": 0.016666666666666666,
+      "signed_simulated_force_N": 0.00052327678577962,
+      "state": 1,
+      "trapezoidal_work_J": 3.209474559180048e-09
+    },
+    {
+      "full_and_native_coordinate_m": 2.453366666666333e-05,
+      "full_stored_energy_J": 1.2826462665287285e-08,
+      "maximum_probe_vector_norm_m": 2.233855081223895e-05,
+      "pseudotime": 0.03333333333333333,
+      "signed_simulated_force_N": 0.00104375685001103,
+      "state": 2,
+      "trapezoidal_work_J": 1.2820744778164377e-08
+    },
+    {
+      "full_and_native_coordinate_m": 3.6800499999995e-05,
+      "full_stored_energy_J": 2.8808174031452658e-08,
+      "maximum_probe_vector_norm_m": 3.350152240016142e-05,
+      "pseudotime": 0.05,
+      "signed_simulated_force_N": 0.00156146050973075,
+      "state": 3,
+      "trapezoidal_work_J": 2.8799628352691768e-08
+    },
+    {
+      "full_and_native_coordinate_m": 4.906733333332666e-05,
+      "full_stored_energy_J": 5.112354489281671e-08,
+      "maximum_probe_vector_norm_m": 4.466035603848361e-05,
+      "pseudotime": 0.06666666666666667,
+      "signed_simulated_force_N": 0.00207640807916589,
+      "state": 4,
+      "trapezoidal_work_J": 5.111219218697053e-08
+    },
+    {
+      "full_and_native_coordinate_m": 6.133416666665833e-05,
+      "full_stored_energy_J": 7.973889131749849e-08,
+      "maximum_probe_vector_norm_m": 5.581510001800745e-05,
+      "pseudotime": 0.08333333333333333,
+      "signed_simulated_force_N": 0.00258861986164305,
+      "state": 5,
+      "trapezoidal_work_J": 7.972475230958988e-08
+    },
+    {
+      "full_and_native_coordinate_m": 7.360099999999e-05,
+      "full_stored_energy_J": 1.1462077826645991e-07,
+      "maximum_probe_vector_norm_m": 6.69658024910456e-05,
+      "pseudotime": 0.1,
+      "signed_simulated_force_N": 0.0030981161446651797,
+      "state": 6,
+      "trapezoidal_work_J": 1.1460387370960948e-07
+    },
+    {
+      "full_and_native_coordinate_m": 8.586783333332167e-05,
+      "full_stored_energy_J": 1.5573601950993898e-07,
+      "maximum_probe_vector_norm_m": 7.811251143266416e-05,
+      "pseudotime": 0.11666666666666667,
+      "signed_simulated_force_N": 0.0036049171951405,
+      "state": 7,
+      "trapezoidal_work_J": 1.5571637011319037e-07
+    },
+    {
+      "full_and_native_coordinate_m": 9.813466666665332e-05,
+      "full_stored_energy_J": 2.0305167729920552e-07,
+      "maximum_probe_vector_norm_m": 8.925527468528594e-05,
+      "pseudotime": 0.13333333333333333,
+      "signed_simulated_force_N": 0.00410904325470137,
+      "state": 8,
+      "trapezoidal_work_J": 2.030293037022515e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.000110401499999985,
+      "full_stored_energy_J": 2.565350618897448e-07,
+      "maximum_probe_vector_norm_m": 0.00010039413992648145,
+      "pseudotime": 0.15,
+      "signed_simulated_force_N": 0.00461051453519856,
+      "state": 9,
+      "trapezoidal_work_J": 2.565099847767796e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00012266833333331666,
+      "full_stored_energy_J": 3.161537313802707e-07,
+      "maximum_probe_vector_norm_m": 0.0001115291546242092,
+      "pseudotime": 0.16666666666666666,
+      "signed_simulated_force_N": 0.0051093512142684,
+      "state": 10,
+      "trapezoidal_work_J": 3.1612597136231465e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00013493516666664832,
+      "full_stored_energy_J": 3.8187549117357333e-07,
+      "maximum_probe_vector_norm_m": 0.0001226603660990531,
+      "pseudotime": 0.18333333333333332,
+      "signed_simulated_force_N": 0.0056055734310768,
+      "state": 11,
+      "trapezoidal_work_J": 3.8184506876414336e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00014720199999998,
+      "full_stored_energy_J": 4.5366839329561615e-07,
+      "maximum_probe_vector_norm_m": 0.0001337878214378131,
+      "pseudotime": 0.2,
+      "signed_simulated_force_N": 0.0060992012821492,
+      "state": 12,
+      "trapezoidal_work_J": 4.536353290698126e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00015946883333331166,
+      "full_stored_energy_J": 5.31500736169398e-07,
+      "maximum_probe_vector_norm_m": 0.00014491156754998103,
+      "pseudotime": 0.21666666666666667,
+      "signed_simulated_force_N": 0.0065902548173597,
+      "state": 13,
+      "trapezoidal_work_J": 5.314650506014648e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00017173566666664334,
+      "full_stored_energy_J": 6.153410638797634e-07,
+      "maximum_probe_vector_norm_m": 0.0001560316511273331,
+      "pseudotime": 0.23333333333333334,
+      "signed_simulated_force_N": 0.0070787540360258,
+      "state": 14,
+      "trapezoidal_work_J": 6.153027773196225e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.000184002499999975,
+      "full_stored_energy_J": 7.051581653030709e-07,
+      "maximum_probe_vector_norm_m": 0.0001671481186442208,
+      "pseudotime": 0.25,
+      "signed_simulated_force_N": 0.0075647188831415,
+      "state": 15,
+      "trapezoidal_work_J": 7.051172981799129e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00019626933333330665,
+      "full_stored_energy_J": 8.009210738282359e-07,
+      "maximum_probe_vector_norm_m": 0.00017826101635212997,
+      "pseudotime": 0.26666666666666666,
+      "signed_simulated_force_N": 0.0080481692457233,
+      "state": 16,
+      "trapezoidal_work_J": 8.008776464442813e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00020853616666663833,
+      "full_stored_energy_J": 9.025990664406428e-07,
+      "maximum_probe_vector_norm_m": 0.00018937039025908398,
+      "pseudotime": 0.2833333333333333,
+      "signed_simulated_force_N": 0.0085291249493003,
+      "state": 17,
+      "trapezoidal_work_J": 9.02553098948262e-07
+    },
+    {
+      "full_and_native_coordinate_m": 0.00022080299999997,
+      "full_stored_energy_J": 1.0101616626765275e-06,
+      "maximum_probe_vector_norm_m": 0.00020047628614795732,
+      "pseudotime": 0.3,
+      "signed_simulated_force_N": 0.0090076057545031,
+      "state": 18,
+      "trapezoidal_work_J": 1.0101131753258001e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00023306983333330164,
+      "full_stored_energy_J": 1.1235786243038846e-06,
+      "maximum_probe_vector_norm_m": 0.00021157874953708274,
+      "pseudotime": 0.31666666666666665,
+      "signed_simulated_force_N": 0.009483631353794202,
+      "state": 19,
+      "trapezoidal_work_J": 1.1235276371931003e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0002453366666666333,
+      "full_stored_energy_J": 1.2428199542397062e-06,
+      "maximum_probe_vector_norm_m": 0.00022267782571658732,
+      "pseudotime": 0.3333333333333333,
+      "signed_simulated_force_N": 0.009957221368318,
+      "state": 20,
+      "trapezoidal_work_J": 1.2427664872930993e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00025760349999996495,
+      "full_stored_energy_J": 1.3678558953431736e-06,
+      "maximum_probe_vector_norm_m": 0.00023377355969752726,
+      "pseudotime": 0.35,
+      "signed_simulated_force_N": 0.0104283953448444,
+      "state": 21,
+      "trapezoidal_work_J": 1.3677999686018708e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00026987033333329664,
+      "full_stored_energy_J": 1.4986569300686456e-06,
+      "maximum_probe_vector_norm_m": 0.0002448659962517502,
+      "pseudotime": 0.36666666666666664,
+      "signed_simulated_force_N": 0.0108971727528741,
+      "state": 22,
+      "trapezoidal_work_J": 1.4985985633985348e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0002821371666666283,
+      "full_stored_energy_J": 1.635193779230117e-06,
+      "maximum_probe_vector_norm_m": 0.0002559551798475274,
+      "pseudotime": 0.38333333333333336,
+      "signed_simulated_force_N": 0.011363572981822601,
+      "state": 23,
+      "trapezoidal_work_J": 1.6351329923001341e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00029440399999996,
+      "full_stored_energy_J": 1.7774374006470686e-06,
+      "maximum_probe_vector_norm_m": 0.0002670411547133089,
+      "pseudotime": 0.4,
+      "signed_simulated_force_N": 0.011827615338336601,
+      "state": 24,
+      "trapezoidal_work_J": 1.7773742132627848e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0003066708333332917,
+      "full_stored_energy_J": 1.9253589887809658e-06,
+      "maximum_probe_vector_norm_m": 0.0002781239647803059,
+      "pseudotime": 0.4166666666666667,
+      "signed_simulated_force_N": 0.012289319043714799,
+      "state": 25,
+      "trapezoidal_work_J": 1.9252934205505454e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0003189376666666233,
+      "full_stored_energy_J": 2.078929973360327e-06,
+      "maximum_probe_vector_norm_m": 0.00028920365369613284,
+      "pseudotime": 0.43333333333333335,
+      "signed_simulated_force_N": 0.0127487032314486,
+      "state": 26,
+      "trapezoidal_work_J": 2.0788620436733825e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.000331204499999955,
+      "full_stored_energy_J": 2.2381220178924207e-06,
+      "maximum_probe_vector_norm_m": 0.00030028026482980776,
+      "pseudotime": 0.45,
+      "signed_simulated_force_N": 0.0132057869448648,
+      "state": 27,
+      "trapezoidal_work_J": 2.238051746295598e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0003434713333332867,
+      "full_stored_energy_J": 2.4029070192945325e-06,
+      "maximum_probe_vector_norm_m": 0.0003113538412333161,
+      "pseudotime": 0.4666666666666667,
+      "signed_simulated_force_N": 0.0136605891348767,
+      "state": 28,
+      "trapezoidal_work_J": 2.402834425115997e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0003557381666666183,
+      "full_stored_energy_J": 2.5732571063920962e-06,
+      "maximum_probe_vector_norm_m": 0.00032242442570575496,
+      "pseudotime": 0.48333333333333334,
+      "signed_simulated_force_N": 0.014113128657840899,
+      "state": 29,
+      "trapezoidal_work_J": 2.573182208721124e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00036800499999995,
+      "full_stored_energy_J": 2.7491446383089527e-06,
+      "maximum_probe_vector_norm_m": 0.0003334920607024084,
+      "pseudotime": 0.5,
+      "signed_simulated_force_N": 0.0145634242735137,
+      "state": 30,
+      "trapezoidal_work_J": 2.7490674564128195e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00038027183333328167,
+      "full_stored_energy_J": 2.9305422041036933e-06,
+      "maximum_probe_vector_norm_m": 0.000344556788386139,
+      "pseudotime": 0.5166666666666667,
+      "signed_simulated_force_N": 0.015011494643111299,
+      "state": 31,
+      "trapezoidal_work_J": 2.930462757011338e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0003925386666666133,
+      "full_stored_energy_J": 3.1174226211531057e-06,
+      "maximum_probe_vector_norm_m": 0.00035561865064700755,
+      "pseudotime": 0.5333333333333333,
+      "signed_simulated_force_N": 0.015457358327471098,
+      "state": 32,
+      "trapezoidal_work_J": 3.117340927635298e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00040480549999994504,
+      "full_stored_energy_J": 3.3097589334325874e-06,
+      "maximum_probe_vector_norm_m": 0.0003666776890104132,
+      "pseudotime": 0.55,
+      "signed_simulated_force_N": 0.015901033785298998,
+      "state": 33,
+      "trapezoidal_work_J": 3.309675012459606e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00041707233333327666,
+      "full_stored_energy_J": 3.5075244111674995e-06,
+      "maximum_probe_vector_norm_m": 0.0003777339447238653,
+      "pseudotime": 0.5666666666666667,
+      "signed_simulated_force_N": 0.0163425393715231,
+      "state": 34,
+      "trapezoidal_work_J": 3.507438281452517e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00042933916666660835,
+      "full_stored_energy_J": 3.7106925491130673e-06,
+      "maximum_probe_vector_norm_m": 0.0003887874587166212,
+      "pseudotime": 0.5833333333333334,
+      "signed_simulated_force_N": 0.0167818933357241,
+      "state": 35,
+      "trapezoidal_work_J": 3.7106042290929984e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00044160599999994,
+      "full_stored_energy_J": 3.9192370647365e-06,
+      "maximum_probe_vector_norm_m": 0.0003998382715777798,
+      "pseudotime": 0.6,
+      "signed_simulated_force_N": 0.0172191138206786,
+      "state": 36,
+      "trapezoidal_work_J": 3.919146573069502e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00045387283333327166,
+      "full_stored_energy_J": 4.133131897891795e-06,
+      "maximum_probe_vector_norm_m": 0.0004108864236061418,
+      "pseudotime": 0.6166666666666667,
+      "signed_simulated_force_N": 0.017654218860966298,
+      "state": 37,
+      "trapezoidal_work_J": 4.1330392529612856e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0004661396666666033,
+      "full_stored_energy_J": 4.3523512090070655e-06,
+      "maximum_probe_vector_norm_m": 0.0004219319547428347,
+      "pseudotime": 0.6333333333333333,
+      "signed_simulated_force_N": 0.0180872263816529,
+      "state": 38,
+      "trapezoidal_work_J": 4.35225642890309e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.000478406499999935,
+      "full_stored_energy_J": 4.576869377178542e-06,
+      "maximum_probe_vector_norm_m": 0.0004329749046423807,
+      "pseudotime": 0.65,
+      "signed_simulated_force_N": 0.0185181541971232,
+      "state": 39,
+      "trapezoidal_work_J": 4.576772480234603e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0004906733333332667,
+      "full_stored_energy_J": 4.806660999877185e-06,
+      "maximum_probe_vector_norm_m": 0.0004440153125973269,
+      "pseudotime": 0.6666666666666666,
+      "signed_simulated_force_N": 0.018947020009902397,
+      "state": 40,
+      "trapezoidal_work_J": 4.806562004135511e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0005029401666665983,
+      "full_stored_energy_J": 5.041700891053794e-06,
+      "maximum_probe_vector_norm_m": 0.0004550532176012,
+      "pseudotime": 0.6833333333333333,
+      "signed_simulated_force_N": 0.019373841409589802,
+      "state": 41,
+      "trapezoidal_work_J": 5.041599814246816e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0005152069999999299,
+      "full_stored_energy_J": 5.28196407915338e-06,
+      "maximum_probe_vector_norm_m": 0.0004660886582813483,
+      "pseudotime": 0.7,
+      "signed_simulated_force_N": 0.0197986358719205,
+      "state": 42,
+      "trapezoidal_work_J": 5.281860939279819e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0005274738333332616,
+      "full_stored_energy_J": 5.52742580686239e-06,
+      "maximum_probe_vector_norm_m": 0.00047712167297898846,
+      "pseudotime": 0.7166666666666667,
+      "signed_simulated_force_N": 0.0202214207578473,
+      "state": 43,
+      "trapezoidal_work_J": 5.527320621613749e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0005397406666665933,
+      "full_stored_energy_J": 5.778061529139549e-06,
+      "maximum_probe_vector_norm_m": 0.00048815229966414175,
+      "pseudotime": 0.7333333333333333,
+      "signed_simulated_force_N": 0.0206422133126438,
+      "state": 44,
+      "trapezoidal_work_J": 5.777954315882232e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.000552007499999925,
+      "full_stored_energy_J": 6.033846911160632e-06,
+      "maximum_probe_vector_norm_m": 0.000499180575990006,
+      "pseudotime": 0.75,
+      "signed_simulated_force_N": 0.0210610306652404,
+      "state": 45,
+      "trapezoidal_work_J": 6.03373768755022e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0005642743333332566,
+      "full_stored_energy_J": 6.2947578281121575e-06,
+      "maximum_probe_vector_norm_m": 0.0005102065392731511,
+      "pseudotime": 0.7666666666666667,
+      "signed_simulated_force_N": 0.0214778898274554,
+      "state": 46,
+      "trapezoidal_work_J": 6.294646611482093e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0005765411666665883,
+      "full_stored_energy_J": 6.560770363157192e-06,
+      "maximum_probe_vector_norm_m": 0.0005212302265089743,
+      "pseudotime": 0.7833333333333333,
+      "signed_simulated_force_N": 0.021892807693367003,
+      "state": 47,
+      "trapezoidal_work_J": 6.560657170501227e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00058880799999992,
+      "full_stored_energy_J": 6.831860805317756e-06,
+      "maximum_probe_vector_norm_m": 0.0005322516743213718,
+      "pseudotime": 0.8,
+      "signed_simulated_force_N": 0.0223058010387385,
+      "state": 48,
+      "trapezoidal_work_J": 6.831745653942166e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0006010748333332516,
+      "full_stored_energy_J": 7.108005649322209e-06,
+      "maximum_probe_vector_norm_m": 0.0005432709190422945,
+      "pseudotime": 0.8166666666666667,
+      "signed_simulated_force_N": 0.0227168865205802,
+      "state": 49,
+      "trapezoidal_work_J": 7.107888556196579e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0006133416666665834,
+      "full_stored_energy_J": 7.389181593512464e-06,
+      "maximum_probe_vector_norm_m": 0.0005542879966308889,
+      "pseudotime": 0.8333333333333334,
+      "signed_simulated_force_N": 0.023126080676582,
+      "state": 50,
+      "trapezoidal_work_J": 7.38906257525307e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.000625608499999915,
+      "full_stored_energy_J": 7.675365537672824e-06,
+      "maximum_probe_vector_norm_m": 0.0005653029427317769,
+      "pseudotime": 0.85,
+      "signed_simulated_force_N": 0.023533399924836603,
+      "state": 51,
+      "trapezoidal_work_J": 7.675244611231781e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0006378753333332466,
+      "full_stored_energy_J": 7.966534582935173e-06,
+      "maximum_probe_vector_norm_m": 0.0005763157926337914,
+      "pseudotime": 0.8666666666666667,
+      "signed_simulated_force_N": 0.0239388605634143,
+      "state": 52,
+      "trapezoidal_work_J": 7.96641176491472e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0006501421666665783,
+      "full_stored_energy_J": 8.262666029636089e-06,
+      "maximum_probe_vector_norm_m": 0.0005873265813117474,
+      "pseudotime": 0.8833333333333333,
+      "signed_simulated_force_N": 0.024342478770105397,
+      "state": 53,
+      "trapezoidal_work_J": 8.262541336271877e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.00066240899999991,
+      "full_stored_energy_J": 8.563737375097338e-06,
+      "maximum_probe_vector_norm_m": 0.0005983353433837425,
+      "pseudotime": 0.9,
+      "signed_simulated_force_N": 0.0247442706022227,
+      "state": 54,
+      "trapezoidal_work_J": 8.563610822984563e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0006746758333332416,
+      "full_stored_energy_J": 8.869726313595069e-06,
+      "maximum_probe_vector_norm_m": 0.0006093421131530023,
+      "pseudotime": 0.9166666666666666,
+      "signed_simulated_force_N": 0.025144251996355,
+      "state": 55,
+      "trapezoidal_work_J": 8.869597918966013e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0006869426666665734,
+      "full_stored_energy_J": 9.180610734172108e-06,
+      "maximum_probe_vector_norm_m": 0.0006203469245553675,
+      "pseudotime": 0.9333333333333333,
+      "signed_simulated_force_N": 0.0255424387683144,
+      "state": 56,
+      "trapezoidal_work_J": 9.180480512880176e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.000699209499999905,
+      "full_stored_energy_J": 9.496368718377135e-06,
+      "maximum_probe_vector_norm_m": 0.0006313498112350361,
+      "pseudotime": 0.95,
+      "signed_simulated_force_N": 0.025938846612920397,
+      "state": 57,
+      "trapezoidal_work_J": 9.49623668665882e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0007114763333332366,
+      "full_stored_energy_J": 9.816978540301552e-06,
+      "maximum_probe_vector_norm_m": 0.0006423508064487363,
+      "pseudotime": 0.9666666666666667,
+      "signed_simulated_force_N": 0.0263334911041168,
+      "state": 58,
+      "trapezoidal_work_J": 9.816844714018079e-06
+    },
+    {
+      "full_and_native_coordinate_m": 0.0007237431666665682,
+      "full_stored_energy_J": 1.014241866435312e-05,
+      "maximum_probe_vector_norm_m": 0.000653349943168216,
+      "pseudotime": 0.9833333333333333,
+      "signed_simulated_force_N": 0.0267263876948526,
+      "state": 59,
+      "trapezoidal_work_J": 1.0142283058974946e-05
+    },
+    {
+      "full_and_native_coordinate_m": 0.0007360099999999,
+      "full_stored_energy_J": 1.047266774295893e-05,
+      "maximum_probe_vector_norm_m": 0.0006643472539979877,
+      "pseudotime": 1.0,
+      "signed_simulated_force_N": 0.0271175517171575,
+      "state": 60,
+      "trapezoidal_work_J": 1.0472530374363516e-05
+    }
+  ]
+}

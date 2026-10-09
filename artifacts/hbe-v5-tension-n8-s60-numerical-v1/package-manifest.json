@@ -1,0 +1,124 @@
+{
+  "bulk_omissions": [
+    "Native raw logs retained in original hash-bound attempt",
+    "Full original/replayed readout response and all-probe arrays",
+    "N12 supplemental full readout arrays retained in exact ancestry"
+  ],
+  "decision": "GO_numerical_specimen_fixture_only",
+  "files_excluding_this_manifest": {
+    "INDEPENDENT_REVIEW.md": {
+      "bytes": 4842,
+      "sha256": "8a4b8814a5d2a333b056ba9289197b23fd3786a3409b947a5f1f8a9eb9478985"
+    },
+    "PREFLIGHT.json": {
+      "bytes": 647,
+      "sha256": "701b12de246634b3ebf9ec9895e52e4eb339216b1a093963a9ff7b18f7bb27ae"
+    },
+    "RESULT.md": {
+      "bytes": 1774,
+      "sha256": "1bf8b2e39c2e08ded74ed2342069b5aad47175ccadf4f82e24d7c57e7dd97e63"
+    },
+    "audit.py": {
+      "bytes": 9636,
+      "sha256": "7c32bfd6eb5f5c9830cd7df27fa80e287ff79c32c34361bb57699dc02c436ec6"
+    },
+    "expected-terminal.json": {
+      "bytes": 470,
+      "sha256": "27aa5051e3defef9ef5dfa2176e9edb910277a78979a7380ff6492a7de37ab91"
+    },
+    "finish.py": {
+      "bytes": 7120,
+      "sha256": "35df25000432359c454f1340b5b9263cfbb42c9da47458379ebd54971fe84e51"
+    },
+    "independent-replay-receipt.json": {
+      "bytes": 964,
+      "sha256": "0636d968c62acbbf66232d84c754ac6b04160e0e7cd2479bc5415907395b2545"
+    },
+    "readout-work-order.json": {
+      "bytes": 7322,
+      "sha256": "5e3704551bae0d1d0d12442ead2b830d8e62958488968d28593f15d964773c82"
+    },
+    "receipt.json": {
+      "bytes": 14059,
+      "sha256": "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5"
+    },
+    "release.json": {
+      "bytes": 13814,
+      "sha256": "c91e41806e70093644714072e7a22d24642aae40b8f10310f8cf8bc8bd69a843"
+    },
+    "replay-comparison.json": {
+      "bytes": 901,
+      "sha256": "8bb2b19566fecf85f44130abaecc6008afd06f4e285b0a479b949704a4b1222e"
+    },
+    "signed-path.json": {
+      "bytes": 21586,
+      "sha256": "7df124d985ce2f25bd2e08be13b39b1dd13f019b7e28eb82b659e419067757d8"
+    },
+    "source-bindings.json": {
+      "bytes": 14790,
+      "sha256": "613c4ce11b19239104492da05b07b943c74fe54c271b14bdff6797a78cd93be7"
+    },
+    "summary.json": {
+      "bytes": 5627,
+      "sha256": "ef8d6579db6e6a4f22bd18f22d6fe11a7b2c12c6088805f5ce442000a730baf3"
+    }
+  },
+  "interpretation": "Numerical specimen-fixture only; no mesh convergence, full-study release, measured-response fit, physical validation or patient inference.",
+  "native_calls_in_independent_audit": 0,
+  "original_exact_copies": {
+    "INDEPENDENT_REVIEW.md": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/REPORT.md",
+      "sha256": "8a4b8814a5d2a333b056ba9289197b23fd3786a3409b947a5f1f8a9eb9478985"
+    },
+    "PREFLIGHT.json": {
+      "path": "build/hbe-v5-tension-n8-s60-one-shot-release/PREFLIGHT.json",
+      "sha256": "701b12de246634b3ebf9ec9895e52e4eb339216b1a093963a9ff7b18f7bb27ae"
+    },
+    "audit.py": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/audit.py",
+      "sha256": "7c32bfd6eb5f5c9830cd7df27fa80e287ff79c32c34361bb57699dc02c436ec6"
+    },
+    "expected-terminal.json": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/expected-terminal.json",
+      "sha256": "27aa5051e3defef9ef5dfa2176e9edb910277a78979a7380ff6492a7de37ab91"
+    },
+    "finish.py": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/finish.py",
+      "sha256": "35df25000432359c454f1340b5b9263cfbb42c9da47458379ebd54971fe84e51"
+    },
+    "independent-replay-receipt.json": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/receipt.json",
+      "sha256": "0636d968c62acbbf66232d84c754ac6b04160e0e7cd2479bc5415907395b2545"
+    },
+    "readout-work-order.json": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/07-tension-N8-S60-reference/attempt-01/readout-work-order.json",
+      "sha256": "5e3704551bae0d1d0d12442ead2b830d8e62958488968d28593f15d964773c82"
+    },
+    "receipt.json": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/07-tension-N8-S60-reference/attempt-01/receipt.json",
+      "sha256": "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5"
+    },
+    "release.json": {
+      "path": "build/hbe-v5-tension-n8-s60-one-shot-release/release.json",
+      "sha256": "c91e41806e70093644714072e7a22d24642aae40b8f10310f8cf8bc8bd69a843"
+    },
+    "replay-comparison.json": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/replay-comparison.json",
+      "sha256": "8bb2b19566fecf85f44130abaecc6008afd06f4e285b0a479b949704a4b1222e"
+    },
+    "signed-path.json": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/signed-path.json",
+      "sha256": "7df124d985ce2f25bd2e08be13b39b1dd13f019b7e28eb82b659e419067757d8"
+    },
+    "summary.json": {
+      "path": "build/hbe-v5-tension-n8-s60-result-independent-v1/summary.json",
+      "sha256": "ef8d6579db6e6a4f22bd18f22d6fe11a7b2c12c6088805f5ce442000a730baf3"
+    }
+  },
+  "readout_sha256": "7e572166c5734bbdab14c468c18d8bb6253e6525c70505935bc7ff55d5127bd6",
+  "release_sha256": "c91e41806e70093644714072e7a22d24642aae40b8f10310f8cf8bc8bd69a843",
+  "saved_stream_replays_in_independent_audit": 1,
+  "schema": "hbe-v5-tension-n8-s60-compact-numerical-archive-v1",
+  "source_audit_commit": "4e89ef83805ea9282f59fc4ff1c4543b60110908",
+  "terminal_receipt_sha256": "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5"
+}
