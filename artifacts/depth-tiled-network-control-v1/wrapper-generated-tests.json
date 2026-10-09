@@ -1,0 +1,14 @@
+{
+  "full_block_allclose_1e_3": true,
+  "full_block_exact_equal": false,
+  "maximum_absolute_error": 7.152557373046875e-07,
+  "negative_guards": [
+    "reflect",
+    "same",
+    "duplicate_wrapper"
+  ],
+  "parameters_state_modules_preserved": true,
+  "scope": "Generated tiny Conv3d+InstanceNorm module only",
+  "torch_version": "2.14.1",
+  "wrapped_unique_convs": 1
+}

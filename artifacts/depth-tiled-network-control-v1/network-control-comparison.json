@@ -1,0 +1,63 @@
+{
+  "atol": 0.001,
+  "control_pass": true,
+  "decoded_disagreement_cells": 0,
+  "decoded_disagreement_fraction": 0.0,
+  "decoded_total_cells": 65536,
+  "gate_b_128_patch_enabled": false,
+  "interpretation": "Numerical operator-substitution parity on generated input only; not segmentation accuracy, patient transfer, or clinical evidence",
+  "max_absolute_error": 0.0,
+  "native_raw_logit_sha256": "7b5df1e4bc124da3c251b31b3ec6ff80ca34b132cb2fbd9d48a3fe5f9f8b646f",
+  "out_of_tolerance_elements": 0,
+  "per_region_threshold_margins": [
+    {
+      "maximum_abs_logit_difference_on_crossings": null,
+      "maximum_distance_to_zero_on_crossings": null,
+      "minimum_native_abs_logit": 0.00112575211096555,
+      "minimum_tiled_abs_logit": 0.00112575211096555,
+      "native_near_zero_cells": 0,
+      "near_zero_band_abs_logit": 0.001,
+      "region": "whole tumor",
+      "threshold_crossing_cells": 0,
+      "tiled_near_zero_cells": 0
+    },
+    {
+      "maximum_abs_logit_difference_on_crossings": null,
+      "maximum_distance_to_zero_on_crossings": null,
+      "minimum_native_abs_logit": 1.275989294052124,
+      "minimum_tiled_abs_logit": 1.275989294052124,
+      "native_near_zero_cells": 0,
+      "near_zero_band_abs_logit": 0.001,
+      "region": "tumor core",
+      "threshold_crossing_cells": 0,
+      "tiled_near_zero_cells": 0
+    },
+    {
+      "maximum_abs_logit_difference_on_crossings": null,
+      "maximum_distance_to_zero_on_crossings": null,
+      "minimum_native_abs_logit": 1.0678085088729858,
+      "minimum_tiled_abs_logit": 1.0678085088729858,
+      "native_near_zero_cells": 0,
+      "near_zero_band_abs_logit": 0.001,
+      "region": "enhancing tumor",
+      "threshold_crossing_cells": 0,
+      "tiled_near_zero_cells": 0
+    }
+  ],
+  "raw_logit_allclose": true,
+  "region_order": [
+    "whole tumor",
+    "tumor core",
+    "enhancing tumor"
+  ],
+  "regions_class_order": [
+    2,
+    1,
+    3
+  ],
+  "rmse": 0.0,
+  "rtol": 0.001,
+  "scope": "Generated-only 32x32x64 native-vs-tiled CPU logit parity; no patient or 128^3 inference",
+  "tiled_raw_logit_sha256": "7b5df1e4bc124da3c251b31b3ec6ff80ca34b132cb2fbd9d48a3fe5f9f8b646f",
+  "total_logit_elements": 196608
+}

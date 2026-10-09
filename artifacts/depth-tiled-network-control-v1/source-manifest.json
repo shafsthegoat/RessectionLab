@@ -1,0 +1,34 @@
+{
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/network_control_worker.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/network_control_worker.py.snapshot",
+    "sha256": "a08520542b077abffa63af14cb216f9c2ede76f2d08dab0439275266922a01d9"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/supervise_control.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/supervise_control.py.snapshot",
+    "sha256": "d76393fab9fda2f64042d3ddb734e62be71be92c3c8254df6ea7b7d75f1ff93d"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/compare_control.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/compare_control.py.snapshot",
+    "sha256": "45c4e82a4ab2148638e10b3adf533d647594217075d11ce7934933d1efc51be2"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/conv_wrapper.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/conv_wrapper.py.snapshot",
+    "sha256": "6551b48c550924d73006edf429939d1df8c4728b34c8b5db4f8b57bc4963f291"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/depth_tiled_conv3d.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/depth_tiled_conv3d.py.snapshot",
+    "sha256": "83c9660278d219bae10aa2f0ca7e8d5b21ed948cab639706a1720c27685c098c"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/darwin_fast_sampler.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/darwin_fast_sampler.py.snapshot",
+    "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/slow_inventory.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/slow_inventory.py.snapshot",
+    "sha256": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1"
+  },
+  "build/limited-input-guard-design/gliomoda-depth-network-control-v1/make_generated_input.py": {
+    "snapshot_path": "artifacts/depth-tiled-network-control-v1/source/make_generated_input.py.snapshot",
+    "sha256": "07eda5d3a2668eb088dee350e8c8ed5b964afb7c0fce34db02cd348623a4bd9a"
+  }
+}

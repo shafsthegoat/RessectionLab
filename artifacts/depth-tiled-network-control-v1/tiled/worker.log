@@ -1,0 +1,12 @@
+{"elapsed_seconds": 0.0018120419699698687, "phase": "before_imports", "self_rss_kib": 21376}
+{"elapsed_seconds": 1.2066190419718623, "phase": "after_input_model_hashes", "self_rss_kib": 325792}
+{"elapsed_seconds": 1.2116582079324871, "phase": "before_weights_only_load", "self_rss_kib": 325872}
+{"elapsed_seconds": 1.3552413750439882, "phase": "after_weights_only_load", "self_rss_kib": 565376}
+{"elapsed_seconds": 1.3849913750309497, "phase": "after_optimizer_cleanup", "self_rss_kib": 564096}
+{"elapsed_seconds": 1.439759625121951, "phase": "after_network_construction_alias_checks", "self_rss_kib": 565680}
+{"elapsed_seconds": 1.572696042014286, "phase": "after_strict_copy_weights_cleanup", "self_rss_kib": 566128}
+{"elapsed_seconds": 1.5817149579524994, "phase": "after_tiled_conv3d_attachment", "self_rss_kib": 566336}
+{"elapsed_seconds": 1.5864332499913871, "phase": "before_generated_forward", "self_rss_kib": 566432}
+{"elapsed_seconds": 1.7420252079609782, "phase": "after_generated_forward", "self_rss_kib": 654384}
+{"elapsed_seconds": 1.7461176249198616, "phase": "after_output_transfer", "self_rss_kib": 654432}
+{"arm": "tiled", "forward_seconds": 0.14959433395415545, "logits_raw_sha256": "7b5df1e4bc124da3c251b31b3ec6ff80ca34b132cb2fbd9d48a3fe5f9f8b646f", "status": "completed"}

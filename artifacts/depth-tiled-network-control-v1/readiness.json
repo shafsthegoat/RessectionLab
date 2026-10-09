@@ -1,0 +1,39 @@
+{
+  "comparator_provenance_test": "comparator-generated-tests-v2.json: synthetic receipt, wrong contract/checkpoint rejection",
+  "file_sha256": {
+    "comparator-generated-tests-v2.json": "8e5588c2e90133be8d17f34fdc3e1d4b76e0ed312ae142a4b2838e6b13e8a0a2",
+    "compare_control.py": "45c4e82a4ab2148638e10b3adf533d647594217075d11ce7934933d1efc51be2",
+    "control-contract.json": "6f962399a271a975a2fea72220304b7ecf0c278ff5645b2ebad41dd66f31f38b",
+    "conv_wrapper.py": "6551b48c550924d73006edf429939d1df8c4728b34c8b5db4f8b57bc4963f291",
+    "darwin_fast_sampler.py": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+    "depth_tiled_conv3d.py": "83c9660278d219bae10aa2f0ca7e8d5b21ed948cab639706a1720c27685c098c",
+    "generated-input-receipt.json": "3760ff88ddc9158d0edb2c8b1847435ba5cd11d08a90323dd4c93fa8e0f9dddf",
+    "generated-input.npy": "1edcafb65d19d721f7a729dc1aed883f24b84bba8f9b4a0f122dc28af0ee1ddf",
+    "network_control_worker.py": "a08520542b077abffa63af14cb216f9c2ede76f2d08dab0439275266922a01d9",
+    "slow_inventory.py": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1",
+    "supervise_control.py": "d76393fab9fda2f64042d3ddb734e62be71be92c3c8254df6ea7b7d75f1ff93d",
+    "wrapper-generated-tests.json": "6b2b57b921785339ba3d26b045d2e10836eb6e26d1bdeab60876fbf9ff422af2"
+  },
+  "generated_shape": [
+    1,
+    2,
+    32,
+    32,
+    64
+  ],
+  "human_interpretation": "Generated software numerical control; no patient accuracy, clinical evidence, or full patch admission",
+  "model_children_launched": false,
+  "model_patch_retained": [
+    128,
+    128,
+    128
+  ],
+  "native_output_exists": false,
+  "native_then_tiled": true,
+  "resource_guard_source": "exact copied Gate A v3 fast/slow sampler; 22 policy keys unchanged",
+  "scope": "Prospective ignored generated CPU native-vs-tiled control preparation only; no checkpoint load or model forward in preparation",
+  "static_preflight": "passed: local source/input hashes and pinned plans; deepest spatial 1x1x2",
+  "tiled_output_exists": false,
+  "tiled_requires_accepted_native": true,
+  "unique_conv3d_wrapper_test": "wrapper-generated-tests.json: identities preserved; rtol=atol=1e-3 pass; max block error 7.15e-7"
+}

@@ -1,0 +1,25 @@
+"""Create one deterministic nonzero FP32 32x32x64 network-control input."""
+import hashlib
+import json
+from pathlib import Path
+import numpy as np
+HERE=Path(__file__).resolve().parent
+OUT=HERE/'generated-input.npy'
+RECEIPT=HERE/'generated-input-receipt.json'
+if OUT.exists() or RECEIPT.exists():
+    raise FileExistsError('fresh generated input already exists')
+if np.__version__!='2.0.1':
+    raise RuntimeError('unfrozen NumPy runtime')
+shape=(1,2,32,32,64)
+index=np.arange(np.prod(shape),dtype=np.int32)
+values=((index*37 % 101)-50).astype(np.float32).reshape(shape)/np.float32(50)
+values=np.ascontiguousarray(values,dtype=np.float32)
+with OUT.open('xb') as stream:
+    np.save(stream,values,allow_pickle=False)
+report={'scope':'Generated fixed integer-pattern FP32 input only; no patient data',
+        'shape':shape,'dtype':str(values.dtype),'formula':'((flat_index*37 mod 101)-50)/50',
+        'npy_sha256':hashlib.sha256(OUT.read_bytes()).hexdigest(),
+        'raw_sha256':hashlib.sha256(values.tobytes(order='C')).hexdigest(),
+        'nonzero_count':int(np.count_nonzero(values)),'numpy_version':np.__version__}
+RECEIPT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+print(json.dumps(report,sort_keys=True))

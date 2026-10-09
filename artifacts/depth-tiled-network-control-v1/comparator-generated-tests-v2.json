@@ -1,0 +1,8 @@
+{
+  "scope": "Synthetic comparator/provenance fixture only",
+  "checks": [
+    "valid_synthetic_receipt_and_sequential_region_overwrite",
+    "wrong_contract_rejected",
+    "wrong_checkpoint_rejected"
+  ]
+}

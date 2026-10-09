@@ -100,6 +100,13 @@ adjacent tests. The subsequent N16, N24 and N32 rows have completed; seven nativ
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
+The [small generated full-network control](artifacts/depth-tiled-network-control-v1/RESULT.md)
+now passes independent comparison: all **196,608 FP32 logits** are byte-identical
+between native and depth-tiled CPU inference. Peak sampled RSS fell from 1.21 GB
+to 670 MB (**44.7%**) for this one 32×32×64 input, with unchanged weights and
+normalization. This does not establish full-size feasibility, patient accuracy,
+RL improvement or general speedup. The earlier larger-input failure is retained.
+
 The [generated Conv3d depth-tiling control](artifacts/depth-tiled-conv3d-microkernel-v1/RESULT.md)
 matched native outputs exactly in six small cases and one independently audited
 operator experiment. Peak sampled RSS fell from 351.4 MB to 241.3 MB in that

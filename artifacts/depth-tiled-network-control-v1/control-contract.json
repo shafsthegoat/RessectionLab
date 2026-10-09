@@ -1,0 +1,69 @@
+{
+  "acquisition_allowlist_path": "build/limited-input-guard-design/gliomoda-mps-gate-a-v3/acquisition-allowlist.json",
+  "acquisition_allowlist_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+  "arm_order": [
+    "native",
+    "tiled"
+  ],
+  "full_128_patch_gate_b_enabled": false,
+  "gate": "CPU_DEPTH_TILING_CONTROL_V1",
+  "host_abort_free_drop_points": 20,
+  "host_abort_kernel_pressure_masks": [
+    2,
+    4
+  ],
+  "host_abort_min_free_percent": 30,
+  "host_abort_swap_growth_mib": 128,
+  "host_compressor_occupied": "diagnostic_only_no_standalone_stop",
+  "host_preflight_max_free_spread_points": 5,
+  "host_preflight_min_free_percent": 45,
+  "host_preflight_required_kernel_pressure_mask": 1,
+  "host_preflight_seconds": 30,
+  "host_preflight_swap_growth_measurement_tolerance_mib": 0.0,
+  "host_sample_max_interval_seconds": 0.2,
+  "host_sample_target_interval_seconds": 0.05,
+  "input_npy_sha256": "1edcafb65d19d721f7a729dc1aed883f24b84bba8f9b4a0f122dc28af0ee1ddf",
+  "input_raw_sha256": "2ffd87d8168dd650f172683aed415d484dcb9e208bbbeada64ae4a6b80f75c93",
+  "input_shape": [
+    1,
+    2,
+    32,
+    32,
+    64
+  ],
+  "launch_ancestor_exemption": "Only exact PID ancestry of this supervisor is excluded and recorded at each sample",
+  "local_source_sha256": {
+    "conv_wrapper.py": "6551b48c550924d73006edf429939d1df8c4728b34c8b5db4f8b57bc4963f291",
+    "depth_tiled_conv3d.py": "83c9660278d219bae10aa2f0ca7e8d5b21ed948cab639706a1720c27685c098c"
+  },
+  "log_cap_bytes": 2097152,
+  "model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "model_patch_size": [
+    128,
+    128,
+    128
+  ],
+  "output_depth_tile": 4,
+  "pageouts_swapouts_policy": "diagnostic_counters_only; no automatic hold from isolated system-wide increments",
+  "parity_atol": 0.001,
+  "parity_rtol": 0.001,
+  "process_group_rss_cap_kib": 3145728,
+  "project_compute_policy": "Exact pinned PID/PGID/start/ucomm/command/source/declaration acquisition wrapper may continue only while RSS <=1GiB; all other project Python/FEBio/pytest/node/shell overlaps defer/stop model; curl transfers may continue; downloader is never killed by this controller",
+  "require_exact_decoded_region_labels": true,
+  "runner_source_sha256": {
+    "compare_control.py": "45c4e82a4ab2148638e10b3adf533d647594217075d11ce7934933d1efc51be2",
+    "darwin_fast_sampler.py": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+    "network_control_worker.py": "a08520542b077abffa63af14cb216f9c2ede76f2d08dab0439275266922a01d9",
+    "slow_inventory.py": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1",
+    "supervise_control.py": "d76393fab9fda2f64042d3ddb734e62be71be92c3c8254df6ea7b7d75f1ff93d"
+  },
+  "scope": "Fresh generated 32x32x64 CPU native-vs-output-depth-tiled nnUNet numerical control; separate from Gate A v3 and 128^3 production patch",
+  "slow_inventory_interval_seconds": 0.5,
+  "slow_inventory_max_age_seconds": 1.5,
+  "tiled_requires_accepted_native": true,
+  "wall_time_cap_seconds": 120
+}

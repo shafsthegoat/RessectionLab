@@ -1,0 +1,16 @@
+{
+  "dtype": "float32",
+  "formula": "((flat_index*37 mod 101)-50)/50",
+  "nonzero_count": 129774,
+  "npy_sha256": "1edcafb65d19d721f7a729dc1aed883f24b84bba8f9b4a0f122dc28af0ee1ddf",
+  "numpy_version": "2.0.1",
+  "raw_sha256": "2ffd87d8168dd650f172683aed415d484dcb9e208bbbeada64ae4a6b80f75c93",
+  "scope": "Generated fixed integer-pattern FP32 input only; no patient data",
+  "shape": [
+    1,
+    2,
+    32,
+    32,
+    64
+  ]
+}

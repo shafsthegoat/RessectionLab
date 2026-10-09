@@ -1,0 +1,129 @@
+"""Compare saved generated native/tiled CPU full-network logits without inference."""
+
+import hashlib
+import json
+from pathlib import Path
+
+import numpy as np
+
+
+HERE = Path(__file__).resolve().parent
+CONTRACT = HERE / "control-contract.json"
+OUTPUT = HERE / "network-control-comparison.json"
+
+
+def digest(path):
+    sha = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 * 1024 * 1024), b""):
+            sha.update(block)
+    return sha.hexdigest()
+
+
+def load_checked(arm, contract):
+    folder = HERE / arm
+    receipt = json.loads((folder / "result.json").read_text())
+    supervision = json.loads((folder / "supervision.json").read_text())
+    path = folder / "logits.npy"
+    if (receipt["arm"] != arm or supervision.get("arm") != arm or
+            receipt["input_npy_sha256"] != contract["input_npy_sha256"]):
+        raise ValueError("arm/input receipt mismatch")
+    wrapper = receipt.get("wrapper_report")
+    if arm == "native" and wrapper is not None:
+        raise ValueError("native arm unexpectedly attached Conv3d wrappers")
+    if arm == "tiled" and (not isinstance(wrapper, dict) or
+                           wrapper.get("parameter_state_module_identities_preserved") is not True or
+                           wrapper.get("wrapped_unique_conv3d_modules", 0) <= 0):
+        raise ValueError("tiled arm lacks a verified unique-module wrapper receipt")
+    expected_contract = digest(CONTRACT)
+    if receipt.get("contract_sha256") != expected_contract or supervision.get("contract_sha256") != expected_contract:
+        raise ValueError("arm was not run under the current frozen contract")
+    if receipt.get("checkpoint_sha256_after") != contract["model_file_sha256"]["fold_all/checkpoint_final.pth"]:
+        raise ValueError("arm checkpoint digest differs from frozen contract")
+    if (supervision["exit_code"] != 0 or supervision["watchdog_reason"] is not None
+            or supervision["accepted_for_pair"] is not True):
+        raise ValueError("arm run did not complete under guard")
+    if digest(path) != receipt["logits_npy_sha256"]:
+        raise ValueError("logit file differs from receipt")
+    logits = np.load(path, allow_pickle=False)
+    if logits.shape != (1, 3, 32, 32, 64) or logits.dtype != np.float32 or not logits.flags.c_contiguous:
+        raise ValueError("unexpected logit shape/dtype/layout")
+    if hashlib.sha256(logits.tobytes(order="C")).hexdigest() != receipt["logits_raw_sha256"]:
+        raise ValueError("raw logit bytes differ from receipt")
+    if not np.isfinite(logits).all():
+        raise ValueError("nonfinite logits")
+    return logits, receipt
+
+
+def decode_regions(logits, order):
+    segmentation = np.zeros((logits.shape[0], *logits.shape[2:]), dtype=np.uint8)
+    for index, label in enumerate(order):
+        segmentation[logits[:, index] > 0.0] = label
+    return segmentation
+
+
+def main():
+    if OUTPUT.exists():
+        raise FileExistsError("comparison receipt already exists")
+    contract = json.loads(CONTRACT.read_text())
+    if contract["gate"] != "CPU_DEPTH_TILING_CONTROL_V1" or contract["full_128_patch_gate_b_enabled"]:
+        raise ValueError("only this generated CPU control comparison is permitted")
+    if digest(Path(__file__).resolve()) != contract["runner_source_sha256"]["compare_control.py"]:
+        raise ValueError("comparison source changed after contract freeze")
+    native, native_receipt = load_checked("native", contract)
+    tiled, tiled_receipt = load_checked("tiled", contract)
+    absolute = np.abs(native.astype(np.float64) - tiled.astype(np.float64))
+    allclose = bool(np.allclose(native, tiled, rtol=contract["parity_rtol"],
+                               atol=contract["parity_atol"], equal_nan=False))
+    tolerance = contract["parity_atol"] + contract["parity_rtol"] * np.abs(tiled.astype(np.float64))
+    out_of_tolerance = int(np.count_nonzero(absolute > tolerance))
+    order = [2, 1, 3]  # pinned dataset.json regions_class_order; sequential overwrite
+    if order != json.loads((HERE.parents[2] / "data/models/gliomoda-v1.0.2/t1c-t2f-pinned-v1/dataset.json").read_text())["regions_class_order"]:
+        raise ValueError("region decode order changed")
+    decoded_disagreement = int(np.count_nonzero(decode_regions(native, order) != decode_regions(tiled, order)))
+    decoded_total = int(np.prod(native.shape[2:]) * native.shape[0])
+    threshold_margin = []
+    near_zero_band = contract["parity_atol"]
+    for index, region_name in enumerate(("whole tumor", "tumor core", "enhancing tumor")):
+        native_region = native[:, index]
+        tiled_region = tiled[:, index]
+        crossing = (native_region > 0.0) != (tiled_region > 0.0)
+        crossings = int(np.count_nonzero(crossing))
+        threshold_margin.append({
+            "region": region_name,
+            "near_zero_band_abs_logit": near_zero_band,
+            "native_near_zero_cells": int(np.count_nonzero(np.abs(native_region) <= near_zero_band)),
+            "tiled_near_zero_cells": int(np.count_nonzero(np.abs(tiled_region) <= near_zero_band)),
+            "threshold_crossing_cells": crossings,
+            "minimum_native_abs_logit": float(np.min(np.abs(native_region))),
+            "minimum_tiled_abs_logit": float(np.min(np.abs(tiled_region))),
+            "maximum_abs_logit_difference_on_crossings": float(np.max(np.abs(native_region[crossing] - tiled_region[crossing]))) if crossings else None,
+            "maximum_distance_to_zero_on_crossings": float(np.max(np.maximum(np.abs(native_region[crossing]), np.abs(tiled_region[crossing])))) if crossings else None,
+        })
+    passed = allclose and (decoded_disagreement == 0 if contract["require_exact_decoded_region_labels"] else True)
+    report = {
+        "scope": "Generated-only 32x32x64 native-vs-tiled CPU logit parity; no patient or 128^3 inference",
+        "control_pass": passed,
+        "raw_logit_allclose": allclose,
+        "rtol": contract["parity_rtol"], "atol": contract["parity_atol"],
+        "max_absolute_error": float(np.max(absolute)),
+        "rmse": float(np.sqrt(np.mean(np.square(absolute)))),
+        "out_of_tolerance_elements": out_of_tolerance,
+        "total_logit_elements": int(native.size),
+        "decoded_disagreement_cells": decoded_disagreement,
+        "decoded_total_cells": decoded_total,
+        "decoded_disagreement_fraction": decoded_disagreement / decoded_total,
+        "per_region_threshold_margins": threshold_margin,
+        "region_order": ["whole tumor", "tumor core", "enhancing tumor"],
+        "regions_class_order": order,
+        "native_raw_logit_sha256": native_receipt["logits_raw_sha256"],
+        "tiled_raw_logit_sha256": tiled_receipt["logits_raw_sha256"],
+        "gate_b_128_patch_enabled": False,
+        "interpretation": "Numerical operator-substitution parity on generated input only; not segmentation accuracy, patient transfer, or clinical evidence",
+    }
+    OUTPUT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    print(json.dumps(report, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()
