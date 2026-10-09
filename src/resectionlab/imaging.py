@@ -634,7 +634,6 @@ def import_brain_extraction_evidence(
     return case.revised(structural_evidence=existing)
 
 
-@historical_only("SYNTHETIC_CASE_DISABLED")
 def create_synthetic_case(shape: tuple[int, int, int] = (64, 64, 64)) -> CaseData:
     """Deterministic, explicitly synthetic imaging fixture; never a patient case.
 

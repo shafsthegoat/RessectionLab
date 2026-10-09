@@ -170,6 +170,13 @@ private target removed under a target swap without changing its nominal plan.
 Ten wider provisional-support failures reproduce on the frozen base and remain
 open. This is not patient admission or evidence of transfer.
 
+The [named generated geometry fixture](artifacts/generated-geometry-fixture-restoration-v1/RESULT.md)
+now executes again under the later synthetic-data authorization, with explicit
+simulated/research-only labels and anti-promotion checks. All 42 policy tests pass.
+The matching 71 structural tests now report 48 passes, 23 failures and zero setup
+errors, versus the preserved 26-pass/14-fail/31-error baseline. Remaining failures
+expose retained importer/model-lineage requirements; no patient admission changed.
+
 The October 9 steering makes privileged-simulation training with **limited
 preoperative inputs on unseen patients** the primary falsifiable RL hypothesis.
 The [research protocol](EXPERIMENT_PROTOCOL.md) and [master plan](MASTER_PLAN.md)

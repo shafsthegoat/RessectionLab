@@ -25,7 +25,6 @@ ROOT = Path(__file__).resolve().parents[1]
     ("brain_extraction", "ensure_model_assets", "SYNTHETIC_MODEL_INELIGIBLE"),
     ("brain_extraction", "run_synthstrip", "SYNTHETIC_MODEL_INELIGIBLE"),
     ("imaging", "import_brain_extraction_evidence", "SYNTHETIC_MODEL_INELIGIBLE"),
-    ("imaging", "create_synthetic_case", "SYNTHETIC_CASE_DISABLED"),
     ("brain_extraction", "main", "SYNTHETIC_MODEL_INELIGIBLE"),
     ("population_learning", "validate_population_checkpoint", "GENERATED_POLICY_INELIGIBLE"),
     ("population_learning", "load_frozen_population_policy", "GENERATED_POLICY_INELIGIBLE"),
@@ -44,6 +43,29 @@ def test_incompatible_public_api_refuses_before_inputs(module, name, reason):
         function()
     assert caught.value.code == reason
     assert caught.value.policy_version == POLICY_VERSION
+
+
+def test_generated_geometry_fixture_is_labeled_and_cannot_claim_observed_support():
+    from resectionlab.imaging import create_synthetic_case
+    from resectionlab.structural_evidence import validate_explicit_support
+
+    first = create_synthetic_case((24, 24, 24))
+    repeat = create_synthetic_case((24, 24, 24))
+    assert first.semantic_hash == repeat.semantic_hash
+    assert first.context is None
+    assert first.metadata["is_synthetic"] is True
+    assert first.metadata["benchmark_track"] == "synthetic_geometry"
+    assert first.metadata["input_mode"] == "synthetic"
+    assert first.metadata["clinical_use_status"] == "research_only"
+    assert first.metadata["clinical_deficit_probability"] is None
+    assert "not_a_patient" in first.unknowns
+    assert all(ref.provenance == "simulated" and ref.uri.startswith("synthetic://")
+               for ref in first.source_refs)
+    support = validate_explicit_support(first, first.brain_mask,
+        {"source": first.semantic_hash, "method": "test-only", "evidence_type": "observed"})
+    assert support["evidence_type"] == "simulated"
+    assert support["source_domain"] == "synthetic_fixture"
+    assert support["cortical_access_permitted"] is False
 
 
 @pytest.mark.parametrize("module,function", [

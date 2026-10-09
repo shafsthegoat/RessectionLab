@@ -49,8 +49,9 @@ REASONS = {
         "enter a new compliant learning or evaluation run."
     ),
     "SYNTHETIC_CASE_DISABLED": (
-        "Generated patient cases are excluded from training, evaluation and "
-        "demonstrations. Open an eligible acquired case instead."
+        "This legacy entry point remains closed. Explicitly labeled generated "
+        "fixtures may be used for software and research development; this "
+        "operation does not grant patient, clinical or checkpoint eligibility."
     ),
 }
 

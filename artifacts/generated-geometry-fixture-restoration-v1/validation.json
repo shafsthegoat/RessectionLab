@@ -1,0 +1,403 @@
+{
+  "scope": "generated software fixture restoration; no model, patient or training admission",
+  "baseline_counts": {
+    "error": 31,
+    "failed": 14,
+    "passed": 26
+  },
+  "current_matching_structural_counts": {
+    "passed": 48,
+    "failed": 23
+  },
+  "current_policy_counts": {
+    "passed": 42
+  },
+  "transitions": [
+    {
+      "before": "error",
+      "after": "failed",
+      "count": 10
+    },
+    {
+      "before": "error",
+      "after": "passed",
+      "count": 21
+    },
+    {
+      "before": "failed",
+      "after": "failed",
+      "count": 13
+    },
+    {
+      "before": "failed",
+      "after": "passed",
+      "count": 1
+    },
+    {
+      "before": "passed",
+      "after": "passed",
+      "count": 26
+    }
+  ],
+  "previously_passing_tests_now_failing": [],
+  "per_test": [
+    {
+      "test": "tests.test_native_spatial_task_review::test_actor_crop_affine_does_not_crop_native_removal_or_retained_contact",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_actual_frozen_train_metadata_and_complete_source_inventory_validate_without_images",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_native_inventory_is_complete_over_declared_primitives_and_exact_entries",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_numerical_source_contract_is_closed_before_images[changed_policy]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_numerical_source_contract_is_closed_before_images[omit_engine]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_numerical_source_contract_is_closed_before_images[readme_only]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_parent_worker_byte_binding_includes_case_tool_access_and_settings[access]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_parent_worker_byte_binding_includes_case_tool_access_and_settings[case_bundle]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_parent_worker_byte_binding_includes_case_tool_access_and_settings[settings]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_parent_worker_byte_binding_includes_case_tool_access_and_settings[tools]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_private_reference_change_never_changes_proposals_policy_inputs_or_nominal_teacher",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_resealed_role_promotion_cannot_replace_frozen_cohort[sub-PAT26]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_resealed_role_promotion_cannot_replace_frozen_cohort[sub-PAT29]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_selection_or_sealed_subject_refused_before_bundle_checksum_or_load[sub-PAT26]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_selection_or_sealed_subject_refused_before_bundle_checksum_or_load[sub-PAT27]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_selection_or_sealed_subject_refused_before_bundle_checksum_or_load[sub-PAT29]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_selection_or_sealed_subject_refused_before_bundle_checksum_or_load[sub-PAT31]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_unsupported_worlds_and_functional_objectives_are_explicitly_refused",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_world_tool_access_and_objective_cannot_change_mid_episode[access]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_world_tool_access_and_objective_cannot_change_mid_episode[budget]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_world_tool_access_and_objective_cannot_change_mid_episode[reward]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_native_spatial_task_review::test_world_tool_access_and_objective_cannot_change_mid_episode[tool]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_desktop_displays_separate_proposal_without_planning_permission",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_every_case_factory_blocks_unreviewed_working_brain_mask[flat_review_boolean]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_every_case_factory_blocks_unreviewed_working_brain_mask[rejected_extraction]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_every_case_factory_blocks_unreviewed_working_brain_mask[unknown]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_every_case_factory_blocks_unreviewed_working_brain_mask[unreviewed_extraction]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_exact_review_does_not_select_mask_or_grant_cortical_permission",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_explicit_hypothetical_assumption_is_source_bound_and_remains_unverified",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_explicit_support_cannot_reuse_unreviewed_extraction",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_simulated_source_cannot_be_relabelled_patient_observation",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_stale_source_frame_mask_and_forged_manifest_are_rejected",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence::test_unselected_proposal_is_immutable_separate_and_does_not_change_planning_seed",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_array_descriptor_change_cannot_reuse_accepted_review",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_exact_pending_proposal_cannot_be_overridden_by_formal_assumption",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition0-coarse]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition0-native]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition0-native_config]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition1-coarse]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition1-native]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition1-native_config]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition2-coarse]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition2-native]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition2-native_config]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition3-coarse]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition3-native]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_explicit_full_head_prohibition_wins_over_collection_name[prohibition3-native_config]",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_one_voxel_proposal_change_cannot_launder_unknown_support",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_reviewed_model_provenance_cannot_be_relabelled_by_support_caller[observed]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_reviewed_model_provenance_cannot_be_relabelled_by_support_caller[simulated]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_selected_review_does_not_authorize_adding_targets_outside_envelope[coarse]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_selected_review_does_not_authorize_adding_targets_outside_envelope[native]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_selected_review_does_not_authorize_adding_targets_outside_envelope[native_config]",
+      "before": "error",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_adversarial::test_unselected_proposals_and_reviews_leave_actual_worlds_unchanged",
+      "before": "error",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_attach_cli_rejects_overwriting_known_source_artifacts[case]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_attach_cli_rejects_overwriting_known_source_artifacts[mask]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_attach_cli_rejects_overwriting_known_source_artifacts[report]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_attach_cli_rejects_overwriting_known_source_artifacts[source]",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_attach_cli_saves_separate_reopenable_proposals",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_bundle_preserves_unreviewed_evidence_and_hash_bound_review",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_bundle_rejects_forged_review_status",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_current_case_image_or_frame_change_rejects_stale_extraction",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_extraction_import_is_display_only_and_source_bound",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[failed]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[mask_bytes]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[model]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[qc_cortex]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[review]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[source]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[top_review]",
+      "before": "failed",
+      "after": "failed"
+    },
+    {
+      "test": "tests.test_structural_evidence_io::test_unverified_report_or_mask_cannot_be_attached[wrong_grid]",
+      "before": "failed",
+      "after": "failed"
+    }
+  ],
+  "baseline_xml_sha256": "d9aff502a648331c86eb32266b16e9cc5b432e5383cace28b325bf6f89ff51cd",
+  "current_xml_sha256": "8562d2b57ba5c78122399e29f89d1d095d89aa6618da7d73c82c682cdf0ff82f",
+  "current_total": "23 failed, 90 passed, 0 setup errors in 2.36 seconds"
+}

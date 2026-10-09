@@ -1,0 +1,7 @@
+# Restore explicitly generated geometry fixtures
+
+The named `create_synthetic_case` constructor now runs again under the user's later authorization of generated research data. It keeps simulated source URIs, synthetic geometry labels, `research_only`, `not_a_patient` and no clinical deficit probability. The new test deliberately asks to promote its support to observed evidence; the existing validator retains simulated provenance and denies cortical access. The legacy desktop entry point, patient extraction/model admission and training/checkpoint rules remain closed.
+
+All 42 policy tests pass. On the matching historical 71-test structural selection, passes increased from 26 to 48 and setup errors fell from 31 to zero. There are now 23 failing assertions: the original 13 importer failures remain and 10 previously unreachable cases encounter retained model-lineage gates or expect a later refusal. No previously passing test failed. These failures remain explicit, without skips or relaxed patient admission. Across both selections the actual result is **90 passed, 23 failed, zero setup errors** in 2.36 seconds.
+
+This restores generated test execution, not a patient, segmentation or RL result. Broader generated training needs its own source/simulator/observation/partition contract. Authentic patient-derived estimate import and model lineage are separate unresolved integration work. Historical results remain unchanged; the machine-readable comparison names all 71 matched tests.
