@@ -1,0 +1,91 @@
+{
+  "files": [
+    {
+      "bytes": 1512,
+      "path": "RESULT.md",
+      "sha256": "2ca0e3c4389e3dc77577a39055340b8e4440cd69b30126e10ba161d5802a65af"
+    },
+    {
+      "bytes": 4222,
+      "path": "V1_INDEPENDENT_HOLD.md",
+      "sha256": "928cb8ece90998f639bc4f6328c8f8fa2037c834ff292ec2c1b4946a2ab63864"
+    },
+    {
+      "bytes": 1519,
+      "path": "V1_STAGE1_COUNTEREXAMPLE.py",
+      "sha256": "c39dfd9e54e5c823ceed47e3fe2ebfe7088bbf67d498bb870277a6aa2c5c9172"
+    },
+    {
+      "bytes": 3171,
+      "path": "V2_INDEPENDENT_REVIEW.md",
+      "sha256": "b076217bb41e047a793443163ccd2c4142f185c224a4183af95c91a5fdf44164"
+    },
+    {
+      "bytes": 4266,
+      "path": "V3_INDEPENDENT_AUDIT.md",
+      "sha256": "296f860880ad28204a2538e43649b6ad70aa690a1622c187a8ef3ae397b7fecb"
+    },
+    {
+      "bytes": 9784,
+      "path": "v1/recompute_skip.py",
+      "sha256": "336603fd54155fabd318682ebf37c79dd005ed8bb45337c7fc6ed0555d5f2593"
+    },
+    {
+      "bytes": 6082,
+      "path": "v1/test_recompute_skip.py",
+      "sha256": "34fd53d68b0cff00318e5fac3283ffa9b028e0efa4420c22a9382f120688a879"
+    },
+    {
+      "bytes": 10845,
+      "path": "v2/recompute_skip.py",
+      "sha256": "e8b02c6aca5e6e3539fa103682bb72041c690fb85895bab60ef3a97b6236a5ab"
+    },
+    {
+      "bytes": 5808,
+      "path": "v2/test_recompute_skip.py",
+      "sha256": "ddbc3b2f3de2505a3df3cdeaa5d231fbf8091ef315c1d6f609bea26b1381f2a0"
+    },
+    {
+      "bytes": 3124,
+      "path": "v3/RESULT.md",
+      "sha256": "5cabe11aecfafeadf1ab96410c71f4c83549dd93bab622bf2f400b9f99fdd8b6"
+    },
+    {
+      "bytes": 3914,
+      "path": "v3/generated_six_stage_control.py",
+      "sha256": "79560cc74b146cf08bcff72f678f23868d86945acff9d4415186af7db07ce9d6"
+    },
+    {
+      "bytes": 11954,
+      "path": "v3/recompute_skip.py",
+      "sha256": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d"
+    },
+    {
+      "bytes": 5062,
+      "path": "v3/six-stage-generated/supervision.json",
+      "sha256": "aba2a30dd172134e867456214674ee1a63565f1a6d5c6e596e8d05616e74bcd0"
+    },
+    {
+      "bytes": 783,
+      "path": "v3/six-stage-generated/worker.log",
+      "sha256": "12568f7be47051631983c694153a2cbde3441b62e7263afcd3dd9de6b4fa1bd9"
+    },
+    {
+      "bytes": 4555,
+      "path": "v3/supervise_generated_control.py",
+      "sha256": "0baa75dd4195e48a615da1f5bad7a37b327386cde4c125530de67a72f71f2096"
+    },
+    {
+      "bytes": 6552,
+      "path": "v3/test_recompute_skip.py",
+      "sha256": "48e14692c5327f6e1dd043d1f13a42bf508e30a0a59b2ee3ebf3cd16e94debb7"
+    },
+    {
+      "bytes": 259,
+      "path": "v3/tiny-test.log",
+      "sha256": "cb6023ce3fdde79ad81d8ba897159569214660da8e9044f0c4fc19907e464066"
+    }
+  ],
+  "schema": "compact-generated-encoder-memory-evidence-v1",
+  "scope": "source/tests/receipts only; no arrays, weights or patient records"
+}
