@@ -1,0 +1,18 @@
+{
+  "cohort": {
+    "path": "manifests/experiments/tractoinferno-publisher-person-splits-v1.json",
+    "sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30"
+  },
+  "payload_started_at_scope_freeze": false,
+  "prepared_candidate_hashes": {
+    "proposed-cohort.json": "18da6cfead3146184b656258f8f5635081d893fbfdcc42d8ff9aa654c9c8d0bc",
+    "proposed-scope.json": "e21eeabf9d03521534253a6f1c15c4c278fec423e8ec9db5417f9d2a5eb07c9c",
+    "run-intake.py": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc"
+  },
+  "review_sha256": "e1fdb91533f1488c79aed3aa81f909faf54342be0c9423ccb431248dd021c1f2",
+  "runner_sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+  "scope": {
+    "path": "manifests/experiments/tractoinferno-full-train-byte-intake-v1.json",
+    "sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053"
+  }
+}

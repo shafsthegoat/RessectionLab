@@ -88,6 +88,15 @@ positives outside coverage are counted rather than silently discarded. The
 Case4 mask's inferior omissions remain unresolved; no patient map, model run or
 planner admission follows from this source-only integration.
 
+The [TractoInferno byte-intake scope](artifacts/tractoinferno-train-intake-preparation-v1/INDEPENDENT_REVIEW.md)
+now freezes all 198 publisher TRAIN identifiers: 7,622 files and
+273,788,367,039 bytes. The publisher's 58 validation and 28 test identifiers
+remain protected and excluded. Independent metadata and 13 generated transport
+checks pass; continuous checksum-verified acquisition is released after its
+separate runtime declaration binds this commit. Detailed anatomy QC is deferred.
+These derivative tractography candidates are not verified glioma cases or
+functional ground truth; unknown biological overlap and model exposure remain.
+
 The [NFBS original-byte intake](artifacts/nfbs-completion-v1/RESULT.md)
 completed after ReMIND on October 9 at 08:45 UTC: one sealed archive,
 1,751,464,473 bytes, verified against publisher-linked whole-file MD5 with local
