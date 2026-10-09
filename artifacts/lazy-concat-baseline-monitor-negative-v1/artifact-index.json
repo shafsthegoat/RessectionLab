@@ -1,0 +1,143 @@
+{
+  "contains_generated_logits": false,
+  "contains_patient_or_weight_payload": false,
+  "payload_count": 27,
+  "payloads": [
+    {
+      "path": "ALLOWANCE-DELTA.md",
+      "sha256": "5d35197bfb8ced4a0385f7055a86bcb0ab2eb3d48efacb01eb8cbe0ea5c7f506",
+      "size_bytes": 1618
+    },
+    {
+      "path": "INDEPENDENT-AUDIT.md",
+      "sha256": "ef6e4369b54f4d68070cafa8ff77199c3939d7583d57972931c17b44287bf541",
+      "size_bytes": 3539
+    },
+    {
+      "path": "RESULT.md",
+      "sha256": "a9aa99b3a174a1ba57721898208185b4fb10799b8a60e90843783935ca0bfa87",
+      "size_bytes": 2173
+    },
+    {
+      "path": "acquisition-allowlist.json",
+      "sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "size_bytes": 927
+    },
+    {
+      "path": "baseline/finalization.json",
+      "sha256": "374c532a72756c06f8cfe9d642e582ea82e9fdf3dc86f7c530db6c3c9676e162",
+      "size_bytes": 702
+    },
+    {
+      "path": "baseline/host-preflight.json",
+      "sha256": "43b2084806aea5cbde98752d33eda9769135774f731091d7426f8fdaceed0357",
+      "size_bytes": 14545
+    },
+    {
+      "path": "baseline/launch-binding.json",
+      "sha256": "cb8eddec95047e312a57bf5841081469fd7a742e31ded1860fac243f87d3ca31",
+      "size_bytes": 498
+    },
+    {
+      "path": "baseline/provisional-supervision.json",
+      "sha256": "95284870585619134c89211fb23e953f6875fbf537799b4beb6edad5bb42d533",
+      "size_bytes": 26761
+    },
+    {
+      "path": "baseline/supervision.json",
+      "sha256": "f626caa4848dcb1809cf6c16d58f5e599bf586840f9bd8d7211376d797f80d83",
+      "size_bytes": 29254
+    },
+    {
+      "path": "baseline/worker.log",
+      "sha256": "04a47cb8d7b4445ae94bcecc350c12f40ace8f5e294f5626660ee726c4f432c5",
+      "size_bytes": 825
+    },
+    {
+      "path": "generated-input-receipt.json",
+      "sha256": "83772be6ffdf2d6e0baeaf09349583f9b0df708ab6c31c8f8a0d3092e628fb36",
+      "size_bytes": 417
+    },
+    {
+      "path": "live-acquisition-verification.json",
+      "sha256": "6eab66b9c6dcc4fe26958cb92a43754f488dc89c10c9746d22ec83def89dbfd5",
+      "size_bytes": 909
+    },
+    {
+      "path": "pair-contract-original-no-acquisition.json",
+      "sha256": "58a7365cb929334280ad3a481f5c1119c7b3bd1c18718b4f0b81a8d5a8c8bb06",
+      "size_bytes": 4864
+    },
+    {
+      "path": "pair-contract.json",
+      "sha256": "4c6d17d8287f7ad791ef1002cf931beed7ee561dafb3c99547020993e0f93374",
+      "size_bytes": 5021
+    },
+    {
+      "path": "readiness-acquisition-v2.json",
+      "sha256": "ad0f3e1dbe3615160cfa8060239e0db55f4de005e28df5552834d74b92f5b670",
+      "size_bytes": 730
+    },
+    {
+      "path": "source/compare_pair.py",
+      "sha256": "085855393f45f8c3b39f5e4ff7ee00e1c801604bbff8c5ea86deeaab1e4474ff",
+      "size_bytes": 8883
+    },
+    {
+      "path": "source/darwin_fast_sampler.py",
+      "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+      "size_bytes": 8426
+    },
+    {
+      "path": "source/launch_gate.py",
+      "sha256": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+      "size_bytes": 916
+    },
+    {
+      "path": "source/lazy_concat.py",
+      "sha256": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+      "size_bytes": 11313
+    },
+    {
+      "path": "source/low_memory_conv3d.py",
+      "sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+      "size_bytes": 7119
+    },
+    {
+      "path": "source/monitor_primitives.py",
+      "sha256": "0fbb1ff95a38f26081b88163b85c79be940229ffe8cf615999f8ea854931c448",
+      "size_bytes": 4079
+    },
+    {
+      "path": "source/pair_worker.py",
+      "sha256": "b224791b2ea74456a78bbff99f037d33be808e96ef9f63320f5f6a99cb204051",
+      "size_bytes": 15799
+    },
+    {
+      "path": "source/safe_finalize.py",
+      "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+      "size_bytes": 13744
+    },
+    {
+      "path": "source/slow_inventory.py",
+      "sha256": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1",
+      "size_bytes": 10441
+    },
+    {
+      "path": "source/supervise_pair.py",
+      "sha256": "8ef6a48e7d5267262a1e380a12412a4acf92ba7ecaf43be0a2519fbb3e3ac501",
+      "size_bytes": 23241
+    },
+    {
+      "path": "source/test_compare_pair.py",
+      "sha256": "bb6f338d6063232c1a33f13769f1dce14f65d42b93364efcae6dfe9c23290e44",
+      "size_bytes": 1224
+    },
+    {
+      "path": "source/test_launch_control.py",
+      "sha256": "6ed871a230a628f422abe7ea98c3997e8b326c3e3d2d4cec803698da265339d4",
+      "size_bytes": 12081
+    }
+  ],
+  "status": "saved_monitor_negative_no_model_output"
+}

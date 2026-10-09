@@ -96,6 +96,15 @@ and verifies them by replay using only permitted inputs. Root integration passed
 This supports complete-strategy evaluation and replay. The saved demonstration
 is explicitly generated DEVELOPMENT evidence, with no training or patient transfer.
 
+The [matched 64³ baseline attempt](artifacts/lazy-concat-baseline-monitor-negative-v1/RESULT.md)
+stopped before a forward pass because the process monitor could not inspect a
+short-lived PID. Host pressure stayed normal and sampled RSS peaked at 583 MB;
+this is an observer failure, not a model-memory or numerical result. No logits
+were saved and the optimized arm did not run. Immediate cleanup uncertainty is
+preserved, alongside later confirmation that the recorded PIDs were absent.
+The next version must remove avoidable instrumentation subprocesses and handle
+verified process disappearance without ignoring live inaccessible processes.
+
 The [full-128³ tile-depth-1 attempt](artifacts/full128-tile1-pressure-negative-v1/INDEPENDENT_REVIEW.md)
 was pressure-stopped after 6.327 seconds at 2,489,253,888 sampled resident bytes.
 No output or worker success result was saved. The finalizer recorded a transient

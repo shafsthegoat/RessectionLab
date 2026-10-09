@@ -1,0 +1,30 @@
+{
+  "cleanup_errors": [
+    "group_still_live_after_bounded_wait"
+  ],
+  "completed_at_utc": "2026-10-09T10:46:34.432241+00:00",
+  "exit_code": -9,
+  "finalization_receipt_write_error": null,
+  "launch_start_identity": [
+    1791542792,
+    788890
+  ],
+  "manual_attention_required": true,
+  "pgid": 98947,
+  "pid": 98947,
+  "provisional_receipt_write_error": null,
+  "remaining_detached_pids": [],
+  "remaining_group_pids": [
+    98970
+  ],
+  "residual_possible": true,
+  "scope": "Identity-checked child cleanup with provisional trace before signaling",
+  "signal_results": [
+    {
+      "identity_matched": true,
+      "pid": 98947,
+      "signaled": true
+    }
+  ],
+  "terminate_requested": true
+}

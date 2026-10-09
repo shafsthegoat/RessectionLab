@@ -1,0 +1,21 @@
+{
+  "acquisition_row": {
+    "blocking_overlap": false,
+    "command_class": "acquisition_python",
+    "identity_matched": true,
+    "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+    "max_rss_kib": 524288,
+    "pgid": 92434,
+    "pid": 92434,
+    "rss_kib": 40736,
+    "rss_within_cap": true
+  },
+  "declaration_sha256": "98c9f4bc797aecfc36d2857b98435016162c243e5c35eef4e08d99ed0ebb1f57",
+  "live_identity_matched": true,
+  "live_rss_within_512_mib_allowance": true,
+  "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+  "scope": "Read-only exact existing acquisition allowance verification; no download interruption or model call",
+  "source_sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+  "start_identity_lstart": "Fri Oct  9 05:46:44 2026",
+  "timestamp_utc": "2026-10-09T10:43:07.056212+00:00"
+}
