@@ -1,0 +1,1 @@
+Root compared all eight exact reviewed candidate hashes against the final independent report before issuing this release. Source commit: ff701523a6f20b8bbfe48d6e96aef5fbf553e326. Scope: four arbitrary numerical controls only; unchanged caps, one attempt each, stop first negative. No measured response or material fit.

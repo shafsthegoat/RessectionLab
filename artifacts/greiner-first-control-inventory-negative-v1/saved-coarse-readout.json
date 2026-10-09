@@ -1,0 +1,1954 @@
+{
+  "case": "onearm_shear_dt010",
+  "continuum_oracle": {
+    "1.2": {
+      "discrete_time_error_envelope_Pa": 0.0752246734203652,
+      "per_component_abs_error_Pa": {
+        "xx": 0.07522467320328019,
+        "xy": 0.007312041092859545,
+        "yy": 0.018798731805276248,
+        "zz": 0.018798731805276248
+      },
+      "within_predeclared_envelope": true
+    },
+    "1.7999999999999998": {
+      "discrete_time_error_envelope_Pa": 0.055727808714635785,
+      "per_component_abs_error_Pa": {
+        "xx": 0.05572780914968689,
+        "xy": 0.005416893064420947,
+        "yy": 0.013926443582391812,
+        "zz": 0.013926443582391812
+      },
+      "within_predeclared_envelope": true
+    },
+    "5.2": {
+      "discrete_time_error_envelope_Pa": 0.010180552483660676,
+      "per_component_abs_error_Pa": {
+        "xx": 0.010180552339164706,
+        "xy": 0.000989577061716318,
+        "yy": 0.0025441317377641326,
+        "zz": 0.0025441317377641326
+      },
+      "within_predeclared_envelope": true
+    }
+  },
+  "failures": [],
+  "passed": true,
+  "provenance": {
+    "backend_transform_source_sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "constitutive_source_sha256": [
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEUncoupledViscoElasticMaterial.cpp",
+        "sha256": "70cebde5fc6d09f3fbfb93e67b4f451c8c5960a463e507731ce6cbf2aaccc058"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEViscoElasticMaterial.cpp",
+        "sha256": "2e22d6645c1198bbe83308dddc7fcd3c497b9ac7edd9de3226e4439e1ff16454"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEUncoupledMaterial.cpp",
+        "sha256": "f07b402222bc428373a7beb0fcddd58400b110b6cda6b23df9336e959a898a41"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEUncoupledMaterial.h",
+        "sha256": "236e2d27e23e78bd2cdb5c84a89c95ff383ebad421477adbcc36a935a033a234"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEMooneyRivlin.cpp",
+        "sha256": "1ba2ebf9ec252e8b4447a0aa486b5a0544d5868cdec12db891fde42ea99e76da"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEBioMechModule.cpp",
+        "sha256": "aecff27231e0e11475f732252cfcd8968944a9581f18663549abb56bf11f4645"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEElasticMaterialPoint.cpp",
+        "sha256": "d61bc23f94e9bb81f26eafa902931805bc4a0c1c2e476f5204536c13db55f6f7"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEUncoupledViscoElasticMaterial.h",
+        "sha256": "58b902eb837f14efc142fabaa12f427e2a0c1bfac3a3093f5fedd420a8366a5d"
+      },
+      {
+        "path": "data/optional-runtimes/febio-4.13/source/FEBioMech/FEViscoElasticMaterial.h",
+        "sha256": "b477b4d70872f987394c849c1075717dd2ea554af30980f3e5e496fce9e55917"
+      }
+    ],
+    "executed_deck_sha256": "4ec67cdd47d2e20ec564889197ec4b54ddcf92218277098b5663b106ab2f8a29",
+    "measured_response_accessed": false,
+    "native_output_observed": null,
+    "native_provenance_verified": false,
+    "oracle_sha256": "6790dd916e18002ef0cde912ad0c9a217f7793aef56fa9938a9ee9bc3971600e",
+    "original_prepared_deck_sha256": "5e85e57e6c5eba832d8bd8ab6b05d76f162ae14a516bed2659cd50435fc0c505",
+    "patient_data_accessed": false,
+    "physical_validation_pass": null,
+    "preparation_sha256": "9d42f72c87642ddda705fdebca3592ddf0494b420af3223b4244bbc3267556be",
+    "saved_output_sha256": {
+      "onearm_shear_dt010.elements.log": "964e2b370245d10f437a644574df97e94a0325cacab0731b7c078399885831dd",
+      "onearm_shear_dt010.log": "42190c73768a59a84dbc5f6a2fbaa5d2e239e413a78b0ce872d25892f624a700",
+      "onearm_shear_dt010.nodes.log": "4ed90c82bb97175fe2fca49afa74b37c1a1fb9c0fe62a2f44096dde5d847bf07"
+    },
+    "saved_stream_parsed": true,
+    "solver_only_transform_verified": true,
+    "spec_sha256": "4e8bdaf25c3734b4800c7be5f17264a79b8c2c818c6ce965d22125d73651cb33"
+  },
+  "scope": "arbitrary-constant numerical software control only; not physical validation",
+  "solver": {
+    "last_squared_force_residual_norms_N2": {
+      "1": [
+        0.001205343,
+        1.773142e-32,
+        1.205343e-13
+      ],
+      "10": [
+        0.001436021,
+        1.24262e-31,
+        1.436021e-13
+      ],
+      "11": [
+        0.001490776,
+        1.838138e-31,
+        1.490776e-13
+      ],
+      "12": [
+        0.00155156,
+        8.50686e-32,
+        1.55156e-13
+      ],
+      "13": [
+        8.528401e-32,
+        7.475453e-32,
+        8.528401e-42
+      ],
+      "14": [
+        7.533132e-32,
+        4.211039e-32,
+        7.533132e-42
+      ],
+      "15": [
+        4.245077e-32,
+        8.561215e-32,
+        4.245077e-42
+      ],
+      "16": [
+        8.471219e-32,
+        7.562233e-32,
+        8.471219e-42
+      ],
+      "17": [
+        7.530246e-32,
+        4.271466e-32,
+        7.530246e-42
+      ],
+      "18": [
+        4.247617e-32,
+        6.819279e-32,
+        4.247617e-42
+      ],
+      "19": [
+        6.742684e-32,
+        4.259507e-32,
+        6.742684e-42
+      ],
+      "2": [
+        0.001208158,
+        4.661968e-32,
+        1.208158e-13
+      ],
+      "20": [
+        4.282509e-32,
+        8.884462e-32,
+        4.282509e-42
+      ],
+      "21": [
+        8.924345e-32,
+        8.461603e-32,
+        8.924345e-42
+      ],
+      "22": [
+        8.376405e-32,
+        7.737743e-32,
+        8.376405e-42
+      ],
+      "23": [
+        7.782094e-32,
+        2.470593e-32,
+        7.782094e-42
+      ],
+      "24": [
+        2.449956e-32,
+        2.449956e-32,
+        2.449956e-42
+      ],
+      "25": [
+        2.4424e-32,
+        1.239766e-32,
+        2.4424e-42
+      ],
+      "26": [
+        1.244595e-32,
+        8.997107e-32,
+        1.244595e-42
+      ],
+      "27": [
+        9.00589e-32,
+        3.425471e-31,
+        9.00589e-42
+      ],
+      "28": [
+        3.424672e-31,
+        7.661045e-32,
+        3.424672e-41
+      ],
+      "29": [
+        7.633811e-32,
+        4.336051e-32,
+        7.633811e-42
+      ],
+      "3": [
+        0.001216611,
+        2.242403e-31,
+        1.216611e-13
+      ],
+      "30": [
+        4.314827e-32,
+        8.985089e-32,
+        4.314827e-42
+      ],
+      "31": [
+        8.931022e-32,
+        8.458448e-32,
+        8.931022e-42
+      ],
+      "32": [
+        8.405424e-32,
+        7.661902e-32,
+        8.405424e-42
+      ],
+      "33": [
+        7.640789e-32,
+        6.145616e-32,
+        7.640789e-42
+      ],
+      "34": [
+        6.152868e-32,
+        2.435202e-32,
+        6.152868e-42
+      ],
+      "35": [
+        2.431585e-32,
+        1.26841e-32,
+        2.431585e-42
+      ],
+      "36": [
+        1.260699e-32,
+        9.055737e-32,
+        1.260699e-42
+      ],
+      "37": [
+        8.962036e-32,
+        8.337237e-32,
+        8.962036e-42
+      ],
+      "38": [
+        8.393285e-32,
+        7.754807e-32,
+        8.393285e-42
+      ],
+      "39": [
+        7.725501e-32,
+        2.404272e-32,
+        7.725501e-42
+      ],
+      "4": [
+        0.001230721,
+        4.600011e-32,
+        1.230721e-13
+      ],
+      "40": [
+        2.433312e-32,
+        4.311394e-32,
+        2.433312e-42
+      ],
+      "41": [
+        4.338892e-32,
+        6.647177e-32,
+        4.338892e-42
+      ],
+      "42": [
+        6.612994e-32,
+        4.353072e-32,
+        6.612994e-42
+      ],
+      "43": [
+        4.337425e-32,
+        6.625031e-32,
+        4.337425e-42
+      ],
+      "44": [
+        6.643499e-32,
+        4.327692e-32,
+        6.643499e-42
+      ],
+      "45": [
+        4.346099e-32,
+        8.344204e-32,
+        4.346099e-42
+      ],
+      "46": [
+        8.324316e-32,
+        9.885795e-32,
+        8.324316e-42
+      ],
+      "47": [
+        9.823316e-32,
+        7.752131e-32,
+        9.823316e-42
+      ],
+      "48": [
+        7.719426e-32,
+        3.358965e-31,
+        7.719426e-42
+      ],
+      "49": [
+        3.351233e-31,
+        2.096085e-31,
+        3.351233e-41
+      ],
+      "5": [
+        0.001250514,
+        1.184024e-31,
+        1.250514e-13
+      ],
+      "50": [
+        2.097312e-31,
+        8.400219e-32,
+        2.097312e-41
+      ],
+      "51": [
+        8.438443e-32,
+        7.77905e-32,
+        8.438443e-42
+      ],
+      "52": [
+        7.702478e-32,
+        6.154006e-32,
+        7.702478e-42
+      ],
+      "6": [
+        0.001276021,
+        5.223475e-31,
+        1.276021e-13
+      ],
+      "7": [
+        0.001307279,
+        1.996168e-31,
+        1.307279e-13
+      ],
+      "8": [
+        0.001344331,
+        1.902478e-32,
+        1.344331e-13
+      ],
+      "9": [
+        0.001387227,
+        7.560566e-32,
+        1.387227e-13
+      ]
+    },
+    "passed": true,
+    "state_count": 52
+  },
+  "states": [
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 1.0,
+      "step": 0,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 0.0,
+        "xy": 0.0,
+        "xz": 0.0,
+        "yy": 0.0,
+        "yz": 0.0,
+        "zz": 0.0
+      },
+      "time_s": 0.0
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999997,
+      "step": 1,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.956435013994451e-11,
+        "xy": 1.4203749287844403e-11,
+        "xz": 1.89928570901e-13,
+        "yy": 2.2327806270538986e-11,
+        "yz": 1.19501748146e-13,
+        "zz": 2.2327806270538986e-11
+      },
+      "time_s": 0.1
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 2,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.992717102439201e-11,
+        "xy": 2.923172814917052e-11,
+        "xz": 1.02372253526e-13,
+        "yy": 2.3747226407522248e-11,
+        "yz": 1.45314958642e-13,
+        "zz": 2.3747226407522248e-11
+      },
+      "time_s": 0.2
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 3,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 7.212008767965017e-12,
+        "xy": 5.587708074017428e-11,
+        "xz": 1.73088252706e-13,
+        "yy": 2.1959323248665896e-11,
+        "yz": 2.2561770433e-13,
+        "zz": 2.1959323248665896e-11
+      },
+      "time_s": 0.30000000000000004
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 4,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.0474288930927287e-11,
+        "xy": 3.3872993299155496e-10,
+        "xz": 2.23319083478e-13,
+        "yy": 2.6195934310635494e-11,
+        "yz": 1.14124700386e-13,
+        "zz": 2.6195934310635494e-11
+      },
+      "time_s": 0.4
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999997,
+      "step": 5,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 5.061906449554954e-11,
+        "xy": 3.0900082492735237e-10,
+        "xz": 2.14363857979e-13,
+        "yy": 2.0900614572383347e-11,
+        "yz": 1.40038987354e-13,
+        "zz": 2.0900614572383347e-11
+      },
+      "time_s": 0.5
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 6,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.1088908397359774e-11,
+        "xy": 5.474021236295812e-11,
+        "xz": 1.81623235925e-13,
+        "yy": 1.9742429913094384e-11,
+        "yz": 1.93793271159e-13,
+        "zz": 1.9742429913094384e-11
+      },
+      "time_s": 0.6000000000000001
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999997,
+      "step": 7,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 8.412825991399586e-12,
+        "xy": 1.751914169290103e-10,
+        "xz": 2.03315396139e-13,
+        "yy": 1.1354472917446401e-11,
+        "yz": 1.45411866631e-13,
+        "zz": 1.1354472917446401e-11
+      },
+      "time_s": 0.7000000000000001
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999997,
+      "step": 8,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.529976311256178e-11,
+        "xy": 2.3521806724602357e-10,
+        "xz": 2.1266719473e-13,
+        "yy": 6.023270771038369e-11,
+        "yz": 1.63804648281e-13,
+        "zz": 6.023270771038369e-11
+      },
+      "time_s": 0.8
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999997,
+      "step": 9,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.5150192211876856e-10,
+        "xy": 3.284981175966095e-10,
+        "xz": 2.72405420886e-13,
+        "yy": 1.9127810446661897e-11,
+        "yz": 1.61820955065e-13,
+        "zz": 1.9127810446661897e-11
+      },
+      "time_s": 0.9
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 10,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.057483238284476e-10,
+        "xy": 3.47597506333841e-10,
+        "xz": 1.76692660723e-13,
+        "yy": 1.9525714378687553e-11,
+        "yz": 1.76830091736e-13,
+        "zz": 1.9525714378687553e-11
+      },
+      "time_s": 1.0
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 11,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.4557599570252933e-10,
+        "xy": 4.241655915393494e-10,
+        "xz": 2.96845118262e-13,
+        "yy": 1.4935608305677306e-11,
+        "yz": 1.22420284119e-13,
+        "zz": 1.4935608305677306e-11
+      },
+      "time_s": 1.1
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 12,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.1725554688600823e-10,
+        "xy": 3.482227839413099e-10,
+        "xz": 2.93216014473e-13,
+        "yy": 9.107736786972964e-11,
+        "yz": 1.76622387481e-13,
+        "zz": 9.107736786972964e-11
+      },
+      "time_s": 1.2000000000000002
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 13,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.9952396946318913e-10,
+        "xy": 2.885371941374615e-10,
+        "xz": 3.32211941582e-13,
+        "yy": 2.2296831048151944e-10,
+        "yz": 1.2951631948e-13,
+        "zz": 2.2296831048151944e-10
+      },
+      "time_s": 1.3
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 14,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 5.097717803437263e-10,
+        "xy": 9.197265171678737e-11,
+        "xz": 3.28048508268e-13,
+        "yy": 3.736744247362367e-10,
+        "yz": 1.30909550877e-13,
+        "zz": 3.736744247362367e-10
+      },
+      "time_s": 1.4000000000000001
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 15,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.814317667798605e-10,
+        "xy": 3.872173692798242e-10,
+        "xz": 2.81561073763e-13,
+        "yy": 2.915783170465147e-10,
+        "yz": 1.74230609478e-13,
+        "zz": 2.915783170465147e-10
+      },
+      "time_s": 1.5
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 16,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.290789780090563e-11,
+        "xy": 4.86465978610795e-10,
+        "xz": 3.20764542418e-13,
+        "yy": 2.8333602131169755e-10,
+        "yz": 1.27220196674e-13,
+        "zz": 2.8333602131169755e-10
+      },
+      "time_s": 1.6
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 17,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.6408209780347534e-10,
+        "xy": 3.9619862945983186e-10,
+        "xz": 3.17159405349e-13,
+        "yy": 8.870415513229091e-11,
+        "yz": 1.28281854812e-13,
+        "zz": 8.870415513229091e-11
+      },
+      "time_s": 1.7000000000000002
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 18,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.348521542851813e-10,
+        "xy": 4.65433913632296e-10,
+        "xz": 2.58215013614e-13,
+        "yy": 4.678355480791652e-10,
+        "yz": 2.16333183973e-13,
+        "zz": 4.678355480791652e-10
+      },
+      "time_s": 1.8
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 19,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.340403509355383e-10,
+        "xy": 1.1812062439275905e-10,
+        "xz": 3.12020786333e-13,
+        "yy": 6.603784186154371e-11,
+        "yz": 1.25543470212e-13,
+        "zz": 6.603784186154371e-11
+      },
+      "time_s": 1.9000000000000001
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 20,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.0791723070724402e-10,
+        "xy": 2.1714186004828662e-11,
+        "xz": 2.54492183093e-13,
+        "yy": 3.928875003111898e-10,
+        "yz": 1.99323184739e-13,
+        "zz": 3.928875003111898e-10
+      },
+      "time_s": 2.0
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 21,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.261639681615634e-10,
+        "xy": 9.305267667514272e-11,
+        "xz": 2.65451703003e-13,
+        "yy": 1.8272316992806736e-10,
+        "yz": 1.66716702347e-13,
+        "zz": 1.8272316992806736e-10
+      },
+      "time_s": 2.1
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 22,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.2153122952440754e-10,
+        "xy": 3.675495463539846e-10,
+        "xz": 4.73011360954e-13,
+        "yy": 3.4634695111890323e-10,
+        "yz": 1.23381639417e-13,
+        "zz": 3.4634695111890323e-10
+      },
+      "time_s": 2.2
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 23,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.3021584638627246e-10,
+        "xy": 2.6142288334085606e-10,
+        "xz": 2.99371409618e-13,
+        "yy": 4.313278623158112e-10,
+        "yz": 1.22385088757e-13,
+        "zz": 4.313278623158112e-10
+      },
+      "time_s": 2.3000000000000003
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 24,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.367936874885345e-10,
+        "xy": 4.3030468077631667e-10,
+        "xz": 2.96809627948e-13,
+        "yy": 1.0973622011078987e-10,
+        "yz": 1.2147389252e-13,
+        "zz": 1.0973622011078987e-10
+      },
+      "time_s": 2.4000000000000004
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 25,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.1096192287805025e-10,
+        "xy": 8.066081136348657e-11,
+        "xz": 2.52768120257e-13,
+        "yy": 6.17319528828375e-11,
+        "yz": 1.45475839171e-13,
+        "zz": 6.17319528828375e-11
+      },
+      "time_s": 2.5
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 26,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.1880274541908875e-11,
+        "xy": 1.922444425872527e-10,
+        "xz": 2.47935308393e-13,
+        "yy": 7.105427357601002e-14,
+        "yz": 1.92280444111e-13,
+        "zz": 7.105427357601002e-14
+      },
+      "time_s": 2.6
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 27,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.0749090506578796e-10,
+        "xy": 1.2778400559909642e-10,
+        "xz": 4.19168283646e-13,
+        "yy": 1.5290879673557356e-11,
+        "yz": 1.61562013998e-13,
+        "zz": 1.5290879673557356e-11
+      },
+      "time_s": 2.7
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 28,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.0457946448004805e-10,
+        "xy": 1.411422090313863e-10,
+        "xz": 2.87412665048e-13,
+        "yy": 1.3812950783176348e-11,
+        "yz": 1.21674888571e-13,
+        "zz": 1.3812950783176348e-11
+      },
+      "time_s": 2.8000000000000003
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 29,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.333706561330473e-10,
+        "xy": 5.496758603840135e-11,
+        "xz": 2.85434118233e-13,
+        "yy": 5.285016868583625e-11,
+        "yz": 1.18190820601e-13,
+        "zz": 5.285016868583625e-11
+      },
+      "time_s": 2.9000000000000004
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 30,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.700950739788823e-11,
+        "xy": 1.4227907740860246e-10,
+        "xz": 2.44835215417e-13,
+        "yy": 7.332801033044234e-12,
+        "yz": 1.89035266303e-13,
+        "zz": 7.332801033044234e-12
+      },
+      "time_s": 3.0
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 31,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.5125148062652443e-10,
+        "xy": 3.3566038837307133e-10,
+        "xz": 2.42078413199e-13,
+        "yy": 2.4769519768597092e-11,
+        "yz": 1.59365388696e-13,
+        "zz": 2.4769519768597092e-11
+      },
+      "time_s": 3.1
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 32,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.7483793019200675e-11,
+        "xy": 5.60476109967567e-11,
+        "xz": 2.8197952428e-13,
+        "yy": 6.912159733474255e-11,
+        "yz": 1.19485511754e-13,
+        "zz": 6.912159733474255e-11
+      },
+      "time_s": 3.2
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 33,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.978310931212036e-10,
+        "xy": 1.2846612662542611e-10,
+        "xz": 4.49685413986e-13,
+        "yy": 3.2386537895945366e-11,
+        "yz": 1.16365248404e-13,
+        "zz": 3.2386537895945366e-11
+      },
+      "time_s": 3.3000000000000003
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 34,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.0955326363036875e-10,
+        "xy": 8.463985068374313e-11,
+        "xz": 2.75974089176e-13,
+        "yy": 5.7980287238024175e-11,
+        "yz": 1.15747643245e-13,
+        "zz": 5.7980287238024175e-11
+      },
+      "time_s": 3.4000000000000004
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 35,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 8.967049325292464e-11,
+        "xy": 1.8746959540294483e-10,
+        "xz": 2.33508199695e-13,
+        "yy": 2.8620661396416835e-11,
+        "yz": 1.39320155352e-13,
+        "zz": 2.8620661396416835e-11
+      },
+      "time_s": 3.5
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 36,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.579998519853689e-10,
+        "xy": 3.149693839077372e-10,
+        "xz": 2.40851302568e-13,
+        "yy": 2.6005864128819667e-12,
+        "yz": 1.84658966681e-13,
+        "zz": 2.6005864128819667e-12
+      },
+      "time_s": 3.6
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 37,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.4796341929468326e-10,
+        "xy": 1.5569412425975315e-10,
+        "xz": 2.32928153411e-13,
+        "yy": 5.2935433814127464e-11,
+        "yz": 1.5649787541e-13,
+        "zz": 5.2935433814127464e-11
+      },
+      "time_s": 3.7
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 38,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 6.158984433568548e-11,
+        "xy": 1.7979573385673575e-10,
+        "xz": 4.42818710206e-13,
+        "yy": 4.547473508864641e-12,
+        "yz": 1.17698889594e-13,
+        "zz": 4.547473508864641e-12
+      },
+      "time_s": 3.8000000000000003
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 39,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.45449882640969e-10,
+        "xy": 2.325464265595656e-10,
+        "xz": 2.69077563485e-13,
+        "yy": 2.5295321393059567e-11,
+        "yz": 1.13731213182e-13,
+        "zz": 2.5295321393059567e-11
+      },
+      "time_s": 3.9000000000000004
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 40,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.2736124921939336e-10,
+        "xy": 2.0656898414017633e-10,
+        "xz": 2.67993230125e-13,
+        "yy": 1.764988155628089e-11,
+        "yz": 1.13242071436e-13,
+        "zz": 1.764988155628089e-11
+      },
+      "time_s": 4.0
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 41,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.07778691421845e-10,
+        "xy": 5.5365489970427006e-11,
+        "xz": 2.38808705971e-13,
+        "yy": 2.4158453015843406e-13,
+        "yz": 2.03746312227e-13,
+        "zz": 2.4158453015843406e-13
+      },
+      "time_s": 4.1000000000000005
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 42,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.31384705734672e-10,
+        "xy": 2.8774138627341017e-10,
+        "xz": 2.67533391289e-13,
+        "yy": 6.330935775622493e-11,
+        "yz": 1.11934911454e-13,
+        "zz": 6.330935775622493e-11
+      },
+      "time_s": 4.2
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 43,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.0444978215673473e-10,
+        "xy": 4.657749741454609e-10,
+        "xz": 2.36932629792e-13,
+        "yy": 4.362732397567015e-12,
+        "yz": 2.02157107494e-13,
+        "zz": 4.362732397567015e-12
+      },
+      "time_s": 4.3
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 44,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.4434143597318325e-10,
+        "xy": 6.87805368215777e-12,
+        "xz": 2.67117311904e-13,
+        "yy": 1.8317791727895383e-11,
+        "yz": 1.10752144192e-13,
+        "zz": 1.8317791727895383e-11
+      },
+      "time_s": 4.4
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 45,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 9.671907719166484e-11,
+        "xy": 5.2580162446247414e-11,
+        "xz": 2.25422700366e-13,
+        "yy": 6.959055554034421e-11,
+        "yz": 1.53531977784e-13,
+        "zz": 6.959055554034421e-11
+      },
+      "time_s": 4.5
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 46,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.490630090003833e-11,
+        "xy": 5.502442945726216e-11,
+        "xz": 2.2495134576e-13,
+        "yy": 5.135802894074004e-11,
+        "yz": 1.61776122562e-13,
+        "zz": 5.135802894074004e-11
+      },
+      "time_s": 4.6000000000000005
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 47,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.4440184865379706e-10,
+        "xy": 3.732338882400654e-10,
+        "xz": 2.65159083299e-13,
+        "yy": 7.389644451905042e-13,
+        "yz": 1.16668451029e-13,
+        "zz": 7.389644451905042e-13
+      },
+      "time_s": 4.7
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 48,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.5835333872237243e-10,
+        "xy": 2.9746161089860834e-10,
+        "xz": 4.34599885882e-13,
+        "yy": 2.6929569685307797e-11,
+        "yz": 1.1174171202e-13,
+        "zz": 2.6929569685307797e-11
+      },
+      "time_s": 4.800000000000001
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 49,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 3.2656544135534205e-11,
+        "xy": 2.5067947717616335e-10,
+        "xz": 3.01365388729e-13,
+        "yy": 5.015010628994787e-11,
+        "yz": 8.50338047975e-14,
+        "zz": 5.015010628994787e-11
+      },
+      "time_s": 4.9
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 50,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 2.2427570911531802e-10,
+        "xy": 3.6493474908638746e-10,
+        "xz": 2.19042098198e-13,
+        "yy": 3.979039320256561e-12,
+        "yz": 1.56924178307e-13,
+        "zz": 3.979039320256561e-12
+      },
+      "time_s": 5.0
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 51,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 4.632738637155853e-11,
+        "xy": 1.297166818403639e-10,
+        "xz": 2.59452239321e-13,
+        "yy": 1.809041805245215e-11,
+        "yz": 1.16865171393e-13,
+        "zz": 1.809041805245215e-11
+      },
+      "time_s": 5.1000000000000005
+    },
+    {
+      "bulk_sed_diagnostic_only_Pa": {
+        "analytic": 0.0,
+        "logged_mean": 0.0
+      },
+      "checks": {
+        "current_moment_balance_Nm": true,
+        "displacements_m": true,
+        "force_balance_N": true,
+        "free_center_residual_N": true,
+        "gradient": true,
+        "logged_J": true,
+        "positions_m": true,
+        "positive_sampled_J": true,
+        "signed_reactions_N": true,
+        "stress_components_Pa": true
+      },
+      "deviatoric_sed_gate_applied": false,
+      "minimum_sampled_J": 0.9999999999999996,
+      "step": 52,
+      "stress_component_max_abs_error_Pa": {
+        "xx": 1.44638079291326e-10,
+        "xy": 1.37674760480877e-10,
+        "xz": 4.29319786469e-13,
+        "yy": 3.200284481863491e-11,
+        "yz": 1.12811297975e-13,
+        "zz": 3.200284481863491e-11
+      },
+      "time_s": 5.2
+    }
+  ]
+}

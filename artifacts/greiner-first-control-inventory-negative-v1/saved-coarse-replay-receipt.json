@@ -1,0 +1,62 @@
+{
+  "checker_sha256": "badc544010749274301d0a528ed04f49385605c5b82068670e7bf26d79b276b6",
+  "continuum_envelopes_passed": true,
+  "interpretation": "Independent read-only replay of hash-retained saved logs. The original failed receipt is immutable; this diagnostic alone does not admit the coarse case or authorize another native call.",
+  "maximum_stress_component_abs_error_Pa": 5.097717803437263e-10,
+  "measured_response_accessed": false,
+  "minimum_sampled_J": 0.9999999999999996,
+  "native_calls_attempted_for_this_replay": 0,
+  "native_provenance_verified_by_checker": false,
+  "next_native_calls_allowed_by_this_receipt": 0,
+  "original_failure": {
+    "message": "Exact native output inventory differs",
+    "type": "ValueError"
+  },
+  "original_native_call_count": 1,
+  "original_native_exit_code": 0,
+  "original_native_wall_seconds": 0.08138820785097778,
+  "original_output_bindings": {
+    "console.txt": {
+      "bytes": 71755,
+      "sha256": "85b65337b1d0f77e30c484fb65336c386786d8fbb67f1c27edee9930f09cbcac"
+    },
+    "onearm_shear_dt010.elements.log": {
+      "bytes": 44852,
+      "sha256": "964e2b370245d10f437a644574df97e94a0325cacab0731b7c078399885831dd"
+    },
+    "onearm_shear_dt010.feb": {
+      "bytes": 16832,
+      "sha256": "4ec67cdd47d2e20ec564889197ec4b54ddcf92218277098b5663b106ab2f8a29"
+    },
+    "onearm_shear_dt010.log": {
+      "bytes": 100241,
+      "sha256": "42190c73768a59a84dbc5f6a2fbaa5d2e239e413a78b0ce872d25892f624a700"
+    },
+    "onearm_shear_dt010.nodes.log": {
+      "bytes": 115802,
+      "sha256": "4ed90c82bb97175fe2fca49afa74b37c1a1fb9c0fe62a2f44096dde5d847bf07"
+    },
+    "onearm_shear_dt010.xplt": {
+      "bytes": 40575,
+      "sha256": "86a8153c5dc843aac0acfe21f3ca40bda60c4c09f77634ae372e7885a95a3231"
+    }
+  },
+  "original_receipt_sha256": "55f6138edea3a1aa47788db0cc46a233583360d4e689fdc6b7fd2b1a959cab53",
+  "original_root_release_sha256": "5b9f613fe316d87c4d4d24f9e2b44b0e227950856b561f2a4dc0e43d03e6521b",
+  "original_source_commit": "ff701523a6f20b8bbfe48d6e96aef5fbf553e326",
+  "original_status_preserved": "failed_or_incomplete",
+  "original_summary_sha256": "3584ea8418868eeedcbbfe689fc32d73a6270baa877cfa20d65fa20199988728",
+  "patient_data_accessed": false,
+  "physical_validation_pass": null,
+  "readout_failures": [],
+  "readout_frame_count": 53,
+  "replay_elapsed_seconds": 0.13514662510715425,
+  "saved_bound_input_count": 174,
+  "saved_inputs_after_unchanged": true,
+  "saved_inputs_before_unchanged": true,
+  "saved_inputs_final_unchanged": true,
+  "saved_readout_sha256": "f03fbc6d1af6868722afc768e93d47af8aeb504b879e2e7b9a94e374a4733694",
+  "schema": "greiner-coarse-saved-only-diagnostic-v1",
+  "solver_passed": true,
+  "status": "saved_numerical_diagnostic_pass_original_receipt_still_failed"
+}

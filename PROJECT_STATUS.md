@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [first viscoelastic software control](artifacts/greiner-first-control-inventory-negative-v1/ORIGINAL_AUDIT.md)
+ran once and the solver exited normally, but the supervisor rejected its
+undeclared default plot file. That failure remains preserved; three controls
+were not attempted. Independent replay of all 53 saved states passes the
+unchanged numerical checker, with zero new solver calls. This diagnoses the
+output-contract defect and does not establish physical tissue accuracy.
+
 The [measurement-schema follow-up](artifacts/brain-indentation-schema-followup-v1/RESULT.md)
 found no authoritative positional mapping for the Greiner CSVs. A separate
 Menichetti creator release explicitly documents postmortem brain indentation

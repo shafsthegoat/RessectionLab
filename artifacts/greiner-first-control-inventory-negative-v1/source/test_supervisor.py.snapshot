@@ -1,0 +1,280 @@
+"""Tiny generated controller tests. Fake process objects only; no native solver."""
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import sys
+from types import SimpleNamespace
+import pytest
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[1]
+sys.path.insert(0, str(BASE))
+sys.path.insert(0, str(ROOT))
+import supervisor as s
+checker = s.load(BASE/'checker.py', 'test_actual_deck_checker')
+from scripts import mechanics_nonpatient_n5_supervisor as resource
+from scripts import mechanics_hbe_backend as backend
+
+
+def context():
+    prep = json.loads((BASE/'preparation.json').read_text())
+    return {'resource':resource,'runtime_helper':SimpleNamespace(process_group_rss=lambda *a,**k:(0,[])),
+            'runtime':{'runtime':{'executable':'/fake/not-launched'}},
+            'decks':{case:(ROOT/prep['cases'][case]['adapted']['path']).read_bytes() for case in s.ORDER},
+            'preparation':prep,'checker':SimpleNamespace(compare_time_refinement=lambda a,b:{'diagnostic_only':True})}
+
+
+def fake_native(executable, directory, receipt, **kwargs):
+    case = receipt['case']
+    for name in (case+'.log',case+'.nodes.log',case+'.elements.log','console.txt'):
+        (directory/name).write_text('generated fixture; not native output\n')
+    receipt.update(status='native_exit_zero',pid=999999,exit_code=0,
+                   peak_sampled_process_group_rss_bytes=1)
+
+
+def fake_check(case, directory, context):
+    return {'checked_console_sha256':s.digest((directory/'console.txt').read_bytes()),
+        'saved_output_checks':{'case':case,'passed':True,'fixture_only':True,
+        'provenance':{'executed_deck_sha256':s.digest((directory/(case+'.feb')).read_bytes()),
+                      'saved_output_sha256':{case+suffix:s.digest((directory/(case+suffix)).read_bytes())
+                       for suffix in ('.log','.nodes.log','.elements.log')}}}}
+
+
+def test_hold_template_refuses_before_import_or_launch(monkeypatch):
+    monkeypatch.setattr(s, 'inspect_preparation', lambda *a:pytest.fail('HOLD must fail before imports'))
+    with pytest.raises(ValueError, match='Separate root release'):
+        s.validate_release((BASE/'root-release.template.json').read_bytes())
+
+
+def test_source_mutation_is_retained_and_rejected(tmp_path):
+    (tmp_path/'small.txt').write_bytes(b'original')
+    expected = {'small.txt':s.digest(b'original')}
+    assert s.unchanged(s.audit_inputs(expected,tmp_path))
+    (tmp_path/'small.txt').write_bytes(b'changed')
+    records = s.audit_inputs(expected,tmp_path)
+    assert not s.unchanged(records) and records['small.txt']['sha256'] == s.digest(b'changed')
+
+
+def test_exact_solver_transform_and_mechanical_mutation_rejection(tmp_path):
+    manifest, _ = checker.preparation()
+    case = 'zeroarm_shear'
+    original = (ROOT/manifest['cases'][case]['deck']).read_bytes()
+    adapted = backend.transform_deck(original).encode()
+    target = tmp_path/(case+'.feb')
+    target.write_bytes(adapted)
+    proof = checker.verify_executed_deck(case,tmp_path,s.digest(adapted),manifest)
+    assert proof['executed_deck_sha256'] != proof['original_prepared_deck_sha256']
+    assert proof['solver_only_transform_verified']
+    mechanical_change = adapted.replace(b'<c1>500</c1>', b'<c1>501</c1>')
+    assert mechanical_change != adapted
+    target.write_bytes(mechanical_change)
+    with pytest.raises(ValueError,match='outside the exact solver subtree'):
+        checker.verify_executed_deck(case,tmp_path,s.digest(mechanical_change),manifest)
+    target.write_bytes(original)
+    with pytest.raises(ValueError,match='outside the exact solver subtree'):
+        checker.verify_executed_deck(case,tmp_path,s.digest(original),manifest)
+
+
+def test_actual_deck_checker_runs_generated_full_r0_grammar(tmp_path):
+    import numpy as np
+    case = 'zeroarm_volume'
+    manifest, _ = checker.preparation()
+    adapted = backend.transform_deck((ROOT/manifest['cases'][case]['deck']).read_bytes()).encode()
+    (tmp_path/(case+'.feb')).write_bytes(adapted)
+    history = checker.expected_history(case,4,.25)
+    node_blocks, element_blocks = [], []
+    for index,row in enumerate(history):
+        sigma = row['sigma']
+        vector = [sigma[0,0],sigma[1,1],sigma[2,2],sigma[0,1],sigma[1,2],sigma[0,2],row['J'],row['bulk_energy_density_Pa']]
+        for target,name,rows in ((node_blocks,'mechanics_nodes_si',row['nodes']),
+                                 (element_blocks,'mechanics_elements_si',np.tile(vector,(8,1)))):
+            lines = [f'*Step = {index}',f'*Time = {index*.25:.17g}',f'*Data = {name}']
+            lines += [str(i)+','+','.join(format(float(v),'.17g') for v in values) for i,values in enumerate(rows,1)]
+            target.append('\n'.join(lines))
+    (tmp_path/(case+'.nodes.log')).write_text('\n'.join(node_blocks))
+    (tmp_path/(case+'.elements.log')).write_text('\n'.join(element_blocks))
+    (tmp_path/(case+'.log')).write_text('\n'.join(
+        f'Nonlinear solution status: time= {i*.25}\nresidual 0 0 1e-20' for i in range(1,5))+'\nNORMAL TERMINATION\n')
+    result = checker.check_case(case,tmp_path,executed_sha256=s.digest(adapted))
+    assert result['passed'] and result['provenance']['executed_deck_sha256'] == s.digest(adapted)
+    assert result['provenance']['native_provenance_verified'] is False
+    assert result['provenance']['native_output_observed'] is None
+
+
+def test_deterministic_order_one_attempt_complete_outputs(tmp_path):
+    seen = []
+    def launch(executable,directory,receipt,**kwargs):
+        seen.append(receipt['case']); fake_native(executable,directory,receipt,**kwargs)
+    result = s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=launch,output_check=fake_check)
+    assert seen == list(s.ORDER) and result['native_calls_attempted'] == 4
+    assert result['status'] == 'passed_four_numerical_software_controls'
+    for case in s.ORDER:
+        receipt = json.loads((tmp_path/case/'receipt.json').read_text())
+        assert receipt['output_bindings'][case+'.log']['sha256'] == s.digest(b'generated fixture; not native output\n')
+        assert receipt['thread_environment']['OMP_NUM_THREADS'] == '1'
+
+
+def test_failure_retains_negative_outputs_and_stops_later_calls(tmp_path):
+    seen = []
+    def launch(executable,directory,receipt,**kwargs):
+        seen.append(receipt['case']); fake_native(executable,directory,receipt,**kwargs)
+        receipt.update(status='failed_or_incomplete',exit_code=7)
+    result = s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=launch,output_check=fake_check)
+    assert seen == [s.ORDER[0]] and result['native_calls_attempted'] == 1
+    assert result['unattempted_cases'] == list(s.ORDER[1:])
+    receipt = json.loads((tmp_path/s.ORDER[0]/'receipt.json').read_text())
+    assert receipt['output_bindings']['console.txt']['sha256']
+    assert receipt['inputs_after']['source']['unchanged']
+    assert receipt['native_provenance_verified'] is False
+
+
+def test_after_call_source_change_fails_closed(tmp_path):
+    count = [0]
+    def audit():
+        count[0] += 1
+        return {'source':{'unchanged':count[0] == 1}}
+    result = s.run_sequence(tmp_path,context(),audit,native=fake_native,output_check=fake_check)
+    assert result['status'] == 'failed_or_incomplete' and result['native_calls_attempted'] == 1
+
+
+def test_aggregate_wall_and_output_guard(tmp_path,monkeypatch):
+    s.configure_resource(resource,s.ORDER[0])
+    monkeypatch.setattr(s.time,'monotonic',lambda:120.)
+    with pytest.raises(ValueError,match='aggregate_wall_cap'): s.aggregate_guard(tmp_path,0.,resource)
+    monkeypatch.setattr(s.time,'monotonic',lambda:1.)
+    monkeypatch.setattr(s,'active_bytes',lambda *a:s.CAPS['aggregate_active_output_bytes']+1)
+    with pytest.raises(ValueError,match='aggregate_output_cap'): s.aggregate_guard(tmp_path,0.,resource)
+
+
+@pytest.mark.parametrize('cause', ['rss','wall','observer','descendant','nonzero'])
+def test_reused_resource_controller_kills_reaps_and_keeps_receipt(tmp_path,monkeypatch,cause):
+    s.configure_resource(resource,s.ORDER[0])
+    killed = []
+    monkeypatch.setattr(resource.os,'killpg',lambda pid,sig:killed.append(pid))
+    ticks = iter([0.,0.,31.,31.,31.,31.] if cause == 'wall' else [0.,0.,.1,.1,.1,.1])
+    monkeypatch.setattr(resource.time,'monotonic',lambda:next(ticks,.1))
+    class Fake:
+        pid = 999999
+        waited = False
+        def poll(self): return 0 if cause == 'descendant' else (7 if cause == 'nonzero' else None)
+        def wait(self,timeout): self.waited=True; return 7
+    child = Fake()
+    def observer(*a,**k):
+        if cause == 'observer': raise ValueError('generated observer failure')
+        return (s.CAPS['per_case_sampled_process_group_rss_bytes']+1 if cause == 'rss' else 1,
+                [] if cause == 'nonzero' else [{'pid':child.pid,'rss_bytes':1}])
+    receipt = resource.supervise('/fake',tmp_path,{},rss_observer=observer,
+                                popen=lambda *a,**k:child,sleep=lambda t:None)
+    assert receipt['status'] == 'failed_or_incomplete' and child.waited
+    if cause != 'nonzero': assert killed == [child.pid]
+    assert (tmp_path/'console.txt').exists() and (tmp_path/'receipt.json').exists()
+
+
+def test_unexpected_output_symlink_and_wrong_backend_rejected(tmp_path):
+    case=s.ORDER[0]
+    ctx=context()
+    for name in (case+'.feb',case+'.log',case+'.nodes.log',case+'.elements.log','receipt.json'):
+        (tmp_path/name).write_text('fixture')
+    (tmp_path/'console.txt').write_text('* Selecting linear solver skyline *\n')
+    with pytest.raises(ValueError,match='actual Accelerate'):
+        s.check_outputs(case,tmp_path,ctx)
+    (tmp_path/'extra').symlink_to(tmp_path/'console.txt')
+    with pytest.raises(ValueError,match='inventory'):
+        s.check_outputs(case,tmp_path,ctx)
+    assert s.collect_outputs(tmp_path,resource)['extra']['sha256'] is None
+
+
+def test_existing_attempt_is_never_overwritten(tmp_path,monkeypatch):
+    release=tmp_path/'release.json'; release.write_text('{}')
+    attempt=tmp_path/s.OUTPUT; attempt.mkdir(parents=True)
+    (attempt/'negative.log').write_text('preserve')
+    monkeypatch.setattr(s,'validate_release',lambda *a:({},context()))
+    with pytest.raises(FileExistsError): s.execute(release,tmp_path)
+    assert (attempt/'negative.log').read_text() == 'preserve'
+
+
+def test_special_output_failure_keeps_final_negative_receipt(tmp_path):
+    def launch(executable,directory,receipt,**kwargs):
+        fake_native(executable,directory,receipt,**kwargs)
+        (directory/'special').symlink_to(directory/'console.txt')
+    result=s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=launch,output_check=fake_check)
+    assert result['status']=='failed_or_incomplete' and result['native_calls_attempted']==1
+    receipt=json.loads((tmp_path/s.ORDER[0]/'receipt.json').read_text())
+    assert receipt['status']=='failed_or_incomplete' and receipt['output_bindings']['special']['sha256'] is None
+
+
+def test_checker_output_hash_disagreement_fails_closed(tmp_path):
+    def altered_check(case,directory,ctx):
+        checked=fake_check(case,directory,ctx)
+        (directory/(case+'.log')).write_text('changed after checking')
+        return checked
+    result=s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=fake_native,output_check=altered_check)
+    assert result['status']=='failed_or_incomplete' and result['native_calls_attempted']==1
+    receipt=json.loads((tmp_path/s.ORDER[0]/'receipt.json').read_text())
+    assert 'output_binding_error' in receipt and receipt['native_provenance_verified'] is False
+
+
+@pytest.mark.parametrize('mutation',['console','extra'])
+def test_late_console_or_extra_output_fails_final_inventory(tmp_path,mutation):
+    def changed(case,directory,ctx):
+        checked=fake_check(case,directory,ctx)
+        if mutation=='console': (directory/'console.txt').write_text('changed backend evidence')
+        else: (directory/'extra.txt').write_text('late unexpected output')
+        return checked
+    result=s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=fake_native,output_check=changed)
+    assert result['status']=='failed_or_incomplete' and result['native_calls_attempted']==1
+    receipt=json.loads((tmp_path/s.ORDER[0]/'receipt.json').read_text())
+    assert 'final_evidence_error' in receipt and receipt['native_provenance_verified'] is False
+
+
+def test_late_checked_result_change_fails_final_binding(tmp_path,monkeypatch):
+    original=resource.durable_json
+    def mutated(file,value):
+        original(file,value)
+        if file.name=='checked.json': file.write_text('{"passed": true, "injected": true}')
+    monkeypatch.setattr(resource,'durable_json',mutated)
+    result=s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=fake_native,output_check=fake_check)
+    assert result['status']=='failed_or_incomplete' and result['native_calls_attempted']==1
+    receipt=json.loads((tmp_path/s.ORDER[0]/'receipt.json').read_text())
+    assert 'final_evidence_error' in receipt and receipt['native_provenance_verified'] is False
+
+
+@pytest.mark.parametrize('limit',['rss','case_output','aggregate_output'])
+def test_decisive_cap_sample_is_retained(tmp_path,monkeypatch,limit):
+    ctx=context()
+    if limit=='rss':
+        size=s.CAPS['aggregate_sampled_native_rss_bytes']+1
+        ctx['runtime_helper'].process_group_rss=lambda *a,**k:(size,[{'pid':999999,'rss_bytes':size}])
+    normal_bytes=s.active_bytes
+    active=[False]
+    def bytes_for(directory,helper):
+        if active[0] and limit=='case_output' and directory!=tmp_path:
+            return s.CAPS['per_case_active_output_bytes']+1
+        if active[0] and limit=='aggregate_output':
+            return s.CAPS['aggregate_active_output_bytes']+1
+        return normal_bytes(directory,helper)
+    monkeypatch.setattr(s,'active_bytes',bytes_for)
+    def launch(executable,directory,receipt,*,rss_observer):
+        fake_native(executable,directory,receipt)
+        active[0]=True
+        try: rss_observer(999999,timeout_seconds=1)
+        except ValueError as error: receipt.update(status='failed_or_incomplete',supervision_error=str(error))
+        finally: active[0]=False
+    result=s.run_sequence(tmp_path,ctx,lambda:{'source':{'unchanged':True}},native=launch,output_check=fake_check)
+    assert result['status']=='failed_or_incomplete' and result['native_calls_attempted']==1
+    receipt=json.loads((tmp_path/s.ORDER[0]/'receipt.json').read_text())
+    field={'rss':'peak_sampled_process_group_rss_bytes', 'case_output':'peak_sampled_active_output_bytes',
+           'aggregate_output':'peak_sampled_aggregate_active_output_bytes'}[limit]
+    cap={'rss':'aggregate_sampled_native_rss_bytes','case_output':'per_case_active_output_bytes',
+         'aggregate_output':'aggregate_active_output_bytes'}[limit]
+    assert receipt[field]==s.CAPS[cap]+1
+
+
+def test_previous_case_output_change_is_detected_at_final_freeze(tmp_path):
+    def launch(executable,directory,receipt,**kwargs):
+        fake_native(executable,directory,receipt,**kwargs)
+        if receipt['case']==s.ORDER[1]:
+            (tmp_path/s.ORDER[0]/'console.txt').write_text('changed previous case after finalization')
+    result=s.run_sequence(tmp_path,context(),lambda:{'source':{'unchanged':True}},native=launch,output_check=fake_check)
+    assert result['status']=='failed_or_incomplete'
+    assert result['case_evidence_final'][s.ORDER[0]]['unchanged'] is False
