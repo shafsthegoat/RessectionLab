@@ -260,6 +260,11 @@ generalizes the analytic readout while preserving its n5 default, and binds
 the third frozen case to both prior receipts and the remaining aggregate
 budget. Root's 117 adjacent tests and independent source review pass. Its
 release remains null; the 6,859-node/4,374-element native call is not yet run.
+Its [subsequent one-call execution](artifacts/mechanics-nonpatient-n9-affine-execution-v1/RESULT.md)
+now passes independent saved-output replay across all five states. The larger
+cube solved in 3.649 s with 275,103,744 B peak sampled RSS, and supplemental
+nodal-force checks agree. Three of seven calls are complete; the nonuniform
+n9/n13 and half-step convergence checks and physical validation remain open.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
