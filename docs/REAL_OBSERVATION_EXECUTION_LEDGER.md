@@ -740,3 +740,8 @@ The [v2 launcher source](../artifacts/hbe-v5-n12-nocache-v2-source-proposal-v1/R
 ### October 9: Integrate tiled full-tool vascular scoring with preserved evaluation gates
 
 The reusable tiled kernel now replaces dense contact sets in the private evaluator. Root canonical tests pass 74/74 in 14.37 seconds. Independent coverage passes 74 author/existing plus 19 reviewer controls across two runs; six original reviewer fixture type errors and their targeted correction are retained. Eight complete-report comparisons preserve existing outcomes. Generated admission, size limits, full-history sealing and separate removal semantics remain unchanged. Evidence: [integration record](../artifacts/private-vascular-streaming-integration-v1/source-index.json).
+
+
+### October 9: Prepare separate retrospective actor and private vascular evidence contracts
+
+The metadata helper preserves frozen IXI roles, requires intended-use QC assertions, retains unknown acquisition times and separates immutable T1 actor metadata from private MRA/annotation/registration evidence. Root tests pass 43/43 in 0.30 seconds; 58 independent candidate controls pass. It performs no image QC, authenticates no caller assertion and grants no execution admission. Header-only receipts cannot substitute for anatomy or registration review. [Integration index](../artifacts/ixi-vascular-metadata-preparation-v1/integration-index.json).

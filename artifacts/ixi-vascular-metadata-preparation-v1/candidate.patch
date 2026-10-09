@@ -1,0 +1,494 @@
+--- /dev/null
++++ b/src/resectionlab/ixi_vascular_admission.py
+@@ -0,0 +1,232 @@
++"""Metadata preparation for a future retrospective IXI vascular component task.
++
++This reads no files, constructs no patient arrays and grants no runtime release.
++The caller supplies separately reviewed metadata bytes/hashes. A checksum binds
++those assertions; it does not authenticate them or perform image/anatomical QC.
++Generated controls remain generated. Existing generated planner/evaluator gates
++are deliberately unchanged; neither returned contract is a current spec/seal.
++"""
++from collections.abc import Mapping
++from dataclasses import dataclass
++from datetime import datetime
++import hashlib
++import json
++import re
++
++import numpy as np
++
++from resectionlab.core import freeze_json, semantic_digest, thaw_json
++
++VERSION = "ixi-vascular-metadata-preparation-v1"
++COHORT_SHA256 = "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127"
++METHODS = ("SEARCH", "IL", "RL", "HYBRID")
++ROLE_USE = {"TRAIN": {"training_component_check", "frozen_scoring"},
++            "SELECT": {"declared_selection", "frozen_scoring"},
++            "MEASUREMENT_EVAL": {"frozen_scoring"}}
++TASK_KIND = "retrospective_healthy_vascular_corridor"
++TARGET_MEANING = "hypothetical_T1_derived_waypoint_not_pathology"
++QC_SCOPES = {
++    "acquired_T1": "T1_header_anatomy_and_frame_for_component_use",
++    "acquired_MRA": "MRA_header_anatomy_and_frame_for_vascular_reference",
++    "derived_model_assisted_manually_refined_reference": "derived_annotation_anatomy_and_MRA_grid_link",
++    "support": "T1_support_estimate_and_qualified_coverage",
++    "task": "hypothetical_T1_corridor_definition_and_tool_coverage",
++    "registration": "directed_T1_to_MRA_alignment_and_valid_domain",
++    "coverage": "annotation_MRA_registration_domain_intersection",
++}
++EXECUTION_GAPS = (
++    "retrospective_component_planning_spec_and_waypoint_objective_not_implemented",
++    "real_person_matched_suite_and_vascular_seal_versions_not_implemented",
++    "actual_array_fixity_coverage_and_registration_validation_required_at_load",
++)
++
++
++def _need(condition, reason):
++    if not condition:
++        raise ValueError(reason)
++
++
++def _sha(value):
++    _need(isinstance(value, str) and re.fullmatch(r"(?:sha256:)?[a-f0-9]{64}", value), "exact_sha256_required")
++    return value.removeprefix("sha256:")
++
++
++def _fields(value, names, reason):
++    _need(isinstance(value, Mapping) and set(value) == set(names.split()), reason)
++    return value
++
++
++def _time(value):
++    _need(isinstance(value, str), "availability_time_required")
++    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
++    _need(parsed.tzinfo is not None and parsed.utcoffset() is not None, "timezone_required")
++    return parsed
++
++
++def _grid(value):
++    _fields(value, "shape affine_ras_mm frame_sha256", "grid_fields")
++    shape, affine = value["shape"], np.asarray(value["affine_ras_mm"], dtype=float)
++    _need(isinstance(shape, (list, tuple)) and len(shape) == 3
++          and all(type(n) is int and 3 <= n <= 4096 for n in shape)
++          and int(np.prod(shape)) <= 32_000_000, "bounded_3d_grid_required")
++    _need(affine.shape == (4, 4) and np.isfinite(affine).all()
++          and np.array_equal(affine[3], [0, 0, 0, 1]), "RAS_mm_affine_required")
++    basis = affine[:3, :3]
++    spacing = np.linalg.norm(basis, axis=0)
++    _need(np.all(spacing >= .01) and np.all(spacing <= 100)
++          and np.allclose((basis / spacing).T @ (basis / spacing), np.eye(3), atol=1e-9, rtol=0),
++          "orthogonal_mm_grid_required")
++    expected = semantic_digest({"shape": list(shape), "affine_ras_mm": affine.tolist(), "frame": "RAS+"})
++    _need(_sha(value["frame_sha256"]) == _sha(expected), "frame_hash_mismatch")
++    return value["frame_sha256"]
++
++
++def _checked(row, domain, scope):
++    _need(row.get("evidence_domain") == domain, "generated_evidence_cannot_be_relabelled")
++    _need(row.get("qc_status") == "pass", "reviewed_QC_required")
++    _need(row.get("qc_scope") == QC_SCOPES[scope], "intended_use_QC_scope_required")
++    _sha(row.get("qc_record_sha256"))
++
++
++def _source(row, *, domain, member, kind):
++    _fields(row, "evidence_domain kind member source_file_sha256 array_sha256 grid acquired_at available_at availability_record_sha256 qc_status qc_scope qc_record_sha256",
++            "source_receipt_fields")
++    _checked(row, domain, kind)
++    _need(row["kind"] == kind and row["member"] == member, "source_kind_or_member_mismatch")
++    _sha(row["source_file_sha256"])
++    _sha(row["array_sha256"])
++    _grid(row["grid"])
++    if row["acquired_at"] is not None:
++        _time(row["acquired_at"])
++    if row["available_at"] is not None:
++        available = _time(row["available_at"])
++        _sha(row["availability_record_sha256"])
++        _need(row["acquired_at"] is None or _time(row["acquired_at"]) <= available,
++              "availability_precedes_acquisition")
++    else:
++        _need(row["availability_record_sha256"] is None, "unknown_availability_must_remain_unknown")
++
++
++def _actor_available(row, cutoff):
++    _need(row["available_at"] is not None and _time(row["available_at"]) <= cutoff,
++          "actor_unavailable_at_decision")
++
++
++@dataclass(frozen=True, slots=True)
++class PreparedIXIVascularCase:
++    """Separate snapshots: only actor_contract is suitable for upstream planning.
++
++    The enclosing object is evaluator-owned. Do not pass it to an actor. It is
++    an accidental-misuse boundary, not a Python or OS isolation mechanism.
++    """
++    actor_contract: Mapping
++    evaluator_contract: Mapping
++    evidence_sha256: str
++
++    def __post_init__(self):
++        object.__setattr__(self, "actor_contract", freeze_json(self.actor_contract))
++        object.__setattr__(self, "evaluator_contract", freeze_json(self.evaluator_contract))
++
++    def execution_status(self):
++        return {"execution_admitted": False, "patient_payloads_validated": False,
++                "required_bridges": list(EXECUTION_GAPS)}
++
++
++def prepare_ixi_vascular_case(*, cohort_bytes, evidence, reviewed_evidence_sha256, purpose):
++    """Join reviewed receipts to frozen roles, preserving retrospective unknowns.
++
++    This prepares one person for a later versioned component task. It does not
++    authorize extraction, fitting, selection, actor inference or private loading.
++    Role restrictions apply to the declared downstream use; no role is changed.
++    """
++    _need(type(cohort_bytes) is bytes and len(cohort_bytes) <= 2 * 1024**2
++          and hashlib.sha256(cohort_bytes).hexdigest() == COHORT_SHA256, "frozen_IXI_cohort_required")
++    cohort = json.loads(cohort_bytes)
++    _need(cohort["schema"] == "ixi-component-person-cohort-v1", "cohort_schema")
++    value = thaw_json(freeze_json(evidence))
++    _need(_sha(semantic_digest(value)) == _sha(reviewed_evidence_sha256), "reviewed_evidence_changed")
++    _fields(value, "schema evidence_domain cohort_sha256 person_id role observation_regime decision_cutoff sources support task registration coverage",
++            "case_evidence_fields")
++    _need(value["schema"] == VERSION and _sha(value["cohort_sha256"]) == COHORT_SHA256, "case_schema_or_cohort")
++    domain = value["evidence_domain"]
++    _need(domain in {"real_source_receipts", "generated_metadata_control"}, "evidence_domain_required")
++    _need(value["observation_regime"] == "retrospective_dataset", "retrospective_scope_required")
++    member = [m for m in cohort["members"] if m["person_group"] == value["person_id"]]
++    _need(len(member) == 1 and member[0]["role"] == value["role"], "frozen_person_role_mismatch")
++    member = member[0]
++    _need(purpose in ROLE_USE[value["role"]], "role_forbids_requested_use")
++    _need(set(member["raw_files"]) == {"T1", "MRA"} and member["annotation_available"] is True,
++          "paired_annotated_person_required_no_reassignment")
++    _need(member["vessel_annotation"]["original_MRA_link"] == member["raw_files"]["MRA"]["name"], "annotation_person_link")
++    sources = _fields(value["sources"], "T1 MRA vessel_annotation", "exact_source_roles_required")
++    for modality in ("T1", "MRA"):
++        _source(sources[modality], domain=domain, member=member["raw_files"][modality]["name"], kind="acquired_" + modality)
++    _source(sources["vessel_annotation"], domain=domain, member=member["vessel_annotation"]["member"],
++            kind="derived_model_assisted_manually_refined_reference")
++    t1, mra, annotation = (sources[k] for k in ("T1", "MRA", "vessel_annotation"))
++    _need(annotation["acquired_at"] is None, "derived_annotation_is_not_an_acquisition")
++    _need(annotation["grid"] == mra["grid"], "annotation_to_MRA_grid_validation_required")
++    cutoff = _time(value["decision_cutoff"])
++    _actor_available(t1, cutoff)
++    support = _fields(value["support"], "evidence_domain kind source_file_sha256 frame_sha256 output_sha256 coverage_sha256 estimator_record_sha256 estimator_model_sha256 project_fit_roles pretrained_exposure available_at availability_record_sha256 qc_status qc_scope qc_record_sha256",
++                      "support_receipt_fields")
++    _checked(support, domain, "support")
++    _need(support["kind"] == "T1_derived_brain_envelope" and support["source_file_sha256"] == t1["source_file_sha256"]
++          and support["frame_sha256"] == t1["grid"]["frame_sha256"], "support_must_derive_only_from_actor_T1")
++    for key in ("output_sha256", "coverage_sha256", "estimator_record_sha256", "estimator_model_sha256", "availability_record_sha256"):
++        _sha(support[key])
++    _need(support["project_fit_roles"] in ([], ["TRAIN"])
++          and support["pretrained_exposure"] in {"unknown", "known_overlap", "audited_no_overlap"},
++          "estimator_fit_role_or_exposure_required")
++    _actor_available(support, cutoff)
++    _need(_time(support["available_at"]) >= _time(t1["available_at"]), "support_precedes_actor_source")
++    task = _fields(value["task"], "evidence_domain kind target_semantics source_file_sha256 support_output_sha256 frame_sha256 definition_sha256 waypoint_count horizon available_at availability_record_sha256 qc_status qc_scope qc_record_sha256",
++                   "component_task_fields")
++    _checked(task, domain, "task")
++    _need(task["kind"] == TASK_KIND and task["target_semantics"] == TARGET_MEANING, "healthy_component_task_required")
++    _need(task["source_file_sha256"] == t1["source_file_sha256"] and task["support_output_sha256"] == support["output_sha256"]
++          and task["frame_sha256"] == t1["grid"]["frame_sha256"], "task_must_use_only_actor_T1_and_support")
++    _need(type(task["waypoint_count"]) is int and 1 <= task["waypoint_count"] <= 2
++          and type(task["horizon"]) is int and task["horizon"] == 1, "bounded_waypoint_task_required")
++    _sha(task["definition_sha256"])
++    _sha(task["availability_record_sha256"])
++    _actor_available(task, cutoff)
++    _need(_time(task["available_at"]) >= _time(support["available_at"]), "task_precedes_support")
++    registration = _fields(value["registration"], "evidence_domain from_source_sha256 to_source_sha256 from_frame_sha256 to_frame_sha256 direction matrix_ras_mm valid_domain_sha256 qc_status qc_scope qc_record_sha256",
++                           "registration_receipt_fields")
++    _checked(registration, domain, "registration")
++    _sha(registration["valid_domain_sha256"])
++    _need(registration["direction"] == "T1_RAS_mm_to_MRA_RAS_mm"
++          and registration["from_source_sha256"] == t1["source_file_sha256"]
++          and registration["to_source_sha256"] == mra["source_file_sha256"]
++          and registration["from_frame_sha256"] == t1["grid"]["frame_sha256"]
++          and registration["to_frame_sha256"] == mra["grid"]["frame_sha256"], "registration_source_frame_direction")
++    matrix = np.asarray(registration["matrix_ras_mm"], dtype=float)
++    _need(matrix.shape == (4, 4) and np.isfinite(matrix).all() and np.array_equal(matrix[3], [0, 0, 0, 1])
++          and np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.eye(3), atol=1e-9, rtol=0)
++          and np.isclose(np.linalg.det(matrix[:3, :3]), 1., atol=1e-9, rtol=0)
++          and np.max(np.abs(matrix[:3, 3])) <= 10000, "reviewed_rigid_transform_required")
++    coverage = _fields(value["coverage"], "evidence_domain annotation_source_sha256 mask_sha256 annotation_domain_sha256 mra_valid_domain_sha256 registration_valid_domain_sha256 coverage_sha256 frame_sha256 meaning unlabelled_meaning positive_outside_domain_cells qc_status qc_scope qc_record_sha256",
++                       "coverage_receipt_fields")
++    _checked(coverage, domain, "coverage")
++    _need(coverage["annotation_source_sha256"] == annotation["source_file_sha256"]
++          and coverage["mask_sha256"] == annotation["array_sha256"]
++          and coverage["frame_sha256"] == annotation["grid"]["frame_sha256"], "coverage_reference_binding")
++    for key in ("coverage_sha256", "annotation_domain_sha256", "mra_valid_domain_sha256", "registration_valid_domain_sha256"):
++        _sha(coverage[key])
++    _need(coverage["registration_valid_domain_sha256"] == registration["valid_domain_sha256"], "registration_coverage_binding")
++    _need(coverage["meaning"] == "intersection_of_annotation_MRA_and_registration_domains_not_vessel_completeness"
++          and coverage["unlabelled_meaning"] == "unknown_biological_vessel_status"
++          and type(coverage["positive_outside_domain_cells"]) is int
++          and coverage["positive_outside_domain_cells"] == 0, "qualified_annotation_domain_required")
++    actor = {"schema": VERSION, "evidence_domain": domain, "person_id": value["person_id"], "role": value["role"],
++        "cohort_sha256": COHORT_SHA256, "purpose": purpose, "observation_regime": value["observation_regime"],
++        "decision_cutoff": value["decision_cutoff"], "T1": t1, "support": support, "task": task,
++        "method_order": list(METHODS), "preoperative_claim": False, "clinical_use": False}
++    private = {"schema": VERSION, "evidence_domain": domain, "actor_contract_sha256": semantic_digest(actor),
++        "person_id": value["person_id"], "role": value["role"], "MRA": mra, "vessel_annotation": annotation,
++        "registration": registration, "coverage": coverage, "private_until_all_methods_sealed": True,
++        "annotation_lineage": "SynthStrip_Frangi_manual_refinement_with_incomplete_sensitivity_and_publisher_subset_dependence",
++        "independent_external_site_or_unseen_pretrained_claim": False,
++        "biological_vessel_free_claim": False, "clinical_injury_claim": False}
++    return PreparedIXIVascularCase(actor, private, reviewed_evidence_sha256)
+--- /dev/null
++++ b/tests/test_ixi_vascular_admission.py
+@@ -0,0 +1,256 @@
++"""Generated metadata controls: no image/header/archive/checkpoint bytes opened."""
++import copy
++import hashlib
++import importlib.util
++import json
++from pathlib import Path
++import sys
++
++import numpy as np
++import pytest
++
++ROOT = Path(__file__).resolve().parents[1]
++from resectionlab import ixi_vascular_admission as a
++
++COHORT = (ROOT / "manifests/experiments/ixi-component-person-cohort-v1.json").read_bytes()
++PEOPLE = json.loads(COHORT)["members"]
++DOMAIN = "generated_metadata_control"
++
++
++def digest(text):
++    return "sha256:" + hashlib.sha256(text.encode()).hexdigest()
++
++
++def grid(shift=0.):
++    affine = np.eye(4)
++    affine[0, 3] = shift
++    fields = {"shape": [9, 9, 9], "affine_ras_mm": affine.tolist()}
++    return {**fields, "frame_sha256": a.semantic_digest({**fields, "frame": "RAS+"})}
++
++
++def checked(tag):
++    scope_key = "acquired_" + tag if tag in ("T1", "MRA") else (
++        "derived_model_assisted_manually_refined_reference" if tag == "vessel_annotation" else tag)
++    return {"evidence_domain": DOMAIN, "qc_status": "pass", "qc_scope": a.QC_SCOPES[scope_key],
++            "qc_record_sha256": digest("GENERATED-QC-" + tag)}
++
++
++def fixture(role="TRAIN"):
++    members = [m for m in PEOPLE if m["role"] == role and m["annotation_available"]]
++    member = min(members, key=lambda m: (m["split_sha256"], m["subject"]))
++    sources = {}
++    for name in ("T1", "MRA", "vessel_annotation"):
++        t1 = name == "T1"
++        sources[name] = {**checked(name), "kind": "acquired_" + name if name != "vessel_annotation"
++            else "derived_model_assisted_manually_refined_reference",
++            "member": member["raw_files"][name]["name"] if name != "vessel_annotation" else member["vessel_annotation"]["member"],
++            "source_file_sha256": digest("GENERATED-BYTES-" + name), "array_sha256": digest("GENERATED-ARRAY-" + name),
++            "grid": grid(0. if t1 else 1.), "acquired_at": None,
++            "available_at": "2026-10-09T00:00:00Z" if t1 else None,
++            "availability_record_sha256": digest("GENERATED-T1-AVAILABLE") if t1 else None}
++    t1, mra, label = (sources[k] for k in ("T1", "MRA", "vessel_annotation"))
++    support = {**checked("support"), "kind": "T1_derived_brain_envelope", "source_file_sha256": t1["source_file_sha256"],
++        "frame_sha256": t1["grid"]["frame_sha256"], "output_sha256": digest("GENERATED-SUPPORT"),
++        "coverage_sha256": digest("GENERATED-SUPPORT-DOMAIN"), "estimator_record_sha256": digest("GENERATED-ESTIMATOR"),
++        "estimator_model_sha256": digest("GENERATED-MODEL-NO-WEIGHTS"), "project_fit_roles": ["TRAIN"], "pretrained_exposure": "unknown",
++        "available_at": "2026-10-09T00:01:00Z", "availability_record_sha256": digest("GENERATED-SUPPORT-AVAILABLE")}
++    task = {**checked("task"), "kind": a.TASK_KIND, "target_semantics": a.TARGET_MEANING,
++        "source_file_sha256": t1["source_file_sha256"], "support_output_sha256": support["output_sha256"],
++        "frame_sha256": t1["grid"]["frame_sha256"], "definition_sha256": digest("GENERATED-WAYPOINTS-ACCESS-TOOLS-PROCEDURE"),
++        "waypoint_count": 2, "horizon": 1, "available_at": "2026-10-09T00:02:00Z",
++        "availability_record_sha256": digest("GENERATED-TASK-AVAILABLE")}
++    registration = {**checked("registration"), "from_source_sha256": t1["source_file_sha256"], "to_source_sha256": mra["source_file_sha256"],
++        "from_frame_sha256": t1["grid"]["frame_sha256"], "to_frame_sha256": mra["grid"]["frame_sha256"],
++        "direction": "T1_RAS_mm_to_MRA_RAS_mm", "matrix_ras_mm": np.eye(4).tolist(),
++        "valid_domain_sha256": digest("GENERATED-REGISTRATION-DOMAIN")}
++    coverage = {**checked("coverage"), "annotation_source_sha256": label["source_file_sha256"], "mask_sha256": label["array_sha256"],
++        "annotation_domain_sha256": digest("GENERATED-ANNOTATION-DOMAIN"), "mra_valid_domain_sha256": digest("GENERATED-MRA-DOMAIN"),
++        "registration_valid_domain_sha256": registration["valid_domain_sha256"], "coverage_sha256": digest("GENERATED-INTERSECTION-DOMAIN"),
++        "frame_sha256": label["grid"]["frame_sha256"],
++        "meaning": "intersection_of_annotation_MRA_and_registration_domains_not_vessel_completeness",
++        "unlabelled_meaning": "unknown_biological_vessel_status", "positive_outside_domain_cells": 0}
++    return {"schema": a.VERSION, "evidence_domain": DOMAIN, "cohort_sha256": a.COHORT_SHA256,
++        "person_id": member["person_group"], "role": role, "observation_regime": "retrospective_dataset",
++        "decision_cutoff": "2026-10-09T00:03:00Z", "sources": sources, "support": support, "task": task,
++        "registration": registration, "coverage": coverage}
++
++
++def prepare(value=None, purpose="frozen_scoring", **kwargs):
++    value = fixture() if value is None else value
++    return a.prepare_ixi_vascular_case(cohort_bytes=COHORT, evidence=value,
++        reviewed_evidence_sha256=a.semantic_digest(value), purpose=purpose, **kwargs)
++
++
++def test_retrospective_unknown_acquisition_remains_unknown_without_preoperative_claim():
++    prepared = prepare()
++    assert prepared.actor_contract["T1"]["acquired_at"] is None
++    assert prepared.actor_contract["preoperative_claim"] is False
++    assert prepared.evaluator_contract["MRA"]["available_at"] is None
++    assert prepared.actor_contract["evidence_domain"] == DOMAIN
++    assert prepared.execution_status()["execution_admitted"] is False
++    assert prepared.execution_status()["patient_payloads_validated"] is False
++    assert prepared.actor_contract["method_order"] == a.METHODS
++
++
++@pytest.mark.parametrize("role,purpose", [("TRAIN", "training_component_check"), ("SELECT", "declared_selection"),
++    ("MEASUREMENT_EVAL", "frozen_scoring")])
++def test_roles_support_only_declared_uses_without_reassignment(role, purpose):
++    assert prepare(fixture(role), purpose).actor_contract["role"] == role
++
++
++@pytest.mark.parametrize("role,purpose", [("SELECT", "training_component_check"), ("MEASUREMENT_EVAL", "declared_selection"),
++    ("MEASUREMENT_EVAL", "training_component_check"), ("TRAIN", "optimizer_update")])
++def test_role_misuse_refuses(role, purpose):
++    with pytest.raises(ValueError, match="role_forbids"):
++        prepare(fixture(role), purpose)
++
++
++def test_frozen_cohort_and_person_role_cannot_be_rewritten():
++    value = fixture()
++    value["role"] = "SELECT"
++    with pytest.raises(ValueError, match="frozen_person_role"):
++        prepare(value)
++    with pytest.raises(ValueError, match="frozen_IXI_cohort"):
++        a.prepare_ixi_vascular_case(cohort_bytes=COHORT + b" ", evidence=fixture(),
++            reviewed_evidence_sha256=a.semantic_digest(fixture()), purpose="frozen_scoring")
++
++
++def test_generated_receipts_do_not_become_real_by_changing_envelope_domain():
++    value = fixture()
++    value["evidence_domain"] = "real_source_receipts"
++    with pytest.raises(ValueError, match="generated_evidence_cannot_be_relabelled"):
++        prepare(value)
++
++
++def test_no_private_reference_metadata_in_actor_and_private_swap_preserves_actor():
++    value = fixture()
++    original = prepare(value)
++    private_digest = value["sources"]["MRA"]["source_file_sha256"]
++    actor_json = json.dumps(a.thaw_json(original.actor_contract), sort_keys=True)
++    assert private_digest not in actor_json and '"MRA"' not in actor_json
++    assert '"registration"' not in actor_json and '"coverage"' not in actor_json
++    value["sources"]["MRA"]["source_file_sha256"] = digest("GENERATED-SECOND-MRA")
++    value["registration"]["to_source_sha256"] = value["sources"]["MRA"]["source_file_sha256"]
++    changed = prepare(value)
++    assert original.actor_contract == changed.actor_contract
++    assert original.evaluator_contract != changed.evaluator_contract
++
++
++def test_detached_contracts_and_reviewed_evidence_fixity():
++    value = fixture()
++    before = a.semantic_digest(value)
++    prepared = prepare(value)
++    value["sources"]["T1"]["grid"]["shape"][0] = 8
++    assert prepared.actor_contract["T1"]["grid"]["shape"] == (9, 9, 9)
++    with pytest.raises(TypeError):
++        prepared.actor_contract["role"] = "SELECT"
++    with pytest.raises(ValueError, match="reviewed_evidence_changed"):
++        a.prepare_ixi_vascular_case(cohort_bytes=COHORT, evidence=value, reviewed_evidence_sha256=before, purpose="frozen_scoring")
++
++
++@pytest.mark.parametrize("part", ["support", "task", "registration", "coverage"])
++def test_missing_or_unreviewed_prerequisite_refuses(part):
++    value = fixture()
++    value[part]["qc_status"] = "not_run"
++    with pytest.raises(ValueError, match="reviewed_QC"):
++        prepare(value)
++    del value[part]
++    with pytest.raises(ValueError, match="case_evidence_fields"):
++        prepare(value)
++
++
++@pytest.mark.parametrize("part", ["T1", "MRA", "vessel_annotation", "support", "task", "registration", "coverage"])
++def test_header_only_or_different_intended_use_QC_never_meets_case_prerequisite(part):
++    value = fixture()
++    row = value["sources"][part] if part in value["sources"] else value[part]
++    for scope in ("header_only", a.QC_SCOPES["task"] if part != "task" else a.QC_SCOPES["support"]):
++        row["qc_scope"] = scope
++        with pytest.raises(ValueError, match="intended_use_QC_scope"):
++            prepare(value)
++
++
++@pytest.mark.parametrize("part", ["support", "task"])
++def test_private_ancestry_cannot_enter_nominal_support_or_target(part):
++    value = fixture()
++    value[part]["source_file_sha256"] = value["sources"]["MRA"]["source_file_sha256"]
++    with pytest.raises(ValueError, match="(support|task)_must"):
++        prepare(value)
++
++
++@pytest.mark.parametrize("part", ["T1", "support", "task"])
++def test_actor_availability_unknown_or_after_cutoff_refuses(part):
++    value = fixture()
++    row = value["sources"]["T1"] if part == "T1" else value[part]
++    row["available_at"] = "2026-10-09T00:04:00Z"
++    with pytest.raises(ValueError, match="actor_unavailable"):
++        prepare(value)
++    row["available_at"] = None
++    if part == "T1":
++        row["availability_record_sha256"] = None
++    with pytest.raises(ValueError, match="actor_unavailable"):
++        prepare(value)
++
++
++def test_scan_known_acquisition_and_derived_availability_cannot_run_backward():
++    value = fixture()
++    value["sources"]["T1"]["acquired_at"] = "2026-10-09T00:01:00Z"
++    with pytest.raises(ValueError, match="availability_precedes"):
++        prepare(value)
++    value = fixture()
++    value["task"]["available_at"] = "2026-10-09T00:00:00Z"
++    with pytest.raises(ValueError, match="task_precedes"):
++        prepare(value)
++
++
++@pytest.mark.parametrize("mutation,reason", [("direction", "direction"), ("reflection", "rigid"),
++    ("scale", "rigid"), ("private_frame", "frame"), ("coverage_domain", "coverage_binding")])
++def test_registration_direction_frame_rigidity_and_domain_binding(mutation, reason):
++    value = fixture()
++    if mutation == "direction":
++        value["registration"]["direction"] = "MRA_RAS_mm_to_T1_RAS_mm"
++    elif mutation == "reflection":
++        value["registration"]["matrix_ras_mm"][0][0] = -1
++    elif mutation == "scale":
++        value["registration"]["matrix_ras_mm"][0][0] = 2
++    elif mutation == "private_frame":
++        value["registration"]["to_frame_sha256"] = value["sources"]["T1"]["grid"]["frame_sha256"]
++    else:
++        value["coverage"]["registration_valid_domain_sha256"] = digest("WRONG-DOMAIN")
++    with pytest.raises(ValueError, match=reason):
++        prepare(value)
++
++
++@pytest.mark.parametrize("field,bad", [("positive_outside_domain_cells", 1), ("positive_outside_domain_cells", False),
++    ("unlabelled_meaning", "vessel_free"), ("meaning", "complete_vascular_truth")])
++def test_coverage_preserves_unknowns_and_rejects_positive_outside_domain(field, bad):
++    value = fixture()
++    value["coverage"][field] = bad
++    with pytest.raises(ValueError, match="qualified_annotation_domain"):
++        prepare(value)
++
++
++@pytest.mark.parametrize("field,bad", [("kind", "whole_tumor_candidate"), ("horizon", True), ("waypoint_count", 0)])
++def test_component_task_cannot_masquerade_as_tumor_or_change_horizon(field, bad):
++    value = fixture()
++    value["task"][field] = bad
++    with pytest.raises(ValueError, match="(healthy_component|bounded_waypoint)"):
++        prepare(value)
++
++
++def test_estimator_fit_does_not_use_protected_roles_and_unknown_exposure_is_retained():
++    value = fixture("MEASUREMENT_EVAL")
++    assert prepare(value).actor_contract["support"]["pretrained_exposure"] == "unknown"
++    value["support"]["project_fit_roles"] = ["TRAIN", "SELECT"]
++    with pytest.raises(ValueError, match="estimator_fit_role"):
++        prepare(value)
++
++
++def test_preparation_needs_no_files_or_model_loader(monkeypatch):
++    import builtins
++    import io
++    value = fixture()
++    def forbidden(*args, **kwargs):
++        pytest.fail("No file reader belongs in metadata preparation")
++    monkeypatch.setattr(builtins, "open", forbidden)
++    monkeypatch.setattr(io, "open", forbidden)
++    assert prepare(value).execution_status()["execution_admitted"] is False

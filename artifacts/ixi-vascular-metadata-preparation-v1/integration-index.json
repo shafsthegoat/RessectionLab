@@ -1,0 +1,83 @@
+{
+  "bytes": 101558,
+  "file_count": 15,
+  "files": [
+    {
+      "bytes": 14414,
+      "path": "ixi_vascular_admission.py",
+      "sha256": "7c93cf8faf48ac55b0add1558d47f691ab63dc69672df8cd6fab83fc439ca28d"
+    },
+    {
+      "bytes": 13099,
+      "path": "test_admission.py",
+      "sha256": "20b44cb5607e3d7efea8048132f7461bf625f9c77903c4cda249491b6381b34b"
+    },
+    {
+      "bytes": 12928,
+      "path": "test_ixi_vascular_admission.py",
+      "sha256": "beeb1cdb80642a62fa79aea5eaf15cf1ea50e95a5fc400b0aa409cc2afb43966"
+    },
+    {
+      "bytes": 27986,
+      "path": "candidate.patch",
+      "sha256": "8e4ee0528ff0117068e2b4b861e597e21c49ae523f3111c9edfe61c40f8d970f"
+    },
+    {
+      "bytes": 4239,
+      "path": "next-bridge.json",
+      "sha256": "1c3763af63cc9555a94ef8a92fa8daf09e7ba5f547a36a489dbf4b30d4c2e1a0"
+    },
+    {
+      "bytes": 1170,
+      "path": "author-check.json",
+      "sha256": "ac0dad10c0c9fab3179f9d9d5f4e547e0a8249c6863917c14753e03cb3994657"
+    },
+    {
+      "bytes": 3734,
+      "path": "integration-receipt.json",
+      "sha256": "656db6517289c4252a5e8feb0d4f771b1814fd875d0f64e8ca53f8b01706a6a0"
+    },
+    {
+      "bytes": 2711,
+      "path": "independent-review/REPORT.md",
+      "sha256": "0fd9805520001bc70b02037106989f00eb89f85e120a1c3764865e7472d760d9"
+    },
+    {
+      "bytes": 208,
+      "path": "independent-review/combined-tests.txt",
+      "sha256": "2041e80e998c0b119eb20399ad157051ecc1360e56ffe5d899eb89328dede5d8"
+    },
+    {
+      "bytes": 8412,
+      "path": "independent-review/finalize_review.py",
+      "sha256": "62a119c3015f2969cb77c94110d251edef30c92bae83e62cc5172f97c590f46e"
+    },
+    {
+      "bytes": 0,
+      "path": "independent-review/patch-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4606,
+      "path": "independent-review/review.json",
+      "sha256": "c4856ed8d7e2f4cea835e4ba7cacf8156f34604093ba613bdd39430eabe6b4d5"
+    },
+    {
+      "bytes": 2149,
+      "path": "independent-review/run_review_tests.py",
+      "sha256": "fd7381dc44da3f1384e6921b178d76588bd37164ab887fc1c18dcc8cc1fa632c"
+    },
+    {
+      "bytes": 1554,
+      "path": "independent-review/test-review.json",
+      "sha256": "b9570472c143518b9757e1842fe5c0f2aa702d79b3dfd494b87c29c46502332a"
+    },
+    {
+      "bytes": 4348,
+      "path": "independent-review/test_independent_admission.py",
+      "sha256": "2eb99609671669e6fc2d28fe491f8b002cd85f1fabc84e5fe85b28fa086d6aca"
+    }
+  ],
+  "schema": "ixi-vascular-admission-integration-index-v1",
+  "scope": "metadata-only generated-tested candidate, no patient admission or payloads"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ixi-vascular-admission-author-check-v1",
+  "scope": "generated metadata controls joined to already-public frozen cohort metadata",
+  "command": ".venv/bin/python -m pytest -q build/ixi-vascular-admission-v1/test_admission.py",
+  "result": "43 passed in 0.21s",
+  "prior_test_results": ["36 passed in 0.19s before the order-independent no-file-open test repair", "36 passed in 0.18s before the explicit QC-scope review repair"],
+  "exit_code": 0,
+  "source_arrays_generated_or_opened": 0,
+  "patient_image_or_archive_reads": 0,
+  "model_weight_reads_or_forwards": 0,
+  "optimizer_updates": 0,
+  "tracked_writes_by_author": 0,
+  "test_scope": "roles, exact cohort/hash join, availability, actor/private separation, missing QC and header-only/wrong-intended-use QC rejection, T1-only dependencies, rigid registration/direction/domain, coverage unknowns, generated lineage, immutable metadata and non-execution status",
+  "limits": "Checks reviewed metadata assertions and their hashes only. No image values, coverage arrays, registration quality or anatomy are independently validated by this API. The caller-provided reviewed hash is not authentication."
+}

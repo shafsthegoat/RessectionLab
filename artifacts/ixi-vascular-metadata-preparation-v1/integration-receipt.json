@@ -1,0 +1,29 @@
+{
+  "schema": "ixi-vascular-admission-candidate-integration-v1",
+  "status": "independent_review_GO_metadata_only_candidate",
+  "patch": "candidate.patch",
+  "source": "ixi_vascular_admission.py",
+  "canonical_test": "test_ixi_vascular_admission.py",
+  "ignored_execution_test": "test_admission.py",
+  "api": "prepare_ixi_vascular_case(cohort_bytes, evidence, reviewed_evidence_sha256, purpose)",
+  "function": "Prepare separate immutable T1-only actor and evaluator-private metadata contracts against the exact frozen IXI cohort. The enclosing result is evaluator-owned and never passed to an actor.",
+  "role_policy": "TRAIN/SELECT/MEASUREMENT_EVAL are immutable. TRAIN check permission is not training authorization; SELECT cannot fit; MEASUREMENT_EVAL cannot fit or select. Failed/missing cases retain their original person role and denominator.",
+  "evidence_contract": "Exact reviewed metadata checksum, raw-versus-derived member identity, intended-use QC scopes, available-to-actor timestamps, T1-only support/task ancestry, estimator project-fit role and retained pretrained exposure, proper directed rigid registration, and annotation/MRA/registration domain intersection.",
+  "retrospective_time": "Unknown acquisition time remains null. It does not block retrospective research when T1 availability before the declared decision is independently evidenced. Unknown or late actor availability refuses preparation; private availability may remain unknown. No preoperative or simultaneous-acquisition claim.",
+  "generated_controls": "All synthetic metadata remains generated_metadata_control even when joined to already-public real IXI role/member names. Changing only the envelope to real_source_receipts refuses. These assertions never establish real image QC or patient admission.",
+  "author_checks": "43 generated controls passed in 0.21s, including immutable actor/private separation, no file opens during preparation, unavailable and wrong-role cases, header-only/wrong-scope QC rejection, private ancestry, transform/frame/domain and non-biological coverage semantics.",
+  "independent_checks": "58 metadata controls passed in 0.25s: 43 author plus 15 independent controls. Final source/test/cohort hashes unchanged; patch matches exact source and unchanged canonical test bodies; patch application check passed. Independent evidence copied under independent-review/.",
+  "independent_report_sha256": "0fd9805520001bc70b02037106989f00eb89f85e120a1c3764865e7472d760d9",
+  "independent_review_sha256": "c4856ed8d7e2f4cea835e4ba7cacf8156f34604093ba613bdd39430eabe6b4d5",
+  "runtime_permissions": {
+    "execution_admitted": false,
+    "patient_payloads_validated": false,
+    "actual_source_or_header_or_archive_reads": false,
+    "model_weight_reads_or_forwards": false,
+    "optimizer_updates": 0,
+    "existing_generated_source_semantics_changed": false,
+    "opaque_byte_intake_gated_by_this_module": false
+  },
+  "next_executable_bridge": "next-bridge.json specifies a distinct retrospective healthy corridor task, at most two deterministic T1-derived waypoints, horizon 1 complete tool action or STOP, public reach/effort objective, reused full-history seals and private streaming scorer. Target-removal reward cannot be relabelled as waypoint reach. Existing generated 32^3 reference and 16^3 planning scorer limits remain unchanged.",
+  "limitations": "This is metadata preparation, not authentication or a performed anatomy/registration/coverage check. Runtime loading must verify actual arrays and reviewed bindings through new versioned real-person code paths. No clinical, tumor, vessel-free or unseen-pretrained claim follows. No current checkpoint is assumed compatible with the new component objective."
+}

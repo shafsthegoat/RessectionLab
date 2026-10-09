@@ -1,0 +1,46 @@
+{
+  "schema": "ixi-vascular-executable-bridge-v1",
+  "status": "concrete_next_implementation_not_released_or_executed",
+  "task_kind": "retrospective_healthy_vascular_corridor",
+  "target_semantics": "hypothetical_T1_derived_waypoint_not_pathology",
+  "public_inputs": [
+    "exact acquired T1 and reviewed T1-only support with explicit qualified FOV",
+    "a frozen deterministic rule yielding at most two interior geometric waypoints, hypothetical access windows, actual tool catalogue, budgets and horizon=1",
+    "retrospective decision availability evidence; acquisition time remains null when unknown",
+    "TRAIN-fitted or separately audited frozen estimator lineage with pretrained exposure retained"
+  ],
+  "private_inputs": [
+    "paired acquired MRA and separately identified derived vessel annotation",
+    "accepted rigid T1_RAS_mm_to_MRA_RAS_mm registration and its validated domain",
+    "intersection of annotation, MRA and registration domains; outside is unknown"
+  ],
+  "minimal_source_changes": [
+    {
+      "area": "research_estimate_planning.py",
+      "change": "Add a distinct RetrospectiveVascularPlanningSpec and explicit retrospective availability. Do not relax DevelopmentUseDeclaration or rename whole_tumor_candidate. Factor common immutable nominal input preparation and complete-history serialization so both specs reuse existing FrozenResearchPlan semantics without rewriting generated records."
+    },
+    {
+      "area": "native_spatial_task.py and method interface",
+      "change": "Introduce a horizon-one waypoint/corridor objective using public geometry and fixed effort cost. Preserve existing action IDs, certified complete insertion/withdrawal microsteps, tool shapes, legality and STOP. The existing target-removal reward cannot merely be renamed waypoint reach. Do not run old learned checkpoints under a new observation/objective without a separately fixed diagnostic."
+    },
+    {
+      "area": "matched_private_vascular.py and private_vascular_evaluation.py",
+      "change": "Add versioned real-person identity/suite/reference branches consuming validated admission contracts. Keep all four statuses, common public inputs and fixed budgets. Complete all nominal replay and independent geometry checks before any private load; then reuse the shared streaming physical-history scorer with one common reference. Existing generated-only versions remain valid and cannot be relabelled."
+    }
+  ],
+  "measures": {
+    "public": ["waypoint reached", "tool path length and effort", "STOP/abstention with reason"],
+    "private": ["annotated-positive shaft/tip/full-tool encounter", "unknown contact inside and outside qualified domains"],
+    "explicitly_not_measured": ["tumor removal", "cavity evolution", "clinical injury", "biological vessel absence", "unseen-pretrained performance"]
+  },
+  "resource_and_frame_bridge": "The existing generated scorer retains32^3 reference/16^3 planning caps. Real execution needs an explicitly qualified component ROI with its exact native-to-ROI RAS transform and private coverage, or a separately reviewed larger-array budget. Accepting full source-grid metadata does not increase runtime limits or authorize implicit cropping/resampling.",
+  "source_dependencies_before_real_execution": [
+    "released exact per-person byte/header receipt and original/derived separation",
+    "reviewed T1/MRA/annotation anatomy and frame QC, including accepted transform direction and validated domain",
+    "T1-only support estimate and coverage with source/estimator/project-fit role lineage",
+    "public deterministic waypoint/access/tool procedure and one-step objective frozen before private scoring",
+    "versioned complete method histories and independently reviewed real-person scoring boundary"
+  ],
+  "protected_roles": "TRAIN may support separately released privileged fitting; SELECT only declared selection after frozen scoring; MEASUREMENT_EVAL never fit/calibrate/select. No reassignment or outcome-based replacement on missing/QC-failed cases.",
+  "current_delivery": "Only metadata preparation and generated interface controls. This bridge is a specific implementation target, not a patient admission, source extraction release or training run."
+}
