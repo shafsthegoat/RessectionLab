@@ -725,3 +725,8 @@ The [independently audited generated profile](../artifacts/private-vascular-stre
 ### October 9: Verify first bounded real MRI conversion and retain spacing discrepancy
 
 One exact 64-plane ReMIND-002 TRAIN MRI conversion finished in 2.016 seconds at a 438,386,688-byte (418.1 MiB) worker peak. The [saved-output audit](../artifacts/remind-exact64-patient-MR-conversion-result-v1/summary.json) reconciles all 141 read intents, independently reproduces raw-plane geometry and checks NIfTI units/forms, hash and 3,327 bounded samples. A spacing-tag inconsistency remains recorded: SpacingBetweenSlices says 1 mm while image positions imply approximately 3.3 mm. The verified grid uses physical positions/orientations. Worker all-source pixel equality and independent bounded sampling remain distinct. Anatomy, coverage, preoperative timing, MR-US registration and training/planning admission remain unverified or closed.
+
+
+### October 9: read-only mechanics validation at observed 54% host availability
+
+The [separate hinted probe](../artifacts/hbe-v5-n12-50pct-readonly-v1/RESULT.md) passes independent saved-evidence audit: 14 verified predecessor opens, 2.80 GB call-counted, 5.470 seconds, 178,323,456-byte worker-group peak and clean reaping. Admission was 54%, with every sampled host observation at 53–54% and normal pressure. The protocol name contains 50%, but the result does not validate a 50% start. The original v1 55% admission rule remains unchanged; no native solve, measured-response validation or ordinal reservation occurred.

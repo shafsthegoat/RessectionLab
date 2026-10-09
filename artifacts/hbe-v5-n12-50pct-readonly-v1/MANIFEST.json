@@ -1,0 +1,154 @@
+{
+  "file_count": 24,
+  "files": [
+    {
+      "bytes": 18305,
+      "path": "source/probe.py",
+      "sha256": "e5c1734bb70ac20b1dd5f4a09c4c98df85e5525c237978bf8b2426b1dcaf9181",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/probe.py"
+    },
+    {
+      "bytes": 4533,
+      "path": "source/PROTOCOL.md",
+      "sha256": "fe6bb7182f951169ee601e9fe9e3a41409c2e7f1bc6b0e145ed128858ee79807",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/PROTOCOL.md"
+    },
+    {
+      "bytes": 12974,
+      "path": "tests/test_generated_probe.py",
+      "sha256": "5961f652653b0cffeb43c7ad08c8a932151bc7406cc93c334ab98c471b84b9cb",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/test_generated_probe.py"
+    },
+    {
+      "bytes": 2980,
+      "path": "source/V2_POLICY_ASSESSMENT.md",
+      "sha256": "8514bb80c97fdc0210c6ee6f7e98e265975fd1af5913e0e85117a3e3e233b496",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/V2_POLICY_ASSESSMENT.md"
+    },
+    {
+      "bytes": 3857,
+      "path": "source/INITIAL_FLOOR_AUDIT.md",
+      "sha256": "78e08ab7c1f7c29716cf061acd2cf800c08e86333138fb33bc054b0033fbc419",
+      "source": "build/hbe-v5-tension-n12-s60-nocache-release-prep/INITIAL_FLOOR_AUDIT.md"
+    },
+    {
+      "bytes": 310,
+      "path": "root-authorization.json",
+      "sha256": "2ded45ad59df376f32e20b66f8234c31d7aebd2ba60bb060fced8d0c4ff7aaff",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/root-authorization.json"
+    },
+    {
+      "bytes": 14333,
+      "path": "pinned-dependencies/compare.py",
+      "sha256": "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45",
+      "source": "build/hbe-v5-n12-nocache-comparison-v1/compare.py"
+    },
+    {
+      "bytes": 16818,
+      "path": "pinned-dependencies/diagnose.py",
+      "sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16",
+      "source": "build/hbe-v5-n12-preflight-memory-diagnostic-v1/diagnose.py"
+    },
+    {
+      "bytes": 2075,
+      "path": "pinned-dependencies/hash_hint.py",
+      "sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+      "source": "build/hbe-v5-n12-nocache-comparison-v1/hash_hint.py"
+    },
+    {
+      "bytes": 5418,
+      "path": "independent-source/REPORT.md",
+      "sha256": "2c0443c17c67b98c08fd64e509f5b4c48631d0ae9f83d72d25c801f1d5fa5a31",
+      "source": "build/hbe-v5-n12-nocache-50pct-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 16910,
+      "path": "independent-source/audit.json",
+      "sha256": "52769c4a7cccdaa765dc814234fb41c8d97cbfd014d9683abadeb47eac11ff7c",
+      "source": "build/hbe-v5-n12-nocache-50pct-independent-v1/audit.json"
+    },
+    {
+      "bytes": 4463,
+      "path": "independent-source/audit_sources.py",
+      "sha256": "a1f2f1212304b2476da3f1d983a4cc5098f1fabe70486e97c67fa7f272918773",
+      "source": "build/hbe-v5-n12-nocache-50pct-independent-v1/audit_sources.py"
+    },
+    {
+      "bytes": 7140,
+      "path": "independent-source/test_incomplete_identity.py",
+      "sha256": "26b9b86aa2c49b96206fd67e1537a9268b856ef156bc66ff25c4cda2cad233ec",
+      "source": "build/hbe-v5-n12-nocache-50pct-independent-v1/test_incomplete_identity.py"
+    },
+    {
+      "bytes": 5175,
+      "path": "independent-saved/REPORT.md",
+      "sha256": "da2cbc89299b86eea0913d67661cf66e4b9d8617d371011391d5e1f83d5e1f5f",
+      "source": "build/hbe-v5-n12-nocache-50pct-saved-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 13531,
+      "path": "independent-saved/audit.json",
+      "sha256": "73c9b89cb70f8091b86acd23096d4f4925abd4cb3211be230c1fe9e42f07fe4e",
+      "source": "build/hbe-v5-n12-nocache-50pct-saved-independent-v1/audit.json"
+    },
+    {
+      "bytes": 12662,
+      "path": "independent-saved/audit_saved.py",
+      "sha256": "afd9ac3a7993bec2ab26171277436728bd96cb3eda31b523d728170e7ffa60a2",
+      "source": "build/hbe-v5-n12-nocache-50pct-saved-independent-v1/audit_saved.py"
+    },
+    {
+      "bytes": 2986,
+      "path": "attempt-01/hint-audit.json",
+      "sha256": "ddcd8ed51626ebb1c707024eb77a7bb716d0d9791f268a12a1f761e513e3f8b4",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/hint-audit.json"
+    },
+    {
+      "bytes": 5374,
+      "path": "attempt-01/host-time-series.json",
+      "sha256": "f105101c6e5328de9b87d27d980714d1df57fb7c41bf05bc70c4f8a5443d3212",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/host-time-series.json"
+    },
+    {
+      "bytes": 0,
+      "path": "attempt-01/readout-console.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/readout-console.txt"
+    },
+    {
+      "bytes": 20286,
+      "path": "attempt-01/receipt.json",
+      "sha256": "3390c6886926b0994f2717388ae54b5f6f783d76e020759971206b665e58ec98",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/receipt.json"
+    },
+    {
+      "bytes": 9272,
+      "path": "attempt-01/validation-identity.json",
+      "sha256": "550e51b3e0fc3a2e0ca04a208f7b677476068d63176d65fa4c40e537aeee4e67",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/validation-identity.json"
+    },
+    {
+      "bytes": 570,
+      "path": "attempt-01/worker-result.json",
+      "sha256": "8b644dbc2d7c332363bca9aea7a85f71cd72118d48c43171b72b4a8a7f07d380",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/worker-result.json"
+    },
+    {
+      "bytes": 61507,
+      "path": "attempt-01/worker-samples.json",
+      "sha256": "61a75d448eaf6eef8fb156a1bc3d85c22b9202131d70d43bf29a47856280c3cf",
+      "source": "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01/worker-samples.json"
+    },
+    {
+      "bytes": 2497,
+      "path": "RESULT.md",
+      "sha256": "043e7fcb405412b5616caa97597cb9203e103601e816611c09622dd219c4d790",
+      "source": "build/hbe-v5-n12-50pct-integration/artifacts/hbe-v5-n12-50pct-readonly-v1/RESULT.md"
+    }
+  ],
+  "interpretation": "Actual54%-start read-only software/host evidence, no native or measured-force validation.",
+  "schema": "hbe-v5-n12-50pct-readonly-evidence-manifest-v1",
+  "source_commit": "abbc3e31ef2dd9123e470a31b3701eb375f85424",
+  "status": "closed_read_only_probe_evidence",
+  "total_indexed_bytes": 243976
+}

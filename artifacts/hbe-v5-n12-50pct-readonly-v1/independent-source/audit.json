@@ -1,0 +1,458 @@
+{
+  "absent_targets": {
+    "build/hbe-v5-n12-nocache-50pct-probe-v1/attempt-01": true,
+    "outputs/mechanics/hbe-v5-nocache-policy-v1/08-tension-N12-S60-reference/attempt-01": true,
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01": true
+  },
+  "actual_probe_calls": 0,
+  "candidate_files": {
+    "PROTOCOL.md": {
+      "bytes": 4533,
+      "path": "build/hbe-v5-n12-nocache-50pct-probe-v1/PROTOCOL.md",
+      "sha256": "fe6bb7182f951169ee601e9fe9e3a41409c2e7f1bc6b0e145ed128858ee79807"
+    },
+    "probe.py": {
+      "bytes": 18305,
+      "path": "build/hbe-v5-n12-nocache-50pct-probe-v1/probe.py",
+      "sha256": "e5c1734bb70ac20b1dd5f4a09c4c98df85e5525c237978bf8b2426b1dcaf9181"
+    },
+    "test_generated_probe.py": {
+      "bytes": 12974,
+      "path": "build/hbe-v5-n12-nocache-50pct-probe-v1/test_generated_probe.py",
+      "sha256": "5961f652653b0cffeb43c7ad08c8a932151bc7406cc93c334ab98c471b84b9cb"
+    }
+  },
+  "hbe_readout_calls": 0,
+  "limits": {
+    "initial_min_available_percent": 50,
+    "observed_ongoing_min_available_percent": 45,
+    "outer_seconds": 150,
+    "output_bytes": 4194304,
+    "sampled_worker_group_rss_bytes": 3221225472,
+    "worker_seconds": 147
+  },
+  "native_calls": 0,
+  "old20_working_and_git_bindings": [
+    {
+      "bytes": 24801,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "bytes": 20494,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_febio_verification.py",
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+    },
+    {
+      "bytes": 37769,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "bytes": 28370,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    {
+      "bytes": 18988,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    {
+      "bytes": 17567,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_branch_calibration_v5.py",
+      "sha256": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016"
+    },
+    {
+      "bytes": 8744,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "bytes": 27043,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    {
+      "bytes": 8702,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    {
+      "bytes": 17656,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    {
+      "bytes": 18789,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    {
+      "bytes": 14985,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_frame.py",
+      "sha256": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9"
+    },
+    {
+      "bytes": 13711,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_n12_admission.py",
+      "sha256": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a"
+    },
+    {
+      "bytes": 28179,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_n12_saved_replay.py",
+      "sha256": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d"
+    },
+    {
+      "bytes": 8949,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_n8_canary.py",
+      "sha256": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a"
+    },
+    {
+      "bytes": 28373,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_n8_one_shot.py",
+      "sha256": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0"
+    },
+    {
+      "bytes": 61999,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_remaining_one_shot.py",
+      "sha256": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+    },
+    {
+      "bytes": 14511,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_source_bindings.py",
+      "sha256": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208"
+    },
+    {
+      "bytes": 12369,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_hbe_v5_stream.py",
+      "sha256": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a"
+    },
+    {
+      "bytes": 19006,
+      "matches_selected_committed_blob": true,
+      "path": "scripts/mechanics_patient_constraints.py",
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    }
+  ],
+  "old_source_closure": {
+    "adapter_receipt": {
+      "N": 12,
+      "adapted_deck_sha256": "6dbf980c8d60309f62d4d6e8e395d881b4bacfd1be73796eedfad6112f9505a9",
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "frame_count": 61,
+      "full_load_coordinates_m": [
+        0.0,
+        1.2266833333331666e-05,
+        2.453366666666333e-05,
+        3.6800499999995e-05,
+        4.906733333332666e-05,
+        6.133416666665833e-05,
+        7.360099999999e-05,
+        8.586783333332167e-05,
+        9.813466666665332e-05,
+        0.000110401499999985,
+        0.00012266833333331666,
+        0.00013493516666664832,
+        0.00014720199999998,
+        0.00015946883333331166,
+        0.00017173566666664334,
+        0.000184002499999975,
+        0.00019626933333330665,
+        0.00020853616666663833,
+        0.00022080299999997,
+        0.00023306983333330164,
+        0.0002453366666666333,
+        0.00025760349999996495,
+        0.00026987033333329664,
+        0.0002821371666666283,
+        0.00029440399999996,
+        0.0003066708333332917,
+        0.0003189376666666233,
+        0.000331204499999955,
+        0.0003434713333332867,
+        0.0003557381666666183,
+        0.00036800499999995,
+        0.00038027183333328167,
+        0.0003925386666666133,
+        0.00040480549999994504,
+        0.00041707233333327666,
+        0.00042933916666660835,
+        0.00044160599999994,
+        0.00045387283333327166,
+        0.0004661396666666033,
+        0.000478406499999935,
+        0.0004906733333332667,
+        0.0005029401666665983,
+        0.0005152069999999299,
+        0.0005274738333332616,
+        0.0005397406666665933,
+        0.000552007499999925,
+        0.0005642743333332566,
+        0.0005765411666665883,
+        0.00058880799999992,
+        0.0006010748333332516,
+        0.0006133416666665834,
+        0.000625608499999915,
+        0.0006378753333332466,
+        0.0006501421666665783,
+        0.00066240899999991,
+        0.0006746758333332416,
+        0.0006869426666665734,
+        0.000699209499999905,
+        0.0007114763333332366,
+        0.0007237431666665682,
+        0.0007360099999999
+      ],
+      "native_boundary_coordinates_m": [
+        0.0,
+        1.2266833333331666e-05,
+        2.453366666666333e-05,
+        3.6800499999995e-05,
+        4.906733333332666e-05,
+        6.133416666665833e-05,
+        7.360099999999e-05,
+        8.586783333332167e-05,
+        9.813466666665332e-05,
+        0.000110401499999985,
+        0.00012266833333331666,
+        0.00013493516666664832,
+        0.00014720199999998,
+        0.00015946883333331166,
+        0.00017173566666664334,
+        0.000184002499999975,
+        0.00019626933333330665,
+        0.00020853616666663833,
+        0.00022080299999997,
+        0.00023306983333330164,
+        0.0002453366666666333,
+        0.00025760349999996495,
+        0.00026987033333329664,
+        0.0002821371666666283,
+        0.00029440399999996,
+        0.0003066708333332917,
+        0.0003189376666666233,
+        0.000331204499999955,
+        0.0003434713333332867,
+        0.0003557381666666183,
+        0.00036800499999995,
+        0.00038027183333328167,
+        0.0003925386666666133,
+        0.00040480549999994504,
+        0.00041707233333327666,
+        0.00042933916666660835,
+        0.00044160599999994,
+        0.00045387283333327166,
+        0.0004661396666666033,
+        0.000478406499999935,
+        0.0004906733333332667,
+        0.0005029401666665983,
+        0.0005152069999999299,
+        0.0005274738333332616,
+        0.0005397406666665933,
+        0.000552007499999925,
+        0.0005642743333332566,
+        0.0005765411666665883,
+        0.00058880799999992,
+        0.0006010748333332516,
+        0.0006133416666665834,
+        0.000625608499999915,
+        0.0006378753333332466,
+        0.0006501421666665783,
+        0.00066240899999991,
+        0.0006746758333332416,
+        0.0006869426666665734,
+        0.000699209499999905,
+        0.0007114763333332366,
+        0.0007237431666665682,
+        0.0007360099999999
+      ],
+      "native_boundary_factor": 1.0,
+      "native_domain": "full_native",
+      "reference_mu_Pa": 1000.0,
+      "run_id": "tension:N12:S60:reference",
+      "skyline_sha256": "a33cf70bb49f7e304bd78bffb79bd2fc9d583e826654e3683faf469ca1672656",
+      "source_deck_identity_approved_for_execution": false,
+      "source_deck_sha256": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294",
+      "status": "pure_deck_preparation_no_native_execution",
+      "steps": 60,
+      "times": [
+        0.0,
+        0.016666666666666666,
+        0.03333333333333333,
+        0.05,
+        0.06666666666666667,
+        0.08333333333333333,
+        0.1,
+        0.11666666666666667,
+        0.13333333333333333,
+        0.15,
+        0.16666666666666666,
+        0.18333333333333332,
+        0.2,
+        0.21666666666666667,
+        0.23333333333333334,
+        0.25,
+        0.26666666666666666,
+        0.2833333333333333,
+        0.3,
+        0.31666666666666665,
+        0.3333333333333333,
+        0.35,
+        0.36666666666666664,
+        0.38333333333333336,
+        0.4,
+        0.4166666666666667,
+        0.43333333333333335,
+        0.45,
+        0.4666666666666667,
+        0.48333333333333334,
+        0.5,
+        0.5166666666666667,
+        0.5333333333333333,
+        0.55,
+        0.5666666666666667,
+        0.5833333333333334,
+        0.6,
+        0.6166666666666667,
+        0.6333333333333333,
+        0.65,
+        0.6666666666666666,
+        0.6833333333333333,
+        0.7,
+        0.7166666666666667,
+        0.7333333333333333,
+        0.75,
+        0.7666666666666667,
+        0.7833333333333333,
+        0.8,
+        0.8166666666666667,
+        0.8333333333333334,
+        0.85,
+        0.8666666666666667,
+        0.8833333333333333,
+        0.9,
+        0.9166666666666666,
+        0.9333333333333333,
+        0.95,
+        0.9666666666666667,
+        0.9833333333333333,
+        1.0
+      ]
+    },
+    "expected_adapted_deck_sha256": "6dbf980c8d60309f62d4d6e8e395d881b4bacfd1be73796eedfad6112f9505a9",
+    "old_source_hashes": {
+      "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+      "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+      "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+      "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+      "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+      "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+      "scripts/mechanics_hbe_v5_frame.py": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+      "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+      "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+      "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+      "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+      "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+      "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+      "scripts/mechanics_hbe_v5_stream.py": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+      "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    },
+    "original_template_sha256": "32d7566d10d1a671fe1d7fcd2cb3bfc73dc70c3632d286480fd860e2e15d2feb",
+    "run_id": "tension:N12:S60:reference",
+    "source_commit": "abbc3e31ef2dd9123e470a31b3701eb375f85424",
+    "source_count": 20
+  },
+  "pinned_dependencies": [
+    {
+      "bytes": 14333,
+      "path": "build/hbe-v5-n12-nocache-comparison-v1/compare.py",
+      "sha256": "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45"
+    },
+    {
+      "bytes": 16818,
+      "path": "build/hbe-v5-n12-preflight-memory-diagnostic-v1/diagnose.py",
+      "sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16"
+    },
+    {
+      "bytes": 2075,
+      "path": "build/hbe-v5-n12-nocache-comparison-v1/hash_hint.py",
+      "sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc"
+    },
+    {
+      "bytes": 14068,
+      "path": "build/hbe-v5-tension-n12-s60-release-prep/RELEASE_TEMPLATE.json",
+      "sha256": "32d7566d10d1a671fe1d7fcd2cb3bfc73dc70c3632d286480fd860e2e15d2feb"
+    },
+    {
+      "bytes": 8426,
+      "path": "build/limited-input-guard-design/gliomoda-tile1-parity-64-v2/darwin_fast_sampler.py",
+      "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+    }
+  ],
+  "predecessor_payload_files_opened": 0,
+  "review_files": {
+    "audit_sources.py": {
+      "bytes": 4463,
+      "path": "build/hbe-v5-n12-nocache-50pct-independent-v1/audit_sources.py",
+      "sha256": "a1f2f1212304b2476da3f1d983a4cc5098f1fabe70486e97c67fa7f272918773"
+    },
+    "test_incomplete_identity.py": {
+      "bytes": 7140,
+      "path": "build/hbe-v5-n12-nocache-50pct-independent-v1/test_incomplete_identity.py",
+      "sha256": "26b9b86aa2c49b96206fd67e1537a9268b856ef156bc66ff25c4cda2cad233ec"
+    }
+  },
+  "review_head": "abbc3e31ef2dd9123e470a31b3701eb375f85424",
+  "source_guard_bytes_read_per_full_binding_pass": 431005,
+  "status": "source_generated_review_passed_no_actual_probe",
+  "tested": {
+    "candidate_generated_controls": 10,
+    "candidate_seconds": 0.012,
+    "independent_real_supervisor_fake_child_controls": 4,
+    "independent_seconds": 0.218
+  },
+  "unchanged_committed_v1_launcher_sources": [
+    {
+      "bytes": 31098,
+      "path": "launchers/hbe_v5_nocache_v1.py",
+      "sha256": "efeda27abc3c1a6851e1066789e51a2f05b94728def62e71061d03da7f4629de"
+    },
+    {
+      "bytes": 2075,
+      "path": "launchers/hbe_v5_nocache_hash_v1.py",
+      "sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc"
+    },
+    {
+      "bytes": 8426,
+      "path": "launchers/hbe_v5_nocache_host_v1.py",
+      "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+    }
+  ]
+}
