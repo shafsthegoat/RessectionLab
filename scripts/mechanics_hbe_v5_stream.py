@@ -15,9 +15,8 @@ from scripts import mechanics_hbe_branch_calibration_v5 as v5
 from scripts import mechanics_hbe_v5_frame as frame
 from scripts import mechanics_hbe_v5_source_bindings as sources
 from scripts.mechanics_hbe_access import local_path, verify_binding
-from scripts.mechanics_hbe_halfheight_readout import HalfHeightReconstruction
 from scripts.mechanics_hbe_outputs import _iter_data_records, check_solver_records
-from scripts.mechanics_hbe_physics import HexMesh, energy_work_check
+from scripts.mechanics_hbe_physics import energy_work_check
 
 
 MAX_PRIMITIVE_BYTES = 2 * 1024**3
@@ -59,9 +58,8 @@ def _bound_reconstruction(root, prior, row, native_mesh_binding, native_mesh):
             or wrapper['mapping'].get('schema') != 'hbe-halfheight-mapping-v1'):
         raise ValueError('Reconstruction wrapper or embedded mapping differs')
     mapping = wrapper['mapping']
-    # Validates both complete fingerprints, oriented cell/node permutations,
-    # full coverage, shared midplane and rest-coordinate identity.
-    HalfHeightReconstruction(full, native_mesh, mapping)
+    # prepare_generated_frame validates complete fingerprints, oriented
+    # permutations, coverage, midplane and rest-coordinate identity once.
     return full, mapping
 
 
@@ -79,7 +77,9 @@ def evaluate_stream(contract, mesh_manifest, node_lines, element_lines, solver_l
             or contract.get('native_execution_released') is not False
             or contract.get('source_binding_checked') is not False):
         raise ValueError('Closed exact v5 S60/S120 contract required')
-    mesh = HexMesh.from_manifest(mesh_manifest)
+    prepared = frame.prepare_generated_frame(contract, mesh_manifest,
+                                             reconstruction=reconstruction)
+    mesh = prepared.native_mesh
     if len(mesh.rest_nodes_m) > MAX_ITEMS or mesh.element_count > MAX_ITEMS:
         raise ValueError('Native primitive dimensions exceed bounded parser')
     solver = check_solver_records(solver_lines, expected_times=times,
@@ -100,8 +100,7 @@ def evaluate_stream(contract, mesh_manifest, node_lines, element_lines, solver_l
             raise ValueError('Complete synchronized native primitive streams required')
         if node['step'] != index or element['step'] != index:
             raise ValueError('Native primitive frame order differs')
-        result = frame.evaluate_generated_frame(contract, mesh_manifest, node, element,
-                                                reconstruction=reconstruction)
+        result = frame.evaluate_prepared_frame(contract, prepared, node, element)
         for key, value in result['criteria_ratios'].items():
             if not math.isfinite(value):
                 raise ValueError('Nonfinite numerical criterion')

@@ -15,6 +15,7 @@ from scripts import mechanics_hbe_v5_source_bindings as sources
 from scripts.mechanics_hbe_physics import HexMesh
 from test_mechanics_hbe_branch_calibration_v5 import fixture_source
 from test_mechanics_hbe_halfheight_readout import geometry
+from test_mechanics_hbe_v5_frame import generated as generated_frame
 
 ROOT = Path(__file__).resolve().parents[1]
 STUDY_BYTES = (ROOT / v5.DECLARATION_PATH).read_bytes()
@@ -73,6 +74,61 @@ def generated_run(branch='tension', *, half=False, steps=60):
     solver += ['N O R M A L T E R M I N A T I O N\n']
     reconstruction = (full, mapping) if half else None
     return contract, mesh, node_lines, element_lines, solver, reconstruction
+
+
+@pytest.mark.parametrize('branch', ('tension', 'compression'))
+@pytest.mark.parametrize('domain', ('full_native', 'lower_half_reconstructed'))
+@pytest.mark.parametrize('step', (0, 30, 60))
+def test_stream_local_preparation_preserves_public_frame_result(branch, domain, step):
+    contract, mesh, nodes, elements, reconstruction = generated_frame(branch, domain, step)
+    prepared = frame.prepare_generated_frame(contract, mesh, reconstruction=reconstruction)
+    assert frame.evaluate_prepared_frame(contract, prepared, nodes, elements) == \
+        frame.evaluate_generated_frame(contract, mesh, nodes, elements,
+                                       reconstruction=reconstruction)
+
+
+def test_s120_compression_endpoint_prepared_matches_uncached_exactly():
+    contract, mesh, nodes, elements, _, reconstruction = generated_run(
+        'compression', half=True, steps=120)
+    n = list(stream._iter_data_records(
+        nodes, expected_times=contract['times'], item_count=len(mesh['node_ids']),
+        field_count=9, record_name='mechanics_nodes_si',
+        maximum_bytes=stream.MAX_PRIMITIVE_BYTES, maximum_items=stream.MAX_ITEMS))[-1]
+    e = list(stream._iter_data_records(
+        elements, expected_times=contract['times'], item_count=len(mesh['element_ids']),
+        field_count=8, record_name='mechanics_elements_si',
+        maximum_bytes=stream.MAX_PRIMITIVE_BYTES, maximum_items=stream.MAX_ITEMS))[-1]
+    prepared = frame.prepare_generated_frame(contract, mesh, reconstruction=reconstruction)
+    assert frame.evaluate_prepared_frame(contract, prepared, n, e) == \
+        frame.evaluate_generated_frame(contract, mesh, n, e, reconstruction=reconstruction)
+
+
+def test_prepared_snapshot_rejects_changed_contract_and_mapping():
+    contract, mesh, nodes, elements, reconstruction = generated_frame(
+        'tension', 'lower_half_reconstructed', 60)
+    prepared = frame.prepare_generated_frame(contract, mesh, reconstruction=reconstruction)
+    baseline = frame.evaluate_prepared_frame(contract, prepared, nodes, elements)
+    for array in (prepared.native_mesh._rest_inverse, prepared.native_mesh._weights,
+                  prepared.reconstruction_model.X, prepared.reconstruction_model.node_maps[0],
+                  prepared.full_mesh._rest_inverse):
+        assert not array.flags.writeable
+        with pytest.raises(ValueError):
+            array.flat[0] = 0
+    other = deepcopy(contract)
+    other['adapted_deck_sha256'] = '0' * 64
+    with pytest.raises(ValueError, match='different run contract'):
+        frame.evaluate_prepared_frame(other, prepared, nodes, elements)
+    other = generated_frame('compression', 'lower_half_reconstructed', 60)[0]
+    with pytest.raises(ValueError, match='different run contract'):
+        frame.evaluate_prepared_frame(other, prepared, nodes, elements)
+    changed_mapping = deepcopy(reconstruction[1])
+    changed_mapping['half_mesh_fingerprint'] = '0' * 64
+    with pytest.raises(ValueError, match='Mapping does not bind'):
+        frame.prepare_generated_frame(contract, mesh,
+                                      reconstruction=(reconstruction[0], changed_mapping))
+    mesh['rest_nodes_m'][0][0] += 1e-3
+    reconstruction[1]['half_mesh_fingerprint'] = '0' * 64
+    assert frame.evaluate_prepared_frame(contract, prepared, nodes, elements) == baseline
 
 
 @pytest.mark.parametrize('branch,half,steps', [('tension', False, 60),
@@ -184,6 +240,10 @@ def test_six_hash_bound_saved_files_keep_output_origin_unknown(tmp_path, monkeyp
     assert result['provenance']['source_binding_checked']
     assert result['provenance']['output_origin'] == 'unverified_saved_stream'
     assert result['provenance']['native_output_observed'] is None
+    wrong_mesh = deepcopy(bindings)
+    wrong_mesh['mesh']['sha256'] = '0' * 64
+    with pytest.raises(ValueError, match='source/mesh differs'):
+        stream.read_bound_run(tmp_path, spec['run_id'], wrong_mesh, receipt)
     (tmp_path / bindings['nodes']['path']).write_bytes(payloads['nodes'] + b'changed')
     with pytest.raises(ValueError, match='hash changed|SHA256'):
         stream.read_bound_run(tmp_path, spec['run_id'], bindings, receipt)
@@ -215,6 +275,11 @@ def test_actual_hash_bound_half_reconstruction_representation_at_rest(n):
         pytest.skip('Local ignored historical mesh manifests unavailable')
     half = json.loads(sources._read_bound(ROOT, old['half_mesh'], maximum=sources.MAX_MESH_BYTES))
     full, mapping = stream._bound_reconstruction(ROOT, prior, {'N': n}, old['half_mesh'], half)
+    # This is a generated-only contract. The saved manifests contain no native
+    # records and their wrapper/source hashes are checked above.
+    test_contract = generated_frame('tension', 'lower_half_reconstructed', 0)[0]
+    prepared = frame.prepare_generated_frame(test_contract, half, reconstruction=(full, mapping))
     assert mapping['schema'] == 'hbe-halfheight-mapping-v1'
     assert len(full['rest_nodes_m']) > len(half['rest_nodes_m'])
     assert len(full['elements_hex8']) == 2 * len(half['elements_hex8'])
+    assert prepared.reconstruction_model is not None

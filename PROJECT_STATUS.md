@@ -121,9 +121,13 @@ requires all 61/121 generated-frame records, solver residuals and force-work
 consistency. Ninety-one adjacent checks pass. Independent review caught and
 repaired an actual reconstruction-wrapper mismatch and a relative-root symlink
 escape. The saved-output facade verifies file hashes but cannot prove native
-origin without a supervised execution receipt. A generated N36 frame took about
-4.4 seconds and 720 MiB peak RSS; full-stream performance and physical force
-fidelity remain unmeasured.
+origin without a supervised execution receipt. The [generated N36 profile](artifacts/hbe-v5-stream-generated-profile-v1/RESULT.md)
+located repeated mesh construction: about 4.2 seconds per uncached frame.
+Stream-local validated geometry reuse now gives exactly equal generated results
+across reviewed full/half states; generated N36 prepared frames took 0.94–0.98
+seconds after 3.49 seconds setup. The improved source passed 105 adjacent root
+tests and independent exact-hash review. Full-stream performance and physical
+force fidelity remain unmeasured.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,

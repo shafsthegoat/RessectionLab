@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+from dataclasses import dataclass
 
 import numpy as np
 
@@ -105,21 +106,87 @@ def _ratios(mesh, current, raw, *, coordinate_m, half):
     return ratios
 
 
+@dataclass(frozen=True)
+class PreparedFrame:
+    """One validated local geometry snapshot; no cross-run cache."""
+
+    native_mesh: HexMesh
+    full_mesh: HexMesh
+    reconstruction_model: HalfHeightReconstruction | None
+    probe_map: tuple
+    mapping_sha256: str | None
+    contract_key: tuple
+
+
+def _contract_key(contract):
+    """Bind a prepared snapshot to one exact source/deck/schedule contract."""
+    return (contract['run_id'], contract['branch'], contract['steps'],
+            contract['native_domain'], contract['mu_Pa'],
+            contract['v5_declaration_sha256'], contract['v4_declaration_sha256'],
+            contract['source_deck_sha256'], contract['adapted_deck_sha256'],
+            tuple(contract['times']), tuple(contract['full_coordinates_m']),
+            tuple(contract['native_coordinates_m']))
+
+
+def _freeze_geometry_arrays(mesh):
+    for value in vars(mesh).values():
+        if isinstance(value, np.ndarray):
+            value.setflags(write=False)
+
+
+def prepare_generated_frame(contract, mesh_manifest, *, reconstruction=None):
+    """Validate fixed mesh/mapping once; never cache across independent runs."""
+    key = _contract_key(contract)
+    native_mesh = HexMesh.from_manifest(mesh_manifest)
+    full_mesh, model, mapping_sha = native_mesh, None, None
+    if reconstruction is not None:
+        full_manifest, mapping = reconstruction
+        model = HalfHeightReconstruction(full_manifest, mesh_manifest, mapping)
+        if model.half.fingerprint != native_mesh.fingerprint:
+            raise ValueError('Half mesh reconstruction differs')
+        full_mesh = model.full
+        mapping_sha = hashlib.sha256(json.dumps(
+            mapping, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    probes = full_mesh.probe_map(fixed_probes(native_mesh.radius_m, full_mesh.height_m))
+    _freeze_geometry_arrays(native_mesh)
+    if model is not None:
+        _freeze_geometry_arrays(model.half)
+        _freeze_geometry_arrays(model.full)
+        for value in vars(model).values():
+            if isinstance(value, np.ndarray):
+                value.setflags(write=False)
+        for name in ('node_maps', 'cell_maps'):
+            values = tuple(getattr(model, name))
+            for value in values:
+                value.setflags(write=False)
+            setattr(model, name, values)
+    return PreparedFrame(native_mesh, full_mesh, model, probes, mapping_sha, key)
+
+
 def evaluate_generated_frame(contract, mesh_manifest, node_record, element_record,
                              *, reconstruction=None):
-    """Evaluate exactly one parsed generated frame with fixed HBE constitutive math.
+    """Evaluate one parsed generated frame, rebuilding its geometry each call."""
+    prepared = prepare_generated_frame(contract, mesh_manifest, reconstruction=reconstruction)
+    return evaluate_prepared_frame(contract, prepared, node_record, element_record)
 
-    The `node_record`/`element_record` must come from `_iter_data_records`,
-    whose one-based ID checks are not repeated by this numerical boundary.
-    `reconstruction` is (full_manifest, mapping) for a lower-half fixture.
+
+def evaluate_prepared_frame(contract, prepared, node_record, element_record):
+    """Evaluate one frame with validated stream-local geometry and unchanged gates.
+
+    The record pair must come from `_iter_data_records`, whose one-based ID
+    checks are not repeated here. The caller owns this per-stream context.
     """
+    if not isinstance(prepared, PreparedFrame):
+        raise ValueError('Validated stream-local geometry required')
+    if _contract_key(contract) != prepared.contract_key:
+        raise ValueError('Prepared geometry belongs to a different run contract')
     if contract.get('native_execution_released') is not False or contract.get('source_binding_checked') is not False:
         raise ValueError('Only closed, synthetic-fixture contracts are accepted')
     step = node_record.get('step')
     if type(step) is not int or not 0 <= step <= contract['steps']:
         raise ValueError('Frame outside declared v5 schedule')
     time = contract['times'][step]
-    native_mesh = HexMesh.from_manifest(mesh_manifest)
+    native_mesh = prepared.native_mesh
     X = native_mesh.rest_nodes_m
     values = _record(node_record, step=step, time=time,
                      name='mechanics_nodes_si', count=len(X), fields=9)
@@ -140,7 +207,7 @@ def evaluate_generated_frame(contract, mesh_manifest, node_record, element_recor
     full_coordinate = contract['full_coordinates_m'][step]
     native_coordinate = contract['native_coordinates_m'][step]
     half = contract['native_domain'] == 'lower_half_reconstructed'
-    if half != (reconstruction is not None):
+    if half != (prepared.reconstruction_model is not None):
         raise ValueError('Representation-specific reconstruction required')
     native_ratios = _ratios(native_mesh, current, raw,
                             coordinate_m=native_coordinate, half=half)
@@ -149,15 +216,10 @@ def evaluate_generated_frame(contract, mesh_manifest, node_record, element_recor
     top, bottom = np.asarray(native_mesh._top), np.asarray(native_mesh._bottom)
     native_force = float(-raw[top, 2].sum())
     bottom_force = float(raw[bottom, 2].sum())
-    full_mesh, full_current, full_raw = native_mesh, current, raw
+    full_mesh, full_current, full_raw = prepared.full_mesh, current, raw
     reflected_logs = None
     if half:
-        full_manifest, mapping = reconstruction
-        model = HalfHeightReconstruction(full_manifest, mesh_manifest, mapping)
-        if model.half.fingerprint != native_mesh.fingerprint:
-            raise ValueError('Half mesh reconstruction differs')
-        lifted = model.lift(current, raw, logged, full_coordinate)
-        full_mesh = model.full
+        lifted = prepared.reconstruction_model.lift(current, raw, logged, full_coordinate)
         full_current, full_raw = lifted['current_nodes_m'], lifted['raw_reactions_N']
         reflected_logs = lifted['logged_elements']
     if (full_mesh.height_m != .00489159
@@ -179,8 +241,7 @@ def evaluate_generated_frame(contract, mesh_manifest, node_record, element_recor
     criteria = {**{f'native_{key}': value for key, value in native_ratios.items()},
                 **{f'full_{key}': value for key, value in full_ratios.items()},
                 **scale_ratios}
-    probes = full_mesh.interpolate_displacement(
-        full_current, full_mesh.probe_map(fixed_probes(R, full_mesh.height_m)))
+    probes = full_mesh.interpolate_displacement(full_current, prepared.probe_map)
     if probes.shape != (75, 3):
         raise ValueError('Original 75 physical probes required')
     minimum_J = min(native_state['minimum_sampled_J'], full_state['minimum_sampled_J'])
@@ -209,9 +270,7 @@ def evaluate_generated_frame(contract, mesh_manifest, node_record, element_recor
                        'adapted_deck_sha256': contract['adapted_deck_sha256'],
                        'mesh_fingerprint': native_mesh.fingerprint,
                        'full_mesh_fingerprint': full_mesh.fingerprint,
-                       'reconstruction_mapping_sha256': (hashlib.sha256(json.dumps(
-                           reconstruction[1], sort_keys=True, separators=(',', ':'),
-                           allow_nan=False).encode()).hexdigest() if half else None),
+                       'reconstruction_mapping_sha256': prepared.mapping_sha256,
                        'native_output_observed': False, 'generated_fixture_only': True,
                        'measured_response_accessed': False, 'patient_data_accessed': False,
                        'physical_validation_pass': None, 'calibration_released': False},
