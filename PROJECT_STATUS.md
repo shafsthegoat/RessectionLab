@@ -230,9 +230,13 @@ one-call release and saved-output audit are still required.
 The [second-case n5 nonuniform supervisor preparation](docs/mechanics-nonpatient-n5-nonuniform-supervisor.md)
 now binds that readout, exact first-call receipt, frozen deck/runtime and the
 remaining seven-call wall budget under a separate one-use path. Ninety-nine
-adjacent source-only tests and independent review pass. Its release is null;
-no second FEBio call has occurred. A committed-source release and fresh
-independent preflight remain required before execution.
+adjacent source-only tests and independent review pass. A separate one-call
+release produced the [n5 nonuniform execution](artifacts/mechanics-nonpatient-n5-nonuniform-execution-v1/RESULT.md):
+five saved states, local signed-force checks and seven shared-interface sample
+points passed independent audit in 0.519 s supervised wall at 47,661,056 B
+peak sampled RSS. The console's four `No force acting` warnings are retained.
+This is idealized numerical software evidence only; n9/n13 and half-step
+mesh/time-step convergence remain unrun.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
