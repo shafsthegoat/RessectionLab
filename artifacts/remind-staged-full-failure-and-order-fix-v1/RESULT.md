@@ -1,0 +1,7 @@
+# Full generated MR ordering failure and minimal repair
+
+The 59,520-record / 64-plane generated fixture was built successfully in 1.273 seconds, peaking at 344,735,744 bytes. Its first staged conversion stopped before pixel decoding because the fresh header summary did not equal the saved baseline. Both sequential workers were reaped; every one of 141 read intents reconciles, with no unknown read amount. The complete original failure and source evidence remain in the indexed archive.
+
+A necessary mismatch was incidental per-object summary order: numeric fixture order versus lexical filename order changes 62 of 64 list positions while preserving the same source identities. The failed fresh projection was not saved, so this diagnosis alone cannot prove there were no other differences. The narrow v3 repair orders unique summaries by source identity on both sides while retaining exact physical slice ordering, geometry and all values. Sixteen tiny controls, including a 12-plane end-to-end regression, and sixteen independent mutation checks pass.
+
+A separately released v4 full-fixture reuse has since completed; its independent output audit and success package are separate so this negative cannot be overwritten. No patient files or clinical evidence are contained or admitted here. The archive contains exact source, small receipts, all original read ledgers, baseline/order evidence and reviews; large generated metadata and DICOM arrays are represented only by digest bindings.

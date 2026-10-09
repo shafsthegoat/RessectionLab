@@ -1,0 +1,335 @@
+{
+  "actual_failed_conversion_worker": {
+    "blocked_io_events": [],
+    "data_read_accounting": {
+      "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+      "read_calls": 9452,
+      "returned_bytes": {
+        "memory_header": 45484,
+        "memory_payload": 33599916,
+        "metadata_file": 39848530,
+        "source_file": 33597676
+      },
+      "total_returned_bytes": 107091606
+    },
+    "elapsed_seconds": 0.5765298751648515,
+    "error": "fresh_header_inventory_differs_from_bound_baseline",
+    "error_type": "ValueError",
+    "generated_source_attempts": 64,
+    "intent_sha256": "e1fe3cde8fc44fee50437d712633bb0225b5c54d8abd0f4386c0bc52f30c086a",
+    "patient_source_attempts": 0,
+    "peak_RSS_bytes": 200982528,
+    "pixel_decode_status": "not_started",
+    "preoperative_input_admitted": false,
+    "release_sha256": "a6edd779ad205beb10396b04c7bdbbb2ec1feaec602ca3bb49c4da7fa4b334b2",
+    "schema": "remind-staged-MR-worker-v1",
+    "stage": "conversion",
+    "status": "failed",
+    "termination_requested": false,
+    "training_admitted": false
+  },
+  "actual_failed_pipeline_parent": {
+    "RSS_accounting_note": "Workers are sequential/reaped; parent+largest worker RSS is a conservative process-sum upper bound, not unique physical memory. Missing worker terminal RSS remains unknown/null; the largest recorded value is only partial evidence in that case.",
+    "elapsed_seconds": 1.3292302500922233,
+    "error": "stage_not_completed:conversion",
+    "error_type": "ValueError",
+    "max_recorded_worker_peak_RSS_bytes": 248643584,
+    "max_worker_peak_RSS_bytes": 248643584,
+    "output_bytes_before_parent_receipt": 203391,
+    "parent_peak_RSS_bytes": 55066624,
+    "parent_plus_worker_RSS_upper_bound_bytes": 303710208,
+    "patient_execution": false,
+    "preoperative_input_admitted": false,
+    "read_accounting_scope": "Acquisition metadata, selected source bytes and separately identified memory parser reads; runtime/code/control-JSON reads are source-bound but excluded from these data-read counters.",
+    "release_sha256": "a6edd779ad205beb10396b04c7bdbbb2ec1feaec602ca3bb49c4da7fa4b334b2",
+    "schema": "remind-staged-MR-parent-v1",
+    "stages": [
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 247808000,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1275648.843993916,
+          "worker_exit_status": 0,
+          "worker_pid": 5025
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 6,
+          "confirmed_returned_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 39761896,
+            "source_file": 0
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "validator",
+        "worker_elapsed_seconds": 0.3937006250489503,
+        "worker_peak_RSS_bytes": 248643584
+      },
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 200409088,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1275649.594060916,
+          "worker_exit_status": 1,
+          "worker_pid": 5026
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 135,
+          "confirmed_returned_bytes": {
+            "memory_header": 45484,
+            "memory_payload": 33599916,
+            "metadata_file": 39848530,
+            "source_file": 33597676
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "conversion",
+        "worker_elapsed_seconds": 0.5765298751648515,
+        "worker_peak_RSS_bytes": 200982528
+      }
+    ],
+    "status": "failed",
+    "termination_requested": false,
+    "total_confirmed_returned_bytes": {
+      "memory_header": 45484,
+      "memory_payload": 33599916,
+      "metadata_file": 79610426,
+      "source_file": 33597676
+    },
+    "total_unconfirmed_upper_bound_bytes": {
+      "memory_header": 0,
+      "memory_payload": 0,
+      "metadata_file": 0,
+      "source_file": 0
+    },
+    "training_admitted": false,
+    "unknown_worker_peak_RSS_stages": []
+  },
+  "actual_fixture_parent": {
+    "control_output_bytes_before_parent_receipt": 70072,
+    "elapsed_seconds": 1.273176458897069,
+    "fixture_output_bytes": 74194663,
+    "monitor": {
+      "cleanup_notes": [],
+      "parent_observed_peak_RSS_bytes": 344358912,
+      "parent_reaped_worker": true,
+      "supervision": "completed",
+      "worker_exit_status": 0,
+      "worker_pid": 4990
+    },
+    "parent_peak_RSS_bytes": 55050240,
+    "patient_execution": false,
+    "release_sha256": "523b8998da53e78fe8cf4c68d85cda2fe33716a6998d88d3d61bf4e01b98fc90",
+    "schema": "remind-full-generated-fixture-parent-v1",
+    "staged_release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/full-staged-release.json",
+    "staged_release_sha256": "a6edd779ad205beb10396b04c7bdbbb2ec1feaec602ca3bb49c4da7fa4b334b2",
+    "status": "generated_fixture_ready_for_separate_pipeline_release",
+    "termination_requested": false,
+    "worker_peak_RSS_bytes": 344735744,
+    "worker_receipt_sha256": "2a83d92521829b7cd8e2cb97879f37fb817fecfc1ce77425256b4c583bae1dbe"
+  },
+  "actual_fixture_worker_summary": {
+    "counts": {
+      "expected_bytes": 31246095084,
+      "objects": 59520,
+      "people": 79,
+      "series": 692,
+      "series_by_modality": {
+        "MR": 692
+      },
+      "source_stage_labels": {
+        "intraoperative_label_only": 692
+      }
+    },
+    "dimensions": {
+      "columns": 512,
+      "objects": 59520,
+      "people": 79,
+      "planes": 64,
+      "rows": 512,
+      "series": 692
+    },
+    "elapsed_seconds": 1.057793625164777,
+    "metadata_bytes": 39761896,
+    "patient_files_opened": 0,
+    "peak_RSS_bytes": 344735744,
+    "phases": [
+      {
+        "elapsed_seconds": 0.5928773330524564,
+        "peak_RSS_bytes": 206077952,
+        "phase": "selected_generated_DICOM_written"
+      },
+      {
+        "elapsed_seconds": 0.6467763329856098,
+        "peak_RSS_bytes": 272498688,
+        "phase": "full_generated_metadata_built"
+      },
+      {
+        "elapsed_seconds": 0.7706965000834316,
+        "peak_RSS_bytes": 330268672,
+        "phase": "metadata_serialized"
+      },
+      {
+        "elapsed_seconds": 1.010418124962598,
+        "peak_RSS_bytes": 344735744,
+        "phase": "complete_generated_metadata_verified"
+      }
+    ],
+    "pixel_decodes": 0,
+    "selected_source_bytes": 33597676,
+    "selected_source_objects": 64,
+    "status": "generated_fixture_completed"
+  },
+  "limits": [
+    "Full staged image-conversion memory remains unmeasured because decoding never started.",
+    "RSS/output guards are sampled/checkpointed stop conditions, not kernel allocation limits.",
+    "Generated counts/shape do not establish clinical metadata-mix memory, anatomy, coverage, registration or decision-time availability.",
+    "The original fixture, baseline, source and failure are preserved. The later v4 exact-reuse proposal is separate and excluded from this incremental package."
+  ],
+  "minimal_v3_fix": {
+    "change": "Canonicalize per-object summaries by unique nonempty source_path on both sides; preserve exact values, physical slice ordering and geometry.",
+    "independent_semantic_and_malformed_controls": 16,
+    "largest_tiny_regression": "12planes2x3pixels; no full-shape repair replay",
+    "review_decision": "GO_FOR_SOURCE_AND_TINY_GENERATED_ONLY",
+    "review_sha256": "6ad007a3d6511ccc7e1228c3939e6e55b8f3a36a4b51f83a7556aec8e6de33db",
+    "supplied_tests": 16
+  },
+  "order_evidence": {
+    "baseline_first12": [
+      "SOFTWARE-TEST/generated-MR/0.dcm",
+      "SOFTWARE-TEST/generated-MR/1.dcm",
+      "SOFTWARE-TEST/generated-MR/2.dcm",
+      "SOFTWARE-TEST/generated-MR/3.dcm",
+      "SOFTWARE-TEST/generated-MR/4.dcm",
+      "SOFTWARE-TEST/generated-MR/5.dcm",
+      "SOFTWARE-TEST/generated-MR/6.dcm",
+      "SOFTWARE-TEST/generated-MR/7.dcm",
+      "SOFTWARE-TEST/generated-MR/8.dcm",
+      "SOFTWARE-TEST/generated-MR/9.dcm",
+      "SOFTWARE-TEST/generated-MR/10.dcm",
+      "SOFTWARE-TEST/generated-MR/11.dcm"
+    ],
+    "baseline_objects": 64,
+    "differing_positions": 62,
+    "limit": "Fresh failed projection was not saved. This proves a necessary order mismatch, not the absence of any other potential difference.",
+    "necessary_mismatch": "Header projection preserves record order; fixture baseline is numeric-index order but converter iterates lexicographically sorted handoff jobs.",
+    "physical_order_preserved_separately": [
+      "SOFTWARE-TEST/generated-MR/0.dcm",
+      "SOFTWARE-TEST/generated-MR/49.dcm",
+      "SOFTWARE-TEST/generated-MR/34.dcm",
+      "SOFTWARE-TEST/generated-MR/19.dcm",
+      "SOFTWARE-TEST/generated-MR/4.dcm",
+      "SOFTWARE-TEST/generated-MR/53.dcm",
+      "SOFTWARE-TEST/generated-MR/38.dcm",
+      "SOFTWARE-TEST/generated-MR/23.dcm",
+      "SOFTWARE-TEST/generated-MR/8.dcm",
+      "SOFTWARE-TEST/generated-MR/57.dcm",
+      "SOFTWARE-TEST/generated-MR/42.dcm",
+      "SOFTWARE-TEST/generated-MR/27.dcm",
+      "SOFTWARE-TEST/generated-MR/12.dcm",
+      "SOFTWARE-TEST/generated-MR/61.dcm",
+      "SOFTWARE-TEST/generated-MR/46.dcm",
+      "SOFTWARE-TEST/generated-MR/31.dcm",
+      "SOFTWARE-TEST/generated-MR/16.dcm",
+      "SOFTWARE-TEST/generated-MR/1.dcm",
+      "SOFTWARE-TEST/generated-MR/50.dcm",
+      "SOFTWARE-TEST/generated-MR/35.dcm",
+      "SOFTWARE-TEST/generated-MR/20.dcm",
+      "SOFTWARE-TEST/generated-MR/5.dcm",
+      "SOFTWARE-TEST/generated-MR/54.dcm",
+      "SOFTWARE-TEST/generated-MR/39.dcm",
+      "SOFTWARE-TEST/generated-MR/24.dcm",
+      "SOFTWARE-TEST/generated-MR/9.dcm",
+      "SOFTWARE-TEST/generated-MR/58.dcm",
+      "SOFTWARE-TEST/generated-MR/43.dcm",
+      "SOFTWARE-TEST/generated-MR/28.dcm",
+      "SOFTWARE-TEST/generated-MR/13.dcm",
+      "SOFTWARE-TEST/generated-MR/62.dcm",
+      "SOFTWARE-TEST/generated-MR/47.dcm",
+      "SOFTWARE-TEST/generated-MR/32.dcm",
+      "SOFTWARE-TEST/generated-MR/17.dcm",
+      "SOFTWARE-TEST/generated-MR/2.dcm",
+      "SOFTWARE-TEST/generated-MR/51.dcm",
+      "SOFTWARE-TEST/generated-MR/36.dcm",
+      "SOFTWARE-TEST/generated-MR/21.dcm",
+      "SOFTWARE-TEST/generated-MR/6.dcm",
+      "SOFTWARE-TEST/generated-MR/55.dcm",
+      "SOFTWARE-TEST/generated-MR/40.dcm",
+      "SOFTWARE-TEST/generated-MR/25.dcm",
+      "SOFTWARE-TEST/generated-MR/10.dcm",
+      "SOFTWARE-TEST/generated-MR/59.dcm",
+      "SOFTWARE-TEST/generated-MR/44.dcm",
+      "SOFTWARE-TEST/generated-MR/29.dcm",
+      "SOFTWARE-TEST/generated-MR/14.dcm",
+      "SOFTWARE-TEST/generated-MR/63.dcm",
+      "SOFTWARE-TEST/generated-MR/48.dcm",
+      "SOFTWARE-TEST/generated-MR/33.dcm",
+      "SOFTWARE-TEST/generated-MR/18.dcm",
+      "SOFTWARE-TEST/generated-MR/3.dcm",
+      "SOFTWARE-TEST/generated-MR/52.dcm",
+      "SOFTWARE-TEST/generated-MR/37.dcm",
+      "SOFTWARE-TEST/generated-MR/22.dcm",
+      "SOFTWARE-TEST/generated-MR/7.dcm",
+      "SOFTWARE-TEST/generated-MR/56.dcm",
+      "SOFTWARE-TEST/generated-MR/41.dcm",
+      "SOFTWARE-TEST/generated-MR/26.dcm",
+      "SOFTWARE-TEST/generated-MR/11.dcm",
+      "SOFTWARE-TEST/generated-MR/60.dcm",
+      "SOFTWARE-TEST/generated-MR/45.dcm",
+      "SOFTWARE-TEST/generated-MR/30.dcm",
+      "SOFTWARE-TEST/generated-MR/15.dcm"
+    ],
+    "same_path_set": true,
+    "selected_first12": [
+      "SOFTWARE-TEST/generated-MR/0.dcm",
+      "SOFTWARE-TEST/generated-MR/1.dcm",
+      "SOFTWARE-TEST/generated-MR/10.dcm",
+      "SOFTWARE-TEST/generated-MR/11.dcm",
+      "SOFTWARE-TEST/generated-MR/12.dcm",
+      "SOFTWARE-TEST/generated-MR/13.dcm",
+      "SOFTWARE-TEST/generated-MR/14.dcm",
+      "SOFTWARE-TEST/generated-MR/15.dcm",
+      "SOFTWARE-TEST/generated-MR/16.dcm",
+      "SOFTWARE-TEST/generated-MR/17.dcm",
+      "SOFTWARE-TEST/generated-MR/18.dcm",
+      "SOFTWARE-TEST/generated-MR/19.dcm"
+    ],
+    "selected_objects": 64
+  },
+  "patient_execution_authorized": false,
+  "patient_files_opened": false,
+  "preoperative_input_admitted": false,
+  "read_accounting": {
+    "all_finalized": true,
+    "categories": {
+      "memory_header": 45484,
+      "memory_payload": 33599916,
+      "metadata_file": 79610426,
+      "source_file": 33597676
+    },
+    "paired_intents": 141,
+    "scope": "Acquisition metadata, selected source bytes and separately identified memory parser reads; runtime/code/control-JSON reads are source-bound but excluded from these data-read counters.",
+    "total_returned_bytes": 146853502,
+    "unknown_bytes": 0
+  },
+  "schema": "remind-full-generated-fixture-success-pipeline-order-failure-v1",
+  "status": "FIXTURE_SUCCESS_PIPELINE_FAILED_BEFORE_PIXEL_DECODE",
+  "training_admitted": false
+}
