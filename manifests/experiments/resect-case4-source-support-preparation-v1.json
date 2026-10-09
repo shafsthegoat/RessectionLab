@@ -1,0 +1,105 @@
+{
+  "version": "resect-case4-source-support-preparation-v1",
+  "status": "HOLD_NON_EXECUTABLE_PREPARATION",
+  "role": "retrospective DEVELOPMENT conditional-displacement geometry only",
+  "source_case": "RESECT Case4 unchanged T1-derived estimated envelope, not accepted retained-tissue truth",
+  "pure_preparation_source": {
+    "path": "scripts/mechanics_case4_source_support.py",
+    "sha256": "eb1527480709abed335420ded4733accddb432114e619176c1cf65d613104237",
+    "release_authorized": false
+  },
+  "required_order": [
+    "Bind exact committed source, native images, unchanged mask/surface, source-only partition and fixed baseline alignment receipt before further data access.",
+    "Independent qualified reviewer accepts local T1-to-FLAIR and MRI-to-before-US anatomy/frame correspondence and unchanged retained-tissue approximation; current acceptance is false.",
+    "Only after both decisions, separately release source-only reference coordinates and bounded support check. B/V destination triplets and during-US remain inaccessible."
+  ],
+  "frame": {
+    "native_coordinate_unit": "RAS millimetres from original NIfTI sforms",
+    "proposed_T1_to_FLAIR": "physical RAS identity hypothesis, not verified for exact delivered patient files",
+    "proposed_T1_to_before_US": "fixed FLAIR-to-before-US proper-rigid transform times independently accepted T1-to-FLAIR transform",
+    "source_coordinate_transfer": "invert the accepted T1-to-before-US physical map for each before-US reference/source point",
+    "current_local_anatomical_acceptance": false,
+    "no_transform_selection_by_B_or_V_motion": true
+  },
+  "input_bindings_metadata_only": [
+    {
+      "role": "original_T1",
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+      "sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787"
+    },
+    {
+      "role": "original_FLAIR",
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz",
+      "sha256": "e4b2e09f6d47e256a0af3e515d321a393cfc1b5d6c704a6b23bbfeed8c712d26"
+    },
+    {
+      "role": "original_before_US",
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz",
+      "sha256": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379"
+    },
+    {
+      "role": "unchanged_estimated_T1_mask",
+      "path": "outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz",
+      "sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759"
+    },
+    {
+      "role": "unchanged_retained_native_surface",
+      "path": "outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+      "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f"
+    },
+    {
+      "role": "fixed_source_only_partition_receipt",
+      "path": "artifacts/mechanics/resect-case4-source-partition-v1/partition-receipt.json",
+      "sha256": "de329ceb9fd964bc3b09a5f75d930a9a1bba2b235c233511cd69831bef1ff6aa"
+    },
+    {
+      "role": "frozen_FLAIR_to_before_US_baseline_fit_receipt",
+      "path": "artifacts/mechanics/resect-case4-baseline-alignment-v3/alignment-receipt.json",
+      "sha256": "d5a572a7363d3830c86c68d5de9e158afdeee0026d3d2a254d87e15071fe3adb"
+    }
+  ],
+  "fixed_source_partition": {
+    "B_row_ids": [1, 14, 8, 17, 19, 7],
+    "V_row_ids": [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 15, 16, 18],
+    "V_denominator": 13,
+    "partition_identity_sha256": "cc9d7776cbb4bb6ba745519e24f008c53e556bfe60d3c0509917377c9db02982",
+    "source_coordinates_in_portable_report": false,
+    "V_destinations_available_to_checker": false
+  },
+  "geometric_rule": {
+    "voxel_domain": "unchanged binary T1 mask as full affine-transformed half-cell union",
+    "full_cell_bounds": "separately require source inside native T1 full-cell bounds",
+    "signed_distance": "exact distance to exposed voxel faces in RAS mm; positive inside, negative outside, boundary within 1e-6 mm HOLD",
+    "kernel": "w(r)=max(0,1-r/5 mm) with physical radius held fixed",
+    "full_ball_volume_mm3": 523.5987755982989,
+    "full_tent_weighted_mass_mm3": 130.89969389957471,
+    "integrated_units": "unweighted volume mm3, weighted mass mm3, weighted first moment mm4, centroid offset mm",
+    "primary_quadrature": "native voxel-cell midpoint orders 4 and 8 per axis",
+    "independent_quadrature": "native voxel-cell Gauss-Legendre order 8 per axis",
+    "maximum_relative_weighted_mass_difference": 0.01,
+    "maximum_centroid_shift_mm": 0.1,
+    "minimum_weighted_support_fraction": 0.0001,
+    "minimum_weighted_support_fraction_meaning": "Frozen numerical observation-operator support floor from mechanics-patient-observation; not a clinical tissue-volume threshold",
+    "maximum_exposed_voxel_faces_before_allocation": 2000000,
+    "maximum_candidate_voxel_box_cells_before_allocation": 100000,
+    "maximum_candidate_box_quadrature_points_before_allocation": 4000000,
+    "connectivity": "six-neighbour connected support occupied by positive quadrature mass; independent surface/mask classification required",
+    "B_gate": "all six centres strictly inside; converged weighted mass at least 1e-4 of full tent; one connected containing support component; mask/surface agreement; rigid-mode averaged operator rank six",
+    "V_rule": "count all 13 fixed V source rows, including unsupported, outside, ambiguous and nonconverged; any unsupported row makes original all-13 RMS not estimable"
+  },
+  "review_and_execution": {
+    "qualified_frame_acceptance": false,
+    "qualified_local_anatomy_acceptance": false,
+    "source_only_support_release": false,
+    "patient_arrays_opened_by_this_preparation": false,
+    "solver_or_mechanics_execution_authorized": false,
+    "future_stage_cap_seconds": 120,
+    "future_stage_sampled_process_group_RSS_bytes": 2147483648,
+    "future_stage_maximum_total_output_bytes": 33554432,
+    "future_stage_maximum_file_bytes": 8388608,
+    "future_stage_numerical_threads": 1,
+    "future_stage_retries": 0,
+    "output_handling": "restricted ignored directory 0700/files 0600; row coordinates and patient pixels excluded from Git; review_pending until independent engineering and anatomy audit"
+  },
+  "interpretation_limit": "Geometric source support alone does not validate displacement prediction, tool contact, force, cutting, injury, retraction, clinical outcomes or generalization."
+}

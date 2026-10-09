@@ -148,6 +148,13 @@ known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
 support in the mask, and retained-tissue anatomical suitability are unaccepted.
 Saved-mesh error localization can diagnose the rejected candidate, but a new
 mesh or FEM run waits on these source and sparse-solver gates.
+The [Case4 source-support preparation](docs/resect-case4-source-support-preparation.md)
+adds pure affine-voxel signed distance and fixed 5 mm kernel integration with
+convergence and preallocation guards. Independent review found and repaired a
+minimum-support mismatch and two memory cases; 38 adjacent tests and 450
+independent oblique-distance checks pass. No Case4 array or outcome was opened.
+Patient execution remains HOLD until qualified local frame, anatomy and retained
+domain acceptance; a geometric support check would not validate mechanics.
 The [v4 saved-geometry witness preparation](artifacts/mechanics/resect-case4-v4-fidelity-witness-preparation-v1/RESULT.md)
 passed 186 adjacent controls and ten independent isolated checks after two
 launcher safeguards were repaired. Before release, it fixed exact replay of
