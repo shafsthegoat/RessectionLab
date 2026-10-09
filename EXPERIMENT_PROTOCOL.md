@@ -6,6 +6,53 @@ Protocol ID `patient-pilot-v0.1`, October 4, 2026. Implements the discipline in 
 
 Does bounded scratch RL improve the modeled target-removal/hazard tradeoff or time to an acceptable candidate relative to per-case search, using identical permitted inputs, actions and constraints? Either method can win. The product default follows measured performance, and initial search candidates remain available next to learned candidates.
 
+## Primary cross-patient hypothesis and evidence boundary
+
+The pilot question above is a within-patient optimization test. The primary
+research hypothesis is prospective and different: **can a policy trained with
+rich, privileged anatomical and physical simulation feedback improve planning
+on entirely unseen patients when it receives only realistically available
+preoperative images and declared observations, compared with strong classical
+and learned-model planning under the same information limits?** RL superiority
+is a testable possibility, not a required outcome. Search in a fully informed
+simulator remains an optimization diagnostic, not the deployable comparator.
+
+The principal test needs an outer patient-cluster split frozen before training,
+with repeated visits, overlapping releases, derivatives, and pretraining sources
+grouped. Define a primary structural MRI and/or CT input condition from actual
+available acquisitions; declare additional modality combinations separately.
+For each condition, freeze the preoperative cutoff and the exact planning-input
+record, including derived-model lineage. The actor, action generator, legality
+mask, search objective, and case adaptation may consume only that record and
+observations available at the decision time. They may not consume withheld
+patient-specific vessel/function labels, future imaging, evaluation outcomes,
+hidden world parameters, or action-feasibility hints derived from them.
+Privileged training critics, teachers, simulator transitions and rewards are
+allowed only in explicitly labeled training arms. Derived features trained on
+development patients must have their own immutable provenance and overlap audit.
+
+Each method first commits a complete strategy and action history under the
+same available-input, tool, action, constraint and online-budget contract.
+Compare an imaging-based greedy heuristic, budgeted search or MPC, RL without
+privileged training, RL with privileged training, search using a comparably
+trained anatomical model, and a learned-model/search hybrid. Include STOP and
+observation-request decisions; account separately for offline pretraining and
+case adaptation. A fully informed oracle can be reported only as a diagnostic
+reference. Selection and hyperparameter changes use development patients and
+their designated worlds, never the final patient evaluation records.
+
+Only after strategies are frozen may an independent evaluator open genuinely
+patient-linked withheld anatomy or physical measurements. It must replay the
+full sequential history and report anatomical encounters, modeled removal and
+residual, healthy-tissue interactions, tool feasibility, uncertainty and
+abstention behavior, invalid plans, and total compute. Any vascular or
+functional endpoint requires qualified evidence for that same patient; missing
+evidence stays unknown rather than becoming a safe route. Report paired effects
+at the patient-cluster level. Keep three result labels distinct: training-world
+performance, transfer against acquired withheld patient anatomy, and physical
+or clinical validation against independent measurements or observed outcomes.
+No present generated fixture or within-case pilot satisfies this full benchmark.
+
 Use three labels without interchange: `synthetic_smoke` for software/analytic fixtures, `development_patient` for inspected public cases used in method development, and `locked_patient_evaluation` only after the outer procedure and cohort are frozen. Held-out worlds within a development patient do not make that patient an external validation cohort. A deterministic case is deterministic optimization even if it has many seeds.
 
 ## Eligibility and frozen record
