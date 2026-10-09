@@ -1,0 +1,24 @@
+{
+  "started_utc": "2026-10-09T00:29:02.449562+00:00",
+  "source_commit": "446ea6dccf5a65a41c7f8f689586113a42290a95",
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "scripts/resect_deferred_qc.py",
+    "batch",
+    "--run-id",
+    "remaining-train-pairs-02",
+    "--max-seconds",
+    "600",
+    "--execute",
+    "--manifest-sha",
+    "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+  ],
+  "files_sha256": {
+    "scripts/resect_deferred_qc.py": "55328556f4719a9509effb10b4ef899a0dc1665dfa4ae61ee4c68bdd3c360fd8",
+    "tests/test_resect_deferred_qc.py": "534328029422fce124addf0d9ff0784cf5493863bbc48e26c0029691d554ebb4",
+    "manifests/resect-deferred-qc-v1.json": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83"
+  },
+  "prior_attempt_preserved": "remaining-train-pairs-01",
+  "scope": "All24pendingpairs; noheaderrepairs/admissionupgrades"
+}

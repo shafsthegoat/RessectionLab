@@ -1,0 +1,328 @@
+{
+  "schema": "resect-pair-review-v1",
+  "manifest_sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+  "run_id": "remaining-train-pairs-02",
+  "pair": {
+    "id": "Case23-during",
+    "patient_group": "RESECT:Case23",
+    "phase": "during",
+    "source_ids": [
+      "Case23-during-image",
+      "Case23-during-mask"
+    ],
+    "bytes": 27954475,
+    "reuse_existing_pilot": false,
+    "role": "TRAIN"
+  },
+  "sources": {
+    "pair": {
+      "id": "Case23-during",
+      "patient_group": "RESECT:Case23",
+      "phase": "during",
+      "source_ids": [
+        "Case23-during-image",
+        "Case23-during-mask"
+      ],
+      "bytes": 27954475,
+      "reuse_existing_pilot": false,
+      "role": "TRAIN"
+    },
+    "image": {
+      "id": "Case23-during-image",
+      "pair_id": "Case23-during",
+      "kind": "original_ultrasound",
+      "path": "originals/Case23-US-during.nii.gz",
+      "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case23/US/Case23-US-during.nii.gz",
+      "bytes": 27870850,
+      "expected_md5": "cfc525c6672e315209574fcb75785ea4",
+      "sha256": null
+    },
+    "mask": {
+      "id": "Case23-during-mask",
+      "pair_id": "Case23-during",
+      "kind": "cavity_annotation",
+      "path": "originals/Case23-US-during-resection.nii.gz",
+      "source_url": "https://osf.io/download/64cd23e3a2be6b3ade314980/?revision=2",
+      "bytes": 83625,
+      "expected_md5": "61ce14bcd3f5f051f5ce43d4248844bc",
+      "sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+      "file_revision": 2,
+      "osf_file_id": "64cd23e3a2be6b3ade314980",
+      "short_alias": null
+    },
+    "image_sha256": "badb13acb5910295c15584960db7a4ad0bf3dd59a4dcb80f04c09a13a1640a65",
+    "mask_sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+    "import_receipt": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-during-mask/receipt.json",
+      "bytes": 3157,
+      "sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a"
+    },
+    "mirror_receipt": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case23-during-mask/attempt-01/receipt.json",
+      "bytes": 2221,
+      "sha256": "d64ba7e42ccab9b0cce2aaa38e22718edbe31e0023ea6361b63dfc8735363963"
+    }
+  },
+  "intent_sha256": "28467a0df5c0d6120769283eeb22e622265ef18383086295b71ea38489552035",
+  "declaration_sha256": "60133aeb4ea39915ddb9bb9ff2ff9147430c4f9290f13c733898570273912015",
+  "status": "review_failed",
+  "anatomy_qc": "not_run",
+  "clinical_accuracy": "not_established",
+  "geometric_admission": false,
+  "anatomical_admission": false,
+  "scanner_frame_admitted": false,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "network_requests": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "array_operation": "source_values_counted_only_no_array_retained",
+  "fixity_before": "passed",
+  "image_qc": {
+    "status": "failed",
+    "error_type": "HeaderDataError",
+    "reason": "qfac (pixdim[0]) should be 1 or -1",
+    "stage": "raw_header_recording",
+    "operation_stage": "image_header_scalar_review",
+    "call_path": [
+      "inspect_pair",
+      "inspect_original",
+      "nifti1_header_record",
+      "_header_summary",
+      "get_qform"
+    ],
+    "classification": "adapter_raw_header_recording_limitation",
+    "source_anatomical_validity": "not_assessed",
+    "header_qc": {
+      "status": "unknown_not_returned"
+    },
+    "scalar_qc": {
+      "status": "unknown_not_returned"
+    },
+    "geometry_qc": {
+      "status": "unknown_not_returned"
+    }
+  },
+  "mask_qc": {
+    "status": "passed",
+    "raw_grid": {
+      "source_file_sha256": "sha256:1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+      "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAcwGNAVMBAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD/8xDE+AsUxPvzEMT4AAAAAAAAAAAAAAAAAAAAAAACwQwAAgD8AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAKcJZ73aSp0+09+avqdjDsKIxoxAoUdGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABuKzEA",
+      "header_sha256": "ccfce1db8233308619c7f787cd04c920d274c6439343034cc3793ba085baf62b",
+      "raw_grid": {
+        "shape": [
+          371,
+          397,
+          339
+        ],
+        "spatial_units": "mm",
+        "xyzt_units_code": 2,
+        "pixdim": [
+          1.0,
+          0.17360299825668335,
+          0.1736030876636505,
+          0.17360299825668335,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_code": 1,
+        "sform_code": 0,
+        "qform_numeric_including_inactive": [
+          [
+            0.10906484850829899,
+            0.088561674360466,
+            0.10197890829299061,
+            -35.59731674194336
+          ],
+          [
+            -0.10059473837356978,
+            0.14072921381864753,
+            -0.014629025682195622,
+            4.399234771728516
+          ],
+          [
+            -0.09013078516869164,
+            -0.04990140537910024,
+            0.13972936296523175,
+            3.0981218814849854
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_numeric": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "extensions": {
+      "status": "absent_zero_padding",
+      "offset": 348,
+      "bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "indicator": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "extension_count": 0,
+      "records": [],
+      "payloads_interpreted": false,
+      "used_as_annotation_or_coordinate_evidence": false
+    },
+    "dtype": "|u1",
+    "source_scaling": [
+      1.0,
+      0.0
+    ],
+    "decoding_budget": {
+      "voxels": 49930293,
+      "native_payload_bytes": 49930293,
+      "logical_float64_bytes": 399442344,
+      "chunk_voxels": 65536,
+      "chunk_working_bytes_bound": 786432
+    },
+    "positive_voxels": 611754,
+    "background_voxels": 49318539,
+    "background_semantics": "unknown",
+    "array_operation": "none; source values counted only"
+  },
+  "mask_geometry": {
+    "status": "passed",
+    "header": {
+      "file": "Case23-US-during-resection.nii.gz",
+      "shape": [
+        371,
+        397,
+        339
+      ],
+      "affine_ras_mm": [
+        [
+          0.10906484850829899,
+          0.088561674360466,
+          0.10197890829299061,
+          -35.59731674194336
+        ],
+        [
+          -0.10059473837356978,
+          0.14072921381864753,
+          -0.014629025682195622,
+          4.399234771728516
+        ],
+        [
+          -0.09013078516869164,
+          -0.04990140537910024,
+          0.13972936296523175,
+          3.0981218814849854
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_units": "mm",
+      "physical_units": "mm",
+      "unit_scale_to_mm": 1.0,
+      "qform_code": 1,
+      "sform_code": 0,
+      "qform_native": [
+        [
+          0.10906484850829899,
+          0.088561674360466,
+          0.10197890829299061,
+          -35.59731674194336
+        ],
+        [
+          -0.10059473837356978,
+          0.14072921381864753,
+          -0.014629025682195622,
+          4.399234771728516
+        ],
+        [
+          -0.09013078516869164,
+          -0.04990140537910024,
+          0.13972936296523175,
+          3.0981218814849854
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_native": null,
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        0.17360299825668335,
+        0.1736030876636505,
+        0.17360299825668338
+      ],
+      "voxel_volume_mm3": 0.005232050030254257,
+      "handedness": "right",
+      "anisotropic": false,
+      "obliquity_degrees": [
+        51.079395557942746,
+        35.84171325016487,
+        36.40145353241956
+      ],
+      "status": "passed_header_checks",
+      "visual_alignment_review": "pending",
+      "frame": "RAS+",
+      "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+    }
+  },
+  "pair_geometry": {
+    "status": "not_run"
+  },
+  "image_prefix": {
+    "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAcwGNAVMBAQABAAAAAAAAAAAAAAAAAAAAAAAAABAAIAAAAAAAAAD8xDE+AsUxPvzEMT4AAAAAAACAPwAAAAAAAAAAAACwQ9fWVj8AAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1uYzJuaWkgQ2FzZTIzL1VTL0Nhc2UyMy1VUy1kdXJpbmcubW5jIENhc2UyMy1VUy1kdXJpbmcubmlpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGFd3z3SX7U9T9rQPadjDsKdBM69UhsQPnqub7yIxoxAgpa4vWxlTL04FQ8+oUdGQAAAAAAAAAAAAAAAAAAAAABuKzEA",
+    "header_sha256": "f0299f6ee02c0ce3c2fbe7403c04e9bee06a4150899c52dfdd47379c2d3150e4"
+  },
+  "mask_prefix": {
+    "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAMAcwGNAVMBAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD/8xDE+AsUxPvzEMT4AAAAAAAAAAAAAAAAAAAAAAACwQwAAgD8AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAKcJZ73aSp0+09+avqdjDsKIxoxAoUdGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABuKzEA",
+    "header_sha256": "ccfce1db8233308619c7f787cd04c920d274c6439343034cc3793ba085baf62b"
+  },
+  "fixity_after": "passed",
+  "elapsed_seconds": 0.5906604172196239,
+  "peak_rss_bytes": 69795840,
+  "rss_is_observed_not_hard_limit": true,
+  "numerical_library_threads": 1
+}

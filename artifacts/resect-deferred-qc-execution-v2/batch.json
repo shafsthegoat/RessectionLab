@@ -1,0 +1,432 @@
+{
+  "schema": "resect-deferred-qc-batch-v1",
+  "run_id": "remaining-train-pairs-02",
+  "manifest_sha256": "9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83",
+  "status": "bounded_reviews_finished",
+  "denominator": {
+    "frozen_train_people": 14,
+    "people_with_pairs": 13,
+    "qualified_pairs": 25,
+    "new_pairs": 24,
+    "inherited_pairs": 1,
+    "missing_annotation_timepoints": 3
+  },
+  "outcomes": [
+    {
+      "pair_id": "Case3-during",
+      "status": "inherited_structural_pass",
+      "receipt": {
+        "path": "artifacts/resect-component-admission-v1/pair-qc-01/worker-result.json",
+        "bytes": 5637,
+        "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+      },
+      "parent": {
+        "path": "artifacts/resect-component-admission-v1/pair-qc-01/supervision.json",
+        "bytes": 311,
+        "sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337"
+      },
+      "current_source_redecoded": false,
+      "anatomy_qc": "not_run",
+      "clinical_accuracy": "not_established",
+      "geometric_admission": false,
+      "anatomical_admission": false,
+      "scanner_frame_admitted": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "network_requests": 0,
+      "optimizer_updates": 0,
+      "recorded_rl_transitions": 0,
+      "array_operation": "source_values_counted_only_no_array_retained"
+    },
+    {
+      "pair_id": "Case2-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-during",
+      "intent_sha256": "67895f2c19b8cc5a688f46aec794eac5f487f46241128ffdd9572c8368dd3ca6",
+      "worker_pid": 17764,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "99452792e8626e2a214cc45f534a936b2876e586a11e8034c3c7c0c8786bbea4",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case2-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case2-after",
+      "intent_sha256": "39897be555f9360d123aaead2129163de83208d6bb90fd9590484e0b2103ce01",
+      "worker_pid": 17765,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "342a5d1a4399b3fc7f2b7f2baad0264ecc97d0036ac9cdb3625860cb2b257cdd",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case3-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case3-after",
+      "intent_sha256": "56148b98ab181772e6d3d1fa32e98c6b4ef1e88a38decded11303d278b1fee05",
+      "worker_pid": 17766,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "f013cda8d628a0fea34d8f5b0c4c125e96506d662161ec0e8d71bdcf7ff956c4",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case5-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-during",
+      "intent_sha256": "8948733c19825ef154a6e8f3fa7adf2a7e912630e0a0f7a373da3902ada5f394",
+      "worker_pid": 17767,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "0c784904812ec6aa033fffe7ccb23a4f163653b984af1cd41008fd1577ee1cb6",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case5-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case5-after",
+      "intent_sha256": "f61c4f24dc2b8a244f7e13a530c63c3a7de4dc0b18c31b40026d4380eec4fa44",
+      "worker_pid": 17768,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "8d2ff36fdb132f99fdaf1246ad30d17b0231ee6ea383675090fade10d3b9aff0",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case7-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-during",
+      "intent_sha256": "b580398f1752e11cda6c33ddf33ae61d18185fbbe4e0ff62f3ab976c9053ff38",
+      "worker_pid": 17769,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "d52973b38d893b605f8cd35d97850cedccaaaa06b47ce39aadddf50ea757aa3c",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case7-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case7-after",
+      "intent_sha256": "d66ddcfbdd75203f773339d5b8811d05d13e46e79d7a799e4decb44035574850",
+      "worker_pid": 17770,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "75e06a854a834325e44b965e9ee4464242161e720aa29c47d96875c3d9cea87c",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case12-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-during",
+      "intent_sha256": "349e7c8796dd6bd39b05164cd2c2f6c105bbdf785bbcbbb398d368e49fe4db09",
+      "worker_pid": 17771,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "7d06387b217004a5beee7aee9b5119d66674f991cf7adf45c15ff2bef3202462",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case12-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case12-after",
+      "intent_sha256": "506084a4a81cef42e5235d7b1a1da84bf19b7a17b70a0bcd167f0866c2658e9d",
+      "worker_pid": 17772,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "b8a584412b5b251b6e4a03230319d84a3b63ab03110002daae9abf2320c54932",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case15-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case15-after",
+      "intent_sha256": "9e9dbb36ed190bc053cb9fdf8d14110a9f20e882b7214a4e5f4dcd8e00ac48bc",
+      "worker_pid": 17773,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "0326d9b8c804a874ce57e7eb3dbf585bcba4130d0cd446165353db048e7a6a81",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case16-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-during",
+      "intent_sha256": "170bd98cd32950205128e9beae1679f001fb5cc43ce279ac6bb115117a11cbf7",
+      "worker_pid": 17774,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "7f440f1a6a2f9d440885b83db3483abdb2389811481a2187e08cae9ccc99c12a",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case16-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case16-after",
+      "intent_sha256": "71339975c584ce40998a6b6aeb77b2a0de0a550996096249cd72ba10a2586ee2",
+      "worker_pid": 17775,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "05be58f092fed1c747fe3dcac50a5cde415b215ee881ad06e4fab1e0cf2d954d",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case17-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-during",
+      "intent_sha256": "c43591492880d7de633f217b6877dfb8b65996ef2237995d13d25517561b05c9",
+      "worker_pid": 17776,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "198c12f145860e1f72d8772f246576c5a7d0b222d8dfc713638e3faac3f862ff",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case17-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case17-after",
+      "intent_sha256": "bddeb5ceeda3eb136285dda6ac53156661023ad4a18c4d7f680a54cb8cbd66b4",
+      "worker_pid": 17777,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "94ddbd4fdf658f4d2094cc32fe97c69fb42cf64415ff6319d8cfef01dd7e8ad4",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case18-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-during",
+      "intent_sha256": "9c9d581cc8476161a7a1ffa53f8f40172c4343b5003f88f244e232d7d297ab29",
+      "worker_pid": 17778,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "d4a17e54711dedbfe06c3b4d2045e3edc7318ae74537754b772a38aec3ca54e8",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case18-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case18-after",
+      "intent_sha256": "f9519c8f808d2fd3d693eee7b79f8e5b8ac8eac95757b8c6a43eceb3288bf565",
+      "worker_pid": 17779,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "ee3b8317232514ddb31510041af6ef79be82809aa222af77519ac79dbc36a722",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case21-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-during",
+      "intent_sha256": "d709a6df048328f44a2dc36ae6d9b528aef06209a4a1b0a4d74525fc8afbf011",
+      "worker_pid": 17780,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "51f9a4af6da93d703243085357aed0c0bc91f17272eb6cb4a5b8bbd8ec55d5ac",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case21-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case21-after",
+      "intent_sha256": "c2b589878420466aa409581444a67e391731eb83e3a0f5be581d777a36e37fbc",
+      "worker_pid": 17781,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "9755500ed297d0387062638d960264c68646fa0f0a24f7bf9c0858f1d7729aa0",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case23-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-during",
+      "intent_sha256": "28467a0df5c0d6120769283eeb22e622265ef18383086295b71ea38489552035",
+      "worker_pid": 17782,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "f372532d29e81467867d1f209762182302616228cce2952e85312be50415051e",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case23-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case23-after",
+      "intent_sha256": "772270e69abf8bfc9ef0d2fdc08f8d3229e1e47c200ddedf4d7b63312fb93423",
+      "worker_pid": 17783,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "01bab33bafa3bde80f9353d572e139be4fa4246c36c00fd8a92ffeaf276e7839",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case24-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-during",
+      "intent_sha256": "da79f06aa69d02cf436984cba593b4b877c928fae24e8fe4dc7fc4955046c437",
+      "worker_pid": 17784,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "21017bf7f6df5292977cc097de3b4f9b18d467dd0e3d51e2441062c2c361ac21",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case24-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case24-after",
+      "intent_sha256": "68b5ce9300ba044f6cc9073ceedfde74c89f8818c1fbc6e37a0ff41697670f1a",
+      "worker_pid": 17787,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "51322426ba4c5365ece6dc53c35f963de9fbd84edd88ee87bd78b7dcbdf09f51",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case25-during",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-during",
+      "intent_sha256": "3848f2fe2bd4f0fe4ebbb10d87d3e412b11e7e6fef0d120233ab05d36a068641",
+      "worker_pid": 17792,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "8cb2c33726749f991d5926f511ecee903cc9da4848d743f13a1f52603966fca1",
+      "review_status": "review_failed"
+    },
+    {
+      "pair_id": "Case25-after",
+      "status": "review_failed",
+      "attempt": "data/annotations/resect-seg-v1/deferred-qc-v1/runs/remaining-train-pairs-02/pairs/Case25-after",
+      "intent_sha256": "0194d670820ed3e71b9c934f59190826ef397de098d2ed0dd5c337d10e2e87ec",
+      "worker_pid": 17793,
+      "supervision_status": "completed",
+      "exit_code": 0,
+      "receipt_sha256": "3169e76996626ae2b6a7b74e70f6e2c5bdc83550386ea226d9fe52d461e581f5",
+      "review_status": "review_failed"
+    }
+  ],
+  "missing_annotations": [
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "after",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case15",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    }
+  ],
+  "excluded_members": [
+    {
+      "patient_group": "RESECT:Case1",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "patient_group": "RESECT:Case6",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case8",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case13",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case14",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case19",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case26",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case27",
+      "role": "MEASUREMENT_EVAL"
+    }
+  ],
+  "rights": {
+    "noncommercial_only": true,
+    "commercial_clearance": false,
+    "annotations_license": "CC-BY-NC-SA-4.0",
+    "original_license": "CC-BY-4.0",
+    "financial_benefits_from_annotation_distribution_prohibited": true,
+    "attribution_citations_and_share_alike_required": true,
+    "manual_contours_morphological_interpolation_expert_review": true,
+    "learned_teacher": "none_reported_in_documented_protocol",
+    "visible_cavity_not_total_removed_tissue_or_reward": true,
+    "clinical_accuracy": "not_established",
+    "spatial_planning_admitted": false
+  },
+  "historical_status_receipts": [
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T170443035954Z-e7bc18e5/outcome.json",
+      "status": "rate_deferred",
+      "sha256": "c558a2d876ad0168b0d030c5b8aef5abebee248286b4aa88bfb2bbeccc0d44fb"
+    },
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T171943773377Z-600ced29/outcome.json",
+      "status": "rate_deferred",
+      "sha256": "b3e10751d2f7b0e48c800223e08847a5b21f435aa9312dcfaabbfd81386bc3b4"
+    },
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T174944572869Z-e1003436/outcome.json",
+      "status": "transport_attempts_exhausted",
+      "sha256": "9e90df8fec3980c1049b019ac6a557e1644ee2566a556254b0b908f3d289c943"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/files/Case2-during-image/receipt.json",
+      "status": "downloaded_verified",
+      "sha256": "e2fa36bd24a7f1b3e7f8e6b0877ecadf829b8ddc04dcb781786f3deef55ca8bc"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/files/Case2-during-mask/receipt.json",
+      "status": "failed",
+      "sha256": "cac06ff101a75093db9177420af985b7c45cbe88aa63485a7be44c40fcccfd60"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/supervision.json",
+      "status": "worker_failed",
+      "sha256": "056fc30466c8e42e7d1d6d2b51e33797bdce87936fc4d6dd40e78976d7528a13"
+    }
+  ],
+  "anatomy_qc": "not_run",
+  "clinical_accuracy": "not_established",
+  "geometric_admission": false,
+  "anatomical_admission": false,
+  "scanner_frame_admitted": false,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "annotation_available_at": null,
+  "review_available_at": null,
+  "network_requests": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "array_operation": "source_values_counted_only_no_array_retained",
+  "elapsed_seconds": 19.063569666119292,
+  "outcome_counts": {
+    "inherited_structural_pass": 1,
+    "review_failed": 24
+  }
+}

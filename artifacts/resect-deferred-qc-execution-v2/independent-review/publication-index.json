@@ -1,0 +1,26 @@
+{
+  "created_utc": "2026-10-09T00:35:14.291914+00:00",
+  "files": {
+    "RESULT.md": {
+      "bytes": 2802,
+      "sha256": "da95eaa9b76e2696c4ba15417f27e0921ffe6fcfb4202d2562ddbd59002e97fd"
+    },
+    "audit.log": {
+      "bytes": 783,
+      "sha256": "10bac6ba55c55952807a6c2e49e48c7c9ef3de9043560fc0d1fbb5531c0db583"
+    },
+    "audit.py": {
+      "bytes": 14097,
+      "sha256": "e8bd520b6c2d7c5d44410912292bfb615a63a4872dee59d9032640938ed9ab51"
+    },
+    "verification.json": {
+      "bytes": 106599,
+      "sha256": "d39ca107ea3ac10b84d6271c61d2d9776bdf31015abb455687fe04137401e633"
+    }
+  },
+  "original_receipts_modified": false,
+  "reviewed_run": "remaining-train-pairs-02",
+  "schema": "resect-deferred-qc-output-review-index-v1",
+  "status": "final",
+  "tracked_edits": 0
+}
