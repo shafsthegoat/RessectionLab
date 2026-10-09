@@ -43,7 +43,7 @@ The user's hourly push request is scheduled as the active thread heartbeat
 to `origin/main`, verify the remote, and preserve unfinished work and running transfers.
 No force push, paid infrastructure, billing change or external outreach is authorized.
 
-## Acquisition, QC and mechanics checkpoint, October 9 at 01:01 UTC
+## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC
 
 The [source-frozen CT/MRI archive transfer](../artifacts/synthrad-archive-runner-v1/RESULT.md)
 is active: exact HTTP 200 length/publisher MD5, no scientific decoding. Its 32
@@ -73,6 +73,22 @@ before any measured response access, fit or native call. The failed attempt is
 preserved and the launch environment is being diagnosed. The fixed one-hour
 experiment still requires both actual fitted axial confirmations before freeze
 and withheld torque access. Physical agreement and patient validity remain open.
+
+The [versioned RESECT QC rerun](../artifacts/resect-deferred-qc-v2-execution-v1/RESULT.md)
+now records 24 new structural passes and one inherited pass. Independent saved-output
+review verified 498 bindings, all full image scalar loops, binary-mask receipts,
+source and before/after fixity. The original v1 recorder failures remain unchanged.
+No anatomical, scanner-frame, training or planning admission follows from those
+structural checks. A distinct real-anatomy displacement candidate is TRAIN Case3;
+its frame, rest-mesh and numerical qualification remain open, and no tool/contact
+force measurements are available.
+
+The [runtime replacement diagnosis](../artifacts/hbe-branch-calibration-runtime-drift-v1/RESULT.md)
+pins the old and new Python executable hashes. Seven compact original-path failure
+and release receipts are preserved for prospective v2 verification. The v2 source
+retains the same scientific design and input split; independent review precedes
+any new measured access or native solve. The archive download continues with an
+unverified growing partial file and an active worker and curl process.
 
 ## Latest generated-learning checkpoint
 
