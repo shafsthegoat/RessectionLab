@@ -1,0 +1,67 @@
+{
+  "schema": "greiner-brain-mechanics-byte-intake-v1",
+  "doi": "10.5281/zenodo.13946193",
+  "record": 13946193,
+  "license": "CC-BY-4.0",
+  "attribution": "Alexander Greiner, Nina Reiter, Jan Hinrichsen and Silvia Budday (2024), Experimental Data of Human Brain Tissue (visual cortex, corona radiata), Zenodo 13946193.",
+  "source_metadata": {
+    "path": "build/greiner-13946193-byte-intake-v1/source-metadata/record.json",
+    "sha256": "4676ab8058c7ac4feb72f8f9c5b28569e4b02156720ae9f4a4c6ace68368c241"
+  },
+  "declaration": {
+    "path": "data/acquisition/greiner-13946193-v1/declaration.json",
+    "sha256": "c3987a0a26a411383551fc95e41d1230588b3582807eb39c0c2a868f8787b2b0"
+  },
+  "completion": {
+    "path": "data/acquisition/greiner-13946193-v1/completion.json",
+    "sha256": "bbbb568411483f82e159a170ee82fd6632bb0f3fb05a0d8174e563b7e20d1e02"
+  },
+  "files": [
+    {
+      "receipt": "data/acquisition/greiner-13946193-v1/attempts/20261009T045324555404Z-1e7b3114/result.json",
+      "receipt_sha256": "020f0efb69d4f5c8d25308758c95170132a3f43c5bceffd805402421c2bb5d1a",
+      "source": {
+        "filename": "cyclic_relaxation_corona_radiata.csv",
+        "source_url": "https://zenodo.org/api/records/13946193/files/cyclic_relaxation_corona_radiata.csv/content",
+        "publisher_file_id": "f52fe797-3e15-44a9-8fc4-c4e151403046",
+        "bytes": 61352,
+        "publisher_md5": "d7049005c42eb40b240a93e5eea75caf",
+        "path": "data/acquisition/greiner-13946193-v1/verified/cyclic_relaxation_corona_radiata.csv"
+      },
+      "fixity": {
+        "bytes": 61352,
+        "sha256": "881be97c59d2a212aca19b0c658e692dac2a561296abffaf91b5d934f3607a9a",
+        "md5": "d7049005c42eb40b240a93e5eea75caf"
+      },
+      "status": "byte_verified_unreviewed"
+    },
+    {
+      "receipt": "data/acquisition/greiner-13946193-v1/attempts/20261009T045325180332Z-ea5ca910/result.json",
+      "receipt_sha256": "d5b020909a7facd2d25d8fdf79cb913dca6a4527193f4e83b66f0fa0b1cf1195",
+      "source": {
+        "filename": "cyclic_relaxation_visual_cortex.csv",
+        "source_url": "https://zenodo.org/api/records/13946193/files/cyclic_relaxation_visual_cortex.csv/content",
+        "publisher_file_id": "fb7fb73f-7077-45a3-8efa-fdd3cffef4d3",
+        "bytes": 57025,
+        "publisher_md5": "8e8e1100d4e1188768a34b4374c44988",
+        "path": "data/acquisition/greiner-13946193-v1/verified/cyclic_relaxation_visual_cortex.csv"
+      },
+      "fixity": {
+        "bytes": 57025,
+        "sha256": "c8e06b910cb3c17d7dde8648d011100027005b5ef9e091a069744d2f8657dc01",
+        "md5": "8e8e1100d4e1188768a34b4374c44988"
+      },
+      "status": "byte_verified_unreviewed"
+    }
+  ],
+  "total_bytes": 118377,
+  "status": "byte_verified_unreviewed",
+  "scientific_data_parsed": false,
+  "roles_assigned": false,
+  "independent_people_or_specimens_count": null,
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "physical_validation_pass": null,
+  "recorded_surgical_transitions": 0,
+  "release_note": "Pinned record 13946193; review release lineage, corrections and overlap before scientific use. Do not count versions as independent specimens."
+}

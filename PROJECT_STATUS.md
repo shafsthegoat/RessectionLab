@@ -19,6 +19,12 @@ plus postmortem brain specimen loading curves. These can support narrow
 engineering or specimen-law checks after their own QC, but no verified public
 same-trial live-brain action, force and independent 3-D displacement record
 was found. The direct brain-interaction gate stays HOLD.
+The [Greiner brain-response intake](artifacts/greiner-brain-mechanics-intake-v1/RESULT.md)
+has now acquired two CC-BY-4.0 source files, 118,377 bytes, with verified TLS,
+publisher MD5 and independently rechecked local SHA-256. Payloads remain
+unparsed and unreviewed; specimen identities, overlap, units and roles must be
+qualified before fitting or evaluation. No material or surgical validity follows
+from acquisition.
 
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131
