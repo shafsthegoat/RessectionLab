@@ -87,6 +87,13 @@ is committed and independently reviewed. Generated fixtures verify the frozen
 comparison rules and disclose ungated adjacent-mesh exceedances. Native admission
 remains disabled; eleven of the twelve v5 native rows are still unrun, and neither
 specimen-force calibration nor physical validation is established.
+The [remaining-row supervisor](docs/hbe-v5-remaining-one-shot-supervisor.md)
+now has independent source-only acceptance: 137 writer tests and 81 independent
+focused/adjacent checks pass. Its [portable review](artifacts/hbe-v5-remaining-one-shot-preparation-v1/INDEPENDENT_REVIEW.md)
+binds the exact four source files, complete import closure, predecessor and
+readout integrity, and bounded execution. Eleven native rows remain unrun;
+each still requires its own source-bound release and result audit. The separate
+failed cube force-convergence result is preserved and does not admit patient mechanics.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.

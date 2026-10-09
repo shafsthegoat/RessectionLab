@@ -1,0 +1,60 @@
+{
+  "schema": "hbe-v5-remaining-one-shot-preparation-v1",
+  "status": "prepared_not_released_or_executed",
+  "release": null,
+  "study": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
+  "source_map": "manifests/experiments/hbe-01-03-v5-source-deck-bindings-v1.json",
+  "output_root": "outputs/mechanics/hbe-v5-remaining-one-shot-v1",
+  "first_index": 1,
+  "fixed_n8_predecessor": {
+    "run_id": "compression:N8:S60:reference",
+    "path": "outputs/mechanics/hbe-v5-n8-one-shot-v1/attempt-01/receipt.json",
+    "sha256": "8099c438caadf120d7269c14025fb92932fdda12a05f5ac8e8ade981cb20d45d",
+    "source_commit": "65c6d0b8b54514ae078bc72164a4d8dea416951c",
+    "release_sha256": "417f34c234ed5c79eeaab4f9e060cd7e3a49b67acbe1de63730f018aa3afaad3",
+    "adapted_deck_sha256": "3cf4156b19191918841498490bc448f88a61b656b566d5d6a3d36db817d0a724",
+    "native_elapsed_seconds": 4.570366250118241,
+    "recorded_final_active_output_bytes": 15488457,
+    "actual_saved_output_bytes": 16075117,
+    "readout_elapsed_seconds": null,
+    "prep_elapsed_seconds": null
+  },
+  "per_row": [
+    {"index": 1, "run_id": "compression:N12:S60:reference", "native_wall_seconds": 90, "active_output_mib": 64},
+    {"index": 2, "run_id": "compression:N16:S60:reference", "native_wall_seconds": 420, "active_output_mib": 256},
+    {"index": 3, "run_id": "compression:N24:S60:reference", "native_wall_seconds": 600, "active_output_mib": 384},
+    {"index": 4, "run_id": "compression:N32:S60:reference", "native_wall_seconds": 1800, "active_output_mib": 768},
+    {"index": 5, "run_id": "compression:N36:S60:reference", "native_wall_seconds": 2400, "active_output_mib": 1024},
+    {"index": 6, "run_id": "compression:N36:S120:reference", "native_wall_seconds": 2400, "active_output_mib": 2048},
+    {"index": 7, "run_id": "tension:N8:S60:reference", "native_wall_seconds": 90, "active_output_mib": 64},
+    {"index": 8, "run_id": "tension:N12:S60:reference", "native_wall_seconds": 90, "active_output_mib": 64},
+    {"index": 9, "run_id": "tension:N16:S60:reference", "native_wall_seconds": 420, "active_output_mib": 128},
+    {"index": 10, "run_id": "tension:N24:S60:reference", "native_wall_seconds": 600, "active_output_mib": 384},
+    {"index": 11, "run_id": "tension:N24:S120:reference", "native_wall_seconds": 600, "active_output_mib": 768}
+  ],
+  "per_row_sampled_process_group_rss_bytes": 3221225472,
+  "per_row_readout_wall_seconds": 600,
+  "per_row_readout_sampled_rss_bytes": 3221225472,
+  "per_row_prep_wall_seconds": 150,
+  "numerical_threads": 1,
+  "attempts_per_row": 1,
+  "automatic_retry": false,
+  "aggregate": {
+    "maximum_native_calls_all_12": 12,
+    "native_wall_seconds_all_12": 9600,
+    "remaining_readout_wall_seconds": 6600,
+    "remaining_prep_wall_seconds": 1800,
+    "known_stage_total_wall_seconds": 18000,
+    "active_output_bytes_all_12": 6442450944,
+    "storage_free_reserve_bytes": 2147483648
+  },
+  "phase_gates": {
+    "native_execution": false,
+    "automatic_reference_release": false,
+    "fit": false,
+    "held_out_torque_access": false,
+    "physical_validation": false
+  },
+  "budget_interpretation": "Prospective local ceilings, not promised usage or scientific tolerances. The all-12 native cap includes the prior N8 90-second cap; remaining readout and preparation caps cover rows 1-11 only because N8 stage timings were not recorded. Total known-stage cap is 9600+6600+1800=18000 seconds. Eleven 150-second preparation caps total 1650 seconds, leaving 150 seconds unallocable aggregate headroom; each row remains capped at 150 seconds. Output caps sum to 5952 MiB for rows 1-11; with the prior N8 64 MiB cap reservation, 6016 MiB is below the 6144 MiB aggregate. A release requires per-row storage preflight and independent review. No post-failure escalation.",
+  "release_condition": "One separate reviewed, current-commit-bound release for only the next ordered row; exact predecessor receipt chain; exact adapted deck/source/mesh/runtime; fresh output path; all numerical gates unchanged. This manifest never authorizes a call."
+}
