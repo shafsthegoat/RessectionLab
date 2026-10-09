@@ -32,6 +32,14 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [ReMIND component expansion](artifacts/remind-cohort-expansion-preparation-v1/RESULT.md)
+has independently reviewed, frozen roles for the full source cohort: 79 TRAIN,
+17 SELECT, 17 MEASUREMENT_EVAL, with ReMIND001 retained as DEVELOPMENT. Exact
+checksums are bound for 59,520 raw TRAIN MRI/US objects (30,173,493,690 bytes).
+No new patient payload was read before this freeze; acquisition must bind the
+committed declaration. Diagnosis strata, unknown pretraining overlap and all
+training/clinical admission limits remain explicit.
+
 The [completed BTC training modality intake](artifacts/btc-train-modalities-intake-v1/RESULT.md)
 adds 36 further files (371,219,704 bytes), completing the catalogued raw preoperative
 anatomy/diffusion/resting-state paths for all six existing TRAIN patients. Root
