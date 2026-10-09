@@ -1,0 +1,150 @@
+{
+  "execution_head": "86b3cdbf334a1dffff67b07d65788906d4c42b75",
+  "files": [
+    {
+      "bytes": 17762,
+      "package_path": "launcher/launch.py.snapshot",
+      "sha256": "9b172b3e93375fb2dfc918da3f67896e0b4ea977520e3aa30f5d1b25b958d689",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/launch.py.snapshot"
+    },
+    {
+      "bytes": 5952,
+      "package_path": "launcher/worker_entry.py.snapshot",
+      "sha256": "3f76e56598199b0d84ec66c79d14828336adebfe0b8ecc7ba5250ee9c5735693",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/worker_entry.py.snapshot"
+    },
+    {
+      "bytes": 246776,
+      "package_path": "launcher/runtime-closure.json",
+      "sha256": "a8584f66e51cdf45a36cdbe879c210c36577bb31a5ab651bcd6fa18367b8a6fc",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/runtime-closure.json"
+    },
+    {
+      "bytes": 3637,
+      "package_path": "launcher/authorized-template.json",
+      "sha256": "915e05dd613cefbc1bc0fd3928e1c92b68570b2e1ba644781caae9ea6ff440cc",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/authorized-template.json"
+    },
+    {
+      "bytes": 11496,
+      "package_path": "launcher/test_launch_generated.py.snapshot",
+      "sha256": "b32abd972c7a4946b9e403a65594426ea52e25cfd9f46e2c9bb52617c2c40a8d",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/test_launch_generated.py.snapshot"
+    },
+    {
+      "bytes": 1833,
+      "package_path": "launcher/generated-controls.json",
+      "sha256": "79de395a11023a5a9ed43c54cc41ebb7eb547d6dd87e559c3ce76fd787fd985b",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/generated-controls.json"
+    },
+    {
+      "bytes": 6569,
+      "package_path": "launcher/RESULT.txt",
+      "sha256": "4b3a051e5170a943d76e0c8533b2f224a9088569ca9cbd9117f3a96db35c4856",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/RESULT.txt"
+    },
+    {
+      "bytes": 4291,
+      "package_path": "launcher/INDEPENDENT-REVIEW.md",
+      "sha256": "40b381a6fc3e1177e87a9b82a56e56649bcc09384228389016f76fedaca516c7",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/INDEPENDENT-REVIEW.md"
+    },
+    {
+      "bytes": 1053,
+      "package_path": "launcher/independent-controls.json",
+      "sha256": "50d5a0a28e429f28b35d202fec416c5412f7d031bf4fe51a05094a358bc6aa69",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/independent-controls.json"
+    },
+    {
+      "bytes": 2993,
+      "package_path": "launcher/source-index.json",
+      "sha256": "db34334e0f9421d4bdab09b27c50d8e0de2048cc234abcf63c88b75bc4ab045c",
+      "source_path": "build/menichetti-train-validity-launch-integration-v1/source-index.json"
+    },
+    {
+      "bytes": 3648,
+      "package_path": "root-release.json",
+      "sha256": "29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/root-release.json"
+    },
+    {
+      "bytes": 5526,
+      "package_path": "receipt.json",
+      "sha256": "0910bb39a7dce40e7aeaa54e9e12a2d37962f57c320f1a78a333fee20526f64a",
+      "source_path": "build/menichetti-train-validity-v1/receipt.json"
+    },
+    {
+      "bytes": 5275,
+      "package_path": "released-protocol.json",
+      "sha256": "68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978",
+      "source_path": "build/menichetti-train-validity-v1/released-protocol.json"
+    },
+    {
+      "bytes": 225,
+      "package_path": "readout-console.txt",
+      "sha256": "997fa6468f4c06f76f0eceec95e2d84489528bb02327b1f192dccc3e1a5c4ff3",
+      "source_path": "build/menichetti-train-validity-v1/readout-console.txt"
+    },
+    {
+      "bytes": 302935,
+      "package_path": "validity-counts.json",
+      "sha256": "4977406ecb0f52bbe44478d438323cdf56657ef94bf32ccc997301ebbc4335b5",
+      "source_path": "build/menichetti-train-validity-v1/validity.json"
+    },
+    {
+      "bytes": 7122,
+      "package_path": "aggregate-flags.json",
+      "sha256": "f00925508f15678680f67fa892c305bf33b20cd0349cc162cf09693c7f15271b",
+      "source_path": "build/menichetti-train-validity-result-preparation-v1/aggregate-flags.json"
+    },
+    {
+      "bytes": 3971,
+      "package_path": "RESULT.txt",
+      "sha256": "4777e5b4b1b5aa69807074f570a724feeb0e8f5cc5f06cc62ab48137c17ec5e3",
+      "source_path": "build/menichetti-train-validity-result-preparation-v1/RESULT.txt"
+    },
+    {
+      "bytes": 5033,
+      "package_path": "summarize_saved_qc.py.snapshot",
+      "sha256": "a548773407f40ed12dbd55e77d3d195ef6c6e51cd1e7ea26a7b902c4627c614e",
+      "source_path": "build/menichetti-train-validity-result-preparation-v1/summarize_saved_qc.py"
+    },
+    {
+      "bytes": 4544,
+      "package_path": "INDEPENDENT-RESULT-REVIEW.md",
+      "sha256": "b20383287b8e4ea9fc242e9729dbb4dc82eaec928a0bea1644917ead9065ac63",
+      "source_path": "build/menichetti-train-validity-result-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 4483,
+      "package_path": "independent-saved-audit.json",
+      "sha256": "54aeacff98d037d9119a8ca0fdb0ae7b6221d04fd58a3fa20af6e849301a0275",
+      "source_path": "build/menichetti-train-validity-result-independent-v1/saved-audit.json"
+    },
+    {
+      "bytes": 274,
+      "package_path": "independent-aggregate-check.json",
+      "sha256": "6eaa582f5b9abc883fed3858404ab85dae94e760d9921692a3929087920ec1b3",
+      "source_path": "build/menichetti-train-validity-result-independent-v1/writer-aggregate-check.json"
+    },
+    {
+      "bytes": 10044,
+      "package_path": "independent-audit-saved.py.snapshot",
+      "sha256": "e10c0edd1eaf7c076f04612ea8f22a90f16a1b9bd4e472acef5b83c32455e80f",
+      "source_path": "build/menichetti-train-validity-result-independent-v1/audit_saved.py"
+    }
+  ],
+  "fitting_performed": false,
+  "future_response_read_or_fitting_permission": false,
+  "measured_MAT_reread_during_interpretation_or_packaging": false,
+  "physical_validation_pass": null,
+  "prior_launcher_package_index_sha256": "db34334e0f9421d4bdab09b27c50d8e0de2048cc234abcf63c88b75bc4ab045c",
+  "protected_numeric_values_included": false,
+  "raw_measured_samples_included": false,
+  "root_release_sha256": "29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c",
+  "runtime_binaries_included": false,
+  "schema": "menichetti-training-validity-actual-result-integration-v1",
+  "scientific_MAT_files_included": false,
+  "scope_note": "Includes the complete prior disabled launcher package and exact saved TRAIN counts-only QC evidence. Numerical validity only; roles and unknown cross-release overlap/conflict rule remain unchanged.",
+  "status": "independently_audited_training_numerical_screen_completed"
+}

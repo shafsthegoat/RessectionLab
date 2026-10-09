@@ -56,16 +56,18 @@ relaxation test; actual depth and contact/hold sample alignment remain unresolve
 Its [sealed byte-intake scope](artifacts/menichetti-sealed-intake-preparation-v1/INDEPENDENT_REVIEW.md)
 completed its single 6,427,434-byte transfer on October 9 at 09:10 UTC.
 The [independent completion audit](artifacts/menichetti-sealed-completion-v1/RESULT.md)
-rehashed the whole file and matched the publisher SHA-256. Response values remain closed. The later structural inventory and grouped roles
-are recorded below. Nominal motor commands are
+rehashed the whole file and matched the publisher SHA-256. Response values were
+closed at intake; the later structure, grouped roles and TRAIN-only numerical
+screen are recorded below. Nominal motor commands are
 not measured per-trial displacement, and neither source establishes live surgery.
 
 The [measurement structure inventory](artifacts/menichetti-structure-and-grouping-v1/RESULT.md)
 passed independent review and identified ten brain aliases with 595 trial columns.
 Six training, two development and two sealed-test aliases are now frozen before
 response-value access; every region and trial inherits its parent role. No timing
-or motion fields were found. Response reading, alignment, fitting and physical
-validation remain pending; source aliases do not authenticate donor independence.
+or motion fields were found. The later TRAIN-only numerical screen is recorded
+below; alignment, fitting and physical validation remain pending. Source aliases
+do not authenticate donor independence.
 
 The [MR conversion preparation](artifacts/remind-mr-conversion-preparation-v2/RESULT.md)
 now fixes missing spatial units and shared decoder-cache verification. Twelve
@@ -75,11 +77,14 @@ at 369.80 MiB peak RSS; independent checks matched all 64 plane coordinates and
 resource use remains unmeasured; separate bound stages are being implemented.
 
 The [TRAIN-only measurement reader](artifacts/menichetti-train-validity-preparation-v1/RESULT.md)
-has passed 22 generated controls and independent adversarial review. Only the
-six frozen TRAIN groups can be numerically decoded; protected groups remain
-opaque. Its execution protocol is still disabled, with no original response
-access. Actual indentation/contact timing remains missing, so the proposed
-secondary force forecast cannot establish controlled tissue mechanics.
+passed 22 generated controls and independent adversarial review. The subsequent
+[actual numerical screen](artifacts/menichetti-train-validity-result-v1/RESULT.txt)
+completed once: all 357 TRAIN trial columns are finite and nonconstant, with no
+predeclared nonfinite or constant-tail flags. Independent saved-result review
+matched every aggregate and per-brain count. The 48 protected matrices stayed
+numerically closed. Mixed signs occur in 306 trials; sign convention and actual
+indentation/contact timing remain unresolved. No fitting or physical-validation
+claim follows. Worker time was 0.6633 seconds at 60.77 MiB sampled peak RSS.
 
 The [NFBS archive inventory](artifacts/nfbs-member-inventory-v1/RESULT.txt)
 completed one independently reviewed names-and-sizes-only pass. All 125 source

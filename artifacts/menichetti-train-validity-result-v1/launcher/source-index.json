@@ -1,0 +1,68 @@
+{
+  "dependency_note": "Provenance snapshots only. Executing sources keep their exact original build paths; reviewed parser and owned-child supervisor remain unchanged.",
+  "execution_released": false,
+  "files": [
+    {
+      "bytes": 17762,
+      "package_path": "launch.py.snapshot",
+      "sha256": "9b172b3e93375fb2dfc918da3f67896e0b4ea977520e3aa30f5d1b25b958d689",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/launch.py"
+    },
+    {
+      "bytes": 5952,
+      "package_path": "worker_entry.py.snapshot",
+      "sha256": "3f76e56598199b0d84ec66c79d14828336adebfe0b8ecc7ba5250ee9c5735693",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/worker_entry.py"
+    },
+    {
+      "bytes": 246776,
+      "package_path": "runtime-closure.json",
+      "sha256": "a8584f66e51cdf45a36cdbe879c210c36577bb31a5ab651bcd6fa18367b8a6fc",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/runtime-closure.json"
+    },
+    {
+      "bytes": 3637,
+      "package_path": "authorized-template.json",
+      "sha256": "915e05dd613cefbc1bc0fd3928e1c92b68570b2e1ba644781caae9ea6ff440cc",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/authorized-template.json"
+    },
+    {
+      "bytes": 11496,
+      "package_path": "test_launch_generated.py.snapshot",
+      "sha256": "b32abd972c7a4946b9e403a65594426ea52e25cfd9f46e2c9bb52617c2c40a8d",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/test_launch_generated.py"
+    },
+    {
+      "bytes": 1833,
+      "package_path": "generated-controls.json",
+      "sha256": "79de395a11023a5a9ed43c54cc41ebb7eb547d6dd87e559c3ce76fd787fd985b",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/generated-controls.json"
+    },
+    {
+      "bytes": 6569,
+      "package_path": "RESULT.txt",
+      "sha256": "4b3a051e5170a943d76e0c8533b2f224a9088569ca9cbd9117f3a96db35c4856",
+      "source_path": "build/menichetti-train-validity-launch-preparation-v1/RESULT.txt"
+    },
+    {
+      "bytes": 4291,
+      "package_path": "INDEPENDENT-REVIEW.md",
+      "sha256": "40b381a6fc3e1177e87a9b82a56e56649bcc09384228389016f76fedaca516c7",
+      "source_path": "build/menichetti-train-validity-launch-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 1053,
+      "package_path": "independent-controls.json",
+      "sha256": "50d5a0a28e429f28b35d202fec416c5412f7d031bf4fe51a05094a358bc6aa69",
+      "source_path": "build/menichetti-train-validity-launch-independent-v1/controls.json"
+    }
+  ],
+  "related_reader_package_index": {
+    "path": "build/menichetti-train-validity-integration-v1/source-index.json",
+    "sha256": "e7f3c85260ec3614ad9d7778c7a4fc7ec9b5515529d2fa0c6b18d8a846980a8e"
+  },
+  "runtime_binary_files_copied": false,
+  "schema": "menichetti-train-validity-launch-integration-package-v1",
+  "scientific_MAT_or_response_files_included": false,
+  "status": "independently_reviewed_disabled_preparation"
+}

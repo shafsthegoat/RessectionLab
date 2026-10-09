@@ -1,0 +1,240 @@
+{
+  "aggregate": {
+    "disposition_trial_counts": {
+      "finite_nonconstant_sample_series": 357
+    },
+    "flagged_trial_counts": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "zero_suffix_review_flag": 0
+    },
+    "region_matrices": 72,
+    "rows_per_trial": [
+      10350
+    ],
+    "sample_positions": {
+      "exact_zero_samples": 2764,
+      "finite_samples": 3694950,
+      "nan_samples": 0,
+      "negative_finite_samples": 4611,
+      "negative_infinity_samples": 0,
+      "positive_finite_samples": 3687575,
+      "positive_infinity_samples": 0,
+      "samples": 3694950
+    },
+    "sign_pattern_trial_counts": {
+      "mixed": 306,
+      "nonnegative": 51
+    },
+    "trial_columns": 357
+  },
+  "by_brain_alias": {
+    "Brain1": {
+      "disposition_trial_counts": {
+        "finite_nonconstant_sample_series": 57
+      },
+      "flagged_trial_counts": {
+        "all_exact_zero": 0,
+        "all_finite_constant": 0,
+        "constant_tail_review_flag": 0,
+        "zero_suffix_review_flag": 0
+      },
+      "region_matrices": 12,
+      "rows_per_trial": [
+        10350
+      ],
+      "sample_positions": {
+        "exact_zero_samples": 124,
+        "finite_samples": 589950,
+        "nan_samples": 0,
+        "negative_finite_samples": 127,
+        "negative_infinity_samples": 0,
+        "positive_finite_samples": 589699,
+        "positive_infinity_samples": 0,
+        "samples": 589950
+      },
+      "sign_pattern_trial_counts": {
+        "mixed": 33,
+        "nonnegative": 24
+      },
+      "trial_columns": 57
+    },
+    "Brain10": {
+      "disposition_trial_counts": {
+        "finite_nonconstant_sample_series": 60
+      },
+      "flagged_trial_counts": {
+        "all_exact_zero": 0,
+        "all_finite_constant": 0,
+        "constant_tail_review_flag": 0,
+        "zero_suffix_review_flag": 0
+      },
+      "region_matrices": 12,
+      "rows_per_trial": [
+        10350
+      ],
+      "sample_positions": {
+        "exact_zero_samples": 538,
+        "finite_samples": 621000,
+        "nan_samples": 0,
+        "negative_finite_samples": 747,
+        "negative_infinity_samples": 0,
+        "positive_finite_samples": 619715,
+        "positive_infinity_samples": 0,
+        "samples": 621000
+      },
+      "sign_pattern_trial_counts": {
+        "mixed": 53,
+        "nonnegative": 7
+      },
+      "trial_columns": 60
+    },
+    "Brain4": {
+      "disposition_trial_counts": {
+        "finite_nonconstant_sample_series": 60
+      },
+      "flagged_trial_counts": {
+        "all_exact_zero": 0,
+        "all_finite_constant": 0,
+        "constant_tail_review_flag": 0,
+        "zero_suffix_review_flag": 0
+      },
+      "region_matrices": 12,
+      "rows_per_trial": [
+        10350
+      ],
+      "sample_positions": {
+        "exact_zero_samples": 543,
+        "finite_samples": 621000,
+        "nan_samples": 0,
+        "negative_finite_samples": 883,
+        "negative_infinity_samples": 0,
+        "positive_finite_samples": 619574,
+        "positive_infinity_samples": 0,
+        "samples": 621000
+      },
+      "sign_pattern_trial_counts": {
+        "mixed": 52,
+        "nonnegative": 8
+      },
+      "trial_columns": 60
+    },
+    "Brain5": {
+      "disposition_trial_counts": {
+        "finite_nonconstant_sample_series": 60
+      },
+      "flagged_trial_counts": {
+        "all_exact_zero": 0,
+        "all_finite_constant": 0,
+        "constant_tail_review_flag": 0,
+        "zero_suffix_review_flag": 0
+      },
+      "region_matrices": 12,
+      "rows_per_trial": [
+        10350
+      ],
+      "sample_positions": {
+        "exact_zero_samples": 597,
+        "finite_samples": 621000,
+        "nan_samples": 0,
+        "negative_finite_samples": 1070,
+        "negative_infinity_samples": 0,
+        "positive_finite_samples": 619333,
+        "positive_infinity_samples": 0,
+        "samples": 621000
+      },
+      "sign_pattern_trial_counts": {
+        "mixed": 56,
+        "nonnegative": 4
+      },
+      "trial_columns": 60
+    },
+    "Brain7": {
+      "disposition_trial_counts": {
+        "finite_nonconstant_sample_series": 60
+      },
+      "flagged_trial_counts": {
+        "all_exact_zero": 0,
+        "all_finite_constant": 0,
+        "constant_tail_review_flag": 0,
+        "zero_suffix_review_flag": 0
+      },
+      "region_matrices": 12,
+      "rows_per_trial": [
+        10350
+      ],
+      "sample_positions": {
+        "exact_zero_samples": 503,
+        "finite_samples": 621000,
+        "nan_samples": 0,
+        "negative_finite_samples": 816,
+        "negative_infinity_samples": 0,
+        "positive_finite_samples": 619681,
+        "positive_infinity_samples": 0,
+        "samples": 621000
+      },
+      "sign_pattern_trial_counts": {
+        "mixed": 57,
+        "nonnegative": 3
+      },
+      "trial_columns": 60
+    },
+    "Brain8": {
+      "disposition_trial_counts": {
+        "finite_nonconstant_sample_series": 60
+      },
+      "flagged_trial_counts": {
+        "all_exact_zero": 0,
+        "all_finite_constant": 0,
+        "constant_tail_review_flag": 0,
+        "zero_suffix_review_flag": 0
+      },
+      "region_matrices": 12,
+      "rows_per_trial": [
+        10350
+      ],
+      "sample_positions": {
+        "exact_zero_samples": 459,
+        "finite_samples": 621000,
+        "nan_samples": 0,
+        "negative_finite_samples": 968,
+        "negative_infinity_samples": 0,
+        "positive_finite_samples": 619573,
+        "positive_infinity_samples": 0,
+        "samples": 621000
+      },
+      "sign_pattern_trial_counts": {
+        "mixed": 55,
+        "nonnegative": 5
+      },
+      "trial_columns": 60
+    }
+  },
+  "input_bindings": {
+    "build/menichetti-train-validity-launch-preparation-v1/root-release.json": "29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c",
+    "build/menichetti-train-validity-v1/receipt.json": "0910bb39a7dce40e7aeaa54e9e12a2d37962f57c320f1a78a333fee20526f64a",
+    "build/menichetti-train-validity-v1/released-protocol.json": "68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978",
+    "build/menichetti-train-validity-v1/validity.json": "4977406ecb0f52bbe44478d438323cdf56657ef94bf32ccc997301ebbc4335b5"
+  },
+  "interpretation_limit": "Counts/flags establish only the declared TRAIN numerical validity screen. They establish no contact, hold, padding cause, force-sign convention, constitutive law, donor independence or transfer performance.",
+  "original_MAT_opened_by_summary": false,
+  "physical_validation_pass": null,
+  "saved_report_scope": {
+    "fitting_performed": false,
+    "materialized_training_matrices": 72,
+    "protected_numeric_arrays_materialized": 0,
+    "protected_paths_skipped": 48,
+    "raw_force_samples_emitted": 0
+  },
+  "schema": "menichetti-saved-training-qc-aggregate-v1",
+  "supervision": {
+    "direct_child_reaped": true,
+    "fallback_used": false,
+    "final_regular_file_output_bytes": 313961,
+    "lifecycle_seconds": 0.6856491670478135,
+    "peak_sampled_group_rss_bytes": 63717376,
+    "remaining_group_members": [],
+    "worker_seconds": 0.6633057079743594
+  }
+}

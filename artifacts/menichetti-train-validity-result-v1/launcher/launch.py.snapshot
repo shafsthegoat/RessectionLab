@@ -1,0 +1,227 @@
+"""Exact one-shot TRAIN QC release using the reviewed owned-child supervisor."""
+from pathlib import Path
+import argparse, hashlib, importlib.util, json, subprocess, sys, time
+
+ROOT=Path(__file__).resolve().parents[2]
+PREP='build/menichetti-train-validity-launch-preparation-v1'
+WORKER='build/menichetti-train-validity-preparation-v1/train_validity.py'
+PROTOCOL='build/menichetti-train-validity-preparation-v1/prepared-protocol.json'
+REVIEW='build/menichetti-train-validity-independent-v1/REPORT.md'
+OWNED='build/menichetti-structure-launch-preparation-v1/launch.py'
+OWNED_REVIEW='build/menichetti-structure-launch-independent-v1/REPORT.md'
+RUNTIME=PREP+'/runtime-closure.json'
+ENTRY=PREP+'/worker_entry.py'
+OUTPUT='build/menichetti-train-validity-v1'
+LAUNCHER_CACHE_PREFIX=PREP+'/launcher-unused-pycache'
+ROLES='manifests/experiments/menichetti-brain-group-roles-v1.json'
+INVENTORY='build/menichetti-structure-inventory-v1/inventory.json'
+SOURCES={
+    ENTRY:'3f76e56598199b0d84ec66c79d14828336adebfe0b8ecc7ba5250ee9c5735693',
+    WORKER:'2eddae70e5e38d79bf1325dcb9fce574b49ef30098278cd055090c0067e41d6c',
+    PROTOCOL:'f055e22a73f858bc3d4923b5c3c0a0d0b2ff8e949a5c42af5b25c4e39c85982a',
+    REVIEW:'49e000cd6a0cf27f822aa4416f2fb70cf05310915e5be6fcb2923aaac6eabf0f',
+    OWNED:'2f93c7fd776014417677ed7ea12112a8f237218e76d288ad04297b651816fea2',
+    OWNED_REVIEW:'7b502043e15b8a402c1d02e2bc1338e50cbc201977af6297afd01c5af64731ff',
+    RUNTIME:'a8584f66e51cdf45a36cdbe879c210c36577bb31a5ab651bcd6fa18367b8a6fc',
+    ROLES:'f69a7d65571a685ad1ce2b1f762dd3a587f83087c475fb6916afd755a17dfa64',
+    INVENTORY:'963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e',
+    'build/menichetti-structure-inventory-preparation-v1/inventory.py':'05866df06361a1151ff8efa6d7d5a1bd7198dfad3e19936b5eff43817ce72d9d',
+    'build/menichetti-structure-inventory-preparation-v1/prepared-protocol.json':'62a2a0063a7cef5c1cd28d1421f9b1302ab0482f06011e50e041cefd76781b0f',
+    'scripts/mechanics_hbe_v5_remaining_one_shot.py':'90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b',
+    'scripts/mechanics_hbe_v5_n8_one_shot.py':'82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0',
+    'scripts/febio_runtime.py':'679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e'}
+CAPS={'attempts':1,'worker_stage_wall_seconds':35,'cleanup_and_finalization_reserve_seconds':10,
+      'lifecycle_wall_seconds':45,'sampled_process_group_rss_bytes':536870912,
+      'aggregate_output_bytes':4194304,'qc_report_bytes':1048576,'numerical_threads':1}
+TRAINING=frozenset(('Brain1','Brain4','Brain5','Brain7','Brain8','Brain10'))
+
+def need(ok,reason):
+    if not ok:raise RuntimeError(reason)
+
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+
+def read_bound(relative,digest):
+    p=ROOT/relative
+    need(not p.is_symlink() and p.is_file() and p.stat().st_size<=4*1024**2,'binding_type_or_size')
+    raw=p.read_bytes();need(sha(raw)==digest,'binding_changed:'+relative)
+    return raw
+
+def load_owned():
+    read_bound(OWNED,SOURCES[OWNED])
+    spec=importlib.util.spec_from_file_location('reviewed_owned_supervisor',ROOT/OWNED)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module
+
+def released_protocol():
+    value=json.loads(read_bound(PROTOCOL,SOURCES[PROTOCOL]))
+    need(value['execution_released'] is False,'prepared_protocol_not_false')
+    value['execution_released']=True
+    return (json.dumps(value,sort_keys=True,indent=2)+'\n').encode()
+
+def validate_release(path,expected_sha):
+    need(not path.is_symlink() and path.is_file() and path.stat().st_size<=65536,'release_type_or_size')
+    raw=path.read_bytes();need(sha(raw)==expected_sha,'release_changed');release=json.loads(raw)
+    need(release['schema']=='menichetti-train-validity-one-shot-release-v1','release_schema')
+    need(release['launcher_sha256']==sha(Path(__file__).read_bytes()),'launcher_changed')
+    need(release['source_bindings']==SOURCES and release['caps']==CAPS,'bindings_or_caps_changed')
+    need(release['output_directory']==OUTPUT and release['training_aliases']==sorted(TRAINING),'scope_changed')
+    need(release['development_or_test_access_permitted'] is False and release['fitting_permitted'] is False,'scope_broadened')
+    for name,digest in SOURCES.items():read_bound(name,digest)
+    runtime=json.loads(read_bound(RUNTIME,SOURCES[RUNTIME]))
+    # Byte pins are checked here without importing any scientific worker.
+    for group in ('loaded_module_files','executing_sources','local_native_runtime_files'):
+        for record in runtime[group].values():
+            p=Path(record['path']);need(p.is_file() and p.stat().st_size==record['bytes'],'runtime_file_size')
+            h=hashlib.sha256()
+            with p.open('rb') as stream:
+                while block:=stream.read(1024**2):h.update(block)
+            need(h.hexdigest()==record['sha256'],'runtime_file_changed')
+    executable=runtime['python_executable'];p=Path(executable['path'])
+    need(Path(sys.executable).resolve()==p and sha(p.read_bytes())==executable['sha256'],'python_runtime_changed')
+    owned=load_owned()
+    for name,digest in owned.SUPERVISOR_FILES.items():
+        raw=subprocess.run(['/usr/bin/git','show',owned.EXECUTING_SOURCE_COMMIT+':'+name],cwd=ROOT,capture_output=True,check=True,timeout=5).stdout
+        need(sha(raw)==digest,'historical_supervisor_source_changed')
+    protocol=released_protocol()
+    need(release['released_child_protocol_sha256']==sha(protocol),'child_protocol_changed')
+    return release,protocol,owned
+
+def semantic_qc(raw,protocol_sha):
+    """Accept exactly the reviewed QC scope, including semantic refusal at exit0."""
+    need(len(raw)<=CAPS['qc_report_bytes'],'qc_output_budget')
+    report=json.loads(raw)
+    need(report.get('original_sha256')=='ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6'
+         and report.get('roles_sha256')==SOURCES[ROLES] and report.get('protocol_sha256')==protocol_sha,'qc_provenance')
+    need(report.get('protected_numeric_arrays_materialized')==0 and report.get('raw_force_samples_emitted')==0
+         and report.get('model_fit_performed') is False,'qc_access_boundary')
+    if report.get('status')=='training_validity_refused':
+        need(set(report)=={'status','reason','error_type','protected_numeric_arrays_materialized','raw_force_samples_emitted',
+             'partial_training_QC_discarded','model_fit_performed','original_sha256','roles_sha256','protocol_sha256'}
+             and report.get('partial_training_QC_discarded') is True,'invalid_refusal')
+        return {'status':'qc_refused','reason':report.get('reason'),'training_validity_completed':False}
+    allowed={'schema','status','training_matrix_records','materialized_training_paths','skipped_protected_paths',
+        'protected_numeric_arrays_materialized','raw_force_samples_emitted','opaque_decompression_may_traverse_protected_bytes',
+        'padding_causality_established','force_sign_convention_established','contact_or_hold_alignment_established',
+        'model_fit_performed','physical_validation_pass','qc_rule','original_sha256','roles_sha256','protocol_sha256'}
+    need(set(report)==allowed and report['schema']=='menichetti-training-validity-only-v1'
+         and report['status']=='training_validity_only','qc_schema_or_status')
+    need(all(report[k] is False for k in ('padding_causality_established','force_sign_convention_established','contact_or_hold_alignment_established'))
+         and report['physical_validation_pass'] is None,'qc_claim_broadened')
+    prepared=json.loads(read_bound(PROTOCOL,SOURCES[PROTOCOL]));need(report['qc_rule']==prepared['qc_rules'],'qc_rule_changed')
+    nodes=json.loads(read_bound(INVENTORY,SOURCES[INVENTORY]))['nodes']
+    training=[n for n in nodes if len(n['path'])==3 and n['path'][1]['field'] in TRAINING]
+    protected=[n['path'] for n in nodes if len(n['path'])==3 and n['path'][1]['field'] not in TRAINING]
+    need(report['materialized_training_paths']==[n['path'] for n in training]
+         and report['skipped_protected_paths']==protected,'qc_role_paths_changed')
+    records=report['training_matrix_records'];need(len(records)==len(training)==72,'qc_matrix_count')
+    total=quarantine=0
+    trial_keys={'trial_column_1based','samples','finite_samples','nan_samples','positive_infinity_samples','negative_infinity_samples',
+        'positive_finite_samples','negative_finite_samples','exact_zero_samples','leading_exact_zero_samples','trailing_exact_zero_samples',
+        'all_finite_constant','all_exact_zero','terminal_exact_equal_run_samples','zero_suffix_review_flag','constant_tail_review_flag',
+        'sign_pattern','disposition'}
+    counts=('finite_samples','nan_samples','positive_infinity_samples','negative_infinity_samples','positive_finite_samples',
+            'negative_finite_samples','exact_zero_samples','leading_exact_zero_samples','trailing_exact_zero_samples')
+    for record,node in zip(records,training):
+        shape=node['shape']
+        need(set(record)=={'brain_alias','region','shape','trials'} and record['brain_alias']==node['path'][1]['field']
+             and record['region']==node['path'][2]['field'] and record['shape']==shape,'qc_matrix_scope')
+        need(len(record['trials'])==shape[1],'qc_trial_count')
+        for index,trial in enumerate(record['trials'],1):
+            need(set(trial)==trial_keys and trial['trial_column_1based']==index and trial['samples']==shape[0],'qc_trial_scope')
+            need(all(type(trial[k]) is int and 0<=trial[k]<=shape[0] for k in counts),'qc_count_bounds')
+            need(sum(trial[k] for k in ('finite_samples','nan_samples','positive_infinity_samples','negative_infinity_samples'))==shape[0]
+                 and sum(trial[k] for k in ('positive_finite_samples','negative_finite_samples','exact_zero_samples'))==trial['finite_samples'],'qc_count_partition')
+            finite=trial['finite_samples']==shape[0]
+            flags=('all_finite_constant','all_exact_zero','zero_suffix_review_flag','constant_tail_review_flag')
+            need(all(type(trial[k]) is bool for k in flags),'qc_flag_types')
+            tail=trial['terminal_exact_equal_run_samples']
+            need((finite and type(tail) is int and 1<=tail<=shape[0]) or (not finite and tail is None),'qc_tail_bounds')
+            need(trial['all_finite_constant']==(finite and tail==shape[0])
+                 and trial['all_exact_zero']==(trial['exact_zero_samples']==shape[0]),'qc_constant_flags')
+            need(trial['leading_exact_zero_samples']<=trial['exact_zero_samples']
+                 and trial['trailing_exact_zero_samples']<=trial['exact_zero_samples'],'qc_zero_counts')
+            need(trial['zero_suffix_review_flag']==(trial['trailing_exact_zero_samples']>=2)
+                 and trial['constant_tail_review_flag']==(tail is not None and tail>=100),'qc_review_flags')
+            positive,negative=trial['positive_finite_samples'],trial['negative_finite_samples']
+            sign='mixed' if positive and negative else 'nonnegative' if positive else 'nonpositive' if negative else 'no_nonzero_finite_samples'
+            need(trial['sign_pattern']==sign,'qc_sign_pattern')
+            expected=('quarantine_nonfinite_trial' if not finite else 'finite_constant_series_review' if trial['all_finite_constant'] else 'finite_nonconstant_sample_series')
+            need(trial['disposition']==expected,'qc_disposition_changed')
+            quarantine+=not finite;total+=1
+    need(total==357,'qc_total_trials')
+    return {'status':'training_validity_completed','training_validity_completed':True,
+            'training_matrices':72,'training_trial_columns':total,'quarantined_nonfinite_trials':quarantine,
+            'physical_validation_pass':None}
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--release',type=Path,required=True)
+    parser.add_argument('--release-sha256',required=True);parser.add_argument('--check-only',action='store_true')
+    args=parser.parse_args();release,protocol,owned=validate_release(args.release,args.release_sha256)
+    if args.check_only:
+        print(json.dumps({'status':'launcher_bindings_valid','execution_released':release['execution_released'],
+                          'original_MAT_opens':0,'caps':CAPS}));return
+    need(release['execution_released'] is True and release['status']=='root_released_train_validity_once','root_release_required')
+    launcher_cache=ROOT/LAUNCHER_CACHE_PREFIX
+    need(sys.dont_write_bytecode and sys.pycache_prefix==str(launcher_cache)
+         and not launcher_cache.exists() and not launcher_cache.is_symlink(),'launcher_source_only_cache_policy')
+    directory=ROOT/OUTPUT;need(not directory.exists() and not directory.is_symlink(),'one_attempt_directory_exists')
+    sys.path.insert(0,str(ROOT))
+    from scripts import mechanics_hbe_v5_remaining_one_shot as supervisor
+    from scripts import febio_runtime
+    for name,module in [('scripts/mechanics_hbe_v5_remaining_one_shot.py',supervisor),
+                        ('scripts/mechanics_hbe_v5_n8_one_shot.py',supervisor.io),('scripts/febio_runtime.py',febio_runtime)]:
+        need(Path(module.__file__).resolve()==ROOT/name,'supervisor_module_origin');read_bound(name,SOURCES[name])
+    directory.mkdir(parents=True,exist_ok=False);protocol_path=directory/'released-protocol.json'
+    with protocol_path.open('xb') as stream:stream.write(protocol)
+    environment=febio_runtime.private_environment({'caps':{'thread_environment':supervisor.io.THREAD_ENV}})
+    environment['PYTHONDONTWRITEBYTECODE']='1'
+    worker_cache=directory/'worker-unused-pycache'
+    need(not worker_cache.exists() and not worker_cache.is_symlink(),'worker_cache_prefix_exists')
+    command=[str(ROOT/'.venv/bin/python'),'-B','-X','pycache_prefix='+str(worker_cache),str(ROOT/ENTRY),'--runtime-sha256',SOURCES[RUNTIME],
+             '--protocol',str(protocol_path),'--protocol-sha256',sha(protocol)]
+    head=subprocess.check_output(['/usr/bin/git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    receipt={'schema':'menichetti-supervised-train-validity-one-shot-v1','status':'running',
+             'root_release_sha256':args.release_sha256,'child_protocol_sha256':sha(protocol),
+             'runtime_closure_sha256':SOURCES[RUNTIME],'source_bindings':SOURCES,'caps':CAPS,
+             'observed_head_at_root_release':release['observed_head'],'observed_head_at_launch':head,
+             'training_aliases':sorted(TRAINING),'development_or_test_access_permitted':False,'fitting_permitted':False,
+             'python_bytecode_policy':{'launcher_pycache_prefix':str(launcher_cache),
+                 'worker_pycache_prefix':str(worker_cache),'dont_write_bytecode':True,
+                 'cache_prefixes_absent_before_spawn':True,'existing_bytecode_cache_admission':False},
+             'sampling_note':'Whole worker including original fixity is supervised. RSS/output are sampled; short peaks may be missed.'}
+    owner=owned.OwnedWorker();started=time.monotonic()
+    try:
+        stage=supervisor.supervise_stage('readout',command,directory,receipt,cwd=ROOT,environment=environment,
+            wall_cap=CAPS['worker_stage_wall_seconds'],rss_cap=CAPS['sampled_process_group_rss_bytes'],
+            output_cap=CAPS['aggregate_output_bytes'],rss_observer=febio_runtime.process_group_rss,popen=owner)
+    finally:
+        receipt['cleanup']=owner.cleanup(febio_runtime.process_group_rss,started+CAPS['lifecycle_wall_seconds']-1)
+        receipt['status']='failed_or_incomplete';supervisor.io.durable_json(directory/'receipt.json',receipt)
+    contained=(receipt['cleanup']['contained'] and not receipt['cleanup']['fallback_used'] and not receipt['cleanup']['errors'])
+    report_path=directory/'validity.json'
+    if stage['status']=='completed_within_caps' and contained:
+        try:
+            need(not report_path.is_symlink() and report_path.is_file() and report_path.stat().st_size<=CAPS['qc_report_bytes'],'qc_report_missing_or_oversized')
+            raw=report_path.read_bytes();receipt['qc_report_sha256']=sha(raw);receipt['qc_report_bytes']=len(raw)
+            receipt['qc_semantics']=semantic_qc(raw,sha(protocol))
+            receipt['status']=receipt['qc_semantics']['status']
+            need(all(not p.exists() and not p.is_symlink() for p in (launcher_cache,worker_cache)),'unexpected_bytecode_cache_created')
+            for name,digest in SOURCES.items():read_bound(name,digest)
+        except Exception as error:
+            receipt['status']='failed_qc_report_or_source_validation';receipt['validation_error_type']=type(error).__name__
+    if not receipt['cleanup']['contained']:receipt['status']='failed_cleanup_containment'
+    receipt['lifecycle_seconds']=time.monotonic()-started
+    if receipt['lifecycle_seconds']>=CAPS['lifecycle_wall_seconds']:receipt['status']='failed_lifecycle_wall_cap'
+    supervisor.io.durable_json(directory/'receipt.json',receipt)
+    try:
+        active=supervisor.active_bytes(directory,CAPS['aggregate_output_bytes'])
+        need(active<=CAPS['aggregate_output_bytes'],'final_output_cap')
+    except Exception as error:
+        active=None;receipt['status']='failed_final_output_scan';receipt['final_error_type']=type(error).__name__
+        supervisor.io.durable_json(directory/'receipt.json',receipt)
+    if time.monotonic()-started>=CAPS['lifecycle_wall_seconds']:
+        receipt['status']='failed_lifecycle_wall_cap';supervisor.io.durable_json(directory/'receipt.json',receipt)
+    print(json.dumps({'status':receipt['status'],'receipt':str(directory/'receipt.json'),'final_scanned_output_bytes':active}))
+    return 0 if receipt['status']=='training_validity_completed' else 1
+
+if __name__=='__main__':raise SystemExit(main())

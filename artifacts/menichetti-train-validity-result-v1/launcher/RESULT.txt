@@ -1,0 +1,103 @@
+TRAIN-only Menichetti QC: disabled one-shot launcher proposal
+
+Status: source/generated controls and independent launcher review passed.
+No original MAT was opened, no measured response values decoded, and no fitting
+performed. The prepared protocol and authorized template remain false. Root must
+freeze a separate exact release before the single scientific worker is eligible.
+
+Exact bindings
+  launch.py
+    9b172b3e93375fb2dfc918da3f67896e0b4ea977520e3aa30f5d1b25b958d689
+  worker_entry.py
+    3f76e56598199b0d84ec66c79d14828336adebfe0b8ecc7ba5250ee9c5735693
+  runtime-closure.json
+    a8584f66e51cdf45a36cdbe879c210c36577bb31a5ab651bcd6fa18367b8a6fc
+  authorized-template.json (execution_released=false)
+    915e05dd613cefbc1bc0fd3928e1c92b68570b2e1ba644781caae9ea6ff440cc
+  Exact reviewed reader/protocol and independent reader GO
+    2eddae70e5e38d79bf1325dcb9fce574b49ef30098278cd055090c0067e41d6c
+    f055e22a73f858bc3d4923b5c3c0a0d0b2ff8e949a5c42af5b25c4e39c85982a
+    49e000cd6a0cf27f822aa4416f2fb70cf05310915e5be6fcb2923aaac6eabf0f
+  Derived authorized child protocol (only execution_released changes)
+    68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978
+  Independent launcher GO, ../menichetti-train-validity-launch-independent-v1/REPORT.md
+    40b381a6fc3e1177e87a9b82a56e56649bcc09384228389016f76fedaca516c7
+  Independent launcher controls
+    50d5a0a28e429f28b35d202fec416c5412f7d031bf4fe51a05094a358bc6aa69
+
+Scope and supervision
+The frozen TRAIN aliases are Brain1/4/5/7/8/10: 72 matrices and 357 trial
+columns. The protected 48 region arrays remain opaque skips. An aggregate file
+checksum and opaque decompression may traverse their bytes; this is not numeric
+materialization and produces no protected trial statistics or per-leaf hashes.
+
+The unchanged, previously reviewed OwnedWorker retains the direct child handle
+and performs bounded group/direct-child cleanup and reap after the unchanged
+command supervisor. A 35-second external stage includes interpreter imports,
+runtime checks, whole-file fixity, QC and the post-QC runtime check. A separate
+10-second cleanup/finalization reserve makes the declared lifecycle 45 seconds.
+The process group is sampled against 512 MiB RSS and aggregate output against
+4 MiB. Between-sample peaks can be missed. There is one fresh attempt directory,
+one child and no retry. The report itself is limited to 1 MiB.
+
+The entry guard freezes 411 loaded module origins with file hashes, executing
+source files, the private Python executable/shared library and bundled local
+NumPy/SciPy runtime libraries. The same closure is required before and after QC.
+OS-provided libraries/shared cache are identified by platform release, not copied
+or byte-pinned. Existing .pyc caches are bypassed with -B and an absent, separate
+pycache_prefix for both parent and child. The parent policy and both prefixes
+are bound in the receipt; source-cache directories must remain absent. Historical
+Git blobs bind the three executing supervisor helpers without requiring current
+HEAD to equal an old evidence commit. Root records its actual HEAD at release.
+
+A zero child exit is insufficient. The launcher validates exact QC schema,
+provenance, frozen paths/roles, 72/357 scope, counts, signs, flags and dispositions.
+An exit-zero training_validity_refused report produces qc_refused and a nonzero
+launcher exit. Nonfinite trials are quarantined; finite constant series remain
+reviewable. Numerical validity is not physical validation. Unknown specimen
+overlap and protected-role conflict quarantine remain governed by frozen roles.
+
+Generated validation
+15 tests passed in 2.35 seconds. They use generated counts, tiny generated MATs
+and stubbed process-stage integration only. Controls cover semantic refusal at
+exit zero, exact scope/provenance/count/sign/flag rejection, false release,
+check-only, wrong runtime identity, missing/existing parent cache prefix, and
+cold-runtime invariance after generated compressed TRAIN decode plus protected
+skip. No actual scientific child was launched. Prior reviewed OwnedWorker
+containment controls, including group-signal EPERM fallback, remain unchanged.
+The independent reviewer reran all 15 controls in 2.46 seconds, confirmed one
+generated nonfinite quarantine and rejected an incorrect usable disposition.
+All 14 source bindings match. The GO requires the exact fresh-prefix parent
+command below; it does not release measured-response access.
+
+Root release procedure (not performed)
+Preserve authorized-template.json and the false reader protocol. After root
+review, create a separate root-release.json from that template with only:
+  execution_released = true
+  status = root_released_train_validity_once
+  observed_head = actual current Git HEAD
+Bind that new document's SHA256 and the independent launcher GO in root evidence.
+The scientific output directory and both cache prefixes must be absent. Run from
+the repository root, substituting the frozen release SHA256 below:
+
+.venv/bin/python -B -X pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/menichetti-train-validity-launch-preparation-v1/launcher-unused-pycache build/menichetti-train-validity-launch-preparation-v1/launch.py --release build/menichetti-train-validity-launch-preparation-v1/root-release.json --release-sha256 ROOT_RELEASE_SHA256
+
+Adding --check-only validates pins without original MAT access. Output goes to
+build/menichetti-train-validity-v1/{validity.json,receipt.json,...}. A directory
+left by any attempt blocks another attempt. Saved-result interpretation is a
+separate bounded read of counts/flags; no data-driven contact/hold alignment or
+forecast/model fitting is authorized by this release.
+
+The exact fresh-prefix parent command was run with authorized-template.json,
+its pinned false-template SHA256 and --check-only: exit zero in 0.07 seconds,
+execution_released=false, original_MAT_opens=0. No output attempt directory or
+cache prefix was created.
+
+Integration package already prepared
+build/menichetti-train-validity-integration-v1/source-index.json
+  e7f3c85260ec3614ad9d7778c7a4fc7ec9b5515529d2fa0c6b18d8a846980a8e
+Its ten explicit files total 57,341 bytes: reviewed source/protocol, generated
+tests/controls, independent reader review and mechanical qualification. It
+contains no MAT or measured response files. Forecasting remains a secondary
+prediction-only possibility, not a substitute for missing synchronized actual
+indentation/contact/loading-history measurements needed for mechanics validation.

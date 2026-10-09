@@ -1,0 +1,143 @@
+"""Independent saved QC/source audit. Never load scientific arrays or the MAT."""
+from collections import Counter
+from pathlib import Path
+import hashlib
+import importlib.util
+import json
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).resolve().parent
+PREP = ROOT / 'build/menichetti-train-validity-launch-preparation-v1'
+RUN = ROOT / 'build/menichetti-train-validity-v1'
+opened_original = []
+
+def guard(event, args):
+    if event == 'open' and str(args[0]).endswith('/F_t_curves.mat'):
+        opened_original.append(str(args[0]))
+        raise AssertionError('Original MAT forbidden during saved-only audit')
+
+sys.addaudithook(guard)
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open('rb') as stream:
+        while block := stream.read(1024**2):
+            h.update(block)
+    return h.hexdigest()
+
+def read(path):
+    assert path.is_file() and not path.is_symlink()
+    assert path.stat().st_size < 4*1024**2
+    return json.loads(path.read_bytes())
+
+release = read(PREP/'root-release.json')
+assert digest(PREP/'root-release.json') == '29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c'
+assert digest(PREP/'launch.py') == release['launcher_sha256'] == '9b172b3e93375fb2dfc918da3f67896e0b4ea977520e3aa30f5d1b25b958d689'
+template = read(PREP/'authorized-template.json')
+assert template['execution_released'] is False
+assert {k for k in template if template[k] != release[k]} == {'execution_released', 'status', 'observed_head'}
+assert release['execution_released'] is True and release['status'] == 'root_released_train_validity_once'
+assert release['observed_head'] == '86b3cdbf334a1dffff67b07d65788906d4c42b75'
+
+# Import only the stdlib launcher; never enter main or import the scientific worker.
+spec = importlib.util.spec_from_file_location('saved_audit_launcher', PREP/'launch.py')
+launch = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(launch)
+receipt = read(RUN/'receipt.json')
+qc = read(RUN/'validity.json')
+assert receipt['root_release_sha256'] == digest(PREP/'root-release.json')
+assert receipt['source_bindings'] == release['source_bindings'] == launch.SOURCES
+assert receipt['caps'] == release['caps'] == launch.CAPS
+for name, expected in launch.SOURCES.items():
+    assert digest(ROOT/name) == expected, name
+assert receipt['observed_head_at_launch'] == receipt['observed_head_at_root_release'] == release['observed_head']
+assert receipt['child_protocol_sha256'] == release['released_child_protocol_sha256'] == digest(RUN/'released-protocol.json')
+assert (RUN/'released-protocol.json').read_bytes() == launch.released_protocol()
+assert receipt['qc_report_sha256'] == digest(RUN/'validity.json')
+assert receipt['qc_report_bytes'] == (RUN/'validity.json').stat().st_size == 302935
+assert receipt['qc_semantics'] == launch.semantic_qc((RUN/'validity.json').read_bytes(), receipt['child_protocol_sha256'])
+assert receipt['status'] == 'training_validity_completed'
+assert receipt['readout_calls_attempted'] == 1
+stage = receipt['readout_stage']
+assert stage['status'] == 'completed_within_caps' and stage['exit_code'] == 0 and stage['kill_reason'] is None
+assert stage['elapsed_seconds'] < stage['wall_cap_seconds'] == launch.CAPS['worker_stage_wall_seconds']
+assert stage['peak_sampled_process_group_rss_bytes'] < stage['sampled_process_group_rss_cap_bytes'] == launch.CAPS['sampled_process_group_rss_bytes']
+assert receipt['lifecycle_seconds'] < launch.CAPS['lifecycle_wall_seconds']
+assert receipt['cleanup'] == dict(contained=True, direct_child_reaped=True, errors=[], exit_code=0, fallback_used=False, remaining_members=[])
+assert stage['command'] == [str(ROOT/'.venv/bin/python'), '-B', '-X', 'pycache_prefix='+str(RUN/'worker-unused-pycache'),
+    str(PREP/'worker_entry.py'), '--runtime-sha256', launch.SOURCES[launch.RUNTIME], '--protocol', str(RUN/'released-protocol.json'),
+    '--protocol-sha256', receipt['child_protocol_sha256']]
+for key in ('launcher_pycache_prefix','worker_pycache_prefix'):
+    path=Path(receipt['python_bytecode_policy'][key]); assert not path.exists() and not path.is_symlink()
+assert receipt['python_bytecode_policy']['dont_write_bytecode'] is True
+assert receipt['python_bytecode_policy']['existing_bytecode_cache_admission'] is False
+
+runtime = read(PREP/'runtime-closure.json')
+assert receipt['runtime_closure_sha256'] == digest(PREP/'runtime-closure.json') == 'a8584f66e51cdf45a36cdbe879c210c36577bb31a5ab651bcd6fa18367b8a6fc'
+runtime_paths = {}
+for group in ('loaded_module_files','executing_sources','local_native_runtime_files'):
+    for record in runtime[group].values(): runtime_paths[record['path']] = record
+runtime_paths[runtime['python_executable']['path']] = runtime['python_executable']
+for path, record in runtime_paths.items():
+    p=Path(path); assert p.is_file() and p.stat().st_size == record['bytes'] and digest(p) == record['sha256'], path
+historical_commit = '0f7eee3a17b6743fe15549cf8aba396fa4e98a2c'
+for name in [n for n in launch.SOURCES if n.startswith('scripts/')]:
+    blob = subprocess.run(['/usr/bin/git','show',historical_commit+':'+name],cwd=ROOT,check=True,capture_output=True,timeout=5).stdout
+    assert hashlib.sha256(blob).hexdigest() == launch.SOURCES[name]
+role_bytes = (ROOT/launch.ROLES).read_bytes()
+assert subprocess.run(['/usr/bin/git','show',release['observed_head']+':'+launch.ROLES],cwd=ROOT,check=True,capture_output=True,timeout=5).stdout == role_bytes
+roles = json.loads(role_bytes)
+training = {alias: group for alias,group in roles['brain_groups'].items() if group['role'] == 'training'}
+assert set(training) == launch.TRAINING == set(receipt['training_aliases'])
+assert receipt['development_or_test_access_permitted'] is False and receipt['fitting_permitted'] is False
+
+total=Counter(); per_brain={}; flags=[]; lengths=Counter(); signs=Counter(); dispositions=Counter()
+for matrix in qc['training_matrix_records']:
+    brain,region = matrix['brain_alias'],matrix['region']
+    expected = training[brain]['regions'][region]
+    assert matrix['shape'] == expected['shape']
+    assert [t['trial_column_1based'] for t in matrix['trials']] == expected['trial_column_indices_1based']
+    brain_counts = per_brain.setdefault(brain,Counter())
+    brain_counts['matrices'] += 1
+    for trial in matrix['trials']:
+        total['trials']+=1; brain_counts['trials']+=1
+        signs[trial['sign_pattern']]+=1; dispositions[trial['disposition']]+=1
+        lengths[trial['samples']]+=1
+        for key in ('samples','finite_samples','nan_samples','positive_infinity_samples','negative_infinity_samples','positive_finite_samples','negative_finite_samples','exact_zero_samples'):
+            total[key]+=trial[key]
+        for key in ('all_finite_constant','all_exact_zero','zero_suffix_review_flag','constant_tail_review_flag'):
+            total[key]+=int(trial[key]); brain_counts[key]+=int(trial[key])
+        brain_counts['nonfinite_trials'] += int(trial['finite_samples'] != trial['samples'])
+        if trial['zero_suffix_review_flag'] or trial['constant_tail_review_flag'] or trial['all_finite_constant']:
+            flags.append({'brain_alias':brain,'region':region,**trial})
+assert len(qc['training_matrix_records']) == 72 and total['trials'] == 357
+assert set(per_brain) == set(training)
+for brain,counts in per_brain.items():
+    assert counts['matrices']==len(training[brain]['regions'])==12
+    assert counts['trials']==training[brain]['trial_columns']
+assert len(qc['skipped_protected_paths'])==48 and qc['protected_numeric_arrays_materialized']==0 and qc['raw_force_samples_emitted']==0
+assert all(record['brain_alias'] in training for record in qc['training_matrix_records'])
+files={p.name:{'sha256':digest(p),'bytes':p.stat().st_size} for p in sorted(RUN.iterdir()) if p.is_file()}
+assert set(files)=={'receipt.json','released-protocol.json','validity.json','readout-console.txt'}
+assert sum(r['bytes'] for r in files.values()) < launch.CAPS['aggregate_output_bytes']
+assert opened_original == []
+summary={'status':'PASS_saved_only','root_release_sha256':digest(PREP/'root-release.json'),'execution_files':files,
+    'source_binding_count':len(launch.SOURCES),'runtime_unique_files_rehashed':len(runtime_paths),
+    'runtime_loaded_origins':len(runtime['loaded_module_origins']),'runtime_loaded_files':len(runtime['loaded_module_files']),
+    'runtime_system_library_scope':runtime['system_library_scope'],'head_at_execution':release['observed_head'],
+    'semantic_result':receipt['qc_semantics'],'totals':dict(total),'trial_length_distribution':dict(lengths),
+    'sign_pattern_trials':dict(signs),'disposition_trials':dict(dispositions),'per_brain':per_brain,
+    'flagged_trials':flags,'protected_matrices_skipped':len(qc['skipped_protected_paths']),
+    'resources':{'stage_seconds':stage['elapsed_seconds'],'lifecycle_seconds':receipt['lifecycle_seconds'],
+        'peak_sampled_group_rss_bytes':stage['peak_sampled_process_group_rss_bytes'],
+        'peak_sampled_active_output_bytes':stage['peak_sampled_active_output_bytes'],
+        'final_aggregate_output_bytes':sum(r['bytes'] for r in files.values()),'attempts':receipt['readout_calls_attempted']},
+    'cleanup':receipt['cleanup'],'original_MAT_open_attempts_during_review':opened_original,
+    'limitations':{'contact_or_hold_alignment_established':False,'padding_causality_established':False,
+        'force_sign_convention_established':False,'model_fit_performed':False,'physical_validation_pass':None,
+        'group_identity':roles['group_identity'],'cross_release_overlap':roles['cross_release_overlap']}}
+with (OUT/'saved-audit.json').open('x') as stream: json.dump(summary,stream,indent=2,sort_keys=True);stream.write('\n')
+print(json.dumps({k:v for k,v in summary.items() if k not in ('flagged_trials','per_brain')},sort_keys=True))
+print(json.dumps({'per_brain':per_brain,'flagged_trial_count':len(flags),'flags':[(t['brain_alias'],t['region'],t['trial_column_1based'],t['trailing_exact_zero_samples'],t['terminal_exact_equal_run_samples']) for t in flags]},sort_keys=True))

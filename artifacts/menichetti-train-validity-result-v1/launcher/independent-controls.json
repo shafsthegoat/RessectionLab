@@ -1,0 +1,24 @@
+{
+  "candidate_sha256": {
+    "authorized-template.json": "915e05dd613cefbc1bc0fd3928e1c92b68570b2e1ba644781caae9ea6ff440cc",
+    "launch.py": "9b172b3e93375fb2dfc918da3f67896e0b4ea977520e3aa30f5d1b25b958d689",
+    "runtime-closure.json": "a8584f66e51cdf45a36cdbe879c210c36577bb31a5ab651bcd6fa18367b8a6fc",
+    "test_launch_generated.py": "b32abd972c7a4946b9e403a65594426ea52e25cfd9f46e2c9bb52617c2c40a8d",
+    "worker_entry.py": "3f76e56598199b0d84ec66c79d14828336adebfe0b8ecc7ba5250ee9c5735693"
+  },
+  "extra_generated_controls": {
+    "attempt_and_cache_directories_absent": true,
+    "false_template_preserved": true,
+    "incorrect_nonfinite_disposition_refused": true,
+    "original_MAT_open_attempts": [],
+    "single_nonfinite_trial_counted_and_quarantined": true
+  },
+  "independent_author_suite": {
+    "original_MAT_opens": 0,
+    "pytest_seconds": 2.46,
+    "tests_passed": 15
+  },
+  "released_child_protocol_sha256": "68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978",
+  "source_bindings_verified": 14,
+  "status": "PASS"
+}

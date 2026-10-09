@@ -1,0 +1,176 @@
+"""Generated counts/process controls only; no acquired MAT is opened."""
+from pathlib import Path
+import copy, hashlib, importlib.util, json, os, subprocess, sys
+import pytest
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[1]
+actual_MAT_opens=[]
+def guard(event,args):
+    if event=='open' and isinstance(args[0],(str,bytes,os.PathLike)):
+        if str(args[0]).endswith('data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat'):
+            actual_MAT_opens.append(str(args[0]))
+            raise AssertionError('actual MAT forbidden in launcher controls')
+sys.addaudithook(guard)
+spec=importlib.util.spec_from_file_location('train_qc_launcher',HERE/'launch.py')
+launch=importlib.util.module_from_spec(spec);spec.loader.exec_module(launch)
+sys.path.insert(0,str(ROOT))
+from scripts import mechanics_hbe_v5_remaining_one_shot as supervisor
+from scripts import febio_runtime
+
+def protocol_sha():return launch.sha(launch.released_protocol())
+
+def generated_report(refused=False):
+    provenance={'original_sha256':'ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6',
+                'roles_sha256':launch.SOURCES[launch.ROLES],'protocol_sha256':protocol_sha()}
+    if refused:
+        return dict(provenance,status='training_validity_refused',reason='training_numeric_layout',error_type='Refusal',
+                    protected_numeric_arrays_materialized=0,raw_force_samples_emitted=0,
+                    partial_training_QC_discarded=True,model_fit_performed=False)
+    nodes=json.loads((ROOT/launch.INVENTORY).read_bytes())['nodes']
+    training=[n for n in nodes if len(n['path'])==3 and n['path'][1]['field'] in launch.TRAINING]
+    records=[]
+    for node in training:
+        count,width=node['shape'];trials=[]
+        for index in range(1,width+1):
+            trials.append({'trial_column_1based':index,'samples':count,'finite_samples':count,
+                'nan_samples':0,'positive_infinity_samples':0,'negative_infinity_samples':0,
+                'positive_finite_samples':0,'negative_finite_samples':0,'exact_zero_samples':count,
+                'leading_exact_zero_samples':count,'trailing_exact_zero_samples':count,'all_finite_constant':True,
+                'all_exact_zero':True,'terminal_exact_equal_run_samples':count,'zero_suffix_review_flag':True,
+                'constant_tail_review_flag':True,'sign_pattern':'no_nonzero_finite_samples',
+                'disposition':'finite_constant_series_review'})
+        records.append({'brain_alias':node['path'][1]['field'],'region':node['path'][2]['field'],'shape':node['shape'],'trials':trials})
+    return dict(provenance,schema='menichetti-training-validity-only-v1',status='training_validity_only',
+        training_matrix_records=records,materialized_training_paths=[n['path'] for n in training],
+        skipped_protected_paths=[n['path'] for n in nodes if len(n['path'])==3 and n['path'][1]['field'] not in launch.TRAINING],
+        protected_numeric_arrays_materialized=0,raw_force_samples_emitted=0,opaque_decompression_may_traverse_protected_bytes=True,
+        padding_causality_established=False,force_sign_convention_established=False,contact_or_hold_alignment_established=False,
+        model_fit_performed=False,physical_validation_pass=None,
+        qc_rule=json.loads((ROOT/launch.PROTOCOL).read_bytes())['qc_rules'])
+
+def encode(report):return json.dumps(report,sort_keys=True).encode()
+
+def test_semantic_success_uses_counts_and_preserves_constants():
+    result=launch.semantic_qc(encode(generated_report()),protocol_sha())
+    assert result['status']=='training_validity_completed'
+    assert result['training_trial_columns']==357 and result['quarantined_nonfinite_trials']==0
+    assert result['physical_validation_pass'] is None
+
+def test_qc_refusal_is_not_semantic_success():
+    result=launch.semantic_qc(encode(generated_report(True)),protocol_sha())
+    assert result['status']=='qc_refused' and result['training_validity_completed'] is False
+
+@pytest.mark.parametrize('mutation',['extra_values','protected_materialized','wrong_role','count_partition','flags','wrong_provenance'])
+def test_semantic_scope_refuses_generated_corruption(mutation):
+    report=generated_report()
+    if mutation=='extra_values':report['force_values']=[123.]
+    elif mutation=='protected_materialized':report['protected_numeric_arrays_materialized']=1
+    elif mutation=='wrong_role':report['training_matrix_records'][0]['brain_alias']='Brain2'
+    elif mutation=='count_partition':report['training_matrix_records'][0]['trials'][0]['finite_samples']-=1
+    elif mutation=='flags':report['training_matrix_records'][0]['trials'][0]['all_finite_constant']='not_boolean'
+    else:report['roles_sha256']='0'*64
+    with pytest.raises(RuntimeError):launch.semantic_qc(encode(report),protocol_sha())
+
+def test_launcher_false_gate_and_check_only(monkeypatch,capsys):
+    path=HERE/'authorized-template.json';digest=hashlib.sha256(path.read_bytes()).hexdigest()
+    args=['launcher','--release',str(path),'--release-sha256',digest]
+    monkeypatch.setattr(sys,'argv',args+['--check-only']);launch.main()
+    assert json.loads(capsys.readouterr().out)['execution_released'] is False
+    monkeypatch.setattr(sys,'argv',args)
+    with pytest.raises(RuntimeError,match='root_release_required'):launch.main()
+    assert actual_MAT_opens==[]
+
+@pytest.mark.parametrize('refused,expected_exit',[(False,0),(True,1)])
+def test_main_inspects_generated_report_even_with_worker_exit_zero(tmp_path,monkeypatch,capsys,refused,expected_exit):
+    owned=launch.load_owned();protocol=launch.released_protocol();output=tmp_path/'generated-attempt'
+    release={'execution_released':True,'status':'root_released_train_validity_once','observed_head':'generated-only'}
+    monkeypatch.setattr(launch,'OUTPUT',str(output))
+    monkeypatch.setattr(launch,'validate_release',lambda *args:(release,protocol,owned))
+    monkeypatch.setattr(sys,'pycache_prefix',str(ROOT/launch.LAUNCHER_CACHE_PREFIX))
+    monkeypatch.setattr(sys,'dont_write_bytecode',True)
+    # Never run the scientific worker: replace the stage with generated JSON only.
+    def generated_stage(stage,command,directory,receipt,**kwargs):
+        assert kwargs['wall_cap']==35 and kwargs['rss_cap']==536870912 and kwargs['output_cap']==4194304
+        assert command[2:4]==['-X','pycache_prefix='+str(directory/'worker-unused-pycache')]
+        assert command[4]==str(ROOT/launch.ENTRY)
+        (directory/'validity.json').write_bytes(encode(generated_report(refused)))
+        result={'status':'completed_within_caps','exit_code':0,'generated_only':True}
+        receipt['readout_stage']=result
+        return result
+    monkeypatch.setattr(supervisor,'supervise_stage',generated_stage)
+    monkeypatch.setattr(sys,'argv',['launcher','--release','generated-only','--release-sha256','0'*64])
+    assert launch.main()==expected_exit
+    report=json.loads(capsys.readouterr().out)
+    assert report['status']==('qc_refused' if refused else 'training_validity_completed')
+    receipt=json.loads((output/'receipt.json').read_bytes())
+    assert receipt['readout_stage']['exit_code']==0 and receipt['cleanup']['contained']
+    assert actual_MAT_opens==[]
+
+def test_cold_runtime_guard_check_only_and_false_protocol(tmp_path):
+    command=[sys.executable,'-B','-X','pycache_prefix='+str(tmp_path/'check-unused-pycache'),str(HERE/'worker_entry.py'),'--runtime-sha256',launch.SOURCES[launch.RUNTIME],
+        '--protocol',str(ROOT/launch.PROTOCOL),'--protocol-sha256',launch.SOURCES[launch.PROTOCOL]]
+    env=febio_runtime.private_environment({'caps':{'thread_environment':supervisor.io.THREAD_ENV}})
+    env['PYTHONDONTWRITEBYTECODE']='1'
+    checked=subprocess.run(command+['--check-only'],cwd=ROOT,env=env,capture_output=True,text=True,timeout=10)
+    assert checked.returncode==0,checked.stderr
+    assert json.loads(checked.stdout)['original_MAT_opens']==0
+    refused=subprocess.run(command,cwd=ROOT,env=env,capture_output=True,text=True,timeout=10)
+    assert refused.returncode!=0 and 'training_validity_not_released' in refused.stderr
+    assert actual_MAT_opens==[]
+    assert not (tmp_path/'check-unused-pycache').exists()
+
+def test_wrong_runtime_pin_refuses_before_worker(tmp_path):
+    command=[sys.executable,'-B','-X','pycache_prefix='+str(tmp_path/'refusal-unused-pycache'),str(HERE/'worker_entry.py'),'--runtime-sha256','0'*64,
+        '--protocol',str(ROOT/launch.PROTOCOL),'--protocol-sha256',launch.SOURCES[launch.PROTOCOL],'--check-only']
+    result=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=10)
+    assert result.returncode!=0 and 'runtime_snapshot_changed' in result.stderr
+    assert actual_MAT_opens==[]
+
+def test_cold_loaded_runtime_stable_after_generated_mat(tmp_path):
+    import numpy as np
+    from scipy.io import savemat
+    fixture=tmp_path/'generated-only.mat'
+    data=np.array([[0.,1.],[-2.,3.],[4.,0.]])
+    savemat(fixture,{'F_t_curves':{'Brain1':{'BG':data},'Brain2':{'BG':data+99}}},do_compression=True)
+    probe='''from pathlib import Path
+import importlib.util,json,sys
+def guard(event,args):
+    if event=='open' and str(args[0]).endswith('data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat'):
+        raise AssertionError('original MAT forbidden in generated runtime probe')
+sys.addaudithook(guard)
+spec=importlib.util.spec_from_file_location('entry_probe',sys.argv[1])
+entry=importlib.util.module_from_spec(spec);spec.loader.exec_module(entry)
+worker=entry.load_worker()
+expected=json.loads((entry.ROOT/entry.RUNTIME).read_bytes())
+assert entry.runtime_record(worker)==expected
+path=Path(sys.argv[2])
+nodes=worker.base.inspect_mat5(path)['nodes']
+result=worker.inspect_training(path,nodes)
+assert len(result['training_matrix_records'])==1
+assert result['protected_numeric_arrays_materialized']==0
+assert entry.runtime_record(worker)==expected
+print(json.dumps({'status':'generated_runtime_stable','original_MAT_opens':0}))
+'''
+    env=febio_runtime.private_environment({'caps':{'thread_environment':supervisor.io.THREAD_ENV}})
+    env['PYTHONDONTWRITEBYTECODE']='1'
+    result=subprocess.run([sys.executable,'-B','-X','pycache_prefix='+str(tmp_path/'probe-unused-pycache'),'-c',probe,str(HERE/'worker_entry.py'),str(fixture)],
+                          cwd=ROOT,env=env,capture_output=True,text=True,timeout=10)
+    assert result.returncode==0,result.stderr
+    assert json.loads(result.stdout)['status']=='generated_runtime_stable'
+    assert actual_MAT_opens==[]
+    assert not (tmp_path/'probe-unused-pycache').exists()
+
+def test_actual_launch_requires_empty_source_cache_prefix(tmp_path,monkeypatch):
+    owned=launch.load_owned()
+    release={'execution_released':True,'status':'root_released_train_validity_once','observed_head':'generated-only'}
+    monkeypatch.setattr(launch,'validate_release',lambda *args:(release,launch.released_protocol(),owned))
+    monkeypatch.setattr(sys,'argv',['launcher','--release','generated-only','--release-sha256','0'*64])
+    monkeypatch.setattr(sys,'pycache_prefix',None)
+    with pytest.raises(RuntimeError,match='launcher_source_only_cache_policy'):launch.main()
+    existing=tmp_path/'existing-prefix';existing.mkdir()
+    monkeypatch.setattr(launch,'LAUNCHER_CACHE_PREFIX',str(existing))
+    monkeypatch.setattr(sys,'pycache_prefix',str(existing))
+    monkeypatch.setattr(sys,'dont_write_bytecode',True)
+    with pytest.raises(RuntimeError,match='launcher_source_only_cache_policy'):launch.main()
+    assert actual_MAT_opens==[]

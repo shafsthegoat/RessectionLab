@@ -1,0 +1,145 @@
+{
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "disposition_trials": {
+    "finite_nonconstant_sample_series": 357
+  },
+  "execution_files": {
+    "readout-console.txt": {
+      "bytes": 225,
+      "sha256": "997fa6468f4c06f76f0eceec95e2d84489528bb02327b1f192dccc3e1a5c4ff3"
+    },
+    "receipt.json": {
+      "bytes": 5526,
+      "sha256": "0910bb39a7dce40e7aeaa54e9e12a2d37962f57c320f1a78a333fee20526f64a"
+    },
+    "released-protocol.json": {
+      "bytes": 5275,
+      "sha256": "68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978"
+    },
+    "validity.json": {
+      "bytes": 302935,
+      "sha256": "4977406ecb0f52bbe44478d438323cdf56657ef94bf32ccc997301ebbc4335b5"
+    }
+  },
+  "flagged_trials": [],
+  "head_at_execution": "86b3cdbf334a1dffff67b07d65788906d4c42b75",
+  "limitations": {
+    "contact_or_hold_alignment_established": false,
+    "cross_release_overlap": "unknown; preserve existing protected assignments and quarantine conflicts before intended-use admission if biological aliases are discovered",
+    "force_sign_convention_established": false,
+    "group_identity": "Creator-declared brain specimen aliases Brain1 through Brain10; all regions/sites/columns sharing an alias are inseparable. No private donor linkage or cross-alias donor authentication has been established.",
+    "model_fit_performed": false,
+    "padding_causality_established": false,
+    "physical_validation_pass": null
+  },
+  "original_MAT_open_attempts_during_review": [],
+  "per_brain": {
+    "Brain1": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "matrices": 12,
+      "nonfinite_trials": 0,
+      "trials": 57,
+      "zero_suffix_review_flag": 0
+    },
+    "Brain10": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "matrices": 12,
+      "nonfinite_trials": 0,
+      "trials": 60,
+      "zero_suffix_review_flag": 0
+    },
+    "Brain4": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "matrices": 12,
+      "nonfinite_trials": 0,
+      "trials": 60,
+      "zero_suffix_review_flag": 0
+    },
+    "Brain5": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "matrices": 12,
+      "nonfinite_trials": 0,
+      "trials": 60,
+      "zero_suffix_review_flag": 0
+    },
+    "Brain7": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "matrices": 12,
+      "nonfinite_trials": 0,
+      "trials": 60,
+      "zero_suffix_review_flag": 0
+    },
+    "Brain8": {
+      "all_exact_zero": 0,
+      "all_finite_constant": 0,
+      "constant_tail_review_flag": 0,
+      "matrices": 12,
+      "nonfinite_trials": 0,
+      "trials": 60,
+      "zero_suffix_review_flag": 0
+    }
+  },
+  "protected_matrices_skipped": 48,
+  "resources": {
+    "attempts": 1,
+    "final_aggregate_output_bytes": 313961,
+    "lifecycle_seconds": 0.6856491670478135,
+    "peak_sampled_active_output_bytes": 313293,
+    "peak_sampled_group_rss_bytes": 63717376,
+    "stage_seconds": 0.6633057079743594
+  },
+  "root_release_sha256": "29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c",
+  "runtime_loaded_files": 406,
+  "runtime_loaded_origins": 411,
+  "runtime_system_library_scope": "OS-provided libraries/shared cache are identified by platform release, not copied or byte-pinned.",
+  "runtime_unique_files_rehashed": 413,
+  "semantic_result": {
+    "physical_validation_pass": null,
+    "quarantined_nonfinite_trials": 0,
+    "status": "training_validity_completed",
+    "training_matrices": 72,
+    "training_trial_columns": 357,
+    "training_validity_completed": true
+  },
+  "sign_pattern_trials": {
+    "mixed": 306,
+    "nonnegative": 51
+  },
+  "source_binding_count": 14,
+  "status": "PASS_saved_only",
+  "totals": {
+    "all_exact_zero": 0,
+    "all_finite_constant": 0,
+    "constant_tail_review_flag": 0,
+    "exact_zero_samples": 2764,
+    "finite_samples": 3694950,
+    "nan_samples": 0,
+    "negative_finite_samples": 4611,
+    "negative_infinity_samples": 0,
+    "positive_finite_samples": 3687575,
+    "positive_infinity_samples": 0,
+    "samples": 3694950,
+    "trials": 357,
+    "zero_suffix_review_flag": 0
+  },
+  "trial_length_distribution": {
+    "10350": 357
+  }
+}

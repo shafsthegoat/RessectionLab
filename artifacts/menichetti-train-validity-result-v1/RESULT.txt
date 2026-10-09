@@ -1,0 +1,63 @@
+Menichetti TRAIN validity: actual saved-result interpretation
+
+The one authorized TRAIN QC attempt completed within its declared limits.
+All 357 source-described trial columns across 72 region matrices and six frozen
+brain aliases are finite and nonconstant. There are 10,350 rows per trial and
+3,694,950 finite sample positions. No NaN, positive infinity, negative infinity,
+all-zero trial or constant trial was reported; no trial is quarantined by the
+predeclared nonfinite rule. No trial triggered either the two-zero suffix flag
+or the 100-sample exact-constant-tail flag. These exact tests do not establish
+that padding is absent or that every recorded sample is a valid tissue response.
+
+The saved counts classify 306 trials as mixed-sign and 51 as nonnegative.
+Across all TRAIN positions there are 3,687,575 positive, 4,611 negative and 2,764
+exact-zero samples. These are counts only, with no force amplitudes or temporal
+sample locations. They do not identify tare, noise, contact or the experimental
+sign convention. No crop, sign flip, imputation, finite-trial exclusion or other
+data-driven correction was performed or authorized.
+
+Scope and scientific implication
+TRAIN remains Brain1/4/5/7/8/10. The reader materialized only those 72 matrices;
+48 protected matrices were skipped without protected numerical interpretation.
+The saved report records zero protected arrays materialized and zero raw force
+samples emitted. Whole-file fixity and opaque compressed traversal can include
+protected bytes without decoding their values. Development/test roles and
+unknown cross-release overlap/conflict rules remain unchanged.
+
+This completes the declared TRAIN numerical validity screen. It supplies an
+eligible finite-data pool for a separately frozen prediction-only experiment.
+It does not validate a constitutive relaxation law, specimen/person independence,
+controlled interaction mechanics or rich-training/limited-input transfer.
+The conditional prefix/suffix forecast remains secondary to mechanical
+validation, and no forecast fitting or measured-response reread is authorized
+by this result. The exact missing mechanics information remains synchronized
+actual indentation (or measured motion plus defensible contact/compliance
+reconstruction), authenticated sample-to-contact/ramp/hold/crop mapping, and
+force-reference/sign/tare treatment. Nominal stage commands, 10 kHz source
+sampling and the row count do not supply those measurements.
+
+Execution evidence
+  Root release at HEAD 86b3cdbf334a1dffff67b07d65788906d4c42b75:
+    29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c
+  Receipt:
+    0910bb39a7dce40e7aeaa54e9e12a2d37962f57c320f1a78a333fee20526f64a
+  Exact saved counts-only validity report:
+    4977406ecb0f52bbe44478d438323cdf56657ef94bf32ccc997301ebbc4335b5
+  Released child protocol:
+    68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978
+  Aggregate flags, computed only from the hash-bound saved report:
+    f00925508f15678680f67fa892c305bf33b20cd0349cc162cf09693c7f15271b
+
+Worker exit was zero with training_validity_completed semantics. The stage took
+0.6633 seconds and the recorded lifecycle 0.6856 seconds. Peak sampled process
+group RSS was 63,717,376 bytes (60.77 MiB) against 512 MiB; all four saved output
+files total 313,961 bytes against 4 MiB. The direct child was reaped, the group
+was empty, and cleanup used no fallback and reported no errors. RSS/output are
+sampled and short peaks may be missed; OS shared-cache libraries remain bound
+by platform identity rather than copied/byte-pinned. The exact source/runtime
+pins and fresh-cache policy remain those of the reviewed launcher.
+
+This interpretation read only saved QC counts, flags and execution metadata.
+It did not reopen the MAT, inspect raw measured samples, decode protected values,
+fit a model, modify roles or alter the saved execution artifacts. Root owns
+tracked integration. Independent saved-result review is recorded separately.

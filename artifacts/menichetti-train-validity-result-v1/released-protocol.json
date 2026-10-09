@@ -1,0 +1,102 @@
+{
+  "allowed_after_separate_root_release": [
+    "materialize one exact training double matrix at a time",
+    "training-only finite/sign/exact-zero/constant-tail counts and dispositions",
+    "opaque decompression and skipping of protected numeric bodies"
+  ],
+  "base_parser": {
+    "path": "build/menichetti-structure-inventory-preparation-v1/inventory.py",
+    "sha256": "05866df06361a1151ff8efa6d7d5a1bd7198dfad3e19936b5eff43817ce72d9d"
+  },
+  "development_or_test_access_permitted": false,
+  "execution_released": true,
+  "external_supervision_required": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "lifecycle_wall_seconds": 45,
+    "reviewed_existing_launcher_with_owned_child_cleanup": true,
+    "sampled_process_group_rss_bytes": 536870912,
+    "worker_stage_wall_seconds": 35
+  },
+  "forbidden": [
+    "development or test numeric decoding or statistics",
+    "full-variable/global loadmat",
+    "force samples or fitted parameter output",
+    "contact/ramp/hold inference",
+    "cropping, sign flip or imputation",
+    "model fitting or prediction",
+    "fitted StatisticsTables"
+  ],
+  "input": {
+    "bytes": 6427434,
+    "path": "data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat",
+    "sha256": "ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6"
+  },
+  "input_receipt": {
+    "path": "data/acquisition/menichetti-mechanics-v1/completion.json",
+    "sha256": "c8a219659c5ab68419ab448ac3431c2690de01e681a0d5c1f5b8dba6c796afc0"
+  },
+  "library_files_sha256": {
+    ".venv/lib/python3.12/site-packages/numpy/__init__.py": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+    ".venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-darwin.so": "3432cd9093d7e84b4080015b6a889598fea4c305da967063cb916215193bf85d",
+    ".venv/lib/python3.12/site-packages/scipy/io/matlab/_byteordercodes.py": "0143237dd20046d086ab23200c324119afc49dc3f98a862b133c99a9738b4715",
+    ".venv/lib/python3.12/site-packages/scipy/io/matlab/_mio5.py": "f378ee5c038381725e98b674e7b04bbb1408ee25f0bc08d34a85473a76a6e9b9",
+    ".venv/lib/python3.12/site-packages/scipy/io/matlab/_mio5_params.py": "b4015ac3106bc62944ff64b752b5d2b37921aa723a47dc6ec99fa73dfe5b157f",
+    ".venv/lib/python3.12/site-packages/scipy/io/matlab/_mio5_utils.cpython-312-darwin.so": "a4f4fadb35a77aa6ff3d0848933c9063f5070d2b6e11c6829bc8685778c87b14",
+    ".venv/lib/python3.12/site-packages/scipy/io/matlab/_miobase.py": "4ba5ae23f2349fe594aabe6c8541c9ae83f2fdb0eb84a432b8bef84ef95076c1",
+    ".venv/lib/python3.12/site-packages/scipy/io/matlab/_streams.cpython-312-darwin.so": "ab594111cf87c55ff4dcc9c8a48a1fc0d1d5501165999d9781528813b1b3fc68"
+  },
+  "limits": {
+    "max_depth": 2,
+    "max_fields": 12,
+    "max_metadata_read_bytes": 65536,
+    "max_name_bytes": 128,
+    "max_nodes": 131,
+    "max_numeric_read_bytes": 1048576,
+    "max_opaque_traversal_bytes": 134217728,
+    "max_output_bytes": 1048576,
+    "max_training_matrix_elements": 62100,
+    "wall_seconds": 35
+  },
+  "next_use": "A valid numeric sample series is not certified mechanical relaxation data. Further model/forecast access needs its own frozen experiment.",
+  "numeric_layout_policy": "Only one real miDOUBLE numeric element of exactly 8 times the frozen element count is allowed in each training matrix; reject any other storage layout before calling the existing SciPy numeric decoder.",
+  "numpy_version": "2.5.3",
+  "output_path": "build/menichetti-train-validity-v1/validity.json",
+  "overlap_conflict_rule": "Cross-release biological overlap remains unknown; preserve protected assignments and quarantine any discovered role conflict before intended-use admission.",
+  "padding_interpretation": "Exact zeros/constant tails are descriptive flags only. They do not prove padding; no tail is removed.",
+  "qc_rules": {
+    "all_finite_constant": "review_only_no_exclusion",
+    "amplitude_threshold": null,
+    "contact_or_hold_detection": false,
+    "exact_constant_tail_flag_at_least_samples": 100,
+    "model_fitting": false,
+    "negative_or_mixed_sign": "report_only_no_sign_change",
+    "nonfinite": "quarantine_entire_trial",
+    "padding_flags": "review_only_no_crop_or_exclusion",
+    "zero_suffix_flag_at_least_samples": 2
+  },
+  "raw_force_samples_emitted": 0,
+  "roles": {
+    "commit": "992ab02e0fdfc735641c929b5462e05ce96d2458",
+    "path": "manifests/experiments/menichetti-brain-group-roles-v1.json",
+    "sha256": "f69a7d65571a685ad1ce2b1f762dd3a587f83087c475fb6916afd755a17dfa64"
+  },
+  "runner": "build/menichetti-train-validity-preparation-v1/train_validity.py",
+  "runner_sha256": "2eddae70e5e38d79bf1325dcb9fce574b49ef30098278cd055090c0067e41d6c",
+  "schema": "menichetti-training-validity-protocol-v1",
+  "scipy_version": "1.18.1",
+  "status": "prepared_not_released",
+  "structure_report": {
+    "path": "build/menichetti-structure-inventory-v1/inventory.json",
+    "sha256": "963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e"
+  },
+  "training_aliases": [
+    "Brain1",
+    "Brain10",
+    "Brain4",
+    "Brain5",
+    "Brain7",
+    "Brain8"
+  ],
+  "value_permission_scope": "training QC only after separate reviewed execution release; frozen role manifest response permission remains false for broader uses"
+}

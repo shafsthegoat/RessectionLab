@@ -1,0 +1,72 @@
+"""Aggregate only the exact saved TRAIN QC counts; no scientific MAT access."""
+from pathlib import Path
+from collections import Counter
+import hashlib, json, sys
+
+ROOT=Path(__file__).resolve().parents[2]
+OUTPUT=Path(__file__).resolve().parent/'aggregate-flags.json'
+BINDINGS={
+ 'build/menichetti-train-validity-v1/validity.json':'4977406ecb0f52bbe44478d438323cdf56657ef94bf32ccc997301ebbc4335b5',
+ 'build/menichetti-train-validity-v1/receipt.json':'0910bb39a7dce40e7aeaa54e9e12a2d37962f57c320f1a78a333fee20526f64a',
+ 'build/menichetti-train-validity-v1/released-protocol.json':'68ba439afb73700c908a8e52b786e626601e6523c10aea6a2442c8ef3e383978',
+ 'build/menichetti-train-validity-launch-preparation-v1/root-release.json':'29dbc55b39fd2e7ede6c94f9adf356cd5679c654d58e146eced2aecc363fe98c'}
+
+def guard(event,args):
+    if event=='open' and str(args[0]).lower().endswith('.mat'):
+        raise AssertionError('MAT access forbidden in saved-count summary')
+sys.addaudithook(guard)
+
+def bound(path,digest):
+    file=ROOT/path
+    assert not file.is_symlink() and file.stat().st_size<=1048576
+    raw=file.read_bytes();assert hashlib.sha256(raw).hexdigest()==digest
+    return json.loads(raw)
+
+def aggregate(records):
+    trials=[trial for record in records for trial in record['trials']]
+    counts={key:sum(t[key] for t in trials) for key in (
+        'samples','finite_samples','nan_samples','positive_infinity_samples','negative_infinity_samples',
+        'positive_finite_samples','negative_finite_samples','exact_zero_samples')}
+    assert counts['samples']==sum(counts[k] for k in ('finite_samples','nan_samples','positive_infinity_samples','negative_infinity_samples'))
+    assert counts['finite_samples']==sum(counts[k] for k in ('positive_finite_samples','negative_finite_samples','exact_zero_samples'))
+    return {'region_matrices':len(records),'trial_columns':len(trials),
+        'sample_positions':counts,
+        'rows_per_trial':sorted({t['samples'] for t in trials}),
+        'sign_pattern_trial_counts':dict(sorted(Counter(t['sign_pattern'] for t in trials).items())),
+        'disposition_trial_counts':dict(sorted(Counter(t['disposition'] for t in trials).items())),
+        'flagged_trial_counts':{k:sum(t[k] is True for t in trials) for k in (
+            'all_finite_constant','all_exact_zero','zero_suffix_review_flag','constant_tail_review_flag')}}
+
+def main():
+    saved={name:bound(name,digest) for name,digest in BINDINGS.items()}
+    qc=saved['build/menichetti-train-validity-v1/validity.json']
+    receipt=saved['build/menichetti-train-validity-v1/receipt.json']
+    assert receipt['status']=='training_validity_completed'
+    assert qc['protected_numeric_arrays_materialized']==qc['raw_force_samples_emitted']==0
+    assert qc['model_fit_performed'] is False and qc['physical_validation_pass'] is None
+    records=qc['training_matrix_records']
+    aliases=sorted({r['brain_alias'] for r in records})
+    assert aliases==['Brain1','Brain10','Brain4','Brain5','Brain7','Brain8']
+    result={'schema':'menichetti-saved-training-qc-aggregate-v1','input_bindings':BINDINGS,
+        'aggregate':aggregate(records),
+        'by_brain_alias':{a:aggregate([r for r in records if r['brain_alias']==a]) for a in aliases},
+        'saved_report_scope':{'materialized_training_matrices':len(qc['materialized_training_paths']),
+            'protected_paths_skipped':len(qc['skipped_protected_paths']),
+            'protected_numeric_arrays_materialized':qc['protected_numeric_arrays_materialized'],
+            'raw_force_samples_emitted':qc['raw_force_samples_emitted'],'fitting_performed':False},
+        'supervision':{'worker_seconds':receipt['readout_stage']['elapsed_seconds'],
+            'lifecycle_seconds':receipt['lifecycle_seconds'],
+            'peak_sampled_group_rss_bytes':receipt['readout_stage']['peak_sampled_process_group_rss_bytes'],
+            'final_regular_file_output_bytes':sum(p.stat().st_size for p in (ROOT/'build/menichetti-train-validity-v1').iterdir() if p.is_file()),
+            'direct_child_reaped':receipt['cleanup']['direct_child_reaped'],
+            'remaining_group_members':receipt['cleanup']['remaining_members'],
+            'fallback_used':receipt['cleanup']['fallback_used']},
+        'original_MAT_opened_by_summary':False,'physical_validation_pass':None,
+        'interpretation_limit':'Counts/flags establish only the declared TRAIN numerical validity screen. They establish no contact, hold, padding cause, force-sign convention, constitutive law, donor independence or transfer performance.'}
+    assert result['aggregate']['region_matrices']==72 and result['aggregate']['trial_columns']==357
+    for name,digest in BINDINGS.items():bound(name,digest)
+    with OUTPUT.open('x') as stream:json.dump(result,stream,sort_keys=True,indent=2);stream.write('\n')
+    print(json.dumps({'aggregate':result['aggregate'],'supervision':result['supervision'],
+        'output_sha256':hashlib.sha256(OUTPUT.read_bytes()).hexdigest()},sort_keys=True))
+
+if __name__=='__main__':main()
