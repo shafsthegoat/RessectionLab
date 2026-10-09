@@ -103,6 +103,12 @@ timeout failures remain. Case4 comparison landmarks were previously revealed,
 so any later FEM displacement score here is retrospective development evidence.
 A separately frozen patient and sealed outcomes are required for untouched
 evaluation.
+The [sparse-solver feasibility audit](artifacts/mechanics-sparse-solver-feasibility-v1/RESULT.md)
+distinguishes the v4 mesh's 39.28 GB conservative Skyline storage projection
+from measured memory. The pinned FEBio/Accelerate backend has tiny controls,
+but no patient-size tet10 solve; a bounded non-patient cube convergence and
+memory benchmark is the next numerical qualification. It cannot admit the
+rejected Case4 mesh or establish physical fidelity.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
