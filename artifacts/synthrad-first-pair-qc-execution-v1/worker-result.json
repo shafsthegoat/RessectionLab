@@ -1,0 +1,1073 @@
+{
+  "anatomical_admission": false,
+  "archive_bytes_read": 19778494,
+  "archive_stat_close": {
+    "st_ctime_ns": 1791510808244446814,
+    "st_dev": 16777232,
+    "st_ino": 8705129,
+    "st_mode": 33188,
+    "st_mtime_ns": 1791510768267198282,
+    "st_nlink": 1,
+    "st_size": 14471900926
+  },
+  "archive_stat_open": {
+    "st_ctime_ns": 1791510808244446814,
+    "st_dev": 16777232,
+    "st_ino": 8705129,
+    "st_mode": 33188,
+    "st_mtime_ns": 1791510768267198282,
+    "st_nlink": 1,
+    "st_size": 14471900926
+  },
+  "clinical_ct_scaling": "review_pending",
+  "declaration_sha256": "1bbff4d23f503118d33c8107e9c8fbd3fbfe2aa1fabcaf53aa8fc8d997af99ca",
+  "dispositions": {
+    "calvarium_usability": "review_pending",
+    "gross_correspondence": "review_pending",
+    "intracranial_coverage": "review_pending",
+    "visual_privacy": "review_pending"
+  },
+  "elapsed_seconds": 1.0988308330997825,
+  "extraction": [
+    {
+      "bytes": 6298605,
+      "data_offset": 1240749857,
+      "local_extra_bytes": 0,
+      "local_extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_header_sha256": "5cc58503a9cb7ddea06d8516e4c94f9ad771a6424fd351d3904e1e01dc5fd9ab",
+      "member": "Task1/brain/1BA336/ct.nii.gz",
+      "sha256": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+      "staged_stat": {
+        "st_ctime_ns": 1791513441340751033,
+        "st_dev": 16777232,
+        "st_ino": 8719771,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791513441340751033,
+        "st_nlink": 1,
+        "st_size": 6298605
+      },
+      "zip_crc32_verified": "9bb1d7a9"
+    },
+    {
+      "bytes": 13338415,
+      "data_offset": 1247054120,
+      "local_extra_bytes": 0,
+      "local_extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_header_sha256": "b95780f1a1c835166fbc3d2dffc7d7969a5904cb055ba33435727f6714451a61",
+      "member": "Task1/brain/1BA336/mr.nii.gz",
+      "sha256": "88b0c68ea4c649d83c75f1da8fd338a45d27fb3d1651c0b4c1e49584010a0af8",
+      "staged_stat": {
+        "st_ctime_ns": 1791513441391374450,
+        "st_dev": 16777232,
+        "st_ino": 8719773,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791513441391374450,
+        "st_nlink": 1,
+        "st_size": 13338415
+      },
+      "zip_crc32_verified": "6a0801e0"
+    }
+  ],
+  "extraction_receipts": [
+    {
+      "path": "ct-extraction.json",
+      "sha256": "2152ab32a43eec2150293803d6c615866244ff5dc7ed3430fc405391eceab265"
+    },
+    {
+      "path": "mr-extraction.json",
+      "sha256": "419ea36c82895316642723c6d23f6e80754efa7efad91840a0e4ee072a7dead4"
+    }
+  ],
+  "grid": {
+    "anatomical_registration": "review_pending",
+    "ct_grid_corner_displacement_mm": 0.0,
+    "equal_shapes": true,
+    "status": "source_coded_grid_correspondence"
+  },
+  "image_stage_evidence": {
+    "ct": {
+      "extraction": {
+        "evidence": {
+          "bytes": 638,
+          "path": "ct-extraction.json",
+          "sha256": "2152ab32a43eec2150293803d6c615866244ff5dc7ed3430fc405391eceab265"
+        },
+        "status": "completed"
+      },
+      "geometry": {
+        "evidence": {
+          "bytes": 958,
+          "path": "ct-grid.json",
+          "sha256": "cc85e676b5e15ef415c4f8a086c316ef10dbc064300ef8cdc0a247aa9dcdebb9"
+        },
+        "status": "completed"
+      },
+      "gzip_metadata": {
+        "evidence": {
+          "bytes": 10,
+          "path": "restricted/ct-gzip-header.bin",
+          "sha256": "51db09572f8df3e9769c063f848e77288b38003efda634b175842f8fd66eafaf"
+        },
+        "status": "completed"
+      },
+      "header": {
+        "evidence": {
+          "bytes": 1252,
+          "path": "ct-header.json",
+          "sha256": "385a06f0d3923b14ce83a9436d58ef0696cc8c40afd9e83a083756f4d80ae997"
+        },
+        "status": "completed"
+      },
+      "privacy_preview": {
+        "evidence": {
+          "bytes": 5123,
+          "path": "ct-views.json",
+          "sha256": "f939b06a4757cd3df572a1519a69e1e76d60ae36041b87f0b50e5fd5bd2ebd03"
+        },
+        "status": "completed"
+      },
+      "scalar": {
+        "evidence": {
+          "bytes": 717,
+          "path": "ct-scalar.json",
+          "sha256": "a734a349161e30e5afa6a96e65c9cf9aeffb29aeddad6d898f3bc85db8a13aa3"
+        },
+        "status": "completed"
+      }
+    },
+    "mr": {
+      "extraction": {
+        "evidence": {
+          "bytes": 640,
+          "path": "mr-extraction.json",
+          "sha256": "419ea36c82895316642723c6d23f6e80754efa7efad91840a0e4ee072a7dead4"
+        },
+        "status": "completed"
+      },
+      "geometry": {
+        "evidence": {
+          "bytes": 958,
+          "path": "mr-grid.json",
+          "sha256": "cc85e676b5e15ef415c4f8a086c316ef10dbc064300ef8cdc0a247aa9dcdebb9"
+        },
+        "status": "completed"
+      },
+      "gzip_metadata": {
+        "evidence": {
+          "bytes": 10,
+          "path": "restricted/mr-gzip-header.bin",
+          "sha256": "51db09572f8df3e9769c063f848e77288b38003efda634b175842f8fd66eafaf"
+        },
+        "status": "completed"
+      },
+      "header": {
+        "evidence": {
+          "bytes": 1252,
+          "path": "mr-header.json",
+          "sha256": "d7a1760c2c04244fbca095324d6a6f4c1bbe0eda4d37c37e77c019e3e00f2bed"
+        },
+        "status": "completed"
+      },
+      "privacy_preview": {
+        "evidence": {
+          "bytes": 2598,
+          "path": "mr-views.json",
+          "sha256": "0954aeb814b36cf2cbd01b5eeb5aa901274a457d14facc3515db3e63ab24e8fa"
+        },
+        "status": "completed"
+      },
+      "scalar": {
+        "evidence": {
+          "bytes": 722,
+          "path": "mr-scalar.json",
+          "sha256": "874244448b29927f70e53530aad718d0e5e454fb5f9f30b4dad5cadb14953e5b"
+        },
+        "status": "completed"
+      }
+    }
+  },
+  "images": {
+    "ct": {
+      "anatomy": "review_pending",
+      "deidentification": "review_pending",
+      "grid": {
+        "affine_ras_mm": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            107.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            71.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -106.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "claim": "source coded geometry only; no scanner or anatomical registration admission",
+        "field_of_view_mm": [
+          213.0,
+          230.0,
+          165.0
+        ],
+        "handedness": "right",
+        "obliquity_degrees": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "orientation": [
+          "L",
+          "P",
+          "S"
+        ],
+        "qform_code": 1,
+        "qform_sform_corner_residual_mm": 0.0,
+        "qform_status": "active",
+        "sform_code": 0,
+        "shape": [
+          213,
+          230,
+          165
+        ],
+        "source_unit_code": 2,
+        "spacing_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "unit_scale_to_mm": 1.0,
+        "voxel_volume_mm3": 1.0,
+        "world_corner_bounds_mm": [
+          [
+            -105.0,
+            -158.0,
+            -106.0
+          ],
+          [
+            107.0,
+            71.0,
+            58.0
+          ]
+        ]
+      },
+      "gzip_metadata": {
+        "fields": {},
+        "header_sha256": "51db09572f8df3e9769c063f848e77288b38003efda634b175842f8fd66eafaf",
+        "metadata_review_pending": false
+      },
+      "header": {
+        "data_offset": 352,
+        "dtype_effective": "float64",
+        "dtype_native": "<f4",
+        "effective_scaling": [
+          1.0,
+          0.0
+        ],
+        "extensions": [],
+        "header_sha256": "e35d43aaf5c77bd607f6adcc53c3bcf5e624ee7f9c555b25610199257c9e0056",
+        "metadata_privacy": "no_nonempty_text_or_extension",
+        "native_payload_bytes": 32333400,
+        "raw_scaling": [
+          1.0,
+          0.0
+        ],
+        "scalar_workspace_bytes_bound": 7340032,
+        "scaling_active": true,
+        "shape": [
+          213,
+          230,
+          165
+        ],
+        "text_fields": {
+          "aux_file": {
+            "nonempty": false,
+            "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0"
+          },
+          "descrip": {
+            "nonempty": false,
+            "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8"
+          },
+          "intent_name": {
+            "nonempty": false,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        }
+      },
+      "restricted_views": [
+        {
+          "clipping_fractions": [
+            0.6395922482634057,
+            0.07165061515337082
+          ],
+          "coordinates": [
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                86.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.1,
+              "index": 21
+            },
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 106
+            },
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                -84.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.9,
+              "index": 191
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                48.0,
+                -24.0
+              ],
+              "fraction": 0.1,
+              "index": 23
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                -44.0,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 115
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                -135.0,
+                -24.0
+              ],
+              "fraction": 0.9,
+              "index": 206
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -90.0
+              ],
+              "fraction": 0.1,
+              "index": 16
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 82
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                42.0
+              ],
+              "fraction": 0.9,
+              "index": 148
+            }
+          ],
+          "extent_axis": 2,
+          "extent_slice_count": 165,
+          "files": [
+            {
+              "bytes": 81432,
+              "path": "restricted/ct-window0-planes.png",
+              "sha256": "222a0941b1cfa579f51f00eda8b382cf1a42a1c55bc0bb95a5df68d8d91b49f8"
+            },
+            {
+              "bytes": 84235,
+              "path": "restricted/ct-window0-extent-0000.png",
+              "sha256": "87d2e0a9be99d83e7c5214ce4219612a488e824004f280406dc691da53282062"
+            },
+            {
+              "bytes": 98622,
+              "path": "restricted/ct-window0-extent-0064.png",
+              "sha256": "c018dcb03eacb14577878ac3ce63bcdfe6d578a3717359a7aedec4968edaf105"
+            },
+            {
+              "bytes": 25605,
+              "path": "restricted/ct-window0-extent-0128.png",
+              "sha256": "0099f419dfa7b7f0ea5ba35638565ee34be7d0be84a97d75f7a73d404ecdc451"
+            }
+          ],
+          "privacy_release": "restricted_only",
+          "source_units_not_verified_HU": true,
+          "window": [
+            -200.0,
+            200.0
+          ]
+        },
+        {
+          "clipping_fractions": [
+            0.007985426834171475,
+            0.0
+          ],
+          "coordinates": [
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                86.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.1,
+              "index": 21
+            },
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 106
+            },
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                -84.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.9,
+              "index": 191
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                48.0,
+                -24.0
+              ],
+              "fraction": 0.1,
+              "index": 23
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                -44.0,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 115
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                -135.0,
+                -24.0
+              ],
+              "fraction": 0.9,
+              "index": 206
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -90.0
+              ],
+              "fraction": 0.1,
+              "index": 16
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 82
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                42.0
+              ],
+              "fraction": 0.9,
+              "index": 148
+            }
+          ],
+          "extent_axis": 2,
+          "extent_slice_count": 165,
+          "files": [
+            {
+              "bytes": 86954,
+              "path": "restricted/ct-window1-planes.png",
+              "sha256": "be4df18d1ad89cd43e9c6b6b076e90eecca622933463121145495cd12f7b012b"
+            },
+            {
+              "bytes": 86968,
+              "path": "restricted/ct-window1-extent-0000.png",
+              "sha256": "49afff3e22abd416198334650b6bdb046aec4ce7bdbdbb35f0f3c3dfbb129403"
+            },
+            {
+              "bytes": 95924,
+              "path": "restricted/ct-window1-extent-0064.png",
+              "sha256": "e3c7e8b580cd57a2a62b3e0b0d0cbd270140a36c1f6ead5a7aabb6e4b8527279"
+            },
+            {
+              "bytes": 32547,
+              "path": "restricted/ct-window1-extent-0128.png",
+              "sha256": "1a0cb3b912374d54cab8b52a33f5b8f658cbfb5cb7e4588bfa1236f5ca2d8a40"
+            }
+          ],
+          "privacy_release": "restricted_only",
+          "source_units_not_verified_HU": true,
+          "window": [
+            -1000.0,
+            2000.0
+          ]
+        }
+      ],
+      "scalar": {
+        "effective_zero_fraction": 0.0014449454743392283,
+        "extrema_fractions": [
+          0.00013682446015575225,
+          1.2371108513178324e-07
+        ],
+        "flags": [
+          "clinical_scale_review_pending"
+        ],
+        "histogram_counts_sha256": "708754e09bf353e0b6fb1153eb821a3c812b847cdb6b653677e185a9864d911b",
+        "maximum": 1929.0,
+        "minimum": -1024.0,
+        "percentiles": {
+          "1": -999.9383850097656,
+          "5": -999.9383850097656,
+          "50": -999.9383850097656,
+          "95": 687.0782165527344,
+          "99": 1342.9599914550781
+        },
+        "quantile_absolute_error_bound": 0.18023681640625,
+        "range_interpretation": "source-scale descriptive values; clinical CT scaling pending; MRI arbitrary",
+        "status": "finite_nonconstant",
+        "voxels": 8083350
+      },
+      "source": {
+        "bytes": 6298605,
+        "data_offset": 1240749857,
+        "local_extra_bytes": 0,
+        "local_extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "local_header_sha256": "5cc58503a9cb7ddea06d8516e4c94f9ad771a6424fd351d3904e1e01dc5fd9ab",
+        "member": "Task1/brain/1BA336/ct.nii.gz",
+        "sha256": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+        "staged_stat": {
+          "st_ctime_ns": 1791513441340751033,
+          "st_dev": 16777232,
+          "st_ino": 8719771,
+          "st_mode": 33152,
+          "st_mtime_ns": 1791513441340751033,
+          "st_nlink": 1,
+          "st_size": 6298605
+        },
+        "zip_crc32_verified": "9bb1d7a9"
+      },
+      "stage_evidence": {
+        "grid": {
+          "bytes": 958,
+          "path": "ct-grid.json",
+          "sha256": "cc85e676b5e15ef415c4f8a086c316ef10dbc064300ef8cdc0a247aa9dcdebb9"
+        },
+        "header": {
+          "bytes": 1252,
+          "path": "ct-header.json",
+          "sha256": "385a06f0d3923b14ce83a9436d58ef0696cc8c40afd9e83a083756f4d80ae997"
+        },
+        "scalar": {
+          "bytes": 717,
+          "path": "ct-scalar.json",
+          "sha256": "a734a349161e30e5afa6a96e65c9cf9aeffb29aeddad6d898f3bc85db8a13aa3"
+        }
+      },
+      "stage_journals": {
+        "geometry": {
+          "bytes": 358,
+          "path": "ct-stage-geometry-completed.json",
+          "sha256": "40ace34a84f19772db0c1ffa4410b99a007ba9775ec1d24f907efa93ff188933"
+        },
+        "gzip_metadata": {
+          "bytes": 379,
+          "path": "ct-stage-gzip_metadata-completed.json",
+          "sha256": "af43fab143ec6044cbefa064f6164a011832d8e6371fd37b6a655b28961fac2b"
+        },
+        "header": {
+          "bytes": 359,
+          "path": "ct-stage-header-completed.json",
+          "sha256": "e288a4d2fabb2e2c72c8663b070beaa8a04f12a5cdcd89665ab50511c6c0fcba"
+        },
+        "privacy_preview": {
+          "bytes": 367,
+          "path": "ct-stage-privacy_preview-completed.json",
+          "sha256": "a2807c7b4462de894fc26b2cb8d3f680de2a35445035f9ef5b5547b522e0a357"
+        },
+        "scalar": {
+          "bytes": 358,
+          "path": "ct-stage-scalar-completed.json",
+          "sha256": "89362edd5ef8d9822d8a2f52682688f59a435c297d6572909276c033dcf5ee0e"
+        }
+      }
+    },
+    "mr": {
+      "anatomy": "review_pending",
+      "deidentification": "review_pending",
+      "grid": {
+        "affine_ras_mm": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            107.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            71.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -106.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "claim": "source coded geometry only; no scanner or anatomical registration admission",
+        "field_of_view_mm": [
+          213.0,
+          230.0,
+          165.0
+        ],
+        "handedness": "right",
+        "obliquity_degrees": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "orientation": [
+          "L",
+          "P",
+          "S"
+        ],
+        "qform_code": 1,
+        "qform_sform_corner_residual_mm": 0.0,
+        "qform_status": "active",
+        "sform_code": 0,
+        "shape": [
+          213,
+          230,
+          165
+        ],
+        "source_unit_code": 2,
+        "spacing_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "unit_scale_to_mm": 1.0,
+        "voxel_volume_mm3": 1.0,
+        "world_corner_bounds_mm": [
+          [
+            -105.0,
+            -158.0,
+            -106.0
+          ],
+          [
+            107.0,
+            71.0,
+            58.0
+          ]
+        ]
+      },
+      "gzip_metadata": {
+        "fields": {},
+        "header_sha256": "51db09572f8df3e9769c063f848e77288b38003efda634b175842f8fd66eafaf",
+        "metadata_review_pending": false
+      },
+      "header": {
+        "data_offset": 352,
+        "dtype_effective": "float64",
+        "dtype_native": "<f4",
+        "effective_scaling": [
+          1.0,
+          0.0
+        ],
+        "extensions": [],
+        "header_sha256": "e35d43aaf5c77bd607f6adcc53c3bcf5e624ee7f9c555b25610199257c9e0056",
+        "metadata_privacy": "no_nonempty_text_or_extension",
+        "native_payload_bytes": 32333400,
+        "raw_scaling": [
+          1.0,
+          0.0
+        ],
+        "scalar_workspace_bytes_bound": 7340032,
+        "scaling_active": true,
+        "shape": [
+          213,
+          230,
+          165
+        ],
+        "text_fields": {
+          "aux_file": {
+            "nonempty": false,
+            "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0"
+          },
+          "descrip": {
+            "nonempty": false,
+            "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8"
+          },
+          "intent_name": {
+            "nonempty": false,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        }
+      },
+      "restricted_views": [
+        {
+          "clipping_fractions": [
+            0.5513490075278196,
+            0.009998824744691248
+          ],
+          "coordinates": [
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                86.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.1,
+              "index": 21
+            },
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 106
+            },
+            {
+              "axis": 0,
+              "centre_ras_mm": [
+                -84.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.9,
+              "index": 191
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                48.0,
+                -24.0
+              ],
+              "fraction": 0.1,
+              "index": 23
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                -44.0,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 115
+            },
+            {
+              "axis": 1,
+              "centre_ras_mm": [
+                1.0,
+                -135.0,
+                -24.0
+              ],
+              "fraction": 0.9,
+              "index": 206
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -90.0
+              ],
+              "fraction": 0.1,
+              "index": 16
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                -24.0
+              ],
+              "fraction": 0.5,
+              "index": 82
+            },
+            {
+              "axis": 2,
+              "centre_ras_mm": [
+                1.0,
+                -43.5,
+                42.0
+              ],
+              "fraction": 0.9,
+              "index": 148
+            }
+          ],
+          "extent_axis": 2,
+          "extent_slice_count": 165,
+          "files": [
+            {
+              "bytes": 116922,
+              "path": "restricted/mr-window0-planes.png",
+              "sha256": "8f1a2c23d527a8c4fb11be13401a35e3f83ede89773016668f5b8fd272e89c91"
+            },
+            {
+              "bytes": 97573,
+              "path": "restricted/mr-window0-extent-0000.png",
+              "sha256": "3282c0afbd4d0635e1fa4591056caa423435f9c8447e0722a984f0d9b70dc734"
+            },
+            {
+              "bytes": 132104,
+              "path": "restricted/mr-window0-extent-0064.png",
+              "sha256": "6d1c1cda49c0fae59496c2565ff5b9177050aae5a44f0e595d5ca37b92c4426d"
+            },
+            {
+              "bytes": 39244,
+              "path": "restricted/mr-window0-extent-0128.png",
+              "sha256": "2355e090a17c404ed39bed28c56bca370adfe92ce77e71c78728ea5714e3f3ed"
+            }
+          ],
+          "privacy_release": "restricted_only",
+          "source_units_not_verified_HU": false,
+          "window": [
+            0.07530607283115387,
+            1635.120759382844
+          ]
+        }
+      ],
+      "scalar": {
+        "effective_zero_fraction": 0.5504673186240853,
+        "extrema_fractions": [
+          0.5504673186240853,
+          1.2371108513178324e-07
+        ],
+        "flags": [
+          "clinical_scale_review_pending"
+        ],
+        "histogram_counts_sha256": "7654bb6fedcca09cb7b748a490ee7713f6c0acf81a86924d975b75864caa4a31",
+        "maximum": 2467.62939453125,
+        "minimum": 0.0,
+        "percentiles": {
+          "1": 0.07530607283115387,
+          "5": 0.07530607283115387,
+          "50": 0.07530607283115387,
+          "95": 1104.3635580688715,
+          "99": 1635.120759382844
+        },
+        "quantile_absolute_error_bound": 0.15061214566230774,
+        "range_interpretation": "source-scale descriptive values; clinical CT scaling pending; MRI arbitrary",
+        "status": "finite_nonconstant",
+        "voxels": 8083350
+      },
+      "source": {
+        "bytes": 13338415,
+        "data_offset": 1247054120,
+        "local_extra_bytes": 0,
+        "local_extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "local_header_sha256": "b95780f1a1c835166fbc3d2dffc7d7969a5904cb055ba33435727f6714451a61",
+        "member": "Task1/brain/1BA336/mr.nii.gz",
+        "sha256": "88b0c68ea4c649d83c75f1da8fd338a45d27fb3d1651c0b4c1e49584010a0af8",
+        "staged_stat": {
+          "st_ctime_ns": 1791513441391374450,
+          "st_dev": 16777232,
+          "st_ino": 8719773,
+          "st_mode": 33152,
+          "st_mtime_ns": 1791513441391374450,
+          "st_nlink": 1,
+          "st_size": 13338415
+        },
+        "zip_crc32_verified": "6a0801e0"
+      },
+      "stage_evidence": {
+        "grid": {
+          "bytes": 958,
+          "path": "mr-grid.json",
+          "sha256": "cc85e676b5e15ef415c4f8a086c316ef10dbc064300ef8cdc0a247aa9dcdebb9"
+        },
+        "header": {
+          "bytes": 1252,
+          "path": "mr-header.json",
+          "sha256": "d7a1760c2c04244fbca095324d6a6f4c1bbe0eda4d37c37e77c019e3e00f2bed"
+        },
+        "scalar": {
+          "bytes": 722,
+          "path": "mr-scalar.json",
+          "sha256": "874244448b29927f70e53530aad718d0e5e454fb5f9f30b4dad5cadb14953e5b"
+        }
+      },
+      "stage_journals": {
+        "geometry": {
+          "bytes": 358,
+          "path": "mr-stage-geometry-completed.json",
+          "sha256": "8797b3ad97e5762563c36254bd597105e4fa46c17401146102c4dd8a758bb7d8"
+        },
+        "gzip_metadata": {
+          "bytes": 379,
+          "path": "mr-stage-gzip_metadata-completed.json",
+          "sha256": "ae979215e43e5636fc0c5e9b4a7d13daad6d9df62ff7ce5ce8cecb4ce8371f0d"
+        },
+        "header": {
+          "bytes": 359,
+          "path": "mr-stage-header-completed.json",
+          "sha256": "f2e55ff2ddee143b79997511f23d1def916286c350a59427d305a5668c178a1e"
+        },
+        "privacy_preview": {
+          "bytes": 367,
+          "path": "mr-stage-privacy_preview-completed.json",
+          "sha256": "4714ef36df675d6e80fd6a78443b9b5c9a5db17161e12b22b7a10c27d20e7052"
+        },
+        "scalar": {
+          "bytes": 358,
+          "path": "mr-stage-scalar-completed.json",
+          "sha256": "3008b6f63092559e5294359ca5f517b326ad7599b5fc1a8d73a5cf20326c62e1"
+        }
+      }
+    }
+  },
+  "intent_sha256": "399b2bdaa20862d1d15b7fdf9284940aa2611f52bd8bf0f9beb82299d7f9fff8",
+  "network_requests": 0,
+  "optimizer_updates": 0,
+  "output_bytes_before_receipt": 20656109,
+  "overlap": "unresolved_admission_blocker",
+  "patient_group": "SynthRAD2023:1BA336",
+  "peak_rss_bytes": 70238208,
+  "portable_views_released": false,
+  "recorded_rl_transitions": 0,
+  "role": "TRAIN",
+  "scanner_frame_admitted": false,
+  "schema": "synthrad-first-train-pair-qc/1-worker",
+  "source_basis": {
+    "archive_sha256_from_prior_verification": "43526037fcd23bdf4318bc193edd4f810e9b8806b6b8f57d41b8ef4e39c1f4cf",
+    "archive_stat_continuity_required": true,
+    "attribution": "creators retained in frozen zenodo-record-7260705.json source proof",
+    "changes": "source gzip unchanged; numeric QC and restricted uint8 display derivatives only",
+    "doi": "10.5281/zenodo.7260705",
+    "full_archive_rehashed": false,
+    "implementation": {
+      "executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "files": {
+        "scripts/synthrad_first_pair_qc_v1.py": "be2a90d009989d25cababc46945b6b40e1d5268b318b2c3894e1df9ff1cff4f3",
+        "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+        "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+        "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+        "src/resectionlab/nifti_header_records.py": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1",
+        "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+        "tests/test_synthrad_first_pair_qc_v1.py": "8c1eb15b81bb9f5c9aeb84c451b2ec1fac411faef00ad951cb4254126ab5fc77"
+      },
+      "packages": {
+        "nibabel": "5.4.2",
+        "numpy": "2.5.3",
+        "pillow": "12.3.0"
+      },
+      "pins": {
+        "artifacts/synthrad-first-pair-qc-preparation-v1/brain-pair-map.json": "2d3a10f7bdbeec1c6d6499d487e42d789eb8d46f92185389ef6ea76647feee20",
+        "artifacts/synthrad-first-pair-qc-preparation-v1/central-directory.json": "d22c9e6a7dd28c2425b8e7c76b3bd323d6033d57a128e23ca6d3dfe7da4af3a7",
+        "artifacts/synthrad-first-pair-qc-preparation-v1/directory-review.json": "96d29da46f2ba4ee856fe04f08cf751671f1b9cf80f4274c0aa7af101081680e",
+        "artifacts/synthrad-first-pair-qc-preparation-v1/preparation-independent-review.md": "ae7d2f970c8b07f8a44e26e255c12923b88951ba6365e988be56fc7fc26336c2",
+        "artifacts/synthrad-first-pair-qc-preparation-v1/proposed-qc-contract.json": "1a073d036a6e2c2328bd97720a5c27625fd9f1457f9394ba7070ce0dc0607332",
+        "artifacts/synthrad-first-pair-qc-preparation-v1/source-evidence.json": "f4f360579c5da1a91059358cd3898a752d304c9b82021da424d15296b182286b",
+        "manifests/synthrad-component-cohort-v1.json": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+      },
+      "policy_sha256": "a53256b0b7d6c34f21b9d8e1de9fd37c8cb06f14866d149c98fa6e7e487a5609",
+      "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+    },
+    "license": "CC-BY-NC-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "scope": "noncommercial research component QC only",
+    "source_cohort_directory_proof_hashes": {
+      "artifacts/synthrad-first-pair-qc-preparation-v1/brain-pair-map.json": "2d3a10f7bdbeec1c6d6499d487e42d789eb8d46f92185389ef6ea76647feee20",
+      "artifacts/synthrad-first-pair-qc-preparation-v1/central-directory.json": "d22c9e6a7dd28c2425b8e7c76b3bd323d6033d57a128e23ca6d3dfe7da4af3a7",
+      "artifacts/synthrad-first-pair-qc-preparation-v1/directory-review.json": "96d29da46f2ba4ee856fe04f08cf751671f1b9cf80f4274c0aa7af101081680e",
+      "artifacts/synthrad-first-pair-qc-preparation-v1/preparation-independent-review.md": "ae7d2f970c8b07f8a44e26e255c12923b88951ba6365e988be56fc7fc26336c2",
+      "artifacts/synthrad-first-pair-qc-preparation-v1/proposed-qc-contract.json": "1a073d036a6e2c2328bd97720a5c27625fd9f1457f9394ba7070ce0dc0607332",
+      "artifacts/synthrad-first-pair-qc-preparation-v1/source-evidence.json": "f4f360579c5da1a91059358cd3898a752d304c9b82021da424d15296b182286b",
+      "manifests/synthrad-component-cohort-v1.json": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    "version": "0.1"
+  },
+  "source_mask_is_human_anatomical_truth": false,
+  "spatial_planning_admitted": false,
+  "stage": "human_privacy_anatomy_review_pending",
+  "stages": {
+    "admission": "not_admitted",
+    "anatomy": "review_pending",
+    "deidentification": "review_pending",
+    "extraction": "passed",
+    "grid": "source_coded_grid_correspondence",
+    "header": "passed",
+    "overlap": "unresolved",
+    "scalar": "passed",
+    "source_binding": "passed"
+  },
+  "status": "review_pending",
+  "subject_id": "1BA336",
+  "training_admitted": false
+}

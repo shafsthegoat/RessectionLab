@@ -1,0 +1,786 @@
+{
+  "HEAD": "c12012b9376af38522eec2b90e974aaeca6c9230",
+  "archive_prior_sha256": "43526037fcd23bdf4318bc193edd4f810e9b8806b6b8f57d41b8ef4e39c1f4cf",
+  "archive_stat": {
+    "st_ctime_ns": 1791510808244446814,
+    "st_dev": 16777232,
+    "st_ino": 8705129,
+    "st_mode": 33188,
+    "st_mtime_ns": 1791510768267198282,
+    "st_nlink": 1,
+    "st_size": 14471900926
+  },
+  "checks": [
+    {
+      "check": "declaration hash in intent/worker/parent",
+      "detail": "1bbff4d23f503118d33c8107e9c8fbd3fbfe2aa1fabcaf53aa8fc8d997af99ca",
+      "passed": true
+    },
+    {
+      "check": "intent hash in worker-started/worker/parent",
+      "detail": "399b2bdaa20862d1d15b7fdf9284940aa2611f52bd8bf0f9beb82299d7f9fff8",
+      "passed": true
+    },
+    {
+      "check": "worker receipt hash in parent",
+      "detail": "78b3b57063b6704261291933ee27be69285c51c93d1798b574493c9d35501c48",
+      "passed": true
+    },
+    {
+      "check": "declaration authorized with independent controls",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "single frozen TRAIN subject and exact members",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "implementation equality across declaration/intent/worker source",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "all source and preparation pins match committed HEAD",
+      "detail": {
+        "count": 14,
+        "mismatches": []
+      },
+      "passed": true
+    },
+    {
+      "check": "frozen offline controls and independent review hashes",
+      "detail": [
+        {
+          "matched": true,
+          "path": "build/synthrad-qc-runner-owner-v1/controls-06.txt"
+        },
+        {
+          "matched": true,
+          "path": "build/synthrad-qc-final-review-v2/REPORT.md"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "check": "archive stat unchanged from preparation through both worker observations and now",
+      "detail": {
+        "inode": 8705129,
+        "size": 14471900926
+      },
+      "passed": true
+    },
+    {
+      "check": "archive prior verified hash preserved, not falsely rehashed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "archive read count bounded by central directory and two compressed members",
+      "detail": 19778494,
+      "passed": true
+    },
+    {
+      "check": "worker/parent extraction receipt references equal",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "CT/MR exact members, archive directory sizes/CRC, staged stat, portable receipts",
+      "detail": [
+        {
+          "bytes": 6298605,
+          "compressed_bytes": 6248488,
+          "member": "Task1/brain/1BA336/ct.nii.gz",
+          "metadata_and_receipts_consistent": true,
+          "modality": "ct",
+          "sha256_claim": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+          "staged_content_independently_rehashed": false,
+          "zip_crc32": "9bb1d7a9"
+        },
+        {
+          "bytes": 13338415,
+          "compressed_bytes": 13318956,
+          "member": "Task1/brain/1BA336/mr.nii.gz",
+          "metadata_and_receipts_consistent": true,
+          "modality": "mr",
+          "sha256_claim": "88b0c68ea4c649d83c75f1da8fd338a45d27fb3d1651c0b4c1e49584010a0af8",
+          "staged_content_independently_rehashed": false,
+          "zip_crc32": "6a0801e0"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "check": "ct/gzip_metadata completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/gzip_metadata evidence hash",
+      "detail": {
+        "bytes": 10,
+        "hash_checked": false,
+        "path": "restricted/ct-gzip-header.bin"
+      },
+      "passed": true
+    },
+    {
+      "check": "ct-stage-gzip_metadata-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct-stage-gzip_metadata-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/header completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/header evidence hash",
+      "detail": {
+        "bytes": 1252,
+        "hash_checked": true,
+        "path": "ct-header.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "ct-stage-header-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct-stage-header-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/geometry completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/geometry evidence hash",
+      "detail": {
+        "bytes": 958,
+        "hash_checked": true,
+        "path": "ct-grid.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "ct-stage-geometry-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct-stage-geometry-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/scalar completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/scalar evidence hash",
+      "detail": {
+        "bytes": 717,
+        "hash_checked": true,
+        "path": "ct-scalar.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "ct-stage-scalar-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct-stage-scalar-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/privacy_preview completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct/privacy_preview evidence hash",
+      "detail": {
+        "bytes": 5123,
+        "hash_checked": true,
+        "path": "ct-views.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "ct-stage-privacy_preview-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct-stage-privacy_preview-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/gzip_metadata completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/gzip_metadata evidence hash",
+      "detail": {
+        "bytes": 10,
+        "hash_checked": false,
+        "path": "restricted/mr-gzip-header.bin"
+      },
+      "passed": true
+    },
+    {
+      "check": "mr-stage-gzip_metadata-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr-stage-gzip_metadata-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/header completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/header evidence hash",
+      "detail": {
+        "bytes": 1252,
+        "hash_checked": true,
+        "path": "mr-header.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "mr-stage-header-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr-stage-header-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/geometry completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/geometry evidence hash",
+      "detail": {
+        "bytes": 958,
+        "hash_checked": true,
+        "path": "mr-grid.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "mr-stage-geometry-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr-stage-geometry-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/scalar completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/scalar evidence hash",
+      "detail": {
+        "bytes": 722,
+        "hash_checked": true,
+        "path": "mr-scalar.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "mr-stage-scalar-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr-stage-scalar-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/privacy_preview completed",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr/privacy_preview evidence hash",
+      "detail": {
+        "bytes": 2598,
+        "hash_checked": true,
+        "path": "mr-views.json"
+      },
+      "passed": true
+    },
+    {
+      "check": "mr-stage-privacy_preview-started.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr-stage-privacy_preview-completed.json semantics",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "all twenty stage journals hash-bound in parent",
+      "detail": {
+        "count": 20
+      },
+      "passed": true
+    },
+    {
+      "check": "ct repeated source hash",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct voxel and native byte arithmetic",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct finite ordered scalar summaries",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct source-coded geometry only",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct no raw text/extensions in portable header",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "ct restricted view inventory",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 81432,
+        "hash_checked": false,
+        "path": "restricted/ct-window0-planes.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 84235,
+        "hash_checked": false,
+        "path": "restricted/ct-window0-extent-0000.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 98622,
+        "hash_checked": false,
+        "path": "restricted/ct-window0-extent-0064.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 25605,
+        "hash_checked": false,
+        "path": "restricted/ct-window0-extent-0128.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 86954,
+        "hash_checked": false,
+        "path": "restricted/ct-window1-planes.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 86968,
+        "hash_checked": false,
+        "path": "restricted/ct-window1-extent-0000.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 95924,
+        "hash_checked": false,
+        "path": "restricted/ct-window1-extent-0064.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 32547,
+        "hash_checked": false,
+        "path": "restricted/ct-window1-extent-0128.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "mr repeated source hash",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr voxel and native byte arithmetic",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr finite ordered scalar summaries",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr source-coded geometry only",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr no raw text/extensions in portable header",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "mr restricted view inventory",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 116922,
+        "hash_checked": false,
+        "path": "restricted/mr-window0-planes.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 97573,
+        "hash_checked": false,
+        "path": "restricted/mr-window0-extent-0000.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 132104,
+        "hash_checked": false,
+        "path": "restricted/mr-window0-extent-0064.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "restricted view file stat (content not opened)",
+      "detail": {
+        "bytes": 39244,
+        "hash_checked": false,
+        "path": "restricted/mr-window0-extent-0128.png"
+      },
+      "passed": true
+    },
+    {
+      "check": "identical source-coded CT/MR grids but registration unadmitted",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "only portable JSON and expected restricted files",
+      "detail": {
+        "portable_files": 35,
+        "restricted_files": 20
+      },
+      "passed": true
+    },
+    {
+      "check": "private filesystem modes",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "aggregate receipt/view/disk resource caps",
+      "detail": {
+        "elapsed_seconds": 1.3419345831498504,
+        "parent_peak_rss_bytes": 70156288,
+        "receipt_bytes": 90010,
+        "total_bytes": 20705884,
+        "view_bytes": 978130,
+        "worker_peak_rss_bytes": 70238208
+      },
+      "passed": true
+    },
+    {
+      "check": "worker and parent accounting is monotone",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "parent supervised clean completion",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "exact 126 TRAIN denominator and one reviewed pair",
+      "detail": {
+        "final_states": {
+          "not_attempted": 125,
+          "review_pending": 1
+        },
+        "roles": {
+          "TRAIN": 126
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "denominator subjects exactly equal committed TRAIN split",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "no data/clinical/training admission or release",
+      "detail": null,
+      "passed": true
+    }
+  ],
+  "decision": "GO_MECHANICAL_QC_COMPLETE_REVIEW_PENDING",
+  "declaration_sha256": "1bbff4d23f503118d33c8107e9c8fbd3fbfe2aa1fabcaf53aa8fc8d997af99ca",
+  "denominator": {
+    "states": {
+      "not_attempted": 125,
+      "review_pending": 1
+    },
+    "total": 126
+  },
+  "extraction": [
+    {
+      "bytes": 6298605,
+      "compressed_bytes": 6248488,
+      "member": "Task1/brain/1BA336/ct.nii.gz",
+      "metadata_and_receipts_consistent": true,
+      "modality": "ct",
+      "sha256_claim": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+      "staged_content_independently_rehashed": false,
+      "zip_crc32": "9bb1d7a9"
+    },
+    {
+      "bytes": 13338415,
+      "compressed_bytes": 13318956,
+      "member": "Task1/brain/1BA336/mr.nii.gz",
+      "metadata_and_receipts_consistent": true,
+      "modality": "mr",
+      "sha256_claim": "88b0c68ea4c649d83c75f1da8fd338a45d27fb3d1651c0b4c1e49584010a0af8",
+      "staged_content_independently_rehashed": false,
+      "zip_crc32": "6a0801e0"
+    }
+  ],
+  "failed": [],
+  "intent_sha256": "399b2bdaa20862d1d15b7fdf9284940aa2611f52bd8bf0f9beb82299d7f9fff8",
+  "offline_evidence": [
+    {
+      "matched": true,
+      "path": "build/synthrad-qc-runner-owner-v1/controls-06.txt"
+    },
+    {
+      "matched": true,
+      "path": "build/synthrad-qc-final-review-v2/REPORT.md"
+    }
+  ],
+  "parent_sha256": "a558d18e4492a9e7e43232f02c06a8eb592c39c335e905decaccb4595640e92b",
+  "passed": 87,
+  "resources": {
+    "elapsed_seconds": 1.3419345831498504,
+    "parent_peak_rss_bytes": 70156288,
+    "receipt_bytes": 90010,
+    "restricted_view_bytes": 978130,
+    "total_output_bytes": 20705884,
+    "worker_peak_rss_bytes": 70238208
+  },
+  "review_scope": "portable JSON and filesystem metadata only; no staged NIfTI, raw header, PNG pixel, or ZIP member opened; restricted file content hashes not independently replayed",
+  "scalar_summary": {
+    "ct": {
+      "effective_zero_fraction": 0.0014449454743392283,
+      "extrema_fractions": [
+        0.00013682446015575225,
+        1.2371108513178324e-07
+      ],
+      "flags": [
+        "clinical_scale_review_pending"
+      ],
+      "histogram_counts_sha256": "708754e09bf353e0b6fb1153eb821a3c812b847cdb6b653677e185a9864d911b",
+      "maximum": 1929.0,
+      "minimum": -1024.0,
+      "percentiles": {
+        "1": -999.9383850097656,
+        "5": -999.9383850097656,
+        "50": -999.9383850097656,
+        "95": 687.0782165527344,
+        "99": 1342.9599914550781
+      },
+      "quantile_absolute_error_bound": 0.18023681640625,
+      "range_interpretation": "source-scale descriptive values; clinical CT scaling pending; MRI arbitrary",
+      "status": "finite_nonconstant",
+      "voxels": 8083350
+    },
+    "mr": {
+      "effective_zero_fraction": 0.5504673186240853,
+      "extrema_fractions": [
+        0.5504673186240853,
+        1.2371108513178324e-07
+      ],
+      "flags": [
+        "clinical_scale_review_pending"
+      ],
+      "histogram_counts_sha256": "7654bb6fedcca09cb7b748a490ee7713f6c0acf81a86924d975b75864caa4a31",
+      "maximum": 2467.62939453125,
+      "minimum": 0.0,
+      "percentiles": {
+        "1": 0.07530607283115387,
+        "5": 0.07530607283115387,
+        "50": 0.07530607283115387,
+        "95": 1104.3635580688715,
+        "99": 1635.120759382844
+      },
+      "quantile_absolute_error_bound": 0.15061214566230774,
+      "range_interpretation": "source-scale descriptive values; clinical CT scaling pending; MRI arbitrary",
+      "status": "finite_nonconstant",
+      "voxels": 8083350
+    }
+  },
+  "schema": "synthrad-first-train-pair-saved-output-independent-audit-v1",
+  "source_binding": [
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "scripts/synthrad_first_pair_qc_v1.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "src/resectionlab/__init__.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "src/resectionlab/core.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "src/resectionlab/data_policy.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "src/resectionlab/nifti_header_records.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "src/resectionlab/structural_evidence.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "source",
+      "path": "tests/test_synthrad_first_pair_qc_v1.py"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "artifacts/synthrad-first-pair-qc-preparation-v1/brain-pair-map.json"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "artifacts/synthrad-first-pair-qc-preparation-v1/central-directory.json"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "artifacts/synthrad-first-pair-qc-preparation-v1/directory-review.json"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "artifacts/synthrad-first-pair-qc-preparation-v1/preparation-independent-review.md"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "artifacts/synthrad-first-pair-qc-preparation-v1/proposed-qc-contract.json"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "artifacts/synthrad-first-pair-qc-preparation-v1/source-evidence.json"
+    },
+    {
+      "HEAD_matches": true,
+      "current_matches": true,
+      "kind": "pin",
+      "path": "manifests/synthrad-component-cohort-v1.json"
+    }
+  ],
+  "worker_sha256": "78b3b57063b6704261291933ee27be69285c51c93d1798b574493c9d35501c48"
+}

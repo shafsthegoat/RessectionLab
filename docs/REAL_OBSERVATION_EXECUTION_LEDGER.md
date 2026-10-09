@@ -79,9 +79,12 @@ manifest review found no further ready declared download; CFB remains deferred
 for lack of an authoritative verified-HTTPS payload route.
 The [first TRAIN-pair QC preparation](../artifacts/synthrad-first-pair-qc-preparation-v1/RESULT.md)
 passes 115 offline controls and independent proof-portability review. It has
-not opened a patient image member. One restricted `1BA336` execution requires
-an exact root declaration; any result stays unreviewed for intended use until
-privacy, anatomy, scaling and overlap checks.
+not opened a patient image member. The later
+[restricted `1BA336` execution](../artifacts/synthrad-first-pair-qc-execution-v1/RESULT.md)
+completed mechanical QC within fixed limits; 87 independent receipt checks
+passed. It remains `review_pending` for privacy, anatomy, scaling and overlap.
+The other 125 TRAIN subjects were not attempted, and no scientific admission
+or training update follows.
 
 The [first v3 mechanics execution](../artifacts/hbe-branch-calibration-v3-failure-v1/RESULT.md)
 is a terminal negative result under its frozen no-extrapolation protocol. Both

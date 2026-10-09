@@ -1,0 +1,751 @@
+{
+  "anatomical_admission": false,
+  "declaration_sha256": "1bbff4d23f503118d33c8107e9c8fbd3fbfe2aa1fabcaf53aa8fc8d997af99ca",
+  "denominator": [
+    {
+      "role": "TRAIN",
+      "status": "review_pending",
+      "subject_id": "1BA336"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB033"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC077"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA253"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB177"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC028"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA328"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB076"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC041"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA076"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB016"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC021"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA201"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB100"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC052"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA260"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB091"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC058"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA040"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB028"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC022"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA307"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB151"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC036"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA141"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB030"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC034"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA172"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB008"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC027"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA247"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB003"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC070"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA294"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB073"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC009"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA032"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB082"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC008"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA222"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB096"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC017"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA175"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB066"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC014"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA256"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB179"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC047"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA300"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB043"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC066"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA266"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB102"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC050"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA058"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB099"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC075"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA054"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB062"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC020"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA358"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB059"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC090"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA005"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB083"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC084"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA359"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB011"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC065"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA158"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB184"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC067"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA085"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB050"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC076"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA345"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB098"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC025"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA278"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB031"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC053"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA001"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB145"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC038"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA103"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB182"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC086"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA379"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB039"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC080"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA116"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB051"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC094"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA206"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB198"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC056"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA143"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB200"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC023"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA227"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB205"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC073"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA131"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB048"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC062"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA189"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB049"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC081"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA305"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB109"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC004"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA288"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB005"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC046"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA185"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB017"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC019"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA239"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB006"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC088"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA111"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB175"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC001"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BA100"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BB152"
+    },
+    {
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "subject_id": "1BC051"
+    }
+  ],
+  "elapsed_seconds": 1.3419345831498504,
+  "extraction_receipts": [
+    {
+      "path": "ct-extraction.json",
+      "sha256": "2152ab32a43eec2150293803d6c615866244ff5dc7ed3430fc405391eceab265"
+    },
+    {
+      "path": "mr-extraction.json",
+      "sha256": "419ea36c82895316642723c6d23f6e80754efa7efad91840a0e4ee072a7dead4"
+    }
+  ],
+  "intent_sha256": "399b2bdaa20862d1d15b7fdf9284940aa2611f52bd8bf0f9beb82299d7f9fff8",
+  "log_policy": "stdout_stderr_discarded_for_privacy",
+  "network_requests": 0,
+  "optimizer_updates": 0,
+  "output_bytes_before_parent_receipt": 20689215,
+  "parent_completed": true,
+  "parent_observed_peak_rss_bytes": 70156288,
+  "parent_reaped_worker": true,
+  "portable_views_released": false,
+  "recorded_rl_transitions": 0,
+  "role": "TRAIN",
+  "scanner_frame_admitted": false,
+  "schema": "synthrad-first-train-pair-qc/1-parent",
+  "source_mask_is_human_anatomical_truth": false,
+  "spatial_planning_admitted": false,
+  "stage_journals": [
+    {
+      "path": "ct-stage-geometry-completed.json",
+      "sha256": "40ace34a84f19772db0c1ffa4410b99a007ba9775ec1d24f907efa93ff188933"
+    },
+    {
+      "path": "ct-stage-geometry-started.json",
+      "sha256": "f2ab52685f47c8d6079108e974161b60921a5e1cd902b81559e7667856a4dc8a"
+    },
+    {
+      "path": "ct-stage-gzip_metadata-completed.json",
+      "sha256": "af43fab143ec6044cbefa064f6164a011832d8e6371fd37b6a655b28961fac2b"
+    },
+    {
+      "path": "ct-stage-gzip_metadata-started.json",
+      "sha256": "11478f2fa0f8f9777b3b25f96414d55c2dbde5ab3f733b9c675deec1b43bf5ee"
+    },
+    {
+      "path": "ct-stage-header-completed.json",
+      "sha256": "e288a4d2fabb2e2c72c8663b070beaa8a04f12a5cdcd89665ab50511c6c0fcba"
+    },
+    {
+      "path": "ct-stage-header-started.json",
+      "sha256": "9e3cb4f53d59e7bba64ff26c2edd66a6ed6c9540ee159fdd8834a6653f2d0c97"
+    },
+    {
+      "path": "ct-stage-privacy_preview-completed.json",
+      "sha256": "a2807c7b4462de894fc26b2cb8d3f680de2a35445035f9ef5b5547b522e0a357"
+    },
+    {
+      "path": "ct-stage-privacy_preview-started.json",
+      "sha256": "9d6f532a4b6192504bddeb1325ba60cf7f0c70f5ac8d2f9f9020023576f95340"
+    },
+    {
+      "path": "ct-stage-scalar-completed.json",
+      "sha256": "89362edd5ef8d9822d8a2f52682688f59a435c297d6572909276c033dcf5ee0e"
+    },
+    {
+      "path": "ct-stage-scalar-started.json",
+      "sha256": "8c047b8fdafdcdcf16a9144822c080d587710a3e4013163541cd84479835c08e"
+    },
+    {
+      "path": "mr-stage-geometry-completed.json",
+      "sha256": "8797b3ad97e5762563c36254bd597105e4fa46c17401146102c4dd8a758bb7d8"
+    },
+    {
+      "path": "mr-stage-geometry-started.json",
+      "sha256": "583073286d17c9605221d78bc8592fb564eb33b48ee252e1ba9ecc8c6c9e105b"
+    },
+    {
+      "path": "mr-stage-gzip_metadata-completed.json",
+      "sha256": "ae979215e43e5636fc0c5e9b4a7d13daad6d9df62ff7ce5ce8cecb4ce8371f0d"
+    },
+    {
+      "path": "mr-stage-gzip_metadata-started.json",
+      "sha256": "cc2c12f2a6234fcd29d385cd44ac5e13ac22da3ce263ad12c0453d37a4367419"
+    },
+    {
+      "path": "mr-stage-header-completed.json",
+      "sha256": "f2e55ff2ddee143b79997511f23d1def916286c350a59427d305a5668c178a1e"
+    },
+    {
+      "path": "mr-stage-header-started.json",
+      "sha256": "0156adf3c4db10e15f4e305ac6a5c882f7480ac9621a211c9cca60c054142b0c"
+    },
+    {
+      "path": "mr-stage-privacy_preview-completed.json",
+      "sha256": "4714ef36df675d6e80fd6a78443b9b5c9a5db17161e12b22b7a10c27d20e7052"
+    },
+    {
+      "path": "mr-stage-privacy_preview-started.json",
+      "sha256": "3d11d65f8df103a676590c063703a9c117831da8415cebf3c83bad793c78477b"
+    },
+    {
+      "path": "mr-stage-scalar-completed.json",
+      "sha256": "3008b6f63092559e5294359ca5f517b326ad7599b5fc1a8d73a5cf20326c62e1"
+    },
+    {
+      "path": "mr-stage-scalar-started.json",
+      "sha256": "95315a2c27a6b69e4ae496c311595828c04b7fe8f1b1fd1d2b832bb1190f1b66"
+    }
+  ],
+  "status": "review_pending",
+  "subject_id": "1BA336",
+  "supervision": "completed",
+  "training_admitted": false,
+  "worker_exit_status": 0,
+  "worker_log_bytes": 0,
+  "worker_receipt_sha256": "78b3b57063b6704261291933ee27be69285c51c93d1798b574493c9d35501c48"
+}
