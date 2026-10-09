@@ -109,6 +109,12 @@ from measured memory. The pinned FEBio/Accelerate backend has tiny controls,
 but no patient-size tet10 solve; a bounded non-patient cube convergence and
 memory benchmark is the next numerical qualification. It cannot admit the
 rejected Case4 mesh or establish physical fidelity.
+The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
+recommends no further Gmsh candidate now. The fixed T1-derived envelope has
+known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
+support in the mask, and retained-tissue anatomical suitability are unaccepted.
+Saved-mesh error localization can diagnose the rejected candidate, but a new
+mesh or FEM run waits on these source and sparse-solver gates.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
