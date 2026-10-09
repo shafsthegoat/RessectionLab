@@ -1,0 +1,82 @@
+{
+  "INDEPENDENT_REVIEW.md": {
+    "bytes": 4098,
+    "sha256": "0fcaf953235a0c02fd8814a69c1aad3df71b9902cb74d23e55bd7edd7f2eeba5"
+  },
+  "PROSPECTIVE_REVIEW.md": {
+    "bytes": 2885,
+    "sha256": "a521c9d740b81105a847fed54ecd70e1f20137022c8af64adc7a7ff82efe608c"
+  },
+  "RESULT.md": {
+    "bytes": 2597,
+    "sha256": "66c64fa6962a36992c6cea6047d80497641eca2eb09fe7cef829ad090bf44b47"
+  },
+  "acquisition-allowlist.json": {
+    "bytes": 927,
+    "sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629"
+  },
+  "feasibility-contract.json": {
+    "bytes": 3598,
+    "sha256": "1efe105ec62eac950b66641de707a7b020ec8b5d2569d1ca83dbdf162eaaa764"
+  },
+  "generated-input-receipt.json": {
+    "bytes": 421,
+    "sha256": "b36db917af5a623681d9a18de45383f34ba3b2e34cae1a65d2ae77fca182cc84"
+  },
+  "source/darwin_fast_sampler.py.snapshot": {
+    "bytes": 8426,
+    "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+  },
+  "source/full128_tiled_worker.py.snapshot": {
+    "bytes": 11477,
+    "sha256": "7a3942ca04a4246c1b9decd920dbb9fc9ce9829b0e746ae784757ca856a61fd0"
+  },
+  "source/launch_gate.py.snapshot": {
+    "bytes": 916,
+    "sha256": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f"
+  },
+  "source/monitor_primitives.py.snapshot": {
+    "bytes": 4098,
+    "sha256": "a0645d9be2c1d9d6081a6e96a70a2b970b4f3e8359a2517252c03e75e283ee93"
+  },
+  "source/safe_finalize.py.snapshot": {
+    "bytes": 13744,
+    "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4"
+  },
+  "source/slow_inventory.py.snapshot": {
+    "bytes": 10441,
+    "sha256": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1"
+  },
+  "source/supervise_tile1_v2.py.snapshot": {
+    "bytes": 22038,
+    "sha256": "0dd11208ef441fdc87767509d8f6b56c4e8b5b30a4548986cfdb8fb791c245eb"
+  },
+  "source/test_launch_control.py.snapshot": {
+    "bytes": 12618,
+    "sha256": "d035e2c41e2a4cbb97cafeb82a28d99ad2c798be09aa4f8ecf3ba0924a77c514"
+  },
+  "tiled/finalization.json": {
+    "bytes": 702,
+    "sha256": "c4cc2a8f8c94a24f7e7b7c5303317a3c3f7f7a0154a434c70c3aea5ae54ae71a"
+  },
+  "tiled/host-preflight.json": {
+    "bytes": 14475,
+    "sha256": "be9f0555f0f040a577d4ed13e7b558736d41ee3aeebaa5f794935ee95615713d"
+  },
+  "tiled/launch-binding.json": {
+    "bytes": 498,
+    "sha256": "7edd8215c7dd5b3b7573ea96eb2517d5a604b596a62916e1c6521308ae442b32"
+  },
+  "tiled/provisional-supervision.json": {
+    "bytes": 98246,
+    "sha256": "3bc4b8074b98dfcd3f7bb377e5da17880c34a59ef2af841e78c2999eb50ffc83"
+  },
+  "tiled/supervision.json": {
+    "bytes": 100767,
+    "sha256": "bd5f164a3429b646980011dced4e805ce3cd82634625516b5a6dbf9b4f670796"
+  },
+  "tiled/worker.log": {
+    "bytes": 927,
+    "sha256": "29170923c33784f5c5cd5fdad9b0575264839b6c0cad69519ed0b2f4ce966d05"
+  }
+}

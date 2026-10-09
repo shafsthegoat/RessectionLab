@@ -1,0 +1,75 @@
+{
+  "acquisition_allowlist_path": "build/limited-input-guard-design/gliomoda-full128-tile1-feasibility-v2/acquisition-allowlist.json",
+  "acquisition_allowlist_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+  "arm_order": [
+    "tiled"
+  ],
+  "gate": "CPU_FULL128_TILE1_FEASIBILITY_V2",
+  "host_abort_free_drop_points": 20,
+  "host_abort_kernel_pressure_masks": [
+    2,
+    4
+  ],
+  "host_abort_min_free_percent": 30,
+  "host_abort_swap_growth_mib": 128,
+  "host_compressor_occupied": "diagnostic_only_no_standalone_stop",
+  "host_preflight_max_free_spread_points": 5,
+  "host_preflight_min_free_percent": 45,
+  "host_preflight_required_kernel_pressure_mask": 1,
+  "host_preflight_seconds": 30,
+  "host_preflight_swap_growth_measurement_tolerance_mib": 0.0,
+  "host_sample_max_interval_seconds": 0.2,
+  "host_sample_target_interval_seconds": 0.05,
+  "input_npy_sha256": "daa9ffd646347a94c89afe8357b5eb321ecc56cf8b17116b12f45ebe43858712",
+  "input_raw_sha256": "f490284195bd84ace5bf3f75d83094b6c74c7af7f276cd582ff811009ec971bb",
+  "input_shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "launch_ancestor_exemption": "Only exact PID ancestry of this supervisor is excluded and recorded at each sample",
+  "log_cap_bytes": 2097152,
+  "model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "model_patch_size": [
+    128,
+    128,
+    128
+  ],
+  "model_training_or_patient_inference": false,
+  "monitor_revision": "identity-bound-closeout-v2",
+  "native_arm_enabled": false,
+  "output_depth_tile": 1,
+  "output_shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "pageouts_swapouts_policy": "diagnostic_counters_only; no automatic hold from isolated system-wide increments",
+  "process_group_rss_cap_kib": 3145728,
+  "project_compute_policy": "Only exact pinned TractoInferno intake PID/PGID/start/ucomm/command/source/declaration may continue while RSS <=512MiB; all other project Python/FEBio/pytest/node/shell overlaps defer/stop model; curl may continue; downloader is never signaled by controller",
+  "runner_source_sha256": {
+    "darwin_fast_sampler.py": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+    "full128_tiled_worker.py": "7a3942ca04a4246c1b9decd920dbb9fc9ce9829b0e746ae784757ca856a61fd0",
+    "launch_gate.py": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+    "monitor_primitives.py": "a0645d9be2c1d9d6081a6e96a70a2b970b4f3e8359a2517252c03e75e283ee93",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1",
+    "supervise_tile1_v2.py": "0dd11208ef441fdc87767509d8f6b56c4e8b5b30a4548986cfdb8fb791c245eb"
+  },
+  "scope": "One new generated-only full128-cubed CPU tile1 forward on exact original full128 input and checkpoint under unchanged guards; memory/runtime feasibility only, no native full-patch comparator, patient accuracy, or deployment admission",
+  "single_full_patch_forward": true,
+  "slow_inventory_interval_seconds": 0.5,
+  "slow_inventory_max_age_seconds": 1.5,
+  "tracked_adapter_path": "src/resectionlab/low_memory_conv3d.py",
+  "tracked_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "tta_sliding_window_autocast": false,
+  "wall_time_cap_seconds": 120
+}

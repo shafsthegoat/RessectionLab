@@ -74,6 +74,14 @@ and verifies them by replay using only permitted inputs. Root integration passed
 This supports complete-strategy evaluation and replay. The saved demonstration
 is explicitly generated DEVELOPMENT evidence, with no training or patient transfer.
 
+The [full-128³ tile-depth-1 attempt](artifacts/full128-tile1-pressure-negative-v1/INDEPENDENT_REVIEW.md)
+was pressure-stopped after 6.327 seconds at 2,489,253,888 sampled resident bytes.
+No output or worker success result was saved. The finalizer recorded a transient
+same-group process after termination and retained manual-attention status; a
+later independent process check found it gone. Acquisition stayed live and matched
+its exact permitted identity. This remains a negative feasibility result, with
+no automatic retry or raised limits. The failing layer is not yet localized.
+
 The [repaired tile-depth-1 control](artifacts/tile1-v2-resource-parity/INDEPENDENT_REVIEW.md)
 completed with a full resource trace and independent acceptance. All 786,432
 64³ generated logits match the saved tile-depth-4 output byte for byte, with

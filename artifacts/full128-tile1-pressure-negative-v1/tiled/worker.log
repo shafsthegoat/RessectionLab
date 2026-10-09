@@ -1,0 +1,9 @@
+{"elapsed_seconds": 0.0018013750668615103, "phase": "before_imports", "self_rss_kib": 21280}
+{"elapsed_seconds": 1.292515292065218, "phase": "after_input_model_hashes", "self_rss_kib": 362640}
+{"elapsed_seconds": 1.2973667499609292, "phase": "before_weights_only_load", "self_rss_kib": 362720}
+{"elapsed_seconds": 1.4410449999850243, "phase": "after_weights_only_load", "self_rss_kib": 589792}
+{"elapsed_seconds": 1.4715377080719918, "phase": "after_optimizer_cleanup", "self_rss_kib": 588496}
+{"elapsed_seconds": 1.5286034580785781, "phase": "after_network_construction_alias_checks", "self_rss_kib": 590368}
+{"elapsed_seconds": 1.6599716250784695, "phase": "after_strict_copy_weights_cleanup", "self_rss_kib": 590800}
+{"elapsed_seconds": 1.6727637920994312, "phase": "after_tiled_conv3d_attachment", "self_rss_kib": 590976}
+{"elapsed_seconds": 1.6786726249847561, "phase": "before_generated_forward", "self_rss_kib": 591072}

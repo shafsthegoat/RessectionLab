@@ -1,0 +1,16 @@
+{
+  "dtype": "float32",
+  "formula": "((flat_index*29+17 mod 127)-63)/63",
+  "nonzero_count": 4161278,
+  "npy_sha256": "daa9ffd646347a94c89afe8357b5eb321ecc56cf8b17116b12f45ebe43858712",
+  "numpy_version": "2.0.1",
+  "raw_sha256": "f490284195bd84ace5bf3f75d83094b6c74c7af7f276cd582ff811009ec971bb",
+  "scope": "Generated software control only; no patient data",
+  "shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ]
+}
