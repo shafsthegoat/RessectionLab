@@ -1,0 +1,119 @@
+{
+  "version": "resect-case4-patient-mesh-boundary6-v4",
+  "status": "prospective_preparation_not_executed",
+  "candidate_id": "case4_boundary6_interior24_curvature_off_single",
+  "source_case": "Case4 unchanged estimated native T1 envelope; known inferior/cerebellar exclusions; no whole-brain or pial truth",
+  "source_surface_binding": {
+    "path": "outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+    "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+    "mask_sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759"
+  },
+  "source_frame": "native Case4 T1 RAS meters",
+  "geometry_operations": "Unchanged retained source and v2 discrete-surface Distance+Threshold workflow; only requested boundary size and compatible global floor change.",
+  "size_profile": {
+    "kind": "Distance(discreteSurfaces)+Threshold",
+    "boundary_size_m": 0.006,
+    "interior_size_m": 0.024,
+    "sampling_per_dimension": 100,
+    "distance_min_m": 0.002,
+    "distance_max_m": 0.024,
+    "sigmoid": false,
+    "meaning": "Prospective 6 mm boundary / 24 mm interior request, 2\u201324 mm transition; no patient accuracy or runtime prediction. Sampled Distance is not the independent surface-error oracle."
+  },
+  "eligibility": {
+    "maximum_nodes": 64000,
+    "maximum_elements": 80000,
+    "meaning": "Geometry-research count ceiling only; no patient-size solver admission or clinical acceptance."
+  },
+  "diagnostic_limits": {
+    "maximum_nodes": 80000,
+    "maximum_elements": 100000,
+    "maximum_total_bytes": 16777216,
+    "maximum_metadata_bytes": 8192,
+    "scope": "Returned-candidate packet only: four complete NPY arrays plus manifest; excludes previously retained native source surface, bounded result/log receipts and original v1 evidence.",
+    "no_truncation": true
+  },
+  "caps": {
+    "aggregate_seconds": 180,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_generations": 1,
+    "retries": 0,
+    "maximum_native_triangles": 500000,
+    "maximum_discrete_patches": 256
+  },
+  "quality": {
+    "midpoint_tolerance_m": 1e-12,
+    "minimum_mean_ratio": 0.05,
+    "maximum_overlap_candidate_pairs": 2000000
+  },
+  "surface_fidelity": {
+    "maximum_distance_m": 0.002,
+    "cover_radius_m": 0.001,
+    "maximum_samples_per_direction": 4000000,
+    "maximum_relative_volume_error": 0.03,
+    "meaning": "Engineering approximation against the estimated mask isosurface, not anatomical error. Bidirectional nearest-triangle samples plus full triangle-interior covering radius."
+  },
+  "gmsh_options": {
+    "General.NumThreads": 1,
+    "Mesh.MaxNumThreads1D": 1,
+    "Mesh.MaxNumThreads2D": 1,
+    "Mesh.MaxNumThreads3D": 1,
+    "Mesh.Algorithm": 6,
+    "Mesh.Algorithm3D": 1,
+    "Mesh.ElementOrder": 2,
+    "Mesh.SecondOrderLinear": 1,
+    "Mesh.HighOrderOptimize": 0,
+    "Mesh.MeshSizeFromPoints": 0,
+    "Mesh.MeshSizeFromCurvature": 0,
+    "Mesh.MeshSizeExtendFromBoundary": 0,
+    "Mesh.Optimize": 1,
+    "Mesh.OptimizeNetgen": 0,
+    "Mesh.RandomSeed": 1,
+    "Mesh.Binary": 1
+  },
+  "v1_helper_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+  "v1_evidence_unchanged": true,
+  "solver_admission": {
+    "authorized": false,
+    "backend_validated_for_patient": false,
+    "limitation": "Geometry-only candidate; no patient-size sparse solve, displacement validation, tool force, or clinical admission."
+  },
+  "execution_release": {
+    "authorized": false,
+    "required": "Separate independent source review and root release of exact committed ten-file closure, immutable source/runtime/context bindings, and one fresh source-only geometry attempt; no retry."
+  },
+  "prohibited": [
+    "new patient arrays before root release",
+    "B/V landmarks or during-US",
+    "source smoothing/dilation/enlargement/repair",
+    "extra candidate generation, automatic retry, or mesh sweep",
+    "reuse or acceptance of failed v1/v2/v3 meshes",
+    "solver calls",
+    "training or policy use"
+  ],
+  "references": [
+    "https://gmsh.info/doc/texinfo/gmsh.html#t10",
+    "https://gmsh.info/doc/texinfo/gmsh.html#Gmsh-mesh-size-fields",
+    "https://gmsh.info/doc/texinfo/gmsh.html#Specifying-mesh-element-sizes"
+  ],
+  "output_limits": {
+    "maximum_total_bytes": 33554432,
+    "maximum_file_bytes": 8388608,
+    "maximum_files": 32
+  },
+  "evidence_bindings": [
+    {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-graded-v2/summary.json",
+      "sha256": "a4262bbd81b327c75aabd8c1a125d37f127ed6135ada4d204486ed943be92a99"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/summary.json",
+      "sha256": "f27114619be8012c837ed3ad6bf77353231fdb5a97eac97527383f74211162a9"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/summary.json",
+      "sha256": "875c25269be2f1a44c91d9744822fb7e448af9f662fdea6b03cc45edd90bab10"
+    }
+  ]
+}

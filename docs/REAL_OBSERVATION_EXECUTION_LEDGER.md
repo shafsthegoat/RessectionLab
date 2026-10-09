@@ -105,6 +105,13 @@ native result. Independent review accepted 243 fixture/source controls after a
 declared-curve correction. Execution and fit remain refused. This specimen
 track does not substitute for patient-anatomy displacement or measured tool
 interaction validation.
+The [Case4 boundary-6 mesh preparation](../artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
+passes 176 source-only controls and preserves all geometry gates. It proposes
+one curvature-off 6/24 mm generation after a separate committed-source release;
+no patient meshing or solve has run in this version. Case4 V outcomes were
+previously revealed, limiting any later FEM comparison to retrospective
+development. The first catalogued evaluation-role full before/during landmark
+pair is Case19, whose payload, frame and eligibility gates remain unopened.
 
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 
