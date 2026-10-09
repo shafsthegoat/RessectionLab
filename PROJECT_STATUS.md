@@ -282,6 +282,12 @@ now passes independent saved-output replay across all five states. The larger
 cube solved in 3.649 s with 275,103,744 B peak sampled RSS, and supplemental
 nodal-force checks agree. Three of seven calls are complete; the nonuniform
 n9/n13 and half-step convergence checks and physical validation remain open.
+The [shared four-row continuation supervisor](docs/mechanics-nonpatient-sparse-continuation-supervisor.md)
+is independently reviewed source preparation: 30 focused and 160 related review
+tests pass, with the first three actual receipts and all saved native file hashes
+rechecked. Each remaining row uses the same implementation with its own exact
+one-call release and predecessor audit. No continuation call has yet run; this
+preparation does not establish numerical convergence or physical fidelity.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point

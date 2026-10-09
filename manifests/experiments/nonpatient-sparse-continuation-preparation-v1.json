@@ -1,0 +1,51 @@
+{
+  "schema": "nonpatient-sparse-continuation-preparation-v1",
+  "status": "prepared_not_released_or_executed",
+  "release": null,
+  "parent_declaration": "manifests/experiments/nonpatient-tet10-sparse-feasibility-v1.json",
+  "case_ids": ["n9_nonuniform", "n13_affine", "n13_nonuniform", "n13_nonuniform_half_step"],
+  "output_root": "outputs/mechanics/nonpatient-sparse-continuation-v1",
+  "fixed_prior_receipts": [
+    {
+      "case_id": "n5_affine",
+      "path": "outputs/mechanics/nonpatient-n5-supervisor-v1/attempt-01/receipt.json",
+      "sha256": "9d26c0c57eefad06c53fe67b2bd64d9572778f23ed8b4356660654f88746f0ce",
+      "source_commit": "2f8f53f18111c2e839f677ac9c371e98f2f5175c",
+      "release_sha256": "f2bebf5e1a7b722ff62e22603e63b80698e66fdc28fc3634ec078359f2726796",
+      "deck_sha256": "860dcdc8b29382281dd35ec41b6939bb29f1de5b3d3bd7a2e0adfd6f866a7674",
+      "elapsed_seconds": 0.5189758341293782
+    },
+    {
+      "case_id": "n5_nonuniform",
+      "path": "outputs/mechanics/nonpatient-n5-nonuniform-supervisor-v1/attempt-01/receipt.json",
+      "sha256": "dae7f8f7646da5b05b048db07b6129388c754824a34396bbe9caa744b8a372e1",
+      "source_commit": "65c6d0b8b54514ae078bc72164a4d8dea416951c",
+      "release_sha256": "5c360159bf32d6eb1d4d65d9e7a745be0fd7f8680609c41e4effbf66352b116f",
+      "deck_sha256": "df19423a89f6af2c72f8fd5ab1566a8fa3c26c253a6b750b31f79bfd9de4e870",
+      "elapsed_seconds": 0.5194279160350561
+    },
+    {
+      "case_id": "n9_affine",
+      "path": "outputs/mechanics/nonpatient-n9-affine-supervisor-v1/attempt-01/receipt.json",
+      "sha256": "44775df0f7f04b2fdd6ec3f0ba43e595d34a07c6303142a5be1cb20d921f52b1",
+      "source_commit": "a61b82c9555ccb52bddba1927a27c9e0ce4eb8b9",
+      "release_sha256": "e90840f8ad6afa08ecd9b3d722a7a87a6ba6f8ece7519633d1810f32115eb5bd",
+      "deck_sha256": "1dd6d1eeaa4072fed359f8217e1389a748bfafc065d230f643f607d4ff9645c9",
+      "elapsed_seconds": 3.649174875114113
+    }
+  ],
+  "caps": {
+    "native_calls": 1,
+    "attempts": 1,
+    "wall_seconds": 600,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "active_output_bytes": 536870912,
+    "numerical_threads": 1
+  },
+  "aggregate_caps": {
+    "maximum_native_calls": 7,
+    "aggregate_native_wall_seconds": 1800,
+    "first_continuation_index": 3
+  },
+  "scope": "Shared source-only implementation for four separate remaining frozen nonpatient cube rows. Each row requires its own source-bound, independently preflighted one-call release and all passing predecessor receipts. No automatic cross-row execution, patient data, material fit, physical validation, or clinical claim."
+}
