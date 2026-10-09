@@ -75,9 +75,12 @@ The next target-estimation path uses separately licensed weights and an
 independent nnU-Net adapter with scan-only registration and inverse-map QC.
 The [fixed SRI-24 atlas intake](artifacts/sri24-atlas-intake-v1/RESULT.md) is complete,
 with independently reproduced size, MD5 and SHA-256. Its original file has a
-singleton fourth axis that preprocessing must handle explicitly. The isolated
-runtime and pinned model-weight verification remain in progress; no patient
-registration or inference has run in this slice.
+singleton fourth axis that preprocessing must handle explicitly. The
+[isolated runtime and fixed checkpoint preparation](artifacts/scan-target-runtime-preparation-v1/RESULT.md)
+now pass dependency, analytic registration and bounded safe metadata checks.
+The initial inverse-transform and safe-load failures are retained. This is
+not patient inference: an independent adapter, scan-only preprocessing and
+local anatomical QC remain required before any planning input is admitted.
 
 The [HBE twelve-row comparison diagnostic](docs/hbe-v5-twelve-row-generated-comparator.md)
 is committed and independently reviewed. Generated fixtures verify the frozen
@@ -286,8 +289,14 @@ The [shared four-row continuation supervisor](docs/mechanics-nonpatient-sparse-c
 is independently reviewed source preparation: 30 focused and 160 related review
 tests pass, with the first three actual receipts and all saved native file hashes
 rechecked. Each remaining row uses the same implementation with its own exact
-one-call release and predecessor audit. No continuation call has yet run; this
-preparation does not establish numerical convergence or physical fidelity.
+one-call release and predecessor audit. The
+[completed seven-row study](artifacts/mechanics-nonpatient-seven-row-execution-v1/RESULT.md)
+now **fails the frozen force-convergence gate**: the n9-to-n13 reaction change
+is 34.990344 µN against a 10 µN limit. The other five comparison gates pass.
+All individual native runs passed their saved-output checks in 73.868947 s
+total supervised native wall time. No threshold change or retry followed.
+The seven-call budget is exhausted; spatial force resolution must be diagnosed
+before another declared experiment. Physical and patient-mesh admission remain open.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
