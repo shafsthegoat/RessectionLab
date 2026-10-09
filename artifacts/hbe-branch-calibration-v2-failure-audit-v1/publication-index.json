@@ -1,0 +1,55 @@
+{
+  "schema": "compact-publication-index-v1",
+  "files": [
+    {
+      "path": "RESULT.md",
+      "bytes": 1659,
+      "sha256": "263f538673fc05026f0d96f71346bd4f3c5474eff564f64bac64fef0211403b8"
+    },
+    {
+      "path": "axial-diagnostic/RESULT.md",
+      "bytes": 4178,
+      "sha256": "b6eb6a13ea20e39196f3c07045f21b661200a38b01025bf99ccaea7d554f6bfd"
+    },
+    {
+      "path": "axial-diagnostic/artifact-index.json",
+      "bytes": 778,
+      "sha256": "c261919d09d963b2e186512d73d26e499aeeadc66be4862b1e703a7ea77bb444"
+    },
+    {
+      "path": "axial-diagnostic/diagnosis.json",
+      "bytes": 4103,
+      "sha256": "67797ea7f187fe07a6b7223592ee1c0047c7a539c2e71f685a6feadd992e9f0a"
+    },
+    {
+      "path": "axial-diagnostic/inspect_headers.py",
+      "bytes": 4414,
+      "sha256": "5c7860eb1885cc0b557f2fce0ee01e896c750fa82d911aa81cbbee54bc471e26"
+    },
+    {
+      "path": "axial-diagnostic/inspection-declaration.json",
+      "bytes": 6552,
+      "sha256": "6ddccaea0e7ff32413d483de2c92e1841804c2fbedec7d1a2858bd0e51b81114"
+    },
+    {
+      "path": "axial-diagnostic/v3-delta-recommendation.json",
+      "bytes": 3214,
+      "sha256": "7865b592d763c2c3d43332f603949a4716372b3e9b2e5738ddc5019c734bb680"
+    },
+    {
+      "path": "failure-review/audit.log",
+      "bytes": 286,
+      "sha256": "67e5b263fd8ae452cb99c629f2975af62a93788a7d427b855768df8c80683e5c"
+    },
+    {
+      "path": "failure-review/audit.py",
+      "bytes": 18257,
+      "sha256": "07d67167bb9cbdb228546eb0ed41111be9a7a1d8a144ee2717b9e16b6cb072f1"
+    },
+    {
+      "path": "failure-review/verification.json",
+      "bytes": 19058,
+      "sha256": "54512fb229ce5100cf22f2c93cad27897d66210c43e992fd79c5c2f62da5877b"
+    }
+  ]
+}

@@ -92,8 +92,12 @@ passed a fresh worker-equivalent preflight; one bounded measured attempt is now
 complete but failed while parsing an axial CSV column label as a number. The
 original schema declared no header; this mismatch stopped before any fit,
 fitted deck or native solve. An axial calibration access was attempted, while
-the held-out torsion reader stayed sealed. This negative result is preserved
-without a retry; a new version requires a separately checked header contract.
+the held-out torsion reader stayed sealed. The [independent failure audit and
+allowed-axial diagnostic](../artifacts/hbe-branch-calibration-v2-failure-audit-v1/RESULT.md)
+show compression's full member was read before the header error; tension was not
+reached. The batch ledger cannot resolve member-level reads, so partial access
+remains explicit. This negative result is preserved without a retry; a new
+version requires the exact checked axial header contract.
 The archive download continues with an unverified growing partial file and active
 worker and curl processes.
 

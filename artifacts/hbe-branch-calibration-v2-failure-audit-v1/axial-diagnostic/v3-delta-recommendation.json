@@ -1,0 +1,115 @@
+{
+  "allowed_scientific_metadata_replacements": [
+    {
+      "json_pointer": "/csv_schemas/compression/header",
+      "new": [
+        "displacement",
+        "force"
+      ],
+      "old": null
+    },
+    {
+      "json_pointer": "/csv_schemas/tension/header",
+      "new": [
+        "displacement",
+        "force"
+      ],
+      "old": null
+    }
+  ],
+  "authorized": false,
+  "automatic_retry": false,
+  "current_torsion_schema_validated": false,
+  "measured_values_converted_or_fit_in_diagnostic": false,
+  "new_native_call_budget": 2,
+  "new_non_scientific_fields": "versioned identity/output/source/release and explicit v2 CSV failure lineage only; retain v1 runtime-failure lineage",
+  "other_unchanged_fields": [
+    "axial_references",
+    "backend_profile",
+    "branches",
+    "budgets",
+    "design",
+    "fitted_parameters",
+    "historical_failures_preserved",
+    "inherited_declarations",
+    "inherited_sources",
+    "interpretation",
+    "interpreter",
+    "legacy",
+    "no_mesher_no_retry",
+    "parser",
+    "physical_binary_threshold",
+    "prior_executions",
+    "protocol",
+    "readiness",
+    "roles",
+    "runtime_identity",
+    "runtime_migration",
+    "scale_proof",
+    "scale_proof_review",
+    "torsion_references"
+  ],
+  "other_unchanged_projection_sha256": "9cd216e83c555b25786c11d724cc472c1ea72d2134a1bb6ad3129c7ea6279f0f",
+  "parser_modification_needed": false,
+  "predecessor": {
+    "access_ledger": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/access.jsonl",
+      "sha256": "2e60b888149039d9ad6536531a65ae3f813152b90cf17cda6a360df0553893cc"
+    },
+    "release": {
+      "path": "build/hbe-branch-calibration-v2/release.json",
+      "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+    },
+    "state": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v2/experiment/state.json",
+      "sha256": "0b3c284e541c47d6f8cd8640584d6b9d94c20b24d8abe1cd5c802f18675f49d5"
+    },
+    "study": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    }
+  },
+  "proposed_csv_schemas": {
+    "compression": {
+      "coordinate_column": 0,
+      "coordinate_unit": "m",
+      "delimiter": ",",
+      "header": [
+        "displacement",
+        "force"
+      ],
+      "response_column": 1,
+      "response_unit": "N"
+    },
+    "tension": {
+      "coordinate_column": 0,
+      "coordinate_unit": "m",
+      "delimiter": ",",
+      "header": [
+        "displacement",
+        "force"
+      ],
+      "response_column": 1,
+      "response_unit": "N"
+    },
+    "torsion_neg": {
+      "coordinate_column": 0,
+      "coordinate_unit": "rad",
+      "delimiter": ",",
+      "header": null,
+      "response_column": 1,
+      "response_unit": "Nm"
+    },
+    "torsion_pos": {
+      "coordinate_column": 0,
+      "coordinate_unit": "rad",
+      "delimiter": ",",
+      "header": null,
+      "response_column": 1,
+      "response_unit": "Nm"
+    }
+  },
+  "schema": "hbe-branch-csv-v3-recommendation-v1",
+  "status": "header_diagnosis_only_not_source_or_execution_release",
+  "torsion_header_guess_authorized": false
+}
