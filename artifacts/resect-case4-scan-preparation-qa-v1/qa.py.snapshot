@@ -1,0 +1,269 @@
+"""Read-only quantitative/visual QA of saved Case4 scan-only preparation."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+import ants
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import nibabel as nib
+import numpy as np
+import scipy.ndimage as ndi
+import SimpleITK as sitk
+
+
+ROOT = Path(__file__).resolve().parents[3]
+HERE = Path(__file__).resolve().parent
+PREP = ROOT / "outputs/scan-target/resect-case4-prep-v1/attempt-01"
+MANIFEST = ROOT / "manifests/experiments/resect-case4-scan-diagnostic-v1.json"
+
+
+def sha(path: Path) -> str:
+    value = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 << 20), b""):
+            value.update(block)
+    return value.hexdigest()
+
+
+def data(path: Path) -> tuple[nib.Nifti1Image, np.ndarray]:
+    image = nib.load(str(path))
+    return image, np.asarray(image.dataobj, dtype=np.float32)
+
+
+def frame_match(a: nib.Nifti1Image, b: nib.Nifti1Image) -> bool:
+    return a.shape == b.shape and bool(np.allclose(a.affine, b.affine, atol=1e-4, rtol=0))
+
+
+def mutual_information(x: np.ndarray, y: np.ndarray, x_range: tuple, y_range: tuple) -> float:
+    table, _, _ = np.histogram2d(x, y, bins=48, range=[x_range, y_range])
+    joint = table / table.sum()
+    px = joint.sum(axis=1, keepdims=True)
+    py = joint.sum(axis=0, keepdims=True)
+    product = px @ py
+    nonzero = joint > 0
+    return float(np.sum(joint[nonzero] * np.log(joint[nonzero] / product[nonzero])))
+
+
+def robust_range(values: np.ndarray) -> tuple[float, float]:
+    lo, hi = np.percentile(values, [1, 99])
+    if hi <= lo:
+        raise ValueError("degenerate image intensity range")
+    return float(lo), float(hi)
+
+
+def lps_point(affine_ras: np.ndarray, voxel_xyz: np.ndarray) -> tuple[float, float, float]:
+    ras = affine_ras @ np.r_[voxel_xyz, 1.0]
+    return tuple(float(v) for v in (-ras[0], -ras[1], ras[2]))
+
+
+def planes(image: nib.Nifti1Image, values: np.ndarray, center_ras_voxel: np.ndarray):
+    canonical = nib.as_closest_canonical(nib.Nifti1Image(values, image.affine, header=image.header))
+    center_ras = image.affine @ np.r_[center_ras_voxel, 1.0]
+    index = np.rint(np.linalg.inv(canonical.affine) @ center_ras)[:3].astype(int)
+    index = np.clip(index, 0, np.array(canonical.shape) - 1)
+    return canonical.get_fdata(dtype=np.float32), index
+
+
+def display_slice(values: np.ndarray, axis: int, index: int) -> np.ndarray:
+    return np.rot90(np.take(values, index, axis=axis))
+
+
+def montage(path: Path, images: list[tuple[str, nib.Nifti1Image, np.ndarray]],
+            mask_image: nib.Nifti1Image, mask: np.ndarray,
+            center_native_voxel: np.ndarray, title: str) -> None:
+    mask_c, indices = planes(mask_image, mask.astype(np.float32), center_native_voxel)
+    oriented = [(name, *planes(image, values, center_native_voxel))
+                for name, image, values in images]
+    fig, axes = plt.subplots(3, len(oriented), figsize=(4 * len(oriented), 11),
+                             facecolor="white", constrained_layout=True)
+    for row, (axis, label) in enumerate(((2, "axial"), (1, "coronal"), (0, "sagittal"))):
+        for column, (name, values, image_indices) in enumerate(oriented):
+            ax = axes[row, column]
+            plane = display_slice(values, axis, int(image_indices[axis]))
+            # Each modality gets its own robust display window; never compare
+            # grayscale levels between T1, FLAIR and the atlas template.
+            inside = values[mask_c > 0.5] if values.shape == mask_c.shape else values[np.isfinite(values)]
+            lo, hi = robust_range(inside)
+            ax.imshow(np.clip(plane, lo, hi), cmap="gray", vmin=lo, vmax=hi,
+                      interpolation="nearest")
+            mask_plane = display_slice(mask_c, axis, int(indices[axis]))
+            ax.contour(mask_plane > 0.5, levels=[0.5], colors=["#00df85"], linewidths=0.65)
+            ax.set_title(f"{label}: {name}", fontsize=10)
+            ax.axis("off")
+    fig.suptitle(title, fontsize=13)
+    fig.savefig(path, dpi=130)
+    plt.close(fig)
+
+
+def main() -> None:
+    HERE.mkdir(parents=True, exist_ok=True)
+    manifest = json.loads(MANIFEST.read_text())
+    receipt_path = PREP / "preparation-result.json"
+    receipt = json.loads(receipt_path.read_text())
+    if sha(receipt_path) != "92fdc93f1240c81ac0ecbd7910a8256a18693480bd4bed48b19e109fe308d72c":
+        raise ValueError("unexpected preparation receipt bytes")
+    for file in receipt["generated_files"]:
+        path = PREP / file["relative_path"]
+        if path.stat().st_size != file["bytes"] or sha(path) != file["sha256"]:
+            raise ValueError(f"saved preparation output changed: {path}")
+    t1_path = ROOT / manifest["preoperative_t1c"]["path"]
+    flair_path = ROOT / manifest["preoperative_flair"]["path"]
+    mask_path = ROOT / manifest["limited_scan_derived_t1_mask"]["path"]
+    for item, path in ((manifest["preoperative_t1c"], t1_path),
+                       (manifest["preoperative_flair"], flair_path),
+                       (manifest["limited_scan_derived_t1_mask"], mask_path)):
+        if sha(path) != item["sha256"]:
+            raise ValueError("source bytes changed")
+    t1_img, t1 = data(t1_path)
+    flair_img, flair = data(flair_path)
+    mask_img, mask_float = data(mask_path)
+    reg_img, reg_flair = data(PREP / "prepared/flair-in-t1c.nii.gz")
+    atlas_img, atlas = data(PREP / "atlas-squeezed-3d.nii.gz")
+    out_t1_img, out_t1 = data(PREP / "prepared/input_0000.nii.gz")
+    out_flair_img, out_flair = data(PREP / "prepared/input_0001.nii.gz")
+    out_mask_img, out_mask_float = data(PREP / "prepared/qualified-mask-atlas.nii.gz")
+    coverage_img, flair_cov_float = data(PREP / "prepared/flair-coverage-in-t1c.nii.gz")
+    if not all(frame_match(t1_img, other) for other in (mask_img, reg_img, coverage_img)):
+        raise ValueError("native T1, mask, registered FLAIR or coverage frames disagree")
+    if not all(frame_match(atlas_img, other) for other in (out_t1_img, out_flair_img, out_mask_img)):
+        raise ValueError("prepared atlas frames disagree")
+    mask = mask_float > 0.5
+    out_mask = out_mask_float > 0.5
+    flair_cov = flair_cov_float > 0.5
+    if not mask.any() or not out_mask.any():
+        raise ValueError("empty limited mask")
+    native_mask_flair_coverage = float(np.mean(flair_cov[mask]))
+    voxel_native = float(abs(np.linalg.det(t1_img.affine[:3, :3])))
+    voxel_atlas = float(abs(np.linalg.det(atlas_img.affine[:3, :3])))
+    native_mask_ml = float(mask.sum() * voxel_native / 1000.0)
+    atlas_mask_ml = float(out_mask.sum() * voxel_atlas / 1000.0)
+    outside_mask_t1 = int(np.count_nonzero(out_t1[~out_mask]))
+    outside_mask_flair = int(np.count_nonzero(out_flair[~out_mask]))
+
+    # Physical-frame identity sampling is the no-optimization comparator.
+    # It is a QC reference, not a second registration or a planner search.
+    voxel_map = np.linalg.inv(flair_img.affine) @ t1_img.affine
+    identity_flair = ndi.affine_transform(
+        flair, voxel_map[:3, :3], offset=voxel_map[:3, 3],
+        output_shape=t1.shape, order=1, mode="constant", cval=0.0,
+        prefilter=False)
+    identity_cov = ndi.affine_transform(
+        np.ones(flair.shape, dtype=np.uint8), voxel_map[:3, :3],
+        offset=voxel_map[:3, 3], output_shape=t1.shape, order=0,
+        mode="constant", cval=0, prefilter=False) > 0
+    native_mask_identity_flair_coverage = float(np.mean(identity_cov[mask]))
+    common = mask & flair_cov & identity_cov
+    subset = (slice(None, None, 4),) * 3
+    q = common[subset]
+    x = t1[subset][q]
+    y0 = identity_flair[subset][q]
+    y1 = reg_flair[subset][q]
+    if len(x) < 1000:
+        raise ValueError("too little common support for multimodal QC")
+    x_range = robust_range(x)
+    y_range = robust_range(np.r_[y0, y1])
+    mi_identity = mutual_information(x, y0, x_range, y_range)
+    mi_registered = mutual_information(x, y1, x_range, y_range)
+    del identity_flair, identity_cov, flair, x, y0, y1
+
+    # ITK matrices are pull transforms for images: fixed physical point ->
+    # moving physical point. Round trip in LPS is algebraic, not anatomy proof.
+    flair_transform = sitk.ReadTransform(str(PREP / "flair-to-t1c/flair-image-to-t1c.mat"))
+    atlas_transform = sitk.ReadTransform(str(PREP / "t1c-to-atlas/t1c-image-to-atlas.mat"))
+    f_inverse = flair_transform.GetInverse()
+    a_inverse = atlas_transform.GetInverse()
+    mask_coords = np.argwhere(mask)
+    pick = mask_coords[np.linspace(0, len(mask_coords) - 1, 33).astype(int)]
+    t1_roundtrip = []
+    two_step_roundtrip = []
+    t1_to_flair_displacement = []
+    for voxel in pick:
+        p_t1 = lps_point(t1_img.affine, voxel)
+        p_atlas = a_inverse.TransformPoint(p_t1)
+        p_t1_return = atlas_transform.TransformPoint(p_atlas)
+        p_flair = flair_transform.TransformPoint(p_t1)
+        p_t1_from_flair = f_inverse.TransformPoint(p_flair)
+        p_atlas_return = a_inverse.TransformPoint(p_t1_from_flair)
+        t1_roundtrip.append(float(np.linalg.norm(np.subtract(p_t1_return, p_t1))))
+        two_step_roundtrip.append(float(np.linalg.norm(np.subtract(p_atlas_return, p_atlas))))
+        t1_to_flair_displacement.append(float(np.linalg.norm(np.subtract(p_flair, p_t1))))
+
+    # Exercise the saved native T1 inverse image direction. Nearest-neighbor
+    # resampling can lose border voxels, so Dice is a fidelity diagnostic.
+    t1_ants = ants.image_read(str(t1_path))
+    mask_atlas_ants = ants.image_read(str(PREP / "prepared/qualified-mask-atlas.nii.gz"))
+    inverse_mask = ants.apply_transforms(
+        fixed=t1_ants, moving=mask_atlas_ants,
+        transformlist=[str(PREP / "t1c-to-atlas/t1c-image-to-atlas.mat")],
+        whichtoinvert=[True], interpolator="genericLabel")
+    inverse_bool = inverse_mask.numpy() > 0.5
+    inverse_dice = float(2 * np.count_nonzero(inverse_bool & mask)
+                         / (inverse_bool.sum() + mask.sum()))
+    inverse_ml = float(inverse_bool.sum() * voxel_native / 1000.0)
+    del t1_ants, mask_atlas_ants, inverse_mask, inverse_bool
+
+    native_center = np.rint(np.mean(mask_coords, axis=0)).astype(int)
+    montage(HERE / "native-registration-montage.png",
+            [("original T1c", t1_img, t1),
+             ("FLAIR in T1c", reg_img, reg_flair)],
+            mask_img, mask_float, native_center,
+            "Case4 scan-only rigid alignment • limited SynthStrip contour • not anatomy-approved")
+    # Choose atlas mask center in its own frame for the public-template view.
+    atlas_center = np.rint(np.mean(np.argwhere(out_mask), axis=0)).astype(int)
+    montage(HERE / "atlas-preparation-montage.png",
+            [("SRI24 template", atlas_img, atlas),
+             ("prepared T1c", out_t1_img, out_t1),
+             ("prepared FLAIR", out_flair_img, out_flair)],
+            out_mask_img, out_mask_float, atlas_center,
+            "Case4 SRI24 rigid preparation • estimated mask contour • not anatomy-approved")
+    result = {
+        "schema_version": "case4-postprep-qa-v1",
+        "scope": "DEVELOPMENT saved scan-only preparation; no model, hidden labels, new registration or planning",
+        "source_preparation_result_sha256": sha(receipt_path),
+        "source_manifest_sha256": sha(MANIFEST),
+        "numeric_checks_are_not_anatomical_approval": True,
+        "frames": {
+            "native_t1_flair_registered_mask_coverage_exact_grid": True,
+            "atlas_template_prepared_channels_mask_exact_grid": True,
+        },
+        "mask": {
+            "source_status": "estimated_unreviewed_SynthStrip_with_known_inferior_cerebellar_omissions",
+            "native_voxels": int(mask.sum()), "atlas_voxels": int(out_mask.sum()),
+            "native_volume_ml": native_mask_ml, "atlas_volume_ml": atlas_mask_ml,
+            "atlas_to_native_volume_ratio": atlas_mask_ml / native_mask_ml,
+            "native_mask_inside_registered_flair_explicit_coverage_fraction": native_mask_flair_coverage,
+            "native_mask_inside_identity_flair_coverage_fraction": native_mask_identity_flair_coverage,
+            "prepared_t1_nonzero_outside_mask_voxels": outside_mask_t1,
+            "prepared_flair_nonzero_outside_mask_voxels": outside_mask_flair,
+            "atlas_common_fov_fraction_from_preparation": receipt["atlas_common_fov_fraction"],
+        },
+        "registration": {
+            "multimodal_mi_sampling": "every fourth voxel per axis, fixed common native mask/support; 48 bins; 1-99 percentile range",
+            "common_sample_count": int(len(mask[subset][q])),
+            "mutual_information_identity_physical_resampling_nats": mi_identity,
+            "mutual_information_saved_registered_nats": mi_registered,
+            "mutual_information_delta_nats": mi_registered - mi_identity,
+            "point_samples": len(pick),
+            "atlas_t1_point_inverse_max_error_mm": max(t1_roundtrip),
+            "atlas_flair_two_step_inverse_max_error_mm": max(two_step_roundtrip),
+            "t1_point_to_flair_transform_displacement_mm_median": float(np.median(t1_to_flair_displacement)),
+            "t1_point_to_flair_transform_displacement_mm_max": max(t1_to_flair_displacement),
+            "atlas_mask_inverse_to_native_t1_nearest_neighbor_dice": inverse_dice,
+            "atlas_mask_inverse_to_native_t1_volume_ml": inverse_ml,
+        },
+        "montages": ["native-registration-montage.png", "atlas-preparation-montage.png"],
+        "status": "numeric_and_visual_review_pending_interpretation",
+    }
+    (HERE / "metrics.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    print(json.dumps({"metrics": str(HERE / "metrics.json"),
+                      "mi_delta": mi_registered - mi_identity,
+                      "inverse_dice": inverse_dice}, sort_keys=True), flush=True)
+
+
+if __name__ == "__main__":
+    main()

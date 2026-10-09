@@ -1,0 +1,43 @@
+{
+  "frames": {
+    "atlas_template_prepared_channels_mask_exact_grid": true,
+    "native_t1_flair_registered_mask_coverage_exact_grid": true
+  },
+  "mask": {
+    "atlas_common_fov_fraction_from_preparation": 0.7260992383512545,
+    "atlas_to_native_volume_ratio": 1.0000285974350211,
+    "atlas_volume_ml": 1186.055,
+    "atlas_voxels": 1186055,
+    "native_mask_inside_identity_flair_coverage_fraction": 1.0,
+    "native_mask_inside_registered_flair_explicit_coverage_fraction": 1.0,
+    "native_volume_ml": 1186.0210828391498,
+    "native_voxels": 1186021,
+    "prepared_flair_nonzero_outside_mask_voxels": 0,
+    "prepared_t1_nonzero_outside_mask_voxels": 0,
+    "source_status": "estimated_unreviewed_SynthStrip_with_known_inferior_cerebellar_omissions"
+  },
+  "montages": [
+    "native-registration-montage.png",
+    "atlas-preparation-montage.png"
+  ],
+  "numeric_checks_are_not_anatomical_approval": true,
+  "registration": {
+    "atlas_flair_two_step_inverse_max_error_mm": 4.081757258616412e-14,
+    "atlas_mask_inverse_to_native_t1_nearest_neighbor_dice": 0.9974416810364818,
+    "atlas_mask_inverse_to_native_t1_volume_ml": 1185.849082827136,
+    "atlas_t1_point_inverse_max_error_mm": 1.312101383108156e-13,
+    "common_sample_count": 18517,
+    "multimodal_mi_sampling": "every fourth voxel per axis, fixed common native mask/support; 48 bins; 1-99 percentile range",
+    "mutual_information_delta_nats": 0.04508812671194168,
+    "mutual_information_identity_physical_resampling_nats": 0.3257277064448302,
+    "mutual_information_saved_registered_nats": 0.37081583315677186,
+    "point_samples": 33,
+    "t1_point_to_flair_transform_displacement_mm_max": 1.3695553601290305,
+    "t1_point_to_flair_transform_displacement_mm_median": 0.6861597944729986
+  },
+  "schema_version": "case4-postprep-qa-v1",
+  "scope": "DEVELOPMENT saved scan-only preparation; no model, hidden labels, new registration or planning",
+  "source_manifest_sha256": "d37948a4dc7acd16bdfac0244b926cfda5c684c60da1f6e4dfccb09ddcf21b26",
+  "source_preparation_result_sha256": "92fdc93f1240c81ac0ecbd7910a8256a18693480bd4bed48b19e109fe308d72c",
+  "status": "numeric_and_visual_review_pending_interpretation"
+}

@@ -1,8 +1,9 @@
 """Generated-tested, scan-only spatial adapter prototype; never opens labels.
 
 This optional research module makes ANTs' image resampling and point-transform
-directions explicit before any separately released Case4 preparation.
-It neither loads a model nor runs a patient. All values are research estimates.
+directions explicit for separately released scan-preparation experiments.
+It never loads a model; callers control patient processing. All values are
+research estimates.
 """
 
 from __future__ import annotations
@@ -333,7 +334,8 @@ def register_rigid_scan_only(fixed: PreparedVolume, moving: PreparedVolume,
     """Optional ANTs rigid registration of two scans, never of annotations.
 
     The caller must freeze these parameters and separately review local QC.
-    This function has not yet been run on a patient.
+    The Case4 DEVELOPMENT preparation has exercised this path; numerical
+    consistency does not establish anatomical accuracy.
     """
     working_dir.mkdir(parents=True, exist_ok=True)
     result = ants.registration(

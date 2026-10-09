@@ -104,8 +104,11 @@ The [real Case4 scan-only preparation](artifacts/resect-case4-scan-preparation-v
 completed one bounded rigid registration and channel-preparation run from the
 permitted preoperative scans. Sampled peak memory was 1.79 GB and the supervised
 worker interval was about 24.66 seconds. Independent receipt checks passed;
-actual alignment, inverse mapping and coverage review remain separate. No model
-inference, planning, training or anatomical acceptance follows from completion.
+the [separate image QC](artifacts/resect-case4-scan-preparation-qa-v1/RESULT.md)
+confirms numerical frame/coverage consistency but retains inferior/cerebellar
+mask omissions. Self-mask inverse Dice 0.99744 and improved in-sample image
+similarity are not independent anatomical accuracy. No model inference, planning,
+training or anatomical acceptance follows from completion.
 
 The reviewed [optional CPU convolution adapter](docs/low-memory-conv3d.md) is now
 reusable in the source package. It preserves full feature-map normalization and
