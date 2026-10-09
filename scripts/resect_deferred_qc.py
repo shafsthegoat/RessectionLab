@@ -332,21 +332,41 @@ def reported_header_contract(raw, value, reported_geometry, source, bounds, kind
 
 
 def inspect_pair(row, bounds, deadline):
+    from nibabel.spatialimages import HeaderDataError
     from resectionlab.imaging import inspect_nifti, ImagingError
     result = {'image_qc': {'status': 'not_run'}, 'mask_qc': {'status': 'not_run'},
               'mask_geometry': {'status': 'not_run'}, 'pair_geometry': {'status': 'not_run'}}
     for kind in ('image', 'mask'):
         path = DATA / row[kind]['path']
+        stage = 'header_prefix'
         try:
             result[kind + '_prefix'] = check_prefix(path, bounds, deadline)
             if kind == 'image':
+                stage = 'image_header_scalar_review'
                 result['image_qc'] = streaming.inspect_original(path, row['image_sha256'], bounds, deadline)
             else:
+                stage = 'mask_header_scalar_review'
                 result['mask_qc'] = streaming.annotations.inspect_mask(path, row['mask_sha256'], bounds, deadline)
                 try:
+                    stage = 'mask_geometry_review'
                     result['mask_geometry'] = {'status': 'passed', 'header': inspect_nifti(path)}
                 except ImagingError as error:
                     result['mask_geometry'] = {'status': 'failed', 'code': error.code, 'reason': str(error)}
+        except HeaderDataError as error:
+            import traceback
+            calls = [frame.name for frame in traceback.extract_tb(error.__traceback__)]
+            recording = 'nifti1_header_record' in calls or '_header_summary' in calls
+            limitation = {'status': 'failed', 'error_type': type(error).__name__, 'reason': str(error),
+                          'stage': 'raw_header_recording' if recording else stage,
+                          'operation_stage': stage, 'call_path': calls,
+                          'classification': 'adapter_raw_header_recording_limitation' if recording
+                          else 'header_interpretation_unresolved',
+                          'source_anatomical_validity': 'not_assessed',
+                          'header_qc': {'status': 'unknown_not_returned'},
+                          'scalar_qc': {'status': 'unknown_not_returned'},
+                          'geometry_qc': {'status': 'unknown_not_returned'}}
+            # A late geometry error must not erase an already returned mask count.
+            result['mask_geometry' if stage == 'mask_geometry_review' else kind + '_qc'] = limitation
         except (ValueError, OSError, streaming.Refusal) as error:
             result[kind + '_qc'] = {'status': 'failed', 'error_type': type(error).__name__, 'reason': str(error)}
         check_deadline(deadline)

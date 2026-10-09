@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def qc(monkeypatch):
     monkeypatch.syspath_prepend(str(ROOT / 'scripts'))
     q = importlib.import_module('resect_deferred_qc')
+    monkeypatch.setattr(q, '_inspect_pair_control', q.inspect_pair, raising=False)
     monkeypatch.setattr(socket, 'create_connection', lambda *a, **k: pytest.fail('network forbidden'))
     monkeypatch.setattr(q, 'verify_pair_files', lambda *a, **k: pytest.fail('patient fixity operation forbidden'))
     monkeypatch.setattr(q, 'inspect_pair', lambda *a, **k: pytest.fail('patient decoding forbidden'))
@@ -280,3 +281,53 @@ def test_reported_header_fields_recomputed_from_bytes(qc, frozen, kind, mutation
     elif mutation == 'filename': geometry['file'] = 'different.nii.gz'
     with pytest.raises(qc.Refusal):
         qc.reported_header_contract(raw, value, geometry, source, bounds, kind)
+
+
+@pytest.mark.parametrize('failure', ['header_recording', 'byte_integrity'])
+def test_header_limitation_continues_but_integrity_failure_aborts(qc, cache, monkeypatch, failure):
+    from nibabel.spatialimages import HeaderDataError
+    fixity_calls, reviewed_pairs = [], []
+    monkeypatch.setattr(qc, 'inspect_pair', qc._inspect_pair_control)
+    monkeypatch.setattr(qc, 'check_prefix', lambda *a: {'test_control_only': True})
+    def nifti1_header_record(*args):
+        raise HeaderDataError('qfac (pixdim[0]) should be 1 or -1')
+    def original_review(*args):
+        return nifti1_header_record()
+    def mask_control(*args):
+        raise ValueError('No scientific payload exists in this metadata control')
+    monkeypatch.setattr(qc.streaming, 'inspect_original', original_review)
+    monkeypatch.setattr(qc.streaming.annotations, 'inspect_mask', mask_control)
+    def verify(row, deadline):
+        fixity_calls.append(row['pair']['id'])
+        if failure == 'byte_integrity': raise qc.Refusal('control_fixity_changed')
+    monkeypatch.setattr(qc, 'verify_pair_files', verify)
+    def supervise(command, log, *, deadline, on_start):
+        on_start(99999999)
+        run_id, pair_id = (command[command.index(k)+1] for k in ('--run-id', '--pair'))
+        intent_sha = command[command.index('--intent-sha')+1]
+        reviewed_pairs.append(pair_id)
+        with monkeypatch.context() as context:
+            context.setattr(qc.os, 'getppid', os.getpid)
+            result = qc.worker(qc.CACHE/'runs'/run_id, pair_id, intent_sha)
+        return ('completed', 0) if result['status'] == 'review_failed' else ('worker_failed', 2)
+    monkeypatch.setattr(qc, 'supervise', supervise)
+    report = qc.batch('worker-control-'+failure)
+    assert len(report['outcomes']) == 25
+    first = json.loads((ROOT/report['outcomes'][1]['attempt']/'receipt.json').read_bytes())
+    if failure == 'header_recording':
+        assert len(reviewed_pairs) == 24 and len(fixity_calls) == 48
+        assert reviewed_pairs[:2] == ['Case2-during', 'Case2-after']
+        assert first['fixity_before'] == first['fixity_after'] == 'passed'
+        assert first['status'] == 'review_failed'
+        limitation = first['image_qc']
+        assert limitation['stage'] == 'raw_header_recording'
+        assert limitation['classification'] == 'adapter_raw_header_recording_limitation'
+        assert limitation['source_anatomical_validity'] == 'not_assessed'
+        assert limitation['scalar_qc']['status'] == limitation['geometry_qc']['status'] == 'unknown_not_returned'
+        assert first['pair_geometry']['status'] == 'not_run'
+        assert report['outcome_counts'] == {'inherited_structural_pass': 1, 'review_failed': 24}
+    else:
+        assert len(reviewed_pairs) == len(fixity_calls) == 1
+        assert first['status'] == 'failed_or_incomplete' and 'fixity_after' not in first
+        assert report['outcome_counts'] == {'inherited_structural_pass': 1, 'failed_or_incomplete': 1,
+                                          'not_attempted': 23}
