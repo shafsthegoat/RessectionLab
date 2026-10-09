@@ -40,6 +40,12 @@ completed one resumable attempt with full SHA-256 and publisher MD5 verification
 An unchanged recovery invocation confirmed `all_complete=true` without a second
 transfer. It remains unextracted and unreviewed; header, geometry and anatomy QC,
 training and spatial-planning admission are all outstanding.
+The [bounded first TRAIN-pair QC preparation](artifacts/synthrad-first-pair-qc-preparation-v1/RESULT.md)
+now binds exact archive members, tracked source proofs, strict local resource
+limits and restricted review-only outputs. Its 115 offline controls and
+independent isolated-metadata review pass. No image member was opened by this
+preparation; `1BA336` remains unreviewed until the separately frozen run and
+human source/anatomy/privacy checks.
 The [versioned RESECT QC rerun](artifacts/resect-deferred-qc-v2-execution-v1/RESULT.md)
 completed all 24 new image–mask pairs in 24.401772 seconds. Full image scalar,
 binary-mask and coded-grid checks now pass; an independent saved-output audit

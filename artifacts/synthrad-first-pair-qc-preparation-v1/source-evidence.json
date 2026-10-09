@@ -1,0 +1,160 @@
+{
+  "all_root_freeze_hashes_match": true,
+  "archive_extractions": 0,
+  "archive_members_opened": 0,
+  "archive_rehashed": false,
+  "changed_by_this_preparation": "Only new files under ignored build/synthrad-qc-prep-v1; no tracked edits, source edits, archive modifications, training or new network access.",
+  "created_utc": "2026-10-09T02:06:24.072920+00:00",
+  "disk_free_bytes_observed": 704228458496,
+  "image_decodes": 0,
+  "observed_train_gzip_member_bytes": 2463706753,
+  "portable_completion_matches_original": true,
+  "schema": "synthrad-qc-preparation-source-evidence-v1",
+  "source_proofs": [
+    {
+      "bytes": 1823,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/root-freeze.json",
+      "sha256": "d5c9a12c569ab35be44274db14860eb5de0e5b2f9e995cd6cb4204bc6f574a23"
+    },
+    {
+      "bytes": 35271,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/cc-by-nc-4.0.html",
+      "sha256": "3f69255e6550c75072122fe7b143143154bf31703cca14fd23e444bfaf12687c"
+    },
+    {
+      "bytes": 22513,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/creator-repositories.json",
+      "sha256": "bfadabe426f526f385b30945fc871602a2a568a8e3d14ffeb84fa6e91b9c6237"
+    },
+    {
+      "bytes": 1001,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/new-metadata-receipts.json",
+      "sha256": "219bba1467a1006216fbbcf2a8a52298efe844f8dc98a5b0c7cc6d1905a69082"
+    },
+    {
+      "bytes": 298538,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/task1-archive-preview.html",
+      "sha256": "3be973c1871ec9eb3b03665a2cf0a71480e506000ef53fb7bf631801393559ed"
+    },
+    {
+      "bytes": 7392,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-head-preview-receipts.json",
+      "sha256": "5ffdf515c9de1d32fc8f2b101868655abb6ded0ff10aa5c639e06106d3a91167"
+    },
+    {
+      "bytes": 21427,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-record-7260705.json",
+      "sha256": "1761a3dc69342aa82bf77cdbaf961bda1698cb4bf06196aad04f7be136afe14b"
+    },
+    {
+      "bytes": 1677,
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-record-receipt.json",
+      "sha256": "55d18bbda969d0d1b3ba995204cf7e1497498c0b851b44743950ab3f17dbe935"
+    },
+    {
+      "bytes": 5176,
+      "path": "artifacts/synthrad-verified-download-v1/RESULT.json",
+      "sha256": "600740653229030672eb58746ce9bfb9d1d2f0dd38f356c0dc52aa7a093e3654"
+    },
+    {
+      "bytes": 475,
+      "path": "artifacts/synthrad-verified-download-v1/archive-completion.json",
+      "sha256": "5dbe792ca0f65ecedcb5036b9d54ebd6033f240b5f457dea376a5727e6645172"
+    },
+    {
+      "bytes": 478,
+      "path": "artifacts/synthrad-verified-download-v1/recovery-completion.json",
+      "sha256": "f130223b1ec4eb1f0c11914a7c57850884fd5654c00c001f86806ae619ea1632"
+    },
+    {
+      "bytes": 475,
+      "path": "artifacts/synthrad-verified-download-v1/archive-completion.json",
+      "sha256": "5dbe792ca0f65ecedcb5036b9d54ebd6033f240b5f457dea376a5727e6645172"
+    },
+    {
+      "bytes": 478,
+      "path": "artifacts/synthrad-verified-download-v1/recovery-completion.json",
+      "sha256": "f130223b1ec4eb1f0c11914a7c57850884fd5654c00c001f86806ae619ea1632"
+    },
+    {
+      "bytes": 132872,
+      "path": "docs/SUPERGOAL_REAL_OBSERVATIONS.md",
+      "sha256": "1937d40d3c08af6db0461819ea23bc7e39120bac2d8af9778574d0fbdb280f5a"
+    },
+    {
+      "bytes": 128752,
+      "path": "manifests/lausanne-deferred-qc-v1.json",
+      "sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19"
+    },
+    {
+      "bytes": 59430,
+      "path": "manifests/resect-deferred-qc-v2.json",
+      "sha256": "775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c"
+    },
+    {
+      "bytes": 108926,
+      "path": "manifests/synthrad-component-cohort-v1.json",
+      "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    {
+      "bytes": 10904,
+      "path": "manifests/synthrad-task1-original-archive-v1.json",
+      "sha256": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b"
+    },
+    {
+      "bytes": 41250,
+      "path": "scripts/lausanne_annotation_intake.py",
+      "sha256": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1"
+    },
+    {
+      "bytes": 41038,
+      "path": "scripts/lausanne_deferred_qc.py",
+      "sha256": "035223a487df9494f812869bc194a405c43f931c4b5643e09acf62ce86131b99"
+    },
+    {
+      "bytes": 4305,
+      "path": "scripts/real_intake_io.py",
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "bytes": 37261,
+      "path": "scripts/resect_deferred_qc.py",
+      "sha256": "e5ec5a109a236255421d95ffddd3cfc921ab931831747e80a92ab27e3ac20ccf"
+    },
+    {
+      "bytes": 41941,
+      "path": "src/resectionlab/imaging.py",
+      "sha256": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2"
+    },
+    {
+      "bytes": 2533,
+      "path": "src/resectionlab/nifti_header_records.py",
+      "sha256": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1"
+    },
+    {
+      "bytes": 20181,
+      "path": "tests/test_lausanne_deferred_qc.py",
+      "sha256": "24f6cd5941af0843f627ca7d53f39742535e4c5274305fb0bda357cc13c16def"
+    },
+    {
+      "bytes": 3451,
+      "path": "tests/test_nifti_header_records.py",
+      "sha256": "848b11969d1c848b297f386ea15649d26ade34e9581a528478b55dac7ad92f3b"
+    },
+    {
+      "bytes": 10044,
+      "path": "tests/test_real_intake_io.py",
+      "sha256": "f1ea6fa21a68448a7dedbc39dcd682fa4c2070c37c98b9c63a98eabf7b4bc6cf"
+    },
+    {
+      "bytes": 18441,
+      "path": "tests/test_resect_deferred_qc.py",
+      "sha256": "098e57d4988f8f56df02d276a70d6abf5cc6d472fcf7afdd714cadedf9fd43a4"
+    }
+  ],
+  "tracked_status_at_preparation": [
+    " M desktop/src/App.tsx",
+    " M desktop/src/NeighboringPathsPanel.tsx",
+    " M desktop/src/neighboring-paths.ts"
+  ]
+}

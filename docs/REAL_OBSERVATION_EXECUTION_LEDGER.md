@@ -77,6 +77,11 @@ establish transfer. The [SynthRAD archive](../artifacts/synthrad-verified-downlo
 is byte-verified but awaits separate image and anatomy QC. A bounded existing
 manifest review found no further ready declared download; CFB remains deferred
 for lack of an authoritative verified-HTTPS payload route.
+The [first TRAIN-pair QC preparation](../artifacts/synthrad-first-pair-qc-preparation-v1/RESULT.md)
+passes 115 offline controls and independent proof-portability review. It has
+not opened a patient image member. One restricted `1BA336` execution requires
+an exact root declaration; any result stays unreviewed for intended use until
+privacy, anatomy, scaling and overlap checks.
 
 The [first v3 mechanics execution](../artifacts/hbe-branch-calibration-v3-failure-v1/RESULT.md)
 is a terminal negative result under its frozen no-extrapolation protocol. Both
