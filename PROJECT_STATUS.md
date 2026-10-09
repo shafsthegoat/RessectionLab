@@ -32,6 +32,14 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [measurement-schema follow-up](artifacts/brain-indentation-schema-followup-v1/RESULT.md)
+found no authoritative positional mapping for the Greiner CSVs. A separate
+Menichetti creator release explicitly documents postmortem brain indentation
+force units, sampling and specimen grouping. It is a candidate for a narrower
+relaxation test; actual depth and contact/hold sample alignment remain unresolved.
+Its response file has not been acquired or fitted. Nominal motor commands are
+not measured per-trial displacement, and neither source establishes live surgery.
+
 The [64³ generated-input memory diagnostic](artifacts/layer-memory-diagnostic-64-v1/INDEPENDENT_REVIEW.md)
 completed one instrumented forward with finite output at **956,301,312 bytes**
 peak sampled memory. The final decoder concatenation boundary added about

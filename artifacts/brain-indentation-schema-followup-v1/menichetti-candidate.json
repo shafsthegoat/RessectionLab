@@ -1,0 +1,63 @@
+{
+  "schema": "menichetti-source-qualified-candidate-v1",
+  "status": "metadata_and_methods_only_no_response_acquisition",
+  "record_url": "https://data.mendeley.com/datasets/7sjcn229cw/1",
+  "doi": "10.17632/7sjcn229cw.1",
+  "license": "CC-BY-4.0",
+  "metadata_endpoint": "https://data.mendeley.com/public-api/datasets/7sjcn229cw/files?folder_id=root&version=1",
+  "force_file": {
+    "filename": "F_t_curves.mat",
+    "file_id": "84e16f8b-6911-4286-9763-3726693ad098",
+    "bytes": 6427434,
+    "publisher_sha256": "ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6",
+    "head_final_status": 200,
+    "head_content_length": 6427434,
+    "head_body_downloaded": false,
+    "body_downloaded": false,
+    "local_fixity_verified": false
+  },
+  "author_declared_schema": {
+    "level_1": "brain specimen number",
+    "level_2": "region abbreviation",
+    "level_3": "matrix with each column one force-relaxation trial",
+    "response_quantity": "force",
+    "response_unit": "micronewton",
+    "response_scale_to_newton": 0.000001,
+    "sampling_frequency_hz": 10000,
+    "position_channel_established": false,
+    "sample_time_origin_established": false
+  },
+  "primary_methods": {
+    "record": "https://lirias.kuleuven.be/3147268",
+    "author_manuscript": "https://lirias.kuleuven.be/retrieve/9c55d8a5-7dbd-40a4-ba17-7014df1a93e0",
+    "publication": "https://doi.org/10.1016/j.ijengsci.2020.103355",
+    "sections": ["2.1", "2.2", "2.3"],
+    "indenter_radius_m": 0.000125,
+    "nominal_command_depth_m": 0.0000577,
+    "nominal_command_speed_m_per_s": 0.00165,
+    "nominal_hold_duration_s": 1,
+    "preconditioning": "none",
+    "contact_method": "manual positioning; microscopy and sudden probe-force change",
+    "per_trial_measured_depth_established": false
+  },
+  "population": {
+    "species": "human",
+    "state": "postmortem",
+    "reported_brains": 10,
+    "reported_age_range_years": [64, 94],
+    "storage": "PBS hydrated; refrigerated about 4 degrees C",
+    "testing": "within 72 hours after extraction and about 4+/-1 days postmortem; air about 22 degrees C",
+    "dependence": "usually five distinct indentation sites per region specimen; all regions/sites from each brain must remain grouped"
+  },
+  "remaining_exact_dependencies": [
+    "MAT field names and structure inventory without force values",
+    "brain-number to unique-donor binding",
+    "sample index corresponding to contact/ramp onset and hold onset",
+    "cropping, padding and baseline handling",
+    "actual per-trial displacement if claiming absolute contact-force prediction"
+  ],
+  "fitted_parameter_statistics_pdf_excluded": true,
+  "donor_roles_assigned": false,
+  "training_admitted": false,
+  "physical_validation_pass": null
+}

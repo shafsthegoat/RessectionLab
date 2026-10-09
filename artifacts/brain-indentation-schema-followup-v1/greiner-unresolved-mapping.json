@@ -1,0 +1,42 @@
+{
+  "schema": "greiner-methods-only-mapping-candidate-v1",
+  "status": "unresolved_no_numeric_column_access",
+  "original_corona_radiata_sha256": "881be97c59d2a212aca19b0c658e692dac2a561296abffaf91b5d934f3607a9a",
+  "companion_code_sha256": "c983758c194ab8624ea67ce319ccfe8d73c5024884c82b092cd2e2df30e08037",
+  "existing_disabled_contract": "build/greiner-measured-preparation-v1/split-contract.json",
+  "mapping": {
+    "time_column_zero_based": null,
+    "time_unit": null,
+    "motion_column_zero_based": null,
+    "motion_quantity": null,
+    "motion_unit": null,
+    "response_column_zero_based": null,
+    "response_quantity": null,
+    "response_unit": null,
+    "response_sign": null,
+    "time_origin_and_resets": null,
+    "initial_and_between_test_history": null
+  },
+  "confirmed_solver_input_interface_only": {
+    "time_header": "time",
+    "time_reader_lines": [2296, 2305],
+    "displacement_header": "displacement",
+    "displacement_reader_ranges": [[9651, 9657], [10359, 10365], [11682, 11688]],
+    "quarter_cylinder_transformation": "increment_z[k] = displacement[k] - displacement[k-1]",
+    "quarter_cylinder_transform_lines": [10380, 10382],
+    "positional_mapping_inferred": false,
+    "unit_conversion_established": false
+  },
+  "negative_source_inventory": {
+    "CSVReader_line_numbers": [1202, 1221, 1222, 1223, 1226, 2296, 9651, 10359, 11682],
+    "read_row_line_numbers": [1326, 2300, 9656, 10364, 11687],
+    "read_header_line_numbers": [1240, 2297, 9653, 10361, 11684],
+    "ifstream_line_numbers": [7984, 8009, 10704, 11107],
+    "absent_case_insensitive_terms": ["cyclic_relaxation", "corona", "visual", "Ramer", "Douglas", "moving average"],
+    "limitation": "Text inventory of the published companion solver; not proof that no unpublished preprocessing exists"
+  },
+  "new_measurement_response_bytes_accessed": 0,
+  "new_measurement_rows_interpreted": 0,
+  "existing_roles_modified": false,
+  "fitting_admitted": false
+}
