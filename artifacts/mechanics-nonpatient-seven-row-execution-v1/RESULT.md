@@ -23,7 +23,7 @@ runtime, one numerical thread, individual reviewed one-call releases and
 hashed predecessor receipts. The first six rows each saved five states; the
 last saved nine, for 39 states in total. Independent replay checked the native
 outputs and the endpoint comparison. The final independent report is
-`build/nonpatient-n13-half-step-result-independent/REPORT.md`; its hash and
+[INDEPENDENT_REVIEW.md](INDEPENDENT_REVIEW.md); its hash and
 the seven receipt bindings are retained in [summary.json](summary.json).
 
 Total supervised native wall time was **73.868947 s**, excluding preparation,
