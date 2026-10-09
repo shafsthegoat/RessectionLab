@@ -29,7 +29,10 @@ It also increased the returned mesh from 5,223 nodes/2,761 tet10 to
 projection rose from 2.95 GB to 39.28 GB before other solver allocations;
 this is a projection, not a measured solve. Blind further refinement is not
 currently justified. Localized boundary errors and a memory-feasible solver
-representation must be understood before another frozen mesh candidate.
+representation must be understood before another frozen mesh candidate. The
+[read-only bottleneck audit](next-bottleneck.md) recommends pausing global
+refinement and testing whether the remaining error is localized before any
+new mesh attempt.
 
 Case4 is a **DEVELOPMENT** case: its comparison landmark outcomes were
 previously revealed. The input surface is an estimated T1-derived envelope
