@@ -1,0 +1,16 @@
+{
+  "axis_order": "N,C,Z,Y,X",
+  "dtype": "float32",
+  "formula": "float32((11*c + 3*z + 5*y + 7*x) mod 257 - 128) / float32(128)",
+  "npy_bytes": 1048704,
+  "npy_sha256": "6a7435f18ebd1e95ce8561e07481f554bfd562f5564bbaaee7da0069123d30b7",
+  "raw_c_order_sha256": "d13f7a23b528e0cf4a4f7185ea8bcbbb7b7639fab82a33b0f0b492078fbaea8c",
+  "scope": "Generated numerical-control input only; no patient image or annotation",
+  "shape": [
+    1,
+    2,
+    32,
+    64,
+    64
+  ]
+}

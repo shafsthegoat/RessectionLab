@@ -93,6 +93,13 @@ adjacent tests. The subsequent N16 and N24 rows have completed; eight native row
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
+The [generated CPU Gate A v3](artifacts/scan-target-generated-gate-a-v3/RESULT.md)
+ended on an independently confirmed macOS pressure warning during the first
+forward pass, after **2.064 seconds** at 1.43 GB sampled RSS. The monitor had no
+timeout/inventory error and the downloader continued. No logits or GPU model
+comparison were produced. A separately labeled small-kernel workspace
+optimization is next; no patient accuracy or RL improvement is claimed.
+
 The [scan-only diagnostic adapter](artifacts/scan-target-estimator-inputs-v1/RESULT.md)
 is integrated with exact scan/atlas/mask/model-metadata bindings and source-only
 registration receipts. All **nine generated controls** pass in its isolated

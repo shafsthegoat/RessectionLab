@@ -1,0 +1,291 @@
+"""Gate A v3: direct fast safety sampler, independent slow project inventory."""
+
+import datetime
+import fcntl
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+from darwin_fast_sampler import FastDarwinSampler
+from slow_inventory import BackgroundInventory, collect, load_acquisition_allowlist
+
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+RUNTIME = ROOT / ".tools/scan-target-runtime/venv/bin/python"
+WORKER = HERE / "gate_a_worker.py"
+CONTRACT = HERE / "gate-a-contract.json"
+
+
+def utc_now():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def overlap(snapshot, child_pgid=None):
+    return [row for row in snapshot["project_process_inventory"]
+            if row["blocking_overlap"] and row["pgid"] != child_pgid]
+
+
+def preflight(fast, contract, acquisition_allowlist):
+    started = time.monotonic()
+    samples = []
+    while True:
+        host = fast.host()
+        slow = collect(os.getpid(), acquisition_allowlist=acquisition_allowlist)
+        samples.append({"timestamp_utc": utc_now(), "elapsed_seconds": time.monotonic()-started,
+                        "fast_host": host, "slow_inventory": slow})
+        remaining = contract["host_preflight_seconds"] - samples[-1]["elapsed_seconds"]
+        if remaining <= 0:
+            break
+        time.sleep(min(5, remaining))
+    reasons = []
+    if any(s["fast_host"]["kernel_pressure_mask"] != 1 for s in samples):
+        reasons.append("kernel_pressure_not_normal")
+    available = [s["fast_host"]["available_percent"] for s in samples]
+    if min(available) < contract["host_preflight_min_free_percent"]:
+        reasons.append("available_percent_below_45")
+    if max(available)-min(available) > contract["host_preflight_max_free_spread_points"]:
+        reasons.append("available_percent_unstable")
+    swaps = [s["fast_host"]["swap_used_bytes"] for s in samples]
+    if any(b > a for a,b in zip(swaps,swaps[1:])):
+        reasons.append("swap_used_rising")
+    if any(overlap(s["slow_inventory"]) for s in samples):
+        reasons.append("project_compute_overlap")
+    return {"accepted": not reasons, "reasons": reasons,
+            "samples": samples, "baseline": samples[-1],
+            "completed_at_utc": utc_now()}
+
+
+def stop_reason(sample, baseline, contract):
+    mask = sample["kernel_pressure_mask"]
+    if mask in contract["host_abort_kernel_pressure_masks"]:
+        return "kernel_pressure_warning_or_critical"
+    if mask != 1:
+        return "kernel_pressure_unknown_mask"
+    if sample["available_percent"] < contract["host_abort_min_free_percent"]:
+        return "available_percent_below_30"
+    if baseline["available_percent"]-sample["available_percent"] > contract["host_abort_free_drop_points"]:
+        return "available_percent_drop_over_20_points"
+    if sample["swap_used_bytes"]-baseline["swap_used_bytes"] > contract["host_abort_swap_growth_mib"]*1024**2:
+        return "swap_used_growth_over_128_mib"
+    return None
+
+
+def last_phase(path):
+    found = None
+    for line in path.read_text(errors="replace").splitlines():
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(record,dict) and isinstance(record.get("phase"),str):
+            found = record["phase"]
+    return found
+
+
+def deferred_receipt(device, status):
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    path = HERE / ("preflight-deferred-%s-%s.json" % (device,stamp))
+    path.write_text(json.dumps(status,indent=2,sort_keys=True)+"\n")
+    print(json.dumps({"status": "deferred_before_child", "device": device,
+                      "reason": status.get("reasons",status.get("error_type")),
+                      "receipt": str(path.relative_to(ROOT))},sort_keys=True),flush=True)
+
+
+def main(device):
+    if device not in ("cpu","mps"):
+        raise ValueError("device must be cpu or mps")
+    contract = json.loads(CONTRACT.read_text())
+    if contract["gate"] != "A" or contract["full_128_patch_gate_b_enabled"]:
+        raise ValueError("unexpected active gate")
+    allowlist_path = contract.get("acquisition_allowlist_path")
+    acquisition_allowlist = load_acquisition_allowlist(ROOT / allowlist_path if allowlist_path else None)
+    if acquisition_allowlist is not None and acquisition_allowlist["manifest_sha256"] != contract["acquisition_allowlist_sha256"]:
+        raise ValueError("acquisition allowlist changed after review")
+    outdir = HERE / device
+    if outdir.exists():
+        raise FileExistsError("device output already exists; refusing retry")
+    if device == "mps":
+        cpu_result, cpu_guard = HERE / "cpu/result.json", HERE / "cpu/supervision.json"
+        if not cpu_result.exists() or not cpu_guard.exists():
+            raise FileNotFoundError("completed CPU control required before MPS")
+        if not json.loads(cpu_guard.read_text())["accepted_for_pair"]:
+            raise ValueError("CPU control not accepted for MPS pair")
+    fast = FastDarwinSampler()
+    try:
+        accepted_preflight = preflight(fast,contract,acquisition_allowlist)
+    except Exception as error:
+        deferred_receipt(device,{"accepted":False,"error_type":type(error).__name__,
+                                 "error":str(error),"child_started":False,
+                                 "timestamp_utc":utc_now()})
+        raise SystemExit(2)
+    if not accepted_preflight["accepted"]:
+        deferred_receipt(device,accepted_preflight)
+        raise SystemExit(2)
+    outdir.mkdir(mode=0o700)
+    (outdir/"host-preflight.json").write_text(json.dumps(accepted_preflight,indent=2,sort_keys=True)+"\n")
+    slow = BackgroundInventory(os.getpid(),contract["slow_inventory_interval_seconds"],
+                               acquisition_allowlist)
+    slow.start()
+    # A fresh inventory must exist before the model child can be launched.
+    first_deadline = time.monotonic()+contract["slow_inventory_max_age_seconds"]
+    while True:
+        first, age, slow_errors = slow.status()
+        if first is not None and age <= contract["slow_inventory_max_age_seconds"]:
+            break
+        if time.monotonic() > first_deadline:
+            slow.close()
+            (outdir/"no-child-failure.json").write_text(json.dumps({"reason":"slow_inventory_not_ready",
+                                                         "errors":slow_errors},indent=2)+"\n")
+            raise SystemExit(2)
+        time.sleep(0.02)
+    if overlap(first):
+        slow.close()
+        (outdir/"no-child-failure.json").write_text(json.dumps({"reason":"project_compute_overlap_before_child",
+                                                     "inventory":first},indent=2)+"\n")
+        raise SystemExit(2)
+    if slow.status()[2]:
+        slow.close()
+        (outdir/"no-child-failure.json").write_text(json.dumps(
+            {"reason":"slow_inventory_error_before_child"},indent=2)+"\n")
+        raise SystemExit(2)
+    env = os.environ.copy()
+    env.update(PYTHONNOUSERSITE="1",CUDA_VISIBLE_DEVICES="",
+               PYTORCH_ENABLE_MPS_FALLBACK="0",OMP_NUM_THREADS="2",
+               MKL_NUM_THREADS="2",NNUNET_COMPILE="false")
+    started = time.monotonic()
+    log_path = outdir/"worker.log"
+    with log_path.open("xb") as log:
+        child = subprocess.Popen([str(RUNTIME),"-I",str(WORKER),device],
+                                 cwd=ROOT,env=env,stdin=subprocess.DEVNULL,
+                                 stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+        pgid = os.getpgid(child.pid)
+        slow.set_child_pgid(pgid)
+        fast_series = []
+        slow_series = []
+        slow_seen = None
+        peak_rss = 0
+        detached_seen = {}
+        detached_cleanup = []
+        reason = None
+        monitor_error = None
+        previous_start = None
+        phase = None
+        baseline = accepted_preflight["baseline"]["fast_host"]
+        try:
+            while child.poll() is None:
+                sample_start = time.monotonic()
+                if previous_start is not None and sample_start-previous_start > contract["host_sample_max_interval_seconds"]:
+                    reason = "fast_sample_gap_over_0_2_seconds"
+                    break
+                previous_start = sample_start
+                sample = fast.sample(pgid,child.pid)
+                for detached_pid, identity in sample["detached_descendant_start_identities"].items():
+                    previous = detached_seen.setdefault(int(detached_pid), identity)
+                    if tuple(previous) != tuple(identity):
+                        raise RuntimeError("detached descendant PID start identity changed during run")
+                if child.poll() is None and not sample["pids"]:
+                    reason = "child_group_missing_during_run"
+                    break
+                latest, age, errors = slow.status()
+                if errors:
+                    reason = "slow_inventory_command_or_parse_failed"
+                    break
+                if latest is None or age is None or age > contract["slow_inventory_max_age_seconds"]:
+                    reason = "slow_inventory_stale"
+                    break
+                if latest["sample_monotonic"] != slow_seen:
+                    slow_seen = latest["sample_monotonic"]
+                    slow_series.append(latest)
+                phase = last_phase(log_path) or phase
+                sample["timestamp_utc"] = utc_now()
+                sample["elapsed_seconds"] = time.monotonic()-started
+                sample["slow_inventory_age_seconds"] = age
+                sample["slow_inventory_errors_so_far"] = len(errors)
+                sample["last_flushed_phase"] = phase
+                fast_series.append(sample)
+                peak_rss = max(peak_rss,sample["process_group_resident_bytes"])
+                reason = stop_reason(sample,baseline,contract)
+                if reason is None and peak_rss > contract["process_group_rss_cap_kib"]*1024:
+                    reason = "process_group_rss_cap_exceeded"
+                if reason is None and detached_seen:
+                    reason = "detached_model_descendant_forbidden"
+                if reason is None and overlap(latest,pgid):
+                    reason = "project_compute_overlap"
+                if reason is None and time.monotonic()-started > contract["wall_time_cap_seconds"]:
+                    reason = "wall_time_cap_exceeded"
+                if reason is None and log_path.stat().st_size > contract["log_cap_bytes"]:
+                    reason = "log_cap_exceeded"
+                if reason is None and time.monotonic()-sample_start > contract["host_sample_max_interval_seconds"]:
+                    reason = "fast_sample_duration_over_0_2_seconds"
+                if reason:
+                    break
+                delay = contract["host_sample_target_interval_seconds"]-(time.monotonic()-sample_start)
+                if delay > 0:
+                    time.sleep(delay)
+        except Exception as error:
+            reason = "monitor_exception"
+            monitor_error = "%s: %s" % (type(error).__name__,error)
+        finally:
+            for pid, identity in sorted(detached_seen.items()):
+                detached_cleanup.append(fast.signal_if_same_process(pid,identity,signal.SIGKILL))
+            if child.poll() is None:
+                try:
+                    os.killpg(pgid,signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            exit_code = child.wait()
+            try:
+                slow.close()
+            except Exception as error:
+                monitor_error = "slow_close_%s: %s" % (type(error).__name__,error)
+        phase = last_phase(log_path) or phase
+    post_error = None
+    try:
+        post_fast = fast.host()
+        post_slow = collect(os.getpid(),pgid,acquisition_allowlist)
+    except Exception as error:
+        post_fast, post_slow = None,None
+        post_error = "%s: %s" % (type(error).__name__,error)
+    post_reason = stop_reason(post_fast,baseline,contract) if post_fast else "post_host_unavailable"
+    if post_slow is not None and overlap(post_slow,pgid):
+        post_reason = "post_project_compute_overlap"
+    final_slow_errors = slow.status()[2]
+    accepted = (exit_code == 0 and reason is None and monitor_error is None and
+                not final_slow_errors and
+                post_error is None and post_reason is None and
+                (outdir/"result.json").exists())
+    report = {"scope":"Generated-only %s Gate A v3 32x64x64; no patient or 128^3"%device,
+              "device":device,"process_group_id":pgid,"exit_code":exit_code,
+              "watchdog_reason":reason,"monitor_error":monitor_error,
+              "post_error":post_error,"post_guard_reason":post_reason,
+              "accepted_for_pair":accepted,"elapsed_seconds":time.monotonic()-started,
+              "process_group_rss_cap_kib":contract["process_group_rss_cap_kib"],
+              "sampled_peak_process_group_resident_bytes":peak_rss,
+              "fast_series":fast_series,"slow_series":slow_series,
+              "slow_inventory_errors":final_slow_errors,
+              "detached_descendant_pids_observed":sorted(detached_seen),
+              "detached_descendant_cleanup":detached_cleanup,
+              "post_fast_host":post_fast,"post_slow_inventory":post_slow,
+              "last_flushed_phase":phase,"completed_at_utc":utc_now(),"no_retry":True,
+              "wall_time_cap_seconds":contract["wall_time_cap_seconds"],
+              "compressor_pageout_swapout_policy":"diagnostic_only; no isolated counter stop/hold",
+              "acquisition_allowlist_manifest_sha256": acquisition_allowlist["manifest_sha256"] if acquisition_allowlist else None,
+              "memory_accounting":"RSS, Metal allocator, available percentage, swap, compressor are distinct"}
+    (outdir/"supervision.json").write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
+    print(json.dumps({k:report[k] for k in ("device","exit_code","watchdog_reason",
+                                           "post_guard_reason","accepted_for_pair",
+                                           "sampled_peak_process_group_resident_bytes",
+                                           "elapsed_seconds")},sort_keys=True),flush=True)
+    if not accepted:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    with (HERE/".gate-a.lock").open("a+") as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        main(sys.argv[1] if len(sys.argv)==2 else None)
