@@ -128,6 +128,12 @@ across reviewed full/half states; generated N36 prepared frames took 0.94–0.98
 seconds after 3.49 seconds setup. The improved source passed 105 adjacent root
 tests and independent exact-hash review. Full-stream performance and physical
 force fidelity remain unmeasured.
+The [bounded generated N36/S120 direct readout](artifacts/hbe-v5-n36-generated-121-readout-v1/RESULT.md)
+subsequently processed all 121 in-memory analytic frames in 116.140 seconds of
+frame work (120.212 seconds supervised wall), with 847,396,864-byte child peak
+RSS and independent receipt review. It did not parse a saved full log or run
+FEBio; generated reactions are not an FEM equilibrium solution. Physical force
+fidelity remains unmeasured.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
