@@ -1,0 +1,76 @@
+Secondary prediction experiment proposal; no execution or response access authorized
+
+Test a narrow rich-training / limited-input claim: parameters learned from all
+six training brain groups predict future measured force in another source brain
+group after observing only a fixed short force prefix. This is conditional force
+forecasting on released sample indices. It is not validation of indentation
+depth, contact geometry, hold alignment or a tissue constitutive law. The current
+record still lacks the independent timing/depth evidence needed for those claims.
+This proposal does not replace controlled mechanical interaction validation and
+cannot satisfy that prerequisite for later RL work. See MECHANICAL-QUALIFICATION.txt.
+
+Candidate input/output boundary
+  Every trace has 10,350 sample positions. Use its first 1,000 samples as the only
+  per-trial response input; predict positions 1,001–10,350. Nominal sample spacing
+  is 0.0001 s from creator metadata. Index zero is the first stored sample, not
+  asserted physical contact time. Region label is known but models below share
+  global time constants; every model receives exactly the same force prefix.
+  Freeze this prefix/horizon and the following rule before development/test access.
+
+Fixed model family and controls
+  1. Constant-force control: mean of the last 100 prefix samples, continued for
+     the whole forecast interval. This is also the no-observed-memory baseline.
+  2. Single-exponential control: b + a exp(-t/tau).
+  3. Two-exponential candidate: b + a1 exp(-t/tau1) + a2 exp(-t/tau2).
+  Choose global time constants using training suffix error only. Candidate tau
+  grid is {0.01, 0.03, 0.1, 0.3, 1.0} nominal seconds; the two-term candidate uses
+  the ten distinct ordered pairs tau1 < tau2. These are predeclared algorithm
+  settings, not published material properties or priors taken from fitted tables.
+  Center and standardize exponential basis columns over the fixed prefix time
+  grid. Condition b and amplitudes using that trial's prefix only, with mean
+  squared prefix residual plus 0.001 times squared standardized amplitudes;
+  leave the intercept unpenalized. Permit signed coefficients because force-sign
+  convention is unverified. No test suffix may affect parameters, normalization,
+  baseline, contact estimate, sign, crop or exclusion rule. These coefficients
+  are forecasting nuisance terms, not identified material constants.
+
+Training and scoring
+  For each grid candidate, form prefix-conditioned forecasts for training trials,
+  and minimize donor-balanced/region-balanced suffix error. Break ties by smaller
+  time constant(s) in ascending lexicographic order. Training uses full suffix
+  truth; prospective trial conditioning uses only the prefix. Lock chosen grids,
+  implementation and predictions before development suffix scoring. Development
+  brains are a fixed one-shot diagnostic; do not change the specification in
+  response to their results within this experiment. If development fails, keep
+  the two test brains sealed rather than spend that holdout on a failed candidate.
+  Normalize each trial's suffix RMSE by the RMS force of that region across all
+  finite training trials, balancing training brains equally. A zero training
+  scale makes that region ineligible under a predeclared recorded rule; establish
+  all scales/regions before opening development/test responses. Average trials
+  within region, regions within brain, then brains equally. Keep per-brain scores.
+  Practical success criterion: the two-term candidate has at least 10% lower
+  normalized RMSE than the better control on each of the two test brain groups.
+  A zero-error best control cannot be beaten and therefore cannot produce a pass.
+  With only two test brain groups, report their separate outcomes; do not imply
+  reliable population confidence intervals or count the 119 test columns as
+  independent donors. Failure falsifies this particular forecast claim.
+
+Data validity and artifact caveats
+  Apply the same frozen numerical-validity rule to every role at its authorized
+  stage. Quarantine a whole nonfinite trial; do not impute/crop it. Retain finite
+  constant/all-zero trials, negative/mixed signs, and zero/constant tails. Removing
+  constant series would favor a relaxation model over the constant-force control.
+  The present QC marks possible padding patterns only; it cannot prove padding.
+  Report completeness and exclusions without choosing them from prediction error.
+  No temporal pattern alone supplies true contact or hold time. Even a successful
+  forecast remains subject to unknown sampling/cropping provenance and overlap
+  across public releases. Preserve protected-role conflicts if biological aliases
+  are later discovered. Existing HBE/Greiner/patient assignments are unchanged.
+
+Sequencing
+  Current prepared release is training QC only and performs none of this fitting.
+  First review its saved training counts. Root must separately freeze a forecast
+  declaration and code before any model fitting or development/test exposure.
+  If independent loading-history evidence becomes available, prepare a distinct
+  mechanical relaxation test with its own alignment and nuisance protocol. Do not
+  reinterpret the forecast experiment as that missing mechanical validation.

@@ -1,0 +1,61 @@
+Mechanical qualification remains unresolved; forecast is secondary
+
+The available creator record supports force units, nominal sampling frequency,
+brain/region/trial organization and public experimental methods. The structural
+result shows only force matrices. TRAIN-only QC can establish whether selected
+training columns are finite and describe zero/sign/constant-tail patterns. It
+cannot identify loading history or certify a physical phase from those patterns.
+
+The proposed prefix/suffix forecast is not presently a qualified constitutive
+relaxation test. It uses sample-relative time and empirical signed exponentials.
+No source evidence establishes that its evaluation interval is a hold at constant
+true tissue indentation. Time-constant/amplitude estimates would therefore not
+be identified material properties. Success would support transfer of recorded
+force dynamics under the dataset's collection conditions. Failure could arise
+from an unobserved changing input as well as a deficient forecast model; it would
+not by itself falsify a constitutive relaxation law under controlled displacement.
+
+Minimum missing evidence for a qualified relaxation test
+  1. For each retained trial, a synchronized actual indentation history, or an
+     independently validated reconstruction from measured displacement, surface
+     contact reference and probe/apparatus compliance. Nominal stage command
+     depth/speed and a programmed hold alone do not establish tissue indentation.
+     The record must show the held interval satisfies the predeclared displacement
+     tolerance. Do not obtain this tolerance by tuning held-out force predictions.
+  2. A creator-authenticated mapping from stored sample rows to physical time and
+     loading phases: recording onset, contact reference, ramp onset/end and hold
+     onset/end, with cropping, padding, resampling and missing-sample handling.
+     Row count 10,350 and stated 10 kHz are consistent with the nominal protocol
+     but do not authenticate the 350/10,000 phase partition. Force-derived timing
+     estimated from a prefix can condition a predictor; it is not independent
+     evidence of actual contact or input motion.
+  3. Force baseline/tare, polarity, preload and calibration convention associated
+     with those retained rows. Micronewton units are known. A positive/negative
+     count does not determine the physical compression convention or baseline.
+     Where appropriate, a declared bounded baseline/amplitude nuisance rule may
+     use training data or the permitted trial prefix; it must be frozen before
+     suffix access and must not be presented as independently measured metadata.
+
+For an absolute contact-force constitutive test, additionally bind the indenter
+geometry, specimen/contact geometry and boundary conditions to the forward model
+and identify which geometric and material assumptions are actually supported.
+Geometry cannot be inferred from force-prefix normalization. The public sphere
+radius and nominal command are useful method inputs, not a substitute for the
+trial-specific controlled input and contact reference above.
+
+Actionable paths
+  First complete the separately reviewed TRAIN-only QC; it may expose numerical
+  invalidity requiring the predefined quarantine, but it cannot repair missing
+  mechanics metadata. If an existing primary-source loading record or authentic
+  acquisition specification supplies items 1–3, bind it and predeclare the physical
+  forward model, nuisance treatment, uncertainty and held-out metrics before any
+  further response access. If it does not, keep the current dataset's forecast
+  experiment explicitly prediction-only and retain mechanical validation as an
+  unmet dependency. Do not use published all-trace fits to fill the missing input.
+
+Sources already reviewed
+  Creator metadata: https://data.mendeley.com/datasets/7sjcn229cw/1
+  Primary methods: https://lirias.kuleuven.be/3147268
+  Author manuscript: https://lirias.kuleuven.be/retrieve/9c55d8a5-7dbd-40a4-ba17-7014df1a93e0
+  Frozen grouping and saved structural report remain unchanged. No original MAT
+  or measured values were opened for this qualification note.

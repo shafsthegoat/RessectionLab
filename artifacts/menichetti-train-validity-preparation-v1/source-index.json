@@ -1,0 +1,69 @@
+{
+  "dependency_note": "Reviewed structural parser and launch snapshots are already integrated in artifacts/menichetti-structure-and-grouping-v1; executing worker keeps its exact reviewed build paths. The package is a provenance snapshot, not a relocated executable.",
+  "execution_released": false,
+  "files": [
+    {
+      "bytes": 16380,
+      "package_path": "train_validity.py.snapshot",
+      "sha256": "2eddae70e5e38d79bf1325dcb9fce574b49ef30098278cd055090c0067e41d6c",
+      "source_path": "build/menichetti-train-validity-preparation-v1/train_validity.py"
+    },
+    {
+      "bytes": 5276,
+      "package_path": "prepared-protocol.json",
+      "sha256": "f055e22a73f858bc3d4923b5c3c0a0d0b2ff8e949a5c42af5b25c4e39c85982a",
+      "source_path": "build/menichetti-train-validity-preparation-v1/prepared-protocol.json"
+    },
+    {
+      "bytes": 8237,
+      "package_path": "test_generated.py.snapshot",
+      "sha256": "b4a3130616e87bcc94c4a733f33ef8acd96dc5979cbe24794be218427a62592b",
+      "source_path": "build/menichetti-train-validity-preparation-v1/test_generated.py"
+    },
+    {
+      "bytes": 4863,
+      "package_path": "PREPARATION-RESULT.txt",
+      "sha256": "9e9078b2d149a3fee54ab6c6056d9a8dd2a6ff53e01aa4b5693c217614b33b03",
+      "source_path": "build/menichetti-train-validity-preparation-v1/RESULT.txt"
+    },
+    {
+      "bytes": 5306,
+      "package_path": "NEXT-EXPERIMENT.txt",
+      "sha256": "2e013875a6bd65b8ade7a7e30f24a2e02d3754823527a921f27110ba4983f024",
+      "source_path": "build/menichetti-train-validity-preparation-v1/NEXT-EXPERIMENT.txt"
+    },
+    {
+      "bytes": 4170,
+      "package_path": "MECHANICAL-QUALIFICATION.txt",
+      "sha256": "7a43ab2874e56e3fede3dd7d39c2ac2e987061c4c4d9f90755bcd7b0541c16d0",
+      "source_path": "build/menichetti-train-validity-preparation-v1/MECHANICAL-QUALIFICATION.txt"
+    },
+    {
+      "bytes": 4923,
+      "package_path": "INDEPENDENT-REVIEW.md",
+      "sha256": "49e000cd6a0cf27f822aa4416f2fb70cf05310915e5be6fcb2923aaac6eabf0f",
+      "source_path": "build/menichetti-train-validity-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 760,
+      "package_path": "extra-controls.json",
+      "sha256": "e6c0d665a5712cc3bb7540815c9268bcf53543098921814d800477f4a48afa25",
+      "source_path": "build/menichetti-train-validity-independent-v1/extra-controls.json"
+    },
+    {
+      "bytes": 4356,
+      "package_path": "extra_controls.py.snapshot",
+      "sha256": "899f068f19dbe277192994c8fd92b279482aa33057dc7924608a022ffde9a9ec",
+      "source_path": "build/menichetti-train-validity-independent-v1/extra_controls.py"
+    }
+  ],
+  "fitting_performed": false,
+  "roles_manifest": {
+    "historical_commit": "992ab02e0fdfc735641c929b5462e05ce96d2458",
+    "path": "manifests/experiments/menichetti-brain-group-roles-v1.json",
+    "sha256": "f69a7d65571a685ad1ce2b1f762dd3a587f83087c475fb6916afd755a17dfa64"
+  },
+  "schema": "menichetti-training-validity-integration-package-v1",
+  "scientific_MAT_or_response_files_included": false,
+  "status": "reviewed_source_preparation_only"
+}

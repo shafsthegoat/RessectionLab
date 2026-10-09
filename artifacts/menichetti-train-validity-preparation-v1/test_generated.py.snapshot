@@ -1,0 +1,147 @@
+"""Generated MAT fixtures only; audit hook refuses the acquired scientific MAT."""
+from pathlib import Path
+import hashlib, importlib.util, json, os, struct, sys
+import numpy as np
+import pytest
+from scipy.io import savemat
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[1]
+original_open_attempts=[]
+def guard(event,args):
+    if event=='open' and isinstance(args[0],(str,bytes,os.PathLike)) and str(args[0]).endswith('/data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat'):
+        original_open_attempts.append(str(args[0]))
+        raise AssertionError('actual response MAT forbidden in generated tests')
+sys.addaudithook(guard)
+spec=importlib.util.spec_from_file_location('training_qc',HERE/'train_validity.py')
+qc=importlib.util.module_from_spec(spec);spec.loader.exec_module(qc)
+
+def fixture(path, *, protected_value=99., compressed=False, train_value=None):
+    sample=np.linspace(-1,2,128).reshape(-1,1)
+    brains={}
+    for i in range(1,11):
+        name='Brain'+str(i)
+        array=np.hstack((sample,sample+1)) if name in qc.TRAINING else np.full((128,2),protected_value)
+        if train_value is not None and name in qc.TRAINING:array=np.full((128,2),train_value)
+        brains[name]={'BG':array}
+    savemat(path,{'F_t_curves':brains},do_compression=compressed)
+    return qc.base.inspect_mat5(path)['nodes']
+
+@pytest.mark.parametrize('compressed',[False,True])
+def test_only_six_training_brains_reach_numeric_reader(tmp_path,monkeypatch,compressed):
+    p=tmp_path/'generated.mat';expected=fixture(p,compressed=compressed)
+    calls=[];original=qc.training_numeric_array
+    def spy(reader,header,tokens):
+        assert tokens[1]['field'] in qc.TRAINING
+        calls.append(tokens[1]['field'])
+        return original(reader,header,tokens)
+    monkeypatch.setattr(qc,'training_numeric_array',spy)
+    def forbidden(*args,**kwargs):raise AssertionError('global full-variable decoder forbidden')
+    monkeypatch.setattr(qc.base.MatFile5Reader,'get_variables',forbidden)
+    monkeypatch.setattr(qc.base.MatFile5Reader,'read_var_array',forbidden)
+    result=qc.inspect_training(p,expected)
+    assert set(calls)==qc.TRAINING and len(calls)==6
+    assert len(result['skipped_protected_paths'])==4
+    assert result['protected_numeric_arrays_materialized']==0
+    assert all(len(r['trials'])==2 for r in result['training_matrix_records'])
+
+@pytest.mark.parametrize('compressed',[False,True])
+@pytest.mark.parametrize('changed',[float('nan'),-987654.125,complex(123,456)])
+def test_protected_payload_changes_leave_qc_identical(tmp_path,compressed,changed):
+    p,q=tmp_path/'a.mat',tmp_path/'b.mat'
+    a=fixture(p,compressed=compressed);b=fixture(q,compressed=compressed,protected_value=changed)
+    assert a==b
+    first,second=qc.inspect_training(p,a),qc.inspect_training(q,b)
+    assert first==second
+    emitted=json.dumps(second)
+    assert '-987654.125' not in emitted and 'NaN' not in emitted and '456' not in emitted
+
+def test_predeclared_qc_counts_without_cropping():
+    x=np.array([0.,0.,-2.,3.,0.,0.]);r=qc.trial_qc(x)
+    assert r['samples']==6 and r['finite_samples']==6
+    assert r['leading_exact_zero_samples']==2 and r['trailing_exact_zero_samples']==2
+    assert r['sign_pattern']=='mixed' and r['zero_suffix_review_flag'] is True
+    assert r['positive_finite_samples']==1 and r['negative_finite_samples']==1
+    assert r['disposition']=='finite_nonconstant_sample_series'
+    assert np.array_equal(x,np.array([0.,0.,-2.,3.,0.,0.]))
+
+def test_numeric_helper_independently_refuses_protected_alias():
+    tokens=['F_t_curves',{'field':'Brain2','element_1based_matlab_linear':1},
+            {'field':'BG','element_1based_matlab_linear':1}]
+    with pytest.raises(qc.Refusal,match='protected_numeric_decode_forbidden'):
+        qc.training_numeric_array(None,None,tokens)
+
+def test_nonfinite_and_constant_dispositions():
+    r=qc.trial_qc(np.array([np.nan,np.inf,-np.inf,1.,0.]))
+    assert r['nan_samples']==r['positive_infinity_samples']==r['negative_infinity_samples']==1
+    assert r['finite_samples']==2 and r['disposition']=='quarantine_nonfinite_trial'
+    assert r['terminal_exact_equal_run_samples'] is None
+    for value in (0.,-3.,4.):
+        r=qc.trial_qc(np.full(128,value))
+        assert r['disposition']=='finite_constant_series_review'
+        assert r['terminal_exact_equal_run_samples']==128
+        assert r['constant_tail_review_flag'] is True
+        assert r['all_exact_zero'] is (value==0.)
+
+def test_constant_tail_is_only_a_flag():
+    r=qc.trial_qc(np.concatenate(([0.,1.],np.full(100,2.))))
+    assert r['constant_tail_review_flag'] is True
+    assert r['disposition']=='finite_nonconstant_sample_series' and r['samples']==102
+
+@pytest.mark.parametrize('limit,value,reason',[
+    ('max_numeric_read_bytes',32,'numeric_read_budget'),
+    ('max_training_matrix_elements',2,'training_matrix_budget'),
+    ('max_nodes',1,'structural_budget'),
+    ('max_opaque_traversal_bytes',256,'matrix_outside_container')])
+def test_budgets_refuse(tmp_path,limit,value,reason):
+    p=tmp_path/'generated.mat';expected=fixture(p,compressed=True)
+    limits=dict(qc.LIMITS);limits[limit]=value
+    with pytest.raises(qc.Refusal,match=reason):qc.inspect_training(p,expected,limits=limits)
+
+def test_changed_structure_refused_before_numeric_access(tmp_path,monkeypatch):
+    p=tmp_path/'generated.mat';expected=fixture(p)
+    expected[2]=dict(expected[2],shape=[127,2])
+    def forbidden(*args,**kwargs):raise AssertionError('numeric decode preceded metadata check')
+    monkeypatch.setattr(qc,'training_numeric_array',forbidden)
+    with pytest.raises(qc.Refusal,match='structure_changed'):qc.inspect_training(p,expected)
+
+def test_numeric_length_bomb_refused_before_library_allocation(tmp_path,monkeypatch):
+    p=tmp_path/'generated.mat';expected=fixture(p)
+    raw=p.read_bytes();tag=struct.pack('<II',qc.mp.miDOUBLE,128*2*8)
+    position=raw.find(tag);assert position>128
+    p.write_bytes(raw[:position]+struct.pack('<II',qc.mp.miDOUBLE,2**31)+raw[position+8:])
+    def forbidden(*args,**kwargs):raise AssertionError('numeric decoder called before length guard')
+    monkeypatch.setattr(qc,'training_numeric_array',forbidden)
+    with pytest.raises(qc.Refusal,match='training_numeric_tag'):qc.inspect_training(p,expected)
+
+def test_complex_training_refused_without_emission(tmp_path):
+    p=tmp_path/'generated.mat';expected=fixture(p,train_value=complex(3,4))
+    with pytest.raises(qc.Refusal,match='training_numeric_layout'):qc.inspect_training(p,expected)
+
+def test_largest_real_training_matrix_uses_bounded_numeric_stream(tmp_path):
+    p=tmp_path/'large-generated.mat'
+    data=np.random.default_rng(123).normal(size=(10350,6))
+    savemat(p,{'F_t_curves':{'Brain1':{'BG':data},'Brain2':{'BG':data+12345}}},do_compression=True)
+    expected=qc.base.inspect_mat5(p)['nodes']
+    result=qc.inspect_training(p,expected)
+    assert len(result['training_matrix_records'])==1 and len(result['skipped_protected_paths'])==1
+    assert len(result['training_matrix_records'][0]['trials'])==6
+    assert all(t['samples']==10350 for t in result['training_matrix_records'][0]['trials'])
+
+def test_protocol_check_only_and_false_release_open_no_original(monkeypatch,capsys):
+    protocol=HERE/'prepared-protocol.json';sha=hashlib.sha256(protocol.read_bytes()).hexdigest()
+    args=['qc','--protocol',str(protocol),'--protocol-sha256',sha]
+    monkeypatch.setattr(sys,'argv',args+['--check-only']);qc.main()
+    assert json.loads(capsys.readouterr().out)['original_MAT_opens']==0
+    monkeypatch.setattr(sys,'argv',args)
+    with pytest.raises(qc.Refusal,match='training_validity_not_released'):qc.main()
+    assert original_open_attempts==[]
+
+def test_serialization_contains_counts_no_raw_trace(tmp_path):
+    p=tmp_path/'generated.mat';expected=fixture(p)
+    report=qc.inspect_training(p,expected);raw=qc.serialize(report,'0'*64)
+    assert len(raw)<=qc.LIMITS['max_output_bytes']
+    assert b'force_samples' in raw and b'raw_force_samples_emitted": 0' in raw
+    assert b'contact_or_hold_alignment_established": false' in raw
+    assert not any(k in raw for k in (b'force_mean',b'force_min',b'force_max',b'force_values',b'fit_parameters'))
+    assert original_open_attempts==[]

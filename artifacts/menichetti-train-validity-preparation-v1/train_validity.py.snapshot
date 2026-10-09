@@ -1,0 +1,268 @@
+"""Exact-role MAT5 training QC; protected numerical leaves are only skipped."""
+from pathlib import Path
+from io import BytesIO
+import argparse, hashlib, importlib.util, json, math, signal, struct, subprocess, time
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = 'build/menichetti-structure-inventory-preparation-v1/inventory.py'
+BASE_SHA = '05866df06361a1151ff8efa6d7d5a1bd7198dfad3e19936b5eff43817ce72d9d'
+BASE_PROTOCOL = 'build/menichetti-structure-inventory-preparation-v1/prepared-protocol.json'
+BASE_PROTOCOL_SHA = '62a2a0063a7cef5c1cd28d1421f9b1302ab0482f06011e50e041cefd76781b0f'
+ROLES = 'manifests/experiments/menichetti-brain-group-roles-v1.json'
+ROLES_SHA = 'f69a7d65571a685ad1ce2b1f762dd3a587f83087c475fb6916afd755a17dfa64'
+ROLES_COMMIT = '992ab02e0fdfc735641c929b5462e05ce96d2458'
+INVENTORY = 'build/menichetti-structure-inventory-v1/inventory.json'
+INVENTORY_SHA = '963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e'
+TRAINING = frozenset(('Brain1', 'Brain4', 'Brain5', 'Brain7', 'Brain8', 'Brain10'))
+OUTPUT = 'build/menichetti-train-validity-v1/validity.json'
+LIMITS = {'max_depth': 2, 'max_nodes': 131, 'max_fields': 12,
+          'max_name_bytes': 128, 'max_metadata_read_bytes': 65536,
+          'max_opaque_traversal_bytes': 134217728, 'max_output_bytes': 1048576,
+          'max_training_matrix_elements': 62100, 'max_numeric_read_bytes': 1048576,
+          'wall_seconds': 35}
+QC = {'nonfinite': 'quarantine_entire_trial', 'all_finite_constant': 'review_only_no_exclusion',
+      'zero_suffix_flag_at_least_samples': 2, 'exact_constant_tail_flag_at_least_samples': 100,
+      'padding_flags': 'review_only_no_crop_or_exclusion', 'negative_or_mixed_sign': 'report_only_no_sign_change',
+      'amplitude_threshold': None, 'contact_or_hold_detection': False, 'model_fitting': False}
+NUMPY_FILES = {
+    '.venv/lib/python3.12/site-packages/numpy/__init__.py': '09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11',
+    '.venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-darwin.so': '3432cd9093d7e84b4080015b6a889598fea4c305da967063cb916215193bf85d'}
+
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+def bound(relative, expected):
+    p = ROOT / relative
+    if p.is_symlink() or not p.is_file() or p.stat().st_size > 16*1024**2:
+        raise RuntimeError('binding_type_or_size')
+    raw = p.read_bytes()
+    if digest(raw) != expected:
+        raise RuntimeError('binding_changed:' + relative)
+    return raw
+
+bound(BASE, BASE_SHA)
+spec = importlib.util.spec_from_file_location('menichetti_metadata_parser', ROOT / BASE)
+base = importlib.util.module_from_spec(spec); spec.loader.exec_module(base)
+need, Refusal, mp = base.need, base.Refusal, base.mp
+
+class SelectiveStream(base.MetadataStream):
+    """Larger reads exist only while one authorized training leaf is decoded."""
+    numeric_access = False
+    def read(self, count=-1):
+        if not self.numeric_access:
+            return super().read(count)
+        need(isinstance(count, int) and 0 <= count <= self.budget.limits['max_numeric_read_bytes'], 'numeric_read_budget')
+        need(self.tell()+count <= self.end, 'numeric_read_outside_training_matrix')
+        self.budget.check(count)
+        raw = self.stream.read(count)
+        need(len(raw) == count, 'truncated_training_numeric_body')
+        return raw
+
+def training_numeric_array(reader, header, tokens):
+    # This is the sole scientific-value deserializer. The caller checks the
+    # exact brain role, region path, class, shape and matrix boundary first.
+    need(len(tokens) == 3 and tokens[1].get('field') in TRAINING, 'protected_numeric_decode_forbidden')
+    return reader.read_real_complex(header)
+
+def trial_qc(column):
+    count = len(column)
+    finite = np.isfinite(column)
+    finite_count = int(np.count_nonzero(finite))
+    zero = column == 0
+    nonzero_indices = np.flatnonzero(~zero)
+    leading = int(nonzero_indices[0]) if len(nonzero_indices) else count
+    trailing = count-1-int(nonzero_indices[-1]) if len(nonzero_indices) else count
+    all_finite = finite_count == count
+    constant = bool(all_finite and np.all(column == column[0]))
+    if all_finite:
+        different_from_last = np.flatnonzero(column != column[-1])
+        tail = count-1-int(different_from_last[-1]) if len(different_from_last) else count
+    else:
+        tail = None
+    positive = int(np.count_nonzero(finite & (column > 0)))
+    negative = int(np.count_nonzero(finite & (column < 0)))
+    if not all_finite:
+        disposition = 'quarantine_nonfinite_trial'
+    elif constant:
+        disposition = 'finite_constant_series_review'
+    else:
+        disposition = 'finite_nonconstant_sample_series'
+    return {'samples': count, 'finite_samples': finite_count,
+            'nan_samples': int(np.count_nonzero(np.isnan(column))),
+            'positive_infinity_samples': int(np.count_nonzero(np.isposinf(column))),
+            'negative_infinity_samples': int(np.count_nonzero(np.isneginf(column))),
+            'positive_finite_samples': positive, 'negative_finite_samples': negative,
+            'exact_zero_samples': int(np.count_nonzero(zero)),
+            'leading_exact_zero_samples': leading, 'trailing_exact_zero_samples': trailing,
+            'all_finite_constant': constant, 'all_exact_zero': bool(all_finite and np.all(zero)),
+            'terminal_exact_equal_run_samples': tail,
+            'zero_suffix_review_flag': trailing >= QC['zero_suffix_flag_at_least_samples'],
+            'constant_tail_review_flag': tail is not None and tail >= QC['exact_constant_tail_flag_at_least_samples'],
+            'sign_pattern': 'mixed' if positive and negative else 'nonnegative' if positive else 'nonpositive' if negative else 'no_nonzero_finite_samples',
+            'disposition': disposition}
+
+def inspect_training(path, expected_nodes, limits=None):
+    """Narrow extension of reviewed walker; no global/full-variable load path."""
+    limits = dict(LIMITS if limits is None else limits)
+    budget, nodes, records, protected_paths = base.Budget(limits), [], [], []
+    materialized_paths = []
+    def matrix(stream, reader, container_end, tokens, depth):
+        budget.check()
+        need(depth <= limits['max_depth'] and len(nodes) < limits['max_nodes'], 'structural_budget')
+        kind, byte_count = reader.read_full_tag()
+        need(kind == mp.miMATRIX and byte_count > 0, 'unsupported_nested_element')
+        end = stream.tell()+byte_count
+        need(end <= container_end, 'matrix_outside_container')
+        previous_end, stream.end = stream.end, end
+        header = reader.read_header(False)
+        name = base.safe_name(header.name, limits, allow_empty=bool(tokens))
+        shape = [int(d) for d in header.dims]
+        mclass = int(header.mclass)
+        tokens = tokens if tokens else [name]
+        node = {'path': tokens, 'name': name, 'shape': shape, 'class': base.CLASS.get(mclass, 'unsupported')}
+        if mclass == mp.mxSTRUCT_CLASS:
+            need(shape == [1, 1] and depth < 2, 'unsupported_struct_shape')
+            fields = [base.safe_name(f, limits) for f in reader.read_fieldnames()]
+            need(len(fields) <= limits['max_fields'] and len(set(fields)) == len(fields), 'field_budget_or_duplicates')
+            node['field_names'] = fields
+        elif mclass == mp.mxDOUBLE_CLASS:
+            need(depth == 2 and len(tokens) == 3, 'unexpected_numeric_path')
+            need(len(shape) == 2 and all(d > 0 for d in shape), 'numeric_shape')
+            node['values_interpreted'] = False  # exact prior metadata comparison
+        else:
+            raise Refusal('unsupported_class')
+        need(len(nodes) < len(expected_nodes) and node == expected_nodes[len(nodes)], 'structure_changed')
+        nodes.append(node)
+        if mclass == mp.mxSTRUCT_CLASS:
+            for field in fields:
+                matrix(stream, reader, end, tokens+[{'element_1based_matlab_linear': 1, 'field': field}], depth+1)
+        elif tokens[1]['field'] not in TRAINING:
+            protected_paths.append(tokens)
+            stream.seek(end)
+        else:
+            need(math.prod(shape) <= limits['max_training_matrix_elements'], 'training_matrix_budget')
+            need(not header.is_logical, 'logical_training_matrix')
+            # Validate the single real-double element size before the C reader
+            # can allocate from an untrusted numeric tag. This is only a narrow
+            # layout guard; SciPy still owns numeric interpretation and shape.
+            numeric_bytes = math.prod(shape)*8
+            need(end-stream.tell() == 8+numeric_bytes, 'training_numeric_layout')
+            tag = stream.read(8)
+            need(struct.unpack(order+'II',tag) == (mp.miDOUBLE,numeric_bytes), 'training_numeric_tag')
+            stream.numeric_access = True
+            try:
+                payload = stream.read(numeric_bytes)
+            finally:
+                stream.numeric_access = False
+            leaf = SelectiveStream(BytesIO(tag+payload), budget, 8+numeric_bytes)
+            leaf.numeric_access = True
+            array = training_numeric_array(base.header_reader(leaf,order), header, tokens)
+            need(leaf.tell() == 8+numeric_bytes, 'training_numeric_consumption')
+            del payload, leaf
+            need(array.shape == tuple(shape) and array.dtype.kind == 'f' and array.dtype.itemsize == 8, 'training_dtype_or_shape')
+            materialized_paths.append(tokens)
+            trials = []
+            for index in range(shape[1]):
+                budget.check()
+                trials.append(dict(trial_column_1based=index+1, **trial_qc(array[:, index])))
+            records.append({'brain_alias': tokens[1]['field'], 'region': tokens[2]['field'], 'shape': shape, 'trials': trials})
+            del array
+        need(stream.tell() == end, 'matrix_length_mismatch')
+        stream.end = previous_end
+    with path.open('rb') as source:
+        size = path.stat().st_size
+        need(128 <= size <= base.ORIGINAL_BYTES, 'input_size_limit')
+        prefix = source.read(128)
+        need(prefix.startswith(b'MATLAB 5.0 MAT-file') and prefix[126:128] in (b'IM', b'MI'), 'unsupported_format')
+        order = '<' if prefix[126:128] == b'IM' else '>'
+        raw = SelectiveStream(source, budget, size)
+        reader = base.header_reader(raw, order)
+        top_count = 0
+        while raw.tell() < size:
+            start = raw.tell(); kind, length = reader.read_full_tag(); end = raw.tell()+length
+            need(length > 0 and end <= size and top_count == 0, 'top_container_changed')
+            if kind == mp.miCOMPRESSED:
+                zstream = base.ZlibInputStream(source, length)
+                stream = SelectiveStream(zstream, budget, limits['max_opaque_traversal_bytes'])
+                matrix(stream, base.header_reader(stream, order), stream.end, [], 0)
+                need(zstream.all_data_read(), 'compressed_trailing_or_unread')
+            elif kind == mp.miMATRIX:
+                raw.seek(start); matrix(raw, reader, end, [], 0)
+            else:
+                raise Refusal('unsupported_top_element')
+            top_count += 1; raw.seek(end)
+    need(nodes == expected_nodes and top_count == 1, 'incomplete_expected_structure')
+    return {'schema':'menichetti-training-validity-only-v1', 'status':'training_validity_only',
+            'training_matrix_records': records, 'materialized_training_paths': materialized_paths,
+            'skipped_protected_paths': protected_paths, 'protected_numeric_arrays_materialized': 0,
+            'raw_force_samples_emitted': 0, 'opaque_decompression_may_traverse_protected_bytes': True,
+            'padding_causality_established': False, 'force_sign_convention_established': False,
+            'contact_or_hold_alignment_established': False, 'model_fit_performed': False,
+            'physical_validation_pass': None, 'qc_rule': QC}
+
+def validate(protocol):
+    need(protocol['schema'] == 'menichetti-training-validity-protocol-v1', 'protocol_schema')
+    need(protocol['runner_sha256'] == digest(Path(__file__).read_bytes()), 'runner_changed')
+    need(protocol['limits'] == LIMITS and protocol['qc_rules'] == QC, 'limits_or_qc_changed')
+    need(protocol['roles'] == {'path': ROLES, 'sha256': ROLES_SHA, 'commit': ROLES_COMMIT}, 'roles_binding')
+    need(protocol['base_parser'] == {'path': BASE, 'sha256': BASE_SHA}, 'base_parser_binding')
+    need(protocol['structure_report'] == {'path': INVENTORY, 'sha256': INVENTORY_SHA}, 'structure_binding')
+    need(protocol['input_receipt'] == {'path': base.RECEIPT, 'sha256': base.RECEIPT_SHA}, 'receipt_binding')
+    roles = json.loads(bound(ROLES, ROLES_SHA))
+    historical = subprocess.run(['/usr/bin/git', 'show', ROLES_COMMIT+':'+ROLES], cwd=ROOT, capture_output=True, check=True, timeout=5).stdout
+    need(digest(historical) == ROLES_SHA, 'historical_roles_changed')
+    need(roles['status'] == 'frozen_before_response_values' and roles['role_freeze_performed'] is True, 'roles_not_frozen')
+    need({b for b,v in roles['brain_groups'].items() if v['role']=='training'} == TRAINING, 'training_roles_changed')
+    need(protocol['training_aliases'] == sorted(TRAINING), 'training_scope_changed')
+    need(protocol['development_or_test_access_permitted'] is False, 'protected_access_forbidden')
+    need(protocol['input'] == {'path':base.ORIGINAL, 'bytes':base.ORIGINAL_BYTES, 'sha256':base.ORIGINAL_SHA}, 'input_changed')
+    need(protocol['output_path'] == OUTPUT, 'output_changed')
+    inventory = json.loads(bound(INVENTORY, INVENTORY_SHA))
+    required = json.loads(bound(BASE_PROTOCOL, BASE_PROTOCOL_SHA))['library_files_sha256']
+    required.update(NUMPY_FILES)
+    need(protocol['library_files_sha256'] == required, 'library_pins_changed')
+    for path, sha in protocol['library_files_sha256'].items():
+        bound(path, sha)
+    need(protocol['numpy_version'] == np.__version__ and protocol['scipy_version'] == base.scipy.__version__, 'library_version_changed')
+    bound(base.RECEIPT, base.RECEIPT_SHA)
+    return inventory['nodes']
+
+def serialize(report, protocol_sha):
+    report = dict(report, original_sha256=base.ORIGINAL_SHA, roles_sha256=ROLES_SHA, protocol_sha256=protocol_sha)
+    raw = (json.dumps(report, sort_keys=True, indent=2, allow_nan=False)+'\n').encode()
+    need(len(raw) <= LIMITS['max_output_bytes'], 'output_budget')
+    return raw
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--protocol',type=Path,required=True)
+    parser.add_argument('--protocol-sha256',required=True);parser.add_argument('--check-only',action='store_true')
+    args=parser.parse_args()
+    need(not args.protocol.is_symlink() and args.protocol.stat().st_size <= 65536, 'protocol_type_or_size')
+    raw=args.protocol.read_bytes();need(digest(raw)==args.protocol_sha256,'protocol_changed')
+    protocol=json.loads(raw);expected=validate(protocol)
+    if args.check_only:
+        print(json.dumps({'status':'valid_without_response_access','execution_released':protocol['execution_released'],'original_MAT_opens':0}))
+        return
+    need(protocol['execution_released'] is True, 'training_validity_not_released')
+    target=ROOT/base.ORIGINAL;output=ROOT/OUTPUT
+    need(not output.exists(), 'preserve_prior_attempt')
+    need(not target.is_symlink() and target.stat().st_size==base.ORIGINAL_BYTES and base.sha(target)==base.ORIGINAL_SHA,'original_fixity')
+    def timed_out(signum,frame):
+        raise Refusal('wall_budget')
+    signal.signal(signal.SIGALRM,timed_out);signal.setitimer(signal.ITIMER_REAL,LIMITS['wall_seconds'])
+    try:
+        report=inspect_training(target,expected)
+    except Exception as error:
+        report={'status':'training_validity_refused','reason':str(error) if isinstance(error,Refusal) else 'library_or_format_error',
+                'error_type':type(error).__name__,'protected_numeric_arrays_materialized':0,'raw_force_samples_emitted':0,
+                'partial_training_QC_discarded':True,'model_fit_performed':False}
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0)
+    encoded=serialize(report,args.protocol_sha256)
+    output.parent.mkdir(parents=True,exist_ok=True)
+    with output.open('xb') as stream:stream.write(encoded)
+    print(json.dumps({'status':report['status'],'output':str(output),'raw_force_samples_emitted':0}))
+
+if __name__=='__main__':
+    main()

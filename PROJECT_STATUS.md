@@ -67,6 +67,13 @@ response-value access; every region and trial inherits its parent role. No timin
 or motion fields were found. Response reading, alignment, fitting and physical
 validation remain pending; source aliases do not authenticate donor independence.
 
+The [TRAIN-only measurement reader](artifacts/menichetti-train-validity-preparation-v1/RESULT.md)
+has passed 22 generated controls and independent adversarial review. Only the
+six frozen TRAIN groups can be numerically decoded; protected groups remain
+opaque. Its execution protocol is still disabled, with no original response
+access. Actual indentation/contact timing remains missing, so the proposed
+secondary force forecast cannot establish controlled tissue mechanics.
+
 The [NFBS archive inventory](artifacts/nfbs-member-inventory-v1/RESULT.txt)
 completed one independently reviewed names-and-sizes-only pass. All 125 source
 IDs have one T1w, brain and brainmask filename, totaling 375 files; archive

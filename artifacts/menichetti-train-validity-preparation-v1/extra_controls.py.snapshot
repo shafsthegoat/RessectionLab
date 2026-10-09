@@ -1,0 +1,47 @@
+from pathlib import Path
+import hashlib,importlib.util,json,os,struct,sys
+from unittest.mock import patch
+import numpy as np
+from scipy.io import savemat
+R=Path.cwd();P=R/'build/menichetti-train-validity-preparation-v1';O=R/'build/menichetti-train-validity-independent-v1';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(P/'train_validity.py')=='2eddae70e5e38d79bf1325dcb9fce574b49ef30098278cd055090c0067e41d6c'
+assert sha(P/'prepared-protocol.json')=='f055e22a73f858bc3d4923b5c3c0a0d0b2ff8e949a5c42af5b25c4e39c85982a'
+opened=[]
+def guard(event,args):
+ if event=='open' and isinstance(args[0],(str,bytes,os.PathLike)) and str(args[0]).endswith('/data/acquisition/menichetti-mechanics-v1/verified/F_t_curves.mat'):
+  opened.append(str(args[0]));raise AssertionError('Original MAT open forbidden')
+sys.addaudithook(guard)
+spec=importlib.util.spec_from_file_location('independent_qc',P/'train_validity.py');q=importlib.util.module_from_spec(spec);spec.loader.exec_module(q)
+d=json.loads((P/'prepared-protocol.json').read_text());nodes=q.validate(d)
+assert not d['execution_released'] and not (R/q.OUTPUT).exists()
+training_nodes=[n for n in nodes if n['class']=='double' and n['path'][1]['field'] in q.TRAINING]
+assert len(nodes)==131 and len(training_nodes)==72 and sum(n['shape'][1] for n in training_nodes)==357
+assert max(np.prod(n['shape']) for n in training_nodes)==q.LIMITS['max_training_matrix_elements']==62100
+for module_name in ['numpy','numpy._core._multiarray_umath','scipy.io.matlab._mio5','scipy.io.matlab._mio5_utils','scipy.io.matlab._streams']:
+ module=sys.modules[module_name];relative=str(Path(module.__file__).relative_to(R));assert relative in d['library_files_sha256'] and sha(Path(module.__file__))==d['library_files_sha256'][relative]
+class Bomb:
+ def read_real_complex(self,*args):raise AssertionError('Protected numeric helper reached decoder')
+for alias in ['Brain2','Brain3','Brain6','Brain9','Unknown']:
+ try:q.training_numeric_array(Bomb(),None,['F_t_curves',{'field':alias},{'field':'BG'}])
+ except q.Refusal as e:assert str(e)=='protected_numeric_decode_forbidden'
+ else:raise AssertionError('Protected helper accepted')
+# Malformed protected numeric tags must stay opaque, unlike malformed TRAIN tags.
+brains={'Brain'+str(k):{'BG':np.arange(256,dtype=float).reshape(128,2)+k} for k in range(1,11)}
+a=O/'generated-clean.mat';savemat(a,{'F_t_curves':brains});expected=q.base.inspect_mat5(a)['nodes'];clean=q.inspect_training(a,expected)
+raw=a.read_bytes();tag=struct.pack('<II',q.mp.miDOUBLE,2048);positions=[];start=0
+while (pos:=raw.find(tag,start))>=0:positions.append(pos);start=pos+8
+assert len(positions)==10
+pos=positions[1];b=O/'generated-protected-malformed.mat';b.write_bytes(raw[:pos]+struct.pack('<II',0xffffffff,2**31)+raw[pos+8:]);assert q.inspect_training(b,expected)==clean
+pos=positions[0];c=O/'generated-training-malformed.mat';c.write_bytes(raw[:pos]+struct.pack('<II',q.mp.miINT32,2048)+raw[pos+8:])
+with patch.object(q,'training_numeric_array',side_effect=AssertionError('TRAIN numeric decoder ran before tag validation')):
+ try:q.inspect_training(c,expected)
+ except q.Refusal as e:assert str(e)=='training_numeric_tag'
+ else:raise AssertionError('Malformed TRAIN numeric tag accepted')
+# Full report serialization refuses an output budget breach, with no raw trace output.
+with patch.dict(q.LIMITS,{'max_output_bytes':32}):
+ try:q.serialize(clean,'0'*64)
+ except q.Refusal as e:assert str(e)=='output_budget'
+ else:raise AssertionError('Oversized report accepted')
+assert not opened and sha(P/'train_validity.py')==d['runner_sha256']
+result={'status':'pass','runner_sha256':sha(P/'train_validity.py'),'prepared_protocol_sha256':sha(P/'prepared-protocol.json'),'source_and_frozen_role_history_validated':True,'loaded_numpy_scipy_origins_match_pinned_files':True,'training_matrices':72,'training_columns':357,'largest_matrix_elements':62100,'extra_controls':['five_protected_or_unknown_aliases_refused_before_decoder','malformed_protected_numeric_tag_invariant','malformed_training_numeric_tag_refused_before_decoder','oversized_serialized_report_refused'],'original_MAT_open_attempts':opened,'scientific_response_access':False,'output_directory_absent':not (R/q.OUTPUT).exists()}
+(O/'extra-controls.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
