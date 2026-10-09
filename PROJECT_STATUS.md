@@ -69,11 +69,13 @@ family; the archive has not been extracted or anatomically reviewed. Unknown
 overlap and label ancestry remain explicit. No training admission follows.
 
 The [TRAIN annotation byte-intake extension](artifacts/remind-train-seg-intake-preparation-v1/RESULT.md)
-is frozen for 242 SEG objects (424,167,640 bytes) belonging to the same 79 TRAIN
-people. Independent source reconciliation and six offline transport controls
-pass. No protected patient roles change. Download release adds no label QC,
-preoperative availability, planner rewards or training admission; source study
-names alone cannot establish when an annotation was available.
+completed all 242 SEG objects (424,167,640 bytes) on October 9 at 09:01 UTC,
+with source MD5 and local SHA-256 for each object. The same 79 TRAIN people and
+all protected roles remain unchanged. The [completion audit](artifacts/remind-train-seg-completion-v1/RESULT.md)
+checks scope, receipt bindings and file lengths without rereading payloads.
+All transfers succeeded on their first attempt. No label QC, preoperative
+availability, planner rewards or training admission follows; source study names
+alone cannot establish when an annotation was available.
 
 The [ReMIND component expansion](artifacts/remind-cohort-expansion-preparation-v1/RESULT.md)
 has independently reviewed, frozen roles for the full source cohort: 79 TRAIN,
