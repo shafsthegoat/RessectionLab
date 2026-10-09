@@ -47,6 +47,13 @@ is hidden. The generic fixed-lattice actor also exposes actions without a
 nominal objective, although observed SEARCH fails closed. Ninety-six narrowly
 selected tests pass; a broader adjacent suite retains ten unrelated
 weight-lineage failures. Limited-input patient admission remains HOLD.
+A [bounded scan-target estimator option review](artifacts/scan-target-estimator-options-v1/RESULT.md)
+identified a two-sequence pretrained research candidate for RESECT Case4,
+subject to modality/frame/reference QC, pinned weights and code-rights review.
+Its automatic weight update path is unsuitable for a frozen local run. The
+current BTC/T1-only input does not match this two-sequence candidate, and a
+known BraTS-overlap case is not an independent test. No weights or patient
+scans were processed, and no inference-only patient target has been admitted.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
