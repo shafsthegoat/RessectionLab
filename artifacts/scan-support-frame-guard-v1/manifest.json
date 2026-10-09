@@ -1,0 +1,27 @@
+{
+  "files": {
+    "artifacts/scan-support-frame-guard-v1/INDEPENDENT-REVIEW.md": {
+      "bytes": 1792,
+      "sha256": "272f4c4c2f4518c0c65b591b4a02fc124d57ced41cb2f95eff008cffcaa23706"
+    },
+    "artifacts/scan-support-frame-guard-v1/RESULT.md": {
+      "bytes": 1190,
+      "sha256": "a0557123a261b7f4e7eba25da9110f0eaa0e09f4d16320932fb37ac4f709abe0"
+    },
+    "src/resectionlab/scan_target_adapter.py": {
+      "bytes": 32454,
+      "sha256": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2"
+    },
+    "tests/test_scan_support_frame.py": {
+      "bytes": 4699,
+      "sha256": "38a4e05fbe2f5b288f6fedb230f3310775f9a6d9b33333672d12c832a7c8d004"
+    }
+  },
+  "schema": "scan-support-frame-guard-integration-v1",
+  "tests": {
+    "count": 20,
+    "generated_only": true,
+    "runner": "unittest",
+    "seconds": 1.633
+  }
+}

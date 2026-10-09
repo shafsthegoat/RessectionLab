@@ -303,6 +303,41 @@ def read_volume(path: Path, expected_sha256: str, *, atlas: bool = False,
     return PreparedVolume(path, tuple(int(x) for x in data.shape), affine, sha256_file(path))
 
 
+def require_support_map_frame(map_path: Path, map_sha256: str,
+                              reference_path: Path, reference_sha256: str) -> PreparedVolume:
+    """Require exact saved bytes and one unambiguous physical grid before use.
+
+    A missing qform is acceptable when the sform is coded. This checks frame
+    integrity only; support-bit validity, anatomical QC, and planner admission
+    remain separate decisions.
+    """
+    volumes = []
+    for name, path, expected_hash in (
+        ("support map", Path(map_path), map_sha256),
+        ("reference", Path(reference_path), reference_sha256),
+    ):
+        _require_hash(path, expected_hash)
+        image = nib.load(str(path))
+        sform, sform_code = image.header.get_sform(coded=True)
+        if sform_code == 0 or sform is None:
+            raise FrameMismatch(f"{name} requires a coded sform")
+        qform, qform_code = image.header.get_qform(coded=True)
+        if qform_code != 0 and not np.allclose(qform, sform, atol=1e-4, rtol=0):
+            raise FrameMismatch(f"{name} has conflicting coded sform and qform")
+        volume = read_volume(path, expected_hash)
+        if volume.sha256 != expected_hash:
+            raise SourceMismatch(f"{name} changed during physical-frame verification")
+        if not np.allclose(volume.affine_ras_mm, sform, atol=1e-4, rtol=0):
+            raise FrameMismatch(f"{name} coded sform differs from physical reader frame")
+        volumes.append(volume)
+    support, reference = volumes
+    if (support.shape_xyz != reference.shape_xyz
+            or not np.allclose(support.affine_ras_mm, reference.affine_ras_mm,
+                               atol=1e-4, rtol=0)):
+        raise FrameMismatch("support map and reference have different physical grids")
+    return support
+
+
 def validate_scan_inputs(t1c: Scan | None, flair: Scan | None,
                          mask: QualifiedMask | None,
                          *, diagnostic_only: bool = False) -> None:

@@ -130,6 +130,12 @@ consumers must check the physical frame explicitly. Known inferior mask omission
 and anatomical registration uncertainty remain unresolved. This establishes
 resampling parity only, with no model inference or planner admission.
 
+The [optional support-map frame guard](artifacts/scan-support-frame-guard-v1/RESULT.md)
+now enforces trusted hashes and matching coded physical frames, including a
+post-read hash check added after independent review. Root integration passed
+20 generated adapter/support controls. The helper is not yet wired into patient
+inference or planning and does not certify anatomy or support-bit contents.
+
 The [scan support contract](docs/scan-support-unknown-contract.md) now keeps
 scan field of view, estimated anatomy and prediction coverage separate. Five
 generated controls pass: unobserved locations stay unknown, and predicted
