@@ -67,6 +67,13 @@ response-value access; every region and trial inherits its parent role. No timin
 or motion fields were found. Response reading, alignment, fitting and physical
 validation remain pending; source aliases do not authenticate donor independence.
 
+The [MR conversion preparation](artifacts/remind-mr-conversion-preparation-v2/RESULT.md)
+now fixes missing spatial units and shared decoder-cache verification. Twelve
+controls pass. A generated 512×512×64 conversion and saved-file check completed
+at 369.80 MiB peak RSS; independent checks matched all 64 plane coordinates and
+3,327 sample values. No patient pixels were read. Full metadata-plus-conversion
+resource use remains unmeasured; separate bound stages are being implemented.
+
 The [TRAIN-only measurement reader](artifacts/menichetti-train-validity-preparation-v1/RESULT.md)
 has passed 22 generated controls and independent adversarial review. Only the
 six frozen TRAIN groups can be numerically decoded; protected groups remain

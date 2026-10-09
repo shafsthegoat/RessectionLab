@@ -1,0 +1,132 @@
+{
+  "actual_patient_conversion_performed": false,
+  "actual_target_scope_not_executed": {
+    "objects": 64,
+    "patient_group": "ReMIND:002",
+    "patient_id": "ReMIND-002",
+    "prior_header_pilot_commit": "b219ab6",
+    "role": "TRAIN",
+    "series_uuid": "4301d666-34c4-48f3-9167-8c4b19725332",
+    "source_bytes": 33696106,
+    "source_stage_hint": "intraoperative_label_only"
+  },
+  "anatomical_coverage": "unreviewed",
+  "anatomy_qc": "not_run",
+  "candidate_behavior": [
+    "Reuses existing header inspector, MR converter and direct plane-audit core; no replacement converter or patient-file reader.",
+    "Retains raw per-plane IOP/IPP/PixelSpacing and optional spacing fields for independent saved-metadata refit on future execution. The previous real pilot's omitted raw values remain unavailable.",
+    "Verifies caller-bound record/header identity and strict classic signed16 uncompressed little-endian MR before decoder access.",
+    "Declares/requires NIfTI millimeter units; checks every source plane, signed/scaled sample, coordinate corner and qform/sform consistency.",
+    "Resets prior pydicom decoder state; independent audit derives expected signed16 samples directly from immutable PixelData bytes, without decoder cache reuse.",
+    "Preserves unavailable acquisition timing and distinct MR/US reference frames; no registration, anatomy or preoperative availability claim."
+  ],
+  "generated_controls": {
+    "base_optional_dependency_skips": 12,
+    "full_shape_retries": 0,
+    "full_shape_runs": 1,
+    "independent_saved_result_PASS_sha256": "7bb915458146ba2ba7ae51071d1f3a13b06b278b648cb54b8b4d18b848d17de7",
+    "independent_source_GO_sha256": "d3831f04e9765a585425aa681bb2d2c6ed739507154759433a73cd886789340b",
+    "supplied_tests": 12,
+    "supplied_tests_pass": 12
+  },
+  "generated_full_shape_result": {
+    "array_bytes": 67108864,
+    "blocked_event_types": [
+      "socket.bind"
+    ],
+    "cleanup_notes": [],
+    "generated_image_binding_only": {
+      "bytes": 67109216,
+      "included_in_package": false,
+      "original_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/generated-native.nii",
+      "sha256": "eafd8ee23a902620ccdb2470b8eaf5608a4d978116c98635cc08300c8e10f8b7"
+    },
+    "independent_saved_image_check": "352-byte header, 3327 samples/13308 bytes across all64planes and direct fixture-coordinate corners; no full-array allocation or conversion rerun",
+    "limits": {
+      "RSS_bytes": 536870912,
+      "columns": 512,
+      "count": 64,
+      "output_bytes": 100663296,
+      "rows": 512,
+      "wall_seconds": 90
+    },
+    "native_file_bytes": 67109216,
+    "output_bytes": 67113594,
+    "parent_reaped_worker": true,
+    "patient_read_attempts": 0,
+    "phases": [
+      {
+        "name": "stdlib_imports",
+        "peak_RSS_bytes": 21086208
+      },
+      {
+        "name": "optional_imports",
+        "peak_RSS_bytes": 58785792
+      },
+      {
+        "name": "generated_sources_built",
+        "peak_RSS_bytes": 131514368
+      },
+      {
+        "name": "converted_and_directly_audited",
+        "peak_RSS_bytes": 318488576
+      },
+      {
+        "name": "native_serialized",
+        "peak_RSS_bytes": 318521344
+      },
+      {
+        "name": "native_roundtrip_audited",
+        "peak_RSS_bytes": 387760128
+      }
+    ],
+    "roundtrip_audit": {
+      "audit_core": "scripts/audit_remind_native.py:check_plane",
+      "direct_source_corner_max_error_mm": 5.978451293500288e-06,
+      "expected_samples_method": "immutable_PixelData_signed16_little_endian_frombuffer; independent_of_pydicom_cache",
+      "qform_sform_max_corner_error_mm": 0.0,
+      "source_planes_checked": 64,
+      "source_rescaled_samples_equal": true
+    },
+    "runtime": {
+      "bytecode_writes_disabled": true,
+      "isolated": true,
+      "nibabel": "5.4.2",
+      "numpy": "2.5.3",
+      "pydicom": "3.0.1",
+      "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "site_hooks_disabled": true
+    },
+    "shape_xyz": [
+      512,
+      512,
+      64
+    ],
+    "worker_elapsed_seconds": 0.6471769579220563,
+    "worker_peak_RSS_MiB": 369.796875,
+    "worker_peak_RSS_bytes": 387760128
+  },
+  "generated_identity": "SOFTWARE-TEST; no acquired DICOM paths opened",
+  "limits_of_evidence": [
+    "The full-shape control excludes the59520-object metadata/preflight heap and patient-source reading. Its369.796875MiB peak is not a combined patient-conversion budget.",
+    "A separate staged launcher must emit a bound exact64 handoff after complete metadata validation, reap that worker, then convert under combined lifecycle/read/output accounting.",
+    "Caller-supplied source verification is an explicit boundary; this in-memory adapter does not rehash patient files. A reviewed verified-payload reader is still required.",
+    "Archive source files preserve the exact ignored candidate paths and are not relocation-safe tracked integration without a ROOT/path adjustment and retest.",
+    "US functional-group contents remain unprojected; patient geometry/spatial-versus-temporal frame interpretation remain unresolved."
+  ],
+  "patient_execution_authorized": false,
+  "preoperative_input_admitted": false,
+  "preserved_v1_HOLD": [
+    "NIfTI spatial units omitted and unaudited",
+    "Converter and audit shared mutable decoder cache"
+  ],
+  "schema": "remind-MR-conversion-generated-preparation-result-v2",
+  "source_sha256": {
+    "generated_memory_control.py": "76e075b096f2aaec73b7ddb1405e088d628138e54777e91229fff2e5d261b596",
+    "mr_conversion.py": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d",
+    "test_mr_conversion.py": "d2c5bb315f70f18336851faf3c108e44e0b4070f6bfdf917493833f409e61289"
+  },
+  "split_changed": false,
+  "status": "PASS_GENERATED_ARRAY_PATH_ONLY",
+  "training_admitted": false
+}

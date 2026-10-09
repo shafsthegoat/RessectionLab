@@ -1,0 +1,262 @@
+{
+  "archive": {
+    "bytes": 60556,
+    "file": "evidence.tar.gz",
+    "members": 34,
+    "sha256": "2fca190818a5443f104481c9b32dc3d94157f869ea3ec886a26737b7802c471b"
+  },
+  "members": [
+    {
+      "archive_member": "actual-generated-pilot-shape-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/intent.json",
+      "bytes": 667,
+      "kind": "actual-generated-pilot-shape-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/intent.json",
+      "sha256": "1c983c250cb0ea0bc9d1a0fc01fc50cb6b81c8faf4cfa9995ed0cd377a1b5f0d"
+    },
+    {
+      "archive_member": "actual-generated-pilot-shape-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/parent-result.json",
+      "bytes": 1109,
+      "kind": "actual-generated-pilot-shape-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/parent-result.json",
+      "sha256": "6add4811d86e08d415d4853b82de86b049b3fe472e7cbc1387f8968825709ca6"
+    },
+    {
+      "archive_member": "actual-generated-pilot-shape-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/started.json",
+      "bytes": 26,
+      "kind": "actual-generated-pilot-shape-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/started.json",
+      "sha256": "3bc2e06e9b4187784b677b902680c8b37c07e53f40b5cf722f9d4a7b880cccb4"
+    },
+    {
+      "archive_member": "actual-generated-pilot-shape-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/worker-result.json",
+      "bytes": 2576,
+      "kind": "actual-generated-pilot-shape-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-pilot-shape-v2/worker-result.json",
+      "sha256": "f6c6c9e8a15fdb99731502398e50f65fb4ce3ab75ea12989252908c14c6f08c9"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/intent.json",
+      "bytes": 653,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/intent.json",
+      "sha256": "e4e0a4cb3ad255d2edcf77facbde05f6c7fc11dbe27d4f6313f8f55a829d5ce2"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/parent-result.json",
+      "bytes": 1093,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/parent-result.json",
+      "sha256": "31e4021b00b536a4d057afaca595e4bdf1c82df867ff77ca3565241b10e9b658"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/started.json",
+      "bytes": 26,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/started.json",
+      "sha256": "ebe5e66302fdb3dd03705b869a9ca9faf63352f0d17bc71cfeb2c3b7e290e151"
+    },
+    {
+      "archive_member": "actual-generated-tiny-receipts/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/worker-result.json",
+      "bytes": 2536,
+      "kind": "actual-generated-tiny-receipts",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated-memory-tiny-v2/worker-result.json",
+      "sha256": "01f91dfc3cabf791432b799cd610e3c4837eaa09e9c8d86e5016f56b44957e47"
+    },
+    {
+      "archive_member": "independent-generated-postrun-PASS/build/remind-mr-generated-memory-postrun-independent-v2/REPORT.md",
+      "bytes": 3655,
+      "kind": "independent-generated-postrun-PASS",
+      "original_repository_path": "build/remind-mr-generated-memory-postrun-independent-v2/REPORT.md",
+      "sha256": "6a6ba9ae02ddda4a8e27ae1aa1ebc1e76c72aaa81f943e739efd8c204bc796cb"
+    },
+    {
+      "archive_member": "independent-generated-postrun-PASS/build/remind-mr-generated-memory-postrun-independent-v2/audit.json",
+      "bytes": 3486,
+      "kind": "independent-generated-postrun-PASS",
+      "original_repository_path": "build/remind-mr-generated-memory-postrun-independent-v2/audit.json",
+      "sha256": "d28cbfb00d187c7d99a22137bbed48e402f43ac17ec95e55d309fa6e2ac6ea5b"
+    },
+    {
+      "archive_member": "independent-generated-postrun-PASS/build/remind-mr-generated-memory-postrun-independent-v2/audit_saved.py",
+      "bytes": 9595,
+      "kind": "independent-generated-postrun-PASS",
+      "original_repository_path": "build/remind-mr-generated-memory-postrun-independent-v2/audit_saved.py",
+      "sha256": "11afd47c68942ec912c8cf33e2b2b1f910dcb9a90c3a2a5ea2b99cc1ab2c97f6"
+    },
+    {
+      "archive_member": "independent-generated-postrun-PASS/build/remind-mr-generated-memory-postrun-independent-v2/review.json",
+      "bytes": 1778,
+      "kind": "independent-generated-postrun-PASS",
+      "original_repository_path": "build/remind-mr-generated-memory-postrun-independent-v2/review.json",
+      "sha256": "7bb915458146ba2ba7ae51071d1f3a13b06b278b648cb54b8b4d18b848d17de7"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/REPORT.md",
+      "bytes": 4762,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/REPORT.md",
+      "sha256": "72ec02f90e7b37427628fabdf35502836c18f6502baa9b54ef34dc8f3693ad98"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/audit.json",
+      "bytes": 3049,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/audit.json",
+      "sha256": "898f034b7797a5d0939874afdb29d3dba72013fa6a8aefdd64db72e5a6ef4c03"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/audit_controls.py",
+      "bytes": 8716,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/audit_controls.py",
+      "sha256": "a22a2bd8a1a79af5cf45c013542e212ff65f71829b28c98ccdf8cdc4bb0454c4"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/frozen-generated_memory_control.py",
+      "bytes": 8253,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/frozen-generated_memory_control.py",
+      "sha256": "76e075b096f2aaec73b7ddb1405e088d628138e54777e91229fff2e5d261b596"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/frozen-mr_conversion.py",
+      "bytes": 12021,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/frozen-mr_conversion.py",
+      "sha256": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/frozen-test_mr_conversion.py",
+      "bytes": 13666,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/frozen-test_mr_conversion.py",
+      "sha256": "d2c5bb315f70f18336851faf3c108e44e0b4070f6bfdf917493833f409e61289"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/review.json",
+      "bytes": 1645,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/review.json",
+      "sha256": "d3831f04e9765a585425aa681bb2d2c6ed739507154759433a73cd886789340b"
+    },
+    {
+      "archive_member": "independent-v2-source-GO/build/remind-mr-conversion-independent-v2/supplied-tests.log",
+      "bytes": 1581,
+      "kind": "independent-v2-source-GO",
+      "original_repository_path": "build/remind-mr-conversion-independent-v2/supplied-tests.log",
+      "sha256": "a8296def0c6444745d55aa325332d7e3ee274bb246e940eff5a4101d3eefb7f7"
+    },
+    {
+      "archive_member": "packaging-source/build/remind-qc-adapter-preparation-v1/package_MR_preparation_v2.py",
+      "bytes": 10241,
+      "kind": "packaging-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/package_MR_preparation_v2.py",
+      "sha256": "2c1fc2c6098e6e6f81edba893b8039d4b1849111ac049cbead86392a524f29c7"
+    },
+    {
+      "archive_member": "preserved-v1-HOLD/build/remind-mr-conversion-independent-v1/REPORT.md",
+      "bytes": 3016,
+      "kind": "preserved-v1-HOLD",
+      "original_repository_path": "build/remind-mr-conversion-independent-v1/REPORT.md",
+      "sha256": "a9a580632c9b2bcdc513489c6a4a73f79db000e3d1059845fd6573b41d1c6733"
+    },
+    {
+      "archive_member": "preserved-v1-HOLD/build/remind-mr-conversion-independent-v1/audit.json",
+      "bytes": 758,
+      "kind": "preserved-v1-HOLD",
+      "original_repository_path": "build/remind-mr-conversion-independent-v1/audit.json",
+      "sha256": "4059ca07abe4893e511e145ab9e0d6958022ea1a59952b1b793141bca3e7fc91"
+    },
+    {
+      "archive_member": "preserved-v1-HOLD/build/remind-mr-conversion-independent-v1/frozen-mr_conversion.py",
+      "bytes": 10326,
+      "kind": "preserved-v1-HOLD",
+      "original_repository_path": "build/remind-mr-conversion-independent-v1/frozen-mr_conversion.py",
+      "sha256": "1f8987a76e38001a4fac2e8fa483ae6ddc0d18fc39bb8965a3eb89d10cea31f2"
+    },
+    {
+      "archive_member": "preserved-v1-HOLD/build/remind-mr-conversion-independent-v1/frozen-test_mr_conversion.py",
+      "bytes": 11628,
+      "kind": "preserved-v1-HOLD",
+      "original_repository_path": "build/remind-mr-conversion-independent-v1/frozen-test_mr_conversion.py",
+      "sha256": "9485764b509545383294ba9ace484afcc1e6469441425dec8a018df6b724ff2a"
+    },
+    {
+      "archive_member": "preserved-v1-HOLD/build/remind-mr-conversion-independent-v1/reproduce_hold.py",
+      "bytes": 1746,
+      "kind": "preserved-v1-HOLD",
+      "original_repository_path": "build/remind-mr-conversion-independent-v1/reproduce_hold.py",
+      "sha256": "f41aaa31c486664482d5154cdc24a20d5a7c8e12cb53b05ca2989f0896e0ee49"
+    },
+    {
+      "archive_member": "preserved-v1-HOLD/build/remind-mr-conversion-independent-v1/supplied-tests.log",
+      "bytes": 1165,
+      "kind": "preserved-v1-HOLD",
+      "original_repository_path": "build/remind-mr-conversion-independent-v1/supplied-tests.log",
+      "sha256": "ea0af54a1205b0442439e6b9cd9be0c91b6d85d3b17895062cff70cec6904cd9"
+    },
+    {
+      "archive_member": "reused-source-snapshot/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "bytes": 27747,
+      "kind": "reused-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    {
+      "archive_member": "reused-source-snapshot/scripts/audit_remind_native.py",
+      "bytes": 10186,
+      "kind": "reused-source-snapshot",
+      "original_repository_path": "scripts/audit_remind_native.py",
+      "sha256": "59fa3cf7298386bbaed7f33ce4540760bd9ab7b16739fc00c22f77a75f59c1ad"
+    },
+    {
+      "archive_member": "reused-source-snapshot/scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "kind": "reused-source-snapshot",
+      "original_repository_path": "scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "archive_member": "reused-source-snapshot/src/resectionlab/remind_header_inventory.py",
+      "bytes": 15666,
+      "kind": "reused-source-snapshot",
+      "original_repository_path": "src/resectionlab/remind_header_inventory.py",
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    {
+      "archive_member": "v2-source-and-generated-controls/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated_memory_control.py",
+      "bytes": 8253,
+      "kind": "v2-source-and-generated-controls",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/generated_memory_control.py",
+      "sha256": "76e075b096f2aaec73b7ddb1405e088d628138e54777e91229fff2e5d261b596"
+    },
+    {
+      "archive_member": "v2-source-and-generated-controls/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "bytes": 12021,
+      "kind": "v2-source-and-generated-controls",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "sha256": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d"
+    },
+    {
+      "archive_member": "v2-source-and-generated-controls/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/test_mr_conversion.py",
+      "bytes": 13666,
+      "kind": "v2-source-and-generated-controls",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/test_mr_conversion.py",
+      "sha256": "d2c5bb315f70f18336851faf3c108e44e0b4070f6bfdf917493833f409e61289"
+    }
+  ],
+  "next_staged_launcher_proposal_excluded": true,
+  "schema": "remind-MR-generated-evidence-index-v2",
+  "summary": {
+    "bytes": 5863,
+    "file": "summary.json",
+    "sha256": "83de23909d13051edea432615f82bfac5625934a9185c47baa0ea06a7e956023"
+  },
+  "validation": {
+    "DICOM_or_image_array_files_in_archive": 0,
+    "all_archive_members_match_original_bytes": true,
+    "code_and_terminal_receipt_pins_checked": true,
+    "patient_files_read_by_packager": 0,
+    "tracked_edits": 0
+  }
+}
