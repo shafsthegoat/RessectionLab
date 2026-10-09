@@ -1,0 +1,61 @@
+{
+  "schema": "resect-case4-boundary6-v4-geometry-result",
+  "recorded_utc": "2026-10-09T03:02:33.065565+00:00",
+  "status": "rejected_independent_surface_fidelity",
+  "source_commit": "95744b27f885d569debea15099ae190aadd594dc",
+  "release_sha256": "e00e568aecf210b75f8fbdec163e7199f7c877b7e0025f12786a97e60490f413",
+  "launcher_exit_code": 1,
+  "candidate_id": "case4_boundary6_interior24_curvature_off_single",
+  "native_generation_calls": 1,
+  "retries": 0,
+  "solver_calls": 0,
+  "solver_admitted": false,
+  "returned_nodes": 19070,
+  "returned_tet10_elements": 10512,
+  "sampled_surface_distance_m": {
+    "source_to_mesh": 0.0038691925286687217,
+    "mesh_to_source": 0.002263557449021836
+  },
+  "full_surface_upper_bound_m": {
+    "source_to_mesh": 0.004576299339337691,
+    "mesh_to_source": 0.003253715834290842
+  },
+  "surface_distance_limit_m": 0.002,
+  "relative_volume_error": 0.0031469476061740664,
+  "relative_volume_limit": 0.03,
+  "source_surface_scope": "retained estimated Case4 T1-derived envelope; not anatomically accepted",
+  "skyline_three_value_arrays_bytes_conservative": 39276495720,
+  "supervision": {
+    "status": "failed_or_incomplete",
+    "worker_exit_code": 1,
+    "kill_reason": null,
+    "elapsed_seconds": 17.63240391621366,
+    "sampled_peak_group_rss_bytes": 591118336
+  },
+  "output_guard": {
+    "error": null,
+    "files": 9,
+    "bytes": 1567682
+  },
+  "all_input_bindings_unchanged": true,
+  "candidate_output_checks_passed": true,
+  "source_arrays_reused": true,
+  "MRI_reextracted": false,
+  "B_or_V_motion_accessed": false,
+  "duringUS_or_before_during_tag_opened": false,
+  "training_updates": 0,
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "raw_saved_receipt_sha256": {
+    "acceptance.json": "c0f5c3ac878d1d45e3aa2db04ccb0204f4ce2c308c00fa1419e6f555495a2d44",
+    "worker.json": "71cea1ac2989d4e757087594da6b9de53f3715f28dcff44459a8f7062e0d970e",
+    "candidate/result.json": "e81e351c93f7b9107d62a8e619c7d60aa77b330413747e083b62d4a2e6a8e543",
+    "candidate/diagnostic/manifest.json": "1f0a861836a88cac116c0b0f11ff572a2c1c7990f2493b5fe442c99ba5d29b65"
+  },
+  "limitations": [
+    "Both observed sampled directed distances exceed the unchanged 2 mm gate; tighter sampling alone cannot cure the rejection.",
+    "A 0.315% total-volume error does not establish local boundary fidelity.",
+    "No displacement solve, numerical convergence, force validation, or unseen-patient evaluation was performed.",
+    "The skyline estimate is a conservative storage projection, not observed solver memory."
+  ]
+}

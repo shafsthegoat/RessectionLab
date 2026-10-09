@@ -95,11 +95,14 @@ validate patient retraction or cutting forces.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
-including independent isolated-source checks; no mesher ran yet. Prior v1 count,
-v2 surface-fidelity and v3 timeout failures remain. Case4 comparison landmarks
-were previously revealed, so any later FEM displacement score here is
-retrospective development evidence. A separately frozen patient and sealed
-outcomes are required for untouched evaluation.
+including independent isolated-source checks. The [single released attempt](artifacts/mechanics/resect-case4-patient-mesh-boundary6-v4/RESULT.md)
+returned 19,070 nodes and 10,512 tet10 in 17.63 seconds, but failed both
+2 mm surface-distance gates (sample maxima 3.869/2.264 mm; full bounds
+4.576/3.254 mm). No solver ran. Prior v1 count, v2 surface-fidelity and v3
+timeout failures remain. Case4 comparison landmarks were previously revealed,
+so any later FEM displacement score here is retrospective development evidence.
+A separately frozen patient and sealed outcomes are required for untouched
+evaluation.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
