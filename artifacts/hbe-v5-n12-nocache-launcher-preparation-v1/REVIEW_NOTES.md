@@ -1,0 +1,15 @@
+# Independent prospective-launcher review notes
+
+Scope: ignored candidate source and tiny generated controls only. No native/model launch, bulk predecessor read, full stream replay, measured/patient data, tracked edit or commit.
+
+Findings communicated to the writer and root before any release:
+
+1. Preflight hint audit used a shallow dictionary copy. The nested path list would grow during post-native validation while the copied counters stayed at fourteen. Repair: deep-copy preflight audit; generated success must preserve fourteen paths separately from twenty-eight final paths.
+2. Frozen old supervisor group-signal failure could skip `wait()`. An independent fake-process call to the actual old function reproduces a failed receipt with live child and zero waits. Repair: versioned extension retains the exact `Popen` handle, performs containment/reaping for native and readout, persists cleanup exceptions and fails policy success on fallback/errors/survivors. Never signal cached group-member PIDs.
+3. New wrapper time/storage initially fell outside the old preparation/aggregate ledger. Repair: launcher-inclusive elapsed minus native/readout stage times must fit the unchanged 150-second preparation/aggregate limits, with explicit sidecar storage and finalization allowance. Enforce this before reservation/native admission as well as at terminal accounting; separate 45-second wrapper checks alone do not suffice.
+4. A saved receipt could differ from the dictionary returned by old execution. Repair: require full parsed equality and detect final digest changes, preserving the first binding; failure paths still bind any available saved native receipt.
+5. Frozen ordinal-9 predecessor validation cannot authenticate the new sidecar. Explicit downstream HOLD is required until a separate committed admission gate verifies envelope, extension sources, sidecar, exact native receipt and extended resource/coverage checks. Preserve all historical identities.
+
+At the intermediate repaired-source checkpoint, sixteen generated candidate controls passed independently in 0.149 seconds. The independent inherited-cleanup reproduction passed in 0.002 seconds; it creates no process. Final source decision remains pending the inclusive prelaunch preparation check and finalization-reserve test/guard, followed by final current-byte tests and hashes. Tests paused during root's second explicit MR fixture quiet window; text review/editing continued.
+
+Final resolution: inclusive prelaunch preparation and post-write reserve checks were added, and disappearance after first native-receipt binding was made terminal. Eighteen final candidate controls passed independently in 0.157 seconds. An independent actual-old-supervisor/new-shim integration test contained and reaped the fake child under injected group-signal failure while rejecting policy success. Final source/hash guards passed; `REPORT.md` records GO for source integration/release preparation, without execution authorization and with the downstream ordinal-9 hold.

@@ -680,3 +680,8 @@ The [private vascular evaluator](../artifacts/private-vascular-evaluator-v1/RESU
 ### October 9: paired-data transfer started alongside Tracto
 
 The [IXI intake launch](../artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/RESULT.txt) is confirmed after the committed role freeze. At 11:49 UTC, 1.67 GB of the first archive was present as unverified resumable partial data; no archive was complete. The concurrent Tracto download had 1,510 verified files totaling 52.26 GB, with zero failed attempts. Both transfers continue; snapshots do not admit image or anatomical use.
+
+
+### October 9: source-bound mechanics launcher adoption
+
+The [mechanics launcher extension](../artifacts/hbe-v5-n12-nocache-launcher-preparation-v1/RESULT.md) is integrated with 18 passing generated controls and independent cleanup-path validation. It preserves original integrity checks while applying the tested per-file cache hint and accounting for its own work. The next numerical row has not run: the observed 50% available host memory is below its reviewed 55% launch floor. No new native output or reservation exists.

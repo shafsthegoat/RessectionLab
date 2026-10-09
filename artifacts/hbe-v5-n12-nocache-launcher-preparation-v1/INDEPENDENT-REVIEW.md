@@ -1,0 +1,30 @@
+# Independent prospective N12 no-cache launcher review
+
+**GO for root to integrate and commit these exact reviewed source bytes and prepare a separately reviewed ordinal-8 envelope. No actual execution is authorized by this source review. HOLD ordinal 9 until a separate source-bound policy-admission gate exists.** Final source guards pass at HEAD `6946ef58ec15d9d2d3b0cd3ba8c83f113ee9c586`; no compute slot or HEAD freeze is held.
+
+Exact ignored candidate bindings:
+
+| File | SHA-256 |
+| --- | --- |
+| `hbe_v5_nocache_v1.py` | `efeda27abc3c1a6851e1066789e51a2f05b94728def62e71061d03da7f4629de` |
+| `hbe_v5_nocache_hash_v1.py` | `96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc` |
+| `hbe_v5_nocache_host_v1.py` | `2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f` |
+| `test_generated_launcher.py` | `1421f31a442bbaa6eb154b7bd3f494065b7477290557c5c20d803e34a5173078` |
+
+Candidate location: `build/hbe-v5-n12-nocache-comparison-v1/adoption_candidate/`. The intended three `launchers/` paths are still absent, as are the native row-8 target and policy sidecar. The launcher refuses execution from the ignored candidate location. A future envelope must bind all three committed extension files to the same selected HEAD as its exact inner old release, with the fixed schema/status/policy/path fields; sources, both release identities and saved native receipt are checked again. The helper loader compiles the exact verified bytes. All twenty original HBE source hashes match both working bytes and historical commit `d2b540f842ef1074db1e9b9c3ca7a767ea150f89`. No old source, release, receipt or native `FINAL_FILES` inventory was changed by this review.
+
+The extension scopes F_NOCACHE to the original predecessor-chain calls during both preflight and post-native validation. Nested N12 verification remains inside the outer hint lifetime; unrelated hashing uses the restored original function. Successful coverage requires the declared 14 preflight / 28 completed opens and repeated-byte totals. The original hash/stat/size implementation remains responsible for integrity. A deep copy preserves the preflight audit independently of later calls.
+
+The host must meet 55%/normal pressure initially and 45%/normal pressure before native reservation and again before native supervision. Inclusive preparation time since launcher entry is checked at both pre-native gates, so the initial wrapper cannot silently extend the old 150-second allowance. Terminal accounting subtracts recorded native/readout stage times from total launcher time, charges a one-second finalization reserve and a full one-MiB sidecar to the original preparation/aggregate checks, and verifies the durable final write fits that reserve. Native output retains its original cap and inventory. The sidecar is outside that inventory and one-use; failed gates remain negative attempts rather than automatic retries. Own-process RSS high-water checks and bounded extension phases supplement the unchanged native/readout process-group caps.
+
+The extension now retains each exact native/readout `Popen` handle. Even if old group signaling fails before old `wait()`, the extension attempts direct-child termination/reaping and checks the observed group. Fallback, cleanup errors, unresolved children or cleanup exceptions prevent policy success and are recorded. The old native/readout numerical result remains distinct from this extension decision.
+
+The exact parsed saved native receipt must equal the dictionary returned by the old runner before success. Later changes **or deletion** fail stable rebinding; failure/finalizer paths retain any safely readable receipt binding and do not invent zero calls when the outcome is unknown. One-use sidecar and native-directory checks prevent adopting a pre-existing attempt as a new policy run.
+
+Issues found and repaired during this independent review were mutable preflight audit state, inherited unreaped-child cleanup, uncharged extension preparation/storage, preparation enforcement occurring only after native execution, mismatched or disappeared durable receipts, and unchecked finalization reserve. `REVIEW_NOTES.md` preserves the review sequence.
+
+**Validation:** all **18 candidate generated controls pass independently** in 0.157 s, covering an ephemeral committed-source fixture, nested scope/restoration, changed-source/envelope identity, host and inclusive-time refusal before reservation/supervision, one-use behavior, resource charging, sidecar finalization, receipt mutation/deletion and cleanup failures. An additional independent control reproduces the original cleanup hole using a fake child. A second independent integration control runs the **actual frozen supervisor through the repaired shim**, injects observer refusal plus group-signal `PermissionError`, and confirms direct-child kill/reap, recorded fallback/error, restored functions and failed policy result (0.002 s). No actual child/solver is created in those process controls. Generated tests do not establish a live native result, actual overload behavior or cache causality.
+
+The remaining boundary is explicit: the frozen ordinal-9 validator can accept an old row-8 native receipt without checking this new policy sidecar. It must not be used to release ordinal 9 after an extended row-8 run until a separate committed admission gate verifies envelope, three-source closure, sidecar, exact native receipt, resource charges and full coverage. The old inner release also remains a legacy-runner input; root must execute through the reviewed envelope when declaring this policy. The old receipt alone cannot certify it.
+
+`audit_candidate.py`, `audit.json` and the saved test logs provide repeatable small-source controls and pre/post byte guards. This review used source, tiny generated files and fake processes only: zero bulk predecessor reads, native/model calls, HBE readouts, measured/patient accesses or repository tracked writes. Temporary Git fixtures are isolated from the project repository. No new numerical convergence, force agreement, material fit or patient-validity claim follows from this source decision.

@@ -1,0 +1,5 @@
+# Prospective HBE predecessor-read policy launcher
+
+The independently reviewed three-file launcher is copied byte-for-byte into `launchers/`. It applies per-descriptor F_NOCACHE only while the existing hash validator streams large predecessor files. Original numerical source, releases, receipts, solver/readout limits and integrity checks remain unchanged. The extension owns child cleanup, records immutable preflight/final hint audits, binds the complete original receipt, and charges wrapper preparation and sidecar output to existing limits. Eighteen generated controls and a separate failure-path check against the old supervisor passed.
+
+This commit contains no executable release or native run. The direct post-model host snapshot was normal pressure at 50% available, below the reviewed initial 55% floor; ordinal 8 remains unlaunched. A fresh same-HEAD inner release and separate policy envelope are required when host conditions permit. Ordinal 9 additionally needs a reviewed admission check for the new sidecar and terminal result. No physical validation, measured fitting or causal memory-cache claim follows from this source integration.

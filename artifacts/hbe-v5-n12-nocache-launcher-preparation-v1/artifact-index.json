@@ -1,0 +1,91 @@
+{
+  "files": [
+    {
+      "bytes": 6144,
+      "path": "INDEPENDENT-REVIEW.md",
+      "sha256": "d154c484a68749834541353e3077a90cea26dd0f3ea51abbcd70476c3f310b33"
+    },
+    {
+      "bytes": 5212,
+      "path": "README.md",
+      "sha256": "11ab745509c0b1ee384d8823f19de067bada46c3322c065c52ef6859d0e58799"
+    },
+    {
+      "bytes": 1153,
+      "path": "RESULT.md",
+      "sha256": "b77d4cdfd6692bae2f4beeed90809c6fca78c5fa64f5f9c7dad6ead0003f668a"
+    },
+    {
+      "bytes": 3031,
+      "path": "REVIEW_NOTES.md",
+      "sha256": "d428f6dc9f2d5ec700ca6abe0388662ed249d8abefa34717dc3fbcb5a9ab4d7d"
+    },
+    {
+      "bytes": 6321,
+      "path": "audit.json",
+      "sha256": "53b7ea57da593f653d1907bbbed8f7b6a47186ca1ca8ee4e7261e47b54d339d2"
+    },
+    {
+      "bytes": 3844,
+      "path": "audit_candidate.py",
+      "sha256": "981c4b883ed87b6fe20b01471a48b1b45bc418ee3f4605a912f78aab7e981585"
+    },
+    {
+      "bytes": 457,
+      "path": "final-guards.json",
+      "sha256": "9c13c1d200883e720b4a810f4c26e1c3372be475a680bee87f2a8354c85ad4da"
+    },
+    {
+      "bytes": 2075,
+      "path": "hbe_v5_nocache_hash_v1.py",
+      "sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc"
+    },
+    {
+      "bytes": 8426,
+      "path": "hbe_v5_nocache_host_v1.py",
+      "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f"
+    },
+    {
+      "bytes": 31098,
+      "path": "hbe_v5_nocache_v1.py",
+      "sha256": "efeda27abc3c1a6851e1066789e51a2f05b94728def62e71061d03da7f4629de"
+    },
+    {
+      "bytes": 35721,
+      "path": "test_generated_launcher.py",
+      "sha256": "1421f31a442bbaa6eb154b7bd3f494065b7477290557c5c20d803e34a5173078"
+    },
+    {
+      "bytes": 1957,
+      "path": "test_generated_launcher.txt",
+      "sha256": "e8ac62d2591a8c3c3a78a0603dc0ac34ad3b0fd542bb2b5a2dbe378e2e631836"
+    },
+    {
+      "bytes": 1473,
+      "path": "test_inherited_cleanup.py",
+      "sha256": "9b7a2d2317ff65f42861c8e86ae6b207887c1470142834f11051f7f915c819dc"
+    },
+    {
+      "bytes": 207,
+      "path": "test_inherited_cleanup.txt",
+      "sha256": "11535b31e5c7fc198c8ca12bda95ed8deacadf5f55f6efe4d701d1dfbfbbdbc7"
+    },
+    {
+      "bytes": 3317,
+      "path": "test_owned_integration.py",
+      "sha256": "f271ea9199b33d35cc5aec29d6741692be5265ff4035bcbda7f1cebfcb4daa72"
+    },
+    {
+      "bytes": 206,
+      "path": "test_owned_integration.txt",
+      "sha256": "9244ded152889d7780be3dbbdc3420d9ff5bfec7d2ebd63e5d6be6d658cc3260"
+    }
+  ],
+  "source_sha256": {
+    "README.md": "11ab745509c0b1ee384d8823f19de067bada46c3322c065c52ef6859d0e58799",
+    "hbe_v5_nocache_hash_v1.py": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+    "hbe_v5_nocache_host_v1.py": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+    "hbe_v5_nocache_v1.py": "efeda27abc3c1a6851e1066789e51a2f05b94728def62e71061d03da7f4629de",
+    "test_generated_launcher.py": "1421f31a442bbaa6eb154b7bd3f494065b7477290557c5c20d803e34a5173078"
+  }
+}

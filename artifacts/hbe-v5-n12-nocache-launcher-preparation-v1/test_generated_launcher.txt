@@ -1,0 +1,23 @@
+test_depleted_host_after_full_validation_refuses_native_reservation (__main__.GeneratedLauncherTests) ... ok
+test_durable_native_receipt_must_equal_returned_receipt_and_remain_stable (__main__.GeneratedLauncherTests) ... ok
+test_exact_versioned_envelope_binds_committed_sources_and_old_release (__main__.GeneratedLauncherTests) ... ok
+test_existing_policy_sidecar_refuses_second_use (__main__.GeneratedLauncherTests) ... ok
+test_extension_source_binding_rejects_changed_worktree_and_head (__main__.GeneratedLauncherTests) ... ok
+test_final_sidecar_write_must_fit_prior_charged_reserve (__main__.GeneratedLauncherTests) ... ok
+test_full_stub_execution_hints_preflight_and_post_native_recheck (__main__.GeneratedLauncherTests) ... ok
+test_generated_complete_old_runner_binds_policy_and_native_receipt (__main__.GeneratedLauncherTests) ... ok
+test_helper_import_compiles_exact_verified_source_bytes (__main__.GeneratedLauncherTests) ... ok
+test_inclusive_pre_native_gate_rejects_before_reservation_and_supervision (__main__.GeneratedLauncherTests) ... ok
+test_missing_nested_hint_coverage_refuses_before_native (__main__.GeneratedLauncherTests) ... ok
+test_native_stage_host_gate_runs_before_supervisor_and_restores (__main__.GeneratedLauncherTests) ... ok
+test_owned_cleanup_exception_reaches_terminal_callback (__main__.GeneratedLauncherTests) ... ok
+test_owned_stage_permission_error_still_kills_and_reaps_exact_child (__main__.GeneratedLauncherTests) ... ok
+test_owned_stage_reaps_normal_completed_child (__main__.GeneratedLauncherTests) ... ok
+test_owned_stage_survivor_is_unresolved_and_never_pid_signaled (__main__.GeneratedLauncherTests) ... ok
+test_pre_native_refusal_restores_all_functions_without_native (__main__.GeneratedLauncherTests) ... ok
+test_total_preparation_charge_includes_wrapper_time_and_sidecar (__main__.GeneratedLauncherTests) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.157s
+
+OK
