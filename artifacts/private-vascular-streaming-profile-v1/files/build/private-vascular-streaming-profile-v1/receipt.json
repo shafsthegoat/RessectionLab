@@ -1,0 +1,103 @@
+{
+  "caps": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "cleanup_reserve_seconds": 10,
+    "lifecycle_wall_seconds": 45,
+    "numerical_threads": 1,
+    "profile_json_bytes": 1048576,
+    "sampled_process_group_rss_bytes": 536870912,
+    "worker_wall_seconds": 35
+  },
+  "child_release_sha256": "a42a149a38a4ae11ae91b5c96a16106eede1540ee88b8b7b2e1bcb412400ad6b",
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "launcher_sha256": "e48cb01e2586e40776109bfa0e79ad10b6e18ab0e6771c3642b9b46d0f6a5480",
+  "lifecycle_seconds": 8.251027290942147,
+  "output_bindings": {
+    "readout-console.txt": {
+      "bytes": 157,
+      "sha256": "ad7861b49c5fcf0c133f90a3ffbcb0f57c1273c154807b0d12d75599ea4fad8b"
+    },
+    "worker-release.json": {
+      "bytes": 413,
+      "sha256": "a42a149a38a4ae11ae91b5c96a16106eede1540ee88b8b7b2e1bcb412400ad6b"
+    },
+    "worker/attempt.json": {
+      "bytes": 1068,
+      "sha256": "c2143edafefff46c9070dbc80daba11f75d451a2fe07d02b5f1ff7827b107883"
+    },
+    "worker/profile.json": {
+      "bytes": 8862,
+      "sha256": "dffc8441d958ac1d0d5d5199ab4ccb05496e1ece1ed8a74c8b65c7192da2fa7b"
+    }
+  },
+  "patient_or_model_access_permitted": false,
+  "profile_bytes": 8862,
+  "profile_sha256": "dffc8441d958ac1d0d5d5199ab4ccb05496e1ece1ed8a74c8b65c7192da2fa7b",
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 4194304,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "-X",
+      "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-profile-v1/worker/unused-pycache",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-preparation-v1/profile_generated.py",
+      "--release",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-profile-v1/worker-release.json",
+      "--output-directory",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-profile-v1/worker"
+    ],
+    "elapsed_seconds": 8.226050707977265,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 13825,
+    "peak_sampled_process_group_rss_bytes": 43548672,
+    "pid": 8074,
+    "sampled_process_group_rss_cap_bytes": 536870912,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 35
+  },
+  "root_release_sha256": "3a37811aaa2144db98fcc591a95357513652642308a8280afff445eab02c11d9",
+  "sampling_note": "RSS/output are sampled; brief peaks can be missed. Whole child lifecycle is supervised.",
+  "schema": "generated-streaming-profile-supervision-v1",
+  "semantics": {
+    "process_peak_rss_bytes": 43614208,
+    "profile_seconds": 7.883141667116433,
+    "status": "generated_streaming_profile_complete",
+    "tracemalloc_peak_bytes": 759089,
+    "work": {
+      "cell_capsule_pairs": 1130496,
+      "maximum_action_masks": 3,
+      "maximum_cell_geometry_batch": 256,
+      "maximum_coarse_geometry_batch": 256,
+      "maximum_geometry_batch": 256,
+      "maximum_tile_cells": 4096,
+      "reference_sample_calls": 105,
+      "reference_sampled_cells": 21314,
+      "tile_capsule_pairs": 18432,
+      "tiles_evaluated": 105,
+      "tiles_pruned": 2967,
+      "tiles_scanned": 3072
+    }
+  },
+  "source_bindings": {
+    "build/menichetti-structure-launch-independent-v1/REPORT.md": "7b502043e15b8a402c1d02e2bc1338e50cbc201977af6297afd01c5af64731ff",
+    "build/menichetti-structure-launch-preparation-v1/launch.py": "2f93c7fd776014417677ed7ea12112a8f237218e76d288ad04297b651816fea2",
+    "build/private-vascular-streaming-independent-v1/REPORT.md": "12d26ca020626ebc0f8ae3474161b2a8cf641610e0714afb63fbb721bf78d488",
+    "build/private-vascular-streaming-preparation-v1/profile_generated.py": "1b149489ee2dfb0338c08518fba5835b689de3cace7f696796b08b42e27b4eda",
+    "build/private-vascular-streaming-preparation-v1/repository-source-pins.json": "2ced65d6f47c3771919e6a62f9fbbf54593db30f803c70343b798db83513fea8",
+    "build/private-vascular-streaming-preparation-v1/streaming_contact.py": "c85cca298b20190be865e23cb3d0bde3dc142e69f182e93e65c008895cec3d75",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+  },
+  "status": "generated_streaming_profile_complete"
+}

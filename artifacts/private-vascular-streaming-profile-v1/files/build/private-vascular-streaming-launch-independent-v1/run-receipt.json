@@ -1,0 +1,30 @@
+{
+  "actual_profile_directory_exists": false,
+  "bound_file_count": 93,
+  "changed_files": [],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-launch-independent-v1/unused-pycache",
+    "-m",
+    "pytest",
+    "-q",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-preparation-v1/test_launch_profile.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-launch-independent-v1/test_independent.py",
+    "--basetemp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-launch-independent-v1/tiny-controls-v1",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "elapsed_seconds": 1.4256248748861253,
+  "error": null,
+  "exit_code": 0,
+  "native_solver_or_model_or_patient_access": false,
+  "output_sha256": "124d710b4e634f773c0cfb2b7fa4c382cf3ef92f8066c66d3ce7bb67d6aef790",
+  "realistic_evaluation_performed": false,
+  "schema": "independent-streaming-launcher-review-v1",
+  "source_after_sha256": "688253554fc31fa06f7d92e1634f997c14490757ed1be321d8f33c7635d5dc55",
+  "source_before_sha256": "688253554fc31fa06f7d92e1634f997c14490757ed1be321d8f33c7635d5dc55",
+  "source_snapshots_equal": true
+}

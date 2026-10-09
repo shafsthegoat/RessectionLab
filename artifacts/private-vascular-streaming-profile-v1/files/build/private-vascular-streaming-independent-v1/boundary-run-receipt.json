@@ -1,0 +1,26 @@
+{
+  "after_sha256": "6f70453156872478dd979d88b292cc363346bec2a13cc960f53dff075c82072f",
+  "before_sha256": "6f70453156872478dd979d88b292cc363346bec2a13cc960f53dff075c82072f",
+  "changed_files": [],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-preparation-v1/test_profile_boundary.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-independent-v1/test_profile_independent.py",
+    "--basetemp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-independent-v1/boundary-generated-tests-v1",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "elapsed_seconds": 0.20653712493367493,
+  "error": null,
+  "exit_code": 0,
+  "output_sha256": "e8b981c8b9010bb633ad4e4d591190d80aad92cbe20d00915232255ce3e7fd94",
+  "realistic_size_evaluation_performed": false,
+  "schema": "independent-tiled-vascular-worker-boundary-v1",
+  "snapshot_file_count": 82,
+  "snapshots_equal": true
+}

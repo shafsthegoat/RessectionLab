@@ -1,0 +1,280 @@
+{
+  "capsule_records": [
+    {
+      "action_id": "first",
+      "end_ras_mm": [
+        19.89966790975015,
+        91.15198885993951,
+        35.8
+      ],
+      "part": "shaft",
+      "radius_mm": 1.5,
+      "start_ras_mm": [
+        -54.292880863589275,
+        -77.06057222429004,
+        -77.2
+      ]
+    },
+    {
+      "action_id": "first",
+      "end_ras_mm": [
+        19.89966790975015,
+        91.15198885993951,
+        35.8
+      ],
+      "part": "tip",
+      "radius_mm": 2.0,
+      "start_ras_mm": [
+        -31.464404317946375,
+        -25.302861121450178,
+        -42.2
+      ]
+    },
+    {
+      "action_id": "repeated",
+      "end_ras_mm": [
+        19.89966790975015,
+        91.15198885993951,
+        35.8
+      ],
+      "part": "shaft",
+      "radius_mm": 1.5,
+      "start_ras_mm": [
+        -54.292880863589275,
+        -77.06057222429004,
+        -77.2
+      ]
+    },
+    {
+      "action_id": "repeated",
+      "end_ras_mm": [
+        19.89966790975015,
+        91.15198885993951,
+        35.8
+      ],
+      "part": "tip",
+      "radius_mm": 2.0,
+      "start_ras_mm": [
+        -31.464404317946375,
+        -25.302861121450178,
+        -42.2
+      ]
+    },
+    {
+      "action_id": "crossing",
+      "end_ras_mm": [
+        -82.65634010691365,
+        51.374291343793686,
+        35.8
+      ],
+      "part": "shaft",
+      "radius_mm": 1.5,
+      "start_ras_mm": [
+        85.55622097731592,
+        -22.81825742954574,
+        -77.2
+      ]
+    },
+    {
+      "action_id": "crossing",
+      "end_ras_mm": [
+        -82.65634010691365,
+        51.374291343793686,
+        35.8
+      ],
+      "part": "tip",
+      "radius_mm": 2.0,
+      "start_ras_mm": [
+        33.798509874476025,
+        0.010219116097161418,
+        -42.2
+      ]
+    }
+  ],
+  "grid": {
+    "affine_ras_mm": [
+      [
+        0.652629141924224,
+        -0.25313080237547336,
+        0.0,
+        -60.0
+      ],
+      [
+        0.25313080237547336,
+        0.652629141924224,
+        0.0,
+        -90.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.7,
+        -67.2
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "shape": [
+      256,
+      256,
+      192
+    ]
+  },
+  "hypothetical_legacy_four_coordinate_arrays_bytes": 539961504,
+  "hypothetical_legacy_largest_bounding_box_cells": 5624599,
+  "legacy_memory_scope": "Arithmetic estimate for index, centre, lower and upper arrays only; not an executed legacy measurement.",
+  "loaded_repository_origins_after": {
+    "resectionlab": "src/resectionlab/__init__.py",
+    "resectionlab.independent_geometry_batch": "src/resectionlab/independent_geometry_batch.py"
+  },
+  "loaded_repository_origins_before": {
+    "resectionlab": "src/resectionlab/__init__.py",
+    "resectionlab.independent_geometry_batch": "src/resectionlab/independent_geometry_batch.py"
+  },
+  "memory_scope": "Traced allocations cover kernel; process RSS includes interpreter/imports. No hard RSS cap is provided by this worker.",
+  "numpy_version": "2.5.3",
+  "process_peak_rss_bytes": 43614208,
+  "profile_seconds": 7.883141667116433,
+  "prohibited_actions": [],
+  "python_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "repository_sources_verified": 77,
+  "result": {
+    "action_count": 3,
+    "budget": {
+      "coarse_batch": 256,
+      "max_cell_capsule_pairs": 4000000,
+      "max_sampled_cells": 2000000,
+      "max_tile_capsule_pairs": 2000000,
+      "tile_edge": 16,
+      "wall_seconds": 20.0
+    },
+    "budget_scope": "Cooperative checkpoints and fixed tile arrays; no hard wall/RSS containment.",
+    "capsule_count": 6,
+    "capsules_identity": "dc4b3056e38e2a9af6bcee91c7ad4bba83427caa8b57932357932cded9884d66",
+    "contact_tolerance_squared_mm2": 1e-10,
+    "elapsed_seconds": 7.883054499980062,
+    "geometry_scope": "Discrete reference-cell contacts; volume is a cell-volume surrogate, not continuous injury.",
+    "grid_shape": [
+      256,
+      256,
+      192
+    ],
+    "grid_voxels": 12582912,
+    "patient_admission": false,
+    "per_action": {
+      "crossing": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": false,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": true,
+        "positive_cell_volume_upper_bound_mm3": 10.975999999999997,
+        "positive_reference_cells": 32,
+        "touched_reference_cells": 10702,
+        "unknown_in_grid_cell_volume_mm3": 1657.0329999999997,
+        "unknown_reference_cells": 4831
+      },
+      "first": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": false,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": true,
+        "positive_cell_volume_upper_bound_mm3": 10.632999999999997,
+        "positive_reference_cells": 31,
+        "touched_reference_cells": 10881,
+        "unknown_in_grid_cell_volume_mm3": 1757.8749999999995,
+        "unknown_reference_cells": 5125
+      },
+      "repeated": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": false,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": true,
+        "positive_cell_volume_upper_bound_mm3": 10.632999999999997,
+        "positive_reference_cells": 31,
+        "touched_reference_cells": 10881,
+        "unknown_in_grid_cell_volume_mm3": 1757.8749999999995,
+        "unknown_reference_cells": 5125
+      }
+    },
+    "reference_grid_identity": "7c1a73572816af0ae5198133fce7a07741c83bf6249beb7b2b9141ecb21a09f7",
+    "reference_identity": "5f587ea93c2eefe119e2f0a01eaac1c15f7113b8bc1e4a7b433bdd24e0343f8c",
+    "reference_scope": "Generated annotation domain only; absent labels do not certify absence of biological vessels.",
+    "removed_overlap": {
+      "existing_congruence_requirement_unchanged": true,
+      "outcomes": null,
+      "status": "not_evaluated_by_contact_kernel"
+    },
+    "schema": "generated-tiled-vascular-contact-v1",
+    "shaft": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 13.376999999999997,
+      "positive_reference_cells": 39,
+      "touched_reference_cells": 15037,
+      "unknown_in_grid_cell_volume_mm3": 2416.7779999999993,
+      "unknown_reference_cells": 7046
+    },
+    "status": "complete_generated_contact_profile",
+    "strategy_replay_or_admission_performed": false,
+    "tile_pruning_padding_mm": 1.792e-07,
+    "tip": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": false,
+      "positive_cell_volume_upper_bound_mm3": 17.149999999999995,
+      "positive_reference_cells": 50,
+      "touched_reference_cells": 17778,
+      "unknown_in_grid_cell_volume_mm3": 2814.314999999999,
+      "unknown_reference_cells": 8205
+    },
+    "whole_tool": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 20.579999999999995,
+      "positive_reference_cells": 60,
+      "touched_reference_cells": 21314,
+      "unknown_in_grid_cell_volume_mm3": 3414.907999999999,
+      "unknown_reference_cells": 9956
+    },
+    "work": {
+      "cell_capsule_pairs": 1130496,
+      "maximum_action_masks": 3,
+      "maximum_cell_geometry_batch": 256,
+      "maximum_coarse_geometry_batch": 256,
+      "maximum_geometry_batch": 256,
+      "maximum_tile_cells": 4096,
+      "reference_sample_calls": 105,
+      "reference_sampled_cells": 21314,
+      "tile_capsule_pairs": 18432,
+      "tiles_evaluated": 105,
+      "tiles_pruned": 2967,
+      "tiles_scanned": 3072
+    }
+  },
+  "root_external_supervision_required": true,
+  "scope": "one_generated_256x256x192_streaming_contact_profile",
+  "source_binding_scope": "Project Python sources bound before and after; scientific runtime binary closure is not authenticated by this feasibility worker.",
+  "source_bytes_unchanged": true,
+  "source_hashes": {
+    "profile_generated.py": "1b149489ee2dfb0338c08518fba5835b689de3cace7f696796b08b42e27b4eda",
+    "repository-source-pins.json": "2ced65d6f47c3771919e6a62f9fbbf54593db30f803c70343b798db83513fea8",
+    "streaming_contact.py": "c85cca298b20190be865e23cb3d0bde3dc142e69f182e93e65c008895cec3d75"
+  },
+  "tracemalloc_current_bytes": 12125,
+  "tracemalloc_peak_bytes": 759089
+}

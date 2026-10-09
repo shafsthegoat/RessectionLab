@@ -1,0 +1,18 @@
+{
+  "exit_code": 0,
+  "fake_stage_controls": "generated counts only; semantic failures, parent/cleanup exceptions and late profile/receipt/extra-file mutation refuse success",
+  "kernel_or_profile_executed": false,
+  "launcher_sha256": "e48cb01e2586e40776109bfa0e79ad10b6e18ab0e6771c3642b9b46d0f6a5480",
+  "passed": 28,
+  "prior_controls_preserved": [
+    "launcher-generated-tests-v1",
+    "launcher-generated-tests-v2"
+  ],
+  "process_controls": "tiny Python sleep/print only, with timeout/RSS/output/EPERM and direct child reap checks",
+  "pytest_seconds": 0.82,
+  "release_sha256": "a438d23e84e2a414d83c9ad7ec6d3f590f40414c3251d573b002234d05ea6951",
+  "schema": "generated-streaming-supervisor-author-controls-v1",
+  "scratch": "launcher-generated-tests-v3",
+  "source_rebind_sha256": "f816fbdb334a1b519ef506c2c68f8389dfb0d4cc43c2aa08116664bfce3f57df",
+  "test_sha256": "f66a9f813793cf4fcd9791c8f406e605c66833753619d5c1e5c5753db9093ca3"
+}

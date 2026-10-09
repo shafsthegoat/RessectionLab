@@ -1,0 +1,27 @@
+{
+  "capsules": 6,
+  "cooperative_wall_seconds": 20,
+  "coverage": "partial_x_half",
+  "distinct_actions": 3,
+  "grid_shape": [
+    256,
+    256,
+    192
+  ],
+  "grid_voxels": 12582912,
+  "patient_access": false,
+  "release": true,
+  "release_sha256": "a42a149a38a4ae11ae91b5c96a16106eede1540ee88b8b7b2e1bcb412400ad6b",
+  "repeated_action": true,
+  "repository_sources_verified": 77,
+  "root_external_supervision_required": true,
+  "scope": "one_generated_256x256x192_streaming_contact_profile",
+  "source_cache_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-profile-v1/worker/unused-pycache",
+  "source_hashes": {
+    "profile_generated.py": "1b149489ee2dfb0338c08518fba5835b689de3cace7f696796b08b42e27b4eda",
+    "repository-source-pins.json": "2ced65d6f47c3771919e6a62f9fbbf54593db30f803c70343b798db83513fea8",
+    "streaming_contact.py": "c85cca298b20190be865e23cb3d0bde3dc142e69f182e93e65c008895cec3d75"
+  },
+  "spacing_mm": 0.7,
+  "status": "reserved_generated_profile"
+}

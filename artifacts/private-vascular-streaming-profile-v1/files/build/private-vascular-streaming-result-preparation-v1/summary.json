@@ -1,0 +1,132 @@
+{
+  "actions": 3,
+  "capsules": 6,
+  "claim_scope": "Generated procedural labels and explicit capsule geometry only; no patient admission, image I/O performance, full strategy admission, removed overlap or biological injury validation.",
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "extra_grid_runs": 0,
+  "grid_cells_sampled_percent": 0.1693884531656901,
+  "grid_shape": [
+    256,
+    256,
+    192
+  ],
+  "grid_voxels": 12582912,
+  "hypothetical_legacy_four_coordinate_arrays_bytes": 539961504,
+  "hypothetical_legacy_largest_bounding_box_cells": 5624599,
+  "kernel_profile_seconds_with_tracing": 7.883141667116433,
+  "legacy_comparison_scope": "Arithmetic allocation estimate only; legacy method was not run. No empirical speedup or measured memory-ratio claim.",
+  "mask_contacts": {
+    "shaft": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 13.376999999999997,
+      "positive_reference_cells": 39,
+      "touched_reference_cells": 15037,
+      "unknown_in_grid_cell_volume_mm3": 2416.7779999999993,
+      "unknown_reference_cells": 7046
+    },
+    "tip": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": false,
+      "positive_cell_volume_upper_bound_mm3": 17.149999999999995,
+      "positive_reference_cells": 50,
+      "touched_reference_cells": 17778,
+      "unknown_in_grid_cell_volume_mm3": 2814.314999999999,
+      "unknown_reference_cells": 8205
+    },
+    "whole_tool": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 20.579999999999995,
+      "positive_reference_cells": 60,
+      "touched_reference_cells": 21314,
+      "unknown_in_grid_cell_volume_mm3": 3414.907999999999,
+      "unknown_reference_cells": 9956
+    }
+  },
+  "original_data_or_model_access": false,
+  "peak_sampled_group_rss_bytes": 43548672,
+  "peak_traced_kernel_bytes": 759089,
+  "per_action": {
+    "crossing": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 10.975999999999997,
+      "positive_reference_cells": 32,
+      "touched_reference_cells": 10702,
+      "unknown_in_grid_cell_volume_mm3": 1657.0329999999997,
+      "unknown_reference_cells": 4831
+    },
+    "first": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 10.632999999999997,
+      "positive_reference_cells": 31,
+      "touched_reference_cells": 10881,
+      "unknown_in_grid_cell_volume_mm3": 1757.8749999999995,
+      "unknown_reference_cells": 5125
+    },
+    "repeated": {
+      "annotated_positive_encounter": true,
+      "annotation_coverage_complete_for_sweep": false,
+      "biological_vessel_free": null,
+      "clinical_injury_probability": null,
+      "outside_reference_fov": true,
+      "positive_cell_volume_upper_bound_mm3": 10.632999999999997,
+      "positive_reference_cells": 31,
+      "touched_reference_cells": 10881,
+      "unknown_in_grid_cell_volume_mm3": 1757.8749999999995,
+      "unknown_reference_cells": 5125
+    }
+  },
+  "process_peak_rss_bytes": 43614208,
+  "profile_sha256": "dffc8441d958ac1d0d5d5199ab4ccb05496e1ece1ed8a74c8b65c7192da2fa7b",
+  "prohibited_actions_during_saved_summary": [],
+  "receipt_sha256": "b9977aed5bfe03d93a794eef977e96ff2d444626541e2c82f625bd7093668805",
+  "repeated_action_counts_equal": true,
+  "repository_sources_verified": 77,
+  "root_preflight_sha256": "dd8b7052250aae4a73c3bc49219732b5e2cb8dc6a85b62e903d025fafaf3c9c0",
+  "root_release_sha256": "3a37811aaa2144db98fcc591a95357513652642308a8280afff445eab02c11d9",
+  "root_source_head": "abbc3e31ef2dd9123e470a31b3701eb375f85424",
+  "saved_output_bytes": 15401,
+  "status": "saved_generated_profile_verified",
+  "tiles_pruned_percent": 96.58203125,
+  "whole_child_seconds": 8.226050707977265,
+  "work": {
+    "cell_capsule_pairs": 1130496,
+    "maximum_action_masks": 3,
+    "maximum_cell_geometry_batch": 256,
+    "maximum_coarse_geometry_batch": 256,
+    "maximum_geometry_batch": 256,
+    "maximum_tile_cells": 4096,
+    "reference_sample_calls": 105,
+    "reference_sampled_cells": 21314,
+    "tile_capsule_pairs": 18432,
+    "tiles_evaluated": 105,
+    "tiles_pruned": 2967,
+    "tiles_scanned": 3072
+  },
+  "worker_cleanup_finalization_seconds": 8.251027290942147
+}

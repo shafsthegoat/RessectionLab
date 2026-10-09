@@ -1,0 +1,20 @@
+Generated streaming contact feasibility succeeded on a 256×256×192 reference grid.
+
+The single root-released run completed with exit 0, no retry, one reaped child (PID 8074), no remaining group members, no cleanup fallback/errors and unchanged source bindings. Kernel profiling took 7.88314s with allocation tracing enabled; the complete child took 8.22605s and worker/cleanup/finalization 8.25103s. Peak traced kernel allocation was 759,089B (0.724MiB); process peak RSS 43,614,208B (41.594MiB); sampled process-group peak 43,548,672B. Final output was 15,401B. All were within the reviewed 35s child/45s lifecycle/512MiB sampled RSS/4MiB output caps. Process RSS includes interpreter/imports; traced allocation is a separate measure. Sampling can miss short peaks.
+
+The grid represented 12,582,912 cells at 0.7mm with a rotated affine. Six generated capsules represented two distinct oblique shaft/tip sweeps plus one repeated action. The kernel scanned 3,072 disjoint tiles, conservatively pruned 2,967 (96.582%), evaluated 105 tiles and sampled procedural labels for 21,314 unique contacted cells (0.1694% of the full grid). Work was 18,432 tile/capsule pairs and 1,130,496 cell/capsule pairs. Scratch geometry stayed at 4,096 cells per tile and 256 cells per oracle batch, with at most 3 action masks. Full-FOV contact was preserved without allocating the complete grid or a global contact set.
+
+Whole-tool contact touched 21,314 unique cells, including 60 generated positive-label cells and 9,956 cells with unknown annotation coverage. Shaft counts were 15,037 touched/39 positive/7,046 unknown; tip counts were 17,778/50/8,205. The shaft and whole tool extended outside the reference field of view. Both first and repeated actions had exactly 10,881 touched/31 positive/5,125 unknown cells; their equality and the whole-strategy union confirm that the repeated action was not double-counted. These are generated reference-mask contact counts, not injury probabilities. Coverage remained incomplete, biological vessel-free and clinical-injury fields remained null, and removed overlap stayed explicitly unassessed.
+
+The prior helper would have materialized 5,624,599 cells for the largest capsule bounding box in this fixture. Its four index/centre/lower/upper coordinate arrays imply 539,961,504B (about515MiB), from source arithmetic alone. That legacy method was not executed. This result supports the bounded working-memory design and measured feasibility of this generated workload; it does not support an empirical speedup or measured before/after memory ratio. Timings include allocation tracing.
+
+The tested improvement is a tile-local full-FOV contact kernel using the unchanged independent geometry oracle and 1e-10mm² squared contact tolerance. Labels were fixed procedural generated controls. No patient images/headers/masks, force values, learned models or native solver were opened or run. The profile did not exercise real image I/O, complete-strategy admission, actual registration/lineage QC or patient-sized reference loading. Those live gates remain closed. Existing separate congruent-grid removed-overlap semantics remain unchanged.
+
+Exact principal bindings:
+Root release 3a37811aaa2144db98fcc591a95357513652642308a8280afff445eab02c11d9
+Receipt b9977aed5bfe03d93a794eef977e96ff2d444626541e2c82f625bd7093668805
+Profile dffc8441d958ac1d0d5d5199ab4ccb05496e1ece1ed8a74c8b65c7192da2fa7b
+Saved-only author summary 32e9c7b62015469254a9b803a28c6b9b6e1dcbb369100248abb0d6d53e355b64
+Executing kernel c85cca298b20190be865e23cb3d0bde3dc142e69f182e93e65c008895cec3d75
+External launcher e48cb01e2586e40776109bfa0e79ad10b6e18ab0e6771c3642b9b46d0f6a5480
+The indexed package binds all included originals and the independent saved-result audit. No original execution files were modified.

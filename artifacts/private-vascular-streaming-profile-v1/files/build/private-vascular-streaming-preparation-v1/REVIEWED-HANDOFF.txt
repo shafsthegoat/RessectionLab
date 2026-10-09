@@ -1,0 +1,29 @@
+GO for the ignored generated streaming-contact kernel and external one-shot supervisor.
+No realistic-size profile or patient payload was executed by preparation/review.
+
+Kernel: streaming_contact.py
+SHA256 c85cca298b20190be865e23cb3d0bde3dc142e69f182e93e65c008895cec3d75
+Profile worker: profile_generated.py
+SHA256 1b149489ee2dfb0338c08518fba5835b689de3cace7f696796b08b42e27b4eda
+Current 77-source inventory: repository-source-pins.json
+SHA256 2ced65d6f47c3771919e6a62f9fbbf54593db30f803c70343b798db83513fea8
+Root integration delta: source-rebind-v2.json
+SHA256 f816fbdb334a1b519ef506c2c68f8389dfb0d4cc43c2aa08116664bfce3f57df
+External launcher: launch_profile.py
+SHA256 e48cb01e2586e40776109bfa0e79ad10b6e18ab0e6771c3642b9b46d0f6a5480
+Disabled supervisor release: supervisor-disabled-release.json
+SHA256 a438d23e84e2a414d83c9ad7ec6d3f590f40414c3251d573b002234d05ea6951
+
+Kernel/profile review: build/private-vascular-streaming-independent-v1/REPORT.md
+SHA256 12d26ca020626ebc0f8ae3474161b2a8cf641610e0714afb63fbb721bf78d488
+Kernel: 40 controls passed 1.29s; worker-boundary: 10 controls passed 0.05s. The review's original 76-source inventory is preserved; the two-file root integration rebind is separately reviewed below.
+
+Final supervisor review: build/private-vascular-streaming-launch-independent-v1/REPORT.md
+SHA256 cf47706a02860411205dacf6f830a4da09081c10e07ef1c7eb6c01df76375af3
+Final: 45 controls passed 1.08s; all 93 snapshots unchanged. The exact false-release CLI check-only passed. Root must bind this final review in its preflight record because the exact executable release schema does not name the launcher review.
+
+Use launch_profile.py, not a direct worker invocation. Root freezes a separate copy of supervisor-disabled-release.json with only execution_released changed to true and records the new file hash. With numerical thread variables set to 1, run the existing .venv/bin/python -B -X pycache_prefix=<absolute repository>/build/private-vascular-streaming-preparation-v1/launcher-unused-pycache, followed by build/private-vascular-streaming-preparation-v1/launch_profile.py --release <root-frozen release> --release-sha256 <its exact SHA256>. Fixed output is build/private-vascular-streaming-profile-v1; it must not exist. The launcher constructs the child release, child command and isolated environment. Root serializes this one run; no auto-retry.
+
+The unchanged reviewed OwnedWorker and existing supervisor bound the whole child to 35 s, 512 MiB sampled group RSS and 4 MiB aggregate output, with 10 s reserved cleanup and 45 s worker/cleanup/finalization lifecycle. Reaping, empty group membership, no fallback/error, exact outputs/receipt/source hashes and semantic completion are mandatory for success. The kernel’s 20 s cooperative budget sits inside these external limits. Parent source validation precedes the supervised lifecycle; sampled RSS/output can miss brief peaks.
+
+The algorithm streams disjoint tiles and uses the existing scalar-backed contact kernel. It avoids whole-grid coordinate arrays and global contact sets, preserves per-action and whole-strategy unions, separates shaft/tip, and never clips to estimated support. It preserves unknown coverage/outside-FOV and leaves removed overlap untouched/unassessed. The benchmark has a generated 256×256×192/0.7 mm rotated grid, 6 capsules / 3 actions including a duplicate, and partial procedural coverage. It introduces no actual image reader, patient admission, target truth, model run, new physics or injury probability. Existing live patient/model and congruent-removal gates stay unchanged.

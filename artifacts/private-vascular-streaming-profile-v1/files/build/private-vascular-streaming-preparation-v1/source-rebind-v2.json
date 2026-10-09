@@ -1,0 +1,23 @@
+{
+  "actual_profile_run": false,
+  "exact_changes": {
+    "src/resectionlab/matched_private_vascular.py": {
+      "after": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+      "before": null
+    },
+    "src/resectionlab/private_vascular_evaluation.py": {
+      "after": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+      "before": "30e9efaac9d0f4e311bedf9075362fcd488f1b31f76a3938f4224736d39e2eb7"
+    }
+  },
+  "executing_geometry_changed": false,
+  "kernel_changed": false,
+  "new_inventory_sha256": "2ced65d6f47c3771919e6a62f9fbbf54593db30f803c70343b798db83513fea8",
+  "new_source_count": 77,
+  "observed_head": "abbc3e31ef2dd9123e470a31b3701eb375f85424",
+  "old_inventory_preserved": "prior-repository-source-pins-v1.json",
+  "old_inventory_sha256": "264f0e811dbb117357de979c2748ac687b7108e56e1f183d8c6582f4b4a1861d",
+  "old_source_count": 76,
+  "root_integration_commit": "abbc3e31ef2dd9123e470a31b3701eb375f85424",
+  "schema": "root-integrated-source-rebind-v1"
+}
