@@ -1,0 +1,65 @@
+IXI265: one prospective TRAIN paired-header pilot
+
+Selection uses only the frozen person manifest: choose the smallest existing
+split_sha256, then exact subject, among the 70 annotation_available TRAIN people.
+This selects IXI:265, source site Guys, filename acquisition code 0845. The rule
+does not inspect images, image-header quality, labels or outcomes. A failure
+preserves the person's frozen role and does not trigger a replacement selection.
+
+Exact selected source members
+T1: IXI265-Guys-0845-T1.nii.gz, 6,980,629 bytes, TAR header offset 1,867,056,128.
+MRA: IXI265-Guys-0845-MRA.nii.gz, 14,307,469 bytes, TAR header offset 3,578,892,288.
+Both body offsets are header offset + 512. Their exact 512-byte header SHA256 values
+are bound by the frozen manifest and the saved complete metadata-only TAR walk.
+Label: vessel_dataset/IXI265.nii.gz, identified by the publisher's ZIP preview;
+its exact local compressed sizes/CRC/offset remain prospective until the verified
+ZIP's central directory is selectively inspected. No rounded preview size is
+treated as an exact size or checksum.
+
+T1 and MRA are acquired measurements. The vessel mask is a source-derived
+SynthStrip/Frangi/manual-refined reference with incomplete sensitivity/coverage.
+Source prose on surgeon review is inconsistent; local manual review has not
+occurred. Acquired copies and derived-reference copies stay in different output
+directories. No resampling, thresholding, cropping, model execution or source
+rewrite is included. Labels do not make unlabelled voxels proven vessel-free.
+
+Matching source ID/site/acquisition-code strings support source-person linkage.
+They do not establish acquisition simultaneity, elapsed time, preoperative
+availability, common grid or accepted registration. File mtime and filename
+acquisition code are never interpreted as acquisition dates. Acquisition time
+and cross-modality time interval remain null. The cohort's unresolved biological
+aliases/pretrained exposure and protected-role conflict rules remain in force.
+
+Header-only scope
+Only NIfTI header and extension-marker bytes are decompressed (352 for NIfTI1,
+544 for NIfTI2). The established header helper retains source units and separate
+qform/sform codes and matrices, reports missing/invalid/conflicting transforms,
+and never silently supplies a fallback frame. Exact declared-grid comparisons
+are metadata facts, not anatomical alignment decisions. Voxel arrays, extension
+content, gzip end-of-stream integrity and complete voxel payload length are not
+validated by this header-only step. Opaque copied-member fixity is separate.
+
+The later intended-use admission helper still requires anatomy QC, coverage/
+support evidence, an accepted transform, source availability and a declared
+T1-only task. This pilot leaves those not_run/null/false. MRA and labels remain
+private reference channels; this recipe adds no actor inputs or prediction,
+learning, selection or evaluation permission.
+
+Transport/fixity boundary
+All three archives must first have completed their separate opaque verified
+intake. The raw archive MD5 reference is the pinned maintained TorchIO downloader,
+not an IXI-publisher checksum; label ZIP MD5 comes from its versioned Zenodo
+record. Full archive SHA256 comes from that intake. Before release, root must
+bind the completed receipt and exact published-file stat tuples. The selective
+reader checks regular read-only descriptor identity before/after use. It does
+not reopen 17 GB of unrelated member bodies for another full-archive checksum.
+Consequently whole-archive fixity is inherited, with metadata continuity checks,
+not independently re-established by this pilot. Selected copied bytes receive
+their own streaming SHA256 and post-write rehash. Original archives stay intact.
+
+Root alone may authorize actual execution after independent review, full archive
+completion and exact runtime release. Use external process supervision covering
+the whole worker at 35 seconds, 512 MiB sampled group RSS and 32 MiB output, plus a
+declared bounded cleanup reserve. One fresh output directory is one attempt;
+failure is preserved and no retry is implicit. The false prepared recipe is not
+an execution release. No archive or patient data was opened in preparation.

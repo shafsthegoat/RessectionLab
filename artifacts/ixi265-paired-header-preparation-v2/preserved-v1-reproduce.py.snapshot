@@ -1,0 +1,84 @@
+"""Independent generated-only controls for the frozen IXI reader negatives."""
+from pathlib import Path
+import hashlib, importlib.util, io, json, marshal, struct, sys, tarfile, time, types, zipfile
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+SOURCE_SHA = '6d2997bd79264683e5fc917e128733eb46fd725a149e0bd6a59683651f5207c3'
+PROTOCOL_SHA = '4822625239f8c73141cce727ae328f33e363428641e39d2946db49ea29ed8c27'
+def digest(raw): return hashlib.sha256(raw).hexdigest()
+def guard(event, args):
+    if event == 'open' and isinstance(args[0], (str, bytes)):
+        path = str(args[0])
+        if '/data/' in path or '/sources/' in path:
+            raise AssertionError('patient_or_archive_open_forbidden')
+sys.addaudithook(guard)
+source = (HERE/'snapshots/selective_qc.py').read_bytes()
+assert digest(source) == SOURCE_SHA
+assert digest((HERE/'snapshots/prepared-protocol.json').read_bytes()) == PROTOCOL_SHA
+m = types.ModuleType('reviewed_reader'); m.__file__ = str(HERE/'snapshots/selective_qc.py')
+exec(compile(source, m.__file__, 'exec', dont_inherit=True), m.__dict__)
+work = HERE/'generated'; work.mkdir()
+
+class RawSpy(io.RawIOBase):
+    def __init__(self, raw): self.data=io.BytesIO(raw); self.reads=[]
+    def readable(self): return True
+    def seekable(self): return True
+    def tell(self): return self.data.tell()
+    def seek(self, offset, whence=0): return self.data.seek(offset, whence)
+    def readinto(self, target):
+        start=self.tell(); block=self.data.read(len(target)); target[:len(block)]=block
+        self.reads.append([start,start+len(block)]); return len(block)
+
+payload=b'SELECTED_ONLY'*9
+tar=io.BytesIO()
+with tarfile.open(fileobj=tar, mode='w', format=tarfile.USTAR_FORMAT) as out:
+    for name,data in [('before',b'PROTECTED_BEFORE'),('IXI265-T1.nii.gz',payload),('after',b'PROTECTED_AFTER')]:
+        item=tarfile.TarInfo(name); item.size=len(data); out.addfile(item,io.BytesIO(data))
+raw=tar.getvalue(); row={'name':'IXI265-T1.nii.gz','header_offset':1024,'size':len(payload),
+                         'type':'file','header_sha256':digest(raw[1024:1536])}
+spy=RawSpy(raw)
+with io.BufferedReader(spy) as buffered:
+    result=m.extract_tar_member(buffered,len(raw),row,work/'selected-tar.gz',time.monotonic()+5)
+assert (work/'selected-tar.gz').read_bytes()==payload
+protected=[2560,2560+len(b'PROTECTED_AFTER')]
+overlap=sum(max(0,min(b,protected[1])-max(a,protected[0])) for a,b in spy.reads)
+assert overlap==len(b'PROTECTED_AFTER') and result['other_member_body_bytes_read']==0
+tar_finding={'raw_reads':spy.reads,'protected_after_body':protected,'protected_bytes_actually_returned':overlap,
+             'reader_reported_other_member_body_bytes':result['other_member_body_bytes_read']}
+
+archive=io.BytesIO(); names=['vessel_dataset/IXI002.nii.gz','vessel_dataset/IXI265.nii.gz','vessel_dataset/IXI999.nii.gz']
+with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_STORED) as out:
+    for name,data in zip(names,[b'PROTECTED_BEFORE',payload,b'PROTECTED_AFTER']):out.writestr(name,data)
+raw=archive.getvalue()
+with zipfile.ZipFile(io.BytesIO(raw)) as z:
+    protected_info=z.getinfo(names[2]);offset=protected_info.header_offset
+    nl,ex=struct.unpack('<HH',raw[offset+26:offset+30]);a=offset+30+nl+ex
+    protected=[a,a+protected_info.compress_size]
+spy=RawSpy(raw)
+with io.BufferedReader(spy) as buffered:
+    result=m.extract_zip_member(buffered,len(raw),names[1],names,work/'selected-zip.gz',time.monotonic()+5)
+overlap=sum(max(0,min(b,protected[1])-max(a,protected[0])) for a,b in spy.reads)
+assert overlap>0 and result['other_member_body_bytes_read']==0
+zip_finding={'raw_reads':spy.reads,'protected_after_body':protected,'protected_bytes_actually_returned':overlap,
+             'reader_reported_other_member_body_bytes':result['other_member_body_bytes_read']}
+
+helper=work/'helper.py'; verified=b'raise RuntimeError("verified_source_marker")\n'; helper.write_bytes(verified)
+cache=Path(importlib.util.cache_from_source(str(helper))); cache.parent.mkdir()
+code=compile('raise RuntimeError("unbound_cached_code_marker")',str(helper),'exec')
+cache.write_bytes(importlib.util.MAGIC_NUMBER+struct.pack('<III',0,int(helper.stat().st_mtime)&0xffffffff,len(verified))+marshal.dumps(code))
+m.ROOT=work; m.HEADER='helper.py'; m.PINS={'helper.py':digest(verified)}
+try:m.header_only(work/'NEVER_OPENED.nii.gz')
+except RuntimeError as error:observed=str(error)
+else:raise AssertionError('expected_marker')
+assert observed=='unbound_cached_code_marker'
+audit={'decision':'HOLD','reader_sha256':SOURCE_SHA,'release_candidate_sha256':PROTOCOL_SHA,
+       'scope':'source and tiny generated fixtures only; no actual archive, patient, full image, or metadata reads',
+       'findings':[{'id':'buffered_archive_read_ahead','tar':tar_finding,'zip':zip_finding},
+                   {'id':'bound_helper_source_cache_bypass','source_sha256':digest(verified),'observed':observed,
+                    'image_opened':False}],
+       'requirements':['Use unbuffered archive descriptors, tested beneath the buffering boundary.',
+                       'Compile and execute exactly the hash-verified helper source bytes, without a cache loader.'],
+       'actual_execution_authorized':False}
+(HERE/'audit.json').write_text(json.dumps(audit,sort_keys=True,indent=2)+'\n')
+print(json.dumps(audit,sort_keys=True))

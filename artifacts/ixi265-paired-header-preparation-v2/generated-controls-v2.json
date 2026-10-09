@@ -1,0 +1,21 @@
+{
+  "actual_archive_opens": 0,
+  "actual_execution_released": false,
+  "false_protocol_check_only_passed": true,
+  "generated_duplicate_zip_warning_expected": true,
+  "independent_audit_sha256": "24003991f1266cb9b962ab5249911132c0de1af297ba4fcd5d30c1b68f21fd21",
+  "known_future_dependencies": [
+    "all three exact archives complete",
+    "canonical completion hash and publication stat continuity",
+    "separately reviewed exact outer launcher/runtime/root release"
+  ],
+  "patient_array_opens": 0,
+  "protocol_sha256": "ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8",
+  "schema": "ixi265-extractor-preparation-generated-controls-v2",
+  "seconds": 0.15,
+  "source_sha256": "4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541",
+  "status": "passed_generated_only",
+  "test_sha256": "80a192bfdeefe77230235b05482e426de06f0154ea54420ac3299193d1c940c3",
+  "tests_failed": 0,
+  "tests_passed": 26
+}

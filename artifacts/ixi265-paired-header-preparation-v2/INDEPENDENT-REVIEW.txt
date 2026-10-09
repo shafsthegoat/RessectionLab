@@ -1,0 +1,51 @@
+GO FOR EXTRACTOR PREPARATION ONLY — no actual extraction release
+
+Reader: build/ixi265-paired-header-preparation-v1/selective_qc_v2.py
+SHA256: 4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541
+False protocol: prepared-protocol-v2.json
+SHA256: ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8
+Audit SHA256: 24003991f1266cb9b962ab5249911132c0de1af297ba4fcd5d30c1b68f21fd21
+
+Both preserved v1 blockers are repaired. Independent generated actual-FileIO
+observations verify archive_stream requests buffering=0; all TAR and ZIP reads
+stay within selected-member/central-metadata ranges. Measured and reported
+returned bytes agree (629 TAR; 491 ZIP). The timestamp-valid cached helper is
+ignored; the verified source marker executes, and a wrong source digest refuses.
+The supplied 26 generated tests pass independently in 0.15 seconds, including
+header limits, identity/CRC refusals, and before-open/post-copy failure receipts.
+
+Startup/member intents precede archive reads. Completed opaque copy identity is
+saved before header parsing. Incomplete attempts keep global read accounting
+unknown; parent-owned terminal cleanup/finalization is still an outer-launcher
+requirement. No original archive/image opens or full array allocations occurred.
+
+One-pair prospective recipe (not permission to execute)
+1. Keep IXI265's frozen TRAIN identity and exact T1/MRA TAR offsets/header hashes;
+   select only vessel_dataset/IXI265.nii.gz from the exact ZIP label inventory.
+2. Require all three archive transport verifications. Bind canonical completion
+   receipt SHA and each publication device/inode/size/mtime_ns/ctime_ns plus its
+   inherited digest. Do not rehash whole archives or inspect protected bodies.
+3. Prepare a separately reviewed root-owned outer launcher/release binding this
+   source, helper, selection/protocol, independent audit, runtime and supervisor.
+   One fresh outer output: build/ixi265-paired-header-qc-v1; worker writes selected/.
+   Cap the whole worker at 35 seconds, 512 MiB sampled process-group RSS, and the
+   whole outer output at 32 MiB; allow at most 10 seconds cleanup/finalization.
+   Require owned-child reaping, no stale post-exit group signals, durable terminal
+   outcome/unknown accounting on failures, no implicit retry or reselection.
+4. Root alone may materialize the exact released protocol and one attempt after
+   that launcher review. Intended worker argv uses the bound Python executable,
+   -I -B, the exact reader path, --protocol <bound released protocol>, and
+   --protocol-sha256 <exact released digest>. The current false protocol refuses.
+5. Audit saved receipts and copied header metadata afterward. Preserve acquisition
+   date/time and interval as null, acquired/derived source distinction, unresolved
+   forms/units, and no anatomy, registration, training or actor-channel admission.
+
+Only 352/544 decompressed NIfTI header/marker bytes are inspected. Opaque copies
+are size/SHA checked and rehashed; gzip footer, extension bodies, complete voxel
+payload and anatomy are not validated. Source-person linkage and declared-grid
+equality do not establish registration, simultaneous acquisition or availability.
+
+The known mechanics/OwnedWorker helper pins alone were not given lifecycle GO:
+their post-exit group-signal paths need exact wrapper review. Reviewed ReMIND
+header_pilot_launcher_v2.py SHA0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652
+is a candidate safer supervisor source for a separately bound IXI adapter.

@@ -1,0 +1,66 @@
+{
+  "actual_execution_authorized": false,
+  "decision": "HOLD",
+  "findings": [
+    {
+      "id": "buffered_archive_read_ahead",
+      "tar": {
+        "protected_after_body": [
+          2560,
+          2575
+        ],
+        "protected_bytes_actually_returned": 15,
+        "raw_reads": [
+          [
+            1024,
+            9216
+          ]
+        ],
+        "reader_reported_other_member_body_bytes": 0
+      },
+      "zip": {
+        "protected_after_body": [
+          307,
+          322
+        ],
+        "protected_bytes_actually_returned": 15,
+        "raw_reads": [
+          [
+            544,
+            566
+          ],
+          [
+            544,
+            566
+          ],
+          [
+            524,
+            566
+          ],
+          [
+            322,
+            566
+          ],
+          [
+            74,
+            566
+          ]
+        ],
+        "reader_reported_other_member_body_bytes": 0
+      }
+    },
+    {
+      "id": "bound_helper_source_cache_bypass",
+      "image_opened": false,
+      "observed": "unbound_cached_code_marker",
+      "source_sha256": "154fb24c15221f18d9a23bfeca1207b0dbc060ecbc7f94d87e9efb1ad16bd7f4"
+    }
+  ],
+  "reader_sha256": "6d2997bd79264683e5fc917e128733eb46fd725a149e0bd6a59683651f5207c3",
+  "release_candidate_sha256": "4822625239f8c73141cce727ae328f33e363428641e39d2946db49ea29ed8c27",
+  "requirements": [
+    "Use unbuffered archive descriptors, tested beneath the buffering boundary.",
+    "Compile and execute exactly the hash-verified helper source bytes, without a cache loader."
+  ],
+  "scope": "source and tiny generated fixtures only; no actual archive, patient, full image, or metadata reads"
+}

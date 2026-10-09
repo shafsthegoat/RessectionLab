@@ -1,0 +1,108 @@
+{
+  "actual_execution_authorized": false,
+  "decision": "GO_FOR_EXTRACTOR_PREPARATION_ONLY",
+  "failure_scope": "Startup/member intents precede reads; copied-byte SHA is saved before header parsing; incomplete attempts leave global reads unknown. External kill/finalization remains parent-owned.",
+  "independent_controls": {
+    "actual_or_synced_opens_attempted": [],
+    "bad_source_sha_refusal": "metadata_hash_changed",
+    "tar_raw_fd": {
+      "measured_archive_bytes": 629,
+      "protected_body_bytes": 0,
+      "raw_fileio_intervals": [
+        [
+          1024,
+          1536
+        ],
+        [
+          1536,
+          1653
+        ]
+      ],
+      "reported_archive_bytes": 629
+    },
+    "valid_cache_source_marker": "verified_source_marker",
+    "zip_raw_fd": {
+      "measured_archive_bytes": 491,
+      "permitted_intervals": [
+        [
+          74,
+          249
+        ],
+        [
+          322,
+          566
+        ]
+      ],
+      "protected_body_bytes": 0,
+      "raw_fileio_intervals": [
+        [
+          544,
+          566
+        ],
+        [
+          544,
+          566
+        ],
+        [
+          524,
+          544
+        ],
+        [
+          322,
+          544
+        ],
+        [
+          74,
+          104
+        ],
+        [
+          74,
+          104
+        ],
+        [
+          104,
+          132
+        ],
+        [
+          132,
+          249
+        ]
+      ],
+      "reported_archive_bytes": 491
+    }
+  },
+  "limits": {
+    "chunk_bytes": 1048576,
+    "max_label_member_bytes": 8388608,
+    "max_output_bytes": 33554432,
+    "max_raw_member_bytes": 33554432,
+    "max_report_bytes": 65536,
+    "max_zip_central_bytes": 262144,
+    "max_zip_entries": 256,
+    "sampled_group_rss_bytes": 536870912,
+    "worker_seconds": 35
+  },
+  "negative_audit": {
+    "path": "build/ixi265-paired-header-independent-v1/audit.json",
+    "sha256": "f2b514d9975acd06d433f7572661b84dc2ea7e92a073157535948efbd69383dc"
+  },
+  "outstanding_release_prerequisites": [
+    "All three exact archive completion receipt and publication stat bindings.",
+    "Separately source-bound and reviewed outer launcher/release, one attempt, 35 s worker plus at most 10 s cleanup, 512 MiB sampled group RSS, 32 MiB aggregate outer output.",
+    "Root serializes and explicitly releases the one-pair attempt."
+  ],
+  "provided_generated_tests": {
+    "elapsed_seconds": 0.15,
+    "passed": 26,
+    "receipt_sha256": "263a9daee5026ef5afd28ca049417745319d8a900929791a5b67b35cacbbd154"
+  },
+  "reader_sha256": "4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541",
+  "release_candidate_sha256": "ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8",
+  "scientific_limits": [
+    "IXI265 TRAIN role fixed; no admission, anatomy QC, accepted registration or simultaneous-acquisition inference.",
+    "Only 352/544 decompressed NIfTI header/marker bytes; no voxel arrays, extension-body/footer/full-payload validation.",
+    "Acquired T1/MRA and derived vessel reference remain distinct; unknown label background remains unknown."
+  ],
+  "scope": "source and tiny generated controls only; no actual archive/image opens or extraction release",
+  "supplied_tests_sha256": "80a192bfdeefe77230235b05482e426de06f0154ea54420ac3299193d1c940c3"
+}

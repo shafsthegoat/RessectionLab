@@ -1,0 +1,95 @@
+IXI265 paired source/header pilot: preparation complete, execution unreleased
+
+Independent decision: GO_FOR_EXTRACTOR_PREPARATION_ONLY.
+Reader selective_qc_v2.py:
+  4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541
+False prepared-protocol-v2.json:
+  ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8
+Independent REPORT.txt:
+  f5cfd4dd77c4f78fe3e1461749849db90bea5fa4efe0565a835200a7a6ee312f
+Independent audit.json:
+  24003991f1266cb9b962ab5249911132c0de1af297ba4fcd5d30c1b68f21fd21
+
+IXI265 is the minimum frozen split_sha256, then exact identifier, among the
+existing 70 labeled TRAIN persons. Its role is preserved. The selection uses
+identifiers alone; no image quality, annotation values or outcomes were read.
+The frozen cohort and saved metadata-only TAR walk authenticate the selected
+T1/MRA member names, exact sizes, header offsets and 512-byte header digests.
+The label name is vessel_dataset/IXI265.nii.gz from the publisher ZIP preview.
+
+The minimal reader directly seeks each selected TAR header and copies only its
+exact selected body. ZIP access uses the last 22-byte zero-comment EOCD, bounded
+central metadata and one selected local/member range. Other member bodies are
+not read by the approved CLI boundary. Actual archive descriptors are unbuffered;
+the independent low-level FileIO observations agree with reported read lengths.
+The source-derived label remains separate from acquired T1/MRA copies. Each
+opaque copy has exact size and SHA256, checked by a post-write streaming rehash.
+
+Header parsing reuses the exact hash-bound established helper source through
+compile/exec, bypassing cached helper bytecode. It decompresses only 352 or 544
+NIfTI header/marker bytes, reports units and separate coded qform/sform geometry,
+and does not materialize image arrays. Shape/form equality is reported only as
+a header declaration. Gzip footer, full voxel length, extension content, label
+coverage, anatomy and registration remain unvalidated. Acquisition times remain
+null; source filename code and filemtime do not supply timing or availability.
+
+Validation: 26 generated controls passed in 0.15 seconds locally and independently.
+They cover selective TAR/ZIP reads, corrupt identities/CRC/format/bounds, duplicate
+or unexpected ZIP members, NIfTI limits/units/forms, no implicit registration,
+false release, actual FileIO read-ahead, timestamp-valid stale helper bytecode,
+and failed-attempt accounting. Durable startup/member intents precede actual
+archive opens; copied member identity is saved before header parsing. Failures
+retain partial state and unknown global read accounting. All fixtures are tiny
+generated archives; no actual archive or patient data was opened in preparation.
+
+The preserved v1 negative candidate must not execute. Independent controls found
+buffered read-ahead into generated protected-after bodies and valid stale helper
+bytecode admission; both are repaired in v2. Its source/protocol/tests and the
+negative review remain retained separately for audit.
+
+Remaining concrete release dependencies
+At the last acquisition check T1 was verified; MRA transfer and ZIP remained
+pending. This reader requires canonical completion status all_bytes_verified
+for all three exact archives. Root must bind that completion receipt SHA and
+the published archive identities. Known T1 metadata-only continuity proof:
+  build/ixi-paired-intake-preparation-v1/stat-bindings/IXI-T1-20261009T123610436189Z.json
+  e288b19eb74ccdd4930ff8c119bf9b8ea5720182369c10f511614b99e2fb16db
+It binds T1 archive SHA256:
+  56bbe911fbe967f7d1b830a552995263bdba281e0a6eb78e62f1c38d88a946a9
+No complete MRA/ZIP publication identity is assumed by this preparation.
+
+Root's later archive_bindings[filename].stat must contain exactly dev, ino,
+size, mtime_ns and ctime_ns. Map a transport stat proof's device to dev and inode
+to ino; omit its mode field, which the reader independently checks as regular.
+Archive SHA256 is inherited from verified transport, with pre/post descriptor
+stat continuity. The reader does not claim a fresh whole-archive rehash.
+
+A separately reviewed exact outer launcher and root release remain required.
+Use one fresh outer directory build/ixi265-paired-header-qc-v1; the worker owns
+selected/ below it. The whole worker, including startup/imports, must have an
+external 35-second window, 512 MiB sampled group RSS and 32 MiB total outer output;
+at most 10 additional seconds are reserved for cleanup/finalization. No retry,
+role change or replacement person is implicit. Successful exit must be checked
+against the exact selected member identities/header status, not exit code alone.
+
+Concrete reviewed supervision sources to consider for the separate adapter:
+  build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py
+  0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652
+  build/remind-qc-adapter-preparation-v1/header_pilot_bootstrap_v2.py
+  fc6f9661997f6bde4b215aeb69ac8427b07a15d7beac345d8404a18875dfb3ff
+  scripts/real_intake_io.py
+  496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8
+Their exact IXI adaptation, process-group monitoring, runtime/import closure,
+termination behavior and release are not covered by the extractor's GO. The old
+mechanics/OwnedWorker helper pins alone do not provide a new lifecycle GO because
+of post-exit group-signal paths. No new process framework was introduced here.
+
+Safe current check-only command, from repository root:
+.venv/bin/python -I -B build/ixi265-paired-header-preparation-v1/selective_qc_v2.py --protocol build/ixi265-paired-header-preparation-v1/prepared-protocol-v2.json --protocol-sha256 ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8 --check-only
+
+Removing --check-only still refuses at the false root-release gate. Do not fill
+the pending archive/launch dependencies by inference from download progress.
+Root owns tracked integration and any eventual real execution. Acquired bytes
+remain separate from derived pipeline products. The later intended-use admission
+helper still requires anatomy, registration, coverage/support and availability
+evidence; this pilot grants no training, actor-channel or prediction permission.

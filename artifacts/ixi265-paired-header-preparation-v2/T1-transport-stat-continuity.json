@@ -1,0 +1,25 @@
+{
+  "archive_path": "data/acquisition/ixi-t1-mra-vessel-v1/verified/IXI-T1.tar",
+  "expected_bytes": 4840816640,
+  "fresh_payload_rehash": false,
+  "limits": "Uses unchanged transport verification receipt plus current local file identity/stat. Downstream bounded reader must bind and recheck this stat tuple; this is not a fresh full-file cryptographic verification.",
+  "modification_and_metadata_change_times_not_after_verification": true,
+  "partial_absent": true,
+  "recorded_archive_sha256": "56bbe911fbe967f7d1b830a552995263bdba281e0a6eb78e62f1c38d88a946a9",
+  "recorded_archive_source_md5": "34901a0593b41dd19c1a1f746eac2d58",
+  "recorded_utc": "2026-10-09T12:36:10.435825+00:00",
+  "regular_not_symlink": true,
+  "schema": "ixi-verified-archive-stat-binding-v1",
+  "source_payload_bytes_read": 0,
+  "stat": {
+    "ctime_ns": 1791547299860545900,
+    "device": 16777232,
+    "inode": 9790353,
+    "mode": 33188,
+    "mtime_ns": 1791547294294894023,
+    "size": 4840816640
+  },
+  "verification_finished_utc": "2026-10-09T12:01:46.627704+00:00",
+  "verification_receipt_path": "data/acquisition/ixi-t1-mra-vessel-v1/attempts/e3/e3981614c7a0c22a805d700f5496c69212da64bb1ea643150c18b3ae9b072f7b/01-20261009T114144129161Z-04a4e72a-result.json",
+  "verification_receipt_sha256": "a3be0320ca3483077f2ea5f3847acd35171fc4447b7a969142872401576984d3"
+}

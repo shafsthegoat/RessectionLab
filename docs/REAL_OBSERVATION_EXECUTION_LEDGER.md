@@ -750,3 +750,8 @@ The metadata helper preserves frozen IXI roles, requires intended-use QC asserti
 ### October 9: Preserve exact trained-network recomputation parity and measured tradeoff
 
 Both trained-network forwards on the same generated 64³ input completed with byte-identical logits and decoded labels, independently reloaded from saved arrays. The single ordered hook-free pair shows a 36,487,168-byte (34.80 MiB, 4.80%) lower sampled peak with recomputation, but 16.73 MiB of that difference predates the forward; peak growth differs by only 18.06 MiB. Forward time increases 13.3%. Both children were reaped and exact downloaders remained live. This is limited numerical/resource evidence, not robust performance, full128 feasibility or patient accuracy. The mistyped comparator invocation is retained as a root-transcribed setup refusal. [Result](../artifacts/recompute-parity-64-v2/RESULT.md).
+
+
+### October 9: selective paired-scan header preparation
+
+The [IXI265 header reader](../artifacts/ixi265-paired-header-preparation-v2/RESULT.txt) is independently checked using 26 generated controls. Selection is deterministic within the existing labeled TRAIN people. Original buffered read-ahead and stale helper-bytecode failures are preserved; v2 uses exact unbuffered member reads and verified source bytes. No actual archive was opened. All three verified archive bindings and a separately reviewed external launcher are still required; header inspection does not establish anatomy, registration, coverage or training admission. Downloads continue independently.

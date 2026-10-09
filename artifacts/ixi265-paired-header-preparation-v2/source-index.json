@@ -1,0 +1,119 @@
+{
+  "actual_archive_or_patient_opens_during_preparation": 0,
+  "actual_execution_dependencies": [
+    "all three exact archives verified",
+    "canonical completion hash and archive publication stat bindings",
+    "separately reviewed exact outer supervisor/runtime release"
+  ],
+  "actual_execution_released": false,
+  "anatomical_registration_accepted": false,
+  "archive_image_or_label_payloads_included": false,
+  "canonical_role_manifest": {
+    "path": "manifests/experiments/ixi-component-person-cohort-v1.json",
+    "sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127"
+  },
+  "files": [
+    {
+      "bytes": 17959,
+      "package_path": "selective_qc_v2.py.snapshot",
+      "sha256": "4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541",
+      "source_path": "build/ixi265-paired-header-preparation-v1/selective_qc_v2.py"
+    },
+    {
+      "bytes": 4914,
+      "package_path": "prepared-protocol-v2.json",
+      "sha256": "ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8",
+      "source_path": "build/ixi265-paired-header-preparation-v1/prepared-protocol-v2.json"
+    },
+    {
+      "bytes": 12259,
+      "package_path": "test_generated_v2.py.snapshot",
+      "sha256": "80a192bfdeefe77230235b05482e426de06f0154ea54420ac3299193d1c940c3",
+      "source_path": "build/ixi265-paired-header-preparation-v1/test_generated_v2.py"
+    },
+    {
+      "bytes": 930,
+      "package_path": "generated-controls-v2.json",
+      "sha256": "76231aa96a907eae453bdacceb39cb125031e17bc77817e6c6e20a22fd1926fe",
+      "source_path": "build/ixi265-paired-header-preparation-v1/generated-controls-v2.json"
+    },
+    {
+      "bytes": 6209,
+      "package_path": "RESULT.txt",
+      "sha256": "46d1ca4da6d29a709f9e622a342d80672cae39ebc5f3d2c147537876c87187d1",
+      "source_path": "build/ixi265-paired-header-preparation-v1/RESULT.txt"
+    },
+    {
+      "bytes": 4253,
+      "package_path": "SCIENTIFIC-SCOPE.txt",
+      "sha256": "bae079046a31d154b2b6b42de3ee4ccc78bd5cecaa00fe6b1417dc2ef3219f81",
+      "source_path": "build/ixi265-paired-header-preparation-v1/SCIENTIFIC-SCOPE.txt"
+    },
+    {
+      "bytes": 3522,
+      "package_path": "INDEPENDENT-REVIEW.txt",
+      "sha256": "f5cfd4dd77c4f78fe3e1461749849db90bea5fa4efe0565a835200a7a6ee312f",
+      "source_path": "build/ixi265-paired-header-independent-v2/REPORT.txt"
+    },
+    {
+      "bytes": 3288,
+      "package_path": "independent-audit.json",
+      "sha256": "24003991f1266cb9b962ab5249911132c0de1af297ba4fcd5d30c1b68f21fd21",
+      "source_path": "build/ixi265-paired-header-independent-v2/audit.json"
+    },
+    {
+      "bytes": 7100,
+      "package_path": "independent-verify-repairs.py.snapshot",
+      "sha256": "624a111dbd59d06d99b2b3f346bc9b336e7815ff538e814d18ba6f9b0d67d280",
+      "source_path": "build/ixi265-paired-header-independent-v2/verify_repairs.py"
+    },
+    {
+      "bytes": 1393,
+      "package_path": "preserved-v1-HOLD.txt",
+      "sha256": "2e59ae63c5e324c7993d0c113493c25d5db4750c7b4f1734618a573e0d4f969c",
+      "source_path": "build/ixi265-paired-header-independent-v1/REPORT.txt"
+    },
+    {
+      "bytes": 1687,
+      "package_path": "preserved-v1-negative-audit.json",
+      "sha256": "f2b514d9975acd06d433f7572661b84dc2ea7e92a073157535948efbd69383dc",
+      "source_path": "build/ixi265-paired-header-independent-v1/audit.json"
+    },
+    {
+      "bytes": 5339,
+      "package_path": "preserved-v1-reproduce.py.snapshot",
+      "sha256": "1a1935f4fbe28ef12bc9681e0ffebcf1ba5205e46a74eb47acbc9a2a1b7d3988",
+      "source_path": "build/ixi265-paired-header-independent-v1/reproduce.py"
+    },
+    {
+      "bytes": 17123,
+      "package_path": "preserved-v1-reader.py.snapshot",
+      "sha256": "6d2997bd79264683e5fc917e128733eb46fd725a149e0bd6a59683651f5207c3",
+      "source_path": "build/ixi265-paired-header-preparation-v1/selective_qc.py"
+    },
+    {
+      "bytes": 4627,
+      "package_path": "preserved-v1-false-protocol.json",
+      "sha256": "4822625239f8c73141cce727ae328f33e363428641e39d2946db49ea29ed8c27",
+      "source_path": "build/ixi265-paired-header-preparation-v1/prepared-protocol.json"
+    },
+    {
+      "bytes": 8315,
+      "package_path": "preserved-v1-tests.py.snapshot",
+      "sha256": "ebaedd85c19170c6528e023a0dc7c3f165c0b66644609f266eff2191f2e9fb1e",
+      "source_path": "build/ixi265-paired-header-preparation-v1/test_generated.py"
+    },
+    {
+      "bytes": 1349,
+      "package_path": "T1-transport-stat-continuity.json",
+      "sha256": "e288b19eb74ccdd4930ff8c119bf9b8ea5720182369c10f511614b99e2fb16db",
+      "source_path": "build/ixi-paired-intake-preparation-v1/stat-bindings/IXI-T1-20261009T123610436189Z.json"
+    }
+  ],
+  "note": "Snapshots are provenance only; executing candidate retains its reviewed build path. Preserved v1 is rejected and must not execute.",
+  "person_group": "IXI:265",
+  "role": "TRAIN",
+  "schema": "ixi265-selected-train-header-preparation-integration-v2",
+  "status": "independently_reviewed_extractor_preparation_only",
+  "training_admitted": false
+}

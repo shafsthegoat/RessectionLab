@@ -1,0 +1,99 @@
+"""Independent tiny generated real-FD and cache controls; no acquired opens."""
+from pathlib import Path
+import hashlib, importlib.util, io, json, marshal, os, struct, sys, tarfile, time, types, zipfile
+
+HERE=Path(__file__).resolve().parent; ROOT=HERE.parents[1]
+SOURCE_SHA='4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541'
+PROTOCOL_SHA='ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8'
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+blocked=[]
+def guard(event,args):
+    if event=='open' and isinstance(args[0],(str,bytes)) and any(x in str(args[0]) for x in ['/data/','/sources/']):
+        blocked.append(str(args[0]));raise AssertionError('acquired_or_synced_file_open_forbidden')
+sys.addaudithook(guard)
+source=(HERE/'snapshots/selective_qc_v2.py').read_bytes();assert sha(source)==SOURCE_SHA
+protocol=(HERE/'snapshots/prepared-protocol-v2.json').read_bytes();assert sha(protocol)==PROTOCOL_SHA
+m=types.ModuleType('reader_v2');m.__file__=str(HERE/'snapshots/selective_qc_v2.py')
+exec(compile(source,m.__file__,'exec',dont_inherit=True),m.__dict__)
+work=HERE/'generated';work.mkdir()
+reads=[]
+class FileSpy(io.FileIO):
+    def read(self,count=-1):
+        start=self.tell();raw=super().read(count);end=self.tell()
+        assert os.lseek(self.fileno(),0,os.SEEK_CUR)==end==start+len(raw)
+        reads.append([start,end]);return raw
+original_fdopen=m.os.fdopen
+def observed_fdopen(fd,mode='r',buffering=-1,*args,**kwargs):
+    assert mode=='rb' and buffering==0 and not args and not kwargs
+    return FileSpy(fd,mode='rb',closefd=True)
+m.os.fdopen=observed_fdopen
+
+payload=b'SELECTED_ONLY'*9
+buf=io.BytesIO()
+with tarfile.open(fileobj=buf,mode='w',format=tarfile.USTAR_FORMAT) as out:
+    for name,data in [('before',b'PROTECTED_BEFORE'),('IXI265-T1.nii.gz',payload),('after',b'PROTECTED_AFTER')]:
+        item=tarfile.TarInfo(name);item.size=len(data);out.addfile(item,io.BytesIO(data))
+raw=buf.getvalue();row={'name':'IXI265-T1.nii.gz','header_offset':1024,'size':len(payload),'type':'file','header_sha256':sha(raw[1024:1536])}
+file=work/'tiny.tar';file.write_bytes(raw)
+with m.archive_stream(os.open(file,os.O_RDONLY)) as stream:
+    result=m.extract_tar_member(stream,len(raw),row,work/'selected-tar.gz',time.monotonic()+5)
+assert (work/'selected-tar.gz').read_bytes()==payload
+assert all(1024<=a<=b<=1536+len(payload) for a,b in reads)
+tar_evidence={'raw_fileio_intervals':reads.copy(),'reported_archive_bytes':result['archive_bytes_read'],
+              'measured_archive_bytes':sum(b-a for a,b in reads),'protected_body_bytes':0}
+assert tar_evidence['reported_archive_bytes']==tar_evidence['measured_archive_bytes']
+
+buf=io.BytesIO();names=['vessel_dataset/IXI002.nii.gz','vessel_dataset/IXI265.nii.gz','vessel_dataset/IXI999.nii.gz']
+with zipfile.ZipFile(buf,'w',compression=zipfile.ZIP_STORED) as out:
+    for name,data in zip(names,[b'PROTECTED_BEFORE',payload,b'PROTECTED_AFTER']):out.writestr(name,data)
+raw=buf.getvalue()
+with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+    info=archive.getinfo(names[1]);cd=archive.start_dir
+    offset=info.header_offset;nl,extra=struct.unpack('<HH',raw[offset+26:offset+30]);end=offset+30+nl+extra+info.compress_size
+reads.clear();file=work/'tiny.zip';file.write_bytes(raw)
+with m.archive_stream(os.open(file,os.O_RDONLY)) as stream:
+    result=m.extract_zip_member(stream,len(raw),names[1],names,work/'selected-zip.gz',time.monotonic()+5)
+assert (work/'selected-zip.gz').read_bytes()==payload
+assert all(cd<=a<=b<=len(raw) or offset<=a<=b<=end for a,b in reads)
+zip_evidence={'raw_fileio_intervals':reads.copy(),'permitted_intervals':[[offset,end],[cd,len(raw)]],
+              'reported_archive_bytes':result['archive_bytes_read'],'measured_archive_bytes':sum(b-a for a,b in reads),
+              'protected_body_bytes':0}
+assert zip_evidence['reported_archive_bytes']==zip_evidence['measured_archive_bytes']
+m.os.fdopen=original_fdopen
+
+helper=work/'helper.py';verified=b'raise RuntimeError("verified_source_marker")\n';helper.write_bytes(verified)
+cache=Path(importlib.util.cache_from_source(str(helper)));cache.parent.mkdir()
+code=compile('raise RuntimeError("unbound_cached_code_marker")',str(helper),'exec')
+cache.write_bytes(importlib.util.MAGIC_NUMBER+struct.pack('<III',0,int(helper.stat().st_mtime)&0xffffffff,len(verified))+marshal.dumps(code))
+m.ROOT=work;m.HEADER='helper.py';m.PINS={'helper.py':sha(verified)}
+try:m.header_only(work/'NEVER_OPENED.nii.gz')
+except RuntimeError as error:observed=str(error)
+else:raise AssertionError('expected_marker')
+assert observed=='verified_source_marker'
+m.PINS={'helper.py':'0'*64}
+try:m.header_only(work/'NEVER_OPENED.nii.gz')
+except m.Refusal as error:bad_digest=str(error)
+else:raise AssertionError('bad_digest_must_refuse')
+assert bad_digest=='metadata_hash_changed' and blocked==[]
+
+audit={'decision':'GO_FOR_EXTRACTOR_PREPARATION_ONLY','reader_sha256':SOURCE_SHA,
+       'release_candidate_sha256':PROTOCOL_SHA,'supplied_tests_sha256':sha((HERE/'snapshots/test_generated_v2.py').read_bytes()),
+       'scope':'source and tiny generated controls only; no actual archive/image opens or extraction release',
+       'negative_audit':{'path':'build/ixi265-paired-header-independent-v1/audit.json',
+                         'sha256':'f2b514d9975acd06d433f7572661b84dc2ea7e92a073157535948efbd69383dc'},
+       'independent_controls':{'tar_raw_fd':tar_evidence,'zip_raw_fd':zip_evidence,
+                               'valid_cache_source_marker':observed,'bad_source_sha_refusal':bad_digest,
+                               'actual_or_synced_opens_attempted':blocked},
+       'provided_generated_tests':{'passed':26,'elapsed_seconds':0.15,
+                                   'receipt_sha256':sha((HERE/'provided-tests.txt').read_bytes())},
+       'failure_scope':'Startup/member intents precede reads; copied-byte SHA is saved before header parsing; incomplete attempts leave global reads unknown. External kill/finalization remains parent-owned.',
+       'limits':json.loads(protocol)['limits'],
+       'actual_execution_authorized':False,
+       'outstanding_release_prerequisites':['All three exact archive completion receipt and publication stat bindings.',
+          'Separately source-bound and reviewed outer launcher/release, one attempt, 35 s worker plus at most 10 s cleanup, 512 MiB sampled group RSS, 32 MiB aggregate outer output.',
+          'Root serializes and explicitly releases the one-pair attempt.'],
+       'scientific_limits':['IXI265 TRAIN role fixed; no admission, anatomy QC, accepted registration or simultaneous-acquisition inference.',
+                            'Only 352/544 decompressed NIfTI header/marker bytes; no voxel arrays, extension-body/footer/full-payload validation.',
+                            'Acquired T1/MRA and derived vessel reference remain distinct; unknown label background remains unknown.']}
+(HERE/'audit.json').write_text(json.dumps(audit,sort_keys=True,indent=2)+'\n')
+print(json.dumps({'decision':audit['decision'],'tar':tar_evidence,'zip':zip_evidence,'cache_marker':observed},sort_keys=True))

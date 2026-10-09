@@ -1,0 +1,244 @@
+"""One frozen TRAIN person: selected opaque copies and NIfTI headers only."""
+from pathlib import Path, PurePosixPath
+import argparse, hashlib, json, os, signal, stat, struct, tarfile, time, types, zipfile
+
+ROOT=Path(__file__).resolve().parents[2]
+PREP='build/ixi265-paired-header-preparation-v1'
+OUTPUT='build/ixi265-paired-header-qc-v1/selected'
+COHORT='manifests/experiments/ixi-component-person-cohort-v1.json'
+SCOPE='manifests/experiments/ixi-t1-mra-vessel-byte-intake-v1.json'
+WALK='build/ixi-t1-mra-header-metadata-execution-v1/receipt.json'
+HEADER='scripts/inspect_rhuh_single_image.py'
+PINS={COHORT:'b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127',
+      SCOPE:'dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c',
+      WALK:'5c751c2131654628709a8b75ead3b284a8aa9aae326ffe34501e4610c5b5066e',
+      HEADER:'268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f'}
+LIMITS={'chunk_bytes':1048576,'max_raw_member_bytes':33554432,'max_label_member_bytes':8388608,
+        'max_zip_central_bytes':262144,'max_zip_entries':256,'max_output_bytes':33554432,
+        'max_report_bytes':65536,'worker_seconds':35,'sampled_group_rss_bytes':536870912}
+SUBJECT='IXI265'
+ARCHIVES='data/acquisition/ixi-t1-mra-vessel-v1/verified'
+COMPLETION='data/acquisition/ixi-t1-mra-vessel-v1/completion.json'
+
+class Refusal(ValueError):pass
+def need(ok,reason):
+    if not ok:raise Refusal(reason)
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+def bound(path,digest):
+    p=ROOT/path
+    need(not p.is_symlink() and p.is_file() and p.stat().st_size<=1048576,'metadata_file_bound')
+    raw=p.read_bytes();need(sha(raw)==digest,'metadata_hash_changed');return raw
+def identity(value):
+    return {k:getattr(value,'st_'+k) for k in ('dev','ino','size','mtime_ns','ctime_ns')}
+def safe_name(name):
+    p=PurePosixPath(name)
+    need(name and len(name.encode())<=256 and '\\' not in name and not p.is_absolute()
+         and '..' not in p.parts and '.' not in p.parts,'unsafe_member_name')
+def deadline_check(deadline):need(time.monotonic()<deadline,'wall_budget')
+def archive_stream(fd):return os.fdopen(fd,'rb',buffering=0)
+
+def save_receipt(directory,report):
+    raw=(json.dumps(report,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+    need(len(raw)<=LIMITS['max_report_bytes'],'report_cap')
+    temporary=directory/'receipt.json.tmp'
+    with temporary.open('xb') as stream:stream.write(raw);stream.flush();os.fsync(stream.fileno())
+    os.replace(temporary,directory/'receipt.json')
+
+def selected_metadata():
+    cohort=json.loads(bound(COHORT,PINS[COHORT]));scope=json.loads(bound(SCOPE,PINS[SCOPE]))
+    walk=json.loads(bound(WALK,PINS[WALK]))
+    candidates=[m for m in cohort['members'] if m['role']=='TRAIN' and m['annotation_available']]
+    need(len(candidates)==70,'frozen_candidate_count')
+    selected=min(candidates,key=lambda m:(m['split_sha256'],m['subject']))
+    need(selected['subject']==SUBJECT and selected['role']=='TRAIN','frozen_selection')
+    need(selected['raw_modalities']==['MRA','T1'],'paired_source_missing')
+    need(walk['status']=='complete_metadata_only' and walk['archive_member_body_bytes_read']==0,'walk_scope')
+    for kind,row in selected['raw_files'].items():
+        matches=[m for a in walk['inventories'] if a['filename']==row['archive'] for m in a['members'] if m['name']==row['name']]
+        need(len(matches)==1 and all(matches[0][k]==row[k] for k in ('name','size','type','header_offset','header_sha256')),'walk_selection_mismatch')
+    labels=sorted(m['vessel_annotation']['member'] for m in cohort['members'] if m['annotation_available'])
+    need(len(labels)==100 and len(set(labels))==100,'label_identity_inventory')
+    return selected,scope,labels
+
+def copy_exact(stream,size,destination,deadline,maximum):
+    need(type(size) is int and 0<size<=maximum,'member_size_cap')
+    need(not destination.exists() and not destination.is_symlink(),'output_exists')
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    digest=hashlib.sha256();remaining=size
+    with destination.open('xb') as target:
+        while remaining:
+            deadline_check(deadline);block=stream.read(min(LIMITS['chunk_bytes'],remaining))
+            need(0<len(block)<=remaining,'truncated_member')
+            target.write(block);digest.update(block);remaining-=len(block)
+        target.flush();os.fsync(target.fileno())
+    need(destination.stat().st_size==size and not destination.is_symlink(),'selected_copy_size')
+    copied=hashlib.sha256()
+    with destination.open('rb') as check:
+        while block:=check.read(LIMITS['chunk_bytes']):deadline_check(deadline);copied.update(block)
+    need(copied.digest()==digest.digest(),'selected_copy_fixity')
+    return {'bytes':size,'sha256':digest.hexdigest(),'selected_copy_rehash_verified':True}
+
+def extract_tar_member(stream,total,row,destination,deadline):
+    safe_name(row['name']);offset=row['header_offset'];size=row['size']
+    need(type(offset) is int and offset>=0 and offset%512==0 and offset+512+size<=total,'tar_member_bounds')
+    stream.seek(offset);block=stream.read(512)
+    need(len(block)==512 and sha(block)==row['header_sha256'],'tar_header_fixity')
+    info=tarfile.TarInfo.frombuf(block,'utf-8','strict')
+    need(info.type in (tarfile.REGTYPE,tarfile.AREGTYPE) and not info.linkname and not info.sparse,'tar_regular_only')
+    need(info.name==row['name'] and info.size==size and row['type']=='file','tar_identity_mismatch')
+    result=copy_exact(stream,size,destination,deadline,LIMITS['max_raw_member_bytes'])
+    return dict(result,member=row['name'],header_offset=offset,header_sha256=row['header_sha256'],
+                archive_bytes_read=512+size,other_member_body_bytes_read=0)
+
+class AllowedRanges:
+    """Permit ZIP metadata plus the one selected member; deny incidental reads."""
+    def __init__(self,stream,total,ranges):self.stream,self.total,self.ranges,self.bytes_read=stream,total,ranges,0
+    def tell(self):return self.stream.tell()
+    def seek(self,offset,whence=0):
+        target=offset if whence==0 else self.tell()+offset if whence==1 else self.total+offset if whence==2 else -1
+        need(0<=target<=self.total,'zip_seek_bounds');return self.stream.seek(target)
+    def read(self,count=-1):
+        start=self.tell()
+        if count==-1:count=self.total-start
+        need(type(count) is int and 0<=count<=LIMITS['chunk_bytes'],'zip_read_cap')
+        need(count==0 or any(a<=start and start+count<=b for a,b in self.ranges),'unselected_zip_range_read')
+        raw=self.stream.read(count);need(len(raw)==count,'zip_truncated');self.bytes_read+=count;return raw
+    def seekable(self):return True
+
+def extract_zip_member(stream,total,name,expected_label_names,destination,deadline):
+    safe_name(name);need(total>=22,'zip_short');stream.seek(total-22);end=stream.read(22)
+    need(len(end)==22,'zip_short');sig,disk,cddisk,ndisk,n,cdsize,cdoffset,comment=struct.unpack('<4s4H2LH',end)
+    need(sig==b'PK\x05\x06' and disk==cddisk==comment==0 and ndisk==n and 0<n<=LIMITS['max_zip_entries'],'zip_eocd_scope')
+    need(0<cdsize<=LIMITS['max_zip_central_bytes'] and cdoffset+cdsize==total-22,'zip_central_bounds')
+    guarded=AllowedRanges(stream,total,[(cdoffset,total)])
+    with zipfile.ZipFile(guarded,'r') as archive:
+        infos=archive.infolist();names=[x.filename for x in infos]
+        need(len(infos)==n and len(set(names))==n,'zip_duplicate_names')
+        for info in infos:
+            safe_name(info.filename)
+            mode=(info.external_attr>>16)&0xffff
+            need(not mode or stat.S_IFMT(mode) in (0,stat.S_IFREG,stat.S_IFDIR),'zip_special_file')
+        files=[x.filename for x in infos if not x.is_dir()]
+        need(sorted(files)==sorted(expected_label_names),'zip_label_inventory_changed')
+        need(all(x.filename=='vessel_dataset/' for x in infos if x.is_dir()),'zip_extra_directory')
+        selected=[x for x in infos if x.filename==name];need(len(selected)==1,'zip_selected_missing');info=selected[0]
+        need(not info.is_dir() and not(info.flag_bits&1) and info.compress_type in (zipfile.ZIP_STORED,zipfile.ZIP_DEFLATED),'zip_selected_encoding')
+        need(0<info.file_size<=LIMITS['max_label_member_bytes'] and 0<info.compress_size<=LIMITS['max_label_member_bytes']
+             and info.file_size<=64*info.compress_size,'zip_selected_expansion_cap')
+        offset=info.header_offset;need(0<=offset and offset+30<=cdoffset,'zip_local_header_bounds')
+        stream.seek(offset);local=stream.read(30);need(len(local)==30 and local[:4]==b'PK\x03\x04','zip_local_signature')
+        namelen,extra=struct.unpack('<HH',local[26:30]);need(0<namelen<=256 and extra<=4096,'zip_local_header_cap')
+        dataoffset=offset+30+namelen+extra;dataend=dataoffset+info.compress_size
+        nextoffset=min([x.header_offset for x in infos if x.header_offset>offset]+[cdoffset])
+        need(dataend<=nextoffset<=cdoffset,'zip_selected_overlap')
+        guarded.ranges.append((offset,dataend))
+        with archive.open(info,'r') as member:
+            result=copy_exact(member,info.file_size,destination,deadline,LIMITS['max_label_member_bytes'])
+            need(member.read(1)==b'','zip_member_extra_bytes')
+        return dict(result,member=name,zip_crc32=info.CRC,zip_member_crc_verified=True,
+            compressed_member_bytes=info.compress_size,local_header_offset=offset,
+            archive_bytes_read=guarded.bytes_read+52,other_member_body_bytes_read=0)
+
+def header_only(path):
+    source=bound(HEADER,PINS[HEADER])
+    module=types.ModuleType('ixi_existing_header_helper');module.__file__=str(ROOT/HEADER)
+    exec(compile(source,module.__file__,'exec'),module.__dict__)
+    with path.open('rb') as stream:
+        reader=module._GzipReader(stream)
+        h,shape,dtype,offset,storage,marker,slope,intercept=module._parse_header(reader)
+        geometry=module._geometry(h,shape)
+        return {'status':'header_only_inspected_no_anatomical_admission','shape':list(shape),'dtype':dtype.str,
+            'nifti_version':1 if h.sizeof_hdr==348 else 2,'declared_voxel_bytes':storage,'voxel_offset':offset,
+            'decoded_header_bytes':reader.uncompressed,'compressed_prefix_bytes_read':reader.compressed,
+            'extension_declared':bool(marker[0]),'extension_body_parsed':False,
+            'geometry':geometry,'gzip_footer_verified':False,'voxel_payload_length_verified':False,
+            'library_versions':{'nibabel':module.nib.__version__,'numpy':module.np.__version__},
+            'voxel_arrays_materialized':0,'acquisition_datetime':None,'cross_modality_time_interval':None,
+            'file_mtime_or_filename_code_interpreted_as_acquisition_time':False}
+
+def compare_declared_grids(first,second):
+    """Exact header declarations only; this is never a registration decision."""
+    a,b=first['geometry'],second['geometry']
+    result={'same_shape':first['shape']==second['shape'],
+        'same_spatial_units_label':a['spatial_units']==b['spatial_units'],
+        'accepted_registration':False,'simultaneous_acquisition_established':False}
+    for form in ('qform','sform'):
+        result[form+'_codes_equal']=a[form]['code']==b[form]['code']
+        aa,bb=a[form]['affine_in_source_units'],b[form]['affine_in_source_units']
+        result[form+'_source_matrices_exact_equal']=(aa==bb if aa is not None and bb is not None else None)
+    return result
+
+def validate_protocol(path,digest):
+    need(path.is_file() and not path.is_symlink() and path.stat().st_size<=65536,'protocol_bound')
+    raw=path.read_bytes();need(sha(raw)==digest,'protocol_changed');p=json.loads(raw)
+    need(p['schema']=='ixi265-selected-train-header-qc-v1' and p['reader_sha256']==sha(Path(__file__).read_bytes()),'reader_binding')
+    need(p['metadata_and_helper_sha256']==PINS and p['limits']==LIMITS and p['output_directory']==OUTPUT,'protocol_scope')
+    selected,scope,labels=selected_metadata();need(p['selected_person']==selected,'selection_changed')
+    need(p['protected_member_access_permitted'] is False and p['voxel_array_decoding_permitted'] is False
+         and p['training_admitted'] is False,'scope_broadened')
+    return p,selected,scope,labels
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--protocol',type=Path,required=True)
+    parser.add_argument('--protocol-sha256',required=True);parser.add_argument('--check-only',action='store_true');args=parser.parse_args()
+    p,selected,scope,labels=validate_protocol(args.protocol,args.protocol_sha256)
+    if args.check_only:
+        print(json.dumps({'status':'metadata_bindings_valid','execution_released':p['execution_released'],'archive_opens':0,
+            'archive_completion_prerequisites_checked':False,'selected_person':SUBJECT}));return
+    need(p['execution_released'] is True,'root_release_required')
+    proof=p['archive_completion_receipt'];need(proof and proof['path']==COMPLETION,'verified_completion_required')
+    completion=json.loads(bound(proof['path'],proof['sha256']))
+    need(completion['status']=='all_bytes_verified' and completion['verified_files']==3 and completion['unresolved_files']==0,'archive_set_not_verified')
+    need(completion['cohort_sha256']==PINS[COHORT],'completion_cohort_mismatch')
+    entries={x['filename']:x for x in scope['files']};need(set(p['archive_bindings'])==set(entries),'archive_bindings_incomplete')
+    receipts={x['path']:x for x in completion['files'] if x['status']=='byte_verified'}
+    for name,expected in p['archive_bindings'].items():
+        row=receipts[name]
+        need(expected['sha256']==row['sha256'] and row['source_md5']==entries[name]['expected_md5']
+             and expected['stat']['size']==row['bytes']==entries[name]['bytes'],'archive_receipt_mismatch')
+    directory=ROOT/OUTPUT;need(not directory.exists() and not directory.is_symlink(),'attempt_exists');directory.mkdir()
+    started=time.monotonic();deadline=started+LIMITS['worker_seconds']
+    def alarm(*unused):raise Refusal('wall_budget')
+    old=signal.signal(signal.SIGALRM,alarm);signal.setitimer(signal.ITIMER_REAL,LIMITS['worker_seconds'])
+    report={'schema':'ixi265-selected-pair-header-result-v1','status':'started','person_group':'IXI:265','role':'TRAIN',
+        'protocol_sha256':args.protocol_sha256,'archive_completion_receipt':proof,'members':{},
+        'acquired_modalities':['T1','MRA'],'derived_reference':'SynthStrip/Frangi/manual-refined vessel label; incomplete coverage',
+        'other_person_member_body_bytes_read':None,'archive_read_accounting_complete':False,
+        'member_attempts':[],'voxel_arrays_materialized':0,'training_admitted':False,
+        'anatomical_registration_accepted':False,'actor_private_reference_access_added':False,
+        'archive_sha256_inherited_from_transport':True,'whole_archives_rehashed_by_this_worker':False}
+    try:
+        save_receipt(directory,report)
+        for kind,name in [('T1','IXI-T1.tar'),('MRA','IXI-MRA.tar'),('derived_vessel_label','vessel_dataset.zip')]:
+            deadline_check(deadline);path=ROOT/ARCHIVES/name;expected=p['archive_bindings'][name]
+            attempt={'kind':kind,'archive':name,'status':'started_read_accounting_incomplete'}
+            report['member_attempts'].append(attempt);save_receipt(directory,report)
+            need(all(not parent.is_symlink() for parent in [path,*path.parents] if parent.is_relative_to(ROOT)),'archive_symlink')
+            fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+            with archive_stream(fd) as stream:
+                before=os.fstat(stream.fileno());need(stat.S_ISREG(before.st_mode) and identity(before)==expected['stat'],'archive_publication_identity_changed')
+                relative=('derived_reference' if kind=='derived_vessel_label' else 'acquired')+'/'+SUBJECT+'-'+kind+'.nii.gz';dest=directory/relative
+                if kind=='derived_vessel_label':
+                    copied=extract_zip_member(stream,before.st_size,selected['vessel_annotation']['member'],labels,dest,deadline)
+                else:copied=extract_tar_member(stream,before.st_size,selected['raw_files'][kind],dest,deadline)
+                need(identity(os.fstat(stream.fileno()))==expected['stat'],'archive_changed_during_selected_copy')
+            copied.update(output_path=relative,archive=name,archive_sha256=expected['sha256'],source_kind='derived_reference' if kind=='derived_vessel_label' else 'acquired_measurement')
+            copied['header_qc']={'status':'not_run'};report['members'][kind]=copied
+            attempt['status']='opaque_copy_verified_header_pending';save_receipt(directory,report)
+            copied['header_qc']=header_only(dest);attempt['status']='selected_copy_and_header_complete';save_receipt(directory,report)
+            need(sum(f.stat().st_size for f in directory.rglob('*') if f.is_file())<=LIMITS['max_output_bytes']-LIMITS['max_report_bytes'],'output_cap')
+        report['declared_grid_comparisons']={pair:compare_declared_grids(report['members'][a]['header_qc'],report['members'][b]['header_qc'])
+            for pair,a,b in [('T1_to_MRA','T1','MRA'),('MRA_to_derived_label','MRA','derived_vessel_label')]}
+        report['archive_read_accounting_complete']=True;report['other_person_member_body_bytes_read']=0
+        report['status']='selected_copies_and_header_qc_complete_unadmitted'
+    except Exception as error:
+        report['status']='failed_preserved_no_retry';report['error_type']=type(error).__name__
+        report['reason']=str(error) if isinstance(error,Refusal) else 'library_or_io_refusal'
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0);signal.signal(signal.SIGALRM,old)
+        report['elapsed_seconds']=time.monotonic()-started
+        save_receipt(directory,report)
+    print(json.dumps({'status':report['status'],'receipt':str(directory/'receipt.json')}))
+    return 0 if report['status']=='selected_copies_and_header_qc_complete_unadmitted' else 1
+
+if __name__=='__main__':raise SystemExit(main())

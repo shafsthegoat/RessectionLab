@@ -1,0 +1,95 @@
+{
+  "archive_bindings": {},
+  "archive_completion_receipt": null,
+  "archive_identity_limit": "Whole-archive digest is inherited from verified transport. This reader checks frozen publication stat identity before/after a read-only descriptor; it does not recompute full archive digest. Selected member SHA256 is computed on the copied bytes.",
+  "execution_released": false,
+  "limits": {
+    "chunk_bytes": 1048576,
+    "max_label_member_bytes": 8388608,
+    "max_output_bytes": 33554432,
+    "max_raw_member_bytes": 33554432,
+    "max_report_bytes": 65536,
+    "max_zip_central_bytes": 262144,
+    "max_zip_entries": 256,
+    "sampled_group_rss_bytes": 536870912,
+    "worker_seconds": 35
+  },
+  "metadata_and_helper_sha256": {
+    "build/ixi-t1-mra-header-metadata-execution-v1/receipt.json": "5c751c2131654628709a8b75ead3b284a8aa9aae326ffe34501e4610c5b5066e",
+    "manifests/experiments/ixi-component-person-cohort-v1.json": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+    "manifests/experiments/ixi-t1-mra-vessel-byte-intake-v1.json": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c",
+    "scripts/inspect_rhuh_single_image.py": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f"
+  },
+  "output_directory": "build/ixi265-paired-header-qc-v1",
+  "protected_member_access_permitted": false,
+  "reader_sha256": "6d2997bd79264683e5fc917e128733eb46fd725a149e0bd6a59683651f5207c3",
+  "reference_limits": {
+    "endpoint": "No mask-intersection-to-clinical-injury interpretation",
+    "review": "Do not assert three independent surgeon reviews per volume; primary prose is inconsistent",
+    "runtime": "Current T1-only interfaces need the separately reviewed evaluator-owned private-reference boundary; acquisition does not establish that boundary",
+    "subset": "100 annotations selected from one intensity-histogram cluster; selection and Frangi tuning dependence retained",
+    "unknown_background": "Unlabelled voxels and unresolved MRA regions are unknown, not proven vessel-free"
+  },
+  "root_release_dependency": "All three exact archives must be transport-verified. Root binds canonical completion receipt SHA and each regular published file device/inode/size/mtime_ns/ctime_ns plus inherited archive SHA256 without reopening payloads during preparation. Root alone may release under an external sampled512MiB/35second supervisor with cleanup reserve.",
+  "schema": "ixi265-selected-train-header-qc-v1",
+  "scientific_limits": {
+    "anatomy_qc_performed": false,
+    "new_actor_channels_added": false,
+    "raw_T1_and_MRA_separate_from_derived_label": true,
+    "registration_accepted": false,
+    "same_source_person_linkage": true,
+    "simultaneous_acquisition_established": false,
+    "unknown_background_is_not_proven_vessel_free": true
+  },
+  "selected_person": {
+    "anatomy_qc": "not_run",
+    "annotation_available": true,
+    "header_qc": "not_run",
+    "person_group": "IXI:265",
+    "rank_within_stratum": 1,
+    "raw_files": {
+      "MRA": {
+        "archive": "IXI-MRA.tar",
+        "header_offset": 3578892288,
+        "header_sha256": "262a4cffa1cd4629a6491a261dcde7ba953eb9af0f6b682d6fd36a7b6fcd0466",
+        "modality": "MRA",
+        "name": "IXI265-Guys-0845-MRA.nii.gz",
+        "site_code": "Guys",
+        "size": 14307469,
+        "source_acquisition_code": "0845",
+        "type": "file"
+      },
+      "T1": {
+        "archive": "IXI-T1.tar",
+        "header_offset": 1867056128,
+        "header_sha256": "6dba3c7e4dee358071cb489f985625bc9c6987eb93f17677483c4ee0397c1e64",
+        "modality": "T1",
+        "name": "IXI265-Guys-0845-T1.nii.gz",
+        "site_code": "Guys",
+        "size": 6980629,
+        "source_acquisition_code": "0845",
+        "type": "file"
+      }
+    },
+    "raw_modalities": [
+      "MRA",
+      "T1"
+    ],
+    "role": "TRAIN",
+    "site_code": "Guys",
+    "split_sha256": "024ae84ebedbcacacb2dba752d37047e82b917a68be327b1020125ae41b44a9d",
+    "subject": "IXI265",
+    "training_admitted": false,
+    "vessel_annotation": {
+      "archive": "vessel_dataset.zip",
+      "evidence_type": "derived_model_assisted_manually_refined_reference",
+      "local_manual_review": "not_performed",
+      "member": "vessel_dataset/IXI265.nii.gz",
+      "original_MRA_link": "IXI265-Guys-0845-MRA.nii.gz"
+    }
+  },
+  "selection_rule": "Minimum frozen split_sha256 then exact subject among the existing70 annotation_available TRAIN persons; no image, header quality or outcome used; roles never reranked.",
+  "status": "prepared_not_released",
+  "training_admitted": false,
+  "voxel_array_decoding_permitted": false
+}

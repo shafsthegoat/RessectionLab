@@ -1,0 +1,128 @@
+"""Tiny generated archives only. Deny actual acquired archive opens."""
+from pathlib import Path
+import gzip, hashlib, importlib.util, io, json, struct, sys, tarfile, time, zipfile, zlib
+import nibabel as nib
+import numpy as np
+import pytest
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
+opens=[]
+def guard(event,args):
+    if event=='open' and str(args[0]).startswith(str(ROOT/'data/acquisition/ixi-t1-mra-vessel-v1/verified')):
+        opens.append(str(args[0]));raise AssertionError('actual archive forbidden')
+sys.addaudithook(guard)
+spec=importlib.util.spec_from_file_location('ixi_selected',HERE/'selective_qc.py')
+m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+
+def compressed_nifti(*,version=1,units='mm',qcode=1,scode=1,translation=0.,shape=(2,3,4),magic=None):
+    h=(nib.Nifti1Header if version==1 else nib.Nifti2Header)()
+    h.set_data_shape(shape);h.set_data_dtype(np.uint8);h.set_xyzt_units(units)
+    h.set_qform(np.eye(4),code=qcode);affine=np.eye(4);affine[0,3]=translation;h.set_sform(affine,code=scode)
+    h['vox_offset']=352 if version==1 else 544
+    if magic is not None:h['magic']=magic
+    return gzip.compress(h.binaryblock+b'\0'*4+b'\x05'*24,mtime=0)
+
+def tar_fixture(payload):
+    stream=io.BytesIO()
+    with tarfile.open(fileobj=stream,mode='w',format=tarfile.USTAR_FORMAT) as archive:
+        for name,data in [('protected-before.nii.gz',b'PROTECTED_BEFORE'),('IXI265-T1.nii.gz',payload),('protected-after.nii.gz',b'PROTECTED_AFTER')]:
+            item=tarfile.TarInfo(name);item.size=len(data);archive.addfile(item,io.BytesIO(data))
+    raw=stream.getvalue();offset=1024;header=raw[offset:offset+512]
+    return raw,{'name':'IXI265-T1.nii.gz','header_offset':offset,'size':len(payload),'type':'file','header_sha256':hashlib.sha256(header).hexdigest()}
+
+class ReadSpy(io.BytesIO):
+    def __init__(self,raw):super().__init__(raw);self.reads=[]
+    def read(self,count=-1):
+        start=self.tell();raw=super().read(count);self.reads.append((start,start+len(raw)));return raw
+
+def test_tar_selected_bytes_only(tmp_path):
+    payload=compressed_nifti();raw,row=tar_fixture(payload);stream=ReadSpy(raw)
+    result=m.extract_tar_member(stream,len(raw),row,tmp_path/'selected.gz',time.monotonic()+2)
+    assert (tmp_path/'selected.gz').read_bytes()==payload
+    assert result['sha256']==hashlib.sha256(payload).hexdigest()
+    assert all(row['header_offset']<=a<=b<=row['header_offset']+512+len(payload) for a,b in stream.reads)
+    assert result['other_member_body_bytes_read']==0
+
+@pytest.mark.parametrize('failure',['bad_pin','wrong_name','bounds','expired','link'])
+def test_tar_refuses_bad_selected_contract(tmp_path,failure):
+    raw,row=tar_fixture(compressed_nifti())
+    if failure=='bad_pin':row['header_sha256']='0'*64
+    elif failure=='wrong_name':row['name']='../bad'
+    elif failure=='bounds':row['header_offset']=len(raw)
+    elif failure=='link':
+        item=tarfile.TarInfo(row['name']);item.type=tarfile.SYMTYPE;item.linkname='elsewhere';item.size=row['size']
+        block=item.tobuf(format=tarfile.USTAR_FORMAT);raw=raw[:row['header_offset']]+block+raw[row['header_offset']+512:];row['header_sha256']=hashlib.sha256(block).hexdigest()
+    with pytest.raises(m.Refusal):m.extract_tar_member(io.BytesIO(raw),len(raw),row,tmp_path/'out',time.monotonic()+(-1 if failure=='expired' else 2))
+
+def zip_fixture(payload,duplicate=False,comment=b''):
+    stream=io.BytesIO()
+    with zipfile.ZipFile(stream,'w',compression=zipfile.ZIP_DEFLATED) as archive:
+        for name,data in [('vessel_dataset/IXI002.nii.gz',b'PROTECTED_A'),('vessel_dataset/IXI265.nii.gz',payload),('vessel_dataset/IXI999.nii.gz',b'PROTECTED_B')]:archive.writestr(name,data)
+        if duplicate:archive.writestr('vessel_dataset/IXI265.nii.gz',payload)
+        archive.comment=comment
+    return stream.getvalue()
+LABELS=['vessel_dataset/IXI002.nii.gz','vessel_dataset/IXI265.nii.gz','vessel_dataset/IXI999.nii.gz']
+
+def test_zip_reads_only_central_metadata_and_selected_local_member(tmp_path):
+    payload=compressed_nifti();raw=zip_fixture(payload);stream=ReadSpy(raw)
+    result=m.extract_zip_member(stream,len(raw),LABELS[1],LABELS,tmp_path/'label.gz',time.monotonic()+2)
+    assert (tmp_path/'label.gz').read_bytes()==payload and result['zip_member_crc_verified']
+    with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+        infos=archive.infolist();selected=archive.getinfo(LABELS[1]);cd=archive.start_dir
+    offset=selected.header_offset;nl,ex=struct.unpack('<HH',raw[offset+26:offset+30]);end=offset+30+nl+ex+selected.compress_size
+    assert all((cd<=a<=b<=len(raw)) or (offset<=a<=b<=end) for a,b in stream.reads)
+
+@pytest.mark.parametrize('failure',['duplicate','comment','unknown_member','inventory','truncated','crc'])
+def test_zip_refuses_ambiguity_and_corruption(tmp_path,failure):
+    raw=zip_fixture(compressed_nifti(),duplicate=failure=='duplicate',comment=b'not-supported' if failure=='comment' else b'')
+    selected=LABELS[1];names=LABELS
+    if failure=='unknown_member':selected='vessel_dataset/IXI111.nii.gz'
+    elif failure=='inventory':names=LABELS[:-1]
+    elif failure=='truncated':raw=raw[:-2]
+    elif failure=='crc':
+        with zipfile.ZipFile(io.BytesIO(raw)) as archive:i=archive.getinfo(LABELS[1])
+        nl,ex=struct.unpack('<HH',raw[i.header_offset+26:i.header_offset+30]);pos=i.header_offset+30+nl+ex
+        changed=bytearray(raw);changed[pos+i.compress_size//2]^=0xff;raw=bytes(changed)
+    with pytest.raises((m.Refusal,zipfile.BadZipFile,zlib.error)):
+        m.extract_zip_member(io.BytesIO(raw),len(raw),selected,names,tmp_path/'out',time.monotonic()+2)
+
+@pytest.mark.parametrize('version',[1,2])
+def test_header_only_never_decodes_voxels(tmp_path,version):
+    path=tmp_path/'generated.gz';path.write_bytes(compressed_nifti(version=version))
+    report=m.header_only(path)
+    assert report['decoded_header_bytes']==(352 if version==1 else 544)
+    assert report['voxel_arrays_materialized']==0 and report['gzip_footer_verified'] is False
+    assert report['geometry']['qform']['code']==report['geometry']['sform']['code']==1
+    assert report['acquisition_datetime'] is None and report['cross_modality_time_interval'] is None
+
+def test_header_unknown_units_and_forms_are_not_repaired(tmp_path):
+    path=tmp_path/'generated.gz';path.write_bytes(compressed_nifti(units='unknown',qcode=0,scode=0))
+    report=m.header_only(path)
+    assert 'physical_units_unresolved' in report['geometry']['issues']
+    assert 'world_transform_absent_no_fallback_assumed' in report['geometry']['issues']
+
+def test_conflicting_forms_flagged_without_registration_claim(tmp_path):
+    path=tmp_path/'generated.gz';path.write_bytes(compressed_nifti(translation=10.))
+    report=m.header_only(path)
+    assert 'qform_sform_numeric_disagreement' in report['geometry']['issues']
+    assert report['geometry']['anatomical_registration_accepted'] is False
+
+def test_equal_declared_grids_do_not_admit_registration(tmp_path):
+    path=tmp_path/'generated.gz';path.write_bytes(compressed_nifti())
+    header=m.header_only(path);result=m.compare_declared_grids(header,header)
+    assert result['same_shape'] and result['qform_source_matrices_exact_equal']
+    assert result['accepted_registration'] is False and result['simultaneous_acquisition_established'] is False
+
+@pytest.mark.parametrize('failure',['shape_bomb','bad_magic','truncated'])
+def test_bad_header_refuses_without_image_allocation(tmp_path,failure):
+    payload=compressed_nifti(shape=(512,512,512)) if failure=='shape_bomb' else compressed_nifti(magic=b'ni1\0') if failure=='bad_magic' else gzip.compress(b'\0'*20)
+    path=tmp_path/'generated.gz';path.write_bytes(payload)
+    with pytest.raises(ValueError):m.header_only(path)
+
+def test_false_release_and_check_only_open_no_actual_archive(monkeypatch,capsys):
+    p=HERE/'prepared-protocol.json';digest=hashlib.sha256(p.read_bytes()).hexdigest();args=['qc','--protocol',str(p),'--protocol-sha256',digest]
+    monkeypatch.setattr(sys,'argv',args+['--check-only']);m.main();report=json.loads(capsys.readouterr().out)
+    assert report['archive_opens']==0 and report['selected_person']=='IXI265'
+    monkeypatch.setattr(sys,'argv',args)
+    with pytest.raises(m.Refusal,match='root_release_required'):m.main()
+    assert opens==[]
