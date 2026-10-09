@@ -116,6 +116,14 @@ including signed force, boundary motion, half-height reconstruction, sampled
 deformation, energy and 75 probes. Seventy-one adjacent controls pass, with an
 independent source-only GO. It has not bound native output, streamed all frames,
 compared measured force, or released fitting or execution.
+The [v5 complete-stream source checker](docs/hbe-v5-stream-evaluator.md) now
+requires all 61/121 generated-frame records, solver residuals and force-work
+consistency. Ninety-one adjacent checks pass. Independent review caught and
+repaired an actual reconstruction-wrapper mismatch and a relative-root symlink
+escape. The saved-output facade verifies file hashes but cannot prove native
+origin without a supervised execution receipt. A generated N36 frame took about
+4.4 seconds and 720 MiB peak RSS; full-stream performance and physical force
+fidelity remain unmeasured.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
