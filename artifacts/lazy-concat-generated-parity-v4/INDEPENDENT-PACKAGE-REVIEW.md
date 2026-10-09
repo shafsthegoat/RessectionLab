@@ -1,0 +1,7 @@
+# Independent compact-package integrity check: v4 generated lazy-concat pair
+
+**GO for promotion of this compact evidence package.** This is a read-only package check, not a model execution, checkpoint load, patient review, or new validation of full-resolution feasibility.
+
+The package at `build/limited-input-guard-design/lazy-pair-v4-accepted-generated-package/` has `artifact-index.json` SHA-256 `d5ce7f6d8c00b6b1b87157ad1769251eb8a8a2f851e1bea52b06d6e031862d40`. Its 34 indexed payloads total 395,253 bytes. I independently enumerated the directory: every indexed path exists exactly once, every declared size and SHA-256 matches, and there is no unindexed file. The 33 payloads other than package-specific `RESULT.md` byte-match their corresponding frozen v4 source, contract, receipt, log, comparison, generated-input receipt, or independent-audit originals. The copied independent audit retains SHA-256 `4196b5637f36787fdf66beac3af0478ae70ef64ec52bc75c79d68a3df06fccc0`.
+
+No `.npy`, `.npz`, model checkpoint, patient image, annotation, or bulk binary payload is present. `RESULT.md` accurately limits the claim: the two saved 64³ generated runs have byte-identical logits and decoded labels, a 67,125,248-byte baseline final-decoder boundary RSS rise consistent with a 67,108,864-byte concatenation tensor, and only a 7,995,392-byte (~1.06%) lower sampled whole-process peak for the lazy arm in this single pair. It does not assert a robust speed advantage, 128³ success, or clinical/patient validity. Earlier negative experiments remain separate.

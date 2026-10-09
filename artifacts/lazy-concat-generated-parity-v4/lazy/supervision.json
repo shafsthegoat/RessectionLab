@@ -1,0 +1,1227 @@
+{
+  "accepted_for_feasibility": true,
+  "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+  "arm": "lazy",
+  "completed_at_utc": "2026-10-09T11:30:32.372825+00:00",
+  "contract_sha256": "1bdf989315cf4d67ce107e18be93fcb6fd90e7f8749504ccbea52252b36ecd3f",
+  "detached_descendant_pids_observed": [],
+  "elapsed_seconds": 2.5830355000216514,
+  "exit_code": 0,
+  "fast_series": [
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.023803125135600567,
+      "group_read_seconds": 4.9999915063381195e-05,
+      "host_read_seconds": 1.1333031579852104e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": null,
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 18153472,
+      "slow_inventory_age_seconds": 0.02427875017747283,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:29.788092+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.07901433319784701,
+      "group_read_seconds": 7.320800796151161e-05,
+      "host_read_seconds": 2.4707987904548645e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 31113216,
+      "slow_inventory_age_seconds": 0.07945333304814994,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:29.843299+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.13899829098954797,
+      "group_read_seconds": 6.816699169576168e-05,
+      "host_read_seconds": 2.1333107724785805e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 42582016,
+      "slow_inventory_age_seconds": 0.13945445814169943,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:29.903285+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.19064545817673206,
+      "group_read_seconds": 7.104198448359966e-05,
+      "host_read_seconds": 2.550007775425911e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 81035264,
+      "slow_inventory_age_seconds": 0.19106737500987947,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:29.954931+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.24726087506860495,
+      "group_read_seconds": 7.187481969594955e-05,
+      "host_read_seconds": 2.2916123270988464e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 103514112,
+      "slow_inventory_age_seconds": 0.24768820800818503,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.011546+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.3072910001501441,
+      "group_read_seconds": 8.708308450877666e-05,
+      "host_read_seconds": 2.8042122721672058e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 121421824,
+      "slow_inventory_age_seconds": 0.3077246251050383,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.071577+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.3672412501182407,
+      "group_read_seconds": 4.75000124424696e-05,
+      "host_read_seconds": 2.5541987270116806e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 139935744,
+      "slow_inventory_age_seconds": 0.3676955830305815,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.131525+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.42726945807226,
+      "group_read_seconds": 7.349997758865356e-05,
+      "host_read_seconds": 2.1292129531502724e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 151076864,
+      "slow_inventory_age_seconds": 0.42772804107517004,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.191554+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.4856753752101213,
+      "group_read_seconds": 3.445800393819809e-05,
+      "host_read_seconds": 3.133295103907585e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 161972224,
+      "slow_inventory_age_seconds": 0.4860390410758555,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.249954+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.5456057500559837,
+      "group_read_seconds": 7.233303040266037e-05,
+      "host_read_seconds": 3.258301876485348e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 171327488,
+      "slow_inventory_age_seconds": 0.03708674991503358,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.309889+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.6043106249999255,
+      "group_read_seconds": 7.245899178087711e-05,
+      "host_read_seconds": 2.400018274784088e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 178257920,
+      "slow_inventory_age_seconds": 0.09581083292141557,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.368593+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.6643744159955531,
+      "group_read_seconds": 8.158409036695957e-05,
+      "host_read_seconds": 2.7792062610387802e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 190611456,
+      "slow_inventory_age_seconds": 0.15584804094396532,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.428657+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.7243398330174387,
+      "group_read_seconds": 7.558404467999935e-05,
+      "host_read_seconds": 2.008303999900818e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 202260480,
+      "slow_inventory_age_seconds": 0.21584687498398125,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.488623+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.7811739582102746,
+      "group_read_seconds": 9.158393368124962e-05,
+      "host_read_seconds": 2.2499822080135345e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 214958080,
+      "slow_inventory_age_seconds": 0.27267204108648,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.545456+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.8312919160816818,
+      "group_read_seconds": 6.999983452260494e-05,
+      "host_read_seconds": 2.0290957763791084e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 223657984,
+      "slow_inventory_age_seconds": 0.32280254107899964,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.595576+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.8894770001061261,
+      "group_read_seconds": 9.870901703834534e-05,
+      "host_read_seconds": 3.516604192554951e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 231194624,
+      "slow_inventory_age_seconds": 0.3809120829682797,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.653757+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.9457685411907732,
+      "group_read_seconds": 8.037500083446503e-05,
+      "host_read_seconds": 4.283408634364605e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 237846528,
+      "slow_inventory_age_seconds": 0.43726004101336,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.710050+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.9996570830699056,
+      "group_read_seconds": 4.4042011722922325e-05,
+      "host_read_seconds": 3.762519918382168e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 243449856,
+      "slow_inventory_age_seconds": 0.4911250830627978,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.763936+00:00"
+    },
+    {
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.0597165410872549,
+      "group_read_seconds": 7.950002327561378e-05,
+      "host_read_seconds": 3.8624973967671394e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 259735552,
+      "slow_inventory_age_seconds": 0.0477654580026865,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.823997+00:00"
+    },
+    {
+      "available_percent": 51,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.1196891660802066,
+      "group_read_seconds": 7.533282041549683e-05,
+      "host_read_seconds": 2.6541994884610176e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 280330240,
+      "slow_inventory_age_seconds": 0.10777412517927587,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.883971+00:00"
+    },
+    {
+      "available_percent": 51,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.1706773331388831,
+      "group_read_seconds": 4.737498238682747e-05,
+      "host_read_seconds": 1.8541933968663216e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 304054272,
+      "slow_inventory_age_seconds": 0.1587676249910146,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.934959+00:00"
+    },
+    {
+      "available_percent": 51,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.2283466251101345,
+      "group_read_seconds": 8.541601710021496e-05,
+      "host_read_seconds": 2.7250032871961594e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 331186176,
+      "slow_inventory_age_seconds": 0.21641075005754828,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:30.992625+00:00"
+    },
+    {
+      "available_percent": 51,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.281407875008881,
+      "group_read_seconds": 8.295802399516106e-05,
+      "host_read_seconds": 3.0333874747157097e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 335937536,
+      "slow_inventory_age_seconds": 0.2671707500703633,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.045683+00:00"
+    },
+    {
+      "available_percent": 50,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.3391215410083532,
+      "group_read_seconds": 7.800012826919556e-05,
+      "host_read_seconds": 2.5165965780615807e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 334970880,
+      "slow_inventory_age_seconds": 0.3271718751639128,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.103402+00:00"
+    },
+    {
+      "available_percent": 50,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.3914579581469297,
+      "group_read_seconds": 8.883397094905376e-05,
+      "host_read_seconds": 3.191595897078514e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_weights_only_load",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 446005248,
+      "slow_inventory_age_seconds": 0.3794580001849681,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.155733+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.451385874999687,
+      "group_read_seconds": 7.091718725860119e-05,
+      "host_read_seconds": 2.1290965378284454e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_weights_only_load",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 545538048,
+      "slow_inventory_age_seconds": 0.43943854118697345,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.215668+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.503993625054136,
+      "group_read_seconds": 2.9333867132663727e-05,
+      "host_read_seconds": 3.14170029014349e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_weights_only_load",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 548700160,
+      "slow_inventory_age_seconds": 0.492044041166082,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.268272+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.5641167080029845,
+      "group_read_seconds": 8.516688831150532e-05,
+      "host_read_seconds": 3.391597419977188e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_optimizer_cleanup",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 555204608,
+      "slow_inventory_age_seconds": 0.046180250123143196,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.328395+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.6241090830881149,
+      "group_read_seconds": 8.158315904438496e-05,
+      "host_read_seconds": 3.045913763344288e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_network_construction_alias_checks",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 555778048,
+      "slow_inventory_age_seconds": 0.10618166695348918,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.388385+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.6840600001160055,
+      "group_read_seconds": 6.0916878283023834e-05,
+      "host_read_seconds": 1.695798709988594e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_network_construction_alias_checks",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 552779776,
+      "slow_inventory_age_seconds": 0.16615445911884308,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.448340+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.7414315831847489,
+      "group_read_seconds": 4.091719165444374e-05,
+      "host_read_seconds": 2.9125018045306206e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:encoder.stages.0.0.convs.0.norm:instancenorm3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 576208896,
+      "slow_inventory_age_seconds": 0.22348579205572605,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.505709+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.7938663330860436,
+      "group_read_seconds": 7.91668426245451e-05,
+      "host_read_seconds": 2.6624882593750954e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:encoder.stages.0.0.convs.1.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 609943552,
+      "slow_inventory_age_seconds": 0.2759130001068115,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.558142+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.8451121661346406,
+      "group_read_seconds": 5.8959005400538445e-05,
+      "host_read_seconds": 2.2666994482278824e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:encoder.stages.1.0.convs.1.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 643514368,
+      "slow_inventory_age_seconds": 0.32714179204776883,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.609390+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.895718083018437,
+      "group_read_seconds": 4.2625004425644875e-05,
+      "host_read_seconds": 2.8416980057954788e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.2.convs.0.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 649527296,
+      "slow_inventory_age_seconds": 0.3776550421025604,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.659995+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.9541505412198603,
+      "group_read_seconds": 8.254195563495159e-05,
+      "host_read_seconds": 2.7708010748028755e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.3.convs.0.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 655851520,
+      "slow_inventory_age_seconds": 0.43608629214577377,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.718428+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.014324082992971,
+      "group_read_seconds": 8.287513628602028e-05,
+      "host_read_seconds": 4.116608761250973e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.0.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 684244992,
+      "slow_inventory_age_seconds": 0.49618800007738173,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.778598+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.074343458050862,
+      "group_read_seconds": 9.145913645625114e-05,
+      "host_read_seconds": 5.520787090063095e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.0.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 684244992,
+      "slow_inventory_age_seconds": 0.0492554591037333,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.838619+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.129257791209966,
+      "group_read_seconds": 8.366699330508709e-05,
+      "host_read_seconds": 3.120885230600834e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.0.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 684441600,
+      "slow_inventory_age_seconds": 0.10420625004917383,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.893532+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.1877062080893666,
+      "group_read_seconds": 9.125005453824997e-05,
+      "host_read_seconds": 4.3665990233421326e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.1.conv:conv3d:before",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 715849728,
+      "slow_inventory_age_seconds": 0.16261062491685152,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:31.951980+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.245969958137721,
+      "group_read_seconds": 5.5416952818632126e-05,
+      "host_read_seconds": 3.112480044364929e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.1.norm:instancenorm3d:after",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 749420544,
+      "slow_inventory_age_seconds": 0.22085612500086427,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:32.010242+00:00"
+    },
+    {
+      "available_percent": 47,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.296107375063002,
+      "group_read_seconds": 9.516696445643902e-05,
+      "host_read_seconds": 9.258394129574299e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 747978752,
+      "slow_inventory_age_seconds": 0.2710202920716256,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:32.060382+00:00"
+    },
+    {
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.353204125072807,
+      "group_read_seconds": 8.29158816486597e-05,
+      "host_read_seconds": 2.6124995201826096e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 738885632,
+      "slow_inventory_age_seconds": 0.32817804208025336,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:32.117477+00:00"
+    },
+    {
+      "available_percent": 47,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.4136398751288652,
+      "group_read_seconds": 0.00030462490394711494,
+      "host_read_seconds": 3.445800393819809e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 741982208,
+      "slow_inventory_age_seconds": 0.38845033408142626,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:32.177913+00:00"
+    },
+    {
+      "available_percent": 46,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.4657265411224216,
+      "group_read_seconds": 9.562494233250618e-05,
+      "host_read_seconds": 3.4667085856199265e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 741408768,
+      "slow_inventory_age_seconds": 0.44059679191559553,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:32.229996+00:00"
+    },
+    {
+      "available_percent": 47,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.526923750061542,
+      "group_read_seconds": 5.4625095799565315e-05,
+      "host_read_seconds": 0.0006404579617083073,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 3622,
+      "pids": [
+        3622
+      ],
+      "process_group_resident_bytes": 448069632,
+      "slow_inventory_age_seconds": 0.5017297500744462,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7306149888,
+      "timestamp_utc": "2026-10-09T11:30:32.291180+00:00"
+    }
+  ],
+  "finalization": {
+    "cleanup_errors": [],
+    "completed_at_utc": "2026-10-09T11:30:32.348854+00:00",
+    "exit_code": 0,
+    "finalization_receipt_write_error": null,
+    "launch_start_identity": [
+      1791545429,
+      764495
+    ],
+    "manual_attention_required": false,
+    "pgid": 3622,
+    "pid": 3622,
+    "provisional_receipt_write_error": null,
+    "remaining_detached_pids": [],
+    "remaining_group_pids": [],
+    "residual_possible": false,
+    "scope": "Identity-checked child cleanup with provisional trace before signaling",
+    "signal_results": [],
+    "terminate_requested": false
+  },
+  "last_flushed_phase": "after_output_transfer",
+  "manual_attention_required": false,
+  "memory_accounting": "sampled descendant-aware RSS, available percentage and swap are distinct",
+  "monitor_error": null,
+  "no_retry": true,
+  "post_error": null,
+  "post_fast_host": {
+    "available_percent": 46,
+    "host_read_seconds": 3.21660190820694e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 8589934592,
+    "swap_used_bytes": 7306149888
+  },
+  "post_guard_reason": null,
+  "post_slow_inventory": {
+    "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+    "collection_seconds": 0.02341095800511539,
+    "compressor_occupied_pages": 348165,
+    "excluded_ancestor_pids": [
+      3587,
+      18726,
+      18690,
+      1
+    ],
+    "pageouts_counter": 3601922,
+    "project_process_inventory": [
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 3493,
+        "pid": 3493,
+        "project_context": false,
+        "rss_kib": 17232
+      },
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 18806,
+        "pid": 18806,
+        "project_context": false,
+        "rss_kib": 1888
+      },
+      {
+        "blocking_overlap": false,
+        "command_class": "acquisition_python",
+        "identity_matched": true,
+        "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+        "max_rss_kib": 524288,
+        "pgid": 92434,
+        "pid": 92434,
+        "rss_kib": 22944,
+        "rss_within_cap": true
+      }
+    ],
+    "sample_monotonic": 1274743.5223515,
+    "swapouts_counter": 19411082,
+    "timestamp_utc": "2026-10-09T11:30:32.372680+00:00",
+    "vm_page_bytes": 16384
+  },
+  "process_group_id": 3622,
+  "process_group_rss_cap_kib": 3145728,
+  "result_exists": true,
+  "sampled_peak_process_group_resident_bytes": 749420544,
+  "scope": "Prospective generated 64-cubed matched instrumented CPU arms; no patient or full128 claim",
+  "slow_close_error": null,
+  "slow_inventory_errors": [],
+  "slow_series": [
+    {
+      "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "collection_seconds": 0.02435912494547665,
+      "compressor_occupied_pages": 293968,
+      "excluded_ancestor_pids": [
+        3587,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3601921,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 3493,
+          "pid": 3493,
+          "project_context": false,
+          "rss_kib": 80464
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 38672,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 1274740.9134075,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T11:30:29.763758+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "collection_seconds": 0.03127962490543723,
+      "compressor_occupied_pages": 297837,
+      "excluded_ancestor_pids": [
+        3587,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3601921,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 3493,
+          "pid": 3493,
+          "project_context": false,
+          "rss_kib": 80464
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 38640,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 1274741.42235925,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T11:30:30.272637+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "collection_seconds": 0.024672667030245066,
+      "compressor_occupied_pages": 305478,
+      "excluded_ancestor_pids": [
+        3587,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3601922,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 3493,
+          "pid": 3493,
+          "project_context": false,
+          "rss_kib": 20288
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 38624,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 1274741.925779875,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T11:30:30.776074+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "collection_seconds": 0.022344208089634776,
+      "compressor_occupied_pages": 338174,
+      "excluded_ancestor_pids": [
+        3587,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3601922,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 3493,
+          "pid": 3493,
+          "project_context": false,
+          "rss_kib": 17232
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 37136,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 1274742.431749041,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T11:30:31.282107+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "collection_seconds": 0.026969166938215494,
+      "compressor_occupied_pages": 344931,
+      "excluded_ancestor_pids": [
+        3587,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3601922,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 3493,
+          "pid": 3493,
+          "project_context": false,
+          "rss_kib": 17232
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 34688,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 1274742.938734791,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T11:30:31.789076+00:00",
+      "vm_page_bytes": 16384
+    }
+  ],
+  "wall_time_cap_seconds": 120,
+  "watchdog_reason": null
+}

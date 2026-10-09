@@ -1,0 +1,83 @@
+{
+  "baseline_vs_saved_tile1_reference": {
+    "all_logits_within_predeclared_tolerance": true,
+    "decoded_label_disagreements": 0,
+    "exact_raw_logit_equality": true,
+    "max_absolute_logit_error": 0.0,
+    "max_tolerance_excess": 0.0,
+    "per_region_min_abs_margin_left": [
+      9.016916737891734e-05,
+      0.0004919283092021942,
+      0.012711480259895325
+    ],
+    "per_region_min_abs_margin_right": [
+      9.016916737891734e-05,
+      0.0004919283092021942,
+      0.012711480259895325
+    ],
+    "per_region_near_zero_counts_left": [
+      4,
+      2,
+      0
+    ],
+    "per_region_near_zero_counts_right": [
+      4,
+      2,
+      0
+    ],
+    "per_region_sign_disagreements": [
+      0,
+      0,
+      0
+    ]
+  },
+  "contract_sha256": "1bdf989315cf4d67ce107e18be93fcb6fd90e7f8749504ccbea52252b36ecd3f",
+  "forward_seconds": {
+    "baseline": 0.5374422499444336,
+    "lazy": 0.5357107920572162
+  },
+  "gate_pass": true,
+  "matched_lazy_vs_baseline": {
+    "all_logits_within_predeclared_tolerance": true,
+    "decoded_label_disagreements": 0,
+    "exact_raw_logit_equality": true,
+    "max_absolute_logit_error": 0.0,
+    "max_tolerance_excess": 0.0,
+    "per_region_min_abs_margin_left": [
+      9.016916737891734e-05,
+      0.0004919283092021942,
+      0.012711480259895325
+    ],
+    "per_region_min_abs_margin_right": [
+      9.016916737891734e-05,
+      0.0004919283092021942,
+      0.012711480259895325
+    ],
+    "per_region_near_zero_counts_left": [
+      4,
+      2,
+      0
+    ],
+    "per_region_near_zero_counts_right": [
+      4,
+      2,
+      0
+    ],
+    "per_region_sign_disagreements": [
+      0,
+      0,
+      0
+    ]
+  },
+  "numerical_rule": {
+    "atol": 0.001,
+    "rtol": 0.001
+  },
+  "peak_difference_bytes_baseline_minus_lazy": 7995392,
+  "sampled_peak_resident_bytes": {
+    "baseline": 757415936,
+    "lazy": 749420544
+  },
+  "scope": "Saved generated-only 64-cubed instrumented comparison; no 128-cubed or patient inference claim",
+  "single_run_host_variability_limit": true
+}

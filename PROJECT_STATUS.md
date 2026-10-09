@@ -1,5 +1,7 @@
 # Project status
 
+The [generated 64³ lazy-concat comparison](artifacts/lazy-concat-generated-parity-v4/RESULT.md) completed both baseline and modified forwards. All 786,432 logits and decoded labels are identical to each other and the earlier accepted reference. The final decoder avoids a 67.1 MB allocation, but sampled whole-process peak falls only 7,995,392 bytes (1.06%) in this single ordered pair. Both workers exited cleanly; no robust speed, full128 feasibility or patient-accuracy claim follows. The next engineering test is the separately reviewed full128 lazy arm, with both active downloaders included in its host monitor.
+
 The [IXI paired vascular-component intake](artifacts/ixi-t1-mra-vessel-byte-intake-v1/RESULT.txt) is independently reviewed and frozen before archive-body intake. Metadata identifies 569 paired T1/MRA people, including all 100 vessel-label IDs; all 582 source people retain prospective TRAIN/SELECT/MEASUREMENT_EVAL roles (407/88/87). The authorized three opaque archives total 17.23 GB. Nineteen generated transport controls pass; verified TLS, resumable transfers, checksum provenance and storage reservations are enforced. This is a healthy vascular component, with acquired MRA separated from derived vessel labels. Image/frame/coverage review, patient admission and unknown pretrained overlap remain unresolved. Acquisition will continue without per-batch QC pauses.
 
 Updated October 9, 2026. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)

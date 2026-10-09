@@ -1,0 +1,106 @@
+"""One-shot generated 64-cubed matched lazy-concat control with V3 guards."""
+
+import datetime
+import fcntl
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+from darwin_fast_sampler import FastDarwinSampler
+from slow_inventory import BackgroundInventory, collect, load_acquisition_allowlist
+
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+RUNTIME = ROOT / ".tools/scan-target-runtime/venv/bin/python"
+WORKER = HERE / "pair_worker.py"
+CONTRACT = HERE / "pair-contract.json"
+
+
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(8 * 1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def utc_now():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def overlap(snapshot, child_pgid=None):
+    return [row for row in snapshot["project_process_inventory"]
+            if row["blocking_overlap"] and row["pgid"] != child_pgid]
+
+
+def preflight(fast, contract, acquisition_allowlist):
+    started = time.monotonic()
+    samples = []
+    while True:
+        host = fast.host()
+        slow = collect(os.getpid(), acquisition_allowlist=acquisition_allowlist)
+        samples.append({"timestamp_utc": utc_now(), "elapsed_seconds": time.monotonic()-started,
+                        "fast_host": host, "slow_inventory": slow})
+        remaining = contract["host_preflight_seconds"] - samples[-1]["elapsed_seconds"]
+        if remaining <= 0:
+            break
+        time.sleep(min(5, remaining))
+    reasons = []
+    if any(s["fast_host"]["kernel_pressure_mask"] != 1 for s in samples):
+        reasons.append("kernel_pressure_not_normal")
+    available = [s["fast_host"]["available_percent"] for s in samples]
+    if min(available) < contract["host_preflight_min_free_percent"]:
+        reasons.append("available_percent_below_45")
+    if max(available)-min(available) > contract["host_preflight_max_free_spread_points"]:
+        reasons.append("available_percent_unstable")
+    swaps = [s["fast_host"]["swap_used_bytes"] for s in samples]
+    if any(b > a for a,b in zip(swaps,swaps[1:])):
+        reasons.append("swap_used_rising")
+    if any(overlap(s["slow_inventory"]) for s in samples):
+        reasons.append("project_compute_overlap")
+    return {"accepted": not reasons, "reasons": reasons,
+            "samples": samples, "baseline": samples[-1],
+            "completed_at_utc": utc_now()}
+
+
+def stop_reason(sample, baseline, contract):
+    mask = sample["kernel_pressure_mask"]
+    if mask in contract["host_abort_kernel_pressure_masks"]:
+        return "kernel_pressure_warning_or_critical"
+    if mask != 1:
+        return "kernel_pressure_unknown_mask"
+    if sample["available_percent"] < contract["host_abort_min_free_percent"]:
+        return "available_percent_below_30"
+    if baseline["available_percent"]-sample["available_percent"] > contract["host_abort_free_drop_points"]:
+        return "available_percent_drop_over_20_points"
+    if sample["swap_used_bytes"]-baseline["swap_used_bytes"] > contract["host_abort_swap_growth_mib"]*1024**2:
+        return "swap_used_growth_over_128_mib"
+    return None
+
+
+def last_phase(path):
+    found = None
+    for line in path.read_text(errors="replace").splitlines():
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(record,dict) and isinstance(record.get("phase"),str):
+            found = record["phase"]
+    return found
+
+
+def deferred_receipt(arm, status):
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    path = HERE / ("preflight-deferred-%s-%s.json" % (arm,stamp))
+    path.write_text(json.dumps(status,indent=2,sort_keys=True)+"\n")
+    print(json.dumps({"status": "deferred_before_child", "arm": arm,
+                      "reason": status.get("reasons",status.get("error_type")),
+                      "receipt": str(path.relative_to(ROOT))},sort_keys=True),flush=True)
+
