@@ -175,8 +175,14 @@ The [one-call n5 supervisor preparation](docs/mechanics-nonpatient-n5-supervisor
 binds committed source, the repaired FEBio/Accelerate runtime, one exact
 generated deck and a fresh output directory. It enforces sampled wall,
 process-RSS and output caps, then requires saved-output and affine-oracle
-checks. Independent review passed 96 adjacent controls. Its release remains
-null and no n5 native call has run; this is prospective numerical qualification.
+checks. Independent review passed 96 adjacent controls. A separate one-call
+release then produced the [first supervised n5 affine execution](artifacts/mechanics-nonpatient-n5-execution-v1/RESULT.md):
+five complete states and four residual-converged steps passed independent
+saved-output review, with 0.519 s wall time and 49,561,600 B peak sampled RSS.
+The earlier direct-file launcher failed before native execution; the corrected
+module launch made exactly one audited native call. This is a small idealized
+numerical-software pass only. The six remaining cases, mesh/time-step
+convergence, patient-scale solver feasibility and physical fidelity remain open.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
