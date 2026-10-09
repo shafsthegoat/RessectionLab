@@ -1,0 +1,10 @@
+{
+  "source": "data/optional-runtimes/febio-4.13-accelerate-csc-v1/source/FEBioMech/FESolidSolver2.cpp",
+  "sha256": "0558262b37931ff591b53e9645d7c5a809e149ecd399656d59aa4bf84f245bf6",
+  "runtime_inventory_sha256": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20",
+  "lines": [
+    1134,
+    1141
+  ],
+  "reason": "normR1 < m_Rmin low-residual convergence branch"
+}

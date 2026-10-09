@@ -1,0 +1,1 @@
+Root read the independent report and verified all seven exact candidate hashes. Release binds 1ede7500a1771323b3cf817cdb14906e8fee9bf5 and exactly three unattempted native controls. No coarse rerun, numerical or cap changes; original negative preserved.

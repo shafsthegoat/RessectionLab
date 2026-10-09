@@ -1,0 +1,13 @@
+# Greiner numerical viscoelastic software controls
+
+**PASS for four arbitrary-constant numerical controls; no physical validation.** The three previously unattempted controls ran once each under the independently reviewed remaining-three release at commit `1ede7500a1771323b3cf817cdb14906e8fee9bf5`: fine one-arm shear, zero-arm shear, and zero-arm volume. Each solver exited zero and passed the unchanged checker. No retry or coarse rerun occurred.
+
+The original coarse solver call at `ff701523a6f20b8bbfe48d6e96aef5fbf553e326` remains a **failed controller attempt** because its output contract omitted FEBio's default `.xplt`. Its original receipt, summary and release are preserved, with `native_provenance_verified: false`. A separately authenticated replay passes its 53 saved states. This supplement does not change the original failure.
+
+The independent saved-only audit reproduced all 168 state rows across the four controls, including 164 positive-time material-check rows. Signed reactions, stress, positions, geometry, force/moment balance, free-center residual, solver residuals, and frozen continuum envelopes pass. The zero-arm shear passes the archived plain-elastic implementation crosscheck. Halving the timestep reduces sampled continuum stress errors by factors of 3.9960–3.9999, consistent with the declared discrete second-order trend. This comparison is diagnostic.
+
+There were three new calls and four calls in total. The remaining sequence records 1.431000 seconds; combined sequence time is 1.803089 seconds and combined native time is 0.309289 seconds. Finalized retained output is 35 files / 1,966,363 bytes, including the original attempt. Peak sampled process-group RSS is 1,622,016 bytes. All frozen resource caps pass; sampling does not bound instantaneous between-sample peaks. Every retained warning is the solver's small-residual `No force acting on the system.` message, with numerical checks still passing.
+
+The prospective review passed 37 generated tests, including cleanup failures, exact inventories and one-time accounting. The postrun audit made zero solver calls, verified historical tracked source blobs and all 198 saved pre/post/final audit entries per phase, replayed every result, and confirmed unchanged retained evidence. See `INDEPENDENT_REVIEW.md`, `PROSPECTIVE_REVIEW.md`, and the compact receipts/results.
+
+Constants are arbitrary numerical values (`mu=1000 Pa`, `r=.3` or zero, `tau=2 s`, `K=149000/3 Pa`). No measured-response values, patient data, fitting, physical tissue accuracy, clinical use, or substantial-RL readiness are established. Greiner CSV schema and measurement chronology remain unresolved. Source-matched PK2 history and continuum agreement establish numerical software behavior only.

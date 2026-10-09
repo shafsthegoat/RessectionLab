@@ -1,0 +1,163 @@
+"""Read-only postrun audit; no solver subprocess may be created."""
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import stat
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).resolve().parent
+BASE = ROOT / 'build/greiner-native-remaining-three-release-v1'
+ATTEMPT = BASE / 'attempt-01'
+sha = lambda raw: hashlib.sha256(raw).hexdigest()
+read = lambda file: json.loads(file.read_bytes())
+release = read(ATTEMPT / 'root-release.json')
+prep = read(BASE / 'preparation.json')
+assert release['source_commit'] == '1ede7500a1771323b3cf817cdb14906e8fee9bf5'
+assert release['status'] == 'root_released_three_never_attempted_native_calls'
+assert (ATTEMPT / 'root-release.json').read_bytes() == (BASE / 'root-release.json').read_bytes()
+for key in ('preparation', 'independent_review'):
+    assert sha((ROOT / release[key]['path']).read_bytes()) == release[key]['sha256']
+historical = {}
+for name, expected in prep['source_bindings'].items():
+    assert sha((ROOT / name).read_bytes()) == expected
+    if name.startswith('scripts/'):
+        actual = sha(subprocess.run(['/usr/bin/git', 'show', release['source_commit'] + ':' + name],
+                                    cwd=ROOT, check=True, capture_output=True).stdout)
+        assert actual == expected
+        historical[name] = actual
+
+def block_launch(*args, **kwargs):
+    raise AssertionError('Postrun saved-only audit forbids process launch')
+subprocess.Popen = block_launch
+sys.path.insert(0, str(BASE))
+sys.path.insert(0, str(ROOT))
+import supervisor as s
+
+context = s.inspect_preparation((BASE / 'preparation.json').read_bytes())
+expected = s.all_input_hashes(prep)
+expected[release['preparation']['path']] = release['preparation']['sha256']
+expected[release['independent_review']['path']] = release['independent_review']['sha256']
+records = {name: {'sha256': digest, 'unchanged': True} for name, digest in expected.items()}
+records['root_release_and_HEAD'] = {'unchanged': True}
+assert s.audit_inputs(expected) == {name: row for name, row in records.items() if name != 'root_release_and_HEAD'}
+summary = read(ATTEMPT / 'summary.json')
+assert summary['status'] == 'passed_remaining_three_and_saved_coarse_software_controls'
+assert summary['caps'] == s.CAPS
+assert summary['case_order'] == list(s.ORDER) and summary['unattempted_cases'] == []
+assert summary['native_calls_attempted'] == 3 and summary['combined_native_calls_attempted'] == 4
+assert summary['inputs_final'] == records
+assert {p.name for p in ATTEMPT.iterdir()} == set(s.ORDER) | {'summary.json', 'root-release.json'}
+
+def inventory(directory):
+    result = {}
+    for file in sorted(directory.rglob('*')):
+        assert not file.is_symlink()
+        if file.is_dir(): continue
+        assert stat.S_ISREG(file.stat().st_mode)
+        raw = s.read_regular(file)
+        result[str(file.relative_to(ROOT))] = {'sha256': sha(raw), 'bytes': len(raw)}
+    return result
+
+before = inventory(ATTEMPT)
+metrics, checks = {}, {}
+for row, case in zip(summary['cases'], s.ORDER, strict=True):
+    directory = ATTEMPT / case
+    assert row['case'] == case and row['status'] == 'passed_numerical_software_only'
+    receipt_raw = s.read_regular(directory / 'receipt.json')
+    receipt = json.loads(receipt_raw)
+    assert sha(receipt_raw) == row['receipt_sha256']
+    assert receipt['status'] == 'passed_numerical_software_only'
+    assert receipt['inputs_before'] == records and receipt['inputs_after'] == records
+    assert receipt['exit_code'] == 0 and receipt['kill_reason'] is None
+    assert 'cleanup_error' not in receipt and 'supervision_error' not in receipt
+    assert receipt['native_calls_attempted'] == receipt['attempt'] == 1 and receipt['no_retry'] is True
+    assert receipt['native_output_observed'] is True and receipt['native_provenance_verified'] is True
+    assert receipt['runtime_identity'] == s.RUNTIME and receipt['backend_profile'] == s.PROFILE
+    assert receipt['thread_environment'] == s.THREAD_ENV_FOR_SAVED
+    assert receipt['command'] == [context['runtime']['runtime']['executable'], '-noconfig', '-no_title', '-i', case + '.feb', '-o', case + '.log']
+    assert receipt['executed_deck'] == prep['cases'][case]['adapted']
+    assert receipt['original_deck'] == prep['cases'][case]['original']
+    assert 0 <= receipt['elapsed_seconds'] < s.WALL[case]
+    assert receipt['peak_sampled_process_group_rss_bytes'] <= s.CAPS['per_case_sampled_process_group_rss_bytes']
+    assert receipt['peak_sampled_active_output_bytes'] <= s.CAPS['per_case_active_output_bytes']
+    exact_names = {case + ext for ext in ('.feb', '.log', '.nodes.log', '.elements.log', '.xplt')} | {'console.txt', 'receipt.json', 'checked.json'}
+    assert {p.name for p in directory.iterdir()} == exact_names
+    assert s.collect_outputs(directory, context['resource']) == receipt['output_bindings']
+    assert receipt['output_bindings'][case + '.xplt']['bytes'] > 0
+    console = (directory / 'console.txt').read_text()
+    assert sha(console.encode()) == receipt['checked_console_sha256']
+    selections = [line.strip() for line in console.splitlines() if 'selecting linear solver' in line.lower()]
+    assert selections == receipt['backend_selection'] and len(selections) == 1
+    assert context['resource'].BACKEND_LINE.fullmatch(selections[0])
+    assert not re.search(r'\b(?:fallback|fall\s+back|switching\s+(?:linear\s+)?solver|selected\s+linear\s+solver)\b', console, re.I)
+    checked = context['checker'].check_case(case, directory, executed_sha256=receipt['executed_deck']['sha256'])
+    assert checked == receipt['saved_output_checks'] == read(directory / 'checked.json')
+    assert sha((directory / 'checked.json').read_bytes()) == receipt['checked_result_sha256']
+    assert checked['passed'] and checked['failures'] == [] and checked['solver']['passed']
+    assert all(all(state['checks'].values()) for state in checked['states'])
+    assert len(checked['states']) == (105 if case.startswith('onearm') else 5)
+    assert checked['solver']['state_count'] == len(checked['states']) - 1
+    if case == 'zeroarm_shear': assert checked['archived_plain_ogden_crosscheck']['passed']
+    warning_messages = {}
+    for name in ('console.txt', case + '.log'):
+        text = (directory / name).read_text()
+        messages = re.findall(r'\*\s+WARNING\s+\*\s*\n\s*\*\s+(.+?)\s+\*', text)
+        assert len(messages) == len(checked['states']) - 1
+        assert set(messages) == {'No force acting on the system.'}
+        warning_messages[name] = {'count': len(messages), 'message': messages[0]}
+    case_bytes = sum(p.stat().st_size for p in directory.iterdir())
+    assert case_bytes < s.CAPS['per_case_active_output_bytes']
+    metrics[case] = {'states': len(checked['states']), 'positive_time_states': len(checked['states']) - 1,
+        'all_state_checks_passed': True, 'failures': [], 'solver_residual_passed': True,
+        'max_discrete_stress_error_Pa': max(max(state['stress_component_max_abs_error_Pa'].values()) for state in checked['states'][1:]),
+        'minimum_sampled_J': min(state['minimum_sampled_J'] for state in checked['states']),
+        'native_wall_seconds': receipt['elapsed_seconds'], 'sampled_peak_group_rss_bytes': receipt['peak_sampled_process_group_rss_bytes'],
+        'finalized_output_bytes': case_bytes, 'plot_bytes': receipt['output_bindings'][case + '.xplt']['bytes'],
+        'warning_messages': warning_messages}
+    checks[case] = checked
+    assert summary['case_evidence_final'][case] == {'unchanged': True}
+
+coarse = context['coarse_saved_readout']
+refinement = context['checker'].compare_time_refinement(coarse, checks[s.ORDER[0]])
+assert refinement == summary['time_refinement']
+ratios = [value for values in refinement['coarse_to_fine_error_ratios_by_component'].values() for value in values.values()]
+previous = context['original_resource_accounting']
+assert summary['original_attempt_accounting'] == previous
+native_total = previous['native_wall_seconds'] + sum(row['native_wall_seconds'] for row in metrics.values())
+assert math.isclose(native_total, summary['combined_native_wall_seconds'], abs_tol=1e-15)
+assert math.isclose(previous['sequence_wall_seconds'] + summary['elapsed_seconds'], summary['combined_accounted_sequence_wall_seconds'], abs_tol=1e-15)
+assert summary['elapsed_seconds'] < 90 and summary['combined_accounted_sequence_wall_seconds'] < 120
+assert max(row['sampled_peak_group_rss_bytes'] for row in metrics.values()) == summary['peak_sampled_aggregate_native_rss_bytes']
+finalized_bytes = sum(row['bytes'] for row in before.values())
+combined_bytes = previous['complete_output_bytes'] + finalized_bytes
+assert finalized_bytes < s.CAPS['aggregate_active_output_bytes'] and combined_bytes < 32 * 1024**2
+assert before == inventory(ATTEMPT)
+assert s.audit_inputs(expected) == {name: row for name, row in records.items() if name != 'root_release_and_HEAD'}
+result = {'schema': 'greiner-remaining-three-independent-postrun-audit-v1', 'status': 'PASS_numerical_software_only',
+    'new_native_calls_in_audit': 0, 'subprocess_launch_blocked_during_replay': True,
+    'historical_execution_commit': release['source_commit'], 'historical_git_blobs_verified': historical,
+    'input_audit_entries_per_phase': len(records), 'all_saved_pre_post_final_input_audits_exact': True,
+    'all_current_bound_inputs_unchanged': True, 'all_finalized_outputs_unchanged_during_replay': True,
+    'remaining_native_calls': 3, 'original_native_calls': 1, 'combined_native_calls': 4,
+    'remaining_states': sum(row['states'] for row in metrics.values()), 'coarse_saved_states': len(coarse['states']),
+    'combined_states': len(coarse['states']) + sum(row['states'] for row in metrics.values()),
+    'initial_rows_are_format_not_material_acceptance': True, 'case_metrics': metrics,
+    'coarse_fine_comparison': {'coarse_continuum_errors': coarse['continuum_oracle'], 'fine_continuum_errors': checks[s.ORDER[0]]['continuum_oracle'],
+        'refinement': refinement, 'minimum_error_ratio': min(ratios), 'maximum_error_ratio': max(ratios)},
+    'resource_accounting': {'original': previous, 'remaining_sequence_wall_seconds': summary['elapsed_seconds'],
+        'combined_sequence_wall_seconds': summary['combined_accounted_sequence_wall_seconds'], 'combined_native_wall_seconds': native_total,
+        'combined_peak_sampled_native_rss_bytes': summary['combined_peak_sampled_native_rss_bytes'],
+        'remaining_finalized_files': len(before), 'remaining_finalized_output_bytes': finalized_bytes,
+        'combined_finalized_output_bytes': combined_bytes, 'controller_prefinal_byte_snapshot': summary['final_active_output_bytes'],
+        'final_summary_growth_bytes': finalized_bytes - summary['final_active_output_bytes'], 'all_caps_satisfied': True,
+        'sampling_limit': summary['sampling_limit']},
+    'original_negative_preserved': True, 'original_coarse_rerun': False, 'physical_validation_pass': None,
+    'patient_data_accessed': False, 'measured_response_accessed': False,
+    'scope': 'Arbitrary-constant numerical software controls only; no physical, specimen, patient, clinical, or RL validation.',
+    'output_inventory': before}
+(OUT / 'audit.json').write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + '\n')
+print(json.dumps({k: result[k] for k in ('status', 'combined_states', 'input_audit_entries_per_phase', 'resource_accounting')}, indent=2))

@@ -1,0 +1,264 @@
+{
+  "INDEPENDENT_REVIEW.md": {
+    "original": {
+      "bytes": 3749,
+      "path": "build/greiner-native-remaining-three-postrun-review-fresh-v1/REPORT.md",
+      "sha256": "3e702fff1af19ac8b042384c63a59806fa536e59c90f0d3d17d613655a476335"
+    },
+    "storage": "exact_bytes"
+  },
+  "PROSPECTIVE_REVIEW.md": {
+    "original": {
+      "bytes": 7742,
+      "path": "build/greiner-native-remaining-three-review-fresh-v1/REPORT.md",
+      "sha256": "2c33ce29795336bcc8d808dcc7079bac5e17adee840d1c434298440422bdfec2"
+    },
+    "storage": "exact_bytes"
+  },
+  "ROOT_PREFLIGHT.md": {
+    "original": {
+      "bytes": 254,
+      "path": "build/greiner-native-remaining-three-release-v1/ROOT_PREFLIGHT.md",
+      "sha256": "36cd2fc4763f96396650d9189daa31b915d07b8c5b25fd879dcd1a42023851dc"
+    },
+    "storage": "exact_bytes"
+  },
+  "decks/onearm_shear_dt005.feb": {
+    "original": {
+      "bytes": 16834,
+      "path": "build/greiner-native-remaining-three-release-v1/decks/onearm_shear_dt005.feb",
+      "sha256": "5c814dd0e6fb4bc07e59d5ed0830768f97d157d2a4a0cdbf0d02813fa5943165"
+    },
+    "storage": "exact_bytes"
+  },
+  "decks/zeroarm_shear.feb": {
+    "original": {
+      "bytes": 16653,
+      "path": "build/greiner-native-remaining-three-release-v1/decks/zeroarm_shear.feb",
+      "sha256": "4f50ba4e46e80324cc8e6d735744dc08981b8552918bceea9274d6f3ec881393"
+    },
+    "storage": "exact_bytes"
+  },
+  "decks/zeroarm_volume.feb": {
+    "original": {
+      "bytes": 17474,
+      "path": "build/greiner-native-remaining-three-release-v1/decks/zeroarm_volume.feb",
+      "sha256": "8652f252630b12a424ac575981b3706a88a5b4a9d4597a982659729cd8e93004"
+    },
+    "storage": "exact_bytes"
+  },
+  "independent-audit.compact.json": {
+    "original": {
+      "bytes": 13416,
+      "path": "build/greiner-native-remaining-three-postrun-review-fresh-v1/audit.json",
+      "sha256": "0ad817286eb6b2cdf90d2e626d6fa6e3603cb181e0ad8a57f96ab380fe2a2bbc"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "original-negative/INDEPENDENT_REVIEW.md": {
+    "original": {
+      "bytes": 3265,
+      "path": "artifacts/greiner-first-control-inventory-negative-v1/ORIGINAL_AUDIT.md",
+      "sha256": "9df28081438f2957054ad229c5685a6b62c90d9d1b10d4dae206be2d38928a92"
+    },
+    "storage": "exact_bytes"
+  },
+  "original-negative/receipt.compact.json": {
+    "original": {
+      "bytes": 74711,
+      "path": "build/greiner-native-four-control-release-v1/attempt-01/onearm_shear_dt010/receipt.json",
+      "sha256": "55f6138edea3a1aa47788db0cc46a233583360d4e689fdc6b7fd2b1a959cab53"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "original-negative/root-release.compact.json": {
+    "original": {
+      "bytes": 541,
+      "path": "build/greiner-native-four-control-release-v1/attempt-01/root-release.json",
+      "sha256": "5b9f613fe316d87c4d4d24f9e2b44b0e227950856b561f2a4dc0e43d03e6521b"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "original-negative/summary.compact.json": {
+    "original": {
+      "bytes": 37702,
+      "path": "build/greiner-native-four-control-release-v1/attempt-01/summary.json",
+      "sha256": "3584ea8418868eeedcbbfe689fc32d73a6270baa877cfa20d65fa20199988728"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "preparation.compact.json": {
+    "original": {
+      "bytes": 62401,
+      "path": "build/greiner-native-remaining-three-release-v1/preparation.json",
+      "sha256": "7c2e7542e7c432350d44405b43c16a92be464df4a14d058f584e3fe10224e345"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "receipts/onearm_shear_dt005.compact.json": {
+    "original": {
+      "bytes": 215834,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/onearm_shear_dt005/receipt.json",
+      "sha256": "1d19d0ab7028699cea32e15e3af747a3cf4766e6f936c397af621a92f2db5c08"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "receipts/zeroarm_shear.compact.json": {
+    "original": {
+      "bytes": 94917,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/zeroarm_shear/receipt.json",
+      "sha256": "e525c6226d694839a90ff872c3563b86df47168fbf95a52f04761d6d0f541308"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "receipts/zeroarm_volume.compact.json": {
+    "original": {
+      "bytes": 94014,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/zeroarm_volume/receipt.json",
+      "sha256": "10b891b8771dcd0c8a614b4283fbcb73dfc8a86c2a75b376a2a42a0e07ef8b0a"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "results/onearm_shear_dt005.compact.json": {
+    "original": {
+      "bytes": 105939,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/onearm_shear_dt005/checked.json",
+      "sha256": "b00ab9810759369dfba57bf761591d148a5c1de43bd0fe56173e7e09ef52d14b"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "results/zeroarm_shear.compact.json": {
+    "original": {
+      "bytes": 8883,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/zeroarm_shear/checked.json",
+      "sha256": "95fd9caa749b8881d932efd847d40cecf47b80306c47a344b048c6f54ccf50c0"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "results/zeroarm_volume.compact.json": {
+    "original": {
+      "bytes": 8033,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/zeroarm_volume/checked.json",
+      "sha256": "4d6b060476a9910caca862792db1318a5198c5f18658f2e67703202211a0150a"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "root-release.compact.json": {
+    "original": {
+      "bytes": 560,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/root-release.json",
+      "sha256": "8e6bd062c6f6b7c7f5fdfcb9a3aef8fedf36c9156ec32a54dbaaf17fde4b2586"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "saved-coarse-supplement.compact.json": {
+    "original": {
+      "bytes": 91100,
+      "path": "build/greiner-native-remaining-three-release-v1/saved-coarse-supplement.json",
+      "sha256": "4367c2d0d12f9975e69363202c88b106bbcd01f689225615268a01ddf9c8f532"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "source/checker.py.snapshot": {
+    "original": {
+      "bytes": 21612,
+      "path": "build/greiner-native-remaining-three-release-v1/checker.py",
+      "sha256": "badc544010749274301d0a528ed04f49385605c5b82068670e7bf26d79b276b6"
+    },
+    "storage": "exact_bytes"
+  },
+  "source/postrun_audit.py.snapshot": {
+    "original": {
+      "bytes": 11409,
+      "path": "build/greiner-native-remaining-three-postrun-review-fresh-v1/audit.py",
+      "sha256": "7a84fbff18f9bc3fe87f16fd9f536223cd7feb516d646e51999380e5acc76bfa"
+    },
+    "storage": "exact_bytes"
+  },
+  "source/prepare_release.py.snapshot": {
+    "original": {
+      "bytes": 6417,
+      "path": "build/greiner-native-remaining-three-release-v1/prepare_release.py",
+      "sha256": "2b3f3e57bf284784a4e0a7b0880e827e390a7e325feae69e6a8eaf3b9370cd76"
+    },
+    "storage": "exact_bytes"
+  },
+  "source/saved_coarse.py.snapshot": {
+    "original": {
+      "bytes": 9724,
+      "path": "build/greiner-native-remaining-three-release-v1/saved_coarse.py",
+      "sha256": "2baaee70b1a6438e55a211b970803ab605c72d13aaf473e3bed95971f83f23cf"
+    },
+    "storage": "exact_bytes"
+  },
+  "source/supervisor.py.snapshot": {
+    "original": {
+      "bytes": 30331,
+      "path": "build/greiner-native-remaining-three-release-v1/supervisor.py",
+      "sha256": "b49afc0335f9e5b9e44b11221a85041a6a25aa32a9a33696532fddb09718bb87"
+    },
+    "storage": "exact_bytes"
+  },
+  "source/test_independent_review.py.snapshot": {
+    "original": {
+      "bytes": 6231,
+      "path": "build/greiner-native-remaining-three-review-fresh-v1/test_independent_review.py",
+      "sha256": "9c4a399fb9ce1b744b3aa5a3fdf9f9e90e22755c937cc05830349a164fa9daed"
+    },
+    "storage": "exact_bytes"
+  },
+  "source/test_supervisor.py.snapshot": {
+    "original": {
+      "bytes": 20540,
+      "path": "build/greiner-native-remaining-three-release-v1/test_supervisor.py",
+      "sha256": "554a71ed7e8090d87025822ae6929a1af1f605ed36311fa752c5595b20fb054f"
+    },
+    "storage": "exact_bytes"
+  },
+  "summary.compact.json": {
+    "original": {
+      "bytes": 44025,
+      "path": "build/greiner-native-remaining-three-release-v1/attempt-01/summary.json",
+      "sha256": "05036586bd046cdbda67a242975173b521eed85fc95b60ac55043e19297c7684"
+    },
+    "restore": "json.dumps(json.loads(bytes), sort_keys=True, indent=2, allow_nan=False) + newline",
+    "storage": "canonical_json_compact"
+  },
+  "test-status.json": {
+    "original": {
+      "bytes": 86,
+      "path": "build/greiner-native-remaining-three-review-fresh-v1/test-status.json",
+      "sha256": "0c2f890ec81342ce884aec659ac76eac7a325c21b25549ed2b55e5d04548eec9"
+    },
+    "storage": "exact_bytes"
+  },
+  "tests.txt": {
+    "original": {
+      "bytes": 99,
+      "path": "build/greiner-native-remaining-three-review-fresh-v1/tests.txt",
+      "sha256": "6c3248049806dddf803bf59a714b19ff453de8b801ac120a2ca9530306563d46"
+    },
+    "storage": "exact_bytes"
+  },
+  "warning-source.json": {
+    "original": {
+      "bytes": 384,
+      "path": "build/greiner-native-remaining-three-postrun-review-fresh-v1/warning-source.json",
+      "sha256": "7d7a53dc33f557ead6851e5bf63ed7a9331b3120dae537bbf3289bfef24557dc"
+    },
+    "storage": "exact_bytes"
+  }
+}

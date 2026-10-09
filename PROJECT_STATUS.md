@@ -39,6 +39,15 @@ were not attempted. Independent replay of all 53 saved states passes the
 unchanged numerical checker, with zero new solver calls. This diagnoses the
 output-contract defect and does not establish physical tissue accuracy.
 
+The [four numerical viscoelastic controls](artifacts/greiner-four-controls-v1/RESULT.md)
+now pass their frozen checks: three previously unattempted cases ran once, and
+the original coarse result was replayed from saved evidence. All 168 recorded
+states reproduce, with approximately fourfold lower continuum error after
+halving the shear timestep. The original inventory failure remains preserved;
+four native calls were spent in total, without a coarse retry. This establishes
+numerical software behavior only. Greiner CSV schema, measurement chronology,
+and measured-response or physical validation remain open.
+
 The [measurement-schema follow-up](artifacts/brain-indentation-schema-followup-v1/RESULT.md)
 found no authoritative positional mapping for the Greiner CSVs. A separate
 Menichetti creator release explicitly documents postmortem brain indentation

@@ -1,0 +1,521 @@
+<?xml version='1.0' encoding='utf-8'?>
+<febio_spec version="4.0">
+  <Module type="solid" />
+  <Control>
+    <analysis>STATIC</analysis>
+    <time_steps>4</time_steps>
+    <step_size>0.25</step_size>
+    <solver type="solid">
+      <symmetric_stiffness>1</symmetric_stiffness>
+      <max_refs>15</max_refs>
+      <dtol>1e-10</dtol>
+      <etol>1e-10</etol>
+      <rtol>1e-10</rtol>
+      <min_residual>1e-20</min_residual>
+      <qn_method type="BFGS" />
+      <linear_solver type="accelerate"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>
+    </solver>
+  </Control>
+  <Material>
+    <material id="1" name="numerical_onearm" type="uncoupled viscoelastic">
+      <g0>1</g0>
+      <g1>0</g1>
+      <t1>2</t1>
+      <g2>0</g2>
+      <t2>1</t2>
+      <g3>0</g3>
+      <t3>1</t3>
+      <g4>0</g4>
+      <t4>1</t4>
+      <g5>0</g5>
+      <t5>1</t5>
+      <g6>0</g6>
+      <t6>1</t6>
+      <k>49666.666666666664</k>
+      <pressure_model>1</pressure_model>
+      <elastic type="Mooney-Rivlin">
+        <c1>500</c1>
+        <c2>0</c2>
+      </elastic>
+    </material>
+  </Material>
+  <Mesh>
+    <Nodes name="cube_nodes">
+      <node id="1">0,0,0</node>
+      <node id="2">0.0050000000000000001,0,0</node>
+      <node id="3">0.01,0,0</node>
+      <node id="4">0,0.0050000000000000001,0</node>
+      <node id="5">0.0050000000000000001,0.0050000000000000001,0</node>
+      <node id="6">0.01,0.0050000000000000001,0</node>
+      <node id="7">0,0.01,0</node>
+      <node id="8">0.0050000000000000001,0.01,0</node>
+      <node id="9">0.01,0.01,0</node>
+      <node id="10">0,0,0.0050000000000000001</node>
+      <node id="11">0.0050000000000000001,0,0.0050000000000000001</node>
+      <node id="12">0.01,0,0.0050000000000000001</node>
+      <node id="13">0,0.0050000000000000001,0.0050000000000000001</node>
+      <node id="14">0.0050000000000000001,0.0050000000000000001,0.0050000000000000001</node>
+      <node id="15">0.01,0.0050000000000000001,0.0050000000000000001</node>
+      <node id="16">0,0.01,0.0050000000000000001</node>
+      <node id="17">0.0050000000000000001,0.01,0.0050000000000000001</node>
+      <node id="18">0.01,0.01,0.0050000000000000001</node>
+      <node id="19">0,0,0.01</node>
+      <node id="20">0.0050000000000000001,0,0.01</node>
+      <node id="21">0.01,0,0.01</node>
+      <node id="22">0,0.0050000000000000001,0.01</node>
+      <node id="23">0.0050000000000000001,0.0050000000000000001,0.01</node>
+      <node id="24">0.01,0.0050000000000000001,0.01</node>
+      <node id="25">0,0.01,0.01</node>
+      <node id="26">0.0050000000000000001,0.01,0.01</node>
+      <node id="27">0.01,0.01,0.01</node>
+    </Nodes>
+    <Elements type="hex8" name="cube">
+      <elem id="1">1,2,5,4,10,11,14,13</elem>
+      <elem id="2">2,3,6,5,11,12,15,14</elem>
+      <elem id="3">4,5,8,7,13,14,17,16</elem>
+      <elem id="4">5,6,9,8,14,15,18,17</elem>
+      <elem id="5">10,11,14,13,19,20,23,22</elem>
+      <elem id="6">11,12,15,14,20,21,24,23</elem>
+      <elem id="7">13,14,17,16,22,23,26,25</elem>
+      <elem id="8">14,15,18,17,23,24,27,26</elem>
+    </Elements>
+    <NodeSet name="node_1">1</NodeSet>
+    <NodeSet name="node_2">2</NodeSet>
+    <NodeSet name="node_3">3</NodeSet>
+    <NodeSet name="node_4">4</NodeSet>
+    <NodeSet name="node_5">5</NodeSet>
+    <NodeSet name="node_6">6</NodeSet>
+    <NodeSet name="node_7">7</NodeSet>
+    <NodeSet name="node_8">8</NodeSet>
+    <NodeSet name="node_9">9</NodeSet>
+    <NodeSet name="node_10">10</NodeSet>
+    <NodeSet name="node_11">11</NodeSet>
+    <NodeSet name="node_12">12</NodeSet>
+    <NodeSet name="node_13">13</NodeSet>
+    <NodeSet name="node_15">15</NodeSet>
+    <NodeSet name="node_16">16</NodeSet>
+    <NodeSet name="node_17">17</NodeSet>
+    <NodeSet name="node_18">18</NodeSet>
+    <NodeSet name="node_19">19</NodeSet>
+    <NodeSet name="node_20">20</NodeSet>
+    <NodeSet name="node_21">21</NodeSet>
+    <NodeSet name="node_22">22</NodeSet>
+    <NodeSet name="node_23">23</NodeSet>
+    <NodeSet name="node_24">24</NodeSet>
+    <NodeSet name="node_25">25</NodeSet>
+    <NodeSet name="node_26">26</NodeSet>
+    <NodeSet name="node_27">27</NodeSet>
+  </Mesh>
+  <MeshDomains>
+    <SolidDomain name="cube" mat="numerical_onearm" type="three-field-solid">
+      <laugon>0</laugon>
+    </SolidDomain>
+  </MeshDomains>
+  <Boundary>
+    <bc type="prescribed displacement" node_set="node_1">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_1">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_1">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_2">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_2">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_2">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_3">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_3">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_3">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_4">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_4">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_4">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_5">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_5">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_5">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_6">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_6">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_6">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_7">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_7">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_7">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_8">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_8">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_8">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_9">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_9">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_9">
+      <dof>z</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_10">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_10">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_10">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_11">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_11">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_11">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_12">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_12">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_12">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_13">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_13">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_13">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_15">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_15">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_15">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_16">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_16">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_16">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_17">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_17">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_17">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_18">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_18">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_18">
+      <dof>z</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_19">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_19">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_19">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_20">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_20">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_20">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_21">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_21">
+      <dof>y</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_21">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_22">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_22">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_22">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_23">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_23">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_23">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_24">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_24">
+      <dof>y</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_24">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_25">
+      <dof>x</dof>
+      <value lc="1">0</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_25">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_25">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_26">
+      <dof>x</dof>
+      <value lc="1">0.00010000000000000009</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_26">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_26">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_27">
+      <dof>x</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_27">
+      <dof>y</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+    <bc type="prescribed displacement" node_set="node_27">
+      <dof>z</dof>
+      <value lc="1">0.00020000000000000017</value>
+      <relative>0</relative>
+    </bc>
+  </Boundary>
+  <LoadData>
+    <load_controller id="1" type="loadcurve">
+      <interpolate>LINEAR</interpolate>
+      <points>
+        <pt>0,0</pt>
+        <pt>1,1</pt>
+      </points>
+    </load_controller>
+  </LoadData>
+  <Output>
+    <logfile file="zeroarm_volume.log">
+      <node_data data="x;y;z;ux;uy;uz;Rx;Ry;Rz" name="mechanics_nodes_si" file="zeroarm_volume.nodes.log" delim="," />
+      <element_data data="sx;sy;sz;sxy;syz;sxz;J;sed" name="mechanics_elements_si" file="zeroarm_volume.elements.log" delim="," />
+    </logfile>
+  </Output>
+</febio_spec>

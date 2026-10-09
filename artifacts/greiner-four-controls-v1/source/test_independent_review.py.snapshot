@@ -1,0 +1,117 @@
+"""Independent generated tests. No native processes may be launched."""
+import importlib.util
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[2]
+CANDIDATE = ROOT / 'build/greiner-native-remaining-three-release-v1'
+sys.path.insert(0, str(CANDIDATE))
+sys.path.insert(0, str(ROOT))
+import supervisor as s
+import saved_coarse
+
+spec = importlib.util.spec_from_file_location('candidate_fixture_helpers', CANDIDATE / 'test_supervisor.py')
+fixtures = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(fixtures)
+
+
+@pytest.mark.parametrize('cleanup_failure', ['signal_permission', 'reap_timeout'])
+def test_cleanup_failure_survives_sequence_and_no_later_launch(tmp_path, monkeypatch, cleanup_failure):
+    resource = fixtures.resource
+    launches, signals, waits = [], [], []
+    class Fake:
+        pid = 999999
+        def poll(self): return None
+        def wait(self, timeout):
+            waits.append(timeout)
+            raise subprocess.TimeoutExpired('fake child', timeout)
+    def signal_fake(pid, sig):
+        signals.append(pid)
+        if cleanup_failure == 'signal_permission':
+            raise PermissionError('independent fake permission denial')
+    monkeypatch.setattr(resource.os, 'killpg', signal_fake)
+    def observer(*args, **kwargs):
+        raise ValueError('independent fake observation failure')
+    def fake_launch(executable, directory, receipt, **kwargs):
+        launches.append(receipt['case'])
+        return resource.supervise('/fake/not-launched', directory, receipt,
+                                  rss_observer=observer, popen=lambda *a, **k: Fake(), sleep=lambda t: None)
+    result = s.run_sequence(tmp_path, fixtures.context(), lambda: {'fixture': {'unchanged': True}},
+                            native=fake_launch, output_check=lambda *args: pytest.fail('must not check after cleanup error'))
+    receipt = json.loads((tmp_path / s.ORDER[0] / 'receipt.json').read_text())
+    saved = json.loads((tmp_path / 'summary.json').read_text())
+    assert result == saved
+    assert launches == [s.ORDER[0]]
+    assert signals == [999999]
+    assert waits == ([] if cleanup_failure == 'signal_permission' else [2])
+    assert result['status'] == receipt['status'] == 'failed_or_incomplete'
+    assert result['native_calls_attempted'] == 1 and result['combined_native_calls_attempted'] == 2
+    assert result['unattempted_cases'] == list(s.ORDER[1:])
+    assert receipt['cleanup_error']['type'] == ('PermissionError' if cleanup_failure == 'signal_permission' else 'TimeoutExpired')
+    assert receipt['exit_code'] is None and receipt['kill_reason'] == 'supervision_exception'
+    assert receipt['pid'] == 999999 and receipt['native_output_observed'] is True
+    assert receipt['native_provenance_verified'] is False
+    assert not any(receipt.get(key) is True for key in ('workers_cleared', 'process_group_cleared', 'reaped', 'killed'))
+    assert 'checked.json' not in receipt['output_bindings']
+
+
+def test_late_plot_mutation_invalidates_completed_case(tmp_path):
+    def fake_launch(executable, directory, receipt, **kwargs):
+        fixtures.fake_native(executable, directory, receipt, **kwargs)
+        if receipt['case'] == s.ORDER[1]:
+            (tmp_path / s.ORDER[0] / (s.ORDER[0] + '.xplt')).write_bytes(b'late plot mutation')
+    result = s.run_sequence(tmp_path, fixtures.context(), lambda: {'fixture': {'unchanged': True}},
+                            native=fake_launch, output_check=fixtures.fake_check)
+    assert result['status'] == 'failed_or_incomplete'
+    assert result['case_evidence_final'][s.ORDER[0]]['unchanged'] is False
+
+
+@pytest.mark.parametrize('kind', ['symlink', 'oversized'])
+def test_expected_plot_special_or_oversized_fails(tmp_path, kind):
+    case = s.ORDER[0]
+    for name in (case + '.feb', case + '.log', case + '.nodes.log', case + '.elements.log', 'receipt.json', 'console.txt'):
+        (tmp_path / name).write_bytes(b'fixture')
+    plot = tmp_path / (case + '.xplt')
+    if kind == 'symlink':
+        plot.symlink_to(tmp_path / 'console.txt')
+    else:
+        with plot.open('wb') as stream:
+            stream.truncate(8 * 1024**2 + 1)
+    with pytest.raises(ValueError, match='Symlink|oversized'):
+        s.check_outputs(case, tmp_path, fixtures.context())
+
+
+def test_coarse_supplement_and_remaining_preparation_exact_source_replay():
+    prep_raw = (CANDIDATE / 'preparation.json').read_bytes()
+    context = s.inspect_preparation(prep_raw)
+    prep = context['preparation']
+    assert s.ORDER == ('onearm_shear_dt005', 'zeroarm_shear', 'zeroarm_volume')
+    assert list(context['decks']) == list(s.ORDER)
+    assert prep['source_commit'] is None
+    assert not (CANDIDATE / 'attempt-01').exists()
+    assert context['coarse_saved_readout']['passed'] is True
+    assert len(context['coarse_saved_readout']['states']) == 53
+    assert context['original_resource_accounting']['native_calls_attempted'] == 1
+    assert context['original_resource_accounting']['complete_output_bytes'] == 503011
+    assert len(prep['runtime_input_hashes']) == 115 and len(prep['source_bindings']) == 10
+    assert len(prep['original_input_hashes']) == 173
+    assert len(prep['original_attempt_bindings']) == 9
+
+
+def test_combined_accounting_charges_old_call_once(tmp_path):
+    context = fixtures.context()
+    def fake_launch(executable, directory, receipt, **kwargs):
+        fixtures.fake_native(executable, directory, receipt, **kwargs)
+        receipt['elapsed_seconds'] = 0.125
+    result = s.run_sequence(tmp_path, context, lambda: {'fixture': {'unchanged': True}},
+                            native=fake_launch, output_check=fixtures.fake_check)
+    previous = context['original_resource_accounting']
+    assert result['native_calls_attempted'] == 3 and result['combined_native_calls_attempted'] == 4
+    assert result['combined_native_wall_seconds'] == pytest.approx(previous['native_wall_seconds'] + 0.375)
+    assert result['combined_accounted_sequence_wall_seconds'] == pytest.approx(previous['sequence_wall_seconds'] + result['elapsed_seconds'])
+    assert result['combined_retained_output_bytes'] == previous['complete_output_bytes'] + result['final_active_output_bytes']
+

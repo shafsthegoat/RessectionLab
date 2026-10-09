@@ -1,0 +1,132 @@
+"""Read-only supplement for the retained failed-controller coarse native attempt.
+
+The original attempt and all its negative statuses remain immutable. This
+reader never launches a solver and never writes into the original attempt.
+"""
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import xml.etree.ElementTree as ET
+
+OLD = 'build/greiner-native-four-control-release-v1'
+ATTEMPT = OLD+'/attempt-01'
+CASE = 'onearm_shear_dt010'
+REMAINING = ['onearm_shear_dt005','zeroarm_shear','zeroarm_volume']
+PARENT_PREP_SHA = '5e6d8660c6451ba3aaf60b26947fcb20466e71f17b7a6e2fc8fdbb971c049701'
+DEFAULT_FILES = ('FECore/FEPlotDataStore.cpp','FECore/FEAnalysis.cpp','FEBioLib/FEBioModel.cpp')
+
+
+def verify(binding_manifest, default_bindings, checker, backend_context, io, root):
+    expected_names = {ATTEMPT+'/root-release.json',ATTEMPT+'/summary.json'} | {
+        ATTEMPT+'/'+CASE+'/'+name for name in (
+            CASE+'.feb',CASE+'.log',CASE+'.nodes.log',CASE+'.elements.log',CASE+'.xplt','console.txt','receipt.json')}
+    if set(binding_manifest) != expected_names:
+        raise ValueError('Exact original negative attempt inventory required')
+    attempt = io.path(ATTEMPT,root)
+    if ({p.name for p in attempt.iterdir()} != {'root-release.json','summary.json',CASE}
+            or {p.name for p in (attempt/CASE).iterdir()} != {Path(p).name for p in expected_names if '/'+CASE+'/' in p}):
+        raise ValueError('Original negative attempt has unexpected or missing files')
+    data = {name:io.bound({'path':name,'sha256':row['sha256']},root,8*1024**2)
+            for name,row in binding_manifest.items()}
+    if any(len(data[name]) != row['bytes'] for name,row in binding_manifest.items()):
+        raise ValueError('Original saved byte inventory differs')
+    release = json.loads(data[ATTEMPT+'/root-release.json'])
+    summary = json.loads(data[ATTEMPT+'/summary.json'])
+    receipt = json.loads(data[ATTEMPT+'/'+CASE+'/receipt.json'])
+    parent = json.loads(io.bound({'path':OLD+'/preparation.json','sha256':PARENT_PREP_SHA},root))
+    if (release.get('schema') != 'greiner-four-control-root-release-v1'
+            or release.get('status') != 'root_released_four_native_calls'
+            or release.get('preparation') != {'path':OLD+'/preparation.json','sha256':PARENT_PREP_SHA}
+            or not re.fullmatch('[0-9a-f]{40}',release.get('source_commit',''))):
+        raise ValueError('Original root release differs')
+    io.bound(release['independent_review'],root,1024**2)
+    if (summary.get('status') != 'failed_or_incomplete' or summary.get('native_calls_attempted') != 1
+            or summary.get('unattempted_cases') != REMAINING or len(summary.get('cases',[])) != 1
+            or summary['cases'][0] != {'case':CASE,'status':'failed_or_incomplete',
+                'receipt_sha256':io.digest(data[ATTEMPT+'/'+CASE+'/receipt.json'])}
+            or receipt.get('status') != 'failed_or_incomplete' or receipt.get('case') != CASE
+            or receipt.get('native_calls_attempted') != 1 or receipt.get('attempt') != 1
+            or receipt.get('failure') != {'type':'ValueError','message':'Exact native output inventory differs'}
+            or receipt.get('exit_code') != 0 or receipt.get('kill_reason') is not None
+            or receipt.get('native_provenance_verified') is not False
+            or receipt.get('native_output_observed') is not True or not receipt.get('no_retry')):
+        raise ValueError('Original one-call inventory-negative provenance differs')
+    elapsed = receipt.get('elapsed_seconds')
+    if (not isinstance(elapsed,(int,float)) or not math.isfinite(elapsed) or not 0 <= elapsed < 30
+            or receipt.get('peak_sampled_process_group_rss_bytes',math.inf) > 256*1024**2
+            or receipt.get('peak_sampled_active_output_bytes',math.inf) > 8*1024**2
+            or sum(row['bytes'] for name,row in binding_manifest.items() if '/'+CASE+'/' in name) > 8*1024**2):
+        raise ValueError('Original native resource bounds differ')
+    expected_inputs = io.all_input_hashes(parent)
+    expected_inputs[OLD+'/preparation.json'] = PARENT_PREP_SHA
+    expected_inputs[release['independent_review']['path']] = release['independent_review']['sha256']
+    expected_audit = {name:{'sha256':sha,'unchanged':True} for name,sha in expected_inputs.items()}
+    expected_audit['root_release_and_HEAD'] = {'unchanged':True}
+    if receipt.get('inputs_before') != expected_audit or receipt.get('inputs_after') != expected_audit or summary.get('inputs_final') != expected_audit:
+        raise ValueError('Original complete source pre/post audit differs')
+    for name,sha in expected_inputs.items(): io.bound({'path':name,'sha256':sha},root)
+    runtime = backend_context['runtime']
+    if (receipt['runtime_identity'] != parent['runtime_identity'] or parent['runtime_identity'] != backend_context['runtime_identity']
+            or receipt['backend_profile'] != parent['backend_profile']
+            or receipt['command'] != [runtime['executable'],'-noconfig','-no_title','-i',CASE+'.feb','-o',CASE+'.log']
+            or receipt['thread_environment'] != io.THREAD_ENV_FOR_SAVED):
+        raise ValueError('Original accepted runtime, command or thread setting differs')
+    original_outputs = {Path(name).name:row for name,row in binding_manifest.items()
+                        if '/'+CASE+'/' in name and not name.endswith('/receipt.json')}
+    if receipt.get('output_bindings') != original_outputs:
+        raise ValueError('Original retained output hashes differ from terminal receipt')
+    if (receipt['executed_deck'] != parent['cases'][CASE]['adapted']
+            or original_outputs[CASE+'.feb']['sha256'] != receipt['executed_deck']['sha256']
+            or receipt['original_deck'] != parent['cases'][CASE]['original']):
+        raise ValueError('Original actual mechanical deck differs')
+    prefix = Path(backend_context['prefix'])
+    source_inventory = json.loads(io.read_regular(Path(runtime['source_inventory']['path'])))
+    if set(default_bindings) != set(DEFAULT_FILES):
+        raise ValueError('Complete default-plot source evidence required')
+    default_text = {}
+    for name in DEFAULT_FILES:
+        binding = default_bindings[name]
+        expected_path = str((prefix/'source'/name).relative_to(root))
+        if binding != {'path':expected_path,'sha256':source_inventory[name]['sha256']}:
+            raise ValueError('Plot default source is not accepted runtime source')
+        default_text[name] = io.bound(binding,root,1024**2).decode()
+    if ('m_splot_type = "febio";' not in default_text[DEFAULT_FILES[0]]
+            or not re.search(r'm_nplot\s*=\s*FE_PLOT_MAJOR_ITRS;',default_text[DEFAULT_FILES[1]])
+            or 'if (step->GetPlotLevel() != FE_PLOT_NEVER)' not in default_text[DEFAULT_FILES[2]]
+            or 'strcat(sz, ".xplt");' not in default_text[DEFAULT_FILES[2]]):
+        raise ValueError('Accepted plot default source tokens differ')
+    tree = ET.fromstring(data[ATTEMPT+'/'+CASE+'/'+CASE+'.feb'])
+    if any(tree.findall('.//'+tag) for tag in ('plotfile','plot_level')):
+        raise ValueError('Frozen deck unexpectedly overrides plot defaults')
+    console = data[ATTEMPT+'/'+CASE+'/console.txt'].decode('utf-8')
+    selections = [line.strip() for line in console.splitlines() if 'selecting linear solver' in line.lower()]
+    if (len(selections) != 1 or not re.fullmatch(r'\*\s+Selecting linear solver accelerate\s+\*',selections[0],re.I)
+            or re.search(r'\b(?:fallback|fall\s+back|switching\s+(?:linear\s+)?solver|selected\s+linear\s+solver)\b',console,re.I)):
+        raise ValueError('Original actual backend selection differs')
+    checked = checker.check_case(CASE,attempt/CASE,executed_sha256=receipt['executed_deck']['sha256'])
+    for name,sha in checked['provenance']['saved_output_sha256'].items():
+        if original_outputs[name]['sha256'] != sha: raise ValueError('Saved checker/output hashes differ')
+    if checked['passed'] is not True: raise ValueError('Saved coarse material-law check failed')
+    for name,row in binding_manifest.items():
+        if io.digest(io.read_regular(io.path(name,root),8*1024**2)) != row['sha256']:
+            raise ValueError('Original negative attempt changed during supplement')
+    return {'schema':'greiner-saved-coarse-supplement-v1',
+            'status':'saved_coarse_numerical_software_control_passed_original_controller_negative_preserved',
+            'original_controller_status':'failed_or_incomplete',
+            'original_failure':receipt['failure'],'original_source_commit':release['source_commit'],
+            'new_native_calls':0,'original_native_calls':1,'coarse_rerun_permitted':False,
+            'original_resource_accounting':{'native_calls_attempted':1,
+                'native_wall_seconds':receipt['elapsed_seconds'],
+                'sequence_wall_seconds':summary['elapsed_seconds'],
+                'complete_output_bytes':sum(row['bytes'] for row in binding_manifest.values()),
+                'peak_sampled_native_rss_bytes':receipt['peak_sampled_process_group_rss_bytes']},
+            'native_provenance_verified_by_saved_receipt_chain':True,
+            'original_input_hashes':expected_inputs,
+            'runtime_identity':receipt['runtime_identity'],'backend_profile':receipt['backend_profile'],
+            'actual_backend_selection':selections,'original_attempt_bindings':binding_manifest,
+            'plot_default_source_bindings':default_bindings,
+            'plot_file':original_outputs[CASE+'.xplt'],'plot_used_for_material_acceptance':False,
+            'saved_output_checks':checked,'physical_validation_pass':None,
+            'measured_response_accessed':False,'patient_data_accessed':False}

@@ -1,0 +1,519 @@
+#!/usr/bin/env python3
+"""Three never-attempted FEBio controls plus an authenticated saved coarse readout.
+
+Reuse the accepted backend verifier, local one-call resource supervisor and
+FEBio process-group observer. No acquisition, model/patient/CSV reader or fit.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import stat
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = 'build/greiner-native-remaining-three-release-v1'
+PREPARATION = BASE+'/preparation.json'
+OUTPUT = BASE+'/attempt-01'
+ORDER = ('onearm_shear_dt005', 'zeroarm_shear', 'zeroarm_volume')
+WALL = dict(zip(ORDER, (45, 10, 10)))
+CAPS = {'maximum_native_calls': 3, 'attempts_per_case': 1, 'retries': 0,
+        'per_case_wall_seconds': WALL, 'aggregate_wall_seconds': 90,
+        'per_case_sampled_process_group_rss_bytes': 256*1024**2,
+        'aggregate_sampled_native_rss_bytes': 256*1024**2,
+        'per_case_active_output_bytes': 8*1024**2,
+        'aggregate_active_output_bytes': 24*1024**2,
+        'numerical_threads': 1, 'parallel_native_calls': 1}
+PROFILE = {'path': 'artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json',
+           'sha256': 'c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1'}
+RUNTIME = {'path': 'artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json',
+           'sha256': '13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57'}
+SOURCES = (BASE+'/supervisor.py', BASE+'/checker.py', BASE+'/saved_coarse.py',
+           'scripts/mechanics_nonpatient_n5_supervisor.py', 'scripts/febio_runtime.py',
+           'scripts/mechanics_hbe_backend.py', 'scripts/mechanics_hbe_access.py',
+           'scripts/mechanics_hbe_evaluation.py', 'scripts/mechanics_febio_verification.py',
+           'scripts/mechanics_patient_constraints.py')
+HEX = re.compile(r'[0-9a-f]{64}\Z')
+COMMIT = re.compile(r'[0-9a-f]{40}\Z')
+THREAD_ENV_FOR_SAVED = {'OMP_NUM_THREADS':'1','OMP_DYNAMIC':'FALSE','OPENBLAS_NUM_THREADS':'1',
+                        'MKL_NUM_THREADS':'1','VECLIB_MAXIMUM_THREADS':'1','NUMEXPR_NUM_THREADS':'1'}
+
+
+def path(relative, root=ROOT):
+    if not isinstance(relative, str) or not relative or Path(relative).is_absolute() or '..' in Path(relative).parts:
+        raise ValueError('Repository-relative path required')
+    target = root.resolve()
+    for part in Path(relative).parts:
+        target /= part
+        if target.is_symlink():
+            raise ValueError('Symlink in bound input/output path')
+    return target
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def read_regular(file, maximum=64*1024**2):
+    """Stable bounded read; no symlinks or special files."""
+    if any(p.is_symlink() for p in (file, *file.parents)):
+        raise ValueError('Symlink in input path')
+    before = file.lstat()
+    if not stat.S_ISREG(before.st_mode) or before.st_size > maximum:
+        raise ValueError('Special or oversized input')
+    with file.open('rb') as stream:
+        data = stream.read(maximum+1)
+        after = os.fstat(stream.fileno())
+    final = file.lstat()
+    identity = lambda s: (s.st_dev, s.st_ino, s.st_size, s.st_mtime_ns)
+    if len(data) != before.st_size or identity(before) != identity(after) or identity(before) != identity(final):
+        raise ValueError('Input changed during read')
+    return data
+
+
+def bound(binding, root=ROOT, maximum=64*1024**2):
+    if (not isinstance(binding, dict) or set(binding) != {'path','sha256'}
+            or not isinstance(binding['sha256'], str) or not HEX.fullmatch(binding['sha256'])):
+        raise ValueError('Exact path/SHA256 binding required')
+    data = read_regular(path(binding['path'], root), maximum)
+    if digest(data) != binding['sha256']:
+        raise ValueError('Bound input changed: '+binding['path'])
+    return data
+
+
+def load(file, name):
+    spec = importlib.util.spec_from_file_location(name, file)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def sources(prep, root=ROOT):
+    if set(prep.get('source_bindings', {})) != set(SOURCES):
+        raise ValueError('Complete fixed source closure required')
+    return {name: digest(bound({'path':name, 'sha256':prep['source_bindings'][name]}, root, 1024**2))
+            for name in SOURCES}
+
+
+def audit_imports(root=ROOT):
+    for name, module in tuple(sys.modules.items()):
+        if name.startswith('scripts.') and getattr(module, '__file__', None):
+            actual = Path(module.__file__).resolve()
+            if not any(actual == root/relative for relative in SOURCES):
+                raise ValueError('Unbound executing scripts import: '+name)
+
+
+def inspect_preparation(raw, root=ROOT):
+    """Read-only preparation and accepted profile replay; never launch FEBio."""
+    prep = json.loads(raw)
+    if (prep.get('schema') != 'greiner-remaining-three-preparation-v1'
+            or prep.get('status') != 'prepared_not_released_or_executed'
+            or prep.get('case_order') != list(ORDER) or prep.get('caps') != CAPS
+            or prep.get('output_directory') != OUTPUT or prep.get('backend_profile') != PROFILE
+            or prep.get('runtime_identity') != RUNTIME or prep.get('source_commit') is not None):
+        raise ValueError('Frozen remaining-three-control preparation differs')
+    before = sources(prep, root)
+    sys.path.insert(0, str(root))
+    from scripts import mechanics_hbe_backend as backend
+    from scripts import mechanics_nonpatient_n5_supervisor as resource
+    from scripts import febio_runtime as runtime
+    checker = load(path(BASE+'/checker.py', root), 'greiner_actual_deck_checker')
+    audit_imports(root)
+    manifest, _ = checker.preparation(root)
+    if set(prep.get('cases', {})) != set(ORDER):
+        raise ValueError('Exactly three never-attempted controls required')
+    decks = {}
+    for case in ORDER:
+        row = prep['cases'][case]
+        info = manifest['cases'][case]
+        if (set(row) != {'original', 'adapted'} or row['original'] !=
+                {'path':info['deck'], 'sha256':info['sha256']}
+                or row['adapted']['path'] != BASE+'/decks/'+case+'.feb'):
+            raise ValueError('Frozen deck identities differ')
+        original, adapted = bound(row['original'], root), bound(row['adapted'], root)
+        backend.verify_deck(original, adapted)
+        decks[case] = adapted
+    context = backend.verify_profile(root, PROFILE)
+    if context['runtime_identity'] != RUNTIME:
+        raise ValueError('Runtime identity differs')
+    inventory_path = context['runtime']['source_inventory']['path']
+    inventory = json.loads(read_regular(Path(inventory_path)))
+    if len(prep.get('constitutive_sources', [])) != 9:
+        raise ValueError('Nine constitutive source pairs required')
+    for original, pair in zip(manifest['source_files'], prep['constitutive_sources']):
+        actual = str(Path(context['prefix']).relative_to(root)/'source'/'FEBioMech'/Path(original['path']).name)
+        key = 'FEBioMech/'+Path(original['path']).name
+        if (pair != {'original':original, 'runtime':{'path':actual,'sha256':original['sha256']}}
+                or inventory[key]['sha256'] != original['sha256']):
+            raise ValueError('Constitutive source differs from accepted runtime source inventory')
+        bound(pair['original'], root); bound(pair['runtime'], root)
+    for binding in prep['reference_bindings']:
+        bound(binding, root)
+    expected_runtime = {str(Path(p).relative_to(root)):h for p,h in context['inputs'].items()}
+    if prep['runtime_input_hashes'] != expected_runtime:
+        raise ValueError('Accepted runtime/profile input closure differs')
+    for relative, sha in expected_runtime.items():
+        bound({'path':relative,'sha256':sha}, root)
+    if sources(prep, root) != before:
+        raise ValueError('Source changed during preparation validation')
+    reader = load(path(BASE+'/saved_coarse.py',root), 'greiner_saved_coarse_reader')
+    saved = reader.verify(prep['original_attempt_bindings'],prep['plot_default_source_bindings'],
+                          checker,context,__import__('types').SimpleNamespace(
+                              path=path,bound=bound,digest=digest,read_regular=read_regular,
+                              all_input_hashes=all_input_hashes,THREAD_ENV_FOR_SAVED=THREAD_ENV_FOR_SAVED),root)
+    if prep.get('original_input_hashes') != saved['original_input_hashes']:
+        raise ValueError('Complete original source/input closure differs')
+    if json.loads(bound(prep['saved_coarse_supplement'],root)) != saved:
+        raise ValueError('Saved coarse supplement differs from exact read-only replay')
+    audit_imports(root)
+    return {'coarse_saved_readout':saved['saved_output_checks'],
+            'original_resource_accounting':saved['original_resource_accounting'], 'preparation':prep, 'source_hashes':before, 'runtime':context, 'decks':decks,
+            'checker':checker, 'resource':resource, 'runtime_helper':runtime}
+
+
+def git_check(commit, prep, resource, root=ROOT):
+    if not isinstance(commit, str) or not COMMIT.fullmatch(commit):
+        raise ValueError('Root-issued final full source commit required')
+    result = subprocess.run(['/usr/bin/git','rev-parse','HEAD'], cwd=root,
+                            env=resource.git_environment(), capture_output=True, check=True, timeout=10)
+    if result.stdout.decode().strip() != commit:
+        raise ValueError('Checkout HEAD differs from root release')
+    for relative in SOURCES:
+        if relative.startswith('scripts/') and digest(resource.git_blob(commit, relative, root=root)) != prep['source_bindings'][relative]:
+            raise ValueError('Tracked helper differs from root-released commit: '+relative)
+
+
+def validate_release(raw, root=ROOT):
+    release = json.loads(raw)
+    if (set(release) != {'schema','status','source_commit','preparation','independent_review'}
+            or release['schema'] != 'greiner-remaining-three-root-release-v1'
+            or release['status'] != 'root_released_three_never_attempted_native_calls'
+            or release['preparation']['path'] != PREPARATION):
+        raise ValueError('Separate root release required; preparation is not executable')
+    review = release['independent_review']
+    if review is None or not review['path'].startswith('build/'):
+        raise ValueError('Independent review binding required')
+    bound(review, root, 1024**2)
+    context = inspect_preparation(bound(release['preparation'], root), root)
+    git_check(release['source_commit'], context['preparation'], context['resource'], root)
+    return release, context
+
+
+def all_input_hashes(prep):
+    result = dict(prep['source_bindings'])
+    result.update(prep['runtime_input_hashes'])
+    result.update(prep.get('original_input_hashes',{}))
+    for row in prep['cases'].values():
+        for binding in row.values(): result[binding['path']] = binding['sha256']
+    for row in prep['constitutive_sources']:
+        for binding in row.values(): result[binding['path']] = binding['sha256']
+    for binding in prep['reference_bindings']: result[binding['path']] = binding['sha256']
+    for name,row in prep.get('original_attempt_bindings',{}).items(): result[name] = row['sha256']
+    for binding in prep.get('plot_default_source_bindings',{}).values(): result[binding['path']] = binding['sha256']
+    binding=prep.get('saved_coarse_supplement')
+    if binding: result[binding['path']] = binding['sha256']
+    return result
+
+
+def audit_inputs(expected, root=ROOT):
+    """Preserve each negative and continue the audit after any changed source."""
+    records = {}
+    for relative, sha in expected.items():
+        try:
+            actual = digest(read_regular(path(relative, root)))
+            records[relative] = {'sha256':actual, 'unchanged':actual == sha}
+        except Exception as error:
+            records[relative] = {'unchanged':False, 'error':str(error)}
+    return records
+
+
+def unchanged(records):
+    return bool(records) and all(row['unchanged'] for row in records.values())
+
+
+def active_bytes(directory, resource):
+    # Existing bounded tree walker, with explicit remaining-three-control aggregate cap.
+    return resource.active_bytes(directory)
+
+
+def aggregate_guard(attempt, started, resource):
+    if time.monotonic()-started >= CAPS['aggregate_wall_seconds']:
+        raise ValueError('aggregate_wall_cap')
+    if active_bytes(attempt, resource) > CAPS['aggregate_active_output_bytes']:
+        raise ValueError('aggregate_output_cap')
+
+
+def collect_outputs(directory, resource):
+    """Hash all regular negatives as well as successes, with bounded scan work.
+
+    Oversized/special files remain untouched and are recorded as unhashable;
+    they force failure and never become accepted native evidence.
+    """
+    records = {}
+    entries = []
+    with os.scandir(directory) as stream:
+        for entry in stream:
+            if len(entries) == 128:
+                records['__inventory_truncated__'] = {'sha256':None,'error':'Output entry-count cap; all files retained'}
+                break
+            entries.append(Path(entry.path))
+    for file in sorted(entries):
+        if file.name == 'receipt.json': continue
+        try:
+            raw = read_regular(file, CAPS['per_case_active_output_bytes'])
+            records[file.name] = {'sha256':digest(raw),'bytes':len(raw)}
+        except Exception as error:
+            records[file.name] = {'error':str(error),'sha256':None}
+    return records
+
+
+def check_outputs(case, directory, context):
+    names = {case+'.feb',case+'.log',case+'.nodes.log',case+'.elements.log',case+'.xplt','console.txt','receipt.json'}
+    if {file.name for file in directory.iterdir()} != names:
+        raise ValueError('Exact native output inventory differs')
+    if not read_regular(directory/(case+'.xplt'),8*1024**2):
+        raise ValueError('Declared default native plot output is empty')
+    console = read_regular(directory/'console.txt', 8*1024**2).decode('utf-8')
+    selections = [line.strip() for line in console.splitlines() if 'selecting linear solver' in line.lower()]
+    if (len(selections) != 1 or not context['resource'].BACKEND_LINE.fullmatch(selections[0])
+            or re.search(r'\b(?:fallback|fall\s+back|switching\s+(?:linear\s+)?solver|selected\s+linear\s+solver)\b', console, re.I)):
+        raise ValueError('Exactly one actual Accelerate selection required; no fallback')
+    sha = context['preparation']['cases'][case]['adapted']['sha256']
+    result = context['checker'].check_case(case, directory, executed_sha256=sha)
+    texts = {'console.txt':console, case+'.log':read_regular(directory/(case+'.log'),8*1024**2).decode('utf-8')}
+    warnings = {name:[line for line in text.splitlines() if re.search(r'warning|error|negative jacobian',line,re.I)]
+                for name,text in texts.items()}
+    return {'saved_output_checks':result, 'backend_selection':selections, 'warning_lines':warnings,
+            'checked_console_sha256':digest(console.encode('utf-8'))}
+
+
+def configure_resource(resource, case):
+    """Reuse one-call controller, sequentially with narrower frozen constants."""
+    resource.CASE = case
+    resource.CAPS = {'native_calls':1,'attempts':1,'wall_seconds':WALL[case],
+                     'sampled_process_group_rss_bytes':CAPS['per_case_sampled_process_group_rss_bytes'],
+                     'active_output_bytes':CAPS['aggregate_active_output_bytes'],
+                     'numerical_threads':1}
+    resource.MAX_ACTIVE_ENTRIES = 128
+    resource.MAX_ACTIVE_DEPTH = 2
+    resource.MAX_ACTIVE_SCAN_SECONDS = .25
+    resource.POLL_SECONDS = .05
+
+
+def run_sequence(attempt, context, source_check, *, native=None, output_check=None):
+    """One fixed sequence, first negative stops all later cases. No retry path."""
+    resource = context['resource']
+    native = resource.supervise if native is None else native
+    output_check = check_outputs if output_check is None else output_check
+    started = time.monotonic()
+    summary = {'status':'running','case_order':list(ORDER),'caps':CAPS,'cases':[],
+               'native_calls_attempted':0,'no_retry':True,'physical_validation_pass':None,
+               'measured_response_accessed':False,'patient_data_accessed':False,
+               'sampling_limit':'RSS/output sampled; brief between-sample peaks can be missed.',
+               'aggregate_rss_semantics':'Maximum live native group RSS; calls strictly sequential.',
+               'peak_sampled_aggregate_native_rss_bytes':0,
+               'peak_sampled_aggregate_active_output_bytes':0}
+    resource.durable_json(attempt/'summary.json', summary)
+    previous = context['original_resource_accounting']
+    summary['original_attempt_accounting'] = previous
+    summary['combined_native_calls_attempted'] = previous['native_calls_attempted']
+    summary['combined_native_wall_seconds'] = previous['native_wall_seconds']
+    results = {}
+    try:
+        for case in ORDER:
+            configure_resource(resource, case)
+            aggregate_guard(attempt, started, resource)
+            before = source_check()
+            if not unchanged(before): raise ValueError('Bound input changed before case')
+            directory = attempt/case
+            directory.mkdir(exist_ok=False)
+            with (directory/(case+'.feb')).open('xb') as file: file.write(context['decks'][case])
+            receipt = {'case':case,'inputs_before':before,'attempt':1,'no_retry':True,
+                       'original_deck':context['preparation']['cases'][case]['original'],
+                       'executed_deck':context['preparation']['cases'][case]['adapted'],
+                       'runtime_identity':RUNTIME,'backend_profile':PROFILE,
+                       'thread_environment':resource.THREAD_ENV,
+                       'native_provenance_verified':False,'native_output_observed':False}
+            resource.durable_json(directory/'receipt.json', receipt)
+            try:
+                # The reused observer checks both active case and all retained outputs.
+                def observe(pgid, *, timeout_seconds):
+                    if time.monotonic()-started >= CAPS['aggregate_wall_seconds']:
+                        raise ValueError('aggregate_wall_cap')
+                    total_bytes = active_bytes(attempt, resource)
+                    case_bytes = active_bytes(directory, resource)
+                    receipt['peak_sampled_active_output_bytes'] = max(
+                        receipt.get('peak_sampled_active_output_bytes',0),case_bytes)
+                    receipt['peak_sampled_aggregate_active_output_bytes'] = max(
+                        receipt.get('peak_sampled_aggregate_active_output_bytes',0),total_bytes)
+                    summary['peak_sampled_aggregate_active_output_bytes'] = max(
+                        summary['peak_sampled_aggregate_active_output_bytes'],total_bytes)
+                    if total_bytes > CAPS['aggregate_active_output_bytes']:
+                        raise ValueError('aggregate_output_cap')
+                    if case_bytes > CAPS['per_case_active_output_bytes']:
+                        raise ValueError('per_case_output_cap')
+                    rss, members = context['runtime_helper'].process_group_rss(pgid, timeout_seconds=timeout_seconds)
+                    receipt['peak_sampled_process_group_rss_bytes'] = max(
+                        receipt.get('peak_sampled_process_group_rss_bytes',0),rss)
+                    if rss > CAPS['aggregate_sampled_native_rss_bytes']:
+                        raise ValueError('aggregate_native_rss_cap')
+                    return rss, members
+                summary['native_calls_attempted'] += 1
+                summary['combined_native_calls_attempted'] = previous['native_calls_attempted'] + summary['native_calls_attempted']
+                resource.durable_json(attempt/'summary.json', summary)
+                native(context['runtime']['runtime']['executable'], directory, receipt, rss_observer=observe)
+                aggregate_guard(attempt, started, resource)
+                if (receipt['status'] != 'native_exit_zero'
+                        or active_bytes(directory, resource) > CAPS['per_case_active_output_bytes']):
+                    raise ValueError('Native call failed, exceeded cap, or was incomplete')
+                receipt.update(output_check(case, directory, context))
+                receipt['checked_result_sha256'] = digest((json.dumps(receipt['saved_output_checks'],
+                    sort_keys=True,indent=2,allow_nan=False)+'\n').encode())
+                resource.durable_json(directory/'checked.json', receipt['saved_output_checks'])
+                if receipt['saved_output_checks']['passed'] is not True:
+                    raise ValueError('Saved numerical software check failed')
+                results[case] = receipt['saved_output_checks']
+                receipt['status'] = 'passed_numerical_software_only'
+            except BaseException as error:
+                receipt.update(status='failed_or_incomplete', failure={'type':type(error).__name__,'message':str(error)})
+            finally:
+                receipt['inputs_after'] = source_check()
+                receipt['output_bindings'] = collect_outputs(directory, resource)
+                if (not unchanged(receipt['inputs_after'])
+                        or any(row.get('sha256') is None for row in receipt['output_bindings'].values())):
+                    receipt['status'] = 'failed_or_incomplete'
+                check = receipt.get('saved_output_checks', {}).get('provenance', {})
+                if receipt['status'] == 'passed_numerical_software_only':
+                    expected_names = {case+'.feb',case+'.log',case+'.nodes.log',case+'.elements.log',
+                                      case+'.xplt','console.txt','receipt.json','checked.json'}
+                    final_names = set(receipt['output_bindings']) | {'receipt.json'}
+                    console_same = (receipt.get('checked_console_sha256') ==
+                                    receipt['output_bindings'].get('console.txt',{}).get('sha256'))
+                    checked_same = (receipt.get('checked_result_sha256') ==
+                                    receipt['output_bindings'].get('checked.json',{}).get('sha256'))
+                    if final_names != expected_names or not console_same or not checked_same:
+                        receipt.update(status='failed_or_incomplete',
+                            final_evidence_error='Final inventory, console, or saved checker result changed')
+                    same_logs = all(check.get('saved_output_sha256',{}).get(case+suffix) ==
+                        receipt['output_bindings'].get(case+suffix,{}).get('sha256')
+                        for suffix in ('.log','.nodes.log','.elements.log'))
+                    deck_sha = context['preparation']['cases'][case]['adapted']['sha256']
+                    if (not same_logs or check.get('executed_deck_sha256') != deck_sha
+                            or receipt['output_bindings'].get(case+'.feb',{}).get('sha256') != deck_sha):
+                        receipt.update(status='failed_or_incomplete',output_binding_error='Checker/native output or executed deck changed')
+                # Only the supervisor can establish actual launch/output provenance.
+                accepted = receipt['status'] == 'passed_numerical_software_only'
+                receipt['native_output_observed'] = receipt.get('pid') is not None
+                receipt['native_provenance_verified'] = accepted
+                try:
+                    if active_bytes(directory, resource) > CAPS['per_case_active_output_bytes']:
+                        raise ValueError('Final per-case output cap')
+                except Exception as error:
+                    receipt.update(status='failed_or_incomplete',native_provenance_verified=False,
+                                   final_output_error=str(error))
+                resource.durable_json(directory/'receipt.json', receipt)
+                summary['peak_sampled_aggregate_native_rss_bytes'] = max(
+                    summary['peak_sampled_aggregate_native_rss_bytes'],
+                    receipt.get('peak_sampled_process_group_rss_bytes',0))
+                summary['combined_native_wall_seconds'] += receipt.get('elapsed_seconds',0.)
+                summary['cases'].append({'case':case,'status':receipt['status'],
+                    'receipt_sha256':digest(read_regular(directory/'receipt.json'))})
+                resource.durable_json(attempt/'summary.json', summary)
+            if receipt['status'] != 'passed_numerical_software_only':
+                raise ValueError('Stop on first negative; later cases remain unattempted')
+        summary['time_refinement'] = context['checker'].compare_time_refinement(context['coarse_saved_readout'],results[ORDER[0]])
+        aggregate_guard(attempt, started, resource)
+        summary['status'] = 'passed_remaining_three_and_saved_coarse_software_controls'
+    except BaseException as error:
+        summary.update(status='failed_or_incomplete', failure={'type':type(error).__name__,'message':str(error)})
+    finally:
+        summary['elapsed_seconds'] = time.monotonic()-started
+        summary['combined_accounted_sequence_wall_seconds'] = previous['sequence_wall_seconds'] + summary['elapsed_seconds']
+        if summary['combined_native_calls_attempted'] > 4 or summary['combined_accounted_sequence_wall_seconds'] >= 120:
+            summary['status'] = 'failed_or_incomplete'
+        summary['unattempted_cases'] = list(ORDER[len(summary['cases']):])
+        summary['inputs_final'] = source_check()
+        summary['case_evidence_final'] = {}
+        for row in summary['cases']:
+            directory = attempt/row['case']
+            try:
+                receipt_raw = read_regular(directory/'receipt.json')
+                saved = json.loads(receipt_raw)
+                current = collect_outputs(directory, resource)
+                if (digest(receipt_raw) != row['receipt_sha256'] or current != saved['output_bindings']
+                        or any(item.get('sha256') is None for item in current.values())):
+                    raise ValueError('Retained case evidence changed after case finalization')
+                summary['case_evidence_final'][row['case']] = {'unchanged':True}
+            except Exception as error:
+                summary['case_evidence_final'][row['case']] = {'unchanged':False,'error':str(error)}
+                summary['status'] = 'failed_or_incomplete'
+        if not unchanged(summary['inputs_final']): summary['status'] = 'failed_or_incomplete'
+        try:
+            summary['final_active_output_bytes'] = active_bytes(attempt, resource)
+            summary['combined_retained_output_bytes'] = previous['complete_output_bytes'] + summary['final_active_output_bytes']
+            summary['combined_peak_sampled_native_rss_bytes'] = max(previous['peak_sampled_native_rss_bytes'],
+                summary['peak_sampled_aggregate_native_rss_bytes'])
+            if summary['combined_retained_output_bytes'] > 32*1024**2:
+                summary['status'] = 'failed_or_incomplete'
+            if (summary['final_active_output_bytes'] > CAPS['aggregate_active_output_bytes']
+                    or summary['elapsed_seconds'] >= CAPS['aggregate_wall_seconds']):
+                summary['status'] = 'failed_or_incomplete'
+        except Exception as error:
+            summary.update(status='failed_or_incomplete', final_output_error=str(error))
+        resource.durable_json(attempt/'summary.json', summary)
+        try:
+            if active_bytes(attempt, resource) > CAPS['aggregate_active_output_bytes']:
+                raise ValueError('Final receipt exceeded aggregate cap')
+        except Exception as error:
+            summary.update(status='failed_or_incomplete',final_output_error=str(error))
+            resource.durable_json(attempt/'summary.json', summary)
+    return summary
+
+
+def execute(release_path, root=ROOT):
+    raw = read_regular(release_path, 1024**2)
+    release, context = validate_release(raw, root)
+    resource = context['resource']
+    attempt = path(OUTPUT, root)
+    attempt.mkdir(exist_ok=False)  # Permanent single-use reservation, including failures.
+    expected = all_input_hashes(context['preparation'])
+    expected[release['preparation']['path']] = release['preparation']['sha256']
+    expected[release['independent_review']['path']] = release['independent_review']['sha256']
+    with (attempt/'root-release.json').open('xb') as file: file.write(raw)
+    def source_check():
+        records = audit_inputs(expected, root)
+        try:
+            git_check(release['source_commit'], context['preparation'], resource, root)
+            if read_regular(release_path, 1024**2) != raw: raise ValueError('Root release changed')
+            records['root_release_and_HEAD'] = {'unchanged':True}
+        except Exception as error:
+            records['root_release_and_HEAD'] = {'unchanged':False,'error':str(error)}
+        return records
+    return run_sequence(attempt, context, source_check)
+
+
+def main():
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('--inspect', action='store_true', help='Read-only preparation verification')
+    cli.add_argument('--release', type=Path)
+    cli.add_argument('--execute', action='store_true')
+    args = cli.parse_args()
+    if args.inspect and not args.execute and args.release is None:
+        context = inspect_preparation(read_regular(path(PREPARATION)))
+        print(json.dumps({'status':'prepared_not_released_or_executed','native_calls':0,
+                          'runtime_profile':context['runtime']['profile_id'],'cases':list(ORDER)}))
+        return 0
+    if args.inspect or not args.execute or args.release is None:
+        cli.error('Use --inspect, or a separate root-issued --release with --execute')
+    result = execute(args.release.absolute())
+    print(json.dumps({'status':result['status'],'native_calls_attempted':result['native_calls_attempted']}))
+    return 0 if result['status'] == 'passed_remaining_three_and_saved_coarse_software_controls' else 1
+
+if __name__ == '__main__':
+    raise SystemExit(main())

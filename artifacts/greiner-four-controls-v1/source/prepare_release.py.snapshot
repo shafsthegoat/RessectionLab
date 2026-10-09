@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+"""Refresh ignored preparation hashes only; never issues or executes a release."""
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import sys
+ROOT = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(BASE))
+import supervisor
+from scripts import mechanics_hbe_backend as backend
+import saved_coarse
+
+def binding(file):
+    return {'path':str(file.relative_to(ROOT)), 'sha256':hashlib.sha256(file.read_bytes()).hexdigest()}
+def write(file, value):
+    file.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False)+'\n')
+
+def main():
+    manifest = json.loads((ROOT/'build/greiner-native-four-control-preparation-v1/manifest.json').read_text())
+    context = backend.verify_profile(ROOT, supervisor.PROFILE)
+    (BASE/'decks').mkdir(exist_ok=True)
+    cases = {}
+    for case in supervisor.ORDER:
+        source = ROOT/manifest['cases'][case]['deck']
+        adapted = backend.transform_deck(source.read_bytes()).encode()
+        backend.verify_deck(source.read_bytes(), adapted)
+        destination = BASE/'decks'/(case+'.feb')
+        destination.write_bytes(adapted)
+        cases[case] = {'original':binding(source), 'adapted':binding(destination)}
+    refs = [
+        'build/greiner-native-four-control-preparation-v1/manifest.json',
+        'build/greiner-native-four-control-preparation-v1/source-validation.json',
+        'build/greiner-native-four-control-preparation-v1/REPORT.md',
+        'build/greiner-native-four-control-preparation-v1/prepare.py',
+        'build/greiner-native-four-control-preparation-v1/verify.py',
+        'build/greiner-native-four-control-checker-v1/checker.py',
+        'build/greiner-native-four-control-checker-v1/test_checker.py',
+        'build/greiner-native-four-control-checker-v1/REPORT.md',
+        'build/greiner-native-four-control-checker-independent-v1/REPORT.md',
+        'build/greiner-febio-viscoelastic-spec-v1/experiment-spec.json',
+        'build/greiner-viscoelastic-oracle-independent-v1/control.json',
+        'build/greiner-viscoelastic-oracle-independent-v1/oracle.py',
+        'build/greiner-viscoelastic-oracle-independent-v1/REPORT.md',
+        'artifacts/mechanics-febio-patch-run-v1/execution.json',
+        'artifacts/mechanics-febio-patch-run-v1/artifact-index.json',
+        'artifacts/mechanics-febio-patch-run-v1/shear/checked.json',
+        'artifacts/mechanics-febio-patch-run-v1/shear/shear.nodes.log',
+        'artifacts/mechanics-febio-patch-run-v1/shear/shear.elements.log',
+        'artifacts/mechanics-febio-patch-run-v1/shear/shear.log',
+        'outputs/mechanics/accelerate-controls-v1/attempt-01/execution.json',
+        supervisor.BASE+'/prepare_release.py', supervisor.BASE+'/test_supervisor.py']
+    original_attempt = ROOT/saved_coarse.ATTEMPT
+    original_bindings = {str(p.relative_to(ROOT)):{'sha256':binding(p)['sha256'],'bytes':p.stat().st_size}
+                         for p in sorted(original_attempt.rglob('*')) if p.is_file()}
+    inventory=json.loads(Path(context['runtime']['source_inventory']['path']).read_text())
+    default_bindings={name:{'path':str((Path(context['prefix'])/'source'/name).relative_to(ROOT)),
+                            'sha256':inventory[name]['sha256']} for name in saved_coarse.DEFAULT_FILES}
+    checker=supervisor.load(BASE/'checker.py','greiner_saved_candidate_checker')
+    supplement=saved_coarse.verify(original_bindings,default_bindings,checker,context,supervisor,ROOT)
+    write(BASE/'saved-coarse-supplement.json',supplement)
+    refs += ['build/greiner-native-four-control-release-v1/'+name for name in
+             ('supervisor.py','checker.py','preparation.json','REPORT.md')]
+    refs += ['build/greiner-native-four-control-release-independent-v1/REPORT.md']
+    prep = {'schema':'greiner-remaining-three-preparation-v1','status':'prepared_not_released_or_executed',
+            'source_commit':None,'original_attempt_bindings':original_bindings,
+            'original_input_hashes':supplement['original_input_hashes'],
+            'plot_default_source_bindings':default_bindings,
+            'saved_coarse_supplement':binding(BASE/'saved-coarse-supplement.json'),
+            'case_order':list(supervisor.ORDER),'cases':cases,
+            'caps':supervisor.CAPS,'output_directory':supervisor.OUTPUT,
+            'backend_profile':supervisor.PROFILE,'runtime_identity':supervisor.RUNTIME,
+            'source_bindings':{p:binding(ROOT/p)['sha256'] for p in supervisor.SOURCES},
+            'reference_bindings':[binding(ROOT/p) for p in refs],
+            'runtime_input_hashes':{str(Path(p).relative_to(ROOT)):h for p,h in context['inputs'].items()},
+            'constitutive_sources':[{'original':item, 'runtime':{
+                'path':str(Path(context['prefix']).relative_to(ROOT)/'source'/'FEBioMech'/Path(item['path']).name),
+                'sha256':item['sha256']}} for item in manifest['source_files']],
+            'scope':'Generated arbitrary mu=1000 Pa, r=.3 or 0, tau=2 s. Numerical software control only; no physical validation, measured data or patient parameters.',
+            'release_policy':'Root must bind independent review and final source commit in a separate release. No cap increase, altered deck, retry or fallback after a failure.'}
+    write(BASE/'preparation.json',prep)
+    write(BASE/'root-release.template.json',{
+        'schema':'greiner-remaining-three-root-release-v1','status':'HOLD_not_an_execution_release',
+        'source_commit':None,'preparation':binding(BASE/'preparation.json'),'independent_review':None})
+    verified = supervisor.inspect_preparation((BASE/'preparation.json').read_bytes())
+    write(BASE/'source-validation.json', {'status':'source_only_prepared_no_native_execution',
+         'new_native_calls':0,'original_native_calls':1,'saved_coarse_passed':True, 'source_commit_bound':None,'case_order':list(supervisor.ORDER),
+         'runtime_profile':verified['runtime']['profile_id'],
+         'constitutive_source_pairs':9,'executing_sources':len(supervisor.SOURCES),
+         'complete_runtime_inputs':len(prep['runtime_input_hashes']),
+         'preparation_sha256':binding(BASE/'preparation.json')['sha256']})
+    print('Prepared three never-attempted decks, authenticated saved coarse supplement and HOLD template; zero new native calls.')
+if __name__ == '__main__': main()

@@ -1,0 +1,405 @@
+#!/usr/bin/env python3
+"""Read-only numerical checker for four arbitrary-constant FEBio patch controls.
+
+No solver launch, specimen fit, measured response, or physical validation.
+The accepted elastic patch is an independent implementation cross-check, not
+evidence that the new viscoelastic wrapper has run successfully.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import sys
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from scripts import mechanics_febio_verification as patch
+
+
+# Minimal actual-deck adaptation of independently reviewed checker v1.
+BACKEND_SOURCE_SHA = 'b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae'
+
+PREPARATION = 'build/greiner-native-four-control-preparation-v1/manifest.json'
+PREPARATION_SHA = '9d42f72c87642ddda705fdebca3592ddf0494b420af3223b4244bbc3267556be'
+SPEC = 'build/greiner-febio-viscoelastic-spec-v1/experiment-spec.json'
+SPEC_SHA = '4e8bdaf25c3734b4800c7be5f17264a79b8c2c818c6ce965d22125d73651cb33'
+ORACLE = 'build/greiner-viscoelastic-oracle-independent-v1/control.json'
+ORACLE_SHA = '6790dd916e18002ef0cde912ad0c9a217f7793aef56fa9938a9ee9bc3971600e'
+PATCH_SHA = 'b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5'
+OLD_SHEAR = 'artifacts/mechanics-febio-patch-run-v1/shear/'
+OLD_HASHES = {'checked.json': 'c7e1f862428aafab0571b08e498dea44bffff2e89a394fff6a09df018d2f5e24',
+              'shear.nodes.log': '018412ffb54396741737efee7d4f3ebc981683817986b4931075ac6edb0839dc',
+              'shear.elements.log': 'd86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd',
+              'shear.log': '46c3952cb2524e527a3d222a710a3e1f4541302e90278de257ba02edd76884a0'}
+CASES = ('onearm_shear_dt010', 'onearm_shear_dt005', 'zeroarm_shear', 'zeroarm_volume')
+FIELDS = {'mechanics_nodes_si': (9, 27), 'mechanics_elements_si': (8, 8)}
+MU, K, GAMMA, R, TAU, RAMP = 1000., 149000./3., 0.6, 0.3, 2., 1.2
+
+
+def _bound(path: Path, digest: str, *, maximum: int = 8*1024**2) -> bytes:
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > maximum:
+        raise ValueError('Missing, special, or oversized bound source: ' + str(path))
+    data = path.read_bytes()
+    if hashlib.sha256(data).hexdigest() != digest:
+        raise ValueError('Bound source hash differs: ' + str(path))
+    return data
+
+
+def preparation(root: Path = ROOT) -> tuple[dict, dict]:
+    """Bind source-only decks, nine constitutive files, oracle and old control."""
+    manifest = json.loads(_bound(root/PREPARATION, PREPARATION_SHA))
+    spec = json.loads(_bound(root/SPEC, SPEC_SHA))
+    oracle = json.loads(_bound(root/ORACLE, ORACLE_SHA))
+    _bound(root/'scripts/mechanics_febio_verification.py', PATCH_SHA)
+    if (manifest.get('status') != 'prospective_decks_source_only_no_native_or_measured_data'
+            or manifest.get('source_spec_sha256') != SPEC_SHA
+            or spec.get('status') != 'prospective_read_only_specification_no_data_admission_no_fit_no_solve'
+            or set(manifest.get('cases', {})) != set(CASES)
+            or len(manifest.get('source_files', [])) != 9
+            or oracle.get('status') != 'pure_generated_math_control_not_native_or_physical_validation'
+            or oracle.get('arbitrary_parameters') != {
+                'mu_Pa': MU, 'r': R, 'tau_s': TAU, 'gamma': GAMMA, 'ramp_s': RAMP}):
+        raise ValueError('Source-only control declaration changed')
+    for item in manifest['source_files']:
+        _bound(root/item['path'], item['sha256'], maximum=1024**2)
+    for name in CASES:
+        info = manifest['cases'][name]
+        _bound(root/info['deck'], info['sha256'], maximum=1024**2)
+        if (info['node_count'] != 27 or info['element_count'] != 8
+                or info['time_steps'] not in (4, 52, 104)
+                or info['expected_node_records'] != info['time_steps']+1
+                or info['expected_element_records'] != info['time_steps']+1):
+            raise ValueError('Declared patch inventory changed')
+    for name, digest in OLD_HASHES.items():
+        _bound(root/OLD_SHEAR/name, digest)
+    old = json.loads((root/OLD_SHEAR/'checked.json').read_bytes())
+    if old.get('passed') is not True:
+        raise ValueError('Archived plain elastic patch did not pass')
+    return manifest, oracle
+
+
+def _read(path: Path, *, maximum: int = 8*1024**2) -> str:
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > maximum:
+        raise ValueError('Missing, special, or oversized saved output')
+    return path.read_bytes().decode('utf-8', errors='strict')
+
+
+def parse_data_log(text: str, name: str, steps: int, dt: float) -> list[np.ndarray]:
+    """Complete 0..N native DataRecord stream, unique IDs and exact time order."""
+    if name not in FIELDS or len(text.encode()) > 8*1024**2:
+        raise ValueError('Unexpected or oversized DataRecord stream')
+    field_count, item_count = FIELDS[name]
+    records, current = [], None
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        match = re.fullmatch(r'\*Step\s*=\s*(\d+)', line)
+        if match:
+            if current is not None:
+                records.append(current)
+            current = {'step': int(match[1]), 'time': None, 'name': None, 'rows': {}}
+            continue
+        match = re.fullmatch(r'\*Time\s*=\s*(\S+)', line)
+        if match:
+            if current is None or current['time'] is not None:
+                raise ValueError('Missing or duplicate native time header')
+            value = float(match[1])
+            if not math.isfinite(value):
+                raise ValueError('Nonfinite native time')
+            current['time'] = value
+            continue
+        match = re.fullmatch(r'\*Data\s*=\s*(\S+)', line)
+        if match:
+            if current is None or current['name'] is not None:
+                raise ValueError('Missing or duplicate native data header')
+            current['name'] = match[1]
+            continue
+        if current is None or current['time'] is None or current['name'] != name:
+            raise ValueError('Unbound or unexpected native data row')
+        fields = line.split(',')
+        if len(fields) != field_count+1 or not fields[0].isdigit():
+            raise ValueError('Malformed native data columns')
+        index = int(fields[0])
+        values = [float(value) for value in fields[1:]]
+        if (not 1 <= index <= item_count or index in current['rows']
+                or not all(math.isfinite(value) for value in values)):
+            raise ValueError('Duplicate, out-of-range, or nonfinite native output')
+        current['rows'][index] = values
+    if current is not None:
+        records.append(current)
+    if len(records) != steps+1:
+        raise ValueError('Incomplete native state count')
+    arrays = []
+    for index, record in enumerate(records):
+        if (record['step'] != index or record['name'] != name
+                or record['time'] is None
+                or abs(record['time']-index*dt) > 1e-9
+                or set(record['rows']) != set(range(1, item_count+1))):
+            raise ValueError('Native step, time, identity, or item coverage differs')
+        arrays.append(np.array([record['rows'][i] for i in range(1, item_count+1)], float))
+    return arrays
+
+
+def check_solver_log(text: str, steps: int, dt: float) -> dict:
+    if len(text.encode()) > 8*1024**2:
+        raise ValueError('Solver log exceeds control bound')
+    banners = [re.sub(r'[^A-Za-z]', '', line).upper() for line in text.splitlines()]
+    if ('NORMALTERMINATION' not in banners
+            or any(token in banners for token in ('ERRORTERMINATION', 'ABNORMALTERMINATION'))
+            or re.search(r'\bnan\b|negative jacobian', text, re.I)):
+        raise ValueError('Solver termination or invalid-J evidence differs')
+    last, current = {}, None
+    for line in text.splitlines():
+        match = re.search(r'Nonlinear solution status:\s*time=\s*(\S+)', line)
+        if match:
+            current = float(match[1])
+        fields = line.split()
+        if fields and fields[0] == 'residual':
+            if current is None or len(fields) != 4:
+                raise ValueError('Unbound residual row')
+            values = [float(value) for value in fields[1:]]
+            if not all(math.isfinite(value) and value >= 0 for value in values):
+                raise ValueError('Invalid residual row')
+            key = round(current/dt)
+            if not 1 <= key <= steps or abs(current-key*dt) > 1e-9:
+                raise ValueError('Residual time outside frozen sequence')
+            last[key] = values
+    if set(last) != set(range(1, steps+1)):
+        raise ValueError('Missing positive-time residual evidence')
+    passed = all(values[1] <= max(values[2], patch.RESIDUAL_FLOOR_N2)
+                 * (1+patch.TOLERANCES['residual_print_relative']) for values in last.values())
+    return {'passed': passed, 'state_count': steps,
+            'last_squared_force_residual_norms_N2': {str(k): last[k] for k in sorted(last)}}
+
+
+def _deformation(case: str, t: float) -> np.ndarray:
+    F = np.eye(3)
+    if case == 'zeroarm_volume':
+        F *= 1+0.02*t
+    else:
+        F[0, 1] = (0.6*min(t/RAMP, 1.) if case.startswith('onearm') else 0.1*t)
+    return F
+
+
+def expected_history(case: str, steps: int, dt: float) -> list[dict]:
+    """Source-derived PK2 recurrence; push forward only after memory update."""
+    memory = np.zeros((3, 3)); previous = np.zeros((3, 3))
+    response = []
+    X, _, _ = patch.cube_mesh()
+    for index in range(steps+1):
+        t = index*dt
+        F = _deformation(case, t)
+        J = float(np.linalg.det(F))
+        B = F @ F.T
+        elastic = MU*J**(-5/3)*(B-np.trace(B)/3*np.eye(3))
+        pulled = J*np.linalg.inv(F) @ elastic @ np.linalg.inv(F).T
+        if index:
+            decay = math.exp(-dt/TAU)
+            factor = -math.expm1(-dt/TAU)/(dt/TAU)
+            memory = decay*memory+factor*(pulled-previous)
+        else:
+            memory = np.zeros((3, 3))
+        previous = pulled
+        r = R if case.startswith('onearm') else 0.
+        sigma = F @ ((1-r)*pulled+r*memory) @ F.T/J
+        pressure = K*(J-1/J)/2
+        sigma += pressure*np.eye(3)
+        if index == 0:  # FEBio wrapper returns zero deviatoric stress at dt=0.
+            sigma[:] = 0.
+        P = J*sigma @ np.linalg.inv(F).T
+        current = X @ F.T
+        reactions = np.zeros_like(X)
+        for node, point in enumerate(X):
+            for axis in range(3):
+                if point[axis] in (0., patch.SIDE_M):
+                    normal = -1. if point[axis] == 0 else 1.
+                    area = math.prod(patch.SIDE_M/(2 if point[j] == patch.SIDE_M/2 else 4)
+                                     for j in range(3) if j != axis)
+                    reactions[node] -= normal*P[:, axis]*area
+        bulk_U = K*(J*J-1-2*math.log(J))/4
+        response.append({'time_s': t, 'F': F, 'J': J, 'sigma': sigma,
+                         'nodes': np.column_stack((current, current-X, reactions)),
+                         'bulk_energy_density_Pa': bulk_U})
+    return response
+
+
+def _component_errors(actual: np.ndarray, expected: np.ndarray) -> dict:
+    names = ('xx', 'yy', 'zz', 'xy', 'yz', 'xz')
+    return {name: float(np.max(np.abs(actual[:, index]-expected[index])))
+            for index, name in enumerate(names)}
+
+
+def evaluate(case: str, nodes: list[np.ndarray], elements: list[np.ndarray],
+             solver: dict, oracle: dict) -> dict:
+    if case not in CASES or len(nodes) != len(elements) or len(nodes) < 2:
+        raise ValueError('Complete synchronized case streams required')
+    dt = .1 if case == 'onearm_shear_dt010' else (.05 if case == 'onearm_shear_dt005' else .25)
+    expected = expected_history(case, len(nodes)-1, dt)
+    X, _, _ = patch.cube_mesh()
+    tol = patch.TOLERANCES
+    failures, states = ([] if solver['passed'] else ['solver_residual']), []
+    for index, (node, element, want) in enumerate(zip(nodes, elements, expected)):
+        F = want['F']; stress = want['sigma']
+        vector = np.array([stress[0,0], stress[1,1], stress[2,2],
+                           stress[0,1], stress[1,2], stress[0,2]])
+        actual = node[:, :3]
+        jacobians, gradients = patch.reconstructed_jacobians(actual)
+        error = _component_errors(element[:, :6], vector)
+        checks = {
+            'positions_m': bool(np.max(np.abs(actual-want['nodes'][:, :3])) <= tol['position_m']),
+            'displacements_m': bool(np.max(np.abs(node[:, 3:6]-(actual-X))) <= tol['position_m']),
+            'signed_reactions_N': bool(np.all(np.abs(node[:, 6:]-want['nodes'][:, 6:])
+                <= tol['force_N']+tol['relative']*np.abs(want['nodes'][:, 6:]))),
+            'stress_components_Pa': all(error[name] <= tol['stress_Pa']
+                +tol['relative']*abs(vector[j]) for j, name in enumerate(
+                    ('xx', 'yy', 'zz', 'xy', 'yz', 'xz'))),
+            'positive_sampled_J': bool(np.all(jacobians > 0)),
+            'gradient': bool(np.max(np.abs(gradients-F)) <= tol['jacobian']),
+            'logged_J': bool(np.max(np.abs(element[:, 6]-jacobians[:, :8].mean(axis=1)))
+                             <= tol['jacobian']),
+            'force_balance_N': bool(np.linalg.norm(node[:, 6:].sum(axis=0)) <= tol['force_N']),
+            'current_moment_balance_Nm': bool(np.linalg.norm(np.cross(actual, node[:, 6:]).sum(axis=0))
+                                            <= tol['moment_Nm']),
+            'free_center_residual_N': bool(np.linalg.norm(node[13, 6:]) <= tol['force_N']),
+        }
+        # Initial dt=0 stress is a format/initialization row, not material acceptance.
+        if index == 0:
+            checks['stress_components_Pa'] = True
+            checks['signed_reactions_N'] = True
+        failures.extend(f'step={index}:{key}' for key, passed in checks.items() if not passed)
+        states.append({'step': index, 'time_s': want['time_s'], 'checks': checks,
+                       'stress_component_max_abs_error_Pa': error,
+                       'minimum_sampled_J': float(jacobians.min()),
+                       'bulk_sed_diagnostic_only_Pa': {
+                           'logged_mean': float(element[:, 7].mean()),
+                           'analytic': want['bulk_energy_density_Pa']},
+                       'deviatoric_sed_gate_applied': False})
+    continuum = {}
+    if case.startswith('onearm'):
+        n = 12 if dt == .1 else 24
+        for sample in oracle['samples']:
+            index = round(sample['time_s']/dt)
+            element = elements[index]
+            target = sample['quadrature_cauchy_Pa']
+            errors = {key: float(np.max(np.abs(element[:, j]-target[key])))
+                      for key, j in (('xx',0),('xy',3),('yy',1),('zz',2))}
+            bound = sample['discrete_max_abs_Pa'][str(n)]
+            continuum[str(sample['time_s'])] = {'per_component_abs_error_Pa': errors,
+                'discrete_time_error_envelope_Pa': bound,
+                'within_predeclared_envelope': all(value <= bound+tol['stress_Pa']
+                    +tol['relative']*abs(target[key]) for key, value in errors.items())}
+            if not continuum[str(sample['time_s'])]['within_predeclared_envelope']:
+                failures.append(f'continuum_oracle_t={sample["time_s"]}')
+    return {'case': case, 'passed': not failures, 'failures': failures,
+            'states': states, 'solver': solver, 'continuum_oracle': continuum,
+            'scope': 'arbitrary-constant numerical software control only; not physical validation'}
+
+
+def verify_executed_deck(case: str, directory: Path, executed_sha256: str,
+                         manifest: dict, *, root: Path = ROOT) -> dict:
+    """Bind the actual Accelerate deck and prove ONLY the solver token changed."""
+    if not isinstance(executed_sha256, str) or not re.fullmatch(r'[0-9a-f]{64}', executed_sha256):
+        raise ValueError('Explicit executed-deck SHA256 required')
+    info = manifest['cases'][case]
+    original = _bound(root/info['deck'], info['sha256'], maximum=1024**2)
+    actual = _bound(directory/(case+'.feb'), executed_sha256, maximum=1024**2)
+    _bound(root/'scripts/mechanics_hbe_backend.py', BACKEND_SOURCE_SHA)
+    from scripts import mechanics_hbe_backend as backend
+    if Path(backend.__file__).resolve() != (root/'scripts/mechanics_hbe_backend.py').resolve():
+        raise ValueError('Unexpected backend helper origin')
+    backend.verify_deck(original, actual)
+    return {'original_prepared_deck_sha256': info['sha256'],
+            'executed_deck_sha256': executed_sha256,
+            'solver_only_transform_verified': True,
+            'backend_transform_source_sha256': BACKEND_SOURCE_SHA}
+
+
+def check_case(case: str, directory: Path, *, executed_sha256: str,
+               root: Path = ROOT) -> dict:
+    manifest, oracle = preparation(root)
+    if case not in CASES:
+        raise ValueError('Undeclared four-control case')
+    info = manifest['cases'][case]
+    deck_proof = verify_executed_deck(case, directory, executed_sha256, manifest, root=root)
+    node_text = _read(directory/(case+'.nodes.log'))
+    element_text = _read(directory/(case+'.elements.log'))
+    solver_text = _read(directory/(case+'.log'))
+    nodes = parse_data_log(node_text,
+                           'mechanics_nodes_si', info['time_steps'], info['step_size_s'])
+    elements = parse_data_log(element_text,
+                              'mechanics_elements_si', info['time_steps'], info['step_size_s'])
+    solver = check_solver_log(solver_text,
+                              info['time_steps'], info['step_size_s'])
+    result = evaluate(case, nodes, elements, solver, oracle)
+    if case == 'zeroarm_shear':
+        old_nodes = parse_data_log(_read(root/OLD_SHEAR/'shear.nodes.log'),
+                                   'mechanics_nodes_si', 4, .25)
+        old_elements = parse_data_log(_read(root/OLD_SHEAR/'shear.elements.log'),
+                                      'mechanics_elements_si', 4, .25)
+        # Different native material implementation, same homogeneous solution.
+        # Wrapper deviatoric SED is deliberately excluded from this check.
+        per_state = []
+        for index in range(1, 5):
+            signed_reaction_error = float(np.max(np.abs(nodes[index][:, 6:]-old_nodes[index][:, 6:])))
+            stress_error = float(np.max(np.abs(elements[index][:, :6]-old_elements[index][:, :6])))
+            passed = (signed_reaction_error <= patch.TOLERANCES['force_N']
+                      +patch.TOLERANCES['relative']*float(np.max(np.abs(old_nodes[index][:, 6:])))
+                      and stress_error <= patch.TOLERANCES['stress_Pa']
+                      +patch.TOLERANCES['relative']*float(np.max(np.abs(old_elements[index][:, :6]))))
+            per_state.append({'step': index, 'signed_reaction_max_abs_error_N': signed_reaction_error,
+                              'stress_max_abs_error_Pa': stress_error, 'passed': bool(passed)})
+            if not passed:
+                result['failures'].append(f'step={index}:archived_elastic_cross_implementation')
+        result['archived_plain_ogden_crosscheck'] = {
+            'source': OLD_SHEAR, 'checked_sha256': OLD_HASHES['checked.json'],
+            'states': per_state, 'deviatoric_sed_compared': False,
+            'passed': all(row['passed'] for row in per_state)}
+        result['passed'] = not result['failures']
+    result['provenance'] = {'preparation_sha256': PREPARATION_SHA,
+        'spec_sha256': SPEC_SHA, 'oracle_sha256': ORACLE_SHA,
+        **deck_proof, 'constitutive_source_sha256': manifest['source_files'],
+        'saved_output_sha256': {case+'.nodes.log': hashlib.sha256(node_text.encode()).hexdigest(),
+                                case+'.elements.log': hashlib.sha256(element_text.encode()).hexdigest(),
+                                case+'.log': hashlib.sha256(solver_text.encode()).hexdigest()},
+        'saved_stream_parsed': True, 'native_provenance_verified': False,
+        'native_output_observed': None, 'measured_response_accessed': False,
+        'patient_data_accessed': False, 'physical_validation_pass': None}
+    return result
+
+
+def compare_time_refinement(coarse: dict, fine: dict) -> dict:
+    if (coarse.get('case') != 'onearm_shear_dt010'
+            or fine.get('case') != 'onearm_shear_dt005'
+            or not coarse.get('passed') or not fine.get('passed')):
+        raise ValueError('Both actual shear histories must pass before comparison')
+    ratios = {}
+    for time, entry in coarse['continuum_oracle'].items():
+        small = fine['continuum_oracle'][time]['per_component_abs_error_Pa']
+        large = entry['per_component_abs_error_Pa']
+        ratios[time] = {key: None if small[key] == 0 else large[key]/small[key]
+                        for key in large}
+    return {'coarse_to_fine_error_ratios_by_component': ratios,
+            'expected_discrete_asymptotic_ratio': 4.0,
+            'qualification': 'diagnostic_only_not_physical_validation'}
+
+
+def main() -> int:
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('--case', choices=CASES, required=True)
+    cli.add_argument('--directory', type=Path, required=True)
+    cli.add_argument('--executed-deck-sha256', required=True)
+    args = cli.parse_args()
+    result = check_case(args.case, args.directory, executed_sha256=args.executed_deck_sha256)
+    print(json.dumps(result, indent=2, allow_nan=False))
+    return 0 if result['passed'] else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
