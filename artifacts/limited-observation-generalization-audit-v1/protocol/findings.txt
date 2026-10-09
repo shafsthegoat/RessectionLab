@@ -1,0 +1,123 @@
+GENERALIZATION PROTOCOL V1 — COMPACT FINDINGS
+2026-10-08. Proposal only; no tracked files changed, no patient payloads decoded,
+no models loaded, no simulator steps or fitting performed.
+
+Central test
+Training may use privileged simulation anatomy, rewards, critic features and
+teacher search. Deployment gets only the declared imaging, permitted estimates,
+tools, constraints and action history. Freeze the entire strategy before a
+separate evaluator opens independently withheld real anatomy. Test whether the
+learned method improves the quality/time frontier over strong observed-model
+search, and whether a matched no-privilege control loses that improvement.
+Simulator score alone cannot answer this question.
+
+Use the existing split; do not invent a new pristine test set
+BTC TRAIN: PAT05/16/20/22/25/28; SELECT: PAT26/27; unopened development-transfer:
+PAT29/31. All visits/derivatives share their patient's role. Two transfer patients
+support a descriptive pilot, not population inference or an external-site claim.
+UPenn remains the reserved external-final candidate, with no registered eligible
+final patients. Eligibility/sample size and model ancestry must be resolved before
+case access under a frozen final procedure. The historical cohort_registry.json
+contains only five development records; it is not a complete current inventory.
+
+Current executable evidence
+The completed prepared comparison contains six prescribed TRAIN cases, four
+complete comparisons and twelve accepted histories. Frozen IL lost reward to
+greedy on all four completed cases, with lower online cost. PAT05 was its training
+case; PAT22/25/28 were TRAIN transfer, PAT16/20 failed support completeness. Each
+successful plan made only three actions and removed about 3–6% of target. This is
+not evidence of a full operation, independent patient testing or an RL benefit.
+The supplied target annotation is also the scoring reference. The source voxel
+geometry checker independently implements checks but does not provide independent
+anatomical truth. Exact model-derived feasibility masks and exact simulated future
+cavity are privileged inference channels if advertised as limited-scan deployment.
+
+Immediate protocol boundary
+Keep three isolated objects/processes: privileged training state; deployable
+observation and permitted planning model; private reference evaluator. All arms
+share the permitted sources, uncertainty, candidate family, tools and budgets.
+At deployment, proposals, crop/normalization, access selection, legality masks,
+search scores and stopping may not consult private truth. The preoperative cavity
+is a prediction from action history, not an observed future cavity. On a fixture,
+swapping hidden target/support/vascular/functional truth must leave every planner
+input and the frozen full plan unchanged, before and after a cut, while a positive
+control changes evaluator scores. Do not censor truth-invalid plans before scoring.
+
+The fastest valid population pilot is MRI-only on BTC, not CT. Fit/freeze anatomy
+estimators on TRAIN and reserve held-out source masks for the evaluator after
+ancestry/frame/coverage QC. An annotation-assisted comparator is still useful, but
+reusing its supplied annotation for scoring establishes only model-conditioned
+planning. Unknown vessels, tracts or critical anatomy stay unassessed. Acquired CT
+requires a separate admitted cohort and cannot be inferred from MRI support.
+
+Comparators and bounded execution
+Retain STOP, untrained/random controls and greedy; compare strong beam/MPC search,
+learned-guided search, frozen IL, scratch RL, IL+RL, and paired no-privilege training.
+Existing observed_beam_search already supports negative opening prefixes and actor
+expansion ordering without using an untrained value head as a search oracle.
+The full matched real-patient runner does not yet exist. Choose one primary learned
+family on SELECT; do not pick the winning method from final scores. Log simulated
+teacher/reward ancestry, offline costs and all actual updates.
+
+For the next TRAIN-only profiling slice, the proposal reuses the historical 90 s /
+468-preview ceiling with a smaller 30 s / 156-preview point, one CPU thread and
+6 GiB. These are starting feasibility caps, not proven full-strategy budgets.
+Check horizons 3/6/12/24 on TRAIN, freeze a supported horizon and all final caps
+before held-out access, and retain horizon-truncation residuals. Cold preparation,
+estimation, proposal generation, online search/inference/adaptation, replay and
+export count toward total online cost; independent reference scoring is separate.
+Randomize/counterbalance order instead of claiming speed from fixed-order runs.
+
+Measure a strategy, not a straight route
+Save entry/access, ordered complete-tool poses and changes, each cavity/removal,
+residual by target compartment, non-target removal and contact separately,
+withdrawal, STOP reason, violations, coverage, alternatives/Pareto quality, runtime,
+expansions/previews, memory and every failure. Primary geometric utility can retain
+the existing declared coefficients; the full metric vector prevents one weighted
+score hiding damage. A failed/unaudited plan has null outcome and a failure flag,
+not zero. Immediate STOP is a separate real comparator. All patients stay counted.
+
+Add coherent nonidentical uncertainty worlds, separate optimization/selection/test
+worlds, and a distinct stress family. Report conditional event counts/intervals,
+mean/tail surrogates, ranking instability and abstention coverage/error curves.
+Select abstention thresholds only on SELECT. Missing coverage/frame/localization
+can force a reason-coded abstention; unavailable hazard data never mean zero risk.
+The current native spatial adapter accepts only deterministic seed 0 and rejects
+critical-evidence bindings, so these uncertainty metrics are not yet executable.
+
+Current data and admission gaps
+Lausanne has 199 TRAIN / 43 SELECT / 42 measurement-evaluation people. The current
+ledger reports 199 TRAIN acquired, but zero scanner-frame or spatial admissions.
+RESECT has 14 TRAIN / 4 SELECT / 4 measurement-evaluation people plus protected
+Case4 DEVELOPMENT. TRAIN originals are acquired; image/mask/anatomy/frame admission
+remains separate. These are anatomy/cavity components, not paired surgical-policy
+trajectories or jointly linked glioma patients. SynthRAD prospectively assigns
+126/27/27 acquired MRI/CT component roles; current extraction/decoding and scientific
+admission are unresolved. It has no established glioma strategy reference.
+
+The current data_policy.py only admits one generated opening study with zero real
+patients and two actions. Old real-case learning paths, simulated checkpoints and
+SynthStrip-derived support remain blocked. The new steering requires a new narrow
+source-use contract, not relaunching historical runners or removing all gates.
+
+Claim ladder and falsification
+A: Held-out simulator worlds + independent code replay establish model-conditioned
+planning. B: Unseen patients + withheld real labels/observations score frozen plans
+and test anatomical generalization, conditional on label/frame quality. C: Held-out
+force/deformation/cutting measurements and observed clinical outcomes answer their
+separate physical/clinical questions. No claim at C follows from success at A/B.
+A learned benefit that disappears with limited inputs, private-truth isolation,
+strong search, or independent anatomy does not support the hypothesis. Two BTC
+transfer patients cannot establish a population benefit. Final patient-level paired
+intervals and failure/violation guardrails must follow a prespecified sample rule.
+
+Artifacts and reproduction
+protocol.json contains the exact proposed contracts, arms, metrics, unresolved
+release gates and source hashes. audit.py uses only standard-library metadata
+reads; run from the repository root:
+  .venv/bin/python build/generalization-protocol-v1/audit.py
+Use --output build/generalization-protocol-v1/<new-name>.json to preserve a new run.
+The preserved first audit.json correctly detected EXPERIMENT_PROTOCOL.md changing
+concurrently after its recorded hash. This is source drift, not a split failure;
+all other recorded files matched. No release follows from an audit pass. The source
+closure must be refrozen after integration before any scientific experiment.

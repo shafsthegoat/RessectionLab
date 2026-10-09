@@ -1,0 +1,120 @@
+{
+  "schema": "compact-publication-index-v1",
+  "files": [
+    {
+      "path": "RESULT.md",
+      "bytes": 2678,
+      "sha256": "cf8047b7db96fe71815d62bd66c01d908f6dfce20b7eaa3d37e399e9c88bae45"
+    },
+    {
+      "path": "baseline-fairness/REPORT.md",
+      "bytes": 14491,
+      "sha256": "01675a40ad6a300aaed3e7704de0e84ea4f169e13316221596615e00f844f2a7"
+    },
+    {
+      "path": "baseline-fairness/evidence.json",
+      "bytes": 7665,
+      "sha256": "6e2681d313fa001ff8b7493f4affa5c20c9b3630068878eba2c4cd92a4a5abd2"
+    },
+    {
+      "path": "interface/PROPOSED_CODE_SLICE.txt",
+      "bytes": 7568,
+      "sha256": "d81035637b87fbc7e510ac9e5489003d2376751053a3c7d9f54643227cced926"
+    },
+    {
+      "path": "interface/REPORT.txt",
+      "bytes": 6646,
+      "sha256": "5619ef5a3b009be4befa71430cb1036ca94d6dbc4e2e37599c17d2f8dc094b3a"
+    },
+    {
+      "path": "interface/audit.json",
+      "bytes": 10622,
+      "sha256": "bec25be93fbf8d1d2ee01a0f48891a653fd12d0fa323dbcbd67cbaa2a2c73d99"
+    },
+    {
+      "path": "interface/existing-target-boundary-probe.json",
+      "bytes": 949,
+      "sha256": "dbe14b9c7a0ff7a41c7d961355dabc0009066b688c9e976ca76d316b94df0e5e"
+    },
+    {
+      "path": "interface/focused-tests.json",
+      "bytes": 731,
+      "sha256": "7e2b6373cddda3368733e52ef3aa3a52fa5e2c45b4e750a6a01934c6c21bd47e"
+    },
+    {
+      "path": "interface/focused-tests.txt",
+      "bytes": 99,
+      "sha256": "1a196dc4a9092955aab7d285ceb571195ef33e10c6530b635dbef41de0c27d99"
+    },
+    {
+      "path": "interface/output-sha256.json",
+      "bytes": 760,
+      "sha256": "2559b2034d6fc36a30778e64e92195d8011e70dc2dcddf88a541493de8ab5089"
+    },
+    {
+      "path": "interface/probe_existing_target_boundary.py",
+      "bytes": 3538,
+      "sha256": "ed890fd89159c33d995cb3dbf54eec253ee3b178a0e7dd08b3bb28caeb5f7e66"
+    },
+    {
+      "path": "interface/source-receipt.json",
+      "bytes": 2984,
+      "sha256": "baeaeeb9c5196214e39f37ee93b9d05147bc197d8faffe279f1ce97bfe7249b2"
+    },
+    {
+      "path": "methodology/inspection-manifest.json",
+      "bytes": 2492,
+      "sha256": "af5aa440b6ee665aa28cef2e5cb12786edf0c932102972aaf14f0e56b513cb1d"
+    },
+    {
+      "path": "methodology/methodology-research.json",
+      "bytes": 29310,
+      "sha256": "2e24febf0bfedd00130883e2647070bc984cd706667a41a6dbaafb574a2a59bd"
+    },
+    {
+      "path": "paired-evidence/REPORT.txt",
+      "bytes": 7123,
+      "sha256": "5655813f075a2b6775896bde750c48d318a6cf9c74ac0033369f98fbcf387557"
+    },
+    {
+      "path": "paired-evidence/matrix.json",
+      "bytes": 11727,
+      "sha256": "60ecdf7b5a2a6157f7bbfe01b1043cdb8a18413882724ac80f4b9f9ec8422147"
+    },
+    {
+      "path": "paired-evidence/patient-splits.json",
+      "bytes": 58759,
+      "sha256": "99272f206ecc5ed1b8ee1cc5dc31f7e6a4ba2604152dd9bc9abfc869095e6347"
+    },
+    {
+      "path": "paired-evidence/source-index.json",
+      "bytes": 5539,
+      "sha256": "1d6789e4041c053641b3f115c80e99fa8d84a2f5c46f76a958b31d6f5aa0b705"
+    },
+    {
+      "path": "protocol/audit-final.json",
+      "bytes": 5996,
+      "sha256": "5d8feb6e3c1b68025062cc5755f592e29523255725a104c6bf39f1dbada0c339"
+    },
+    {
+      "path": "protocol/audit.json",
+      "bytes": 5996,
+      "sha256": "4be84285032d1d41d1962998633bd1f25c2f99166ae7675ded3b6b1f7eaba825"
+    },
+    {
+      "path": "protocol/audit.py",
+      "bytes": 4925,
+      "sha256": "881273b48ead235655db220df58cbefbffe6b0721f1f0d4f0fc1f037de43d883"
+    },
+    {
+      "path": "protocol/findings.txt",
+      "bytes": 8329,
+      "sha256": "f765b071236a22a327fa4a7cc7e2664a3f5f0d2a105c3218c276a45e45eb17e8"
+    },
+    {
+      "path": "protocol/protocol.json",
+      "bytes": 18091,
+      "sha256": "f77ad1cc9bfbf3453993cea19a0a473a1f1dc94a37fb974f2afaf8cd0eeedfc0"
+    }
+  ]
+}

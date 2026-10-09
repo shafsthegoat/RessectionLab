@@ -1,0 +1,35 @@
+Limited-observation interface audit v1
+
+Main finding
+The repository already has most of the small geometric planning machinery. It does not yet implement or validate rich privileged simulation training followed by MRI/CT-only deployment on unseen patients with independently withheld patient-linked anatomy. The existing clean split is narrower: private target labels affect scores but not the nominal action stream. The same support map still governs actor inputs, feasibility, transition geometry and audit.
+
+What the evidence establishes
+At HEAD 88aaec9044d9751cc99c82c2c8e0148641f9a9de, 33 selected existing analytic observation/invariance/evaluation checks pass in 2.50 s (2.854 s including process startup). They test DTO input/missingness controls, hidden target changes, actor/nominal-search invariance and independent geometry/reward reconstruction. No training, patient payload, checkpoint load or tracked edit was performed. Source hashes and full test output are retained beside this report.
+
+Recent experiments
+- Current generated opening task: six tissue cells, two macro-strokes, one seed. BC256 matches exact search at 1.100; RL256 argmax reaches 1.098. This is training-task capacity, with no unseen anatomy.
+- RL256 stochastic expected return is 0.546023 and any-target probability 67.99% on the same finite tree. Argmax success does not establish reliable stochastic performance.
+- PAT05 compatibility consists of two frozen forward passes on a previously consulted TRAIN observation. Trained STOP preference is 81.3695%, with zero actions or planning outcomes. The observation includes a supplied tumor annotation and historical unreviewed synthetic-trained support; it is not limited-scan inference.
+- Current functional evidence supports population-prior sensitivity only. Native spatial reward explicitly rejects motor/language/graph costs. Mechanics calibration remains unmeasured after a preserved runtime/header failure.
+- Latest commits concern RESECT image/header QC and mechanics, not new limited-observation learning. The latest relevant admission commit is 0467ad7, which only enables the bound generated opening comparison.
+
+Smallest executable vertical slice
+Stage A (available now, no new science claim): run the existing target-swap boundary and complete two-stroke episode audits. Done in this audit. This is an implementation control, not the central experiment.
+
+Stage B (smallest new actual hypothesis slice): use one permitted structural MRI modality first, one prescribed access, a fixed common tool catalog and a two-macro-stroke horizon. Train on declared TRAIN groups and reserve SELECT groups for all model/estimator decisions. Choose an unseen-patient evaluation subset prospectively without changing existing BTC/UPenn roles. One held-out patient proves execution only; the study's independent sample size remains the number of people.
+
+Required new glue:
+1. Create separate immutable DecisionInputs and EvaluationReference records. DecisionInputs contains only permitted scan(s), affine, scan-derived support/target estimates with frozen ancestry, prescribed access/tool geometry, and nominal action history. EvaluationReference contains separately registered, independently withheld patient labels, coverage, acquisition time and patient binding. Never pass the rich case object to policy/search. One structural MRI is directly compatible with the current channel schema; true MRI+CT requires a versioned modality schema.
+2. Generate candidate actions, legal masks and predicted cavity using the nominal model only. Generate and seal a complete open-loop sequence before hidden replay. This avoids leaking hidden anatomy through certified actions, exact cavity updates or reference-dependent stopping. Store predicted state as nominal/simulated, never recorded surgery.
+3. Add a versioned admission contract for the authorized TRAIN sources and simulation lineage. Reuse SpatialTransition, BC/REINFORCE loss, gradient receipts and bounded runner supervision. Privileged labels may provide TRAIN rewards or explicit privileged teacher targets, but never deploy-time features. The existing actor/critic both use limited inputs; a privileged critic is optional later.
+4. Compare STOP, observed greedy, bounded observed beam SEARCH, IL/BC, scratch RL and one defined hybrid (BC-initialized RL or policy-guided beam). Start comparable learners from the same seed/architecture; give every primary method the same deployment envelope, action family, horizon and nominal objective. Account separately for teacher/estimator/training cost, online calls/seconds, and hidden evaluation. Existing guided beam is immediately reusable, but the current exact teacher is nominal rather than privileged. An oracle planner is a separately labeled upper bound.
+5. Seal preprocessing, estimates, checkpoints, tools, accesses, inference mode and method sequences before the evaluator opens held-out labels. Reuse native geometry auditing plus a new reference-only patient-label overlap/exposure scorer. Begin with independently withheld target/critical-structure labels for geometric endpoints, not mechanics or clinical risk. A richer hidden support/world needs a separate replay interface; current shared-support audit alone cannot validate it.
+
+Minimum success gates
+- All withheld references swapped/poisoned: observation bytes, crop/normalization, action geometry/masks, logits, selected sequence and planner accounting remain unchanged for a fixed nominal input. Scores must change when the swap changes true geometric exposure. Include hidden support, hazards, reference metadata and file-access denial, not just target labels.
+- Held-out planner process cannot open reference paths. No reference score feeds checkpoint/access/tool selection or test-time adaptation.
+- Every non-STOP sequence has an independent complete-tool audit. Invalid hidden replay is a counted failure, not filtered away or converted to STOP. No feasible-action case and missing-reference cases retain their original denominators.
+- Report target overlap/normal tissue loss, hidden critical-structure contact/exposure, geometry violations, STOP/failure rate and costs per patient, with individual paired method results. Weight patients rather than millions of simulated episodes.
+- MRI/CT estimate quality and limited-vs-privileged planning gap are reported separately. Claims remain simulated anatomical/geometric performance unless independent measured outcomes establish more.
+
+Main reuse details and exact code locations are in audit.json. This report is an architectural recommendation; Stage B has not been implemented or launched.

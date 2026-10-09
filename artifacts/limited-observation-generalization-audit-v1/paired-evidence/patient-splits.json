@@ -1,0 +1,2487 @@
+{
+  "manifests/lausanne-component-cohort-v1.json": {
+    "source_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "counts": {
+      "TRAIN": 199,
+      "MEASUREMENT_EVAL": 42,
+      "SELECT": 43
+    },
+    "members": [
+      {
+        "patient_group": "Lausanne:sub-000",
+        "subject": "sub-000",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-001",
+        "subject": "sub-001",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-002",
+        "subject": "sub-002",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-005",
+        "subject": "sub-005",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-006",
+        "subject": "sub-006",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-007",
+        "subject": "sub-007",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-013",
+        "subject": "sub-013",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-015",
+        "subject": "sub-015",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-021",
+        "subject": "sub-021",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-022",
+        "subject": "sub-022",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-026",
+        "subject": "sub-026",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-030",
+        "subject": "sub-030",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-033",
+        "subject": "sub-033",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-034",
+        "subject": "sub-034",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-035",
+        "subject": "sub-035",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-036",
+        "subject": "sub-036",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-037",
+        "subject": "sub-037",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-039",
+        "subject": "sub-039",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-043",
+        "subject": "sub-043",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-045",
+        "subject": "sub-045",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-047",
+        "subject": "sub-047",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-051",
+        "subject": "sub-051",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-052",
+        "subject": "sub-052",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-053",
+        "subject": "sub-053",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-062",
+        "subject": "sub-062",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-065",
+        "subject": "sub-065",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-066",
+        "subject": "sub-066",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-069",
+        "subject": "sub-069",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-073",
+        "subject": "sub-073",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-074",
+        "subject": "sub-074",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-075",
+        "subject": "sub-075",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-076",
+        "subject": "sub-076",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-077",
+        "subject": "sub-077",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-078",
+        "subject": "sub-078",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-079",
+        "subject": "sub-079",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-081",
+        "subject": "sub-081",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-091",
+        "subject": "sub-091",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-092",
+        "subject": "sub-092",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-099",
+        "subject": "sub-099",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-100",
+        "subject": "sub-100",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-101",
+        "subject": "sub-101",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-103",
+        "subject": "sub-103",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-104",
+        "subject": "sub-104",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-105",
+        "subject": "sub-105",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-106",
+        "subject": "sub-106",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-107",
+        "subject": "sub-107",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-109",
+        "subject": "sub-109",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-111",
+        "subject": "sub-111",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-112",
+        "subject": "sub-112",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-116",
+        "subject": "sub-116",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-119",
+        "subject": "sub-119",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-120",
+        "subject": "sub-120",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-121",
+        "subject": "sub-121",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-125",
+        "subject": "sub-125",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-126",
+        "subject": "sub-126",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-127",
+        "subject": "sub-127",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-128",
+        "subject": "sub-128",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-129",
+        "subject": "sub-129",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-130",
+        "subject": "sub-130",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-131",
+        "subject": "sub-131",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-132",
+        "subject": "sub-132",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-134",
+        "subject": "sub-134",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-140",
+        "subject": "sub-140",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-141",
+        "subject": "sub-141",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-144",
+        "subject": "sub-144",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-147",
+        "subject": "sub-147",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-148",
+        "subject": "sub-148",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-149",
+        "subject": "sub-149",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-151",
+        "subject": "sub-151",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-153",
+        "subject": "sub-153",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-157",
+        "subject": "sub-157",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-159",
+        "subject": "sub-159",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-160",
+        "subject": "sub-160",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-162",
+        "subject": "sub-162",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-163",
+        "subject": "sub-163",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-164",
+        "subject": "sub-164",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-165",
+        "subject": "sub-165",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-167",
+        "subject": "sub-167",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-170",
+        "subject": "sub-170",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-171",
+        "subject": "sub-171",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-172",
+        "subject": "sub-172",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-175",
+        "subject": "sub-175",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-176",
+        "subject": "sub-176",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-178",
+        "subject": "sub-178",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-179",
+        "subject": "sub-179",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-183",
+        "subject": "sub-183",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-185",
+        "subject": "sub-185",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-186",
+        "subject": "sub-186",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-187",
+        "subject": "sub-187",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-188",
+        "subject": "sub-188",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-189",
+        "subject": "sub-189",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-191",
+        "subject": "sub-191",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-192",
+        "subject": "sub-192",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-193",
+        "subject": "sub-193",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-194",
+        "subject": "sub-194",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-195",
+        "subject": "sub-195",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-197",
+        "subject": "sub-197",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-198",
+        "subject": "sub-198",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-200",
+        "subject": "sub-200",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-202",
+        "subject": "sub-202",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-203",
+        "subject": "sub-203",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-204",
+        "subject": "sub-204",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-207",
+        "subject": "sub-207",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-208",
+        "subject": "sub-208",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-209",
+        "subject": "sub-209",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-211",
+        "subject": "sub-211",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-214",
+        "subject": "sub-214",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-215",
+        "subject": "sub-215",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-216",
+        "subject": "sub-216",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-217",
+        "subject": "sub-217",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-220",
+        "subject": "sub-220",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-222",
+        "subject": "sub-222",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-224",
+        "subject": "sub-224",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-225",
+        "subject": "sub-225",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-226",
+        "subject": "sub-226",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-228",
+        "subject": "sub-228",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-231",
+        "subject": "sub-231",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-234",
+        "subject": "sub-234",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-235",
+        "subject": "sub-235",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-239",
+        "subject": "sub-239",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-240",
+        "subject": "sub-240",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-242",
+        "subject": "sub-242",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-243",
+        "subject": "sub-243",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-245",
+        "subject": "sub-245",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-246",
+        "subject": "sub-246",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-247",
+        "subject": "sub-247",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-248",
+        "subject": "sub-248",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-250",
+        "subject": "sub-250",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-251",
+        "subject": "sub-251",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-252",
+        "subject": "sub-252",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-253",
+        "subject": "sub-253",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-254",
+        "subject": "sub-254",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-255",
+        "subject": "sub-255",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-256",
+        "subject": "sub-256",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-257",
+        "subject": "sub-257",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-258",
+        "subject": "sub-258",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-259",
+        "subject": "sub-259",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-261",
+        "subject": "sub-261",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-262",
+        "subject": "sub-262",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-263",
+        "subject": "sub-263",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-264",
+        "subject": "sub-264",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-265",
+        "subject": "sub-265",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-266",
+        "subject": "sub-266",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-267",
+        "subject": "sub-267",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-268",
+        "subject": "sub-268",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-269",
+        "subject": "sub-269",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-270",
+        "subject": "sub-270",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-271",
+        "subject": "sub-271",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-273",
+        "subject": "sub-273",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-274",
+        "subject": "sub-274",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-275",
+        "subject": "sub-275",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-276",
+        "subject": "sub-276",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-277",
+        "subject": "sub-277",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-278",
+        "subject": "sub-278",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-279",
+        "subject": "sub-279",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-280",
+        "subject": "sub-280",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-282",
+        "subject": "sub-282",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-283",
+        "subject": "sub-283",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-284",
+        "subject": "sub-284",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-286",
+        "subject": "sub-286",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-287",
+        "subject": "sub-287",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-288",
+        "subject": "sub-288",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-289",
+        "subject": "sub-289",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-291",
+        "subject": "sub-291",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-293",
+        "subject": "sub-293",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-294",
+        "subject": "sub-294",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-295",
+        "subject": "sub-295",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-297",
+        "subject": "sub-297",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-299",
+        "subject": "sub-299",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-303",
+        "subject": "sub-303",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-304",
+        "subject": "sub-304",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-306",
+        "subject": "sub-306",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-307",
+        "subject": "sub-307",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-308",
+        "subject": "sub-308",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-309",
+        "subject": "sub-309",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-310",
+        "subject": "sub-310",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-311",
+        "subject": "sub-311",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-315",
+        "subject": "sub-315",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-316",
+        "subject": "sub-316",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-317",
+        "subject": "sub-317",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-318",
+        "subject": "sub-318",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-319",
+        "subject": "sub-319",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-324",
+        "subject": "sub-324",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-325",
+        "subject": "sub-325",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-327",
+        "subject": "sub-327",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-328",
+        "subject": "sub-328",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-329",
+        "subject": "sub-329",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-330",
+        "subject": "sub-330",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-331",
+        "subject": "sub-331",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-332",
+        "subject": "sub-332",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-333",
+        "subject": "sub-333",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-334",
+        "subject": "sub-334",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-335",
+        "subject": "sub-335",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-336",
+        "subject": "sub-336",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-337",
+        "subject": "sub-337",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-339",
+        "subject": "sub-339",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-340",
+        "subject": "sub-340",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-341",
+        "subject": "sub-341",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-343",
+        "subject": "sub-343",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-344",
+        "subject": "sub-344",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-345",
+        "subject": "sub-345",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-347",
+        "subject": "sub-347",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-349",
+        "subject": "sub-349",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-350",
+        "subject": "sub-350",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-351",
+        "subject": "sub-351",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-352",
+        "subject": "sub-352",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-353",
+        "subject": "sub-353",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-354",
+        "subject": "sub-354",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-401",
+        "subject": "sub-401",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-402",
+        "subject": "sub-402",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-403",
+        "subject": "sub-403",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-404",
+        "subject": "sub-404",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-405",
+        "subject": "sub-405",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-407",
+        "subject": "sub-407",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-408",
+        "subject": "sub-408",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-409",
+        "subject": "sub-409",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-410",
+        "subject": "sub-410",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-411",
+        "subject": "sub-411",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-412",
+        "subject": "sub-412",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-413",
+        "subject": "sub-413",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-415",
+        "subject": "sub-415",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-416",
+        "subject": "sub-416",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-417",
+        "subject": "sub-417",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-418",
+        "subject": "sub-418",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-419",
+        "subject": "sub-419",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-420",
+        "subject": "sub-420",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-421",
+        "subject": "sub-421",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-423",
+        "subject": "sub-423",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-424",
+        "subject": "sub-424",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-425",
+        "subject": "sub-425",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-426",
+        "subject": "sub-426",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-427",
+        "subject": "sub-427",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-428",
+        "subject": "sub-428",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-429",
+        "subject": "sub-429",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-430",
+        "subject": "sub-430",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-431",
+        "subject": "sub-431",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-432",
+        "subject": "sub-432",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-433",
+        "subject": "sub-433",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-434",
+        "subject": "sub-434",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-435",
+        "subject": "sub-435",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-436",
+        "subject": "sub-436",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-437",
+        "subject": "sub-437",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-438",
+        "subject": "sub-438",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-439",
+        "subject": "sub-439",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-440",
+        "subject": "sub-440",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-441",
+        "subject": "sub-441",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-450",
+        "subject": "sub-450",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-451",
+        "subject": "sub-451",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-452",
+        "subject": "sub-452",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-453",
+        "subject": "sub-453",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-454",
+        "subject": "sub-454",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-455",
+        "subject": "sub-455",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-457",
+        "subject": "sub-457",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-458",
+        "subject": "sub-458",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-459",
+        "subject": "sub-459",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-460",
+        "subject": "sub-460",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-461",
+        "subject": "sub-461",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-462",
+        "subject": "sub-462",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-464",
+        "subject": "sub-464",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-465",
+        "subject": "sub-465",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-466",
+        "subject": "sub-466",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-467",
+        "subject": "sub-467",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-469",
+        "subject": "sub-469",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-470",
+        "subject": "sub-470",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-471",
+        "subject": "sub-471",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-472",
+        "subject": "sub-472",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-473",
+        "subject": "sub-473",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-474",
+        "subject": "sub-474",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-475",
+        "subject": "sub-475",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-476",
+        "subject": "sub-476",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-478",
+        "subject": "sub-478",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-479",
+        "subject": "sub-479",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-480",
+        "subject": "sub-480",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-481",
+        "subject": "sub-481",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-482",
+        "subject": "sub-482",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-484",
+        "subject": "sub-484",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-485",
+        "subject": "sub-485",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-486",
+        "subject": "sub-486",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-487",
+        "subject": "sub-487",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-488",
+        "subject": "sub-488",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "Lausanne:sub-489",
+        "subject": "sub-489",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-490",
+        "subject": "sub-490",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "Lausanne:sub-491",
+        "subject": "sub-491",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "Lausanne:sub-492",
+        "subject": "sub-492",
+        "role": "TRAIN"
+      }
+    ]
+  },
+  "manifests/resect-component-cohort-v1.json": {
+    "source_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+    "counts": {
+      "SELECT": 4,
+      "TRAIN": 14,
+      "DEVELOPMENT": 1,
+      "MEASUREMENT_EVAL": 4
+    },
+    "members": [
+      {
+        "patient_group": "RESECT:Case1",
+        "subject": "Case1",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "RESECT:Case2",
+        "subject": "Case2",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case3",
+        "subject": "Case3",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case4",
+        "subject": "Case4",
+        "role": "DEVELOPMENT"
+      },
+      {
+        "patient_group": "RESECT:Case5",
+        "subject": "Case5",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case6",
+        "subject": "Case6",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "RESECT:Case7",
+        "subject": "Case7",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case8",
+        "subject": "Case8",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "RESECT:Case11",
+        "subject": "Case11",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case12",
+        "subject": "Case12",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case13",
+        "subject": "Case13",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "RESECT:Case14",
+        "subject": "Case14",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "RESECT:Case15",
+        "subject": "Case15",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case16",
+        "subject": "Case16",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case17",
+        "subject": "Case17",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case18",
+        "subject": "Case18",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case19",
+        "subject": "Case19",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "RESECT:Case21",
+        "subject": "Case21",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case23",
+        "subject": "Case23",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case24",
+        "subject": "Case24",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case25",
+        "subject": "Case25",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "RESECT:Case26",
+        "subject": "Case26",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "RESECT:Case27",
+        "subject": "Case27",
+        "role": "MEASUREMENT_EVAL"
+      }
+    ]
+  },
+  "manifests/synthrad-component-cohort-v1.json": {
+    "source_sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+    "counts": {
+      "TRAIN": 126,
+      "MEASUREMENT_EVAL": 27,
+      "SELECT": 27
+    },
+    "members": [
+      {
+        "patient_group": "SynthRAD2023:1BA001",
+        "subject": "1BA001",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA005",
+        "subject": "1BA005",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA012",
+        "subject": "1BA012",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA014",
+        "subject": "1BA014",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA022",
+        "subject": "1BA022",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA032",
+        "subject": "1BA032",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA040",
+        "subject": "1BA040",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA054",
+        "subject": "1BA054",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA058",
+        "subject": "1BA058",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA075",
+        "subject": "1BA075",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA076",
+        "subject": "1BA076",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA082",
+        "subject": "1BA082",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA085",
+        "subject": "1BA085",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA091",
+        "subject": "1BA091",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA097",
+        "subject": "1BA097",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA100",
+        "subject": "1BA100",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA103",
+        "subject": "1BA103",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA105",
+        "subject": "1BA105",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA111",
+        "subject": "1BA111",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA116",
+        "subject": "1BA116",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA125",
+        "subject": "1BA125",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA131",
+        "subject": "1BA131",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA141",
+        "subject": "1BA141",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA143",
+        "subject": "1BA143",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA151",
+        "subject": "1BA151",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA158",
+        "subject": "1BA158",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA159",
+        "subject": "1BA159",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA164",
+        "subject": "1BA164",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA172",
+        "subject": "1BA172",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA175",
+        "subject": "1BA175",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA184",
+        "subject": "1BA184",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA185",
+        "subject": "1BA185",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA189",
+        "subject": "1BA189",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA201",
+        "subject": "1BA201",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA206",
+        "subject": "1BA206",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA220",
+        "subject": "1BA220",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA222",
+        "subject": "1BA222",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA227",
+        "subject": "1BA227",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA234",
+        "subject": "1BA234",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA239",
+        "subject": "1BA239",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA247",
+        "subject": "1BA247",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA253",
+        "subject": "1BA253",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA256",
+        "subject": "1BA256",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA260",
+        "subject": "1BA260",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA266",
+        "subject": "1BA266",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA278",
+        "subject": "1BA278",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA288",
+        "subject": "1BA288",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA292",
+        "subject": "1BA292",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA294",
+        "subject": "1BA294",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA300",
+        "subject": "1BA300",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA305",
+        "subject": "1BA305",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA307",
+        "subject": "1BA307",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA325",
+        "subject": "1BA325",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA328",
+        "subject": "1BA328",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA336",
+        "subject": "1BA336",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA345",
+        "subject": "1BA345",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA358",
+        "subject": "1BA358",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA359",
+        "subject": "1BA359",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA368",
+        "subject": "1BA368",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA379",
+        "subject": "1BA379",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB002",
+        "subject": "1BB002",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB003",
+        "subject": "1BB003",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB005",
+        "subject": "1BB005",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB006",
+        "subject": "1BB006",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB007",
+        "subject": "1BB007",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB008",
+        "subject": "1BB008",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB011",
+        "subject": "1BB011",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB016",
+        "subject": "1BB016",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB017",
+        "subject": "1BB017",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB026",
+        "subject": "1BB026",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB028",
+        "subject": "1BB028",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB030",
+        "subject": "1BB030",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB031",
+        "subject": "1BB031",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB033",
+        "subject": "1BB033",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB034",
+        "subject": "1BB034",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB039",
+        "subject": "1BB039",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB041",
+        "subject": "1BB041",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB043",
+        "subject": "1BB043",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB044",
+        "subject": "1BB044",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB048",
+        "subject": "1BB048",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB049",
+        "subject": "1BB049",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB050",
+        "subject": "1BB050",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB051",
+        "subject": "1BB051",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB052",
+        "subject": "1BB052",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB059",
+        "subject": "1BB059",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB062",
+        "subject": "1BB062",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB066",
+        "subject": "1BB066",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB071",
+        "subject": "1BB071",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB072",
+        "subject": "1BB072",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB073",
+        "subject": "1BB073",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB075",
+        "subject": "1BB075",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB076",
+        "subject": "1BB076",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB079",
+        "subject": "1BB079",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB082",
+        "subject": "1BB082",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB083",
+        "subject": "1BB083",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB085",
+        "subject": "1BB085",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB090",
+        "subject": "1BB090",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB091",
+        "subject": "1BB091",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB095",
+        "subject": "1BB095",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB096",
+        "subject": "1BB096",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB098",
+        "subject": "1BB098",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB099",
+        "subject": "1BB099",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB100",
+        "subject": "1BB100",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB102",
+        "subject": "1BB102",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB109",
+        "subject": "1BB109",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB111",
+        "subject": "1BB111",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB145",
+        "subject": "1BB145",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB151",
+        "subject": "1BB151",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB152",
+        "subject": "1BB152",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB171",
+        "subject": "1BB171",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB173",
+        "subject": "1BB173",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB175",
+        "subject": "1BB175",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB177",
+        "subject": "1BB177",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB179",
+        "subject": "1BB179",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB182",
+        "subject": "1BB182",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB184",
+        "subject": "1BB184",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB189",
+        "subject": "1BB189",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB198",
+        "subject": "1BB198",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB200",
+        "subject": "1BB200",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BB205",
+        "subject": "1BB205",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC001",
+        "subject": "1BC001",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC004",
+        "subject": "1BC004",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC006",
+        "subject": "1BC006",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC007",
+        "subject": "1BC007",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC008",
+        "subject": "1BC008",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC009",
+        "subject": "1BC009",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC010",
+        "subject": "1BC010",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC014",
+        "subject": "1BC014",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC017",
+        "subject": "1BC017",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC019",
+        "subject": "1BC019",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC020",
+        "subject": "1BC020",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC021",
+        "subject": "1BC021",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC022",
+        "subject": "1BC022",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC023",
+        "subject": "1BC023",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC025",
+        "subject": "1BC025",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC027",
+        "subject": "1BC027",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC028",
+        "subject": "1BC028",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC031",
+        "subject": "1BC031",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC034",
+        "subject": "1BC034",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC035",
+        "subject": "1BC035",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC036",
+        "subject": "1BC036",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC037",
+        "subject": "1BC037",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC038",
+        "subject": "1BC038",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC039",
+        "subject": "1BC039",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC041",
+        "subject": "1BC041",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC046",
+        "subject": "1BC046",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC047",
+        "subject": "1BC047",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC048",
+        "subject": "1BC048",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC049",
+        "subject": "1BC049",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC050",
+        "subject": "1BC050",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC051",
+        "subject": "1BC051",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC052",
+        "subject": "1BC052",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC053",
+        "subject": "1BC053",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC054",
+        "subject": "1BC054",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC056",
+        "subject": "1BC056",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC058",
+        "subject": "1BC058",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC062",
+        "subject": "1BC062",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC063",
+        "subject": "1BC063",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC064",
+        "subject": "1BC064",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC065",
+        "subject": "1BC065",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC066",
+        "subject": "1BC066",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC067",
+        "subject": "1BC067",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC068",
+        "subject": "1BC068",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC070",
+        "subject": "1BC070",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC073",
+        "subject": "1BC073",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC074",
+        "subject": "1BC074",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC075",
+        "subject": "1BC075",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC076",
+        "subject": "1BC076",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC077",
+        "subject": "1BC077",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC080",
+        "subject": "1BC080",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC081",
+        "subject": "1BC081",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC082",
+        "subject": "1BC082",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC083",
+        "subject": "1BC083",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC084",
+        "subject": "1BC084",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC085",
+        "subject": "1BC085",
+        "role": "SELECT"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC086",
+        "subject": "1BC086",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC087",
+        "subject": "1BC087",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC088",
+        "subject": "1BC088",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC090",
+        "subject": "1BC090",
+        "role": "TRAIN"
+      },
+      {
+        "patient_group": "SynthRAD2023:1BC094",
+        "subject": "1BC094",
+        "role": "TRAIN"
+      }
+    ]
+  },
+  "BTC": {
+    "manifest": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+    "TRAIN": [
+      "PAT05",
+      "PAT16",
+      "PAT20",
+      "PAT22",
+      "PAT25",
+      "PAT28"
+    ],
+    "SELECT": [
+      "PAT26",
+      "PAT27"
+    ],
+    "UNOPENED_DEVELOPMENT_TRANSFER": [
+      "PAT29",
+      "PAT31"
+    ]
+  }
+}

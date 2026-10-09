@@ -1,6 +1,6 @@
 # Project status
 
-Updated October 8, 2026. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
+Updated October 9, 2026. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
 remains active, with the [later human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8)
 superseding its incompatible real-data-only training restriction. Synthetic data
 and simulator-generated RL experience are now permitted, separately labeled from
@@ -8,6 +8,18 @@ observed patient records, with held-out real-patient and physical validation sti
 required. The first fixed generated-development comparison retains its negative
 result; longer fixed fits now demonstrate learning on that same task. No new
 real-patient training or transfer is claimed.
+
+The October 9 steering makes privileged-simulation training with **limited
+preoperative inputs on unseen patients** the primary falsifiable RL hypothesis.
+The [research protocol](EXPERIMENT_PROTOCOL.md) and [master plan](MASTER_PLAN.md)
+now state the outer patient split, same-information search/learned comparisons,
+and independent patient-linked withheld-anatomy scoring. The [parallel source,
+data, baseline and method audits](artifacts/limited-observation-generalization-audit-v1/RESULT.md)
+found no admitted full benchmark: current spatial support and feasibility share
+hidden-world geometry, real learning admission is limited to one zero-patient
+generated fixture, and no current cohort joins the required vascular,
+functional and mechanical truth. A small target-swap software control passed;
+it is not patient transfer evidence.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.

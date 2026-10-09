@@ -1,0 +1,79 @@
+{
+  "kind": "read_only_inspection_manifest",
+  "report_sha256": "2e24febf0bfedd00130883e2647070bc984cd706667a41a6dbaafb574a2a59bd",
+  "source_files": [
+    {
+      "path": "build/native-opening-length-sensitivity-publication-v1/RESULT.md",
+      "sha256": "7c37626b8cf48fbc366be856545a36d9fa0aedb41889ea0a1e3a0c9407f3d512",
+      "bytes": 2350
+    },
+    {
+      "path": "scripts/run_real_patient_visited_imitation.py",
+      "sha256": "24769ea2b59bf0d2c181d1404b6e79c6ba12331130fd06e85143dbdcb2d08aad",
+      "bytes": 18940
+    },
+    {
+      "path": "src/resectionlab/data_policy.py",
+      "sha256": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+      "bytes": 7841
+    },
+    {
+      "path": "src/resectionlab/learning_ppo.py",
+      "sha256": "327dfb09884f0a125cbbab790b66a67dad98b5e180a820ab29f2c0c358b6a1d4",
+      "bytes": 25323
+    },
+    {
+      "path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+      "bytes": 58891
+    },
+    {
+      "path": "src/resectionlab/observed_search.py",
+      "sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+      "bytes": 12955
+    },
+    {
+      "path": "src/resectionlab/spatial_observations.py",
+      "sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+      "bytes": 24866
+    },
+    {
+      "path": "src/resectionlab/spatial_policy.py",
+      "sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+      "bytes": 22722
+    },
+    {
+      "path": "tests/test_native_spatial_greedy.py",
+      "sha256": "c3345f8d7b7a1c289115b820745966a6f7c8899dd8a15308332d9bbc4ca6e7f4",
+      "bytes": 5151
+    },
+    {
+      "path": "tests/test_native_spatial_task.py",
+      "sha256": "fd683ce5fe0a7960dbf34d2a8014f0b3a72aeefb14c33da7a23ade607139b45f",
+      "bytes": 26771
+    },
+    {
+      "path": "tests/test_native_spatial_task_review.py",
+      "sha256": "8abfdab5d2834869fbddec525166542ab46f826ccc1cfca127b7ff5fb229200f",
+      "bytes": 12119
+    },
+    {
+      "path": "tests/test_spatial_policy_review.py",
+      "sha256": "adaa4f845b0d24087cfdaa88f8f0a428557099cf9e427c01daea76af508cc539",
+      "bytes": 12501
+    }
+  ],
+  "checks": {
+    "json_parses": true,
+    "source_paths_exist": true,
+    "experiments": 3,
+    "primary_sources": 11
+  },
+  "not_run": [
+    "training",
+    "model inference",
+    "simulation",
+    "tests",
+    "patient-image decoding"
+  ]
+}

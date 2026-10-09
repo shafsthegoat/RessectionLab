@@ -1,0 +1,36 @@
+{
+  "created_utc": "2026-10-09T01:27:47.641512+00:00",
+  "scope": "Read-only interface audit; no patient payload opened, no model training, no tracked edits",
+  "git_head": "88aaec9044d9751cc99c82c2c8e0148641f9a9de",
+  "tracked_diff_stat": " desktop/src/App.tsx                   | 95 +++++++++++++++++++++++++++++++++--\n desktop/src/NeighboringPathsPanel.tsx | 31 +++++++++++-\n desktop/src/neighboring-paths.ts      |  9 ++++\n 3 files changed, 129 insertions(+), 6 deletions(-)\n",
+  "source_sha256": {
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "src/resectionlab/native_functional_evaluation.py": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "scripts/run_native_opening_learning.py": "380ec02502840c9ab8acd30bf5c7542728ee622f819c5d12c73e135cea4bf508",
+    "PROJECT_STATUS.md": "929c461e824955fdc5d5de791df1b46813f3bf1075f108fc72de332edd4c93f8",
+    "docs/native-opening-learning.md": "45ef1737152dd6b0d7d40dd9dee5c42e94683660ad2c9f3aa5ea9b050c9b7312",
+    "artifacts/native-opening-rl-capacity-v1/RESULT.md": "6328a7c655848b0a28a4897c3c763b4dcabe2321c9608d5b7eec6fbd7c2dc7ad",
+    "artifacts/pat05-forward-diagnostic-v1/RESULT.md": "808248f4edf6601aa6df4e620ed5b8ad3c5c173f5923b4bf272e4df187befc16",
+    "artifacts/native-opening-bc-capacity-v1/RESULT.md": "018eb08d38b6bacbafe103a208fbed4d3990ee60c80aa2909add51aa486d6c2d",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b"
+  },
+  "interpreter": "Python 3.12.14",
+  "source_unchanged_at_completion": false,
+  "completion_head": "a1aa403ee9602916457adeaed879766193f7e7ac",
+  "concurrent_source_changes": [
+    {
+      "path": "PROJECT_STATUS.md",
+      "initial_sha256": "929c461e824955fdc5d5de791df1b46813f3bf1075f108fc72de332edd4c93f8",
+      "completion_sha256": "e6132028330e12fa712cbbde2be76e6839d40b7853b2a542719d88014ea63488"
+    }
+  ]
+}

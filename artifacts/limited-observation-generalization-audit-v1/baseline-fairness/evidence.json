@@ -1,0 +1,222 @@
+{
+  "audit_version": "baseline-fairness-audit-v1",
+  "created_utc": "2026-10-09T01:30:24.941290+00:00",
+  "repo_head": "eabe64bd8ca9e1d9450b4819f11c9cb1fb859a0a",
+  "scope": "Read-only source and saved textual/JSON metadata inspection; no patient arrays, model weights, forward passes, training, geometry runs, or external browsing. Existing tests inspected, not rerun.",
+  "source_and_result_evidence": [
+    {
+      "path": "MASTER_PLAN.md",
+      "sha256": "0f426f708d61eea96ba6094e1b75ef886bd299e006c6e33b272d0afef2b60de7",
+      "bytes": 119999
+    },
+    {
+      "path": "src/resectionlab/planning.py",
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+      "bytes": 31212
+    },
+    {
+      "path": "src/resectionlab/observed_search.py",
+      "sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+      "bytes": 12955
+    },
+    {
+      "path": "src/resectionlab/planning_budget.py",
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+      "bytes": 11579
+    },
+    {
+      "path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+      "bytes": 58891
+    },
+    {
+      "path": "src/resectionlab/native_spatial_evaluation.py",
+      "sha256": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+      "bytes": 9818
+    },
+    {
+      "path": "src/resectionlab/spatial_observations.py",
+      "sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+      "bytes": 24866
+    },
+    {
+      "path": "src/resectionlab/spatial_policy.py",
+      "sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+      "bytes": 22722
+    },
+    {
+      "path": "src/resectionlab/policy_inputs.py",
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+      "bytes": 3294
+    },
+    {
+      "path": "src/resectionlab/real_patient_learning.py",
+      "sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+      "bytes": 7420
+    },
+    {
+      "path": "tests/test_native_spatial_task.py",
+      "sha256": "fd683ce5fe0a7960dbf34d2a8014f0b3a72aeefb14c33da7a23ade607139b45f",
+      "bytes": 26771
+    },
+    {
+      "path": "tests/test_spatial_observations.py",
+      "sha256": "2f8dfaad413910fe0bffecea541ef316bee1ee8fd26cf23e14835af2c3670ce8",
+      "bytes": 8319
+    },
+    {
+      "path": "docs/real-patient-spatial-training.md",
+      "sha256": "54623e81472d52a80d99320df87a273cae0397c5785aaae23ec104e316fea138",
+      "bytes": 4604
+    },
+    {
+      "path": "docs/native-spatial-task.md",
+      "sha256": "61dfaa378188c104581615f2f61c89c01ab78b775c200edec32add95bc1a3c67",
+      "bytes": 12992
+    },
+    {
+      "path": "docs/native-opening-learning.md",
+      "sha256": "45ef1737152dd6b0d7d40dd9dee5c42e94683660ad2c9f3aa5ea9b050c9b7312",
+      "bytes": 5221
+    },
+    {
+      "path": "docs/native-opening-rl-capacity.md",
+      "sha256": "8cce154f0d415938ccb9102d6c5bd1004058123ede8680b4716756013c42d78b",
+      "bytes": 4101
+    },
+    {
+      "path": "docs/native-opening-bc-capacity.md",
+      "sha256": "7ede45ba61e65453887607017fadbd574d6f0d3e11fbb2074207fd62c4efe136",
+      "bytes": 3225
+    },
+    {
+      "path": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+      "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+      "bytes": 34626
+    },
+    {
+      "path": "manifests/experiments/prepared-training-planner-comparison-v2.json",
+      "sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+      "bytes": 10649
+    },
+    {
+      "path": "artifacts/native-opening-learning-v1/RESULT.md",
+      "sha256": "5b03fd4138f8551a4fb69401f34debc119fde6e48463e34fd1aac5c7aa140bd7",
+      "bytes": 5004
+    },
+    {
+      "path": "artifacts/native-opening-rl-capacity-v1/RESULT.md",
+      "sha256": "6328a7c655848b0a28a4897c3c763b4dcabe2321c9608d5b7eec6fbd7c2dc7ad",
+      "bytes": 3202
+    },
+    {
+      "path": "artifacts/native-opening-bc-capacity-v1/RESULT.md",
+      "sha256": "018eb08d38b6bacbafe103a208fbed4d3990ee60c80aa2909add51aa486d6c2d",
+      "bytes": 2127
+    },
+    {
+      "path": "artifacts/native-opening-length-sensitivity-v1/RESULT.md",
+      "sha256": "7c37626b8cf48fbc366be856545a36d9fa0aedb41889ea0a1e3a0c9407f3d512",
+      "bytes": 2350
+    },
+    {
+      "path": "artifacts/prepared-training-planner-comparison-v2/RESULT.md",
+      "sha256": "2172ac066d8ac0e0cfeff7c7f4d307be0a44a7b2f831f68adc0b1652b43c193c",
+      "bytes": 6242
+    },
+    {
+      "path": "scripts/compare_real_spatial_search.py",
+      "sha256": "4070d790f6124123eeef4fe09bf891cd8f1fdad6c85aa0ab1f2bede4d5413655",
+      "bytes": 17899
+    }
+  ],
+  "patient_role_metadata": [
+    {
+      "subject": "sub-PAT05",
+      "patient_group": "BTC:sub-PAT05",
+      "visit": "ses-preop",
+      "development_role": "previously_consulted_training_and_method_development",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT16",
+      "patient_group": "BTC:sub-PAT16",
+      "visit": "ses-preop",
+      "development_role": "previously_consulted_training_and_method_development",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT20",
+      "patient_group": "BTC:sub-PAT20",
+      "visit": "ses-preop",
+      "development_role": "previously_consulted_training_and_method_development",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT28",
+      "patient_group": "BTC:sub-PAT28",
+      "visit": "ses-preop",
+      "development_role": "previously_consulted_training_and_method_development",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT22",
+      "patient_group": "BTC:sub-PAT22",
+      "visit": "ses-preop",
+      "development_role": "population_training",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT25",
+      "patient_group": "BTC:sub-PAT25",
+      "visit": "ses-preop",
+      "development_role": "population_training",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT26",
+      "patient_group": "BTC:sub-PAT26",
+      "visit": "ses-preop",
+      "development_role": "checkpoint_selection_development",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT27",
+      "patient_group": "BTC:sub-PAT27",
+      "visit": "ses-preop",
+      "development_role": "checkpoint_selection_development",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT29",
+      "patient_group": "BTC:sub-PAT29",
+      "visit": "ses-preop",
+      "development_role": "unopened_frozen_development_transfer",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    },
+    {
+      "subject": "sub-PAT31",
+      "patient_group": "BTC:sub-PAT31",
+      "visit": "ses-preop",
+      "development_role": "unopened_frozen_development_transfer",
+      "outer_role": "development",
+      "eligible_for_external_final": false
+    }
+  ],
+  "report_sha256": "01675a40ad6a300aaed3e7704de0e84ea4f169e13316221596615e00f844f2a7",
+  "tracked_diffs_at_finish": [
+    "EXPERIMENT_PROTOCOL.md",
+    "desktop/src/App.tsx",
+    "desktop/src/NeighboringPathsPanel.tsx",
+    "desktop/src/neighboring-paths.ts"
+  ]
+}

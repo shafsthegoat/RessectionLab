@@ -1,0 +1,155 @@
+{
+  "method": "SHA256 of the exact small local source files consulted; no medical payload or live download file hashed/read.",
+  "sources": [
+    {
+      "path": "artifacts/hbe-branch-calibration-runtime-v2-preparation-v1/RESULT.md",
+      "bytes": 2079,
+      "sha256": "da501d23ef4ea03fd07f013bd1a43e168e5eec90d649e8c0b8cf4112dd7903f0"
+    },
+    {
+      "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/rights.json",
+      "bytes": 1103,
+      "sha256": "39baee3ef549835c0ae13c83eed3235a6597d7ea24b1f94bf361fc1f32fffc35"
+    },
+    {
+      "path": "artifacts/lausanne-deferred-qc-execution-v1/RESULT.md",
+      "bytes": 1583,
+      "sha256": "fb540b59eb25bf5a7bde925ff86f79f353915395988fd85d57190d41b9204c1e"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-source-partition-v1/README.md",
+      "bytes": 2846,
+      "sha256": "e8216c41c1b142ef4ffa6baa57daac4f0ddec1976c1ddd99d0cfafcb6272f7f2"
+    },
+    {
+      "path": "artifacts/resect-deferred-qc-v2-execution-v1/RESULT.md",
+      "bytes": 1996,
+      "sha256": "f83d23c22da2809bd0aecc0e51c99f5bf9a2d6cdc48aecd9778afc3704000323"
+    },
+    {
+      "path": "artifacts/resect-train-originals-execution-v1/RESULT.md",
+      "bytes": 1614,
+      "sha256": "61e191df714562ff1ac782fa533fb3fdda6c7fbbc0e694629c018f11f8834488"
+    },
+    {
+      "path": "artifacts/rhuh-fixed-plane-qc-v1/RESULT.md",
+      "bytes": 2060,
+      "sha256": "483ce9fc3f0bfbf89dced43d562d6a42aad84d1ce557e95bacf8378a77c31cf1"
+    },
+    {
+      "path": "artifacts/rhuh-preoperative-baseline-v1/RESULT.md",
+      "bytes": 6060,
+      "sha256": "c2f72fefa33ecd9c16a4fcc1e8439f42ef6ae1ccb5e19e1290cf28d785d4a89e"
+    },
+    {
+      "path": "artifacts/synthrad-archive-runner-v1/RESULT.md",
+      "bytes": 1382,
+      "sha256": "fa9866620ee29ce72252e133c22bd672100d595ad6373a678d26d73e933a5f71"
+    },
+    {
+      "path": "docs/REAL_OBSERVATION_EXECUTION_LEDGER.md",
+      "bytes": 42292,
+      "sha256": "a8c9ed5a04a69e5ade8516a30ad04239b9d7296bc6726cb91c19518457340b7d"
+    },
+    {
+      "path": "docs/btc-longitudinal-outcome-audit.md",
+      "bytes": 8875,
+      "sha256": "756addda6d5498407cc0830e15fc50924bd0c8adb92524baed67327464346af5"
+    },
+    {
+      "path": "docs/cohort-registry.md",
+      "bytes": 7325,
+      "sha256": "17029060f4cf8d4f7e1e30989999d8427e804550b35dab231da649dd1b92d397"
+    },
+    {
+      "path": "docs/critical-annotation-source-audit.md",
+      "bytes": 8785,
+      "sha256": "9dc0f95331212df195e4c3b6dd2e2c7360a3622f7570ec2d041674b05952c84a"
+    },
+    {
+      "path": "docs/diffusion_source.md",
+      "bytes": 10665,
+      "sha256": "906a6d9958b9632560bef1ee37fe7420d07056bb8088e6ab072ce7a41efdf9b7"
+    },
+    {
+      "path": "docs/functional_evidence.md",
+      "bytes": 8994,
+      "sha256": "fa42227ba773465a7a3eb10d4b16abb47b395fdc753980740959a6dfc00d31ec"
+    },
+    {
+      "path": "docs/glioma-connectivity-outcome-audit.md",
+      "bytes": 11249,
+      "sha256": "55136a734e28ce2ba52c1fadec691ec814819e87871795c8efa703e55bc5e631"
+    },
+    {
+      "path": "docs/real-patient-spatial-training.md",
+      "bytes": 4604,
+      "sha256": "54623e81472d52a80d99320df87a273cae0397c5785aaae23ec104e316fea138"
+    },
+    {
+      "path": "docs/remind-native-independent-qc.md",
+      "bytes": 2638,
+      "sha256": "309e7ca0981cdb6555058a1a3bf82b1ecf0f1ebff8ae3cd6619cccfd4e99c587"
+    },
+    {
+      "path": "docs/resect-conditional-displacement-poc.md",
+      "bytes": 8549,
+      "sha256": "f5489e8e4fa944db4a9b4f66cbfe5be32bc450b3b65cf6c7298611bc4f597b9b"
+    },
+    {
+      "path": "docs/rhuh-outcome-audit.md",
+      "bytes": 5882,
+      "sha256": "48d35dda5612973471effc965b4ddfc0e53c1c026b6522335dcde6da2ca1431c"
+    },
+    {
+      "path": "docs/tissue-mechanics-measurements.md",
+      "bytes": 14340,
+      "sha256": "1975b9667050bf48c3cfdc8a4f73dad79f123adafde4f2113b7e3bbb4dfb1ca5"
+    },
+    {
+      "path": "manifests/cohort_registry.json",
+      "bytes": 34233,
+      "sha256": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5"
+    },
+    {
+      "path": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+      "bytes": 34626,
+      "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "bytes": 6123,
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    {
+      "path": "manifests/lausanne-component-cohort-v1.json",
+      "bytes": 62650,
+      "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    {
+      "path": "manifests/lausanne-train-annotations-v1.json",
+      "bytes": 466329,
+      "sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624"
+    },
+    {
+      "path": "manifests/real_observation_data_use_v1.json",
+      "bytes": 13970,
+      "sha256": "8f9c6e9a4b27c8a157be2416621ff3e7687940976a04d12326e2c22b906fcd93"
+    },
+    {
+      "path": "manifests/resect-component-cohort-v1.json",
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    {
+      "path": "manifests/synthrad-component-cohort-v1.json",
+      "bytes": 108926,
+      "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    {
+      "path": "manifests/synthrad-task1-original-archive-v1.json",
+      "bytes": 10904,
+      "sha256": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b"
+    }
+  ]
+}

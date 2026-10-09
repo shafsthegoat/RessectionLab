@@ -1,0 +1,161 @@
+{
+  "audit_version": "limited-observation-interface-audit-v1",
+  "completed_utc": "2026-10-09T01:30:19.954886+00:00",
+  "head": "eabe64bd8ca9e1d9450b4819f11c9cb1fb859a0a",
+  "scope": "Read-only code, saved reports and metadata audit; no patient array/model checkpoint reads, no training, no tracked edits",
+  "interfaces": [
+    {
+      "name": "Permitted observation DTO",
+      "path": "src/resectionlab/spatial_observations.py",
+      "lines": "1-27; ObservedChannel 88; SpatialInputs 144",
+      "reuse": "Six image channels with coverage and availability, affine, tool geometry and observed procedure state; inference_only forbids supplied_annotation nominal channels; unknown payload zeroed. Immutable arrays and metadata checks.",
+      "limit": "Provenance strings do not establish estimator ancestry or upstream independence. One structural-intensity channel does not represent independent MRI and CT series simultaneously."
+    },
+    {
+      "name": "SpatialPolicy",
+      "path": "src/resectionlab/spatial_policy.py",
+      "lines": "114-264",
+      "reuse": "CNN actor and candidate-aware value baseline accept only exact SpatialObservation DTO. Physical ray geometry and missingness explicit. Parameter hash reusable.",
+      "limit": "No privileged critic, multimodal encoder or memory. One crop <=64 per axis; do not claim whole-tool visibility."
+    },
+    {
+      "name": "Spatial loss and update",
+      "path": "src/resectionlab/spatial_policy.py",
+      "lines": "267-390",
+      "reuse": "SpatialTransition, imitation_loss, reinforce_loss and gradient_step with full-episode on-policy bookkeeping, single-use loss binding and gradient receipts.",
+      "limit": "Current context explicitly permits one synthetic source and two-step task only; no general patient/population training."
+    },
+    {
+      "name": "NativeSpatialCase/Task",
+      "path": "src/resectionlab/native_spatial_task.py",
+      "lines": "135-373;385-620",
+      "reuse": "Separate target scoring reference; source-only target-independent hash; nominal planning clone; complete-tool fixed or nominal/cavity proposals; frozen state and history; bounded source crop.",
+      "limit": "One deterministic world; source-axis-normal aperture; 1-6 macro-strokes; support shared by actor, legality, simulator and audit; function/graph reward disabled."
+    },
+    {
+      "name": "Observed beam search",
+      "path": "src/resectionlab/observed_search.py",
+      "lines": "1-115",
+      "reuse": "Bounded observed nominal search; negative opening prefixes retained; optional frozen actor ordering yields hybrid comparator; lazy nominal transitions; model-call and wall accounting.",
+      "limit": "Search may access whole nominal field while actor only sees crop; needs matched evidence contract or explicit representation comparison."
+    },
+    {
+      "name": "Exact tiny teacher and bounded runner",
+      "path": "scripts/run_native_opening_learning.py",
+      "lines": "105-173;174-382",
+      "reuse": "Exact finite-tree nominal teacher, conflict detection, teacher trace validation, sealed source/declaration hashes, supervised worker budgets, separate offline/online/audit costs.",
+      "limit": "Hard-coded single six-cell development fixture; current teacher sees nominal model, not privileged anatomy."
+    },
+    {
+      "name": "Independent native episode audit",
+      "path": "src/resectionlab/native_spatial_evaluation.py",
+      "lines": "39-159",
+      "reuse": "Independently recompute full-tool geometry, removed-cell union and target/normal physical accounting; require complete committed episode and bound reference hashes; reject planning clone as final evaluation.",
+      "limit": "Audit uses same observed_support; validates arithmetic/geometry implementation, not independent measured tissue truth or biomechanics."
+    },
+    {
+      "name": "Patient role controls",
+      "path": "src/resectionlab/real_patient_learning.py",
+      "lines": "20-80;88-149",
+      "reuse": "Pinned BTC metadata; TRAIN vs SELECT role admission before patient load; all derivatives grouped by BTC participant; patient-uniform BC and on-policy batch bookkeeping.",
+      "limit": "Only six TRAIN and two SELECT admitted; sealed transfer patients not made available by relabeling a caller manifest."
+    },
+    {
+      "name": "Freeze/ledger evaluation",
+      "path": "src/resectionlab/evaluation.py",
+      "lines": "108-298",
+      "reuse": "Freeze candidates and models before evaluation, claimed partition ledger, final/stress restrictions, single-patient inference declaration.",
+      "limit": "World partition independence alone is not unseen-patient independence or patient-linked measured ground truth."
+    },
+    {
+      "name": "Whole-source/local representation preparation",
+      "path": "src/resectionlab/spatial_multiscale_views.py",
+      "lines": "1-37",
+      "reuse": "Conservative coarse cell averages with coverage and source affine; explicit permitted-source contract.",
+      "limit": "Outside current policy; target-local centering must use permitted estimated target, never withheld labels. Current data only show representation coverage."
+    },
+    {
+      "name": "Functional evaluation sealing",
+      "path": "src/resectionlab/native_functional_evaluation.py",
+      "lines": "1-9;192-224",
+      "reuse": "Seal exact sequence/checkpoint before functional reveal; durable shared ledger and saved binding.",
+      "limit": "FunctionalEvidence currently permits population_prior_sensitivity only (functional_evidence.py:37-49,134-138); cannot be relabeled as withheld patient functional anatomy."
+    }
+  ],
+  "leakage_pathways": [
+    {
+      "id": "L1",
+      "severity": "must separate",
+      "location": "native_spatial_task.py:859-912",
+      "finding": "Default patient adapter is annotation_assisted; nominal_target defaults to union of evaluator compartments at lines 890-892.",
+      "action": "Require explicit inference_only plus validated scan-derived estimates in new limited-observation path. Keep annotation-assisted as a separate upper-bound experiment."
+    },
+    {
+      "id": "L2",
+      "severity": "must separate",
+      "location": "native_spatial_task.py:298-301,450-506;native_spatial_evaluation.py:74",
+      "finding": "observed_support defines native engine tissue, certified legal inventory and evaluator geometry. Current target-swap controls do not cover hidden support, vessels or mechanical truth.",
+      "action": "Generate deployment candidates/masks/cavity from permitted nominal model only. Freeze geometry/action sequence before separate hidden replay. A hidden-world rejection is an evaluated failure, never a silently removed candidate."
+    },
+    {
+      "id": "L3",
+      "severity": "must label",
+      "location": "native_spatial_task.py:363-365;scripts/run_native_opening_learning.py:112-116",
+      "finding": "observed_cavity is exact simulated committed removal, not an observed operative cavity.",
+      "action": "For MRI/CT-only preoperative deployment, feed nominal predicted state and action history; only add actual measured cavity in a separately declared online sensing condition."
+    },
+    {
+      "id": "L4",
+      "severity": "must audit",
+      "location": "spatial_observations.py:1-6;native_spatial_task.py:230-243,344-370",
+      "finding": "derived_from_scan is a checked label, not proof: estimator weights, support, normalization mask, crop center, registration, access and proposals can encode held-out labels.",
+      "action": "Bind preprocessing/estimator training ancestry and source cutoff; vary every withheld channel while checking exact observation, inventory, mask, crop, action and logits invariance."
+    },
+    {
+      "id": "L5",
+      "severity": "comparison fairness",
+      "location": "observed_search.py:1-9;policy_inputs.py:16-28",
+      "finding": "Current search can see full permitted field while actor sees crop. Legacy native feature policy includes explicit per-action benefit/contact summaries.",
+      "action": "Use common limited envelope, actions, horizon, nominal objective and calls/time budgets for primary comparison. Treat legacy feature/oracle and full-annotation inputs as separate ablations."
+    },
+    {
+      "id": "L6",
+      "severity": "evaluation leakage",
+      "location": "real_patient_learning.py:20-80;evaluation.py:142-180",
+      "finding": "SELECT/transfer/patient roles, checkpoint choice, proposed access/tool choices and hyperparameters can leak withheld outcomes even when tensors are clean.",
+      "action": "Freeze patient groups, annotation cutoff, preprocessing, model, objective, actions and stopping rule before held-out references are opened; store reference reader outside planner process."
+    },
+    {
+      "id": "L7",
+      "severity": "unsupported proxy claim",
+      "location": "functional_evidence.py:37-49,134-138;native_spatial_task.py:391-392",
+      "finding": "Current functional fields are population priors and native task functional reward is disabled. No patient-linked withheld hazard outcome is represented by the present native spatial evaluator.",
+      "action": "Add explicitly registered patient-linked reference channels with provenance/coverage, score geometric exposure only. Keep missing evidence null; do not infer neurological injury risk."
+    },
+    {
+      "id": "L8",
+      "severity": "contract scope",
+      "location": "data_policy.py:58-121;spatial_policy.py:288-362",
+      "finding": "GeneratedDevelopmentContext only accepts one generated source, two steps, zero real patients; legacy model admission rejects any model hash.",
+      "action": "Implement a new versioned source-use/training context for authorized rich simulation and limited-observation experiments; preserve old narrow contracts and historical receipts."
+    }
+  ],
+  "verification": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_spatial_observations.py",
+      "tests/test_native_spatial_task.py::test_hidden_references_never_change_tensors_inventory_or_teacher_even_outside_support",
+      "tests/test_native_spatial_greedy.py::test_private_reference_swaps_cannot_change_nominal_scores_or_selected_sequence",
+      "tests/test_spatial_policy_review.py::test_private_reference_swap_cannot_change_action_set_actor_or_search_inputs",
+      "tests/test_native_spatial_evaluation.py"
+    ],
+    "exit_code": 0,
+    "seconds": 2.8542852078098804,
+    "scope": "Existing analytic DTO/invariance/evaluator controls; no training; no patient payload access"
+  }
+}

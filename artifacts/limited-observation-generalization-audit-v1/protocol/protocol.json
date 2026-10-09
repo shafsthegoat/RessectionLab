@@ -1,0 +1,251 @@
+{
+  "schema": "generalization-protocol-v1",
+  "status": "PROPOSED_NOT_RELEASED",
+  "created_on": "2026-10-08",
+  "scope": "Metadata-only protocol audit; no patient images, checkpoints, final labels or simulator executions opened by this work.",
+  "root_commit": "eabe64bd8ca9e1d9450b4819f11c9cb1fb859a0a",
+  "hypothesis": "Training with declared privileged simulation state produces a frozen deployable planner using only limited preoperative imaging and permitted estimates that improves the full-strategy quality/cost frontier over strong search on unseen patients when independently withheld real anatomy scores the frozen plans.",
+  "causal_control": "Paired privilege/no-privilege training with the same deployment actor, TRAIN patients, seeds, training cap, observations and action space; richer training critic/rewards/teacher only. Privilege must improve this contrast to attribute a gain to privileged training.",
+  "outer_roles": {
+    "train": [
+      "BTC:sub-PAT05",
+      "BTC:sub-PAT16",
+      "BTC:sub-PAT20",
+      "BTC:sub-PAT22",
+      "BTC:sub-PAT25",
+      "BTC:sub-PAT28"
+    ],
+    "select": [
+      "BTC:sub-PAT26",
+      "BTC:sub-PAT27"
+    ],
+    "unopened_development_transfer": [
+      "BTC:sub-PAT29",
+      "BTC:sub-PAT31"
+    ],
+    "external_final_candidate": "UPENN-GBM; individual eligibility and power/sample count unresolved",
+    "structural_external_candidate": "UTSW-Glioma; no diffusion/function implication"
+  },
+  "deployment_contract": {
+    "primary": "T1 MRI-only on BTC; acquired metadata/frame/coverage, frozen TRAIN-derived anatomy estimates, tools/access constraints, predicted cavity and past chosen actions. No CT claim on this cohort.",
+    "secondary": "Annotation-assisted track permits supplied annotations to every arm. If the same annotations score a plan, label it annotation-conditioned simulator evidence, not independent real-anatomy validation.",
+    "forbidden": "Withheld target/support/vessel/tract labels, pathology/outcomes, postoperative images, private rewards, ground-truth candidate masks/clearance, true future cavity/deformation, references through crop/access/normalization selection or checkpoint selection.",
+    "ct_track": "Acquired MRI/CT component only after SynthRAD source/role/frame/ancestry admission. No synthetic CT claim and no assumption of glioma strategy or independent skull labels.",
+    "firewall": "Separate train privileged state, deployed observation/model process, and evaluator process. Deploy code never receives evaluator truth. Search and learned methods share the same permitted source fields, estimates, uncertainty, candidate family and action horizon.",
+    "negative_control": "Swap withheld target, support, vessel/tract fields and world identity with permitted observations fixed, before and after a planned cut. Actor observations, proposals, masks, search scores/order, access/crop and entire frozen plan must remain unchanged. Evaluator scores should change on a positive-control scene.",
+    "cavity": "For preoperative deployment, cavity is predicted from the permitted model and action history. Exact simulator removal may train rewards but cannot masquerade as an intraoperative observation."
+  },
+  "arms": [
+    {
+      "id": "STOP",
+      "role": "mandatory zero-intervention comparator"
+    },
+    {
+      "id": "GREEDY",
+      "role": "diagnostic; not the strong search comparator"
+    },
+    {
+      "id": "SEARCH",
+      "role": "observed-only beam/MPC with negative opening prefixes, best completed incumbent and explicit node/time accounting"
+    },
+    {
+      "id": "LEARNED_SEARCH",
+      "role": "same search with frozen actor ordering; shared candidate set and calls; no untrained value head as oracle"
+    },
+    {
+      "id": "IL",
+      "role": "frozen behavior cloning from TRAIN simulated teachers"
+    },
+    {
+      "id": "RL",
+      "role": "frozen policy trained on TRAIN simulated rewards; untrained initialization retained"
+    },
+    {
+      "id": "HYBRID",
+      "role": "IL then reward-based RL; same deployment actor and budget accounting"
+    },
+    {
+      "id": "NO_PRIVILEGE",
+      "role": "paired training-information ablation for the predeclared primary learned arm"
+    },
+    {
+      "id": "ORACLE",
+      "role": "diagnostic upper reference only; never eligible winner or deployment baseline"
+    }
+  ],
+  "budgets": {
+    "pilot_online_seconds": [
+      30,
+      90
+    ],
+    "pilot_native_preview_caps": [
+      156,
+      468
+    ],
+    "pilot_arm_cpu_threads": 1,
+    "pilot_patient_max_rss_bytes": 6442450944,
+    "cap_interpretation": "Paired 30s/156 and 90s/468 proposals for the next TRAIN feasibility check, derived from the historical ceiling; not validated full-strategy capacities. Choose/freeze final caps and outer watchdog from TRAIN profiling before SELECT or held-out runs.",
+    "horizon": "TRAIN-only horizon sensitivity at 3, 6, 12, 24 actions; freeze a supported horizon before patient holdout. Horizon truncation retains residual and is not full-resection success.",
+    "offline": "Freeze updates, environment calls, teacher generation, patients and seeds before fitting. Existing 3-action/2-update runs do not establish convergence; final training cap unresolved.",
+    "seeds": [
+      11,
+      23,
+      47
+    ],
+    "online_includes": "cold case-specific preparation, estimation, proposals, model loading, search/inference/adaptation, replay and export; report each component and total; independent evaluator time separately.",
+    "fairness": "Paired same patient/resources and common source information. Randomize/counterbalance arm order; report quality at matched total time and time to fixed SELECT-chosen quality. Offline compute and amortization separate."
+  },
+  "metrics": {
+    "primary": "Paired patient-level difference in declared geometric utility (target removed - 0.2 non-target removed - 0.03 actions - 0.001 complete-tool path mm - 0.03 tool changes), scored on withheld reference anatomy at a frozen online cap. This is a geometric research preference.",
+    "guardrails": "No new observed hard-constraint violation; report feasible fraction and all failures; geometric effect unsupported if available evidence cannot certify the relevant constraint. Predeclare tolerances/noninferiority margins using TRAIN/SELECT before final access.",
+    "full_strategy": [
+      "entry/access",
+      "ordered complete-tool poses and tool changes",
+      "per-step cavity/removal",
+      "target removed and residual by compartment",
+      "non-target removed and contacted tissue separately",
+      "path length and exit/withdrawal",
+      "STOP/abstention reason",
+      "violations and infeasible transitions",
+      "retained alternatives/Pareto coverage",
+      "input/functional/vascular coverage",
+      "runtime/previews/expansions/memory"
+    ],
+    "uncertainty": [
+      "coherent anatomy per world",
+      "independent optimization/selection/evaluation worlds",
+      "different-family stress worlds",
+      "event counts and denominator",
+      "conditional Monte Carlo interval",
+      "mean and adverse-tail surrogate costs",
+      "ranking stability",
+      "abstention-coverage versus observed reference-error/violation curve"
+    ],
+    "statistics": "Average seeds/worlds within patient; paired patient effects and patient-cluster intervals. PAT29/31 n=2 is a descriptive transfer pilot only. External sample count must be set using a predeclared effect/margin/power rule, never final scores.",
+    "failure_rule": "Retain every declared patient and method. Failed preparation/timeout/incomplete audit has null outcome plus failure indicator, never zero; report coverage and failure-aware paired analysis. STOP is a valid separate zero-intervention policy, never imputed for failures."
+  },
+  "stopping_and_abstention": {
+    "hard": "Missing required localization/coverage, unresolvable frame/source conflicts, unsupported tool/access, no admissible model plan, or observed input outside declared domain => reason-coded abstention.",
+    "uncertain": "Choose model disagreement/coverage/fragility thresholds on SELECT, freeze them, and evaluate abstention-risk/coverage on independent reference labels. Missing hazards stay unknown; robust simulated success cannot certify clinical safety.",
+    "strategy_stop": "Stop when the predeclared observed-model marginal utility/constraint condition holds; withdrawal must be represented or limitation explicit. Do not use withheld real residual to choose STOP."
+  },
+  "evidence_layers": {
+    "A_simulator": "Independent code/geometry replay and held-out simulation worlds; conditional model evidence only.",
+    "B_real_anatomy": "Freeze plans before an evaluator reads independently withheld real acquired/annotated anatomy; report label ancestry, missing coverage, registration error, and scorer-model dependence. Reusing the planning annotation is not this layer.",
+    "C_physical_clinical": "Held-out measured force/deformation/cutting observations validate physical components; observed surgical/neurological outcomes validate separate clinical questions. Neither follows from A or B."
+  },
+  "current_gaps": [
+    {
+      "id": "admission",
+      "evidence": "src/resectionlab/data_policy.py",
+      "gap": "Only one 0-patient 2-step generated opening fixture admitted; real-case legacy learners and model ancestry remain blocked. New explicit source-use contract needed; no blanket bypass."
+    },
+    {
+      "id": "limited_input_estimator",
+      "evidence": "docs/rl-observation-gap.md",
+      "gap": "No admitted TRAIN-only scan estimator or deployed limited-input whole-strategy path demonstrated. Existing annotation-assisted nominal/reference target is the same source."
+    },
+    {
+      "id": "independent_anatomy",
+      "evidence": "manifests/cohort_registry.json",
+      "gap": "Zero outer-final patients; BTC reference tumor mask is currently supplied to planning. Need withheld real labels/observations with ancestry, frame, coverage and exposure ledger."
+    },
+    {
+      "id": "support",
+      "evidence": "artifacts/prepared-training-planner-comparison-v2/compact-results.json",
+      "gap": "Historical planning uses provisional SynthStrip support, now model-ineligible; PAT16/20 support conflicts retained. No silent envelope expansion or target clipping."
+    },
+    {
+      "id": "whole_strategy",
+      "evidence": "src/resectionlab/native_spatial_task.py",
+      "gap": "Three-action historical experiment, bounded local proposals and hypothetical access; not whole-operation coverage. Actual legal masks derive from exact observed simulator support."
+    },
+    {
+      "id": "uncertainty",
+      "evidence": "src/resectionlab/native_spatial_task.py",
+      "gap": "reset rejects nonzero seeds; spatial factory rejects critical-evidence binding. Other uncertainty modules do not establish integration here."
+    },
+    {
+      "id": "matched_arms",
+      "evidence": "src/resectionlab/observed_search.py",
+      "gap": "Beam search/guidance exists, but current completed real comparison only STOP/frozen IL/greedy, differing crop/full-field representations. Full matched comparison and privilege ablation unexecuted."
+    },
+    {
+      "id": "component_admission",
+      "evidence": "manifests/real_observation_data_use_v1.json",
+      "gap": "Lausanne acquired 199 TRAIN people but 0 scanner-frame/spatial admissions; RESECT acquired 14 TRAIN people but fitting/spatial admission false at this ledger. They support separate anatomy/cavity components, not joint patient surgical truth."
+    },
+    {
+      "id": "ct",
+      "evidence": "manifests/synthrad-component-cohort-v1.json",
+      "gap": "Prospective 126/27/27 MRI-CT component split; current extraction/decoding not admitted, all scientific admission unresolved, no strategy labels."
+    }
+  ],
+  "executable_sequence": [
+    {
+      "step": 0,
+      "status": "AVAILABLE_NOW",
+      "action": ".venv/bin/python build/generalization-protocol-v1/audit.py --output build/generalization-protocol-v1/audit.json",
+      "result": "Metadata/source hash and split audit only; no experiment release."
+    },
+    {
+      "step": 1,
+      "status": "IMPLEMENTATION_REQUIRED",
+      "action": "Freeze a new narrow source-use admission + limited-input DTO/evaluator boundary; retain every old historical restriction outside that contract. Pass full truth-swap firewall and permitted-model geometry controls."
+    },
+    {
+      "step": 2,
+      "status": "DATA_QC_REQUIRED",
+      "action": "Qualify existing TRAIN real anatomy components, train/freeze permitted estimators on TRAIN only, review source/support/frame/coverage and model ancestry. Do not pool unrelated datasets as linked patient truth."
+    },
+    {
+      "step": 3,
+      "status": "RUNNER_REQUIRED",
+      "action": "TRAIN-only bounded profile and full-strategy horizon check; common observations/action family; fit IL, RL, hybrid and no-privilege controls; record all costs. Tune/checkpoint/abstention selection only on declared SELECT."
+    },
+    {
+      "step": 4,
+      "status": "FROZEN_PILOT_REQUIRED",
+      "action": "Freeze source+data+checkpoint+observation+candidate+objective+budget+analysis hashes, then authorize/acquire PAT29/31 under original roles for one descriptive transfer pilot with private labels held out from deploy inputs."
+    },
+    {
+      "step": 5,
+      "status": "EXTERNAL_PROTOCOL_REQUIRED",
+      "action": "Freeze final method and eligibility/sample-size rule before opening UPenn individual records. Independently evaluate frozen plans with held-out real anatomy, then report simulator/anatomy/physical/clinical evidence separately."
+    }
+  ],
+  "evidence_sha256": {
+    "manifests/cohort_registry.json": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5",
+    "manifests/experiments/btc-spatial-development-cohort-v1.json": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+    "manifests/lausanne-component-cohort-v1.json": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "manifests/resect-component-cohort-v1.json": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+    "manifests/synthrad-component-cohort-v1.json": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+    "manifests/real_observation_data_use_v1.json": "8f9c6e9a4b27c8a157be2416621ff3e7687940976a04d12326e2c22b906fcd93",
+    "manifests/experiments/native-opening-learning-v1.json": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212",
+    "manifests/experiments/prepared-training-planner-comparison-v2.json": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+    "artifacts/prepared-training-planner-comparison-v2/compact-results.json": "e017779e72565c44bacf05e6e3b9413868c7f48564a472f88cb391d5ca9c3ea3",
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "docs/real-patient-spatial-training.md": "54623e81472d52a80d99320df87a273cae0397c5785aaae23ec104e316fea138",
+    "docs/rl-observation-gap.md": "b89e76e8b7650623bbb4762ef5285abe89578d64ececff00fd24430783ae0e96",
+    "docs/native-spatial-task.md": "61dfaa378188c104581615f2f61c89c01ab78b775c200edec32add95bc1a3c67",
+    "EXPERIMENT_PROTOCOL.md": "b3ca76a143f70fbb77d26f65547fe3bf9ff9884d4612dc63fa5fdb32ec398a0b"
+  },
+  "success_and_falsification": {
+    "primary_method": "Select one learned family and checkpoint using SELECT only; predeclare primary SEARCH comparator and budget before opening transfer/final patient outcomes. Keep all named arms as secondary contrasts.",
+    "external_success": "On an adequately sized external patient cohort, paired patient-cluster 95% interval for the primary learned-minus-SEARCH geometric utility difference must lie above zero at the frozen cap, with predeclared feasibility/violation/failure guardrails satisfied. Alternatively a prespecified speed-at-quality primary can be used, never switched after results.",
+    "privilege_success": "The same prospective comparison must favor privilege over its paired no-privilege training control to attribute the effect to privileged training.",
+    "negative": "Equal/worse reference quality, advantage lost with limited inputs or under true-label firewall, only simulator-evaluator advantage, increased constraint violations, or excessive abstention/failures do not support the hypothesis. Preserve all these outcomes.",
+    "pilot": "Two unopened BTC transfer patients are a descriptive feasibility check; no confidence-bound population-success claim."
+  },
+  "reference_holdout": {
+    "patient": "All visits, derivative images, masks, repeated exams and known pretraining overlaps inherit one outer patient role.",
+    "within_patient": "In the MRI-only path, a source target mask may become evaluator-only reference after source/annotation ancestry QC, never supplied to that patient's estimator or deployed planner. Anatomy absent from the dataset remains unassessed.",
+    "freeze": "Plan sequence/contingent policy, deploy weights, selected access, uncertainty/stopping rule and all runtime traces are hashed before truth-evaluator access. Evaluation cannot retry or change plans after a reference failure.",
+    "split_units": "Simulation-world holdout, real-patient holdout, withheld annotations and different-site external holdout are distinct; report which each experiment actually supplies.",
+    "pretraining": "Record third-party model training ancestry; unknown overlap prohibits an untouched end-to-end generalization claim even if local splits are disjoint."
+  }
+}

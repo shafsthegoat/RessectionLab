@@ -1,0 +1,336 @@
+{
+  "title": "Privileged training with limited deployment observations: methodology audit",
+  "version": "methodology-research-v1",
+  "date": "2026-10-08",
+  "scope": "Read-only source audit and primary-paper research. No training, patient imaging reads, simulator execution, tests, tracked source edits, or clinical-performance claims.",
+  "revision": "88aaec9044d9751cc99c82c2c8e0148641f9a9de",
+  "working_tree": "Existing tracked and untracked changes were present. Findings refer to inspected working-tree files, not a clean revision.",
+  "recommendation": {
+    "main": "Establish whether the deployment observation contains enough information before choosing a learning algorithm. Keep observed-only search as the comparator. Prioritize a training-only privileged critic after a small observability diagnostic, use history only when a permitted earlier observation is informative, and treat student-aware imitation as an alternative. Defer a learned dynamics model until model error and online planning cost justify it.",
+    "claim_boundary": "These methods provide algorithmic hypotheses from robotics/control benchmarks. None of the reviewed papers establishes a surgical benefit for this simulator, these observations, or these patients.",
+    "information_limit": "If two equally likely hidden states have identical permitted histories and require opposite binary actions, a policy receiving only those histories cannot exceed 50% state-identification accuracy. Privileged training cannot remove that ambiguity. This is an analytical example, not a measured property of RessectionLab. Action choice should instead reflect the conditional outcome distribution, information acquisition if actually available, or explicit abstention.",
+    "method_order": [
+      "Audit input sufficiency and representation shift",
+      "Separate symmetric versus privileged training signals with the same deployed actor",
+      "Compare student-aware distillation or an observation-conditioned outcome model plus bounded search",
+      "Evaluate abstention with a held-out calibration set; defer claims of calibrated patient harm"
+    ]
+  },
+  "baseline_audit": [
+    {
+      "finding": "SpatialPolicy is feed-forward: two Conv3d layers, coarse spatial pooling, shared per-action scorer and separate STOP and value heads. Optional candidate critic context pools only permitted legal candidate geometry and sampled image features; it is not a privileged-state critic.",
+      "anchors": [
+        "src/resectionlab/spatial_policy.py:99",
+        "src/resectionlab/spatial_policy.py:114",
+        "src/resectionlab/spatial_policy.py:237"
+      ],
+      "implication": "A new recurrent/belief actor, privileged critic input, or uncertainty output requires an explicitly versioned interface. The optional candidate context is a useful observed-only control."
+    },
+    {
+      "finding": "SpatialObservation exposes six image/nominal/cavity channels, coverage, availability, physical action geometry, observed procedure state and action masks. It excludes reward, simulator handles and evaluator reference labels, but explicitly states that upstream provenance alone cannot prove absence of leakage.",
+      "anchors": [
+        "src/resectionlab/spatial_observations.py:1",
+        "src/resectionlab/spatial_observations.py:21",
+        "src/resectionlab/spatial_observations.py:250"
+      ],
+      "implication": "Preserve the actor DTO; introduce a separate training-only record for privileged supervision, never add privileged arrays to the actor observation."
+    },
+    {
+      "finding": "NativeSpatialTask uses observed support and nominal proposals for previews/inventory, and separate reference_target for outcome scoring. planning_clone replaces reference outcomes with the permitted nominal target. Its reset accepts only seed=0, horizon is 1–6, and functional/graph costs must be disabled.",
+      "anchors": [
+        "src/resectionlab/native_spatial_task.py:385",
+        "src/resectionlab/native_spatial_task.py:435",
+        "src/resectionlab/native_spatial_task.py:450",
+        "src/resectionlab/native_spatial_task.py:508",
+        "src/resectionlab/native_spatial_task.py:592"
+      ],
+      "implication": "The active native adapter is deterministic geometry, not a stochastic hidden-anatomy benchmark. Repeated optimizer seeds do not add independent worlds or patients. Reference truth is currently an evaluator label, not a recurrent sensor signal."
+    },
+    {
+      "finding": "Spatial training implements generated-development behavior cloning and full-episode Monte Carlo REINFORCE with a detached learned baseline. A separate legacy PPO implementation exists, but it is not the current spatial loss.",
+      "anchors": [
+        "src/resectionlab/spatial_policy.py:287",
+        "src/resectionlab/spatial_policy.py:307",
+        "src/resectionlab/learning_ppo.py:194"
+      ],
+      "implication": "Compare algorithm identities explicitly. Do not call the spatial trainer PPO or mistake privileged offline readout for privileged training."
+    },
+    {
+      "finding": "Current data admission permits exactly one generated synthetic_scan source, zero real patients, max_steps=2, and the native-opening-generated-development-v1 scope. Historical real-patient learning scripts remain readable but their execution is blocked.",
+      "anchors": [
+        "src/resectionlab/data_policy.py:57",
+        "src/resectionlab/data_policy.py:85",
+        "src/resectionlab/data_policy.py:115",
+        "scripts/run_real_patient_visited_imitation.py:267"
+      ],
+      "implication": "All richer hidden-world, multi-source, recurrent, teacher-student or patient experiments below are proposed future contract extensions. This audit neither changes nor bypasses those gates."
+    },
+    {
+      "finding": "Observed beam search uses planning_clone; a frozen policy can change expansion order only, and its value head does not rank routes. Full permitted nominal fields used by search can exceed the actor crop.",
+      "anchors": [
+        "src/resectionlab/observed_search.py:1",
+        "src/resectionlab/observed_search.py:93",
+        "src/resectionlab/observed_search.py:115"
+      ],
+      "implication": "Use matched observation information for algorithm comparisons. If a full-field planner is retained, label it a richer-representation comparator and add an actor with equivalent permitted information before attributing a gap to learning."
+    },
+    {
+      "finding": "The saved working-length sensitivity report shows a STOP preference change from 6.7249% to 99.3915% when descriptors alone changed on one familiar generated root. The report states that tool geometry was not recertified.",
+      "anchors": [
+        "build/native-opening-length-sensitivity-publication-v1/RESULT.md:1"
+      ],
+      "implication": "This is evidence of descriptor sensitivity, not proof that STOP is incorrect on a physical long tool. A physically recertified tool comparison has higher immediate value than assuming more RL will solve transfer."
+    },
+    {
+      "finding": "Hidden-reference invariance tests already cover actor tensors, inventory and nominal teacher behavior. No LSTM/GRU, history belief filter, learned dynamics model, or selective-risk calibration was located in the audited current source paths.",
+      "anchors": [
+        "tests/test_native_spatial_task.py:107",
+        "tests/test_native_spatial_task_review.py:102",
+        "tests/test_native_spatial_greedy.py:62",
+        "tests/test_spatial_policy_review.py:88"
+      ],
+      "implication": "Reuse those invariance concepts and extend them to history, batching, normalization, checkpoint selection and training-only inputs. Absence finding is from static search, not an exhaustive semantic proof."
+    }
+  ],
+  "method_comparison": [
+    {
+      "name": "Asymmetric actor-critic",
+      "evidence": "Pinto et al. show image actors trained with full-state critics in simulated robot manipulation. Baisero and Amato analyze partial observability and propose history-state critics; replacing a history critic with a state-only bootstrapped value can introduce bias.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "fit": "Most direct training-signal ablation if privileged simulator state is informative and admitted. Deployment actor retains the same observation/history.",
+      "technical_caveat": "The current spatial algorithm uses complete Monte Carlo returns. A pre-action, action-independent detached baseline b(h,s) can have a zero expected score-function contribution even when it depends on hidden state; the state-only TD-bias critique must not be applied indiscriminately to this estimator. If adopting TD/GAE for a history actor, condition the critic on both permitted history and privileged state, and verify the estimator on an enumerable fixture. Use separate critic parameters or matched stop-gradient controls to isolate variance reduction from value-loss representation learning.",
+      "do_not_claim": "Privileged state cannot make deployment history informative when it is not, and theory does not guarantee neural optimization or surgical safety."
+    },
+    {
+      "name": "Recurrent or explicit-belief policy",
+      "evidence": "Ni et al. establish carefully implemented recurrent model-free RL as a strong baseline on diverse POMDP benchmarks. POMCP combines sampled belief updates with tree search using a generative simulator.",
+      "sources": [
+        "S3",
+        "S7"
+      ],
+      "fit": "Use a small GRU or explicit low-dimensional belief only after showing that past permitted observations distinguish states that the current crop aliases.",
+      "technical_caveat": "Never feed the recurrent actor simulated reward, private target removal, future images, or a privileged critic embedding merely because a common RL implementation feeds previous reward. The current reward includes private reference labels. A recurrent state must reset between patients and episodes. If no observations ever reveal the uncertainty, memory cannot resolve it.",
+      "do_not_claim": "A static missing modality or unobserved functional anatomy does not become observable by adding memory."
+    },
+    {
+      "name": "Teacher-student / distillation",
+      "evidence": "Learning by Cheating demonstrates privileged-teacher to image-student transfer in driving. DAgger addresses learner-induced state distribution shift. Robust Asymmetric Learning in POMDPs shows why a teacher ignorant of the student's information can supervise inappropriate decisions and adapts the expert accordingly.",
+      "sources": [
+        "S4",
+        "S5",
+        "S6"
+      ],
+      "fit": "Existing behavior-cloning and observed-search interfaces make this a relatively small extension. First use permitted observed search as teacher; compare privilege only on the same learner histories and candidate set.",
+      "technical_caveat": "A full-state oracle is a diagnostic ceiling, not automatically an imitable teacher. Group identical or near-identical student histories and measure teacher-label conflict and conditional regret. A fixed visited-state augmentation is not a full iterative DAgger implementation. Price every teacher query and keep all reference labels outside deployed policy inputs.",
+      "do_not_claim": "Low teacher-action cross-entropy alone does not establish low sequential cost, faithful uncertainty, or better unseen-patient plans."
+    },
+    {
+      "name": "Learned model plus bounded search",
+      "evidence": "PETS learns probabilistic dynamics ensembles and propagates their uncertainty through sampling-based control. POMCP provides a belief-search precedent, but neither paper validates this native simulator.",
+      "sources": [
+        "S7",
+        "S8"
+      ],
+      "fit": "Prefer learning an observation-conditioned outcome/uncertainty estimator or search expansion order before replacing the audited geometry engine. The current code already supports actor-guided expansion with exact nominal scoring.",
+      "technical_caveat": "A learned model used to score candidate outcomes is a new objective dependency and needs out-of-family residual and multi-step error tests. Keep exact geometry certification and independent replay. Do not train on hidden true future trajectories from evaluation patients. Compare matched search calls and total online time, including model inference and posterior updates.",
+      "do_not_claim": "Ensemble disagreement is an uncertainty score, not proof of calibrated risk. A model can improve held-out one-step prediction yet mislead planning through correlated or exploited errors."
+    },
+    {
+      "name": "Abstention and calibration",
+      "evidence": "SelectiveNet evaluates risk-coverage tradeoffs with a reject option. Guo et al. study prediction calibration and temperature scaling. Conformal Risk Control gives expected bounded monotone-loss control under exchangeability, with specifically derived extensions for shift.",
+      "sources": [
+        "S9",
+        "S10",
+        "S11"
+      ],
+      "fit": "Add explicit unsupported-evidence or out-of-domain abstention alongside scored STOP. Evaluate coverage, structural loss among accepted plans and all-case loss on held-out anatomy groups.",
+      "technical_caveat": "Policy softmax is an action preference, not a clinical event probability. Temperature scaling teacher-action probabilities does not calibrate injury. A reject rule's conditional accepted-case risk is not automatically a monotone loss for conformal risk control. Separate calibration from selection and final test. Unknown-site shift, dependent trajectories and simulator-label mismatch invalidate casual guarantees.",
+      "do_not_claim": "STOP is an available action, not evidence of calibrated abstention or safety. Report zero accepted plans as zero coverage and undefined accepted-case risk, never zero risk."
+    }
+  ],
+  "experiments": [
+    {
+      "rank": 1,
+      "id": "E1_OBSERVABILITY_AND_PHYSICAL_SHIFT",
+      "decision": "Is failure primarily missing information, cropped representation, or input/unit extrapolation? This determines whether to change observations, memory, normalization or learning signal.",
+      "hypothesis": "A physically recertified, held-out tool/anatomy family reveals whether the observed STOP shift survives real inventory changes. Separately, exact identical-history counterfactuals expose irreducible ambiguity.",
+      "design": "Start with saved-output audit and explicit input-contract mapping; no new training is needed for that portion. Future bounded diagnostic: use actual short/long tool geometries, recertify every action, and freeze all existing weights. Compare STOP, greedy, bounded beam and frozen actor on a few predeclared small fixture families. Create a paired counterfactual hidden-reference toy with identical actor histories and feasible actions; compute the full-state and observation-constrained optimal decisions by enumeration. Add a permitted noisy update to only one declared variant to test whether history can help. Do not label either toy a patient.",
+      "controls": [
+        "Real tool dimensions and independently checked paths, not a descriptor-only edit",
+        "Same horizon, action inventory, observed fields and search budget; full-field versus crop difference reported as separate condition",
+        "Known fully observed positive control and intentionally unobservable negative control",
+        "Hold out whole anatomy/tool families; no alternate render of the same anatomy in both train and evaluation",
+        "Reference-swap invariant observation, action IDs/order, masks, crop, normalization and nominal planner"
+      ],
+      "endpoints": [
+        "Fraction of history-equivalence classes with conflicting optimal hidden-state actions",
+        "Exact regret to observation-constrained optimum, not only to inaccessible oracle",
+        "Return/removal/cost and independent geometry failures after recertification",
+        "STOP/abstention rate and action-score sensitivity"
+      ],
+      "falsification": "If recertified longer tools make STOP optimal, the descriptor-only observation was not a demonstrated decision failure. If identical permitted histories imply conflicting optimal actions, reject the hypothesis that more feed-forward fitting can recover oracle behavior. If an earlier allowed observation resolves the conflict, memory/belief is justified; otherwise it is not.",
+      "smallness": "Saved artifact review can proceed read-only. The toy or recertified-family execution needs a new bounded declaration because current admission binds one source. No broad patient training.",
+      "advance_gate": "Only move to E2 when information boundaries and model semantics are explicit and the analytic controls pass."
+    },
+    {
+      "rank": 2,
+      "id": "E2_PRIVILEGED_CRITIC_ISOLATION",
+      "decision": "Does training-only information reduce optimization cost for the same deployed policy, independent of a larger actor or richer deployment inputs?",
+      "hypothesis": "A separate critic conditioned on permitted actor history plus admitted hidden state improves sample efficiency compared with a matched observed-only critic; the benefit need not change the reachable information-limited ceiling.",
+      "design": "On the smallest admitted enumerable hidden-world benchmark from E1, first compare expected policy gradients and empirical variance without updating weights. Then, only under a new training declaration, compare two matched actors with observed/history critic versus history+state critic, three paired initialization seeds (11,23,47), and fixed transition/update caps. Add a state-only bootstrapped critic only as a theory diagnostic if a TD trainer is introduced, not as the proposed production default. Keep one coherent hidden state per episode and actor history identical.",
+      "controls": [
+        "Actor initialization, architecture, update count, trajectories/world manifests and compute accounting matched",
+        "Separate critic branch with no privileged forward path into actor; symmetric branch uses the same stop-gradient policy",
+        "Shuffled privileged-state negative control on saved gradients, clearly not a policy benchmark",
+        "Exact gradient check on tiny finite task, with terminal handling and pre-action baseline conditions",
+        "Complete selection panel; freeze checkpoint before final/stress worlds; no test-reference-driven stopping"
+      ],
+      "endpoints": [
+        "Gradient bias against enumeration and gradient variance at fixed actor",
+        "Area under selection quality versus environment calls and total online time",
+        "Final held-out family regret and cost constraints",
+        "Privileged critic ablated at deployment with identical actor actions/hashes"
+      ],
+      "falsification": "Reject this extension for the next stage if exact-gradient controls fail, a purported gain depends on actor input changes, or the privileged arm does not improve the preregistered sample-efficiency endpoint across paired seeds without worsening the fixed cost/geometry criteria. Three seeds are an engineering screen, not evidence of population-level efficacy.",
+      "smallness": "Use the existing two-step finite-tree pattern; do not launch a patient cohort or neural world model. A useful result can be a zero-update gradient/variance diagnostic before any fitting.",
+      "advance_gate": "If advantage is absent, preserve observed-only training/search. If present, extend to family holdout without changing the deployment information contract."
+    },
+    {
+      "rank": 3,
+      "id": "E3_IMITABLE_SUPERVISION_AND_SELECTIVE_SEARCH",
+      "decision": "Can a deployable student or outcome estimator retain the useful part of a teacher/search policy under limited information, and identify unsupported cases?",
+      "hypothesis": "Student-information-aware supervision or a conditional outcome model plus bounded search has lower held-out conditional regret than naive full-state teacher cloning at useful coverage.",
+      "design": "After E1/E2, choose one narrow representation task. Freeze an observed-only search comparator. Use the same student-visited histories and count teacher labels for (a) privileged oracle action cloning and (b) labels/values marginalized over the declared training belief conditional on student history. Prefer a small observation-conditioned value/outcome head combined with existing exact geometry search over a learned geometry simulator. Assess a separate threshold for model error/disagreement or evidence coverage on a disjoint calibration family before final test.",
+      "controls": [
+        "Oracle teacher evaluated separately as an inaccessible diagnostic ceiling; never compare it as deployable",
+        "Equal teacher queries, training examples, candidate set, architecture capacity and online search-call budget",
+        "Static BC versus visited-state data controls if assessing distribution shift",
+        "A simple coverage/missing-evidence gate and STOP comparator; no all-abstain apparent victory",
+        "Independent final group and stress family; thresholds cannot be selected on these"
+      ],
+      "endpoints": [
+        "Teacher conflict within identical-history classes and observation-constrained regret",
+        "Quality/time curves and all offline labeling/fitting costs",
+        "Accepted fraction plus geometric cost/failure among accepted plans and all eligible cases",
+        "Prediction residuals and reliability on held-out structural outcomes; not clinical harm"
+      ],
+      "falsification": "Reject privileged action cloning if conflicting labels induce avoidable conditional regret, or if teacher agreement rises while held-out decision quality does not. Reject the learned-model/search variant if prediction errors are exploited by search, gains disappear at equal compute, or rejection only works by reducing coverage below the predeclared useful minimum.",
+      "smallness": "Use one low-dimensional hidden outcome and existing geometry. Full learned dynamics, sophisticated A2D, and conformal certification are later options, not simultaneous mandatory components.",
+      "advance_gate": "No calibrated-risk language until a specific endpoint, independent calibration sample and sampling assumptions are justified. Report empirical risk-coverage first."
+    }
+  ],
+  "leakage_and_analysis_contract": [
+    "Maintain two separate interfaces: deployment history h_t of genuinely available inputs; training record z_t of admitted privileged labels/state. Export only actor and observed-estimator dependencies.",
+    "At inference, swap hidden truth, future outcomes and episode IDs while holding permitted history fixed; actor distribution, candidate generation/order, legality masks, search ranking and normalization must be invariant. Geometry-dependent masks must be based only on permitted evidence and modeled hard constraints.",
+    "Do not pass private scalar reward or target-removal accounting into recurrent state. Logged reward is training supervision; clinical observation is a separate declared measurement.",
+    "Privileged labels can train a critic/teacher/estimator only on training groups. They cannot tune thresholds, crop locations, action proposals, patient admission, checkpoint selection, or adaptation on evaluation cases.",
+    "Fit normalization, image preprocessing, nominal estimators, action priors and uncertainty parameters on training groups only; split patient/visit/derivative and anatomy families, not frames or trajectories.",
+    "Training, selection, calibration, final evaluation and stress partitions have distinct roles. Any inspected evaluation outcome converts that setting to development; it is not reusable final evidence.",
+    "Model/checkpoint, objective, action-generator, source, observation schema, crop, tool geometry and independent geometry checker identities must be frozen. Report dirty-source hashes.",
+    "Preserve a coherent hidden world through an episode, and carry only permitted sensor observations forward. Recurrent hidden state resets at episode/patient boundaries.",
+    "Compare identical observation information and proposals first. Charge preprocessing, teacher labeling, policy inference, posterior updates, search, selection and independent validation separately and in total.",
+    "Report all failures, timeouts, illegal candidates, missing evidence and abstentions in denominators. Multiple worlds/seeds within one anatomy are repeats, not independent patients.",
+    "Use held-out anatomy/patient-cluster paired differences for generalization. Current one-fixture results support only an optimization/representation diagnostic.",
+    "Keep simulated structural losses distinct from clinical neurological outcomes. No reviewed evidence establishes clinical-deficit calibration."
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Pinto et al. — Asymmetric Actor Critic for Image-Based Robot Learning",
+      "year": 2017,
+      "url": "https://arxiv.org/abs/1710.06542",
+      "kind": "author preprint",
+      "supports": "Full-state critic with image actor in simulated robot manipulation; no surgical claim"
+    },
+    {
+      "id": "S2",
+      "title": "Baisero & Amato — Unbiased Asymmetric Reinforcement Learning under Partial Observability",
+      "year": 2022,
+      "url": "https://arxiv.org/html/2105.11674v2",
+      "kind": "AAMAS paper, author-hosted full text",
+      "supports": "History-state critic and limits of state-only bootstrapped asymmetric critics, especially section 5"
+    },
+    {
+      "id": "S3",
+      "title": "Ni et al. — Recurrent Model-Free RL Can Be a Strong Baseline for Many POMDPs",
+      "year": 2022,
+      "url": "https://proceedings.mlr.press/v162/ni22a.html",
+      "kind": "ICML proceedings",
+      "supports": "Recurrent baseline design and comparative POMDP evidence"
+    },
+    {
+      "id": "S4",
+      "title": "Chen et al. — Learning by Cheating",
+      "year": 2020,
+      "url": "https://proceedings.mlr.press/v100/chen20a.html",
+      "kind": "CoRL proceedings",
+      "supports": "Privileged teacher followed by vision-only student; driving benchmark evidence"
+    },
+    {
+      "id": "S5",
+      "title": "Ross et al. — A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning",
+      "year": 2011,
+      "url": "https://proceedings.mlr.press/v15/ross11a.html",
+      "kind": "AISTATS proceedings",
+      "supports": "Sequential distribution shift and data aggregation"
+    },
+    {
+      "id": "S6",
+      "title": "Warrington et al. — Robust Asymmetric Learning in POMDPs",
+      "year": 2021,
+      "url": "https://proceedings.mlr.press/v139/warrington21a.html",
+      "kind": "ICML proceedings",
+      "supports": "Privileged expert/partial-observation student mismatch and adaptive asymmetric DAgger"
+    },
+    {
+      "id": "S7",
+      "title": "Silver & Veness — Monte-Carlo Planning in Large POMDPs",
+      "year": 2010,
+      "url": "https://proceedings.neurips.cc/paper/2010/hash/edfbe1afcf9246bb0d40eb4d8027d90f-Abstract.html",
+      "kind": "NeurIPS proceedings",
+      "supports": "Sampled belief updates and online tree search using a generative simulator"
+    },
+    {
+      "id": "S8",
+      "title": "Chua et al. — Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models",
+      "year": 2018,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2018/hash/3de568f8597b94bda53149c7d7f5958c-Abstract.html",
+      "kind": "NeurIPS proceedings",
+      "supports": "PETS uncertainty-aware dynamics ensembles and sampling-based control"
+    },
+    {
+      "id": "S9",
+      "title": "Geifman & El-Yaniv — SelectiveNet",
+      "year": 2019,
+      "url": "https://proceedings.mlr.press/v97/geifman19a.html",
+      "kind": "ICML proceedings",
+      "supports": "Selective prediction and empirical risk-coverage evaluation"
+    },
+    {
+      "id": "S10",
+      "title": "Guo et al. — On Calibration of Modern Neural Networks",
+      "year": 2017,
+      "url": "https://proceedings.mlr.press/v70/guo17a.html",
+      "kind": "ICML proceedings",
+      "supports": "Prediction probability calibration; temperature scaling"
+    },
+    {
+      "id": "S11",
+      "title": "Angelopoulos et al. — Conformal Risk Control",
+      "year": 2024,
+      "url": "https://arxiv.org/html/2208.02814v4",
+      "kind": "ICLR paper, revised author full text",
+      "supports": "Expected bounded monotone-loss control under exchangeability; distinct from arbitrary selective or clinical risk guarantees"
+    }
+  ],
+  "unresolved_questions": [
+    "What precise measurements are available at each deployment decision, and which can change after an action?",
+    "Which hidden variables have source-supported uncertainty models rather than arbitrary perturbations?",
+    "What is the smallest independently validated mechanics/geometric task that admits more than one hidden world?",
+    "Is the intended outcome a candidate ranker, an observation-conditioned plan, or a sequential sensor-updating policy? The experiment should fix one before expanding models."
+  ]
+}
+

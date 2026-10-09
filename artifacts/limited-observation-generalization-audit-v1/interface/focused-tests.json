@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_spatial_observations.py",
+    "tests/test_native_spatial_task.py::test_hidden_references_never_change_tensors_inventory_or_teacher_even_outside_support",
+    "tests/test_native_spatial_greedy.py::test_private_reference_swaps_cannot_change_nominal_scores_or_selected_sequence",
+    "tests/test_spatial_policy_review.py::test_private_reference_swap_cannot_change_action_set_actor_or_search_inputs",
+    "tests/test_native_spatial_evaluation.py"
+  ],
+  "exit_code": 0,
+  "seconds": 2.8542852078098804,
+  "scope": "Existing analytic DTO/invariance/evaluator controls; no training; no patient payload access"
+}

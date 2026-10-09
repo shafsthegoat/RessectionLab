@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "scope": "existing generated private-target invariance only",
+  "training_updates": 0,
+  "real_patient_count": 0,
+  "hidden_support_isolation_tested": false,
+  "file_access_isolation_tested": false,
+  "sequence_seal": {
+    "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+    "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+    "initial_observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+    "sequence": [
+      "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+      "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+    ]
+  },
+  "seal_hash": "sha256:c6a32d5b1065a43a1e5217a14dc4992dfcfcf760aa6137aaa8b1dd3609e4e9bb",
+  "target_removed_mm3": [
+    2.0,
+    0.0
+  ],
+  "reward": [
+    1.1,
+    -1.3000000000000003
+  ],
+  "model_transition_calls": [
+    15,
+    15
+  ],
+  "seconds": 0.5660360420588404
+}

@@ -1,6 +1,6 @@
 # Real-observation execution ledger
 
-Updated October 8, 2026. The [October 6 supergoal](SUPERGOAL_REAL_OBSERVATIONS.md)
+Updated October 9, 2026. The [October 6 supergoal](SUPERGOAL_REAL_OBSERVATIONS.md)
 defines the full surgical planning/rehearsal objective, subject to the later
 human instructions below. Its [source receipt](../manifests/real_observation_supergoal_source.json)
 binds the preserved original text; that historical copy is not rewritten.
@@ -42,6 +42,34 @@ The user's hourly push request is scheduled as the active thread heartbeat
 `push-ressectionlab-progress`: fetch first, push completed reviewed commits normally
 to `origin/main`, verify the remote, and preserve unfinished work and running transfers.
 No force push, paid infrastructure, billing change or external outreach is authorized.
+
+## Primary transfer hypothesis, October 9
+
+The user's October 9 steering (source SHA-256
+`7c1a7d1de504b449376ac8f88a488d8f77d62ce6c622b8c8a6fa2def1c213600`)
+asks whether rich privileged simulation training produces **transferable planning
+under limited preoperative imaging** on entirely unseen patients, compared with
+strong classical and learned-model planners with the same test-time information.
+This is a falsifiable primary hypothesis; the within-patient optimization pilot
+remains a valid development and application mode. The amended
+[protocol](../EXPERIMENT_PROTOCOL.md) freezes the patient cluster, permitted MRI/CT
+and derived-feature lineage, deployable action generator/search inputs, full
+strategy before private evidence access, independent patient-linked scoring and
+separate simulator/anatomical/physical-clinical result levels.
+
+Five [parallel audits](../artifacts/limited-observation-generalization-audit-v1/RESULT.md)
+found reusable nominal observations, spatial policy and beam search, alongside a
+critical gap: hidden support can still influence action legality and predicted
+cavity. A 33-control interface suite and tiny generated private-target swap
+passed, but they do not test that support or file-access boundary. Existing
+generated learning has one two-step zero-patient admission; the four completed
+annotation-assisted TRAIN comparisons favored greedy over frozen imitation and
+do not test unseen-patient limited-input transfer. No acquired/admitted cohort
+yet combines glioma scans with complete independent vascular, functional and
+surgical-interaction truth for the same person. The next source slice is a
+fail-closed planning-input/private-reference boundary, not an unqualified
+population training sweep. The SynthRAD archive remains an independent live
+download with unverified partial bytes.
 
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC
 

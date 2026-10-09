@@ -1,0 +1,120 @@
+{
+  "schema": "paired-evidence-audit-v1",
+  "audited_at_utc": "2026-10-09T01:30:55.192844+00:00",
+  "scope": "Metadata/documents/previous receipts only. No archive extraction, image decode, live transfer access, role mutation, training, or fresh payload-hash verification. Claims describe bound existing evidence, not a new source re-audit.",
+  "conclusion": "No acquired/admitted cohort currently combines glioma MRI/CT with independently withheld vascular, functional and physical surgical truth. Component-paired studies are possible after their specific gates.",
+  "rows": [
+    {
+      "source": "BTC_preop 5.0.1",
+      "paired_acquired": "Eight source-linked T1/tumor-annotation cases; PAT28 additionally has AP DWI, reverse-PA b0 and gradients. No CT, patient task-fMRI/DES, or vascular truth established.",
+      "fixed_roles": "TRAIN PAT05/16/20/22/25/28; SELECT PAT26/27; unopened development-transfer PAT29/31; all visits and derivatives grouped by BTC participant_id.",
+      "withheld_truth": "Source tumor annotation can be evaluator-only in a scan-only task. Tracts reconstructed from DWI are estimates, not independent functional truth. PAT28 alone cannot establish between-patient missing-modality transfer.",
+      "rights": "Pinned source CC0; TVB derivatives separately say PDDL v1.0; upstream model rights/ancestry remain distinct.",
+      "qc": "Fractional labels, affine handling, brain support, diffusion correction/registration and functional coverage require task-specific gates. Existing source masks must not leak through target-dependent crops/proposals.",
+      "evidence": [
+        "docs/diffusion_source.md",
+        "manifests/experiments/btc-spatial-development-cohort-v1.json",
+        "docs/real-patient-spatial-training.md",
+        "docs/btc-longitudinal-outcome-audit.md"
+      ]
+    },
+    {
+      "source": "Lausanne ds003949 1.0.1",
+      "paired_acquired": "199 TRAIN people / 210 sessions have acquired T1 and TOF-MRA, 840 original files. 204 image pairs from 193 people pass header/scalar QC; six T1 conflicts retained. 144 aneurysm-region masks from 106 people/117 sessions acquired; 136 grid-pass, eight unresolved.",
+      "fixed_roles": "199 TRAIN, 43 SELECT, 42 MEASUREMENT_EVAL people; all visits/TopCoW derivatives inherit person role. Current documented payload intake is TRAIN.",
+      "withheld_truth": "TOF can be a withheld acquired modality after T1/TOF alignment qualification. Labels are aneurysm-positive regions, not a complete vessel mask or safe background. Of 144 masks, 111 subtype unresolved, 31 exact-date crosswalk mismatch, two exact voxelwise crosswalks (476,478); 478 grid fails. Only sub476 currently combines exact voxelwise linkage with passed mask-grid qualification.",
+      "rights": "Pinned release CC0. TopCoW external derivative annotation rights and model-assisted lineage are not inherited automatically.",
+      "qc": "TOF sidecar/NIfTI scanner orientation and T1/TOF alignment unresolved; no scanner-frame, training or planning admission. sub476 normalization supports retrospective component inspection only; unknown label/review availability and background remain.",
+      "evidence": [
+        "manifests/lausanne-component-cohort-v1.json",
+        "manifests/lausanne-train-annotations-v1.json",
+        "manifests/real_observation_data_use_v1.json",
+        "artifacts/lausanne-deferred-qc-execution-v1/RESULT.md",
+        "docs/critical-annotation-source-audit.md",
+        "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/rights.json"
+      ]
+    },
+    {
+      "source": "SynthRAD2023 Task1 v0.1 / Zenodo 7260705",
+      "paired_acquired": "180 brain MRI/CT identities in publisher inventory; archive campaign is opaque/unverified in the latest audited receipt. Zero decoded or scientifically admitted pairs. Partial transfer bytes are not acquired verified patient evidence.",
+      "fixed_roles": "126 TRAIN / 27 SELECT / 27 MEASUREMENT_EVAL; 42/9/9 per anonymous center. Every CT/MRI/outline/derivative inherits subject role; no held-out-center claim.",
+      "withheld_truth": "Same-person acquired CT could independently evaluate MRI-only estimates of CT intensities or qualified bone geometry. It supplies no vessel/function/tool-force truth. Released outline is not skull, tumor or vessel ground truth.",
+      "rights": "CC BY-NC 4.0 for noncommercial research; preserve exact version and attribution. No commercial permission inferred.",
+      "qc": "Must finish archive size/MD5/SHA256 verification before any separately admitted extraction. Rigid registration, defacing/cropping, calvarium coverage, CT scaling, lineage and source-family overlap unresolved. Release is processed acquired imaging, not synthetic-CT output or native DICOM.",
+      "evidence": [
+        "manifests/synthrad-component-cohort-v1.json",
+        "manifests/synthrad-task1-original-archive-v1.json",
+        "artifacts/synthrad-archive-runner-v1/RESULT.md"
+      ]
+    },
+    {
+      "source": "RESECT / RESECT-SEG",
+      "paired_acquired": "Across 14 TRAIN people: 70 acquired original MRI/US images and 59 correspondence files. 25 visible-cavity US/mask pairs from 13 people passed structural QC; Case11 labels absent and Case15 during label absent. Additional MRI/landmark frame/anatomical qualification remains.",
+      "fixed_roles": "TRAIN Case2/3/5/7/11/12/15/16/17/18/21/23/24/25; SELECT 1/6/14/26; MEASUREMENT_EVAL 8/13/19/27; previously exposed Case4 DEVELOPMENT, excluded from component learner.",
+      "withheld_truth": "Within-person US and manual landmarks support observed cavity/correspondence tasks. Protected Case4 B/V partition: six conditioning IDs 1,14,8,17,19,7 and 13 V IDs. V must stay sealed under its contract. No synchronized tool/action/load or force truth; no complete removed-tissue truth.",
+      "rights": "Original MRI/US/landmarks CC BY 4.0; RESECT-SEG cavity annotations CC BY-NC-SA 4.0, source version 1 revision-2 masks.",
+      "qc": "Cavity masks use manual slices, interpolation, refinement and surgeon review; they can omit blood-filled ambiguous regions. Later US unavailable to preoperative policy. Sparse landmarks are conditional displacement targets, not dense mechanical truth. Case4 mesh/frame/numerical gates remain separate.",
+      "evidence": [
+        "manifests/resect-component-cohort-v1.json",
+        "artifacts/resect-train-originals-execution-v1/RESULT.md",
+        "artifacts/resect-deferred-qc-v2-execution-v1/RESULT.md",
+        "docs/resect-conditional-displacement-poc.md",
+        "artifacts/mechanics/resect-case4-source-partition-v1/README.md"
+      ]
+    },
+    {
+      "source": "ReMIND-001",
+      "paired_acquired": "386 verified DICOM objects: preoperative postcontrast T1 and T2 plus automatic BrainLab cerebrum/manual tumor SEG. Native conversion preservation audited; no acquired intraoperative series established here.",
+      "fixed_roles": "Existing development case; all ReMIND2Reg/visit derivatives must inherit same person.",
+      "withheld_truth": "Manual tumor SEG is same-source annotation, not function/vessel/mechanics truth. T1/T2 have different frame identifiers; not yet a qualified multimodal common-frame truth pair.",
+      "rights": "CC BY 4.0; automatic cerebrum label ancestry/meaning remain explicit.",
+      "qc": "No explicit source SOP-instance references in SEG; release names and frame IDs provide limited linkage. Sampled overlays do not establish whole-volume anatomy or cortical access.",
+      "evidence": [
+        "docs/remind-native-independent-qc.md",
+        "docs/tissue-mechanics-measurements.md"
+      ]
+    },
+    {
+      "source": "UCSF-PDGM / UPenn / UTSW",
+      "paired_acquired": "UCSF-0004 structural mirror exists but official byte equivalence unresolved; no raw DWI there. UPenn/UTSW remain metadata-only reservations, not acquired eligible patients.",
+      "fixed_roles": "UCSF-0004 DEVELOPMENT, grouped with UCSF-004 / BraTS2021_00097 (known Training alias). UPenn reserved external final; UTSW structural validation.",
+      "withheld_truth": "No currently available independent multimodal final-patient truth from these reservations. Do not count published cohort totals as eligible/acquired counts.",
+      "rights": "Recorded collection licenses CC BY 4.0; mirror identity still unresolved.",
+      "qc": "UCSF v5 DWI orientation corrections and rotated gradients matter; upstream segmentation-training overlap must be audited. UTSW 362 manually refined masks differ from full 625-case release.",
+      "evidence": [
+        "docs/cohort-registry.md",
+        "manifests/cohort_registry.json"
+      ]
+    },
+    {
+      "source": "Functional/outcome releases",
+      "paired_acquired": "Population motor/language atlases and MNI DES point tables; separate 63-person pre/post connectome+cognitive release; RHUH 40-row outcome CSV and one processed T1. These are not linked to BTC/Lausanne/RESECT/SynthRAD people.",
+      "fixed_roles": "All 40 RHUH outcomes already audited; fixed leave-one-patient-out exploratory baseline executed. Connectome 63 patients lack a frozen untouched partition. Atlas point rows group by SUB_ID. BTC postoperative same-ID candidates remain unresolved cross-dataset joins.",
+      "withheld_truth": "No current paired patient-specific functional localizer/negative-stimulation coverage for the proposed image-only planner. Population priors do not become individualized function. Cognitive/deficit endpoints describe observed care, not unperformed-route injury.",
+      "rights": "Atlas records, cognitive data and public RHUH release CC BY 4.0; bundled code/templates and controlled RHUH DICOM separate.",
+      "qc": "Connectomes have pooled longitudinal preprocessing and label discrepancy; raw MRI/spatial streamlines absent. RHUH deficit timing/domain/baseline state unknown; all labels already exposed. Single RHUH MRI has unresolved processing/coverage.",
+      "evidence": [
+        "docs/functional_evidence.md",
+        "docs/glioma-connectivity-outcome-audit.md",
+        "docs/btc-longitudinal-outcome-audit.md",
+        "docs/rhuh-outcome-audit.md",
+        "artifacts/rhuh-fixed-plane-qc-v1/RESULT.md",
+        "artifacts/rhuh-preoperative-baseline-v1/RESULT.md"
+      ]
+    },
+    {
+      "source": "HBE / VitalDB / MULTIS physical observations",
+      "paired_acquired": "HBE archive acquired/verified, donor HBE_01 specimen HBE_01_03 selected for within-specimen axial-to-torsion study. VitalDB case3/subject2861 is separate recorded physiology. MULTIS accepted run005 remains source/fixity blocked and unacquired.",
+      "fixed_roles": "HBE_01 DEVELOPMENT including all sibling specimens; compression/tension c3 calibration, torsion held out. VitalDB DEVELOPMENT. MULTIS proposed donor004 development, not enacted.",
+      "withheld_truth": "Held-out torsional torque is genuine physical measurement but from a postmortem specimen, unlinked to living imaging patients. Latest HBE v2 attempt failed parsing axial column header before fitting; torque reader stayed sealed. No acquired synchronized brain tool-contact force measurement.",
+      "rights": "Recorded source terms CC BY 4.0; no cross-source person linkage exists.",
+      "qc": "Specimen mode transfer is not patient/donor generalization; no patient material parameters or injury thresholds inferred. Physiology cannot be attached to a different glioma patient. MULTIS is cadaver leg, not brain.",
+      "evidence": [
+        "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+        "artifacts/hbe-branch-calibration-runtime-v2-preparation-v1/RESULT.md",
+        "docs/tissue-mechanics-measurements.md",
+        "docs/REAL_OBSERVATION_EXECUTION_LEDGER.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+First source slice after the single-writer lease releases
+
+Purpose: replace the implicit rich-task handoff with an explicit limited planner -> frozen sequence -> private evaluator contract, using only the existing generated opening fixture. This is a boundary implementation and regression, not new training or patient admission.
+
+New file: src/resectionlab/limited_observation_boundary.py
+
+1. @dataclass(frozen=True) LimitedPlanningSpec
+   Exact fields: version/scope, permitted structural intensity and affine, nominal support/target with immutable provenance, access, tools, crop/normalization/proposal configuration, max_steps and RewardSpec. For v1, accept only generated-private-target-boundary-v1 with two steps and the existing generated fixture lineage. No patient ID as a feature; group/source bookkeeping remains outside arrays. Do not accept **kwargs or a CaseData/NativeSpatialCase/NativeSpatialTask. Do not include evaluator reference fields, anatomy labels, reward observations, hard exclusions derived from hidden structures, or arbitrary metadata.
+   Reuse core.immutable_array / freeze_json / semantic_digest, existing geometry dataclasses and NativeSpatialCase validation. Explicit serialization has an exact allowed-key set and rejects extra keys. Bind all permitted arrays, geometry and provenance with a fingerprint.
+
+2. build_limited_planning_task(spec: LimitedPlanningSpec) -> NativeSpatialTask
+   Construct NativeSpatialCase ONLY from this permitted spec. Set its engine scoring target to the permitted nominal_target, then return a planning_clone(). This local reference_target is explicitly the nominal prediction and never a held-out label. Reuse current native geometry/action proposals unchanged. The source hash must stay independent of evaluator arrays. Do not build a nominal clone from an incoming rich patient task at this boundary.
+
+3. @dataclass(frozen=True) FrozenLimitedPlan
+   Exact fields: version/scope, limited_input_hash, decision_model_hash, initial_observation_hash, tool_catalog_hash, ordered action IDs and corresponding physical entry/tip/tool records, horizon, terminal reason, planner identity/parameter hash or SEARCH identifier, configuration hash. Freeze complete STOP-or-horizon nominal history. No private reward/target counts or evaluator hashes need enter planning. Seal with canonical semantic digest.
+   freeze_limited_plan(planning_task, *, spec, method_record) checks exact input type, planning_estimator_only=True, immutable binding, full completion and proper STOP termination before producing the seal. Incomplete search prefixes must explicitly append STOP or fail; a time-cap exception is not silently interpreted as STOP.
+
+4. @dataclass(frozen=True) HeldOutTargetReference
+   Exact fields: version/scope, limited_input_hash, reference_target, reference provenance/coverage and fingerprint. Initial v1 accepts the generated fixture label and its counterfactual only. Reference support, hazard fields, patient IDs/claims and clinical probabilities are unsupported and explicitly rejected for this first slice. This prevents the narrow target-only evaluator from silently claiming richer hidden-world validation.
+
+5. evaluate_frozen_limited_plan(plan, *, spec, load_reference) -> sealed report
+   Validate the plan's schema, seal, completion, source, tools, horizon and objective BEFORE invoking the evaluator-owned zero-argument reference loader. The loader validates its reference binding before replay. Build a fresh evaluator task from the same permitted spec with only reference_target replaced; replay the frozen action IDs without requesting any new action from actor/search. Use evaluate_native_spatial_episode() for independently reconstructed geometry/removal/reward. Export fixed-sequence target outcomes, evaluator reference hash, seal hash and unsupported-functional/clinical nulls. No optimizer/checkpoint callback; failures are durable explicit results. Changed reference data may alter only evaluator outcomes.
+   This provides accidental-misuse isolation in Python, not OS security. The later patient runner must send only the serialized LimitedPlanningSpec to its planning worker and keep reference paths out of that process; do not claim process isolation from a dataclass alone.
+
+New file: tests/test_limited_observation_boundary.py
+
+Tiny regression from make_native_opening_task() (no training, no patient files):
+- Extract permitted fields into LimitedPlanningSpec in the test setup, then discard the rich factory task from the planner-facing path.
+- SEARCH plans on the nominal task through observed_beam_search(max_calls=128, beam_width=16, seconds=5, transition_mode='lazy_planning'); execute its two-stroke nominal sequence and seal it.
+- Create original and all-zero private reference targets in the evaluator test, only after planning is frozen. Replay the SAME seal. Assert target removed 2 versus 0 mm3, geometry audits pass, and evaluator rewards differ.
+- Verify extra reference_target or hidden_support in planning serialization is rejected, missing nominal target is rejected, unsupported patient scope is rejected.
+- Verify incomplete/changed sequence, extra keys, changed tool/affine/input hash, and reference source mismatch reject before any label loader read (spy loader counter stays zero).
+- Verify the same nominal spec yields exactly identical observation fingerprints, action inventories/masks, logits, plan and call count regardless of the separate reference object. No policy update required.
+- Explicitly test that a nominal planning task cannot bypass independent evaluator execution and that a reference-only source change cannot alter source hash/action IDs.
+
+Executable current-code baseline already retained:
+.venv/bin/python build/limited-observation-interface-audit-v1/probe_existing_target_boundary.py
+This standalone probe is a regression against existing functions, not implementation of the proposed contract or file-access isolation. Its JSON states both limits. Existing tests: 33 passed.
+
+Gates before extending to patient-linked claims
+- New versioned admission for actual TRAIN/SELECT/TEST groups, source cutoff and all derivatives grouped by person; no opening reserved holdout roles through a caller label.
+- Source-bound estimator/support ancestry and image-only crop/normalization/access/proposal rules. Existing default annotation_assisted behavior must not become the limited track.
+- Planner worker reads only an allowlisted limited envelope; evaluator references remain in a separate process/store with recorded open events after freeze. Add denied-file-access tests.
+- Independently registered withheld anatomy must be patient-linked with measured provenance/coverage; population atlases are only priors. Validate anatomy beyond byte/header QC.
+- New hidden-support/hazard/dynamics replay must freeze actions before reference scoring; hidden legal masks or exact hidden cavities cannot feed back to the actor. Hidden replay failures count as failures.
+- MRI-only preoperative sequence uses nominal predicted cavity. Any actual intraoperative observations require a separately defined observation regime.
+- Freeze methods/estimators/checkpoints and budgets before held-out references. Equal deployment inputs/actions and transparent offline/online costs for SEARCH, IL, RL and a defined hybrid.
+- Patient-level paired outcomes and uncertainty; no claims about unseen-patient generalization from one case, functional protection from target labels, mechanical fidelity from rigid geometry, or clinical risk from simulated encounters.
