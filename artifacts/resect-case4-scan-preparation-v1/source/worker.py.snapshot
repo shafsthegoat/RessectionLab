@@ -1,0 +1,159 @@
+"""One-shot, source-only Case4 DEVELOPMENT preparation; not a model runner."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+RELEASE = Path(__file__).with_name("release.json")
+
+
+def digest(path: Path) -> str:
+    sha = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 << 20), b""):
+            sha.update(block)
+    return sha.hexdigest()
+
+
+def exact(path: Path, sha256: str, size: int | None = None) -> None:
+    if not path.is_file() or (size is not None and path.stat().st_size != size):
+        raise ValueError(f"missing or wrong-size pinned input: {path}")
+    if digest(path) != sha256:
+        raise ValueError(f"wrong SHA-256 for pinned input: {path}")
+
+
+def checked_inputs() -> tuple[dict, dict]:
+    release = json.loads(RELEASE.read_text())
+    if (release["schema_version"] != "case4-scan-only-preparation-v1"
+            or release["release_status"] != "prepared_not_executed"
+            or release["split_role"] != "DEVELOPMENT"
+            or release["one_shot_no_automatic_retry"] is not True
+            or any(release[key] is not False for key in
+                   ("inference_admitted", "planning_admitted", "clinical_use_admitted"))):
+        raise ValueError("preparation release does not authorize this source-only scope")
+    if (release["registration"] != {
+            "transform_type": "Rigid", "metric": "mattes", "sampling": 32,
+            "seed": 17, "itk_threads": 2,
+            "brain_mask_scope": "documented_limited_scan_derived", "n4_enabled": False}):
+        raise ValueError("registration configuration differs from frozen release")
+    exact(ROOT / release["manifest_path"], release["manifest_sha256"])
+    exact(ROOT / release["adapter_path"], release["adapter_sha256"])
+    exact(ROOT / release["package_init_path"], release["package_init_sha256"])
+    exact(ROOT / release["fast_sampler_path"], release["fast_sampler_sha256"])
+    exact(Path(__file__), release["worker_sha256"])
+    exact(Path(__file__).with_name("supervise.py"), release["supervisor_sha256"])
+    exact(ROOT / release["isolated_runtime_lock_path"], release["isolated_runtime_lock_sha256"])
+    manifest = json.loads((ROOT / release["manifest_path"]).read_text())
+    if (manifest["schema_version"] != "case4-scan-diagnostic-inputs-v1"
+            or manifest["case_id"] != "RESECT-Case4"
+            or manifest["split_role"] != "DEVELOPMENT"
+            or any(manifest[key] is not False for key in (
+                "patient_processing_admitted", "model_inference_admitted",
+                "planning_admitted", "clinical_use_admitted"))):
+        raise ValueError("pinned manifest is not the original all-false source manifest")
+    for key, channel, modality in (("preoperative_t1c", 0, "t1c"),
+                                   ("preoperative_flair", 1, "t2f")):
+        item = manifest[key]
+        if (item["channel_index"] != channel or item["model_channel_name"] != modality
+                or item["availability_basis"] != "preoperative_source"
+                or item["acquisition_time_utc"] is not None):
+            raise ValueError("scan modality/channel/availability mismatch")
+        exact(ROOT / item["path"], item["sha256"], item["bytes"])
+    atlas = manifest["atlas"]
+    if atlas["original_shape_xyz_singleton"] != [240, 240, 155, 1]:
+        raise ValueError("atlas shape contract changed")
+    exact(ROOT / atlas["path"], atlas["sha256"], atlas["bytes"])
+    mask = manifest["limited_scan_derived_t1_mask"]
+    if (mask["status"] != "documented_limited_scan_derived"
+            or mask["input_scan_sha256"] != manifest["preoperative_t1c"]["sha256"]
+            or not mask["limitations"].strip()):
+        raise ValueError("limited mask provenance or caveat missing")
+    exact(ROOT / mask["path"], mask["sha256"], mask["bytes"])
+    exact(ROOT / mask["generation_record_path"],
+          mask["generation_record_sha256"], mask["generation_record_bytes"])
+    extraction = manifest["model_extraction"]
+    exact(ROOT / extraction["receipt_path"], extraction["receipt_sha256"],
+          extraction["receipt_bytes"])
+    if extraction["training_lineage_status"] != "unknown" or extraction["case_overlap_status"] != "unknown":
+        raise ValueError("model lineage must remain unknown")
+    if manifest["native_estimate_frame"] != "original preoperative FLAIR RAS-mm":
+        raise ValueError("native frame statement changed")
+    return release, manifest
+
+
+def receipt_file(path: Path, output: Path) -> dict:
+    return {"relative_path": str(path.relative_to(output)),
+            "bytes": path.stat().st_size, "sha256": digest(path)}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--release-sha256", required=True)
+    args = parser.parse_args()
+    if not args.execute or digest(RELEASE) != args.release_sha256:
+        raise ValueError("explicit execution and independently reviewed release SHA required")
+    release, manifest = checked_inputs()
+    from resectionlab.scan_target_adapter import Scan, prepare_registered_diagnostic_pair
+
+    if os.environ.get("ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS") != "2":
+        raise ValueError("ITK thread setting differs from release")
+    output = ROOT / release["output_dir"]
+    if output.exists():
+        raise FileExistsError("one-shot output already exists; no overwrite or retry")
+    output.mkdir(parents=True)
+    start = datetime.now(timezone.utc).isoformat()
+    t1c = manifest["preoperative_t1c"]
+    flair = manifest["preoperative_flair"]
+    mask = manifest["limited_scan_derived_t1_mask"]
+    atlas = manifest["atlas"]
+    pair = prepare_registered_diagnostic_pair(
+        Scan("t1c", ROOT / t1c["path"], t1c["sha256"], "preoperative_source", None),
+        Scan("t2f", ROOT / flair["path"], flair["sha256"], "preoperative_source", None),
+        synthstrip_mask_path=ROOT / mask["path"],
+        synthstrip_record_path=ROOT / mask["generation_record_path"],
+        synthstrip_record_sha256=mask["generation_record_sha256"],
+        mask_limitations=mask["limitations"],
+        atlas_path=ROOT / atlas["path"], atlas_sha256=atlas["sha256"],
+        private_dir=output, seed=release["registration"]["seed"])
+    files = [receipt_file(path, output) for path in sorted(output.rglob("*")) if path.is_file()]
+    result = {
+        "schema_version": "case4-scan-prep-result-v1", "run_id": release["run_id"],
+        "release_sha256": args.release_sha256, "manifest_sha256": release["manifest_sha256"],
+        "started_at_utc": start, "finished_at_utc": datetime.now(timezone.utc).isoformat(),
+        "split_role": "DEVELOPMENT",
+        "input_kinds": {
+            "t1c": "observed_preoperative_scan",
+            "flair": "observed_preoperative_scan",
+            "limited_mask": "estimated_scan_derived_SynthStrip_unreviewed_anatomy",
+            "atlas": "public_reference_template",
+        },
+        "operation": "estimated_scan_only_rigid_registration_and_preparation",
+        "prepared_t1c": receipt_file(pair.t1c_atlas.path, output),
+        "prepared_flair": receipt_file(pair.flair_atlas.path, output),
+        "prepared_limited_mask": receipt_file(pair.atlas_mask.path, output),
+        "atlas_common_fov_fraction": pair.atlas_common_fov_fraction,
+        "generated_files": files,
+        "mask_limitations": mask["limitations"],
+        "registration_qc_status": pair.qc_status,
+        "anatomical_qc_status": "pending_after_generation",
+        "native_inverse_mapping_qc_status": "pending_after_generation",
+        "model_inference_performed": False, "planning_performed": False,
+        "inference_admitted": False, "planning_admitted": False,
+        "clinical_evidence": False,
+    }
+    result_path = output / "preparation-result.json"
+    result_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    print(json.dumps({"result_path": str(result_path), "result_sha256": digest(result_path)},
+                     sort_keys=True), flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

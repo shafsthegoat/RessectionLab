@@ -1,0 +1,274 @@
+"""Prospective host/resource guard for one Case4 scan-only preparation attempt.
+
+This is intentionally outside tracked source until independent review. It does
+not authorize model inference, annotation access, or a second attempt.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[3]
+RELEASE = Path(__file__).with_name("release.json")
+WORKER = Path(__file__).with_name("worker.py")
+RECORD = Path(__file__).with_name("supervision-result.json")
+LOG = Path(__file__).with_name("worker.log")
+
+
+def now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def sha256_file(path: Path) -> str:
+    sha = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 << 20), b""):
+            sha.update(block)
+    return sha.hexdigest()
+
+
+def sampler_from_exact_file(relative_path: str, expected_sha256: str):
+    path = ROOT / relative_path
+    if not path.is_file() or sha256_file(path) != expected_sha256:
+        raise ValueError("frozen macOS sampler bytes are missing or changed")
+    spec = importlib.util.spec_from_file_location("case4_fast_darwin_sampler", path)
+    if spec is None or spec.loader is None:
+        raise ValueError("cannot load reviewed macOS sampler")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.FastDarwinSampler()
+
+
+def output_bytes(output: Path) -> int:
+    if not output.exists():
+        return 0
+    return sum(path.stat().st_size for path in output.rglob("*") if path.is_file())
+
+
+def atomic_json(path: Path, payload: dict) -> None:
+    temp = path.with_suffix(path.suffix + ".tmp")
+    temp.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    os.replace(temp, path)
+
+
+def prospective_checks(host: dict, *, baseline: dict, rule: dict) -> str | None:
+    if host["kernel_pressure_mask"] != rule["require_kernel_pressure_mask"]:
+        return "kernel_pressure_not_normal"
+    if host["available_percent"] < rule["minimum_runtime_available_percent"]:
+        return "host_available_below_runtime_floor"
+    if (baseline["available_percent"] - host["available_percent"]
+            > rule["maximum_runtime_drop_from_baseline_points"]):
+        return "host_available_drop_exceeded"
+    if (host["swap_used_bytes"] - baseline["swap_used_bytes"]
+            > rule["maximum_swap_used_growth_mib"] * (1 << 20)):
+        return "swap_growth_exceeded"
+    return None
+
+
+def stop_owned_group(proc: subprocess.Popen, sampler, detached_seen: dict) -> list[dict]:
+    """Signal only the worker process group and identity-matched descendants."""
+    actions = []
+    if proc.poll() is None:
+        try:
+            os.killpg(proc.pid, signal.SIGTERM)
+            actions.append({"target": "owned_process_group", "signal": "SIGTERM"})
+        except ProcessLookupError:
+            pass
+    for pid, identity in detached_seen.items():
+        actions.append(sampler.signal_if_same_process(int(pid), identity, signal.SIGTERM))
+    try:
+        proc.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        if proc.poll() is None:
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+                actions.append({"target": "owned_process_group", "signal": "SIGKILL"})
+            except ProcessLookupError:
+                pass
+        proc.wait(timeout=5)
+    for pid, identity in detached_seen.items():
+        actions.append(sampler.signal_if_same_process(int(pid), identity, signal.SIGKILL))
+    return actions
+
+
+def cleanup_remaining_group(pgid: int, sampler, remaining: dict) -> tuple[list[dict], list[int]]:
+    """Clean only members of the just-observed worker group, with PID identities."""
+    actions = []
+    identities = {}
+    for pid in remaining["pids"]:
+        try:
+            if os.getpgid(pid) != pgid:
+                actions.append({"pid": pid, "skipped": "not_in_owned_group"})
+                continue
+            identity = sampler.process_start_identity(pid)
+        except (OSError, ProcessLookupError) as error:
+            actions.append({"pid": pid, "skipped": f"identity_error:{type(error).__name__}"})
+            continue
+        if identity is None:
+            actions.append({"pid": pid, "skipped": "identity_unavailable"})
+            continue
+        identities[pid] = identity
+        actions.append(sampler.signal_if_same_process(pid, identity, signal.SIGTERM))
+    time.sleep(0.5)
+    for pid, identity in identities.items():
+        try:
+            still_in_group = os.getpgid(pid) == pgid
+        except ProcessLookupError:
+            still_in_group = False
+        if still_in_group:
+            actions.append(sampler.signal_if_same_process(pid, identity, signal.SIGKILL))
+    return actions, sampler.group(pgid, pgid)["pids"]
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--release-sha256", required=True)
+    args = parser.parse_args()
+    if (not args.execute or not RELEASE.is_file()
+            or sha256_file(RELEASE) != args.release_sha256):
+        raise ValueError("explicit one-shot execution and reviewed release SHA required")
+    release = json.loads(RELEASE.read_text())
+    if (release.get("schema_version") != "case4-scan-only-preparation-v1"
+            or release.get("release_status") != "prepared_not_executed"
+            or release.get("one_shot_no_automatic_retry") is not True):
+        raise ValueError("not an unreleased one-shot preparation")
+    for path, expected in (
+            (WORKER, release["worker_sha256"]),
+            (Path(__file__), release["supervisor_sha256"]),
+            (ROOT / release["isolated_runtime_lock_path"],
+             release["isolated_runtime_lock_sha256"])):
+        if not path.is_file() or sha256_file(path) != expected:
+            raise ValueError(f"frozen worker/supervisor/runtime-lock bytes changed: {path}")
+    if RECORD.exists() or LOG.exists() or (ROOT / release["output_dir"]).exists():
+        raise FileExistsError("attempt already exists; no overwrite or automatic retry")
+    rule = release["resource_protocol"]
+    sampler = sampler_from_exact_file(release["fast_sampler_path"],
+                                      release["fast_sampler_sha256"])
+    python = ROOT / release["python_path"]
+    if not python.is_file():
+        raise FileNotFoundError("isolated pinned runtime unavailable")
+    if sys.platform != "darwin":
+        raise RuntimeError("frozen resource monitor is macOS-only")
+    record = {
+        "schema_version": "case4-prep-supervision-v1", "run_id": release["run_id"],
+        "release_sha256": args.release_sha256, "worker_sha256": sha256_file(WORKER),
+        "started_at_utc": now(), "preflight": [], "samples": [],
+        "status": "preflight", "stop_reason": None, "stop_actions": [],
+        "model_inference_performed": False, "planning_performed": False,
+        "anatomical_qc_status": "pending_after_generation",
+    }
+    atomic_json(RECORD, record)
+    preflight = record["preflight"]
+    try:
+        count = int(rule["preflight_seconds"] / rule["preflight_sample_interval_seconds"])
+        for index in range(count + 1):
+            host = sampler.host()
+            preflight.append({"at_utc": now(), **host})
+            atomic_json(RECORD, record)
+            if (host["kernel_pressure_mask"] != rule["require_kernel_pressure_mask"]
+                    or host["available_percent"] < rule["minimum_preflight_available_percent"]):
+                raise RuntimeError("host_pressure_or_availability_preflight_hold")
+            if index < count:
+                time.sleep(rule["preflight_sample_interval_seconds"])
+        available = [item["available_percent"] for item in preflight]
+        if (max(available) - min(available) > rule["maximum_preflight_available_spread_points"]
+                or any(b["swap_used_bytes"] > a["swap_used_bytes"]
+                       for a, b in zip(preflight, preflight[1:]))):
+            raise RuntimeError("unstable_host_availability_or_rising_swap_preflight_hold")
+    except Exception as error:
+        record["status"] = "deferred_before_worker"
+        record["stop_reason"] = f"preflight:{type(error).__name__}:{error}"
+        record["finished_at_utc"] = now()
+        atomic_json(RECORD, record)
+        return 2
+    baseline = preflight[-1]
+    record["status"] = "launched"
+    atomic_json(RECORD, record)
+    environment = os.environ.copy()
+    environment["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = str(release["registration"]["itk_threads"])
+    environment["PYTHONPATH"] = str(ROOT / "src")
+    output = ROOT / release["output_dir"]
+    started = time.monotonic()
+    proc = None
+    detached_seen = {}
+    stop_reason = None
+    try:
+        with LOG.open("x") as log:
+            proc = subprocess.Popen(
+                [str(python), "-B", str(WORKER), "--execute", "--release-sha256",
+                 args.release_sha256], cwd=ROOT, env=environment, stdout=log,
+                stderr=subprocess.STDOUT, start_new_session=True)
+            while True:
+                if proc.poll() is not None:
+                    break
+                elapsed = time.monotonic() - started
+                try:
+                    last_sample = sampler.sample(proc.pid, proc.pid)
+                    sample = {"at_utc": now(), "elapsed_seconds": elapsed,
+                              **last_sample, "output_bytes": output_bytes(output)}
+                    record["samples"].append(sample)
+                    for pid, identity in last_sample["detached_descendant_start_identities"].items():
+                        old = detached_seen.setdefault(int(pid), tuple(identity))
+                        if tuple(old) != tuple(identity):
+                            raise RuntimeError("detached descendant PID start identity changed")
+                    stop_reason = prospective_checks(last_sample, baseline=baseline, rule=rule)
+                    if detached_seen:
+                        stop_reason = "detached_descendant_forbidden"
+                    if (last_sample["process_group_resident_bytes"]
+                            > rule["maximum_process_group_rss_gib"] * (1 << 30)):
+                        stop_reason = "process_group_rss_cap_exceeded"
+                    if sample["output_bytes"] > rule["maximum_output_bytes"]:
+                        stop_reason = "output_bytes_cap_exceeded"
+                except Exception as error:
+                    stop_reason = f"resource_monitor_failed:{type(error).__name__}:{error}"
+                if elapsed > rule["maximum_wall_seconds"]:
+                    stop_reason = "wall_time_cap_exceeded"
+                if stop_reason:
+                    record["stop_reason"] = stop_reason
+                    record["stop_actions"] = stop_owned_group(proc, sampler, detached_seen)
+                    break
+                if proc.poll() is not None:
+                    break
+                if len(record["samples"]) % 25 == 0:
+                    atomic_json(RECORD, record)
+                time.sleep(rule["runtime_sample_interval_seconds"])
+            remaining = sampler.group(proc.pid, proc.pid)
+            record["final_owned_group_pids"] = remaining["pids"]
+            if remaining["pids"]:
+                if record["stop_reason"] is None:
+                    record["stop_reason"] = "owned_group_remains_after_worker_exit"
+                cleanup, unresolved = cleanup_remaining_group(proc.pid, sampler, remaining)
+                record["stop_actions"].extend(cleanup)
+                record["unresolved_owned_group_pids"] = unresolved
+    except BaseException as error:
+        if proc is not None and proc.poll() is None:
+            record["stop_actions"] = stop_owned_group(proc, sampler, detached_seen)
+        record["stop_reason"] = f"supervisor_exception:{type(error).__name__}:{error}"
+        raise
+    finally:
+        record["finished_at_utc"] = now()
+        record["worker_exit_code"] = proc.returncode if proc is not None else None
+        record["output_bytes_final"] = output_bytes(output)
+        result = output / "preparation-result.json"
+        record["preparation_result_sha256"] = sha256_file(result) if result.is_file() else None
+        record["status"] = ("completed_geometry_only_qc_pending" if
+                            proc is not None and proc.returncode == 0 and
+                            record["stop_reason"] is None and result.is_file() else "failed")
+        atomic_json(RECORD, record)
+    return 0 if record["status"] == "completed_geometry_only_qc_pending" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

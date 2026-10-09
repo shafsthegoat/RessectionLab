@@ -1,0 +1,118 @@
+{
+  "anatomical_qc_status": "pending_after_generation",
+  "atlas_common_fov_fraction": 0.7260992383512545,
+  "clinical_evidence": false,
+  "finished_at_utc": "2026-10-09T08:06:09.084286+00:00",
+  "generated_files": [
+    {
+      "bytes": 9261839,
+      "relative_path": "atlas-squeezed-3d.nii.gz",
+      "sha256": "bdd8e1e788ce44d3d46946170e8c316757fa1338d9cea5896324cf28ade912c1"
+    },
+    {
+      "bytes": 132,
+      "relative_path": "flair-to-t1c/flair-image-to-t1c.mat",
+      "sha256": "cebc5579ba063c6425e1e98cd81194912401734dc5f7f4b5f02f9d19c985d0d4"
+    },
+    {
+      "bytes": 727,
+      "relative_path": "flair-to-t1c/flair-to-t1c-registration.json",
+      "sha256": "5435b5b764ec37194a32a5da76390a45f0e879c86cc242cca042392dbc6f3843"
+    },
+    {
+      "bytes": 132,
+      "relative_path": "flair-to-t1c/rigid-0GenericAffine.mat",
+      "sha256": "cebc5579ba063c6425e1e98cd81194912401734dc5f7f4b5f02f9d19c985d0d4"
+    },
+    {
+      "bytes": 9261839,
+      "relative_path": "prepared/atlas-squeezed-3d.nii.gz",
+      "sha256": "bdd8e1e788ce44d3d46946170e8c316757fa1338d9cea5896324cf28ade912c1"
+    },
+    {
+      "bytes": 301780,
+      "relative_path": "prepared/flair-coverage-in-t1c.nii.gz",
+      "sha256": "8c4078ce46bcac09bfe0c422f1a01137601caa45b776fb6b405238f9f80f7331"
+    },
+    {
+      "bytes": 22282798,
+      "relative_path": "prepared/flair-in-t1c.nii.gz",
+      "sha256": "d0291c18407c50c17d343e11e85767e1cdfee26084740a1158aa7385a4233772"
+    },
+    {
+      "bytes": 55085,
+      "relative_path": "prepared/flair-native-coverage.nii.gz",
+      "sha256": "0fa4ad27bf48dd2410956a28cfd2668547ba69cfc5fde71c067b79d1e3fd8091"
+    },
+    {
+      "bytes": 4182603,
+      "relative_path": "prepared/input_0000.nii.gz",
+      "sha256": "608516aa3c55e8450e777d892dfa5fb5db5824046f85085a25b884e0fcf9d953"
+    },
+    {
+      "bytes": 4191043,
+      "relative_path": "prepared/input_0001.nii.gz",
+      "sha256": "046a8b7aa9620bdf0aeb2b0e40632b4c10ff58cff1ed83a458bd7b05cd86f993"
+    },
+    {
+      "bytes": 100285,
+      "relative_path": "prepared/qualified-mask-atlas.nii.gz",
+      "sha256": "e9d8077f600e7e520ab0273a98028d65f822bf45aa1e03e2df7dbea00b4d1b8e"
+    },
+    {
+      "bytes": 55083,
+      "relative_path": "prepared/t1c-native-coverage.nii.gz",
+      "sha256": "162569bc8b0c3b28c3386bc5cb0e4072c6182ec5ed0dc823938b65a4c958fb64"
+    },
+    {
+      "bytes": 132,
+      "relative_path": "t1c-to-atlas/rigid-0GenericAffine.mat",
+      "sha256": "90e85485698c6d8fc2dea108a980e3140079d97671dcfc5111114ba25a9f95fb"
+    },
+    {
+      "bytes": 132,
+      "relative_path": "t1c-to-atlas/t1c-image-to-atlas.mat",
+      "sha256": "90e85485698c6d8fc2dea108a980e3140079d97671dcfc5111114ba25a9f95fb"
+    },
+    {
+      "bytes": 727,
+      "relative_path": "t1c-to-atlas/t1c-to-atlas-registration.json",
+      "sha256": "e6b830159678991380658c375eb11135c5e6bb0560f027ae6bdc5a4ce034741b"
+    }
+  ],
+  "inference_admitted": false,
+  "input_kinds": {
+    "atlas": "public_reference_template",
+    "flair": "observed_preoperative_scan",
+    "limited_mask": "estimated_scan_derived_SynthStrip_unreviewed_anatomy",
+    "t1c": "observed_preoperative_scan"
+  },
+  "manifest_sha256": "d37948a4dc7acd16bdfac0244b926cfda5c684c60da1f6e4dfccb09ddcf21b26",
+  "mask_limitations": "Prior local review found inferior/cerebellar omissions; whole-brain and cortical-access use were not accepted. Suitable only for an explicitly scoped research diagnostic preparation pending local QC.",
+  "model_inference_performed": false,
+  "native_inverse_mapping_qc_status": "pending_after_generation",
+  "operation": "estimated_scan_only_rigid_registration_and_preparation",
+  "planning_admitted": false,
+  "planning_performed": false,
+  "prepared_flair": {
+    "bytes": 4191043,
+    "relative_path": "prepared/input_0001.nii.gz",
+    "sha256": "046a8b7aa9620bdf0aeb2b0e40632b4c10ff58cff1ed83a458bd7b05cd86f993"
+  },
+  "prepared_limited_mask": {
+    "bytes": 100285,
+    "relative_path": "prepared/qualified-mask-atlas.nii.gz",
+    "sha256": "e9d8077f600e7e520ab0273a98028d65f822bf45aa1e03e2df7dbea00b4d1b8e"
+  },
+  "prepared_t1c": {
+    "bytes": 4182603,
+    "relative_path": "prepared/input_0000.nii.gz",
+    "sha256": "608516aa3c55e8450e777d892dfa5fb5db5824046f85085a25b884e0fcf9d953"
+  },
+  "registration_qc_status": "diagnostic_forward_only_mask_limitations_retained",
+  "release_sha256": "6c004e45cca84c7488f66d905c281ded82a85eb3cb8bdf211f655d09aa2d5fbc",
+  "run_id": "resect-case4-scan-prep-v1-attempt-01",
+  "schema_version": "case4-scan-prep-result-v1",
+  "split_role": "DEVELOPMENT",
+  "started_at_utc": "2026-10-09T08:05:46.595600+00:00"
+}

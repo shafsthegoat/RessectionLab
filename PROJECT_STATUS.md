@@ -100,6 +100,13 @@ adjacent tests. The subsequent N16, N24 and N32 rows have completed; seven nativ
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
+The [real Case4 scan-only preparation](artifacts/resect-case4-scan-preparation-v1/RESULT.md)
+completed one bounded rigid registration and channel-preparation run from the
+permitted preoperative scans. Sampled peak memory was 1.79 GB and the supervised
+worker interval was about 24.66 seconds. Independent receipt checks passed;
+actual alignment, inverse mapping and coverage review remain separate. No model
+inference, planning, training or anatomical acceptance follows from completion.
+
 The [small generated full-network control](artifacts/depth-tiled-network-control-v1/RESULT.md)
 now passes independent comparison: all **196,608 FP32 logits** are byte-identical
 between native and depth-tiled CPU inference. Peak sampled RSS fell from 1.21 GB
@@ -110,23 +117,24 @@ RL improvement or general speedup. The earlier larger-input failure is retained.
 The [generated Conv3d depth-tiling control](artifacts/depth-tiled-conv3d-microkernel-v1/RESULT.md)
 matched native outputs exactly in six small cases and one independently audited
 operator experiment. Peak sampled RSS fell from 351.4 MB to 241.3 MB in that
-single experiment, about **31%**. This is operator evidence only; a separate
-full-network comparison must verify weights, normalizations and outputs before
-claiming model-level savings. No trained network or patient was used here.
+single experiment, about **31%**. This is operator evidence only; the separate small full-network comparison
+above subsequently verified weights, normalization and outputs for its declared
+input. No trained network or patient was used in the operator-only experiment.
 
 The [generated CPU Gate A v3](artifacts/scan-target-generated-gate-a-v3/RESULT.md)
 ended on an independently confirmed macOS pressure warning during the first
 forward pass, after **2.064 seconds** at 1.43 GB sampled RSS. The monitor had no
 timeout/inventory error and the downloader continued. No logits or GPU model
-comparison were produced. A separately labeled small-kernel workspace
-optimization is next; no patient accuracy or RL improvement is claimed.
+comparison were produced. Subsequent depth-tiling controls above preserve this
+negative result; no patient accuracy or RL improvement is claimed.
 
 The [scan-only diagnostic adapter](artifacts/scan-target-estimator-inputs-v1/RESULT.md)
 is integrated with exact scan/atlas/mask/model-metadata bindings and source-only
 registration receipts. All **nine generated controls** pass in its isolated
 runtime; base tests handle absent optional packages without collection errors.
-No patient processing or model inference ran. The next separate preparation
-attempt can generate real registration outputs for local QC before inference.
+That integration slice used generated controls only. The separate Case4
+preparation above has since produced actual registration outputs for local QC;
+model inference remains unperformed.
 
 The [research-estimate planning interface](artifacts/research-estimate-planning-v1/RESULT.md)
 now gives search, imitation, RL and hybrid callbacks the same nominal geometry,

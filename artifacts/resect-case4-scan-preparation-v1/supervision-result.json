@@ -1,0 +1,2220 @@
+{
+  "anatomical_qc_status": "pending_after_generation",
+  "final_owned_group_pids": [],
+  "finished_at_utc": "2026-10-09T08:06:09.305476+00:00",
+  "model_inference_performed": false,
+  "output_bytes_final": 49698969,
+  "planning_performed": false,
+  "preflight": [
+    {
+      "at_utc": "2026-10-09T08:05:14.589208+00:00",
+      "available_percent": 56,
+      "host_read_seconds": 1.787500000000053e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:19.599907+00:00",
+      "available_percent": 57,
+      "host_read_seconds": 0.0002127090000003662,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:24.608587+00:00",
+      "available_percent": 57,
+      "host_read_seconds": 8.295800000013287e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:29.619126+00:00",
+      "available_percent": 57,
+      "host_read_seconds": 0.00012066699999913055,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:34.620722+00:00",
+      "available_percent": 57,
+      "host_read_seconds": 8.320799999950168e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:39.631697+00:00",
+      "available_percent": 57,
+      "host_read_seconds": 0.00014416700000197125,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:44.643416+00:00",
+      "available_percent": 57,
+      "host_read_seconds": 8.499999999855845e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    }
+  ],
+  "preparation_result_sha256": "92fdc93f1240c81ac0ecbd7910a8256a18693480bd4bed48b19e109fe308d72c",
+  "release_sha256": "6c004e45cca84c7488f66d905c281ded82a85eb3cb8bdf211f655d09aa2d5fbc",
+  "run_id": "resect-case4-scan-prep-v1-attempt-01",
+  "samples": [
+    {
+      "at_utc": "2026-10-09T08:05:44.648020+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.002999374999998139,
+      "group_read_seconds": 0.00026412500000105865,
+      "host_read_seconds": 0.00010045899999866492,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 688128,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:44.854507+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.20976891600000158,
+      "group_read_seconds": 7.920799999894257e-05,
+      "host_read_seconds": 2.512500000051432e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 85180416,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:45.059484+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.41475441600000096,
+      "group_read_seconds": 7.212500000264299e-05,
+      "host_read_seconds": 2.4750000001461103e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 123224064,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:45.265037+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.6202939160000014,
+      "group_read_seconds": 8.083399999847529e-05,
+      "host_read_seconds": 2.8374999999414285e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 151977984,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:45.467682+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.8229387909999986,
+      "group_read_seconds": 7.820799999791461e-05,
+      "host_read_seconds": 2.737499999838633e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 178487296,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:45.672176+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.027364458000001,
+      "group_read_seconds": 0.0001084579999997004,
+      "host_read_seconds": 5.8542000001438055e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 195543040,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:45.881213+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.2364707909999986,
+      "group_read_seconds": 7.529200000178093e-05,
+      "host_read_seconds": 2.7917000000599046e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 213876736,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:46.091375+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.4466318750000013,
+      "group_read_seconds": 7.737500000004616e-05,
+      "host_read_seconds": 2.6458999997203136e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 242122752,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:46.301544+00:00",
+      "available_percent": 58,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.6567950829999987,
+      "group_read_seconds": 8.604199999950879e-05,
+      "host_read_seconds": 2.4874999997592795e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 257654784,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:46.505403+00:00",
+      "available_percent": 58,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.8606599159999995,
+      "group_read_seconds": 7.583400000044094e-05,
+      "host_read_seconds": 2.8291999999652262e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 311885824,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:46.715565+00:00",
+      "available_percent": 58,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.070826291000003,
+      "group_read_seconds": 7.408299999411838e-05,
+      "host_read_seconds": 2.63750000044638e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 504610816,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:46.925918+00:00",
+      "available_percent": 58,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.2811773749999986,
+      "group_read_seconds": 7.78329999988614e-05,
+      "host_read_seconds": 2.654099999688242e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 4356732,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 516341760,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:47.136230+00:00",
+      "available_percent": 57,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.4914534999999987,
+      "group_read_seconds": 9.2334000001415e-05,
+      "host_read_seconds": 4.254099999911887e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 562446336,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:47.346533+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.701787750000001,
+      "group_read_seconds": 7.816600000154494e-05,
+      "host_read_seconds": 3.054099999388882e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 714309632,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:47.547082+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.9023293750000008,
+      "group_read_seconds": 8.13339999936602e-05,
+      "host_read_seconds": 3.216700000052697e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 767148032,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:47.750169+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 3.105408040999997,
+      "group_read_seconds": 8.891699999935554e-05,
+      "host_read_seconds": 3.3375000001001354e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 740851712,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:47.960496+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 3.315747291000001,
+      "group_read_seconds": 7.837500000107411e-05,
+      "host_read_seconds": 3.120800000289137e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 791216128,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:48.170397+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 3.5256410829999965,
+      "group_read_seconds": 8.470800000281997e-05,
+      "host_read_seconds": 3.091699999657749e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 850755584,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:48.372077+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 3.7273697079999977,
+      "group_read_seconds": 4.020899999801486e-05,
+      "host_read_seconds": 2.645800000067311e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 901054464,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:48.574281+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 3.9295136249999985,
+      "group_read_seconds": 9.216700000536093e-05,
+      "host_read_seconds": 3.4499999998161e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 902021120,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:48.780421+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 4.1356605,
+      "group_read_seconds": 8.69160000007696e-05,
+      "host_read_seconds": 3.275000000257933e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 902086656,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:48.997380+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 4.352248707999998,
+      "group_read_seconds": 0.0004508339999986788,
+      "host_read_seconds": 3.3292000004792044e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 902348800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:49.208851+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 4.564101583000003,
+      "group_read_seconds": 7.779100000249173e-05,
+      "host_read_seconds": 3.066699999720868e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 916586496,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:49.413747+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 4.768994708000001,
+      "group_read_seconds": 8.179200000313358e-05,
+      "host_read_seconds": 2.8957999994361217e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 916586496,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:49.624057+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 4.979308166000003,
+      "group_read_seconds": 7.850000000075852e-05,
+      "host_read_seconds": 2.8709000005733287e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924794880,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:49.835202+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 5.190441749999998,
+      "group_read_seconds": 7.762500000296768e-05,
+      "host_read_seconds": 4.133299999864448e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:50.040012+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 5.395262332999998,
+      "group_read_seconds": 7.96250000050236e-05,
+      "host_read_seconds": 2.879199999483717e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:50.250324+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 5.605573249999999,
+      "group_read_seconds": 8.150000000028967e-05,
+      "host_read_seconds": 2.69999999957804e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:50.458535+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 5.813787791000003,
+      "group_read_seconds": 7.674999999807142e-05,
+      "host_read_seconds": 2.775000000099226e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:50.663771+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 6.018994415999998,
+      "group_read_seconds": 9.458299999920428e-05,
+      "host_read_seconds": 3.6041000001318935e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:50.869324+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 6.224521500000002,
+      "group_read_seconds": 0.00011354099999749678,
+      "host_read_seconds": 4.2749999998648036e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:51.079558+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 6.434859957999997,
+      "group_read_seconds": 2.979199999941784e-05,
+      "host_read_seconds": 2.2708000003035522e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:51.289831+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 6.6450844579999995,
+      "group_read_seconds": 7.737499999649344e-05,
+      "host_read_seconds": 2.595799999483006e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:51.497123+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 6.852345415999999,
+      "group_read_seconds": 9.225000000157024e-05,
+      "host_read_seconds": 3.816699999958928e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:51.707473+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 7.062711708000002,
+      "group_read_seconds": 8.274999999713373e-05,
+      "host_read_seconds": 3.341699999737102e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 924876800,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:51.913949+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 7.269172249999997,
+      "group_read_seconds": 8.608399999587846e-05,
+      "host_read_seconds": 4.408299999880683e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 963887104,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:52.122078+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 7.477310916,
+      "group_read_seconds": 8.008399999681615e-05,
+      "host_read_seconds": 4.025000000495993e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:52.328928+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 7.684186165999996,
+      "group_read_seconds": 7.433400000422807e-05,
+      "host_read_seconds": 2.250000000003638e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:52.537485+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 7.892728208000001,
+      "group_read_seconds": 7.837500000107411e-05,
+      "host_read_seconds": 3.2333000000051015e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:52.747792+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 8.103045708000003,
+      "group_read_seconds": 7.358299999538076e-05,
+      "host_read_seconds": 2.7125000002570232e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:52.949557+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 8.304809083000002,
+      "group_read_seconds": 7.408299999411838e-05,
+      "host_read_seconds": 2.7916000000516306e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:53.156031+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 8.511286124999998,
+      "group_read_seconds": 7.204199999932825e-05,
+      "host_read_seconds": 2.6832999999726326e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:53.356882+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 8.712143249999997,
+      "group_read_seconds": 6.850000000468981e-05,
+      "host_read_seconds": 2.3834000003830624e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:53.559340+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 8.914592583000001,
+      "group_read_seconds": 7.445899999680705e-05,
+      "host_read_seconds": 2.6583999996887542e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:53.767149+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 9.122399457999997,
+      "group_read_seconds": 7.36659999986955e-05,
+      "host_read_seconds": 2.866700000225819e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:53.977415+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 9.332668249999998,
+      "group_read_seconds": 7.437499999696229e-05,
+      "host_read_seconds": 2.4500000002092293e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:54.180634+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 9.535877165999999,
+      "group_read_seconds": 8.000000000407681e-05,
+      "host_read_seconds": 2.7875000000676664e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:54.390907+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 9.746157083,
+      "group_read_seconds": 7.583400000044094e-05,
+      "host_read_seconds": 2.512500000051432e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:54.601195+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 9.956442457999998,
+      "group_read_seconds": 7.733300000012377e-05,
+      "host_read_seconds": 2.6083000001619894e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:54.811499+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 10.166738166000002,
+      "group_read_seconds": 7.875000000012733e-05,
+      "host_read_seconds": 3.174999999799866e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:55.022742+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 10.377983458000003,
+      "group_read_seconds": 8.008300000028612e-05,
+      "host_read_seconds": 2.8583000002413428e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:55.233019+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 10.588278791,
+      "group_read_seconds": 6.945800000579538e-05,
+      "host_read_seconds": 2.1459000002721496e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:55.438757+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 10.793991875000003,
+      "group_read_seconds": 8.279200000060882e-05,
+      "host_read_seconds": 3.062500000083901e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:55.649048+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 11.004294791,
+      "group_read_seconds": 7.608399999980975e-05,
+      "host_read_seconds": 2.6874999996095994e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:55.853470+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 11.208703833000001,
+      "group_read_seconds": 8.141600000044491e-05,
+      "host_read_seconds": 3.35410000005254e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:56.060023+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 11.415248583,
+      "group_read_seconds": 7.766699999933735e-05,
+      "host_read_seconds": 2.925000000431055e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:56.263424+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 11.618660540999997,
+      "group_read_seconds": 7.766600000280732e-05,
+      "host_read_seconds": 3.27499999954739e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:56.470378+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 11.825617457999996,
+      "group_read_seconds": 7.924999999886495e-05,
+      "host_read_seconds": 2.55839999994123e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:56.673689+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 12.028935333,
+      "group_read_seconds": 7.733300000012377e-05,
+      "host_read_seconds": 2.4249999995618055e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:56.883978+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 12.239218166,
+      "group_read_seconds": 7.81250000017053e-05,
+      "host_read_seconds": 2.9207999993730027e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:57.094274+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 12.449520249999999,
+      "group_read_seconds": 7.470799999964584e-05,
+      "host_read_seconds": 2.570799999546125e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:57.300710+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 12.655956916000001,
+      "group_read_seconds": 7.39580000015394e-05,
+      "host_read_seconds": 2.5250000000198725e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:57.505390+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 12.860634333,
+      "group_read_seconds": 7.554199999759703e-05,
+      "host_read_seconds": 2.691699999957109e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 975847424,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:57.713877+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 13.069116583000003,
+      "group_read_seconds": 7.345899999933181e-05,
+      "host_read_seconds": 3.27499999954739e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9261839,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976011264,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:57.918065+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 13.273309083000001,
+      "group_read_seconds": 7.324999999980264e-05,
+      "host_read_seconds": 2.824999999972988e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 978518016,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:58.128414+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 13.483655333000002,
+      "group_read_seconds": 7.512500000217415e-05,
+      "host_read_seconds": 2.8542000002573786e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 978518016,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:58.333369+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 13.688593040999997,
+      "group_read_seconds": 8.63340000023527e-05,
+      "host_read_seconds": 3.1833000001313394e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 978534400,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:58.537328+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 13.892569416,
+      "group_read_seconds": 7.76659999957019e-05,
+      "host_read_seconds": 2.5583000002882272e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 978599936,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:58.747154+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 14.102380208,
+      "group_read_seconds": 8.083299999839255e-05,
+      "host_read_seconds": 3.583299999831979e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 978599936,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:58.950021+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 14.30523075,
+      "group_read_seconds": 9.020899999967469e-05,
+      "host_read_seconds": 4.0957999999591266e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 978599936,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:59.159276+00:00",
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 14.514515625000001,
+      "group_read_seconds": 7.837500000107411e-05,
+      "host_read_seconds": 2.4790999994195317e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 979288064,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:59.369608+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 14.724839375000002,
+      "group_read_seconds": 8.02499999963402e-05,
+      "host_read_seconds": 3.01659999948356e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 980025344,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:59.574525+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 14.929757875,
+      "group_read_seconds": 7.86249999933375e-05,
+      "host_read_seconds": 3.0667000004314104e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 980025344,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:59.782887+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 15.138098665999998,
+      "group_read_seconds": 7.791699999870616e-05,
+      "host_read_seconds": 4.570899999833955e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 980025344,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:05:59.984236+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 15.339427333000003,
+      "group_read_seconds": 9.962500000426644e-05,
+      "host_read_seconds": 4.5999999997548e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 980025344,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:00.188997+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 15.544160374999997,
+      "group_read_seconds": 0.00012312499999467263,
+      "host_read_seconds": 4.820799999549763e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 980025344,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:00.394609+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 15.749817665999998,
+      "group_read_seconds": 8.995799999667042e-05,
+      "host_read_seconds": 3.8000000003535206e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 977223680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:00.595454+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 15.950694749999997,
+      "group_read_seconds": 7.47919999994906e-05,
+      "host_read_seconds": 2.641699999372804e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 977223680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:00.804659+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 16.159877625,
+      "group_read_seconds": 8.695900000077472e-05,
+      "host_read_seconds": 3.424999999879219e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:01.013716+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 16.36894025,
+      "group_read_seconds": 8.095799999807696e-05,
+      "host_read_seconds": 3.375000000005457e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:01.223988+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 16.579222791,
+      "group_read_seconds": 7.674999999807142e-05,
+      "host_read_seconds": 2.8624999998783096e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:01.431235+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 16.786453833000003,
+      "group_read_seconds": 8.37500000017144e-05,
+      "host_read_seconds": 3.46670000013205e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:01.641739+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 16.996953958,
+      "group_read_seconds": 8.300000000360797e-05,
+      "host_read_seconds": 3.3041999998317806e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:01.852114+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 17.207344083000002,
+      "group_read_seconds": 7.979200000107767e-05,
+      "host_read_seconds": 2.7833000004306996e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:02.060585+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 17.415815000000002,
+      "group_read_seconds": 7.916599999902019e-05,
+      "host_read_seconds": 2.9707999999573076e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 976306176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:02.270941+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 17.626175333,
+      "group_read_seconds": 7.554200000470246e-05,
+      "host_read_seconds": 2.866700000225819e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:02.481279+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 17.836512125,
+      "group_read_seconds": 8.087500000186765e-05,
+      "host_read_seconds": 2.5000000000829914e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:02.688203+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 18.043406124999997,
+      "group_read_seconds": 9.945900000474239e-05,
+      "host_read_seconds": 3.2624999995789494e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:02.895581+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 18.250817249999997,
+      "group_read_seconds": 7.412499999759348e-05,
+      "host_read_seconds": 2.7500000001623448e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:03.101068+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 18.456297624999998,
+      "group_read_seconds": 7.820799999791461e-05,
+      "host_read_seconds": 2.849999999909869e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:03.305506+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 18.660734124999998,
+      "group_read_seconds": 8.279200000060882e-05,
+      "host_read_seconds": 2.6042000001780252e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:03.513723+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 18.868941166,
+      "group_read_seconds": 8.320899999603171e-05,
+      "host_read_seconds": 3.3874999999738975e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7557808128
+    },
+    {
+      "at_utc": "2026-10-09T08:06:03.722320+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 19.077523416,
+      "group_read_seconds": 9.316599999920072e-05,
+      "host_read_seconds": 3.554100000258131e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7507476480
+    },
+    {
+      "at_utc": "2026-10-09T08:06:03.930422+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 19.285628291000002,
+      "group_read_seconds": 8.295900000376832e-05,
+      "host_read_seconds": 4.5999999997548e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:04.138709+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 19.493935125,
+      "group_read_seconds": 8.012500000376122e-05,
+      "host_read_seconds": 2.841700000288938e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:04.345034+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 19.700257915999998,
+      "group_read_seconds": 8.304100000344761e-05,
+      "host_read_seconds": 2.770800000462259e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:04.547379+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 19.902580041,
+      "group_read_seconds": 0.00010237499999732336,
+      "host_read_seconds": 3.083300000383815e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:04.755421+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 20.110641041,
+      "group_read_seconds": 8.449999999982083e-05,
+      "host_read_seconds": 2.987499999562715e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:04.965786+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 20.321009500000002,
+      "group_read_seconds": 7.845799999728342e-05,
+      "host_read_seconds": 3.091699999657749e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981319680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:05.176167+00:00",
+      "available_percent": 54,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 20.531389958,
+      "group_read_seconds": 8.237500000518594e-05,
+      "host_read_seconds": 2.7000000002885827e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981286912,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:05.386195+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 20.74141375,
+      "group_read_seconds": 8.045900000297479e-05,
+      "host_read_seconds": 3.350000000068576e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981286912,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:05.589425+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 20.944653916,
+      "group_read_seconds": 7.50840000023345e-05,
+      "host_read_seconds": 2.8208000003360212e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981270528,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:05.792814+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 21.148022750000003,
+      "group_read_seconds": 7.691600000470089e-05,
+      "host_read_seconds": 2.9666999999733434e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981270528,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:06.003155+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 21.358385790999996,
+      "group_read_seconds": 7.229199999869707e-05,
+      "host_read_seconds": 2.8542000002573786e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981270528,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:06.213493+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 21.568718124999997,
+      "group_read_seconds": 7.845799999728342e-05,
+      "host_read_seconds": 2.791700000415176e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9262830,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 981270528,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:06.423850+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 21.779070916000002,
+      "group_read_seconds": 8.062500000249884e-05,
+      "host_read_seconds": 2.9916999999102245e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 9263821,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 994738176,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:06.630375+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 21.985589249999997,
+      "group_read_seconds": 8.174999999965848e-05,
+      "host_read_seconds": 3.2500000003210516e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 11179732,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1012006912,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:06.834934+00:00",
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 22.190160249999998,
+      "group_read_seconds": 7.433399999712265e-05,
+      "host_read_seconds": 2.6624999996727183e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 18525660,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1020641280,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:07.045327+00:00",
+      "available_percent": 54,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 22.400551041,
+      "group_read_seconds": 7.64999999987026e-05,
+      "host_read_seconds": 2.7959000000521428e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 18525660,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1237188608,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:07.249054+00:00",
+      "available_percent": 50,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 22.604281125,
+      "group_read_seconds": 7.487500000280534e-05,
+      "host_read_seconds": 2.8333000003044617e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 22851036,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1759264768,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:07.458791+00:00",
+      "available_percent": 49,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 22.814006166,
+      "group_read_seconds": 8.183399999950325e-05,
+      "host_read_seconds": 3.187499999768306e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 40808458,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1761640448,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:07.669194+00:00",
+      "available_percent": 49,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 23.024416916,
+      "group_read_seconds": 7.887499999981173e-05,
+      "host_read_seconds": 2.7000000002885827e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 40808458,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1758806016,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:07.879593+00:00",
+      "available_percent": 49,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 23.234808166,
+      "group_read_seconds": 8.062499999539341e-05,
+      "host_read_seconds": 3.262500000289492e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 40963826,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1757134848,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:08.080385+00:00",
+      "available_percent": 49,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 23.435586583000003,
+      "group_read_seconds": 7.925000000597038e-05,
+      "host_read_seconds": 4.637499999660122e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 41149983,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1757200384,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:08.287053+00:00",
+      "available_percent": 49,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 23.642278083,
+      "group_read_seconds": 7.524999999475313e-05,
+      "host_read_seconds": 2.8207999996254784e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 41320691,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1751498752,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7482310656
+    },
+    {
+      "at_utc": "2026-10-09T08:06:08.490973+00:00",
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 23.846166125000003,
+      "group_read_seconds": 9.53750000007858e-05,
+      "host_read_seconds": 3.712499999863894e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 41320691,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1750761472,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7473922048
+    },
+    {
+      "at_utc": "2026-10-09T08:06:08.691863+00:00",
+      "available_percent": 48,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 24.0470715,
+      "group_read_seconds": 8.604099999587334e-05,
+      "host_read_seconds": 3.137499999894544e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 41320691,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1750777856,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7473922048
+    },
+    {
+      "at_utc": "2026-10-09T08:06:08.899938+00:00",
+      "available_percent": 47,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 24.255147916,
+      "group_read_seconds": 8.45839999996656e-05,
+      "host_read_seconds": 3.183399999784342e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 45503294,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1761869824,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7473922048
+    },
+    {
+      "at_utc": "2026-10-09T08:06:09.103954+00:00",
+      "available_percent": 47,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 24.459171249999997,
+      "group_read_seconds": 7.899999999949614e-05,
+      "host_read_seconds": 3.0457999997679508e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 49698969,
+      "pgid": 73801,
+      "pids": [
+        73801
+      ],
+      "process_group_resident_bytes": 1793179648,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7473922048
+    }
+  ],
+  "schema_version": "case4-prep-supervision-v1",
+  "started_at_utc": "2026-10-09T08:05:14.588556+00:00",
+  "status": "completed_geometry_only_qc_pending",
+  "stop_actions": [],
+  "stop_reason": null,
+  "worker_exit_code": 0,
+  "worker_sha256": "47205227bdc18c318a24c321357c652be74e64b8fa0a262686f52e30ba592655"
+}
