@@ -40,8 +40,8 @@ REASONS = {
         "weights and their derived masks are excluded from the current pipeline."
     ),
     "WEIGHT_LINEAGE_UNVERIFIED": (
-        "This legacy checkpoint loader has no verified real-only training "
-        "ancestry contract. File integrity alone does not establish eligibility."
+        "This model dependency has no verified training ancestry contract "
+        "for this use. File integrity alone does not establish eligibility."
     ),
     "GENERATED_POLICY_INELIGIBLE": (
         "This frozen policy was trained on simulated experience or generated "

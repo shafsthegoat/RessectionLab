@@ -5,12 +5,14 @@ import numpy as np
 import pytest
 
 from resectionlab.core import CaseData, SourceRef, array_digest
+from resectionlab.data_policy import DataPolicyError
 from resectionlab.geometry import AccessWindow
+from resectionlab import native_spatial_task as native_task_module
 from resectionlab.native_resection import NativeResectionEngine
 from resectionlab.native_spatial_task import (
     DEFAULT_NATIVE_SPATIAL_REWARD, NativeSpatialCase, NativeSpatialTask,
     OPENING_TOOLS, make_native_opening_task, native_spatial_task_from_case,
-    reconcile_native_grid_roundoff,
+    reconcile_native_grid_roundoff, _validate_provisional_proposal_binding,
 )
 from resectionlab.simulation import InvalidActionError
 from resectionlab.structural_evidence import structural_frame_hash
@@ -277,25 +279,22 @@ def provisional_source():
     return case, acknowledgment
 
 
-def test_provisional_support_is_explicit_shared_with_teacher_and_does_not_promote_source():
+def test_provisional_support_rejects_unverified_model_before_task_creation(monkeypatch):
     case, acknowledgment = provisional_source()
     original_hash, original_planning_hash = case.semantic_hash, case.planning_hash
-    task = native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
-        tools=OPENING_TOOLS, research_support_acknowledgment=acknowledgment)
+    access = make_native_opening_task().case.access
     item = case.structural_evidence[acknowledgment["evidence_id"]]
-    np.testing.assert_array_equal(task.case.observed_support, item.mask)
-    assert task.case.support_source_kind == "derived_from_scan"
-    np.testing.assert_array_equal(task.planning_clone().case.observed_support, item.mask)
+    assert _validate_provisional_proposal_binding(case, item, acknowledgment) is None
+    def forbidden_task(*args, **kwargs):
+        pytest.fail("No native task or candidate inventory may be created from an unverified model")
+    monkeypatch.setattr(native_task_module, "NativeSpatialTask", forbidden_task)
+    with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
+        native_spatial_task_from_case(case, access=access, tools=OPENING_TOOLS,
+            research_support_acknowledgment=acknowledgment)
     assert case.brain_mask is None and item.review is None and item.review_status == "review_required"
     assert case.semantic_hash == original_hash and case.planning_hash == original_planning_hash
-    record = task.metrics()["support_provenance"]
-    assert record["research_use"] == "provisional" and record["review_status"] == "review_required"
-    assert not record["cortical_access_permitted"] and not record["clinical_use_permitted"]
-    assert task.metrics()["clinical_deficit_probability"] is None
-    acknowledgment["rationale"] = "mutated caller metadata"
-    assert task.metrics()["support_provenance"] == record
     with pytest.raises(ValueError, match="ESSENTIAL_EVIDENCE_MISSING"):
-        native_spatial_task_from_case(case, access=task.case.access, tools=OPENING_TOOLS)
+        native_spatial_task_from_case(case, access=access, tools=OPENING_TOOLS)
 
 
 @pytest.mark.parametrize("field", ["case_hash", "planning_hash", "evidence_hash", "source_image_hash",
@@ -303,9 +302,9 @@ def test_provisional_support_is_explicit_shared_with_teacher_and_does_not_promot
 def test_provisional_support_rejects_every_stale_identity(field):
     case, acknowledgment = provisional_source()
     acknowledgment[field] = "sha256:" + "f" * 64
+    item = case.structural_evidence[acknowledgment["evidence_id"]]
     with pytest.raises(ValueError, match="PROVISIONAL_SUPPORT_STALE"):
-        native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
-            tools=OPENING_TOOLS, research_support_acknowledgment=acknowledgment)
+        _validate_provisional_proposal_binding(case, item, acknowledgment)
 
 
 @pytest.mark.parametrize("change", ["missing_field", "expert_claim", "clinical", "cortical", "unacknowledged", "naive_time", "track"])
@@ -321,7 +320,20 @@ def test_provisional_support_refuses_missing_or_promotional_declarations(change)
         acknowledgment["acknowledge_unreviewed"] = False
     elif change == "naive_time":
         acknowledgment["declared_at"] = "2026-10-04T12:00:00"
-    with pytest.raises(ValueError):
+    if change == "naive_time":
+        item = case.structural_evidence[acknowledgment["evidence_id"]]
+        with pytest.raises(ValueError, match="timezone-aware timestamp"):
+            _validate_provisional_proposal_binding(case, item, acknowledgment)
+        return
+    expected = {
+        "missing_field": "PROVISIONAL_SUPPORT_ACKNOWLEDGMENT_FIELDS",
+        "expert_claim": "PROVISIONAL_SUPPORT_ACKNOWLEDGMENT_FIELDS",
+        "clinical": "PROVISIONAL_SUPPORT_RESEARCH_ONLY",
+        "cortical": "PROVISIONAL_SUPPORT_RESEARCH_ONLY",
+        "unacknowledged": "PROVISIONAL_SUPPORT_RESEARCH_ONLY",
+        "track": "PROVISIONAL_SUPPORT_TRACK",
+    }
+    with pytest.raises(ValueError, match=expected[change]):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS,
             track="inference_only" if change == "track" else "annotation_assisted",
             research_support_acknowledgment=acknowledgment)
@@ -336,8 +348,7 @@ def test_rejected_model_proposal_cannot_be_bypassed_by_research_acknowledgment()
     case = case.revised(structural_evidence={rejected.evidence_id: rejected})
     acknowledgment["case_hash"], acknowledgment["planning_hash"] = case.semantic_hash, case.planning_hash
     with pytest.raises(ValueError, match="PROVISIONAL_SUPPORT_INELIGIBLE"):
-        native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
-            tools=OPENING_TOOLS, research_support_acknowledgment=acknowledgment)
+        _validate_provisional_proposal_binding(case, rejected, acknowledgment)
 
 
 def test_opt_in_normalization_uses_whole_permitted_support_and_preserves_raw_scan():

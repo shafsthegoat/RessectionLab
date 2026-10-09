@@ -813,7 +813,6 @@ def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None
 
 def _provisional_proposal_support(case, acknowledgment):
     """Opt in to one exact research proposal without changing its review state."""
-    from .structural_evidence import validate_support_assumption
     if not isinstance(acknowledgment, Mapping):
         raise ValueError("PROVISIONAL_SUPPORT_ACKNOWLEDGMENT_REQUIRED: expected a bound research declaration")
     acknowledgment = thaw_json(freeze_json(acknowledgment))
@@ -837,6 +836,21 @@ def _provisional_proposal_support(case, acknowledgment):
     if item is None:
         raise ValueError("PROVISIONAL_SUPPORT_UNKNOWN_PROPOSAL: select an existing source-bound proposal")
     require_admitted_model(item.model_sha256, "_provisional_proposal_support")
+    _validate_provisional_proposal_binding(case, item, acknowledgment)
+    return item.mask, {"method": "explicitly_acknowledged_unreviewed_model_support",
+        "evidence_type": item.provenance, "evidence_hash": item.evidence_hash,
+        "review_status": item.review_status, "research_use": "provisional",
+        "cortical_access_permitted": False, "clinical_use_permitted": False,
+        "clinical_deficit_probability": None, "acknowledgment": acknowledgment}
+
+
+def _validate_provisional_proposal_binding(case, item, acknowledgment):
+    """Validate a selected proposal's binding; never admit or return its mask.
+
+    The consuming path must call ``require_admitted_model`` before this helper.
+    Tests can exercise stale/rejected metadata without bypassing that gate.
+    """
+    from .structural_evidence import validate_support_assumption
     item.assert_matches(case)
     if item.review_status != "review_required" or item.provenance != "estimated" or item.model_sha256 is None:
         raise ValueError("PROVISIONAL_SUPPORT_INELIGIBLE: only an unreviewed model proposal can use this pathway")
@@ -849,11 +863,6 @@ def _provisional_proposal_support(case, acknowledgment):
     # Reuse exact mask/image/frame binding and aware time validation. This is a
     # research declaration, deliberately separate from BrainEnvelopeReview.
     validate_support_assumption(case, item.mask, acknowledgment)
-    return item.mask, {"method": "explicitly_acknowledged_unreviewed_model_support",
-        "evidence_type": item.provenance, "evidence_hash": item.evidence_hash,
-        "review_status": item.review_status, "research_use": "provisional",
-        "cortical_access_permitted": False, "clinical_use_permitted": False,
-        "clinical_deficit_probability": None, "acknowledgment": acknowledgment}
 
 
 def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
