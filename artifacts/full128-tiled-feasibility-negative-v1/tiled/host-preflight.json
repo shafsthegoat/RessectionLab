@@ -1,0 +1,503 @@
+{
+  "accepted": true,
+  "baseline": {
+    "elapsed_seconds": 30.063485042,
+    "fast_host": {
+      "available_percent": 53,
+      "host_read_seconds": 0.00020075000000119303,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008
+    },
+    "slow_inventory": {
+      "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+      "collection_seconds": 0.05315058400000083,
+      "compressor_occupied_pages": 287123,
+      "excluded_ancestor_pids": [
+        78851,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3554799,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+          "max_rss_kib": 1048576,
+          "pgid": 65921,
+          "pid": 65921,
+          "rss_kib": 72688,
+          "rss_within_cap": true
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 77245,
+          "pid": 77245,
+          "project_context": false,
+          "rss_kib": 17168
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 78881,
+          "pid": 78881,
+          "project_context": false,
+          "rss_kib": 88368
+        }
+      ],
+      "sample_monotonic": 30.094791541,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T08:30:20.128165+00:00",
+      "vm_page_bytes": 16384
+    },
+    "timestamp_utc": "2026-10-09T08:30:20.128254+00:00"
+  },
+  "completed_at_utc": "2026-10-09T08:30:20.128274+00:00",
+  "reasons": [],
+  "samples": [
+    {
+      "elapsed_seconds": 0.024230708999999996,
+      "fast_host": {
+        "available_percent": 52,
+        "host_read_seconds": 1.979099999999817e-05,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.024167124999999998,
+        "compressor_occupied_pages": 297979,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554681,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          }
+        ],
+        "sample_monotonic": 0.055556333,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:29:50.088804+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:29:50.088953+00:00"
+    },
+    {
+      "elapsed_seconds": 5.076174,
+      "fast_host": {
+        "available_percent": 52,
+        "host_read_seconds": 0.00018150000000005662,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.04872029199999961,
+        "compressor_occupied_pages": 297882,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554692,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          }
+        ],
+        "sample_monotonic": 5.107480333,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:29:55.140822+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:29:55.140903+00:00"
+    },
+    {
+      "elapsed_seconds": 10.137300417,
+      "fast_host": {
+        "available_percent": 52,
+        "host_read_seconds": 0.000245542000000043,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.050670999999999466,
+        "compressor_occupied_pages": 293397,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554704,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 78881,
+            "pid": 78881,
+            "project_context": false,
+            "rss_kib": 88384
+          }
+        ],
+        "sample_monotonic": 10.168592,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:30:00.201935+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:30:00.202038+00:00"
+    },
+    {
+      "elapsed_seconds": 15.188727792,
+      "fast_host": {
+        "available_percent": 53,
+        "host_read_seconds": 0.00015849999999950626,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.04280812499999875,
+        "compressor_occupied_pages": 291548,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554704,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 78881,
+            "pid": 78881,
+            "project_context": false,
+            "rss_kib": 88368
+          }
+        ],
+        "sample_monotonic": 15.220049625,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:30:05.253413+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:30:05.253473+00:00"
+    },
+    {
+      "elapsed_seconds": 20.252543375,
+      "fast_host": {
+        "available_percent": 53,
+        "host_read_seconds": 0.00019141599999983328,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.053502833999999666,
+        "compressor_occupied_pages": 291239,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554704,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 78881,
+            "pid": 78881,
+            "project_context": false,
+            "rss_kib": 88368
+          }
+        ],
+        "sample_monotonic": 20.283850416,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:30:10.317215+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:30:10.317296+00:00"
+    },
+    {
+      "elapsed_seconds": 25.317292583999997,
+      "fast_host": {
+        "available_percent": 53,
+        "host_read_seconds": 0.0001962079999984212,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.054387457999997224,
+        "compressor_occupied_pages": 287578,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554794,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 78881,
+            "pid": 78881,
+            "project_context": false,
+            "rss_kib": 88368
+          }
+        ],
+        "sample_monotonic": 25.348599625,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:30:15.381978+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:30:15.382054+00:00"
+    },
+    {
+      "elapsed_seconds": 30.063485042,
+      "fast_host": {
+        "available_percent": 53,
+        "host_read_seconds": 0.00020075000000119303,
+        "kernel_pressure_mask": 1,
+        "swap_total_bytes": 8589934592,
+        "swap_used_bytes": 7431979008
+      },
+      "slow_inventory": {
+        "acquisition_allowlist_manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+        "collection_seconds": 0.05315058400000083,
+        "compressor_occupied_pages": 287123,
+        "excluded_ancestor_pids": [
+          78851,
+          18726,
+          18690,
+          1
+        ],
+        "pageouts_counter": 3554799,
+        "project_process_inventory": [
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 18806,
+            "pid": 18806,
+            "project_context": false,
+            "rss_kib": 1888
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "acquisition_python",
+            "identity_matched": true,
+            "manifest_sha256": "1151663817c835dc913cd1a8af69eff25fc0f9890b9a63766a13c7f38458b52f",
+            "max_rss_kib": 1048576,
+            "pgid": 65921,
+            "pid": 65921,
+            "rss_kib": 72688,
+            "rss_within_cap": true
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 77245,
+            "pid": 77245,
+            "project_context": false,
+            "rss_kib": 17168
+          },
+          {
+            "blocking_overlap": false,
+            "command_class": "python",
+            "pgid": 78881,
+            "pid": 78881,
+            "project_context": false,
+            "rss_kib": 88368
+          }
+        ],
+        "sample_monotonic": 30.094791541,
+        "swapouts_counter": 19411082,
+        "timestamp_utc": "2026-10-09T08:30:20.128165+00:00",
+        "vm_page_bytes": 16384
+      },
+      "timestamp_utc": "2026-10-09T08:30:20.128254+00:00"
+    }
+  ]
+}

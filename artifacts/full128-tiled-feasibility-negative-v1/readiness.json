@@ -1,0 +1,23 @@
+{
+  "adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "checkpoint_expected_sha256_verified_at_worker_launch_only": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+  "contract_sha256": "941fe564d94a6d2cdf1055e0787d12a740ceaf2aded708c7a2835168be5321aa",
+  "deepest_spatial_shape": [
+    4,
+    4,
+    4
+  ],
+  "expected_output_bytes_fp32": 25165824,
+  "feature_map_aggregate_bytes_fp32_not_peak": 1811185664,
+  "generated_input_bytes_fp32": 16777216,
+  "input_npy_sha256": "daa9ffd646347a94c89afe8357b5eb321ecc56cf8b17116b12f45ebe43858712",
+  "model_children_launched": false,
+  "model_patch_feasibility_not_patient_accuracy": true,
+  "native_full128_reference_planned": false,
+  "patient_data_accessed": false,
+  "possible_native_second_conv_columns_bytes_fp32_not_tiled_prediction": 7247757312,
+  "scope": "Static generated full-128-cubed tiled-only feasibility preparation; no checkpoint load or model forward",
+  "source_head_at_preparation": "05d4fdd",
+  "unchanged_prior_guard_keys": 22,
+  "unique_model_weight_bytes_fp32_prior_meta_estimate": 124789052
+}

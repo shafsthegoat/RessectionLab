@@ -114,6 +114,13 @@ mask omissions. Self-mask inverse Dice 0.99744 and improved in-sample image
 similarity are not independent anatomical accuracy. No model inference, planning,
 training or anatomical acceptance follows from completion.
 
+The [full-size tiled CPU attempt](artifacts/full128-tiled-feasibility-negative-v1/RESULT.md)
+was stopped by directly sampled macOS warning pressure during its first 128³
+forward, after **4.011 seconds** at **2.39 GB** sampled RSS. No logits or accepted
+output were produced; the independent audit found no monitor or overlap defect.
+The small-input improvement below remains shape-specific. Layer-level allocation
+profiling is next; caps and the failed attempt are preserved.
+
 The reviewed [optional CPU convolution adapter](docs/low-memory-conv3d.md) is now
 reusable in the source package. It preserves full feature-map normalization and
 weight aliases, rejects unsupported padding before mutation, and imports without

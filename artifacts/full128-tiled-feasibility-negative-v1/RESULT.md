@@ -1,0 +1,9 @@
+# Full-size tiled CPU feasibility: pressure-stop negative
+
+One generated FP32 input at the model's planned `[1,2,128,128,128]` size was attempted on October 9, 2026. The unchanged pressure guard stopped the model during its forward pass after 4.010891 seconds, at peak sampled process-group RSS 2,394,734,592 bytes. No logits or model result were produced; `accepted_for_feasibility=false`. This failed attempt is retained without retry or changed limits.
+
+All seven preflight readings reported normal pressure, 52–53% available memory and flat swap. The runtime trace had 69 normal samples, then a directly measured warning-level macOS pressure sample at 3.95665 seconds with 40% available memory. RSS remained below the separate 3 GiB cap. The child exited −9, its process group was empty, and no sampler, stale-inventory or overlap failure occurred. A post-child sample still showed warning pressure; a later independent check saw normal pressure recover. Acquisition continued, and swap did not grow. The allocation rise coincided with model execution, but a system-wide warning cannot prove that this process alone caused host pressure.
+
+The last worker marker was `before_generated_forward`, after safe checkpoint loading, strict weight/value/alias checks and attachment to 27 unique Conv3d modules. There were no internal layer markers, so the exact failing layer is unknown. Subsequent work must investigate allocation lifetimes before choosing another configuration; raising the cap would not address this pressure stop.
+
+The earlier small-input exact-parity and 44.7% memory-reduction result remains valid for its tested shape. It does not establish full-size feasibility, patient accuracy, RL improvement or clinical validity. This control used no patient input, no native full-size comparison, no sliding windows, augmentation or model training. Generated arrays and weights remain outside Git.
