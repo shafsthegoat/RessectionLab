@@ -166,7 +166,7 @@
       "used_in_offline_rl_people": 0,
       "checkpoint_contributions": [],
       "receipt": "artifacts/resect-component-admission-v1/RESULT.md",
-      "next": "Cache-only QC of24 remaining image/mask pairs, then original-image and landmark/frame qualification before intended component use; retain all rights, missing labels and historical failures",
+      "next": "Review anatomy and semantic mask validity, plus separate original-image, landmark and scanner-frame qualification before intended component use; retain all rights, missing labels and historical failures",
       "exclusions": [
         "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
         "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
@@ -176,8 +176,8 @@
       "acquired_original_images": 70,
       "acquired_annotation_masks": 25,
       "complete_image_annotation_pairs": 25,
-      "qc_passed_pairs": 1,
-      "acquisition_scope": "All129 frozen TRAIN original files and25 masks acquired and byte-verified; new104 originals remain unreviewed,24 image/mask pairs await separate QC;13 cavity-labeled people; no additional roles or trajectories",
+      "qc_passed_pairs": 25,
+      "acquisition_scope": "All 129 frozen TRAIN original files and 25 masks acquired and byte-verified; 24 new image/mask pairs passed structural QC plus one inherited Case3 pass; 104 additional original-source files, including 59 correspondence files, require separate intended-use review; 13 cavity-labeled people; no additional roles or trajectories",
       "latest_acquisition": "artifacts/resect-train-originals-execution-v1/RESULT.md",
       "development_correspondence_evaluation": {
         "patient": "RESECT:Case4",
@@ -197,7 +197,8 @@
         "optimizer_updates": 0,
         "recorded_rl_transitions": 0
       },
-      "pair_qc": "artifacts/resect-component-admission-v1/pair-qc-01/independent-review.json",
+      "pair_qc": "artifacts/resect-deferred-qc-v2-execution-v1/independent-review/verification.json",
+      "pilot_pair_qc": "artifacts/resect-component-admission-v1/pair-qc-01/independent-review.json",
       "source_annotated_cavity_voxels": 20005,
       "metadata_qualified_train_pairs": 25,
       "metadata_qualified_train_people": 13,
@@ -214,11 +215,11 @@
         "qc_passed_pairs": 1,
         "latest_acquisition": "artifacts/resect-component-admission-v1/acquisition-complete-01/worker-result.json"
       },
-      "qc_pending_pairs": 24,
+      "qc_pending_pairs": 0,
       "mirror_imported_masks": 24,
       "mirror_imported_bytes": 1561749,
       "mirror_transport": "third-party MedOtter/RESECT-SEG; bodies exactly match original OSF authority checksums",
-      "header_qc_new_pairs": "not_run",
+      "header_qc_new_pairs": "passed_for_24_new_image_mask_pairs_in_v2_structural_qc",
       "anatomy_qc": "not_run",
       "training_admitted": false,
       "spatial_planning_admitted": false,
