@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [ReMIND001 extension](artifacts/remind001-extension-intake-v1/RESULT.md)
+completed 400 additional objects (412,786,204 bytes), including three staged
+ultrasound objects verified through official generation-pinned CRC32C metadata.
+Root independently rehashed every payload; roles remain unchanged. This is byte
+acquisition only: images remain unreviewed, and intraoperative data are not
+preoperative policy inputs or tool-force measurements.
+
 The [BTC diffusion extension](artifacts/btc-pat16-pat20-diffusion-intake-v1/RESULT.md)
 adds 16 byte-verified files (94,311,092 bytes) for existing TRAIN patients PAT16
 and PAT20. Root independently rehashed every payload and confirmed unchanged

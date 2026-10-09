@@ -1,0 +1,69 @@
+{
+  "schema": "remind001-extension-byte-intake-portable-summary-v1",
+  "status": "all_bytes_verified",
+  "patient_group": "ReMIND:001",
+  "existing_role": "development_annotation_assisted_geometry",
+  "patient_roles_changed": false,
+  "new_objects": 400,
+  "new_series": 8,
+  "new_bytes": 412786204,
+  "source": "TCIA ReMIND version1 / IDC v24",
+  "license": "CC BY 4.0",
+  "citation": "https://doi.org/10.7937/3rag-d070",
+  "metadata_manifest": "build/btc-pat16-pat20-diffusion-intake-v1/remind001-next-source-object-manifest.json",
+  "metadata_manifest_sha256": "10d14d298dcfd508fb0903c18a594271ad182bf92d1d49eb63869057fbab5c7d",
+  "groups": [
+    {
+      "files": 397,
+      "bytes": 114589348,
+      "source": "official IDC AWS",
+      "whole_object_checksum": "single-part ETag MD5",
+      "completion": "data/acquisition/remind001-extension-v1/completion.json",
+      "completion_sha256": "a171ae0a5ded6adc27e904ea044b765d4dc7ae86e4009712d2c27d14db015af4",
+      "independent_fixity": "build/remind001-extension-intake-v1/fixity-audit.json",
+      "independent_fixity_sha256": "c4e0712a997f2194f927cf9bac880954f2b2749b032aa71f965b2702b1f1e4e7"
+    },
+    {
+      "files": 3,
+      "bytes": 298196856,
+      "source": "official IDC GCS generation-pinned mirror",
+      "whole_object_checksum": "publisher CRC32C; no publisher whole-file MD5/SHA256 claimed",
+      "completion": "data/acquisition/remind001-ultrasound-v1/completion.json",
+      "completion_sha256": "70715dd6fff50f2ab1a65df24c8679a704e08d5aee88d55209c979c3bafdb7a4",
+      "independent_fixity": "build/remind001-extension-intake-v1/ultrasound-fixity-audit.json",
+      "independent_fixity_sha256": "d79ed343bef50199c705e909a1f8bf3adcdf93f6dd40e55c28a7a2eefacb45b6"
+    }
+  ],
+  "file_identity_local_sha256_recorded": true,
+  "resumption_supported": true,
+  "all_transfers_completed_from_offset_zero": true,
+  "total_http_body_requests": 400,
+  "transfer_failures": 0,
+  "all_payloads_unreviewed": true,
+  "header_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "registration_qc": "not_run",
+  "decoded_array_bytes": 0,
+  "training_admitted": false,
+  "optimizer_updates": 0,
+  "eligible_for_outer_final": false,
+  "intraoperative_images_as_preoperative_inputs": false,
+  "force_or_action_ground_truth_claimed": false,
+  "current_live_transfer_handles": [],
+  "free_bytes_after": 695831314432,
+  "reserve_bytes": 107374182400,
+  "role_proofs": [
+    {
+      "path": "manifests/experiments/remind-001-structural-development-v1.json",
+      "sha256": "3dad212f49655937d8ef3d0dff998eb796de9f885c4328e9f4202503157ac08f",
+      "matches_HEAD": true
+    },
+    {
+      "path": "manifests/cohort_registry.json",
+      "sha256": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5",
+      "matches_HEAD": true
+    }
+  ],
+  "tracked_edits_by_this_agent": false,
+  "new_patient_records_outside_already_selected_ReMIND001": false
+}
