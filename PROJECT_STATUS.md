@@ -56,9 +56,12 @@ The [N12 saved numerical replay](artifacts/hbe-v5-n12-saved-replay-v1/RESULT.md)
 now has an independently audited supplemental pass: one Python worker reproduced
 all 61 saved frames byte for byte, with zero new FEBio calls. It took 2.847 seconds
 and 200,769,536 bytes peak sampled RSS. The original failed receipt and missing
-historical post-run guard observations remain explicit. Generic predecessor
-admission stays closed pending the separate exact-hash integration; no physical
-or patient validation follows from this numerical replay.
+historical post-run guard observations remain explicit. The [exact supplement integration](docs/hbe-v5-n12-exact-supplement-admission.md)
+now admits this specific reviewed pair as a numerical predecessor; all other
+failed receipts remain rejected. Independent checks pass 29 focused and 14
+adjacent tests. The remaining ten native rows and comparator are still unrun.
+[Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
+not complete elapsed cost; no physical or patient validation follows.
 
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131

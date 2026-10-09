@@ -1,0 +1,21 @@
+{
+  "schema": "hbe-v5-n12-exact-supplement-admission-v1",
+  "status": "specific_numerical_exception_after_independent_replay_review",
+  "run_id": "compression:N12:S60:reference",
+  "ordinal": 1,
+  "original_failed_receipt": {"path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/01-compression-N12-S60-reference/attempt-01/receipt.json", "sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2"},
+  "original_release": {"path": "build/hbe-v5-n12-one-shot-release/release.json", "sha256": "b9e765529e98668e8fe675b61bc7084d48efddb1f431221174801d3bfe50acad"},
+  "original_source_commit": "936cf2acb13cd01a80e88d8d5791afff9cf846f3",
+  "original_closed_output_bytes": 50501397,
+  "supplement_receipt": {"path": "outputs/mechanics/hbe-v5-n12-saved-attempt-replay-v1/attempt-01/receipt.json", "sha256": "8985a0e23b5d3a3d0029c5d69b48caaa6aff54c0628e40dabd1ea33aa6f3bb24"},
+  "supplement_release": {"path": "build/hbe-v5-n12-saved-replay-release/release.json", "sha256": "250961266042ffde26fb779743bbf669551b65d8b976e57df74cf80ff3018326"},
+  "supplement_source_commit": "f335975d4ed331eb33fc9806846cc19193037c1e",
+  "supplement_closed_output_bytes": 557392,
+  "independent_review": {"path": "artifacts/hbe-v5-n12-saved-replay-v1/INDEPENDENT_REVIEW.md", "sha256": "39e832c7ccfb6f941e5e4db584f2849fa64d45cdd101ff7417cbc9db73fd0458"},
+  "independent_summary": {"path": "artifacts/hbe-v5-n12-saved-replay-v1/summary.json", "sha256": "39d921b5a6ad0db2efa52a18aab6b8e030b302fdc5a5778556eb350e9c374f9e"},
+  "original_accounting": {"native_calls": 1, "native_wall_seconds": 10.688777334056795, "readout_calls": 1, "readout_wall_seconds": 2.8276635000947863, "preparation_wall_seconds": 1.348830624949187, "closed_output_bytes": 50501397},
+  "supplement_overhead": {"native_calls": 0, "replay_calls": 1, "replay_wall_seconds": 2.8474308329168707, "preparation_wall_seconds": 3.4362154591362923, "closed_output_bytes": 557392},
+  "historical_guard_gap": "Original post-run source/runtime guards were not recorded after parent packaging failure.",
+  "admission_scope": "This exact failed original receipt plus exact independently reviewed saved-output supplement may serve as one N12 numerical predecessor and future native comparator input. Original status remains failed. No other failed receipt is admitted. Supplemental replay overhead is separately charged and combined totals are reported.",
+  "phase_gates": {"exact_n12_numerical_predecessor": true, "exact_n12_native_comparator_input": true, "generic_failed_receipt_admission": false, "native_retry": false, "fit": false, "held_out_torque_access": false, "physical_validation": false, "patient_or_measured_response_access": false}
+}

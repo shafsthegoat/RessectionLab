@@ -120,6 +120,12 @@ def test_second_remaining_row_rebinds_prior_release_and_assumptions(tmp_path):
                 'prior_native_wall_seconds': runner.N8_NATIVE_SECONDS,
                 'prior_readout_wall_seconds': 0., 'prior_prep_wall_seconds': 0.,
                 'prior_active_output_bytes': runner.N8_OUTPUT_BYTES,
+                'prior_supplement_replay_wall_seconds': 0.,
+                'prior_supplement_prep_wall_seconds': 0.,
+                'prior_supplement_output_bytes': 0,
+                'prior_supplement_replay_calls': 0,
+                'prior_combined_wall_seconds': runner.N8_NATIVE_SECONDS,
+                'prior_combined_output_bytes': runner.N8_OUTPUT_BYTES,
                 'native_stage': {'status': 'completed_within_caps', 'exit_code': 0,
                                  'kill_reason': None, 'elapsed_seconds': 1.},
                 'readout_stage': {'status': 'completed_within_caps', 'exit_code': 0,
@@ -129,6 +135,10 @@ def test_second_remaining_row_rebinds_prior_release_and_assumptions(tmp_path):
                 'aggregate_readout_wall_seconds': 2.,
                 'aggregate_prep_wall_seconds': 3.,
                 'aggregate_native_calls': 2,
+                'aggregate_supplement_replay_wall_seconds': 0.,
+                'aggregate_supplement_prep_wall_seconds': 0.,
+                'aggregate_supplement_replay_calls': 0,
+                'aggregate_combined_wall_seconds': runner.N8_NATIVE_SECONDS + 6.,
                 'output_bindings': records,
                 'native_output_bindings': {name: records[name]
                                            for name in runner.NATIVE_FILES},
@@ -461,10 +471,15 @@ def test_worker_requires_unshared_parent_token_before_readout(tmp_path, monkeypa
 def test_aggregate_stage_caps_and_closed_output_accounting():
     prior = {'native_seconds': runner.N8_NATIVE_SECONDS, 'readout_seconds': 0.,
              'prep_seconds': 0., 'output_bytes': runner.N8_OUTPUT_BYTES,
-             'native_calls': 1}
+             'native_calls': 1, 'supplement_readout_seconds': 0.,
+             'supplement_prep_seconds': 0., 'supplement_output_bytes': 0,
+             'supplement_replay_calls': 0}
     values = runner._check_aggregate(prior, 1., 2., 3., 4, 1)
     assert values['aggregate_native_calls'] == 2
     assert values['aggregate_output_bytes'] == runner.N8_OUTPUT_BYTES + 4
+    assert values['aggregate_supplement_replay_calls'] == 0
+    assert values['aggregate_combined_wall_seconds'] == runner.N8_NATIVE_SECONDS + 6.
+    assert values['aggregate_combined_output_bytes'] == runner.N8_OUTPUT_BYTES + 4
     with pytest.raises(ValueError, match='Aggregate'):
         runner._check_aggregate(prior, 9600., 0., 0., 0, 1)
     with pytest.raises(ValueError, match='Aggregate'):

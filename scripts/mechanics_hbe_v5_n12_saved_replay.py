@@ -36,6 +36,8 @@ CAPS = {'native_calls': 0, 'replay_calls': 1, 'attempts': 1,
         'numerical_threads': 1}
 SOURCE_PATHS = tuple(dict.fromkeys((
     'scripts/mechanics_hbe_v5_n12_saved_replay.py', *prior.SOURCE_PATHS)))
+ORIGINAL_SOURCE_PATHS = tuple(dict.fromkeys((
+    'scripts/mechanics_hbe_v5_remaining_one_shot.py', *io.SOURCE_PATHS)))
 OUTPUT_NAMES = {'receipt.json', 'replay-work-order.json',
                 'readout-console.txt', 'replay.json'}
 
@@ -148,7 +150,8 @@ def original_inventory(prep: dict, *, root: Path = ROOT) -> dict:
     return result
 
 
-def validate_original(prep: dict, *, root: Path = ROOT) -> dict:
+def validate_original(prep: dict, *, root: Path = ROOT,
+                      audit_loaded_imports: bool = True) -> dict:
     """Read-only original receipt/release/runtime/geometry and saved JSON check."""
     inventory = original_inventory(prep, root=root)
     receipt = json.loads(io.bound({'path': ORIGINAL+'/receipt.json',
@@ -158,7 +161,7 @@ def validate_original(prep: dict, *, root: Path = ROOT) -> dict:
     released = json.loads(release_raw)
     original_source = released.get('source_bindings')
     committed_source(ORIGINAL_SOURCE_COMMIT, original_source,
-                     paths=prior.SOURCE_PATHS, root=root)
+                     paths=ORIGINAL_SOURCE_PATHS, root=root)
     if (released.get('schema') != 'hbe-v5-remaining-one-call-release-v1'
             or released.get('status') != 'root_released_one_native_call'
             or released.get('ordinal') != 1 or released.get('run_id') != prior.ORDER[1]
@@ -260,7 +263,8 @@ def validate_original(prep: dict, *, root: Path = ROOT) -> dict:
                    for name in records)):
         raise ValueError('Original saved readout identity differs')
     prior.validate_prior_chain(released['prior_receipts'], 1, root=root)
-    audit_imports(root=root)
+    if audit_loaded_imports:
+        audit_imports(root=root)
     return {'receipt': receipt, 'release': released, 'release_raw': release_raw,
             'inventory': inventory, 'work_order': work_order,
             'saved_json': json.loads((directory / 'readout.json').read_bytes()),

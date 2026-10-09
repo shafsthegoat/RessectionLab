@@ -142,14 +142,14 @@ def test_original_release_git_blob_and_whitelist_reject_forgery():
     prep = preparation()
     release = json.loads((replay.ROOT / replay.ORIGINAL_RELEASE).read_text())
     head = replay.committed_source(replay.ORIGINAL_SOURCE_COMMIT,
-        release['source_bindings'], paths=prior.SOURCE_PATHS)
+        release['source_bindings'], paths=replay.ORIGINAL_SOURCE_PATHS)
     assert len(head) == 40
     forged = deepcopy(release['source_bindings'])
-    name = prior.SOURCE_PATHS[0]
+    name = replay.ORIGINAL_SOURCE_PATHS[0]
     forged[name]['sha256'] = '0'*64
     with pytest.raises(ValueError, match='immutable Git blob'):
         replay.committed_source(replay.ORIGINAL_SOURCE_COMMIT, forged,
-            paths=prior.SOURCE_PATHS)
+            paths=replay.ORIGINAL_SOURCE_PATHS)
     wrong = deepcopy(prep)
     wrong['closed_attempt_files']['solver.log']['bytes'] = 0
     with pytest.raises(ValueError):

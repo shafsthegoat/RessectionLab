@@ -57,8 +57,14 @@ AGGREGATE = {'maximum_native_calls_all_12': 12,
              'known_stage_total_wall_seconds': 18000,
              'active_output_bytes_all_12': 6 * 1024**3,
              'storage_free_reserve_bytes': 2 * 1024**3}
+SUPPLEMENT_CAPS = {'replay_calls': 1, 'replay_wall_seconds': 600,
+                   'preparation_wall_seconds': 150,
+                   'closed_output_bytes': 64*1024**2}
+N12_FAILED_RECEIPT_SHA = '9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2'
 SOURCE_PATHS = tuple(dict.fromkeys((
     'scripts/mechanics_hbe_v5_remaining_one_shot.py',
+    'scripts/mechanics_hbe_v5_n12_admission.py',
+    'scripts/mechanics_hbe_v5_n12_saved_replay.py',
     *io.SOURCE_PATHS,
 )))
 SELECTION = '* Selecting linear solver accelerate                                    *'
@@ -238,12 +244,14 @@ def validate_prior_chain(bindings: list[dict], index: int, *, root: Path = ROOT,
                          expected_profile: dict | None = None,
                          expected_runtime: dict | None = None) -> dict:
     """Rehash every earlier receipt/output and preserve N8 as row zero."""
-    if type(index) is not int or index not in range(1, 12) or not isinstance(bindings, list) or len(bindings) != index:
+    if type(index) is not int or index not in range(1, 13) or not isinstance(bindings, list) or len(bindings) != index:
         raise ValueError('Complete ordered predecessor chain required')
     hashes = []
     native = N8_NATIVE_SECONDS
     readout = prep = 0.
     output = N8_OUTPUT_BYTES
+    supplement_readout = supplement_prep = 0.
+    supplement_output = supplement_calls = 0
     for ordinal, item in enumerate(bindings):
         expected = receipt_path(ordinal)
         if (not isinstance(item, dict) or set(item) != {'run_id', 'path', 'sha256'}
@@ -252,6 +260,36 @@ def validate_prior_chain(bindings: list[dict], index: int, *, root: Path = ROOT,
             raise ValueError('Predecessor order/path/hash differs')
         document = json.loads(io.bound(_receipt_binding(root, expected, item['sha256']),
                                        expected, root=root, maximum=8*1024**2))
+        if ordinal == 1 and item['sha256'] == N12_FAILED_RECEIPT_SHA:
+            if expected_profile is None or expected_runtime is None:
+                raise ValueError('Exact N12 exception requires frozen runtime ancestry')
+            from scripts import mechanics_hbe_v5_n12_admission as admission
+            accepted = admission.verify_exact(root=root)
+            original = accepted['original_accounting']
+            overhead = accepted['supplement_overhead']
+            if (document.get('status') != 'failed_or_incomplete'
+                    or document.get('run_id') != ORDER[1]
+                    or document.get('native_calls_attempted') != 1
+                    or document.get('readout_calls_attempted') != 1
+                    or document.get('no_retry') is not True
+                    or accepted['original_receipt_sha256'] != item['sha256']
+                    or accepted['original_backend_profile'] != expected_profile
+                    or accepted['original_runtime_identity'] != expected_runtime
+                    or original['native_calls'] != 1
+                    or original['readout_calls'] != 1
+                    or overhead['native_calls'] != 0
+                    or overhead['replay_calls'] != 1):
+                raise ValueError('Specific failed N12 plus supplement did not qualify')
+            native += original['native_wall_seconds']
+            readout += original['readout_wall_seconds']
+            prep += original['preparation_wall_seconds']
+            output += original['closed_output_bytes']
+            supplement_readout += overhead['replay_wall_seconds']
+            supplement_prep += overhead['preparation_wall_seconds']
+            supplement_output += overhead['closed_output_bytes']
+            supplement_calls += overhead['replay_calls']
+            hashes.append(item['sha256'])
+            continue
         if (document.get('run_id') != ORDER[ordinal]
                 or document.get('status') != 'passed_numerical_software_only'
                 or document.get('native_calls_attempted') != 1
@@ -289,7 +327,19 @@ def validate_prior_chain(bindings: list[dict], index: int, *, root: Path = ROOT,
                     or document.get('prior_native_wall_seconds') != native
                     or document.get('prior_readout_wall_seconds') != readout
                     or document.get('prior_prep_wall_seconds') != prep
-                    or document.get('prior_active_output_bytes') != output):
+                    or document.get('prior_active_output_bytes') != output
+                    or document.get('prior_supplement_replay_wall_seconds') !=
+                       supplement_readout
+                    or document.get('prior_supplement_prep_wall_seconds') !=
+                       supplement_prep
+                    or document.get('prior_supplement_output_bytes') !=
+                       supplement_output
+                    or document.get('prior_supplement_replay_calls') !=
+                       supplement_calls
+                    or document.get('prior_combined_wall_seconds') !=
+                       native+readout+prep+supplement_readout+supplement_prep
+                    or document.get('prior_combined_output_bytes') !=
+                       output+supplement_output):
                 raise ValueError('Continuation predecessor release, caps or ledger differs')
             ns = document.get('native_stage', {}).get('elapsed_seconds')
             rs = document.get('readout_stage', {}).get('elapsed_seconds')
@@ -305,7 +355,15 @@ def validate_prior_chain(bindings: list[dict], index: int, *, root: Path = ROOT,
             if (document.get('aggregate_native_wall_seconds') != native
                     or document.get('aggregate_readout_wall_seconds') != readout
                     or document.get('aggregate_prep_wall_seconds') != prep
-                    or document.get('aggregate_native_calls') != ordinal+1):
+                    or document.get('aggregate_native_calls') != ordinal+1
+                    or document.get('aggregate_supplement_replay_wall_seconds') !=
+                       supplement_readout
+                    or document.get('aggregate_supplement_prep_wall_seconds') !=
+                       supplement_prep
+                    or document.get('aggregate_supplement_replay_calls') !=
+                       supplement_calls
+                    or document.get('aggregate_combined_wall_seconds') !=
+                       native+readout+prep+supplement_readout+supplement_prep):
                 raise ValueError('Predecessor cumulative resource ledger differs')
             names = FINAL_FILES - {'receipt.json'}
             records = document.get('output_bindings')
@@ -415,16 +473,28 @@ def validate_prior_chain(bindings: list[dict], index: int, *, root: Path = ROOT,
             or native+readout+prep > AGGREGATE['known_stage_total_wall_seconds']
             or output > AGGREGATE['active_output_bytes_all_12']):
         raise ValueError('Predecessor aggregate resource cap exceeded')
-    current_caps = caps(index)
-    if (native + current_caps['native_wall_seconds'] > AGGREGATE['native_wall_seconds_all_12']
+    if (supplement_calls > SUPPLEMENT_CAPS['replay_calls']
+            or supplement_readout > SUPPLEMENT_CAPS['replay_wall_seconds']
+            or supplement_prep > SUPPLEMENT_CAPS['preparation_wall_seconds']
+            or supplement_output > SUPPLEMENT_CAPS['closed_output_bytes']):
+        raise ValueError('Specific supplemental resource cap exceeded')
+    if index < 12:
+        current_caps = caps(index)
+        if (native + current_caps['native_wall_seconds'] > AGGREGATE['native_wall_seconds_all_12']
             or readout + READOUT_WALL > AGGREGATE['remaining_readout_wall_seconds']
             or prep + PREP_WALL > AGGREGATE['remaining_prep_wall_seconds']
             or native + readout + prep + current_caps['native_wall_seconds']
                + READOUT_WALL + PREP_WALL > AGGREGATE['known_stage_total_wall_seconds']
             or output + current_caps['active_output_bytes'] > AGGREGATE['active_output_bytes_all_12']):
-        raise ValueError('Remaining aggregate resource budget cannot cover one call')
+            raise ValueError('Remaining aggregate resource budget cannot cover one call')
     return {'sha256': hashes, 'native_seconds': native, 'readout_seconds': readout,
-            'prep_seconds': prep, 'output_bytes': output, 'native_calls': index}
+            'prep_seconds': prep, 'output_bytes': output, 'native_calls': index,
+            'supplement_readout_seconds': supplement_readout,
+            'supplement_prep_seconds': supplement_prep,
+            'supplement_output_bytes': supplement_output,
+            'supplement_replay_calls': supplement_calls,
+            'combined_wall_seconds': native+readout+prep+supplement_readout+supplement_prep,
+            'combined_output_bytes': output+supplement_output}
 
 
 def validate_release(release: dict, *, root: Path = ROOT) -> dict:
@@ -519,7 +589,21 @@ def _check_aggregate(previous: dict, native: float, readout: float,
               'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
               'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
               'aggregate_output_bytes': previous['output_bytes'] + output,
-              'aggregate_native_calls': previous['native_calls'] + calls}
+              'aggregate_native_calls': previous['native_calls'] + calls,
+              'aggregate_supplement_replay_wall_seconds':
+                  previous['supplement_readout_seconds'],
+              'aggregate_supplement_prep_wall_seconds':
+                  previous['supplement_prep_seconds'],
+              'aggregate_supplement_replay_calls':
+                  previous['supplement_replay_calls']}
+    values['aggregate_combined_wall_seconds'] = (
+        values['aggregate_native_wall_seconds']
+        + values['aggregate_readout_wall_seconds']
+        + values['aggregate_prep_wall_seconds']
+        + values['aggregate_supplement_replay_wall_seconds']
+        + values['aggregate_supplement_prep_wall_seconds'])
+    values['aggregate_combined_output_bytes'] = (
+        values['aggregate_output_bytes'] + previous['supplement_output_bytes'])
     if (values['aggregate_native_wall_seconds'] > AGGREGATE['native_wall_seconds_all_12']
             or values['aggregate_readout_wall_seconds'] > AGGREGATE['remaining_readout_wall_seconds']
             or values['aggregate_prep_wall_seconds'] > AGGREGATE['remaining_prep_wall_seconds']
@@ -530,6 +614,15 @@ def _check_aggregate(previous: dict, native: float, readout: float,
             or values['aggregate_output_bytes'] > AGGREGATE['active_output_bytes_all_12']
             or values['aggregate_native_calls'] > AGGREGATE['maximum_native_calls_all_12']):
         raise ValueError('Aggregate remaining HBE v5 resource cap exceeded')
+    if (values['aggregate_supplement_replay_wall_seconds'] >
+            SUPPLEMENT_CAPS['replay_wall_seconds']
+            or values['aggregate_supplement_prep_wall_seconds'] >
+               SUPPLEMENT_CAPS['preparation_wall_seconds']
+            or previous['supplement_output_bytes'] >
+               SUPPLEMENT_CAPS['closed_output_bytes']
+            or values['aggregate_supplement_replay_calls'] >
+               SUPPLEMENT_CAPS['replay_calls']):
+        raise ValueError('Separate supplemental resource cap exceeded')
     return values
 
 
@@ -792,6 +885,16 @@ def execute(release_path: Path, *, root: Path = ROOT) -> dict:
                'prior_readout_wall_seconds': context['previous']['readout_seconds'],
                'prior_prep_wall_seconds': context['previous']['prep_seconds'],
                'prior_active_output_bytes': context['previous']['output_bytes'],
+               'prior_supplement_replay_wall_seconds':
+                   context['previous']['supplement_readout_seconds'],
+               'prior_supplement_prep_wall_seconds':
+                   context['previous']['supplement_prep_seconds'],
+               'prior_supplement_output_bytes':
+                   context['previous']['supplement_output_bytes'],
+               'prior_supplement_replay_calls':
+                   context['previous']['supplement_replay_calls'],
+               'prior_combined_wall_seconds': context['previous']['combined_wall_seconds'],
+               'prior_combined_output_bytes': context['previous']['combined_output_bytes'],
                'caps': row_caps, 'aggregate_caps': AGGREGATE,
                'preflight_free_bytes': context['preflight_free_bytes'],
                'preflight_required_free_bytes': context['preflight_required_free_bytes'],
@@ -895,7 +998,8 @@ def execute(release_path: Path, *, root: Path = ROOT) -> dict:
                 active_bytes(directory, row_caps['active_output_bytes']),
                 receipt['native_calls_attempted'])
             receipt.update({key: value for key, value in ledger.items()
-                            if key != 'aggregate_output_bytes'})
+                            if key not in ('aggregate_output_bytes',
+                                           'aggregate_combined_output_bytes')})
         except BaseException as error:
             receipt['status'] = 'failed_or_incomplete'
             receipt['final_resource_failure'] = {'type': type(error).__name__,
