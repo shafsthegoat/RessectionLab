@@ -1,0 +1,18 @@
+{
+  "schema": "nonpatient-n5-supervisor-preparation-v1",
+  "status": "prepared_not_released_or_executed",
+  "release": null,
+  "case_id": "n5_affine",
+  "parent_declaration": "manifests/experiments/nonpatient-tet10-sparse-feasibility-v1.json",
+  "output_directory": "outputs/mechanics/nonpatient-n5-supervisor-v1/attempt-01",
+  "caps": {
+    "native_calls": 1,
+    "attempts": 1,
+    "wall_seconds": 600,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "active_output_bytes": 536870912,
+    "numerical_threads": 1
+  },
+  "release_condition": "A separate root-issued, committed-source-bound release must freeze this preparation hash, the current source commit and source closure, exact generated deck SHA256, existing repaired runtime/profile, and the single fresh output directory. This preparation is not a release.",
+  "scope": "One numerical 10 mm cube; software feasibility only. No patient data, tissue-property fit, clinical validity or seven-case execution."
+}

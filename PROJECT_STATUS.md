@@ -165,6 +165,12 @@ and signed boundary work against the frozen analytic oracle. Ninety adjacent
 controls pass against the stabilized output parser, with independent numerical
 review. It shares the assumed constitutive law and has not seen a new native
 cube solve or any physical tissue measurement.
+The [one-call n5 supervisor preparation](docs/mechanics-nonpatient-n5-supervisor.md)
+binds committed source, the repaired FEBio/Accelerate runtime, one exact
+generated deck and a fresh output directory. It enforces sampled wall,
+process-RSS and output caps, then requires saved-output and affine-oracle
+checks. Independent review passed 96 adjacent controls. Its release remains
+null and no n5 native call has run; this is prospective numerical qualification.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
