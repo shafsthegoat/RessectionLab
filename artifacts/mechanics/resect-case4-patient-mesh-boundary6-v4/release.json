@@ -1,0 +1,57 @@
+{
+  "anatomical_registration_accepted": false,
+  "attempt_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-boundary6-v4",
+  "authorized": true,
+  "clinical_validation": false,
+  "context_bindings": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json",
+      "role": "mask_qc",
+      "sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23"
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json",
+      "role": "baseline_diagnostic",
+      "sha256": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1"
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json",
+      "role": "root_visual_decision",
+      "sha256": "5ed4158a8247eb731175b70d8194ac290731455cc6ce34ed08056dc3f715a2c2"
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-v1/saved-records/worker.json",
+      "role": "prior_mesh_worker",
+      "sha256": "b3485944aa760b3d5a360660835471b06981ac59024d6f465b8285f35bda5f56"
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-boundary6-preparation-v1/source-review.md",
+      "role": "independent_candidate_review",
+      "sha256": "2922a42bffd4950b733b35140c8e87392d2dd8074d8c9fc2e1627a0ec083bd82"
+    }
+  ],
+  "repository_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "reuse_saved_native_surface_only": true,
+  "root_authorization": {
+    "archive_member_count": 10,
+    "archive_sha256": "03c9b2ff503779235900961f330516da5c1a70ed45cf563eb93d25dc88b8e542",
+    "scope": "One Case4 source-only curvature-off Gmsh generation at fixed 6/24 mm sizing, unchanged geometry gates, 180 seconds/3 GiB/one thread, no retry, B/V/during-US/solver/training access or clinical admission.",
+    "utc": "2026-10-09T02:59:37.155071+00:00"
+  },
+  "schema": "resect-case4-patient-mesh-boundary6-v4-release",
+  "solver_authorized": false,
+  "source_commit": "95744b27f885d569debea15099ae190aadd594dc",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-boundary6-v4/source",
+  "source_sha256": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "manifests/experiments/resect-case4-patient-mesh-boundary6-v4.json": "0cc7058ce0fbb58a8000bfa69d94dbf2d1f158c91b7a303c7943248eb0ec771a",
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/mechanics_patient_mesh_boundary6.py": "d4ee218653edb0a44e865c39699e3fc6e182a81947c43cc99d2bf2ab030ddf2e",
+    "scripts/mechanics_patient_mesh_boundary6_run.py": "961075afa4eff04075d90394383b3379eefba29452c14baa60deceb4fdbf42c0",
+    "scripts/mechanics_patient_mesh_candidate.py": "e1d45b6371bc64baaf6cacbc6f98926728dcf7699c0dffb00bea67df167edc4c",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "cfee357faf585f78afccf812d06c00de9022494e8ed4d82ef3fa68a97eaa38cb"
+  }
+}
