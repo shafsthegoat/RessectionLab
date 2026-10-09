@@ -1,4 +1,4 @@
-"""Independent field readout for supplied n5 affine numerical-cube records.
+"""Independent field readout for supplied declared affine numerical cubes.
 
 This source-only check reads pinned local declarations through existing
 validators but no saved outputs or patient files; it does not start FEBio,
@@ -16,6 +16,16 @@ from scripts import mechanics_patient_constraints as fixture
 
 
 CASE_ID = "n5_affine"
+AFFINE_CASES = frozenset(("n5_affine", "n9_affine", "n13_affine"))
+
+
+def _case(declared: dict, case_id: str) -> dict:
+    if case_id not in AFFINE_CASES:
+        raise ValueError("Undeclared affine case")
+    case = next((row for row in declared["cases"] if row["id"] == case_id), None)
+    if case is None or case["load"] != "affine":
+        raise ValueError("Affine case differs from frozen declaration")
+    return case
 
 
 def _response(F: np.ndarray, *, mu_Pa: float, K_Pa: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -58,7 +68,7 @@ def _readout_state(mesh: deck.CubeMesh, nodes: np.ndarray, elements: np.ndarray,
     actual_energy_J = 0.
     logged_energy_J = 0.
     reference_volume_m3 = 0.
-    # Bounded chunking: n5 has 750 elements; no full [element, point, node]
+    # Bounded chunking: no full [element, point, node]
     # gradient tensor need be retained across states.
     for start in range(0, len(E), 256):
         sl = slice(start, start + 256)
@@ -140,10 +150,11 @@ def _readout_state(mesh: deck.CubeMesh, nodes: np.ndarray, elements: np.ndarray,
             "derived_density_gate_Pa": density_gate_Pa}
 
 
-def check_parsed_affine_readout(node_states: list[dict], element_states: list[dict]) -> dict:
-    """Audit complete already-parsed n5 affine records, with no native claim."""
+def check_parsed_affine_readout(node_states: list[dict], element_states: list[dict],
+                                case_id: str = CASE_ID) -> dict:
+    """Audit complete already-parsed declared affine records, with no native claim."""
     declared = design.validate_declaration()
-    case = next(row for row in declared["cases"] if row["id"] == CASE_ID)
+    case = _case(declared, case_id)
     mesh = deck.build_mesh(case["n"])
     times = tuple(k * case.get("step_size", declared["numerical_gauge"]["step_size"])
                   for k in range(case.get("time_steps", declared["numerical_gauge"]["time_steps"]) + 1))
@@ -163,17 +174,18 @@ def check_parsed_affine_readout(node_states: list[dict], element_states: list[di
                 or not np.isfinite(nodes).all() or not np.isfinite(elements).all()):
             raise ValueError("Complete finite affine node and element fields required")
         rows.append(_readout_state(mesh, nodes, elements, time, declared))
-    return {"case_id": CASE_ID, "passed": bool(all(row["passed"] for row in rows)),
-            "states": rows, "scope": "Supplied complete non-patient n5 affine fields only; no native provenance, solver residual, physical validation, or clinical evidence."}
+    return {"case_id": case_id, "passed": bool(all(row["passed"] for row in rows)),
+            "states": rows, "scope": "Supplied complete non-patient affine fields only; no native provenance, solver residual, physical validation, or clinical evidence."}
 
 
-def check_affine_readout(node_text: str, element_text: str) -> dict:
+def check_affine_readout(node_text: str, element_text: str,
+                         case_id: str = CASE_ID) -> dict:
     """Parse complete saved text streams, then apply the independent readout."""
     if (not isinstance(node_text, str) or not isinstance(element_text, str)
             or len(node_text) + len(element_text) > output.MAX_TOTAL_CHARS):
         raise ValueError("Combined affine text exceeds declared active-output bound")
     declared = design.validate_declaration()
-    case = next(row for row in declared["cases"] if row["id"] == CASE_ID)
+    case = _case(declared, case_id)
     mesh = deck.build_mesh(case["n"])
     times = tuple(k * case.get("step_size", declared["numerical_gauge"]["step_size"])
                   for k in range(case.get("time_steps", declared["numerical_gauge"]["time_steps"]) + 1))
@@ -183,4 +195,4 @@ def check_affine_readout(node_text: str, element_text: str) -> dict:
     elements = output.parse_data_log(element_text, expected_times=times,
                                      item_count=len(mesh.tet10_indices), field_count=8,
                                      record_name="mechanics_elements_si")
-    return check_parsed_affine_readout(nodes, elements)
+    return check_parsed_affine_readout(nodes, elements, case_id=case_id)

@@ -242,6 +242,11 @@ points passed independent audit in 0.519 s supervised wall at 47,661,056 B
 peak sampled RSS. The console's four `No force acting` warnings are retained.
 This is idealized numerical software evidence only; n9/n13 and half-step
 mesh/time-step convergence remain unrun.
+The [n9 affine source preparation](docs/mechanics-nonpatient-n9-affine-supervisor.md)
+generalizes the analytic readout while preserving its n5 default, and binds
+the third frozen case to both prior receipts and the remaining aggregate
+budget. Root's 117 adjacent tests and independent source review pass. Its
+release remains null; the 6,859-node/4,374-element native call is not yet run.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point

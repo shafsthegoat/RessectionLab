@@ -9,9 +9,10 @@ from scripts import mechanics_nonpatient_sparse_deck as deck
 from scripts import mechanics_nonpatient_sparse_feasibility as design
 
 
-def _exact_records() -> tuple[list[dict], list[dict]]:
+def _exact_records(case_id: str = "n5_affine") -> tuple[list[dict], list[dict]]:
     declared = design.validate_declaration()
-    mesh = deck.build_mesh(5)
+    case = next(row for row in declared["cases"] if row["id"] == case_id)
+    mesh = deck.build_mesh(case["n"])
     X = mesh.nodes_m
     final_F = np.asarray(declared["loads"]["affine"]["final_F"])
     nodes, elements = [], []
@@ -68,6 +69,37 @@ def test_exact_synthetic_affine_fields_pass_each_state_and_text_roundtrip():
         assert result["states"][-1]["boundary_virtual_work_J"] == pytest.approx(
             result["states"][-1]["oracle_boundary_virtual_work_J"], abs=1e-12)
         assert "no native provenance" in result["scope"]
+
+
+def test_n9_generated_affine_fields_and_text_roundtrip():
+    nodes, elements = _exact_records("n9_affine")
+    direct = readout.check_parsed_affine_readout(nodes, elements, case_id="n9_affine")
+    text = readout.check_affine_readout(_text(nodes), _text(elements), case_id="n9_affine")
+    for result in (direct, text):
+        assert result["case_id"] == "n9_affine"
+        assert result["passed"], result["states"][-1]["errors"]
+        assert [state["time"] for state in result["states"]] == [0., .25, .5, .75, 1.]
+    with pytest.raises(ValueError, match="Complete finite"):
+        readout.check_parsed_affine_readout(*_exact_records(), case_id="n9_affine")
+    with pytest.raises(ValueError, match="Incomplete FEBio"):
+        readout.check_affine_readout(_text(nodes), _text(elements).rsplit("\n", 2)[0] + "\n",
+                                     case_id="n9_affine")
+
+
+def test_n13_generated_affine_fields_pass_without_native_provenance():
+    nodes, elements = _exact_records("n13_affine")
+    result = readout.check_parsed_affine_readout(nodes, elements, case_id="n13_affine")
+    assert result["case_id"] == "n13_affine" and result["passed"]
+    assert len(result["states"]) == 5
+
+
+@pytest.mark.parametrize("bad", ["n5_nonuniform", "n9_nonuniform", "n13_nonuniform",
+                                    "n13_nonuniform_half_step", "n11_affine", "n9_Affine"])
+def test_readout_rejects_wrong_or_undeclared_case(bad):
+    with pytest.raises(ValueError, match="Undeclared affine"):
+        readout.check_parsed_affine_readout([], [], case_id=bad)
+    with pytest.raises(ValueError, match="Undeclared affine"):
+        readout.check_affine_readout("", "", case_id=bad)
 
 
 @pytest.mark.parametrize("target,column,increment,check", [

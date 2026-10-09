@@ -1,0 +1,36 @@
+{
+  "schema": "nonpatient-n9-affine-supervisor-preparation-v1",
+  "status": "prepared_not_released_or_executed",
+  "release": null,
+  "case_id": "n9_affine",
+  "parent_declaration": "manifests/experiments/nonpatient-tet10-sparse-feasibility-v1.json",
+  "output_directory": "outputs/mechanics/nonpatient-n9-affine-supervisor-v1/attempt-01",
+  "prior_receipts": [
+    {
+      "path": "outputs/mechanics/nonpatient-n5-supervisor-v1/attempt-01/receipt.json",
+      "sha256": "9d26c0c57eefad06c53fe67b2bd64d9572778f23ed8b4356660654f88746f0ce",
+      "elapsed_seconds": 0.5189758341293782
+    },
+    {
+      "path": "outputs/mechanics/nonpatient-n5-nonuniform-supervisor-v1/attempt-01/receipt.json",
+      "sha256": "dae7f8f7646da5b05b048db07b6129388c754824a34396bbe9caa744b8a372e1",
+      "elapsed_seconds": 0.5194279160350561
+    }
+  ],
+  "caps": {
+    "native_calls": 1,
+    "attempts": 1,
+    "wall_seconds": 600,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "active_output_bytes": 536870912,
+    "numerical_threads": 1
+  },
+  "aggregate_caps": {
+    "maximum_native_calls": 7,
+    "aggregate_native_wall_seconds": 1800,
+    "prior_calls": 2,
+    "case_index": 2
+  },
+  "release_condition": "A separately reviewed one-call release must bind this committed source and revised affine readout, unchanged seven-case declaration, both verified prior receipts and saved native output hashes, exact n9_affine deck, repaired runtime/profile, and a fresh n9-only output directory. This preparation issues no release.",
+  "scope": "Third frozen numerical 10 mm cube case only. The prior two n5 calls consume 1.0384037501644343 of 1800 aggregate native-wall seconds. This source-only preparation does not run FEBio, establish convergence, fit tissue properties, inspect patients, or validate clinical decisions."
+}
