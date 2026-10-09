@@ -71,6 +71,14 @@ adjacent tests. The remaining ten native rows and comparator are still unrun.
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
+The [research-estimate planning interface](artifacts/research-estimate-planning-v1/RESULT.md)
+now gives search, imitation, RL and hybrid callbacks the same nominal geometry,
+then seals complete routes before private target evaluation. Root's integrated
+boundary checks pass **85 tests**. Direct forged-STOP cases now repeat preflight
+before private evidence access. This is generated-array software evidence;
+patient releases, trained-policy comparisons and outside-image tool feasibility
+remain unestablished.
+
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131
 additional controls passed. A sealed two-action plan scores 2 versus 0 mm³
