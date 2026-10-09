@@ -1,0 +1,107 @@
+"""Read-only static admission for a generated smaller layer-profile call.
+
+This never imports Torch or loads checkpoint tensors.
+"""
+import hashlib
+import json
+from pathlib import Path
+import numpy as np
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+BASE = ROOT / 'build/limited-input-guard-design/gliomoda-full128-tiled-feasibility-v1'
+OLD = json.loads((BASE / 'feasibility-contract.json').read_text())
+NEW = json.loads((HERE / 'profile-contract.json').read_text())
+
+def file_hash(path):
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(block)
+    return digest.hexdigest()
+
+resource_keys = ('process_group_rss_cap_kib', 'wall_time_cap_seconds', 'log_cap_bytes',
+                 'host_preflight_seconds', 'host_preflight_min_free_percent',
+                 'host_preflight_max_free_spread_points', 'host_preflight_swap_growth_measurement_tolerance_mib',
+                 'host_preflight_required_kernel_pressure_mask', 'host_sample_target_interval_seconds',
+                 'host_sample_max_interval_seconds', 'slow_inventory_interval_seconds',
+                 'slow_inventory_max_age_seconds', 'pageouts_swapouts_policy', 'host_abort_min_free_percent',
+                 'host_abort_free_drop_points', 'host_abort_swap_growth_mib', 'host_abort_kernel_pressure_masks',
+                 'host_compressor_occupied', 'acquisition_allowlist_path', 'acquisition_allowlist_sha256',
+                 'project_compute_policy', 'launch_ancestor_exemption')
+for key in resource_keys:
+    if key not in ('acquisition_allowlist_path', 'acquisition_allowlist_sha256',
+                   'project_compute_policy'):
+        assert OLD[key] == NEW[key], key
+assert NEW['process_group_rss_cap_kib'] == 3145728
+assert NEW['wall_time_cap_seconds'] == 120
+assert NEW['gate'] == 'CPU_TILED_LAYER_PROFILE_64_V1'
+assert NEW['arm_order'] == ['tiled'] and NEW['native_arm_enabled'] is False
+assert NEW['single_full_patch_forward'] is False and NEW['single_generated_forward'] is True
+assert NEW['tta_sliding_window_autocast'] is False
+assert NEW['model_training_or_patient_inference'] is False
+assert NEW['output_depth_tile'] == 4
+assert NEW['model_patch_size'] == [128, 128, 128]
+assert NEW['input_shape'] == [1, 2, 64, 64, 64]
+assert NEW['output_shape'] == [1, 3, 64, 64, 64]
+for name, expected in NEW['runner_source_sha256'].items():
+    assert file_hash(HERE / name) == expected, name
+assert file_hash(ROOT / NEW['tracked_adapter_path']) == NEW['tracked_adapter_sha256']
+assert NEW['acquisition_allowlist_path'] is None and NEW['acquisition_allowlist_sha256'] is None
+assert NEW['project_compute_policy'].startswith('No acquisition process is allowlisted')
+receipt = json.loads((HERE / 'generated-input-receipt.json').read_text())
+assert receipt['scope'] == 'Generated software control only; no patient data'
+assert receipt['npy_sha256'] == NEW['input_npy_sha256']
+assert receipt['raw_sha256'] == NEW['input_raw_sha256']
+assert file_hash(HERE / 'generated-input.npy') == NEW['input_npy_sha256']
+values = np.load(HERE / 'generated-input.npy', allow_pickle=False, mmap_mode='r')
+assert list(values.shape) == NEW['input_shape'] and values.dtype == np.float32
+assert file_hash(HERE / 'generated-input.npy') == NEW['input_npy_sha256']
+assert hashlib.sha256(values.tobytes(order='C')).hexdigest() == NEW['input_raw_sha256']
+assert NEW['phase_probe_expected_counts'] == {'conv3d': 27, 'instancenorm3d': 22, 'convtranspose3d': 5, 'decoder_stage': 5}
+assert (HERE / 'tiled').exists() is False
+model = ROOT / 'data/models/gliomoda-v1.0.2/t1c-t2f-pinned-v1'
+for name in ('dataset.json', 'plans.json'):
+    assert file_hash(model / name) == NEW['model_file_sha256'][name]
+checkpoint = model / 'fold_all/checkpoint_final.pth'
+assert checkpoint.is_file() and checkpoint.stat().st_size > 0
+plans = json.loads((model / 'plans.json').read_text())
+configuration = plans['configurations']['3d_fullres']
+a = configuration['architecture']['arch_kwargs']
+assert configuration['patch_size'] == [128, 128, 128]
+assert a['conv_op'] == 'torch.nn.modules.conv.Conv3d'
+assert a['norm_op'] == 'torch.nn.modules.instancenorm.InstanceNorm3d'
+assert a['dropout_op'] is None and a['dropout_op_kwargs'] is None
+assert a['kernel_sizes'] == [[3, 3, 3]] * 6
+assert a['strides'] == [[1, 1, 1]] + [[2, 2, 2]] * 5
+spatial = [64, 64, 64]
+for stride in a['strides']:
+    spatial = [length // step for length, step in zip(spatial, stride)]
+assert spatial == [2, 2, 2]
+prior_estimate = json.loads((ROOT / 'build/limited-input-guard-design/gliomoda-nnunet-memory-diagnostic-v2/preflight.json').read_text())
+assert prior_estimate['network_feature_map_bytes_fp32_aggregate_not_peak'] == 1811185664
+assert prior_estimate['generated_64_feature_map_bytes_fp32_aggregate_not_peak'] == 226398208
+assert prior_estimate['full_res_second_conv_possible_columns_bytes_fp32'] == 7247757312
+assert prior_estimate['estimated_model_unique_parameter_bytes_fp32'] == 124789052
+readiness = {
+    'scope': 'Static generated 64-cubed tiled layer-profile preparation; no checkpoint load or model forward',
+    'model_children_launched': False, 'patient_data_accessed': False,
+    'contract_sha256': file_hash(HERE / 'profile-contract.json'),
+    'input_npy_sha256': NEW['input_npy_sha256'],
+    'adapter_sha256': NEW['tracked_adapter_sha256'],
+    'checkpoint_expected_sha256_verified_at_worker_launch_only': NEW['model_file_sha256']['fold_all/checkpoint_final.pth'],
+    'unchanged_prior_guard_keys': len(resource_keys) - 3,
+    'deepest_spatial_shape': spatial,
+    'generated_input_bytes_fp32': int(values.nbytes),
+    'expected_output_bytes_fp32': 1 * 3 * 64 ** 3 * 4,
+    'unique_model_weight_bytes_fp32_prior_meta_estimate': prior_estimate['estimated_model_unique_parameter_bytes_fp32'],
+    'profile64_feature_map_aggregate_bytes_fp32_not_peak': prior_estimate['generated_64_feature_map_bytes_fp32_aggregate_not_peak'],
+    'prior_full128_feature_map_aggregate_bytes_fp32_not_peak': prior_estimate['network_feature_map_bytes_fp32_aggregate_not_peak'],
+    'prior_full128_native_second_conv_columns_bytes_fp32_not_tiled_prediction': prior_estimate['full_res_second_conv_possible_columns_bytes_fp32'],
+    'native_full128_reference_planned': False,
+    'model_patch_feasibility_not_patient_accuracy': True,
+    'acquisition_exception_active': False,
+    'observer_benchmark': json.loads((HERE / 'observer-benchmark.json').read_text()),
+}
+(HERE / 'readiness.json').write_text(json.dumps(readiness, indent=2, sort_keys=True) + '\n')
+print(json.dumps(readiness, sort_keys=True))

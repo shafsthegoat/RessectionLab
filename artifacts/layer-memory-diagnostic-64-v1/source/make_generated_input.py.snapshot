@@ -1,0 +1,30 @@
+"""Freeze one nonpatient FP32 64-cubed input without loading any model."""
+import hashlib
+import json
+from pathlib import Path
+import numpy as np
+
+HERE = Path(__file__).resolve().parent
+OUT = HERE / "generated-input.npy"
+RECEIPT = HERE / "generated-input-receipt.json"
+if OUT.exists() or RECEIPT.exists():
+    raise FileExistsError("generated input already frozen")
+if np.__version__ != "2.0.1":
+    raise RuntimeError("unpinned NumPy runtime")
+shape = (1, 2, 64, 64, 64)
+indices = np.arange(np.prod(shape), dtype=np.int32)
+values = np.ascontiguousarray((((indices * 29 + 17) % 127) - 63).astype(np.float32).reshape(shape)
+                              / np.float32(63), dtype=np.float32)
+with OUT.open("xb") as stream:
+    np.save(stream, values, allow_pickle=False)
+sha = hashlib.sha256()
+with OUT.open("rb") as stream:
+    for block in iter(lambda: stream.read(1024 * 1024), b""):
+        sha.update(block)
+report = {"scope": "Generated software control only; no patient data", "shape": shape,
+          "dtype": str(values.dtype), "formula": "((flat_index*29+17 mod 127)-63)/63",
+          "npy_sha256": sha.hexdigest(),
+          "raw_sha256": hashlib.sha256(values.tobytes(order="C")).hexdigest(),
+          "nonzero_count": int(np.count_nonzero(values)), "numpy_version": np.__version__}
+RECEIPT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+print(json.dumps(report, sort_keys=True))

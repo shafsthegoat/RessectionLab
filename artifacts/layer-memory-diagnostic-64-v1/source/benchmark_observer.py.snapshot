@@ -1,0 +1,39 @@
+"""Measure generated phase-hook observer cost without loading model or tensors."""
+import hashlib
+import json
+import os
+import statistics
+import time
+from pathlib import Path
+from darwin_fast_sampler import FastDarwinSampler
+HERE = Path(__file__).resolve().parent
+OUT = HERE / 'observer-benchmark.json'
+LOG = HERE / 'observer-benchmark.log'
+if OUT.exists() or LOG.exists():
+    raise FileExistsError('one-shot observer benchmark already exists')
+sampler = FastDarwinSampler()
+host = sampler.host()
+if host['kernel_pressure_mask'] != 1:
+    raise SystemExit('host pressure not normal; observer benchmark deferred')
+samples = []
+with LOG.open('x') as stream:
+    for i in range(100):
+        before = time.perf_counter()
+        row = sampler.group(os.getpgrp(), os.getpid())
+        sampled = time.perf_counter()
+        stream.write(json.dumps({'phase': 'observer-fixture:%03d' % i,
+                                 'resident_bytes': row['process_group_resident_bytes']}, sort_keys=True) + '\n')
+        stream.flush()
+        samples.append({'sample_seconds': sampled - before,
+                        'total_with_json_flush_seconds': time.perf_counter() - before})
+report = {'scope': 'No-model/no-tensor direct libproc plus JSON flush observer cost on 100 generated fixture phases',
+          'host_start_kernel_pressure_mask': host['kernel_pressure_mask'],
+          'count': len(samples),
+          'sample_median_ms': statistics.median(s['sample_seconds'] for s in samples)*1000,
+          'sample_max_ms': max(s['sample_seconds'] for s in samples)*1000,
+          'total_median_ms': statistics.median(s['total_with_json_flush_seconds'] for s in samples)*1000,
+          'total_max_ms': max(s['total_with_json_flush_seconds'] for s in samples)*1000,
+          'total_sum_ms': sum(s['total_with_json_flush_seconds'] for s in samples)*1000,
+          'log_sha256': hashlib.sha256(LOG.read_bytes()).hexdigest()}
+OUT.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
+print(json.dumps(report, sort_keys=True))

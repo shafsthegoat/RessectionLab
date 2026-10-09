@@ -1,0 +1,1062 @@
+{
+  "accepted_for_feasibility": true,
+  "acquisition_allowlist_manifest_sha256": null,
+  "arm": "tiled",
+  "completed_at_utc": "2026-10-09T08:53:23.494185+00:00",
+  "compressor_pageout_swapout_policy": "diagnostic_only; no isolated counter stop/hold",
+  "contract_sha256": "7c2419a2b1f9ef0ac395b17f6c8b03029e5126ecb4fef09d113311cc96507ced",
+  "detached_descendant_cleanup": [],
+  "detached_descendant_pids_observed": [],
+  "elapsed_seconds": 2.390259499999999,
+  "exit_code": 0,
+  "fast_series": [
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.0015567499999988854,
+      "group_read_seconds": 8.816600000116637e-05,
+      "host_read_seconds": 4.054100000061567e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": null,
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 622592,
+      "slow_inventory_age_seconds": 0.028817000000000093,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.105462+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.06081316699999917,
+      "group_read_seconds": 5.8750000000884484e-05,
+      "host_read_seconds": 3.3666000000209806e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 33849344,
+      "slow_inventory_age_seconds": 0.08806912500000053,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.164720+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.11911158399999877,
+      "group_read_seconds": 5.962499999867532e-05,
+      "host_read_seconds": 2.4582999998301602e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 70631424,
+      "slow_inventory_age_seconds": 0.1463850839999985,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.223024+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.17223241700000003,
+      "group_read_seconds": 4.350000000030718e-05,
+      "host_read_seconds": 2.6542000000517874e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 108609536,
+      "slow_inventory_age_seconds": 0.1994992499999988,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.276146+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.23225558400000068,
+      "group_read_seconds": 6.358299999931205e-05,
+      "host_read_seconds": 2.7375000001939043e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 133480448,
+      "slow_inventory_age_seconds": 0.2595461669999999,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.336169+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.2922624169999999,
+      "group_read_seconds": 6.591699999702882e-05,
+      "host_read_seconds": 2.1540999998848065e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 149094400,
+      "slow_inventory_age_seconds": 0.3195590419999981,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.396176+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.3523497500000019,
+      "group_read_seconds": 0.00010604199999875163,
+      "host_read_seconds": 2.6625000000279897e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 161628160,
+      "slow_inventory_age_seconds": 0.3796271669999989,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.456259+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.41231020900000104,
+      "group_read_seconds": 7.387500000177738e-05,
+      "host_read_seconds": 2.4666999998146366e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 172048384,
+      "slow_inventory_age_seconds": 0.43960587499999804,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.516224+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.4673306249999989,
+      "group_read_seconds": 5.1959000000323385e-05,
+      "host_read_seconds": 4.14580000018816e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 178749440,
+      "slow_inventory_age_seconds": 0.49455087499999806,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.571237+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.5273381669999999,
+      "group_read_seconds": 8.00000000005241e-05,
+      "host_read_seconds": 3.245799999973542e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 191479808,
+      "slow_inventory_age_seconds": 0.052339500000002204,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.631253+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.5784878750000004,
+      "group_read_seconds": 7.120799999782434e-05,
+      "host_read_seconds": 3.9624999999432475e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 201916416,
+      "slow_inventory_age_seconds": 0.10354366700000028,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.682402+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.6342959999999991,
+      "group_read_seconds": 6.570800000105237e-05,
+      "host_read_seconds": 2.0834000000746755e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 206241792,
+      "slow_inventory_age_seconds": 0.15935762500000195,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.738212+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.6857666249999994,
+      "group_read_seconds": 7.129200000122182e-05,
+      "host_read_seconds": 2.666600000011954e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 218595328,
+      "slow_inventory_age_seconds": 0.21081929200000005,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.789680+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.745789834,
+      "group_read_seconds": 7.52910000016982e-05,
+      "host_read_seconds": 2.6249999997673967e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 232210432,
+      "slow_inventory_age_seconds": 0.2708419580000019,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.849704+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.8058113340000013,
+      "group_read_seconds": 7.287500000074942e-05,
+      "host_read_seconds": 2.645800000067311e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 238501888,
+      "slow_inventory_age_seconds": 0.33086370800000253,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.909726+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.8658212089999999,
+      "group_read_seconds": 7.150000000066825e-05,
+      "host_read_seconds": 2.7833000000754282e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 249561088,
+      "slow_inventory_age_seconds": 0.3908798329999996,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:21.969735+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.9258038339999999,
+      "group_read_seconds": 4.320800000101599e-05,
+      "host_read_seconds": 1.9915999999398082e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 270270464,
+      "slow_inventory_age_seconds": 0.450862542000003,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.029718+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.9858414999999994,
+      "group_read_seconds": 3.9624999999432475e-05,
+      "host_read_seconds": 2.6499999997042778e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 308264960,
+      "slow_inventory_age_seconds": 0.000954416999999097,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.089757+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.0459921250000015,
+      "group_read_seconds": 9.800000000126374e-05,
+      "host_read_seconds": 4.258299999904125e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 338313216,
+      "slow_inventory_age_seconds": 0.06108204199999889,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.149906+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.1058598750000002,
+      "group_read_seconds": 3.137499999894544e-05,
+      "host_read_seconds": 1.8665999999001315e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_input_model_hashes",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 336920576,
+      "slow_inventory_age_seconds": 0.12099658300000016,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.209776+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.1659652499999993,
+      "group_read_seconds": 7.825000000138971e-05,
+      "host_read_seconds": 2.6499999997042778e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_weights_only_load",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 579125248,
+      "slow_inventory_age_seconds": 0.18106974999999892,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.269882+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.2190334589999985,
+      "group_read_seconds": 2.7499999998070734e-05,
+      "host_read_seconds": 1.983299999963606e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_weights_only_load",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 582385664,
+      "slow_inventory_age_seconds": 0.23417737500000158,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.322946+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.2712712090000018,
+      "group_read_seconds": 8.958400000125266e-05,
+      "host_read_seconds": 2.8542000002573786e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_weights_only_load",
+      "pgid": 81110,
+      "pids": [
+        81110,
+        81122
+      ],
+      "process_group_resident_bytes": 582615040,
+      "slow_inventory_age_seconds": 0.28636991699999825,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.375185+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.3213167500000012,
+      "group_read_seconds": 6.74169999967944e-05,
+      "host_read_seconds": 2.883400000186498e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_optimizer_cleanup",
+      "pgid": 81110,
+      "pids": [
+        81110,
+        81123
+      ],
+      "process_group_resident_bytes": 583548928,
+      "slow_inventory_age_seconds": 0.3364249579999985,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.425232+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.3775031250000005,
+      "group_read_seconds": 8.058399999910648e-05,
+      "host_read_seconds": 3.4458000001791333e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_network_construction_alias_checks",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 583270400,
+      "slow_inventory_age_seconds": 0.39261175000000037,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.481418+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.4375208340000007,
+      "group_read_seconds": 8.004099999681102e-05,
+      "host_read_seconds": 2.8582999998860714e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_network_construction_alias_checks",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 583270400,
+      "slow_inventory_age_seconds": 0.4526239170000004,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.541436+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.4891580419999997,
+      "group_read_seconds": 8.733399999982794e-05,
+      "host_read_seconds": 4.874999999771035e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:encoder.stages.0.0.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 613056512,
+      "slow_inventory_age_seconds": 0.5041523750000003,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.593067+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.5492203750000009,
+      "group_read_seconds": 0.00010420799999977248,
+      "host_read_seconds": 5.9000000000253294e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:encoder.stages.0.0.convs.1.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 709623808,
+      "slow_inventory_age_seconds": 0.051837542000001235,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.653133+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.6092070840000012,
+      "group_read_seconds": 8.929199999840876e-05,
+      "host_read_seconds": 3.925000000037926e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:encoder.stages.1.0.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 711966720,
+      "slow_inventory_age_seconds": 0.1118277919999997,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.713118+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.6692133750000018,
+      "group_read_seconds": 3.81249999996669e-05,
+      "host_read_seconds": 3.345800000076338e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.1.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 713736192,
+      "slow_inventory_age_seconds": 0.1717905420000001,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.773130+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.7276426670000014,
+      "group_read_seconds": 8.783299999848282e-05,
+      "host_read_seconds": 4.004200000196079e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.3.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 775847936,
+      "slow_inventory_age_seconds": 0.23014775000000043,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.831557+00:00"
+    },
+    {
+      "available_percent": 56,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.7776756250000005,
+      "group_read_seconds": 8.816600000116637e-05,
+      "host_read_seconds": 3.2790999998866255e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.transpconvs.4:convtranspose3d:after",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 841826304,
+      "slow_inventory_age_seconds": 0.2802072090000003,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.881593+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.8377718340000015,
+      "group_read_seconds": 0.00010133299999992573,
+      "host_read_seconds": 3.8290999999190944e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 956252160,
+      "slow_inventory_age_seconds": 0.34025579200000067,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:22.941683+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.8982316669999975,
+      "group_read_seconds": 7.508300000580448e-05,
+      "host_read_seconds": 3.69169999956398e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 956252160,
+      "slow_inventory_age_seconds": 0.4002578750000012,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.002145+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.9578010419999998,
+      "group_read_seconds": 0.00012216599999703703,
+      "host_read_seconds": 3.587500000179489e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.0.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 956252160,
+      "slow_inventory_age_seconds": 0.4603255840000031,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.061718+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.017910792000002,
+      "group_read_seconds": 9.558400000031497e-05,
+      "host_read_seconds": 5.170899999740186e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "layer:decoder.stages.4.convs.1.conv:conv3d:before",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 956252160,
+      "slow_inventory_age_seconds": 0.009971124999999859,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.121825+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.077776499999999,
+      "group_read_seconds": 5.387499999898182e-05,
+      "host_read_seconds": 2.479199999783077e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 956301312,
+      "slow_inventory_age_seconds": 0.06991383299999399,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.181690+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.1378173339999975,
+      "group_read_seconds": 7.64170000024933e-05,
+      "host_read_seconds": 2.8957999994361217e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 956301312,
+      "slow_inventory_age_seconds": 0.1299649159999987,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.241733+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.1978602920000014,
+      "group_read_seconds": 8.916699999872435e-05,
+      "host_read_seconds": 3.054199999752427e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 953614336,
+      "slow_inventory_age_seconds": 0.19000245799999504,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.301777+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.2578637499999985,
+      "group_read_seconds": 8.229099999823575e-05,
+      "host_read_seconds": 2.6500000004148205e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 954122240,
+      "slow_inventory_age_seconds": 0.25000566599999985,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.361782+00:00"
+    },
+    {
+      "available_percent": 55,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.3091479590000006,
+      "group_read_seconds": 8.524999999792726e-05,
+      "host_read_seconds": 3.0125000002101388e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "after_output_transfer",
+      "pgid": 81110,
+      "pids": [
+        81110
+      ],
+      "process_group_resident_bytes": 468172800,
+      "slow_inventory_age_seconds": 0.30126862499999874,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7431979008,
+      "timestamp_utc": "2026-10-09T08:53:23.413059+00:00"
+    }
+  ],
+  "last_flushed_phase": "after_output_transfer",
+  "memory_accounting": "sampled descendant-aware RSS, available percentage, swap, compressor are distinct",
+  "monitor_error": null,
+  "no_retry": true,
+  "post_error": null,
+  "post_fast_host": {
+    "available_percent": 55,
+    "host_read_seconds": 2.6624999996727183e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 8589934592,
+    "swap_used_bytes": 7431979008
+  },
+  "post_guard_reason": null,
+  "post_slow_inventory": {
+    "acquisition_allowlist_manifest_sha256": null,
+    "collection_seconds": 0.020875457999999014,
+    "compressor_occupied_pages": 272033,
+    "excluded_ancestor_pids": [
+      81083,
+      18726,
+      18690,
+      1
+    ],
+    "pageouts_counter": 3556574,
+    "project_process_inventory": [
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 18806,
+        "pid": 18806,
+        "project_context": false,
+        "rss_kib": 1888
+      },
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 80801,
+        "pid": 80801,
+        "project_context": false,
+        "rss_kib": 88560
+      }
+    ],
+    "sample_monotonic": 32.532143041,
+    "swapouts_counter": 19411082,
+    "timestamp_utc": "2026-10-09T08:53:23.494092+00:00",
+    "vm_page_bytes": 16384
+  },
+  "process_group_id": 81110,
+  "process_group_rss_cap_kib": 3145728,
+  "sampled_peak_process_group_resident_bytes": 956301312,
+  "scope": "One generated-only 64-cubed CPU tiled layer-RSS diagnostic; no full-patch feasibility, patient accuracy, or native comparator",
+  "slow_inventory_errors": [],
+  "slow_series": [
+    {
+      "acquisition_allowlist_manifest_sha256": null,
+      "collection_seconds": 0.0245697920000012,
+      "compressor_occupied_pages": 257247,
+      "excluded_ancestor_pids": [
+        81083,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3556539,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 80801,
+          "pid": 80801,
+          "project_context": false,
+          "rss_kib": 88560
+        }
+      ],
+      "sample_monotonic": 30.114591166,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T08:53:21.076534+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": null,
+      "collection_seconds": 0.020472625000000022,
+      "compressor_occupied_pages": 257247,
+      "excluded_ancestor_pids": [
+        81083,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3556539,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 80801,
+          "pid": 80801,
+          "project_context": false,
+          "rss_kib": 88560
+        }
+      ],
+      "sample_monotonic": 30.616829208,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T08:53:21.578771+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": null,
+      "collection_seconds": 0.020363917000000953,
+      "compressor_occupied_pages": 257258,
+      "excluded_ancestor_pids": [
+        81083,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3556539,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 80801,
+          "pid": 80801,
+          "project_context": false,
+          "rss_kib": 88560
+        }
+      ],
+      "sample_monotonic": 31.126750458,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T08:53:22.088694+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": null,
+      "collection_seconds": 0.022715375000000648,
+      "compressor_occupied_pages": 257257,
+      "excluded_ancestor_pids": [
+        81083,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3556574,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 80801,
+          "pid": 80801,
+          "project_context": false,
+          "rss_kib": 88560
+        }
+      ],
+      "sample_monotonic": 31.639139416,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T08:53:22.601081+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": null,
+      "collection_seconds": 0.023055500000005225,
+      "compressor_occupied_pages": 272096,
+      "excluded_ancestor_pids": [
+        81083,
+        18726,
+        18690,
+        1
+      ],
+      "pageouts_counter": 3556574,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1888
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 80801,
+          "pid": 80801,
+          "project_context": false,
+          "rss_kib": 88560
+        }
+      ],
+      "sample_monotonic": 32.14952,
+      "swapouts_counter": 19411082,
+      "timestamp_utc": "2026-10-09T08:53:23.111462+00:00",
+      "vm_page_bytes": 16384
+    }
+  ],
+  "wall_time_cap_seconds": 120,
+  "watchdog_reason": null
+}

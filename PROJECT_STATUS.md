@@ -32,6 +32,13 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [64³ generated-input memory diagnostic](artifacts/layer-memory-diagnostic-64-v1/INDEPENDENT_REVIEW.md)
+completed one instrumented forward with finite output at **956,301,312 bytes**
+peak sampled memory. The final decoder concatenation boundary added about
+67 MB RSS and its following convolution about 113 MB. These observations identify
+optimization candidates; they do not prove the cause of the preserved full-128³
+pressure stop or establish patient accuracy. No patient inference or RL training ran.
+
 The [scan support contract](docs/scan-support-unknown-contract.md) now keeps
 scan field of view, estimated anatomy and prediction coverage separate. Five
 generated controls pass: unobserved locations stay unknown, and predicted

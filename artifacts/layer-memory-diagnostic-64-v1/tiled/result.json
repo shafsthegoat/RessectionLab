@@ -1,0 +1,51 @@
+{
+  "alias_compared_pairs": 184,
+  "alias_groups": 88,
+  "arm": "tiled",
+  "checkpoint_sha256_after": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+  "contract_sha256": "7c2419a2b1f9ef0ac395b17f6c8b03029e5126ecb4fef09d113311cc96507ced",
+  "dropout_configured": false,
+  "forward_seconds": 0.5745945419184864,
+  "full_feature_map_instancenorm_unchanged": true,
+  "input_npy_sha256": "c2551f7e80714ffa49f2dc300c916d0a75004b9b0c4888f17e40d54f300b4bb4",
+  "input_shape": [
+    1,
+    2,
+    64,
+    64,
+    64
+  ],
+  "libproc_sample_max_seconds_excludes_json_flush": 9.49581153690815e-05,
+  "libproc_sample_total_seconds_excludes_json_flush": 0.003029624931514263,
+  "logits_npy_sha256": "377bb7a1dc0bea971ab3c2890432d20c2230744b479a5e7605bd824b0a81ddb1",
+  "logits_raw_sha256": "52252550d12d7fc0ddd930c044f58cd6e1bca00606646bbd9780687bce3f2853",
+  "numpy_version": "2.0.1",
+  "observed_module_counts": {
+    "conv3d": 27,
+    "convtranspose3d": 5,
+    "decoder_stage": 5,
+    "instancenorm3d": 22
+  },
+  "observer_samples": 110,
+  "output_nonfinite": 0,
+  "output_shape": [
+    1,
+    3,
+    64,
+    64,
+    64
+  ],
+  "safe_globals_restored": true,
+  "scope": "Generated-only 64-cubed tiled CPU per-layer memory diagnostic; no full-patch feasibility, patient accuracy, or native comparator",
+  "single_generated_volume_no_sliding_window_tta_autocast": true,
+  "tiled_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "torch_version": "2.14.1",
+  "unique_parameter_elements": 31197263,
+  "wrapper_report": {
+    "named_module_occurrences": 337,
+    "parameter_name_occurrences": 292,
+    "parameter_state_module_identities_preserved": true,
+    "state_dict_entries": 292,
+    "wrapped_unique_conv3d_modules": 27
+  }
+}

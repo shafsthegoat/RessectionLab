@@ -1,0 +1,35 @@
+{
+  "acquisition_exception_active": false,
+  "adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "checkpoint_expected_sha256_verified_at_worker_launch_only": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+  "contract_sha256": "7c2419a2b1f9ef0ac395b17f6c8b03029e5126ecb4fef09d113311cc96507ced",
+  "deepest_spatial_shape": [
+    2,
+    2,
+    2
+  ],
+  "expected_output_bytes_fp32": 3145728,
+  "generated_input_bytes_fp32": 2097152,
+  "input_npy_sha256": "c2551f7e80714ffa49f2dc300c916d0a75004b9b0c4888f17e40d54f300b4bb4",
+  "model_children_launched": false,
+  "model_patch_feasibility_not_patient_accuracy": true,
+  "native_full128_reference_planned": false,
+  "observer_benchmark": {
+    "count": 100,
+    "host_start_kernel_pressure_mask": 1,
+    "log_sha256": "5bf42c2e962c849809db23e05ac6966f36e005f48545ed81d37067742c962d47",
+    "sample_max_ms": 0.07049999999999418,
+    "sample_median_ms": 0.012958000000000414,
+    "scope": "No-model/no-tensor direct libproc plus JSON flush observer cost on 100 generated fixture phases",
+    "total_max_ms": 0.09791699999999598,
+    "total_median_ms": 0.016541500000001597,
+    "total_sum_ms": 1.7529569999999786
+  },
+  "patient_data_accessed": false,
+  "prior_full128_feature_map_aggregate_bytes_fp32_not_peak": 1811185664,
+  "prior_full128_native_second_conv_columns_bytes_fp32_not_tiled_prediction": 7247757312,
+  "profile64_feature_map_aggregate_bytes_fp32_not_peak": 226398208,
+  "scope": "Static generated 64-cubed tiled layer-profile preparation; no checkpoint load or model forward",
+  "unchanged_prior_guard_keys": 19,
+  "unique_model_weight_bytes_fp32_prior_meta_estimate": 124789052
+}
