@@ -205,6 +205,14 @@ The earlier direct-file launcher failed before native execution; the corrected
 module launch made exactly one audited native call. This is a small idealized
 numerical-software pass only. The six remaining cases, mesh/time-step
 convergence, patient-scale solver feasibility and physical fidelity remain open.
+The [nonuniform cube readout](docs/mechanics-nonpatient-sparse-nonuniform-readout.md)
+now reconstructs element stress/energy and signed local nodal forces from
+saved fields, and interpolates seven physical comparison points across all
+their shared tet interfaces. This closes a source-level false pass where
+altered nonuniform stress and energy went unchecked. Fourteen focused tests
+and an independent native-affine mathematical control pass. No nonuniform
+FEBio solve or mesh/time-step convergence result exists yet; a distinct
+one-call release and saved-output audit are still required.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
