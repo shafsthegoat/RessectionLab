@@ -745,3 +745,8 @@ The reusable tiled kernel now replaces dense contact sets in the private evaluat
 ### October 9: Prepare separate retrospective actor and private vascular evidence contracts
 
 The metadata helper preserves frozen IXI roles, requires intended-use QC assertions, retains unknown acquisition times and separates immutable T1 actor metadata from private MRA/annotation/registration evidence. Root tests pass 43/43 in 0.30 seconds; 58 independent candidate controls pass. It performs no image QC, authenticates no caller assertion and grants no execution admission. Header-only receipts cannot substitute for anatomy or registration review. [Integration index](../artifacts/ixi-vascular-metadata-preparation-v1/integration-index.json).
+
+
+### October 9: Preserve exact trained-network recomputation parity and measured tradeoff
+
+Both trained-network forwards on the same generated 64³ input completed with byte-identical logits and decoded labels, independently reloaded from saved arrays. The single ordered hook-free pair shows a 36,487,168-byte (34.80 MiB, 4.80%) lower sampled peak with recomputation, but 16.73 MiB of that difference predates the forward; peak growth differs by only 18.06 MiB. Forward time increases 13.3%. Both children were reaped and exact downloaders remained live. This is limited numerical/resource evidence, not robust performance, full128 feasibility or patient accuracy. The mistyped comparator invocation is retained as a root-transcribed setup refusal. [Result](../artifacts/recompute-parity-64-v2/RESULT.md).

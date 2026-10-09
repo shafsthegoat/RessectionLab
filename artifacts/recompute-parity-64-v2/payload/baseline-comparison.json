@@ -1,0 +1,47 @@
+{
+  "baseline_logits_npy_sha256": "377bb7a1dc0bea971ab3c2890432d20c2230744b479a5e7605bd824b0a81ddb1",
+  "baseline_logits_raw_sha256": "52252550d12d7fc0ddd930c044f58cd6e1bca00606646bbd9780687bce3f2853",
+  "contract_sha256": "df13db40de28b9782dc7b5e3110538b7b4671aaefec2249d6a57977bbfc9d4b2",
+  "gate_pass": true,
+  "historical_hook_observed_memory_not_comparable": true,
+  "historical_logits_npy_sha256": "377bb7a1dc0bea971ab3c2890432d20c2230744b479a5e7605bd824b0a81ddb1",
+  "metrics": {
+    "all_logits_within_predeclared_tolerance": true,
+    "decoded_label_disagreements": 0,
+    "exact_raw_logit_equality": true,
+    "max_absolute_logit_error": 0.0,
+    "max_tolerance_excess": 0.0,
+    "per_region_min_abs_margin_baseline": [
+      9.016916737891734e-05,
+      0.0004919283092021942,
+      0.012711480259895325
+    ],
+    "per_region_min_abs_margin_candidate": [
+      9.016916737891734e-05,
+      0.0004919283092021942,
+      0.012711480259895325
+    ],
+    "per_region_near_zero_counts_baseline": [
+      4,
+      2,
+      0
+    ],
+    "per_region_near_zero_counts_candidate": [
+      4,
+      2,
+      0
+    ],
+    "per_region_sign_disagreements": [
+      0,
+      0,
+      0
+    ]
+  },
+  "mode": "baseline",
+  "numerical_rule": {
+    "atol": 0.001,
+    "exact_decoded_labels": true,
+    "rtol": 0.001
+  },
+  "scope": "Saved generated 64-cube matched hook-free baseline versus historical hooked reference"
+}

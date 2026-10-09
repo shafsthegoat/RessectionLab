@@ -1,0 +1,14 @@
+{"elapsed_seconds": 0.0001069169957190752, "phase": "before_imports", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 22432}
+{"elapsed_seconds": 1.4009226248599589, "phase": "after_input_model_hashes", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 315792}
+{"elapsed_seconds": 1.402031207922846, "phase": "before_weights_only_load", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 315856}
+{"elapsed_seconds": 1.559962041908875, "phase": "after_weights_only_load", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 535824}
+{"elapsed_seconds": 1.5814984168391675, "phase": "after_optimizer_cleanup", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 541264}
+{"elapsed_seconds": 1.6251369169913232, "phase": "after_network_construction_alias_checks", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 542256}
+{"elapsed_seconds": 1.7447114170063287, "phase": "after_strict_copy_weights_cleanup", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 542720}
+{"elapsed_seconds": 1.7496207498479635, "phase": "after_tiled_conv3d_attachment", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 542928}
+{"elapsed_seconds": 1.752741999924183, "phase": "after_lazy_final_decoder_attachment", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 543696}
+{"elapsed_seconds": 1.7529404170345515, "phase": "after_optional_recompute_attachment_no_module_hooks", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 543696}
+{"elapsed_seconds": 1.7537490830291063, "phase": "before_generated_forward", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 543792}
+{"elapsed_seconds": 2.296120666898787, "phase": "after_generated_forward", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 743808}
+{"elapsed_seconds": 2.3015109170228243, "phase": "after_output_transfer", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 741952}
+{"arm": "baseline", "forward_seconds": 0.5423421659506857, "logits_raw_sha256": "52252550d12d7fc0ddd930c044f58cd6e1bca00606646bbd9780687bce3f2853", "status": "completed"}

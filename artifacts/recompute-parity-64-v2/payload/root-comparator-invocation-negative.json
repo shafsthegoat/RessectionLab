@@ -1,0 +1,8 @@
+{
+  "evidence_kind": "root transcription of exec tool result; not native command log",
+  "command": ".tools/scan-target-runtime/venv/bin/python -B build/limited-input-guard-design/gliomoda-recompute-parity-64-v2/compare_recompute.py recompute",
+  "observed_exit_code": 1,
+  "observed_output": "require baseline or pair saved-only mode\n",
+  "correction": "The subsequent pair mode completed with gate_pass=true, decoded_label_disagreements=0 and max_absolute_logit_error=0.0.",
+  "model_rerun": false
+}

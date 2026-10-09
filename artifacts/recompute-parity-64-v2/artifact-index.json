@@ -1,0 +1,235 @@
+{
+  "payloads": [
+    {
+      "path": "RESULT.md",
+      "sha256": "5e8125def75b6d63addbe5d8a4c826d1e15be6aa0c9e0ce4862a350042cf0064",
+      "size_bytes": 2622
+    },
+    {
+      "path": "payload/acquisition-allowlist.json",
+      "sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+      "size_bytes": 927
+    },
+    {
+      "path": "payload/baseline/finalization.json",
+      "sha256": "f94ee2e26cff56fb7998bd1ae2090334346f610f3f905067ae2da539f7f2a899",
+      "size_bytes": 556
+    },
+    {
+      "path": "payload/baseline/host-preflight.json",
+      "sha256": "6e041472a231fa9d2485a7d22c918bbbde8929872b5e1732d0f9a474c64c95ea",
+      "size_bytes": 19196
+    },
+    {
+      "path": "payload/baseline/launch-binding.json",
+      "sha256": "fa46a081f98f437919ac768a484b8c9ebd9aab43fa3e7aad006375358b5a5467",
+      "size_bytes": 498
+    },
+    {
+      "path": "payload/baseline/provisional-supervision.json",
+      "sha256": "ba332798014652ca85f3e216baa5e0ea87d78f768a6cdf149b6bbf64bf6bf127",
+      "size_bytes": 44718
+    },
+    {
+      "path": "payload/baseline/result.json",
+      "sha256": "6c890907018e3b2810bdb7ceeff9b9527872e88d2f4f764bd47e74045f453595",
+      "size_bytes": 2148
+    },
+    {
+      "path": "payload/baseline/supervision.json",
+      "sha256": "6d19306f2890be42a58a2030a025044aafae273930412c78bbd0f2fb1c9734c0",
+      "size_bytes": 47570
+    },
+    {
+      "path": "payload/baseline/worker.log",
+      "sha256": "174044baeb7d59cc0935953bc589b4ada5ae2d16ec01622471a5ee89d3c01110",
+      "size_bytes": 2326
+    },
+    {
+      "path": "payload/baseline-comparison.json",
+      "sha256": "c74197a581c34b85ff0934e8b47056316569a5c88662f52b12735a6135812678",
+      "size_bytes": 1415
+    },
+    {
+      "path": "payload/compare_recompute.py",
+      "sha256": "f75e0e3d9526a9838b46c412b750c3124817e70cb957ae65564f5cf12da752e4",
+      "size_bytes": 10000
+    },
+    {
+      "path": "payload/comparison.json",
+      "sha256": "06dee67d1e1c107c8aa2b60d245d9b7f1727813981c0d93929d41171b317b78a",
+      "size_bytes": 1767
+    },
+    {
+      "path": "payload/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "size_bytes": 9482
+    },
+    {
+      "path": "payload/dual-live-allowlist.json",
+      "sha256": "735d163d50ec49f3730c3aca387df90b8315b12eae7f82f6cd17a69180d1b2fd",
+      "size_bytes": 804
+    },
+    {
+      "path": "payload/generated-input-receipt.json",
+      "sha256": "83772be6ffdf2d6e0baeaf09349583f9b0df708ab6c31c8f8a0d3092e628fb36",
+      "size_bytes": 417
+    },
+    {
+      "path": "payload/independent/recompute-parity-64-v2-actual-baseline-audit.md",
+      "sha256": "7fdbaab4d3053e9d7a82cc7a56bb88dda38ffe2b135a870898014e81222a191f",
+      "size_bytes": 2003
+    },
+    {
+      "path": "payload/independent/recompute-parity-64-v2-actual-pair-audit.md",
+      "sha256": "2b7e36273365c508b7bad1015c61585e8f557c9cc22e3092452c26e2bf634a61",
+      "size_bytes": 3166
+    },
+    {
+      "path": "payload/independent/recompute-parity-64-v2-matched-prospective-review.md",
+      "sha256": "6e0503e255d3cb248b8aae8668b1cc4e4fc96ece63db297125679d5be73c2f0c",
+      "size_bytes": 3345
+    },
+    {
+      "path": "payload/ixi-exact-process.json",
+      "sha256": "c65d03b31713d7c26e38a60161b429cfc19edaa7067ceb029b7135cc8feb577c",
+      "size_bytes": 917
+    },
+    {
+      "path": "payload/launch_gate.py",
+      "sha256": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+      "size_bytes": 916
+    },
+    {
+      "path": "payload/lazy_concat.py",
+      "sha256": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+      "size_bytes": 11313
+    },
+    {
+      "path": "payload/monitor_primitives.py",
+      "sha256": "a6ee58d8b92d82b8ccabf7b996bc36363afa2b1b3e276f222d5969d56dc66905",
+      "size_bytes": 4080
+    },
+    {
+      "path": "payload/pair-contract.json",
+      "sha256": "df13db40de28b9782dc7b5e3110538b7b4671aaefec2249d6a57977bbfc9d4b2",
+      "size_bytes": 6672
+    },
+    {
+      "path": "payload/pair_worker.py",
+      "sha256": "51f7b589d10cba55007e03fe75d015b13cf2db690a6f42d29ad237bd24bb587e",
+      "size_bytes": 14046
+    },
+    {
+      "path": "payload/recompute/finalization.json",
+      "sha256": "264faaff9cd8d2660f9447f7a14d5efe2bc52077f7dd68ea9b8b771e8a889681",
+      "size_bytes": 556
+    },
+    {
+      "path": "payload/recompute/host-preflight.json",
+      "sha256": "b5261061984cfc0214e6844d9884c4ec05325e7b2dfc397e7fcf436b4c826df4",
+      "size_bytes": 20095
+    },
+    {
+      "path": "payload/recompute/launch-binding.json",
+      "sha256": "24250db01be998ddaa9c7ec540d442e80d618eb8ab25940e528442c98fe6b4d2",
+      "size_bytes": 498
+    },
+    {
+      "path": "payload/recompute/provisional-supervision.json",
+      "sha256": "d6044450fde91075bff7482f5f56e07116147753c2b993b8be3e6427281f0bf2",
+      "size_bytes": 40724
+    },
+    {
+      "path": "payload/recompute/result.json",
+      "sha256": "10e7e31b12a8e76596574ccd5dc6477a588b02c940a38c99a2818b81c3d0b9b4",
+      "size_bytes": 2320
+    },
+    {
+      "path": "payload/recompute/supervision.json",
+      "sha256": "9e82f32a8bb5a640d4c88187704f7ed14f349b46438970904ba8693b32558b81",
+      "size_bytes": 43575
+    },
+    {
+      "path": "payload/recompute/worker.log",
+      "sha256": "71e7d1c7187cb57d63ebbf003a1cb340021564129fb147e9fb037734f5b63c13",
+      "size_bytes": 2328
+    },
+    {
+      "path": "payload/recompute_skip.py",
+      "sha256": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+      "size_bytes": 11954
+    },
+    {
+      "path": "payload/root-baseline-release.json",
+      "sha256": "8350c1941d54ddbc265b43157fe4f6b80d30d718671441933a7c6ea3629ae7e1",
+      "size_bytes": 285
+    },
+    {
+      "path": "payload/root-comparator-invocation-negative.json",
+      "sha256": "a5341702cfb489362fdcb44b29dc049eb788d6df97ee94749928165e61d54293",
+      "size_bytes": 502
+    },
+    {
+      "path": "payload/root-recompute-release.json",
+      "sha256": "a9393ffae6f79e80320fc3c80f451413d465b89d55b34b4f69bb5585d8a54414",
+      "size_bytes": 460
+    },
+    {
+      "path": "payload/safe_finalize.py",
+      "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+      "size_bytes": 13744
+    },
+    {
+      "path": "payload/slow_inventory.py",
+      "sha256": "16c57744450f26a41249b54297c387bbc0136d52abf79042c143b260b28148b4",
+      "size_bytes": 13306
+    },
+    {
+      "path": "payload/supervise_pair.py",
+      "sha256": "6451655ae3602481b896b7cd33335ccc392c49cdd3f90553a3dcb271555771d9",
+      "size_bytes": 26661
+    },
+    {
+      "path": "payload/test_dual_live_allowlist.py",
+      "sha256": "4c95458ac219415f4fbffd1a0a7e27c890aa1b50fc4445ff91c721b48dd6fc5d",
+      "size_bytes": 4507
+    },
+    {
+      "path": "payload/test_isolated_import.py",
+      "sha256": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968",
+      "size_bytes": 1547
+    },
+    {
+      "path": "payload/test_launch_control.py",
+      "sha256": "43e84767ebe2fe2ce318d7b15d30333ede93c37011ea0d50cc5ebf8ff27511c4",
+      "size_bytes": 12850
+    },
+    {
+      "path": "payload/test_main_entry_precheckpoint.py",
+      "sha256": "457fc15ff293784de6cb73bfe69251c03cc8cfb7dbc9ea45baea9e210c79aa71",
+      "size_bytes": 4008
+    },
+    {
+      "path": "payload/test_matched_baseline_gate.py",
+      "sha256": "d0043eee26288ced1185ef1482df7e4b930cc4b97c4a61f9185cc050beae55aa",
+      "size_bytes": 3550
+    },
+    {
+      "path": "payload/test_phase_no_ps.py",
+      "sha256": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf",
+      "size_bytes": 893
+    },
+    {
+      "path": "payload/test_saved_reference_and_metrics.py",
+      "sha256": "238969a885552ffaefacbad194ece8461f353f4ca5af2374ea2a7adbc585b78b",
+      "size_bytes": 2174
+    },
+    {
+      "path": "payload/test_vanishing_pid.py",
+      "sha256": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35",
+      "size_bytes": 2365
+    }
+  ],
+  "scope": "generated64 matched recomputation, compact evidence only"
+}
