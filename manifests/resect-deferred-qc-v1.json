@@ -1,0 +1,1439 @@
+{
+  "schema": "resect-deferred-qc-manifest-v1",
+  "scope": "24 frozen TRAIN pairs, cache-only separate structural QC; retain Case3-during as the historical25th result",
+  "metadata": {
+    "acquisition_manifest": {
+      "path": "manifests/resect-train-cavity-acquisition-v1.json",
+      "bytes": 39206,
+      "sha256": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1"
+    },
+    "cohort": {
+      "path": "manifests/resect-component-cohort-v1.json",
+      "bytes": 10888,
+      "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+    },
+    "rights": {
+      "path": "artifacts/resect-component-admission-v1/rights-review-02/README.txt",
+      "bytes": 1656,
+      "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+    },
+    "canonical_review": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/independent-verification.json",
+      "bytes": 45748,
+      "sha256": "8ea4a68ab3aa9c00875bfc36378252bd6f40511395555bda3c4d9fb6c19f2612"
+    },
+    "import_summary": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/actual-import-result.json",
+      "bytes": 8715,
+      "sha256": "e340b5e3db918afce2605ebbeaabba1564048bfb2c70ddecda4a7031a57db37b"
+    },
+    "import_bindings": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/bindings.json",
+      "bytes": 2443,
+      "sha256": "2951181288ba03e4b15cc8af0d3f2ae90428b3673aef77521a90e7c0ce754f34"
+    },
+    "mirror_declaration": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/declaration.json",
+      "bytes": 36459,
+      "sha256": "dd99a2898c257a4249f48d30bca1a633a975461942552631c19cdfc582dbfb6f"
+    },
+    "mirror_summary": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/summary.json",
+      "bytes": 7136,
+      "sha256": "0f3fea574d6fd10a893a9e65318b611fd940fa338eb6ed17e372b24ecb034c76"
+    },
+    "mirror_source": {
+      "path": "artifacts/resect-exact-mirror-acquisition-v1/source-snapshot.py",
+      "bytes": 16487,
+      "sha256": "e590509d9efa746b2b3c0cf89f20479ea07d338d323691b0aca7ba7549fe29d4"
+    },
+    "pilot_worker": {
+      "path": "artifacts/resect-component-admission-v1/pair-qc-01/worker-result.json",
+      "bytes": 5637,
+      "sha256": "fddfe22f3e9c1db9ae949a21db9edb6d8a8115f1958586d06926ee43e1844982"
+    },
+    "pilot_parent": {
+      "path": "artifacts/resect-component-admission-v1/pair-qc-01/supervision.json",
+      "bytes": 311,
+      "sha256": "e608e3edc9a12ef7f4bf54580cbfd63fd35763f60f35f73e621e1105056cf337"
+    },
+    "pilot_source": {
+      "path": "artifacts/resect-component-admission-v1/pair-qc-01/source.json",
+      "bytes": 1168,
+      "sha256": "d914ff83e83c55660a0b29f842227ac2d0b4559ddf0eacd2096cac4835d7f37a"
+    },
+    "pilot_manifest": {
+      "path": "artifacts/resect-component-admission-v1/pair-qc-01/manifest.json",
+      "bytes": 2415,
+      "sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+    },
+    "pilot_review": {
+      "path": "artifacts/resect-component-admission-v1/pair-qc-01/independent-review.json",
+      "bytes": 5844,
+      "sha256": "21ddcdb6e46d1a0f69a6c64f5d4ac185d2ded9369e85c546e63a7e2548b938d3"
+    }
+  },
+  "helper_pins": {
+    "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/lausanne_deferred_qc.py": "2e2b49718889afbc1bf4451f35a88493df3a651db00ccb8971530bdab912b860",
+    "scripts/lausanne_annotation_intake.py": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1",
+    "scripts/lausanne_train_intake.py": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f",
+    "scripts/acquire_lausanne_pilot.py": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a",
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+  },
+  "pairs": [
+    {
+      "pair": {
+        "id": "Case2-during",
+        "patient_group": "RESECT:Case2",
+        "phase": "during",
+        "source_ids": [
+          "Case2-during-image",
+          "Case2-during-mask"
+        ],
+        "bytes": 16014201,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case2-during-image",
+        "pair_id": "Case2-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case2-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case2/US/Case2-US-during.nii.gz",
+        "bytes": 15970191,
+        "expected_md5": "cdf821aea3781ff7ecf1ea917a0dbccb",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case2-during-mask",
+        "pair_id": "Case2-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case2-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd21e0a2be6b3ade3147f5/?revision=2",
+        "bytes": 44010,
+        "expected_md5": "3b35891d3838349223b6bcdf6dd11b35",
+        "sha256": "fbf87d2a6c26f4d12e802eb4d85e28f411a2510ee210651e136e67f243062d40",
+        "file_revision": 2,
+        "osf_file_id": "64cd21e0a2be6b3ade3147f5",
+        "short_alias": null
+      },
+      "image_sha256": "8b5560b8b777316d1ba0cb4b8b48ebb577818b0e300e149d51e0274f376d7251",
+      "mask_sha256": "fbf87d2a6c26f4d12e802eb4d85e28f411a2510ee210651e136e67f243062d40",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-during-mask/receipt.json",
+        "bytes": 3140,
+        "sha256": "98baa1a3d91fb147975ef21432bba138f8782c57a7bbf1d0c1da7555ab396f5e"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case2-during-mask/attempt-01/receipt.json",
+        "bytes": 2209,
+        "sha256": "b2f21436183f98c114bbae6b3ee95034e26037c0a2b27f139f841e375081aaf8"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case2-after",
+        "patient_group": "RESECT:Case2",
+        "phase": "after",
+        "source_ids": [
+          "Case2-after-image",
+          "Case2-after-mask"
+        ],
+        "bytes": 15540319,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case2-after-image",
+        "pair_id": "Case2-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case2-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case2/US/Case2-US-after.nii.gz",
+        "bytes": 15482998,
+        "expected_md5": "0d23b98ea7031d28083b5d2161f7b6b5",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case2-after-mask",
+        "pair_id": "Case2-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case2-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd21dbc7ab292b21d4e006/?revision=2",
+        "bytes": 57321,
+        "expected_md5": "a5334fd082769458f7d7ca383e2eab93",
+        "sha256": "56092abbb40bdb4de150b0787420333837e7701bbd2cf2b2b728994709d50b8d",
+        "file_revision": 2,
+        "osf_file_id": "64cd21dbc7ab292b21d4e006",
+        "short_alias": null
+      },
+      "image_sha256": "440ca1b5a1077cf49654999d67b3d6c8d5573a0681ad4898655e0ccabd86800a",
+      "mask_sha256": "56092abbb40bdb4de150b0787420333837e7701bbd2cf2b2b728994709d50b8d",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case2-after-mask/receipt.json",
+        "bytes": 3126,
+        "sha256": "1009b47fb9bc8616707c9677c9b127168887bda824fe7bb59d280c9d0ccd2afb"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case2-after-mask/attempt-01/receipt.json",
+        "bytes": 2200,
+        "sha256": "9e995eaa28d9d073d45ec292fa7cd4b30711accb5a232e0aed14dd0977bf2cca"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case3-after",
+        "patient_group": "RESECT:Case3",
+        "phase": "after",
+        "source_ids": [
+          "Case3-after-image",
+          "Case3-after-mask"
+        ],
+        "bytes": 12330551,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case3-after-image",
+        "pair_id": "Case3-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case3-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-after.nii.gz",
+        "bytes": 12285987,
+        "expected_md5": "b6794875e56efe2d6549654ae0413ece",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case3-after-mask",
+        "pair_id": "Case3-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case3-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd21fcc7ab292b21d4e00a/?revision=2",
+        "bytes": 44564,
+        "expected_md5": "a7de4775c42dd2dd5219d02327dcb735",
+        "sha256": "2a8d15c1808df9a5028e4a3049a6af6164b1d300d6f08e5bdc632f7038687693",
+        "file_revision": 2,
+        "osf_file_id": "64cd21fcc7ab292b21d4e00a",
+        "short_alias": null
+      },
+      "image_sha256": "83ce8eb0fa0182b1dde08f28f74e7308b932e95a4625f029e276fb4abdaee764",
+      "mask_sha256": "2a8d15c1808df9a5028e4a3049a6af6164b1d300d6f08e5bdc632f7038687693",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case3-after-mask/receipt.json",
+        "bytes": 3126,
+        "sha256": "8c84e041f49a5b1af798b8cb1e4ac2023f398399499264354c8cf83d0be7df72"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case3-after-mask/attempt-01/receipt.json",
+        "bytes": 2200,
+        "sha256": "93f42766f6c6c70cac65b5d4606711702b67fecbd3cac6d67b5a20a79288092f"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case5-during",
+        "patient_group": "RESECT:Case5",
+        "phase": "during",
+        "source_ids": [
+          "Case5-during-image",
+          "Case5-during-mask"
+        ],
+        "bytes": 14994411,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case5-during-image",
+        "pair_id": "Case5-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case5-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case5/US/Case5-US-during.nii.gz",
+        "bytes": 14956524,
+        "expected_md5": "0591ab40bc0ee681a6c3977b7fe9aab8",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case5-during-mask",
+        "pair_id": "Case5-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case5-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd22344f0a443410994559/?revision=2",
+        "bytes": 37887,
+        "expected_md5": "b1177c22fb5a1f2c94495145678ec78f",
+        "sha256": "8209ba5d2d56b5494494309c1cdab78a5c2290ec9a394843fcd227e90204a2e3",
+        "file_revision": 2,
+        "osf_file_id": "64cd22344f0a443410994559",
+        "short_alias": null
+      },
+      "image_sha256": "a878f8ef65b54cb4279693d0d93d92db15302bf145aaae09497d0bd0a92cc3d7",
+      "mask_sha256": "8209ba5d2d56b5494494309c1cdab78a5c2290ec9a394843fcd227e90204a2e3",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-during-mask/receipt.json",
+        "bytes": 3140,
+        "sha256": "772b7d00a2c5678a71c666191e8bb019fc5743c115330cfb23d008d9204af649"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case5-during-mask/attempt-01/receipt.json",
+        "bytes": 2209,
+        "sha256": "c99b7931c76f312794752e478dfbdda7bf527e84ba92176108e016d0be10e13a"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case5-after",
+        "patient_group": "RESECT:Case5",
+        "phase": "after",
+        "source_ids": [
+          "Case5-after-image",
+          "Case5-after-mask"
+        ],
+        "bytes": 12444283,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case5-after-image",
+        "pair_id": "Case5-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case5-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case5/US/Case5-US-after.nii.gz",
+        "bytes": 12390869,
+        "expected_md5": "c0f412e875de6f4d5730c52e05857913",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case5-after-mask",
+        "pair_id": "Case5-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case5-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd2230c7ab292b1dd4df76/?revision=2",
+        "bytes": 53414,
+        "expected_md5": "f64e8a67c1079b2516a0f988c24e4f97",
+        "sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+        "file_revision": 2,
+        "osf_file_id": "64cd2230c7ab292b1dd4df76",
+        "short_alias": null
+      },
+      "image_sha256": "294200de9fc725649e3fb271ae8d5c2c7e452c9aa2e6fdc153cf8b112fbca556",
+      "mask_sha256": "875870fa3dd76452447feebdb17f5e162a47b15ef14c2d4c5fe145e8e146b270",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case5-after-mask/receipt.json",
+        "bytes": 3126,
+        "sha256": "913d6c20cd1bc4461f2f5c3a91424d4ffdfde161625ea494818eb11de6433901"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case5-after-mask/attempt-01/receipt.json",
+        "bytes": 2200,
+        "sha256": "0882a93d72d8df3d69f9a3c4809d3b2f115149884e6bf4c034abdba7cddf7fd5"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case7-during",
+        "patient_group": "RESECT:Case7",
+        "phase": "during",
+        "source_ids": [
+          "Case7-during-image",
+          "Case7-during-mask"
+        ],
+        "bytes": 21405552,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case7-during-image",
+        "pair_id": "Case7-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case7-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case7/US/Case7-US-during.nii.gz",
+        "bytes": 21363715,
+        "expected_md5": "cdfa763c0b31aa7c6a0d08a022f90197",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case7-during-mask",
+        "pair_id": "Case7-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case7-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd226cc7ab292b22d4e116/?revision=2",
+        "bytes": 41837,
+        "expected_md5": "9672da0cf8e908b53ffec8fc15e5ae04",
+        "sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+        "file_revision": 2,
+        "osf_file_id": "64cd226cc7ab292b22d4e116",
+        "short_alias": null
+      },
+      "image_sha256": "fe27d2cfef777fec7def7a285bee7daad5c7ccdb23db7aa472eb663e3c9be326",
+      "mask_sha256": "7b6ed36eafe83ade4db113ebabbebc1bf18a2f6fdd247400a5326e1a62053b76",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-during-mask/receipt.json",
+        "bytes": 3140,
+        "sha256": "93da5b07501bff9ed199f58a4df49a626469f2ad1942a9405e2c1a785dd9e1ab"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case7-during-mask/attempt-01/receipt.json",
+        "bytes": 2209,
+        "sha256": "2c38b661ddace1afdd020fb2b90f66d4c1828b60b6dab6bd0dc90b00bef20978"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case7-after",
+        "patient_group": "RESECT:Case7",
+        "phase": "after",
+        "source_ids": [
+          "Case7-after-image",
+          "Case7-after-mask"
+        ],
+        "bytes": 19125066,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case7-after-image",
+        "pair_id": "Case7-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case7-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case7/US/Case7-US-after.nii.gz",
+        "bytes": 19072334,
+        "expected_md5": "573c135399b986a7921629679a52fb72",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case7-after-mask",
+        "pair_id": "Case7-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case7-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd226ac7ab292b22d4e112/?revision=2",
+        "bytes": 52732,
+        "expected_md5": "b90d0840ac4ea09aa7183ac36cba0a24",
+        "sha256": "805e34af9982980a57a6ff6268a659999836e7ad5fadda4ea8cdb94fa95753d3",
+        "file_revision": 2,
+        "osf_file_id": "64cd226ac7ab292b22d4e112",
+        "short_alias": null
+      },
+      "image_sha256": "05cbc29a6853e60e24186c3b0afeba49783041b5f175e1dabc25faa60894bde2",
+      "mask_sha256": "805e34af9982980a57a6ff6268a659999836e7ad5fadda4ea8cdb94fa95753d3",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case7-after-mask/receipt.json",
+        "bytes": 3126,
+        "sha256": "e9b5c394da97efacdca1c1b9e701938169c4447c67e5e8cae35d09da9b88a283"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case7-after-mask/attempt-01/receipt.json",
+        "bytes": 2200,
+        "sha256": "226367f4cfa069dabbcbd7babdce8dfa426d1589672dd203412d401e19d2813b"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case12-during",
+        "patient_group": "RESECT:Case12",
+        "phase": "during",
+        "source_ids": [
+          "Case12-during-image",
+          "Case12-during-mask"
+        ],
+        "bytes": 24030402,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case12-during-image",
+        "pair_id": "Case12-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case12-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case12/US/Case12-US-during.nii.gz",
+        "bytes": 23973313,
+        "expected_md5": "ab14d3689743e58d1bcbca75a5c1eb4d",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case12-during-mask",
+        "pair_id": "Case12-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case12-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/y5m4k/?revision=2",
+        "bytes": 57089,
+        "expected_md5": "de7b60f4d874de49c167fd9e9380240a",
+        "sha256": "8b0e0d3b5c253be3c83dc6ea6df2598e68b8e434c78695fcfe55efd26933d7b3",
+        "file_revision": 2,
+        "osf_file_id": "64cd22d3c7ab292b21d4e061",
+        "short_alias": "y5m4k"
+      },
+      "image_sha256": "261e0cc9114aad36631a8ea1e572f57d28a8ed8648ae751cb839fadd9efd0128",
+      "mask_sha256": "8b0e0d3b5c253be3c83dc6ea6df2598e68b8e434c78695fcfe55efd26933d7b3",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-during-mask/receipt.json",
+        "bytes": 3125,
+        "sha256": "536def18b2b6227a461f9dce95b3d83167a73f8a4bf8acb46da408ed51c1c581"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case12-during-mask/attempt-01/receipt.json",
+        "bytes": 2205,
+        "sha256": "09700fbe5a2521144f462959d3b52cf2a24bc80c1aa32af09384fa8b734eb210"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case12-after",
+        "patient_group": "RESECT:Case12",
+        "phase": "after",
+        "source_ids": [
+          "Case12-after-image",
+          "Case12-after-mask"
+        ],
+        "bytes": 25363516,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case12-after-image",
+        "pair_id": "Case12-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case12-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case12/US/Case12-US-after.nii.gz",
+        "bytes": 25282562,
+        "expected_md5": "fdca041ba8040b58e46c8ef3de01b5ed",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case12-after-mask",
+        "pair_id": "Case12-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case12-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/gfcnz/?revision=2",
+        "bytes": 80954,
+        "expected_md5": "f990900082d8e43c6a686dd68dbb43b9",
+        "sha256": "baaa1a7be5d8c6d818dd008d1406c1ed473df8eab55d6e68e0de73d41d03c882",
+        "file_revision": 2,
+        "osf_file_id": "64cd22ce2fe4962f1461b2ba",
+        "short_alias": "gfcnz"
+      },
+      "image_sha256": "b963c7371acc8e89fccdfdbdaf890bba65a01ebb4e35d3a5668db31d046c9f3d",
+      "mask_sha256": "baaa1a7be5d8c6d818dd008d1406c1ed473df8eab55d6e68e0de73d41d03c882",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case12-after-mask/receipt.json",
+        "bytes": 3111,
+        "sha256": "3d23976c3b13d144379ead185cccf88fb94d479c9c1c28d419b9c25a9386fb16"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case12-after-mask/attempt-01/receipt.json",
+        "bytes": 2196,
+        "sha256": "0200586968b0f5b1f7d20e477f73a23b39c2a81b853b0a22a604ec5bdfd56506"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case15-after",
+        "patient_group": "RESECT:Case15",
+        "phase": "after",
+        "source_ids": [
+          "Case15-after-image",
+          "Case15-after-mask"
+        ],
+        "bytes": 25224822,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case15-after-image",
+        "pair_id": "Case15-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case15-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case15/US/Case15-US-after.nii.gz",
+        "bytes": 25165476,
+        "expected_md5": "01d68924eeeefc2a2e58ac428e01adcc",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case15-after-mask",
+        "pair_id": "Case15-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case15-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/6jx3n/?revision=2",
+        "bytes": 59346,
+        "expected_md5": "007324da20083cc8c195e58feb41b344",
+        "sha256": "3b24eabdc8cde6719a6aedcef8e0b207c6cfd8a44c898c9fe70a93550c8252d0",
+        "file_revision": 2,
+        "osf_file_id": "64cd233b9cbf033b051e4882",
+        "short_alias": "6jx3n"
+      },
+      "image_sha256": "88e437869d398aeeccfd7bb464224a1e13a6aca27f58e60adcf998d664bb5fb6",
+      "mask_sha256": "3b24eabdc8cde6719a6aedcef8e0b207c6cfd8a44c898c9fe70a93550c8252d0",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case15-after-mask/receipt.json",
+        "bytes": 3111,
+        "sha256": "921a6b5987224e9ca5b4b0a0d5ca88315d08b41995c88a5da386e78f451ac40d"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case15-after-mask/attempt-01/receipt.json",
+        "bytes": 2196,
+        "sha256": "755252812bcc715846903e29cd8d8729939d8457f7cb777635d7583ab1ba845f"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case16-during",
+        "patient_group": "RESECT:Case16",
+        "phase": "during",
+        "source_ids": [
+          "Case16-during-image",
+          "Case16-during-mask"
+        ],
+        "bytes": 17479019,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case16-during-image",
+        "pair_id": "Case16-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case16-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case16/US/Case16-US-during.nii.gz",
+        "bytes": 17442716,
+        "expected_md5": "a04f05bd4e5e95b9d38b5bc0bae2e3ba",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case16-during-mask",
+        "pair_id": "Case16-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case16-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/n5eu8/?revision=2",
+        "bytes": 36303,
+        "expected_md5": "fb91ccd6a556289c8815cee2ddb6c803",
+        "sha256": "05f82c7f56077aeb5967b647ec86ee150f730ea831f43c156bc846f0a423787d",
+        "file_revision": 2,
+        "osf_file_id": "64cd23562fe4962f0c61b12d",
+        "short_alias": "n5eu8"
+      },
+      "image_sha256": "450bc56bd743a755bb88f1c5a87e05ce0d58908906f596fd6de4f17fa9401523",
+      "mask_sha256": "05f82c7f56077aeb5967b647ec86ee150f730ea831f43c156bc846f0a423787d",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-during-mask/receipt.json",
+        "bytes": 3125,
+        "sha256": "5e81efb37533ab3f82bef5f3331ccd33ed9cf031f58bae1428d1f55cb9fec961"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case16-during-mask/attempt-01/receipt.json",
+        "bytes": 2205,
+        "sha256": "6226fe869ae066146a117c874ebde1c139cd37cd39b3394e35a4d3c016217c71"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case16-after",
+        "patient_group": "RESECT:Case16",
+        "phase": "after",
+        "source_ids": [
+          "Case16-after-image",
+          "Case16-after-mask"
+        ],
+        "bytes": 18205554,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case16-after-image",
+        "pair_id": "Case16-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case16-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case16/US/Case16-US-after.nii.gz",
+        "bytes": 18158379,
+        "expected_md5": "2fa097661b257104ba2f7c236df789db",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case16-after-mask",
+        "pair_id": "Case16-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case16-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/5ktpy/?revision=2",
+        "bytes": 47175,
+        "expected_md5": "2532c53561bc6602795173050f339431",
+        "sha256": "6e3d16dd0fdf7998aaa486975fc62e27b9bce1898c7cf0a295bd243b2961aa9d",
+        "file_revision": 2,
+        "osf_file_id": "64cd2354c7ab292b22d4e183",
+        "short_alias": "5ktpy"
+      },
+      "image_sha256": "27af7870fd2a213051f977ad306d17a504463fc26f3d960eab6d1ac10d754467",
+      "mask_sha256": "6e3d16dd0fdf7998aaa486975fc62e27b9bce1898c7cf0a295bd243b2961aa9d",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case16-after-mask/receipt.json",
+        "bytes": 3111,
+        "sha256": "cef939a42fe6a354f8b4c0ebe17a9a351139e584969f4f6e9c9dae79ec01e176"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case16-after-mask/attempt-01/receipt.json",
+        "bytes": 2196,
+        "sha256": "94bd7148b148af35a60ec454f0b31444d766a60ddc3ad5e2a1e100bc5d92f247"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case17-during",
+        "patient_group": "RESECT:Case17",
+        "phase": "during",
+        "source_ids": [
+          "Case17-during-image",
+          "Case17-during-mask"
+        ],
+        "bytes": 15773378,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case17-during-image",
+        "pair_id": "Case17-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case17-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case17/US/Case17-US-during.nii.gz",
+        "bytes": 15689935,
+        "expected_md5": "58bbb039dc22ab880d28b2674f4a9727",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case17-during-mask",
+        "pair_id": "Case17-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case17-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/kd37t/?revision=2",
+        "bytes": 83443,
+        "expected_md5": "324e3bd5f5d7f2b484721de60bdbab3d",
+        "sha256": "97f2a73ad19c0d629cd748faf75b4ee58af2d3f6c8b65a1dac6d0dc97eb2dd0a",
+        "file_revision": 2,
+        "osf_file_id": "64cd23739cbf033b051e48b3",
+        "short_alias": "kd37t"
+      },
+      "image_sha256": "edf624634b0dc367edef7cad96fb79054ec45b8406881d36ce70318a2e2d1692",
+      "mask_sha256": "97f2a73ad19c0d629cd748faf75b4ee58af2d3f6c8b65a1dac6d0dc97eb2dd0a",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-during-mask/receipt.json",
+        "bytes": 3125,
+        "sha256": "ee306965964aa19b788c31f7f93f00904e7b2d24b0f16c3bf6b9bb0ecae06441"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case17-during-mask/attempt-01/receipt.json",
+        "bytes": 2205,
+        "sha256": "f4dd07c801db305721032589f7e66786a9e0a25b1b7dee0703920eef0cfcbf2d"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case17-after",
+        "patient_group": "RESECT:Case17",
+        "phase": "after",
+        "source_ids": [
+          "Case17-after-image",
+          "Case17-after-mask"
+        ],
+        "bytes": 16864506,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case17-after-image",
+        "pair_id": "Case17-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case17-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case17/US/Case17-US-after.nii.gz",
+        "bytes": 16765158,
+        "expected_md5": "e644f1ac372ed31c90749c8b49ea3ca9",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case17-after-mask",
+        "pair_id": "Case17-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case17-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/4m5nx/?revision=2",
+        "bytes": 99348,
+        "expected_md5": "e8305aafb8bd270b4ab14ec31e9a8473",
+        "sha256": "f7262ee41b9658dd852e2f8c25046ea34030162745d25e2d15ea0ceaaafeea4c",
+        "file_revision": 2,
+        "osf_file_id": "64cd236fc7ab292b22d4e18f",
+        "short_alias": "4m5nx"
+      },
+      "image_sha256": "5ca5c647437c94b487bada7f2cac782ad0582d021264bad979615b3691a9533a",
+      "mask_sha256": "f7262ee41b9658dd852e2f8c25046ea34030162745d25e2d15ea0ceaaafeea4c",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case17-after-mask/receipt.json",
+        "bytes": 3111,
+        "sha256": "9c68ea7ef8683c38f07b0062a565a28f7aaf0e57758fad93790f99bf72f24f7a"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case17-after-mask/attempt-01/receipt.json",
+        "bytes": 2196,
+        "sha256": "0b296dc867574cb669cc20d4fd17dc5d628e7d76a8200a665521093eaa5b5a2a"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case18-during",
+        "patient_group": "RESECT:Case18",
+        "phase": "during",
+        "source_ids": [
+          "Case18-during-image",
+          "Case18-during-mask"
+        ],
+        "bytes": 22571328,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case18-during-image",
+        "pair_id": "Case18-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case18-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case18/US/Case18-US-during.nii.gz",
+        "bytes": 22479713,
+        "expected_md5": "4d17988ba90989efcb9749f4968e0496",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case18-during-mask",
+        "pair_id": "Case18-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case18-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/5cwfk/?revision=2",
+        "bytes": 91615,
+        "expected_md5": "cf4632c18af8915621a15a4b13edaa7b",
+        "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+        "file_revision": 2,
+        "osf_file_id": "64cd2385c7ab292b22d4e1a9",
+        "short_alias": "5cwfk"
+      },
+      "image_sha256": "9eb5cb2c4585efcfbe96bd86d9be7fb77e8c413405c15e62243e1675e7d24558",
+      "mask_sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-during-mask/receipt.json",
+        "bytes": 3125,
+        "sha256": "3286e20b289ea8b888099aa25f1d543ea9193dd1c337e1962b749b83ec4e94a5"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case18-during-mask/attempt-01/receipt.json",
+        "bytes": 2205,
+        "sha256": "81ba967b5866a0f09e09aa4fb03120027b9ad207ada8a8c4c75665dac1108ddb"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case18-after",
+        "patient_group": "RESECT:Case18",
+        "phase": "after",
+        "source_ids": [
+          "Case18-after-image",
+          "Case18-after-mask"
+        ],
+        "bytes": 21128797,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case18-after-image",
+        "pair_id": "Case18-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case18-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case18/US/Case18-US-after.nii.gz",
+        "bytes": 21033465,
+        "expected_md5": "b0391122d687a8f24148248e9e08962b",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case18-after-mask",
+        "pair_id": "Case18-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case18-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/mwtyz/?revision=2",
+        "bytes": 95332,
+        "expected_md5": "2aa55652340230ecbcfd3cc3cca06527",
+        "sha256": "6f3dcbd2d60772731280c5cdb2ba7a096f1f26e634dee9e7bda308c17705b231",
+        "file_revision": 2,
+        "osf_file_id": "64cd23832fe4962f1461b312",
+        "short_alias": "mwtyz"
+      },
+      "image_sha256": "53cd5179b695eea31d24648337741d2d7afddffce149336b12fc8b67e5f7d47a",
+      "mask_sha256": "6f3dcbd2d60772731280c5cdb2ba7a096f1f26e634dee9e7bda308c17705b231",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case18-after-mask/receipt.json",
+        "bytes": 3111,
+        "sha256": "9ae335488449d5d3376e8c69d7e4efadec1671188c69a14f8584ce8fade47c64"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case18-after-mask/attempt-01/receipt.json",
+        "bytes": 2196,
+        "sha256": "32c54641e8d09d9c1510ef34a6ce67723c6e54b72bcd811d57b48c488cb34388"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case21-during",
+        "patient_group": "RESECT:Case21",
+        "phase": "during",
+        "source_ids": [
+          "Case21-during-image",
+          "Case21-during-mask"
+        ],
+        "bytes": 40350122,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case21-during-image",
+        "pair_id": "Case21-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case21-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case21/US/Case21-US-during.nii.gz",
+        "bytes": 40283369,
+        "expected_md5": "c5a026291dd8cb16a642840967f547c1",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case21-during-mask",
+        "pair_id": "Case21-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case21-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd23c09cbf033b011e474f/?revision=2",
+        "bytes": 66753,
+        "expected_md5": "602605c954e797a1bfcc2b3ed0e5e497",
+        "sha256": "a3fba84f7af6191cfc889339d3aa35e601352fbe6d19072da19aea6c447dc8d2",
+        "file_revision": 2,
+        "osf_file_id": "64cd23c09cbf033b011e474f",
+        "short_alias": null
+      },
+      "image_sha256": "5e38f932a199e73ee503b586e0cb3f62b9448dcce40042ada3a23e4a1911e8be",
+      "mask_sha256": "a3fba84f7af6191cfc889339d3aa35e601352fbe6d19072da19aea6c447dc8d2",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-during-mask/receipt.json",
+        "bytes": 3157,
+        "sha256": "d3ab93a18afa5445e8724a99b829fdce992a5ac2baef5475f663ccc84200e5d1"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case21-during-mask/attempt-01/receipt.json",
+        "bytes": 2221,
+        "sha256": "6941bc26731265a53174bd061fc92d8a8e9a7c63c973ce67c9a4b94f7e8318a1"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case21-after",
+        "patient_group": "RESECT:Case21",
+        "phase": "after",
+        "source_ids": [
+          "Case21-after-image",
+          "Case21-after-mask"
+        ],
+        "bytes": 36700547,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case21-after-image",
+        "pair_id": "Case21-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case21-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case21/US/Case21-US-after.nii.gz",
+        "bytes": 36611111,
+        "expected_md5": "69af22360e22b426552835a1a4d1eab1",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case21-after-mask",
+        "pair_id": "Case21-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case21-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/n92zk/?revision=2",
+        "bytes": 89436,
+        "expected_md5": "5141f9bb1b796631fd70dde911a9ca6e",
+        "sha256": "e943ac5da95bd0c8245a57b4f6beac9426d2b20d152aa9ba0f4088eefd4fe335",
+        "file_revision": 2,
+        "osf_file_id": "64cd23bda2be6b3ada31479c",
+        "short_alias": "n92zk"
+      },
+      "image_sha256": "cc7f0f099e3068e181730c35872b28cb398f07217a63efe9cfc7c06b862fac15",
+      "mask_sha256": "e943ac5da95bd0c8245a57b4f6beac9426d2b20d152aa9ba0f4088eefd4fe335",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case21-after-mask/receipt.json",
+        "bytes": 3111,
+        "sha256": "0b793cafbfccd46654745a9dabb2362319ac3523fed95e7be7ef336aa6fa02b1"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case21-after-mask/attempt-01/receipt.json",
+        "bytes": 2196,
+        "sha256": "75dff145083df2fb51398cc2ca7a50730b3afde79c8780368ae7055ec5cb7acd"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case23-during",
+        "patient_group": "RESECT:Case23",
+        "phase": "during",
+        "source_ids": [
+          "Case23-during-image",
+          "Case23-during-mask"
+        ],
+        "bytes": 27954475,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case23-during-image",
+        "pair_id": "Case23-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case23-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case23/US/Case23-US-during.nii.gz",
+        "bytes": 27870850,
+        "expected_md5": "cfc525c6672e315209574fcb75785ea4",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case23-during-mask",
+        "pair_id": "Case23-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case23-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd23e3a2be6b3ade314980/?revision=2",
+        "bytes": 83625,
+        "expected_md5": "61ce14bcd3f5f051f5ce43d4248844bc",
+        "sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+        "file_revision": 2,
+        "osf_file_id": "64cd23e3a2be6b3ade314980",
+        "short_alias": null
+      },
+      "image_sha256": "badb13acb5910295c15584960db7a4ad0bf3dd59a4dcb80f04c09a13a1640a65",
+      "mask_sha256": "1258d7676f0588fed76716970516d863fb638f97eb9627bf342e5de384a67f60",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-during-mask/receipt.json",
+        "bytes": 3157,
+        "sha256": "d63bc7acd8537abecc320bfb700218973b58d5e7b6f611aa915ea9fb49f5e35a"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case23-during-mask/attempt-01/receipt.json",
+        "bytes": 2221,
+        "sha256": "d64ba7e42ccab9b0cce2aaa38e22718edbe31e0023ea6361b63dfc8735363963"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case23-after",
+        "patient_group": "RESECT:Case23",
+        "phase": "after",
+        "source_ids": [
+          "Case23-after-image",
+          "Case23-after-mask"
+        ],
+        "bytes": 26512354,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case23-after-image",
+        "pair_id": "Case23-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case23-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case23/US/Case23-US-after.nii.gz",
+        "bytes": 26426798,
+        "expected_md5": "92ab54c999b8f990ea5301a669f0da5b",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case23-after-mask",
+        "pair_id": "Case23-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case23-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd23dfa2be6b3add3148a2/?revision=2",
+        "bytes": 85556,
+        "expected_md5": "0458f8f96635db7277d83a4ae5283a68",
+        "sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+        "file_revision": 2,
+        "osf_file_id": "64cd23dfa2be6b3add3148a2",
+        "short_alias": null
+      },
+      "image_sha256": "60aac5029efd855a14e25d19dc0628579db58db85291a630132bc155329a3b8b",
+      "mask_sha256": "f13c3f0aef0be594fbaff53f1afecd1357e9b00f2b7c21610db77c74fb450cdb",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case23-after-mask/receipt.json",
+        "bytes": 3143,
+        "sha256": "eecf5211710ef6d331a2a3c1f3712a36659641ed32e7a36976108efb68518a23"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case23-after-mask/attempt-01/receipt.json",
+        "bytes": 2212,
+        "sha256": "f21b8f396928c41350c2f7b07465b6572fb2346450099a27a806f30468c24ebc"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case24-during",
+        "patient_group": "RESECT:Case24",
+        "phase": "during",
+        "source_ids": [
+          "Case24-during-image",
+          "Case24-during-mask"
+        ],
+        "bytes": 32652888,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case24-during-image",
+        "pair_id": "Case24-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case24-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case24/US/Case24-US-during.nii.gz",
+        "bytes": 32603719,
+        "expected_md5": "74ae927bfc4981ffff636b50673b5f21",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case24-during-mask",
+        "pair_id": "Case24-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case24-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24009cbf033b041e47f3/?revision=2",
+        "bytes": 49169,
+        "expected_md5": "fe7337943f5d0433fc3128014162ee6d",
+        "sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+        "file_revision": 2,
+        "osf_file_id": "64cd24009cbf033b041e47f3",
+        "short_alias": null
+      },
+      "image_sha256": "01aa3897eb164aec62793fa546db6f7bc2ea4f470f049e3a16b3e7aaaf258d62",
+      "mask_sha256": "42ea21f447f7ef501b30c9ee1bde5d29704f28cec6592d95f14fd3ebf3fe406a",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-during-mask/receipt.json",
+        "bytes": 3157,
+        "sha256": "c80161219ac25dbfd5bae5771528ce01842a57c250337bc145c2042a39eb3e18"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case24-during-mask/attempt-01/receipt.json",
+        "bytes": 2221,
+        "sha256": "a62dcc13cdbadefd258177b91496750a59febfb55ba09cf814729b95ed727f61"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case24-after",
+        "patient_group": "RESECT:Case24",
+        "phase": "after",
+        "source_ids": [
+          "Case24-after-image",
+          "Case24-after-mask"
+        ],
+        "bytes": 29869497,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case24-after-image",
+        "pair_id": "Case24-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case24-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case24/US/Case24-US-after.nii.gz",
+        "bytes": 29799833,
+        "expected_md5": "e7adace53cf3f93301496bdcbaa9ccf1",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case24-after-mask",
+        "pair_id": "Case24-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case24-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24004f0a443410994681/?revision=2",
+        "bytes": 69664,
+        "expected_md5": "afcf8b644eb86b2b6e7d60ffadd0acd0",
+        "sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+        "file_revision": 2,
+        "osf_file_id": "64cd24004f0a443410994681",
+        "short_alias": null
+      },
+      "image_sha256": "ada319d94a223079ab0a6c6f6e67881013758b4a991a82f6f36df71c14556304",
+      "mask_sha256": "e9fcce9c4758b7515cf4598697b2fbf24f6ae1080ab0b80e2ae0bbcf51e08959",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case24-after-mask/receipt.json",
+        "bytes": 3143,
+        "sha256": "8b6df1b655ecd08c5958cbdad8b9722537137db3cd526f7666cf89ea5e9bc6a3"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case24-after-mask/attempt-01/receipt.json",
+        "bytes": 2212,
+        "sha256": "465636b52a3090ad8ec69bdcf8eaa413233015df51b6d538a4f3d5d48a70a0c3"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case25-during",
+        "patient_group": "RESECT:Case25",
+        "phase": "during",
+        "source_ids": [
+          "Case25-during-image",
+          "Case25-during-mask"
+        ],
+        "bytes": 29507707,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case25-during-image",
+        "pair_id": "Case25-during",
+        "kind": "original_ultrasound",
+        "path": "originals/Case25-US-during.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case25/US/Case25-US-during.nii.gz",
+        "bytes": 29442412,
+        "expected_md5": "c402e8168bb66f6ec932d06f2ca6b652",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case25-during-mask",
+        "pair_id": "Case25-during",
+        "kind": "cavity_annotation",
+        "path": "originals/Case25-US-during-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24189cbf033b051e492d/?revision=2",
+        "bytes": 65295,
+        "expected_md5": "3fe057dc0e393c9532b6afb327914139",
+        "sha256": "ffc5b985713e61d73e63037eedf82b4fc168f3e19c4e179e771801c953ecd6ad",
+        "file_revision": 2,
+        "osf_file_id": "64cd24189cbf033b051e492d",
+        "short_alias": null
+      },
+      "image_sha256": "b48e085ed8328ce29fb32ff746c2f940c7adabb38805b7102772394c8afcfadd",
+      "mask_sha256": "ffc5b985713e61d73e63037eedf82b4fc168f3e19c4e179e771801c953ecd6ad",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-during-mask/receipt.json",
+        "bytes": 3157,
+        "sha256": "b53dd9382307e7e2cff17a4dc22b79dc1b7ac0c7d2780adb90f446268c423809"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case25-during-mask/attempt-01/receipt.json",
+        "bytes": 2221,
+        "sha256": "208ecd1fbcc95d4778ea6e52916dd16cc6c2bfa70010c52f2e6a3912b0196952"
+      }
+    },
+    {
+      "pair": {
+        "id": "Case25-after",
+        "patient_group": "RESECT:Case25",
+        "phase": "after",
+        "source_ids": [
+          "Case25-after-image",
+          "Case25-after-mask"
+        ],
+        "bytes": 26562296,
+        "reuse_existing_pilot": false,
+        "role": "TRAIN"
+      },
+      "image": {
+        "id": "Case25-after-image",
+        "pair_id": "Case25-after",
+        "kind": "original_ultrasound",
+        "path": "originals/Case25-US-after.nii.gz",
+        "source_url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case25/US/Case25-US-after.nii.gz",
+        "bytes": 26492415,
+        "expected_md5": "1cecf1cf555977f6bc021b522ff74ac8",
+        "sha256": null
+      },
+      "mask": {
+        "id": "Case25-after-mask",
+        "pair_id": "Case25-after",
+        "kind": "cavity_annotation",
+        "path": "originals/Case25-US-after-resection.nii.gz",
+        "source_url": "https://osf.io/download/64cd24154f0a44340b994498/?revision=2",
+        "bytes": 69881,
+        "expected_md5": "440f561c7cefcfd4622a1711c901089c",
+        "sha256": "e38a01207a2323d6b7d9d6f525c2fb01a0bae13ad053fd48f75dd97d0aef749a",
+        "file_revision": 2,
+        "osf_file_id": "64cd24154f0a44340b994498",
+        "short_alias": null
+      },
+      "image_sha256": "70868f3f328bb79d4d9a0d1d6d900dfc17305404257516029c023d1de0011001",
+      "mask_sha256": "e38a01207a2323d6b7d9d6f525c2fb01a0bae13ad053fd48f75dd97d0aef749a",
+      "import_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/canonical-import/attempt/files/Case25-after-mask/receipt.json",
+        "bytes": 3143,
+        "sha256": "eaced578ecaf33605aa0366f227c13e346424e2c3adf49a30fcd0c89a9cd2b33"
+      },
+      "mirror_receipt": {
+        "path": "artifacts/resect-exact-mirror-acquisition-v1/objects/Case25-after-mask/attempt-01/receipt.json",
+        "bytes": 2212,
+        "sha256": "63daba1896f3d018b83a15bc62d16dc24abab77e8aa61b99a7d9d4ca72ee6d75"
+      }
+    }
+  ],
+  "inherited_pair": {
+    "id": "Case3-during",
+    "patient_group": "RESECT:Case3",
+    "phase": "during",
+    "source_ids": [
+      "Case3-during-image",
+      "Case3-during-mask"
+    ],
+    "bytes": 9184649,
+    "reuse_existing_pilot": true,
+    "role": "TRAIN"
+  },
+  "missing_annotations": [
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case11",
+      "role": "TRAIN",
+      "phase": "after",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    },
+    {
+      "patient_group": "RESECT:Case15",
+      "role": "TRAIN",
+      "phase": "during",
+      "acquisition_allowed": false,
+      "negative_mask_allowed": false
+    }
+  ],
+  "excluded_members": [
+    {
+      "patient_group": "RESECT:Case1",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "patient_group": "RESECT:Case6",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case8",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case13",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case14",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case19",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case26",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case27",
+      "role": "MEASUREMENT_EVAL"
+    }
+  ],
+  "rights": {
+    "noncommercial_only": true,
+    "commercial_clearance": false,
+    "annotations_license": "CC-BY-NC-SA-4.0",
+    "original_license": "CC-BY-4.0",
+    "financial_benefits_from_annotation_distribution_prohibited": true,
+    "attribution_citations_and_share_alike_required": true,
+    "manual_contours_morphological_interpolation_expert_review": true,
+    "learned_teacher": "none_reported_in_documented_protocol",
+    "visible_cavity_not_total_removed_tissue_or_reward": true,
+    "clinical_accuracy": "not_established",
+    "spatial_planning_admitted": false
+  },
+  "release_by_kind": {
+    "original_ultrasound": {
+      "doi": "10.11582/2017.00004",
+      "version": 1,
+      "license": "CC-BY-4.0"
+    },
+    "cavity_annotation": {
+      "doi": "10.17605/OSF.IO/JV8BK",
+      "version": "All-Labels v1 2024-02-15",
+      "file_revision": 2,
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  },
+  "denominator": {
+    "frozen_train_people": 14,
+    "people_with_pairs": 13,
+    "qualified_pairs": 25,
+    "new_pairs": 24,
+    "inherited_pairs": 1,
+    "missing_annotation_timepoints": 3
+  },
+  "bounds": {
+    "max_batch_seconds": 600,
+    "max_worker_seconds": 60,
+    "max_voxels": 134217728,
+    "max_native_payload_bytes": 536870912,
+    "scalar_chunk_voxels": 65536,
+    "max_scalar_workspace_bytes": 8388608,
+    "max_mask_voxels": 134217728,
+    "max_uncompressed_mask_bytes": 536870912,
+    "max_logical_float64_bytes": 1073741824,
+    "max_chunk_voxels": 65536,
+    "max_decoded_chunk_working_bytes": 8388608,
+    "max_nifti_data_offset": 1048576
+  },
+  "historical_status_receipts": [
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T170443035954Z-e7bc18e5/outcome.json",
+      "status": "rate_deferred",
+      "sha256": "c558a2d876ad0168b0d030c5b8aef5abebee248286b4aa88bfb2bbeccc0d44fb"
+    },
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T171943773377Z-600ced29/outcome.json",
+      "status": "rate_deferred",
+      "sha256": "b3e10751d2f7b0e48c800223e08847a5b21f435aa9312dcfaabbfd81386bc3b4"
+    },
+    {
+      "path": "data/acquisition/continuous-source-v1/objects/resect-Case2-during-mask/attempts/20261008T174944572869Z-e1003436/outcome.json",
+      "status": "transport_attempts_exhausted",
+      "sha256": "9e90df8fec3980c1049b019ac6a557e1644ee2566a556254b0b908f3d289c943"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/files/Case2-during-image/receipt.json",
+      "status": "downloaded_verified",
+      "sha256": "e2fa36bd24a7f1b3e7f8e6b0877ecadf829b8ddc04dcb781786f3deef55ca8bc"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/files/Case2-during-mask/receipt.json",
+      "status": "failed",
+      "sha256": "cac06ff101a75093db9177420af985b7c45cbe88aa63485a7be44c40fcccfd60"
+    },
+    {
+      "path": "data/annotations/resect-seg-v1/train-v1/attempts/train-Case2-during-01/supervision.json",
+      "status": "worker_failed",
+      "sha256": "056fc30466c8e42e7d1d6d2b51e33797bdce87936fc4d6dd40e78976d7528a13"
+    }
+  ],
+  "claims": {
+    "anatomy_qc": "not_run",
+    "clinical_accuracy": "not_established",
+    "geometric_admission": false,
+    "anatomical_admission": false,
+    "scanner_frame_admitted": false,
+    "training_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "network_requests": 0,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "array_operation": "source_values_counted_only_no_array_retained"
+  }
+}

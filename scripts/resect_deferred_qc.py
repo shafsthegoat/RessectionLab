@@ -1,0 +1,607 @@
+#!/usr/bin/env python3
+"""Separate, offline structural QC of 24 frozen RESECT TRAIN pairs.
+
+Preflight reads metadata only. Explicit batch execution streams cached originals;
+it never downloads, changes labels, or grants anatomical/planning admission.
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+from collections import Counter
+import fcntl
+import gzip
+import importlib.metadata
+import json
+import math
+import os
+from pathlib import Path
+import re
+import resource
+import sys
+import time
+
+import resect_train_intake as authority
+import lausanne_deferred_qc as streaming
+from real_intake_io import (atomic_preserve, check_deadline, supervise,
+                            termination_cleanup, verify_source_file)
+
+ROOT = authority.ROOT
+DATA = authority.DATA
+CACHE = DATA / 'deferred-qc-v1'
+MANIFEST = ROOT / 'manifests/resect-deferred-qc-v1.json'
+MANIFEST_SHA = '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83'
+Refusal = authority.Refusal
+encode, digest, safe, read = authority.encode, authority.digest, authority.safe_path, authority.read_small
+CLAIMS = {'anatomy_qc': 'not_run', 'clinical_accuracy': 'not_established',
+          'geometric_admission': False, 'anatomical_admission': False,
+          'scanner_frame_admitted': False, 'training_admitted': False,
+          'spatial_planning_admitted': False, 'annotation_available_at': None,
+          'review_available_at': None, 'network_requests': 0, 'optimizer_updates': 0,
+          'recorded_rl_transitions': 0,
+          'array_operation': 'source_values_counted_only_no_array_retained'}
+THREAD_VARS = ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
+               'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS')
+
+
+def save(path, value):
+    atomic_preserve(safe(path), encode(value))
+
+
+def claims_match(record):
+    return all(type(record.get(k)) is type(v) and record[k] == v for k, v in CLAIMS.items())
+
+
+def proof_bytes(proof, deadline=None):
+    raw = read(ROOT / proof['path'], deadline=deadline)
+    if len(raw) != proof['bytes'] or digest(raw) != proof['sha256']:
+        raise Refusal('metadata_proof_changed')
+    return raw
+
+
+def proof_json(proof, deadline=None):
+    return json.loads(proof_bytes(proof, deadline))
+
+
+def validate_mirror(row, manifest, records):
+    """Join actual acquisition -> import -> canonical identity, metadata only."""
+    receipt = proof_json(row['import_receipt'])
+    transport = proof_json(row['mirror_receipt'])
+    source, pair = row['mask'], row['pair']
+    sid = source['id']
+    parent = [f for f in records['import_summary']['files'] if f['source_id'] == sid]
+    declared = [r for r in records['mirror_declaration']['rows'] if r['source_id'] == sid]
+    mirror = receipt.get('mirror_source', {})
+    import_hash = row['import_receipt']['sha256']
+    transport_hash = row['mirror_receipt']['sha256']
+    original_path = records['import_summary']['attempt'] + '/files/' + sid + '/receipt.json'
+    if (len(parent) != 1 or len(declared) != 1 or parent[0]['receipt_sha256'] != import_hash
+            or parent[0]['receipt'] != original_path
+            or parent[0]['status'] != 'installed_mirror_bytes_verified'
+            or receipt.get('status') != parent[0]['status'] or not receipt.get('canonical_published')
+            or receipt.get('source_authority') != source or mirror != declared[0]
+            or mirror.get('source_authority') != source or mirror.get('role') != pair['role']
+            or mirror.get('patient_group') != pair['patient_group']
+            or mirror.get('source_release') != manifest['release_by_kind']['cavity_annotation']
+            or mirror.get('mirror_commit') != 'e86fb37dd93f7a9c64e48952f71410af59b04b9b'
+            or receipt.get('import_binding_sha256') != manifest['metadata']['import_bindings']['sha256']
+            or receipt.get('target_path') != str((DATA / source['path']).relative_to(ROOT))
+            or receipt.get('acquisition_transport') != 'third_party_huggingface_mirror'
+            or receipt.get('original_osf_attempts_modified') is not False
+            or receipt.get('mirror_receipt_sha256') != transport_hash
+            or transport.get('source') != mirror or transport.get('status') != 'downloaded_verified'
+            or transport.get('source_binding') != digest(encode(mirror))
+            or transport.get('declaration_sha256') != manifest['metadata']['mirror_declaration']['sha256']
+            or records['mirror_summary']['outcomes'][sid]['receipt_sha256'] != transport_hash):
+        raise Refusal('mirror_parent_source_transport_join')
+    for record, size_key in ((receipt, 'verified_bytes'), (transport, 'bytes')):
+        if (record.get(size_key) != source['bytes'] or record.get('sha256') != source['sha256']
+                or record.get('md5') != source['expected_md5']
+                or record.get('training_admitted') is not False
+                or record.get('spatial_planning_admitted') is not False
+                or record.get('decoded_array_bytes') != 0):
+            raise Refusal('mirror_fixity_or_claims')
+
+
+def validate_manifest(m, acquisition, records):
+    expected = [p for p in acquisition['pairs'] if not p['reuse_existing_pilot']]
+    sources = {s['id']: s for s in acquisition['sources']}
+    canonical = records['canonical_review']
+    measured = {r['source_id']: r for r in canonical['files']}
+    if (m['schema'] != 'resect-deferred-qc-manifest-v1' or m['claims'] != CLAIMS
+            or len(expected) != 24 or [r['pair'] for r in m['pairs']] != expected
+            or len(measured) != 50 or set(measured) != set(sources)
+            or canonical['status'] != 'all_50_frozen_canonical_files_byte_verified'
+            or m['inherited_pair'] != next(p for p in acquisition['pairs'] if p['reuse_existing_pilot'])
+            or m['inherited_pair']['id'] != 'Case3-during'
+            or m['denominator'] != {'frozen_train_people': 14, 'people_with_pairs': 13,
+                'qualified_pairs': 25, 'new_pairs': 24, 'inherited_pairs': 1, 'missing_annotation_timepoints': 3}
+            or m['missing_annotations'] != acquisition['missing_annotations']
+            or m['excluded_members'] != acquisition['excluded_members']
+            or m['rights'] != canonical['rights'] or m['release_by_kind'] != acquisition['release_by_kind']
+            or m['historical_status_receipts'] != canonical['historical_osf_attempts']['status_receipts']
+            or m['metadata']['acquisition_manifest']['sha256'] != authority.MANIFEST_SHA
+            or m['metadata']['cohort']['sha256'] != acquisition['cohort']['sha256']
+            or m['metadata']['rights']['sha256'] != acquisition['rights_prerequisite']['sha256']
+            or records['import_summary']['status'] != 'all_24_mirror_bodies_imported'
+            or records['import_summary']['verified_files'] != 24
+            or records['import_summary']['unresolved_source_ids']
+            or records['mirror_summary']['status'] != 'all_24_bodies_verified'
+            or records['mirror_declaration']['mirror_is_third_party_transport_only'] is not True):
+        raise Refusal('worklist_rights_denominator_or_parent_changed')
+    for row in m['pairs']:
+        pair = row['pair']
+        if (pair['role'] != 'TRAIN' or row['image'] != sources[pair['source_ids'][0]]
+                or row['mask'] != sources[pair['source_ids'][1]]
+                or row['image']['sha256'] is not None or row['mask']['file_revision'] != 2):
+            raise Refusal('pair_source_or_role')
+        for kind in ('image', 'mask'):
+            source = row[kind]
+            fixity = measured[source['id']]
+            if (fixity['pair_id'] != pair['id'] or fixity['patient_group'] != pair['patient_group']
+                    or fixity['role'] != 'TRAIN' or fixity['bytes'] != source['bytes']
+                    or fixity['md5'] != source['expected_md5'] or fixity['sha256'] != row[kind + '_sha256']
+                    or not re.fullmatch('[0-9a-f]{64}', row[kind + '_sha256'])):
+                raise Refusal('canonical_fixity_join')
+        if row['mask_sha256'] != row['mask']['sha256']:
+            raise Refusal('mask_published_fixity')
+        validate_mirror(row, m, records)
+    worker, parent = records['pilot_worker'], records['pilot_parent']
+    if (worker['status'] != 'completed' or parent['status'] != 'completed' or parent['exit_code'] != 0
+            or worker['role'] != 'TRAIN' or worker['patient_group'] != 'RESECT:Case3'
+            or worker['scope'] != parent['scope'] or worker['scope'] != 'qc'
+            or worker['manifest_sha256'] != m['metadata']['pilot_manifest']['sha256']
+            or worker['execution_source_sha256'] != m['metadata']['pilot_source']['sha256']
+            or parent['execution_source_sha256'] != worker['execution_source_sha256']
+            or worker['structural_qc']['status'] != 'passed_byte_header_scalar_and_binary_grid_checks'
+            or worker['structural_qc']['annotated_cavity_voxels'] != 20005
+            or worker['training_admitted'] is not False):
+        raise Refusal('inherited_pilot_not_passed')
+    for item in worker['files']:
+        sid = next(sid for sid in m['inherited_pair']['source_ids'] if sources[sid]['path'] == item['path'])
+        if measured[sid]['sha256'] != item['sha256']:
+            raise Refusal('inherited_pilot_source_changed')
+
+
+def preflight(deadline=None):
+    raw = read(MANIFEST, deadline=deadline)
+    if digest(raw) != MANIFEST_SHA:
+        raise Refusal('frozen_qc_manifest_changed')
+    m = json.loads(raw)
+    acquisition = authority.require_manifest(deadline=deadline)
+    records = {k: proof_json(v, deadline) for k, v in m['metadata'].items()
+               if k not in ('rights', 'mirror_source')}
+    for p in m['metadata'].values():
+        proof_bytes(p, deadline)
+    validate_manifest(m, acquisition, records)
+    for name, sha in m['helper_pins'].items():
+        if digest(read(ROOT / name, deadline=deadline)) != sha:
+            raise Refusal('pinned_helper_changed')
+    return m
+
+
+def execution_source(m, deadline=None):
+    files = dict(m['helper_pins'])
+    for name in (*files, 'scripts/resect_deferred_qc.py', 'manifests/resect-deferred-qc-v1.json'):
+        sha = digest(read(ROOT / name, deadline=deadline))
+        if name in files and sha != files[name]:
+            raise Refusal('pinned_execution_helper_changed')
+        files[name] = sha
+        module_name = (name[4:-3].replace('/', '.') if name.startswith('src/') else Path(name).stem)
+        module = sys.modules.get(module_name)
+        if module and Path(module.__file__).resolve() != ROOT / name:
+            raise Refusal('helper_import_outside_checkout')
+    return {'files': files, 'python': sys.version, 'executable': sys.executable,
+            'packages': {n: importlib.metadata.version(n) for n in ('numpy', 'nibabel', 'scipy')}}
+
+
+def validate_execution(run, declaration, m, deadline=None):
+    if declaration['execution'] != execution_source(m, deadline):
+        raise Refusal('executing_source_or_runtime_changed')
+    for name, sha in declaration['execution']['files'].items():
+        if digest(read(run / 'source-snapshot' / name, deadline=deadline)) != sha:
+            raise Refusal('execution_snapshot_changed')
+
+
+def input_proofs(m):
+    proofs = dict(m['metadata'])
+    for row in m['pairs']:
+        for key in ('import_receipt', 'mirror_receipt'):
+            proofs[row['pair']['id'] + '-' + key] = row[key]
+    return proofs
+
+
+def validate_inputs(run, m, deadline=None):
+    for name, proof in input_proofs(m).items():
+        if read(run / 'input-snapshot' / (name + '.bin'), deadline=deadline) != proof_bytes(proof, deadline):
+            raise Refusal('input_snapshot_changed')
+    # Missing historical local records do not defeat portable preflight, but any
+    # retained local attempt must still match its archived immutable fingerprint.
+    for record in m['historical_status_receipts']:
+        path = safe(ROOT / record['path'])
+        if path.exists() and digest(read(path, deadline=deadline)) != record['sha256']:
+            raise Refusal('historical_attempt_changed')
+
+
+def check_prefix(path, bounds, deadline):
+    """Bounded prefix guard supplements the shared mask dtype/bitpix check."""
+    import nibabel as nib
+    with gzip.open(safe(path), 'rb') as stream:
+        raw = stream.read(348)
+    check_deadline(deadline)
+    if len(raw) != 348:
+        raise Refusal('truncated_nifti_header')
+    h = nib.Nifti1Header(binaryblock=raw, check=False)
+    dtype = h.get_data_dtype()
+    if (int(h['sizeof_hdr']) != 348 or bytes(h['magic']) != b'n+1\0'
+            or dtype.kind not in 'iuf' or int(h['bitpix']) != dtype.itemsize * 8):
+        raise Refusal('nifti_magic_or_dtype_bitpix')
+    offset = float(h['vox_offset'])
+    if not math.isfinite(offset) or not offset.is_integer() or not 352 <= offset <= bounds['max_nifti_data_offset']:
+        raise Refusal('nifti_prefix_bound')
+    streaming.scalar_budget(list(h.get_data_shape()), dtype.itemsize, bounds)
+    return {'header_base64': base64.b64encode(raw).decode(), 'header_sha256': digest(raw)}
+
+
+def pair_geometry(image, mask):
+    import numpy as np
+    from resectionlab.imaging import _maximum_corner_displacement
+    if image['shape'] != mask['shape']:
+        return {'status': 'failed', 'reason': 'source_shape_disagreement'}
+    corner = _maximum_corner_displacement(np.asarray(image['affine_ras_mm']),
+                                         np.asarray(mask['affine_ras_mm']), image['shape'])
+    return {'status': 'passed' if math.isfinite(corner) and corner <= .01 else 'failed',
+            'maximum_corner_difference_mm': corner if math.isfinite(corner) else None, 'tolerance_mm': .01,
+            'interpretation': 'source_coded_grid_correspondence_only', 'geometric_admission': False}
+
+
+def geometry_from_header(raw, filename):
+    """Recompute inspect_nifti semantics from 348 bytes, without opening an image.
+
+    The shared file inspector remains unchanged. This independent receipt check
+    uses the same coded-transform, units and spatial-consistency rules.
+    """
+    import nibabel as nib
+    import numpy as np
+    from resectionlab.imaging import _UNIT_TO_MM, _maximum_corner_displacement
+    if len(raw) != 348:
+        raise Refusal('receipt_header_length')
+    h = nib.Nifti1Header(binaryblock=raw, check=False)
+    shape, dtype = list(h.get_data_shape()), h.get_data_dtype()
+    if (int(h['sizeof_hdr']) != 348 or bytes(h['magic']) != b'n+1\0'
+            or dtype.kind not in 'iuf' or int(h['bitpix']) != dtype.itemsize * 8
+            or len(shape) != 3 or any(n <= 0 for n in shape)):
+        raise Refusal('receipt_header_type_or_shape')
+    units = h.get_xyzt_units()[0]
+    if units not in _UNIT_TO_MM:
+        raise Refusal('receipt_unknown_units')
+    factor = _UNIT_TO_MM[units]
+    qform, qcode = h.get_qform(coded=True)
+    sform, scode = h.get_sform(coded=True)
+    if not qcode and not scode:
+        raise Refusal('receipt_transform_missing')
+    if qcode and scode:
+        scale = np.diag([factor, factor, factor, 1.])
+        if _maximum_corner_displacement(scale @ qform, scale @ sform, shape) > .01:
+            raise Refusal('receipt_qform_sform_disagreement')
+    affine = np.array(sform if scode else qform, dtype=float, copy=True)
+    affine[:3, :] *= factor
+    if (not np.isfinite(affine).all() or not np.allclose(affine[3], [0, 0, 0, 1])
+            or abs(np.linalg.det(affine[:3, :3])) < 1e-12):
+        raise Refusal('receipt_invalid_affine')
+    spacing = np.linalg.norm(affine[:3, :3], axis=0)
+    directions = affine[:3, :3] / spacing
+    if (not np.allclose(directions.T @ directions, np.eye(3), atol=1e-4)
+            or not np.allclose(spacing, np.array(h.get_zooms()[:3]) * factor, atol=.01, rtol=1e-4)):
+        raise Refusal('receipt_shear_or_spacing_disagreement')
+    codes = nib.aff2axcodes(affine)
+    if any(code is None for code in codes):
+        raise Refusal('receipt_orientation_unresolved')
+    return {'file': filename, 'shape': shape, 'affine_ras_mm': affine.tolist(),
+            'source_units': units, 'physical_units': 'mm', 'unit_scale_to_mm': factor,
+            'qform_code': int(qcode), 'sform_code': int(scode),
+            'qform_native': None if qform is None else qform.tolist(),
+            'sform_native': None if sform is None else sform.tolist(),
+            'orientation': list(codes), 'spacing_mm': spacing.tolist(),
+            'voxel_volume_mm3': float(abs(np.linalg.det(affine[:3, :3]))),
+            'handedness': 'left' if np.linalg.det(affine[:3, :3]) < 0 else 'right',
+            'anisotropic': bool(np.max(spacing) - np.min(spacing) > .01),
+            'obliquity_degrees': np.rad2deg(nib.affines.obliquity(affine)).tolist(),
+            'status': 'passed_header_checks', 'visual_alignment_review': 'pending', 'frame': 'RAS+',
+            'simulation_frame': 'source_coded_frame_native_status_requires_source_provenance'}
+
+
+def reported_header_contract(raw, value, reported_geometry, source, bounds, kind):
+    import nibabel as nib
+    from resectionlab.critical_evidence import nifti1_header_record
+    if value['raw_grid'] != nifti1_header_record(raw, source[kind + '_sha256']):
+        raise Refusal('complete_raw_header_record_changed')
+    filename = Path(source[kind]['path']).name if kind in source else reported_geometry['file']
+    if reported_geometry != geometry_from_header(raw, filename):
+        raise Refusal('reported_geometry_differs_from_raw_header')
+    h = nib.Nifti1Header(binaryblock=raw, check=False)
+    shape, itemsize = list(h.get_data_shape()), h.get_data_dtype().itemsize
+    budget_fn = streaming.scalar_budget if kind == 'image' else streaming.annotations.decoding_budget
+    if value['decoding_budget'] != budget_fn(shape, itemsize, bounds):
+        raise Refusal('reported_budget_differs_from_raw_header')
+    offset = float(h['vox_offset'])
+    if (not math.isfinite(offset) or not offset.is_integer()
+            or not 352 <= offset <= bounds['max_nifti_data_offset']
+            or (kind == 'mask' and offset + math.prod(shape) * itemsize > bounds['max_uncompressed_mask_bytes'])):
+        raise Refusal('receipt_raw_header_byte_bound')
+
+
+def inspect_pair(row, bounds, deadline):
+    from resectionlab.imaging import inspect_nifti, ImagingError
+    result = {'image_qc': {'status': 'not_run'}, 'mask_qc': {'status': 'not_run'},
+              'mask_geometry': {'status': 'not_run'}, 'pair_geometry': {'status': 'not_run'}}
+    for kind in ('image', 'mask'):
+        path = DATA / row[kind]['path']
+        try:
+            result[kind + '_prefix'] = check_prefix(path, bounds, deadline)
+            if kind == 'image':
+                result['image_qc'] = streaming.inspect_original(path, row['image_sha256'], bounds, deadline)
+            else:
+                result['mask_qc'] = streaming.annotations.inspect_mask(path, row['mask_sha256'], bounds, deadline)
+                try:
+                    result['mask_geometry'] = {'status': 'passed', 'header': inspect_nifti(path)}
+                except ImagingError as error:
+                    result['mask_geometry'] = {'status': 'failed', 'code': error.code, 'reason': str(error)}
+        except (ValueError, OSError, streaming.Refusal) as error:
+            result[kind + '_qc'] = {'status': 'failed', 'error_type': type(error).__name__, 'reason': str(error)}
+        check_deadline(deadline)
+    image = result['image_qc']
+    if image.get('geometry_qc', {}).get('status') == result['mask_geometry']['status'] == 'passed':
+        result['pair_geometry'] = pair_geometry(image['geometry_qc']['header'], result['mask_geometry']['header'])
+    passed = (all(image.get(k, {}).get('status') == 'passed' for k in ('header_qc', 'scalar_qc', 'geometry_qc'))
+              and result['mask_qc']['status'] == result['pair_geometry']['status'] == 'passed')
+    result['status'] = 'review_passed' if passed else 'review_failed'
+    return result
+
+
+def base_receipt(row, intent, declaration):
+    return {'schema': 'resect-pair-review-v1', 'manifest_sha256': MANIFEST_SHA,
+            'run_id': declaration['run_id'], 'pair': row['pair'], 'sources': row,
+            'intent_sha256': digest(encode(intent)), 'declaration_sha256': digest(encode(declaration)),
+            'status': 'failed_or_incomplete', **CLAIMS}
+
+
+def verify_pair_files(row, deadline):
+    for kind in ('image', 'mask'):
+        source = row[kind]
+        verify_source_file(safe(DATA / source['path']), source, receipt_sha=row[kind + '_sha256'], deadline=deadline)
+
+
+def worker(run, pair_id, intent_sha):
+    for key in THREAD_VARS:
+        os.environ[key] = '1'
+    trial = safe(run / 'pairs' / pair_id)
+    intent_raw = read(trial / 'intent.json')
+    intent = json.loads(intent_raw)
+    deadline = intent['deadline']
+    if (digest(intent_raw) != intent_sha or intent.get('supervisor_pid') != os.getppid()
+            or type(deadline) not in (float, int) or not math.isfinite(deadline)
+            or not 0 < deadline - time.monotonic() <= 60):
+        raise Refusal('worker_parent_or_time_or_intent')
+    m = preflight(deadline)
+    declaration = json.loads(read(run / 'declaration.json', deadline=deadline))
+    row = next((r for r in m['pairs'] if r['pair']['id'] == pair_id), None)
+    if (row is None or intent.get('pair_id') != pair_id or declaration.get('run_id') != run.name
+            or intent.get('declaration_sha256') != digest(encode(declaration))
+            or declaration.get('manifest_sha256') != MANIFEST_SHA
+            or not claims_match(declaration) or declaration['selected_pairs'] != [r['pair']['id'] for r in m['pairs']]):
+        raise Refusal('worker_scope_changed')
+    result = base_receipt(row, intent, declaration)
+    started = time.monotonic()
+    try:
+        validate_execution(run, declaration, m, deadline)
+        validate_inputs(run, m, deadline)
+        verify_pair_files(row, deadline)
+        result['fixity_before'] = 'passed'
+        result.update(inspect_pair(row, m['bounds'], deadline))
+        verify_pair_files(row, deadline)
+        result['fixity_after'] = 'passed'
+        validate_execution(run, declaration, m, deadline)
+        validate_inputs(run, m, deadline)
+        check_deadline(deadline)
+    except BaseException as error:
+        result.update(status='failed_or_incomplete', error_type=type(error).__name__,
+                      error_code=str(error) if isinstance(error, Refusal) else 'pair_review_incomplete')
+    finally:
+        rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        result.update(elapsed_seconds=time.monotonic() - started,
+                      peak_rss_bytes=int(rss if sys.platform == 'darwin' else rss * 1024),
+                      rss_is_observed_not_hard_limit=True, numerical_library_threads=1)
+        save(trial / 'receipt.json', result)
+    return result
+
+
+def receipt_contract(receipt, row, intent, declaration):
+    base = base_receipt(row, intent, declaration)
+    for key, value in base.items():
+        if key != 'status' and (type(receipt.get(key)) is not type(value) or receipt[key] != value):
+            raise Refusal('review_receipt_binding_or_claims')
+    if receipt.get('status') not in ('review_passed', 'review_failed', 'failed_or_incomplete'):
+        raise Refusal('review_receipt_status')
+    if receipt['status'] in ('review_passed', 'review_failed') and any(
+            receipt.get(k) != 'passed' for k in ('fixity_before', 'fixity_after')):
+        raise Refusal('review_receipt_fixity_missing')
+    if receipt['status'] == 'review_passed':
+        image = receipt.get('image_qc', {})
+        if (any(image.get(k, {}).get('status') != 'passed' for k in ('header_qc', 'scalar_qc', 'geometry_qc'))
+                or receipt.get('mask_qc', {}).get('status') != 'passed'
+                or receipt.get('mask_geometry', {}).get('status') != 'passed'
+                or receipt.get('pair_geometry', {}).get('status') != 'passed'):
+            raise Refusal('review_pass_claim_inconsistent')
+        mask = receipt['mask_qc']
+        try:
+            manifest_raw = read(MANIFEST)
+            if digest(manifest_raw) != MANIFEST_SHA:
+                raise Refusal('receipt_bounds_manifest_changed')
+            bounds = json.loads(manifest_raw)['bounds']
+            for kind, value in (('image', image), ('mask', mask)):
+                raw = streaming.validate_raw_grid(value['raw_grid'], row[kind + '_sha256'])
+                prefix = receipt[kind + '_prefix']
+                if prefix != {'header_base64': base64.b64encode(raw).decode(), 'header_sha256': digest(raw)}:
+                    raise Refusal('review_prefix_grid_disagreement')
+                geometry = image['geometry_qc']['header'] if kind == 'image' else receipt['mask_geometry']['header']
+                reported_header_contract(raw, value, geometry, row, bounds, kind)
+            ih = image['geometry_qc']['header']
+            mh = receipt['mask_geometry']['header']
+            voxels = math.prod(ih['shape'])
+            scalar, budget = image['scalar_qc'], mask['decoding_budget']
+            if (ih['shape'] != mh['shape'] or scalar['voxels'] != voxels or budget['voxels'] != voxels
+                    or any(type(mask[k]) is not int or mask[k] <= 0 for k in ('positive_voxels', 'background_voxels'))
+                    or mask['positive_voxels'] + mask['background_voxels'] != voxels
+                    or mask['background_semantics'] != 'unknown'
+                    or not all(math.isfinite(scalar[k]) for k in ('minimum', 'maximum'))
+                    or scalar['minimum'] > scalar['maximum']
+                    or receipt['pair_geometry'] != pair_geometry(ih, mh)):
+                raise Refusal('review_scalar_grid_accounting')
+        except (KeyError, TypeError, ValueError) as error:
+            raise Refusal('review_pass_metadata_inconsistent') from error
+
+
+def retain_receipt(outcome, trial, row, intent, declaration):
+    raw = read(trial / 'receipt.json')
+    outcome['receipt_sha256'] = digest(raw)
+    receipt = json.loads(raw)
+    receipt_contract(receipt, row, intent, declaration)
+    outcome['review_status'] = receipt['status']
+
+
+def run_pair(run, row, m, declaration, outcome, deadline):
+    trial = safe(run / 'pairs' / row['pair']['id'])
+    trial.mkdir(parents=True, exist_ok=False)
+    child_deadline = min(deadline - 1, time.monotonic() + m['bounds']['max_worker_seconds'])
+    intent = {'pair_id': row['pair']['id'], 'supervisor_pid': os.getpid(), 'deadline': child_deadline,
+              'declaration_sha256': digest(encode(declaration))}
+    outcome.update(status='worker_launch_pending', attempt=str(trial.relative_to(ROOT)))
+    problem = None
+    try:
+        save(trial / 'intent.json', intent)
+        outcome['intent_sha256'] = digest(encode(intent))
+        command = [sys.executable, str(Path(__file__).resolve()), 'worker', '--execute', '--manifest-sha', MANIFEST_SHA,
+                   '--run-id', run.name, '--pair', row['pair']['id'], '--intent-sha', outcome['intent_sha256']]
+        def on_start(pid):
+            outcome.update(worker_pid=pid, status='worker_started')
+            save(trial / 'started.json', {'pid': pid, 'intent_sha256': outcome['intent_sha256']})
+        status, code = supervise(command, trial / 'worker.log', deadline=child_deadline + .5, on_start=on_start)
+        outcome.update(supervision_status=status, exit_code=code)
+    except BaseException as error:
+        problem = error
+        outcome.update(status='interrupted_after_start' if 'worker_pid' in outcome else 'worker_start_failed',
+                       error_type=type(error).__name__)
+    finally:
+        try:
+            retain_receipt(outcome, trial, row, intent, declaration)
+        except BaseException as error:
+            outcome['receipt_error_type'] = type(error).__name__
+            problem = problem or error
+        try:
+            check_deadline(deadline)
+            validate_execution(run, declaration, m, deadline)
+            validate_inputs(run, m, deadline)
+            check_deadline(deadline)
+        except BaseException as error:
+            outcome['completion_error_type'] = type(error).__name__
+            problem = problem or error
+        if problem is None and outcome.get('supervision_status') == 'completed' and outcome.get('exit_code') == 0:
+            outcome['status'] = outcome['review_status']
+        elif outcome['status'] in ('worker_started', 'worker_launch_pending'):
+            outcome['status'] = 'failed_or_incomplete'
+        save(trial / 'outcome.json', outcome)
+    return outcome['status'] in ('review_passed', 'review_failed')
+
+
+def initial_outcomes(m):
+    return [{'pair_id': m['inherited_pair']['id'], 'status': 'inherited_structural_pass',
+             'receipt': m['metadata']['pilot_worker'], 'parent': m['metadata']['pilot_parent'],
+             'current_source_redecoded': False, **CLAIMS}] + [
+        {'pair_id': r['pair']['id'], 'status': 'not_attempted'} for r in m['pairs']]
+
+
+def batch(run_id, seconds=600):
+    started = time.monotonic()
+    if (not re.fullmatch('[A-Za-z0-9][A-Za-z0-9_-]{0,79}', run_id)
+            or type(seconds) not in (int, float) or not math.isfinite(seconds) or not 5 <= seconds <= 600):
+        raise Refusal('run_identity_or_time_bound')
+    deadline = started + seconds
+    m = preflight(deadline)
+    safe(CACHE).mkdir(parents=True, exist_ok=True)
+    with safe(CACHE / 'review.lock').open('a') as lock, termination_cleanup():
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        run = safe(CACHE / 'runs' / run_id)
+        run.mkdir(parents=True, exist_ok=False)
+        outcomes = initial_outcomes(m)
+        report = {'schema': 'resect-deferred-qc-batch-v1', 'run_id': run_id, 'manifest_sha256': MANIFEST_SHA,
+                  'status': 'failed_or_incomplete', 'denominator': m['denominator'], 'outcomes': outcomes,
+                  'missing_annotations': m['missing_annotations'], 'excluded_members': m['excluded_members'],
+                  'rights': m['rights'], 'historical_status_receipts': m['historical_status_receipts'], **CLAIMS}
+        try:
+            declaration = {'schema': 'resect-deferred-qc-run-v1', 'run_id': run_id, 'manifest_sha256': MANIFEST_SHA,
+                           'max_seconds': seconds, 'workers': 1, 'automatic_retries': 0,
+                           'selected_pairs': [r['pair']['id'] for r in m['pairs']],
+                           'execution': execution_source(m, deadline), **CLAIMS}
+            save(run / 'declaration.json', declaration)
+            for name in declaration['execution']['files']:
+                atomic_preserve(safe(run / 'source-snapshot' / name), read(ROOT / name, deadline=deadline))
+            for name, proof in input_proofs(m).items():
+                atomic_preserve(safe(run / 'input-snapshot' / (name + '.bin')), proof_bytes(proof, deadline))
+            for row, outcome in zip(m['pairs'], outcomes[1:]):
+                validate_execution(run, declaration, m, deadline)
+                check_deadline(deadline - 5)
+                if not run_pair(run, row, m, declaration, outcome, deadline):
+                    raise Refusal('pair_lifecycle_or_integrity_incomplete')
+            validate_execution(run, declaration, m, deadline)
+            validate_inputs(run, m, deadline)
+            check_deadline(deadline)
+            report['status'] = 'bounded_reviews_finished'
+        except BaseException as error:
+            report.update(error_type=type(error).__name__, error_code=str(error) if isinstance(error, Refusal)
+                          else 'bounded_review_incomplete')
+        finally:
+            report.update(elapsed_seconds=time.monotonic() - started,
+                          outcome_counts=dict(Counter(o['status'] for o in outcomes)))
+            if report['elapsed_seconds'] >= seconds:
+                report.update(status='failed_or_incomplete', deadline_exceeded=True)
+            save(run / 'batch.json', report)
+    return report
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('action', choices=('preflight', 'batch', 'worker'), nargs='?', default='preflight')
+    parser.add_argument('--run-id')
+    parser.add_argument('--max-seconds', type=float, default=600)
+    parser.add_argument('--pair')
+    parser.add_argument('--intent-sha')
+    parser.add_argument('--execute', action='store_true')
+    parser.add_argument('--manifest-sha')
+    args = parser.parse_args(argv)
+    try:
+        if args.action == 'preflight':
+            m = preflight()
+            result = {'status': 'metadata_preflight_passed', 'manifest_sha256': MANIFEST_SHA,
+                      'denominator': m['denominator'], **CLAIMS}
+        else:
+            if not args.execute or args.manifest_sha != MANIFEST_SHA or not args.run_id:
+                raise Refusal('explicit_execution_and_frozen_manifest_required')
+            if not re.fullmatch('[A-Za-z0-9][A-Za-z0-9_-]{0,79}', args.run_id):
+                raise Refusal('run_identity')
+            if args.action == 'worker':
+                if not args.pair or not re.fullmatch('Case[0-9]+-(during|after)', args.pair):
+                    raise Refusal('worker_pair_identity')
+                result = worker(safe(CACHE / 'runs' / args.run_id), args.pair, args.intent_sha)
+            else:
+                result = batch(args.run_id, args.max_seconds)
+    except BaseException as error:
+        result = {'status': 'refused', 'error_type': type(error).__name__,
+                  'error_code': str(error) if isinstance(error, Refusal) else 'review_operation_failed', **CLAIMS}
+    print(json.dumps(result, allow_nan=False), flush=True)
+    return 0 if result['status'] in ('metadata_preflight_passed', 'bounded_reviews_finished',
+                                    'review_passed', 'review_failed') else 2
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
