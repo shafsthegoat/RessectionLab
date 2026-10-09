@@ -730,3 +730,8 @@ One exact 64-plane ReMIND-002 TRAIN MRI conversion finished in 2.016 seconds at 
 ### October 9: read-only mechanics validation at observed 54% host availability
 
 The [separate hinted probe](../artifacts/hbe-v5-n12-50pct-readonly-v1/RESULT.md) passes independent saved-evidence audit: 14 verified predecessor opens, 2.80 GB call-counted, 5.470 seconds, 178,323,456-byte worker-group peak and clean reaping. Admission was 54%, with every sampled host observation at 53–54% and normal pressure. The protocol name contains 50%, but the result does not validate a 50% start. The original v1 55% admission rule remains unchanged; no native solve, measured-response validation or ordinal reservation occurred.
+
+
+### October 9: explicit versioned mechanics host policy
+
+The [v2 launcher source](../artifacts/hbe-v5-n12-nocache-v2-source-proposal-v1/RESULT.md) adopts a separately named 54% initial host threshold, informed by the observed 54% read-only start. All 26 generated controls pass independent review. V1 remains at 55%; later 45%/normal checks, numerical sources, caps and single native attempt remain fixed. A prior v1 sidecar now prevents v2 retry; reverse policy switching after any v2 attempt is forbidden. This source change is not a native result or physical validation; exact committed release review and a fresh host reading are still required.

@@ -1,0 +1,98 @@
+{
+  "file_count": 15,
+  "files": [
+    {
+      "bytes": 1813,
+      "path": "RESULT.md",
+      "sha256": "52962153046fcbdff5bef91f60a9bf871b06117bf3bee94da9330a8b2e7431a8",
+      "source": "build/hbe-v5-n12-nocache-v2-integration/artifacts/hbe-v5-n12-nocache-v2-source-proposal-v1/RESULT.md"
+    },
+    {
+      "bytes": 5172,
+      "path": "independent/REPORT.md",
+      "sha256": "2519453896241e495c6d246bf20eb8589de553409eb1d9da94a1aa0cb34ad0aa",
+      "source": "build/hbe-v5-n12-nocache-v2-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 7210,
+      "path": "independent/audit.json",
+      "sha256": "bdf3554bb9ae4eed371920d6b3effa8cd8140df411331eef29b4bd14c0db3239",
+      "source": "build/hbe-v5-n12-nocache-v2-independent-v1/audit.json"
+    },
+    {
+      "bytes": 6491,
+      "path": "independent/audit_sources.py",
+      "sha256": "06a0797a5befe02ac5e5152b1c0ab062f50a2099167aacb9701bd2fcd06e63ed",
+      "source": "build/hbe-v5-n12-nocache-v2-independent-v1/audit_sources.py"
+    },
+    {
+      "bytes": 5048,
+      "path": "independent/test_independent_v2.py",
+      "sha256": "5364f3d83d358c00910530d75efe68138cd795fa6d7bdd00717699faaffb9edd",
+      "source": "build/hbe-v5-n12-nocache-v2-independent-v1/test_independent_v2.py"
+    },
+    {
+      "bytes": 5532,
+      "path": "independent/v1-to-v2.diff",
+      "sha256": "1b8e90f4e0f181805e9dd17b369e96d6d00b1d6f5b1615979de4418f8ed3ed9a",
+      "source": "build/hbe-v5-n12-nocache-v2-independent-v1/v1-to-v2.diff"
+    },
+    {
+      "bytes": 2936,
+      "path": "release-prep/RELEASE_RECIPE.md",
+      "sha256": "9db1be031e18379ffa09ca4016af76a652a9fdaca3d0f9173a4c3c47e60f57fb",
+      "source": "build/hbe-v5-tension-n12-s60-nocache-v2-release-prep/RELEASE_RECIPE.md"
+    },
+    {
+      "bytes": 4694,
+      "path": "release-prep/derive_templates.py",
+      "sha256": "82089ea5e286efe3a0438e40a9e41afb72668de406eb1757e8ddff19f78f20d3",
+      "source": "build/hbe-v5-tension-n12-s60-nocache-v2-release-prep/derive_templates.py"
+    },
+    {
+      "bytes": 3959,
+      "path": "source/V2_PROPOSAL.md",
+      "sha256": "c06ce9d0e63c5dfda58d06bfb6caa179bf794aa12ebae2aa2f5042c405e3c59e",
+      "source": "build/hbe-v5-n12-nocache-v2-candidate/V2_PROPOSAL.md"
+    },
+    {
+      "bytes": 2075,
+      "path": "source/hbe_v5_nocache_hash_v1.py",
+      "sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+      "source": "launchers/hbe_v5_nocache_hash_v1.py"
+    },
+    {
+      "bytes": 8426,
+      "path": "source/hbe_v5_nocache_host_v1.py",
+      "sha256": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+      "source": "launchers/hbe_v5_nocache_host_v1.py"
+    },
+    {
+      "bytes": 31098,
+      "path": "source/hbe_v5_nocache_v1.py",
+      "sha256": "efeda27abc3c1a6851e1066789e51a2f05b94728def62e71061d03da7f4629de",
+      "source": "launchers/hbe_v5_nocache_v1.py"
+    },
+    {
+      "bytes": 31493,
+      "path": "source/hbe_v5_nocache_v2.py",
+      "sha256": "4271cb49de70a63de5bf8369628208d8b90907434deb6324a16a7b36c314790f",
+      "source": "build/hbe-v5-n12-nocache-v2-candidate/hbe_v5_nocache_v2.py"
+    },
+    {
+      "bytes": 35727,
+      "path": "tests/test_generated_v2.py",
+      "sha256": "cc2b272052d75297642b68c3bd07c169192db11df7d3af02b3087e359b9a06ef",
+      "source": "build/hbe-v5-n12-nocache-v2-candidate/test_generated_v2.py"
+    },
+    {
+      "bytes": 5365,
+      "path": "tests/test_v2_boundary.py",
+      "sha256": "d353e4200d7f1371b31957c1681e23996bfb281d9ce759391e02ba66036fa285",
+      "source": "build/hbe-v5-n12-nocache-v2-candidate/test_v2_boundary.py"
+    }
+  ],
+  "schema": "hbe-v5-n12-nocache-v2-source-proposal-manifest-v1",
+  "status": "SOURCE_PROPOSAL_NOT_RELEASED",
+  "total_bytes": 157039
+}
