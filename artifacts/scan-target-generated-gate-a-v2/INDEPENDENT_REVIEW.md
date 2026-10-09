@@ -1,0 +1,13 @@
+# Independent Gate A v2 CPU negative audit
+
+This audit preserves the separately versioned v2 generated-only CPU attempt. Gate A v1 remains a distinct failed compressor-growth-guard run. Neither attempt produced CPU/MPS parity data or patient-level evidence.
+
+The v2 run used the approved SHA-256 worker `27f64a3f681b63dfccfde0fbf54be3f897e134fd716edb41bc57d49328f325d3`, supervisor `cd2af7e5e608a208a1c14a6bd1c38f5094791435c22e80be0aa04c123b95ddbb`, comparator `88b485b824bd1c9bcfe284530b6e7cd9947cbec94a4e3cf52c8d263d7aacb21b`, contract `e540fa8ef361685a299438e7781a8174242983dc6f0d318a957b5d1dfddba256`, and generated input `6a7435f18ebd1e95ce8561e07481f554bfd562f5564bbaaee7da0069123d30b7`. All still match after the run. The pinned checkpoint still hashes to `0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3`.
+
+The 30-second quiet-host preflight passed with seven samples: kernel pressure mask 1, available indicator 53–54%, unchanged swap used at 7255.69 MiB, and no classified blocking project process. The CPU child logged scoped weights-only load, architecture construction, alias checks, strict copy, and `before_generated_forward` at about +1.015 seconds. It never logged `after_synchronized_forward` and produced no logits or result receipt.
+
+The supervisor's process-inventory command `ps -axo pid=,ppid=,pgid=,rss=,ucomm=,command=` exceeded its prospective 0.1-second timeout while the forward was running. It recorded `watchdog_reason=monitor_exception`, `monitor_error=TimeoutExpired`, killed the child group (PGID 62449, exit -9), and completed at 1.456 seconds. Read-only process inspection found the group empty. The sampled peak child-group RSS was 1,038,096 KiB, below the separate 3,145,728 KiB cap.
+
+An **independent prospective HOLD condition** was also present: the system-wide pageouts counter rose from 3,507,651 at baseline to 3,507,709 (+58 16-KiB pages) after checkpoint load. The frozen v2 rule treats any new pageout/swapout counter increment as a hold. Swapouts and swap used stayed unchanged; kernel pressure samples remained mask 1; available indicator reached 48% in the post-child snapshot, above the 30% stop and within the 20-point baseline drop limit. Compressor occupancy grew, but is diagnostic only in v2. These system-wide signals cannot be attributed entirely to the model process.
+
+The result is a **supervisor timeout and separate host-pageout HOLD**, not a failed inference or CPU/MPS numerical mismatch. The saved supervision receipt sets `accepted_for_pair=false`. No MPS directory or comparator output exists. Do not retry v2 or change its frozen rules after seeing the outcome; a future monitor design or pageout policy must be an independently reviewed, separately versioned prospective experiment.

@@ -116,6 +116,12 @@ now pass dependency, analytic registration and bounded safe metadata checks.
 The initial inverse-transform and safe-load failures are retained. This is
 not patient inference: an independent adapter, scan-only preprocessing and
 local anatomical QC remain required before any planning input is admitted.
+The separately reviewed [generated CPU control v2](artifacts/scan-target-generated-gate-a-v2/RESULT.md)
+passed its quiet-host preflight but stopped on a 0.1-second process-inventory
+timeout before producing logits. A separate 58-page host pageout increase also
+triggered its frozen hold rule. Kernel pressure remained normal in saved samples;
+no MPS comparison ran. The monitor architecture is the next engineering target,
+with both negative attempts retained and no new policy or accuracy claim.
 The [generated CPU/MPS Gate A attempt](artifacts/scan-target-generated-gate-a-v1/RESULT.md)
 stopped during its CPU reference forward under the frozen host-compressor-growth
 rule. Process RSS stayed below its cap; no logits or MPS call occurred. The
