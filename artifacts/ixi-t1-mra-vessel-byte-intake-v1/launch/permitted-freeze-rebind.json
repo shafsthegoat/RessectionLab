@@ -1,0 +1,17 @@
+{
+  "canonical_cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+  "canonical_scope_sha256": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c",
+  "execution_launched": false,
+  "network_requests": 0,
+  "payload_bytes_read": 0,
+  "permitted_scope_and_role_delta_only": true,
+  "prepared": {
+    "prepared-declaration.json": "1d3435db6f164855a654939e72ba90e222b7e6cd9388defea7f1004a1d9b7f0a",
+    "proposed-cohort.json": "cc6641d25162b7016089e29256c6870d2427642d58abcd4e6e46f44e67fad716",
+    "proposed-scope.json": "7a09c828609cc0f7f91ab6f1466c902ac1ca1dfc91da7db307e0942f66e1e586",
+    "run-intake.py": "8101d3c3edfea9d9099848468dbbfe24157bcd552bb16854f94b9c2c5a297dc2"
+  },
+  "released_declaration_sha256": "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1",
+  "runner_and_helpers_unchanged": true,
+  "scope_commit": "bf8653a77ad36ada57775c798407cb07034f70f1"
+}

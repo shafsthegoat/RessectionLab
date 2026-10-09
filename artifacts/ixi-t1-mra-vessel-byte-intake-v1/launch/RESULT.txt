@@ -1,0 +1,7 @@
+IXI intake actually launched after committed freeze bf8653a77ad36ada57775c798407cb07034f70f1. The exact released declaration and unchanged runner passed permitted-delta, committed-source and check-only checks before launch. PID/PGID 4631, session 95570, run 20261009T114144129161Z-04a4e72a began at 2026-10-09T11:41:44.129644Z.
+
+At 2026-10-09T11:49:34 UTC, the exact process identity remained live and IXI-T1.tar had 1,668,284,416 unverified resumable partial bytes. No archive was complete, no failed attempt result was recorded, and no terminal receipt existed. This changes the recorded status from authorized to running. Acquisition remains incomplete.
+
+The contemporaneous Tracto snapshot retained exact PID 92434/session 35269 and 1,510 verified files totaling 52,257,031,518 bytes, with zero failed attempt results. Both sessions were left intact.
+
+The prelaunch rebind proof still says execution_launched=false because it records check-only at that earlier stage; later start/process/progress receipts establish launch. All snapshots and this package read metadata and file statistics only. No archive body, image header, voxel/label value, anatomy QC or training use was accessed or admitted.

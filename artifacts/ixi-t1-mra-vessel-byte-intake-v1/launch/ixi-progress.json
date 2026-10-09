@@ -1,0 +1,47 @@
+{
+  "all_payloads_unreviewed": true,
+  "exact_process_identity_matches": true,
+  "files": [
+    {
+      "bytes_at_final_path": 0,
+      "expected_bytes": 4840816640,
+      "filename": "IXI-T1.tar",
+      "latest_result": null,
+      "partial_bytes": 1668284416,
+      "verified": false
+    },
+    {
+      "bytes_at_final_path": 0,
+      "expected_bytes": 12377712640,
+      "filename": "IXI-MRA.tar",
+      "latest_result": null,
+      "partial_bytes": 0,
+      "verified": false
+    },
+    {
+      "bytes_at_final_path": 0,
+      "expected_bytes": 6580597,
+      "filename": "vessel_dataset.zip",
+      "latest_result": null,
+      "partial_bytes": 0,
+      "verified": false
+    }
+  ],
+  "free_bytes": 603626967040,
+  "historical_result_status_counts": {},
+  "owner_agent": "/root/acquisition_continuity_audit",
+  "payload_bytes_opened_by_status_tool": 0,
+  "pgid": 4631,
+  "pid": 4631,
+  "planned_bytes": 17225109877,
+  "planned_files": 3,
+  "process_alive": true,
+  "recorded_utc": "2026-10-09T11:49:34.241387+00:00",
+  "sampled_rss_kib": 20880,
+  "schema": "ixi-live-status-v1",
+  "session_id": 95570,
+  "terminal_receipt_sha256": null,
+  "terminal_status": null,
+  "verified_bytes": 0,
+  "verified_files": 0
+}

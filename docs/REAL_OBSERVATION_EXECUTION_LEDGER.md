@@ -675,3 +675,8 @@ The [staged MR pipeline](../artifacts/remind-staged-full-generated-preparation-v
 ### October 9: integrated sealed-strategy private vascular evaluator
 
 The [private vascular evaluator](../artifacts/private-vascular-evaluator-v1/RESULT.md) is now integrated into the reusable library. It seals and checks the complete strategy before loading an evaluator-owned vessel reference, then measures full shaft/tip exposure and separate removed-cell overlap. Unknown coverage remains unknown. All 125 focused author, independent and related regression tests passed; source snapshots were unchanged. This is generated-only interface validation, with real-person admission and hard process supervision still required before acquired-patient evaluation.
+
+
+### October 9: paired-data transfer started alongside Tracto
+
+The [IXI intake launch](../artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/RESULT.txt) is confirmed after the committed role freeze. At 11:49 UTC, 1.67 GB of the first archive was present as unverified resumable partial data; no archive was complete. The concurrent Tracto download had 1,510 verified files totaling 52.26 GB, with zero failed attempts. Both transfers continue; snapshots do not admit image or anatomical use.

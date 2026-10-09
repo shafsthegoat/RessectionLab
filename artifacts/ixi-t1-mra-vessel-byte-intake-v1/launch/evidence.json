@@ -1,0 +1,91 @@
+{
+  "Tracto": {
+    "historical_attempt_results": {
+      "byte_verified": 1510
+    },
+    "pid": 92434,
+    "progress_recorded_utc": "2026-10-09T11:49:34.241100+00:00",
+    "session_id": 35269,
+    "terminal_status": null,
+    "verified_bytes": 52257031518,
+    "verified_files": 1510
+  },
+  "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+  "declaration_sha256": "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1",
+  "download_sessions_changed": false,
+  "execution_actually_launched": true,
+  "historical_attempt_results": {},
+  "limits": [
+    "Snapshot records one time, not a current liveness guarantee.",
+    "Partial bytes are unverified and must not be counted as acquired/complete.",
+    "No archive-body inspection, image header/array decoding, anatomy QC or training admission.",
+    "Process identity uses ps lstart and exact command; subsecond kernel token is owned by the separate model monitor."
+  ],
+  "packaged_utc": "2026-10-09T11:50:30.707950+00:00",
+  "payload_bytes_opened_for_bundle": 0,
+  "pgid": 4631,
+  "pid": 4631,
+  "polling_loop_started": false,
+  "progress_recorded_utc": "2026-10-09T11:49:34.241387+00:00",
+  "proof_stage_note": "permitted-freeze-rebind.json truthfully records execution_launched=false at prelaunch check-only. started.json, process-identity.json and the later progress snapshot establish actual subsequent launch; the earlier proof is preserved unchanged.",
+  "run_id": "20261009T114144129161Z-04a4e72a",
+  "runner_sha256": "8101d3c3edfea9d9099848468dbbfe24157bcd552bb16854f94b9c2c5a297dc2",
+  "schema": "ixi-actual-launch-evidence-v1",
+  "scope_commit": "bf8653a77ad36ada57775c798407cb07034f70f1",
+  "scope_sha256": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c",
+  "session_id": 95570,
+  "source_artifacts": {
+    "ixi-progress.json": {
+      "bytes": 1216,
+      "original_path": "build/ixi-paired-intake-preparation-v1/latest-status.json",
+      "sha256": "598b8fd35fb2f8d960d96294cd0bf556b4599aa50d974a884c606441123a8673"
+    },
+    "ixi-snapshot-source.py": {
+      "bytes": 2960,
+      "original_path": "build/ixi-paired-intake-preparation-v1/snapshot-status.py",
+      "sha256": "3d116e08e4f06c740fabd36ba5cb0bdbe83109c7c241d1f3eb64641a07397361"
+    },
+    "permitted-freeze-rebind.json": {
+      "bytes": 930,
+      "original_path": "build/ixi-paired-intake-preparation-v1/root-release-binding.json",
+      "sha256": "9aaa7799f1f9e76fbfda3ff2fbe52088cb7617229869e5831f7c570806a7dc72"
+    },
+    "process-identity.json": {
+      "bytes": 3389,
+      "original_path": "build/ixi-paired-intake-preparation-v1/live-monitor-identity.json",
+      "sha256": "fe9ed9f44cef6f64b589c3135bc33ba1b60eed4290662fa2b6e1cd937c5ccf63"
+    },
+    "rebind-root-release.py": {
+      "bytes": 3701,
+      "original_path": "build/ixi-paired-intake-preparation-v1/rebind-root-release.py",
+      "sha256": "538edf34d04337392988c728777c572986db94198f7ecf395341f1b494392018"
+    },
+    "released-declaration.json": {
+      "bytes": 4795,
+      "original_path": "data/acquisition/ixi-t1-mra-vessel-v1/declaration.json",
+      "sha256": "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1"
+    },
+    "started.json": {
+      "bytes": 779,
+      "original_path": "data/acquisition/ixi-t1-mra-vessel-v1/runs/20261009T114144129161Z-04a4e72a/started.json",
+      "sha256": "96730b997f0edc842bbc51a4d3d4a60772754312fb1238ef48823257e0518081"
+    },
+    "tracto-progress.json": {
+      "bytes": 961,
+      "original_path": "build/tractoinferno-train-preparation-v1/latest-status.json",
+      "sha256": "a3ba27955bef915259548714cdb5b3b78f2887b0061e07b253375ee4b39ee8a7"
+    },
+    "tracto-snapshot-source.py": {
+      "bytes": 2569,
+      "original_path": "build/tractoinferno-train-preparation-v1/snapshot-status.py",
+      "sha256": "1d2d6b55d0da6d42a74a1a8df44bf671ec9a3b69569afda6398d6e7328808fbe"
+    }
+  },
+  "started_utc": "2026-10-09T11:41:44.129644+00:00",
+  "status": "running_at_recorded_snapshot",
+  "terminal_status": null,
+  "tracked_files_modified": false,
+  "unverified_partial_bytes": 1668284416,
+  "verified_bytes": 0,
+  "verified_files": 0
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "ixi-launch-evidence-bundle-hashes-v1",
+  "files": [
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/RESULT.txt",
+      "sha256": "ae534df6f5cda19ce75df5c4de01c67422093fec5f0d4ca4f74d62be3d68e38b",
+      "bytes": 1202
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/evidence.json",
+      "sha256": "b10047f881828199378309e485bacbaae5a7ac1f605a74e7b43ba6d7a70b83f4",
+      "bytes": 4170
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/ixi-progress.json",
+      "sha256": "598b8fd35fb2f8d960d96294cd0bf556b4599aa50d974a884c606441123a8673",
+      "bytes": 1216
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/ixi-snapshot-source.py",
+      "sha256": "3d116e08e4f06c740fabd36ba5cb0bdbe83109c7c241d1f3eb64641a07397361",
+      "bytes": 2960
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/permitted-freeze-rebind.json",
+      "sha256": "9aaa7799f1f9e76fbfda3ff2fbe52088cb7617229869e5831f7c570806a7dc72",
+      "bytes": 930
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/process-identity.json",
+      "sha256": "fe9ed9f44cef6f64b589c3135bc33ba1b60eed4290662fa2b6e1cd937c5ccf63",
+      "bytes": 3389
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/rebind-root-release.py",
+      "sha256": "538edf34d04337392988c728777c572986db94198f7ecf395341f1b494392018",
+      "bytes": 3701
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/released-declaration.json",
+      "sha256": "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1",
+      "bytes": 4795
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/started.json",
+      "sha256": "96730b997f0edc842bbc51a4d3d4a60772754312fb1238ef48823257e0518081",
+      "bytes": 779
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/tracto-progress.json",
+      "sha256": "a3ba27955bef915259548714cdb5b3b78f2887b0061e07b253375ee4b39ee8a7",
+      "bytes": 961
+    },
+    {
+      "path": "artifacts/ixi-t1-mra-vessel-byte-intake-v1/launch/tracto-snapshot-source.py",
+      "sha256": "1d2d6b55d0da6d42a74a1a8df44bf671ec9a3b69569afda6398d6e7328808fbe",
+      "bytes": 2569
+    }
+  ],
+  "archive_bodies_or_images_included": false
+}
