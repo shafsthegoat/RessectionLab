@@ -1,0 +1,187 @@
+"""One sealed MAT file through the existing SHA256-verified byte transport.
+
+Scoped adaptation of build/nfbs-intake-preparation-v1/run-intake.py.
+No scipy, h5py, decoder, scientific values, fitted statistics, or role assignment.
+"""
+from pathlib import Path
+from datetime import datetime, timezone
+from urllib.request import build_opener, HTTPSHandler
+from urllib.error import HTTPError, URLError
+from email.utils import parsedate_to_datetime
+import argparse, fcntl, hashlib, http.client, json, os, shutil, socket, ssl, sys, time, uuid
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = ROOT / 'data/acquisition/menichetti-mechanics-v1'
+ENTRY = {'path': 'F_t_curves.mat', 'size_bytes': 6427434,
+         'sha256': 'ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6',
+         'source_url': 'https://prod-dcd-datasets-public-files-eu-west-1.s3.eu-west-1.amazonaws.com/f4b66b90-4c1f-4e63-b340-098a956dc67b'}
+ETAG = '"af2e61709bbfae4bb95ace7c15cf0824"'  # Opaque identity, not a checksum claim.
+
+def sha(path):
+    h = hashlib.sha256()
+    with path.open('rb') as stream:
+        while block := stream.read(1024 ** 2):
+            h.update(block)
+    return h.hexdigest()
+
+def utc():
+    return datetime.now(timezone.utc).isoformat()
+
+def require(value, reason):
+    if not value:
+        raise RuntimeError(reason)
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--declaration', type=Path, required=True)
+    parser.add_argument('--declaration-sha256', required=True)
+    parser.add_argument('--check-only', action='store_true')
+    args = parser.parse_args()
+    require(sha(args.declaration) == args.declaration_sha256, 'declaration_changed')
+    declaration = json.loads(args.declaration.read_text())
+    require(sha(Path(__file__)) == declaration['runner_sha256'], 'runner_changed')
+    scope_path = ROOT / declaration['scope_path']
+    require(sha(scope_path) == declaration['scope_sha256'], 'scope_changed')
+    scope = json.loads(scope_path.read_text())
+    require(scope['payload'] == ENTRY and declaration['payload'] == ENTRY, 'scope_payload_mismatch')
+    require(scope['access_role'] == 'SEALED_BYTE_INTAKE_ONLY', 'role_mismatch')
+    require(scope['force_values_accessed'] is False and scope['donor_roles_assigned'] is False, 'value_or_role_access')
+    require(scope['training_admitted'] is False and scope['existing_roles_modified'] is False, 'admission_or_split_changed')
+    require(declaration['max_transport_attempts_across_restarts'] == 3, 'attempt_limit_changed')
+    require(declaration['free_space_reserve_bytes'] == 100 * 1024 ** 3, 'reserve_changed')
+    for relative, digest in declaration['source_files_sha256'].items():
+        require(sha(BASE / 'source' / relative) == digest, 'source_helper_changed')
+    for relative, digest in declaration['metadata_files_sha256'].items():
+        require(sha(ROOT / relative) == digest, 'metadata_changed')
+    if args.check_only:
+        print(json.dumps({'status': 'prepared_contract_valid', 'network_requests': 0,
+                          'payload_access': False, 'execution_released': declaration['execution_released'],
+                          'bytes': ENTRY['size_bytes'], 'scope_sha256': declaration['scope_sha256']}))
+        return
+    require(declaration['execution_released'] is True, 'execution_not_released')
+    require(declaration['scope_frozen_before_payload_access'] is True, 'scope_not_frozen')
+    prior_binding = declaration['preceding_remind_SEG_terminal']
+    require(prior_binding['path'] == 'data/acquisition/remind-train-seg-v1/completion.json', 'wrong_predecessor')
+    prior_path = ROOT / prior_binding['path']
+    require(prior_binding['sha256'] and sha(prior_path) == prior_binding['sha256'], 'predecessor_receipt_unbound')
+    prior = json.loads(prior_path.read_text())
+    require(prior['run_id'] == prior_binding['run_id'] and prior['declaration_sha256'] == prior_binding['declaration_sha256'], 'predecessor_run_mismatch')
+    require(prior['status'] == 'all_bytes_verified', 'predecessor_not_complete')
+    # Hold both locks throughout, preventing overlap with a restarted SEG queue.
+    prior_lock = (ROOT / 'data/acquisition/remind-train-seg-v1/queue.lock').open('a+')
+    fcntl.flock(prior_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    queue_lock = (BASE / 'queue.lock').open('a+')
+    fcntl.flock(queue_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    sys.path.insert(0, str(BASE / 'source'))
+    import acquire_public_case as transport
+    import acquire_btc_case as guards
+    import real_intake_io as io
+    for module in (transport, guards, io):
+        require(Path(module.__file__).resolve().parent == BASE / 'source', 'wrong_import')
+    out = BASE / 'verified'
+    out.mkdir(exist_ok=True)
+    path, partial = out / ENTRY['path'], out / (ENTRY['path'] + '.partial')
+    require(not path.is_symlink() and not partial.is_symlink(), 'symlink_refusal')
+    require(not partial.exists() or partial.stat().st_size <= ENTRY['size_bytes'], 'oversized_partial')
+    remaining = max(0, ENTRY['size_bytes'] - (partial.stat().st_size if partial.exists() else 0))
+    require(shutil.disk_usage(BASE).free - remaining >= declaration['free_space_reserve_bytes'], 'storage_reserve_refusal')
+    ctx = ssl.create_default_context()
+    require(ctx.verify_mode == ssl.CERT_REQUIRED and ctx.check_hostname, 'tls_verification_disabled')
+    opener = build_opener(guards.RejectRedirects(), HTTPSHandler(context=ctx))
+    run_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '-' + uuid.uuid4().hex[:8]
+    run, attempts = BASE / 'runs' / run_id, BASE / 'attempts'
+    run.mkdir(parents=True)
+    attempts.mkdir(exist_ok=True)
+    def save(p, value):
+        io.atomic_preserve(p, (json.dumps(value, sort_keys=True, indent=2) + '\n').encode())
+    def proof():
+        transport.verify_file(path, ENTRY)  # Unchanged source SHA256 verifier.
+        return {'bytes': path.stat().st_size, 'sha256': sha(path)}
+    save(run / 'started.json', {'pid': os.getpid(), 'run_id': run_id, 'started_utc': utc(),
+         'declaration_sha256': args.declaration_sha256, 'scope_sha256': declaration['scope_sha256'],
+         'force_values_accessed': False, 'training_admitted': False})
+    previous = sorted(attempts.glob('*-intent.json'))
+    require(all(p.with_name(p.name.replace('-intent.json', '-result.json')).exists() for p in previous), 'orphan_attempt_requires_review')
+    old_results = [json.loads(p.with_name(p.name.replace('-intent.json', '-result.json')).read_text()) for p in previous]
+    result = {'status': 'transport_exhausted', 'attempts_before_run': len(previous)}
+    if path.exists():
+        result = {'status': 'existing_byte_verified', **proof(), 'http_requests': 0}
+    elif any(r['status'] == 'integrity_or_scope_refusal' for r in old_results):
+        result = {'status': 'prior_integrity_or_scope_refusal_no_network'}
+    else:
+        with io.termination_cleanup():
+            for attempt in range(len(previous) + 1, 4):
+                next_allowed = max([r.get('next_attempt_unix') or 0 for r in old_results] or [0])
+                while time.time() < next_allowed:
+                    time.sleep(min(2, next_allowed - time.time()))
+                offset = partial.stat().st_size if partial.exists() else 0
+                aid = f'{attempt:02d}-{run_id}'
+                save(attempts / (aid + '-intent.json'), {'entry': ENTRY, 'run_id': run_id,
+                     'started_utc': utc(), 'resume_offset': offset, 'declaration_sha256': args.declaration_sha256})
+                events = []
+                def observed(request, *, timeout):
+                    require(request.full_url == ENTRY['source_url'], 'undeclared_url')
+                    request.add_header('If-Match', ETAG)
+                    event = {'url': request.full_url, 'range': request.get_header('Range'), 'tls_verified': True}
+                    try:
+                        response = opener.open(request, timeout=timeout)
+                    except HTTPError as error:
+                        event.update(status=error.code, retry_after=error.headers.get('Retry-After'))
+                        events.append(event)
+                        save(attempts / (aid + '-http.json'), event)
+                        raise
+                    headers = response.headers
+                    event.update(status=response.status, effective_url=response.geturl(), headers={k: headers.get(k) for k in ['Content-Length', 'Content-Range', 'Content-Encoding', 'ETag']})
+                    events.append(event)
+                    save(attempts / (aid + '-http.json'), event)
+                    valid = (response.geturl() == ENTRY['source_url'] and response.status == (206 if offset else 200)
+                             and headers.get('ETag') == ETAG
+                             and int(headers.get('Content-Length', '-1')) == ENTRY['size_bytes'] - offset)
+                    if not valid:
+                        response.close()
+                        raise transport.AcquisitionError('identity_size_or_strict_resume_contract_failed')
+                    return response
+                try:
+                    state = transport.acquire_file(ENTRY, out, opener=observed)
+                    result = {'status': 'byte_verified', 'transport_status': state, **proof(), 'attempt': attempt,
+                              'http_requests': len(events), 'resume_offset': offset, 'finished_utc': utc()}
+                    save(attempts / (aid + '-result.json'), result)
+                    break
+                except Exception as error:
+                    transient = ((isinstance(error, HTTPError) and error.code in [408, 429, 500, 502, 503, 504])
+                                 or isinstance(error, (TimeoutError, socket.timeout, ConnectionResetError, http.client.IncompleteRead))
+                                 or (isinstance(error, URLError) and isinstance(error.reason, (ConnectionError, socket.gaierror, TimeoutError))))
+                    truncated = (isinstance(error, transport.AcquisitionError) and str(error).startswith('Size mismatch:')
+                                 and partial.exists() and partial.stat().st_size < ENTRY['size_bytes']
+                                 and events and events[-1].get('status') in [200, 206])
+                    transient = transient or bool(truncated)
+                    delay = 5 if attempt == 1 else 15
+                    if isinstance(error, HTTPError) and error.code in [429, 503]:
+                        value = error.headers.get('Retry-After', '')
+                        try:
+                            delay = max(60, int(value))
+                        except ValueError:
+                            try:
+                                delay = max(60, parsedate_to_datetime(value).timestamp() - time.time())
+                            except Exception:
+                                delay = 60
+                    result = {'status': 'transport_deferred' if transient and attempt < 3 else 'transport_exhausted' if transient else 'integrity_or_scope_refusal',
+                              'attempt': attempt, 'error_type': type(error).__name__, 'error': str(error)[:400],
+                              'partial_bytes': partial.stat().st_size if partial.exists() else 0,
+                              'finished_utc': utc(), 'next_attempt_unix': time.time() + delay if transient else None}
+                    save(attempts / (aid + '-result.json'), result)
+                    old_results.append(result)
+                    if not transient or attempt == 3:
+                        break
+    completion = {'status': 'all_bytes_verified' if result['status'] in ['byte_verified', 'existing_byte_verified'] else 'completed_with_unresolved_file',
+                  'run_id': run_id, 'finished_utc': utc(), 'declaration_sha256': args.declaration_sha256,
+                  'scope_sha256': declaration['scope_sha256'], 'file': result,
+                  'all_payloads_unreviewed': True, 'force_values_accessed': False, 'decoded_array_bytes': 0,
+                  'donor_roles_assigned': False, 'training_admitted': False, 'optimizer_updates': 0}
+    save(run / 'completion.json', completion)
+    if completion['status'] == 'all_bytes_verified':
+        save(BASE / 'completion.json', completion)
+    print(json.dumps({'event': 'completed', 'status': completion['status'], 'receipt': str(run / 'completion.json')}), flush=True)
+
+if __name__ == '__main__':
+    main()

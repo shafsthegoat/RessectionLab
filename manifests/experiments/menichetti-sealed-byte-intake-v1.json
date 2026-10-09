@@ -1,0 +1,50 @@
+{
+  "access_role": "SEALED_BYTE_INTAKE_ONLY",
+  "attribution": "Menichetti, Andrea; MacManus, David B.; Gilchrist, Michael D.; Depreitere, Bart; Vander Sloten, Jos; Famaey, Nele (2020), Regional characterization of the dynamic mechanical properties of human brain tissue by microindentation, Mendeley Data V1.",
+  "brain_alias_to_unique_donor_binding": null,
+  "created_utc": "2026-10-09T09:02:15.247219+00:00",
+  "creator_download_url": "https://data.mendeley.com/public-files/datasets/7sjcn229cw/files/84e16f8b-6911-4286-9763-3726693ad098/file_downloaded",
+  "cross_release_overlap": "Not established; do not infer independent donor identity from a different paper/release.",
+  "declaration_status": "frozen_before_sealed_byte_intake",
+  "decoded_array_bytes": 0,
+  "doi": "10.17632/7sjcn229cw.1",
+  "donor_role_freeze_required_before_any_response_value_access": true,
+  "donor_roles_assigned": false,
+  "eligible_operations": [
+    "opaque whole-file HTTPS transfer",
+    "whole-file size and SHA256 verification",
+    "immutable byte receipts"
+  ],
+  "etag_opaque_identity_only": "\"af2e61709bbfae4bb95ace7c15cf0824\"",
+  "existing_roles_modified": false,
+  "force_values_accessed": false,
+  "grouping_rule": "All region specimens and indentation sites for one brain remain in the same donor group. Brain alias identity must be inventoried and authenticated before roles are frozen.",
+  "license": "CC-BY-4.0",
+  "local_brain_aliases": null,
+  "payload": {
+    "path": "F_t_curves.mat",
+    "sha256": "ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6",
+    "size_bytes": 6427434,
+    "source_url": "https://prod-dcd-datasets-public-files-eu-west-1.s3.eu-west-1.amazonaws.com/f4b66b90-4c1f-4e63-b340-098a956dc67b"
+  },
+  "physical_validation_pass": null,
+  "preserved_roles": [
+    "all existing HBE roles and withheld modes",
+    "all Greiner sealed response roles and disabled split contract",
+    "all patient source roles"
+  ],
+  "prohibited_operations": [
+    "MAT decoding or response value access",
+    "fitted-parameter StatisticsTables acquisition",
+    "scientific fitting or model initialization",
+    "scientific-use admission",
+    "patient payload access"
+  ],
+  "publisher_reported_brains": 10,
+  "record": "https://data.mendeley.com/datasets/7sjcn229cw/1",
+  "schema": "menichetti-sealed-byte-scope-v1",
+  "structure_inventory_separate_stage": true,
+  "training_admitted": false,
+  "transport_source_derivation": "Exact S3 target of creator HTTPS HEAD redirect, saved 2026-10-09; no redirect followed during future body transfer. Publisher SHA256 is authoritative; ETag is opaque identity only.",
+  "whole_file_contains_multiple_donors": true
+}

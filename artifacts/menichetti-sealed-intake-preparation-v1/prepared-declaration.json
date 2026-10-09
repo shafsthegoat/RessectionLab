@@ -1,0 +1,72 @@
+{
+  "created_utc": "2026-10-09T09:02:15.247500+00:00",
+  "execution_released": false,
+  "force_values_accessed": false,
+  "free_space_reserve_bytes": 107374182400,
+  "max_transport_attempts_across_restarts": 3,
+  "max_workers": 1,
+  "metadata_files_sha256": {
+    "build/greiner-measurement-schema-v1/menichetti-candidate.json": "140ff7f43a4f71303ea9d9fa873466d533a9389b683dbed59ff52508d1c18116",
+    "build/greiner-measurement-schema-v1/menichetti-files.json": "feb17d3c7d416aa083f8308e69acbb677180704896fdb898fb1f57563b9d7b39",
+    "build/greiner-measurement-schema-v1/menichetti-force-head.headers": "4fe590f6a53418489b3acdbe62d0b61d4193b8031a3e978ba825c6d08a2d1745",
+    "build/greiner-measurement-schema-v1/menichetti-record.html": "9e7dd950a4b89777df15d737aba8e7dbf2414e2b0b968c688af80979809509b6"
+  },
+  "payload": {
+    "path": "F_t_curves.mat",
+    "sha256": "ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6",
+    "size_bytes": 6427434,
+    "source_url": "https://prod-dcd-datasets-public-files-eu-west-1.s3.eu-west-1.amazonaws.com/f4b66b90-4c1f-4e63-b340-098a956dc67b"
+  },
+  "preceding_remind_SEG_terminal": {
+    "declaration_sha256": "da9401bd5cb5a6936c389a401ea41ae44bc68734d3765268e25ece038452dd0c",
+    "path": "data/acquisition/remind-train-seg-v1/completion.json",
+    "run_id": "20261009T090019816874Z-e7318361",
+    "sha256": "2b3a5605be4d9f8376e92dc5cdae318077153f8352a8a699d78c8a906a9abd4f"
+  },
+  "retry_policy": {
+    "completed_file": "Rehash against source SHA256 and reuse; no redownload.",
+    "delay_seconds": [
+      5,
+      15
+    ],
+    "maximum_durable_intents": 3,
+    "never_automatic_retry": [
+      "TLS/certificate error",
+      "scope/source identity mismatch",
+      "ETag/If-Match failure",
+      "checksum mismatch",
+      "unhonored Range",
+      "oversize",
+      "orphan intent lacking result"
+    ],
+    "rate_or_service_cooldown": "At least 60 seconds for 429/503; honor a longer Retry-After delta or HTTP date.",
+    "transient_http": [
+      408,
+      429,
+      500,
+      502,
+      503,
+      504
+    ],
+    "transient_transport": [
+      "timeout",
+      "connection reset",
+      "incomplete read",
+      "DNS/connection failure",
+      "short transfer with valid source headers"
+    ]
+  },
+  "runner": "build/menichetti-intake-preparation-v1/run-intake.py",
+  "runner_sha256": "7773bff7dc6b6d581c7a921b5ebec86f6bdb7a2034c10578e9dd838383276c23",
+  "schema": "menichetti-one-file-sealed-intake-v1",
+  "scope_frozen_before_payload_access": false,
+  "scope_path": "build/menichetti-intake-preparation-v1/proposed-scope.json",
+  "scope_sha256": "26beb55672ebc48dfba5721cb4029df8d3a7b87e67be2ed17d80c5777935fc79",
+  "source_files_sha256": {
+    "acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "training_admitted": false,
+  "transport": "Unchanged acquire_public_case.acquire_file and its SHA256 verify_file; exact HTTPS URL, default verified TLS, RejectRedirects, opaque If-Match ETag, strict 200/206 and source byte length; source SHA256 before atomic publish. Existing partials preserved on refusal."
+}

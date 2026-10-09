@@ -1,0 +1,51 @@
+{
+  "schema": "menichetti-independent-offline-transport-controls-v1",
+  "status": "pass",
+  "runner_sha256": "7773bff7dc6b6d581c7a921b5ebec86f6bdb7a2034c10578e9dd838383276c23",
+  "declaration_sha256": "8c21e4b223cea1548925db23bb41989b93fdda963b9af6e1462eb5abed0dd508",
+  "fixture_boundary": "Exact runner functions, unchanged source helpers, isolated ignored temporary roots, deliberately substituted eight-byte generated ENTRY and fake opener. No actual network, MAT parser, measured data or donor roles accessed.",
+  "controls": [
+    {
+      "case": "fresh",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0,
+      "original_measurement_bytes_accessed": 0
+    },
+    {
+      "case": "strict_resume",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0,
+      "original_measurement_bytes_accessed": 0
+    },
+    {
+      "case": "ignored_range",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0,
+      "original_measurement_bytes_accessed": 0
+    },
+    {
+      "case": "wrong_sha256",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0,
+      "original_measurement_bytes_accessed": 0
+    },
+    {
+      "case": "wrong_etag",
+      "status": "pass",
+      "fake_open_calls": 1,
+      "actual_network_requests": 0,
+      "original_measurement_bytes_accessed": 0
+    },
+    {
+      "case": "three_attempt_exhaustion",
+      "status": "pass",
+      "fake_open_calls": 3,
+      "actual_network_requests": 0,
+      "original_measurement_bytes_accessed": 0
+    }
+  ]
+}
