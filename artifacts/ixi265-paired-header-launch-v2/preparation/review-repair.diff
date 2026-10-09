@@ -1,0 +1,35 @@
+--- build/ixi265-paired-header-launch-preparation-v1/launch.py	2026-10-09 09:04:23
++++ build/ixi265-paired-header-launch-preparation-v1/launch_v2.py	2026-10-09 10:41:50
+@@ -81,6 +81,11 @@
+         'scientific_claims':{'anatomy_qc':'not_run','accepted_registration':False,'training_admitted':False,
+             'simultaneity_established':False,'image_arrays_materialized':0,'derived_label_is_raw_acquisition':False}}
+ 
++def reviewed_candidate_sha(release):
++    normalized=dict(release)
++    normalized.update(execution_released=False,independent_review=None,release_head=None,released_at=None)
++    return sha(encode(normalized))
++
+ def check_release(path,digest,executing=False):
+     release=metadata(path,digest);expected=candidate()
+     for key in ('execution_released','independent_review','archive_completion_receipt','archive_bindings',
+@@ -91,7 +96,11 @@
+         need(release['execution_released'] is True,'root_release_required')
+         review=release['independent_review'];need(review and review['decision']=='GO_FOR_EXACT_IXI265_HEADER_LAUNCH','launcher_review_required')
+         p=ROOT/review['path'];need(p.resolve()==p and p.is_relative_to(ROOT),'review_path')
+-        need(sha(p.read_bytes())==review['sha256'],'review_digest')
++        audit=metadata(p,review['sha256'])
++        need(isinstance(audit,dict) and audit.get('schema')=='ixi265-header-launch-review-v1'
++             and audit.get('decision')=='GO_FOR_EXACT_IXI265_HEADER_LAUNCH'
++             and audit.get('launcher_sha256')==release['launcher_sha256']
++             and audit.get('release_candidate_sha256')==reviewed_candidate_sha(release),'review_candidate_binding')
+         need(isinstance(release['release_head'],str) and len(release['release_head'])==40 and release['released_at'],'root_release_record')
+         startup=getattr(sys,'_remind_header_startup',None)
+         need(startup and startup['bootstrap_sha256']==PINS[BOOT] and startup['environment']==ENV,
+@@ -215,6 +224,7 @@
+     def group_rss(pid):
+         remaining=deadline-time.monotonic();need(remaining>0,'RSS_deadline')
+         rss,members=rss_module.process_group_rss(pid,timeout_seconds=min(.5,remaining))
++        need(bool(members) or (owned and owned[0].poll() is not None),'live_worker_missing_group_RSS')
+         if members:
+             need(all(x['pid']==pid for x in members),'unexpected_worker_descendant')
+             observations.append(rss)

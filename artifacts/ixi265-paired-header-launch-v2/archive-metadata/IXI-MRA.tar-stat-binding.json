@@ -1,0 +1,27 @@
+{
+  "archive_path": "data/acquisition/ixi-t1-mra-vessel-v1/verified/IXI-MRA.tar",
+  "canonical_completion_path": "data/acquisition/ixi-t1-mra-vessel-v1/completion.json",
+  "canonical_completion_sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+  "expected_bytes": 12377712640,
+  "fresh_payload_rehash": false,
+  "limits": "Uses unchanged transport verification receipt plus current local file identity/stat. Downstream bounded reader must bind and recheck this stat tuple; this is not a fresh full-file cryptographic verification.",
+  "modification_and_metadata_change_times_not_after_verification": true,
+  "partial_absent": true,
+  "recorded_archive_sha256": "b88420ae0e1b23ae53ac6f61a0bee243d7fbc9af9efbba952a6b0b8e6e89250c",
+  "recorded_archive_source_md5": "29be7d2fee3998f978a55a9bdaf3407e",
+  "recorded_utc": "2026-10-09T13:06:57.301232+00:00",
+  "regular_not_symlink": true,
+  "schema": "ixi-verified-archive-stat-binding-v1",
+  "source_payload_bytes_read": 0,
+  "stat": {
+    "ctime_ns": 1791551073081886909,
+    "device": 16777232,
+    "inode": 9798513,
+    "mode": 33188,
+    "mtime_ns": 1791551059137683808,
+    "size": 12377712640
+  },
+  "verification_finished_utc": "2026-10-09T13:04:50.308151+00:00",
+  "verification_receipt_path": "data/acquisition/ixi-t1-mra-vessel-v1/attempts/b0/b0c5249df4f02cc7e87a063c8600167c2dde0b975d9aa73181bbde1399609dc2/01-20261009T114144129161Z-04a4e72a-result.json",
+  "verification_receipt_sha256": "f733f49682d1c7c171d2d5f8f2d54ed62b05ae5451ed64edc61e4121750eccd8"
+}

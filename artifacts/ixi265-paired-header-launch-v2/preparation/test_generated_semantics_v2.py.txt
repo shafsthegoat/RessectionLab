@@ -1,0 +1,11 @@
+test_exit_zero_semantic_failure (__main__.Semantics.test_exit_zero_semantic_failure) ... ok
+test_mutated_bindings_or_scope_refuse (__main__.Semantics.test_mutated_bindings_or_scope_refuse) ... ok
+test_parent_valid_generated_success (__main__.Semantics.test_parent_valid_generated_success) ... ok
+test_success_sigterm_after_supervision_refused (__main__.Semantics.test_success_sigterm_after_supervision_refused) ... ok
+test_success_sigterm_during_publication_refused (__main__.Semantics.test_success_sigterm_during_publication_refused) ... ok
+test_valid_generated_report (__main__.Semantics.test_valid_generated_report) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.062s
+
+OK

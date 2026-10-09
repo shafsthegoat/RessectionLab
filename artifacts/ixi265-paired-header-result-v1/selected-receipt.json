@@ -1,0 +1,452 @@
+{
+  "acquired_modalities": [
+    "T1",
+    "MRA"
+  ],
+  "actor_private_reference_access_added": false,
+  "anatomical_registration_accepted": false,
+  "archive_completion_receipt": {
+    "path": "data/acquisition/ixi-t1-mra-vessel-v1/completion.json",
+    "sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8"
+  },
+  "archive_read_accounting_complete": true,
+  "archive_sha256_inherited_from_transport": true,
+  "declared_grid_comparisons": {
+    "MRA_to_derived_label": {
+      "accepted_registration": false,
+      "qform_codes_equal": true,
+      "qform_source_matrices_exact_equal": false,
+      "same_shape": true,
+      "same_spatial_units_label": true,
+      "sform_codes_equal": true,
+      "sform_source_matrices_exact_equal": false,
+      "simultaneous_acquisition_established": false
+    },
+    "T1_to_MRA": {
+      "accepted_registration": false,
+      "qform_codes_equal": true,
+      "qform_source_matrices_exact_equal": false,
+      "same_shape": false,
+      "same_spatial_units_label": true,
+      "sform_codes_equal": true,
+      "sform_source_matrices_exact_equal": false,
+      "simultaneous_acquisition_established": false
+    }
+  },
+  "derived_reference": "SynthStrip/Frangi/manual-refined vessel label; incomplete coverage",
+  "elapsed_seconds": 0.37849620799534023,
+  "member_attempts": [
+    {
+      "archive": "IXI-T1.tar",
+      "kind": "T1",
+      "status": "selected_copy_and_header_complete"
+    },
+    {
+      "archive": "IXI-MRA.tar",
+      "kind": "MRA",
+      "status": "selected_copy_and_header_complete"
+    },
+    {
+      "archive": "vessel_dataset.zip",
+      "kind": "derived_vessel_label",
+      "status": "selected_copy_and_header_complete"
+    }
+  ],
+  "members": {
+    "MRA": {
+      "archive": "IXI-MRA.tar",
+      "archive_bytes_read": 14307981,
+      "archive_sha256": "b88420ae0e1b23ae53ac6f61a0bee243d7fbc9af9efbba952a6b0b8e6e89250c",
+      "bytes": 14307469,
+      "header_offset": 3578892288,
+      "header_qc": {
+        "acquisition_datetime": null,
+        "compressed_prefix_bytes_read": 65536,
+        "cross_modality_time_interval": null,
+        "declared_voxel_bytes": 52428800,
+        "decoded_header_bytes": 352,
+        "dtype": "<i2",
+        "extension_body_parsed": false,
+        "extension_declared": false,
+        "file_mtime_or_filename_code_interpreted_as_acquisition_time": false,
+        "geometry": {
+          "anatomical_registration_accepted": false,
+          "issues": [],
+          "max_full_cell_corner_difference_mm": 0.00022807138649639884,
+          "numeric_comparison_tolerance_mm": 0.001,
+          "qform": {
+            "affine_in_source_units": [
+              [
+                -0.4675968658915527,
+                0.022762450512280544,
+                0.0404449228126845,
+                113.11631774902344
+              ],
+              [
+                0.021471178297718427,
+                0.46756594066599144,
+                -0.04343264959961386,
+                -131.24533081054688
+              ],
+              [
+                0.024874123319319312,
+                0.02430070936829939,
+                0.7977957275993646,
+                -36.80162048339844
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "axis_codes": [
+              "L",
+              "A",
+              "S"
+            ],
+            "code": 1,
+            "finite": true,
+            "invertible": true,
+            "present": true
+          },
+          "scanner_or_atlas_provenance_verified": false,
+          "sform": {
+            "affine_in_source_units": [
+              [
+                -0.4675968885421753,
+                0.022762440145015717,
+                0.04044419899582863,
+                113.11631774902344
+              ],
+              [
+                0.021471189334988594,
+                0.46756595373153687,
+                -0.043432630598545074,
+                -131.24533081054688
+              ],
+              [
+                0.024873699992895126,
+                0.024300718680024147,
+                0.7977957725524902,
+                -36.80162048339844
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "axis_codes": [
+              "L",
+              "A",
+              "S"
+            ],
+            "code": 1,
+            "finite": true,
+            "invertible": true,
+            "present": true
+          },
+          "spatial_units": "mm",
+          "temporal_units": "sec",
+          "zooms_in_source_units": [
+            0.46875,
+            0.46875,
+            0.8000001311302185
+          ]
+        },
+        "gzip_footer_verified": false,
+        "library_versions": {
+          "nibabel": "5.4.2",
+          "numpy": "2.5.3"
+        },
+        "nifti_version": 1,
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "status": "header_only_inspected_no_anatomical_admission",
+        "voxel_arrays_materialized": 0,
+        "voxel_offset": 352,
+        "voxel_payload_length_verified": false
+      },
+      "header_sha256": "262a4cffa1cd4629a6491a261dcde7ba953eb9af0f6b682d6fd36a7b6fcd0466",
+      "member": "IXI265-Guys-0845-MRA.nii.gz",
+      "other_member_body_bytes_read": 0,
+      "output_path": "acquired/IXI265-MRA.nii.gz",
+      "selected_copy_rehash_verified": true,
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "source_kind": "acquired_measurement"
+    },
+    "T1": {
+      "archive": "IXI-T1.tar",
+      "archive_bytes_read": 6981141,
+      "archive_sha256": "56bbe911fbe967f7d1b830a552995263bdba281e0a6eb78e62f1c38d88a946a9",
+      "bytes": 6980629,
+      "header_offset": 1867056128,
+      "header_qc": {
+        "acquisition_datetime": null,
+        "compressed_prefix_bytes_read": 65536,
+        "cross_modality_time_interval": null,
+        "declared_voxel_bytes": 19660800,
+        "decoded_header_bytes": 352,
+        "dtype": "<i2",
+        "extension_body_parsed": false,
+        "extension_declared": false,
+        "file_mtime_or_filename_code_interpreted_as_acquisition_time": false,
+        "geometry": {
+          "anatomical_registration_accepted": false,
+          "issues": [],
+          "max_full_cell_corner_difference_mm": 1.8300677352826637e-05,
+          "numeric_comparison_tolerance_mm": 0.001,
+          "qform": {
+            "affine_in_source_units": [
+              [
+                -0.04665683705034007,
+                0.06588860148888928,
+                1.195541436684528,
+                -90.70220947265625
+              ],
+              [
+                -0.9363382184830493,
+                -0.002922830186959935,
+                -0.05960521301253242,
+                122.19873046875
+              ],
+              [
+                0.00036078310315008216,
+                0.9351772020625484,
+                -0.08441904809798166,
+                -112.01844787597656
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "axis_codes": [
+              "P",
+              "S",
+              "R"
+            ],
+            "code": 1,
+            "finite": true,
+            "invertible": true,
+            "present": true
+          },
+          "scanner_or_atlas_provenance_verified": false,
+          "sform": {
+            "affine_in_source_units": [
+              [
+                -0.04665682837367058,
+                0.06588856875896454,
+                1.1955413818359375,
+                -90.70220947265625
+              ],
+              [
+                -0.9363381862640381,
+                -0.0029228338971734047,
+                -0.059605203568935394,
+                122.19873046875
+              ],
+              [
+                0.00036077748518437147,
+                0.935177206993103,
+                -0.08441900461912155,
+                -112.01844787597656
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "axis_codes": [
+              "P",
+              "S",
+              "R"
+            ],
+            "code": 1,
+            "finite": true,
+            "invertible": true,
+            "present": true
+          },
+          "spatial_units": "mm",
+          "temporal_units": "sec",
+          "zooms_in_source_units": [
+            0.9375,
+            0.9375,
+            1.199999451637268
+          ]
+        },
+        "gzip_footer_verified": false,
+        "library_versions": {
+          "nibabel": "5.4.2",
+          "numpy": "2.5.3"
+        },
+        "nifti_version": 1,
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "status": "header_only_inspected_no_anatomical_admission",
+        "voxel_arrays_materialized": 0,
+        "voxel_offset": 352,
+        "voxel_payload_length_verified": false
+      },
+      "header_sha256": "6dba3c7e4dee358071cb489f985625bc9c6987eb93f17677483c4ee0397c1e64",
+      "member": "IXI265-Guys-0845-T1.nii.gz",
+      "other_member_body_bytes_read": 0,
+      "output_path": "acquired/IXI265-T1.nii.gz",
+      "selected_copy_rehash_verified": true,
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "source_kind": "acquired_measurement"
+    },
+    "derived_vessel_label": {
+      "archive": "vessel_dataset.zip",
+      "archive_bytes_read": 81926,
+      "archive_sha256": "6b5e425001208cb11685ff610b5b15ee388b73d22bfede5237b0da9148276b93",
+      "bytes": 109932,
+      "compressed_member_bytes": 71081,
+      "header_qc": {
+        "acquisition_datetime": null,
+        "compressed_prefix_bytes_read": 65536,
+        "cross_modality_time_interval": null,
+        "declared_voxel_bytes": 52428800,
+        "decoded_header_bytes": 352,
+        "dtype": "<i2",
+        "extension_body_parsed": false,
+        "extension_declared": false,
+        "file_mtime_or_filename_code_interpreted_as_acquisition_time": false,
+        "geometry": {
+          "anatomical_registration_accepted": false,
+          "issues": [],
+          "max_full_cell_corner_difference_mm": 0.0002298444775518116,
+          "numeric_comparison_tolerance_mm": 0.001,
+          "qform": {
+            "affine_in_source_units": [
+              [
+                -0.46759686579879745,
+                0.02276244881219782,
+                0.04044492872311273,
+                113.11631774902344
+              ],
+              [
+                0.02147117650872276,
+                0.46756594084121833,
+                -0.04343264668115854,
+                -131.24533081054688
+              ],
+              [
+                0.024874126607233385,
+                0.024300707589253144,
+                0.7977957274586138,
+                -36.80162048339844
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "axis_codes": [
+              "L",
+              "A",
+              "S"
+            ],
+            "code": 1,
+            "finite": true,
+            "invertible": true,
+            "present": true
+          },
+          "scanner_or_atlas_provenance_verified": false,
+          "sform": {
+            "affine_in_source_units": [
+              [
+                -0.4675968885421753,
+                0.022762438282370567,
+                0.04044419899582863,
+                113.11631774902344
+              ],
+              [
+                0.021471187472343445,
+                0.46756595373153687,
+                -0.043432630598545074,
+                -131.24533081054688
+              ],
+              [
+                0.024873699992895126,
+                0.024300716817378998,
+                0.7977957725524902,
+                -36.80162048339844
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "axis_codes": [
+              "L",
+              "A",
+              "S"
+            ],
+            "code": 1,
+            "finite": true,
+            "invertible": true,
+            "present": true
+          },
+          "spatial_units": "mm",
+          "temporal_units": "sec",
+          "zooms_in_source_units": [
+            0.46875,
+            0.46875,
+            0.8000001311302185
+          ]
+        },
+        "gzip_footer_verified": false,
+        "library_versions": {
+          "nibabel": "5.4.2",
+          "numpy": "2.5.3"
+        },
+        "nifti_version": 1,
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "status": "header_only_inspected_no_anatomical_admission",
+        "voxel_arrays_materialized": 0,
+        "voxel_offset": 352,
+        "voxel_payload_length_verified": false
+      },
+      "local_header_offset": 5694346,
+      "member": "vessel_dataset/IXI265.nii.gz",
+      "other_member_body_bytes_read": 0,
+      "output_path": "derived_reference/IXI265-derived_vessel_label.nii.gz",
+      "selected_copy_rehash_verified": true,
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "source_kind": "derived_reference",
+      "zip_crc32": 2965244789,
+      "zip_member_crc_verified": true
+    }
+  },
+  "other_person_member_body_bytes_read": 0,
+  "person_group": "IXI:265",
+  "protocol_sha256": "551bce278cb37357421f609eadb9e4f6810b4ea675cf3d5746688a1c6a46f5bd",
+  "role": "TRAIN",
+  "schema": "ixi265-selected-pair-header-result-v1",
+  "status": "selected_copies_and_header_qc_complete_unadmitted",
+  "training_admitted": false,
+  "voxel_arrays_materialized": 0,
+  "whole_archives_rehashed_by_this_worker": false
+}

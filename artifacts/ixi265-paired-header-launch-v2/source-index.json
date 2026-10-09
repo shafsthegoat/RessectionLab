@@ -1,0 +1,237 @@
+{
+  "contains_actual_header_read_results": false,
+  "contains_original_archives_or_images": false,
+  "file_count": 36,
+  "files": [
+    {
+      "bytes": 24470,
+      "sha256": "819dffd069ed2cf5cf67c2148d3b8bc71af2f9d222cbfe3a7d7264966eb91c2e",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/launch_v2.py",
+      "suggested_package_path": "preparation/launch_v2.py"
+    },
+    {
+      "bytes": 233387,
+      "sha256": "c8e712d875110913150c5a7e82ffe1aea69b860fa3c3cc3c3a807f5bd06e0c4e",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/release-template-v2.json",
+      "suggested_package_path": "preparation/release-template-v2.json"
+    },
+    {
+      "bytes": 234821,
+      "sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/terminal-bound-CANDIDATE-NOT-RELEASED-v2.json",
+      "suggested_package_path": "preparation/terminal-bound-CANDIDATE-NOT-RELEASED-v2.json"
+    },
+    {
+      "bytes": 9787,
+      "sha256": "21cd0be230cdbb029b916536e5c3c2055b167f68a42d0ba432b70763baabd334",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/PROPOSAL-v2.txt",
+      "suggested_package_path": "preparation/PROPOSAL-v2.txt"
+    },
+    {
+      "bytes": 11446,
+      "sha256": "98e0e7d3dd58793e55dabf18722b93a89b25ab1b867ac03df8aa9085db37e0fa",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/test_generated_v2.py",
+      "suggested_package_path": "preparation/test_generated_v2.py"
+    },
+    {
+      "bytes": 7295,
+      "sha256": "483ffb14cc571cbe2b2890418ba883d317d45aaf1b0f4f9ae74dbe1fa3d1a78d",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/test_generated_semantics_v2.py",
+      "suggested_package_path": "preparation/test_generated_semantics_v2.py"
+    },
+    {
+      "bytes": 501,
+      "sha256": "1bec13ec5207c26c63ebe92b1feb3e6eb239e41bf88c94da4b55da8b1ee29092",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/generated-controls-v2.json",
+      "suggested_package_path": "preparation/generated-controls-v2.json"
+    },
+    {
+      "bytes": 2145,
+      "sha256": "2010ec149fcf2380028298c90cf48377e747d8cb58932b9e47cb26cf09a6496c",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/test_generated_v2.py.txt",
+      "suggested_package_path": "preparation/test_generated_v2.py.txt"
+    },
+    {
+      "bytes": 724,
+      "sha256": "61df585f99f3287a0c83c8e5ca2552774001b5cde61a221dbd5f825f350a40b4",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/test_generated_semantics_v2.py.txt",
+      "suggested_package_path": "preparation/test_generated_semantics_v2.py.txt"
+    },
+    {
+      "bytes": 1216,
+      "sha256": "c7c41a7f850b0cb9d6a42ff3c1fe12934a495ffc02dcd1936045fc2def5ab626",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/cold-check-only-v2.json",
+      "suggested_package_path": "preparation/cold-check-only-v2.json"
+    },
+    {
+      "bytes": 1710,
+      "sha256": "53decb0014b1dc089dc4dcea15ff127a014b9fda0e2989ed4b13bffdd7498fa4",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/generated_header_probe_v2.py",
+      "suggested_package_path": "preparation/generated_header_probe_v2.py"
+    },
+    {
+      "bytes": 234952,
+      "sha256": "893bb836b2082d7cd2a63a629e4711185f4b28500f29de772987458370befc92",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/generated-probe-release-v2.json",
+      "suggested_package_path": "preparation/generated-probe-release-v2.json"
+    },
+    {
+      "bytes": 479,
+      "sha256": "6ce2cb0ad9f51c034346ae07e7b2855cc1e1b7cc9bd4fbde55fde17837d181a1",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/generated-header-probe-result-v2.json",
+      "suggested_package_path": "preparation/generated-header-probe-result-v2.json"
+    },
+    {
+      "bytes": 2419,
+      "sha256": "df00ff5f321b3de4bdd8a3079179402c6d8182779f684d7588c735d24c89523f",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/review-repair.diff",
+      "suggested_package_path": "preparation/review-repair.diff"
+    },
+    {
+      "bytes": 23823,
+      "sha256": "a5999d91bd53a7c39c2a37e0650d4d3f30e7027a978457ad84e0f4194ce65615",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/launch.py",
+      "suggested_package_path": "preparation/launch.py"
+    },
+    {
+      "bytes": 233387,
+      "sha256": "43d242b44d6d377ac0a02fa1d283b4163eabe93e32ea89a2a312e4e593680c83",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/release-template.json",
+      "suggested_package_path": "preparation/release-template.json"
+    },
+    {
+      "bytes": 234821,
+      "sha256": "7995e002616535c1941bfdf3d680a34df47146a4a919b056cf4bac6583094325",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/terminal-bound-CANDIDATE-NOT-RELEASED.json",
+      "suggested_package_path": "preparation/terminal-bound-CANDIDATE-NOT-RELEASED.json"
+    },
+    {
+      "bytes": 9017,
+      "sha256": "ffc7180ebb4619fed8e6301c59927c9246d0fdf00ad4beda5e7861e444c99deb",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/test_generated.py",
+      "suggested_package_path": "preparation/test_generated.py"
+    },
+    {
+      "bytes": 308,
+      "sha256": "578ee13a62acf36579bdfb121916fe964298f697945a20900833817f92a5e82f",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/generated-controls.json",
+      "suggested_package_path": "preparation/generated-controls.json"
+    },
+    {
+      "bytes": 269,
+      "sha256": "e29f1891078d1b5af0f97ba83f41e91ad7e5f198b8e37ad7b23b1c3ceba544e3",
+      "source_path": "build/ixi265-paired-header-launch-preparation-v1/terminal-prerequisites-check.json",
+      "suggested_package_path": "preparation/terminal-prerequisites-check.json"
+    },
+    {
+      "bytes": 1486,
+      "sha256": "a3bc35d0dd2a80a6e5e102f3c3614b72bb8c1b0506fe799b5a746b92f865a49f",
+      "source_path": "build/ixi265-paired-header-launch-independent-v1/audit.json",
+      "suggested_package_path": "independent-v1/audit.json"
+    },
+    {
+      "bytes": 1702,
+      "sha256": "f0c052c5a4bffafbea1dfd4009b685b7f5d22177395fad39692ecd71a6e6b695",
+      "source_path": "build/ixi265-paired-header-launch-independent-v1/REPORT.txt",
+      "suggested_package_path": "independent-v1/REPORT.txt"
+    },
+    {
+      "bytes": 3706,
+      "sha256": "689b1500e90e81f578256b247f680943e5331effaf624839c5f8766aa358e853",
+      "source_path": "build/ixi265-paired-header-launch-independent-v1/reproduce.py",
+      "suggested_package_path": "independent-v1/reproduce.py"
+    },
+    {
+      "bytes": 4388,
+      "sha256": "f6eb6a6048547323faeaf9fbd1f559ac1c9978c512ebee7e742f0ddbde80e904",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/audit.json",
+      "suggested_package_path": "independent-v2/audit.json"
+    },
+    {
+      "bytes": 3444,
+      "sha256": "5ebd557b00778215ebca5abb3675dfff6bae342bd05ce7941cd5e45a00798ebe",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/REPORT.txt",
+      "suggested_package_path": "independent-v2/REPORT.txt"
+    },
+    {
+      "bytes": 5967,
+      "sha256": "230759e9e08235e9d3edabef8b8a78e78d860242345a1a65b0faa32ea54f7762",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/independent-controls.json",
+      "suggested_package_path": "independent-v2/independent-controls.json"
+    },
+    {
+      "bytes": 10915,
+      "sha256": "1e3503412a0271ca3310b0068912538fb361ad4c0e794b32d16d2bce78924328",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/verify.py",
+      "suggested_package_path": "independent-v2/verify.py"
+    },
+    {
+      "bytes": 1538,
+      "sha256": "9cacbbc46cf86a5693ffa617842cd88914901e7b8bc435eeb9af632f41390fa8",
+      "source_path": "build/ixi-completion-evidence-v1/artifacts/ixi-t1-mra-vessel-byte-intake-v1/completion/IXI-T1.tar-stat-binding.json",
+      "suggested_package_path": "archive-metadata/IXI-T1.tar-stat-binding.json"
+    },
+    {
+      "bytes": 1541,
+      "sha256": "9dc5fe4e3c7dd222fd176e4789398bef0f75d7a240cce75395a1acb9ed485a37",
+      "source_path": "build/ixi-completion-evidence-v1/artifacts/ixi-t1-mra-vessel-byte-intake-v1/completion/IXI-MRA.tar-stat-binding.json",
+      "suggested_package_path": "archive-metadata/IXI-MRA.tar-stat-binding.json"
+    },
+    {
+      "bytes": 1540,
+      "sha256": "bcdd54c90a1a632e16c5b9050270e7a664412ac812b9c2a5ce60e3b6dd7261a7",
+      "source_path": "build/ixi-completion-evidence-v1/artifacts/ixi-t1-mra-vessel-byte-intake-v1/completion/vessel_dataset.zip-stat-binding.json",
+      "suggested_package_path": "archive-metadata/vessel_dataset.zip-stat-binding.json"
+    },
+    {
+      "bytes": 2369,
+      "sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+      "source_path": "data/acquisition/ixi-t1-mra-vessel-v1/completion.json",
+      "suggested_package_path": "archive-metadata/completion.json"
+    },
+    {
+      "bytes": 23823,
+      "sha256": "a5999d91bd53a7c39c2a37e0650d4d3f30e7027a978457ad84e0f4194ce65615",
+      "source_path": "build/ixi265-paired-header-launch-independent-v1/snapshots/launch.py",
+      "suggested_package_path": "independent-v1/snapshots/launch.py"
+    },
+    {
+      "bytes": 24470,
+      "sha256": "819dffd069ed2cf5cf67c2148d3b8bc71af2f9d222cbfe3a7d7264966eb91c2e",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/snapshots/launch_v2.py",
+      "suggested_package_path": "independent-v2/snapshots/launch_v2.py"
+    },
+    {
+      "bytes": 234821,
+      "sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/snapshots/terminal-bound-CANDIDATE-NOT-RELEASED-v2.json",
+      "suggested_package_path": "independent-v2/snapshots/terminal-bound-CANDIDATE-NOT-RELEASED-v2.json"
+    },
+    {
+      "bytes": 2145,
+      "sha256": "bc5547390f9f65e15e0c0bdf250abaebc91c6fdba79370b996407f457e9c4298",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/provided-lifecycle.txt",
+      "suggested_package_path": "independent-v2/provided-lifecycle.txt"
+    },
+    {
+      "bytes": 724,
+      "sha256": "61df585f99f3287a0c83c8e5ca2552774001b5cde61a221dbd5f825f350a40b4",
+      "source_path": "build/ixi265-paired-header-launch-independent-v2/provided-semantics.txt",
+      "suggested_package_path": "independent-v2/provided-semantics.txt"
+    }
+  ],
+  "independent_review": {
+    "decision": "GO_FOR_EXACT_IXI265_HEADER_LAUNCH",
+    "path": "build/ixi265-paired-header-launch-independent-v2/audit.json",
+    "sha256": "f6eb6a6048547323faeaf9fbd1f559ac1c9978c512ebee7e742f0ddbde80e904"
+  },
+  "launcher_sha256": "819dffd069ed2cf5cf67c2148d3b8bc71af2f9d222cbfe3a7d7264966eb91c2e",
+  "preserved_reader_package_index": {
+    "path": "build/ixi265-paired-header-integration-v2/source-index.json",
+    "sha256": "6a06f9bcbe5288de33a1c01b950fa88979842d4b4eb1307b3d439a776b44aeec"
+  },
+  "release_candidate_sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c",
+  "schema": "ixi265-header-launch-integration-source-index-v2",
+  "status": "independent_GO_root_execution_still_required",
+  "total_bytes": 1591556
+}

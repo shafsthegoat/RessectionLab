@@ -1,0 +1,27 @@
+test_01_exited_no_group_signal (__main__.Controls.test_01_exited_no_group_signal) ... ok
+test_02_eperm_direct_term (__main__.Controls.test_02_eperm_direct_term) ... ok
+test_03_cleanup_unexpected_error_fallback (__main__.Controls.test_03_cleanup_unexpected_error_fallback) ... ok
+test_04_popen_failure (__main__.Controls.test_04_popen_failure) ... ok
+test_05_onstart_failure (__main__.Controls.test_05_onstart_failure) ... ok
+test_06_probe_failure (__main__.Controls.test_06_probe_failure) ... ok
+test_07_output_cap (__main__.Controls.test_07_output_cap) ... ok
+test_08_wall_cap (__main__.Controls.test_08_wall_cap) ... ok
+test_09_descendant_refuses (__main__.Controls.test_09_descendant_refuses) ... ok
+test_10_worker_guard (__main__.Controls.test_10_worker_guard) ... ok
+test_11_false_release_no_archives (__main__.Controls.test_11_false_release_no_archives) ... ok
+test_12_protocol_delta_only (__main__.Controls.test_12_protocol_delta_only) ... ok
+test_13_parent_launch_failure_has_unknown_receipt (__main__.Controls.test_13_parent_launch_failure_has_unknown_receipt) ... ok
+test_14_final_save_failure_has_fallback (__main__.Controls.test_14_final_save_failure_has_fallback) ... ok
+test_15_sigterm_after_supervision (__main__.Controls.test_15_sigterm_after_supervision) ... ok
+test_16_sigterm_during_final_save (__main__.Controls.test_16_sigterm_during_final_save) ... ok
+test_17_semantic_exit0_not_success (__main__.Controls.test_17_semantic_exit0_not_success) ... ok
+test_18_real_generated_child_timeout_reaped (__main__.Controls.test_18_real_generated_child_timeout_reaped) ... ok
+test_19_unresolved_cleanup_remains_failure (__main__.Controls.test_19_unresolved_cleanup_remains_failure) ... ok
+test_20_live_empty_group_refuses (__main__.Controls.test_20_live_empty_group_refuses) ... ok
+test_21_exited_during_probe_does_not_signal_stale_group (__main__.Controls.test_21_exited_during_probe_does_not_signal_stale_group) ... ok
+test_22_review_must_bind_terminal_candidate (__main__.Controls.test_22_review_must_bind_terminal_candidate) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.369s
+
+OK

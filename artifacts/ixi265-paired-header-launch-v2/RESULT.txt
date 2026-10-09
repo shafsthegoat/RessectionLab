@@ -1,0 +1,11 @@
+Ready for root-only integration and one separately released IXI265 header attempt.
+
+The fixed reader v2 and original reader v1 negatives are unchanged. The original launcher candidate and its independently reproduced review-gate/RSS negatives are preserved. Corrected launch_v2.py is independently GO.
+
+Root starts from terminal-bound-CANDIDATE-NOT-RELEASED-v2.json. Only execution_released, independent_review, release_head and released_at may change; the review verifies the whole candidate after normalizing those four fields. The independent review proof is build/ixi265-paired-header-launch-independent-v2/audit.json SHA f6eb6a6048547323faeaf9fbd1f559ac1c9978c512ebee7e742f0ddbde80e904, decision GO_FOR_EXACT_IXI265_HEADER_LAUNCH. Preserve both false candidates. Do not modify the reader/protocol or recompute roles.
+
+The executable command and detailed lifecycle are in preparation/PROPOSAL-v2.txt (original source path listed in source-index.json). It uses unchanged source-only bootstrap/runtime, exact source hashes, inherited verified archive bytes plus stat continuity, one owned worker,35seconds plus at most10seconds cleanup,512MiB sampled group RSS and32MiB output. No hidden-eval members, whole-archive extraction, arrays, anatomy/registration/clinical claim or actor MRA/label channels.
+
+Validation:22 generated lifecycle tests,6 generated semantic tests,31 independent controls; cold false-candidate check-only; generated NIfTI1/2 header compatibility with active process/network guard and357 checked loaded origins. All passed. Existing all-three terminal/stat/attempt prerequisites and1473 runtime files were verified without archive-body opens. These are preparation results; no actual source header, anatomy, affine or selected-copy result exists yet.
+
+No actual IXI265 output/attempt directory existed at handoff preparation. Root must check again and refuse an existing directory. Successful release requires exit0 and final semantic completion, no publication-failure/refusal sidecar, reaped worker, exact copy/receipt identities and unchanged archive publication stats. Any failed attempt stays preserved and is not silently retried.

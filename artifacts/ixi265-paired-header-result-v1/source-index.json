@@ -1,0 +1,77 @@
+{
+  "scope": "selected TRAIN headers only; no voxel arrays or originals in Git",
+  "files": [
+    {
+      "path": "root-release.json",
+      "source": "build/ixi265-paired-header-launch-preparation-v1/root-release-v2.json",
+      "bytes": 235077,
+      "sha256": "2e2dfa63ec1511fe5e42fe794ebf45e0493f6677e761eeeb288007763616831f"
+    },
+    {
+      "path": "root-check-only.txt",
+      "source": "build/ixi265-paired-header-launch-preparation-v1/root-check-only-v2.txt",
+      "bytes": 139,
+      "sha256": "c5f2a99c409c02222e3b5810734ef4453167fbe1f1188b8ff5c51422412d4764"
+    },
+    {
+      "path": "root-session-terminal.json",
+      "source": "build/ixi265-paired-header-launch-preparation-v1/root-session-terminal-v2.json",
+      "bytes": 258,
+      "sha256": "13cbf1d2f6120b995db5b940d55197015111f03d0e309bda28639db1f197cfa1"
+    },
+    {
+      "path": "child-protocol.json",
+      "source": "build/ixi265-paired-header-qc-v1/child-protocol.json",
+      "bytes": 5083,
+      "sha256": "551bce278cb37357421f609eadb9e4f6810b4ea675cf3d5746688a1c6a46f5bd"
+    },
+    {
+      "path": "intent.json",
+      "source": "build/ixi265-paired-header-qc-v1/intent.json",
+      "bytes": 436,
+      "sha256": "768bff4ee8c78b8aa966dc31f75f43e58e8786cc5f373bc341f08124c0a7e561"
+    },
+    {
+      "path": "worker-start.json",
+      "source": "build/ixi265-paired-header-qc-v1/worker-start.json",
+      "bytes": 132,
+      "sha256": "12e44a0746145666a91a715fface6a4e7bbd7a47588811524fcad016b1c0901c"
+    },
+    {
+      "path": "worker-terminal.json",
+      "source": "build/ixi265-paired-header-qc-v1/worker-terminal.json",
+      "bytes": 321,
+      "sha256": "62ec6e99639107f757b945f7dc38210a68611ea78c07639bbd00a5c219cbe627"
+    },
+    {
+      "path": "terminal.json",
+      "source": "build/ixi265-paired-header-qc-v1/terminal.json",
+      "bytes": 989,
+      "sha256": "ca97cb0dadb698aa9e607feaf803c89087468890afbde851e14b3ade6f3c46b3"
+    },
+    {
+      "path": "selected-receipt.json",
+      "source": "build/ixi265-paired-header-qc-v1/selected/receipt.json",
+      "bytes": 13838,
+      "sha256": "473de05cb2936812ad779639a345a54bf4eda64850c6d2793b7ca53011f4a86f"
+    },
+    {
+      "path": "INDEPENDENT_REVIEW.txt",
+      "source": "build/ixi265-paired-header-postrun-independent-v1/REPORT.txt",
+      "bytes": 2158,
+      "sha256": "52e652b3bfcf2e85a4eb861d49ff0496f1a1264d0e66142201fb73ea4e52c716"
+    },
+    {
+      "path": "independent-audit.json",
+      "source": "build/ixi265-paired-header-postrun-independent-v1/audit.json",
+      "bytes": 10403,
+      "sha256": "a9c039a4def16bec1bc84bb27626d2ebccc97090467027546eaa809cda226529"
+    },
+    {
+      "path": "audit_saved.py",
+      "source": "build/ixi265-paired-header-postrun-independent-v1/audit_saved.py",
+      "bytes": 15008,
+      "sha256": "a3e2fb96f23fa58f9b9b5799a751fce204b52e63fa1fbda7c231c86b2789ef5a"
+    }
+  ]
+}

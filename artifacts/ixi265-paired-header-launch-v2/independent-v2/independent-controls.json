@@ -1,0 +1,216 @@
+{
+  "checks": [
+    {
+      "name": "exact_candidate_review",
+      "status": "pass"
+    },
+    {
+      "name": "review_decision",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "review_schema",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "review_launcher_sha256",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "review_release_candidate_sha256",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "candidate_archive_completion_receipt",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "candidate_archive_bindings",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "candidate_archive_stat_proofs",
+      "reason": "review_candidate_binding",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "scope_person_group",
+      "reason": "release_scope_source_runtime_or_limit_mismatch",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "scope_role",
+      "reason": "release_scope_source_runtime_or_limit_mismatch",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "scope_output_directory",
+      "reason": "release_scope_source_runtime_or_limit_mismatch",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "scope_limit",
+      "reason": "release_scope_source_runtime_or_limit_mismatch",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "unreleased_refuses",
+      "reason": "root_release_required",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "generated_transport_complete",
+      "status": "pass"
+    },
+    {
+      "name": "transport_status",
+      "reason": "all_three_terminal_required",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "transport_verified_files",
+      "reason": "all_three_terminal_required",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "transport_unresolved_files",
+      "reason": "all_three_terminal_required",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "transport_cohort_sha256",
+      "reason": "cohort_mismatch",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "stat_source_payload_bytes_read",
+      "reason": "stat_proof_status",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "stat_fresh_payload_rehash",
+      "reason": "stat_proof_status",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "stat_regular_not_symlink",
+      "reason": "stat_proof_status",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "stat_partial_absent",
+      "reason": "stat_proof_status",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "stat_modification_and_metadata_change_times_not_after_verification",
+      "reason": "stat_proof_status",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "stat_archive_path",
+      "reason": "stat_scope",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "terminal_status",
+      "reason": "terminal_attempt",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "terminal_sha256",
+      "reason": "terminal_attempt",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "terminal_bytes",
+      "reason": "terminal_attempt",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "publication_stat_changed",
+      "reason": "archive_stat_changed",
+      "status": "expected_refusal"
+    },
+    {
+      "name": "missing_live_group_RSS",
+      "result": {
+        "cleanup_notes": [
+          "group_signal_denied"
+        ],
+        "error_type": "Refusal",
+        "group_RSS_note": "No live group sample; sampled peak is unknown, worker self peak required separately.",
+        "group_RSS_observations": 0,
+        "parent_observed_peak_RSS_bytes": 0,
+        "parent_reaped_worker": true,
+        "sampled_group_peak_RSS_bytes": null,
+        "supervision": "supervisor_interrupted_or_failed",
+        "worker_exit_status": -15,
+        "worker_pid": 776655
+      },
+      "status": "expected_refusal"
+    },
+    {
+      "name": "confirmed_exit_race",
+      "result": {
+        "cleanup_notes": [],
+        "group_RSS_note": "No live group sample; sampled peak is unknown, worker self peak required separately.",
+        "group_RSS_observations": 0,
+        "parent_observed_peak_RSS_bytes": 0,
+        "parent_reaped_worker": true,
+        "sampled_group_peak_RSS_bytes": null,
+        "supervision": "completed",
+        "worker_exit_status": 0,
+        "worker_pid": 776655
+      },
+      "status": "pass"
+    },
+    {
+      "name": "real_child_stdout_stderr_discarded",
+      "result": {
+        "cleanup_notes": [],
+        "group_RSS_observations": 1,
+        "parent_observed_peak_RSS_bytes": 2408448,
+        "parent_reaped_worker": true,
+        "sampled_group_peak_RSS_bytes": 2408448,
+        "supervision": "completed",
+        "worker_exit_status": 0,
+        "worker_pid": 13254
+      },
+      "status": "pass"
+    }
+  ],
+  "cold_check_only": {
+    "archive_opens": 0,
+    "archive_prerequisites_checked": false,
+    "execution_released": false,
+    "status": "source_and_release_preparation_valid"
+  },
+  "guarded_generated_headers": {
+    "actual_archive_opens": 0,
+    "generated_headers": [
+      {
+        "array_reads": 0,
+        "header_bytes": 352,
+        "version": 1
+      },
+      {
+        "array_reads": 0,
+        "header_bytes": 544,
+        "version": 2
+      }
+    ],
+    "guard_active": true,
+    "status": "PASS",
+    "verified_loaded_module_count": 357
+  },
+  "launcher_sha256": "819dffd069ed2cf5cf67c2148d3b8bc71af2f9d222cbfe3a7d7264966eb91c2e",
+  "original_archive_or_patient_opens": 0,
+  "release_candidate_sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c"
+}

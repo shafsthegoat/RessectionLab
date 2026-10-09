@@ -1,0 +1,5 @@
+# IXI265 selected paired-image headers
+
+One root-owned attempt completed and passed independent saved-result audit: 0.6123 seconds in the supervised interval, 141,197,312-byte (134.66 MiB) peak RSS, nine group samples, exit zero and reaped worker. Startup/source preflight is outside that interval. All three selected-copy hashes match; 21,371,048 source bytes were accounted for, with no other-person bodies and no materialized voxel arrays. Original archives and selected image copies remain outside Git.
+
+The selected TRAIN person retains the frozen role. T1 is 256×256×150; MRA and the derived vessel label are 512×512×100. All headers declare millimeters. MRA/label same-index cell-corner differences are approximately 0.000002 mm, but numerical header agreement is not anatomical registration. T1/MRA grids differ. Acquisition times, anatomical QC, full voxel integrity, annotation coverage, registration and planning/training admission remain unresolved. Acquired MRA and derived reference labels remain separate from T1 actor inputs.

@@ -1,0 +1,26 @@
+HOLD — exact IXI265 launcher v1
+
+Launcher SHA256: a5999d91bd53a7c39c2a37e0650d4d3f30e7027a978457ad84e0f4194ce65615
+False template SHA256: 43d242b44d6d377ac0a02fa1d283b4163eabe93e32ea89a2a312e4e593680c83
+Terminal-bound candidate SHA256: 7995e002616535c1941bfdf3d680a34df47146a4a919b056cf4bac6583094325
+Audit SHA256: a3bc35d0dd2a80a6e5e102f3c3614b72bb8c1b0506fe799b5a746b92f865a49f
+
+1. The execution gate checks a GO label supplied by the release and a referenced
+   file hash, but never parses that file's decision or binds its candidate. An
+   independent generated control supplies a JSON review with decision HOLD and
+   an unrelated all-zero candidate digest; the executing gate accepts it. Parse
+   the hash-bound review, require its GO decision and launcher hash, and bind the
+   whole canonical terminal-bound candidate. Normalize only release state,
+   independent review, root head and release timestamp. Archive completion/stat
+   proofs and all fixed source/runtime/scope/limits must remain in the hash.
+
+2. Empty process-group membership while the owned child remains alive returns
+   zero RSS without refusing. The independent control observes a known-live
+   child with no membership; supervision subsequently reports completed. Refuse
+   a missing live-group observation. A confirmed exit race may retain unknown
+   sampled peak and require the separately measured worker self peak.
+
+The supplied 19 generated lifecycle tests pass independently in 0.296 seconds.
+No original archive/image or scientific worker was opened or executed. Preserved
+source/template/test snapshots and generated reproducer are adjacent. Both
+findings require a versioned repair before an actual root release.

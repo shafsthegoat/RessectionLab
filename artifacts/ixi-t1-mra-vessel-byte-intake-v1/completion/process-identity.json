@@ -1,0 +1,53 @@
+{
+  "RSS_semantics": "External exact-process overlap allowance, not self-enforced or measured high-water guarantee.",
+  "Tracto_untouched": {
+    "pid": 92434,
+    "session_id": 35269
+  },
+  "cohort_path": "manifests/experiments/ixi-component-person-cohort-v1.json",
+  "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+  "command_tokens": [
+    "build/idc-acquisition-venv/bin/python",
+    "build/ixi-paired-intake-preparation-v1/run-intake.py",
+    "--declaration",
+    "data/acquisition/ixi-t1-mra-vessel-v1/declaration.json",
+    "--declaration-sha256",
+    "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1"
+  ],
+  "declaration_path": "data/acquisition/ixi-t1-mra-vessel-v1/declaration.json",
+  "declaration_sha256": "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1",
+  "declared_external_RSS_allowance_bytes": 268435456,
+  "decoded_array_bytes": 0,
+  "network_workers": 1,
+  "normal_completion": "One process stages T1 then MRA then ZIP; exits after all three terminal results, publishing completion only when every expected size/MD5 verified. No children or follow-on jobs.",
+  "owner_agent": "/root/acquisition_continuity_audit",
+  "pgid": 4631,
+  "pid": 4631,
+  "protocol": "Released declaration plus canonical opaque-intake scope; no separate payload decoder protocol. Prior TAR metadata walk ended.",
+  "ps_command_stripped": "build/idc-acquisition-venv/bin/python build/ixi-paired-intake-preparation-v1/run-intake.py --declaration data/acquisition/ixi-t1-mra-vessel-v1/declaration.json --declaration-sha256 bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1",
+  "ps_command_stripped_sha256": "d7c5c64e03a4cf11c3e72974cae6e8543d843b57a18b75aae56286dc89b42846",
+  "ps_lstart_local": "Fri Oct  9 07:41:43 2026",
+  "ps_ucomm": "python3.12",
+  "recorded_utc": "2026-10-09T11:42:33.972643+00:00",
+  "run_id": "20261009T114144129161Z-04a4e72a",
+  "runner_path": "build/ixi-paired-intake-preparation-v1/run-intake.py",
+  "runner_sha256": "8101d3c3edfea9d9099848468dbbfe24157bcd552bb16854f94b9c2c5a297dc2",
+  "sampled_rss_kib": 73696,
+  "schema": "ixi-byte-intake-live-monitor-identity-v1",
+  "scope_commit": "bf8653a77ad36ada57775c798407cb07034f70f1",
+  "scope_path": "manifests/experiments/ixi-t1-mra-vessel-byte-intake-v1.json",
+  "scope_sha256": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c",
+  "session_id": 95570,
+  "source_files_sha256": {
+    "acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "cohort.json": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+    "real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scope.json": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c",
+    "source-contract.json": "159a4bba5fd9b8b5db0a4195b089f42850da4f3dae86bf101efc1a72de4ab387"
+  },
+  "started_receipt": "data/acquisition/ixi-t1-mra-vessel-v1/runs/20261009T114144129161Z-04a4e72a/started.json",
+  "started_receipt_sha256": "96730b997f0edc842bbc51a4d3d4a60772754312fb1238ef48823257e0518081",
+  "started_utc": "2026-10-09T11:41:44.129644+00:00",
+  "strong_kernel_start_token": "Must be collected by the model monitor; ps lstart has only one-second resolution."
+}

@@ -1,0 +1,15 @@
+{
+  "archive_body_bytes_opened": 0,
+  "canonical_completion_sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+  "observed_tool": "write_stdin on the existing owned session, no restart or signal",
+  "original_process_absent_verified_by_ps": true,
+  "pgid": 4631,
+  "pid": 4631,
+  "recorded_utc": "2026-10-09T13:07:53.984675+00:00",
+  "schema": "ixi-owned-session-terminal-observation-v1",
+  "session_id": 95570,
+  "stdout_terminal_status": "all_bytes_verified",
+  "stdout_verified_bytes": 17225109877,
+  "stdout_verified_files": 3,
+  "tool_exit_code": 0
+}

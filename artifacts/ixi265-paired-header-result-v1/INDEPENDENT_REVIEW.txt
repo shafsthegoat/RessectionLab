@@ -1,0 +1,34 @@
+PASS_SAVED_HEADER_RESULT_UNADMITTED — IXI265 TRAIN
+
+Exact release 2e2dfa63ec1511fe5e42fe794ebf45e0493f6677e761eeeb288007763616831f
+at aee1b8f9f11184aef20e957fa43c86130dac4797 changes only the four reviewed root
+fields. Source, review, receipt and transport/stat bindings agree. No mismatch.
+
+The supervised attempt finished in 0.612309792 s; source/runtime preflight is
+outside that interval. Nine samples and worker self peak both report 141,197,312 B
+(134.66 MiB). Worker 15486 exited0 and was reaped, with no cleanup notes or refusal
+markers. Three members completed. Source-return counters total 21,371,048 B;
+other-person body bytes and voxel arrays remain zero. Total output: 21,418,829 B.
+
+All selected-copy sizes/SHA256 values independently match: 21,398,030 compressed
+bytes in total; the copied label also matches its ZIP-member CRC. Independent
+stdlib parsing decoded exactly 352 header/marker bytes per copy and reproduced
+the saved qform/sform matrices. All are signed16, millimetres, qform/sform code1.
+
+T1: 256x256x150; spacing about 0.9375x0.9375x1.2 mm; declared axes PSR.
+MRA and derived label: 512x512x100; about 0.46875x0.46875x0.8 mm; axes LAS.
+MRA-label matrices are not byte-exact: maximum same-index full-cell corner delta
+is 1.91672e-6 mm for qform and 1.65020e-6 mm for sform. This is a numerical header
+comparison, not anatomical alignment. Within-volume qform/sform discrepancies
+remain below the existing 0.001 mm reporting tolerance.
+
+No original archive bodies were reopened; current publication stat tuples still
+match. No voxel arrays, full gzip footer/payload, extension content or anatomy
+were examined. Timing and preoperative availability remain unknown. Registration,
+training/clinical admission and added actor channels remain false; acquired T1/MRA
+and the incomplete derived vessel reference stay distinct.
+
+Package inputs: audit.json (hash-bound saved evidence index and copied-file
+digests), audit_saved.py, this report, audit-output.json, and the indexed small
+JSON/source files. Preserve prior negatives. Keep image copies outside a compact
+evidence archive and bind them by the independently verified digests.

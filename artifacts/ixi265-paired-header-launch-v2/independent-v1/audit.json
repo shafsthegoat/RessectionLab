@@ -1,0 +1,43 @@
+{
+  "actual_execution_authorized": false,
+  "decision": "HOLD",
+  "findings": [
+    {
+      "actual_referenced_review": {
+        "decision": "HOLD",
+        "release_candidate_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "executing_gate_accepted": true,
+      "id": "review_file_semantics_and_exact_candidate_not_checked"
+    },
+    {
+      "id": "missing_live_group_rss_not_refused",
+      "probe_evidence": [
+        {
+          "members": [],
+          "owned_child_live": true,
+          "rss": 0
+        }
+      ],
+      "result": {
+        "cleanup_notes": [],
+        "group_RSS_note": "No live group sample; sampled peak is unknown, worker self peak required separately.",
+        "group_RSS_observations": 0,
+        "parent_observed_peak_RSS_bytes": 0,
+        "parent_reaped_worker": true,
+        "sampled_group_peak_RSS_bytes": null,
+        "supervision": "completed",
+        "worker_exit_status": 0,
+        "worker_pid": 776655
+      }
+    }
+  ],
+  "launcher_sha256": "a5999d91bd53a7c39c2a37e0650d4d3f30e7027a978457ad84e0f4194ce65615",
+  "provided_tests": {
+    "passed": 19,
+    "seconds": 0.296
+  },
+  "release_candidate_sha256": "7995e002616535c1941bfdf3d680a34df47146a4a919b056cf4bac6583094325",
+  "release_template_sha256": "43d242b44d6d377ac0a02fa1d283b4163eabe93e32ea89a2a312e4e593680c83",
+  "scope": "Only source and generated gate/process metadata; no original archives, images, or scientific worker execution"
+}

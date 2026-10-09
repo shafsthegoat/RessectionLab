@@ -1,0 +1,262 @@
+{
+  "MRA_label_max_same_index_cell_corner_delta_mm": {
+    "qform": 1.9167205760973803e-06,
+    "sform": 1.6501992718716724e-06
+  },
+  "audit_io": {
+    "compressed_header_prefix_bytes": 12288,
+    "header_bytes_decoded": 1056,
+    "original_archive_body_bytes": 0,
+    "selected_copy_hash_bytes": 21398030,
+    "voxel_arrays": 0
+  },
+  "candidate_sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c",
+  "complete_member_attempts": 3,
+  "current_archive_stat_continuity": {
+    "IXI-MRA.tar": {
+      "archive_body_bytes_read_by_audit": 0,
+      "unchanged_stat": true
+    },
+    "IXI-T1.tar": {
+      "archive_body_bytes_read_by_audit": 0,
+      "unchanged_stat": true
+    },
+    "vessel_dataset.zip": {
+      "archive_body_bytes_read_by_audit": 0,
+      "unchanged_stat": true
+    }
+  },
+  "decision": "PASS_SAVED_HEADER_RESULT_UNADMITTED",
+  "evidence": {
+    "build/ixi-completion-evidence-v1/artifacts/ixi-t1-mra-vessel-byte-intake-v1/completion/IXI-MRA.tar-stat-binding.json": {
+      "bytes": 1541,
+      "sha256": "9dc5fe4e3c7dd222fd176e4789398bef0f75d7a240cce75395a1acb9ed485a37"
+    },
+    "build/ixi-completion-evidence-v1/artifacts/ixi-t1-mra-vessel-byte-intake-v1/completion/IXI-T1.tar-stat-binding.json": {
+      "bytes": 1538,
+      "sha256": "9cacbbc46cf86a5693ffa617842cd88914901e7b8bc435eeb9af632f41390fa8"
+    },
+    "build/ixi-completion-evidence-v1/artifacts/ixi-t1-mra-vessel-byte-intake-v1/completion/vessel_dataset.zip-stat-binding.json": {
+      "bytes": 1540,
+      "sha256": "bcdd54c90a1a632e16c5b9050270e7a664412ac812b9c2a5ce60e3b6dd7261a7"
+    },
+    "build/ixi-t1-mra-header-metadata-execution-v1/receipt.json": {
+      "bytes": 294418,
+      "sha256": "5c751c2131654628709a8b75ead3b284a8aa9aae326ffe34501e4610c5b5066e"
+    },
+    "build/ixi265-paired-header-independent-v2/REPORT.txt": {
+      "bytes": 3522,
+      "sha256": "f5cfd4dd77c4f78fe3e1461749849db90bea5fa4efe0565a835200a7a6ee312f"
+    },
+    "build/ixi265-paired-header-independent-v2/audit.json": {
+      "bytes": 3288,
+      "sha256": "24003991f1266cb9b962ab5249911132c0de1af297ba4fcd5d30c1b68f21fd21"
+    },
+    "build/ixi265-paired-header-launch-independent-v2/audit.json": {
+      "bytes": 4388,
+      "sha256": "f6eb6a6048547323faeaf9fbd1f559ac1c9978c512ebee7e742f0ddbde80e904"
+    },
+    "build/ixi265-paired-header-launch-preparation-v1/launch_v2.py": {
+      "bytes": 24470,
+      "sha256": "819dffd069ed2cf5cf67c2148d3b8bc71af2f9d222cbfe3a7d7264966eb91c2e"
+    },
+    "build/ixi265-paired-header-launch-preparation-v1/root-release-v2.json": {
+      "bytes": 235077,
+      "sha256": "2e2dfa63ec1511fe5e42fe794ebf45e0493f6677e761eeeb288007763616831f"
+    },
+    "build/ixi265-paired-header-launch-preparation-v1/root-session-terminal-v2.json": {
+      "bytes": 258,
+      "sha256": "13cbf1d2f6120b995db5b940d55197015111f03d0e309bda28639db1f197cfa1"
+    },
+    "build/ixi265-paired-header-launch-preparation-v1/terminal-bound-CANDIDATE-NOT-RELEASED-v2.json": {
+      "bytes": 234821,
+      "sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c"
+    },
+    "build/ixi265-paired-header-preparation-v1/prepared-protocol-v2.json": {
+      "bytes": 4914,
+      "sha256": "ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8"
+    },
+    "build/ixi265-paired-header-preparation-v1/selective_qc_v2.py": {
+      "bytes": 17959,
+      "sha256": "4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541"
+    },
+    "build/ixi265-paired-header-qc-v1/child-protocol.json": {
+      "bytes": 5083,
+      "sha256": "551bce278cb37357421f609eadb9e4f6810b4ea675cf3d5746688a1c6a46f5bd"
+    },
+    "build/ixi265-paired-header-qc-v1/intent.json": {
+      "bytes": 436,
+      "sha256": "768bff4ee8c78b8aa966dc31f75f43e58e8786cc5f373bc341f08124c0a7e561"
+    },
+    "build/ixi265-paired-header-qc-v1/selected/receipt.json": {
+      "bytes": 13838,
+      "sha256": "473de05cb2936812ad779639a345a54bf4eda64850c6d2793b7ca53011f4a86f"
+    },
+    "build/ixi265-paired-header-qc-v1/terminal.json": {
+      "bytes": 989,
+      "sha256": "ca97cb0dadb698aa9e607feaf803c89087468890afbde851e14b3ade6f3c46b3"
+    },
+    "build/ixi265-paired-header-qc-v1/worker-start.json": {
+      "bytes": 132,
+      "sha256": "12e44a0746145666a91a715fface6a4e7bbd7a47588811524fcad016b1c0901c"
+    },
+    "build/ixi265-paired-header-qc-v1/worker-terminal.json": {
+      "bytes": 321,
+      "sha256": "62ec6e99639107f757b945f7dc38210a68611ea78c07639bbd00a5c219cbe627"
+    },
+    "build/remind-qc-adapter-preparation-v1/header_pilot_bootstrap_v2.py": {
+      "bytes": 4583,
+      "sha256": "fc6f9661997f6bde4b215aeb69ac8427b07a15d7beac345d8404a18875dfb3ff"
+    },
+    "build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py": {
+      "bytes": 27747,
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    "build/remind-qc-adapter-preparation-v1/root-release-v2-r3.json": {
+      "bytes": 233294,
+      "sha256": "65c3f90df6e10028ae7c9939ed610cf332e1b368a56ed1235860a239db55aa29"
+    },
+    "data/acquisition/ixi-t1-mra-vessel-v1/attempts/00/00489f2db07323a4e263a25ae1a47482853b818ccaa3edf4339d8fac0f1a2eb9/02-20261009T114144129161Z-04a4e72a-result.json": {
+      "bytes": 451,
+      "sha256": "276a8f99fe8a9a2f880eafc902ca4766f61bf7cd3271822863bfbe45a282e866"
+    },
+    "data/acquisition/ixi-t1-mra-vessel-v1/attempts/b0/b0c5249df4f02cc7e87a063c8600167c2dde0b975d9aa73181bbde1399609dc2/01-20261009T114144129161Z-04a4e72a-result.json": {
+      "bytes": 560,
+      "sha256": "f733f49682d1c7c171d2d5f8f2d54ed62b05ae5451ed64edc61e4121750eccd8"
+    },
+    "data/acquisition/ixi-t1-mra-vessel-v1/attempts/e3/e3981614c7a0c22a805d700f5496c69212da64bb1ea643150c18b3ae9b072f7b/01-20261009T114144129161Z-04a4e72a-result.json": {
+      "bytes": 558,
+      "sha256": "a3be0320ca3483077f2ea5f3847acd35171fc4447b7a969142872401576984d3"
+    },
+    "data/acquisition/ixi-t1-mra-vessel-v1/completion.json": {
+      "bytes": 2369,
+      "sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8"
+    },
+    "manifests/experiments/ixi-component-person-cohort-v1.json": {
+      "bytes": 788725,
+      "sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127"
+    },
+    "manifests/experiments/ixi-t1-mra-vessel-byte-intake-v1.json": {
+      "bytes": 6652,
+      "sha256": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c"
+    },
+    "scripts/febio_runtime.py": {
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/inspect_rhuh_single_image.py": {
+      "bytes": 23777,
+      "sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f"
+    },
+    "scripts/real_intake_io.py": {
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    }
+  },
+  "group_RSS_observations": 9,
+  "limitations": [
+    "No anatomy or registration admission; numerical header agreement is not anatomical validation.",
+    "T1/MRA grids differ; MRA/derived-label shape and declared spacing agree but qform/sform matrices are not byte-exact.",
+    "Acquisition datetime, interval and preoperative availability remain unknown; seconds unit does not establish timing.",
+    "Acquired T1/MRA and derived vessel label remain separate; unknown label background is not proven vessel-free.",
+    "Original archive fixity remains inherited from transport plus unchanged stat; no archive-body reread.",
+    "No full voxel decode, gzip-footer, full-payload-length, extension-body or anatomical validation.",
+    "Reported source-read counters are worker receipt/source evidence; this saved audit did not independently replay source reads."
+  ],
+  "members": {
+    "MRA": {
+      "axis_codes": [
+        "L",
+        "A",
+        "S"
+      ],
+      "bytes": 14307469,
+      "dtype": "<i2",
+      "header_matrices_reproduced": true,
+      "independent_compressed_prefix_bytes": 4096,
+      "independent_header_bytes": 352,
+      "qform_code": 1,
+      "qform_sform_max_cell_corner_delta_mm": 0.0002280713861865177,
+      "sform_code": 1,
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "shape": [
+        512,
+        512,
+        100
+      ],
+      "zooms_mm": [
+        0.46875,
+        0.46875,
+        0.8000001311302185
+      ]
+    },
+    "T1": {
+      "axis_codes": [
+        "P",
+        "S",
+        "R"
+      ],
+      "bytes": 6980629,
+      "dtype": "<i2",
+      "header_matrices_reproduced": true,
+      "independent_compressed_prefix_bytes": 4096,
+      "independent_header_bytes": 352,
+      "qform_code": 1,
+      "qform_sform_max_cell_corner_delta_mm": 1.8300677352826637e-05,
+      "sform_code": 1,
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "shape": [
+        256,
+        256,
+        150
+      ],
+      "zooms_mm": [
+        0.9375,
+        0.9375,
+        1.199999451637268
+      ]
+    },
+    "derived_vessel_label": {
+      "axis_codes": [
+        "L",
+        "A",
+        "S"
+      ],
+      "bytes": 109932,
+      "dtype": "<i2",
+      "header_matrices_reproduced": true,
+      "independent_compressed_prefix_bytes": 4096,
+      "independent_header_bytes": 352,
+      "qform_code": 1,
+      "qform_sform_max_cell_corner_delta_mm": 0.00022984447741555676,
+      "sform_code": 1,
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "shape": [
+        512,
+        512,
+        100
+      ],
+      "zooms_mm": [
+        0.46875,
+        0.46875,
+        0.8000001311302185
+      ]
+    }
+  },
+  "other_person_body_bytes_recorded": 0,
+  "outer_output_bytes": 21418829,
+  "parent_elapsed_seconds": 0.6123097918462008,
+  "peak_group_and_worker_RSS_bytes": 141197312,
+  "release_head": "aee1b8f9f11184aef20e957fa43c86130dac4797",
+  "release_sha256": "2e2dfa63ec1511fe5e42fe794ebf45e0493f6677e761eeeb288007763616831f",
+  "selected_compressed_copy_bytes": 21398030,
+  "source_and_review_bindings_verified": true,
+  "source_archive_returned_bytes_recorded": 21371048,
+  "voxel_arrays_materialized": 0,
+  "worker_compressed_header_prefix_bytes_recorded": 196608,
+  "worker_header_bytes_decoded": 1056,
+  "worker_header_elapsed_seconds": 0.37849620799534023,
+  "worker_pid": 15486,
+  "worker_reaped_exit_zero": true,
+  "worker_selected_copy_rehash_bytes": 21398030
+}

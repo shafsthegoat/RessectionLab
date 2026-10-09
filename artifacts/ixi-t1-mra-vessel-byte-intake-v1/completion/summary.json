@@ -1,0 +1,62 @@
+{
+  "all_payloads_unreviewed": true,
+  "archive_body_bytes_opened_by_audit": 0,
+  "archive_hashes": {
+    "IXI-MRA.tar": {
+      "bytes": 12377712640,
+      "sha256": "b88420ae0e1b23ae53ac6f61a0bee243d7fbc9af9efbba952a6b0b8e6e89250c",
+      "source_md5": "29be7d2fee3998f978a55a9bdaf3407e",
+      "stat_binding_sha256": "9dc5fe4e3c7dd222fd176e4789398bef0f75d7a240cce75395a1acb9ed485a37",
+      "terminal_attempt_receipt_path": "data/acquisition/ixi-t1-mra-vessel-v1/attempts/b0/b0c5249df4f02cc7e87a063c8600167c2dde0b975d9aa73181bbde1399609dc2/01-20261009T114144129161Z-04a4e72a-result.json",
+      "terminal_attempt_receipt_sha256": "f733f49682d1c7c171d2d5f8f2d54ed62b05ae5451ed64edc61e4121750eccd8"
+    },
+    "IXI-T1.tar": {
+      "bytes": 4840816640,
+      "sha256": "56bbe911fbe967f7d1b830a552995263bdba281e0a6eb78e62f1c38d88a946a9",
+      "source_md5": "34901a0593b41dd19c1a1f746eac2d58",
+      "stat_binding_sha256": "9cacbbc46cf86a5693ffa617842cd88914901e7b8bc435eeb9af632f41390fa8",
+      "terminal_attempt_receipt_path": "data/acquisition/ixi-t1-mra-vessel-v1/attempts/e3/e3981614c7a0c22a805d700f5496c69212da64bb1ea643150c18b3ae9b072f7b/01-20261009T114144129161Z-04a4e72a-result.json",
+      "terminal_attempt_receipt_sha256": "a3be0320ca3483077f2ea5f3847acd35171fc4447b7a969142872401576984d3"
+    },
+    "vessel_dataset.zip": {
+      "bytes": 6580597,
+      "sha256": "6b5e425001208cb11685ff610b5b15ee388b73d22bfede5237b0da9148276b93",
+      "source_md5": "96be3dd9d1413e8890f89721829a79f7",
+      "stat_binding_sha256": "bcdd54c90a1a632e16c5b9050270e7a664412ac812b9c2a5ce60e3b6dd7261a7",
+      "terminal_attempt_receipt_path": "data/acquisition/ixi-t1-mra-vessel-v1/attempts/00/00489f2db07323a4e263a25ae1a47482853b818ccaa3edf4339d8fac0f1a2eb9/02-20261009T114144129161Z-04a4e72a-result.json",
+      "terminal_attempt_receipt_sha256": "276a8f99fe8a9a2f880eafc902ca4766f61bf7cd3271822863bfbe45a282e866"
+    }
+  },
+  "attempt_result_status_counts": {
+    "byte_verified": 3,
+    "transport_deferred": 1
+  },
+  "audited_utc": "2026-10-09T13:06:57.301232+00:00",
+  "canonical_completion_sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+  "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+  "declaration_sha256": "bf6953035d90ce66dcbccee86c4eb69a8cc8b33e020537515e418ab47b4ccdc1",
+  "file_stat_field_mapping_for_reader": {
+    "device": "dev",
+    "inode": "ino"
+  },
+  "header_or_array_bytes_opened": 0,
+  "labels_admitted": false,
+  "member_extraction_released": false,
+  "publication_evidence": "Pinned existing transport verifies size/source MD5 on .partial before atomic replace, then records local SHA256. Each final regular file has expected size, no partial remains, and mtime/ctime precede its verification receipt. No bulk rehash was performed.",
+  "run_id": "20261009T114144129161Z-04a4e72a",
+  "schema": "ixi-opaque-byte-intake-completion-audit-v1",
+  "scope_commit": "bf8653a77ad36ada57775c798407cb07034f70f1",
+  "scope_sha256": "dfbf2d9d9721a03d7eea313326ef71d570cac2921ca5f520eea41d24a8a5085c",
+  "status": "all_bytes_verified_unreviewed",
+  "terminal_process": {
+    "exact_original_process_alive": false,
+    "pgid": 4631,
+    "pid": 4631,
+    "ps_exit_code": 1,
+    "session_id": 95570
+  },
+  "tracked_files_modified": false,
+  "training_admitted": false,
+  "verified_bytes": 17225109877,
+  "verified_files": 3
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "ixi265-header-launch-review-v1",
+  "decision": "GO_FOR_EXACT_IXI265_HEADER_LAUNCH",
+  "launcher_sha256": "819dffd069ed2cf5cf67c2148d3b8bc71af2f9d222cbfe3a7d7264966eb91c2e",
+  "release_candidate_sha256": "c099b5759a0a92624c4d8ba1f1ba587c846173c202b422b731ec11b34d0e9c5c",
+  "false_template_sha256": "c8e712d875110913150c5a7e82ffe1aea69b860fa3c3cc3c3a807f5bd06e0c4e",
+  "reader_sha256": "4388145cde74e5421346391a6ecafba8ec177c6972187e5183c817fc3a361541",
+  "reader_protocol_sha256": "ad53a12cdfe480ff53aacc023aebb80e653cf797a47c3df486cd46c52bc8bde8",
+  "supervisor_sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652",
+  "bootstrap_sha256": "fc6f9661997f6bde4b215aeb69ac8427b07a15d7beac345d8404a18875dfb3ff",
+  "review_scope": "Exact source and generated lifecycle, release, transport-metadata/stat, and bounded header controls. No original archive/image opens, scientific worker execution, or full arrays.",
+  "actual_execution_performed": false,
+  "original_archive_or_patient_opens": 0,
+  "candidate_execution_released": false,
+  "root_release_required": true,
+  "review_normalization": ["execution_released=false", "independent_review=null", "release_head=null", "released_at=null"],
+  "supplied_tests": {
+    "lifecycle_passed": 22,
+    "lifecycle_seconds": 0.380,
+    "semantic_passed": 6,
+    "semantic_seconds": 0.062,
+    "lifecycle_source_sha256": "98e0e7d3dd58793e55dabf18722b93a89b25ab1b867ac03df8aa9085db37e0fa",
+    "semantic_source_sha256": "483ffb14cc571cbe2b2890418ba883d317d45aaf1b0f4f9ae74dbe1fa3d1a78d",
+    "lifecycle_log_sha256": "bc5547390f9f65e15e0c0bdf250abaebc91c6fdba79370b996407f457e9c4298",
+    "semantic_log_sha256": "61df585f99f3287a0c83c8e5ca2552774001b5cde61a221dbd5f825f350a40b4"
+  },
+  "independent_controls": {
+    "passed": 31,
+    "script_sha256": "1e3503412a0271ca3310b0068912538fb361ad4c0e794b32d16d2bce78924328",
+    "receipt_sha256": "230759e9e08235e9d3edabef8b8a78e78d860242345a1a65b0faa32ea54f7762",
+    "coverage": ["Parsed review and whole canonical candidate binding", "False release, source/scope/limit and archive-proof mutations refuse", "Generated three-archive completion/terminal/stat joins and changed publication identity", "Missing live process-group RSS refuses", "Confirmed exit race has null sampled RSS and no stale PGID signal", "Real generated child stdout/stderr discarded and child reaped"],
+    "cold_check_only": {"execution_released": false, "archive_opens": 0, "archive_prerequisites_checked": false},
+    "guarded_header_probe": {"nifti1_decompressed_header_bytes": 352, "nifti2_decompressed_header_bytes": 544, "array_reads": 0, "verified_loaded_origins": 357, "process_and_network_guard_active": true}
+  },
+  "preserved_negative": {
+    "audit_path": "build/ixi265-paired-header-launch-independent-v1/audit.json",
+    "audit_sha256": "a3bc35d0dd2a80a6e5e102f3c3614b72bb8c1b0506fe799b5a746b92f865a49f",
+    "report_sha256": "f0c052c5a4bffafbea1dfd4009b685b7f5d22177395fad39692ecd71a6e6b695"
+  },
+  "limits": {"worker_seconds": 35, "cleanup_and_finalization_seconds": 10, "sampled_group_RSS_bytes": 536870912, "outer_output_bytes": 33554432, "attempts": 1, "workers": 1},
+  "lifecycle_limitations": ["Source/runtime/metadata-only preflight precedes the bounded attempt.", "RSS and output are sampled; worker self peak is additionally required.", "Missing group samples after a confirmed exit remain unknown, never measured zero.", "SIGKILL, power loss and filesystem failure cannot guarantee terminal publication; an existing attempt/intent forbids implicit replay.", "Success requires parent exit zero, successful terminal status, no post-publication/publication-failure markers, a reaped successful worker, semantic receipt validation, and unchanged source publication stat identities."],
+  "scientific_limits": ["Frozen IXI265 TRAIN selection and acquired T1/MRA versus derived vessel-reference roles remain unchanged.", "No anatomy QC, accepted registration, simultaneous-acquisition, preoperative availability, training admission or added actor channels.", "Header geometry and units remain declarations; absent/invalid/conflicting forms are preserved.", "No voxel arrays, extension-body, full gzip-footer or complete voxel-payload validation.", "Whole-archive hashes are inherited from verified transport with stat continuity; this review did not rehash original archives."]
+}
