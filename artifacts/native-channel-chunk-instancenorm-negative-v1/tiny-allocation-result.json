@@ -1,0 +1,35 @@
+{
+  "channel_chunk": 1,
+  "exact_equal": true,
+  "input_bytes": 442368,
+  "input_shape": [
+    1,
+    8,
+    24,
+    24,
+    24
+  ],
+  "max_abs_error": 0.0,
+  "native_channel_chunk_1": {
+    "peak_tracked_cpu_tensor_bytes": 12835648,
+    "timeline_points": 308,
+    "timeline_sha256": "8942304f1628b5ff51894c65574d9a0fc21e82e10eb0881c0ad1e55ac5c86f88"
+  },
+  "native_full": {
+    "peak_tracked_cpu_tensor_bytes": 12835648,
+    "timeline_points": 44,
+    "timeline_sha256": "82236f7933b7fca3167e43d2982f165f9240fa0742e1f53c3b9a1a9ccee0c308"
+  },
+  "output_bytes": 442368,
+  "output_shape": [
+    1,
+    8,
+    24,
+    24,
+    24
+  ],
+  "profile_limit": "PyTorch CPU tensor allocator timeline, not total process RSS or native convolution workspace",
+  "scope": "one tiny generated [1,8,24,24,24] CPU FP32 allocator profile; no model, patient, or host pressure probe",
+  "sign_disagreements": 0,
+  "torch_version": "2.14.1"
+}

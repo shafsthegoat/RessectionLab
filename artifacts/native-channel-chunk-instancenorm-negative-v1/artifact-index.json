@@ -1,0 +1,45 @@
+{
+  "payloads": [
+    {
+      "path": "INDEPENDENT_REVIEW.md",
+      "sha256": "cdd9393b1c517385335a6fcef2363dc396135bc6284401a2565df564139771f8",
+      "size_bytes": 2778
+    },
+    {
+      "path": "RESULT.md",
+      "sha256": "934c54db12d89c8b6f9bb883c7c0d84a7b7fad4c890f6adc1a773b71f5fc0647",
+      "size_bytes": 2263
+    },
+    {
+      "path": "native-channel-chunk-1-memory-timeline.json",
+      "sha256": "8942304f1628b5ff51894c65574d9a0fc21e82e10eb0881c0ad1e55ac5c86f88",
+      "size_bytes": 18951
+    },
+    {
+      "path": "native-full-memory-timeline.json",
+      "sha256": "82236f7933b7fca3167e43d2982f165f9240fa0742e1f53c3b9a1a9ccee0c308",
+      "size_bytes": 2721
+    },
+    {
+      "path": "native_chunk_norm.py",
+      "sha256": "ba2d642f908cb6670833331ef597e119c71e6fc5329e18b3b1f2a9a7acef6518",
+      "size_bytes": 4386
+    },
+    {
+      "path": "profile_tiny_allocation.py",
+      "sha256": "e1fffc6e1b82c1282fee97937429de9c32ac906515f0f65e4b541fbfe363f53d",
+      "size_bytes": 3829
+    },
+    {
+      "path": "test_native_chunk_norm.py",
+      "sha256": "51bee703baabd3f66713e95d3ce610cdb00d4a4152ff45b2006755aad33e1d02",
+      "size_bytes": 5339
+    },
+    {
+      "path": "tiny-allocation-result.json",
+      "sha256": "b2d4e536a4bcc9e07ee98dc58bd00b4dc9e15816e4a4d8c6a518c9c4714c9ac9",
+      "size_bytes": 923
+    }
+  ],
+  "scope": "tiny generated native-channel-chunk InstanceNorm nonbenefit; no model/patient data"
+}

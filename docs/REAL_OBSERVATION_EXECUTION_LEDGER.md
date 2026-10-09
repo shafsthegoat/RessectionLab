@@ -765,3 +765,8 @@ The independently reviewed single-attempt generated release [deferred at host pr
 ### October 9: integrate generated limited-input corridor strategy comparison
 
 The [generated bridge](../artifacts/healthy-corridor-bridge-v1/RESULT.md) connects actor-only imaging/support, exhaustive public SEARCH and scripted IL/RL/HYBRID slots, complete insertion/withdrawal histories, all-method sealing and independent private full-tool contact scoring. Root integration passes 150 tests in 30.83 seconds; independent candidate controls pass 47. Duplicate waypoints, resealed suboptimal search and weakened role assertions were reproduced and repaired, with negative records retained. Two-waypoint batches are joint target/tool selection; the first acquired-data comparison requires one fixed target per batch. This is a geometric exposure query, not tissue penetration, removal, mechanics or learned-policy efficacy. Actual patient admission remains closed.
+
+
+### October 9: native channel-chunk normalization preserves tiny parity without peak benefit
+
+The [bounded generated operator experiment](../artifacts/native-channel-chunk-instancenorm-negative-v1/RESULT.md) passes six tiny parity/guard controls, including the earlier large-offset counterexample, by using native whole-spatial-map normalization per channel. Both saved PyTorch CPU tensor-allocation timelines nevertheless peak at exactly 12,835,648 bytes; this is neither process RSS nor complete native-workspace accounting. The early transient has no established operator attribution. No trained-network attachment, checkpoint read or full128 retry occurred. Ownership in the pinned tiled network remains unproved, so the prototype stays excluded; the earlier hand-written normalization failure is preserved.
