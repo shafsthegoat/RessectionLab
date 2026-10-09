@@ -1,0 +1,66 @@
+{
+  "config": {
+    "candidate_cap": 96,
+    "column_offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "fixture": "make_native_opening_task; six generated cells; no patient anatomy",
+    "max_steps": 2,
+    "negative_control": "generated annotations become nominal target while only actor target image is zeroed",
+    "nominal_fixed": "original generated signal-derived target",
+    "proposal_mode": "nominal_cavity_v1",
+    "reference_a_xyz": [
+      [
+        4,
+        4,
+        4
+      ],
+      [
+        4,
+        4,
+        5
+      ]
+    ],
+    "reference_b_xyz": [
+      [
+        4,
+        4,
+        3
+      ],
+      [
+        4,
+        4,
+        4
+      ]
+    ],
+    "search": {
+      "beam_width": 2,
+      "max_calls": 6,
+      "seconds": 20.0,
+      "transition_mode": "lazy_planning"
+    }
+  },
+  "expected": {
+    "fixed_private_swap": "identical observation bytes, fingerprint, candidate inventory and bounded search",
+    "missing_estimate": "nominal/cavity and SEARCH reject; generic fixed-lattice actor availability reported separately",
+    "negative_control": "equal masked image bytes but different annotation-driven action IDs and emitted endpoints"
+  },
+  "scope": "generated_software_diagnostic",
+  "source_sha256": {
+    "scripts/limited_input_leakage_canary_v1.py": "4dfaefdd558d604794f05e25f5c639910b412f5d6c27eb8deaa0655a7bf6165a",
+    "src/resectionlab/limited_observation_boundary.py": "d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "version": "limited-input-leakage-canary-v1"
+}

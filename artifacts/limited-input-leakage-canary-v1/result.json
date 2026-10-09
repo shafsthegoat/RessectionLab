@@ -1,0 +1,939 @@
+{
+  "admission_limit": "No scan-derived patient estimator or shared actor admission gate is established. The generic fixed-lattice task still exposes legal actor actions without a nominal objective; nominal/cavity construction, sealed limited planning spec and observed SEARCH fail closed. No deployment plan was emitted here.",
+  "annotation_mask_only_negative": {
+    "candidate_ids": [
+      [
+        "STOP",
+        "nominal-cavity-fafd7e5d9fb2e6d11138d564",
+        "nominal-cavity-d2da8779f80fe329d0bfb935"
+      ],
+      [
+        "STOP",
+        "nominal-cavity-427f5b0c45cf43e1d566a83a",
+        "nominal-cavity-6b5b989757aaf171c87d660d"
+      ]
+    ],
+    "endpoints": [
+      [
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "proximal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "distal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            5.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "proximal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "distal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            5.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        },
+        {
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        }
+      ],
+      [
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "proximal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            3.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "distal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "proximal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            3.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "family": "distal_nominal",
+          "feasible": false,
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        },
+        {
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        }
+      ]
+    ],
+    "legal_masks": [
+      [
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true
+      ]
+    ],
+    "masked_image_hashes": [
+      "sha256:dcb941531f71f5438059bf72735636cba227e024c09e867ef378664d6ba939e2",
+      "sha256:dcb941531f71f5438059bf72735636cba227e024c09e867ef378664d6ba939e2"
+    ],
+    "observation_fingerprints": [
+      "sha256:f703fbcefde922a33c7fe82c70e5d6e30b4c6160aae1378f152454d9ade424f7",
+      "sha256:5f58a77d201c572686432fc33b5d235056ed76dc3ac29169ca81e7a6641270ff"
+    ],
+    "qualification": "Masked actor image is a counterfactual projection; SEARCH still scores the supplied annotation.",
+    "same_physical_opening_then_masked_actor": {
+      "action_geometry_hashes": [
+        "sha256:939782794a37d0b20e572d2389d0dec294953c34945a4a62931622a8b821edee",
+        "sha256:e46c737915d17d44aa324104a753d762039ece8658202355ad87f6d4dbdcf592"
+      ],
+      "candidate_ids": [
+        [
+          "STOP",
+          "nominal-cavity-673e5e3cf4d8dcf6bcd16458",
+          "nominal-cavity-b2c57512c193d5191cb4f86c",
+          "nominal-cavity-61082daaa3e3c9c54809afb2"
+        ],
+        [
+          "STOP",
+          "nominal-cavity-5832e68bc4c0d9a8c976edc3",
+          "nominal-cavity-a8c2d79be47c49ff57680e76"
+        ]
+      ],
+      "endpoints": [
+        [
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "exposed_opening",
+            "feasible": false,
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "proximal_nominal",
+            "feasible": false,
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "distal_nominal",
+            "feasible": false,
+            "tip_mm": [
+              4.0,
+              4.0,
+              5.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              5
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "exposed_opening",
+            "feasible": true,
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "proximal_nominal",
+            "feasible": true,
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "distal_nominal",
+            "feasible": true,
+            "tip_mm": [
+              4.0,
+              4.0,
+              5.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              5
+            ]
+          }
+        ],
+        [
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "exposed_opening",
+            "feasible": false,
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "distal_nominal",
+            "feasible": false,
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "exposed_opening",
+            "feasible": true,
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "family": "distal_nominal",
+            "feasible": true,
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          }
+        ]
+      ],
+      "legal_masks": [
+        [
+          true,
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          true
+        ]
+      ],
+      "masked_image_hashes": [
+        "sha256:34cd3ea13e89289102e04e163b2f03e8e5b458b4f9a0886cac954a277343115a",
+        "sha256:34cd3ea13e89289102e04e163b2f03e8e5b458b4f9a0886cac954a277343115a"
+      ],
+      "observation_fingerprints": [
+        "sha256:f7212fd4642816f6657fef41bda107b08fee84cad6f2f808d57d419709f9c1c8",
+        "sha256:b9517d0a0198e1570b3ba364660085e3127e81501fdb06a1260d7e5dcbb7b4c0"
+      ],
+      "opening_entry_mm": [
+        4.0,
+        4.0,
+        0.5
+      ],
+      "opening_tip_mm": [
+        4.0,
+        4.0,
+        1.0
+      ],
+      "search_decisions": [
+        [
+          "nominal-cavity-61082daaa3e3c9c54809afb2"
+        ],
+        [
+          "nominal-cavity-a8c2d79be47c49ff57680e76"
+        ]
+      ]
+    },
+    "search_cost_stable": [
+      {
+        "call_cap_reached": true,
+        "completed_layers": 1,
+        "estimated_incremental_return": 0.10199999999999987,
+        "evaluated_transition_prefixes": 6,
+        "model_transition_calls": 6,
+        "negative_prefixes_evaluated": 5,
+        "root_legal_nonstop_actions": 2,
+        "transition_mode": "lazy_planning"
+      },
+      {
+        "call_cap_reached": false,
+        "completed_layers": 2,
+        "estimated_incremental_return": 1.302,
+        "evaluated_transition_prefixes": 6,
+        "model_transition_calls": 6,
+        "negative_prefixes_evaluated": 3,
+        "root_legal_nonstop_actions": 2,
+        "transition_mode": "lazy_planning"
+      }
+    ],
+    "search_decisions": [
+      [
+        "nominal-cavity-fafd7e5d9fb2e6d11138d564",
+        "nominal-cavity-b2c57512c193d5191cb4f86c"
+      ],
+      [
+        "nominal-cavity-427f5b0c45cf43e1d566a83a",
+        "nominal-cavity-a8c2d79be47c49ff57680e76"
+      ]
+    ],
+    "side_channel_exposed": true
+  },
+  "clinical_evidence": false,
+  "fixed_private_swap": {
+    "candidate_ids": [
+      [
+        "STOP",
+        "nominal-cavity-6dd153095f699861498f580e",
+        "nominal-cavity-823b0a3db20b63c1ae648a32"
+      ],
+      [
+        "STOP",
+        "nominal-cavity-6dd153095f699861498f580e",
+        "nominal-cavity-823b0a3db20b63c1ae648a32"
+      ]
+    ],
+    "endpoints": [
+      {
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "family": "exposed_opening",
+        "feasible": true,
+        "tip_mm": [
+          4.0,
+          4.0,
+          1.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "family": "proximal_nominal",
+        "feasible": false,
+        "tip_mm": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "family": "distal_nominal",
+        "feasible": false,
+        "tip_mm": [
+          4.0,
+          4.0,
+          5.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          5
+        ]
+      },
+      {
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "family": "exposed_opening",
+        "feasible": true,
+        "tip_mm": [
+          4.0,
+          4.0,
+          1.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "family": "proximal_nominal",
+        "feasible": false,
+        "tip_mm": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "family": "distal_nominal",
+        "feasible": false,
+        "tip_mm": [
+          4.0,
+          4.0,
+          5.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          5
+        ]
+      },
+      {
+        "entry_mm": [
+          5.0,
+          5.0,
+          0.5
+        ],
+        "family": "exposed_opening",
+        "feasible": false,
+        "tip_mm": [
+          5.0,
+          5.0,
+          1.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          5,
+          5,
+          1
+        ]
+      },
+      {
+        "entry_mm": [
+          5.0,
+          5.0,
+          0.5
+        ],
+        "family": "exposed_opening",
+        "feasible": false,
+        "tip_mm": [
+          5.0,
+          5.0,
+          1.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          5,
+          5,
+          1
+        ]
+      }
+    ],
+    "invariants_passed": true,
+    "legal_masks": [
+      [
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true
+      ]
+    ],
+    "observation_array_hashes": [
+      {
+        "action_geometry": "sha256:4ad134699ea77f26b474e2236ff93e956e57ef55be95cacc66ac9421144d26a1",
+        "action_mask": "sha256:da82e4c141e4479943d62614c72be6524cd599273770da8d700fd6aedb1bee03",
+        "affine_ras_mm": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "channel_available": "sha256:54c80ef32c2c35866de215c2917fed52a1d58f2a8a5b1d468fb5f3b17f490aa0",
+        "coverage": "sha256:b95efc0a1a2accbb9e008c7c8f605d3922ec87e0e010c932e557b8b0ee264b8b",
+        "image_channels": "sha256:57cb4282f2b5f4290a0d5d1c63f8ca745db7c7e624ffb1aa70f26439c430fef8",
+        "spacing_mm": "sha256:406eba51306897acb37650b7cd04536193d86c025b64bae8d5eb3f4975c7dc5b",
+        "state_features": "sha256:09ca075ac04e5a0e386c179fd5137e592043a5480b7e0888d93e3f6575de512f"
+      },
+      {
+        "action_geometry": "sha256:4ad134699ea77f26b474e2236ff93e956e57ef55be95cacc66ac9421144d26a1",
+        "action_mask": "sha256:da82e4c141e4479943d62614c72be6524cd599273770da8d700fd6aedb1bee03",
+        "affine_ras_mm": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "channel_available": "sha256:54c80ef32c2c35866de215c2917fed52a1d58f2a8a5b1d468fb5f3b17f490aa0",
+        "coverage": "sha256:b95efc0a1a2accbb9e008c7c8f605d3922ec87e0e010c932e557b8b0ee264b8b",
+        "image_channels": "sha256:57cb4282f2b5f4290a0d5d1c63f8ca745db7c7e624ffb1aa70f26439c430fef8",
+        "spacing_mm": "sha256:406eba51306897acb37650b7cd04536193d86c025b64bae8d5eb3f4975c7dc5b",
+        "state_features": "sha256:09ca075ac04e5a0e386c179fd5137e592043a5480b7e0888d93e3f6575de512f"
+      }
+    ],
+    "observation_fingerprints": [
+      "sha256:e1fcc72e95e3d403e8d6a6b1548a11f84f6d29363d8d5f8e750876035e9b27de",
+      "sha256:e1fcc72e95e3d403e8d6a6b1548a11f84f6d29363d8d5f8e750876035e9b27de"
+    ],
+    "private_evaluator_returns": [
+      0.10199999999999987,
+      1.302
+    ],
+    "reference_hashes": [
+      "sha256:c85476408ffa5a6d937b32b749e8cf26c2a22be35a2cf6e90764f203856f5c1f",
+      "sha256:f7adc35d4bcc58a31c9a50e9c4f50022a56ae99df84e5fafe103d2faa8b50467"
+    ],
+    "search_cost_stable": [
+      {
+        "call_cap_reached": true,
+        "completed_layers": 1,
+        "estimated_incremental_return": 0.10199999999999987,
+        "evaluated_transition_prefixes": 6,
+        "model_transition_calls": 6,
+        "negative_prefixes_evaluated": 5,
+        "root_legal_nonstop_actions": 2,
+        "transition_mode": "lazy_planning"
+      },
+      {
+        "call_cap_reached": true,
+        "completed_layers": 1,
+        "estimated_incremental_return": 0.10199999999999987,
+        "evaluated_transition_prefixes": 6,
+        "model_transition_calls": 6,
+        "negative_prefixes_evaluated": 5,
+        "root_legal_nonstop_actions": 2,
+        "transition_mode": "lazy_planning"
+      }
+    ],
+    "search_decisions": [
+      [
+        "nominal-cavity-6dd153095f699861498f580e",
+        "nominal-cavity-9123181649b32edbaf882418"
+      ],
+      [
+        "nominal-cavity-6dd153095f699861498f580e",
+        "nominal-cavity-9123181649b32edbaf882418"
+      ]
+    ],
+    "source_hash": "sha256:1611586961f28dcb016767950f3f7c5b675fe9d9eae387711c38e74841664e4d"
+  },
+  "manifest_sha256": "0fc778261c892aa7410b2819640e80007120de3eb8954c5492c5e28ceb038333",
+  "missing_estimate": {
+    "generic_fixed_lattice_actor_nonstop_actions": 4,
+    "generic_fixed_lattice_search": "ESSENTIAL_EVIDENCE_MISSING: explicit nominal target required for SEARCH; no MRI threshold fallback",
+    "nominal_cavity_constructor": "ESSENTIAL_EVIDENCE_MISSING: nominal/cavity proposals need explicit permitted target evidence",
+    "sealed_limited_planning_spec": "Exact finite generated-fixture arrays are required"
+  },
+  "patient_count": 0,
+  "scope": "generated_software_diagnostic",
+  "source_sha256": {
+    "scripts/limited_input_leakage_canary_v1.py": "4dfaefdd558d604794f05e25f5c639910b412f5d6c27eb8deaa0655a7bf6165a",
+    "src/resectionlab/limited_observation_boundary.py": "d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "status": "diagnostic_complete_boundary_hold",
+  "training_updates": 0,
+  "version": "limited-input-leakage-canary-v1"
+}

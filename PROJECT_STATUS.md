@@ -38,6 +38,15 @@ hidden-world geometry, real learning admission is limited to one zero-patient
 generated fixture, and no current cohort joins the required vascular,
 functional and mechanical truth. A small target-swap software control passed;
 it is not patient transfer evidence.
+The [generated limited-input leakage canary](artifacts/limited-input-leakage-canary-v1/RESULT.md)
+now holds permitted inputs fixed while swapping private truth: actor arrays,
+action inventory and bounded-search choices stayed identical, while private
+returns changed. Its negative control shows annotation-derived nominal targets
+alter candidate geometry and legal masks even when the actor target image plane
+is hidden. The generic fixed-lattice actor also exposes actions without a
+nominal objective, although observed SEARCH fails closed. Ninety-six narrowly
+selected tests pass; a broader adjacent suite retains ten unrelated
+weight-lineage failures. Limited-input patient admission remains HOLD.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
