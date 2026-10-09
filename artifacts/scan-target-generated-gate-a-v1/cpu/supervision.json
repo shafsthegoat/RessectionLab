@@ -1,0 +1,129 @@
+{
+  "completed_at_utc": "2026-10-09T06:26:10.003017+00:00",
+  "device": "cpu",
+  "elapsed_seconds": 1.8976858330000006,
+  "exit_code": -9,
+  "host_series": [
+    {
+      "compressor_occupied_bytes": 5021319168,
+      "elapsed_seconds": 0.01877045800000232,
+      "free_percent": 51,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5013897216,
+      "elapsed_seconds": 0.6193672079999999,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5052448768,
+      "elapsed_seconds": 1.2324796249999999,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5959303168,
+      "elapsed_seconds": 1.8742977080000003,
+      "free_percent": 45,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    }
+  ],
+  "last_flushed_phase": "before_generated_forward",
+  "log_cap_bytes": 2097152,
+  "memory_accounting": "RSS, Metal allocator bytes, host free/swap/compression are distinct indicators; no sum interpreted as physical use",
+  "monitor_error": null,
+  "no_retry": true,
+  "process_group_id": 59598,
+  "process_group_rss_cap_kib": 3145728,
+  "rss_series": [
+    {
+      "elapsed_seconds": 0.001866708000001438,
+      "last_flushed_phase": null,
+      "process_group_rss_kib": 448
+    },
+    {
+      "elapsed_seconds": 0.12883462499999965,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 83936
+    },
+    {
+      "elapsed_seconds": 0.24847412500000132,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 137872
+    },
+    {
+      "elapsed_seconds": 0.36803250000000176,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 160848
+    },
+    {
+      "elapsed_seconds": 0.48535599999999945,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 179424
+    },
+    {
+      "elapsed_seconds": 0.6049179160000016,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 200992
+    },
+    {
+      "elapsed_seconds": 0.7270025000000011,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 226736
+    },
+    {
+      "elapsed_seconds": 0.8462705830000026,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 234720
+    },
+    {
+      "elapsed_seconds": 0.9657796249999997,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 263488
+    },
+    {
+      "elapsed_seconds": 1.0849862909999999,
+      "last_flushed_phase": "before_imports",
+      "process_group_rss_kib": 327312
+    },
+    {
+      "elapsed_seconds": 1.204793041000002,
+      "last_flushed_phase": "before_weights_only_load",
+      "process_group_rss_kib": 515888
+    },
+    {
+      "elapsed_seconds": 1.3425191250000026,
+      "last_flushed_phase": "after_weights_only_load",
+      "process_group_rss_kib": 566016
+    },
+    {
+      "elapsed_seconds": 1.4554344160000028,
+      "last_flushed_phase": "after_network_construction_alias_checks",
+      "process_group_rss_kib": 566192
+    },
+    {
+      "elapsed_seconds": 1.5746072909999995,
+      "last_flushed_phase": "before_generated_forward",
+      "process_group_rss_kib": 714896
+    },
+    {
+      "elapsed_seconds": 1.7170414160000007,
+      "last_flushed_phase": "before_generated_forward",
+      "process_group_rss_kib": 745584
+    },
+    {
+      "elapsed_seconds": 1.8473802910000003,
+      "last_flushed_phase": "before_generated_forward",
+      "process_group_rss_kib": 1177968
+    }
+  ],
+  "sampled_peak_process_group_rss_kib": 1177968,
+  "scope": "One generated-only cpu 32x64x64 Gate A call; no patient data or 128^3 patch",
+  "wall_time_cap_seconds": 120,
+  "watchdog_reason": "host_compressor_growth_over_256_mib"
+}

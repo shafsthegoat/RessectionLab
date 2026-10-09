@@ -1,0 +1,63 @@
+{
+  "accepted": true,
+  "baseline": {
+    "compressor_occupied_bytes": 5023629312,
+    "elapsed_seconds": 30.023099167,
+    "free_percent": 51,
+    "swap_used_mib": 7279.69,
+    "vm_page_bytes": 16384
+  },
+  "busy_compute_processes": [],
+  "reasons": [],
+  "samples": [
+    {
+      "compressor_occupied_bytes": 5107679232,
+      "elapsed_seconds": 0.005981208000000002,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5102288896,
+      "elapsed_seconds": 5.013767125,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5090443264,
+      "elapsed_seconds": 10.028703083,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5071339520,
+      "elapsed_seconds": 15.038517042,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5068767232,
+      "elapsed_seconds": 20.057214625,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5066817536,
+      "elapsed_seconds": 25.073911167,
+      "free_percent": 50,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    },
+    {
+      "compressor_occupied_bytes": 5023629312,
+      "elapsed_seconds": 30.023099167,
+      "free_percent": 51,
+      "swap_used_mib": 7279.69,
+      "vm_page_bytes": 16384
+    }
+  ]
+}

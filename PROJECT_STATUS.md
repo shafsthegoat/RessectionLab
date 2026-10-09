@@ -32,6 +32,12 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
+The [BTC diffusion extension](artifacts/btc-pat16-pat20-diffusion-intake-v1/RESULT.md)
+adds 16 byte-verified files (94,311,092 bytes) for existing TRAIN patients PAT16
+and PAT20. Root independently rehashed every payload and confirmed unchanged
+patient-role and queue files. Anatomy and reconstruction QC are deferred; the
+new modalities remain unreviewed and do not increase patient counts or admit training.
+
 The [N12 saved-attempt replay implementation](docs/hbe-v5-n12-saved-attempt-replay.md)
 has an [independent source-only GO](artifacts/hbe-v5-n12-saved-replay-v1/SOURCE_REVIEW.md):
 7 focused tests passed independently, and the writer reports 144 HBE tests passing.
@@ -95,6 +101,13 @@ now pass dependency, analytic registration and bounded safe metadata checks.
 The initial inverse-transform and safe-load failures are retained. This is
 not patient inference: an independent adapter, scan-only preprocessing and
 local anatomical QC remain required before any planning input is admitted.
+The [generated CPU/MPS Gate A attempt](artifacts/scan-target-generated-gate-a-v1/RESULT.md)
+stopped during its CPU reference forward under the frozen host-compressor-growth
+rule. Process RSS stayed below its cap; no logits or MPS call occurred. The
+[independent protocol audit](artifacts/scan-target-generated-gate-a-v1/RESOURCE_PROTOCOL_REVIEW.md)
+finds compressor growth alone insufficient to diagnose OS pressure and proposes
+a separately versioned test that records the kernel pressure state. This preserves
+the failure; it is not a numerical parity result, RL update or patient evaluation.
 The subsequent [generated CPU memory tests](artifacts/scan-target-generated-cpu-memory-v1/RESULT.md)
 retain one 64³ resource failure and one separate instrumented pass. The passing
 run produced finite region outputs in 1.660 s forward time; its sampled peak

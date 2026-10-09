@@ -1,0 +1,17 @@
+{
+  "scope": "First Gate A CPU host preflight; deferred before output directory or model child",
+  "accepted": false,
+  "reason": "preflight_free_below_threshold",
+  "required_min_free_percent": 45,
+  "busy_compute_processes": [],
+  "samples": [
+    {"elapsed_seconds": 0.006073708, "free_percent": 44, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 6116245504, "vm_page_bytes": 16384},
+    {"elapsed_seconds": 5.021914667, "free_percent": 45, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 5992710144, "vm_page_bytes": 16384},
+    {"elapsed_seconds": 10.037657167, "free_percent": 44, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 5896290304, "vm_page_bytes": 16384},
+    {"elapsed_seconds": 15.047350958, "free_percent": 46, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 5781258240, "vm_page_bytes": 16384},
+    {"elapsed_seconds": 20.071630292, "free_percent": 47, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 5586599936, "vm_page_bytes": 16384},
+    {"elapsed_seconds": 25.089228167, "free_percent": 49, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 5285150720, "vm_page_bytes": 16384},
+    {"elapsed_seconds": 30.026123167, "free_percent": 49, "swap_used_mib": 7279.69, "compressor_occupied_bytes": 5273796608, "vm_page_bytes": 16384}
+  ],
+  "transcription_source": "First supervisor stdout captured in this task; numerical values copied unchanged"
+}
