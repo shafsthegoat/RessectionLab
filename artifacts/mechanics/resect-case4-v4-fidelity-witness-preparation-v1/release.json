@@ -1,0 +1,23 @@
+{
+  "schema": "resect-case4-boundary6-fidelity-witness-v1-release",
+  "authorized": true,
+  "root_release": "One private saved-geometry diagnostic of rejected Case4 v4 from exact seven-file commit archive; 120 s, sampled 2 GiB, one numeric thread, 1.25 million distance queries, no retry, mesher, solver, B/V, during-US, clinical or mesh admission.",
+  "root_release_utc": "2026-10-09T03:16:43.657476+00:00",
+  "source_archive_sha256": "9780b0bb07cb6cda38c857498510ce317e7d23bdbd27c7ed80229f469a6d58e8",
+  "source_commit": "6338f22d6e6660eca7f71cfaa696dbf022fa92f7",
+  "repository_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-boundary6-fidelity-witness-v1/source",
+  "attempt_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-boundary6-fidelity-witness-v1",
+  "source_sha256": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "manifests/experiments/resect-case4-boundary6-fidelity-witness-v1.json": "3a0790914b33159a3a09c275716f04f6deec6c9bd19de497b1b56dd22798a4d4",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/mechanics_patient_mesh_boundary6_witness.py": "7dfb31ab6826aebf7e0b20528157b97ee1b4164b16afee3dbe4a0877d2a03d0d",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "cfee357faf585f78afccf812d06c00de9022494e8ed4d82ef3fa68a97eaa38cb",
+    "scripts/mechanics_patient_mesh_diagnostic.py": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de"
+  },
+  "clinical_validation": false,
+  "mesh_accepted": false,
+  "solver_authorized": false
+}
