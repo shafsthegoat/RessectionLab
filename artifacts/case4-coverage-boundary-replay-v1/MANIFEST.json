@@ -1,0 +1,61 @@
+{
+  "files": [
+    {
+      "bytes": 3428,
+      "name": "INDEPENDENT-RELEASE-REVIEW.md",
+      "sha256": "a50b541106a533336e50f865492064710e9186b6703c4f3e7baccb5dfe2d1d38"
+    },
+    {
+      "bytes": 3748,
+      "name": "INDEPENDENT-SAVED-RESULT-REVIEW.md",
+      "sha256": "3013cb2ca3ddc3b58359616dfa49a3c41b5763dc5c3341efc44ebf382ac23476"
+    },
+    {
+      "bytes": 1412,
+      "name": "RESULT.md",
+      "sha256": "bea3df16a251bece62590a54ecbe90c521678a9e1329bb4af3d2aad46b4d1f89"
+    },
+    {
+      "bytes": 3444,
+      "name": "grid-constant-comparison.json",
+      "sha256": "e989c562e5296093d711f6526da61f2809dc90f1a69e14495c83dcae7e852f58"
+    },
+    {
+      "bytes": 3863,
+      "name": "replay-release.json",
+      "sha256": "481897b822a095adc2117f4660aa462a86684ae3e152f105357047f77726a961"
+    },
+    {
+      "bytes": 11383,
+      "name": "replay-supervision-result.json",
+      "sha256": "c05ee4b946b38654725c1816e86c920b29245e5023480bf0f60b74d46a2342e9"
+    },
+    {
+      "bytes": 345,
+      "name": "replay-worker.log",
+      "sha256": "db7d3d9710bec7fe0032ae5a21d50e3f0ed6ff17a13844c91e54e7b6e9238435"
+    },
+    {
+      "bytes": 6986,
+      "name": "replay.py",
+      "sha256": "85fbf2928d54cd7713a770c0548ec144cc1abf0bcb9b5d8b57a3c29015179767"
+    },
+    {
+      "bytes": 30818,
+      "name": "supervise_replay.py",
+      "sha256": "0c5590dcde4296195d1ca644f2c9584f3144f9b9f97db61724733750113a196c"
+    },
+    {
+      "bytes": 4167,
+      "name": "test_replay.py",
+      "sha256": "de39381f2c8a119c3750f4d10be06170241043e3187008dde0e2b92ed0783702"
+    },
+    {
+      "bytes": 17544,
+      "name": "test_supervise_replay.py",
+      "sha256": "5633be6fda476256f3b362188c29e722cab7219a26629ae4fb3f9729be7349de"
+    }
+  ],
+  "schema_version": "case4-readonly-boundary-result-package-v1",
+  "scope": "development-only saved-coverage numerical replay, no patient arrays"
+}

@@ -1,0 +1,81 @@
+{
+  "ants_nibabel_voxel_and_frame_agreement": [
+    "atlas_template",
+    "atlas_estimated_mask",
+    "t1_native_coverage",
+    "flair_in_t1_coverage"
+  ],
+  "bit_semantics": {
+    "1": "original T1 scan field of view within atlas grid",
+    "2": "original FLAIR scan field of view within atlas grid",
+    "4": "unreviewed estimated SynthStrip mask; not qualified anatomy"
+  },
+  "bit_value_counts": {
+    "0": 2328954,
+    "1": 116432,
+    "2": 0,
+    "3": 5296559,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 1186055
+  },
+  "both_original_scan_fov_fraction_of_atlas_grid": 0.7260992383512545,
+  "both_original_scan_fov_voxels": 6482614,
+  "clinical_use_admitted": false,
+  "diagnostic_input_domain_qualified": false,
+  "estimated_mask_voxels": 1186055,
+  "fov_sampling_semantics": "saved-transform nearest-neighbor pull at atlas voxel centers; not continuous full-cell or tool-shaft coverage",
+  "future_interface_note": "A future reviewed ScanEstimate uses separate binary mask/coverage. This unreviewed bitfield cannot be promoted to coverage with qc_status pass; unknown outside any independently qualified ROI remains unknown, not negative tumor.",
+  "generator_source_sha256": "61c1604283a94ac9cb0dc683386e644880d7082de5f762f7222d0eb465b9f672",
+  "independent_nearest_saved_transform_flair_voxel_mismatches": 0,
+  "independent_nearest_saved_transform_t1_voxel_mismatches": 0,
+  "mask_anatomy_qualified": false,
+  "model_inference_performed": false,
+  "outside_atlas_grid_status": "unassessed_not_background",
+  "planning_admitted": false,
+  "registration_optimized": false,
+  "route_or_policy_run": false,
+  "schema_version": "case4-support-map-v1",
+  "source_manifest_sha256": "d37948a4dc7acd16bdfac0244b926cfda5c684c60da1f6e4dfccb09ddcf21b26",
+  "source_preparation_result_sha256": "92fdc93f1240c81ac0ecbd7910a8256a18693480bd4bed48b19e109fe308d72c",
+  "source_transform_sha256": "90e85485698c6d8fc2dea108a980e3140079d97671dcfc5111114ba25a9f95fb",
+  "support_bits_affine_ras_mm": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -1.0,
+      0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "support_bits_path": "build/scan-target-estimator-research/case4-support-grid-constant-v2/support-bits-atlas.nii.gz",
+  "support_bits_sha256": "4932902a641aac5d884fbfec543b8da9cdefa9437407e488c1ebef6b9ca700f2",
+  "support_bits_shape_xyz": [
+    240,
+    240,
+    155
+  ],
+  "support_contract_source_sha256": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a",
+  "tumor_target_estimated": false,
+  "unknown_inside_both_scans_outside_estimated_mask": 5296559,
+  "unknown_within_atlas_grid_voxels": 7741945,
+  "unreviewed_diagnostic_input_domain_voxels": 1186055
+}

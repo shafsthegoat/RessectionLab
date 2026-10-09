@@ -111,12 +111,23 @@ completed correctly. Generated edge tests identify a plausible half-voxel
 boundary convention difference; the original failure is preserved while a
 strict patient-scan comparison of the corrected rule is prepared.
 
+The [saved-input boundary replay](artifacts/case4-coverage-boundary-replay-v1/RESULT.md)
+reproduced the original mismatch counts and then reached zero mismatches for
+both scans using the corrected half-voxel boundary rule. A separately released
+[Case4 coverage map](artifacts/case4-source-support-map-v2/RESULT.md) also passed
+independent voxel and frame checks. Both scan fields cover 6,482,614 voxels;
+5,296,559 of those fall outside the unreviewed estimated mask and stay unknown.
+The saved map uses a coded sform with the exact atlas affine and an unset qform;
+consumers must check the physical frame explicitly. Known inferior mask omissions
+and anatomical registration uncertainty remain unresolved. This establishes
+resampling parity only, with no model inference or planner admission.
+
 The [scan support contract](docs/scan-support-unknown-contract.md) now keeps
 scan field of view, estimated anatomy and prediction coverage separate. Five
 generated controls pass: unobserved locations stay unknown, and predicted
 positives outside coverage are counted rather than silently discarded. The
-Case4 mask's inferior omissions remain unresolved; no patient map, model run or
-planner admission follows from this source-only integration.
+Case4 mask's inferior omissions remain unresolved; the later map above has
+numerical acceptance only, with no model run or planner admission.
 
 The [TractoInferno byte-intake scope](artifacts/tractoinferno-train-intake-preparation-v1/INDEPENDENT_REVIEW.md)
 now freezes all 198 publisher TRAIN identifiers: 7,622 files and

@@ -1,0 +1,7 @@
+# Case4 saved-coverage boundary diagnostic
+
+This DEVELOPMENT-only replay used the completed scan-only Case4 preparation and its saved rigid transform. It performed no new registration, tumor inference, support-map generation, planning, or patient-label access. The original attempt-01 `discretization_hold` remains preserved separately.
+
+The original SciPy `constant` nearest-neighbor comparison reproduced the held mismatch counts exactly: 49,293 T1 and 24,923 FLAIR atlas voxels. With the same saved inputs and transform, SciPy `grid-constant` agreed voxel-for-voxel with ANTs `nearestNeighbor` for both coverage volumes (0 and 0 mismatches). These differences were confined to the old boundary convention in this replay. This is numerical implementation parity, not independent registration accuracy, anatomical validity, brain-mask quality, or surgical evidence.
+
+The one-shot supervisor completed with worker exit 0, no resource stop or cleanup error, and `completed_readonly_parity_explained`; the exact positive result is `grid-constant-comparison.json` SHA-256 `e989c562e5296093d711f6526da61f2809dc90f1a69e14495c83dcae7e852f58`. The release and exact source snapshots are alongside this note. No map or model output was saved. A corrected support-map attempt requires its own frozen release and post-run QC; the estimated mask's known inferior/cerebellar omissions remain unknown anatomy, not negatives.

@@ -1,0 +1,157 @@
+{
+  "anatomical_acceptance": false,
+  "case_id": "RESECT-Case4",
+  "diagnostic_source_sha256": "85fbf2928d54cd7713a770c0548ec144cc1abf0bcb9b5d8b57a3c29015179767",
+  "flair": {
+    "ants_coverage_voxels": 6482614,
+    "atlas_affine_ras_mm": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        -0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        239.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "atlas_shape_xyz": [
+      240,
+      240,
+      155
+    ],
+    "constant_only_boundary_corrections": 24923,
+    "new_grid_disagreements": 0,
+    "scipy_constant_vs_ants_mismatches": 24923,
+    "scipy_grid_constant_vs_ants_mismatches": 0,
+    "source_affine_ras_mm": [
+      [
+        0.0869971364736557,
+        0.007269168272614479,
+        -0.9961820840835571,
+        91.50908660888672
+      ],
+      [
+        -0.9962085485458374,
+        0.0006349085597321391,
+        -0.08699481934309006,
+        142.4852752685547
+      ],
+      [
+        1.0450764875713503e-07,
+        0.9999734163284302,
+        0.007296842522919178,
+        -156.06825256347656
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_sha256": "8c4078ce46bcac09bfe0c422f1a01137601caa45b776fb6b405238f9f80f7331",
+    "source_shape_xyz": [
+      256,
+      256,
+      192
+    ]
+  },
+  "interpretation": "Nearest-neighbor boundary implementation comparison only; no patient anatomy or tumor validation",
+  "model_inference_performed": false,
+  "new_registration_performed": false,
+  "original_hold_sha256": "3c64662024efccbfc990922460294d2c9cb6cfc830ad562d9d9f9174268856f1",
+  "planning_admitted": false,
+  "saved_transform_sha256": "90e85485698c6d8fc2dea108a980e3140079d97671dcfc5111114ba25a9f95fb",
+  "schema_version": "case4-nearest-neighbor-boundary-diagnosis-v1",
+  "source_only_saved_transform_replay": true,
+  "source_preparation_result_sha256": "92fdc93f1240c81ac0ecbd7910a8256a18693480bd4bed48b19e109fe308d72c",
+  "split_role": "DEVELOPMENT",
+  "status": "grid_boundary_fix_explains_saved_hold",
+  "support_map_written": false,
+  "t1": {
+    "ants_coverage_voxels": 6599046,
+    "atlas_affine_ras_mm": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        -0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        239.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "atlas_shape_xyz": [
+      240,
+      240,
+      155
+    ],
+    "constant_only_boundary_corrections": 49293,
+    "new_grid_disagreements": 0,
+    "scipy_constant_vs_ants_mismatches": 49293,
+    "scipy_grid_constant_vs_ants_mismatches": 0,
+    "source_affine_ras_mm": [
+      [
+        0.0869971364736557,
+        0.007269168272614479,
+        -0.9961820840835571,
+        91.50908660888672
+      ],
+      [
+        -0.9962085485458374,
+        0.0006349085597321391,
+        -0.08699482679367065,
+        142.4852752685547
+      ],
+      [
+        1.0446104425909652e-07,
+        0.9999734163284302,
+        0.007296843454241753,
+        -156.06825256347656
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_sha256": "162569bc8b0c3b28c3386bc5cb0e4072c6182ec5ed0dc823938b65a4c958fb64",
+    "source_shape_xyz": [
+      256,
+      256,
+      192
+    ]
+  }
+}

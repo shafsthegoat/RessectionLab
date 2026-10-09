@@ -1,0 +1,353 @@
+{
+  "anatomical_qc_status": "not_assessed_by_boundary_comparison",
+  "cleanup_errors": [],
+  "cleanup_verification_complete": true,
+  "comparison_status": "grid_boundary_fix_explains_saved_hold",
+  "final_owned_group_pids": [],
+  "finalization_errors": [],
+  "finished_at_utc": "2026-10-09T09:53:00.585079+00:00",
+  "generator_sha256": "85fbf2928d54cd7713a770c0548ec144cc1abf0bcb9b5d8b57a3c29015179767",
+  "model_inference_performed": false,
+  "observed_detached_start_identities": {},
+  "observed_owned_start_identities": {
+    "94005": [
+      1791539577,
+      701490
+    ]
+  },
+  "output_bytes_final": 3789,
+  "output_sha256": {
+    "build/scan-target-estimator-research/case4-discretization-diagnosis-v1/grid-constant-comparison.json": "e989c562e5296093d711f6526da61f2809dc90f1a69e14495c83dcae7e852f58"
+  },
+  "planning_performed": false,
+  "preflight": [
+    {
+      "at_utc": "2026-10-09T09:52:27.648306+00:00",
+      "available_percent": 51,
+      "host_read_seconds": 1.9499999999998685e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:32.658669+00:00",
+      "available_percent": 52,
+      "host_read_seconds": 0.00011524999999945607,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:37.660237+00:00",
+      "available_percent": 52,
+      "host_read_seconds": 0.00017375000000008356,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:42.668488+00:00",
+      "available_percent": 53,
+      "host_read_seconds": 0.00015158300000095437,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:47.677133+00:00",
+      "available_percent": 53,
+      "host_read_seconds": 0.0002122920000005024,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:52.687893+00:00",
+      "available_percent": 52,
+      "host_read_seconds": 0.00015016700000103356,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:57.699823+00:00",
+      "available_percent": 53,
+      "host_read_seconds": 6.945900000232541e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    }
+  ],
+  "provisional_negative_written": false,
+  "receipt_write_errors": [],
+  "release_sha256": "481897b822a095adc2117f4660aa462a86684ae3e152f105357047f77726a961",
+  "run_id": "resect-case4-grid-boundary-diagnosis-v1-attempt-01",
+  "samples": [
+    {
+      "at_utc": "2026-10-09T09:52:57.704517+00:00",
+      "available_percent": 53,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.003193416999998533,
+      "group_read_seconds": 0.00018266699999713865,
+      "host_read_seconds": 3.095799999996984e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 671744,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:57.907770+00:00",
+      "available_percent": 53,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.20657912499999753,
+      "group_read_seconds": 7.850000000075852e-05,
+      "host_read_seconds": 3.1416000002337796e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 65863680,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:58.113953+00:00",
+      "available_percent": 53,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.4127806669999998,
+      "group_read_seconds": 7.412500000114619e-05,
+      "host_read_seconds": 2.5292000000121106e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 103071744,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:58.318437+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.6172474589999979,
+      "group_read_seconds": 8.391700000132118e-05,
+      "host_read_seconds": 3.23749999999734e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 135282688,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:58.522054+00:00",
+      "available_percent": 53,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.8208959589999978,
+      "group_read_seconds": 6.095799999883411e-05,
+      "host_read_seconds": 2.5707999999013964e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 165117952,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:58.732342+00:00",
+      "available_percent": 53,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.0310948749999973,
+      "group_read_seconds": 0.00011270799999962833,
+      "host_read_seconds": 4.679199999912953e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 194838528,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:58.934918+00:00",
+      "available_percent": 53,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.2337402500000003,
+      "group_read_seconds": 7.899999999949614e-05,
+      "host_read_seconds": 3.004199999878665e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 221249536,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:59.135519+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.4343509999999995,
+      "group_read_seconds": 7.466700000335891e-05,
+      "host_read_seconds": 2.6041000001697512e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 257032192,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:59.345740+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.6445412919999995,
+      "group_read_seconds": 8.854200000030232e-05,
+      "host_read_seconds": 3.8499999998720114e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 369737728,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:59.548474+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 1.8472910839999983,
+      "group_read_seconds": 8.166699999989646e-05,
+      "host_read_seconds": 3.445799999823862e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 1058340864,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:59.751483+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.0503159999999987,
+      "group_read_seconds": 7.825000000138971e-05,
+      "host_read_seconds": 2.791700000415176e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 1222524928,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:52:59.961688+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.2605118750000024,
+      "group_read_seconds": 8.391699999776847e-05,
+      "host_read_seconds": 3.162499999831425e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 1222475776,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:53:00.171875+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.4707164589999984,
+      "group_read_seconds": 7.76659999957019e-05,
+      "host_read_seconds": 2.4457999998617197e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 0,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 1329692672,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    },
+    {
+      "at_utc": "2026-10-09T09:53:00.381728+00:00",
+      "available_percent": 52,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 2.6805683339999966,
+      "group_read_seconds": 7.762500000296768e-05,
+      "host_read_seconds": 2.6624999996727183e-05,
+      "kernel_pressure_mask": 1,
+      "output_bytes": 3789,
+      "pgid": 94005,
+      "pids": [
+        94005
+      ],
+      "process_group_resident_bytes": 1329905664,
+      "swap_total_bytes": 8589934592,
+      "swap_used_bytes": 7390035968
+    }
+  ],
+  "schema_version": "case4-grid-boundary-supervision-v1",
+  "started_at_utc": "2026-10-09T09:52:27.647733+00:00",
+  "status": "completed_readonly_parity_explained",
+  "stop_actions": [],
+  "stop_reason": null,
+  "supervisor_sha256": "0c5590dcde4296195d1ca644f2c9584f3144f9b9f97db61724733750113a196c",
+  "unresolved_owned_group_pids": [],
+  "worker_exit_code": 0,
+  "worker_liveness_after_cleanup": false,
+  "worker_pid": 94005,
+  "worker_start_identity": [
+    1791539577,
+    701490
+  ]
+}
