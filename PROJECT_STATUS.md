@@ -32,21 +32,26 @@ holdout traces and are excluded from that test's initialization and assumptions.
 CSV schema/roles, numerical implementation and measured-response evaluation
 remain open; no direct retraction validation or independent-donor claim follows.
 
-The [NFBS original-byte intake](artifacts/nfbs-intake-preparation-v1/RESULT.md)
-is prepared and independently reviewed, with its publisher-reported 125 people
-frozen as one dependent TRAIN family before payload access. Its 1.75 GB archive
-is queued after ReMIND, with publisher-linked fixity and resumable TLS transfer.
-Unknown overlap and label ancestry remain explicit; no anatomy or training
-admission follows from acquisition.
+The [NFBS original-byte intake](artifacts/nfbs-completion-v1/RESULT.md)
+completed after ReMIND on October 9 at 08:45 UTC: one sealed archive,
+1,751,464,473 bytes, verified against publisher-linked whole-file MD5 with local
+SHA-256 retained. Its publisher-reported 125 people remain one dependent TRAIN
+family; the archive has not been extracted or anatomically reviewed. Unknown
+overlap and label ancestry remain explicit. No training admission follows.
 
 The [ReMIND component expansion](artifacts/remind-cohort-expansion-preparation-v1/RESULT.md)
 has independently reviewed, frozen roles for the full source cohort: 79 TRAIN,
 17 SELECT, 17 MEASUREMENT_EVAL, with ReMIND001 retained as DEVELOPMENT. Exact
 checksums are bound for 59,520 raw TRAIN MRI/US objects (30,173,493,690 bytes).
-No new patient payload was read before this freeze. The acquisition launched
-against the committed declaration on October 9 at 07:08 UTC and is in progress;
-unreviewed payloads remain separate from training admission. Diagnosis strata, unknown pretraining overlap and all
-training/clinical admission limits remain explicit.
+No new patient payload was read before this freeze. The
+[completed acquisition](artifacts/remind-train-completion-v1/RESULT.md) verified
+all 59,520 files by October 9 at 08:39 UTC: 59,297 source MD5 and 223 official
+whole-object CRC32C checks, with local SHA-256 for every object. Two transient
+failures recovered within the declared attempts. Independent receipt audits
+checked source/role/fixity bindings and regular-file lengths without rereading
+payloads. Both downloads together total 31,924,958,163 bytes; no combined unique
+patient count is claimed. Unreviewed data remain separate from training admission.
+Diagnosis strata, unknown pretraining overlap and clinical limits remain explicit.
 
 The [completed BTC training modality intake](artifacts/btc-train-modalities-intake-v1/RESULT.md)
 adds 36 further files (371,219,704 bytes), completing the catalogued raw preoperative

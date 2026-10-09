@@ -1,0 +1,76 @@
+{
+  "SEG_payloads_in_this_scope": 0,
+  "acquisition_finished_utc": "2026-10-09T08:39:37.766368+00:00",
+  "all_current_paths_regular_and_size_matches": true,
+  "all_frozen_source_hashes_match": true,
+  "anatomy_qc": "not_run",
+  "audit_utc": "2026-10-09T08:42:17.948412+00:00",
+  "canonical_roles_unchanged": true,
+  "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "declaration_sha256": "a8cdd554542088d7887f78d973938418d16cde2a7348834052b9db7d3065964c",
+  "decoded_array_bytes": 0,
+  "eligibility_strata_people": {
+    "outside_strict_three_label_predicate": 16,
+    "strict_three_label_glioma": 63
+  },
+  "exact_unique_scope_matches": true,
+  "files_with_actual_resume": 0,
+  "files_with_attempt_gt_1": 2,
+  "interpretation": "All raw MRI/US TRAIN intake is complete. Strict three-label candidate glioma eligibility remains metadata-only and requires intended-use QC; diagnosis is not a preoperative actor input. Intraoperative images are not preoperative inputs. No independent-site or unknown-pretraining-exposure claim.",
+  "journal_http_events_final_plus_recovered": 59521,
+  "payload_bytes_read_by_this_audit": 0,
+  "people": 79,
+  "protected_or_development_payloads_in_this_scope": 0,
+  "receipt": "data/acquisition/remind-train-originals-v1/completion.json",
+  "receipt_sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d",
+  "recovered_prior_attempts": [
+    {
+      "attempt": 1,
+      "error": "<urlopen error [Errno 60] Operation timed out>",
+      "error_type": "URLError",
+      "http_events": 0,
+      "partial_bytes": 0,
+      "path": "ReMIND-046/0d17e3e3-3cde-4920-81af-906b17df77a5/929878d5-a0c7-4dd0-944a-eb8bbe0ca549.dcm",
+      "result_path": "data/acquisition/remind-train-originals-v1/attempts/01/0159a6f026a3ff3efd3687f22702e5be42d0a424bcc15126e82306bdbf9d42a8/01-20261009T070811272508Z-70c9496e-result.json",
+      "result_sha256": "7301df1886adca2b5071549c797816421b944f85c12ad89667d1a58ff4f4bce2"
+    },
+    {
+      "attempt": 1,
+      "error": "HTTP Error 503: Service Unavailable",
+      "error_type": "HTTPError",
+      "http_events": 1,
+      "partial_bytes": 0,
+      "path": "ReMIND-098/25a4d399-5800-4ce6-a21d-480a6e70fa28/8ed1a2e5-0473-42e1-b1a8-49389ad33285.dcm",
+      "result_path": "data/acquisition/remind-train-originals-v1/attempts/8a/8a49d8825b84a12b15549ecbbd2f5a645e7ff45763ff9c9c50fb1adbafa1e4e8/01-20261009T070811272508Z-70c9496e-result.json",
+      "result_sha256": "5f24b3a110890909ff688887bab66a54d6f2c70c3751c63aade3cd666fc510fe"
+    }
+  ],
+  "role": "TRAIN",
+  "run_id": "20261009T070811272508Z-70c9496e",
+  "schema": "remind-train-byte-completion-metadata-audit-v1",
+  "series": 692,
+  "source_checksum_counts": {
+    "CRC32C": 223,
+    "MD5": 59297
+  },
+  "source_modality_file_counts": {
+    "MR": 59297,
+    "US": 223
+  },
+  "source_study_description_file_counts": {
+    "Intraop": 26718,
+    "Preop": 32802
+  },
+  "status": "pass",
+  "storage_after_acquisition": {
+    "free": 662278742016,
+    "total": 994610155520,
+    "used": 332331413504
+  },
+  "successful_attempt_http_events": 59520,
+  "total_transport_attempts": 59522,
+  "training_admitted": false,
+  "verification_boundary": "Transport verified source MD5 or whole-object CRC32C and local SHA256 before completion. This independent audit checks receipt/source metadata, checksum bindings, regular files and lengths; it does not independently reread or decode payload bytes.",
+  "verified_bytes": 30173493690,
+  "verified_files": 59520
+}
