@@ -107,6 +107,11 @@ worker interval was about 24.66 seconds. Independent receipt checks passed;
 actual alignment, inverse mapping and coverage review remain separate. No model
 inference, planning, training or anatomical acceptance follows from completion.
 
+The reviewed [optional CPU convolution adapter](docs/low-memory-conv3d.md) is now
+reusable in the source package. It preserves full feature-map normalization and
+weight aliases, rejects unsupported padding before mutation, and imports without
+Torch. All nine focused generated tests pass; no new patient/model run occurred.
+
 The [small generated full-network control](artifacts/depth-tiled-network-control-v1/RESULT.md)
 now passes independent comparison: all **196,608 FP32 logits** are byte-identical
 between native and depth-tiled CPU inference. Peak sampled RSS fell from 1.21 GB

@@ -1,0 +1,29 @@
+{
+  "earlier_32x64x64_cpu_pressure_failure_preserved": true,
+  "focused_test_sha256": "5fca9181ef16d61d7817fb2b88b0f282d0b7e38584a51109cee086df07e4b159",
+  "full_128_patch_validated": false,
+  "generated_control_comparison_sha256": "ecded8fdcc997e789a340e064148659726c04f39c50e6cfe4a679ca089c9510a",
+  "generated_control_decoded_disagreement_cells": 0,
+  "generated_control_exact_logits": true,
+  "generated_control_input_shape": [
+    1,
+    2,
+    32,
+    32,
+    64
+  ],
+  "generated_control_logits_raw_sha256": "7b5df1e4bc124da3c251b31b3ec6ff80ca34b132cb2fbd9d48a3fe5f9f8b646f",
+  "independent_generated_network_audit_sha256": "20c3fa953680624a23f40cbac852a67b53bcab1a601c84c911c6f15d96d6c2f3",
+  "independent_promotion_review_sha256": "01ab1cef6ed95a098cfae556a549196d7191414483dbd715b7b436a2e64a8447",
+  "native_peak_sampled_rss_bytes": 1212137472,
+  "patient_accuracy_validated": false,
+  "reviewed_candidate_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "reviewed_generated_control_contract_sha256": "6f962399a271a975a2fea72220304b7ecf0c278ff5645b2ebad41dd66f31f38b",
+  "scope": "Optional CPU/FP32 inference primitive; generated numerical evidence only, no patient/clinical claim",
+  "source_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "tiled_peak_sampled_rss_bytes": 670138368,
+  "validation": {
+    "base_python": "1 passed, 8 skipped (Torch absent)",
+    "project_venv": "9 passed, 0 failed"
+  }
+}
