@@ -495,6 +495,25 @@ The ordinary plan must run with missing molecular metadata. Context may justify 
 
 ## 9. The RL problem and a local-first model architecture
 
+The primary, falsifiable transfer question is whether a policy trained with
+rich, anatomically and physically informed simulation feedback can make better
+decisions for **unseen patients using only realistically available images and
+observations** than strong search and learned-model planning under the same
+information restrictions. A simulator may use privileged anatomy and physical
+parameters to generate training transitions or critic/teacher signals; the
+deployed actor, action generator and test-time search cannot read them. Planning
+strategies must be frozen before an independent evaluator opens any withheld
+patient-linked anatomy. This makes partial observability and leakage control
+central to the research question. The [experiment protocol](EXPERIMENT_PROTOCOL.md)
+defines the prospective outer split, comparator and evidence levels.
+
+The existing single-patient optimization program remains a necessary
+development and product mode. It tests whether training updates improve a
+particular modeled case; even excellent performance there does not establish
+transfer to a new brain. Conversely, a strong learned-model/search hybrid is a
+valid winning result. Simulator reward, anatomical generalization and physical
+or clinical validation must be reported as separate levels of evidence.
+
 ### 9.1 Single-patient RL is a legitimate optimization mode
 
 **Train or adapt inside the uploaded patient's simulator.** One anatomy can generate enough simulated interactions to test instance-specific RL. Learning a strategy for a known case is different from estimating a clinical injury law from one person. The former is a valid computational formulation; the latter is not established by repeatedly replaying synthetic actions.
@@ -901,7 +920,14 @@ A candidate title is:
 
 > Patient-specific learning for instrument-aware glioma access and resection planning under anatomical uncertainty.
 
-The proposed primary question is whether bounded patient-specific optimization improves the quality/time tradeoff over frozen population policies, scratch policies and strong search/MPC, using a shared instrument-feasible simulator and independent checks. Instrument conditioning and uncertainty are substantive parts of the task, not decorative input channels.
+The primary question is whether privileged training experience improves
+limited-information planning on independent patients, compared with strong
+classical and learned-model planners that use the same permitted test-time
+inputs. Bounded patient-specific optimization remains an important secondary
+question and application mode. Any claim of transfer needs independent
+patient-linked withheld anatomy; any claim of physical or clinical fidelity
+needs its own measurements and observed outcomes. Instrument conditioning and
+uncertainty are substantive parts of the task, not decorative input channels.
 
 Close risk-map and learned glioma-planning work already exists, and patient-specific RL is not new across all medicine. Do not claim novelty merely from those phrases. A defensible contribution needs an actual method, evaluation or benchmark advance at their intersection. [P01–P04, R09]
 
