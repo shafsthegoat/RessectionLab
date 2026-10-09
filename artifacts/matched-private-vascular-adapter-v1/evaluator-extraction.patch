@@ -1,0 +1,30 @@
+--- a/src/resectionlab/private_vascular_evaluation.py
++++ b/src/resectionlab/private_vascular_evaluation.py
+@@ -311,6 +311,18 @@
+         return False
+     context=_preflight(seal_path,seal_sha256,spec,planning_identity,reference_binding,check)
+     check()
++    return _evaluate_preflighted_private_vessels(context=context,seal_path=seal_path,
++        seal_sha256=seal_sha256,spec=spec,reference_binding=reference_binding,
++        expected_binding_hash=reference_binding.fingerprint,load_reference=load_reference,
++        output_directory=output_directory,started=started,check=check)
++
++
++def _evaluate_preflighted_private_vessels(*,context,seal_path,seal_sha256,spec,
++        reference_binding,expected_binding_hash,load_reference,output_directory,started,check):
++    """Internal scoring half; batch caller must preflight every method first."""
++    check();reference_binding.assert_intact();spec.assert_intact()
++    need(reference_binding.fingerprint==expected_binding_hash,'reference_binding_changed_after_preflight')
++    need(_read_bound(seal_path,seal_sha256)==context['seal'],'seal_changed_after_preflight')
+     directory=_safe_path(output_directory)
+     directory.mkdir(parents=False,exist_ok=False)
+     _sync_directory(directory.parent)
+@@ -319,7 +331,7 @@
+           'patient_admission':False,'file_access_isolation':False,'private_loader_calls':0,
+           'planning_after_private_load':False,'clinical_injury_probability':None,'glioma_target_truth':None}
+     _write_new(directory/'attempt.json',{**base,'status':'reserved_before_private_load'})
+-    expected_binding=reference_binding.fingerprint
++    expected_binding=expected_binding_hash
+     try:
+         check();base['private_loader_calls']=1
+         reference=load_reference()

@@ -1,0 +1,1 @@
+{"scope":"root test-import relocation","result":"1 failed, 87 passed in 15.72s","failure":"test_no_policy_library_imported: NameError sys","cause":"Root removed sys import while replacing candidate bootstrap; one test still uses sys.modules","fix":"Restore import sys; implementation unchanged","model_or_patient_calls":0}

@@ -1,0 +1,229 @@
+--- a/src/resectionlab/private_vascular_evaluation.py
++++ b/src/resectionlab/private_vascular_evaluation.py
+@@ -311,6 +311,18 @@
+         return False
+     context=_preflight(seal_path,seal_sha256,spec,planning_identity,reference_binding,check)
+     check()
++    return _evaluate_preflighted_private_vessels(context=context,seal_path=seal_path,
++        seal_sha256=seal_sha256,spec=spec,reference_binding=reference_binding,
++        expected_binding_hash=reference_binding.fingerprint,load_reference=load_reference,
++        output_directory=output_directory,started=started,check=check)
++
++
++def _evaluate_preflighted_private_vessels(*,context,seal_path,seal_sha256,spec,
++        reference_binding,expected_binding_hash,load_reference,output_directory,started,check):
++    """Internal scoring half; batch caller must preflight every method first."""
++    check();reference_binding.assert_intact();spec.assert_intact()
++    need(reference_binding.fingerprint==expected_binding_hash,'reference_binding_changed_after_preflight')
++    need(_read_bound(seal_path,seal_sha256)==context['seal'],'seal_changed_after_preflight')
+     directory=_safe_path(output_directory)
+     directory.mkdir(parents=False,exist_ok=False)
+     _sync_directory(directory.parent)
+@@ -319,7 +331,7 @@
+           'patient_admission':False,'file_access_isolation':False,'private_loader_calls':0,
+           'planning_after_private_load':False,'clinical_injury_probability':None,'glioma_target_truth':None}
+     _write_new(directory/'attempt.json',{**base,'status':'reserved_before_private_load'})
+-    expected_binding=reference_binding.fingerprint
++    expected_binding=expected_binding_hash
+     try:
+         check();base['private_loader_calls']=1
+         reference=load_reference()
+--- /dev/null
++++ b/src/resectionlab/matched_private_vascular.py
+@@ -0,0 +1,196 @@
++"""Generated-only transport from existing method records to private evaluation.
++
++No actor, training code, image loader or new strategy representation is used.
++The caller retains ownership of evaluator-only reference bindings and loaders.
++"""
++from collections.abc import Mapping
++from pathlib import Path
++import time
++
++from resectionlab.core import freeze_json, semantic_digest, thaw_json
++from resectionlab.research_estimate_planning import research_strategy_from_record
++from resectionlab import private_vascular_evaluation as vessels
++
++METHODS = ("SEARCH", "IL", "RL", "HYBRID")
++MATCHED_VERSION = "generated-matched-estimate-methods-v1"
++VERSION = "generated-matched-private-vascular-v1"
++
++
++def _suite(value, spec):
++    vessels.need(isinstance(value, Mapping), "matched_suite_required")
++    value = thaw_json(freeze_json(value))
++    payload = dict(value)
++    claimed = payload.pop("seal_hash", None)
++    vessels.need(claimed == semantic_digest(payload) and value.get("version") == MATCHED_VERSION
++        and value.get("input_hash") == spec.fingerprint
++        and value.get("method_order") == list(METHODS)
++        and set(value.get("methods", {})) == set(METHODS), "matched_suite_identity")
++    vessels.need(all(type(value.get(name)) is int and value[name] == 0
++        for name in ("real_patient_count", "optimizer_updates")), "generated_frozen_planning_session_required")
++    for method in METHODS:
++        row = value["methods"][method]
++        vessels.need(row.get("outcomes") is None and row.get("status") in {"complete", "failed", "abstained"}
++            and ((row["status"] == "complete" and isinstance(row.get("strategy"), Mapping))
++                 or (row["status"] != "complete" and row.get("strategy") is None)), "unfinished_method_slot")
++    return value
++
++
++def write_matched_vascular_seals(suite, *, spec, planning_identity, output_directory):
++    """Persist all four terminal slots and complete records before private input.
++
++The original suite's training/inference accounting and failed slots are copied
++exactly. Modality, identity and plan hashes cannot be rewritten by this adapter.
++"""
++    started = time.monotonic()
++    identity = vessels._public_identity(planning_identity, spec)
++    suite = _suite(suite, spec)
++    plans = {}
++    for method in METHODS:
++        row = suite["methods"][method]
++        if row["status"] == "complete":
++            plan = research_strategy_from_record(row["strategy"], spec)
++            vessels.need(plan.method == method, "method_plan_mismatch")
++            plans[method] = plan
++    vessels.need(len({p.initial_observation_hash for p in plans.values()}) <= 1, "method_input_parity")
++    directory = vessels._safe_path(output_directory)
++    directory.mkdir(parents=False, exist_ok=False)
++    vessels._sync_directory(directory.parent)
++    suite_sha = vessels._write_new(directory / "matched-planning-suite.json", suite)
++    receipt = {"schema": VERSION, "planning_identity": identity, "input_hash": spec.fingerprint,
++        "planning_suite_seal_hash": suite["seal_hash"], "suite_file_sha256": suite_sha,
++        "method_order": list(METHODS), "methods": {}, "private_input_supplied": False,
++        "patient_admission": False, "scope": "generated_interface_control_only"}
++    for method in METHODS:
++        row = {"planning_status": suite["methods"][method]["status"], "strategy_filename": None,
++               "strategy_file_sha256": None, "plan_seal_hash": None, "physical_history_hash": None}
++        if method in plans:
++            name = method + "-vascular-seal.json"
++            seal = vessels.write_strategy_seal(directory / name, plan=plans[method], spec=spec,
++                                               planning_identity=identity)
++            row.update(strategy_filename=name, strategy_file_sha256=seal,
++                plan_seal_hash=plans[method].seal_hash, physical_history_hash=plans[method].physical_history_hash)
++        receipt["methods"][method] = row
++    receipt["transport_accounting"] = {
++        "record_validation_replay_transition_calls": sum(len(p.action_ids) for p in plans.values()),
++        "seal_export_replay_transition_calls": sum(len(p.action_ids) for p in plans.values()),
++        "elapsed_seconds": time.monotonic() - started, "actor_forward_calls": 0, "search_calls": 0}
++    digest = vessels._write_new(directory / "matched-vascular-seals.json", receipt)
++    return {"manifest_path": str(directory / "matched-vascular-seals.json"), "manifest_sha256": digest}
++
++
++def evaluate_matched_private_vessels(*, manifest_path, manifest_sha256, spec, planning_identity,
++        reference_bindings, load_references, output_directory, wall_seconds=10.):
++    """Preflight every strategy before any loader, then reuse private scoring.
++
++All bindings must describe one identical evaluator reference, apart from the
++per-method strategy-file hash. No post-private nominal replay or new decision
++is allowed. Failed/abstained planning slots stay in the fixed denominator.
++"""
++    vessels.need(type(wall_seconds) in (int, float) and 0 < wall_seconds <= 30,
++                 "bounded_evaluation_required")
++    identity = vessels._public_identity(planning_identity, spec)
++    manifest = vessels._read_bound(manifest_path, manifest_sha256)
++    vessels.need(manifest.get("schema") == VERSION and manifest.get("planning_identity") == identity
++        and manifest.get("input_hash") == spec.fingerprint
++        and manifest.get("method_order") == list(METHODS)
++        and set(manifest.get("methods", {})) == set(METHODS), "matched_manifest_identity")
++    directory = Path(manifest_path).parent
++    suite_path = directory / "matched-planning-suite.json"
++    suite = _suite(vessels._read_bound(suite_path, manifest["suite_file_sha256"]), spec)
++    vessels.need(suite["seal_hash"] == manifest["planning_suite_seal_hash"], "matched_manifest_suite")
++    complete = []
++    for method in METHODS:
++        row, original = manifest["methods"][method], suite["methods"][method]
++        vessels.need(row["planning_status"] == original["status"], "method_slot_changed")
++        if original["status"] == "complete":
++            vessels.need(row["strategy_filename"] == method + "-vascular-seal.json", "method_seal_filename")
++            complete.append(method)
++        else:
++            vessels.need(all(row[key] is None for key in ("strategy_filename", "strategy_file_sha256",
++                "plan_seal_hash", "physical_history_hash")), "failed_method_has_strategy")
++    vessels.need(isinstance(reference_bindings, Mapping) and isinstance(load_references, Mapping),
++                 "complete_method_reference_slots")
++    reference_bindings, load_references = dict(reference_bindings), dict(load_references)
++    vessels.need(set(reference_bindings) == set(load_references) == set(complete)
++        and all(callable(load_references[m]) for m in complete), "complete_method_reference_slots")
++    reference_identities = set()
++    expected_bindings = {}
++    for method in complete:
++        binding = reference_bindings[method]
++        vessels.need(type(binding) is vessels.VascularReferenceBinding, "expected_reference_binding_type")
++        binding.assert_intact()
++        expected_bindings[method] = binding.fingerprint
++        record = binding.record()
++        record.pop("strategy_file_sha256")
++        reference_identities.add(semantic_digest(record))
++    vessels.need(len(reference_identities) <= 1, "methods_require_same_private_reference")
++    expected_world = next(iter(reference_identities), None)
++
++    def require_original_binding(method):
++        binding = reference_bindings[method]
++        binding.assert_intact()
++        vessels.need(binding.fingerprint == expected_bindings[method], "preflight_reference_binding_changed")
++        record = binding.record()
++        record.pop("strategy_file_sha256")
++        vessels.need(semantic_digest(record) == expected_world, "preflight_reference_world_changed")
++        return binding
++
++    def clock():
++        started = time.monotonic()
++        def check():
++            if time.monotonic() - started >= wall_seconds:
++                raise TimeoutError("evaluation_wall_budget")
++            return False
++        return started, check
++
++    prepared, preparation = {}, {}
++    for method in complete:
++        row = manifest["methods"][method]
++        started, check = clock()
++        context = vessels._preflight(directory / row["strategy_filename"], row["strategy_file_sha256"],
++            spec, identity, require_original_binding(method), check)
++        vessels.need(context["seal"]["strategy"] == suite["methods"][method]["strategy"]
++            and context["plan_seal_hash"] == row["plan_seal_hash"]
++            and context["seal"]["strategy"]["plan"]["method"] == method
++            and context["seal"]["strategy"]["plan"]["physical_history_hash"] == row["physical_history_hash"],
++            "prepared_method_differs_from_suite")
++        prepared[method] = context
++        preparation[method] = {"elapsed_seconds": time.monotonic() - started,
++            "nominal_replay_transition_calls": context["recording_replay_calls"]}
++    out = vessels._safe_path(output_directory)
++    out.mkdir(parents=False, exist_ok=False)
++    vessels._sync_directory(out.parent)
++    base = {"schema": VERSION, "planning_manifest_sha256": vessels._hash(manifest_sha256),
++        "planning_suite_seal_hash": suite["seal_hash"], "method_order": list(METHODS),
++        "all_complete_methods_preflighted_before_private_load": True,
++        "pre_private_accounting": preparation, "patient_admission": False,
++        "clinical_injury_probability": None, "private_reference_identity_hash": expected_world,
++        "expected_reference_binding_hashes": expected_bindings,
++        "methods": {m: {"planning_status": manifest["methods"][m]["planning_status"],
++            "evaluation_status": "not_evaluated", "evaluation": None} for m in METHODS}}
++    vessels._write_new(out / "attempt.json", {**base, "status": "all_methods_reserved_before_private_load"})
++    for method in complete:
++        row = manifest["methods"][method]
++        started, check = clock()
++        try:
++            evaluation = vessels._evaluate_preflighted_private_vessels(context=prepared[method],
++                seal_path=directory / row["strategy_filename"], seal_sha256=row["strategy_file_sha256"],
++                spec=spec, reference_binding=require_original_binding(method),
++                expected_binding_hash=expected_bindings[method], load_reference=load_references[method],
++                output_directory=out / method, started=started, check=check)
++            base["methods"][method].update(evaluation_status=evaluation["status"], evaluation=evaluation)
++        except Exception as error:
++            base["methods"][method].update(evaluation_status="evaluation_failed",
++                error_type=type(error).__name__, reason="sealed_method_or_private_evaluation_failed")
++    try:
++        vessels.need(vessels._read_bound(manifest_path, manifest_sha256) == manifest
++            and vessels._read_bound(suite_path, manifest["suite_file_sha256"]) == suite, "batch_inputs_changed")
++        spec.assert_intact()
++        for method in complete:
++            require_original_binding(method)
++        base["status"] = "completed_fixed_generated_method_denominator"
++    except Exception as error:
++        base.update(status="batch_integrity_failed", error_type=type(error).__name__)
++    base["evaluation_clock_scope"] = "Each nominal preflight and each private scoring phase has the same separate cooperative wall limit; preprocessing and original method costs remain separately recorded. No overall hard supervisor is supplied by this generated adapter."
++    vessels._write_new(out / "report.json", base)
++    return thaw_json(freeze_json(base))

@@ -700,3 +700,8 @@ The [first full generated MR conversion failure](../artifacts/remind-staged-full
 ### October 9: corrected full generated MR pipeline independently passes
 
 The [saved-output result](../artifacts/remind-staged-full-generated-success-v1/RESULT.md) passes all 64 physical-plane checks and 3,327 bounded generated-value samples. All 141 read intents reconcile with zero unknown bytes, both sequential workers are reaped, and the original fixture and ordering negative remain intact. The 1.953-second run peaks at 359,989,248 worker RSS bytes. The next scope is a separately reviewed exact TRAIN-patient conversion; no preoperative, anatomical or training admission is inferred from this synthetic workload. PROJECT_STATUS now consolidates the recent completed slices while this ledger retains their full chronology.
+
+
+### October 9: all-method sealing before private vascular scoring
+
+The [matched-method adapter](../artifacts/matched-private-vascular-adapter-v1/RESULT.md) now connects existing four-method strategy records to the private evaluator. All complete strategies undergo preflight before any reference callback. An independently reproduced cross-method reference-substitution defect was corrected with captured bindings and final integrity checks. Fifty-two candidate controls and the root integrated 88-test set pass; both the original finding and test-harness errors remain preserved. No learned forward, training, patient admission or real-geometry registration is added.

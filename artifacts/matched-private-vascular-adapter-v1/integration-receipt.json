@@ -1,0 +1,68 @@
+{
+  "accounting_note": "Batch pre_private_accounting and per-method nominal_replay_transition_calls refer to the same preflight work; do not add them as duplicate replay costs. Original method training/inference accounting remains caller-declared and preserved unchanged.",
+  "boundary": [
+    "Original complete matched suite and per-method physical strategy records are retained; no new strategy DTO.",
+    "All four terminal method slots and every complete seal are durable before private callbacks; all nominal replay and geometry preflight finishes before first callback.",
+    "Expected binding fingerprints and common reference identity are captured before private access and rechecked before each loader/scoring and at batch completion; caller mapping replacement does not retarget a later method.",
+    "Failed or abstained planning slots remain unevaluated null slots, and private failures retain denominator without substituted STOP or zero scores.",
+    "Raw planning suites with non-null outcomes or nonzero/non-integer real-patient/update counters refuse before sealing."
+  ],
+  "existing_evaluator_sha256": "30e9efaac9d0f4e311bedf9075362fcd488f1b31f76a3938f4224736d39e2eb7",
+  "files": {
+    "final-combined-tests.txt": "363a57ab73298b5b2bdd51f4c39766b5ead43e27f939b67dc78af222f36d135d",
+    "matched_private_vascular.py": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+    "private_vascular_evaluation.py": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+    "source.patch": "4486189366259ff9c3f9de28230433e92ac2b94bf6d7b78bdec1402f2d5a5587",
+    "test_adapter.py": "82637681b30a9fa5edcc40e1902377f41ceb343a7c6b4ca367200840718eb258"
+  },
+  "independent_review": {
+    "guard_note": "Original outer guard FAIL receipt is preserved; supplemental classification identifies only3 blocked stdlib python312.zip import lookups while pytest exited0 with52 passes. No patient/model/network attempt, no rerun or hidden receipt rewrite.",
+    "report_sha256": "dcf7fdfdbeea303e6421bf7413dcf5be1e6f656c8d258ccf3c8015a2b070fe41",
+    "review_sha256": "c54b0c22b7951bd1802396b9720592a9f5ac1284f5a138014209405902c1e2e1",
+    "seconds": 14.71,
+    "test_classification_sha256": "5e73dd6675fb4876dda3da93a5a525ea15eaff5b8ca48800ca9ea5ae604b43a2",
+    "tests_passed": 52,
+    "torch_imported": false
+  },
+  "new_policy_forwards": 0,
+  "patient_or_model_payload_reads": 0,
+  "promotion_note": "source.patch contains the existing evaluator extraction and new adapter module only. Ignored tests bootstrap exact candidate as canonical evaluator; when promoted, replace that bootstrap with canonical package imports and ROOT parents[1], preserving every test assertion.",
+  "remaining_incompatibilities": [
+    {
+      "behavior": "Explicit refusal; do not relabel already-sealed inputs. A future upstream generated/real protocol must use its canonical modality before planning and keep new seals distinct.",
+      "issue": "Prior actual comparison source/actor modality is GENERATED_T1; vascular public identity requires exactly one T1 source."
+    },
+    {
+      "behavior": "Frozen IXI TRAIN/SELECT/MEASUREMENT_EVAL assignments are not automatically accepted; this adapter cannot bypass or replace participant/source/asset admission.",
+      "issue": "Current evaluator and bindings admit only generated identity, GENERATED_DEVELOPMENT role and generated-control lineage."
+    },
+    {
+      "behavior": "The independent streaming capsule kernel is separate and untouched. No real-volume execution or performance claim is made.",
+      "issue": "Current planning/reference limits are16^3/32^3 voxels with at most4 actions and256 microsteps; arrays are resident."
+    },
+    {
+      "behavior": "No implicit T1/MRA/annotation resampling or invented registration. Noncongruent removal stays explicitly unsupported.",
+      "issue": "Reference frames require orthogonal grids and a declared rigid planning-to-reference transform; removed-cell overlap supports congruent discrete grids only."
+    },
+    {
+      "behavior": "Unknowns and clinical probabilities stay null; generated control masks are never relabeled clinical ground truth.",
+      "issue": "Vascular annotation coverage is not biological completeness; vessel encounters are geometric surrogates. IXI vascular labels do not constitute glioma, functional or physical-damage truth."
+    },
+    {
+      "behavior": "This interface does not establish rich-training/limited-observation unseen-person generalization, calibrated abstention, mechanics validity or fair large-scale training budgets.",
+      "issue": "Frozen tiny actors/search experiments remain familiar fully observed generated development."
+    }
+  ],
+  "scope": "generated-only matched-method serialization and private-evaluation interface; no patient admission or learned efficacy experiment",
+  "status": "independent_GO_generated_source_integration_only",
+  "streaming_coordination": "n36_result_audit_fresh owns streaming_contact.py capsule/Grid/GeneratedReference kernel only. This candidate owns suite staging and pre-private orchestration; standalone and matched scoring share one existing scoring body for future kernel integration.",
+  "tests": {
+    "command": "PYTHONPATH=src:tests:build/matched-private-vascular-adapter-v1 .venv/bin/python -m pytest -q build/matched-private-vascular-adapter-v1/test_adapter.py tests/test_private_vascular_evaluation.py",
+    "existing_standalone_controls": 30,
+    "new_generated_controls": 19,
+    "passed": 49,
+    "seconds": 12.47
+  },
+  "tracked_writes": false,
+  "training_updates": 0
+}

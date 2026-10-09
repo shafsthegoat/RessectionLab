@@ -1,0 +1,72 @@
+{
+  "baseline_sha256": {
+    "build/matched-private-vascular-adapter-v1/matched_private_vascular.py": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+    "build/matched-private-vascular-adapter-v1/private_vascular_evaluation.py": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+    "build/matched-private-vascular-adapter-v1/test_adapter.py": "82637681b30a9fa5edcc40e1902377f41ceb343a7c6b4ca367200840718eb258",
+    "build/matched-private-vascular-independent-v1/test_independent_adapter.py": "51dfdf0110976068fa91991fa5efe44c14cde925bd82b10884ad4e8d5265719c",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/private_vascular_evaluation.py": "30e9efaac9d0f4e311bedf9075362fcd488f1b31f76a3938f4224736d39e2eb7",
+    "src/resectionlab/research_estimate_planning.py": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+    "tests/test_private_vascular_evaluation.py": "ce3573a4f381baaf01b50ff0346ef883acf814a8193e14e1602c5821f431cec9"
+  },
+  "candidate_sha256": {
+    "matched_private_vascular.py": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+    "private_vascular_evaluation.py": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+    "source.patch": "4486189366259ff9c3f9de28230433e92ac2b94bf6d7b78bdec1402f2d5a5587",
+    "test_adapter.py": "82637681b30a9fa5edcc40e1902377f41ceb343a7c6b4ca367200840718eb258"
+  },
+  "checks": {
+    "GENERATED_T1_not_relabelled": true,
+    "actual_model_patient_archive_or_network_attempts": 0,
+    "all_complete_seals_and_nominal_preflights_before_first_private_loader": true,
+    "all_relevant_sources_unchanged_during_tests": true,
+    "author_adapter_controls": 19,
+    "common_reference_identity_and_per_method_hashes_captured_before_callbacks": true,
+    "existing_geometry_and_other_evaluator_definitions_AST_unchanged": true,
+    "existing_standalone_controls": 30,
+    "extracted_scoring_body_AST_unchanged_except_captured_expected_binding": true,
+    "failed_abstained_slots_preserved": true,
+    "generated_controls_passed": 52,
+    "in_place_binding_mutation_with_recomputed_fingerprint_refused_before_next_loader": true,
+    "independent_callback_mutation_controls": 3,
+    "late_mutation_of_already_scored_binding_invalidates_batch": true,
+    "mapping_replacement_cannot_retarget_loader_or_reference": true,
+    "non_null_prescored_outcomes_rejected": true,
+    "private_errors_do_not_export_error_text": true,
+    "pytest_seconds": 14.71,
+    "strict_generated_session_counters": true,
+    "torch_imported": false
+  },
+  "decision": "GO_generated_source_integration_only",
+  "evidence": {
+    "classify_test_receipt.py": "4a26305e23e6bece74645ea0e593fae4cdcf089fefda3037df85a0d408402a4e",
+    "combined-tests.txt": "43f58a747158e57c6c68278773cf99dcc4ade98f48591ecf18964543238a950a",
+    "mapping-mutation-finding.json": "2419b10af1c8c73d1dfcb93a4ca866893492b42781c5c7148d892a72a0451696",
+    "reproduce_mapping_mutation.py": "35033a3725f32958f6912662466cfe14bc8484263633a67563410de48ac79616",
+    "run_review_tests.py": "7e9dcc31fb8fa5bc6f477201ced5cf250a5d0a2fe3508577a469e4a08e311411",
+    "test-classification.json": "5e73dd6675fb4876dda3da93a5a525ea15eaff5b8ca48800ca9ea5ae604b43a2",
+    "test-review.json": "032a07dde691d3825bb16e84c289084806de9cb3374d52c0984512f1f06c67a7",
+    "test_independent_adapter.py": "51dfdf0110976068fa91991fa5efe44c14cde925bd82b10884ad4e8d5265719c"
+  },
+  "guard_classification": "All52 tests passed. Original wrapper status FAIL is retained because broad .zip guard blocked exactly3 Python stdlib archive import lookups. Supplemental classification verifies those runtime-library lookups; no patient/model/archive/network attempt occurred. No repeated execution or hidden receipt rewrite.",
+  "limits": [
+    "Generated interface correctness only; no learned-method efficacy or transfer claim.",
+    "Existing GENERATED_T1 comparison records remain incompatible with exact T1 vascular identity; no relabelling permitted.",
+    "Only generated person/role/lineage accepted. IXI or other patient data admission remains unimplemented.",
+    "Planning/reference array and action/microstep bounds remain unchanged; no streaming, frame registration or geometry algorithm changes.",
+    "Wall limits are cooperative per-preflight/per-scoring phase; arbitrary blocking callbacks need external supervision before real use.",
+    "Accidental-misuse protection, not hostile-Python isolation or source authenticity.",
+    "Private vascular encounters remain geometric annotation surrogates; unknown coverage and clinical injury probabilities remain unresolved/null.",
+    "Original suite training/inference accounting remains caller-declared and preserved; top-level pre-private replay counts and per-method reported replay counts describe the same preflight work, not two additional replays."
+  ],
+  "resolved_finding": {
+    "generated_reproduction": "SEARCH positive cells2, IL0, both accepted, batch completed.",
+    "issue": "After common-reference preflight, the first private callback could replace the next method binding and loader in caller-owned mappings; the batch accepted successful methods scored in different reference worlds.",
+    "original_adapter_sha256": "c4b76aad5b971195f05e6ad7c0783ab18494f7ebfb16dfb144d32fd28e73c52d",
+    "repair": "Copy mappings, retain immutable expected per-method and common-world fingerprints before private access, verify each selected binding before loader/scoring and all again at completion; helper receives captured expected hash.",
+    "status": "closed_by_source_review_and_regression_controls"
+  },
+  "root_only_integration": true,
+  "schema": "matched-private-vascular-independent-review-v1",
+  "tracked_writes_by_reviewer": false
+}

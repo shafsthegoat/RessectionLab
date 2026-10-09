@@ -1,0 +1,12 @@
+{
+  "independent_candidate_controls": 52,
+  "module_sha256": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+  "patient_payload_reads": 0,
+  "root_regressions": {
+    "passed": 88,
+    "seconds": 15.39
+  },
+  "test_import_change": "Canonical package imports and repository ROOT replace ignored candidate injection; sys retained for no-Torch assertion. All assertions preserved.",
+  "test_sha256": "d41f84d4f9db882ee9085ca3de60722712d34e623d4db6737d77bf57881594dd",
+  "trained_model_calls": 0
+}

@@ -1,0 +1,82 @@
+{
+  "evaluator-extraction.patch": {
+    "bytes": 1761,
+    "sha256": "74ed251329eb9e1590cd2e565db4bca3b4d46f3eb17ddea96b7795b9dcb4b7d8"
+  },
+  "final-combined-tests.txt": {
+    "bytes": 100,
+    "sha256": "363a57ab73298b5b2bdd51f4c39766b5ead43e27f939b67dc78af222f36d135d"
+  },
+  "independent-review/REPORT.md": {
+    "bytes": 3271,
+    "sha256": "dcf7fdfdbeea303e6421bf7413dcf5be1e6f656c8d258ccf3c8015a2b070fe41"
+  },
+  "independent-review/classify_test_receipt.py": {
+    "bytes": 1697,
+    "sha256": "4a26305e23e6bece74645ea0e593fae4cdcf089fefda3037df85a0d408402a4e"
+  },
+  "independent-review/combined-tests.txt": {
+    "bytes": 209,
+    "sha256": "43f58a747158e57c6c68278773cf99dcc4ade98f48591ecf18964543238a950a"
+  },
+  "independent-review/finalize_review.py": {
+    "bytes": 9054,
+    "sha256": "7cb4f1f9a4457b12eadb153d1a8c5dbb5025032ee2683507d48c28c465d74d07"
+  },
+  "independent-review/mapping-mutation-finding.json": {
+    "bytes": 423,
+    "sha256": "2419b10af1c8c73d1dfcb93a4ca866893492b42781c5c7148d892a72a0451696"
+  },
+  "independent-review/mapping-mutation-log.txt": {
+    "bytes": 407,
+    "sha256": "d90caab5497512893482e4a98a1656b71f84745ce2cbb976683598a326a13a0a"
+  },
+  "independent-review/patch-check.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "independent-review/reproduce_mapping_mutation.py": {
+    "bytes": 2378,
+    "sha256": "35033a3725f32958f6912662466cfe14bc8484263633a67563410de48ac79616"
+  },
+  "independent-review/review.json": {
+    "bytes": 5851,
+    "sha256": "c54b0c22b7951bd1802396b9720592a9f5ac1284f5a138014209405902c1e2e1"
+  },
+  "independent-review/run_review_tests.py": {
+    "bytes": 2177,
+    "sha256": "7e9dcc31fb8fa5bc6f477201ced5cf250a5d0a2fe3508577a469e4a08e311411"
+  },
+  "independent-review/test-classification.json": {
+    "bytes": 1189,
+    "sha256": "5e73dd6675fb4876dda3da93a5a525ea15eaff5b8ca48800ca9ea5ae604b43a2"
+  },
+  "independent-review/test-review.json": {
+    "bytes": 2837,
+    "sha256": "032a07dde691d3825bb16e84c289084806de9cb3374d52c0984512f1f06c67a7"
+  },
+  "independent-review/test_independent_adapter.py": {
+    "bytes": 3006,
+    "sha256": "51dfdf0110976068fa91991fa5efe44c14cde925bd82b10884ad4e8d5265719c"
+  },
+  "integration-receipt.json": {
+    "bytes": 5598,
+    "sha256": "66e9258fcfb410a0e2c978cda4daec7ce9b2fd2e2bd80250d009e87db1ce4b51"
+  },
+  "matched_private_vascular.py": {
+    "bytes": 11696,
+    "sha256": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db"
+  },
+  "private_vascular_evaluation.py": {
+    "bytes": 21023,
+    "sha256": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d"
+  },
+  "source.patch": {
+    "bytes": 13736,
+    "sha256": "4486189366259ff9c3f9de28230433e92ac2b94bf6d7b78bdec1402f2d5a5587"
+  },
+  "test_adapter.py": {
+    "bytes": 14689,
+    "sha256": "82637681b30a9fa5edcc40e1902377f41ceb343a7c6b4ca367200840718eb258"
+  }
+}

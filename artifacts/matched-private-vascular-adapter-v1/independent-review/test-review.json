@@ -1,0 +1,33 @@
+{
+  "blocked_attempts": [
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip"
+  ],
+  "elapsed_seconds": 14.73265887494199,
+  "pytest_exit_code": 0,
+  "scope": "Small generated scripted-policy and geometry fixtures only; no model forwards/training, patient/archive payload or network access.",
+  "source_files_unchanged_during_tests": true,
+  "source_hashes_after": {
+    "build/matched-private-vascular-adapter-v1/matched_private_vascular.py": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+    "build/matched-private-vascular-adapter-v1/private_vascular_evaluation.py": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+    "build/matched-private-vascular-adapter-v1/test_adapter.py": "82637681b30a9fa5edcc40e1902377f41ceb343a7c6b4ca367200840718eb258",
+    "build/matched-private-vascular-independent-v1/test_independent_adapter.py": "51dfdf0110976068fa91991fa5efe44c14cde925bd82b10884ad4e8d5265719c",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/private_vascular_evaluation.py": "30e9efaac9d0f4e311bedf9075362fcd488f1b31f76a3938f4224736d39e2eb7",
+    "src/resectionlab/research_estimate_planning.py": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+    "tests/test_private_vascular_evaluation.py": "ce3573a4f381baaf01b50ff0346ef883acf814a8193e14e1602c5821f431cec9"
+  },
+  "source_hashes_before": {
+    "build/matched-private-vascular-adapter-v1/matched_private_vascular.py": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+    "build/matched-private-vascular-adapter-v1/private_vascular_evaluation.py": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+    "build/matched-private-vascular-adapter-v1/test_adapter.py": "82637681b30a9fa5edcc40e1902377f41ceb343a7c6b4ca367200840718eb258",
+    "build/matched-private-vascular-independent-v1/test_independent_adapter.py": "51dfdf0110976068fa91991fa5efe44c14cde925bd82b10884ad4e8d5265719c",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/private_vascular_evaluation.py": "30e9efaac9d0f4e311bedf9075362fcd488f1b31f76a3938f4224736d39e2eb7",
+    "src/resectionlab/research_estimate_planning.py": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+    "tests/test_private_vascular_evaluation.py": "ce3573a4f381baaf01b50ff0346ef883acf814a8193e14e1602c5821f431cec9"
+  },
+  "status": "FAIL",
+  "torch_imported": false
+}
