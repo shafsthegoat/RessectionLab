@@ -73,8 +73,13 @@ The [mechanics preflight memory diagnostic](artifacts/hbe-v5-n12-preflight-memor
 passed full input validation at only 144 MB sampled worker RSS, but host pressure
 rose during the 2.88-second predecessor-file verification interval. Independent
 review matched all saved counters and selected samples. The native solve stayed
-held; no mechanics result was produced. A per-file uncached-read control is
-prepared to test the cache hypothesis while preserving every integrity check.
+held; no mechanics result was produced. The subsequent
+[uncached-read feasibility control](artifacts/hbe-v5-n12-nocache-hinted-feasibility-v1/RESULT.md)
+completed every integrity check while all 24 host samples stayed at 55% and
+normal pressure. Independent audit verified the 14 opens across 12 eligible
+files and clean termination. This is one successful engineering control, with
+no causal or speed claim. A separately bound launcher extension is being
+implemented before the next native mechanics row.
 
 The [MR conversion preparation](artifacts/remind-mr-conversion-preparation-v2/RESULT.md)
 now fixes missing spatial units and shared decoder-cache verification. Twelve

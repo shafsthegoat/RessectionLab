@@ -1,0 +1,65 @@
+{
+  "arm": "hinted",
+  "caps": {
+    "aggregate_output_bytes": 4194304,
+    "attempts": 1,
+    "numerical_threads": 1,
+    "outer_wall_seconds": 150,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "worker_wall_seconds": 147
+  },
+  "comparison_source_sha256": "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45",
+  "comparison_source_sha256_postguard": "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45",
+  "diagnostic_source_sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16",
+  "final_retained_output_bytes": 76758,
+  "hbe_output_reserved": false,
+  "hbe_readout_calls": 0,
+  "hint_audit_present": true,
+  "hint_source_sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+  "host_before": {
+    "available_percent": 55,
+    "host_read_seconds": 4.333304241299629e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 8589934592,
+    "swap_used_bytes": 7348092928
+  },
+  "native_calls": 0,
+  "outer_elapsed_seconds": 5.204922916833311,
+  "owned_worker_cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 4194304,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-n12-nocache-comparison-v1/compare.py",
+      "worker",
+      "hinted",
+      "d2b540f842ef1074db1e9b9c3ca7a767ea150f89",
+      "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45"
+    ],
+    "elapsed_seconds": 5.182485957862809,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 76194,
+    "peak_sampled_process_group_rss_bytes": 177553408,
+    "pid": 1696,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 147
+  },
+  "release_written": false,
+  "schema": "hbe-v5-n12-nocache-comparison-arm-v1",
+  "source_commit": "d2b540f842ef1074db1e9b9c3ca7a767ea150f89",
+  "status": "completed_read_only_arm",
+  "supervisor_stage_label": "readout_api_only_not_hbe_readout",
+  "validation_identity_present": true,
+  "worker_result_status": "read_only_validation_memory_diagnostic_complete"
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "hbe-v5-n12-nocache-hinted-feasibility-evidence-v1",
+  "status": "single_read_only_arm_completed_not_causal_validation",
+  "source_commit": "d2b540f842ef1074db1e9b9c3ca7a767ea150f89",
+  "run_id": "tension:N12:S60:reference",
+  "comparison_source_sha256": "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45",
+  "hint_source_sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+  "diagnostic_source_sha256": "8684aa673e8e0189bd6c5fdfab144e7ff6d8a33af5e16047caa5a88b196dce16",
+  "adapted_deck_sha256": "6dbf980c8d60309f62d4d6e8e395d881b4bacfd1be73796eedfad6112f9505a9",
+  "template_sha256": "32d7566d10d1a671fe1d7fcd2cb3bfc73dc70c3632d286480fd860e2e15d2feb",
+  "calls": {
+    "native": 0,
+    "hbe_saved_readout": 0,
+    "baseline_comparison_arm": 0,
+    "hinted_full_validation_arm": 1
+  },
+  "result": {
+    "full_validate_release_completed": true,
+    "outer_wall_seconds": 5.204922916833311,
+    "peak_sampled_process_group_rss_bytes": 177553408,
+    "receipt_recorded_output_snapshot_bytes": 76758,
+    "independently_recounted_closed_output_bytes": 76797,
+    "supervisor_exit_code": 0,
+    "owned_worker_contained": true,
+    "hinted_file_opens": 14,
+    "unique_hinted_files": 12,
+    "hinted_bytes_counting_nested_n12_repeat": 2801621755,
+    "hinted_unique_file_bytes": 2753200498,
+    "outer_chain_elapsed_seconds": 3.558523166924715,
+    "outer_chain_host_available_percent_before": 55,
+    "outer_chain_host_available_percent_after": 55,
+    "outer_chain_kernel_pressure_mask_before": 1,
+    "outer_chain_kernel_pressure_mask_after": 1,
+    "outer_chain_vm_pageins_delta_pages": 6897,
+    "outer_chain_vm_file_backed_delta_pages": 6184,
+    "outer_chain_vm_anonymous_delta_pages": 2718,
+    "outer_chain_vm_compressor_occupied_delta_pages": -1,
+    "outer_chain_swap_used_delta_bytes": 0,
+    "vm_page_size_bytes": 16384
+  },
+  "historical_unhinted_orientation": {
+    "source": "artifacts/hbe-v5-n12-preflight-memory-v1",
+    "outer_chain_elapsed_seconds": 2.883542541,
+    "outer_chain_host_available_percent_before": 55,
+    "outer_chain_host_available_percent_after": 40,
+    "outer_chain_kernel_pressure_mask_before": 1,
+    "outer_chain_kernel_pressure_mask_after": 2,
+    "outer_chain_vm_pageins_delta_pages": 173521,
+    "outer_chain_vm_file_backed_delta_pages": 139470
+  },
+  "interpretation_limit": "Single arm with distinct host/I/O conditions. Consistent with reduced cache pressure, but F_NOCACHE causality and performance benefit are not established. No force, material or patient validation claim."
+}

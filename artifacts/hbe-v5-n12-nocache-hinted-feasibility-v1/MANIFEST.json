@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "bytes": 1640,
+      "path": "README.md",
+      "sha256": "90b68bc3b2cf69c7f92210ec915e485a8c29f0bedd0f8eeb70fbd3e03f98a8ef"
+    },
+    {
+      "bytes": 2986,
+      "path": "attempt-01/hint-audit.json",
+      "sha256": "ddcd8ed51626ebb1c707024eb77a7bb716d0d9791f268a12a1f761e513e3f8b4"
+    },
+    {
+      "bytes": 0,
+      "path": "attempt-01/readout-console.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2466,
+      "path": "attempt-01/receipt.json",
+      "sha256": "b8beac4bc491c88958492405f77fafd1581bd907c5fcae6da11b3fe1446b1f73"
+    },
+    {
+      "bytes": 9272,
+      "path": "attempt-01/validation-identity.json",
+      "sha256": "2314bb377008cbf11c0b683ea5af3305e29c0b4d4a6a7e869ee5a4939d90da57"
+    },
+    {
+      "bytes": 569,
+      "path": "attempt-01/worker-result.json",
+      "sha256": "275b864cff4337f80919d43e5fafeec64e5a3f161082feebf6f466adbbfcd430"
+    },
+    {
+      "bytes": 61504,
+      "path": "attempt-01/worker-samples.json",
+      "sha256": "b551f6e410e72eed1d731a399864405f1875ab5cd94f60b0bbd9f0c08bbf728d"
+    },
+    {
+      "bytes": 7119,
+      "path": "source/PROTOCOL.md",
+      "sha256": "74dd6e25bef09859539e5e9fa548bdc2a9ce8ad87a769e0e69b47e4f304ac5e4"
+    },
+    {
+      "bytes": 14333,
+      "path": "source/compare.py",
+      "sha256": "2113791dc16d7191b7c9c24f4148fb820450ecfff4c2d2f5c0af8ad8488d0b45"
+    },
+    {
+      "bytes": 2075,
+      "path": "source/hash_hint.py",
+      "sha256": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc"
+    },
+    {
+      "bytes": 2579,
+      "path": "summary.json",
+      "sha256": "8c54aec9f9428661c9b9455ec4917ba3aca3dd1826615dec6f654e40c820c65a"
+    },
+    {
+      "bytes": 14355,
+      "path": "tests/test_generated_compare.py",
+      "sha256": "e2c1ea85f4a4431c87050fc32244dd718c9fbaf7e4bc0b106131fd2693376d30"
+    },
+    {
+      "bytes": 5040,
+      "path": "tests/test_generated_hash_hint.py",
+      "sha256": "fa2676f1734550e8673a28a4e5ad4a08fec946db0be9d3e92bc71be1061c6d09"
+    }
+  ],
+  "schema": "hbe-v5-n12-nocache-hinted-feasibility-manifest-v1",
+  "status": "ignored_integration_candidate_root_review_required",
+  "validation_boundary": "single read-only hinted full validation; no causal, native, physical or patient admission"
+}
