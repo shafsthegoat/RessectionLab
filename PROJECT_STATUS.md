@@ -140,6 +140,13 @@ frame work (120.212 seconds supervised wall), with 847,396,864-byte child peak
 RSS and independent receipt review. It did not parse a saved full log or run
 FEBio; generated reactions are not an FEM equilibrium solution. Physical force
 fidelity remains unmeasured.
+The [HBE v5 N8 first-canary source preparation](artifacts/hbe-v5-n8-canary-source-only-v1/RESULT.md)
+now binds one old full-native compression deck and mesh, both new-endpoint
+adapted decks, 61 load points ending at -0.00073726 m, 630 boundary conditions
+and the repaired runtime prerequisites. Independent XML/hash review and 57
+focused tests pass. Its release is null and execution gate remains closed:
+no extended-endpoint native solve, measured-force comparison or patient-force
+validation has occurred.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
