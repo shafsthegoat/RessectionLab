@@ -154,6 +154,13 @@ unloaded initial state, sampled deformation and reaction balance. Independent
 adversarial review repaired several false passes; 80 adjacent checks pass. The
 new decks have not been accepted or solved by FEBio. This is numerical
 preparation, not measured solver feasibility.
+The [n5 affine source-only readout](docs/mechanics-nonpatient-sparse-affine-readout.md)
+reconstructs all five idealized cube states from supplied nodal fields and
+checks eight-point deformation, Ogden stress/energy, logged element quantities
+and signed boundary work against the frozen analytic oracle. Ninety adjacent
+controls pass against the stabilized output parser, with independent numerical
+review. It shares the assumed constitutive law and has not seen a new native
+cube solve or any physical tissue measurement.
 The [Case4 source-suitability audit](artifacts/mechanics/resect-case4-source-suitability-v1/RESULT.md)
 recommends no further Gmsh candidate now. The fixed T1-derived envelope has
 known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
