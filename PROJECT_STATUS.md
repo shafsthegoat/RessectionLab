@@ -59,6 +59,13 @@ is hidden. The generic fixed-lattice actor also exposes actions without a
 nominal objective, although observed SEARCH fails closed. Ninety-six narrowly
 selected tests pass; a broader adjacent suite retains ten unrelated
 weight-lineage failures. Limited-input patient admission remains HOLD.
+The subsequent [provisional-support metadata repair](artifacts/provisional-support-metadata-repair-v1/INDEPENDENT_REVIEW.md)
+separates testable metadata validation from model admission without weakening
+the admission gate. The current focused selection passes 178 tests; independent
+review passes 99. The old canary passes seven tests against its frozen archive
+and correctly refuses the changed current source. An additional structural
+selection still has 14 failures and 31 errors; the [exact baseline comparison](artifacts/provisional-support-metadata-repair-v1/BASELINE_COMPARISON.md)
+reproduces every outcome on the pre-edit commit. This is not an all-tests-green claim.
 A [bounded scan-target estimator option review](artifacts/scan-target-estimator-options-v1/RESULT.md)
 identified a two-sequence pretrained research candidate for RESECT Case4,
 subject to modality/frame/reference QC, pinned weights and code-rights review.
