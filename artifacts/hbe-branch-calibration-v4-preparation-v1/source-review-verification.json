@@ -1,0 +1,98 @@
+{
+  "all_execution_fit_heldout_gates_closed": true,
+  "all_nine_retargets_byte_and_hash_identical": true,
+  "binding_retargets": {
+    "bytes": 4145,
+    "path": "build/hbe-branch-calibration-v4-source-review-v3/binding-retargets.json",
+    "sha256": "4c05b626d0dd9ad6385af77b827b4f958615f1acddf63b91fa9862a8afb5e223"
+  },
+  "blocking_findings": [],
+  "candidate": [
+    {
+      "bytes": 30703,
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
+      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+    },
+    {
+      "bytes": 18988,
+      "path": "scripts/mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    {
+      "bytes": 14428,
+      "path": "tests/test_mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "20c1de47123841613f4040492f4e58229e452b670df6044bb7b1c8b49e52227e"
+    }
+  ],
+  "candidate_and_direct_inputs_unchanged_at_completion": true,
+  "commit_created": false,
+  "core_changed_only_manifest_digest": true,
+  "disposition": "GO_REPRODUCIBLE_NON_EXECUTABLE_PREPARATION_ONLY",
+  "fit_calls": 0,
+  "focused_tests_passed": 215,
+  "isolated_controls_passed": 52,
+  "isolated_direct_metadata_files": 14,
+  "isolated_source_modules": {
+    "scripts.mechanics_hbe_access": "scripts/mechanics_hbe_access.py",
+    "scripts.mechanics_hbe_branch_calibration_v4": "scripts/mechanics_hbe_branch_calibration_v4.py",
+    "scripts.mechanics_hbe_evaluation": "scripts/mechanics_hbe_evaluation.py"
+  },
+  "isolated_validation": {
+    "bytes": 17523,
+    "path": "build/hbe-branch-calibration-v4-source-review-v3/isolated-validation.json",
+    "sha256": "918a2b1efa557681c35a69004e95d03bb7aa94e85f0d928a8e4ab616ee87bea3"
+  },
+  "isolated_validation_passed": true,
+  "measured_archive_reads": 0,
+  "measured_torsion_reads": 0,
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "no_build_outputs_or_data_in_isolated_tree": true,
+  "project_imports_outside_isolated_tree": 0,
+  "required_new_files_for_complete_commit": [
+    {
+      "bytes": 17585,
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/independent-audit.txt",
+      "sha256": "c6eee64ff86300af734659c7930d4f1a7a9b9070c4bfaa89ce0e7c38bf2a5db1"
+    },
+    {
+      "bytes": 6712,
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/independent-resource-audit.json",
+      "sha256": "bf780e319ea56bca59a1bb4ad11557df4f11cd2cf1ba8ee1e762a135616ded9b"
+    },
+    {
+      "bytes": 1566,
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/independent-verification.json",
+      "sha256": "46eb5b96151656ea9def6e797ab2ce70bff7e07f265deb87819d9a44566fd27c"
+    },
+    {
+      "bytes": 9188,
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/proposal.md",
+      "sha256": "078174f134d5ec97aeb906a7e0b036d88eb90ce4d94abf96dbf75309d23e5568"
+    },
+    {
+      "bytes": 30703,
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
+      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+    },
+    {
+      "bytes": 18988,
+      "path": "scripts/mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    {
+      "bytes": 14428,
+      "path": "tests/test_mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "20c1de47123841613f4040492f4e58229e452b670df6044bb7b1c8b49e52227e"
+    }
+  ],
+  "review": {
+    "bytes": 4767,
+    "path": "build/hbe-branch-calibration-v4-source-review-v3/REVIEW.txt",
+    "sha256": "7935038bf1903e9438801ff6bb134ae8e37f5f907f8ba01e4ac6cc1b03aec7ea"
+  },
+  "schema": "hbe-v4-source-review-v3",
+  "six_reference_candidate_fit_ready": false,
+  "tests_byte_identical_to_review_v2": true,
+  "tracked_edits": false
+}

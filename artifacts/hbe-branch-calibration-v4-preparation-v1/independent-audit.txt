@@ -1,0 +1,273 @@
+HBE_01_03 v4 proposal: independent protocol challenge
+Reviewed 2026-10-09 UTC. No execution release approved.
+
+Disposition
+
+Changes required. A tracked draft may be prepared with execution disabled. The
+six-call proposal can be a coordinate-coverage/numerical diagnostic, but it must
+not make fitting eligible by presenting its two-level spatial checks as equivalent
+to the branch qualification accepted by v3. The endpoint change is defensible as
+retrospective adaptation to already exposed calibration coordinates. It does not
+by itself expose or use held-out torsion outcomes. It cannot restore prospective,
+unexposed status to the calibration data.
+
+This audit reviewed the proposal at SHA256
+078174f134d5ec97aeb906a7e0b036d88eb90ce4d94abf96dbf75309d23e5568.
+The exact bytes are retained as proposal-reviewed.txt. The authoritative v3
+source commit is e96f706ff1857a5791ed69b5ac0d05aff5756e55; current inspected
+v3/inherited source files and declarations match that commit. Four selected v3
+manifest/worker/readout source members also match its source archive, SHA256
+8fa980c20f1caeac6e47a96314fa6118efa5cad14424ea9ecb4f2a48b907f3ec.
+All inspected input hashes remained unchanged. Full path/hash bindings are in
+input-bindings.json; coordinate-controls.json and resource-audit.json contain
+the independently recomputed arithmetic and resource evidence.
+
+1. Endpoint selection, exposure and the terminal v3 result
+
+The exact proposed endpoints are the outermost original calibration coordinates:
+compression -0.00073726 m; tension +0.0007360099999999 m. Both 30-row vectors
+are finite, unique and monotone, with their original signs. Compared with the old
+0.15*0.00489159 = 0.0007337385 m magnitude, the gaps are exactly 0.0000035215 m
+and 0.0000022714999999 m using source decimal literals. Both are genuine support
+mismatches, not rounding. Every original row fits inside the proposed endpoint
+interval; the old endpoint excludes exactly the terminal row of each branch.
+
+Fourteen independent coordinate/hash controls passed from the archived
+coordinate-only report: all 30 coordinates, exact endpoint acceptance, one ULP
+outward rejection, old endpoint rejection and one ULP inward endpoint rejection
+for each branch. No measured-data ZIP or CSV member was reopened. This audit
+reproduces archived coordinate facts, not the original extraction from ZIP bytes.
+
+Compression member SHA256:
+bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43
+Compression coordinate-vector SHA256 (compact JSON float list):
+881665105d646fbc47a116b0e6bcad7d4ad79f26d43b386c8f297e3b4624fa2e
+Tension member SHA256:
+750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8
+Tension coordinate-vector SHA256:
+a1690a5cff8fb75fc619984074ba53dbb044f3ea6894f72f698cb36b1edc0731
+
+The archived diagnosis and the build original are identical at SHA256
+572b20b3255abdd19513372dc034b54a08330991152d23154d03954b27f23397.
+Its verification is 7aff58f34d69f91a26762d37d6961539212f8eb07fb9e5829563901eb7f04d9f.
+The v3 result is 595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c;
+the access ledger is d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288.
+They preserve a terminal no-fit outcome: both permitted axial payloads parsed;
+fit_scale entered once and rejected compression before accumulation/estimation;
+zero new native calls, zero freezes, zero held-out torsion access. The old
+out-of-range rule forbids endpoint change within that v3 attempt. A new version
+must explicitly override the loading/support declaration, never modify v3.
+
+The deterministic min/max-coordinate rule is a defensible coverage rule without
+response-based tuning. Retain all rows, geometry, units, signs, equal axial-mode
+weights, trapezoidal coordinate weights, common positive scale, no offset and no
+extrapolation. Bind both original member hashes plus literal and float64 endpoint
+representations before any new solve. Do not call coordinate-only extraction
+"unexposed data": v3 already parsed both response payloads. Do not call the new
+endpoints exactly +/-15% strain. The unchanged role-manifest hash is
+c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432.
+
+2. B1 -- Six reference calls do not reproduce the v3 qualification contract
+
+The proposal requires compression N32/S60, N36/S60, N36/S120 and tension
+N16/S60, N24/S60, N24/S120. These six calls can test individual solver physics,
+one adjacent spatial difference and one finest temporal difference per branch.
+They cannot compute a spatial trend from three distinct meshes, the compression
+two-latest-limit envelope, order drift or the tension co-primary triplet
+classification margins. The proposal correctly disclaims continuum convergence,
+but saying that only load/support and reference bindings change is still false:
+the path from passing numerical checks to fitting is materially weakened.
+
+This is demonstrated by this project's own saved failure. N32 passed adjacent
+force change (0.138140 mN against 0.724169 mN) and probe change (1.727312 um
+against 8 um), while its two-limit remaining envelope was 0.985189 mN and failed.
+The original N4/N8/N12 study also failed compression motion 22.356144373333107 um
+and tension motion 23.25768976023929 um against 8 um, plus tension reaction
+trend 0.22774250190189804 mN against the preceding 0.19948362350659735 mN.
+Later N12/N16/N24 compression failed raw reaction trend despite passing adjacent
+absolute limits. None of these failures can be replaced by a passing pair.
+
+V3 qualify() requires the independently reviewed N36 temporal candidate, whose
+comparison also preserved the conditional envelope/classification safeguards,
+and the independently reviewed tension temporal candidate. The new-domain six
+curves cannot inherit these properties from old +/-15% curves. Old-state reuse,
+appending one endpoint, or interpolating a missing coarse curve is inadequate.
+
+Constructive correction A: keep the six-call design diagnostic-only, with no
+transition to fitting or torque access regardless of a diagnostic pass. Name the
+changed evidence standard explicitly; do not describe it as v3-equivalent
+qualification. A stronger design must be declared before any adaptive extra run.
+
+Constructive correction B: before any v4 native work, select and preregister the
+following 12-call design. It is the minimum set that supplies every input of the
+existing prior-comparable branch comparison contracts without dropping a level:
+
+  Compression endpoint -0.00073726 m:
+  N8/S60, N12/S60, N16/S60, N24/S60, N32/S60, N36/S60, N36/S120.
+  Tension endpoint +0.0007360099999999 m:
+  N8/S60, N12/S60, N16/S60, N24/S60, N24/S120.
+
+Relative to the proposal, add compression N8/S60, N12/S60, N16/S60, N24/S60;
+add tension N8/S60 and N12/S60. Preserve the existing representation map:
+compression N8/N12/N16 full native, N24/N32/N36 native lower-half with full
+reconstruction; tension N8/N12 full native and N16/N24 native lower-half.
+All are fresh solves from rest over their complete branch-specific new endpoint.
+Existing hash-bound meshes may be reused; no new mesher call is needed. Any
+representation change needs its own declared and reviewed equivalence evidence.
+
+Required comparisons on that stronger option:
+
+  * Compression S60: all 61 states and 75 fixed physical probes; record N24/32/36
+    reaction/motion/trend metrics. Retain the four signed unequal-ratio triplets
+    N8/12/16, N12/16/24, N16/24/32, N24/32/36 at every nonrest state. Require
+    adjacent reaction and motion absolute limits; latest endpoint admissibility;
+    zero unresolved nonrest states, two-latest-limit envelope exceedances,
+    increasing-order-drift flags or force-limit-instability flags. Use the
+    existing drift comparison (+1e-6), positive-root logic and fixed original
+    allowance formula, not thresholds chosen from the new curves. Preserve
+    unresolved older triplets and raw trend outcomes rather than concealing them.
+  * Compression S120: compare i to 2*i for i=0..60. Require original temporal
+    force/probe gates. Replace only N36 with those even S120 states, recompute
+    all conditional state classifications and N24/32/36 adjacent classifications,
+    and require zero changes, unresolved states, instability or exceedances.
+    Recompute and report the endpoint decision sensitivity for the new S60
+    baseline; report the actual signed shift. The old sensitivity number is not
+    a new-domain acceptance constant.
+  * Tension S60: both co-primary triplets N12/16/24 and N8/16/24, including
+    reaction/motion magnitude and trend checks, must pass. Tension S120 must
+    pass the original temporal force/probe gates; substituting only N24 even
+    S120 states into both triplets must leave every classification unchanged.
+  * Individual all-frame convergence, residual, sampled positive Jacobians,
+    prescribed motion, force/moment balance, work-energy, primitive consistency
+    and reconstruction checks apply before any curve participates in a group.
+
+This stronger option still yields conditional new-domain branch qualification,
+not rigorous continuum accuracy. Original spatial_acceptance remains false and
+all old failures remain immutable. If original formal global convergence is the
+required claim, this is not enough; a separately designed homogeneous convergence
+study is needed. No outcome of either option releases patient or clinical claims.
+
+3. B2 -- Endpoint/step propagation must cover all primitive checks
+
+The proposal identifies checked_reference() as hard-coded to +/-15%, but the
+dependency extends further. mechanics_hbe_branch_calibration_v3_readout.py
+stream_frames() generates TIMES*sign*.15*H; common temporal readers do the same.
+mechanics_hbe_physics.py read_frame() obtains prescribed displacements from the
+old loading model. The full reconstruction checks, work integration, fitted
+readout and parsers also assume 121 states or the old schedule. Changing only a
+deck, load_coordinate array or reference validator would be insufficient.
+
+Freeze a single explicit branch endpoint and step-grid contract. Pass it through
+deck emission, loading receipts, exact schedule/deck verification, half-to-full
+reconstruction, full prescribed-boundary checks, work integration, primitive
+readout, group comparisons and fitted confirmations. Keep fixed geometry and
+probe sites. Do not mutate global H/TIMES/.15 constants or bypass a physics gate.
+Pin exact file-kind/mesh/state-count parser caps for N8/N12/N16/N24/N32/N36 as
+applicable; N36 logs cannot be passed through the old generic 256 MiB cap.
+
+Specify max|fine force| over the 61 compared even S120 states, matching the
+original formula; do not silently use all 121 states as a different denominator.
+Require shape (61,75,3) for common probe arrays and Euclidean probe-vector maxima.
+For pairwise spatial diagnostics, implement the declared two-level formula
+directly rather than inventing a third mesh. Three-level trend gates require
+three genuinely distinct new-domain meshes.
+
+Before native execution, verify endpoint literal/float64/XML round trips and
+half/full displacement factors. Specify whether strict support is reconstructed
+from the prescribed input coordinate or from native printed displacement; they
+are different quantities. Under the proposal's inward-rounding-fails rule, the
+coverage checker must really consume the independently established interval and
+must reject an inward endpoint. It must not merely regenerate the desired array
+and label it solved support. Retain the original boundary-error numerical gate;
+do not turn it into permission to extrapolate measured coordinates.
+
+Required negative controls include an extended loading receipt paired with old
+boundary fields, old +/-15% work coordinates, missing/duplicate/nonmonotone rows,
+wrong signs or units, mismatched S60/S120 grids, inward endpoint rounding, source
+or primitive drift, attempted fit after failed qualification, and attempted
+torque access before durable freeze. A passing scalar coverage test alone does
+not test the full new-domain readout path.
+
+4. B3 -- Freeze resource, stage and no-retry contracts before execution
+
+The six-call cap arithmetic is 1800 + 2*2400 + 2*600 + 420 = 8220 s. An 8400 s
+inclusive aggregate leaves 180 s if every call reaches its cap. That is not a
+logical contradiction: nested limits may be truncated by remaining aggregate
+time. It is not a promise that six near-cap solves plus all overhead can finish.
+Prior N36/S120 alone used about 180 s beyond native execution through publication,
+and its separate independent audit used about 165 s. Declare which reviews run
+inside the phase and bound any later independent review separately.
+
+The six exact old-domain analogues sum to 3672.4775739158504 native seconds and
+3070506998 retained run-directory bytes. The six additional runs sum to
+268.06708575203083 seconds and 446866363 bytes. All twelve sum to
+3940.544659667881 seconds and 3517373361 bytes. These are historical observations
+at old endpoints, not forecasts or guaranteed upper bounds at the new endpoints.
+Run-directory totals exclude source archives, preparation, audit and closeout.
+The full per-run execution hashes and stat-only totals are in resource-audit.json.
+
+For a 12-run planning option, retaining proposed caps and adding four N8/N12 calls
+at 90 s, N16 at 420 s and N24 at 600 s gives 9600 s summed native maxima. An
+inclusive 10800 s ceiling would reserve 1200 s at those maxima, but it is only
+an unapproved planning example and requires real accounting before freezing.
+Do not quietly reuse the six-call 8400 s contract or increase it after failure.
+The 6 GiB cap is plausible compared with the 3.52 GB historical raw-run total,
+but must charge every new archive, deck, receipt, parser spill, log and partial
+output on the same filesystem. Keep old raw data as bound inputs instead of
+copying it. Recheck free space immediately before an actual release.
+
+Retain one runtime thread, 3 GiB sampled whole-process-family RSS, zero meshing
+and streaming readout. Historical largest N36 sampled RSS is about 1.92 GB; this
+supports plausibility, not a continuous-peak guarantee. Define active per-run
+output/parser caps by level/steps and total new-output accounting. All deadlines
+must be min(stage/call cap, remaining inclusive aggregate), beginning before
+preflight/hashing and ending only at durable publication/cleanup.
+
+Freeze exact order, attempt marker, per-run IDs, source/archive/runtime/mesh hashes
+and phase transitions. Count a native invocation before spawn and charge failed
+or partial calls. Stop on the first mandatory failure, preserve partial outputs,
+kill and reap the process family; no resume, automatic retry, alternate endpoint,
+extra mesh, cap reset or new directory under the same version to evade the stop.
+A later proposal gets a new version with the entire prior failed history bound.
+Reporting-only audit repairs must preserve both attempts and cannot repeat a solve.
+
+Six diagnostic references plus two fitted solves are at most eight new native
+calls only if a separately justified qualification contract exists; twelve
+stronger references plus two fitted solves are fourteen. Do not charge the
+fitted phase to the reference-call cap or use a second release to reset a failed
+reference phase. A fitted release must bind the exact successful independent
+qualification receipt, endpoint/vector hashes, accepted references and complete
+phase history. It must fix its own inclusive time/output caps before execution.
+
+5. Held-out seal, fit and interpretation
+
+Preserving N12/S120 signed torsion prediction references is defensible because
+their torsion load path is unchanged. Existing numerical torsion references are
+simulation outputs, distinct from measured torque members. The conditional
+homogeneity proof supports scaling on the same fixed equilibrium branch, not
+uniqueness, a numerical guarantee at arbitrary fitted modulus, or measured
+accuracy. The two actual fitted axial confirmations remain mandatory on the new
+N36/S120 and N24/S120 reference schedules, with original component-wise motion,
+raw-reaction and torque scaling tolerances, actual-mu physics scales and complete
+primitive/source bindings. Reject nonpositive or unidentified scales without
+clipping, refitting or another native attempt.
+
+Only after both confirmations and independent paired primitive checks may a
+durable source-bound parameter-and-prediction freeze precede measured torsion
+access. Preserve the exact two torsion member identities and the role split.
+Their headers and coordinates remain uninspected here. A later strict parser or
+range failure after the first reveal is a terminal recorded failure; the mode
+has then been exposed and cannot become unseen validation again. Freeze metrics,
+normalization and null-denominator rules before reveal, without an empirical pass
+threshold. A fit is within-specimen calibration goodness, and torsion is a
+same-specimen different-mode prediction, not donor transfer or patient-specific
+stiffness, surgical retraction/cutting/injury or neurological validation.
+
+Scope and limitations
+
+Read-only inspection of saved declarations, source, source archive, failure/range
+receipts and numerical summaries; stat-only historical native-output sizing;
+fourteen coordinate/hash controls. No project scientific module was imported or
+executed. No new native/mesher call, fit, measured-member read, torsion reveal,
+tracked-file edit or execution authorization occurred. This report audits the
+identified proposal bytes only, not any concurrently prepared v4 implementation.

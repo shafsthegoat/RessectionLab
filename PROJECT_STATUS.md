@@ -68,6 +68,13 @@ mismatch: the last compression and tension rows exceed the frozen solve range by
 3.5215 and 2.2715 µm. No native solve or held-out torsion access occurred.
 Physical agreement remains unmeasured. V3 is terminal; any larger solve domain
 needs a separately versioned, independently reviewed study.
+The [v4 load-domain preparation](artifacts/hbe-branch-calibration-v4-preparation-v1/RESULT.md)
+now records exact coordinate-derived endpoints and portable evidence bindings.
+It passed 215 focused and 52 independent isolated-input controls. Execution,
+fitting and held-out torsion remain closed: the proposed six solves are only a
+diagnostic design, while twelve fresh same-endpoint references, native primitive
+reconstruction and a supervised resource contract are still missing. No new
+measurement or physical-fidelity result was produced.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)

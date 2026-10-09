@@ -1,0 +1,781 @@
+{
+  "coordinates": {
+    "compression": {
+      "coordinate_column": 0,
+      "coordinate_hash_encoding": "utf8_json_float64_array_compact_no_nan",
+      "coordinate_sha256": "881665105d646fbc47a116b0e6bcad7d4ad79f26d43b386c8f297e3b4624fa2e",
+      "coordinate_unit": "m",
+      "coordinates_m": [
+        -1.3110338983051408e-05,
+        -3.808101694915308e-05,
+        -6.305169491525487e-05,
+        -8.802237288135644e-05,
+        -0.0001129930508474,
+        -0.0001379637288135,
+        -0.0001629344067796,
+        -0.0001879050847457,
+        -0.0002128757627118,
+        -0.0002378464406779,
+        -0.000262817118644,
+        -0.0002877877966101,
+        -0.0003127584745762,
+        -0.0003377291525423,
+        -0.0003626998305084,
+        -0.0003876705084745,
+        -0.0004126411864406,
+        -0.0004376118644067,
+        -0.0004625825423728,
+        -0.0004875532203389,
+        -0.000512523898305,
+        -0.0005374945762711,
+        -0.0005624652542372,
+        -0.0005874359322033,
+        -0.0006124066101694,
+        -0.0006373772881355,
+        -0.0006623479661016,
+        -0.0006873186440677,
+        -0.0007122893220338,
+        -0.00073726
+      ],
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
+      "endpoint_float64_m": -0.00073726,
+      "full_payload_bytes_were_decompressed_by_prior_diagnostic": true,
+      "header": [
+        "displacement",
+        "force"
+      ],
+      "maximum_m": -1.3110338983051408e-05,
+      "member": {
+        "bytes": 1222,
+        "crc32": "c7b7a162",
+        "path": "HBE_01/HBE_01_03/compression_c3.csv",
+        "sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43"
+      },
+      "minimum_m": -0.00073726,
+      "response_strings_used_for_endpoint_selection": false,
+      "rest_coordinate_m": 0.0,
+      "row_count": 30,
+      "sign": "negative",
+      "strictly_increasing_magnitude": true
+    },
+    "tension": {
+      "coordinate_column": 0,
+      "coordinate_hash_encoding": "utf8_json_float64_array_compact_no_nan",
+      "coordinate_sha256": "a1690a5cff8fb75fc619984074ba53dbb044f3ea6894f72f698cb36b1edc0731",
+      "coordinate_unit": "m",
+      "coordinates_m": [
+        1.186033898305027e-05,
+        3.683101694915195e-05,
+        6.180169491525362e-05,
+        8.67723728813553e-05,
+        0.0001117430508474,
+        0.0001367137288135,
+        0.0001616844067796,
+        0.0001866550847457,
+        0.0002116257627118,
+        0.0002365964406779,
+        0.000261567118644,
+        0.0002865377966101,
+        0.0003115084745762,
+        0.0003364791525423,
+        0.0003614498305084,
+        0.0003864205084745,
+        0.0004113911864406,
+        0.0004363618644067,
+        0.0004613325423728,
+        0.0004863032203389,
+        0.000511273898305,
+        0.0005362445762711,
+        0.0005612152542372,
+        0.0005861859322033,
+        0.0006111566101694,
+        0.0006361272881355,
+        0.0006610979661016,
+        0.0006860686440677,
+        0.0007110393220338,
+        0.0007360099999999
+      ],
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "endpoint_float64_hex": "0x1.81e1970946411p-11",
+      "endpoint_float64_m": 0.0007360099999999,
+      "full_payload_bytes_were_decompressed_by_prior_diagnostic": true,
+      "header": [
+        "displacement",
+        "force"
+      ],
+      "maximum_m": 0.0007360099999999,
+      "member": {
+        "bytes": 1170,
+        "crc32": "03927483",
+        "path": "HBE_01/HBE_01_03/tension_c3.csv",
+        "sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8"
+      },
+      "minimum_m": 1.186033898305027e-05,
+      "response_strings_used_for_endpoint_selection": false,
+      "rest_coordinate_m": 0.0,
+      "row_count": 30,
+      "sign": "positive",
+      "strictly_increasing_magnitude": true
+    }
+  },
+  "evidence": {
+    "coordinate_diagnosis": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/range-diagnosis/diagnosis.json",
+      "sha256": "572b20b3255abdd19513372dc034b54a08330991152d23154d03954b27f23397"
+    },
+    "coordinate_verification": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/range-diagnosis/verification.json",
+      "sha256": "7aff58f34d69f91a26762d37d6961539212f8eb07fb9e5829563901eb7f04d9f"
+    },
+    "independent_protocol_review": {
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/independent-verification.json",
+      "sha256": "46eb5b96151656ea9def6e797ab2ce70bff7e07f265deb87819d9a44566fd27c"
+    },
+    "independent_resource_audit": {
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/independent-resource-audit.json",
+      "sha256": "bf780e319ea56bca59a1bb4ad11557df4f11cd2cf1ba8ee1e762a135616ded9b"
+    },
+    "n36_spatial_declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    "n36_temporal_declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json",
+      "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+    },
+    "proposal": {
+      "path": "artifacts/hbe-branch-calibration-v4-preparation-v1/proposal.md",
+      "sha256": "078174f134d5ec97aeb906a7e0b036d88eb90ce4d94abf96dbf75309d23e5568"
+    },
+    "v3_access_ledger": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/access.jsonl",
+      "sha256": "d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288"
+    },
+    "v3_publication": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/publication-check.json",
+      "sha256": "f97dcb6534bafd6f4f203c9c90b18ffd6fb1797694939472848a7e70d9f18f2c"
+    },
+    "v3_result": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/result.json",
+      "sha256": "595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c"
+    },
+    "v3_state": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/state.json",
+      "sha256": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd"
+    }
+  },
+  "execution_blockers": [
+    "new_endpoint_primitive_reconstruction_and_boundary_checker_not_implemented",
+    "S60_S120_native_parser_and_work_integration_adapter_not_implemented",
+    "six_call_one_shot_supervised_runner_and_durable_access_ledger_not_implemented",
+    "hash_bound_commit_archive_release_not_created",
+    "resource_caps_not_evidence_qualified",
+    "six_call_diagnostic_is_insufficient_for_calibration"
+  ],
+  "future_qualification_dependency_not_release": {
+    "additional_to_six_candidate": [
+      "compression:N8:S60:reference",
+      "compression:N12:S60:reference",
+      "compression:N16:S60:reference",
+      "compression:N24:S60:reference",
+      "tension:N8:S60:reference",
+      "tension:N12:S60:reference"
+    ],
+    "minimum_reference_call_count": 12,
+    "no_claim_of_physical_validation": true,
+    "not_implemented_or_authorized": true,
+    "original_gates_required": [
+      "all_state_individual_half_and_reconstructed_full_checks",
+      "original_spatial_triplets_and_eligibility_reasons",
+      "order_drift_and_limit_disagreement",
+      "two_latest_limit_remaining_error_envelope",
+      "mixed_step_envelope_and_classification_stability",
+      "complete_original_60_axial_row_coverage"
+    ],
+    "reference_mu_Pa": 1000.0,
+    "same_branch_endpoints_required": true,
+    "six_candidate_count": 6
+  },
+  "interpretation": "Retrospective one-specimen diagnostic preparation using already-exposed axial coordinates. Two-level adjacent spatial and temporal screens do not reproduce the earlier multi-level remaining-error and mixed-step safeguards. No numerical qualification, fit, held-out access, continuum accuracy or patient validation is released.",
+  "loading": {
+    "coordinate_unit": "m",
+    "coverage_absolute_tolerance_m": 0.0,
+    "coverage_relative_tolerance": 0.0,
+    "endpoint_float64_equality_required": true,
+    "equal_pseudotime_steps": true,
+    "interior_grid_absolute_tolerance_m": 1e-18,
+    "interior_grid_relative_tolerance": 2e-14,
+    "no_clipping_or_snapping": true,
+    "no_endpoint_margin": true,
+    "no_extrapolation": true,
+    "no_old_solution_reuse": true,
+    "no_row_drop": true,
+    "pseudotime_end": 1.0,
+    "pseudotime_start": 0.0,
+    "scope": "replace_only_axial_loading_schedule_for_new_diagnostic_solutions",
+    "separate_rest_start_per_run": true,
+    "steps": [
+      60,
+      120
+    ]
+  },
+  "meshes": {
+    "16": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/mesh.json",
+        "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"
+      },
+      "half_elements": 3072,
+      "half_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N16/mesh.json",
+        "sha256": "c1665d5f107c5e20590d877e7613910a5a2aef1c54c9dff5f5229a8d4f8927ee"
+      },
+      "half_nodes": 4005,
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N16/reconstruction.json",
+        "sha256": "4c0766462d11513bc077c31dd96f3062c854f57130f397346245bfd638b7006d"
+      }
+    },
+    "24": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json",
+        "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+      },
+      "half_elements": 10368,
+      "half_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+        "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+      },
+      "half_nodes": 12439,
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/reconstruction.json",
+        "sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+      }
+    },
+    "32": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/generated/mesh.json",
+        "sha256": "5680a53bb8fa9c5303b23bd9036a6e67ebb2d0cb8604a08106211490c5b2116a"
+      },
+      "half_elements": 24576,
+      "half_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/mesh.json",
+        "sha256": "edbb95dd61e2f1ba94faf405bbd263a2d995dcc87ebd298a8e072595ecc6009a"
+      },
+      "half_nodes": 28233,
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/preparation/N32/reconstruction.json",
+        "sha256": "fa853fa294277d0f468b977d5e83506c693f49ae4d7c74864f3eefdddac9084c"
+      }
+    },
+    "36": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/generated/mesh.json",
+        "sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74"
+      },
+      "half_elements": 34992,
+      "half_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+        "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+      },
+      "half_nodes": 39610,
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json",
+        "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+      }
+    }
+  },
+  "ordered_reference_runs": [
+    {
+      "N": 32,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "frame_count": 61,
+      "mu_Pa": 1000.0,
+      "native_domain": "lower_half",
+      "output_subdirectory": "compression-N32-S60-reference",
+      "run_id": "compression:N32:S60:reference",
+      "solve_entire_extended_branch": true,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 36,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "frame_count": 61,
+      "mu_Pa": 1000.0,
+      "native_domain": "lower_half",
+      "output_subdirectory": "compression-N36-S60-reference",
+      "run_id": "compression:N36:S60:reference",
+      "solve_entire_extended_branch": true,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 36,
+      "branch": "compression",
+      "endpoint_decimal_literal_m": "-0.00073726",
+      "frame_count": 121,
+      "mu_Pa": 1000.0,
+      "native_domain": "lower_half",
+      "output_subdirectory": "compression-N36-S120-reference",
+      "run_id": "compression:N36:S120:reference",
+      "solve_entire_extended_branch": true,
+      "start_from_rest": true,
+      "steps": 120
+    },
+    {
+      "N": 16,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "frame_count": 61,
+      "mu_Pa": 1000.0,
+      "native_domain": "lower_half",
+      "output_subdirectory": "tension-N16-S60-reference",
+      "run_id": "tension:N16:S60:reference",
+      "solve_entire_extended_branch": true,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 24,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "frame_count": 61,
+      "mu_Pa": 1000.0,
+      "native_domain": "lower_half",
+      "output_subdirectory": "tension-N24-S60-reference",
+      "run_id": "tension:N24:S60:reference",
+      "solve_entire_extended_branch": true,
+      "start_from_rest": true,
+      "steps": 60
+    },
+    {
+      "N": 24,
+      "branch": "tension",
+      "endpoint_decimal_literal_m": "0.0007360099999999",
+      "frame_count": 121,
+      "mu_Pa": 1000.0,
+      "native_domain": "lower_half",
+      "output_subdirectory": "tension-N24-S120-reference",
+      "run_id": "tension:N24:S120:reference",
+      "solve_entire_extended_branch": true,
+      "start_from_rest": true,
+      "steps": 120
+    }
+  ],
+  "output_root": "outputs/mechanics/hbe-01-03-branch-calibration-v4",
+  "pairwise_checks": [
+    {
+      "after_call": 2,
+      "coarse_run": "compression:N32:S60:reference",
+      "fine_run": "compression:N36:S60:reference",
+      "id": "compression_spatial",
+      "kind": "mesh"
+    },
+    {
+      "after_call": 3,
+      "coarse_run": "compression:N36:S60:reference",
+      "fine_run": "compression:N36:S120:reference",
+      "id": "compression_temporal",
+      "kind": "step"
+    },
+    {
+      "after_call": 5,
+      "coarse_run": "tension:N16:S60:reference",
+      "fine_run": "tension:N24:S60:reference",
+      "id": "tension_spatial",
+      "kind": "mesh"
+    },
+    {
+      "after_call": 6,
+      "coarse_run": "tension:N24:S60:reference",
+      "fine_run": "tension:N24:S120:reference",
+      "id": "tension_temporal",
+      "kind": "step"
+    }
+  ],
+  "pairwise_limits": {
+    "claimed_continuum_error_bound": false,
+    "common_state_count": 61,
+    "fine_force_maximum_uses_compared_states": true,
+    "mesh": {
+      "force_floor_N": 1.6e-07,
+      "force_relative_to_max_abs_fine": 0.02,
+      "probe_norm_limit_m": 8e-06
+    },
+    "probe_coordinates": "unchanged_original_fixed_physical_probes",
+    "probe_count": 75,
+    "signed_force_and_probe_component_differences_required": true,
+    "step": {
+      "force_floor_N": 1.6e-08,
+      "force_relative_to_max_abs_fine": 0.002,
+      "probe_norm_limit_m": 8e-07
+    }
+  },
+  "phase_contract": {
+    "later_calibration": {
+      "available_in_this_version": false,
+      "durable_hash_bound_mu_prediction_freeze_before_any_torque_access": true,
+      "independent_paired_primitive_checks_required": true,
+      "maximum_native_calls": 2,
+      "new_output_subdirectory": "calibration",
+      "released": false,
+      "two_actual_fitted_axial_native_confirmations_required": true
+    },
+    "preparation": {
+      "held_out_member_reads": 0,
+      "measured_response_fit_calls": 0,
+      "mesher_calls": 0,
+      "native_calls": 0
+    },
+    "reference_diagnostic": {
+      "access_ledger": "coordinate_only_allowlist_no_response_fit_no_torque",
+      "automatic_retry": false,
+      "maximum_mesher_calls": 0,
+      "maximum_native_calls": 6,
+      "new_output_subdirectory": "reference-diagnostic",
+      "released": false,
+      "runtime_threads": 1,
+      "sampled_process_family_RSS_bytes": 3221225472,
+      "stop_on_first_failed_mandatory_gate": true
+    }
+  },
+  "planning_budget_not_release": {
+    "actual_release_caps_frozen": false,
+    "aggregate_seconds_proposed": 8400,
+    "native_seconds_by_N_proposed": {
+      "16": 420,
+      "24": 600,
+      "32": 1800,
+      "36": 2400
+    },
+    "new_output_bytes_proposed": 6442450944,
+    "remaining_proposed_overhead_seconds": 180,
+    "required_before_release": [
+      "evidence_bound_prior_runtime_and_output_inventory",
+      "inclusive_hashing_preparation_independent_readout_and_publication_allowance",
+      "free_storage_check",
+      "separately_frozen_later_calibration_aggregate_and_byte_caps"
+    ],
+    "sum_six_native_caps_seconds": 8220
+  },
+  "preserved_v3_fields": {
+    "backend_profile": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "csv_schemas": {
+      "compression": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": [
+          "displacement",
+          "force"
+        ],
+        "response_column": 1,
+        "response_unit": "N"
+      },
+      "tension": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": [
+          "displacement",
+          "force"
+        ],
+        "response_column": 1,
+        "response_unit": "N"
+      },
+      "torsion_neg": {
+        "coordinate_column": 0,
+        "coordinate_unit": "rad",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "Nm"
+      },
+      "torsion_pos": {
+        "coordinate_column": 0,
+        "coordinate_unit": "rad",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "Nm"
+      }
+    },
+    "fitted_parameters": [
+      "common_positive_mu_scale_only"
+    ],
+    "interpreter": {
+      "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+    },
+    "legacy": {
+      "aggregate": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/reference-numerical.json",
+        "sha256": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a"
+      },
+      "outcome": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+        "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+      },
+      "release": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-v1/release.json",
+        "sha256": "edb91bdbaa542852ec65a87eba8e2676556d926d9c979ceea3cb8e460624ba6b"
+      }
+    },
+    "physical_binary_threshold": null,
+    "protocol": {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "roles": {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    "runtime_identity": {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    "scale_proof": {
+      "path": "artifacts/hbe-n36-temporal-preparation-v1/scale-homogeneity.md",
+      "sha256": "e7c5f4aaf0693299f20d872b95de18a28f568cba7fa95520c48994f1105c57b0"
+    },
+    "scale_proof_review": {
+      "path": "artifacts/hbe-n36-temporal-preparation-v1/scale-homogeneity-review.json",
+      "sha256": "06234924a7867b8842dab467cf3eda6c1ca41bb6e7a75685bf5f3f48d55fc33f"
+    },
+    "torsion_references": {
+      "torsion_neg": {
+        "execution": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/execution.json",
+          "sha256": "021aa15a98ef150da032280088be52d9471a82ea33d8f7196e4f6de86360b67d"
+        },
+        "primitives": {
+          "deck": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/specimen.feb",
+            "sha256": "ccd47d61bea8ee46b835241e528e5ec054a30706fd44262b6b480dfdaabb881f"
+          },
+          "elements": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/elements.log",
+            "sha256": "0f98a63f0d975b271849163f9e0aa5422677ce99d4120a6348156def1d7c20c6"
+          },
+          "loading": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/loading.json",
+            "sha256": "43dfe963dbe14dbfdaed17fbde2f72c0fd276ef1cf8a1b647b17660e52ffcf46"
+          },
+          "mesh": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+            "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+          },
+          "nodes": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/nodes.log",
+            "sha256": "07624c98658433fa7172b5ea6b3f28fd1b542feadaf34d25f5b4054f091125bf"
+          },
+          "solver": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/solver.log",
+            "sha256": "e0350c42689ed21dcd47bc74988131bb6d1c8c83dd0fe27d0e8dd457f78685b5"
+          }
+        },
+        "readout": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/readout.json",
+          "sha256": "5934d4699d747f0f852a9242a08ca3bdaac3cfcb583dc4ed92dd96cbaecc2569"
+        }
+      },
+      "torsion_pos": {
+        "execution": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/execution.json",
+          "sha256": "35ffcacc32f0fc48d3293c712d834c1158a345829dcaeea2c4941a906dcd6630"
+        },
+        "primitives": {
+          "deck": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/specimen.feb",
+            "sha256": "9f52d78d9b65bbfe3752e3a3707ee150a2ce34f2916f96d5591026686d55bbb5"
+          },
+          "elements": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/elements.log",
+            "sha256": "08199be8b92cfd5bc8cb6b8f804e1854fdebf6336efe73e05f396afb1eb6bbd2"
+          },
+          "loading": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/loading.json",
+            "sha256": "1cc031dce1b833c1776707748f724b51a43dd54d7b542e7939f6b55ee6f71de6"
+          },
+          "mesh": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+            "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+          },
+          "nodes": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/nodes.log",
+            "sha256": "f35785676d86f8da7c0746b6df9f2ccf9d4cfed91792d98bb345aff5a660e761"
+          },
+          "solver": {
+            "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/solver.log",
+            "sha256": "ca587a60067b7af03121b3cce268e6d327c31a252a6767035652e0dcda2ae3cc"
+          }
+        },
+        "readout": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/readout.json",
+          "sha256": "0ec663c8d3bcbc178d8712e3cb0583084086a1981f9d4f67bb52c100538c0b9f"
+        }
+      }
+    }
+  },
+  "previous_study": {
+    "path": "manifests/experiments/hbe-01-03-branch-calibration-v3.json",
+    "sha256": "e644ab3a46d52c6530b9264e9315ce7eb139e03cdb93e197ca1d60a81329d01c"
+  },
+  "qualification_limits": {
+    "automatic_fit_release": false,
+    "future_calibration_requires": "Separate preregistered same-endpoint twelve-reference qualification, original triplet/order/envelope/mixed-step gates, new-domain primitive checker, independent source review and a separately released calibration phase. Adding boolean checks to these six runs cannot qualify fitting.",
+    "missing_same_endpoint_safeguards": [
+      "multi_level_order_history",
+      "two_latest_limit_remaining_error_envelope",
+      "mixed_step_envelope_and_classification_stability"
+    ],
+    "old_endpoints_not_new_domain_evidence": true,
+    "original_global_spatial_failure_preserved": true,
+    "six_call_pairwise_screen_is_diagnostic_only": true
+  },
+  "reference_candidate_disposition": "Six-run candidate retained as an unexecuted diagnostic design only. It is not a recommended or authorized expensive next action and cannot lead to fit in this version.",
+  "retrospective_axial_coordinates_already_exposed": true,
+  "schema": "hbe-branch-calibration-v4-preparation",
+  "scientific_invariants": {
+    "calibration": {
+      "allowed_after": "root_release_and_runtime_mesh_analytical_gates",
+      "axial_mu_hat_confirmation_mesh_N": 12,
+      "axial_mu_hat_confirmation_runs": 2,
+      "axial_mu_hat_confirmation_steps": 120,
+      "computed_curve_interpolation": "piecewise_linear_in_solved_input_coordinate_no_extrapolation",
+      "coordinate_schema": "finite_unique_monotone_signed_m_or_rad;ambiguous_units_signs_or_duplicates_stop",
+      "intercept_sign_offset_height_pressure_fit": false,
+      "members_from": "roles.calibration.members",
+      "minimum_identified_denominator_over_F0_squared_exclusive": 1e-12,
+      "mu_formula": "scale*reference_mu_Pa",
+      "no_outcome_based_row_removal": true,
+      "nonpositive_scale": "stop_not_clip",
+      "scale_formula": "sum(w*g*y)/sum(w*g*g)",
+      "weights": "each_mode_total_0.5;normalized_trapezoidal_coordinate_weights_within_mode"
+    },
+    "geometry": {
+      "axis_origin_m": [
+        0,
+        0,
+        0
+      ],
+      "axis_unit_vector": [
+        0,
+        0,
+        1
+      ],
+      "height_m": 0.00489159,
+      "height_provenance": "creator_test_inferred",
+      "measurement_uncertainty": null,
+      "radius_m": 0.004,
+      "specimen": "HBE_01_03"
+    },
+    "held_out": {
+      "access_requires": "durable_calibration_parameter_and_prediction_freeze_with_all_hashes_and_numerical_gates",
+      "members_from": "roles.held_out_validation.members",
+      "no_CI_from_processed_rows": true,
+      "release_is_loading_mode_not_donor_validation": true,
+      "used_for_selection_or_refitting": false
+    },
+    "material": {
+      "K_over_mu": 49.666666666666664,
+      "c1_over_mu": 2,
+      "c2_through_c6": 0,
+      "energy": "mu/2*(Ibar1-3)+K/4*(J^2-1-2*ln(J))",
+      "febio_type": "Ogden",
+      "fitted_parameters": [
+        "positive_mu_scale_only"
+      ],
+      "initial_poisson_ratio_assumption": 0.49,
+      "m1": 2,
+      "m2_through_m6": 2,
+      "pressure_model": 1,
+      "reference_mu_Pa": 1000.0,
+      "sweeps": false
+    },
+    "mechanics": {
+      "body_forces": false,
+      "bottom_xyz": "prescribed_zero",
+      "contact": false,
+      "domain_type": "three-field-solid",
+      "element_type": "hex8",
+      "glue_compliance": false,
+      "lateral_boundary": "traction_free",
+      "laugon": 0,
+      "quasistatic": true,
+      "rigid_bodies": false,
+      "top_axial_xyz": [
+        "prescribed_zero",
+        "prescribed_zero",
+        "prescribed_axial_displacement"
+      ],
+      "top_torsion_xyz": [
+        "x*(cos(theta)-1)-y*sin(theta)",
+        "x*sin(theta)+y*(cos(theta)-1)",
+        "prescribed_zero"
+      ],
+      "units": [
+        "m",
+        "N",
+        "Pa",
+        "Nm"
+      ],
+      "zero_components_use_prescribed_displacement_not_fixed_BC": true
+    },
+    "metrics": {
+      "aggregation": "equal_branch_weight_not_row_pooled",
+      "axial_role": "calibration_goodness_of_fit_only",
+      "empirical_fidelity_acceptance_tolerance": null,
+      "normalized_error_null_when": "observed_RMS<=64*float64_epsilon*max(characteristic_fitted_response_scale,max_abs_observed)",
+      "per_signed_branch": [
+        "RMSE",
+        "MAE",
+        "signed_endpoint_bias",
+        "observed_RMS_denominator",
+        "normalized_RMSE"
+      ],
+      "physical_validation_pass_claim_allowed": false,
+      "reason": "unknown_metrology_and_no_application_tolerance;first_baseline_reports_descriptive_concordance",
+      "signed_endpoint_bias_definition": "prediction_minus_observation_at_largest_absolute_observed_input_coordinate",
+      "torque_odd_symmetry_discrepancy": true,
+      "torque_odd_symmetry_grid": "21_equal_points_in_intersection_of_positive_and_absolute_negative_observed_angle_domains;linear_interpolation_no_extrapolation;null_with_reason_if_empty_or_singleton_overlap",
+      "torsion_role": "within_specimen_held_out_mode",
+      "within_branch_weights": "normalized_trapezoidal_absolute_input_coordinate_weights;no_row_IID_assumption"
+    },
+    "required_freeze_receipt": [
+      "git_commit_and_clean_source_archive_sha256",
+      "this_declaration_sha256",
+      "role_and_input_archive_hashes",
+      "verified_gmsh_runtime_and_license_receipt",
+      "verified_febio_binary_library_and_runtime_receipt",
+      "mesh_converter_and_evaluator_source_hashes",
+      "solver_deck_hashes_and_command_arrays",
+      "calibration_fit_and_predicted_torsion_hashes_before_heldout_open"
+    ],
+    "solver": {
+      "analysis": "STATIC",
+      "analytic_verification_required_first": true,
+      "dtol": 1e-08,
+      "etol": 1e-08,
+      "linear_solver": "skyline",
+      "max_refs": 15,
+      "min_residual_N2_formula": "(1e-10*mu*R^2)^2",
+      "qn_method": "BFGS",
+      "rtol": 1e-08,
+      "silent_symmetrization_or_formulation_switch": false,
+      "symmetric_stiffness": 1,
+      "tolerances_scale_with_mu": true
+    }
+  },
+  "specimen": "HBE_01_03",
+  "status": "diagnostic_preparation_only_not_execution_ready",
+  "study_id": "hbe-01-03-branch-calibration-v4",
+  "untouched_prospective_calibration_claim": false
+}

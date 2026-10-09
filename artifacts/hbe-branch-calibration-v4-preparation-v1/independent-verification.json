@@ -1,0 +1,34 @@
+{
+  "all_audited_inputs_unchanged": true,
+  "archived_diagnosis_matches_build_original": true,
+  "artifact_writes": "this audit build directory only; no release or protocol modification",
+  "blocking_findings": [
+    "B1_new_domain_qualification_contract_is_weaker_than_v3",
+    "B2_endpoint_and_step_propagation_in_all_native_primitive_checks_unimplemented",
+    "B3_release_accounting_and_cross_phase_one_shot_contract_must_be_frozen_before_execution"
+  ],
+  "calibration_status": "retrospective_already_exposed_development",
+  "completed_fits": 0,
+  "coordinate_control_checks_passed": 14,
+  "coordinate_extrema_choice_heldout_outcome_leakage_found": false,
+  "execution_release_approved": false,
+  "held_out_torsion_accessed": false,
+  "later_actual_fitted_confirmation_count": 2,
+  "measured_members_opened": [],
+  "measured_zip_opened": false,
+  "new_mesher_calls": 0,
+  "new_native_calls": 0,
+  "original_global_spatial_gate_pass": false,
+  "reviewed_proposal": {
+    "bytes": 9188,
+    "path": "build/hbe-branch-calibration-v4-protocol-options-v1/PROPOSAL.md",
+    "sha256": "078174f134d5ec97aeb906a7e0b036d88eb90ce4d94abf96dbf75309d23e5568"
+  },
+  "schema": "hbe-v4-independent-review-v1",
+  "six_calls_may_be_declared_diagnostic_only": true,
+  "six_calls_sufficient_for_v3_equivalent_branch_qualification": false,
+  "status": "proposal_changes_required_no_execution_release",
+  "stronger_reference_call_count_to_reproduce_prior_branch_contracts": 12,
+  "tracked_files_edited_by_this_audit": false,
+  "v3_committed_source_and_archived_source_match": true
+}

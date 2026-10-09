@@ -1,0 +1,82 @@
+HBE_01_03 v4 portability repair: independent source review v3
+Disposition: GO for the exact reproducible NON-EXECUTABLE preparation candidate.
+No execution, fit, held-out access, or numerical qualification is released.
+
+Both prior blockers are resolved for this scope. The corrected temporal allowance
+still uses only the 61 compared states, and the nine formerly ignored direct
+metadata bindings now target commit-eligible artifacts. No other candidate change
+was introduced: the manifest changes only those nine paths, the core changes only
+its corresponding declaration digest, and the tests are byte-identical to v2.
+
+Verified all nine retargets against the exact previously reviewed originals.
+Every byte and SHA256 is unchanged. Six use existing committed compact v3 failure
+and range-diagnosis artifacts; three use the new compact v4 artifacts. The readable
+independent audit is also byte-identical to its original at SHA256
+c6eee64ff86300af734659c7930d4f1a7a9b9070c4bfaa89ce0e7c38bf2a5db1.
+All four new supporting artifact paths are eligible for Git inclusion, not ignored.
+
+Isolated checkout verification
+
+Constructed an isolated tree containing exactly the 14 direct metadata inputs and
+the complete three-module source import closure: v4 core, mechanics_hbe_access,
+and mechanics_hbe_evaluation. The existing .venv supplies external dependencies.
+Used Python isolated mode and an audit hook to reject original-workspace reads
+outside this isolated tree (except interpreter dependencies). Confirmed every
+project import resolves inside the tree. No build/, outputs/, or data/ directory
+exists within it, and no ignored local evidence is needed by the validator.
+
+validate_preparation succeeds. Deleting and then hash-altering each of all 14
+bound metadata inputs causes rejection. After restoring the exact bytes it
+succeeds again. Fabricated authorized/six-pass/twelve-pass/frozen/failed statuses
+and empty arguments cannot open any execution, fitting, or torque gate. The two
+odd-state temporal counterexamples remain failures, and spatial comparisons still
+use all 61 states. These isolated checks total 52 successful controls.
+
+The focused source suite independently passes all 215 tests (69 v4 and 146 v3).
+No candidate or direct-evidence hash changed during review. There are no remaining
+blocking findings for the declared preparation scope.
+
+Commit completeness
+
+This is GO for including all SEVEN new files listed with exact hashes in
+new-files-required-for-commit.json: the manifest, core, tests, and four compact
+supporting artifacts under artifacts/hbe-branch-calibration-v4-preparation-v1.
+Those seven files are currently untracked; this review does not claim they have
+already been committed. Omitting the three machine-read v4 evidence artifacts
+would reintroduce the fresh-checkout failure. The supporting audit preserves the
+human-readable independent rationale. Existing tracked v3 mirrors must remain.
+
+Exact candidate SHA256
+
+manifests/experiments/hbe-01-03-branch-calibration-v4.json
+85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b
+scripts/mechanics_hbe_branch_calibration_v4.py
+2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc
+tests/test_mechanics_hbe_branch_calibration_v4.py
+20c1de47123841613f4040492f4e58229e452b670df6044bb7b1c8b49e52227e
+
+Scope limits retained
+
+This remains an unexecuted, retrospective coordinate/diagnostic preparation.
+The six-call diagnostic is not fit-ready; the stronger same-endpoint twelve-run
+qualification and complete native reconstruction/runtime contract remain missing
+and explicitly blocked. Original spatial failures and the role/held-out boundaries
+are unchanged. The preparation validator authenticates its direct metadata set;
+it is not full execution preflight or complete source/runtime/mesh admission.
+The role-file dereference limitation recorded in source review v2 remains within
+that scope; these path edits do not change it.
+
+Evidence
+
+binding-retargets.json: nine old/new path pairs with unchanged hashes.
+isolated-input-inventory.json: direct files, hashes, committed availability.
+isolated-validation.json: 52 controls, source origins, gates and no-payload scope.
+new-files-required-for-commit.json: all seven exact commit candidates.
+preparation.json: exact source/hash delta and supporting audit binding.
+focused-tests.log / focused-tests.xml: independent 215-test rerun.
+review.py and isolated-direct-input-tree/independent_check.py: review drivers.
+verification.json: final scope-limited GO and evidence hashes.
+
+No tracked file was edited, no commit made, no fit/native/mesher call executed,
+and no measured archive member, measured torsion, or native primitive payload
+was opened. Writes were limited to this independent build review directory.

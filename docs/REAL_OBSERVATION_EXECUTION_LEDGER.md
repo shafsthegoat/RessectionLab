@@ -85,6 +85,12 @@ by 3.5215 µm in compression and 2.2715 µm in tension. Independent failure and
 coordinate audits verified no completed fit, native solve, parameter freeze or
 held-out torsion access. Any corrected domain requires a separately versioned
 and reviewed protocol; v3 will not be retried or patched in place.
+The [v4 preparation](../artifacts/hbe-branch-calibration-v4-preparation-v1/RESULT.md)
+binds exact coordinate-derived endpoints and portable review evidence. Its
+execution, fitting, and held-out gates remain closed. Independent isolated
+controls and focused tests pass, but twelve new same-endpoint references and a
+native reconstruction/resource protocol are still required; no physical
+calibration or patient interaction was validated.
 
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 

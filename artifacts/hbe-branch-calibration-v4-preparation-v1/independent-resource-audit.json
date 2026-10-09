@@ -1,0 +1,128 @@
+{
+  "runs": {
+    "compression:N12:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/execution.json",
+      "execution_sha256": "458ebfdcc9c28952c70e7c720af7818d8642480c7e2369932b7c537ee24db6ff",
+      "in_six_run_proposal": false,
+      "recorded_native_seconds": 20.69952041702345,
+      "recorded_seconds_cap": 90,
+      "retained_run_directory_bytes_stat_only": 50387406
+    },
+    "compression:N16:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/execution.json",
+      "execution_sha256": "c8acadcaf0d4f37a102182996ec2a628e9194aa38e5476c3af9e83171e515f0d",
+      "in_six_run_proposal": false,
+      "recorded_native_seconds": 88.58572033396922,
+      "recorded_seconds_cap": 420,
+      "retained_run_directory_bytes_stat_only": 115817090
+    },
+    "compression:N24:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/execution.json",
+      "execution_sha256": "310eeb9555801c5105df88b0b7d84423c0ec950845cd02ddf01e9c913c3e5e42",
+      "in_six_run_proposal": false,
+      "recorded_native_seconds": 130.32527245907113,
+      "recorded_seconds_cap": 420,
+      "retained_run_directory_bytes_stat_only": 199145497
+    },
+    "compression:N32:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-global-n32-v1/experiment/runs/compression-N32-S60-reference/execution.json",
+      "execution_sha256": "3cd61feadf9304197a99ccc223d0a22794d9b1ddba4c3eaf118274f5496f5475",
+      "in_six_run_proposal": true,
+      "recorded_native_seconds": 639.0573542909697,
+      "recorded_seconds_cap": 750,
+      "retained_run_directory_bytes_stat_only": 463539655
+    },
+    "compression:N36:S120": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-temporal-v1/experiment/runs/compression-N36-S120-reference/execution.json",
+      "execution_sha256": "fdc1487ba8445f756109a0e8cfdcd1388da0fcf6e497b09f750951e4d91c70af",
+      "in_six_run_proposal": true,
+      "recorded_native_seconds": 1766.5480909170583,
+      "recorded_seconds_cap": 2100,
+      "retained_run_directory_bytes_stat_only": 1303382785
+    },
+    "compression:N36:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/execution.json",
+      "execution_sha256": "ea36bd4aee4440277695dc2a6d19df2f39b6d14b248554f0ad628cbc04ed672b",
+      "in_six_run_proposal": true,
+      "recorded_native_seconds": 873.3347458748613,
+      "recorded_seconds_cap": 1500,
+      "retained_run_directory_bytes_stat_only": 656799570
+    },
+    "compression:N8:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/execution.json",
+      "execution_sha256": "901c1c701a95730abc5d6ff25083733f66471ef67d7d6e82d050d59494c2b1b4",
+      "in_six_run_proposal": false,
+      "recorded_native_seconds": 4.249919041059911,
+      "recorded_seconds_cap": 90,
+      "retained_run_directory_bytes_stat_only": 15989219
+    },
+    "tension:N12:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/execution.json",
+      "execution_sha256": "883c197bc8c347523e23de96aad830ef447a14d817058e8cb67961aceeb11168",
+      "in_six_run_proposal": false,
+      "recorded_native_seconds": 20.285739916958846,
+      "recorded_seconds_cap": 90,
+      "retained_run_directory_bytes_stat_only": 49726919
+    },
+    "tension:N16:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/execution.json",
+      "execution_sha256": "7e9d0a6674236060ba150bbf9ac92515e1a1723af4335a1e2d0047c310633f6d",
+      "in_six_run_proposal": true,
+      "recorded_native_seconds": 20.724548124941066,
+      "recorded_seconds_cap": 420,
+      "retained_run_directory_bytes_stat_only": 60816918
+    },
+    "tension:N24:S120": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/execution.json",
+      "execution_sha256": "a1365536813a5db43665cc42d5adf291891c756b76274c64a43df06d530e6e97",
+      "in_six_run_proposal": true,
+      "recorded_native_seconds": 245.9516257501673,
+      "recorded_seconds_cap": 420,
+      "retained_run_directory_bytes_stat_only": 389488783
+    },
+    "tension:N24:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/execution.json",
+      "execution_sha256": "78870007328a7a2f1bd8adf46b4b76388bc5152fbea9d11cf07d481efb9dd802",
+      "in_six_run_proposal": true,
+      "recorded_native_seconds": 126.8612089578528,
+      "recorded_seconds_cap": 420,
+      "retained_run_directory_bytes_stat_only": 196479287
+    },
+    "tension:N8:S60": {
+      "execution_path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/execution.json",
+      "execution_sha256": "a72afec40b1f0c2f9a89a6eade8c8dca6301c976bc06e202fbf1f7c88efa96f8",
+      "in_six_run_proposal": false,
+      "recorded_native_seconds": 3.920913583948277,
+      "recorded_seconds_cap": 90,
+      "retained_run_directory_bytes_stat_only": 15800232
+    }
+  },
+  "summary": {
+    "additional_six": {
+      "old_domain_recorded_native_seconds_sum": 268.06708575203083,
+      "old_domain_retained_run_directory_bytes_sum": 446866363,
+      "run_count": 6
+    },
+    "available_bytes_at_audit": 704231669760,
+    "cap_arithmetic": {
+      "additional_caps_if_N8_N12_90s_N16_420s_N24_600s": 1380,
+      "aggregate_not_required_to_equal_sum_of_maxima": true,
+      "headroom_if_all_calls_reach_maximum_seconds": 180,
+      "possible_planning_aggregate_10800s_is_not_authorized_or_validated": 10800,
+      "proposed_aggregate_seconds": 8400,
+      "proposed_per_call_maxima_sum_seconds": 8220,
+      "twelve_per_call_maxima_sum_with_those_added_caps_seconds": 9600
+    },
+    "proposed_six": {
+      "old_domain_recorded_native_seconds_sum": 3672.4775739158504,
+      "old_domain_retained_run_directory_bytes_sum": 3070506998,
+      "run_count": 6
+    },
+    "resource_scope": "Old-domain observations only, not promised runtimes, new-endpoint results, or independent process-family peak measurements. No raw primitive content read for size totals. No source/preparation/closeout overhead included in run-directory sums.",
+    "stronger_twelve": {
+      "old_domain_recorded_native_seconds_sum": 3940.544659667881,
+      "old_domain_retained_run_directory_bytes_sum": 3517373361,
+      "run_count": 12
+    }
+  }
+}
