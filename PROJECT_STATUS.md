@@ -92,6 +92,13 @@ Actual source decks, full boundary topology, native primitives and resource
 release are still unbound; execution, fit and torsion access remain closed.
 Independent scope review confirms that this specimen work cannot by itself
 validate patient retraction or cutting forces.
+The [v5 source-deck gate audit](artifacts/hbe-v5-source-deck-gate-v1/RESULT.md)
+found ten local old-domain decks covering the twelve proposed runs and
+independently matched their mesh and complete top/bottom boundary topology.
+The pure adapter accepted all twelve in memory. Execution remains blocked by
+an immutable source binding, new-endpoint primitive checks, a twelve-run
+comparator and a supervised release; no new physical result or patient-force
+validation exists.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
