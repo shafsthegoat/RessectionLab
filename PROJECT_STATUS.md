@@ -81,19 +81,31 @@ now pass dependency, analytic registration and bounded safe metadata checks.
 The initial inverse-transform and safe-load failures are retained. This is
 not patient inference: an independent adapter, scan-only preprocessing and
 local anatomical QC remain required before any planning input is admitted.
+The subsequent [generated CPU memory tests](artifacts/scan-target-generated-cpu-memory-v1/RESULT.md)
+retain one 64³ resource failure and one separate instrumented pass. The passing
+run produced finite region outputs in 1.660 s forward time; its sampled peak
+was 3,017,936 KiB against a 3,145,728 KiB cap. Memory rose during that forward,
+with little headroom. The first failure's stage remains unproven; full 128³
+and patient inference remain untested. No new RL or patient accuracy is claimed.
 
 The [HBE twelve-row comparison diagnostic](docs/hbe-v5-twelve-row-generated-comparator.md)
 is committed and independently reviewed. Generated fixtures verify the frozen
-comparison rules and disclose ungated adjacent-mesh exceedances. Native admission
-remains disabled; eleven of the twelve v5 native rows are still unrun, and neither
-specimen-force calibration nor physical validation is established.
+comparison rules and disclose ungated adjacent-mesh exceedances. Native comparison
+remains incomplete; neither specimen-force calibration nor physical validation
+is established. The subsequent N12 attempt below is not admitted to the chain.
 The [remaining-row supervisor](docs/hbe-v5-remaining-one-shot-supervisor.md)
 now has independent source-only acceptance: 137 writer tests and 81 independent
 focused/adjacent checks pass. Its [portable review](artifacts/hbe-v5-remaining-one-shot-preparation-v1/INDEPENDENT_REVIEW.md)
 binds the exact four source files, complete import closure, predecessor and
-readout integrity, and bounded execution. Eleven native rows remain unrun;
-each still requires its own source-bound release and result audit. The separate
+readout integrity, and bounded execution. Remaining rows require their own
+source-bound release and result audit. The separate
 failed cube force-convergence result is preserved and does not admit patient mechanics.
+The [N12 continuation attempt](artifacts/hbe-v5-n12-parent-guard-failure-v1/RESULT.md)
+completed native and readout stages within their caps, but the parent rejected
+the silent worker's empty console. The original receipt remains failed.
+Independent raw-log replay exactly matches its 61 passing numerical frames.
+Later rows remain on hold pending the narrow file-check fix and a separately
+reviewed saved-attempt supplement; no solver retry or measured fitting occurred.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
