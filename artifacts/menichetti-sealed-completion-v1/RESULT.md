@@ -1,0 +1,5 @@
+PASS: one sealed Menichetti F_t_curves.mat, 6,427,434 bytes. Source SHA256 and independent post-transfer whole-file rehash match ce3ee6610977500cc1f999a8b5ab1e620a9551cb0f8d770d3b4e429545c39cb6.
+Receipt SHA256: c8a219659c5ab68419ab448ac3431c2690de01e681a0d5c1f5b8dba6c796afc0.
+First attempt, one verified-TLS HTTP200, exact source URL and opaque ETag, offset zero. Actual resumption was not needed. Session29721/PID83330 exited0; PGID not observed before fast process exit. Both own and SEG predecessor locks released.
+No MAT structure interpretation, response values, donor inventory, donor-role assignment, StatisticsTables PDF payload, fit or training admission. The file remains sealed under the committed SEALED_BYTE_INTAKE_ONLY scope. Publisher reports ten brains; this is not a locally verified donor denominator or independent cohort claim.
+All declaration, scope, publisher metadata, helper and predecessor receipt bindings pass. Independent hashing read bytes solely for fixity, without decoding scientific contents.

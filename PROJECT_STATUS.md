@@ -45,8 +45,10 @@ Menichetti creator release explicitly documents postmortem brain indentation
 force units, sampling and specimen grouping. It is a candidate for a narrower
 relaxation test; actual depth and contact/hold sample alignment remain unresolved.
 Its [sealed byte-intake scope](artifacts/menichetti-sealed-intake-preparation-v1/INDEPENDENT_REVIEW.md)
-is now frozen after six independent transport controls. Response values remain
-closed until donor grouping and roles are established. Nominal motor commands are
+completed its single 6,427,434-byte transfer on October 9 at 09:10 UTC.
+The [independent completion audit](artifacts/menichetti-sealed-completion-v1/RESULT.md)
+rehashed the whole file and matched the publisher SHA-256. Response values and
+MAT structure remain closed; donor grouping and roles are not yet established. Nominal motor commands are
 not measured per-trial displacement, and neither source establishes live surgery.
 
 The [tile-depth-1 comparison attempt](artifacts/tile1-cleanup-negative-v1/INDEPENDENT_REVIEW.md)
