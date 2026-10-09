@@ -1,0 +1,114 @@
+{
+  "acquisition_allowlist_path": "build/limited-input-guard-design/gliomoda-full128-tile1-feasibility-v2/acquisition-allowlist.json",
+  "acquisition_allowlist_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+  "arm_order": [
+    "baseline",
+    "lazy"
+  ],
+  "expected_observer_samples": 110,
+  "gate": "CPU_TILED_LAZY_CONCAT_PARITY_64_V2",
+  "host_abort_free_drop_points": 20,
+  "host_abort_kernel_pressure_masks": [
+    2,
+    4
+  ],
+  "host_abort_min_free_percent": 30,
+  "host_abort_swap_growth_mib": 128,
+  "host_compressor_occupied": "diagnostic_only_no_standalone_stop",
+  "host_preflight_max_free_spread_points": 5,
+  "host_preflight_min_free_percent": 45,
+  "host_preflight_required_kernel_pressure_mask": 1,
+  "host_preflight_seconds": 30,
+  "host_preflight_swap_growth_measurement_tolerance_mib": 0.0,
+  "host_sample_max_interval_seconds": 0.2,
+  "host_sample_target_interval_seconds": 0.05,
+  "input_npy_sha256": "c2551f7e80714ffa49f2dc300c916d0a75004b9b0c4888f17e40d54f300b4bb4",
+  "input_raw_sha256": "9397cfe247fc715ea3bfe013e9c23e54bd62e0013338fa1f5e3b00f5db841f20",
+  "input_shape": [
+    1,
+    2,
+    64,
+    64,
+    64
+  ],
+  "launch_ancestor_exemption": "Only exact PID ancestry of this supervisor is excluded and recorded at each sample",
+  "log_cap_bytes": 2097152,
+  "model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "model_patch_size": [
+    128,
+    128,
+    128
+  ],
+  "model_training_or_patient_inference": false,
+  "monitor_revision": "identity-bound-closeout-v2",
+  "native_arm_enabled": false,
+  "output_depth_tile": 1,
+  "output_shape": [
+    1,
+    3,
+    64,
+    64,
+    64
+  ],
+  "pageouts_swapouts_policy": "diagnostic_counters_only; no automatic hold from isolated system-wide increments",
+  "parity_atol": 0.001,
+  "parity_rtol": 0.001,
+  "phase_probe_expected_counts": {
+    "conv3d": 27,
+    "convtranspose3d": 5,
+    "decoder_stage": 5,
+    "instancenorm3d": 22
+  },
+  "phase_probe_semantics": "Matched pre/post hooks use direct libproc RSS; worker phase markers also use direct self libproc without ps subprocess; independent watchdog remains resource authority",
+  "phase_rss_source": "direct_libproc_self_pid_no_subprocess",
+  "process_group_rss_cap_kib": 3145728,
+  "project_compute_policy": "Only the exact reviewed TractoInferno downloader PID/start/source/declaration identity is allowed at <=512MiB RSS; mismatch/absence blocks; all other project compute overlaps defer or stop model; controller never signals downloader",
+  "region_order": [
+    "WT",
+    "TC",
+    "ET"
+  ],
+  "regions_class_order": [
+    2,
+    1,
+    3
+  ],
+  "require_exact_decoded_region_labels": true,
+  "runner_source_sha256": {
+    "compare_pair.py": "9aead32ee93ebdcce3ab809914346875f5fc89ed6b507569e82176980751bc61",
+    "darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "launch_gate.py": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+    "lazy_concat.py": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+    "monitor_primitives.py": "0fbb1ff95a38f26081b88163b85c79be940229ffe8cf615999f8ea854931c448",
+    "pair_worker.py": "26e107e1bd89e875b3222d908926a77397a79998378ead89d099767285d52780",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1",
+    "supervise_pair.py": "223d4d92ef97d1e7088f087fbdd72ffc39d50a455c0fa21d64b56a5d2c4e6188",
+    "test_compare_pair.py": "bb6f338d6063232c1a33f13769f1dce14f65d42b93364efcae6dfe9c23290e44",
+    "test_isolated_import.py": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968",
+    "test_launch_control.py": "6ed871a230a628f422abe7ea98c3997e8b326c3e3d2d4cec803698da265339d4",
+    "test_phase_no_ps.py": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf",
+    "test_vanishing_pid.py": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35"
+  },
+  "saved_tile1_reference": {
+    "logits_npy_sha256": "377bb7a1dc0bea971ab3c2890432d20c2230744b479a5e7605bd824b0a81ddb1",
+    "logits_path": "build/limited-input-guard-design/gliomoda-tile1-parity-64-v2/tiled/logits.npy",
+    "result_path": "build/limited-input-guard-design/gliomoda-tile1-parity-64-v2/tiled/result.json",
+    "result_sha256": "ae7492549a9b6f90d6684b377c11b5e32711b83a9d3f42f28e9a11257047ca98",
+    "supervision_path": "build/limited-input-guard-design/gliomoda-tile1-parity-64-v2/tiled/supervision.json",
+    "supervision_sha256": "91396e051668265acbc48f5c7fbdc7a06f66b89f0bf0258a3bc2ec08dddcbd90"
+  },
+  "scope": "New prospective generated-only 64-cubed matched CPU control after v1 monitor EPERM stop; exact direct-self-RSS phase logger and verified-vanishing-PID sampler; no patient/full128 claim",
+  "single_full_patch_forward": false,
+  "single_generated_forward": true,
+  "slow_inventory_interval_seconds": 0.5,
+  "slow_inventory_max_age_seconds": 1.5,
+  "tracked_adapter_path": "src/resectionlab/low_memory_conv3d.py",
+  "tracked_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "tta_sliding_window_autocast": false,
+  "wall_time_cap_seconds": 120
+}

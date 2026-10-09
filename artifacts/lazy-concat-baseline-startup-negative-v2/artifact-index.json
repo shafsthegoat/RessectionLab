@@ -1,0 +1,135 @@
+{
+  "files": [
+    {
+      "bytes": 1227,
+      "path": "RESULT.md",
+      "sha256": "97c92dcb6270bf9f5e7bf5cb6ede39e41cd2c3064fcf2c171135cc97d598acc9"
+    },
+    {
+      "bytes": 163,
+      "path": "baseline/failure.json",
+      "sha256": "8685589fb7dbf8e2bdf2435b2e2cc359148d77059768e070144980b337dd8034"
+    },
+    {
+      "bytes": 554,
+      "path": "baseline/finalization.json",
+      "sha256": "4a53f26ed8ce2756489beec4bcd4792578e3e677d88c955be272f8aac5651c21"
+    },
+    {
+      "bytes": 15178,
+      "path": "baseline/host-preflight.json",
+      "sha256": "afc5a41f686a0eb4a0f4c9fcb30a4f16e43419fa3d5a1a861d927956339af25a"
+    },
+    {
+      "bytes": 496,
+      "path": "baseline/launch-binding.json",
+      "sha256": "87311be21529fe5fad4b914a372940dae39b531a4730b578221ea90c664e540e"
+    },
+    {
+      "bytes": 23734,
+      "path": "baseline/provisional-supervision.json",
+      "sha256": "866e934bd9df9385e736846d72cdf59fe54138cd2447d910825c3405ed4d308b"
+    },
+    {
+      "bytes": 26055,
+      "path": "baseline/supervision.json",
+      "sha256": "9c88440f131a01a2fef8c1d6ddf4298744c35ceb479c7190d3019a0804e28e3b"
+    },
+    {
+      "bytes": 869,
+      "path": "baseline/worker.log",
+      "sha256": "4ec5c4cb45afbaf1948d884fcbf69137e9bf8ad1c118666e57645dcafc0bb628"
+    },
+    {
+      "bytes": 982,
+      "path": "checkpoint-size-erratum.md",
+      "sha256": "aa3f3ee08ace03011d1c964f7d340161b7b6a66e40710557cd985f1c2951dc4d"
+    },
+    {
+      "bytes": 417,
+      "path": "generated-input-receipt.json",
+      "sha256": "83772be6ffdf2d6e0baeaf09349583f9b0df708ab6c31c8f8a0d3092e628fb36"
+    },
+    {
+      "bytes": 3391,
+      "path": "independent-audit.md",
+      "sha256": "fa65752e9535908b9ccd542158aeae3d0f47e40f2cd1c0bb158c906fd6ca06f9"
+    },
+    {
+      "bytes": 5476,
+      "path": "pair-contract.json",
+      "sha256": "b4535dcdb935097857d1d6fd8007673327fd62591c177809ef4a7c914cdd23ef"
+    },
+    {
+      "bytes": 8972,
+      "path": "source/compare_pair.py",
+      "sha256": "9aead32ee93ebdcce3ab809914346875f5fc89ed6b507569e82176980751bc61"
+    },
+    {
+      "bytes": 9482,
+      "path": "source/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "bytes": 916,
+      "path": "source/launch_gate.py",
+      "sha256": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f"
+    },
+    {
+      "bytes": 11313,
+      "path": "source/lazy_concat.py",
+      "sha256": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b"
+    },
+    {
+      "bytes": 4079,
+      "path": "source/monitor_primitives.py",
+      "sha256": "0fbb1ff95a38f26081b88163b85c79be940229ffe8cf615999f8ea854931c448"
+    },
+    {
+      "bytes": 16405,
+      "path": "source/pair_worker.py",
+      "sha256": "26e107e1bd89e875b3222d908926a77397a79998378ead89d099767285d52780"
+    },
+    {
+      "bytes": 13744,
+      "path": "source/safe_finalize.py",
+      "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4"
+    },
+    {
+      "bytes": 10441,
+      "path": "source/slow_inventory.py",
+      "sha256": "1b3915453af9eee16094bf47963a7078435a390f112765266328d30160c2eef1"
+    },
+    {
+      "bytes": 23241,
+      "path": "source/supervise_pair.py",
+      "sha256": "223d4d92ef97d1e7088f087fbdd72ffc39d50a455c0fa21d64b56a5d2c4e6188"
+    },
+    {
+      "bytes": 1224,
+      "path": "source/test_compare_pair.py",
+      "sha256": "bb6f338d6063232c1a33f13769f1dce14f65d42b93364efcae6dfe9c23290e44"
+    },
+    {
+      "bytes": 1547,
+      "path": "source/test_isolated_import.py",
+      "sha256": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968"
+    },
+    {
+      "bytes": 12081,
+      "path": "source/test_launch_control.py",
+      "sha256": "6ed871a230a628f422abe7ea98c3997e8b326c3e3d2d4cec803698da265339d4"
+    },
+    {
+      "bytes": 893,
+      "path": "source/test_phase_no_ps.py",
+      "sha256": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf"
+    },
+    {
+      "bytes": 2365,
+      "path": "source/test_vanishing_pid.py",
+      "sha256": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35"
+    }
+  ],
+  "schema": "compact-generated-negative-package-v1"
+}

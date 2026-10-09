@@ -127,6 +127,13 @@ values. Independent saved-input checks passed. This diagnoses descriptor
 sensitivity; no altered-descriptor strategy was executed and no policy repair
 or patient transfer is claimed.
 
+The separately reviewed [v2 inference baseline](artifacts/lazy-concat-baseline-startup-negative-v2/RESULT.md)
+passed host and monitor checks and terminated cleanly, but exposed a worker
+startup error before checkpoint loading or a forward pass: a local import
+shadowed the sampler used earlier in the function. No model output or lazy arm
+exists. The negative is preserved; a separately versioned minimal fix adds a
+regression that enters the actual worker main path before checkpoint access.
+
 The [matched 64³ baseline attempt](artifacts/lazy-concat-baseline-monitor-negative-v1/RESULT.md)
 stopped before a forward pass because the process monitor could not inspect a
 short-lived PID. Host pressure stayed normal and sampled RSS peaked at 583 MB;

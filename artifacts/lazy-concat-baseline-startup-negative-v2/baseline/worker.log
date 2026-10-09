@@ -1,0 +1,8 @@
+{"elapsed_seconds": 0.00011974992230534554, "phase": "before_imports", "phase_rss_source": "direct_libproc_self_pid_no_subprocess", "self_rss_kib": 22720}
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/limited-input-guard-design/gliomoda-lazy-concat-parity-64-v2/pair_worker.py", line 305, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/limited-input-guard-design/gliomoda-lazy-concat-parity-64-v2/pair_worker.py", line 130, in main
+    imported_sampler = Path(sys.modules[FastDarwinSampler.__module__].__file__).resolve()
+                                        ^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'FastDarwinSampler' where it is not associated with a value
