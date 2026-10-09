@@ -68,13 +68,16 @@ def test_second_remaining_row_rebinds_prior_release_and_assumptions(tmp_path):
     directory = tmp_path / runner.output_directory(1)
     directory.mkdir(parents=True)
     for name in runner.FINAL_FILES - {'receipt.json', 'readout-work-order.json'}:
-        (directory / name).write_bytes(name.encode())
+        (directory / name).write_bytes(b'' if name == 'readout-console.txt'
+                                        else name.encode())
     token_hash = 'f'*64
     n8.durable_json(directory / 'readout-work-order.json',
                     {'readout_token_sha256': token_hash})
     records = {name: runner._regular_output_binding(directory / name,
-               root=tmp_path, limit=64*1024**2)
+               root=tmp_path, limit=64*1024**2,
+               allow_empty=name == 'readout-console.txt')
                for name in runner.FINAL_FILES - {'receipt.json'}}
+    assert records['readout-console.txt']['bytes'] == 0
     profile = {'path': 'frozen-profile', 'sha256': 'a'*64}
     runtime = {'path': 'frozen-runtime', 'sha256': 'b'*64}
     source_bindings = {name: {'path': name, 'sha256': 'c'*64}
@@ -359,7 +362,7 @@ def test_readout_binds_exact_work_order_frames_and_solver(tmp_path, index, domai
                'adapter_receipt': {'adapted_deck_sha256': n8.sha(b'adapted')}}
     receipt = {'release_sha256': 'c'*64, 'source_commit': 'd'*40}
     for name in runner.NATIVE_FILES | {'receipt.json', 'readout-console.txt'}:
-        (directory / name).write_bytes(b'one')
+        (directory / name).write_bytes(b'' if name == 'readout-console.txt' else b'one')
     (directory / 'specimen.feb').write_bytes(b'adapted')
     native = {name: runner._regular_output_binding(directory / name,
               root=tmp_path, limit=64*1024**2) for name in runner.NATIVE_FILES}
@@ -395,6 +398,21 @@ def test_readout_binds_exact_work_order_frames_and_solver(tmp_path, index, domai
                                                root=tmp_path)
     assert summary['native_output_observed'] is True
     assert records['readout.json']['sha256'] == n8.file_hash(directory / 'readout.json')
+    assert records['readout-console.txt'] == {
+        'path': str((directory / 'readout-console.txt').relative_to(tmp_path)),
+        'sha256': n8.sha(b''), 'bytes': 0}
+    assert all(runner._regular_output_binding(directory / name, root=tmp_path,
+               limit=runner.caps(index)['active_output_bytes'],
+               allow_empty=name == 'readout-console.txt') == binding
+               for name, binding in records.items())
+    for mandatory in ('specimen.feb', 'solver.log', 'readout-work-order.json',
+                      'readout.json'):
+        path = directory / mandatory
+        saved = path.read_bytes()
+        path.write_bytes(b'')
+        with pytest.raises(ValueError, match='Mandatory output'):
+            runner.inspect_readout(directory, context, native, receipt, root=tmp_path)
+        path.write_bytes(saved)
     for field, invalid in [('frame_count', frames-1), ('steps', frames-2),
                            ('representation', 'wrong'), ('numerical_passed', False),
                            ('solver', {'passed': False}),

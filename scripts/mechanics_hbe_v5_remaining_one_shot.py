@@ -204,12 +204,13 @@ def active_bytes(directory: Path, byte_cap: int) -> int:
     return total
 
 
-def _regular_output_binding(path: Path, *, root: Path, limit: int) -> dict:
+def _regular_output_binding(path: Path, *, root: Path, limit: int,
+                            allow_empty: bool = False) -> dict:
     relative = str(path.relative_to(root))
     digest = io.file_hash(io.local(relative, root=root), maximum=limit)
     size = path.stat().st_size
-    if not 0 < size <= limit:
-        raise ValueError('Native output absent or above bound')
+    if size > limit or (size == 0 and not allow_empty):
+        raise ValueError('Mandatory output empty or above bound')
     return {'path': relative, 'sha256': digest, 'bytes': size}
 
 
@@ -317,7 +318,9 @@ def validate_prior_chain(bindings: list[dict], index: int, *, root: Path = ROOT,
             record = records[name]
             if (not isinstance(record, dict) or set(record) != {'path', 'sha256', 'bytes'}
                     or record['path'] != str(Path(expected).parent / name)
-                    or type(record['bytes']) is not int or record['bytes'] <= 0
+                    or type(record['bytes']) is not int
+                    or record['bytes'] < 0
+                    or (record['bytes'] == 0 and name != 'readout-console.txt')
                     or io.file_hash(io.local(record['path'], root=root), maximum=2*1024**3)
                        != record['sha256']
                     or io.local(record['path'], root=root).stat().st_size != record['bytes']):
@@ -702,7 +705,8 @@ def inspect_readout(directory: Path, context: dict, native_records: dict,
     if active_bytes(directory, limit) > limit:
         raise ValueError('Readout exceeded per-row active output cap')
     records = {name: _regular_output_binding(directory / name, root=root,
-                                              limit=limit)
+                                              limit=limit,
+                                              allow_empty=name == 'readout-console.txt')
                for name in sorted(FINAL_FILES - {'receipt.json'})}
     if any(records[name] != native_records[name] for name in NATIVE_FILES):
         raise ValueError('Native input changed during separate readout stage')
@@ -868,7 +872,8 @@ def execute(release_path: Path, *, root: Path = ROOT) -> dict:
             raise ValueError('Repaired runtime or prior analytical controls changed')
         receipt['runtime_profile_verified_after'] = True
         if any(_regular_output_binding(directory / name, root=root,
-                                       limit=row_caps['active_output_bytes']) != binding
+                                       limit=row_caps['active_output_bytes'],
+                                       allow_empty=name == 'readout-console.txt') != binding
                for name, binding in records.items()):
             raise ValueError('Native/readout output changed after post-run validation')
         receipt['status'] = 'passed_numerical_software_only'

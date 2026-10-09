@@ -61,6 +61,10 @@ Python readout worker to replay *all* 61 or 121 saved frames and frozen v5
 solver, force, moment, reaction, motion, energy/work and residual gates. The
 readout's source/mesh/deck/primitive bindings and work order are tied back to
 that one native attempt. A passing receipt binds all native and readout files,
+and a quiet, zero-byte `readout-console.txt` is permitted only when its worker
+exits successfully and the nonempty saved readout passes all checks. The deck,
+native logs, work order and readout JSON remain mandatory and nonempty.
+The receipt binds
 the source before and after, release, runtime, prior receipts, actual stage
 timings and numerical decision. The release commit must be HEAD before
 launch. Later unrelated commits may advance HEAD while the row runs only if
