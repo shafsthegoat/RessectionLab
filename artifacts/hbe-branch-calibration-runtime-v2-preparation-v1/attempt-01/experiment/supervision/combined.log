@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_branch_calibration_v2_experiment.py", line 198, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_branch_calibration_v2_experiment.py", line 187, in main
+    worker(root,binding,args.deadline)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_branch_calibration_v2_experiment.py", line 53, in worker
+    calibration=released.read_calibration({b:study['csv_schemas'][b] for b in core.AXIAL})
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_access.py", line 594, in read_calibration
+    self._calibration=self._read_selected(
+                      ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_branch_calibration_v2.py", line 399, in _read_selected
+    result=super()._read_selected(*args,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_access.py", line 583, in _read_selected
+    result[branch]=parse_member_csv(data,branch,schemas[branch])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_access.py", line 433, in parse_member_csv
+    x=[float(row[columns[0]]) for row in rows]
+       ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: could not convert string to float: 'displacement'

@@ -1,0 +1,55 @@
+{
+  "all_eight_predecessor_records_match_both_commits": true,
+  "all_five_frozen_files_match_commit": true,
+  "blocking_findings": [],
+  "candidate_release": {
+    "authorized": false,
+    "matches_reviewed_template_except_commit_and_archive_identity": true,
+    "path": "build/hbe-branch-calibration-v2/release.candidate.json",
+    "sha256": "0e2b7f51543faa182578291455395fc67b45da9b5ec7ad86159c3f043e5be6fb"
+  },
+  "created_at": "2026-10-09T01:21:38.536787+00:00",
+  "independent_review_sha256": "e2c8f88da2c4276e988a9b7f2329d5ed503d6faf710261f39f8d8d3199d04a20",
+  "portability_finding_closed": true,
+  "predecessor_commit": "d2032ca75455a3d549f578545fb668c36e1b5b65",
+  "qualification": "Readiness and refusal review only; no scientific execution results or independent-donor/clinical validation are implied.",
+  "required_next_gates": [
+    "Root must complete exact archived-source preflight in the sanitized execution environment under the new interpreter pin and preserve its result.",
+    "Root alone may authorize the separately declared v2 release and one bounded attempt; stop on source/runtime/preflight mismatch, no automatic retry."
+  ],
+  "review_execution": {
+    "native_primitive_reads": 0,
+    "native_solver_calls": 0,
+    "new_measured_reads": 0,
+    "new_test_reruns": 0,
+    "tracked_writes": 0
+  },
+  "schema": "hbe-branch-calibration-runtime-v2-final-release-readiness-v1",
+  "source_archive": {
+    "all_member_bytes_equal_commit_current_and_extracted": true,
+    "bytes": 890880,
+    "commit_comment": "2054fb265da36c36aeb276ad30b889c7347bcaf9",
+    "path": "build/hbe-branch-calibration-v2/source.tar",
+    "regular_members": 38,
+    "sha256": "7ff52b48cb830c55829cb8247b481d3f1324865814abaa944c1e4b5f5b6f45ae"
+  },
+  "source_commit": "2054fb265da36c36aeb276ad30b889c7347bcaf9",
+  "status": "go_for_archived_same_environment_preflight_then_root_authorized_single_bounded_attempt",
+  "unchanged_resource_and_scientific_contract": {
+    "aggregate_seconds": 3600,
+    "calibration_members": [
+      "HBE_01/HBE_01_03/compression_c3.csv",
+      "HBE_01/HBE_01_03/tension_c3.csv"
+    ],
+    "conditional_holdout_members": [
+      "HBE_01/HBE_01_03/torsion_l1_c3_neg.csv",
+      "HBE_01/HBE_01_03/torsion_l1_c3_pos.csv"
+    ],
+    "maximum_mesher_calls": 0,
+    "maximum_native_calls": 2,
+    "output_bytes_including_archive": 2147483648,
+    "runtime_threads": 1,
+    "sampled_family_rss_bytes": 3221225472,
+    "scientific_projection_sha256": "e08334d7cc21a1b0b46fb1389f28eb899cf48f27bdb0d00c0e7a90ebe7e40467"
+  }
+}

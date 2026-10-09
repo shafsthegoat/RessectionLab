@@ -1,0 +1,5 @@
+docs(mechanics): retain exact interpreter-drift receipts at original paths
+
+Track seven small failure/release records needed for v2 preflight joins and publish their hashes. Preserve the failed first attempt and report the current backend metadata check.
+
+Co-authored-by: shafsthegoat <shafrir.p@gmail.com>

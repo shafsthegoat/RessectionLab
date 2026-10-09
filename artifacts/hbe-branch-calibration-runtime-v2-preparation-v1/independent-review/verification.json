@@ -1,0 +1,343 @@
+{
+  "actual_review_runtime": {
+    "binary_sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb",
+    "numpy_module_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/__init__.py",
+    "numpy_module_sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+    "numpy_version": "2.5.3",
+    "python_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "resolved_executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sys_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python"
+  },
+  "blocking_source_findings": [],
+  "branches": {
+    "compression": {
+      "N": 36,
+      "fitted_native_required": true,
+      "native_domain": "lower_half",
+      "steps": 120
+    },
+    "tension": {
+      "N": 24,
+      "fitted_native_required": true,
+      "native_domain": "lower_half",
+      "steps": 120
+    },
+    "torsion_neg": {
+      "N": 12,
+      "fitted_native_required": false,
+      "native_domain": "full",
+      "steps": 120
+    },
+    "torsion_pos": {
+      "N": 12,
+      "fitted_native_required": false,
+      "native_domain": "full",
+      "steps": 120
+    }
+  },
+  "budgets": {
+    "active_output_bytes_by_branch": {
+      "compression": 1610612736,
+      "tension": 536870912
+    },
+    "aggregate_includes": "Preflight/source+input hashing, member access, one fit, deck preparation, both native calls, all primitive readout/paired comparisons, final source/input rehash, fit+prediction freeze, conditional held-out evaluation and durable result publication. Outer sampled family supervisor begins before preflight.",
+    "aggregate_seconds": 3600,
+    "all_nested_deadlines": "min(stage_start+stage_cap, aggregate_deadline); native cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.",
+    "automatic_retry": false,
+    "combined_deck_preparation_seconds": 60,
+    "copy_old_raw_logs": false,
+    "hard_real_time_guarantee_claimed": false,
+    "maximum_mesher_calls": 0,
+    "maximum_native_calls": 2,
+    "native_seconds_by_branch": {
+      "compression": 2100,
+      "tension": 420
+    },
+    "new_total_output_bytes": 2147483648,
+    "old_inputs_counted_as_new_output": false,
+    "other_work_allocation_seconds": 420,
+    "paired_raw_streaming_seconds": 600,
+    "runtime_threads": 1,
+    "same_disk_new_source_archive_in_total": true,
+    "sampled_family_RSS_bytes": 3221225472
+  },
+  "closed_portability_finding": {
+    "initial_failure_control": "test_published_copies_alone_reproduce_original_missing_path_failure",
+    "issue": "Seven predecessor JSON paths were ignored while v2 exact authentication requires their original paths. Existing six artifact copies alone cannot satisfy path joins; diagnosis lacked published bytes.",
+    "minimal_fix": "Root staged the seven exact original-path JSON bytes; all eight predecessor binding files including the existing v1 study now match the Git index. No old receipt or v2 source rewrite.",
+    "must_preserve_on_commit": {
+      "build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9",
+      "build/hbe-branch-calibration-v1/release.json": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957",
+      "manifests/experiments/hbe-01-03-branch-calibration-v1.json": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1",
+      "outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0",
+      "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d",
+      "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3",
+      "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7",
+      "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f"
+    },
+    "newly_published_predecessor_json_bytes": 14586,
+    "newly_published_predecessor_json_count": 7,
+    "observed_failure": "FileNotFoundError at original build/hbe-branch-calibration-v1/release.json in isolated metadata-only root",
+    "repair_control": "test_exact_original_path_metadata_bundle_closes_portability_without_rewriting",
+    "repair_result": "Actual migration verification succeeds in isolated root containing only eight hash-bound metadata files. Subsequent state-byte mutation refuses."
+  },
+  "created_at": "2026-10-09T01:20:56.886996+00:00",
+  "execution_scope": {
+    "actual_fit_executions": 0,
+    "backend_profile_execution": 0,
+    "description": "Metadata/source/interpreter-byte audit plus mocked negative controls. No full preflight qualifies primitive data.",
+    "measured_curve_reads": 0,
+    "mesher_calls": 0,
+    "native_primitive_reads": 0,
+    "native_solver_calls": 0,
+    "patient_array_reads": 0,
+    "tracked_writes": 0
+  },
+  "fitted_parameters": [
+    "common_positive_mu_scale_only"
+  ],
+  "focused_controls": {
+    "command_sha256": "70534363c5c120acb3a65d60201ffcae3a83fd71704409b07d0a05d5573ed42b",
+    "failed": 0,
+    "junit_sha256": "22054303367a3dbc727883c152d6d1722689b78d3829e3f3a43c868bfa44f9a4",
+    "log_sha256": "bdb786f2d289eaeab4e53d0fdccb998525c217efaa778496cf7a97ccca9e1597",
+    "no_genuine_new_readiness_test_failure": true,
+    "passed": 15,
+    "prior_owner_mock_signature_failure_and_original_runtime_failure_preserved": true,
+    "pytest_seconds": 0.59,
+    "test_names": [
+      "test_exact_scientific_projection_and_current_interpreter",
+      "test_actual_predecessor_metadata_registers_exact_eight_files",
+      "test_published_copies_alone_reproduce_original_missing_path_failure",
+      "test_exact_original_path_metadata_bundle_closes_portability_without_rewriting",
+      "test_changed_predecessor_refused_before_backend_or_measured_access[previous_state-held_out_access_attempted-True]",
+      "test_changed_predecessor_refused_before_backend_or_measured_access[previous_state-native_calls-False]",
+      "test_changed_predecessor_refused_before_backend_or_measured_access[previous_result-state-value2]",
+      "test_changed_predecessor_refused_before_backend_or_measured_access[diagnosis-actual-value3]",
+      "test_old_release_cannot_authorize_runtime_migration",
+      "test_runtime_and_source_origin_refused_before_backend_or_data[wrong_interpreter]",
+      "test_runtime_and_source_origin_refused_before_backend_or_data[wrong_source_origin]",
+      "test_held_out_refused_without_durable_freeze",
+      "test_calibration_refused_after_held_out_exposure",
+      "test_failed_numerical_confirmation_cannot_freeze_or_reveal",
+      "test_numerical_and_access_methods_are_unchanged_modulo_version_names"
+    ],
+    "test_sha256": "fb308cbac04d91845fe9a79d76939bf32ac8f2f5dc3d54f9f1ee4b5fa30e6355"
+  },
+  "frozen_source_bindings": {
+    "manifests/experiments/hbe-01-03-branch-calibration-v2.json": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v2.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v2.py",
+      "sha256": "589325800a7ba9a73ce24cd8ba3b335632bd4f186155e692a74dca3a242bbff9"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v2_experiment.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v2_experiment.py",
+      "sha256": "9a28a72c84e9cc0342e6bfd9230724bf2874467619f01cdf0971b2f51c2485fd"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v2_readout.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v2_readout.py",
+      "sha256": "28f0f5187052a3f27eba57cceacace70926c9c0d34a0665fdbaa04b13449c71a"
+    },
+    "tests/test_mechanics_hbe_branch_calibration_v2.py": {
+      "path": "tests/test_mechanics_hbe_branch_calibration_v2.py",
+      "sha256": "2e8e3000ff62214976322853ba0122645e92714a8f3cc30040d6810bf644088b"
+    }
+  },
+  "implementation_equivalence": "All existing core functions/classes except preflight are AST-equal after explicit branch namespace/schema substitution; experiment/readout source is text-equal after the same fixed substitutions. Only predecessor verification is added to runtime preflight. Late freeze_predictions import resolves v2 readout.",
+  "limitations": [
+    "The app-managed interpreter can change again; exact new pin fails closed and is not a guarantee that every Python dependency is immutable.",
+    "The source archive is source-only. Independent execution still requires the original hash-bound scientific inputs and backend installation. Publishing predecessor JSONs repairs the new metadata dependency, not full dataset/solver portability.",
+    "This authorizes no measured access or solver run and makes no calibration, physical-model, patient-transfer, contact/cutting or clinical claim.",
+    "Cross-mode torsion holdout comes from the same development specimen, not independent held-out donors."
+  ],
+  "owner_verification_sha256": "37acc806bc8266ae5d05c1dfeca3937376b0d722bebece8f910653509a1b69b7",
+  "pending_release_actions": [
+    "Commit the five frozen migration files and seven exact predecessor JSON receipts with compact review evidence.",
+    "Create and authenticate the separate 38-member archive at the exact new commit; authorize a new v2 release, preserving v1 failure and no-retry marker.",
+    "Perform the planned archived-source sanitized preflight and retain its receipt under the pinned current interpreter.",
+    "Bind the separately reported backend verification receipt; this review authenticates unchanged solver/profile identities but does not replay backend controls."
+  ],
+  "predecessor_metadata": {
+    "diagnosis": {
+      "bytes": 1613,
+      "git_index_sha256": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9",
+      "path": "build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json",
+      "sha256": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9"
+    },
+    "previous_publication": {
+      "bytes": 604,
+      "git_index_sha256": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json",
+      "sha256": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d"
+    },
+    "previous_release": {
+      "bytes": 8701,
+      "git_index_sha256": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957",
+      "path": "build/hbe-branch-calibration-v1/release.json",
+      "sha256": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957"
+    },
+    "previous_result": {
+      "bytes": 1831,
+      "git_index_sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json",
+      "sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3"
+    },
+    "previous_started": {
+      "bytes": 184,
+      "git_index_sha256": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json",
+      "sha256": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0"
+    },
+    "previous_state": {
+      "bytes": 458,
+      "git_index_sha256": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json",
+      "sha256": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7"
+    },
+    "previous_study": {
+      "bytes": 40663,
+      "git_index_sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1",
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+      "sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+    },
+    "previous_supervision": {
+      "bytes": 1195,
+      "git_index_sha256": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f",
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json",
+      "sha256": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f"
+    }
+  },
+  "protected_input_hashes_verified_unchanged": {
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/execution.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/launch.json": "4a930dad77d6aec612ee938ca601d7f2179594c7cc6c32fde220cf27b07058e2",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/preflight.json": "4f1f9612795f5459ed6ddd4ecc44832f7e083742a55a9dc1f823a6e84536861f",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/preflight.log": "00fe2d80e265bd29c351bc565839a3840fb388d29eeeca055ccc3514492d05ba",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/release.json": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/root-freeze.json": "9402e9630888851bf4d8f988cc8e237769826d742e70d19459ef4e7eb97ac550",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/terminal.json": "1d49d639f75c0769ddbed60c5fd3f935363ca4f7439521f48dd3dbb6603b9521",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/.started.json": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/publication-check.json": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/result.json": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/state.json": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/supervision/combined.log": "1be070cfe38812e8fb3f8e0037f9f9007ec6bbb55afb8ae78cbae4d8d3f716dd",
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/supervision/supervision.json": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f",
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c",
+    "manifests/experiments/hbe-01-03-branch-calibration-v1.json": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1",
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e",
+    "manifests/experiments/hbe-01-03-halfheight-global-n32-v1.json": "902286e195a673acb6384a864f0bb57f747eb0ba450be44d2451dc221cd7d1ce",
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f",
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b",
+    "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c",
+    "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_branch_calibration.py": "4289a8b7ff3c96c823ad9ca4b17f80977734ccac2db704c317ad8292e5d282c6",
+    "scripts/mechanics_hbe_branch_calibration_experiment.py": "1d2b58366ccc2e7bd16fdd0983c168b956eb2295d40eb6096865bc4e59533345",
+    "scripts/mechanics_hbe_branch_calibration_readout.py": "1fe54d936d6b3b0a80f46d965d2ea5cbde99590a68e72acdcaab6570bee92d33",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_halfheight_global.py": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0",
+    "scripts/mechanics_hbe_halfheight_global_experiment.py": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2",
+    "scripts/mechanics_hbe_halfheight_global_n36.py": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d",
+    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80",
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1",
+    "scripts/mechanics_hbe_halfheight_global_readout.py": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343",
+    "scripts/mechanics_hbe_halfheight_mesh.py": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_halfheight_spatial.py": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
+    "scripts/mechanics_hbe_halfheight_spatial_experiment.py": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd",
+    "scripts/mechanics_hbe_halfheight_spatial_readout.py": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c",
+    "scripts/mechanics_hbe_halfheight_temporal_common.py": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5",
+    "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73",
+    "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178",
+    "scripts/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+  },
+  "roles": {
+    "calibration_members": [
+      {
+        "bytes": 1222,
+        "crc32": "c7b7a162",
+        "path": "HBE_01/HBE_01_03/compression_c3.csv"
+      },
+      {
+        "bytes": 1170,
+        "crc32": "03927483",
+        "path": "HBE_01/HBE_01_03/tension_c3.csv"
+      }
+    ],
+    "conditional_held_out_members": [
+      {
+        "bytes": 1224,
+        "crc32": "f5259802",
+        "path": "HBE_01/HBE_01_03/torsion_l1_c3_neg.csv"
+      },
+      {
+        "bytes": 1332,
+        "crc32": "611776b4",
+        "path": "HBE_01/HBE_01_03/torsion_l1_c3_pos.csv"
+      }
+    ],
+    "donor_role": "DEVELOPMENT",
+    "freeze_condition": "Original durable fit/prediction freeze plus both successful numerical confirmations before torsion access; no refit after exposure",
+    "future_final_donor_validation_eligible": false,
+    "same_specimen_cross_mode_only": true
+  },
+  "schema": "hbe-branch-calibration-runtime-v2-independent-review-v1",
+  "scientific_field_equality": "exact recursive JSON equality for every field except allowed schema/study_id/output_root/interpreter plus added runtime_migration",
+  "scientific_projection_sha256": "e08334d7cc21a1b0b46fb1389f28eb899cf48f27bdb0d00c0e7a90ebe7e40467",
+  "source_closure": {
+    "archive_members": 38,
+    "declarations": 9,
+    "full_archived_execution_preflight_run_in_this_review": false,
+    "members_sha256": "eff156e1e4d8aea535d77b40d22db499b4e7b75aae5361339fc1317a0aa9d5b4",
+    "python_files": 29,
+    "static_local_imports_missing_from_closure": [],
+    "unchanged_inherited_declarations": 8,
+    "unchanged_inherited_python": 26
+  },
+  "status": "source_and_focused_refusal_controls_passed_portability_repair_staged_pending_commit_archive_preflight_and_root_release",
+  "unchanged_backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "unchanged_scientific_fields": [
+    "axial_references",
+    "backend_profile",
+    "branches",
+    "budgets",
+    "csv_schemas",
+    "design",
+    "fitted_parameters",
+    "historical_failures_preserved",
+    "inherited_declarations",
+    "inherited_sources",
+    "interpretation",
+    "legacy",
+    "no_mesher_no_retry",
+    "parser",
+    "physical_binary_threshold",
+    "prior_executions",
+    "protocol",
+    "readiness",
+    "roles",
+    "runtime_identity",
+    "scale_proof",
+    "scale_proof_review",
+    "torsion_references"
+  ],
+  "unchanged_solver_runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  }
+}

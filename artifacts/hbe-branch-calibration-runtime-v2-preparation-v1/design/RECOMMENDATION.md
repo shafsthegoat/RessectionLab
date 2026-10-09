@@ -1,0 +1,25 @@
+# Minimal runtime-only v2 migration
+
+The v1 attempt remains failed and final. Its saved state records `Interpreter identity differs`, zero native/mesher calls, and false calibration/held-out access-attempt and response-access flags. The supervised worker refused at `mechanics_hbe_branch_calibration.py:245–247`, before backend-profile verification and before any measured member read. The saved replacement time is 2026-10-09 01:00:26 UTC. This is runtime drift, not a calibration result or evidence about the physical model.
+
+## Exact proposed delta
+
+Create `manifests/experiments/hbe-01-03-branch-calibration-v2.json`, a fresh `outputs/mechanics/hbe-01-03-branch-calibration-v2` output root, and a separately committed source archive/release under `build/hbe-branch-calibration-v2`. Keep v1 manifest, all three v1 modules, release, `.started.json`, failure outputs and copied attempt receipts unchanged. Do not resume the v1 output directory or reuse its authorization.
+
+In the v2 study replace only `schema`, `study_id`, `output_root` and the interpreter SHA with `2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb`; the resolved path remains the currently declared Python path. Add one `runtime_migration` record binding the v1 study, exact failed release/state/result/supervision and drift diagnosis, stating new authorization required and no automatic retry. Verify those predecessor receipts before data access. The executable pin is exact, never an old-or-new allowlist, and is not proof that every Python dependency stayed unchanged.
+
+Use three separately named v2 modules (listed in `review.json`). Mechanical edits only: v2 declaration path/hash; their mutual imports including the late `freeze_predictions` readout import; `NEW_SOURCES` names; branch-specific schema identifiers/release checks; and registration/validation of the predecessor-failure metadata. Keep mathematical functions, CSV parsing, role reader, tolerances, chronology and supervisory budgets identical. Retain all 26 inherited Python files and 8 inherited declarations byte-for-byte. The resulting exact archive remains 38 members (29 Python + 9 declarations). No global monkeypatch or generalized runtime dispatcher is needed. A fresh root release binds that commit/archive and all source hashes, the new study/Python, unchanged backend profile, same four member paths and new access-ledger path.
+
+## Everything scientific stays fixed
+
+Require exact canonical equality of all other study fields; `review.json` records their per-field and combined SHA-256. This includes the original protocol/roles and references, single positive common modulus fit, objective, support, signs and units, compression N36 / tension N24 with 120 steps on the lower-half domains, and original N12 positive/negative torsion predictions. Calibration still uses only `compression_c3.csv` and `tension_c3.csv`; the two `torsion_l1_c3_{neg,pos}.csv` members stay sealed until the same durable fit/prediction freeze and both fitted numerical confirmations pass. Original spatial-convergence negatives and descriptive one-specimen limitations remain.
+
+Keep the Accelerate profile SHA `c9fafd50…` and FEBio runtime identity `13c4f60c…` unchanged. Root reports a separate current-Python backend verification passed in 0.55 s without native calls; this review did not replay it. Its exact receipt should accompany v2 readiness. No solver rebuild or repeat of the eight solver controls is implied by interpreter replacement alone. Existing profile verification must still authenticate the installed native bytes and replay its saved control checkers.
+
+Retain 3,600 s aggregate, compression 2,100 s / tension 420 s maximum native stages, 60 s preparation, 600 s paired streaming, 3 GiB sampled process-family RSS, one thread, 2 GiB new outputs including source archive, at most two native calls, zero mesher calls and no retry. New authorization is a disclosed second study attempt after a pre-data environment failure, not erasure of that failure.
+
+## Minimum readiness gate
+
+Before release: an allowlisted v1/v2 metadata/source diff; existing analytical/mocked fit/readout/access controls under the new interpreter; exact role/predecessor-failure assertions; negative mismatched-interpreter/source/release and existing-output checks; archive-origin verification; and sanitized child preflight using the same environment as execution. Preserve any failed readiness check. Record actual Python/NumPy versions and module origins in the new readiness receipt; version labels do not replace existing byte checks. Final release follows those receipts and root authorization. Do not claim the mutable app-managed runtime is immutable: another replacement must fail closed again. Copying only the Python executable would not freeze its library environment and is not proposed.
+
+Only metadata/source files and the interpreter binary were read for this recommendation. No measured curves, patient arrays, native primitives, fits, solver calls, or tracked writes occurred. Nothing here authorizes execution.

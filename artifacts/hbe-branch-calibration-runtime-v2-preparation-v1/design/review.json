@@ -1,0 +1,219 @@
+{
+  "allowed_added_top_level_field": "runtime_migration",
+  "allowed_replaced_top_level_fields": [
+    "interpreter",
+    "output_root",
+    "schema",
+    "study_id"
+  ],
+  "checks_run": "stdlib metadata equality/hash assertions only; no imported study preflight, tests, fit, primitive replay or solver",
+  "expected_v2_scientific_delta": {},
+  "inputs": {
+    "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json": {
+      "bytes": 7059,
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/release.json": {
+      "bytes": 8701,
+      "sha256": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957"
+    },
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01-launcher/terminal.json": {
+      "bytes": 200,
+      "sha256": "1d49d639f75c0769ddbed60c5fd3f935363ca4f7439521f48dd3dbb6603b9521"
+    },
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/result.json": {
+      "bytes": 1831,
+      "sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3"
+    },
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/state.json": {
+      "bytes": 458,
+      "sha256": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7"
+    },
+    "artifacts/hbe-branch-calibration-preparation-v1/attempt-01/experiment/supervision/supervision.json": {
+      "bytes": 1195,
+      "sha256": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f"
+    },
+    "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json": {
+      "bytes": 843,
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json": {
+      "bytes": 1613,
+      "sha256": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9"
+    },
+    "manifests/experiments/hbe-01-03-branch-calibration-v1.json": {
+      "bytes": 40663,
+      "sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+    },
+    "manifests/experiments/hbe-01-03-specimen-roles-v1.json": {
+      "bytes": 6123,
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "bytes": 28370,
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_branch_calibration.py": {
+      "bytes": 22999,
+      "sha256": "4289a8b7ff3c96c823ad9ca4b17f80977734ccac2db704c317ad8292e5d282c6"
+    },
+    "scripts/mechanics_hbe_branch_calibration_experiment.py": {
+      "bytes": 14865,
+      "sha256": "1d2b58366ccc2e7bd16fdd0983c168b956eb2295d40eb6096865bc4e59533345"
+    },
+    "scripts/mechanics_hbe_branch_calibration_readout.py": {
+      "bytes": 17934,
+      "sha256": "1fe54d936d6b3b0a80f46d965d2ea5cbde99590a68e72acdcaab6570bee92d33"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "bytes": 8744,
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    }
+  },
+  "inputs_unchanged_after_review": true,
+  "measured_response_reads": 0,
+  "native_calls": 0,
+  "observed_interpreter": {
+    "ctime_utc": "2026-10-09T01:00:26.038554+00:00",
+    "mtime_utc": "2026-10-07T19:31:43+00:00",
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+  },
+  "old_interpreter": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "original_source_commit": "de420c3ba97d26044e7bd73d5274903702412946",
+  "parent_reported_separate_backend_check": {
+    "elapsed_seconds": 0.55,
+    "independently_replayed_here": false,
+    "native_calls": 0,
+    "passed": true,
+    "receipt_path_supplied": false,
+    "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "proposed_source_layout": [
+    "scripts/mechanics_hbe_branch_calibration_v2.py",
+    "scripts/mechanics_hbe_branch_calibration_v2_readout.py",
+    "scripts/mechanics_hbe_branch_calibration_v2_experiment.py"
+  ],
+  "schema": "hbe-branch-runtime-v2-design-review-v1",
+  "source_closure_counts": {
+    "expected_git_archive_members_without_tests": 38,
+    "inherited_declarations_unchanged": 8,
+    "inherited_python_unchanged": 26,
+    "new_versioned_python": 3,
+    "v2_declaration": 1
+  },
+  "source_dependency_hashes_verified": {
+    "access": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "backend_profile": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "curve_evaluator": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "halfheight_global": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0",
+    "halfheight_global_n36": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d",
+    "halfheight_global_n36_readout": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27",
+    "halfheight_global_n36_runner": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80",
+    "halfheight_global_n36_temporal": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93",
+    "halfheight_global_n36_temporal_readout": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1",
+    "halfheight_global_n36_temporal_runner": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e",
+    "halfheight_global_readout": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343",
+    "halfheight_global_runner": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2",
+    "halfheight_mesh": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "halfheight_readout": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "halfheight_spatial": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
+    "halfheight_spatial_readout": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c",
+    "halfheight_spatial_runner": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd",
+    "halfheight_temporal_common": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5",
+    "halfheight_tension_n24_temporal": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73",
+    "halfheight_tension_n24_temporal_runner": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178",
+    "mesh_deck": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "orchestrator": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "physics": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "primitive_parser": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "readout": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "runtime_driver": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "status": "recommendation_only_no_execution_authority",
+  "tracked_writes": 0,
+  "unchanged_backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "unchanged_febio_runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "unchanged_study_field_sha256": {
+    "axial_references": "28a4e0072a2f95aa9cd736b90644d4c2ed6b58f7b6bc6629fd526dca635d4b89",
+    "backend_profile": "3902b8dcee6e9fc3b0854840fb275399b086f1df24f97dcd5f765891ac8c9048",
+    "branches": "c670ee92742cfcaa1962bda78e85b55d8cb39fe2f1b64fc42bc316e84c2366ab",
+    "budgets": "004f7070140722adec7f06d4eb6dbc23c916a2d5b013bb36806123fb864a1071",
+    "csv_schemas": "ca7c5d3083004c54482e4a65d2c1ec792429c51c2b1d45cc4c00e33754199ee4",
+    "design": "d0a78d2655f1a2575273a8bde54caca7cd9787ffbd7fc91dfed25f02053c0573",
+    "fitted_parameters": "76d786a4f9a7a0dcdf254095fb4fae552efeb4adad8e2f4c4a8bcf138c14c8ef",
+    "historical_failures_preserved": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+    "inherited_declarations": "ecdb4c99ae5d2470900d53e7d5606526f1075e3a67d0d97f966a782c4dd1fff1",
+    "inherited_sources": "25c4522607d6d93faf08576ddd1c715be255f7ea26ada6bfa2de6304bdcec740",
+    "interpretation": "4c71d51d60135b1993ffaa3e9bc7a199fc81e6daa2cc2849f5f170bb81284d5b",
+    "legacy": "fcaacc9f375d407767280072ca6f713acaa5997a51cb5d5f06c86c6d9f76a0bc",
+    "no_mesher_no_retry": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+    "parser": "ae68b5fddcde6894f23603a4f0f07ad2c22722780106537ab9ea3252c63414fd",
+    "physical_binary_threshold": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "prior_executions": "0beed635162cc195862e71224043459a17398dadcc6c6a63c6a876ff66cfc9cb",
+    "protocol": "0f36f88dedec305a62ffc324e62c6cece8df5a771a2fea4abe73505495dac201",
+    "readiness": "db28eba83336a5df07186aadfb680bc428188a26b2731e7cf7cf2b0f5f4cd2f9",
+    "roles": "b32b7d26e89bc7d00fa42028fa79e633072e2fbbdc225937562c367aa8f8b436",
+    "runtime_identity": "49612f25b015f80c38d11141e69a48643e6788e9655c05d70653109c3e8cf65a",
+    "scale_proof": "4c4c59c762171ad5e7c9e3c2b23de886c8b6a447ebcede5c62ca4eb4f04fb009",
+    "scale_proof_review": "dee9b582d1d62f4e404741649dce6cc162512f99834e3389466b9562981abee3",
+    "torsion_references": "70ed193ff6e09b699f7fc634e9490bfefd72adea9a49b949b81169cb119584c8"
+  },
+  "unchanged_study_fields": [
+    "axial_references",
+    "backend_profile",
+    "branches",
+    "budgets",
+    "csv_schemas",
+    "design",
+    "fitted_parameters",
+    "historical_failures_preserved",
+    "inherited_declarations",
+    "inherited_sources",
+    "interpretation",
+    "legacy",
+    "no_mesher_no_retry",
+    "parser",
+    "physical_binary_threshold",
+    "prior_executions",
+    "protocol",
+    "readiness",
+    "roles",
+    "runtime_identity",
+    "scale_proof",
+    "scale_proof_review",
+    "torsion_references"
+  ],
+  "unchanged_study_projection_sha256": "e08334d7cc21a1b0b46fb1389f28eb899cf48f27bdb0d00c0e7a90ebe7e40467",
+  "v1_failure": {
+    "automatic_retry": false,
+    "calibration_access_attempted": false,
+    "calibration_responses_accessed": false,
+    "error": {
+      "message": "Interpreter identity differs",
+      "type": "ValueError"
+    },
+    "held_out_access_attempted": false,
+    "held_out_responses_accessed": false,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "physical_validation_pass": null,
+    "runs": {},
+    "schema": "hbe-branch-calibration-state-v1",
+    "status": "failed_or_incomplete"
+  },
+  "v1_study_sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+}

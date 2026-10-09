@@ -1,0 +1,64 @@
+........................................................................ [ 87%]
+......F...                                                               [100%]
+=================================== FAILURES ===================================
+___________ test_replaced_interpreter_refused_before_backend_or_data ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b21aea0>
+study = {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/hbe-n36-temporal-ex...ive cap additionally min(branch_cap, remaining aggregate); no reset or continuation extends the aggregate.', ...}, ...}
+records = {'previous_study': {'axial_references': {'compression': {'artifact_bindings': {'comparison.json': {'path': 'artifacts/...aadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957'}, 'schema': 'hbe-branch-calibration-result-v1', ...}, ...}
+
+    def test_replaced_interpreter_refused_before_backend_or_data(monkeypatch, study, records):
+        release = release_for(study)
+        sources = deepcopy(study['inherited_sources'])
+        sources.update({key: {'path': 'scripts/'+name, 'sha256': 'c'*64}
+                        for key, name in core.NEW_SOURCES.items()})
+        release.update(source_bindings=sources, source_archive={'path': 'new-source.tar', 'sha256': 'd'*64},
+                       source_commit='e'*40)
+        registry = MetadataRegistry(study, records)
+        registry.records['new-release.json'] = release
+        for binding in list(sources.values()) + study['inherited_declarations'] + [release['study'], release['source_archive']]:
+            registry.records[binding['path']] = 'source-only-placeholder'
+        monkeypatch.setattr(core, 'Registry', lambda root: registry)
+        monkeypatch.setattr(core, 'declaration', lambda root: study)
+        monkeypatch.setattr(core.receipts, 'verify_archive', lambda *a: None)
+        monkeypatch.setattr(core.runtime, 'sha', lambda path: '0'*64)
+        monkeypatch.setattr(core.backend, 'verify_profile', lambda *a: pytest.fail('backend reached wrong interpreter'))
+        with pytest.raises(ValueError, match='Interpreter identity differs'):
+>           core.preflight(ROOT, {'path': 'new-release.json', 'sha256': 'a'*64})
+
+tests/test_mechanics_hbe_branch_calibration_v2.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab')
+release_binding = {'path': 'new-release.json', 'sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
+deadline = None
+
+    def preflight(root, release_binding, *, deadline=None):
+        root=Path(root).resolve(); study=declaration(root); reg=Registry(root)
+        reg.add({'path':DECLARATION_PATH,'sha256':DECLARATION_SHA256}); release=reg.bound(release_binding)
+        if (release.get('schema') != 'hbe-branch-calibration-release-v2' or release.get('authorized') is not True
+                or release.get('phase') != 'calibrate_and_validate'
+                or release.get('study') != {'path':DECLARATION_PATH,'sha256':DECLARATION_SHA256}
+                or release.get('authorized_native_calls') != 2 or release.get('backend_profile') != study['backend_profile']
+                or release.get('interpreter') != study['interpreter']
+                or release.get('predecessor_failure') != study['runtime_migration']['previous_state']):
+            raise ValueError('Exact committed branch-calibration release required')
+        verify_runtime_migration(study, reg)
+        sources=release['source_bindings']; expected={k:Path(v['path']).name for k,v in study['inherited_sources'].items()}; expected.update(NEW_SOURCES)
+        if set(sources) != set(expected): raise ValueError('Exact branch source closure required')
+        wanted={}
+        for key,name in expected.items():
+            module=importlib.import_module('scripts.'+Path(name).stem)
+            binding=sources[key]
+            if access.local_path(root,binding['path']) != Path(module.__file__).resolve():
+                raise ValueError('Executing source origin differs')
+            if key in study['inherited_sources'] and binding['sha256'] != study['inherited_sources'][key]['sha256']:
+                raise ValueError('Inherited source changed')
+>           reg.bound(binding,json_value=False);wanted['scripts/'+name]=binding['sha256']
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: MetadataRegistry.bound() got an unexpected keyword argument 'json_value'
+
+scripts/mechanics_hbe_branch_calibration_v2.py:331: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_branch_calibration_v2.py::test_replaced_interpreter_refused_before_backend_or_data
+1 failed, 81 passed in 0.58s

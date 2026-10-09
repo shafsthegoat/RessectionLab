@@ -1,0 +1,25 @@
+{
+  "schema": "hbe-branch-calibration-v2-detached-launch-v1",
+  "harness_pid": 21187,
+  "started_utc": "2026-10-09T01:22:38.060040+00:00",
+  "source_commit": "2054fb265da36c36aeb276ad30b889c7347bcaf9",
+  "release": {
+    "path": "build/hbe-branch-calibration-v2/release.json",
+    "sha256": "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+  },
+  "preflight_sha256": "1ed4f21ea683d6786ccd11636b374940016f8ba264dc962800a500258cdd9951",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_branch_calibration_v2_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "build/hbe-branch-calibration-v2/release.json",
+    "--release-sha256",
+    "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7",
+    "--execute"
+  ],
+  "one_attempt": true,
+  "aggregate_seconds": 3600
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "build/hbe-branch-calibration-v2/source/scripts/mechanics_hbe_branch_calibration_v2_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "build/hbe-branch-calibration-v2/release.json",
+    "--release-sha256",
+    "d286f46e616036be399c2acd69741ce2fcb6a629ab13d62ebbe4fc74e9ac94f7"
+  ],
+  "sanitized_as_worker": true,
+  "exit_code": 0,
+  "elapsed_seconds": 4.96856754203327,
+  "finished_utc": "2026-10-09T01:22:12.067707+00:00",
+  "log_sha256": "00fe2d80e265bd29c351bc565839a3840fb388d29eeeca055ccc3514492d05ba",
+  "measured_members_read": 0,
+  "native_calls": 0
+}

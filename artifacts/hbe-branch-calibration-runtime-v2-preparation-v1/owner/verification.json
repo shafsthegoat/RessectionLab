@@ -1,0 +1,137 @@
+{
+  "actual_archive_created": false,
+  "actual_release_created": false,
+  "archive_member_count": 38,
+  "archive_members": {
+    "path": "build/hbe-branch-calibration-runtime-v2-preparation/archive-members.txt",
+    "sha256": "eff156e1e4d8aea535d77b40d22db499b4e7b75aae5361339fc1317a0aa9d5b4"
+  },
+  "exact_unchanged_study_fields": [
+    "axial_references",
+    "backend_profile",
+    "branches",
+    "budgets",
+    "csv_schemas",
+    "design",
+    "fitted_parameters",
+    "historical_failures_preserved",
+    "inherited_declarations",
+    "inherited_sources",
+    "interpretation",
+    "legacy",
+    "no_mesher_no_retry",
+    "parser",
+    "physical_binary_threshold",
+    "prior_executions",
+    "protocol",
+    "readiness",
+    "roles",
+    "runtime_identity",
+    "scale_proof",
+    "scale_proof_review",
+    "torsion_references"
+  ],
+  "inherited_declarations_unchanged": 8,
+  "inherited_sources_unchanged": 26,
+  "measured_data_read": false,
+  "native_primitives_read": false,
+  "native_solver_calls": 0,
+  "numpy": {
+    "module_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/__init__.py",
+    "module_sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+    "version": "2.5.3"
+  },
+  "patient_arrays_read": false,
+  "predecessor_metadata": {
+    "diagnosis": {
+      "path": "build/hbe-branch-calibration-launch-diagnostic-v1/diagnosis.json",
+      "sha256": "748e078eec5c57057dfddbd48cdf0ba34b2032b89ddbfffb2db25be3309622b9"
+    },
+    "previous_publication": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/publication-check.json",
+      "sha256": "724497c8f1f03f16f41eb1e6e24e2fc727a70feb7746fbcb56c46bf6bb072d1d"
+    },
+    "previous_release": {
+      "path": "build/hbe-branch-calibration-v1/release.json",
+      "sha256": "05aecaadbf55a7e0c5917712ed85e42e5adbbc6f47111d6c47b182511c4e8957"
+    },
+    "previous_result": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/result.json",
+      "sha256": "924bb84e978568966719110f6aa62ebd0bf66176237fb6972debe0f76eaedac3"
+    },
+    "previous_started": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/.started.json",
+      "sha256": "ce262055d4c2bdfb2801cdebc9832380454e9ca1f210b5202f9f2ef3adf25fc0"
+    },
+    "previous_state": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/state.json",
+      "sha256": "f8d38e02eb4bba282c0f6a7067ceb09951e4a4d28406cae62144756ca4cdb3c7"
+    },
+    "previous_study": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+      "sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+    },
+    "previous_supervision": {
+      "path": "outputs/mechanics/hbe-01-03-branch-calibration-v1/experiment/supervision/supervision.json",
+      "sha256": "5b88f3c646757c0d7c1bce9222df4981a3ac80c91035cfe554bd433a20bea24f"
+    }
+  },
+  "protected_input_count": 51,
+  "protected_inputs_unchanged": true,
+  "python": {
+    "resolved_executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb",
+    "sys_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "version": "3.12.14"
+  },
+  "schema": "hbe-branch-runtime-v2-preparation-verification-v1",
+  "scientific_model_changed": false,
+  "source_bindings": {
+    "manifests/experiments/hbe-01-03-branch-calibration-v2.json": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v2.json",
+      "sha256": "49afffc1a1efc30ca4e44fd50ebc754d9ed65d699e61f7668e2ea62c0406f102"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v2.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v2.py",
+      "sha256": "589325800a7ba9a73ce24cd8ba3b335632bd4f186155e692a74dca3a242bbff9"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v2_experiment.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v2_experiment.py",
+      "sha256": "9a28a72c84e9cc0342e6bfd9230724bf2874467619f01cdf0971b2f51c2485fd"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v2_readout.py": {
+      "path": "scripts/mechanics_hbe_branch_calibration_v2_readout.py",
+      "sha256": "28f0f5187052a3f27eba57cceacace70926c9c0d34a0665fdbaa04b13449c71a"
+    },
+    "tests/test_mechanics_hbe_branch_calibration_v2.py": {
+      "path": "tests/test_mechanics_hbe_branch_calibration_v2.py",
+      "sha256": "2e8e3000ff62214976322853ba0122645e92714a8f3cc30040d6810bf644088b"
+    }
+  },
+  "status": "owner_offline_controls_passed_pending_independent_review_commit_and_release",
+  "tests": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_mechanics_hbe_branch_calibration_v2.py"
+    ],
+    "final_passed": 82,
+    "final_seconds": 0.64,
+    "intermediate_failure": "One test-only mock bound() signature lacked json_value; exact failed test source/log/explanation preserved; no production repair.",
+    "log": {
+      "path": "build/hbe-branch-calibration-runtime-v2-preparation/tests-attempt-03.txt",
+      "sha256": "328c4a144e056bb8f918cdc5644d5d487fcd35e504c1f0c2e2d459b3a570ddc9"
+    },
+    "prior_attempts": [
+      "tests-attempt-01.txt",
+      "tests-attempt-02.txt"
+    ],
+    "terminal_exit_code": 0
+  },
+  "v1_study": {
+    "path": "manifests/experiments/hbe-01-03-branch-calibration-v1.json",
+    "sha256": "d5581a64f9db48cacdbee5d83735977a87e520b4c11d6095fb4b6f98cabdada1"
+  }
+}

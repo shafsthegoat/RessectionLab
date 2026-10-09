@@ -1,0 +1,14 @@
+{
+  "archive_binding": {
+    "path": "build/hbe-branch-calibration-v2/source.tar",
+    "sha256": "7ff52b48cb830c55829cb8247b481d3f1324865814abaa944c1e4b5f5b6f45ae"
+  },
+  "archive_regular_files": 38,
+  "authorized": false,
+  "candidate_release_sha256": "0e2b7f51543faa182578291455395fc67b45da9b5ec7ad86159c3f043e5be6fb",
+  "measured_member_reads": 0,
+  "native_calls": 0,
+  "schema": "hbe-branch-calibration-v2-root-freeze-v1",
+  "source_commit": "2054fb265da36c36aeb276ad30b889c7347bcaf9",
+  "source_members_match_commit": true
+}

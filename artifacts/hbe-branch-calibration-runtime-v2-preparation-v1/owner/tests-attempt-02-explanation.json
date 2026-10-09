@@ -1,0 +1,8 @@
+{
+  "production_failure": false,
+  "repair": "Match the existing registry mock method signature only; no production change.",
+  "result": "81 passed; one new interpreter-refusal control did not reach its intended assertion because MetadataRegistry.bound lacked the existing json_value keyword",
+  "source_sha256": "589325800a7ba9a73ce24cd8ba3b335632bd4f186155e692a74dca3a242bbff9",
+  "status": "test_harness_signature_failure",
+  "test_sha256": "f5e9a0407aad41e908c275701d4b492e144afc5eab98428590bd506ae8dec64a"
+}
