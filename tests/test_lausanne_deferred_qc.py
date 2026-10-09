@@ -11,6 +11,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import lausanne_deferred_qc as qc
+_INSPECT_ORIGINAL_CONTROL = qc.inspect_original
 
 
 @pytest.fixture(autouse=True)
@@ -36,6 +37,43 @@ def metadata():
     if not (ROOT / m["basis_queue"]["path"]).exists():
         pytest.skip("Requires preserved real receipt metadata; never create a patient substitute")
     return qc.preflight()
+
+
+@pytest.mark.parametrize('route', ['legacy', 'explicit_none', 'v2'])
+def test_original_recorder_keyword_is_explicit_and_preserves_default(monkeypatch, route):
+    import io
+    import nibabel as nib
+    from resectionlab import imaging
+    from resectionlab.nifti_header_records import nifti1_header_record_coded_v2
+    h = nib.Nifti1Header()
+    h.set_data_shape((2, 2, 2)); h.set_xyzt_units('mm')
+    h.set_sform([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]], code=1)
+    h['pixdim'][0] = 0; h['vox_offset'] = 352
+    raw = h.binaryblock
+    class PrefixOnly(io.BytesIO):
+        def read(self, count=-1):
+            assert 0 <= count <= 348 and self.tell()+count <= 352, 'No scalar reads permitted'
+            return super().read(count)
+    monkeypatch.setattr(qc.gzip, 'open', lambda *a, **k: PrefixOnly(raw+b'\0'*4))
+    class StopBeforeScalars(Exception): pass
+    def geometry_stop(*a, **k): raise StopBeforeScalars()
+    monkeypatch.setattr(imaging, 'inspect_nifti', geometry_stop)
+    calls = []
+    def recorder(payload, sha):
+        calls.append((payload, sha))
+        return nifti1_header_record_coded_v2(payload, sha)
+    bounds = {'scalar_chunk_voxels': 65536, 'max_scalar_workspace_bytes': 8388608,
+              'max_voxels': 134217728, 'max_native_payload_bytes': 536870912, 'max_nifti_data_offset': 1048576}
+    kwargs = {} if route == 'legacy' else {'header_recorder': None if route == 'explicit_none' else recorder}
+    expected = StopBeforeScalars if route == 'v2' else nib.spatialimages.HeaderDataError
+    with pytest.raises(expected):
+        _INSPECT_ORIGINAL_CONTROL(ROOT/'build/header-control-not-an-image', 'a'*64, bounds, time.monotonic()+10, **kwargs)
+    assert calls == ([(raw, 'a'*64)] if route == 'v2' else [])
+
+
+def test_invalid_recorder_rejected_before_open(monkeypatch):
+    with pytest.raises(TypeError, match='header_recorder'):
+        _INSPECT_ORIGINAL_CONTROL(ROOT/'build/no-image', 'a'*64, {}, time.monotonic()+10, header_recorder=False)
 
 
 def test_exact_scope_and_retained_failures(metadata):

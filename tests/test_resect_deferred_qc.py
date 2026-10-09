@@ -271,7 +271,8 @@ def test_reported_header_fields_recomputed_from_bytes(qc, frozen, kind, mutation
     source = {kind + '_sha256': 'a'*64, kind: {'path': 'originals/control.nii.gz'}}
     bounds = frozen[0]['bounds']
     budget = qc.streaming.scalar_budget if kind == 'image' else qc.streaming.annotations.decoding_budget
-    value = {'raw_grid': nifti1_header_record(raw, 'a'*64), 'decoding_budget': budget([2, 2, 2], 4, bounds)}
+    recorder = qc.nifti1_header_record_coded_v2 if kind == 'image' else nifti1_header_record
+    value = {'raw_grid': recorder(raw, 'a'*64), 'decoding_budget': budget([2, 2, 2], 4, bounds)}
     geometry = qc.geometry_from_header(raw, 'control.nii.gz')
     qc.reported_header_contract(raw, value, geometry, source, bounds, kind)
     if mutation == 'raw_summary': value['raw_grid']['raw_grid']['shape'] = [9, 9, 9]
@@ -291,7 +292,8 @@ def test_header_limitation_continues_but_integrity_failure_aborts(qc, cache, mon
     monkeypatch.setattr(qc, 'check_prefix', lambda *a: {'test_control_only': True})
     def nifti1_header_record(*args):
         raise HeaderDataError('qfac (pixdim[0]) should be 1 or -1')
-    def original_review(*args):
+    def original_review(*args, **kwargs):
+        assert kwargs == {'header_recorder': qc.nifti1_header_record_coded_v2}
         return nifti1_header_record()
     def mask_control(*args):
         raise ValueError('No scientific payload exists in this metadata control')
@@ -331,3 +333,37 @@ def test_header_limitation_continues_but_integrity_failure_aborts(qc, cache, mon
         assert first['status'] == 'failed_or_incomplete' and 'fixity_after' not in first
         assert report['outcome_counts'] == {'inherited_structural_pass': 1, 'failed_or_incomplete': 1,
                                           'not_attempted': 23}
+
+
+def test_v2_namespace_and_v1_scope_protected(qc, frozen):
+    m, _, records = frozen
+    old = records['previous_manifest']
+    assert qc.CACHE.name == 'deferred-qc-v2'
+    assert m['schema'] == 'resect-deferred-qc-manifest-v2'
+    assert m['pairs'] == old['pairs'] and m['bounds'] == old['bounds']
+    assert m['header_recorders'] == qc.HEADER_RECORDERS
+    assert qc.base_receipt(m['pairs'][0], {}, {'run_id': 'control'})['schema'] == 'resect-pair-review-v2'
+
+
+@pytest.mark.parametrize('change', ['old_scope', 'mask_route', 'schema', 'other_helper'])
+def test_v2_contract_cannot_expand_legacy_scope(qc, frozen, change):
+    m, a, records = copy.deepcopy(frozen)
+    if change == 'old_scope': m['bounds']['max_voxels'] += 1
+    elif change == 'mask_route': m['header_recorders']['mask'] = m['header_recorders']['image']
+    elif change == 'schema': m['schema'] = 'resect-deferred-qc-manifest-v1'
+    elif change == 'other_helper': m['helper_pins']['src/resectionlab/critical_evidence.py'] = '0'*64
+    with pytest.raises(qc.Refusal): qc.validate_manifest(m, a, records)
+
+
+def test_v2_recorder_does_not_relax_active_form_disagreement(qc):
+    import nibabel as nib
+    h = nib.Nifti1Header()
+    h.set_data_shape((2, 2, 2)); h.set_xyzt_units('mm')
+    identity = [[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]]
+    h.set_qform(identity, code=1)
+    moved = copy.deepcopy(identity); moved[0][3] = 1.
+    h.set_sform(moved, code=1)
+    h['vox_offset'] = 352
+    assert qc.nifti1_header_record_coded_v2(h.binaryblock, 'a'*64)['raw_grid']['qform_status'] == 'active_decoded'
+    with pytest.raises(qc.Refusal, match='qform_sform_disagreement'):
+        qc.geometry_from_header(h.binaryblock, 'control.nii.gz')

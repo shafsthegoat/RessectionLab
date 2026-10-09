@@ -23,14 +23,22 @@ import time
 
 import resect_train_intake as authority
 import lausanne_deferred_qc as streaming
+from resectionlab.nifti_header_records import nifti1_header_record_coded_v2
 from real_intake_io import (atomic_preserve, check_deadline, supervise,
                             termination_cleanup, verify_source_file)
 
 ROOT = authority.ROOT
 DATA = authority.DATA
-CACHE = DATA / 'deferred-qc-v1'
-MANIFEST = ROOT / 'manifests/resect-deferred-qc-v1.json'
-MANIFEST_SHA = '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83'
+CACHE = DATA / 'deferred-qc-v2'
+MANIFEST = ROOT / 'manifests/resect-deferred-qc-v2.json'
+MANIFEST_SHA = '775671fef0d59b96ee9d77019e37105474d5c61701c76ed5e9b16b18d4fe262c'
+PREVIOUS_MANIFEST_SHA = '9fd3ce43aa85805354091cc11bcf74705342726eafa45f453b8f3251afcafb83'
+HEADER_RECORDERS = {
+    'image': {'schema': 'resectionlab.nifti1-header-record/2',
+              'module': 'src/resectionlab/nifti_header_records.py', 'function': 'nifti1_header_record_coded_v2'},
+    'mask': {'schema': 'legacy_nifti1_header_record',
+             'module': 'src/resectionlab/critical_evidence.py', 'function': 'nifti1_header_record'},
+}
 Refusal = authority.Refusal
 encode, digest, safe, read = authority.encode, authority.digest, authority.safe_path, authority.read_small
 CLAIMS = {'anatomy_qc': 'not_run', 'clinical_accuracy': 'not_established',
@@ -104,11 +112,24 @@ def validate_mirror(row, manifest, records):
 
 
 def validate_manifest(m, acquisition, records):
+    previous = records['previous_manifest']
+    unchanged = ('pairs', 'inherited_pair', 'missing_annotations', 'excluded_members', 'rights',
+                 'release_by_kind', 'denominator', 'bounds', 'historical_status_receipts', 'claims')
+    old_metadata = {k: v for k, v in m['metadata'].items() if k != 'previous_manifest'}
+    old_pins = previous['helper_pins']
+    new_module = HEADER_RECORDERS['image']['module']
+    if (m['metadata']['previous_manifest']['sha256'] != PREVIOUS_MANIFEST_SHA
+            or previous['schema'] != 'resect-deferred-qc-manifest-v1'
+            or any(m[k] != previous[k] for k in unchanged) or old_metadata != previous['metadata']
+            or m.get('header_recorders') != HEADER_RECORDERS
+            or set(m['helper_pins']) != set(old_pins) | {new_module}
+            or any(m['helper_pins'][k] != v for k, v in old_pins.items() if k != 'scripts/lausanne_deferred_qc.py')):
+        raise Refusal('v2_recorder_scope_or_previous_manifest_changed')
     expected = [p for p in acquisition['pairs'] if not p['reuse_existing_pilot']]
     sources = {s['id']: s for s in acquisition['sources']}
     canonical = records['canonical_review']
     measured = {r['source_id']: r for r in canonical['files']}
-    if (m['schema'] != 'resect-deferred-qc-manifest-v1' or m['claims'] != CLAIMS
+    if (m['schema'] != 'resect-deferred-qc-manifest-v2' or m['claims'] != CLAIMS
             or len(expected) != 24 or [r['pair'] for r in m['pairs']] != expected
             or len(measured) != 50 or set(measured) != set(sources)
             or canonical['status'] != 'all_50_frozen_canonical_files_byte_verified'
@@ -182,7 +203,7 @@ def preflight(deadline=None):
 
 def execution_source(m, deadline=None):
     files = dict(m['helper_pins'])
-    for name in (*files, 'scripts/resect_deferred_qc.py', 'manifests/resect-deferred-qc-v1.json'):
+    for name in (*files, 'scripts/resect_deferred_qc.py', str(MANIFEST.relative_to(ROOT))):
         sha = digest(read(ROOT / name, deadline=deadline))
         if name in files and sha != files[name]:
             raise Refusal('pinned_execution_helper_changed')
@@ -314,7 +335,8 @@ def geometry_from_header(raw, filename):
 def reported_header_contract(raw, value, reported_geometry, source, bounds, kind):
     import nibabel as nib
     from resectionlab.critical_evidence import nifti1_header_record
-    if value['raw_grid'] != nifti1_header_record(raw, source[kind + '_sha256']):
+    recorder = nifti1_header_record_coded_v2 if kind == 'image' else nifti1_header_record
+    if value['raw_grid'] != recorder(raw, source[kind + '_sha256']):
         raise Refusal('complete_raw_header_record_changed')
     filename = Path(source[kind]['path']).name if kind in source else reported_geometry['file']
     if reported_geometry != geometry_from_header(raw, filename):
@@ -343,7 +365,8 @@ def inspect_pair(row, bounds, deadline):
             result[kind + '_prefix'] = check_prefix(path, bounds, deadline)
             if kind == 'image':
                 stage = 'image_header_scalar_review'
-                result['image_qc'] = streaming.inspect_original(path, row['image_sha256'], bounds, deadline)
+                result['image_qc'] = streaming.inspect_original(path, row['image_sha256'], bounds, deadline,
+                                                               header_recorder=nifti1_header_record_coded_v2)
             else:
                 stage = 'mask_header_scalar_review'
                 result['mask_qc'] = streaming.annotations.inspect_mask(path, row['mask_sha256'], bounds, deadline)
@@ -380,7 +403,8 @@ def inspect_pair(row, bounds, deadline):
 
 
 def base_receipt(row, intent, declaration):
-    return {'schema': 'resect-pair-review-v1', 'manifest_sha256': MANIFEST_SHA,
+    return {'schema': 'resect-pair-review-v2', 'manifest_sha256': MANIFEST_SHA,
+            'header_recorders': HEADER_RECORDERS,
             'run_id': declaration['run_id'], 'pair': row['pair'], 'sources': row,
             'intent_sha256': digest(encode(intent)), 'declaration_sha256': digest(encode(declaration)),
             'status': 'failed_or_incomplete', **CLAIMS}
@@ -409,6 +433,8 @@ def worker(run, pair_id, intent_sha):
     if (row is None or intent.get('pair_id') != pair_id or declaration.get('run_id') != run.name
             or intent.get('declaration_sha256') != digest(encode(declaration))
             or declaration.get('manifest_sha256') != MANIFEST_SHA
+            or declaration.get('header_recorders') != HEADER_RECORDERS
+            or declaration.get('schema') != 'resect-deferred-qc-run-v2'
             or not claims_match(declaration) or declaration['selected_pairs'] != [r['pair']['id'] for r in m['pairs']]):
         raise Refusal('worker_scope_changed')
     result = base_receipt(row, intent, declaration)
@@ -554,12 +580,14 @@ def batch(run_id, seconds=600):
         run = safe(CACHE / 'runs' / run_id)
         run.mkdir(parents=True, exist_ok=False)
         outcomes = initial_outcomes(m)
-        report = {'schema': 'resect-deferred-qc-batch-v1', 'run_id': run_id, 'manifest_sha256': MANIFEST_SHA,
+        report = {'schema': 'resect-deferred-qc-batch-v2', 'run_id': run_id, 'manifest_sha256': MANIFEST_SHA,
+                  'header_recorders': HEADER_RECORDERS,
                   'status': 'failed_or_incomplete', 'denominator': m['denominator'], 'outcomes': outcomes,
                   'missing_annotations': m['missing_annotations'], 'excluded_members': m['excluded_members'],
                   'rights': m['rights'], 'historical_status_receipts': m['historical_status_receipts'], **CLAIMS}
         try:
-            declaration = {'schema': 'resect-deferred-qc-run-v1', 'run_id': run_id, 'manifest_sha256': MANIFEST_SHA,
+            declaration = {'schema': 'resect-deferred-qc-run-v2', 'run_id': run_id, 'manifest_sha256': MANIFEST_SHA,
+                           'header_recorders': HEADER_RECORDERS,
                            'max_seconds': seconds, 'workers': 1, 'automatic_retries': 0,
                            'selected_pairs': [r['pair']['id'] for r in m['pairs']],
                            'execution': execution_source(m, deadline), **CLAIMS}

@@ -250,12 +250,20 @@ def scalar_budget(shape, itemsize, bounds):
             "scalar_workspace_bytes_bound": chunk * (itemsize + 9)}
 
 
-def inspect_original(path, sha, bounds, deadline):
-    """Future explicit payload operation: bounded streaming, no image allocation."""
+def inspect_original(path, sha, bounds, deadline, *, header_recorder=None):
+    """Bounded streaming; an explicit recorder can version raw-header metadata.
+
+    Omitting the keyword preserves the legacy recorder and its refusal behavior.
+    The caller must bind an alternate recorder in its own execution contract.
+    """
     import nibabel as nib
     import numpy as np
     from resectionlab.critical_evidence import nifti1_header_record
     from resectionlab.imaging import inspect_nifti, ImagingError
+
+    recorder = nifti1_header_record if header_recorder is None else header_recorder
+    if not callable(recorder):
+        raise TypeError('header_recorder must be callable')
 
     result = {"header_qc": {"status": "not_run"}, "scalar_qc": {"status": "not_run"},
               "geometry_qc": {"status": "not_run"}}
@@ -281,7 +289,7 @@ def inspect_original(path, sha, bounds, deadline):
             for module_name in ("resectionlab.imaging", "resectionlab.critical_evidence"):
                 if Path(sys.modules[module_name].__file__).resolve() != ROOT / "src" / (module_name.replace(".", "/") + ".py"):
                     raise Refusal("Imported scientific QC code is outside this checkout")
-            result.update(raw_grid=nifti1_header_record(raw, sha), decoding_budget=budget,
+            result.update(raw_grid=recorder(raw, sha), decoding_budget=budget,
                           header_qc={"status": "passed", "extensions": extensions, "dtype": dtype.str,
                                      "source_scaling": [slope, intercept]})
             check_deadline(deadline)
