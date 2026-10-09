@@ -35,7 +35,7 @@ New commits credit `skamal23 <sayemkamal12@gmail.com>` and co-author
 `shafsthegoat <shafrir.p@gmail.com>`. An hourly thread heartbeat is active for
 normal pushes of completed reviewed commits to `origin/main`.
 
-The [14.47 GB acquired CT/MRI archive transfer](artifacts/synthrad-archive-runner-v1/RESULT.md)
+The [14.47 GB acquired CT/MRI archive transfer](artifacts/synthrad-verified-download-v1/RESULT.md)
 completed one resumable attempt with full SHA-256 and publisher MD5 verification.
 An unchanged recovery invocation confirmed `all_complete=true` without a second
 transfer. It remains unextracted and unreviewed; header, geometry and anatomy QC,

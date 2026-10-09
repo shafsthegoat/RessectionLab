@@ -73,8 +73,10 @@ now seals complete nominal routes before target-only private evaluation on one
 exact generated fixture. Sixty focused and 131 independent controls pass; all
 ten wider failures reproduce on frozen base as legacy weight-lineage rejects.
 It does not admit patients, hide support/hazards, validate clinical outcomes or
-establish transfer. The SynthRAD archive is byte-verified but awaits separate
-image and anatomy QC.
+establish transfer. The [SynthRAD archive](../artifacts/synthrad-verified-download-v1/RESULT.md)
+is byte-verified but awaits separate image and anatomy QC. A bounded existing
+manifest review found no further ready declared download; CFB remains deferred
+for lack of an authoritative verified-HTTPS payload route.
 
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 

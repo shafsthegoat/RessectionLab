@@ -1,0 +1,144 @@
+{
+  "schema": "synthrad-verified-download-publication-v1",
+  "status": "VERIFIED_ARCHIVE_DOWNLOAD_AND_QUEUE_BOOKKEEPING_COMPLETE",
+  "published_utc": "2026-10-09T01:57:42.301933+00:00",
+  "source": {
+    "record": 7260705,
+    "version": "0.1",
+    "doi": "10.5281/zenodo.7260705",
+    "url": "https://zenodo.org/api/records/7260705/files/Task1.zip/content",
+    "license": "CC-BY-NC-4.0",
+    "project_use": "Noncommercial research component; source archive of acquired clinical CT/MRI and provider derivatives"
+  },
+  "archive": {
+    "path": "data/acquisition/synthrad-task1-v1/verified/Task1.zip",
+    "bytes": 14471900926,
+    "publisher_md5": "360bc61e2320d5c5a7145454a81c566a",
+    "measured_local_sha256": "43526037fcd23bdf4318bc193edd4f810e9b8806b6b8f57d41b8ef4e39c1f4cf",
+    "publisher_sha256_available": false
+  },
+  "recovery_run": {
+    "command": [
+      ".venv/bin/python",
+      "-B",
+      "scripts/acquire_synthrad_task1_archive.py",
+      "run"
+    ],
+    "started_utc": "2026-10-09T01:55:10.780248+00:00",
+    "finished_utc": "2026-10-09T01:55:32.219107+00:00",
+    "exit_code": 0,
+    "elapsed_seconds": 21.438897874904796,
+    "attempt_count": 1,
+    "run_ids": [
+      "2b0dc4f2bd95473ab222d2b4e2e22c0b",
+      "fb2f2313ab1f40d3bedaeefe8e706aa4"
+    ],
+    "original_receipts_unchanged": true,
+    "runtime_unchanged": true
+  },
+  "new_run_completion_path": "data/acquisition/synthrad-task1-v1/runs/fb2f2313ab1f40d3bedaeefe8e706aa4/completion.json",
+  "duplicate_transfer_created": false,
+  "transfer_attempt_count_before": 1,
+  "transfer_attempt_count_after": 1,
+  "original_receipts_unchanged": true,
+  "source_and_split_unchanged": true,
+  "prospective_brain_component_roles": {
+    "TRAIN": 126,
+    "SELECT": 27,
+    "MEASUREMENT_EVAL": 27
+  },
+  "member_extraction_performed": false,
+  "image_decoding_performed": false,
+  "header_qc": "not_run",
+  "geometry_qc": "not_run",
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "spatial_planning_admitted": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "next_declared_download_review": {
+    "scope": "Bounded existing manifest/completion-metadata inspection only; not a new provider search",
+    "ready_pending_declared_downloads_found": 0,
+    "completed_queues": [
+      {
+        "name": "Lausanne original TRAIN",
+        "files": 840,
+        "people": 199,
+        "sessions": 210
+      },
+      {
+        "name": "Lausanne metadata-qualified TRAIN annotations",
+        "files": 144,
+        "excluded_metadata_failures": 4
+      },
+      {
+        "name": "RESECT prior cavity queue",
+        "files": 50,
+        "pairs": 25
+      },
+      {
+        "name": "RESECT additional original TRAIN",
+        "files": 104
+      },
+      {
+        "name": "SynthRAD Task1 source archive",
+        "files": 1
+      }
+    ],
+    "cfb": {
+      "candidate_pair_bytes": 172110636,
+      "state": "deferred_no_source_authoritative_verified_https_payload_route",
+      "publisher_checksum_absence_is_not_sole_blocker": true,
+      "roles_assigned": false
+    },
+    "not_new_download_authority": [
+      "SynthRAD Task2 explicitly excluded from current contract",
+      "Old Case4 development acquisition declaration retains release gates; no new launch inferred from that historical document",
+      "Four failed Lausanne annotation metadata entries and missing RESECT annotations remain excluded"
+    ],
+    "large_transfer_launched": false,
+    "root_coordination": "No next ready pending queue found; report to root before any newly declared large source transfer."
+  },
+  "proofs": [
+    {
+      "path": "manifests/synthrad-task1-original-archive-v1.json",
+      "bytes": 10904,
+      "sha256": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b"
+    },
+    {
+      "path": "manifests/synthrad-component-cohort-v1.json",
+      "bytes": 108926,
+      "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/root-freeze.json",
+      "bytes": 1823,
+      "sha256": "d5c9a12c569ab35be44274db14860eb5de0e5b2f9e995cd6cb4204bc6f574a23"
+    },
+    {
+      "path": "artifacts/resect-train-originals-execution-v1/summary.json",
+      "bytes": 39158,
+      "sha256": "37aafaa2ed9fb388704fc7c74210215fc4279ad689f3f1c30d450a17d1098301"
+    },
+    {
+      "path": "artifacts/lausanne-train-acquisition-complete-v1/completion.json",
+      "bytes": 821964,
+      "sha256": "0111fa527602bc44ae7987b9d90b8209af25a798b6fd015d649184f5895a19a5"
+    },
+    {
+      "path": "artifacts/lausanne-annotation-full-intake-v1/independent-verification.json",
+      "bytes": 233598,
+      "sha256": "756a12b35e2634efa5d53629903d25798fb434b2c82d397a6d20cf958aacfcd9"
+    },
+    {
+      "path": "build/cfb-supported-transport-followup-v1/result.json",
+      "bytes": 10069,
+      "sha256": "8de622aeabfa1e11002d750e2910ddaccba8c5834eece65434c0898e1f0abd35"
+    },
+    {
+      "path": "data/acquisition/synthrad-task1-v1/runs/fb2f2313ab1f40d3bedaeefe8e706aa4/completion.json",
+      "bytes": 478,
+      "sha256": "f130223b1ec4eb1f0c11914a7c57850884fd5654c00c001f86806ae619ea1632"
+    }
+  ]
+}

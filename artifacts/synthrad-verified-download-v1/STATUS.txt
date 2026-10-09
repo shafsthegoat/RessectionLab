@@ -1,0 +1,13 @@
+SynthRAD2023 Task1 archive download is complete and verified.
+
+Exact source archive: 14,471,900,926 bytes.
+Publisher MD5: 360bc61e2320d5c5a7145454a81c566a
+Measured local SHA256: 43526037fcd23bdf4318bc193edd4f810e9b8806b6b8f57d41b8ef4e39c1f4cf
+Source: https://zenodo.org/api/records/7260705/files/Task1.zip/content
+License: CC-BY-NC-4.0; noncommercial research component.
+
+After the orphan worker and curl had exited, the unchanged acquisition entrypoint ran once and independently rehashed the completed archive. It returned all_complete=true in 21.44 seconds. Transfer attempts stayed at 1; no duplicate transfer occurred. Original receipts, source bindings, campaign and prospective split were preserved exactly. The new queue completion receipt is data/acquisition/synthrad-task1-v1/runs/fb2f2313ab1f40d3bedaeefe8e706aa4/completion.json.
+
+Prospective brain roles remain 126 TRAIN / 27 SELECT / 27 MEASUREMENT_EVAL. The archive remains unopened: no member extraction, image decode, anatomical/registration QC, training or spatial admission. Archive verification is not individual-image validation or evidence of glioma diagnosis.
+
+The bounded review of existing ready acquisition manifests found no further pending download. Prior Lausanne originals/qualified annotations and RESECT queues are recorded complete. CFB remains deferred because an authoritative verified-HTTPS payload route is absent. No next large transfer was launched; new acquisition scope needs coordination with root.
