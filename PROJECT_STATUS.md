@@ -25,6 +25,12 @@ publisher MD5 and independently rechecked local SHA-256. Payloads remain
 unparsed and unreviewed; specimen identities, overlap, units and roles must be
 qualified before fitting or evaluation. No material or surgical validity follows
 from acquisition.
+The [subsequent scientific qualification](artifacts/greiner-brain-mechanics-intake-v1/QUALIFICATION.md)
+identifies two specimens from one donor and a possible within-specimen
+stress-relaxation test. Published material parameters already use the proposed
+holdout traces and are excluded from that test's initialization and assumptions.
+CSV schema/roles, numerical implementation and measured-response evaluation
+remain open; no direct retraction validation or independent-donor claim follows.
 
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131
@@ -67,6 +73,17 @@ fixed views show gross correspondence, but local anatomical alignment remains
 unaccepted. No private labels, outcomes, weights, inference or planning were used.
 The next target-estimation path uses separately licensed weights and an
 independent nnU-Net adapter with scan-only registration and inverse-map QC.
+The [fixed SRI-24 atlas intake](artifacts/sri24-atlas-intake-v1/RESULT.md) is complete,
+with independently reproduced size, MD5 and SHA-256. Its original file has a
+singleton fourth axis that preprocessing must handle explicitly. The isolated
+runtime and pinned model-weight verification remain in progress; no patient
+registration or inference has run in this slice.
+
+The [HBE twelve-row comparison diagnostic](docs/hbe-v5-twelve-row-generated-comparator.md)
+is committed and independently reviewed. Generated fixtures verify the frozen
+comparison rules and disclose ungated adjacent-mesh exceedances. Native admission
+remains disabled; eleven of the twelve v5 native rows are still unrun, and neither
+specimen-force calibration nor physical validation is established.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
