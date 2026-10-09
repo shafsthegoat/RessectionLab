@@ -1,0 +1,11 @@
+Independent saved-output audit PASS: one working-length input intervention.
+
+At the exact generated actual-120-mm root, changing only seven working-length descriptors back to 2.2/12 mm moved the frozen RL STOP-minus-best-movement score from +0.4669986 to -6.3032722. The STOP scalar stayed exactly -1.811178207397461. Its softmax preference fell from 60.984445% to 0.173134%; these are model scores, not clinical probabilities.
+
+The unchanged action set contains seven movements. Image, coverage, affine, state, masks, IDs/order, other geometry and policy parameters/buffers remained fixed. The intervention has its own observation fingerprint and is explicitly uncertified. No action or strategy was executed.
+
+Exactly one RL forward completed. Reconstruction used 24 previews under the fixed 64-preview cap. Recorded diagnostic body time was 0.1165 s; supervisor wall time was 1.8840 s, including worker startup/imports. Sampled peak worker RSS was 311083008 B, within the fixed 20 s/1 GiB envelope. There were zero updates, searches, patient reads or retries.
+
+This isolates working-length input sensitivity on one familiar generated root. It does not establish a repaired policy, calibrated abstention, physical validity, or the primary rich-training/limited-input unseen-patient hypothesis. No normalization, STOP threshold or checkpoint was changed.
+
+The 2309-byte generated-permitted-inputs.npz and input-identity.json preserve the original input arrays and changed geometry. attempt-01.tar.gz preserves every original source/input/output/receipt byte; archive-inventory.json verifies each member. Frozen checkpoint bytes are referenced by exact hashes and are not copied. Both independent reviews and their checks are included.

@@ -1,0 +1,382 @@
+{
+  "actual_original_bytes": 1813277,
+  "actual_original_files": 93,
+  "archive_sha256": "cc84f805f24982efa787781beeaf29ee59706d595d53d1bf7950d857a30c8103",
+  "members": {
+    "attempt-01/declaration-input.json": {
+      "bytes": 14459,
+      "sha256": "8463bbf4e244498cc1df6ca2a92df2ed981f64c9622f158aaf7f62e50bd01204"
+    },
+    "attempt-01/generated-permitted-inputs.npz": {
+      "bytes": 2309,
+      "sha256": "628c972c9e24efbcdfd0ae51fc8e6dda25bce9d373f1566998a6c021c48d7b78"
+    },
+    "attempt-01/input-identity.json": {
+      "bytes": 3689,
+      "sha256": "e7dfa67c8c9ee52c15caa452b12c339d39d7b381d90a569bfd9b1f582c0b643f"
+    },
+    "attempt-01/output-sha256.json": {
+      "bytes": 12521,
+      "sha256": "d893722ee7f234c273bf5a879dc6db32908387afba6912f272b23e50f6cd26f4"
+    },
+    "attempt-01/result.json": {
+      "bytes": 3242,
+      "sha256": "999f513f3c348a4a1e3705ffaa950949ac5edac6cd18ec98f03039a2acfb3c47"
+    },
+    "attempt-01/source-and-input-snapshot/artifacts/matched-estimate-methods-v1/declaration.json": {
+      "bytes": 17652,
+      "sha256": "24c9f9bc22ebf56b1567cd27f3c8777a55897ccfbb58606a5f4ae205d771dd60"
+    },
+    "attempt-01/source-and-input-snapshot/artifacts/matched-estimate-methods-v1/logit-decomposition.json": {
+      "bytes": 7754,
+      "sha256": "9f342b65637cae46d52d37012e6f723ea3a26b7d28861025f19081dcf5f9422b"
+    },
+    "attempt-01/source-and-input-snapshot/artifacts/matched-estimate-methods-v1/prospective-fixed-experiment.json": {
+      "bytes": 6977,
+      "sha256": "1508ed23c1acbce63c20ba92b076d580fa25ce9f7f9ba96dac6314a64ca61a32"
+    },
+    "attempt-01/source-and-input-snapshot/build/matched-estimate-methods-v1/attempt-01/actual_120mm_tools/planning-suite.json": {
+      "bytes": 107349,
+      "sha256": "02f9fc0cefae183042807817c25d1a2286a5619f777811693f6c004d56065e31"
+    },
+    "attempt-01/source-and-input-snapshot/build/matched-estimate-methods-v1/candidate/frozen_preflight_supervisor.py": {
+      "bytes": 23824,
+      "sha256": "8d3db9c04e4b2e040f6b6f5bc153618f277233fb93c12c2cabdf418493e58048"
+    },
+    "attempt-01/source-and-input-snapshot/build/matched-estimate-methods-v1/candidate/matched_estimate_methods.py": {
+      "bytes": 14048,
+      "sha256": "738bc20079aa9e50e6bef8aecea7b8cfd88b0e729ca9dc910d3bfb5ee9f450ac"
+    },
+    "attempt-01/source-and-input-snapshot/build/matched-estimate-methods-v1/candidate/run_fixed_comparison.py": {
+      "bytes": 10764,
+      "sha256": "c312cfb63c94e39e301915a1bfd5d1c273d5e7dfa3b0a0e265407e503f9912e1"
+    },
+    "attempt-01/source-and-input-snapshot/build/working-length-reverse-diagnostic-v1/run_reverse.py": {
+      "bytes": 13052,
+      "sha256": "3b03941385007905762701a5a9e2b26f7ecb3aa0cb7c2c41ac22096975f330d1"
+    },
+    "attempt-01/source-and-input-snapshot/build/working-length-reverse-diagnostic-v1/test_reverse.py": {
+      "bytes": 5390,
+      "sha256": "a6710938ce202285edb1edf7033336791489b3f8f564c7da56c5ffabf11dd618"
+    },
+    "attempt-01/source-and-input-snapshot/scripts/preflight_real_spatial_policy.py": {
+      "bytes": 22680,
+      "sha256": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/anatomy.py": {
+      "bytes": 13915,
+      "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/__init__.py": {
+      "bytes": 324,
+      "sha256": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/annotation.py": {
+      "bytes": 1579,
+      "sha256": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/desktop.py": {
+      "bytes": 52112,
+      "sha256": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/refinement.py": {
+      "bytes": 10623,
+      "sha256": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/reslice.py": {
+      "bytes": 3963,
+      "sha256": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/scene.py": {
+      "bytes": 10251,
+      "sha256": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/slice_view.py": {
+      "bytes": 4846,
+      "sha256": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/style.py": {
+      "bytes": 3687,
+      "sha256": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/training_view.py": {
+      "bytes": 6651,
+      "sha256": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/app/workers.py": {
+      "bytes": 1692,
+      "sha256": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/brain_extraction.py": {
+      "bytes": 23276,
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/cohort.py": {
+      "bytes": 14491,
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/core.py": {
+      "bytes": 30914,
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/data_policy.py": {
+      "bytes": 7928,
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/desktop_bridge.py": {
+      "bytes": 90561,
+      "sha256": "f900380474782e8632353c44c0e1306766fe3b4c7bdd2bbf7167255b407ff6de"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/diffusion.py": {
+      "bytes": 22180,
+      "sha256": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/evaluation.py": {
+      "bytes": 60912,
+      "sha256": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/experimental_capsule_cache.py": {
+      "bytes": 11590,
+      "sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/functional_events.py": {
+      "bytes": 23198,
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/functional_evidence.py": {
+      "bytes": 11698,
+      "sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/geometry.py": {
+      "bytes": 31204,
+      "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/imaging.py": {
+      "bytes": 41897,
+      "sha256": "e02e09de5289b2151a2869df841e66acddc90a789bd5aff9c5a9ebed81512c36"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/independent_geometry_batch.py": {
+      "bytes": 9799,
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/lausanne_sub476_component.py": {
+      "bytes": 10954,
+      "sha256": "c885c0d45f21c3bb56b0aeeb20cf1a5fcf26cc3df320cfae2fcd48cf6a061867"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/learning.py": {
+      "bytes": 51360,
+      "sha256": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/learning_ppo.py": {
+      "bytes": 25323,
+      "sha256": "327dfb09884f0a125cbbab790b66a67dad98b5e180a820ab29f2c0c358b6a1d4"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/limited_observation_boundary.py": {
+      "bytes": 19777,
+      "sha256": "d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/low_memory_conv3d.py": {
+      "bytes": 7119,
+      "sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/mechanics_landmarks.py": {
+      "bytes": 22280,
+      "sha256": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_access_preparation.py": {
+      "bytes": 12234,
+      "sha256": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_axis_accounting.py": {
+      "bytes": 32191,
+      "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_axis_policy_schema.py": {
+      "bytes": 4443,
+      "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_axis_refinement.py": {
+      "bytes": 17552,
+      "sha256": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_axis_simulation.py": {
+      "bytes": 24485,
+      "sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_functional_evaluation.py": {
+      "bytes": 12986,
+      "sha256": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_ingress.py": {
+      "bytes": 12447,
+      "sha256": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_proposals.py": {
+      "bytes": 33903,
+      "sha256": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_refinement.py": {
+      "bytes": 34315,
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_resection.py": {
+      "bytes": 27879,
+      "sha256": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_routes.py": {
+      "bytes": 8680,
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_simulation.py": {
+      "bytes": 34916,
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_spatial_evaluation.py": {
+      "bytes": 9818,
+      "sha256": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/native_spatial_task.py": {
+      "bytes": 59280,
+      "sha256": "3d2d050b20a208683f2b803395e0cd46afe67b12d74b5abb548b91fb6ece9764"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/nifti_header_records.py": {
+      "bytes": 2533,
+      "sha256": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/observed_landmark_replay.py": {
+      "bytes": 11508,
+      "sha256": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/observed_search.py": {
+      "bytes": 12955,
+      "sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/pat05_forward_diagnostic.py": {
+      "bytes": 19560,
+      "sha256": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/planning.py": {
+      "bytes": 31212,
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/planning_budget.py": {
+      "bytes": 11579,
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/policy_inputs.py": {
+      "bytes": 3294,
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/population_learning.py": {
+      "bytes": 25672,
+      "sha256": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/preprocessing.py": {
+      "bytes": 17223,
+      "sha256": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/prior_proposals.py": {
+      "bytes": 27458,
+      "sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/prior_registration.py": {
+      "bytes": 21175,
+      "sha256": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/procedural_learning.py": {
+      "bytes": 40198,
+      "sha256": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/real_patient_learning.py": {
+      "bytes": 7420,
+      "sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/remind_header_inventory.py": {
+      "bytes": 15666,
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/research_estimate_planning.py": {
+      "bytes": 30612,
+      "sha256": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/rhuh_outcomes.py": {
+      "bytes": 13611,
+      "sha256": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/route_native_diagnostics.py": {
+      "bytes": 3685,
+      "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/scan_support_contract.py": {
+      "bytes": 2923,
+      "sha256": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/scan_target_adapter.py": {
+      "bytes": 32454,
+      "sha256": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/selection_contract.py": {
+      "bytes": 1927,
+      "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/simulation.py": {
+      "bytes": 47076,
+      "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/spatial_multiscale_views.py": {
+      "bytes": 30061,
+      "sha256": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/spatial_observations.py": {
+      "bytes": 24866,
+      "sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/spatial_policy.py": {
+      "bytes": 22722,
+      "sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/spatial_policy_diagnostics.py": {
+      "bytes": 20387,
+      "sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/spatial_task.py": {
+      "bytes": 25313,
+      "sha256": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/vitaldb_observed.py": {
+      "bytes": 28501,
+      "sha256": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be"
+    },
+    "attempt-01/source-and-input-snapshot/src/resectionlab/worlds.py": {
+      "bytes": 20428,
+      "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "attempt-01/supervisor-progress.json": {
+      "bytes": 236,
+      "sha256": "07c58da950ed818f702bf4878ff626f5b0a59a46441fd81dcf080337e995e24b"
+    },
+    "attempt-01/supervisor.json": {
+      "bytes": 669,
+      "sha256": "0ddb13acf847b98a73a53686353cecd4e5bfdb0da42055a615753fecd460f3a0"
+    },
+    "attempt-01/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "note": "Every original file is retained byte-for-byte. Frozen checkpoint bytes are not copied; exact checkpoint lineage is in the declaration and independent audit.",
+  "original_index_sha256": "d893722ee7f234c273bf5a879dc6db32908387afba6912f272b23e50f6cd26f4",
+  "original_indexed_files": 92
+}

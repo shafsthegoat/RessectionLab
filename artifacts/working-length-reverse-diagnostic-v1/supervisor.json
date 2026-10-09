@@ -1,0 +1,19 @@
+{
+  "automatic_retry": false,
+  "cleanup_errors": [],
+  "declaration_sha256": "8463bbf4e244498cc1df6ca2a92df2ed981f64c9622f158aaf7f62e50bd01204",
+  "measurement_timeout_seconds": 2,
+  "returncode": 0,
+  "rss_samples": 9,
+  "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+  "sampled_peak_rss_bytes": 311083008,
+  "sampling_interval_seconds": 0.2,
+  "sampling_limit": "transient peaks between samples can be missed",
+  "seconds": 1.8839911660179496,
+  "status": "complete",
+  "termination_grace_seconds": 2,
+  "termination_reason": null,
+  "timed_out": false,
+  "unresolved_worker_pid": null,
+  "worker_termination_confirmed": true
+}

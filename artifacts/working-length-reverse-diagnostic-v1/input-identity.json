@@ -1,0 +1,83 @@
+{
+  "action_ids": [
+    "STOP",
+    "NATIVE-SPATIAL:8f14333c6962b62c1bc6f6b1",
+    "NATIVE-SPATIAL:aef76798cff8dcedd394f254",
+    "NATIVE-SPATIAL:85e89affab621cf0cc032e2f",
+    "NATIVE-SPATIAL:b7cee0d9f5d9f75a76e80b4f",
+    "NATIVE-SPATIAL:4b276657495f584eadede150",
+    "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+    "NATIVE-SPATIAL:c43127b9ec672e22e768b38f"
+  ],
+  "action_tool_ids": [
+    null,
+    "short-wide-opener",
+    "long-narrow-cutter",
+    "short-wide-opener",
+    "long-narrow-cutter",
+    "short-wide-opener",
+    "short-wide-opener",
+    "short-wide-opener"
+  ],
+  "changed_array_sha256": {
+    "action_geometry": "sha256:309ebd57a604f72f9ace1bc8bd85d0d7dc60071f13730e57f0d143a9823d0faa",
+    "action_mask": "sha256:ea1003661b53c5804341c5d87f9dc90aa9aa8d437e373a32c6a776d1ba28ab43",
+    "affine_ras_mm": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+    "channel_available": "sha256:54c80ef32c2c35866de215c2917fed52a1d58f2a8a5b1d468fb5f3b17f490aa0",
+    "coverage": "sha256:b95efc0a1a2accbb9e008c7c8f605d3922ec87e0e010c932e557b8b0ee264b8b",
+    "image_channels": "sha256:57cb4282f2b5f4290a0d5d1c63f8ca745db7c7e624ffb1aa70f26439c430fef8",
+    "spacing_mm": "sha256:406eba51306897acb37650b7cd04536193d86c025b64bae8d5eb3f4975c7dc5b",
+    "state_features": "sha256:09ca075ac04e5a0e386c179fd5137e592043a5480b7e0888d93e3f6575de512f"
+  },
+  "channel_provenance": {
+    "nominal_language": {
+      "derivation": "",
+      "derived_from": [],
+      "source_kind": "unavailable"
+    },
+    "nominal_motor": {
+      "derivation": "",
+      "derived_from": [],
+      "source_kind": "unavailable"
+    },
+    "nominal_target": {
+      "derivation": "provisional target sha256:1e238994abfb38582d8eea644fea9cf92e126016a485e0e503b69bbb15c49443; no independent accuracy claim",
+      "derived_from": [
+        "structural_intensity"
+      ],
+      "source_kind": "derived_from_scan"
+    },
+    "nominal_tissue": {
+      "derivation": "provisional model support sha256:b72a6a18c646f03636c99a21a72e944eb9bcf6861705fdddceb27bf7c75f24b4; nonclinical; no cortical approval",
+      "derived_from": [
+        "structural_intensity"
+      ],
+      "source_kind": "derived_from_scan"
+    },
+    "observed_cavity": {
+      "derivation": "committed fully contained connected native cells",
+      "derived_from": [],
+      "source_kind": "observed_procedure_state"
+    },
+    "structural_intensity": {
+      "derivation": "",
+      "derived_from": [],
+      "source_kind": "observed_scan"
+    }
+  },
+  "input_geometry_certified": false,
+  "intervention_hash": "sha256:42fa2b7acb8e5a20bed344fd5e7506469207c6bfbca115eee4593e6aef5366e8",
+  "original_array_sha256": {
+    "action_geometry": "sha256:6934a7c81a7de03185d8e9af4329b3cd42e71e7a9c31155a63c005602d367c50",
+    "action_mask": "sha256:ea1003661b53c5804341c5d87f9dc90aa9aa8d437e373a32c6a776d1ba28ab43",
+    "affine_ras_mm": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+    "channel_available": "sha256:54c80ef32c2c35866de215c2917fed52a1d58f2a8a5b1d468fb5f3b17f490aa0",
+    "coverage": "sha256:b95efc0a1a2accbb9e008c7c8f605d3922ec87e0e010c932e557b8b0ee264b8b",
+    "image_channels": "sha256:57cb4282f2b5f4290a0d5d1c63f8ca745db7c7e624ffb1aa70f26439c430fef8",
+    "spacing_mm": "sha256:406eba51306897acb37650b7cd04536193d86c025b64bae8d5eb3f4975c7dc5b",
+    "state_features": "sha256:09ca075ac04e5a0e386c179fd5137e592043a5480b7e0888d93e3f6575de512f"
+  },
+  "original_hash": "sha256:35370c298051ef93184addf397f1c148b460e0397707ac9e7de578b07d24643a",
+  "source_id_ancestry_only": "sha256:da8ef040a4970a22ac429d548db56a38edf8faad1d490e012dfcb7f508501432",
+  "strategy_execution_permitted": false
+}

@@ -1,0 +1,97 @@
+{
+  "checkpoint_parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+  "critic_used": false,
+  "diagnostic_logits": [
+    -1.811178207397461,
+    -0.3554571866989136,
+    -1.3783527612686157,
+    -0.03377664089202881,
+    -1.0566726922988892,
+    0.20817768573760986,
+    0.36670637130737305,
+    4.492094039916992
+  ],
+  "elapsed_seconds": 0.11647349991835654,
+  "executed_actions": 0,
+  "forward_calls": {
+    "attempted": 1,
+    "completed": 1
+  },
+  "highest_ranked_id_not_executed": "NATIVE-SPATIAL:c43127b9ec672e22e768b38f",
+  "intervention_observation_hash": "sha256:42fa2b7acb8e5a20bed344fd5e7506469207c6bfbca115eee4593e6aef5366e8",
+  "legal_action_ids": [
+    "STOP",
+    "NATIVE-SPATIAL:8f14333c6962b62c1bc6f6b1",
+    "NATIVE-SPATIAL:aef76798cff8dcedd394f254",
+    "NATIVE-SPATIAL:85e89affab621cf0cc032e2f",
+    "NATIVE-SPATIAL:b7cee0d9f5d9f75a76e80b4f",
+    "NATIVE-SPATIAL:4b276657495f584eadede150",
+    "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+    "NATIVE-SPATIAL:c43127b9ec672e22e768b38f"
+  ],
+  "logit_changes": [
+    0.0,
+    8.051406025886536,
+    7.276589751243591,
+    7.956279397010803,
+    7.181717276573181,
+    7.832024693489075,
+    7.758583068847656,
+    6.770270824432373
+  ],
+  "optimizer_updates": 0,
+  "original_observation_hash": "sha256:35370c298051ef93184addf397f1c148b460e0397707ac9e7de578b07d24643a",
+  "patient_files_opened": 0,
+  "planning_efficacy_measured": false,
+  "reconstruction_native_previews": {
+    "phases": {
+      "actual_120mm_observation": {
+        "feasible": 7,
+        "raised": 0,
+        "rejected": 5,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+        },
+        "returned": 12,
+        "returned_microsteps": 92,
+        "seconds": 0.03611633158288896,
+        "started": 12
+      },
+      "generated_fixture": {
+        "feasible": 4,
+        "raised": 0,
+        "rejected": 8,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+          "HARD_GEOMETRY:WORKING_REACH": 3,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+        },
+        "returned": 12,
+        "returned_microsteps": 47,
+        "seconds": 0.039113209350034595,
+        "started": 12
+      }
+    },
+    "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+    "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+  },
+  "reconstruction_seconds": 0.08835366717539728,
+  "same_other_preprocessing_tensors": true,
+  "saved_actual_logits": [
+    -1.811178207397461,
+    -8.40686321258545,
+    -8.654942512512207,
+    -7.990056037902832,
+    -8.23838996887207,
+    -7.623847007751465,
+    -7.391876697540283,
+    -2.278176784515381
+  ],
+  "saved_stop_minus_best_movement": 0.4669985771179199,
+  "scope": "One frozen RL forward on an uncertified descriptor intervention at the exact reconstructed generated actual-long root; no executed strategy, efficacy, patient or clinical claim.",
+  "search_calls": 0,
+  "status": "complete",
+  "stop_minus_best_movement": -6.303272247314453,
+  "stop_softmax": 0.0017313376243020112
+}

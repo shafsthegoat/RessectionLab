@@ -114,8 +114,13 @@ returns were SEARCH/IL/HYBRID 1.100 and RL 1.098. With actual 120 mm tools,
 SEARCH/HYBRID scored 1.163 and IL 1.161, while RL stopped at zero despite seven
 legal movement alternatives. Eight strategies, 15 transitions and 141 microsteps
 were verified without retraining. This is a useful tool-transfer failure, not
-limited-input patient generalization or physical validation. Saved-score analysis
-is complete; a narrowly controlled feature intervention is being prepared.
+limited-input patient generalization or physical validation. The subsequent
+[one-forward feature intervention](artifacts/working-length-reverse-diagnostic-v1/RESULT.md)
+changed only seven tool-length descriptors and reversed the STOP margin from
++0.467 to −6.303; four common movement scores recovered exactly their original
+values. Independent saved-input checks passed. This diagnoses descriptor
+sensitivity; no altered-descriptor strategy was executed and no policy repair
+or patient transfer is claimed.
 
 The [matched 64³ baseline attempt](artifacts/lazy-concat-baseline-monitor-negative-v1/RESULT.md)
 stopped before a forward pass because the process monitor could not inspect a

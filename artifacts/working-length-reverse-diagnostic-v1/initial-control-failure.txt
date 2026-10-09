@@ -1,0 +1,4 @@
+First control invocation failed during test collection, before any test or checkpoint/native call:
+SyntaxError in run_reverse.py line 162: expected 'except' or 'finally' block.
+A local edit accidentally removed indentation from the checkpoint loader line inside worker's try block.
+The indentation was restored before rerunning the same controls. No experiment attempt occurred.

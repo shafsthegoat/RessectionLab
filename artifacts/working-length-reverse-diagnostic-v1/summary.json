@@ -1,0 +1,97 @@
+{
+  "checkpoint_parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+  "claim": "On this fixed generated input, reverting only working-length features is sufficient to reverse the frozen policy's STOP ranking. The STOP scalar is unchanged; movement scores account for the flip.",
+  "clock_note": "Recorded diagnostic body starts after imports; supervisor wall time includes worker startup/imports. Parent snapshots and postflight hashing are outside the worker timer.",
+  "declaration_sha256": "8463bbf4e244498cc1df6ca2a92df2ed981f64c9622f158aaf7f62e50bd01204",
+  "diagnostic_stop_minus_best_movement": -6.303272247314453,
+  "diagnostic_stop_softmax": 0.0017313376243020112,
+  "executed_actions": 0,
+  "forward_calls": {
+    "attempted": 1,
+    "completed": 1
+  },
+  "generated_input_bytes": 2309,
+  "highest_ranked_id_not_executed": "NATIVE-SPATIAL:c43127b9ec672e22e768b38f",
+  "intervention_observation_hash": "sha256:42fa2b7acb8e5a20bed344fd5e7506469207c6bfbca115eee4593e6aef5366e8",
+  "limits": [
+    "modified descriptors are uncertified and no resulting action is executed",
+    "not a repaired policy or demonstration of strategy efficacy",
+    "softmax values are model scores, not clinical probabilities",
+    "one fully observed familiar generated source, not limited-input unseen-patient evidence",
+    "does not justify changed normalization, STOP threshold, checkpoint selection or retraining",
+    "physical tissue and outside-source-FOV validity remain unestablished"
+  ],
+  "movement_logit_changes": [
+    8.051406025886536,
+    7.276589751243591,
+    7.956279397010803,
+    7.181717276573181,
+    7.832024693489075,
+    7.758583068847656,
+    6.770270824432373
+  ],
+  "optimizer_updates": 0,
+  "original_observation_hash": "sha256:35370c298051ef93184addf397f1c148b460e0397707ac9e7de578b07d24643a",
+  "patient_files_opened": 0,
+  "reconstruction_native_previews": {
+    "phases": {
+      "actual_120mm_observation": {
+        "feasible": 7,
+        "raised": 0,
+        "rejected": 5,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+        },
+        "returned": 12,
+        "returned_microsteps": 92,
+        "seconds": 0.03611633158288896,
+        "started": 12
+      },
+      "generated_fixture": {
+        "feasible": 4,
+        "raised": 0,
+        "rejected": 8,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+          "HARD_GEOMETRY:WORKING_REACH": 3,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+        },
+        "returned": 12,
+        "returned_microsteps": 47,
+        "seconds": 0.039113209350034595,
+        "started": 12
+      }
+    },
+    "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+    "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+  },
+  "reconstruction_preview_entries": 24,
+  "reconstruction_seconds": 0.08835366717539728,
+  "recorded_diagnostic_body_seconds": 0.11647349991835654,
+  "saved_actual_stop_minus_best_movement": 0.4669985771179199,
+  "saved_actual_stop_softmax": 0.6098444528902071,
+  "scope": "One frozen RL forward on an uncertified descriptor intervention at the exact reconstructed generated actual-long root; no executed strategy, efficacy, patient or clinical claim.",
+  "search_calls": 0,
+  "status": "independent_saved_only_audit_PASS",
+  "stop_logit_before_and_after": -1.811178207397461,
+  "supervisor": {
+    "automatic_retry": false,
+    "cleanup_errors": [],
+    "declaration_sha256": "8463bbf4e244498cc1df6ca2a92df2ed981f64c9622f158aaf7f62e50bd01204",
+    "measurement_timeout_seconds": 2,
+    "returncode": 0,
+    "rss_samples": 9,
+    "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+    "sampled_peak_rss_bytes": 311083008,
+    "sampling_interval_seconds": 0.2,
+    "sampling_limit": "transient peaks between samples can be missed",
+    "seconds": 1.8839911660179496,
+    "status": "complete",
+    "termination_grace_seconds": 2,
+    "termination_reason": null,
+    "timed_out": false,
+    "unresolved_worker_pid": null,
+    "worker_termination_confirmed": true
+  }
+}

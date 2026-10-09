@@ -1,0 +1,139 @@
+{
+  "actual_attempt_reconstruction_previews": 24,
+  "actual_attempt_reconstruction_seconds": 0.08835366717539728,
+  "actual_worker_seconds": 0.11647349991835654,
+  "all_other_saved_array_hashes_unchanged": true,
+  "both_observation_hashes_recomputed_from_saved_arrays_and_metadata": true,
+  "changed_lengths_mm": [
+    2.2,
+    12.0,
+    2.2,
+    12.0,
+    2.2,
+    2.2,
+    2.2
+  ],
+  "checkpoint_file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+  "checkpoint_parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+  "declaration_sha256": "8463bbf4e244498cc1df6ca2a92df2ed981f64c9622f158aaf7f62e50bd01204",
+  "diagnostic_stop_minus_best_movement": -6.303272247314453,
+  "diagnostic_stop_softmax": 0.0017313376243020112,
+  "exact_changed_array_coordinates": [
+    [
+      1,
+      12
+    ],
+    [
+      2,
+      12
+    ],
+    [
+      3,
+      12
+    ],
+    [
+      4,
+      12
+    ],
+    [
+      5,
+      12
+    ],
+    [
+      6,
+      12
+    ],
+    [
+      7,
+      12
+    ]
+  ],
+  "executed_actions": 0,
+  "finalized_bytes": 1813277,
+  "finalized_files": 93,
+  "forward_calls": {
+    "attempted": 1,
+    "completed": 1
+  },
+  "four_common_movement_scores_exactly_restore_original_logits": [
+    {
+      "endpoint": [
+        4,
+        4,
+        1
+      ],
+      "restored_logit": -1.3783527612686157,
+      "tool_id": "long-narrow-cutter"
+    },
+    {
+      "endpoint": [
+        4,
+        4,
+        2
+      ],
+      "restored_logit": -1.0566726922988892,
+      "tool_id": "long-narrow-cutter"
+    },
+    {
+      "endpoint": [
+        4,
+        4,
+        1
+      ],
+      "restored_logit": -0.3554571866989136,
+      "tool_id": "short-wide-opener"
+    },
+    {
+      "endpoint": [
+        4,
+        4,
+        2
+      ],
+      "restored_logit": -0.03377664089202881,
+      "tool_id": "short-wide-opener"
+    }
+  ],
+  "highest_ranked_id_not_executed": "NATIVE-SPATIAL:c43127b9ec672e22e768b38f",
+  "indexed_files": 92,
+  "input_bindings_checked": 4,
+  "intervention_observation_hash": "sha256:42fa2b7acb8e5a20bed344fd5e7506469207c6bfbca115eee4593e6aef5366e8",
+  "limits": [
+    "DTO descriptor intervention only; altered actions were uncertified and not executed",
+    "score sensitivity is not strategy efficacy or generalized policy repair",
+    "one familiar fully observed generated fixture, not limited-input patient transfer",
+    "runtime preprocessing and post-forward state checks are source-bound receipts, not repeated model evaluation",
+    "sampled worker RSS may miss transient peaks; source snapshots/postflight excluded from worker timer"
+  ],
+  "optimizer_updates": 0,
+  "original_observation_hash": "sha256:35370c298051ef93184addf397f1c148b460e0397707ac9e7de578b07d24643a",
+  "original_stop_minus_best_movement": 0.4669985771179199,
+  "original_stop_softmax": 0.6098444528902071,
+  "output_index_sha256": "d893722ee7f234c273bf5a879dc6db32908387afba6912f272b23e50f6cd26f4",
+  "patient_files_opened": 0,
+  "review_new_checkpoint_decodes": 0,
+  "review_new_model_forwards": 0,
+  "review_new_native_previews": 0,
+  "search_calls": 0,
+  "source_bindings_checked": 81,
+  "status": "PASS_saved_reverse_descriptor_diagnostic",
+  "stop_logit_unchanged": -1.811178207397461,
+  "supervisor": {
+    "automatic_retry": false,
+    "cleanup_errors": [],
+    "declaration_sha256": "8463bbf4e244498cc1df6ca2a92df2ed981f64c9622f158aaf7f62e50bd01204",
+    "measurement_timeout_seconds": 2,
+    "returncode": 0,
+    "rss_samples": 9,
+    "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+    "sampled_peak_rss_bytes": 311083008,
+    "sampling_interval_seconds": 0.2,
+    "sampling_limit": "transient peaks between samples can be missed",
+    "seconds": 1.8839911660179496,
+    "status": "complete",
+    "termination_grace_seconds": 2,
+    "termination_reason": null,
+    "timed_out": false,
+    "unresolved_worker_pid": null,
+    "worker_termination_confirmed": true
+  }
+}
