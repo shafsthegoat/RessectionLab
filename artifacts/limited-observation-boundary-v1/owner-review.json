@@ -1,0 +1,60 @@
+{
+  "schema": "limited-boundary-owner-review-v1",
+  "created_at": "2026-10-09T01:49:12.264630+00:00",
+  "base_commit": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+  "changed_source_files": [
+    "src/resectionlab/limited_observation_boundary.py",
+    "tests/test_limited_observation_boundary.py"
+  ],
+  "all_preexisting_tracked_src_and_tests_unchanged": true,
+  "focused_tests": {
+    "passed": 60,
+    "failed": 0,
+    "log": "focused-tests.txt"
+  },
+  "existing_regressions": {
+    "passed": 126,
+    "failed": 10,
+    "log": "existing-regressions.txt"
+  },
+  "baseline_reproduction": {
+    "commit": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+    "boundary_module_absent": true,
+    "reproduced_failures": 10,
+    "test_ids": "baseline-admission-failures.json",
+    "log": "frozen-head-admission-failures.txt",
+    "exception": "WEIGHT_LINEAGE_UNVERIFIED: _provisional_proposal_support"
+  },
+  "counterfactual": {
+    "target_removed_mm3": [
+      2.0,
+      0.0
+    ],
+    "total_reward": [
+      1.1,
+      -1.3000000000000003
+    ],
+    "same_plan_seal": true,
+    "same_independent_geometry": true,
+    "same_source_hash": true
+  },
+  "proposal_adaptations": [
+    "Separate evaluator-owned HeldOutTargetBinding metadata is mandatory before the zero-argument label loader so a reference source mismatch can reject without reading labels.",
+    "V1 allowlists the exact generated permitted-input fingerprint and the original/zero generated target hashes; crop/normalization/proposals/tools/objective variants require a new version.",
+    "HeldOutTargetReference nests the binding and privately owns immutable target bytes; provenance and target-only full-generated-grid coverage are fixed by the version.",
+    "Preflight errors raise before loader access; load/reference/replay failures return immutable sealed records that the caller must persist.",
+    "Method configuration/parameter identities and accounting are sealed caller declarations; no claim is made to authenticate planner identity or independently measure prior planning costs."
+  ],
+  "scope_limits": {
+    "training_updates": 0,
+    "patient_files_read": 0,
+    "patient_admission_added": false,
+    "data_policy_changed": false,
+    "hidden_support_or_hazards_validated": false,
+    "file_or_process_isolation": false,
+    "clinical_or_functional_claims": false
+  },
+  "source_hashes": "source-hashes.json",
+  "source_snapshot": "source-snapshot",
+  "counterfactual_artifact": "private-target-counterfactual.json"
+}

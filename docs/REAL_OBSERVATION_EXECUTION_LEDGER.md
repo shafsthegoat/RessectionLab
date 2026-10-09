@@ -68,13 +68,18 @@ do not test unseen-patient limited-input transfer. No acquired/admitted cohort
 yet combines glioma scans with complete independent vascular, functional and
 surgical-interaction truth for the same person. The next source slice is a
 fail-closed planning-input/private-reference boundary, not an unqualified
-population training sweep. The SynthRAD archive remains an independent live
-download with unverified partial bytes.
+population training sweep. The [first bounded implementation](../artifacts/limited-observation-boundary-v1/RESULT.md)
+now seals complete nominal routes before target-only private evaluation on one
+exact generated fixture. Sixty focused and 131 independent controls pass; all
+ten wider failures reproduce on frozen base as legacy weight-lineage rejects.
+It does not admit patients, hide support/hazards, validate clinical outcomes or
+establish transfer. The SynthRAD archive is byte-verified but awaits separate
+image and anatomy QC.
 
-## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC
+## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 
-The [source-frozen CT/MRI archive transfer](../artifacts/synthrad-archive-runner-v1/RESULT.md)
-is active: exact HTTP 200 length/publisher MD5, no scientific decoding. Its 32
+At this checkpoint, the [source-frozen CT/MRI archive transfer](../artifacts/synthrad-archive-runner-v1/RESULT.md)
+was active: exact HTTP 200 length/publisher MD5, no scientific decoding. Its 32
 offline controls and independent process/hash expiry checks include a repaired
 sleep-related campaign deadline defect. The full 14.47 GB archive runs continuously
 within persisted attempts and deadlines; partial bytes do not establish fixity or

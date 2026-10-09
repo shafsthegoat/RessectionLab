@@ -1,0 +1,46 @@
+GO for the exact generated-fixture limited-observation boundary slice.
+
+Reviewed base commit: e596c8f42b328a0ce00f1b3e9cedc13f7c287196
+
+Reviewed file SHA-256:
+  src/resectionlab/limited_observation_boundary.py
+  d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c
+  tests/test_limited_observation_boundary.py
+  609ec871e0c934c7db7541ff27e19ca76c97b33c0d06b7bc8c64d1b6c2a35049
+
+No blocking or nonblocking defects found in the reviewed scope.
+
+Independent validation:
+  60 focused tests passed.
+  131 additional independent controls passed.
+  Wider related regressions: 126 passed, 10 failed.
+  All 10 failures independently reproduced on frozen HEAD with the new boundary
+  module absent and imports confirmed from the frozen export. Every failure is
+  the baseline WEIGHT_LINEAGE_UNVERIFIED provisional-support admission failure.
+
+The independently built permitted spec used no rich task or private reference.
+The same sealed two-action sequence removed 2 versus 0 mm3 of private target;
+rewards were 1.1 versus -1.3000000000000003. Geometry, source hash, proposals,
+observations, nominal cavity, legal masks, logits, nominal rewards, search
+sequence and transition accounting remained invariant. The private loader ran
+only after complete nominal replay. Guards detected no post-load actor/search
+or planning-clone calls. Caller-object mutation during the loader did not change
+the detached execution/report. Missing/extra fields, changed geometry and
+source/objective/tool hashes, resealed invalid actions, incomplete prefixes,
+malformed STOP termination and time-cap claims failed before private reads.
+
+This GO applies only to one exact generated fixture and the original/all-zero
+private targets. It authorizes no patient admission, training, clinical claim,
+functional or hidden-support/hazard validation, or process/file-access security
+claim. Caller-declared method identities/costs are not authenticated. Failure
+records are immutable in-memory outputs that a future caller must persist.
+The versioned patient-runner and admission gates in the committed proposal
+remain necessary before any wider use.
+
+See review.json for requirement-by-requirement findings and scope limits,
+independent-controls.json for full traces and target outcomes, and the focused,
+wider and frozen-HEAD test logs for reproducible verification. Source snapshots
+and an artifact hash manifest accompany this review.
+
+Only build/limited-boundary-independent-v1 was written by this reviewer; no
+tracked code, desktop WIP, synced references, commits, or patient files changed.

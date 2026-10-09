@@ -1,0 +1,17 @@
+{
+  "passed": 126,
+  "failed": 10,
+  "same_failures_as_frozen_head": true,
+  "failed_tests": [
+    "tests.test_native_spatial_task::test_provisional_support_is_explicit_shared_with_teacher_and_does_not_promote_source",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[case_hash]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[planning_hash]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[evidence_hash]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[source_image_hash]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[source_frame_hash]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[mask_hash]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[model_sha256]",
+    "tests.test_native_spatial_task::test_provisional_support_rejects_every_stale_identity[run_sha256]",
+    "tests.test_native_spatial_task::test_rejected_model_proposal_cannot_be_bypassed_by_research_acknowledgment"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "head": "e596c8f42b328a0ce00f1b3e9cedc13f7c287196",
+  "new_boundary_available": false,
+  "selected_test_ids": [
+    "tests/test_native_spatial_task.py::test_provisional_support_is_explicit_shared_with_teacher_and_does_not_promote_source",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[case_hash]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[planning_hash]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[evidence_hash]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[source_image_hash]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[source_frame_hash]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[mask_hash]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[model_sha256]",
+    "tests/test_native_spatial_task.py::test_provisional_support_rejects_every_stale_identity[run_sha256]",
+    "tests/test_native_spatial_task.py::test_rejected_model_proposal_cannot_be_bypassed_by_research_acknowledgment"
+  ],
+  "expected_exception": "WEIGHT_LINEAGE_UNVERIFIED: _provisional_proposal_support",
+  "exit_code": 1,
+  "failure_count": 10
+}

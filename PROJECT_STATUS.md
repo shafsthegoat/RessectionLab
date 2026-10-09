@@ -9,6 +9,13 @@ required. The first fixed generated-development comparison retains its negative
 result; longer fixed fits now demonstrate learning on that same task. No new
 real-patient training or transfer is claimed.
 
+The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
+is committed and has a scope-limited independent GO: 60 focused and 131
+additional controls passed. A sealed two-action plan scores 2 versus 0 mm³
+private target removed under a target swap without changing its nominal plan.
+Ten wider provisional-support failures reproduce on the frozen base and remain
+open. This is not patient admission or evidence of transfer.
+
 The October 9 steering makes privileged-simulation training with **limited
 preoperative inputs on unseen patients** the primary falsifiable RL hypothesis.
 The [research protocol](EXPERIMENT_PROTOCOL.md) and [master plan](MASTER_PLAN.md)
@@ -29,10 +36,10 @@ New commits credit `skamal23 <sayemkamal12@gmail.com>` and co-author
 normal pushes of completed reviewed commits to `origin/main`.
 
 The [14.47 GB acquired CT/MRI archive transfer](artifacts/synthrad-archive-runner-v1/RESULT.md)
-started at 00:26 UTC on October 9 and is running independently of QC and model
-work. The runner passes 32 controls plus independent live-clock and mid-hash
-expiry checks. Its first HTTP 200 response matches the frozen size/checksum;
-partial bytes are unverified, images unopened, and prospective roles unchanged.
+completed one resumable attempt with full SHA-256 and publisher MD5 verification.
+An unchanged recovery invocation confirmed `all_complete=true` without a second
+transfer. It remains unextracted and unreviewed; header, geometry and anatomy QC,
+training and spatial-planning admission are all outstanding.
 The [versioned RESECT QC rerun](artifacts/resect-deferred-qc-v2-execution-v1/RESULT.md)
 completed all 24 new image–mask pairs in 24.401772 seconds. Full image scalar,
 binary-mask and coded-grid checks now pass; an independent saved-output audit
@@ -53,9 +60,12 @@ then stopped on a real CSV header mismatch before fitting or native solves. The
 [independent failure audit and allowed-axial header diagnostic](artifacts/hbe-branch-calibration-v2-failure-audit-v1/RESULT.md)
 confirm that compression was read but tension and held-out torsion were not.
 The [separately versioned v3 correction](artifacts/hbe-branch-calibration-v3-preparation-v1/RESULT.md)
-is committed with 146 owner and 227 guarded independent controls, but a fresh
-execution release has not yet run. Physical agreement and withheld torque
-remain unmeasured.
+passed 146 owner and 227 guarded independent controls. Its first authorized,
+supervised execution parsed both allowed axial curves, then stopped before a
+completed material fit because a measured displacement lay outside the frozen
+solved range. No native solves ran; held-out torsion stayed sealed. Physical
+agreement and withheld torque remain unmeasured. The failed attempt is being
+preserved for independent diagnosis before any separately versioned correction.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
