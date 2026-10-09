@@ -1,0 +1,2400 @@
+{
+  "archive": {
+    "bytes": 1054768,
+    "file": "evidence.tar.gz",
+    "members": 334,
+    "sha256": "da4a7fb51187c0ec0045950c100cf9acb6247c22e8ec7ced7444a9708eca8a54"
+  },
+  "large_inputs_digest_bindings": {
+    "cohort": {
+      "bytes": 7582,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/cohort.json",
+      "sha256": "6d781b6d5d3bb558e44932c2c0534e735465bd01b367c2d300748b7982479a78"
+    },
+    "completion": {
+      "bytes": 17438453,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/completion.json",
+      "sha256": "78361402d8c50bd21a96fe450ed10d2d28d04c4307d4adf89c2a61f0947f81f0"
+    },
+    "declaration": {
+      "bytes": 729,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/declaration.json",
+      "sha256": "f45ac48d33d0049eeff1e45495ae5a5e71e06aa317471e630cea010b447ad967"
+    },
+    "objects": {
+      "bytes": 22128232,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/objects.json",
+      "sha256": "19b9e910a1574ef24294c351e1199061c6ce35521ed8efcf654897d5f821faf6"
+    },
+    "series_index": {
+      "bytes": 186697,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/series_index.json",
+      "sha256": "86e9731f5cb72dfa490e845ce8e544ec96bd0283f3edc633cc48d0c08eab68d7"
+    },
+    "us_checksums": {
+      "bytes": 203,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/us_checksums.json",
+      "sha256": "898e2062100095e3f22f18ea2894b360ca0ba48b3c4b4321f6a53091c138a83f"
+    }
+  },
+  "members": [
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "bytes": 21303,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_adapter.py",
+      "sha256": "d51237a21ccac5bad3e0ea7c07a4c48968e6a061547bb168bf95efd0ba8e3a76"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "bytes": 27747,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/header_pilot_launcher_v2.py",
+      "sha256": "0cdfa0e257c69da805fa44101f44cf0f7f034ebb30cc23eb50233d65c6cc7652"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "bytes": 12021,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/mr-conversion-candidate-v2/mr_conversion.py",
+      "sha256": "8a6db6cdf6c10f276fd13a4de0d0fe14b62fa5fc368e164d86494cccef47847d"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "bytes": 12071,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/prepare_inventory.py",
+      "sha256": "f06331d64dd1669587cb5561c714cee093ac88f943e69894c89e6bbfea09237b"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "bytes": 8572,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "bytes": 27921,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/staged_runner.py",
+      "sha256": "339053cc6c81c540b441c8dae97fa8e39e0fa5e53945a3cd29c7f48349dc5cbd"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/staged_io.py",
+      "bytes": 8572,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/staged_runner.py",
+      "bytes": 29886,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/staged_runner.py",
+      "sha256": "e658ba2d37c34c8a4a0c4d6ddeb927a55760d4002129e114bb18592843e19c61"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/scripts/audit_remind_native.py",
+      "bytes": 10186,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "scripts/audit_remind_native.py",
+      "sha256": "59fa3cf7298386bbaed7f33ce4540760bd9ab7b16739fc00c22f77a75f59c1ad"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/scripts/real_intake_io.py",
+      "bytes": 4305,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "scripts/real_intake_io.py",
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "archive_member": "actual-executing-source-snapshot/src/resectionlab/remind_header_inventory.py",
+      "bytes": 15666,
+      "kind": "actual-executing-source-snapshot",
+      "original_repository_path": "src/resectionlab/remind_header_inventory.py",
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/REPORT.txt",
+      "bytes": 2842,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/REPORT.txt",
+      "sha256": "c1e4152c84861d28898dd4e073dd9e0299f2a1329b25ef5d18c7db162100aa5f"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/audit.json",
+      "bytes": 4844,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/audit.json",
+      "sha256": "d9df3ab0b3e3d92ef6c1221925bebe67397385a2c5837ad93e6041fd11fde6a2"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/audit_full_reuse.py",
+      "bytes": 8935,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/audit_full_reuse.py",
+      "sha256": "ae585f5a4c9840abc3ae365952dbec9e424a0390b9d5fa7ed1385c340a868046"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/provided-test-output.txt",
+      "bytes": 2343,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/provided-test-output.txt",
+      "sha256": "d7e5d740bb025795721fc7f414ceede018486ce28d0c3d6a55f3a6c0aacb9e61"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/full-reuse-CANDIDATE-NOT-APPROVED-v1.json",
+      "bytes": 236497,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/full-reuse-CANDIDATE-NOT-APPROVED-v1.json",
+      "sha256": "c42e7d5f022780402a30575a9ba9fcf703f5567e150c3a2cee2eb4cfe9803f4a"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/generated_fixture.py",
+      "bytes": 7891,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/generated_fixture.py",
+      "sha256": "cfd1b8a8e5af9fb846599d77534f39c59b51f1f8b6597a919c89d6c714941bfd"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/prepare_full_reuse.py",
+      "bytes": 2278,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/prepare_full_reuse.py",
+      "sha256": "0c0b799b0bee464b59ea8e596d0de41db1629a791b60c7af1a0d6eef8d72423f"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/prepare_patient_candidate.py",
+      "bytes": 3860,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/prepare_patient_candidate.py",
+      "sha256": "b9406f8f16a14dfe67f8fb8f57e2eb439d4970d2cac2e6305e6c48036b0cd8bc"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/staged_io.py",
+      "bytes": 8572,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/staged_io.py",
+      "sha256": "3b663b6396b3f6c8f53019986875e0ea6a09fef5d379aef41a6d55cbe5b7856f"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/staged_runner.py",
+      "bytes": 29886,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/staged_runner.py",
+      "sha256": "e658ba2d37c34c8a4a0c4d6ddeb927a55760d4002129e114bb18592843e19c61"
+    },
+    {
+      "archive_member": "independent-reuse-GO/build/remind-staged-full-reuse-independent-v1/snapshots/test_staged.py",
+      "bytes": 22866,
+      "kind": "independent-reuse-GO",
+      "original_repository_path": "build/remind-staged-full-reuse-independent-v1/snapshots/test_staged.py",
+      "sha256": "cbdadd729b9164607e1f01fc4efe2ff2cb6eff32ac4577414ff6b51095f45097"
+    },
+    {
+      "archive_member": "independent-saved-postrun-audit/build/remind-staged-full-reuse-postrun-independent-v1/REPORT.txt",
+      "bytes": 3382,
+      "kind": "independent-saved-postrun-audit",
+      "original_repository_path": "build/remind-staged-full-reuse-postrun-independent-v1/REPORT.txt",
+      "sha256": "8d83c893531c0295654853318c4302e651ef81ea7b12569a256dc77a7e890efc"
+    },
+    {
+      "archive_member": "independent-saved-postrun-audit/build/remind-staged-full-reuse-postrun-independent-v1/audit.json",
+      "bytes": 65124,
+      "kind": "independent-saved-postrun-audit",
+      "original_repository_path": "build/remind-staged-full-reuse-postrun-independent-v1/audit.json",
+      "sha256": "88cce1a376c28a8075c65c5c4b51eadcf8fe8198bc022f1c89207b30fede6d83"
+    },
+    {
+      "archive_member": "independent-saved-postrun-audit/build/remind-staged-full-reuse-postrun-independent-v1/audit_saved_success.py",
+      "bytes": 15982,
+      "kind": "independent-saved-postrun-audit",
+      "original_repository_path": "build/remind-staged-full-reuse-postrun-independent-v1/audit_saved_success.py",
+      "sha256": "d4697e37ff7d9282546c35c722c4d179aa16dc72b8ff054d0841f7305b0f3ae0"
+    },
+    {
+      "archive_member": "packaging-source/build/remind-qc-adapter-preparation-v1/package_full_reuse_success.py",
+      "bytes": 10625,
+      "kind": "packaging-source",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/package_full_reuse_success.py",
+      "sha256": "084f5227bd79d5c20c3c8b7158bdc8bfe751a158f3d9716759fd653f072a87d8"
+    },
+    {
+      "archive_member": "preserved-negative-and-v3-package/build/remind-qc-adapter-preparation-v1/promotion-staged-full-failure-v1/artifacts/remind-staged-full-failure-and-order-fix-v1/evidence-index.json",
+      "bytes": 350006,
+      "kind": "preserved-negative-and-v3-package",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/promotion-staged-full-failure-v1/artifacts/remind-staged-full-failure-and-order-fix-v1/evidence-index.json",
+      "sha256": "a110402bf6bf1c54ea5788b13afe04828093021a716e57d217e7b07deb7ea424"
+    },
+    {
+      "archive_member": "preserved-negative-and-v3-package/build/remind-qc-adapter-preparation-v1/promotion-staged-full-failure-v1/artifacts/remind-staged-full-failure-and-order-fix-v1/evidence.tar.gz",
+      "bytes": 638829,
+      "kind": "preserved-negative-and-v3-package",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/promotion-staged-full-failure-v1/artifacts/remind-staged-full-failure-and-order-fix-v1/evidence.tar.gz",
+      "sha256": "1a0709abd6c0b5dda37441a13c2322bc1d15401a6ba02c2be5b673c675823c03"
+    },
+    {
+      "archive_member": "preserved-negative-and-v3-package/build/remind-qc-adapter-preparation-v1/promotion-staged-full-failure-v1/artifacts/remind-staged-full-failure-and-order-fix-v1/summary.json",
+      "bytes": 13306,
+      "kind": "preserved-negative-and-v3-package",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/promotion-staged-full-failure-v1/artifacts/remind-staged-full-failure-and-order-fix-v1/summary.json",
+      "sha256": "d648688e3aa7ba5ead53bfae666f970cfd4d047afa7a4116a108738b50e44ada"
+    },
+    {
+      "archive_member": "release-protocol-and-no-run-recipe/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/reuse-protocol-v1.json",
+      "bytes": 2683,
+      "kind": "release-protocol-and-no-run-recipe",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/reuse-protocol-v1.json",
+      "sha256": "ceba6d7b436aee6306cc37357617236daa53b98cb5e7830fc88f5fa912d18c50"
+    },
+    {
+      "archive_member": "release-protocol-and-no-run-recipe/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root-full-reuse-launch-recipe.json",
+      "bytes": 3487,
+      "kind": "release-protocol-and-no-run-recipe",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root-full-reuse-launch-recipe.json",
+      "sha256": "5dfcc362c01292c3ec43d4faba136fef632b6cfd86ae1d024335c53b181eca9b"
+    },
+    {
+      "archive_member": "release-protocol-and-no-run-recipe/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root_reuse_recipe.py",
+      "bytes": 2775,
+      "kind": "release-protocol-and-no-run-recipe",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root_reuse_recipe.py",
+      "sha256": "171c779523847480e3627d447c763bca0aa171ca2684984efe2b0c7faf02559b"
+    },
+    {
+      "archive_member": "reviewed-unsigned-candidate/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/full-reuse-CANDIDATE-NOT-APPROVED-v1.json",
+      "bytes": 236497,
+      "kind": "reviewed-unsigned-candidate",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/full-reuse-CANDIDATE-NOT-APPROVED-v1.json",
+      "sha256": "c42e7d5f022780402a30575a9ba9fcf703f5567e150c3a2cee2eb4cfe9803f4a"
+    },
+    {
+      "archive_member": "root-authorized-exact-reuse/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root-release-full-reuse-v1.json",
+      "bytes": 236635,
+      "kind": "root-authorized-exact-reuse",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/root-release-full-reuse-v1.json",
+      "sha256": "5c23be8d4beb87c8be627b5ade2964fa2b2eb15fc4daa73b97e4121094ef10e7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/conversion.json",
+      "bytes": 102943,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/conversion.json",
+      "sha256": "395e1d18b163e813ea964db2f63cc6f3f51da5e537caa5ed749150c4238dd914"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/monitor.json",
+      "bytes": 198,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/monitor.json",
+      "sha256": "3ec5eb0962129bc149801405d98e7b321849a8a9a2545839baaa5ccd5d96426b"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0001-intent.json",
+      "bytes": 625,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0001-intent.json",
+      "sha256": "bc685d32d927cc5d90d11d62f69dcfdc1e547fdc6ee4c3fe1a142f1d1da0e5cc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0001-result.json",
+      "bytes": 469,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0001-result.json",
+      "sha256": "857ed825592195f0ad617793d32c09f93ba1738fbf98cc3d7b4255979ba7b453"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0002-intent.json",
+      "bytes": 634,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0002-intent.json",
+      "sha256": "96009f81625f43e1b9bc5a59aaf6e3b87424e28276e273f4898ceba64f60e662"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0002-result.json",
+      "bytes": 468,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0002-result.json",
+      "sha256": "2e007f6ef8afa3f1509e31d69ae750c78b39aba92c5596bc9ab1b6477085df6c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0003-intent.json",
+      "bytes": 641,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0003-intent.json",
+      "sha256": "22c3e03fe6757f675420fd3e69c60b4c723c1a58a32a9a09ceb4b5b906e8c128"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0003-result.json",
+      "bytes": 475,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0003-result.json",
+      "sha256": "78f24b7129445ae800af2b3eaaac926a38712a28dfccbed97bd1eefe2c190a28"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0004-intent.json",
+      "bytes": 644,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0004-intent.json",
+      "sha256": "3a4e56c3bfe79955681c7490a83be14aeacc259981c1b25c670262e47a75c5f9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0004-result.json",
+      "bytes": 482,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0004-result.json",
+      "sha256": "ac03c477866dd34f34b30131f1604649e224022f69419c472575e5fbf40f5c87"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0005-intent.json",
+      "bytes": 644,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0005-intent.json",
+      "sha256": "ab47a64d3c7117b85f74e443d956f960c545ead5acf040d471eea5b58a3a46c2"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0005-result.json",
+      "bytes": 477,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0005-result.json",
+      "sha256": "eee624a1e78adf42c318d4a3630c119f86716f6f6df582c1fc689cb3e4e37e22"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0006-intent.json",
+      "bytes": 652,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0006-intent.json",
+      "sha256": "9876b3a52ba51e367ced55fe8eb525eeccf9c0ab5628d7e65c10e2e11f396f05"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0006-result.json",
+      "bytes": 482,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0006-result.json",
+      "sha256": "c4516fa0b58555c0316c3c19ca8604b23339f093cc2922e0aacfa3fb079f084d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0007-intent.json",
+      "bytes": 644,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0007-intent.json",
+      "sha256": "2e1383bb9581918eca8854a150087f8974653cc75a74d7c033bd04bfc69b8a3f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0007-result.json",
+      "bytes": 479,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0007-result.json",
+      "sha256": "abd5326293859f271f7f182f1eee37373a82c099954637254563c58e87f1e5d6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0008-intent.json",
+      "bytes": 784,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0008-intent.json",
+      "sha256": "e46226b9fd6c5b48149d4d973fbb14cebba023c4f7924dcd10a14a1775c3aa12"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0008-result.json",
+      "bytes": 485,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0008-result.json",
+      "sha256": "ad9a4b2c90b031d26711377e74c48199992ae74980c04ab7a968a01b58636c07"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0009-intent.json",
+      "bytes": 504,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0009-intent.json",
+      "sha256": "740dcbcbeb76d0671e6a87eb3eb8c07fe4ae7c0b5305e404e5fdbd8a6b85f5ba"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0009-result.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0009-result.json",
+      "sha256": "78902a5b9a317a4dbdfbb7bff451e1da1cd9b4c51625584447e94baf321a04b9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0010-intent.json",
+      "bytes": 797,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0010-intent.json",
+      "sha256": "0296cf5f95a9733e9a8899269f4b450f93776a419a0a875e0782b16f856a45fd"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0010-result.json",
+      "bytes": 494,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0010-result.json",
+      "sha256": "07fa7a0d148d4cc97b5e366e8a38a153a931dcdf4d2f1b56c6d8e66c9c1dded3"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0011-intent.json",
+      "bytes": 513,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0011-intent.json",
+      "sha256": "00ff41668b10b63b0fdcc25312bda761f0f030d8f913339351e2d4b78cfdf048"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0011-result.json",
+      "bytes": 523,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0011-result.json",
+      "sha256": "6f25a0940dd5d519b9c08420f7d134578d660e66ae45a3d00d360a3646607af4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0012-intent.json",
+      "bytes": 801,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0012-intent.json",
+      "sha256": "4be683e251897757690909acda549f617dcec939c7bfb7b38796d52c990bfa53"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0012-result.json",
+      "bytes": 496,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0012-result.json",
+      "sha256": "0790d2728cd5b0e99cdd6fd7c3f19fa5d4a773500c83d3928890fb340f2cf614"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0013-intent.json",
+      "bytes": 516,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0013-intent.json",
+      "sha256": "bdd6562d07ccbffd58e7455c3446bdc3362ce2061990abf04311508a181f2db3"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0013-result.json",
+      "bytes": 523,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0013-result.json",
+      "sha256": "f35c780878e7f7d3f8fe7a22b5f2a517b79455a92874d1b4e563b55a1ef3d599"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0014-intent.json",
+      "bytes": 801,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0014-intent.json",
+      "sha256": "5086035009de18e2306ab8b55707b3596a257ae892c034a8d578ec5c6448ff62"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0014-result.json",
+      "bytes": 496,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0014-result.json",
+      "sha256": "6cd31f389f63af54ecc53eb60c0bd62c3516d1191d1d671a8100931cf3a8e3e4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0015-intent.json",
+      "bytes": 516,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0015-intent.json",
+      "sha256": "e16117c2c484c9ba1bdfe153dc720562a11758a2bc70a773146c187090f2d16f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0015-result.json",
+      "bytes": 523,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0015-result.json",
+      "sha256": "1f247216e9d4e31e5d804a4f9fedd26506c048b1925c8f9f4cf0abb43d110761"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0016-intent.json",
+      "bytes": 801,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0016-intent.json",
+      "sha256": "cd4aeee090c86d3f9ddaddf3dfd27554b77987318a788af303ea5dca4b74e6b7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0016-result.json",
+      "bytes": 496,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0016-result.json",
+      "sha256": "91c23b4a0c157f1f01b63c3607ac243ee513d171e2990d8720e15b72be7ba081"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0017-intent.json",
+      "bytes": 516,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0017-intent.json",
+      "sha256": "11c8bc59be1d277427803731e18dde80724998945e7693e6a8e6badc9b583357"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0017-result.json",
+      "bytes": 523,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0017-result.json",
+      "sha256": "d15b155a9847e3393daa977004c64c85ffd1103d2de5e4a7d9a7197ff0099e2f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0018-intent.json",
+      "bytes": 801,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0018-intent.json",
+      "sha256": "621891d07796b0e2bf47e1a9f33b83589f50a6de62d3ec0584c04ae5a02e26c7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0018-result.json",
+      "bytes": 496,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0018-result.json",
+      "sha256": "27cac2629ecea73266c147f95e879528edf2465e130884a707284844d91fa0dc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0019-intent.json",
+      "bytes": 516,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0019-intent.json",
+      "sha256": "404750ce3e8a7a1ac3768d22aa6d49fcd6fb2f33879ff41dfc09771c233af487"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0019-result.json",
+      "bytes": 523,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0019-result.json",
+      "sha256": "b47ad8b36ea9e02c5dfb2ee54c18d5c63b9b98f2fb43fe1e26ad757fc28fbf4d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0020-intent.json",
+      "bytes": 801,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0020-intent.json",
+      "sha256": "c39c0877e8d495507872b6e85101e15b59331b54cb0c6493a0a1cab622419560"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0020-result.json",
+      "bytes": 496,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0020-result.json",
+      "sha256": "809b62601c34e5d4989e4eeecee164239e78a8b07b0c56d2a55d82609287b03a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0021-intent.json",
+      "bytes": 516,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0021-intent.json",
+      "sha256": "c648c06e2bdb4e0161729b30961bdafa48d8ef6647990bae27872d9799b3ab9a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0021-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0021-result.json",
+      "sha256": "49398ac286763d7cd564cf2de7f96d7c1090f16d15c54ac0cab991a34c09eee6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0022-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0022-intent.json",
+      "sha256": "f705e1a49581bfeb139dffa02a69c5c534441b1fc474a0f6395115b2db37a899"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0022-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0022-result.json",
+      "sha256": "fe4eb49e2584aa9af624073c71a86107034ebf5001a9989fa6faaa0028041453"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0023-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0023-intent.json",
+      "sha256": "8f11cc0db337741d63a621f34d453cfeb9bd11b61413f3b07688ca2e0c39c5de"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0023-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0023-result.json",
+      "sha256": "7686edb61e1f223c809deaa08024894812c787e7f1c801d6c0093a730256a2b3"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0024-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0024-intent.json",
+      "sha256": "d95ce92c6308640783174ad3b255dbff88a07cc90af8adb4afa8482f21be59a2"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0024-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0024-result.json",
+      "sha256": "474df2da87aa1bc8753a904310f8ce355d752dba9618df977e402044c84ba5b9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0025-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0025-intent.json",
+      "sha256": "f816df0c1cfd37657257c5fc9433756737230d936626ee63cb656e7ba7a9ec49"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0025-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0025-result.json",
+      "sha256": "6f087fad7e0394e38587839621c3c6f8614e9e636719c68053d15d1fc5d97528"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0026-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0026-intent.json",
+      "sha256": "b52fa7922dbc6cc24c1a68832420f4e32ba05d4f9d132eeb08ebd582f1139726"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0026-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0026-result.json",
+      "sha256": "3d4a6bd88ccdf1f9f1cec8203f99e3179dc89d1cf8363dfdcbc7b9942e55aa29"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0027-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0027-intent.json",
+      "sha256": "680736d3afdd7811fc4f16886058373c92ee2c64af55d732826c034e71d7934f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0027-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0027-result.json",
+      "sha256": "9e9fcc03ac815550285168e4ca4c9803316239b5ad38a47a043a232646e10db9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0028-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0028-intent.json",
+      "sha256": "4c74601dbb2d665970344cb6d21ee6ed68a364e824b1ecd5c02c066f8da40b5c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0028-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0028-result.json",
+      "sha256": "1789efae34909b71846e4ddafbf0f70710f73ab28c2c941c2954a6940dfabbbf"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0029-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0029-intent.json",
+      "sha256": "cde2defaf06f8f85d6b28b14ea6cb2986515f39a5496d353412f09a729b7df4d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0029-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0029-result.json",
+      "sha256": "ca6f680cd74d844532bacd1778bb523e4080ea64609a024e4def432c2d458561"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0030-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0030-intent.json",
+      "sha256": "8e04ff8124a85dde03ffa58d559bd7b49f0944bc9a622f03d23cc4b4efdaf735"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0030-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0030-result.json",
+      "sha256": "d6e1e017a2099dd012130666c585e064aabef628da809c42838cee1bc0a18e23"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0031-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0031-intent.json",
+      "sha256": "d8a2adc3f289470e980064acc3440b03cc4daa45d4410fcf2d8be6d9abd24a77"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0031-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0031-result.json",
+      "sha256": "401b83e300b25440ec118dc9bfbef5c8dc67a378b6bcbb65c7d35a686e728c0a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0032-intent.json",
+      "bytes": 801,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0032-intent.json",
+      "sha256": "47d66fd97716266348fcc2e224e2071b7afece8fd57c8f31480b96438f2fada2"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0032-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0032-result.json",
+      "sha256": "8c684448ef3b077b68ccc9f2675602f7a70dff8eedb7154d761cd481f50a66cd"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0033-intent.json",
+      "bytes": 516,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0033-intent.json",
+      "sha256": "2924e534515414f2d4c6416c286ee2797e2cfda7d6baad325e4f5bee95772689"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0033-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0033-result.json",
+      "sha256": "88f7cb1d43937297657b4e36378e07850d257c8e49630c05d86763d723e8b517"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0034-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0034-intent.json",
+      "sha256": "79a35fdc3c3f6c8ff685d206c6dc0127dbfe639bcdbb47a18dc3914ab4495ca2"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0034-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0034-result.json",
+      "sha256": "b0a5f677fe5500c80f1d4ccb7f153329d3a1e9f5761301214639c71c7aedbe6c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0035-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0035-intent.json",
+      "sha256": "3d87103f5dead69dbe39511fce638cffec44a282940ed481675ced5b0d145f26"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0035-result.json",
+      "bytes": 524,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0035-result.json",
+      "sha256": "82bed8deb081fb44d33e4098a6c86ad2f12442240da893dfa6eabfeda2823859"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0036-intent.json",
+      "bytes": 802,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0036-intent.json",
+      "sha256": "a12a1542f00a3720fbdd8ebe04ee557774060bdf09ec4183c239ae79aec7133b"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0036-result.json",
+      "bytes": 497,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0036-result.json",
+      "sha256": "558d931b0dc5d6d12427feaf4428dddb33f192da218273337e66ba35c0eecb90"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0037-intent.json",
+      "bytes": 517,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0037-intent.json",
+      "sha256": "db6364e9c3a7fc2f7832e137592f33c06cc2fc2827ff6335f5cbf80d14899a34"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0037-result.json",
+      "bytes": 525,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0037-result.json",
+      "sha256": "38563daeb0568a0f9004be59e08f1c887e9e5db222fb5d639025eaea9cd17c15"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0038-intent.json",
+      "bytes": 803,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0038-intent.json",
+      "sha256": "a6d3ed8067e0df1ae33ed8c167f8f9d55f2afa85a797d38155b08ed0426ce46e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0038-result.json",
+      "bytes": 498,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0038-result.json",
+      "sha256": "6617077acdf4f9137a34ef89cb31b7c391f86c15cd7746a88bb126944d17ec26"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0039-intent.json",
+      "bytes": 518,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0039-intent.json",
+      "sha256": "1a1d1130d6c73b4322a211b34c2f60dcd5c34847f249e53dc2bc08ef79174568"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0039-result.json",
+      "bytes": 525,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0039-result.json",
+      "sha256": "ee9228143265e0d5059a35cbdd4a8ed79c30bae3d7ccdef482579b23e4fa31db"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0040-intent.json",
+      "bytes": 803,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0040-intent.json",
+      "sha256": "342324ad8362dfa04834d76426ef0a5ba3538d276aee8f3308cbaf67c059e337"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0040-result.json",
+      "bytes": 498,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0040-result.json",
+      "sha256": "41e82b04436bf24aef4720784fe3c7864c2422fb8b53632441b47352fc67d90c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0041-intent.json",
+      "bytes": 518,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0041-intent.json",
+      "sha256": "9a312472ba5e181ce86fb100d9310f2f5e9abfcb66c8b2324b19eabd0bc7b9e6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0041-result.json",
+      "bytes": 525,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0041-result.json",
+      "sha256": "f2577ce56f9d5fcec7007cded65390e4b44bc1e312dff2efbaa044f6ae1c5b8e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0042-intent.json",
+      "bytes": 803,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0042-intent.json",
+      "sha256": "3faf037f57790a7906c72ecba0eabeead46c9ecdf72ab32b9ef1e95d66eca495"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0042-result.json",
+      "bytes": 498,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0042-result.json",
+      "sha256": "3b97b9de29139a743d4ae403f6aa87b306f89ffae27f224e1c810c60faaf9669"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0043-intent.json",
+      "bytes": 518,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0043-intent.json",
+      "sha256": "dca72442391bedfe7c026fa8a310082a446ae5916c86bced2959315c184e9668"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0043-result.json",
+      "bytes": 525,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0043-result.json",
+      "sha256": "76e2dd4e584c13ab5a62bfffecfe402477c9d59923b5066be79c1b61b4c92593"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0044-intent.json",
+      "bytes": 803,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0044-intent.json",
+      "sha256": "73e53048b37ea43f60dccf696352a3d42ad60bd6f1c446942a96dfab2fccda11"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0044-result.json",
+      "bytes": 498,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0044-result.json",
+      "sha256": "ea36d7f6421ee493546c5b6bae4f7f32d85b3216a8ffbb1bf21aaa3dd76b12a9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0045-intent.json",
+      "bytes": 518,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0045-intent.json",
+      "sha256": "e4ce3024302f75b1ba8e304758f118dec07ec7a60b4a8df2edfc9d5a36c1576c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0045-result.json",
+      "bytes": 525,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0045-result.json",
+      "sha256": "6d471cc26b081a652ce16b45d4a98a5d2c8fcfc63303ad94ac2c079d28e85e2f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0046-intent.json",
+      "bytes": 803,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0046-intent.json",
+      "sha256": "ee0e1a7df417b1b3167cd6344d7d18c7b0328cff3f8b7ee85a357075cf4d9a25"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0046-result.json",
+      "bytes": 499,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0046-result.json",
+      "sha256": "ab7e1f1c1fc52180ca3d8896e12f2e294b7ea0dba13a709dc3d7812d65fd7dcc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0047-intent.json",
+      "bytes": 519,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0047-intent.json",
+      "sha256": "acbb78ae18166a6b662eb33bb8cfb3909361c6c5ba057fa0999c8fbf67c12d98"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0047-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0047-result.json",
+      "sha256": "21e309912ee91bea2a6d1667976f4abc8df21de11899e91e874373d71a2a5166"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0048-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0048-intent.json",
+      "sha256": "b949c9bd58f3d6e30cc26d0569c349fb9eea82cd3aece1b8e82ce066655a615d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0048-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0048-result.json",
+      "sha256": "25728553f885a93088fe9d9b190ab4642965778c1945528cf4681bdd4ae34ac4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0049-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0049-intent.json",
+      "sha256": "901203cbebbe70d529c4e22de53be3175f7928458a3a75a11d2ef2d4bd913082"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0049-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0049-result.json",
+      "sha256": "51712df98023aeb92f3cfd9374d1d0d266545e6e8999fa8e92c88d4223070992"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0050-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0050-intent.json",
+      "sha256": "de1d7c29494fda0f2208a3e88040e405a2b9922ff11d8a3ad2d9907a6b149379"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0050-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0050-result.json",
+      "sha256": "2eea31de57b9b289354076ccc4058985c641f77de1cc0f518e9367d987fda07c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0051-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0051-intent.json",
+      "sha256": "5be07ea9685b6b0040dfa0e0bbd512bfee666bdf94edb6d2e49afe7ab6cec23f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0051-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0051-result.json",
+      "sha256": "8a323f739aa6bddab5f9d0fe651d3c1d5890c8db4e67a14bd990f0451c23df91"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0052-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0052-intent.json",
+      "sha256": "9423e3f3fe259d789bafb5701169dacf1b97a93686e91c7eae7eb7af6bf4ed70"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0052-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0052-result.json",
+      "sha256": "cd5136f989a152fd0be3e37468d11f759fcd578dd47c172796cd18eab1def5a4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0053-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0053-intent.json",
+      "sha256": "e8574074bba1fe9817234af3e57127d4b69ae73b139c315e6cb91895b21e23cb"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0053-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0053-result.json",
+      "sha256": "4c37cb3f4f41829fb761051c2342bf0d3ae437a9e2552e20f8bc8713b95f9a67"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0054-intent.json",
+      "bytes": 804,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0054-intent.json",
+      "sha256": "cee4e6162904e6fb3ea1c1b1a924f38677a721fbbdaf2abb66e2cc352459066f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0054-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0054-result.json",
+      "sha256": "879e542264173cb7bc040db1a650c6fea49331cb6b9d0c659b1f69b195c534e6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0055-intent.json",
+      "bytes": 519,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0055-intent.json",
+      "sha256": "c2d54e4bab8af08192a14099c49d22c09e2dc2a2c22a6f50e5faf051f6239bcf"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0055-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0055-result.json",
+      "sha256": "d4f161ff71487ea8ecdc3eb1dc333ad966bbe74cd142c369fbd0ffbf76f007dd"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0056-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0056-intent.json",
+      "sha256": "2193ae1708f5264a19d51bb7ee56ce0acf583012c0176909bf2e61330f1c7840"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0056-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0056-result.json",
+      "sha256": "7ed1c17ca7dce789fbf2fcf3892b91948c831927404409d2a1f44a29942044a1"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0057-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0057-intent.json",
+      "sha256": "4f6438cef2a1b80b2a68a6f681557602221f772ec5138ffc8ec3c8180381ffc8"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0057-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0057-result.json",
+      "sha256": "d111e87b14adca7b65b2f7e1fdabcfaffdfb5b7cd1babfe0bf658fc881ea7b12"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0058-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0058-intent.json",
+      "sha256": "c4ac1d2e5ba7402bc26c2d533adcac18a76664dc1966a0203d6f2259526a9af8"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0058-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0058-result.json",
+      "sha256": "73e0513ceee717b3d672f72299ac837fd1458a005382160090f6026e37ea5c00"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0059-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0059-intent.json",
+      "sha256": "a9f39fc97d4cd51fa21ee16676e71f1bbc4ada59f4be08bc80612f662605e88d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0059-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0059-result.json",
+      "sha256": "8912abb6e5060115d7b060e5da2f18e786f98adf86e7a3f0ae0006ae6088892d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0060-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0060-intent.json",
+      "sha256": "1c880a56634040692f6289b70af0e78a566fb9490b6a82713d5bb25d99e52243"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0060-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0060-result.json",
+      "sha256": "d0f30ea37910a6bcfd96cc05a0504205f7570f277668a74e333de3e08228cb3a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0061-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0061-intent.json",
+      "sha256": "fa52ed3a102d10e2e863f6ba2dea63c18442dbb1adac5319382bb4b661250712"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0061-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0061-result.json",
+      "sha256": "bbec007689f3b34b0ac5c729ac918de48afe73134fc71a672d4ca7480fbdb711"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0062-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0062-intent.json",
+      "sha256": "1bd566791cc6c5358e7c83a454e1e76db8ca4e15c0498b493f318cc7460cc126"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0062-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0062-result.json",
+      "sha256": "4a5da7fbfdaaa34fcb0e8b72dfb97018613b9e7d401419cad067049d3ccca9c7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0063-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0063-intent.json",
+      "sha256": "5be863abdc21032d55cb261c02a03b0b8a8263f60528cdb53ec6f5cf5b102c61"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0063-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0063-result.json",
+      "sha256": "2880434d984c60efb53342f02da8a135b37d4b5eeb05fc2cb163c2aba4852700"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0064-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0064-intent.json",
+      "sha256": "ca4aab868832c8515606c4e750495b480e120ac6f587f87f1538f81941a9025c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0064-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0064-result.json",
+      "sha256": "b95559fb75e1d51d97d28552a7c6a33f2d66c02058d32d158f83e9429d78a945"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0065-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0065-intent.json",
+      "sha256": "5b4e8c42deb74f5963d73b8828433139f9e58ba60ee3aa03b631d6fc4a2f4d2e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0065-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0065-result.json",
+      "sha256": "9f5e2d9b606ab19a7c797e1a75b3283db48cc398b66ea74fad69e111edbbd311"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0066-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0066-intent.json",
+      "sha256": "2b70be46fc47238bad4cfecf4d559148496313a5b348bdd0ca9dba105d36c98d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0066-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0066-result.json",
+      "sha256": "82625b98477d1edd54f81d4b37dc2206e2912567c4ae471046cec9ae57236936"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0067-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0067-intent.json",
+      "sha256": "81f97af45f9817aa1188a90592465ecd2058ba50302c10f138e7ddc825297380"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0067-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0067-result.json",
+      "sha256": "40853045dc76c7359325b783bd147e8342c88868ea2a31c919f849559dc9ac03"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0068-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0068-intent.json",
+      "sha256": "6cbec485070da3780e875b27bd9f81eaa52a1ebe690d13bb57cf38771248d9be"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0068-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0068-result.json",
+      "sha256": "05f3033b3a8274a75866a9ca63f4ce8edc476a434953060b186e4a80335ca9e6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0069-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0069-intent.json",
+      "sha256": "d44923590bedae502050126b79b5abbdf1bd8d34ac4217864dde72be28034fbd"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0069-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0069-result.json",
+      "sha256": "f7489ba481c2ad76383d01e2a33d3e5cf5b98119f9abec916551f49015d34bac"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0070-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0070-intent.json",
+      "sha256": "299430c333a141ffeda6ac4bdbee27cc697b4950e0c10a3843dd6487d9c1a053"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0070-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0070-result.json",
+      "sha256": "43e6fb5098519d84393373b3017f05ae257f0167731a33741ee04aed82c32a1c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0071-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0071-intent.json",
+      "sha256": "fd99b1532d0d229d19c5af04136977cab6ac708db70dd5f87206cb3f556e1d92"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0071-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0071-result.json",
+      "sha256": "7c5ca8b545bd7727e30e9951a4f4b9aaaf02273af89532da7527933e6698ad2e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0072-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0072-intent.json",
+      "sha256": "d697d6b599fc23e2aeb738c2fb6f52906b948886ffa335daa711877bdc19f0a6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0072-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0072-result.json",
+      "sha256": "8909f1105472278625bffc601c9caa1956e66a6e2a4e77d842370bff9a260776"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0073-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0073-intent.json",
+      "sha256": "2d99166b1ed216959b68e0f9439d6f12b4f03a55db9989cac62f68d00f1ae38c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0073-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0073-result.json",
+      "sha256": "ccc70130a24c82e26651cd8191885d8ae012c52bdfc107aa602ee4b847b403da"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0074-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0074-intent.json",
+      "sha256": "e5eebf83ab1ae58f6c96231a09b675db0767e5e162ad95d2339290bee6c0598d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0074-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0074-result.json",
+      "sha256": "94db45905ee1e6c4cd1ca46a0634363d28c2107b091d1051faf094652a95cbda"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0075-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0075-intent.json",
+      "sha256": "66833be7d1b8fe68acf5e6d6642d0ac0315f4f00a31af18229f304fbaa9608b7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0075-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0075-result.json",
+      "sha256": "3efe345f777cf3134c9585b919d409538b46dbd4bf4ad46d275b4563def11915"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0076-intent.json",
+      "bytes": 804,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0076-intent.json",
+      "sha256": "ea95a926886467932db695606880782bb3a34e8e0674511d2b69e529f4a91bfc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0076-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0076-result.json",
+      "sha256": "edaa88b1705ef7a469d04da15b89d82876f2ef6ee6e2dfe36d1911eab5775a12"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0077-intent.json",
+      "bytes": 519,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0077-intent.json",
+      "sha256": "4c1c3291c0b37627689f9b39ed1d6a4dec18574e64a05c7c512567745906d1d9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0077-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0077-result.json",
+      "sha256": "235532d5aee5f850a9a03eac51d6f194470ce4290738512167cb58a62773d1a5"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0078-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0078-intent.json",
+      "sha256": "d2640308bccdcc51ed0a4030afdccf2dd1294befc354f263416a8db9089853a1"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0078-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0078-result.json",
+      "sha256": "8bb249ace8b94829f709221542c1954337b9225caefbaca892c262bbf24898bf"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0079-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0079-intent.json",
+      "sha256": "7ae285208fa765210c98112cfeb7b1cca55888260e4e4c5c1aba8926efe97aab"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0079-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0079-result.json",
+      "sha256": "266e84f5b0dacba1049e33b2f223667de3f2a96c28a9d85625f59d999f7c187b"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0080-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0080-intent.json",
+      "sha256": "414ca9e2d703ce5fda3cdb49b21c67c5ffde758ab80cdafe25d5244709ceb73e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0080-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0080-result.json",
+      "sha256": "b52a1389ad6575c32193e7ba636fc3137c47533eb42792c25e440b3ba8396c14"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0081-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0081-intent.json",
+      "sha256": "228c9e6d6b9e1b64b941be0af22d51a5ba3c8005d78ed1e0b53ee791946f33c7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0081-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0081-result.json",
+      "sha256": "177e4eb1a9519cea735195cb9fade8392f951353d07e0e0b72d9cb4b2c0b76ab"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0082-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0082-intent.json",
+      "sha256": "3154bbe99f30d2962eb50fbf90d1e777d884257d1baa6f9879796fe1563fe7eb"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0082-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0082-result.json",
+      "sha256": "eeebefaa8223cc8568e5c2bc48c653662503bb914c2e348cb18a19e834e4beef"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0083-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0083-intent.json",
+      "sha256": "37f03b9d0c58ce674fa69609a52679d25b5d144c7ee3b0a11199c0bce86eaec4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0083-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0083-result.json",
+      "sha256": "d025661caa614a1f832bea77f5c11bf2de7ab5e2624f7d920bef4195aab91156"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0084-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0084-intent.json",
+      "sha256": "81b7f635116361de4d048e757c0965b7c6ae8cf814087a1d37f6cb6209f6519c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0084-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0084-result.json",
+      "sha256": "cad7cbfed60fb33a168e680083de9f20af4dc4c7e91ee80b5b4f0483885e2089"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0085-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0085-intent.json",
+      "sha256": "8563fb65ef567a82c460c76be519d81476c99da92e23e10b063f7b5e540baa5b"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0085-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0085-result.json",
+      "sha256": "116fc860419da352cb90506fe49a37102566ee938bdc8a54b4fd5b05ba05e147"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0086-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0086-intent.json",
+      "sha256": "c28de3902c6219fba4aca73c36491425eed1eeb1ec8d2d03113611ba90a7a126"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0086-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0086-result.json",
+      "sha256": "4421ed19e4f1866f9a04f69328397c5be09df9b4308cb58f12485a829396cc57"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0087-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0087-intent.json",
+      "sha256": "8f89a3fc2e7e15e1b8250d171d0a205819e5b0a54f7b502e7948bc486a0cfc39"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0087-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0087-result.json",
+      "sha256": "c443028b5d6edbd8bfb410d1111c9fd499fe193ad8cc3547f0c9d89e64870732"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0088-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0088-intent.json",
+      "sha256": "895c6688947bbcca51f50d3130f2bcab91beecb1df62e1fce383b0f32240a382"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0088-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0088-result.json",
+      "sha256": "f8bedb12a6e7750c6446b2e8ba99590f542cf6e21bab613bb490fc9280ee8115"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0089-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0089-intent.json",
+      "sha256": "7825ef18464dfb19e13af97b000b5e507465830de4b6532c48e35aa9003b3981"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0089-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0089-result.json",
+      "sha256": "1697a833914dab3f22af1728734205105096e3cbacd5af1dcef33ceb8b826d6c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0090-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0090-intent.json",
+      "sha256": "d237acd427ac3d4dfc39a5f53d8b5cd2df2b487d4039989b85f9304175fde5c5"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0090-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0090-result.json",
+      "sha256": "09fd21fbdc3705585be670285f38779333f8e3706ce62cf777ba23075a96d6b6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0091-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0091-intent.json",
+      "sha256": "b599d6bb72f274a1ff740ebc7768946c5a2194dbf9c7303fe9ad775f53f62ac7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0091-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0091-result.json",
+      "sha256": "b5e30f4ee7fb6fe7c460d22b78ceeb7b2dd685ed5cef46ef02fc63323e4e415d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0092-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0092-intent.json",
+      "sha256": "83cf25bf1ce1b32fd8c65e77dbc6631634d2f12274ea0d265756ecb02f0f8c14"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0092-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0092-result.json",
+      "sha256": "1805e85a1575d1efe4468197ab3c2432317236d6f5659ffaab95d47b82fffa9c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0093-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0093-intent.json",
+      "sha256": "4397a7179262a4414a7d2261e94c50bd59c97ede5942c2abd42b70802b3bf596"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0093-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0093-result.json",
+      "sha256": "ea80b4ea212d631674e2ce0163e16563e3e80393b1148b8a2101d05fdd7aa980"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0094-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0094-intent.json",
+      "sha256": "04209ba2dc9bd45bb0c9ed97bae7547e4245ecdab2612c076cd3be76391bca77"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0094-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0094-result.json",
+      "sha256": "2a56ad685c616d620dd389c364b0b0536da145a54d219b6158fe5d9680f44d48"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0095-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0095-intent.json",
+      "sha256": "b1bd823fac80bad35de2500dcd9c1cc9c5ecfed4120374a9edeb1f4607e53881"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0095-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0095-result.json",
+      "sha256": "fc2f8a9de0d7c8da28a7107c1e8dbd427aae5167b9ed09995d21acedf8c26d56"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0096-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0096-intent.json",
+      "sha256": "4dab1f94f822439abbf378e9757c3dc5c816041180604ecd8b51aaccc1fc2fca"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0096-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0096-result.json",
+      "sha256": "c93062068da6a1d05b0ac51bc4d99dd558dbfe1eba9b37c99d910a02cb5c8ef4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0097-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0097-intent.json",
+      "sha256": "2041cfe4cb00de9cd5eb96fc64ff4ea8bd78c57b055b6aed542a23494d9953df"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0097-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0097-result.json",
+      "sha256": "4e3ed70b5262f115e72e93c89b115cce2d810a6085e0d3f590bf37f150eedb45"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0098-intent.json",
+      "bytes": 804,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0098-intent.json",
+      "sha256": "4496311450feb7920550a51630b5ebcb4fb1de89ae1f6e987fd3e928b51a9f64"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0098-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0098-result.json",
+      "sha256": "cd7b411ef26118b05ee55ff1d81622a812427877f05e712f3db9299399305d39"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0099-intent.json",
+      "bytes": 519,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0099-intent.json",
+      "sha256": "b89d74b6fc6a11b9b6835adca8e5145f1a1ae06815709f5b83b8d50d0e1f0ae9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0099-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0099-result.json",
+      "sha256": "57b9e47468e3db56cf5f1f463792b4b7a15519700e96822ef9f846c3711775d5"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0100-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0100-intent.json",
+      "sha256": "5218c1cff8dda8587e9c096315e2e6ac64a01c2fcfd27c3e447e2eaa0ffddb38"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0100-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0100-result.json",
+      "sha256": "65a985a7cdb7fc2ae908e8902aeff1ad906d67b348699e343c1db2a355f7b243"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0101-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0101-intent.json",
+      "sha256": "e8e7154dfe336af2e1c2787e3df22b91f98ae6b0592d5a2602b08eeb5cf05498"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0101-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0101-result.json",
+      "sha256": "7d503b0f2f1f27b49a8899dee72e9c4146170d3d2b74bb493f5d284e122f05e6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0102-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0102-intent.json",
+      "sha256": "cbf1436f2ba6176d977b95382f18db443fc4927a0a5a6651c401934b04cf7200"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0102-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0102-result.json",
+      "sha256": "03926bbc92fab7f1f6d15bf7e26f936aeb6797fd3a850d6c222070849083fd87"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0103-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0103-intent.json",
+      "sha256": "048259e97d93ddfcc264d36466f61e2cf2222287f98ffa97ddbd8fa9850b1fbe"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0103-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0103-result.json",
+      "sha256": "694c1a5debd5ad4fe1a7aa7867fb88de0cc71380a8fdaa82ecc55668b91f43fe"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0104-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0104-intent.json",
+      "sha256": "aae9a30742738836458f1eb71de69fa9d22276c4f0f5d8b91dd548611ad0b1e1"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0104-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0104-result.json",
+      "sha256": "9966937817944a2d33dbc6bfc55af6114ea04f6346394a9e59bc41c8c6c01376"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0105-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0105-intent.json",
+      "sha256": "599916f948833c98e3e7368fca7577cadad9bca18e429fffa033e5dac88b95c5"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0105-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0105-result.json",
+      "sha256": "b53e8d79690ad63a0239af809959e5f0d8a29f7de59a2401a446426e097e0273"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0106-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0106-intent.json",
+      "sha256": "7dc0f691cca542eabdd315ab9a65276ddc9d88cd1a98632174ca3a9daef5642e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0106-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0106-result.json",
+      "sha256": "02b17b712ca47f4296fb81bec0ed0a419d4464e79aec1ba03be839632a22e071"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0107-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0107-intent.json",
+      "sha256": "8c687e1fec0e85e569a784d3e9a274d1f2a212ebe10fdd3e664383175a67fba7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0107-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0107-result.json",
+      "sha256": "7978de686d051e39a12a46e097c1f4773ad228f3c3f99fe8892750317617a6b9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0108-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0108-intent.json",
+      "sha256": "9e694c84357e84bf7accbbe9ced0c67eaa5f1367b06bfa53ef2ad001d5f07146"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0108-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0108-result.json",
+      "sha256": "e5febd52ca9d9920c150d73e157deb385decea79fc79f11596b39470674a7340"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0109-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0109-intent.json",
+      "sha256": "aa70e207296092a12958006973d585731a15d241a4053bd0ac69e2826fb69b42"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0109-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0109-result.json",
+      "sha256": "91121b56f99c9a0c0701b96d4e8df19d11e5e9702d8270a471257293ca385bdf"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0110-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0110-intent.json",
+      "sha256": "61f7c34d2c97a221d8cb9205886a4c042fdc2343d4a4e194de0c12faf1a2fc85"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0110-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0110-result.json",
+      "sha256": "805dff7a568c9b05e3ee5646d207d62c91ad5ac65144332230f22158b32c19f8"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0111-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0111-intent.json",
+      "sha256": "92e0723c5a53e8ab36f110c9dc0fe27c4507c877d0523ad4c01d10550592ab6b"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0111-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0111-result.json",
+      "sha256": "87d7624832d00a486ffb906a901225c355d619678d606797f33e558e1bf759cb"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0112-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0112-intent.json",
+      "sha256": "7af02cd7b91addea222b73685a34bcd2dda2e2074167b75b35e486a81115fafb"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0112-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0112-result.json",
+      "sha256": "d9ca9eeed0b508d0b77d320757852bf1367a32617519432b5caa03f9c36c38fd"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0113-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0113-intent.json",
+      "sha256": "82f9c87c1d1a92f437bd7f3baf4070068bbb8e3fd9e391ae744030d99157a31d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0113-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0113-result.json",
+      "sha256": "0e8ca74af5d51131168d412bc4f08bda7e9ba7641f294548cfecf78526d563d1"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0114-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0114-intent.json",
+      "sha256": "43172f59f1a2f4f93e38c7daa5a508f5451da8f481bcaa17f61d3bdfaecfc609"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0114-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0114-result.json",
+      "sha256": "d0c3c5633ef7acba3886befaa2b06f239d3898d3223e126263aad10ec4ff277d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0115-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0115-intent.json",
+      "sha256": "6ab0c22a532ebb5bcaf6aab369dfa40394ae2f0ad641403856226a11c55da586"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0115-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0115-result.json",
+      "sha256": "a2b0792030c6cc13bc091cc62ade3be7a33accb0a15bcc86912250c39dea30d7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0116-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0116-intent.json",
+      "sha256": "f40be8beea9c855f793700a22c11ccca6954279dd8e2c506e37ad213ce6ce505"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0116-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0116-result.json",
+      "sha256": "ca54c83aea48e30208a38cfa429709a0dd83b2c714498a74f141abaa233b0098"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0117-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0117-intent.json",
+      "sha256": "e05e2d9c62764bc774f7a6043781942d5aef0a108983e2972eb51e8415bd34fc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0117-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0117-result.json",
+      "sha256": "35d84e2f5cc7c50392a0a9e250f5c45d5e49bb38a2be799bd2052d03a22375b6"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0118-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0118-intent.json",
+      "sha256": "08c50715fcef03c083a588b8708cd406cead98ddad8e4f8c939a2db0343822ad"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0118-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0118-result.json",
+      "sha256": "389d556e665798cd8dd3fcc000a0a70d8ffffbdbed0218b2958a8535b4eddfce"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0119-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0119-intent.json",
+      "sha256": "c04012b0ac13950d19ab93b64626f5e2c7a8c9e3d8d65bd4b895587d9ef1be1c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0119-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0119-result.json",
+      "sha256": "3ca1e3450638197b6ed5ab99cbed9973472454d838190dc31b5704364b2ead53"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0120-intent.json",
+      "bytes": 804,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0120-intent.json",
+      "sha256": "228b59d7873d66fb3eba8f704d93c69961eddf2f0c89b492083ee33baf185d73"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0120-result.json",
+      "bytes": 500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0120-result.json",
+      "sha256": "133d680421d4a6880afc5651a6ebd4444da91831982b6ad4360e3796aa6865ae"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0121-intent.json",
+      "bytes": 519,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0121-intent.json",
+      "sha256": "24761816febec9c97622f48caf72408e6223c9df9f7085719c93d4b15b05c1e8"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0121-result.json",
+      "bytes": 527,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0121-result.json",
+      "sha256": "13ffbdd89f0a05f8ba0719a771c9d9e03ee91a7a5d3adacdf7932e798cacd92a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0122-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0122-intent.json",
+      "sha256": "77087142e36ae392f2307de58e44e75318efd4434a4e153be52128e99cfc6c29"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0122-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0122-result.json",
+      "sha256": "a0fc25fdfb584d0327168f5bb78147e23721b2167ba3a126ec3b40560cfcd39e"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0123-intent.json",
+      "bytes": 521,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0123-intent.json",
+      "sha256": "0aa76e36eddb9b4c24c83687b1e3007d8ac61044484489b964e4ea0fa4d4ba29"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0123-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0123-result.json",
+      "sha256": "4b48058e5afe7bf2ca067c6f3e1debbaf9043f8f62c3c740701e845f4a918689"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0124-intent.json",
+      "bytes": 806,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0124-intent.json",
+      "sha256": "cd530a2e6afa130d0d83f76f1a8979476b1ae7b9c63ead279691d58f1b5f75c1"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0124-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0124-result.json",
+      "sha256": "f866350ed4ef7e0112af24b04b1b1de4ba706ca492a1bb369708b88dffb58c9b"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0125-intent.json",
+      "bytes": 521,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0125-intent.json",
+      "sha256": "17f3c0c04d0b6f23a9ca15026a0c27657c06361c763d8bd05d3f4f0579e1d968"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0125-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0125-result.json",
+      "sha256": "5b359c1cfca6e6b71fd321515247d65cee33dba5d6fc9f700c6f544f8983c9fc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0126-intent.json",
+      "bytes": 806,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0126-intent.json",
+      "sha256": "f5c0aaf79b94ebd012744c33176ec98be0a9c9e9548ab84eac908dbbbbb55d58"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0126-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0126-result.json",
+      "sha256": "2a0b250acd073fe1430ff3d9b0a01e0b869c97f9d525c5f853beedd99b0dbb79"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0127-intent.json",
+      "bytes": 521,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0127-intent.json",
+      "sha256": "8998d5ff5ffb1c94a9d4a6b3e69d2e77bb71ee12d1e1c63ae8886b9ebfaec397"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0127-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0127-result.json",
+      "sha256": "b1159f96dd44afa2bf361d40734bfe72f03b99a78bd08e2ace816e9b19b70799"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0128-intent.json",
+      "bytes": 806,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0128-intent.json",
+      "sha256": "88e5b8e6f9288e361ba9fb84957edd115a75bead8ba3df096e50cda3c9e2b099"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0128-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0128-result.json",
+      "sha256": "b4000c18d07f828b42e765157599199e3310af4da5eba9e739272c82e9d73284"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0129-intent.json",
+      "bytes": 521,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0129-intent.json",
+      "sha256": "3f4dba02c93622442193da967affe232f41956273ab48df5a7f601140f885a75"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0129-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0129-result.json",
+      "sha256": "cabd2aba09e79bb73879bc31bd3af3c2eb91dccb4bbc1ba591a167ecd2c9f320"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0130-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0130-intent.json",
+      "sha256": "422177bdcd02c10c4e7a393fd8b507f7a7ee4a588868360ba1593e0fc7f4b235"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0130-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0130-result.json",
+      "sha256": "73de9cf4b441b1cb3e7f367b0d52ecdf41b729b6006a6032c0d8143bcef1e5cc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0131-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0131-intent.json",
+      "sha256": "ad0eb78b01c4e0347bfc5673496b61a3f70d94b988937c2869de9bb75185ac3d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0131-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0131-result.json",
+      "sha256": "88b5758503c98fd636cccfb75153a33515117eea9be25fd4fc3853cc3d5461b0"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0132-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0132-intent.json",
+      "sha256": "48eb5e072a23a405acaa1fe1c63172f834745378a849b8f1e1ac28d72a5d4a6f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0132-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0132-result.json",
+      "sha256": "4702a92fad042fe090db53228617d79a142f63d403586bf197d06e96c924bba4"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0133-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0133-intent.json",
+      "sha256": "718e08d6fed4011cb40de843844120d4225180bf8d4ace8338ab32f260436e5a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0133-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0133-result.json",
+      "sha256": "8d401b352f15d53d482da0ff38138db5398cf10c9a880f81c7764bff84a7a150"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0134-intent.json",
+      "bytes": 805,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0134-intent.json",
+      "sha256": "ef1fc9140013bf15218233bd6737e80cd4304cfa105cd05036fe61d8bcab3631"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0134-result.json",
+      "bytes": 501,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0134-result.json",
+      "sha256": "3a540995ba8aed3743892fedde30a695655ca6b0026479bfc39048a1ab535d36"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0135-intent.json",
+      "bytes": 520,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0135-intent.json",
+      "sha256": "d69363953ca49b87670f950b6c7e0d2e0e3de0eef645a90c9935bc3c18c7050a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0135-result.json",
+      "bytes": 528,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/read-0135-result.json",
+      "sha256": "119c47dd4105782c4e6642097304d22295286683310db25ec81cf1b94318959f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/started.json",
+      "bytes": 79,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/started.json",
+      "sha256": "5c3d69f7799109d03decb8d38595a6e29e29273918de949b918744e874d6f359"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/worker-result.json",
+      "bytes": 62567,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/worker-result.json",
+      "sha256": "7ab632628a01dbb1613f6d96e41cb6e5a43386c39b99cac5e98039622516f78f"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/intent.json",
+      "bytes": 143,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/intent.json",
+      "sha256": "be0e178eb3a90b9514e7055923929fa082f13d5d5b09ae16e81257f7d4db0efd"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/parent-result.json",
+      "bytes": 2500,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/parent-result.json",
+      "sha256": "79e0a1098b6036396e3afffe2c2ae9f001e1386f437335501afb422065e55521"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/transition.json",
+      "bytes": 457,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/transition.json",
+      "sha256": "c5837ca1c7bca0feeb4e3182b27b30451bcc96f6f872de7ab3cca3980fc7ebdf"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/handoff.json",
+      "bytes": 20873,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/handoff.json",
+      "sha256": "af73b67d6a78d5e1cf2d426ba5f2a5e8ae888c3766894069f7a9429f237e046a"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/monitor.json",
+      "bytes": 198,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/monitor.json",
+      "sha256": "abe4336abfaa00df621f1e8e74337c08c58547a116cb5e71fbf46f34a5cea7a7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0001-intent.json",
+      "bytes": 625,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0001-intent.json",
+      "sha256": "bc685d32d927cc5d90d11d62f69dcfdc1e547fdc6ee4c3fe1a142f1d1da0e5cc"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0001-result.json",
+      "bytes": 469,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0001-result.json",
+      "sha256": "857ed825592195f0ad617793d32c09f93ba1738fbf98cc3d7b4255979ba7b453"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0002-intent.json",
+      "bytes": 634,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0002-intent.json",
+      "sha256": "96009f81625f43e1b9bc5a59aaf6e3b87424e28276e273f4898ceba64f60e662"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0002-result.json",
+      "bytes": 468,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0002-result.json",
+      "sha256": "2e007f6ef8afa3f1509e31d69ae750c78b39aba92c5596bc9ab1b6477085df6c"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0003-intent.json",
+      "bytes": 641,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0003-intent.json",
+      "sha256": "22c3e03fe6757f675420fd3e69c60b4c723c1a58a32a9a09ceb4b5b906e8c128"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0003-result.json",
+      "bytes": 475,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0003-result.json",
+      "sha256": "78f24b7129445ae800af2b3eaaac926a38712a28dfccbed97bd1eefe2c190a28"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0004-intent.json",
+      "bytes": 644,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0004-intent.json",
+      "sha256": "3a4e56c3bfe79955681c7490a83be14aeacc259981c1b25c670262e47a75c5f9"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0004-result.json",
+      "bytes": 482,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0004-result.json",
+      "sha256": "ac03c477866dd34f34b30131f1604649e224022f69419c472575e5fbf40f5c87"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0005-intent.json",
+      "bytes": 644,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0005-intent.json",
+      "sha256": "ab47a64d3c7117b85f74e443d956f960c545ead5acf040d471eea5b58a3a46c2"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0005-result.json",
+      "bytes": 477,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0005-result.json",
+      "sha256": "eee624a1e78adf42c318d4a3630c119f86716f6f6df582c1fc689cb3e4e37e22"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0006-intent.json",
+      "bytes": 652,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0006-intent.json",
+      "sha256": "9876b3a52ba51e367ced55fe8eb525eeccf9c0ab5628d7e65c10e2e11f396f05"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0006-result.json",
+      "bytes": 482,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/read-0006-result.json",
+      "sha256": "c4516fa0b58555c0316c3c19ca8604b23339f093cc2922e0aacfa3fb079f084d"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/started.json",
+      "bytes": 77,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/started.json",
+      "sha256": "f685adc874eaf0859a4b65b3a9950c301a07fe17be83ab1dfdc4dc9b5c2b93a7"
+    },
+    {
+      "archive_member": "successful-generated-complete-ledgers/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/worker-result.json",
+      "bytes": 15694,
+      "kind": "successful-generated-complete-ledgers",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/worker-result.json",
+      "sha256": "472a32a6aebefefb1e1c27335495bc2850bb953995b63cdf475638ac8c387e73"
+    },
+    {
+      "archive_member": "successful-generated-run/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/conversion.json",
+      "bytes": 102943,
+      "kind": "successful-generated-run",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/conversion.json",
+      "sha256": "395e1d18b163e813ea964db2f63cc6f3f51da5e537caa5ed749150c4238dd914"
+    },
+    {
+      "archive_member": "successful-generated-run/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/worker-result.json",
+      "bytes": 62567,
+      "kind": "successful-generated-run",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/worker-result.json",
+      "sha256": "7ab632628a01dbb1613f6d96e41cb6e5a43386c39b99cac5e98039622516f78f"
+    },
+    {
+      "archive_member": "successful-generated-run/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/parent-result.json",
+      "bytes": 2500,
+      "kind": "successful-generated-run",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/parent-result.json",
+      "sha256": "79e0a1098b6036396e3afffe2c2ae9f001e1386f437335501afb422065e55521"
+    },
+    {
+      "archive_member": "successful-generated-run/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/worker-result.json",
+      "bytes": 15694,
+      "kind": "successful-generated-run",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/validator/worker-result.json",
+      "sha256": "472a32a6aebefefb1e1c27335495bc2850bb953995b63cdf475638ac8c387e73"
+    },
+    {
+      "archive_member": "v4-generated-controls-and-release-preparation/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/prepare_full_reuse.py",
+      "bytes": 2278,
+      "kind": "v4-generated-controls-and-release-preparation",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/prepare_full_reuse.py",
+      "sha256": "0c0b799b0bee464b59ea8e596d0de41db1629a791b60c7af1a0d6eef8d72423f"
+    },
+    {
+      "archive_member": "v4-generated-controls-and-release-preparation/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/test_staged.py",
+      "bytes": 22866,
+      "kind": "v4-generated-controls-and-release-preparation",
+      "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/test_staged.py",
+      "sha256": "cbdadd729b9164607e1f01fc4efe2ff2cb6eff32ac4577414ff6b51095f45097"
+    }
+  ],
+  "nested_preserved_package_members": 637,
+  "original_baseline_binding": {
+    "bytes": 86634,
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v2/generated/full-staged-v1/expanded-metadata/baseline.json",
+    "sha256": "c75d61ca79d95b0faa62c6d29fd4c550acb69679ae2002bb04f312959fedc9f8"
+  },
+  "schema": "remind-full-generated-success-index-v1",
+  "summary": {
+    "bytes": 8836,
+    "file": "summary.json",
+    "sha256": "508bede30d7e480c01ccf96407690cdc30f3dc3e4ac92d345a52c31b3f469734"
+  },
+  "validation": {
+    "DICOM_or_image_array_payloads_included": false,
+    "all_archived_bytes_equal_originals": true,
+    "all_success_and_preserved_failure_ledgers_included": true,
+    "large59520_object_metadata_included": false,
+    "patient_or_generated_image_files_read_by_packager": false,
+    "tracked_edits": false
+  }
+}

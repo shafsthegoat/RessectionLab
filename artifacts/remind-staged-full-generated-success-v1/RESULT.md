@@ -1,0 +1,9 @@
+# Full generated staged MR conversion passes
+
+The corrected pipeline reused the exact original generated fixture and baseline: 59,520 metadata records and 64 MR planes of 512 × 512 pixels. The root-released run finished in 1.952669834 seconds. Largest worker RSS was 359,989,248 bytes (343.3125 MiB); parent peak was 55,296,000 bytes. Workers were sequential and both were reaped cleanly. The conservative parent-plus-largest-worker sum is 396.046875 MiB, not a measurement of unique physical memory.
+
+Independent saved-output review reconciled all 141 read intents, totaling 146,853,502 returned bytes across separately labeled file and memory-parser reads, with no unknown amount. The resulting NIfTI is 512 × 512 × 64 float32 with millimetre units and both qform/sform. All 64 raw-plane corner checks passed (maximum error 5.978451293500288e-6 mm), and all 3,327 sampled values matched the generated pattern. Native output SHA-256 is `eafd8ee23a902620ccdb2470b8eaf5608a4d978116c98635cc08300c8e10f8b7`.
+
+The original ordering failure is preserved separately and nested in the indexed evidence archive; source and physical slice ordering were not changed to fit the result. The fix canonicalizes only the per-object summary set by unique source identity. The success archive binds exact executing sources, release, read ledgers, metadata/source digest references, and independent pre/post reviews; it contains no image arrays or large acquisition metadata.
+
+This establishes the declared generated workload's software geometry, value and resource checks. The metadata has a synthetic MR-only mix, so it does not prove every allocation of actual clinical metadata. No patient conversion, anatomical quality, preoperative availability, model-training admission or clinical validation follows from this run. Those remain separate gates.

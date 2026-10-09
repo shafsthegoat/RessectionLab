@@ -695,3 +695,8 @@ The [full128 inference attempt](../artifacts/full128-lazy-encoder-pressure-negat
 ### October 9: preserved full MR failure and identity-order repair
 
 The [first full generated MR conversion failure](../artifacts/remind-staged-full-failure-and-order-fix-v1/RESULT.md) is preserved with all 141 reconciled read intents and clean child reaping. The minimal repair makes per-object header summaries identity-ordered while preserving exact physical slice order and values; 16 tiny tests and 16 independent mutation checks pass. The separately authorized full-fixture reuse now completes in 1.95 seconds at a 359,989,248-byte worker peak, pending independent saved-output audit. No real-patient conversion or anatomical admission has occurred.
+
+
+### October 9: corrected full generated MR pipeline independently passes
+
+The [saved-output result](../artifacts/remind-staged-full-generated-success-v1/RESULT.md) passes all 64 physical-plane checks and 3,327 bounded generated-value samples. All 141 read intents reconcile with zero unknown bytes, both sequential workers are reaped, and the original fixture and ordering negative remain intact. The 1.953-second run peaks at 359,989,248 worker RSS bytes. The next scope is a separately reviewed exact TRAIN-patient conversion; no preoperative, anatomical or training admission is inferred from this synthetic workload. PROJECT_STATUS now consolidates the recent completed slices while this ledger retains their full chronology.

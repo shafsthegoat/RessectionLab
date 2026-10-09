@@ -1,0 +1,236 @@
+{
+  "actual_parent_result": {
+    "RSS_accounting_note": "Workers are sequential/reaped; parent+largest worker RSS is a conservative process-sum upper bound, not unique physical memory. Missing worker terminal RSS remains unknown/null; the largest recorded value is only partial evidence in that case.",
+    "elapsed_seconds": 1.9526698340196162,
+    "max_recorded_worker_peak_RSS_bytes": 359989248,
+    "max_worker_peak_RSS_bytes": 359989248,
+    "output_bytes_before_parent_receipt": 67477199,
+    "parent_peak_RSS_bytes": 55296000,
+    "parent_plus_worker_RSS_upper_bound_bytes": 415285248,
+    "patient_execution": false,
+    "preoperative_input_admitted": false,
+    "read_accounting_scope": "Acquisition metadata, selected source bytes and separately identified memory parser reads; runtime/code/control-JSON reads are source-bound but excluded from these data-read counters.",
+    "release_sha256": "5c23be8d4beb87c8be627b5ade2964fa2b2eb15fc4daa73b97e4121094ef10e7",
+    "schema": "remind-staged-MR-parent-v1",
+    "stages": [
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 241991680,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1276609.968710916,
+          "worker_exit_status": 0,
+          "worker_pid": 6284
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 6,
+          "confirmed_returned_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 39761896,
+            "source_file": 0
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "validator",
+        "worker_elapsed_seconds": 0.41272737504914403,
+        "worker_peak_RSS_bytes": 242302976
+      },
+      {
+        "monitor": {
+          "cleanup_notes": [],
+          "parent_observed_peak_RSS_bytes": 319356928,
+          "parent_reaped_worker": true,
+          "supervision": "completed",
+          "terminal_monotonic": 1276611.254246791,
+          "worker_exit_status": 0,
+          "worker_pid": 6286
+        },
+        "read_accounting": {
+          "all_attempts_finalized": true,
+          "attempts": 135,
+          "confirmed_returned_bytes": {
+            "memory_header": 45484,
+            "memory_payload": 33599916,
+            "metadata_file": 39848530,
+            "source_file": 33597676
+          },
+          "unconfirmed_upper_bound_bytes": {
+            "memory_header": 0,
+            "memory_payload": 0,
+            "metadata_file": 0,
+            "source_file": 0
+          }
+        },
+        "stage": "conversion",
+        "worker_elapsed_seconds": 1.103963959030807,
+        "worker_peak_RSS_bytes": 359989248
+      }
+    ],
+    "status": "conversion_finished_anatomy_unreviewed",
+    "termination_requested": false,
+    "total_confirmed_returned_bytes": {
+      "memory_header": 45484,
+      "memory_payload": 33599916,
+      "metadata_file": 79610426,
+      "source_file": 33597676
+    },
+    "total_unconfirmed_upper_bound_bytes": {
+      "memory_header": 0,
+      "memory_payload": 0,
+      "metadata_file": 0,
+      "source_file": 0
+    },
+    "training_admitted": false,
+    "unknown_worker_peak_RSS_stages": []
+  },
+  "all141_read_intent_result_pairs_included": true,
+  "generated_acquisition_timing_missing_preserved_as_null": true,
+  "generated_output_binding_only": {
+    "bytes": 67109216,
+    "included_in_package": false,
+    "original_repository_path": "build/remind-qc-adapter-preparation-v1/staged-MR-candidate-v4/generated-run-full-reuse-v1/conversion/native.nii",
+    "packager_image_reads": 0,
+    "sha256": "eafd8ee23a902620ccdb2470b8eaf5608a4d978116c98635cc08300c8e10f8b7"
+  },
+  "geometry_summary": {
+    "affine_xyz_to_ras_mm": [
+      [
+        -0.43,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.43,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        3.3000000000000003,
+        -3.46812525787668e-15
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "physical_extent_ras_mm": {
+      "definition": "axis_aligned_bounds_of_voxel_cell_corners",
+      "maximum": [
+        0.215,
+        0.215,
+        209.55
+      ],
+      "minimum": [
+        -219.945,
+        -219.945,
+        -1.6500000000000037
+      ]
+    },
+    "shape_xyz": [
+      512,
+      512,
+      64
+    ],
+    "slice_position_max_residual_mm": 2.842170943040401e-14
+  },
+  "header_inventory_stage_note": "Nested header inventory remains the pre-conversion projection. Its not_run/unchecked fields describe that stage; worker and serialized-output audit independently record completed conversion.",
+  "independent_postrun_audit_sha256": "88cce1a376c28a8075c65c5c4b51eadcf8fe8198bc022f1c89207b30fede6d83",
+  "independent_postrun_decision": "PASS_EXACT_GENERATED_FULL_REUSE_SAVED_OUTPUTS",
+  "independent_preflight_audit_sha256": "d9df3ab0b3e3d92ef6c1221925bebe67397385a2c5837ad93e6041fd11fde6a2",
+  "limits": [
+    "This resolves the generated engineering gate only. No patient MR source/header/pixel was opened in this experiment or package.",
+    "Synthetic cardinality and shape do not reproduce all real clinical metadata strings/modality mix; actual patient resource feasibility remains separately bounded and reviewed.",
+    "RSS/output guards are sampled/checkpointed stop conditions; reported process-sum memory is not unique physical memory.",
+    "No anatomy, coverage, registration, preoperative availability or training-admission claim follows. The real MR/US frame mismatch and unsupported US geometry remain unresolved.",
+    "Any actual64-object TRAIN MR conversion needs its own exact source/runtime/bounds review and root release; no patient run is authorized by this success."
+  ],
+  "patient_conversion_performed": false,
+  "patient_execution_authorized": false,
+  "preoperative_input_admitted": false,
+  "preserved_negative_and_minimal_fix": {
+    "description": "Original successful fixture, before-decode ordering failure,141 prior read ledgers, original baseline/order evidence, executing source and independently reviewed v3 canonical-order fix are preserved in the nested package.",
+    "nested_package_index_sha256": "a110402bf6bf1c54ea5788b13afe04828093021a716e57d217e7b07deb7ea424"
+  },
+  "raw_plane_geometry_retained": true,
+  "root_release_sha256": "5c23be8d4beb87c8be627b5ade2964fa2b2eb15fc4daa73b97e4121094ef10e7",
+  "schema": "remind-full-generated-staged-success-v1",
+  "scope": {
+    "all_inputs_generated": true,
+    "metadata_objects": 59520,
+    "people": 79,
+    "selected_source_objects": 64,
+    "series": 692,
+    "shape_xyz": [
+      512,
+      512,
+      64
+    ]
+  },
+  "serialized_output_audit": {
+    "audit_core": "scripts/audit_remind_native.py:check_plane",
+    "direct_source_corner_max_error_mm": 5.978451293500288e-06,
+    "expected_samples_method": "immutable_PixelData_signed16_little_endian_frombuffer; independent_of_pydicom_cache",
+    "qform_sform_max_corner_error_mm": 0.0,
+    "source_planes_checked": 64,
+    "source_rescaled_samples_equal": true
+  },
+  "status": "PASS_GENERATED_STAGED_ENGINEERING_GATE",
+  "total_returned_bytes": 146853502,
+  "training_admitted": false,
+  "worker_results": {
+    "conversion": {
+      "blocked_io_events": [],
+      "data_read_accounting": {
+        "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+        "read_calls": 9452,
+        "returned_bytes": {
+          "memory_header": 45484,
+          "memory_payload": 33599916,
+          "metadata_file": 39848530,
+          "source_file": 33597676
+        },
+        "total_returned_bytes": 107091606
+      },
+      "elapsed_seconds": 1.103963959030807,
+      "generated_source_attempts": 64,
+      "patient_source_attempts": 0,
+      "peak_RSS_bytes": 359989248,
+      "pixel_decode_status": "completed",
+      "status": "completed"
+    },
+    "validator": {
+      "blocked_io_events": [],
+      "data_read_accounting": {
+        "definition": "Unbuffered file bytes and separately identified in-memory parse bytes, including rereads/failed attempts",
+        "read_calls": 43,
+        "returned_bytes": {
+          "memory_header": 0,
+          "memory_payload": 0,
+          "metadata_file": 39761896,
+          "source_file": 0
+        },
+        "total_returned_bytes": 39761896
+      },
+      "elapsed_seconds": 0.41272737504914403,
+      "generated_source_attempts": 0,
+      "patient_source_attempts": 0,
+      "peak_RSS_bytes": 242302976,
+      "pixel_decode_status": "not_started",
+      "status": "completed"
+    }
+  }
+}
