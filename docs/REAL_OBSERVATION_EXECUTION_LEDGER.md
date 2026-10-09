@@ -735,3 +735,8 @@ The [separate hinted probe](../artifacts/hbe-v5-n12-50pct-readonly-v1/RESULT.md)
 ### October 9: explicit versioned mechanics host policy
 
 The [v2 launcher source](../artifacts/hbe-v5-n12-nocache-v2-source-proposal-v1/RESULT.md) adopts a separately named 54% initial host threshold, informed by the observed 54% read-only start. All 26 generated controls pass independent review. V1 remains at 55%; later 45%/normal checks, numerical sources, caps and single native attempt remain fixed. A prior v1 sidecar now prevents v2 retry; reverse policy switching after any v2 attempt is forbidden. This source change is not a native result or physical validation; exact committed release review and a fresh host reading are still required.
+
+
+### October 9: Integrate tiled full-tool vascular scoring with preserved evaluation gates
+
+The reusable tiled kernel now replaces dense contact sets in the private evaluator. Root canonical tests pass 74/74 in 14.37 seconds. Independent coverage passes 74 author/existing plus 19 reviewer controls across two runs; six original reviewer fixture type errors and their targeted correction are retained. Eight complete-report comparisons preserve existing outcomes. Generated admission, size limits, full-history sealing and separate removal semantics remain unchanged. Evidence: [integration record](../artifacts/private-vascular-streaming-integration-v1/source-index.json).

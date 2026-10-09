@@ -25,7 +25,10 @@ from resectionlab.research_estimate_planning import (
 )
 from resectionlab.evaluation import independent_check_native_history
 from resectionlab.functional_events import AxialToolSweep, sweeps_from_native_history
-from resectionlab.independent_geometry_batch import segment_box_contact_indices
+from resectionlab.vascular_contact_streaming import (
+    Grid as ContactGrid, Capsule as ContactCapsule, Budget as ContactBudget,
+    evaluate_contacts,
+)
 
 VERSION = 'generated-private-vascular-evaluator-v1'
 ROOT = Path(__file__).resolve().parents[2]
@@ -244,19 +247,6 @@ def _preflight(path, seal_sha256, spec, identity, binding, check):
         'geometry_certificate':asdict(certificate),'recording_replay_calls':len(plan.action_ids)*2}
 
 
-def _capsule_cells(start,end,radius,shape,affine,check):
-    spacing=np.linalg.norm(affine[:3,:3],axis=0);rotation=affine[:3,:3]/spacing
-    a=rotation.T@(start-affine[:3,3]);b=rotation.T@(end-affine[:3,3])
-    outside=bool(np.any(np.minimum(a,b)-radius<-.5*spacing) or np.any(np.maximum(a,b)+radius>(np.array(shape)-.5)*spacing))
-    lo=np.maximum(np.floor((np.minimum(a,b)-radius)/spacing-.5).astype(int),0)
-    hi=np.minimum(np.ceil((np.maximum(a,b)+radius)/spacing+.5).astype(int),np.array(shape)-1)
-    if np.any(hi<lo):return set(),outside
-    indices=np.indices(tuple(hi-lo+1)).reshape(3,-1).T+lo
-    centres=indices*spacing
-    rows=segment_box_contact_indices(a,b,centres-spacing/2,centres+spacing/2,radius,batch_size=256,cancelled=check)
-    return {tuple(int(v) for v in row) for row in indices[rows]},outside
-
-
 def _counts(cells, reference, outside=False):
     keys=np.asarray(sorted(cells),dtype=int).reshape(-1,3)
     index=tuple(keys.T)
@@ -342,23 +332,27 @@ def _evaluate_preflighted_private_vessels(*,context,seal_path,seal_sha256,spec,
         need(_read_bound(seal_path,seal_sha256)==context['seal'],'seal_changed_during_private_load')
         spec.assert_intact()
         transform=_rigid(reference.binding.planning_to_reference_ras_mm)
-        parts={'shaft':set(),'tip':set()};outside={'shaft':False,'tip':False};per_action=[]
-        for sweep in sweeps_from_native_history(context['history'],context['tools']):
+        capsules=[];sweep_count=0
+        for sweep_count,sweep in enumerate(sweeps_from_native_history(context['history'],context['tools']),1):
             check()
             mapped=AxialToolSweep(sweep.tool,tuple(transform[:3,:3]@sweep.tip_start_mm+transform[:3,3]),
                 tuple(transform[:3,:3]@sweep.tip_end_mm+transform[:3,3]),tuple(transform[:3,:3]@sweep.axis_unit))
-            action_cells=set();action_outside=False
             for name,(start,end,radius) in zip(('shaft','tip'),mapped.capsules()):
-                cells,out=_capsule_cells(start,end,radius,reference.mask.shape,reference.affine_ras_mm,check)
-                parts[name].update(cells);outside[name]|=out;action_cells.update(cells);action_outside|=out
-            per_action.append(_counts(action_cells,reference,action_outside))
-        union=parts['shaft']|parts['tip']
+                capsules.append(ContactCapsule(str(sweep_count-1),name,tuple(start),tuple(end),float(radius)))
+        def sample_reference(indices):
+            index=tuple(indices.T)
+            return reference.mask[index],reference.coverage[index]
+        contacts=evaluate_contacts(ContactGrid(reference.mask.shape,reference.affine_ras_mm),tuple(capsules),
+            sample_reference=sample_reference,budget=ContactBudget(wall_seconds=30.),cancelled=check)
+        per_action=[contacts['per_action'][str(index)] for index in range(sweep_count)]
         report={**base,'status':'evaluated_generated_vascular_reference','source_lineage':thaw_json(reference.binding.source_lineage),
             'full_history_hash':semantic_digest(context['history']),'nominal_geometry':context['geometry_certificate'],
             'action_count':len(context['history']),'nonstop_sweeps':len(per_action),
             'microstep_count':sum(len(r.get('microsteps',())) for r in context['history']),
-            'shaft':_counts(parts['shaft'],reference,outside['shaft']),'tip':_counts(parts['tip'],reference,outside['tip']),
-            'whole_tool':_counts(union,reference,any(outside.values())),'per_nonstop_action':per_action,
+            'shaft':contacts['shaft'],'tip':contacts['tip'],
+            'whole_tool':contacts['whole_tool'],'per_nonstop_action':per_action,
+            'contact_work':contacts['work'],'contact_budget':contacts['budget'],
+            'tile_pruning_padding_mm':contacts['tile_pruning_padding_mm'],
             'removed_overlap':_removed_overlap(context,reference,transform),
             'nominal_replay_transition_calls':context['recording_replay_calls'],
             'contact_tolerance_squared_mm2':1e-10,

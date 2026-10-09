@@ -1,0 +1,21 @@
+{
+  "after_sha256": "3eaebd832595f1f357389c6f251bc147659ef2fcddb67c0c7e060dfd090cbf1c",
+  "before_sha256": "3eaebd832595f1f357389c6f251bc147659ef2fcddb67c0c7e060dfd090cbf1c",
+  "changed_files": [],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-integration-independent-v1/unused-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/private-vascular-streaming-integration-independent-v1/review_worker.py"
+  ],
+  "elapsed_seconds": 14.813210291787982,
+  "error": null,
+  "exit_code": 1,
+  "full_profile_rerun": false,
+  "model_or_native_or_patient_access": false,
+  "pytest_output_sha256": "acc84c20c90b271a2264e09c19c5c5fd134af2eb1445ca7f1ed1f069c791ce02",
+  "schema": "independent-streaming-integration-review-v1",
+  "snapshots_equal": true,
+  "source_file_count": 90
+}

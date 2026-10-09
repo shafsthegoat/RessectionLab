@@ -1,0 +1,203 @@
+{
+  "excluded": [
+    "staged/canonical source duplicates",
+    "generated arrays",
+    "temporary case files",
+    "bulk runtime/source archives"
+  ],
+  "file_count": 24,
+  "files": [
+    {
+      "byte_compared_to_source": true,
+      "bytes": 3461,
+      "path": "author/RESULT.txt",
+      "sha256": "afdf05fd91eb99584147f05eea8674e4518139e900b051c09f7959a2d0781c19",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/RESULT.txt"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 2095,
+      "path": "author/candidate-pins.json",
+      "sha256": "332cbbe3cbdccce5a4d5733cc2d03a865abc09a767d16a1f8562ce6324e18ffb",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/candidate-pins.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 1244,
+      "path": "author/source-delta.json",
+      "sha256": "d36a906159e0ae82279f60626f5aa2a432cd0ecd7ea4cb800f5035f68ef9b90b",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/source-delta.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 28191,
+      "path": "author/source.patch",
+      "sha256": "688bd80641fe0584dfc0dd4726aabe6856d51c9f68c1c39674fa07a3a542c101",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/source.patch"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 4628,
+      "path": "author/compare_legacy.py",
+      "sha256": "273f0aa629312aaeea3cc2ed55d9508159740f87e5594f5d1e40742212570bcb",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/compare_legacy.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 10125,
+      "path": "author/legacy-report-parity.json",
+      "sha256": "8edc9158d429fe714bcfab099bc198d4b7df7dd8f9599bf871bea4e1aa1a29fc",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/legacy-report-parity.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 1563,
+      "path": "author/run_controls.py",
+      "sha256": "4fde30ec745928683db773003152cc6f15907cc22b7e0b2988753e7b52f19ce1",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/run_controls.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 180,
+      "path": "author/root-integration-test.txt",
+      "sha256": "479358201bb9000bffda1deb89f1ea3b320f039acf7eebec0a47ae0af5e64671",
+      "source": "build/private-vascular-streaming-integration-preparation-v1/root-integration-test.txt"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 9289,
+      "path": "independent/REPORT.md",
+      "sha256": "bcf3b2f2a2ee0efeae0f752a3ca130916539d4f44738cd184e0d62b596b82a0a",
+      "source": "build/private-vascular-streaming-integration-independent-v1/REPORT.md"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 9990,
+      "path": "independent/test_independent-initial.py",
+      "sha256": "843b11c10cfc51335fe021d682d754243777b1838dcca00916086bf842e2495f",
+      "source": "build/private-vascular-streaming-integration-independent-v1/test_independent-initial.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 9997,
+      "path": "independent/test_independent.py",
+      "sha256": "c7f87b1fee28ef9986999d87d05581501c92ae97cd19a06fa0c63846976b3f29",
+      "source": "build/private-vascular-streaming-integration-independent-v1/test_independent.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 2652,
+      "path": "independent/run_review.py",
+      "sha256": "d799425f341fa5679027efb1dba9fbd415fd30fbda77df04d964188726b1743e",
+      "source": "build/private-vascular-streaming-integration-independent-v1/run_review.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 1745,
+      "path": "independent/review_worker.py",
+      "sha256": "954a43687fa4f2916a8e96879091ee4ca72e3742175133b7bc6f0cb706dda501",
+      "source": "build/private-vascular-streaming-integration-independent-v1/review_worker.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 2403,
+      "path": "independent/run_corrected_controls.py",
+      "sha256": "07e15bdf0cb4e7ac937b5ae7a907cb876f3b22a78f5442289f423fbdce0af0dd",
+      "source": "build/private-vascular-streaming-integration-independent-v1/run_corrected_controls.py"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 1085,
+      "path": "independent/run-receipt.json",
+      "sha256": "5b0d196963798ca5cb432d371717b1f3452405c0690bfebffc9ab0f874cc730a",
+      "source": "build/private-vascular-streaming-integration-independent-v1/run-receipt.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 15856,
+      "path": "independent/pytest-output.txt",
+      "sha256": "acc84c20c90b271a2264e09c19c5c5fd134af2eb1445ca7f1ed1f069c791ce02",
+      "source": "build/private-vascular-streaming-integration-independent-v1/pytest-output.txt"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 10502,
+      "path": "independent/source-before.json",
+      "sha256": "3eaebd832595f1f357389c6f251bc147659ef2fcddb67c0c7e060dfd090cbf1c",
+      "source": "build/private-vascular-streaming-integration-independent-v1/source-before.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 10502,
+      "path": "independent/source-after.json",
+      "sha256": "3eaebd832595f1f357389c6f251bc147659ef2fcddb67c0c7e060dfd090cbf1c",
+      "source": "build/private-vascular-streaming-integration-independent-v1/source-after.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 1704,
+      "path": "independent/corrected-run-receipt.json",
+      "sha256": "ae26489342cfa65446cff5444b938e64db2b36fec64ccac7df16860483c9b1c8",
+      "source": "build/private-vascular-streaming-integration-independent-v1/corrected-run-receipt.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 113,
+      "path": "independent/corrected-pytest-output.txt",
+      "sha256": "a2027a2e77f4181f0e185b739a017ce2851da8916e2896c2db08e9b4f31e1b94",
+      "source": "build/private-vascular-streaming-integration-independent-v1/corrected-pytest-output.txt"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 10661,
+      "path": "independent/corrected-source-before.json",
+      "sha256": "ec31651b6d39c8d6aca0292cf5e2c214378b67f4cf40ff2ca4c7c57b4ba7bae9",
+      "source": "build/private-vascular-streaming-integration-independent-v1/corrected-source-before.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 10661,
+      "path": "independent/corrected-source-after.json",
+      "sha256": "ec31651b6d39c8d6aca0292cf5e2c214378b67f4cf40ff2ca4c7c57b4ba7bae9",
+      "source": "build/private-vascular-streaming-integration-independent-v1/corrected-source-after.json"
+    },
+    {
+      "byte_compared_to_source": true,
+      "bytes": 6086,
+      "path": "package_evidence.py",
+      "sha256": "43b2fe470e041e33a34a986d21fbbbf188cb374200125a79d9a3f319838e3374",
+      "source": "build/private-vascular-streaming-integration-package-preparation-v1/package_evidence.py"
+    },
+    {
+      "bytes": 2380,
+      "path": "summary.json",
+      "sha256": "27e0e257d1d4950e7a4ad5fd38930703bac3284ce2daec4ca34df318ce89b10e",
+      "source": "generated_from_saved_evidence_and_root_terminal_message"
+    }
+  ],
+  "root_owns_tracked_integration_and_commit": true,
+  "schema": "explicit-small-integration-evidence-index-v1",
+  "total_bytes": 157113,
+  "tracked_source_references_not_copied": {
+    "src/resectionlab/private_vascular_evaluation.py": {
+      "bytes": 20473,
+      "copied": false,
+      "sha256": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8"
+    },
+    "src/resectionlab/vascular_contact_streaming.py": {
+      "bytes": 14041,
+      "copied": false,
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+    },
+    "tests/test_private_vascular_streaming.py": {
+      "bytes": 1896,
+      "copied": false,
+      "sha256": "f8fd5458c589b6ab529bba11e056fb70bf24bef0e94fe1b710880e96f5d16791"
+    },
+    "tests/test_vascular_contact_streaming.py": {
+      "bytes": 6372,
+      "copied": false,
+      "sha256": "c23c191bf22181705a2408b3fc4c8880cb2f0aca2393e2c19718e534073a9acf"
+    }
+  }
+}

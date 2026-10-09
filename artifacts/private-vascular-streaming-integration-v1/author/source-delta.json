@@ -1,0 +1,33 @@
+{
+  "baseline_sha256": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+  "changes": "Generic bounded sampler extracted from measured tile loop; private scorer maps all decoded sweeps then uses tile-local count unions. Removal body and admission/preflight/manifest checks unchanged.",
+  "existing_caps_and_schema_unchanged": true,
+  "measured_kernel_sha256": "c85cca298b20190be865e23cb3d0bde3dc142e69f182e93e65c008895cec3d75",
+  "removed_legacy_dense_helper": "_capsule_cells",
+  "shared_scoring_signature_unchanged": true,
+  "staged_files": {
+    "stage/src/resectionlab/private_vascular_evaluation.py": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8",
+    "stage/src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+  },
+  "unchanged_existing_definitions": [
+    "need",
+    "digest",
+    "_hash",
+    "_json",
+    "_safe_path",
+    "_write_new",
+    "_sync_directory",
+    "_read_bound",
+    "_grid",
+    "_rigid",
+    "_public_identity",
+    "write_strategy_seal",
+    "_history_budget",
+    "VascularReferenceBinding",
+    "VascularReference",
+    "_preflight",
+    "_counts",
+    "_removed_overlap",
+    "evaluate_private_vessels"
+  ]
+}

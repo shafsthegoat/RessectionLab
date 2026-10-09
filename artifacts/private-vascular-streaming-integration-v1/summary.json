@@ -1,0 +1,68 @@
+{
+  "author_whole_report_parity": {
+    "case_count": 8,
+    "compared_except": [
+      "elapsed_seconds",
+      "contact_work",
+      "contact_budget",
+      "tile_pruning_padding_mm"
+    ],
+    "independently_inspected_not_rerun": true,
+    "saved_evidence": "author/legacy-report-parity.json"
+  },
+  "boundaries": {
+    "congruent_removed_overlap_unchanged": true,
+    "existing_generated_only_admission_unchanged": true,
+    "full_profile_rerun": false,
+    "microstep_cap": 256,
+    "patient_payload_access": false,
+    "planning_voxel_cap": 4096,
+    "private_reference_voxel_cap": 32768,
+    "shared_matched_signature_unchanged": true
+  },
+  "review": {
+    "candidate_changed_for_fixture_correction": false,
+    "corrected_cases_deselected": 13,
+    "corrected_cases_passed": 6,
+    "corrected_pytest_seconds": 0.59,
+    "decision": "GO",
+    "initial_fixture_failures": 6,
+    "initial_passed": 87,
+    "one_combined_93_pass_run_claimed": false,
+    "report": "independent/REPORT.md"
+  },
+  "root_terminal": {
+    "canonical_tests_passed": 74,
+    "exit_code": 0,
+    "output": "author/root-integration-test.txt",
+    "output_sha256": "479358201bb9000bffda1deb89f1ea3b320f039acf7eebec0a47ae0af5e64671",
+    "pytest_seconds": 14.37,
+    "session_id": 58296,
+    "source": "root message: session58296 terminal exit0"
+  },
+  "schema": "private-vascular-streaming-integration-evidence-v1",
+  "scope": "Saved evidence only; package creation performs no tests or scientific, model, patient or network execution.",
+  "status": "reviewed_candidate_integrated_root_tests_passed",
+  "tracked_source_references_not_copied": {
+    "src/resectionlab/private_vascular_evaluation.py": {
+      "bytes": 20473,
+      "copied": false,
+      "sha256": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8"
+    },
+    "src/resectionlab/vascular_contact_streaming.py": {
+      "bytes": 14041,
+      "copied": false,
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+    },
+    "tests/test_private_vascular_streaming.py": {
+      "bytes": 1896,
+      "copied": false,
+      "sha256": "f8fd5458c589b6ab529bba11e056fb70bf24bef0e94fe1b710880e96f5d16791"
+    },
+    "tests/test_vascular_contact_streaming.py": {
+      "bytes": 6372,
+      "copied": false,
+      "sha256": "c23c191bf22181705a2408b3fc4c8880cb2f0aca2393e2c19718e534073a9acf"
+    }
+  }
+}

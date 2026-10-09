@@ -1,0 +1,50 @@
+Tiled private vascular evaluation integration candidate — generated-only.
+
+The reusable vascular_contact_streaming module factors the measured disjoint-tile
+geometry loop behind a bounded boolean sampler. The private scorer supplies its
+already bound immutable reference arrays after all existing seal, nominal replay,
+full-history and source/frame checks. Each decoded axial sweep retains its own
+ordinal and row order; repeated sweeps do not duplicate whole-strategy cells.
+Shaft, tip, whole-tool and per-sweep unions are accumulated inside one tile.
+Reference unknowns and outside-FOV state remain distinct from positive contacts.
+
+MAX_REFERENCE_VOXELS=32^3, MAX_PLANNING_VOXELS=16^3, horizon<=4,
+MAX_MICROSTEPS=256, generated person/role/lineage restrictions, shared matched
+scoring signature, and the separate congruent removed-cell overlap are unchanged.
+Nineteen existing definitions are AST-identical. The generic geometry primitive
+itself grants no patient, file, strategy, or source admission. It replaces the
+legacy dense capsule-cell set helper; no full-grid arrays/contact sets are built.
+
+The established cell-contact tolerance remains 1e-10 mm^2. Broad-phase padding
+only admits extra tile work; final contacts use the same independent oracle.
+Grid spacing0.01..100mm and orthogonality tolerance1e-9 preserve the private
+reference's existing accepted frame domain; former profile-only radius/origin
+restrictions are absent. A sampled positive label outside coverage refuses.
+
+Validation: 74 focused generated tests passed in13.89s, including the existing
+private and matched interfaces, scalar full-grid comparisons across rotations,
+anisotropy, uneven tiles, near tangency, duplicate unions, sampler failures,
+STOP and explicit work refusal. Eight additional whole old/new reports were
+exactly equal after removing elapsed_seconds and the three additive diagnostic
+fields: identity, rotated, partial, empty-partial, outside-FOV, noncongruent
+removal, shifted ROI and STOP. That saved parity run took2.6455s. No claim of
+universal equality to the old broad-phase edge rounding is made; the independent
+full-grid scalar oracle is the contact correctness reference.
+
+Work counters/limits and pruning padding are added to successful private reports.
+Budget failure is an existing durable evaluation_failed outcome, without partial
+success or retry. Tile/callback wall checks remain cooperative; a blocking
+arbitrary callback requires external supervision. Array admission has not been
+raised. No real source QC/registration, glioma truth, injury probability or
+biological vessel completeness is established.
+
+The measured256x256x192 result belongs to the frozen predecessor kernel/profile;
+this extraction was tested only on tiny generated fixtures. No patient/payload,
+model, native solver, network or realistic-size profile was run in this work.
+Only ignored files were written. Root must apply the four-file source.patch.
+The staging harness sets only the staged module ROOT to the live repository for
+build-only test outputs; the promoted ROOT expression is unchanged.
+
+Commands (single-thread numerical libraries):
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src .venv/bin/python -B build/private-vascular-streaming-integration-preparation-v1/run_controls.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B build/private-vascular-streaming-integration-preparation-v1/compare_legacy.py

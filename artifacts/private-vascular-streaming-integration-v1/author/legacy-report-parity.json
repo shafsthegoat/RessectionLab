@@ -1,0 +1,236 @@
+{
+  "cases": [
+    {
+      "case": "identity",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 1,
+        "positive_overlap_mm3": 1.0,
+        "removed_planning_cells": 6,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:eb415f0ea93107e31c499c76f17785dae29915a0b48b525c57ad974f16fde290",
+      "whole_tool": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": true,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 2.0,
+        "positive_reference_cells": 2,
+        "touched_reference_cells": 260,
+        "unknown_in_grid_cell_volume_mm3": 0.0,
+        "unknown_reference_cells": 0
+      }
+    },
+    {
+      "case": "rotated",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 1,
+        "positive_overlap_mm3": 1.0,
+        "removed_planning_cells": 6,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:1520ee354d0542aef3f16780ea7afa3de53da02eb75b1e79e93d8fb9a031d135",
+      "whole_tool": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": true,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 2.0,
+        "positive_reference_cells": 2,
+        "touched_reference_cells": 260,
+        "unknown_in_grid_cell_volume_mm3": 0.0,
+        "unknown_reference_cells": 0
+      }
+    },
+    {
+      "case": "partial",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 1,
+        "positive_overlap_mm3": 1.0,
+        "removed_planning_cells": 6,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:b645733ab4b32cb712db0476311dd33847a7207527bbbfd73a8fdb08135e7b2a",
+      "whole_tool": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": false,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 2.0,
+        "positive_reference_cells": 2,
+        "touched_reference_cells": 260,
+        "unknown_in_grid_cell_volume_mm3": 1.0,
+        "unknown_reference_cells": 1
+      }
+    },
+    {
+      "case": "empty_partial",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 0,
+        "positive_overlap_mm3": 0.0,
+        "removed_planning_cells": 6,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:603f01e84de2632273df2e4a46de4776940b8041565766ad64a9a34db0763491",
+      "whole_tool": {
+        "annotated_positive_encounter": null,
+        "annotation_coverage_complete_for_sweep": false,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 0.0,
+        "positive_reference_cells": 0,
+        "touched_reference_cells": 260,
+        "unknown_in_grid_cell_volume_mm3": 1.0,
+        "unknown_reference_cells": 1
+      }
+    },
+    {
+      "case": "outside",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 0,
+        "positive_overlap_mm3": 0.0,
+        "removed_planning_cells": 6,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:53e81202a965ef04ab350e5cff01da87ea85764917122dac9db26c419c900175",
+      "whole_tool": {
+        "annotated_positive_encounter": null,
+        "annotation_coverage_complete_for_sweep": false,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": true,
+        "positive_cell_volume_upper_bound_mm3": 0.0,
+        "positive_reference_cells": 0,
+        "touched_reference_cells": 123,
+        "unknown_in_grid_cell_volume_mm3": 0.0,
+        "unknown_reference_cells": 0
+      }
+    },
+    {
+      "case": "noncongruent",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "positive_overlap_cells": null,
+        "positive_overlap_mm3": null,
+        "removed_planning_cells": 6,
+        "status": "unsupported_noncongruent_grids",
+        "unknown_removed_cells": 6
+      },
+      "report_semantic_sha256": "sha256:74dcc7c02e1fc984b936be4ff6bce518f27fd01fe4c915716cf7033886787aeb",
+      "whole_tool": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": true,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 2.0,
+        "positive_reference_cells": 2,
+        "touched_reference_cells": 245,
+        "unknown_in_grid_cell_volume_mm3": 0.0,
+        "unknown_reference_cells": 0
+      }
+    },
+    {
+      "case": "roi_shifted",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 1,
+        "positive_overlap_mm3": 1.0,
+        "removed_planning_cells": 6,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:882a696852cb5f051b0d18d29186e164c2020afa3f8fa5814df4f10de0041d7c",
+      "whole_tool": {
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": true,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 2.0,
+        "positive_reference_cells": 2,
+        "touched_reference_cells": 260,
+        "unknown_in_grid_cell_volume_mm3": 0.0,
+        "unknown_reference_cells": 0
+      }
+    },
+    {
+      "case": "stop",
+      "entire_previous_report_equal_except_elapsed_and_additive_work": true,
+      "removed_overlap": {
+        "continuous_tissue_or_vessel_damage_assessed": false,
+        "index_mapping_normalization_tolerance": 1e-08,
+        "method": "congruent_discrete_cell_overlap_with_index_roundoff_normalization",
+        "outside_reference_fov_removed_cells": 0,
+        "positive_overlap_cells": 0,
+        "positive_overlap_mm3": 0.0,
+        "removed_planning_cells": 0,
+        "status": "computed",
+        "unknown_removed_cells": 0
+      },
+      "report_semantic_sha256": "sha256:847580b287844af2e6bbd44da4c8a7b7bf4256bb9e8e1c183891bba4685c09b9",
+      "whole_tool": {
+        "annotated_positive_encounter": false,
+        "annotation_coverage_complete_for_sweep": true,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null,
+        "outside_reference_fov": false,
+        "positive_cell_volume_upper_bound_mm3": 0.0,
+        "positive_reference_cells": 0,
+        "touched_reference_cells": 0,
+        "unknown_in_grid_cell_volume_mm3": 0.0,
+        "unknown_reference_cells": 0
+      }
+    }
+  ],
+  "elapsed_seconds": 2.6454846248961985,
+  "patient_model_native_network_access": false,
+  "sources": {
+    "build/private-vascular-streaming-integration-preparation-v1/compare_legacy.py": "273f0aa629312aaeea3cc2ed55d9508159740f87e5594f5d1e40742212570bcb",
+    "build/private-vascular-streaming-integration-preparation-v1/stage/src/resectionlab/private_vascular_evaluation.py": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8",
+    "build/private-vascular-streaming-integration-preparation-v1/stage/src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed",
+    "src/resectionlab/private_vascular_evaluation.py": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d"
+  },
+  "status": "all_generated_report_parity_passed"
+}

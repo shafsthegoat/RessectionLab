@@ -1,0 +1,60 @@
+{
+  "author_generated_tests": {
+    "passed": 74,
+    "seconds": 13.89,
+    "whole_report_parity_cases": 8
+  },
+  "baseline_private_sha256": "a4ca5a710fa6b8f02251e7d30d5e3fc6bf3602a8f6b2ca9ce7af6e809281856d",
+  "files": {
+    "RESULT.txt": {
+      "bytes": 3461,
+      "sha256": "afdf05fd91eb99584147f05eea8674e4518139e900b051c09f7959a2d0781c19"
+    },
+    "compare_legacy.py": {
+      "bytes": 4628,
+      "sha256": "273f0aa629312aaeea3cc2ed55d9508159740f87e5594f5d1e40742212570bcb"
+    },
+    "freeze_candidate.py": {
+      "bytes": 5190,
+      "sha256": "63e6ce58ff104a4224a33affe9f1e8094296972f0bc30ac5e0531e18415e1483"
+    },
+    "legacy-report-parity.json": {
+      "bytes": 10125,
+      "sha256": "8edc9158d429fe714bcfab099bc198d4b7df7dd8f9599bf871bea4e1aa1a29fc"
+    },
+    "prepare_candidate.py": {
+      "bytes": 8337,
+      "sha256": "29422df913d190969623dc9a49f883a5ee1e9f6b14cb411060e4fd82a1eebf43"
+    },
+    "run_controls.py": {
+      "bytes": 1563,
+      "sha256": "4fde30ec745928683db773003152cc6f15907cc22b7e0b2988753e7b52f19ce1"
+    },
+    "source-delta.json": {
+      "bytes": 1244,
+      "sha256": "d36a906159e0ae82279f60626f5aa2a432cd0ecd7ea4cb800f5035f68ef9b90b"
+    },
+    "source.patch": {
+      "bytes": 28191,
+      "sha256": "688bd80641fe0584dfc0dd4726aabe6856d51c9f68c1c39674fa07a3a542c101"
+    },
+    "stage/src/resectionlab/private_vascular_evaluation.py": {
+      "bytes": 20473,
+      "sha256": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8"
+    },
+    "stage/src/resectionlab/vascular_contact_streaming.py": {
+      "bytes": 14041,
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+    },
+    "stage/tests/test_private_vascular_streaming.py": {
+      "bytes": 1896,
+      "sha256": "f8fd5458c589b6ab529bba11e056fb70bf24bef0e94fe1b710880e96f5d16791"
+    },
+    "stage/tests/test_vascular_contact_streaming.py": {
+      "bytes": 6372,
+      "sha256": "c23c191bf22181705a2408b3fc4c8880cb2f0aca2393e2c19718e534073a9acf"
+    }
+  },
+  "status": "candidate_ready_for_independent_review",
+  "tracked_edits": false
+}
