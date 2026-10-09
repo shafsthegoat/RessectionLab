@@ -1,0 +1,10 @@
+{
+  "session_id": 24691,
+  "supervisor_exit_code": 1,
+  "exception": "PermissionError: [Errno 1] Operation not permitted",
+  "location": "supervise_tile1.py:244 os.killpg(pgid,signal.SIGKILL)",
+  "immediate_process_check": "No tile1 or isolated-runtime workers remained",
+  "worker_exit_code": "not durably recorded",
+  "resource_acceptance": "unknown_unrecorded",
+  "rerun": false
+}

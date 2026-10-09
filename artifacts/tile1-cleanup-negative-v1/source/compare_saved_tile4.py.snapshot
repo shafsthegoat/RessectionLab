@@ -1,0 +1,150 @@
+"""Compare one accepted generated tile1 result with the frozen tile4 output.
+
+Read-only after inference; neither patient data nor model weights are loaded.
+"""
+import hashlib
+import json
+from pathlib import Path
+import numpy as np
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+CONTRACT = HERE / 'tile1-contract.json'
+OUTPUT = HERE / 'tile1-vs-tile4-comparison.json'
+
+
+def digest(path):
+    sha = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            sha.update(block)
+    return sha.hexdigest()
+
+
+def decode(logits, order):
+    labels = np.zeros((logits.shape[0], *logits.shape[2:]), dtype=np.uint8)
+    for channel, label in enumerate(order):
+        labels[logits[:, channel] > 0.0] = label
+    return labels
+
+
+def checked_arm(folder, expected_contract_hash, expected_input_hash, expected_checkpoint_hash,
+                expected_logit_hash=None, expected_result_hash=None, expected_supervision_hash=None):
+    result_path = folder / 'result.json'
+    supervision_path = folder / 'supervision.json'
+    logits_path = folder / 'logits.npy'
+    if expected_result_hash and digest(result_path) != expected_result_hash:
+        raise ValueError('saved reference result bytes changed')
+    if expected_supervision_hash and digest(supervision_path) != expected_supervision_hash:
+        raise ValueError('saved reference supervision bytes changed')
+    result = json.loads(result_path.read_text())
+    supervision = json.loads(supervision_path.read_text())
+    if (result.get('arm') != 'tiled' or supervision.get('arm') != 'tiled' or
+            result.get('contract_sha256') != expected_contract_hash or
+            supervision.get('contract_sha256') != expected_contract_hash or
+            result.get('input_npy_sha256') != expected_input_hash or
+            result.get('checkpoint_sha256_after') != expected_checkpoint_hash or
+            result.get('safe_globals_restored') is not True or
+            result.get('output_nonfinite') != 0 or
+            result.get('wrapper_report', {}).get('wrapped_unique_conv3d_modules') != 27 or
+            result.get('wrapper_report', {}).get('parameter_state_module_identities_preserved') is not True or
+            supervision.get('accepted_for_feasibility') is not True or
+            supervision.get('exit_code') != 0 or
+            supervision.get('watchdog_reason') is not None or
+            supervision.get('post_guard_reason') is not None):
+        raise ValueError('source arm was not an accepted matching tiled run')
+    if digest(logits_path) != result['logits_npy_sha256']:
+        raise ValueError('logits file disagrees with arm receipt')
+    if expected_logit_hash and digest(logits_path) != expected_logit_hash:
+        raise ValueError('saved tile4 logits bytes changed')
+    logits = np.load(logits_path, allow_pickle=False)
+    if (logits.shape != (1, 3, 64, 64, 64) or logits.dtype != np.float32 or
+            not logits.flags.c_contiguous or not np.isfinite(logits).all()):
+        raise ValueError('arm logits shape, FP32 layout, or finiteness changed')
+    if hashlib.sha256(logits.tobytes(order='C')).hexdigest() != result['logits_raw_sha256']:
+        raise ValueError('raw logit bytes disagree with arm receipt')
+    return logits, result, supervision
+
+
+def main():
+    if OUTPUT.exists():
+        raise FileExistsError('comparison already recorded')
+    contract = json.loads(CONTRACT.read_text())
+    if (contract['gate'] != 'CPU_TILED_TILE1_PARITY_64_V1' or
+            contract['output_depth_tile'] != 1 or
+            contract['parity_atol'] != 0.001 or contract['parity_rtol'] != 0.001 or
+            contract['require_exact_decoded_region_labels'] is not True):
+        raise ValueError('unexpected frozen comparison protocol')
+    if digest(Path(__file__).resolve()) != contract['runner_source_sha256']['compare_saved_tile4.py']:
+        raise ValueError('comparison source changed after freeze')
+    reference = contract['saved_tile4_reference']
+    refdir = ROOT / reference['folder']
+    if digest(refdir.parent / 'profile-contract.json') != reference['contract_sha256']:
+        raise ValueError('saved tile4 contract changed')
+    refcontract = json.loads((refdir.parent / 'profile-contract.json').read_text())
+    if (refcontract['output_depth_tile'] != 4 or
+            refcontract['input_npy_sha256'] != contract['input_npy_sha256'] or
+            refcontract['model_file_sha256'] != contract['model_file_sha256']):
+        raise ValueError('saved tile4 input/model contract differs')
+    old, old_result, old_supervision = checked_arm(
+        refdir, reference['contract_sha256'], contract['input_npy_sha256'],
+        contract['model_file_sha256']['fold_all/checkpoint_final.pth'],
+        reference['logits_npy_sha256'], reference['result_sha256'], reference['supervision_sha256'])
+    new, new_result, new_supervision = checked_arm(
+        HERE / 'tiled', digest(CONTRACT), contract['input_npy_sha256'],
+        contract['model_file_sha256']['fold_all/checkpoint_final.pth'])
+    if new_result.get('output_depth_tile') != 1:
+        raise ValueError('new arm did not use output-depth tile 1')
+    if (old_result['torch_version'] != new_result['torch_version'] or
+            old_result['numpy_version'] != new_result['numpy_version']):
+        raise ValueError('runtime versions differ between matched controls')
+    differences = np.abs(new.astype(np.float64) - old.astype(np.float64))
+    tolerance = contract['parity_atol'] + contract['parity_rtol'] * np.abs(old.astype(np.float64))
+    allclose = bool(np.allclose(new, old, rtol=contract['parity_rtol'], atol=contract['parity_atol'], equal_nan=False))
+    order = [2, 1, 3]
+    dataset = json.loads((ROOT / 'data/models/gliomoda-v1.0.2/t1c-t2f-pinned-v1/dataset.json').read_text())
+    if dataset['regions_class_order'] != order:
+        raise ValueError('pinned region decode order changed')
+    disagree = int(np.count_nonzero(decode(new, order) != decode(old, order)))
+    near_zero = []
+    for index, region in enumerate(('whole tumor', 'tumor core', 'enhancing tumor')):
+        a, b = old[:, index], new[:, index]
+        cross = (a > 0.0) != (b > 0.0)
+        near_zero.append({
+            'region': region, 'near_zero_band_abs_logit': contract['parity_atol'],
+            'tile4_near_zero_cells': int(np.count_nonzero(np.abs(a) <= contract['parity_atol'])),
+            'tile1_near_zero_cells': int(np.count_nonzero(np.abs(b) <= contract['parity_atol'])),
+            'threshold_crossing_cells': int(np.count_nonzero(cross)),
+            'minimum_tile4_abs_logit': float(np.min(np.abs(a))),
+            'minimum_tile1_abs_logit': float(np.min(np.abs(b))),
+            'maximum_abs_difference_on_crossings': float(np.max(np.abs(a[cross]-b[cross]))) if cross.any() else None,
+        })
+    report = {
+        'scope': 'Generated identical-input/checkpoint 64-cubed tile1-vs-saved-tile4 software parity and guarded single-run resources only',
+        'control_pass': allclose and disagree == 0,
+        'allclose': allclose, 'atol': contract['parity_atol'], 'rtol': contract['parity_rtol'],
+        'max_absolute_error': float(np.max(differences)),
+        'rmse': float(np.sqrt(np.mean(np.square(differences)))),
+        'out_of_tolerance_elements': int(np.count_nonzero(differences > tolerance)),
+        'total_logit_elements': int(new.size),
+        'decoded_disagreement_cells': disagree,
+        'decoded_total_cells': int(np.prod(new.shape[:1] + new.shape[2:])),
+        'per_region_threshold_margins': near_zero,
+        'regions_class_order': order,
+        'tile4_raw_logits_sha256': old_result['logits_raw_sha256'],
+        'tile1_raw_logits_sha256': new_result['logits_raw_sha256'],
+        'tile4_forward_seconds_single_run_instrumented': old_result['forward_seconds'],
+        'tile1_forward_seconds_single_run_instrumented': new_result['forward_seconds'],
+        'tile4_sampled_peak_process_group_rss_bytes': old_supervision['sampled_peak_process_group_resident_bytes'],
+        'tile1_sampled_peak_process_group_rss_bytes': new_supervision['sampled_peak_process_group_resident_bytes'],
+        'interpretation': 'Generated software comparison only; one run per tile and phase hooks perturb timing. No full128 feasibility, patient accuracy, or clinical evidence.',
+    }
+    OUTPUT.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
+    print(json.dumps({'control_pass': report['control_pass'],
+                      'max_absolute_error': report['max_absolute_error'],
+                      'decoded_disagreement_cells': disagree,
+                      'report': str(OUTPUT.relative_to(ROOT))}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

@@ -47,6 +47,13 @@ relaxation test; actual depth and contact/hold sample alignment remain unresolve
 Its response file has not been acquired or fitted. Nominal motor commands are
 not measured per-trial displacement, and neither source establishes live surgery.
 
+The [tile-depth-1 comparison attempt](artifacts/tile1-cleanup-negative-v1/INDEPENDENT_REVIEW.md)
+saved outputs byte-identical to tile depth 4 (786,432 logits, zero decoded-label
+disagreements), but its controller raised PermissionError during cleanup before
+saving the resource receipt. Resource acceptance and memory/speed improvement
+remain unknown. No worker remained in the immediate process check. The original
+failure is preserved; cleanup hardening is required before another model run.
+
 The [64³ generated-input memory diagnostic](artifacts/layer-memory-diagnostic-64-v1/INDEPENDENT_REVIEW.md)
 completed one instrumented forward with finite output at **956,301,312 bytes**
 peak sampled memory. The final decoder concatenation boundary added about
