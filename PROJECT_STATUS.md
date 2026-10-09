@@ -122,6 +122,12 @@ known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
 support in the mask, and retained-tissue anatomical suitability are unaccepted.
 Saved-mesh error localization can diagnose the rejected candidate, but a new
 mesh or FEM run waits on these source and sparse-solver gates.
+The [unreleased v4 saved-geometry witness preparation](artifacts/mechanics/resect-case4-v4-fidelity-witness-preparation-v1/RESULT.md)
+passed 186 adjacent controls and ten independent isolated checks after two
+launcher safeguards were repaired. It would replay the original rejected
+2 mm fidelity result and test whether boundary errors are spatially
+concentrated. No saved patient array has been opened for this diagnostic;
+its execution needs a separate exact-source release and private audit.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)

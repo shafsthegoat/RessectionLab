@@ -1,0 +1,103 @@
+{
+  "schema": "resect-case4-boundary6-fidelity-witness-v1",
+  "status": "prospective_preparation_not_executed",
+  "execution_authorized": false,
+  "source_case": "RESECT Case4 retrospective DEVELOPMENT; estimated T1-derived envelope, not accepted brain anatomy",
+  "caps": {
+    "parent_seconds": 120,
+    "cooperative_seconds": 110,
+    "rss_bytes": 2147483648,
+    "numerical_threads": 1,
+    "maximum_distance_queries": 1250000,
+    "output_bytes": 16777216,
+    "per_file_bytes": 8388608,
+    "maximum_files": 32,
+    "attempts": 1,
+    "retries": 0
+  },
+  "inputs": {
+    "native_surface": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+      "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f"
+    },
+    "nodes_m": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/candidate/diagnostic/nodes_m.npy",
+      "sha256": "1c4612637d3b6290099a85bd05660025e4b51ce26be24706b147a9a7affaef6a"
+    },
+    "tet10_indices": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/candidate/diagnostic/tet10_indices.npy",
+      "sha256": "bb8f037152c900bf48b656a67a2951725fc2685fcf44d2e62c7654159d6c9d7a"
+    },
+    "gmsh_node_ids": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/candidate/diagnostic/gmsh_node_ids.npy",
+      "sha256": "6d578e8f97ccb637e51f9e2a405e7ea996365fc3903a2a7503d0a276fc44656a"
+    },
+    "gmsh_element_ids": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/candidate/diagnostic/gmsh_element_ids.npy",
+      "sha256": "a8fcfa81abd9c78073c207d5ccfc0c41206afc02c69f040b621e3266eb0a3743"
+    },
+    "candidate_manifest": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/candidate/diagnostic/manifest.json",
+      "sha256": "1f0a861836a88cac116c0b0f11ff572a2c1c7990f2493b5fe442c99ba5d29b65"
+    },
+    "candidate_result": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/candidate/result.json",
+      "sha256": "e81e351c93f7b9107d62a8e619c7d60aa77b330413747e083b62d4a2e6a8e543"
+    },
+    "candidate_acceptance": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-boundary6-v4/acceptance.json",
+      "sha256": "c0f5c3ac878d1d45e3aa2db04ccb0204f4ce2c308c00fa1419e6f555495a2d44"
+    },
+    "candidate_release": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-boundary6-v4/release.json",
+      "sha256": "e00e568aecf210b75f8fbdec163e7199f7c877b7e0025f12786a97e60490f413"
+    },
+    "candidate_summary": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-boundary6-v4/summary.json",
+      "sha256": "20bc36889b3468d340b1d547b2a88b10de2246648f4df92c864ceee32e5a7cc6"
+    }
+  },
+  "packages": {"numpy": "2.5.3", "scipy": "1.18.1", "vtk": "9.7.1"},
+  "fixed_geometry": {
+    "source_vertices": 91951,
+    "source_triangles": 183902,
+    "mesh_nodes": 19070,
+    "mesh_tet10": 10512,
+    "exterior_vertices": 2428,
+    "exterior_triangles": 4856,
+    "exterior_distinct_midsides": 7284
+  },
+  "original_fidelity": {
+    "cover_m": 0.001,
+    "chunk_triangles": 256,
+    "limit_m": 0.002,
+    "replay_absolute_tolerance_m": 1e-12,
+    "source_to_mesh": {
+      "sample_count": 1027230,
+      "maximum_sample_distance_m": 0.0038691925286687217,
+      "full_surface_upper_bound_m": 0.004576299339337691
+    },
+    "mesh_to_source": {
+      "sample_count": 151644,
+      "maximum_sample_distance_m": 0.002263557449021836,
+      "full_surface_upper_bound_m": 0.003253715834290842
+    }
+  },
+  "localization_decision": {
+    "cube_side_m": 0.03,
+    "absolute_ras_grid_m": 0.005,
+    "strict_face_max_threshold_m": 0.002,
+    "maximum_witness_face_area_fraction_each_direction": 0.05,
+    "minimum_joint_cube_capture_fraction_each_direction": 0.8,
+    "whole_face_area_proxy": true,
+    "cube_interval": "half-open [origin, origin + 0.03 m) on absolute RAS 5 mm grid",
+    "candidate_cubes": "Only grid-aligned cubes containing at least one witness-face centroid from either direction",
+    "tie_break": "lexicographically smallest cube origin",
+    "invalid_replay_is_not_diffuse": true
+  },
+  "prohibited": [
+    "MRI or mask reads", "B/V landmarks or during-US reads", "Gmsh or remeshing",
+    "solver, tissue deformation, training, policy use", "retry or parameter sweep",
+    "mesh admission, anatomical or clinical validation"
+  ]
+}
