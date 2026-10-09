@@ -17,3 +17,27 @@ After schema and loading-history checks, prospectively select the corona-radiata
 This proposal could establish within-specimen prediction across loading modes. It cannot establish independent-donor transfer. No roles have yet been assigned and no scientific-use admission follows from this source review. The missing evidence for direct retraction validation remains same-trial calibrated tool/contact/load and independently registered tissue motion with uncertainty.
 
 Independent review: `build/greiner-scientific-qualification-independent-v1/REPORT.md`. The corrected source qualification is `build/greiner-scientific-qualification-v1/qualification.json`, SHA-256 `9e4f28307f2cf7a23d73b2f402e39f03d5a977d451315ffb58fe33a4557631b5`. Original intake hashes and acquisition receipts remain in [manifest.json](manifest.json).
+
+## Subsequent schema investigation: fitting remains blocked
+
+Only bytes 0–5 of the corona-radiata CSV's first physical line were inspected.
+They contain two commas and no ASCII letters; no numeric conversion, literal
+value output or later-row access occurred. This may be a data row, so it is
+recorded as first-line exposure rather than a verified header. The three field
+meanings, units/scales, loading timestamps, rest intervals and initial history
+remain unresolved. Paper-derived durations must not be substituted for them.
+
+A narrowly isolated read of the [v2 source](https://zenodo.org/records/13960486)
+found readers requiring named `time` and `displacement` columns. They do not
+document the acquired headerless format or a measured-response mapping. The
+577,078-byte source has SHA-256
+`c983758c194ab8624ea67ce319ccfe8d73c5024884c82b092cd2e2df30e08037`.
+Its notices include GPL3-or-later and deal.II LGPL2.1-or-later, despite the
+record-level CC-BY metadata. It was neither executed nor reused; parameter
+files and fitted constants were not inspected. Exact exposure records and the
+disabled split contract remain in `build/greiner-measured-preparation-v1/`.
+
+Measured fitting needs a creator-supported schema and acquisition chronology
+or the exact preprocessing specification. Numerical controls of FEBio's existing
+material law can proceed separately with explicitly arbitrary constants, but
+they cannot fill this measurement dependency or validate surgical interaction.
