@@ -61,6 +61,13 @@ and PAT20. Root independently rehashed every payload and confirmed unchanged
 patient-role and queue files. Anatomy and reconstruction QC are deferred; the
 new modalities remain unreviewed and do not increase patient counts or admit training.
 
+The [N24 compression numerical run](artifacts/hbe-v5-n24-numerical-v1/RESULT.md)
+completed in **68.423 seconds**, and independent replay reproduced all 61 frames.
+It uses a reflected half-height native fixture. Its 0.670% endpoint force change
+from N16 is larger than the preceding adjacent change: convergence remains
+unestablished. Eight native rows and the full comparator remain; no measured
+force or patient interaction was used.
+
 The [N16 compression numerical run](artifacts/hbe-v5-n16-numerical-v1/RESULT.md)
 completed one native call in **46.446 seconds**, with about 306 MiB peak sampled
 RSS. Independent reconstruction reproduced all 61 saved frames and the passing
@@ -75,7 +82,7 @@ and 200,769,536 bytes peak sampled RSS. The original failed receipt and missing
 historical post-run guard observations remain explicit. The [exact supplement integration](docs/hbe-v5-n12-exact-supplement-admission.md)
 now admits this specific reviewed pair as a numerical predecessor; all other
 failed receipts remain rejected. Independent checks pass 29 focused and 14
-adjacent tests. The subsequent N16 row has now completed; nine native rows and the comparator remain unrun.
+adjacent tests. The subsequent N16 and N24 rows have completed; eight native rows and the comparator remain unrun.
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 
