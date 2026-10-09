@@ -8,6 +8,11 @@ observed patient records, with held-out real-patient and physical validation sti
 required. The first fixed generated-development comparison retains its negative
 result; longer fixed fits now demonstrate learning on that same task. No new
 real-patient training or transfer is claimed.
+The [public brain-interaction measurement audit](artifacts/open-neurosurgery-interaction-data-audit-v1/RESULT.md)
+found no verified accessible same-trial record combining tracked tool motion,
+force and independent brain displacement. HBE specimen force, RESECT patient
+displacement and simulator-generated labels must stay distinct. Direct brain
+retraction action-response validation remains a physical-data dependency.
 
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131
