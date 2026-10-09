@@ -110,6 +110,12 @@ reference runs and checks full/half specimen boundary topology. Forty-three
 focused v5 tests and fifteen independent controls pass. It still does not
 release FEBio: new-endpoint native primitives, the twelve-run comparator and
 resource-bounded execution remain unimplemented.
+The [generated v5 single-frame evaluator](docs/hbe-v5-single-frame-evaluator.md)
+now checks one exact extended-endpoint schedule and parsed synthetic frame,
+including signed force, boundary motion, half-height reconstruction, sampled
+deformation, energy and 75 probes. Seventy-one adjacent controls pass, with an
+independent source-only GO. It has not bound native output, streamed all frames,
+compared measured force, or released fitting or execution.
 The [RESECT Case4 boundary-6 mesh preparation](artifacts/mechanics/resect-case4-boundary6-preparation-v1/RESULT.md)
 proposes one 6/24 mm, curvature-off, source-only Gmsh attempt with unchanged
 2 mm bidirectional surface and 3% volume gates. All 176 mesh controls pass,
