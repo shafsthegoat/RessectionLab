@@ -1,0 +1,17 @@
+{
+  "source_commit": "0f7eee3a17b6743fe15549cf8aba396fa4e98a2c",
+  "source_files": 20,
+  "review_path": "build/hbe-v5-n36-s120-independent-v1/REPORT.md",
+  "review_sha256": "bab693db7dd4e7401bab32936831c676e36b6ca11b4a234c3f6dcd3151a14202",
+  "host": {
+    "kernel_pressure_mask": 1,
+    "available_percent": 57,
+    "swap_used_bytes": 7431979008,
+    "swap_total_bytes": 8589934592,
+    "host_read_seconds": 1.9541941583156586e-05
+  },
+  "validate_release": "passed",
+  "native_calls_in_preflight": 0,
+  "preflight_script_note": "Initial root check compared nested binding object to digest; assertion stopped before release/native launch. Corrected to explicit path/sha256 keys; working and committed bytes match.",
+  "scope": "one declared ordinal6 N36 S120 numerical run, unchanged caps, no measured data or fit"
+}

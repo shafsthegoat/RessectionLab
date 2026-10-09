@@ -138,9 +138,17 @@ and PAT20. Root independently rehashed every payload and confirmed unchanged
 patient-role and queue files. Anatomy and reconstruction QC are deferred; the
 new modalities remain unreviewed and do not increase patient counts or admit training.
 
+The [N36 timestep refinement](artifacts/hbe-v5-n36-s120-numerical-v1/RESULT.md)
+completed one 120-step native solve and an independent exact 121-frame replay.
+The frozen comparison passes at all 61 common load states and 75 probes:
+maximum force change is 1.81e-12 N and displacement change is 2.31e-14 m,
+both within preset limits. This is a load-step sensitivity check on the
+arbitrary-material specimen fixture, not measured physical validation.
+Five tension rows and the full twelve-row screen remain unrun.
+
 The [N36 compression numerical run](artifacts/hbe-v5-n36-numerical-v1/RESULT.md)
 completed in **481.205 seconds** and passed an independent exact 61-frame replay.
-Its force step from N32 is **0.1360%**. Six declared native rows and the full
+Its force step from N32 is **0.1360%**. Five declared tension rows and the full
 comparison remain; convergence and physical accuracy are still unestablished.
 The numerical full response is reconstructed from a half-height native fixture.
 
@@ -170,7 +178,7 @@ and 200,769,536 bytes peak sampled RSS. The original failed receipt and missing
 historical post-run guard observations remain explicit. The [exact supplement integration](docs/hbe-v5-n12-exact-supplement-admission.md)
 now admits this specific reviewed pair as a numerical predecessor; all other
 failed receipts remain rejected. Independent checks pass 29 focused and 14
-adjacent tests. The subsequent N16, N24, N32 and N36 rows have completed; six native rows and the comparator remain unrun.
+adjacent tests. The subsequent N16, N24, N32 and N36 rows have completed; five tension rows and the comparator remain unrun.
 [Timing is a known-stage subtotal](artifacts/hbe-v5-n12-exact-admission-v1/ACCOUNTING_NOTE.md),
 not complete elapsed cost; no physical or patient validation follows.
 

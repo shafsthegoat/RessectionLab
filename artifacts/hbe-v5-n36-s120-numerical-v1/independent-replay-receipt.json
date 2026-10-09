@@ -1,0 +1,26 @@
+{
+  "attempts": 1,
+  "native_calls": 0,
+  "no_retry": true,
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 1073741824,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-n36-s120-result-independent-v1/audit.py",
+      "replay"
+    ],
+    "elapsed_seconds": 78.57675658399239,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 1741883,
+    "peak_sampled_process_group_rss_bytes": 887422976,
+    "pid": 90486,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 600
+  },
+  "schema": "independent-n36-s120-saved-stream-audit-supervision-v1",
+  "source_commit": "0f7eee3a17b6743fe15549cf8aba396fa4e98a2c"
+}

@@ -1,0 +1,122 @@
+{
+  "bulk_omissions": [
+    "Native raw logs, retained in original hash-bound attempt directory",
+    "Full original/replayed readout response arrays",
+    "Full 75-probe signed difference arrays, hash-bound by temporal-comparison.json",
+    "N12 supplemental full readout arrays, hash-bound by original ancestry"
+  ],
+  "decision": "GO_numerical_specimen_fixture_only",
+  "files_excluding_this_manifest": {
+    "INDEPENDENT_REVIEW.md": {
+      "bytes": 5868,
+      "sha256": "3d490c4be33eedf9374318b98240e85574d34623c77d17dfead4c49bff036aab"
+    },
+    "PREFLIGHT.json": {
+      "bytes": 818,
+      "sha256": "c38d549a39fe136bc610bd50ac873e67ce37ec469f5d1efbce9504729c8c3d8f"
+    },
+    "RESULT.md": {
+      "bytes": 2138,
+      "sha256": "0e65c126eedd24a4ac9090bcd059984105a8646d84090d6f34512ba3eacd2561"
+    },
+    "audit.py": {
+      "bytes": 9631,
+      "sha256": "94db786ac577e9aa6223211f6419af2f9850e701d4f867ee31e8a2c2abf7c241"
+    },
+    "expected-terminal.json": {
+      "bytes": 470,
+      "sha256": "cd1e2a91c3c57f4cca6a98f47ac4c5f7e693c691ca4a8f08d622d3bed8fe5234"
+    },
+    "finish.py": {
+      "bytes": 11985,
+      "sha256": "d390c7ea0b5a0a8240e1806cffb0aa289fe0c041cc0b0641771f4364a03a53ba"
+    },
+    "independent-replay-receipt.json": {
+      "bytes": 953,
+      "sha256": "7ecab62d716fac0e55436943ccf126fd73dafb9d35c53e147b4484a0d902813c"
+    },
+    "readout-work-order.json": {
+      "bytes": 11846,
+      "sha256": "b957d6f53a84a06b6a7b0b780a5b8335876335eae4a7a677d0442e4472c62701"
+    },
+    "receipt.json": {
+      "bytes": 14106,
+      "sha256": "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4"
+    },
+    "release.json": {
+      "bytes": 18056,
+      "sha256": "1ea9f55f9d1db13cb214e8eac649713fb39b2492d0721c8bed9921d4cd886a58"
+    },
+    "replay-comparison.json": {
+      "bytes": 902,
+      "sha256": "4962ae2553d7b59348bed778c44449376d695a67887324771dfd654dd0711859"
+    },
+    "source-bindings.json": {
+      "bytes": 16810,
+      "sha256": "71261513ed519f402ecd16988a0789cd93ae9a6c58a88e00a00e74d30c92b5b7"
+    },
+    "summary.json": {
+      "bytes": 6047,
+      "sha256": "1f9c6b05809fbbeff31a6a6a62c25a54a82bc2e648d3ff486eeac0f535851421"
+    },
+    "temporal-comparison.json": {
+      "bytes": 29693,
+      "sha256": "bc54c8feb732e72dae87095b1448c2eb187ac861c447a645f5f955552e023c8d"
+    }
+  },
+  "interpretation": "Numerical specimen-fixture and frozen pairwise load-step diagnostic only; no full-study release, measured-response fit, physical validation or patient inference.",
+  "native_calls_in_independent_audit": 0,
+  "original_exact_copies": {
+    "INDEPENDENT_REVIEW.md": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/REPORT.md",
+      "sha256": "3d490c4be33eedf9374318b98240e85574d34623c77d17dfead4c49bff036aab"
+    },
+    "PREFLIGHT.json": {
+      "path": "build/hbe-v5-n36-s120-one-shot-release/PREFLIGHT.json",
+      "sha256": "c38d549a39fe136bc610bd50ac873e67ce37ec469f5d1efbce9504729c8c3d8f"
+    },
+    "audit.py": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/audit.py",
+      "sha256": "94db786ac577e9aa6223211f6419af2f9850e701d4f867ee31e8a2c2abf7c241"
+    },
+    "expected-terminal.json": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/expected-terminal.json",
+      "sha256": "cd1e2a91c3c57f4cca6a98f47ac4c5f7e693c691ca4a8f08d622d3bed8fe5234"
+    },
+    "finish.py": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/finish.py",
+      "sha256": "d390c7ea0b5a0a8240e1806cffb0aa289fe0c041cc0b0641771f4364a03a53ba"
+    },
+    "independent-replay-receipt.json": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/receipt.json",
+      "sha256": "7ecab62d716fac0e55436943ccf126fd73dafb9d35c53e147b4484a0d902813c"
+    },
+    "readout-work-order.json": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/readout-work-order.json",
+      "sha256": "b957d6f53a84a06b6a7b0b780a5b8335876335eae4a7a677d0442e4472c62701"
+    },
+    "receipt.json": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/receipt.json",
+      "sha256": "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4"
+    },
+    "release.json": {
+      "path": "build/hbe-v5-n36-s120-one-shot-release/release.json",
+      "sha256": "1ea9f55f9d1db13cb214e8eac649713fb39b2492d0721c8bed9921d4cd886a58"
+    },
+    "replay-comparison.json": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/replay-comparison.json",
+      "sha256": "4962ae2553d7b59348bed778c44449376d695a67887324771dfd654dd0711859"
+    },
+    "summary.json": {
+      "path": "build/hbe-v5-n36-s120-result-independent-v1/summary.json",
+      "sha256": "1f9c6b05809fbbeff31a6a6a62c25a54a82bc2e648d3ff486eeac0f535851421"
+    }
+  },
+  "readout_sha256": "14ca49981b0bf68df1a2a1d75489b9e8966c017635d3c4ba20a794e64a8eb18b",
+  "release_sha256": "1ea9f55f9d1db13cb214e8eac649713fb39b2492d0721c8bed9921d4cd886a58",
+  "saved_stream_replays_in_independent_audit": 1,
+  "schema": "hbe-v5-n36-s120-compact-numerical-archive-v1",
+  "source_audit_commit": "0f7eee3a17b6743fe15549cf8aba396fa4e98a2c",
+  "temporal_pair_passed": true,
+  "terminal_receipt_sha256": "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4"
+}

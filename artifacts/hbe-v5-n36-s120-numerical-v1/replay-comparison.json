@@ -1,0 +1,38 @@
+{
+  "all_top_level_keys": [
+    "applied_force_N",
+    "criteria_max_ratio",
+    "energy_J",
+    "frame_count",
+    "full_energy_work",
+    "load_coordinate_full_m",
+    "logged_sed_used_for_energy_gate",
+    "minimum_logged_J",
+    "minimum_sampled_J",
+    "native_energy_work",
+    "numerical_passed",
+    "probe_displacements_m",
+    "provenance",
+    "representation",
+    "run_id",
+    "sampled_J_positivity_is_not_everywhere_proof",
+    "schema",
+    "solver",
+    "steps"
+  ],
+  "entire_json_equal": true,
+  "frame_count": 121,
+  "native_calls": 0,
+  "numerical_passed": true,
+  "saved_outputs_after_match": true,
+  "saved_stream_replay_calls": 1,
+  "source_after_matches": true,
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}
