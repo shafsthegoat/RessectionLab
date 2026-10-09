@@ -45,12 +45,13 @@ and PAT20. Root independently rehashed every payload and confirmed unchanged
 patient-role and queue files. Anatomy and reconstruction QC are deferred; the
 new modalities remain unreviewed and do not increase patient counts or admit training.
 
-The [N12 saved-attempt replay implementation](docs/hbe-v5-n12-saved-attempt-replay.md)
-has an [independent source-only GO](artifacts/hbe-v5-n12-saved-replay-v1/SOURCE_REVIEW.md):
-7 focused tests passed independently, and the writer reports 144 HBE tests passing.
-It can recheck the immutable failed attempt using one bounded Python-only replay,
-without rerunning FEBio. Execution, the supplemental result and explicit downstream
-admission remain separate; the original failed receipt cannot become a normal pass.
+The [N12 saved numerical replay](artifacts/hbe-v5-n12-saved-replay-v1/RESULT.md)
+now has an independently audited supplemental pass: one Python worker reproduced
+all 61 saved frames byte for byte, with zero new FEBio calls. It took 2.847 seconds
+and 200,769,536 bytes peak sampled RSS. The original failed receipt and missing
+historical post-run guard observations remain explicit. Generic predecessor
+admission stays closed pending the separate exact-hash integration; no physical
+or patient validation follows from this numerical replay.
 
 The [generated-fixture limited-observation boundary](artifacts/limited-observation-boundary-v1/RESULT.md)
 is committed and has a scope-limited independent GO: 60 focused and 131

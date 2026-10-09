@@ -1,0 +1,23 @@
+{
+  "status": "supplemental_saved_attempt_numerical_pass_only",
+  "original_status_preserved": "failed_or_incomplete",
+  "original_receipt_sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2",
+  "original_release_sha256": "b9e765529e98668e8fe675b61bc7084d48efddb1f431221174801d3bfe50acad",
+  "original_source_commit": "936cf2acb13cd01a80e88d8d5791afff9cf846f3",
+  "historical_guard_gap": "Original post-run source/runtime guards were not recorded after parent packaging failure.",
+  "current_source_commit": "f335975d4ed331eb33fc9806846cc19193037c1e",
+  "release_sha256": "250961266042ffde26fb779743bbf669551b65d8b976e57df74cf80ff3018326",
+  "native_calls_attempted": 0,
+  "replay_calls_attempted": 1,
+  "frame_count": 61,
+  "replay_numerical_passed": true,
+  "comparator_admitted": false,
+  "predecessor_admitted": false,
+  "preparation_elapsed_seconds": 3.4362154591362923,
+  "receipt_sha256": "8985a0e23b5d3a3d0029c5d69b48caaa6aff54c0628e40dabd1ea33aa6f3bb24",
+  "replay_wall_seconds": 2.8474308329168707,
+  "replay_peak_sampled_rss_bytes": 200769536,
+  "closed_replay_bytes": 557392,
+  "readout_equality": "byte-for-byte with saved original",
+  "physical_validation": false
+}
