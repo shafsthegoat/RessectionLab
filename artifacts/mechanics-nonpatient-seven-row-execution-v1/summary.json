@@ -1,0 +1,85 @@
+{
+  "schema": "nonpatient-sparse-seven-row-root-comparison-v1",
+  "source_commit": "5a1dff7ade2bf56e5da3e7703a36d5f65f33813a",
+  "rows": [
+    {
+      "case_id": "n5_affine",
+      "receipt_path": "outputs/mechanics/nonpatient-n5-supervisor-v1/attempt-01/receipt.json",
+      "receipt_sha256": "9d26c0c57eefad06c53fe67b2bd64d9572778f23ed8b4356660654f88746f0ce",
+      "native_seconds": 0.5189758341293782,
+      "sampled_peak_rss_bytes": 49561600
+    },
+    {
+      "case_id": "n5_nonuniform",
+      "receipt_path": "outputs/mechanics/nonpatient-n5-nonuniform-supervisor-v1/attempt-01/receipt.json",
+      "receipt_sha256": "dae7f8f7646da5b05b048db07b6129388c754824a34396bbe9caa744b8a372e1",
+      "native_seconds": 0.5194279160350561,
+      "sampled_peak_rss_bytes": 47661056
+    },
+    {
+      "case_id": "n9_affine",
+      "receipt_path": "outputs/mechanics/nonpatient-n9-affine-supervisor-v1/attempt-01/receipt.json",
+      "receipt_sha256": "44775df0f7f04b2fdd6ec3f0ba43e595d34a07c6303142a5be1cb20d921f52b1",
+      "native_seconds": 3.649174875114113,
+      "sampled_peak_rss_bytes": 275103744
+    },
+    {
+      "case_id": "n9_nonuniform",
+      "receipt_path": "outputs/mechanics/nonpatient-sparse-continuation-v1/n9_nonuniform/attempt-01/receipt.json",
+      "receipt_sha256": "8b17186ab28fdaacafee9926fdb5c12f4eff658372d2393353a4f8112b613fce",
+      "native_seconds": 2.5596073751803488,
+      "sampled_peak_rss_bytes": 269877248
+    },
+    {
+      "case_id": "n13_affine",
+      "receipt_path": "outputs/mechanics/nonpatient-sparse-continuation-v1/n13_affine/attempt-01/receipt.json",
+      "receipt_sha256": "91af5f0f3818ac9bcc23b5d86db52250c5e7f027ce6eda8bd6456d3c1205a7f2",
+      "native_seconds": 15.906785249942914,
+      "sampled_peak_rss_bytes": 1096187904
+    },
+    {
+      "case_id": "n13_nonuniform",
+      "receipt_path": "outputs/mechanics/nonpatient-sparse-continuation-v1/n13_nonuniform/attempt-01/receipt.json",
+      "receipt_sha256": "7f4c30ac47726d00d6db729eb1f03d956625a3e86ea55cd32cb6e829a0458423",
+      "native_seconds": 17.249061124864966,
+      "sampled_peak_rss_bytes": 1086324736
+    },
+    {
+      "case_id": "n13_nonuniform_half_step",
+      "receipt_path": "outputs/mechanics/nonpatient-sparse-continuation-v1/n13_nonuniform_half_step/attempt-01/receipt.json",
+      "receipt_sha256": "d4949d98340b1a74adabdbb3eda9da9805d16e1ce7aceb630349e0793c5fc34e",
+      "native_seconds": 33.46591499983333,
+      "sampled_peak_rss_bytes": 1086308352
+    }
+  ],
+  "native_calls": 7,
+  "native_seconds": 73.8689473751001,
+  "comparison": {
+    "passed": false,
+    "checks": {
+      "field_refinement_decreases": true,
+      "reaction_refinement_decreases": true,
+      "field_n9_n13_absolute": true,
+      "reaction_n9_n13_absolute": false,
+      "field_half_step": true,
+      "reaction_half_step": true
+    },
+    "metrics": {
+      "field_n5_n9_m": 6.449353086752613e-07,
+      "field_n9_n13_m": 2.2087070515031927e-07,
+      "top_reaction_n5_n9_N": 0.0001036872384458593,
+      "top_reaction_n9_n13_N": 3.499034418910938e-05,
+      "field_n13_step_repeat_m": 4.1390622665869276e-14,
+      "top_reaction_n13_step_repeat_N": 4.315643456916829e-12
+    },
+    "scope": "Pure supplied-array numerical trend only; no provenance, solve or physical validation."
+  },
+  "physical_validation_pass": null,
+  "patient_data_used": false,
+  "independent_review": {
+    "path": "build/nonpatient-n13-half-step-result-independent/REPORT.md",
+    "sha256": "28b56f6983a1b8379173aa2ac0e9bb8702c266e9fff4753c85c23fe0f94f4732",
+    "decision": "saved_software_runs_pass_but_frozen_convergence_fails"
+  },
+  "root_comparison_sha256": "0eb7be91eb43ce8cbc8bb2aa1042ed146c1921f79c079a8997add33122303464"
+}
