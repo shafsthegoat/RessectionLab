@@ -1,0 +1,242 @@
+{
+  "initial_empty_cavity_hash": "sha256:cc01306fe032833d721d0a698b9c647c857fd24e300101cd2ffef0371f0a3d2b",
+  "interpretation": [
+    "Both STOP logits are unchanged. The action representation/ranking changes, rather than a larger STOP scalar, explain the observed argmax change algebraically.",
+    "RL common movement scores fall; three newly certified legal actions reduce the STOP preference substantially. Full actual-inventory STOP softmax must not be replaced by the prior descriptor-only figure.",
+    "Saved score decomposition does not identify which training feature or architecture change will fix transfer; no thresholds, normalization or policy outputs were changed.",
+    "The frozen source uses image/state/spacing context for STOP and context plus per-action geometry/ray features for movement. Candidate critic context does not feed the actor. Source inspection is an architectural explanation, not another learned experiment."
+  ],
+  "matching_basis": "Frozen native_spatial_task action-ID recipe: source hash, empty bool cavity digest, voxel and tool ID; every saved legal ID maps exactly. Physical matching uses tool ID plus voxel, not list position.",
+  "methods": {
+    "IL": {
+      "actual_120mm_common_actions_only_stop_softmax": 0.9520753429551746,
+      "actual_120mm_stop_logit": -22.797964096069336,
+      "actual_120mm_stop_minus_best_movement": -8.480696678161621,
+      "actual_120mm_stop_softmax": 0.00020738895219559676,
+      "common_actions": [
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:aef76798cff8dcedd394f254",
+            "logit": -26.58639144897461
+          },
+          "logit_change": -5.514684677124023,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:09ae6144e352a41f16a999a5",
+            "logit": -21.071706771850586
+          },
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:b7cee0d9f5d9f75a76e80b4f",
+            "logit": -37.29940414428711
+          },
+          "logit_change": -5.514684677124023,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:0ac38d74412b99a7d477d957",
+            "logit": -31.784719467163086
+          },
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:8f14333c6962b62c1bc6f6b1",
+            "logit": -26.38411521911621
+          },
+          "logit_change": -6.015092849731445,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:1eebda710507974cd753fcb0",
+            "logit": -20.369022369384766
+          },
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:85e89affab621cf0cc032e2f",
+            "logit": -37.097129821777344
+          },
+          "logit_change": -6.015092849731445,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:972696835dab6645f25d9085",
+            "logit": -31.0820369720459
+          },
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        }
+      ],
+      "newly_legal_actions": [
+        {
+          "action_id": "NATIVE-SPATIAL:4b276657495f584eadede150",
+          "logit": -37.120487213134766,
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+          "logit": -34.72092819213867,
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c43127b9ec672e22e768b38f",
+          "logit": -14.317267417907715,
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        }
+      ],
+      "original_stop_logit": -22.797964096069336,
+      "original_stop_softmax": 0.05565812908129722,
+      "removed_legal_actions": [],
+      "stop_logit_change": 0.0
+    },
+    "RL": {
+      "actual_120mm_common_actions_only_stop_softmax": 0.993915212294939,
+      "actual_120mm_stop_logit": -1.811178207397461,
+      "actual_120mm_stop_minus_best_movement": 0.4669985771179199,
+      "actual_120mm_stop_softmax": 0.6098444528902071,
+      "common_actions": [
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:aef76798cff8dcedd394f254",
+            "logit": -8.654942512512207
+          },
+          "logit_change": -7.276589751243591,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:09ae6144e352a41f16a999a5",
+            "logit": -1.3783527612686157
+          },
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:b7cee0d9f5d9f75a76e80b4f",
+            "logit": -8.23838996887207
+          },
+          "logit_change": -7.181717276573181,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:0ac38d74412b99a7d477d957",
+            "logit": -1.0566726922988892
+          },
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:8f14333c6962b62c1bc6f6b1",
+            "logit": -8.40686321258545
+          },
+          "logit_change": -8.051406025886536,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:1eebda710507974cd753fcb0",
+            "logit": -0.3554571866989136
+          },
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "actual_120mm": {
+            "action_id": "NATIVE-SPATIAL:85e89affab621cf0cc032e2f",
+            "logit": -7.990056037902832
+          },
+          "logit_change": -7.956279397010803,
+          "original": {
+            "action_id": "NATIVE-SPATIAL:972696835dab6645f25d9085",
+            "logit": -0.03377664089202881
+          },
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        }
+      ],
+      "newly_legal_actions": [
+        {
+          "action_id": "NATIVE-SPATIAL:4b276657495f584eadede150",
+          "logit": -7.623847007751465,
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+          "logit": -7.391876697540283,
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c43127b9ec672e22e768b38f",
+          "logit": -2.278176784515381,
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        }
+      ],
+      "original_stop_logit": -1.811178207397461,
+      "original_stop_softmax": 0.06724855189372794,
+      "removed_legal_actions": [],
+      "stop_logit_change": 0.0
+    }
+  },
+  "new_checkpoint_loads": 0,
+  "new_model_forwards": 0,
+  "new_native_previews": 0,
+  "optimizer_updates": 0,
+  "patient_files_opened": 0,
+  "scope": "saved initial logits and pure action-identity arithmetic only"
+}

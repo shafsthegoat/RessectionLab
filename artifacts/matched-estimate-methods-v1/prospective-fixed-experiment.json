@@ -1,0 +1,131 @@
+{
+  "version": "actual-tool-length-matched-generated-diagnostic-v1",
+  "status": "PROPOSED_PENDING_ROOT_REVIEW_NO_CHECKPOINT_CALLS_EXECUTED",
+  "question": "After replacing both actual tool working lengths with120 mm and recertifying every action, do frozen policies retain a useful complete sequence, stop despite positive attainable nominal value, or stop appropriately under this geometric objective?",
+  "motivation": "The preserved descriptor-only experiment changed RL256 STOP preference to99.3915%, but did not recertify longer physical tools. This diagnostic resolves that limitation before interpreting STOP behavior.",
+  "scope": "Full-information tiny generated tool-distribution diagnostic and end-to-end interface integration; NOT the primary limited-information unseen-patient experiment.",
+  "conditions_in_fixed_order": [
+    {
+      "name": "original_tools",
+      "working_lengths_mm": [
+        2.2,
+        12.0
+      ]
+    },
+    {
+      "name": "actual_120mm_tools",
+      "working_lengths_mm": [
+        120.0,
+        120.0
+      ]
+    }
+  ],
+  "unchanged": [
+    "generated9x9x7 scan",
+    "six-cell support",
+    "two-cell target",
+    "access window",
+    "all other physical tool dimensions",
+    "horizon2",
+    "geometric reward",
+    "frozen policy tensors",
+    "deterministic argmax",
+    "permitted complete observation grid"
+  ],
+  "physical_intervention": "Construct new ToolGeometry instances, then rebuild nominal native tasks and certified state-dependent action inventories. Never patch observation descriptors or reuse old action IDs/certificates.",
+  "methods_in_fixed_order": [
+    "SEARCH",
+    "IL",
+    "RL",
+    "HYBRID"
+  ],
+  "algorithms": {
+    "SEARCH": "existing observed_beam_search on permitted nominal estimates",
+    "IL": "masked deterministic argmax of fixed BC256",
+    "RL": "masked deterministic argmax of fixed scratch REINFORCE256",
+    "HYBRID": "same observed_beam_search and nominal reward, using fixed RL256 only to order all legal expansions; critic value ignored"
+  },
+  "matched_online_limits_per_method": {
+    "seconds": 10.0,
+    "native_preview_entries": 2048,
+    "search_transition_calls": 256,
+    "search_beam_width": 16
+  },
+  "search_strength": "At most12 declared tool-cell slots per state and horizon2 imply at most156 nonSTOP transition evaluations and12 first-layer survivors. The256-call/beam16 baseline can complete this finite search; actual cap/pruning flags must confirm completion before any optimality statement.",
+  "whole_run_proposed_limits": {
+    "seconds": 60.0,
+    "cpu_threads": 1,
+    "attempts": 1,
+    "automatic_retry": false,
+    "requires_existing_external_supervisor": true,
+    "sampled_worker_rss_bytes": 1073741824,
+    "rss_scope": "existing supervisor samples worker process; native execution is single-process threads"
+  },
+  "additional_training": {
+    "optimizer_updates": 0,
+    "new_teacher_generation_for_training": 0,
+    "new_checkpoint_selection": false,
+    "normalization_or_architecture_change": false
+  },
+  "frozen_checkpoints": {
+    "IL": {
+      "path": "artifacts/native-opening-bc-capacity-v1/BC-256.pt",
+      "file_sha256": "b0c3829a486f5699f466506e36397c307425bb0e609737c7b310818f24a8ce93",
+      "parameter_hash": "sha256:1c530abdc3c8c08b69dec1dad33b21976d887dcc8baa9ae6c8b84f19f35ca04b",
+      "declaration_sha256": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84",
+      "prior_optimizer_updates": 256,
+      "prior_supervised_loss_forwards": 1280,
+      "teacher": "five audited states from complete nominal search on the original generated fixture; inherited search/demonstration generation costs remain attributable"
+    },
+    "RL": {
+      "path": "artifacts/native-opening-rl-capacity-v1/RL-256.pt",
+      "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "declaration_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+      "prior_optimizer_updates": 256,
+      "prior_training_episodes": 1024,
+      "prior_collection_forwards": 1842,
+      "prior_loss_forwards": 1842,
+      "teacher_or_BC_actions_in_loss": false
+    }
+  },
+  "common_training_lineage": {
+    "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+    "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+    "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+    "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+    "real_patient_count": 0,
+    "transition_lineage": "simulator_generated",
+    "permission_basis": "Prior authorized generated opening experiments under the user's simulator-generated research experience permission; no new fit is proposed."
+  },
+  "commit_before_evaluation": "All four method slots finish as complete, abstained, or failed; each complete full physical strategy and resulting state is durably saved, then the entire planning suite is sealed. Only the separate evaluator receives a reference loader. Partial failures retain null outcomes and remain in the denominator.",
+  "independent_evaluation": "Replay committed actions using the existing native geometry checker and independent unique-cell/reward accounting. The reference is the original generated target, not patient-specific withheld anatomy. No new policy or search decision is requested during scoring.",
+  "primary_readouts": [
+    "independently audited complete geometric return",
+    "target and normal removal volumes",
+    "residual generated target",
+    "complete tool path and tool changes",
+    "retained contact",
+    "STOP versus complete sequence",
+    "search completeness and modeled regret relative to complete search"
+  ],
+  "secondary_readouts": [
+    "actor STOP-minus-best-movement score at every actually visited state",
+    "same initial permitted-observation identity within each condition",
+    "full native action/microstep/state records",
+    "actual model transitions, actor forwards and native previews",
+    "inherited training costs and separate preparation/export/evaluation work"
+  ],
+  "protected_data": {
+    "patient_files_opened": 0,
+    "heldout_patient_roles_opened": 0,
+    "training_selection_or_external_splits_changed": false
+  },
+  "claim_limits": [
+    "No rich-training advantage is established by two policies fitted on one generated fixture.",
+    "This is not acquired-anatomy generalization, clinical STOP correctness, or physical tissue validation.",
+    "Long-tool feasibility outside the source field of view remains unassessed and explicitly recorded by the existing strategy contract.",
+    "Search and hybrid may equal or outperform pure policies; that result will be preserved.",
+    "Single ordered timings do not establish deployment efficiency."
+  ]
+}

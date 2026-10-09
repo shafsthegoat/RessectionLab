@@ -1,0 +1,325 @@
+{
+  "additional_generated_replay": {
+    "all_eight_outcomes_geometry_and_physical_hashes_match": true,
+    "committed_evaluation_transitions": 15,
+    "committed_nominal_transitions": 15,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 120,
+          "raised": 0,
+          "rejected": 252,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 62,
+            "HARD_GEOMETRY:WORKING_REACH": 51,
+            "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS": 88,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 51
+          },
+          "returned": 372,
+          "returned_microsteps": 2339,
+          "seconds": 0.6229126583784819,
+          "started": 372
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "seconds": 0.8713536669965833
+  },
+  "checkpoint_decodes_by_reviewer": 0,
+  "checkpoint_file_identities": {
+    "IL": {
+      "decoded": false,
+      "file_sha256": "b0c3829a486f5699f466506e36397c307425bb0e609737c7b310818f24a8ce93",
+      "path": "artifacts/native-opening-bc-capacity-v1/BC-256.pt",
+      "prior_declaration_sha256": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84"
+    },
+    "RL": {
+      "decoded": false,
+      "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+      "path": "artifacts/native-opening-rl-capacity-v1/RL-256.pt",
+      "prior_declaration_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285"
+    }
+  },
+  "chronology_evidence": {
+    "all_saved_strategy_mtimes_precede_first_saved_evaluation_mtime": true,
+    "limit": "source order and filesystem evidence, not an authenticated external event trace",
+    "reviewed_runner_finishes_both_suites_before_any_reference_callback": true
+  },
+  "claim_limit": "Full-information tiny generated tool shift only; no patient transfer, tissue mechanics, clinical validation or demonstrated deployment efficiency; outside-FOV tool feasibility unassessed.",
+  "declaration_sha256": "24c9f9bc22ebf56b1567cd27f3c8777a55897ccfbb58606a5f4ae205d771dd60",
+  "finalized_total_bytes": 2714476,
+  "finalized_total_files": 111,
+  "metadata_count": 6,
+  "model_forwards_by_reviewer": 0,
+  "new_search_calls_by_reviewer": 0,
+  "original_indexed_bytes": 2406897,
+  "original_indexed_files": 108,
+  "output_index_coverage": {
+    "excluded_nested_metadata_inventories": [
+      "source-and-metadata-snapshot/artifacts/native-opening-bc-capacity-v1/output-sha256.json",
+      "source-and-metadata-snapshot/artifacts/native-opening-rl-capacity-v1/output-sha256.json"
+    ],
+    "excluded_root_index": "output-sha256.json",
+    "nested_inventories_validated_by_declaration_metadata_hashes": true,
+    "note": "The original runner excludes every basename output-sha256.json. Its output index covers 108 files, not every finalized file."
+  },
+  "output_index_sha256": "e4a45383759d05748c1daf7425655a34ad7dea399973a956b3bcd36ac94a61ca",
+  "recorded_microstep_count": 141,
+  "recorded_transition_count": 15,
+  "review_elapsed_seconds": 1.3555727079510689,
+  "reviewed_strategy_count": 8,
+  "rows": [
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:1eebda710507974cd753fcb0",
+        "NATIVE-SPATIAL:2283e69e5e221fbe2a61e1a1"
+      ],
+      "actor_forwards": 0,
+      "condition": "original_tools",
+      "method": "SEARCH",
+      "native_preview_entries": 108,
+      "online_seconds": 0.18523612502031028,
+      "outcomes": {
+        "complete_tool_path_length_mm": 10.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 1,
+        "total_reward": 1.0999999999999999
+      },
+      "physical_history_hash": "sha256:066677b98db4903f93208f0f0ff2f22c94bac34dcfcb80334805d0ac7d2185fd",
+      "planner_transitions": 15,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:827fc570a36a9d60c0a801bb119ad7cc35a0b414942ff9da11148c39cc29bc72",
+      "search_complete": true
+    },
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:1eebda710507974cd753fcb0",
+        "NATIVE-SPATIAL:2283e69e5e221fbe2a61e1a1"
+      ],
+      "actor_forwards": 2,
+      "condition": "original_tools",
+      "method": "IL",
+      "native_preview_entries": 72,
+      "online_seconds": 0.137350499862805,
+      "outcomes": {
+        "complete_tool_path_length_mm": 10.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 1,
+        "total_reward": 1.0999999999999999
+      },
+      "physical_history_hash": "sha256:066677b98db4903f93208f0f0ff2f22c94bac34dcfcb80334805d0ac7d2185fd",
+      "planner_transitions": 2,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:8e602d25ccf8603ead85ad1be40fef1c5ee86d22214d7068fb06581c2ba567dd",
+      "search_complete": null
+    },
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:972696835dab6645f25d9085",
+        "NATIVE-SPATIAL:fbe99c39f1e548f59eb59b95"
+      ],
+      "actor_forwards": 2,
+      "condition": "original_tools",
+      "method": "RL",
+      "native_preview_entries": 72,
+      "online_seconds": 0.12033766694366932,
+      "outcomes": {
+        "complete_tool_path_length_mm": 12.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 1,
+        "total_reward": 1.0979999999999999
+      },
+      "physical_history_hash": "sha256:a056a01e9fb12d78019a420ad77a839caedf7d28b3761302dae628e6d7594717",
+      "planner_transitions": 2,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:b41300b66fa8c9f37b011d7b7c066f79ccbfeeae03a0fad3083aa396ae7c1b46",
+      "search_complete": null
+    },
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:1eebda710507974cd753fcb0",
+        "NATIVE-SPATIAL:2283e69e5e221fbe2a61e1a1"
+      ],
+      "actor_forwards": 5,
+      "condition": "original_tools",
+      "method": "HYBRID",
+      "native_preview_entries": 108,
+      "online_seconds": 0.19126583286561072,
+      "outcomes": {
+        "complete_tool_path_length_mm": 10.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 1,
+        "total_reward": 1.0999999999999999
+      },
+      "physical_history_hash": "sha256:066677b98db4903f93208f0f0ff2f22c94bac34dcfcb80334805d0ac7d2185fd",
+      "planner_transitions": 15,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:418998a60507a43e6e2a8be7bd1958346899503a0f7c12106d098eba22d2bea8",
+      "search_complete": true
+    },
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+        "STOP"
+      ],
+      "actor_forwards": 0,
+      "condition": "actual_120mm_tools",
+      "method": "SEARCH",
+      "native_preview_entries": 144,
+      "online_seconds": 0.4056289589498192,
+      "outcomes": {
+        "complete_tool_path_length_mm": 7.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 0,
+        "total_reward": 1.163
+      },
+      "physical_history_hash": "sha256:49fb7cf668c3779aa6802c718f088b1771a89bbd9a15834070e225ce0db371e6",
+      "planner_transitions": 33,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:5469de9e74a74267c0e088b584df90cfd88431c5a1b699a109590a7a1944b42d",
+      "search_complete": true
+    },
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:c43127b9ec672e22e768b38f",
+        "STOP"
+      ],
+      "actor_forwards": 2,
+      "condition": "actual_120mm_tools",
+      "method": "IL",
+      "native_preview_entries": 72,
+      "online_seconds": 0.18771445797756314,
+      "outcomes": {
+        "complete_tool_path_length_mm": 9.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 0,
+        "total_reward": 1.161
+      },
+      "physical_history_hash": "sha256:e19a39c9756c43a177944222ef754c978a4b25a64ee1a85cce5ecf403fddd76b",
+      "planner_transitions": 2,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:df0b2aaaf98741e8e2b578d4abbe8282dd37a63e64f33058f2aab91c22dd47b9",
+      "search_complete": null
+    },
+    {
+      "action_ids": [
+        "STOP"
+      ],
+      "actor_forwards": 1,
+      "condition": "actual_120mm_tools",
+      "method": "RL",
+      "native_preview_entries": 36,
+      "online_seconds": 0.09165066597051919,
+      "outcomes": {
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0,
+        "simulated_removed_volume_mm3": 0,
+        "target_removed_mm3": 0,
+        "tool_changes": 0,
+        "total_reward": 0.0
+      },
+      "physical_history_hash": "sha256:d5642cdf90a78a3e281ee68749aa6429888e32c46c0eb2b9bf6f01354591faf8",
+      "planner_transitions": 1,
+      "seal_export_replay_transitions": 2,
+      "seal_hash": "sha256:68e98815d8d42af2ae803bb2586d4ef50a88ddf2a609bbb8a80b6e002a2c96d1",
+      "search_complete": null
+    },
+    {
+      "action_ids": [
+        "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+        "STOP"
+      ],
+      "actor_forwards": 6,
+      "condition": "actual_120mm_tools",
+      "method": "HYBRID",
+      "native_preview_entries": 144,
+      "online_seconds": 0.4116966670844704,
+      "outcomes": {
+        "complete_tool_path_length_mm": 7.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 4,
+        "simulated_removed_volume_mm3": 6,
+        "target_removed_mm3": 2,
+        "tool_changes": 0,
+        "total_reward": 1.163
+      },
+      "physical_history_hash": "sha256:49fb7cf668c3779aa6802c718f088b1771a89bbd9a15834070e225ce0db371e6",
+      "planner_transitions": 33,
+      "seal_export_replay_transitions": 4,
+      "seal_hash": "sha256:0cf131760f4a65d3d3d8ea1e72887fef3c3fd9f6cccaaedd779be2e6b0fd03a9",
+      "search_complete": true
+    }
+  ],
+  "saved_attempt_supervisor": {
+    "automatic_retry": false,
+    "cleanup_errors": [],
+    "declaration_sha256": "24c9f9bc22ebf56b1567cd27f3c8777a55897ccfbb58606a5f4ae205d771dd60",
+    "measurement_timeout_seconds": 2,
+    "returncode": 0,
+    "rss_samples": 20,
+    "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+    "sampled_peak_rss_bytes": 313311232,
+    "sampling_interval_seconds": 0.2,
+    "sampling_limit": "transient peaks between samples can be missed",
+    "seconds": 4.188548124860972,
+    "status": "complete",
+    "termination_grace_seconds": 2,
+    "termination_reason": null,
+    "timed_out": false,
+    "unresolved_worker_pid": null,
+    "worker_termination_confirmed": true
+  },
+  "saved_worker_elapsed_seconds": 2.918191917007789,
+  "source_count": 79,
+  "status": "PASS_saved_identity_arithmetic_and_committed_generated_replay",
+  "totals": {
+    "actor_forwards": 18,
+    "native_preview_entries": 756,
+    "online_seconds": 1.7308808746747673,
+    "planner_transitions": 103,
+    "seal_export_replay_transitions": 30
+  },
+  "useful_action_available_to_stopping_RL": {
+    "action_id": "NATIVE-SPATIAL:c1fe19ae288896b6973e791d",
+    "legal_nonstop_count": 7,
+    "same_observation_hash": "sha256:35370c298051ef93184addf397f1c148b460e0397707ac9e7de578b07d24643a",
+    "search_return": 1.163,
+    "stop_minus_best_movement": 0.4669985771179199
+  }
+}

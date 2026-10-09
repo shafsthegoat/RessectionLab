@@ -1,0 +1,67 @@
+--- a/scripts/preflight_real_spatial_policy.py
++++ b/scripts/preflight_real_spatial_policy.py
+@@ -321,21 +321,31 @@
+     environment = {**os.environ, "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1",
+                    "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1"}
+ 
++    cleanup_errors = []
++
+     def stop(process):
+-        if process.poll() is not None:
+-            return
+-        try:
+-            os.killpg(process.pid, signal.SIGTERM)
+-        except ProcessLookupError:
+-            return
+-        try:
+-            process.wait(timeout=2)
+-        except subprocess.TimeoutExpired:
++        # This runner owns one process with native threads. If group signaling
++        # is denied, try the owned PID; never lose the terminal receipt or wait
++        # indefinitely when both signaling routes fail.
++        for label, sig, direct in (("TERM", signal.SIGTERM, process.terminate),
++                                   ("KILL", signal.SIGKILL, process.kill)):
++            if process.poll() is not None:
++                return
+             try:
+-                os.killpg(process.pid, signal.SIGKILL)
++                os.killpg(process.pid, sig)
+             except ProcessLookupError:
+-                pass
+-            process.wait(timeout=2)
++                return
++            except OSError as error:
++                cleanup_errors.append("group_" + label + ":" + type(error).__name__ + ":" + str(error))
++                try:
++                    direct()
++                except OSError as direct_error:
++                    cleanup_errors.append("pid_" + label + ":" + type(direct_error).__name__ + ":" + str(direct_error))
++            try:
++                process.wait(timeout=2)
++                return
++            except (subprocess.TimeoutExpired, OSError) as error:
++                cleanup_errors.append("wait_" + label + ":" + type(error).__name__ + ":" + str(error))
+ 
+     with (output / "worker.log").open("w") as log:
+         process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
+@@ -367,10 +377,17 @@
+             reason = "parent_supervision_error:" + type(error).__name__ + ":" + str(error)
+         finally:
+             stop(process)
+-        code = process.wait()
++        code = process.poll()
++    if code is None:
++        reason = reason or "worker_cleanup_unconfirmed"
++    final_elapsed = time.perf_counter() - started
++    if final_elapsed >= settings["max_wall_seconds"]:
++        reason = reason or "parent_wall_budget_exceeded"
+     result = {"status": "complete" if code == 0 and reason is None else "failed",
+-        "returncode": code, "timed_out": reason == "parent_wall_budget_exceeded",
+-        "termination_reason": reason, "seconds": time.perf_counter() - started,
++        "returncode": code, "worker_termination_confirmed": code is not None,
++        "unresolved_worker_pid": process.pid if code is None else None,
++        "cleanup_errors": cleanup_errors, "timed_out": reason == "parent_wall_budget_exceeded",
++        "termination_reason": reason, "seconds": final_elapsed,
+         "sampled_peak_rss_bytes": maximum, "rss_samples": samples,
+         "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+         "sampling_interval_seconds": .2, "measurement_timeout_seconds": 2,

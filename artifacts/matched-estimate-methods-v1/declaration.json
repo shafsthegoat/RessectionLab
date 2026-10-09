@@ -1,0 +1,235 @@
+{
+  "version": "actual-tool-length-matched-generated-release-v1",
+  "proposal": {
+    "version": "actual-tool-length-matched-generated-diagnostic-v1",
+    "status": "PROPOSED_PENDING_ROOT_REVIEW_NO_CHECKPOINT_CALLS_EXECUTED",
+    "question": "After replacing both actual tool working lengths with120 mm and recertifying every action, do frozen policies retain a useful complete sequence, stop despite positive attainable nominal value, or stop appropriately under this geometric objective?",
+    "motivation": "The preserved descriptor-only experiment changed RL256 STOP preference to99.3915%, but did not recertify longer physical tools. This diagnostic resolves that limitation before interpreting STOP behavior.",
+    "scope": "Full-information tiny generated tool-distribution diagnostic and end-to-end interface integration; NOT the primary limited-information unseen-patient experiment.",
+    "conditions_in_fixed_order": [
+      {
+        "name": "original_tools",
+        "working_lengths_mm": [
+          2.2,
+          12.0
+        ]
+      },
+      {
+        "name": "actual_120mm_tools",
+        "working_lengths_mm": [
+          120.0,
+          120.0
+        ]
+      }
+    ],
+    "unchanged": [
+      "generated9x9x7 scan",
+      "six-cell support",
+      "two-cell target",
+      "access window",
+      "all other physical tool dimensions",
+      "horizon2",
+      "geometric reward",
+      "frozen policy tensors",
+      "deterministic argmax",
+      "permitted complete observation grid"
+    ],
+    "physical_intervention": "Construct new ToolGeometry instances, then rebuild nominal native tasks and certified state-dependent action inventories. Never patch observation descriptors or reuse old action IDs/certificates.",
+    "methods_in_fixed_order": [
+      "SEARCH",
+      "IL",
+      "RL",
+      "HYBRID"
+    ],
+    "algorithms": {
+      "SEARCH": "existing observed_beam_search on permitted nominal estimates",
+      "IL": "masked deterministic argmax of fixed BC256",
+      "RL": "masked deterministic argmax of fixed scratch REINFORCE256",
+      "HYBRID": "same observed_beam_search and nominal reward, using fixed RL256 only to order all legal expansions; critic value ignored"
+    },
+    "matched_online_limits_per_method": {
+      "seconds": 10.0,
+      "native_preview_entries": 2048,
+      "search_transition_calls": 256,
+      "search_beam_width": 16
+    },
+    "search_strength": "At most12 declared tool-cell slots per state and horizon2 imply at most156 nonSTOP transition evaluations and12 first-layer survivors. The256-call/beam16 baseline can complete this finite search; actual cap/pruning flags must confirm completion before any optimality statement.",
+    "whole_run_proposed_limits": {
+      "seconds": 60.0,
+      "cpu_threads": 1,
+      "attempts": 1,
+      "automatic_retry": false,
+      "requires_existing_external_supervisor": true,
+      "sampled_worker_rss_bytes": 1073741824,
+      "rss_scope": "existing supervisor samples worker process; native execution is single-process threads"
+    },
+    "additional_training": {
+      "optimizer_updates": 0,
+      "new_teacher_generation_for_training": 0,
+      "new_checkpoint_selection": false,
+      "normalization_or_architecture_change": false
+    },
+    "frozen_checkpoints": {
+      "IL": {
+        "path": "artifacts/native-opening-bc-capacity-v1/BC-256.pt",
+        "file_sha256": "b0c3829a486f5699f466506e36397c307425bb0e609737c7b310818f24a8ce93",
+        "parameter_hash": "sha256:1c530abdc3c8c08b69dec1dad33b21976d887dcc8baa9ae6c8b84f19f35ca04b",
+        "declaration_sha256": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84",
+        "prior_optimizer_updates": 256,
+        "prior_supervised_loss_forwards": 1280,
+        "teacher": "five audited states from complete nominal search on the original generated fixture; inherited search/demonstration generation costs remain attributable"
+      },
+      "RL": {
+        "path": "artifacts/native-opening-rl-capacity-v1/RL-256.pt",
+        "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+        "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+        "declaration_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+        "prior_optimizer_updates": 256,
+        "prior_training_episodes": 1024,
+        "prior_collection_forwards": 1842,
+        "prior_loss_forwards": 1842,
+        "teacher_or_BC_actions_in_loss": false
+      }
+    },
+    "common_training_lineage": {
+      "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+      "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+      "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+      "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "real_patient_count": 0,
+      "transition_lineage": "simulator_generated",
+      "permission_basis": "Prior authorized generated opening experiments under the user's simulator-generated research experience permission; no new fit is proposed."
+    },
+    "commit_before_evaluation": "All four method slots finish as complete, abstained, or failed; each complete full physical strategy and resulting state is durably saved, then the entire planning suite is sealed. Only the separate evaluator receives a reference loader. Partial failures retain null outcomes and remain in the denominator.",
+    "independent_evaluation": "Replay committed actions using the existing native geometry checker and independent unique-cell/reward accounting. The reference is the original generated target, not patient-specific withheld anatomy. No new policy or search decision is requested during scoring.",
+    "primary_readouts": [
+      "independently audited complete geometric return",
+      "target and normal removal volumes",
+      "residual generated target",
+      "complete tool path and tool changes",
+      "retained contact",
+      "STOP versus complete sequence",
+      "search completeness and modeled regret relative to complete search"
+    ],
+    "secondary_readouts": [
+      "actor STOP-minus-best-movement score at every actually visited state",
+      "same initial permitted-observation identity within each condition",
+      "full native action/microstep/state records",
+      "actual model transitions, actor forwards and native previews",
+      "inherited training costs and separate preparation/export/evaluation work"
+    ],
+    "protected_data": {
+      "patient_files_opened": 0,
+      "heldout_patient_roles_opened": 0,
+      "training_selection_or_external_splits_changed": false
+    },
+    "claim_limits": [
+      "No rich-training advantage is established by two policies fitted on one generated fixture.",
+      "This is not acquired-anatomy generalization, clinical STOP correctness, or physical tissue validation.",
+      "Long-tool feasibility outside the source field of view remains unassessed and explicitly recorded by the existing strategy contract.",
+      "Search and hybrid may equal or outperform pure policies; that result will be preserved.",
+      "Single ordered timings do not establish deployment efficiency."
+    ]
+  },
+  "proposal_sha256": "1508ed23c1acbce63c20ba92b076d580fa25ce9f7f9ba96dac6314a64ca61a32",
+  "settings": {
+    "max_wall_seconds": 60.0,
+    "max_rss_bytes": 1073741824
+  },
+  "method_budget": {
+    "search_calls": 256,
+    "beam_width": 16,
+    "method_seconds": 10.0,
+    "native_previews": 2048
+  },
+  "source_sha256": {
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "src/resectionlab/app/__init__.py": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e",
+    "src/resectionlab/app/annotation.py": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5",
+    "src/resectionlab/app/desktop.py": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96",
+    "src/resectionlab/app/refinement.py": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c",
+    "src/resectionlab/app/reslice.py": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796",
+    "src/resectionlab/app/scene.py": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b",
+    "src/resectionlab/app/slice_view.py": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367",
+    "src/resectionlab/app/style.py": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468",
+    "src/resectionlab/app/training_view.py": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1",
+    "src/resectionlab/app/workers.py": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c",
+    "src/resectionlab/brain_extraction.py": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+    "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "src/resectionlab/data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+    "src/resectionlab/desktop_bridge.py": "f900380474782e8632353c44c0e1306766fe3b4c7bdd2bbf7167255b407ff6de",
+    "src/resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/imaging.py": "e02e09de5289b2151a2869df841e66acddc90a789bd5aff9c5a9ebed81512c36",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/lausanne_sub476_component.py": "c885c0d45f21c3bb56b0aeeb20cf1a5fcf26cc3df320cfae2fcd48cf6a061867",
+    "src/resectionlab/learning.py": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12",
+    "src/resectionlab/learning_ppo.py": "327dfb09884f0a125cbbab790b66a67dad98b5e180a820ab29f2c0c358b6a1d4",
+    "src/resectionlab/limited_observation_boundary.py": "d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c",
+    "src/resectionlab/low_memory_conv3d.py": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "src/resectionlab/native_axis_accounting.py": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+    "src/resectionlab/native_axis_policy_schema.py": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+    "src/resectionlab/native_axis_refinement.py": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e",
+    "src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+    "src/resectionlab/native_functional_evaluation.py": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_refinement.py": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+    "src/resectionlab/native_resection.py": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+    "src/resectionlab/native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "src/resectionlab/native_simulation.py": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+    "src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+    "src/resectionlab/native_spatial_task.py": "3d2d050b20a208683f2b803395e0cd46afe67b12d74b5abb548b91fb6ece9764",
+    "src/resectionlab/nifti_header_records.py": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1",
+    "src/resectionlab/observed_landmark_replay.py": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/pat05_forward_diagnostic.py": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+    "src/resectionlab/planning.py": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+    "src/resectionlab/planning_budget.py": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/population_learning.py": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c",
+    "src/resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "src/resectionlab/procedural_learning.py": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "src/resectionlab/remind_header_inventory.py": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271",
+    "src/resectionlab/research_estimate_planning.py": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+    "src/resectionlab/rhuh_outcomes.py": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36",
+    "src/resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "src/resectionlab/scan_support_contract.py": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a",
+    "src/resectionlab/scan_target_adapter.py": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2",
+    "src/resectionlab/selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/spatial_task.py": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "src/resectionlab/vitaldb_observed.py": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "build/matched-estimate-methods-v1/candidate/matched_estimate_methods.py": "738bc20079aa9e50e6bef8aecea7b8cfd88b0e729ca9dc910d3bfb5ee9f450ac",
+    "build/matched-estimate-methods-v1/candidate/run_fixed_comparison.py": "c312cfb63c94e39e301915a1bfd5d1c273d5e7dfa3b0a0e265407e503f9912e1",
+    "build/matched-estimate-methods-v1/candidate/frozen_preflight_supervisor.py": "8d3db9c04e4b2e040f6b6f5bc153618f277233fb93c12c2cabdf418493e58048"
+  },
+  "metadata_sha256": {
+    "artifacts/native-opening-bc-capacity-v1/output-sha256.json": "7c4cc90b3883ec2760029d9f9d558c52980702bc7d1441a6661a743d2c35d684",
+    "artifacts/native-opening-bc-capacity-v1/RESULT.md": "018eb08d38b6bacbafe103a208fbed4d3990ee60c80aa2909add51aa486d6c2d",
+    "artifacts/native-opening-rl-capacity-v1/output-sha256.json": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d",
+    "artifacts/native-opening-rl-capacity-v1/summary.json": "f71c9d5e2c7e28692fefed904e57240c23f0fb00b7725a1fb83086bf1f4c78e8",
+    "artifacts/native-opening-rl-capacity-v1/RESULT.md": "6328a7c655848b0a28a4897c3c763b4dcabe2321c9608d5b7eec6fbd7c2dc7ad",
+    "artifacts/native-opening-length-sensitivity-v1/RESULT.md": "7c37626b8cf48fbc366be856545a36d9fa0aedb41889ea0a1e3a0c9407f3d512"
+  },
+  "supervisor_cleanup": "Existing supervisor retained in an ignored copy with bounded owned-PID fallback after group signal errors; terminal receipt reports unresolved cleanup explicitly, with no unbounded wait."
+}

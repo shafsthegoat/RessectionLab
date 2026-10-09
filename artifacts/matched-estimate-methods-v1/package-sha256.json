@@ -1,0 +1,106 @@
+{
+  "SUMMARY.txt": {
+    "bytes": 2060,
+    "sha256": "55667d5ffa8aca04f56d41db47df382fca4cd52f82e592fa5f6f709f84ba0cfb"
+  },
+  "archive-inventory.json": {
+    "bytes": 22068,
+    "sha256": "9f0e651f30b5b888c222164d33e39f528a2dc12f79b6c8262afbce73eb1f599f"
+  },
+  "attempt-01.tar.gz": {
+    "bytes": 625002,
+    "sha256": "295f288cbe142e6d70ca9fbf192ed2e987e95eadeb842b0a4f3a6304798c061f"
+  },
+  "candidate.patch": {
+    "bytes": 25829,
+    "sha256": "0f24fc166d3bd6005a303ee06a33bbc0886b321c6b00aaeaad02358830ef843e"
+  },
+  "declaration.json": {
+    "bytes": 17652,
+    "sha256": "24c9f9bc22ebf56b1567cd27f3c8777a55897ccfbb58606a5f4ae205d771dd60"
+  },
+  "logit-decomposition.json": {
+    "bytes": 7754,
+    "sha256": "9f342b65637cae46d52d37012e6f723ea3a26b7d28861025f19081dcf5f9422b"
+  },
+  "next-diagnostic.json": {
+    "bytes": 1927,
+    "sha256": "4385be5771bd386ada0c0cd69c5f0607f79b3e5b48b8b52af5f492579c7afbda"
+  },
+  "package_result.py": {
+    "bytes": 16863,
+    "sha256": "88ef55d9ff7c125c24d31714b0583ca13ae3f91f4f06efe64b77c2689a29e2a9"
+  },
+  "prospective-fixed-experiment.json": {
+    "bytes": 6977,
+    "sha256": "1508ed23c1acbce63c20ba92b076d580fa25ce9f7f9ba96dac6314a64ca61a32"
+  },
+  "reviews/postrun/REPORT.md": {
+    "bytes": 5080,
+    "sha256": "96160d91044d05ece3fb48daff6437e7595d74bef9c88a9c55acc65c91fc8b2a"
+  },
+  "reviews/postrun/actual_120mm_tools-replay.json": {
+    "bytes": 15625,
+    "sha256": "001cb8c0b8d8cf01ca935a3600b89bfb6702ccf6d359b460243dc0b892005ebd"
+  },
+  "reviews/postrun/audit.json": {
+    "bytes": 12730,
+    "sha256": "2d3909a6a4494704779ce985ab676bfffc11a5030d26ae2e6e510948216585c7"
+  },
+  "reviews/postrun/audit_saved.py": {
+    "bytes": 16603,
+    "sha256": "56d8272fa4e42835c58d141b92a433dc1dd070337d1e0bc48f332797f9a5d831"
+  },
+  "reviews/postrun/file-accounting-correction.json": {
+    "bytes": 602,
+    "sha256": "01040d85df5c791c0be12371519155bb8d65f52ad815b458e807ff1159df6dc8"
+  },
+  "reviews/postrun/original_tools-replay.json": {
+    "bytes": 15644,
+    "sha256": "98a3f7cb624e630c38dfeca7a88b71ea330823eb6d888a665711349668bb2808"
+  },
+  "reviews/postrun/package-review.json": {
+    "bytes": 2196,
+    "sha256": "3cefb372cbda9e07eff6c157876407a03fd758fda37ca9e132ff159b8fda55ae"
+  },
+  "reviews/postrun/review_package.py": {
+    "bytes": 7111,
+    "sha256": "e7285befc18c65334d0a3c446e18cfc8d1d65d86edb5b34bfa3ac79e84905e1a"
+  },
+  "reviews/release/REPORT.md": {
+    "bytes": 3132,
+    "sha256": "c270b294db1267783adcf17252b650bcee92158e43545bdb277facc374027961"
+  },
+  "reviews/release/metadata-preflight.json": {
+    "bytes": 212,
+    "sha256": "70cb8beacf844183caabf32d464732bf8fbebe03666b872321fa51517ce073f8"
+  },
+  "reviews/release/review.json": {
+    "bytes": 15550,
+    "sha256": "e49c6ad369cfff9c8c507806b19e59141ebce07b562a8d2b20d00a0341fe3381"
+  },
+  "reviews/release/tests.txt": {
+    "bytes": 99,
+    "sha256": "144204a562b40c989a13b37ca0c207b8aa993c179889e5545ee1d6667fea05f0"
+  },
+  "summary.json": {
+    "bytes": 16165,
+    "sha256": "59d2d8e4634f7a30f670da492c1f2c9d566f1a2240a4be9bc8c8b32eced7417f"
+  },
+  "supervisor-cleanup.patch": {
+    "bytes": 3340,
+    "sha256": "62fed2e7483acf5726f2e2dd182abf0cc09dd55f5254820efd2b6a8e6ac4ef67"
+  },
+  "tests/test_independent_release.py": {
+    "bytes": 5382,
+    "sha256": "bf2f5fbceb21d7ebb195e06e9f836f0ae6b3f82ba592f8b5f5088a73a6d73309"
+  },
+  "tests/test_matched_estimate_methods.py": {
+    "bytes": 11121,
+    "sha256": "623c6a59988322f361c2ceb1609b5a43884748e81ddacc341ad0b3cf53b28489"
+  },
+  "tests/test_supervisor_cleanup.py": {
+    "bytes": 3372,
+    "sha256": "9661324f5a65af393619968a55eb6f1d1537526977f5c0c63a55acb16c8e2dc5"
+  }
+}

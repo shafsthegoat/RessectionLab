@@ -1,0 +1,15 @@
+Independent audit PASS: actual tool-geometry shift on one generated six-cell fixture.
+
+                     SEARCH     IL       RL       HYBRID
+Original tools        1.100    1.100    1.098       1.100
+Both lengths 120 mm    1.163    1.161    0.000 STOP  1.163
+
+Values are independently checked geometric returns. All moving methods remove 2 mm^3 target and 4 mm^3 normal tissue. Longer-tool RL chooses immediate STOP despite seven legal movement alternatives; SEARCH/HYBRID find a one-movement solution. Search finished without pruning or budget truncation.
+
+Worker 2.9182 s; supervisor 4.1885 s; sampled peak 313311232 B; zero updates/patient reads. Eight full strategies preserve 15 transitions/141 microsteps. Postrun committed-only replay is separate review work: 0.8714 s/372 previews, no checkpoint decode, policy forward or search.
+
+Saved RL STOP score stays -1.8111782074; best long-tool movement is -2.2781767845, margin +0.4669985771. Its saved softmax STOP preference is 60.9844%, compared with 6.7249% originally. The old descriptor-only 99.39% figure is a different inventory. Matched action details are in logit-decomposition.json. These are model scores, not clinical probabilities.
+
+attempt-01.tar.gz preserves every original output/source/metadata byte. archive-inventory.json adds an exact hash for all members, including prior metadata inventories omitted by the original basename-filtered output index. Both original condition suites, eight full strategies, endpoint evaluations, budgets and lineage remain inside. Frozen checkpoint files are referenced by hash, not copied. Independent reports, tests and candidate patches are separate.
+
+This supports a negative frozen-RL tool-transfer finding on a fully observed tiny generated task. It does not establish the primary rich-training/limited-input unseen-patient hypothesis or physical/clinical validity. Outside-source-FOV feasibility remains unassessed. The next optional diagnostic is proposed separately; no new forward or retraining was performed to package or decompose the result.

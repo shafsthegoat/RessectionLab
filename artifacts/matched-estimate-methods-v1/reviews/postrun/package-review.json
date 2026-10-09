@@ -1,0 +1,55 @@
+{
+  "actual_attempt_bytes": 2714476,
+  "actual_attempt_files": 111,
+  "archive_bytes": 625002,
+  "archive_inventory_sha256": "9f0e651f30b5b888c222164d33e39f528a2dc12f79b6c8262afbce73eb1f599f",
+  "archive_sha256": "295f288cbe142e6d70ca9fbf192ed2e987e95eadeb842b0a4f3a6304798c061f",
+  "both_stop_logits_unchanged": true,
+  "common_legal_movements": 4,
+  "independent_softmax_values": {
+    "IL": {
+      "actual_120mm_common_actions_only_stop_softmax": 0.9520753429551746,
+      "actual_120mm_stop_softmax": 0.00020738895219559676,
+      "original_stop_softmax": 0.05565812908129721
+    },
+    "RL": {
+      "actual_120mm_common_actions_only_stop_softmax": 0.993915212294939,
+      "actual_120mm_stop_softmax": 0.6098444528902071,
+      "original_stop_softmax": 0.06724855189372794
+    }
+  },
+  "interpretation": "Common means matching tool ID and endpoint across altered working lengths, not identical full physical tool geometry. Restricted-four-action softmax is a saved-score subset calculation, not a new policy run or deployable action inventory. Movement scores and added feasible candidates explain the ranking arithmetic; which learned feature/training change would repair transfer is untested.",
+  "logit_decomposition_sha256": "9f342b65637cae46d52d37012e6f723ea3a26b7d28861025f19081dcf5f9422b",
+  "new_checkpoint_loads": 0,
+  "new_model_forwards": 0,
+  "new_native_previews": 0,
+  "newly_legal_move_endpoints": [
+    [
+      4,
+      4,
+      3
+    ],
+    [
+      4,
+      4,
+      4
+    ],
+    [
+      4,
+      4,
+      5
+    ]
+  ],
+  "newly_legal_movements": 3,
+  "newly_legal_tool": "short-wide-opener",
+  "original_indexed_files": 108,
+  "package_scope": "All111 archived original bytes and saved-logit decomposition checked. Final package inventory must be rebound after copying corrected reviews.",
+  "reconstructed_candidate_action_ids_per_condition": 12,
+  "removed_legal_movements": 0,
+  "source_recipe_reviewed": [
+    "frozen core.array_digest bool/shape/C-order bytes",
+    "frozen native_spatial_task fixed-lattice action-ID digest",
+    "frozen spatial_policy.forward context/STOP/movement/critic separation"
+  ],
+  "status": "PASS_archive_and_saved_logit_decomposition"
+}

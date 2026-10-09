@@ -1,0 +1,13 @@
+{
+  "added_inventory_bytes": 293225,
+  "corrected_audit_sha256": "2d3909a6a4494704779ce985ab676bfffc11a5030d26ae2e6e510948216585c7",
+  "corrected_bytes": 2714476,
+  "corrected_count": 111,
+  "new_checkpoint_loads": 0,
+  "new_model_forwards": 0,
+  "new_native_previews": 0,
+  "previous_audit_sha256": "5a641c0a6b2b668f1eb7d16ca89912a2761aad204a9d462b6736ef16dfb9cf8a",
+  "previous_bytes": 2421251,
+  "previous_count": 109,
+  "reason": "Finalized total incorrectly reused original basename-filtered output inventory; both omitted nested inventories had already passed declaration metadata validation."
+}

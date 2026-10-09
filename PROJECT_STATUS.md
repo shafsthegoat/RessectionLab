@@ -96,6 +96,15 @@ and verifies them by replay using only permitted inputs. Root integration passed
 This supports complete-strategy evaluation and replay. The saved demonstration
 is explicitly generated DEVELOPMENT evidence, with no training or patient transfer.
 
+The [frozen four-method comparison](artifacts/matched-estimate-methods-v1/RESULT.md)
+now has independent saved-strategy replay. On the tiny generated task, original
+returns were SEARCH/IL/HYBRID 1.100 and RL 1.098. With actual 120 mm tools,
+SEARCH/HYBRID scored 1.163 and IL 1.161, while RL stopped at zero despite seven
+legal movement alternatives. Eight strategies, 15 transitions and 141 microsteps
+were verified without retraining. This is a useful tool-transfer failure, not
+limited-input patient generalization or physical validation. Saved-score analysis
+is complete; a narrowly controlled feature intervention is being prepared.
+
 The [matched 64³ baseline attempt](artifacts/lazy-concat-baseline-monitor-negative-v1/RESULT.md)
 stopped before a forward pass because the process monitor could not inspect a
 short-lived PID. Host pressure stayed normal and sampled RSS peaked at 583 MB;

@@ -1,0 +1,459 @@
+{
+  "actual_original_bytes": 2714476,
+  "actual_original_files": 111,
+  "archive_sha256": "295f288cbe142e6d70ca9fbf192ed2e987e95eadeb842b0a4f3a6304798c061f",
+  "members": {
+    "attempt-01/actual_120mm_tools-evaluation.json": {
+      "bytes": 15622,
+      "sha256": "d68b915701fc184c4d494ba80efd60d064d1e2491e65fb0695ea9509ffb0bf68"
+    },
+    "attempt-01/actual_120mm_tools/HYBRID-method.json": {
+      "bytes": 26369,
+      "sha256": "3601d01782094c1ef50376b6984a11fc893ac6c31e04dcbbe199dc63f52637a6"
+    },
+    "attempt-01/actual_120mm_tools/HYBRID-strategy.json": {
+      "bytes": 20173,
+      "sha256": "129bad92c1f077453204cc6c8545e21f1f8511be358f208ce02fb6cbeeaf12fa"
+    },
+    "attempt-01/actual_120mm_tools/IL-method.json": {
+      "bytes": 29962,
+      "sha256": "4362e1f819affc73f9b0c6a4c75002609531a797badff1ff6230fcb95ad24ca0"
+    },
+    "attempt-01/actual_120mm_tools/IL-strategy.json": {
+      "bytes": 23939,
+      "sha256": "f97694173e3c6dac30fcc6856d2b66ce9d157dcf864c62d78f8cdfa59cbfc01d"
+    },
+    "attempt-01/actual_120mm_tools/RL-method.json": {
+      "bytes": 5074,
+      "sha256": "a812f0a48fc873c06b9ac866a75dd6b676ccaf129208065503d320e9af64fb42"
+    },
+    "attempt-01/actual_120mm_tools/RL-strategy.json": {
+      "bytes": 1928,
+      "sha256": "60e6ef2dd78d80dc20b0b03c3154ab97342473e5f00eb3d19d68bd93fc8b83b0"
+    },
+    "attempt-01/actual_120mm_tools/SEARCH-method.json": {
+      "bytes": 26121,
+      "sha256": "af30e12e8964363481d9c2280d508d4f032b11c6e0fcdce9b8dcc0d7f515a162"
+    },
+    "attempt-01/actual_120mm_tools/SEARCH-strategy.json": {
+      "bytes": 20173,
+      "sha256": "cfb8b42bcd0427dfcc522811ad825ff4f82604a03ce39ae161cd47833be9eff9"
+    },
+    "attempt-01/actual_120mm_tools/planning-suite.json": {
+      "bytes": 107349,
+      "sha256": "02f9fc0cefae183042807817c25d1a2286a5619f777811693f6c004d56065e31"
+    },
+    "attempt-01/declaration-input.json": {
+      "bytes": 17652,
+      "sha256": "24c9f9bc22ebf56b1567cd27f3c8777a55897ccfbb58606a5f4ae205d771dd60"
+    },
+    "attempt-01/original_tools-evaluation.json": {
+      "bytes": 15646,
+      "sha256": "e20a1f852fc1868f427337797967ddf9c56f31b8fe67720e3d94a1fda55b79f3"
+    },
+    "attempt-01/original_tools/HYBRID-method.json": {
+      "bytes": 34512,
+      "sha256": "b24542da17afe2c8dc9bc94e831a32239cdaa7a32b71e34d26a7f20bc4a5bdd0"
+    },
+    "attempt-01/original_tools/HYBRID-strategy.json": {
+      "bytes": 27546,
+      "sha256": "d3a78aefbc9a3f78beb1d343ab54677f36881518fcb1c2fa8ba057b66656d59f"
+    },
+    "attempt-01/original_tools/IL-method.json": {
+      "bytes": 34049,
+      "sha256": "3d44d5afd276105709c31cb25b29a6b3f5faaa0947151d02cd97839ee727034f"
+    },
+    "attempt-01/original_tools/IL-strategy.json": {
+      "bytes": 27541,
+      "sha256": "3050c6b9bfa37bcfc1a7ec80ae8b1a902e485d6ecc5189461b819e7325f64597"
+    },
+    "attempt-01/original_tools/RL-method.json": {
+      "bytes": 38055,
+      "sha256": "e555d55d3a744901f301ec4e1e6aeb283a6e56d1bef4849efb933e39b600df0d"
+    },
+    "attempt-01/original_tools/RL-strategy.json": {
+      "bytes": 31292,
+      "sha256": "79c94c9ebd8c0a3f9ea11980c4cdb269db765c73bfd118951d2f2ef390903e75"
+    },
+    "attempt-01/original_tools/SEARCH-method.json": {
+      "bytes": 34263,
+      "sha256": "8b09771490f98f1b93507368266dd84a99f3bd7030d099a2d6670106771a92f6"
+    },
+    "attempt-01/original_tools/SEARCH-strategy.json": {
+      "bytes": 27546,
+      "sha256": "80c1cc01067b9c7c83f0557f89e742426f7b1f2d567d999b01ffd3569c661fde"
+    },
+    "attempt-01/original_tools/planning-suite.json": {
+      "bytes": 170697,
+      "sha256": "0ab5032078e36e111cf97a39e57969fc0de3f4bdc97b4ee468732cff75ecb074"
+    },
+    "attempt-01/output-sha256.json": {
+      "bytes": 14354,
+      "sha256": "e4a45383759d05748c1daf7425655a34ad7dea399973a956b3bcd36ac94a61ca"
+    },
+    "attempt-01/result.json": {
+      "bytes": 35782,
+      "sha256": "92b9653c76b685ba3e9a54d91d7de3bdae6fdb3e1604dd5233d52d09d2cc1854"
+    },
+    "attempt-01/source-and-metadata-snapshot/artifacts/native-opening-bc-capacity-v1/RESULT.md": {
+      "bytes": 2127,
+      "sha256": "018eb08d38b6bacbafe103a208fbed4d3990ee60c80aa2909add51aa486d6c2d"
+    },
+    "attempt-01/source-and-metadata-snapshot/artifacts/native-opening-bc-capacity-v1/output-sha256.json": {
+      "bytes": 5700,
+      "sha256": "7c4cc90b3883ec2760029d9f9d558c52980702bc7d1441a6661a743d2c35d684"
+    },
+    "attempt-01/source-and-metadata-snapshot/artifacts/native-opening-length-sensitivity-v1/RESULT.md": {
+      "bytes": 2350,
+      "sha256": "7c37626b8cf48fbc366be856545a36d9fa0aedb41889ea0a1e3a0c9407f3d512"
+    },
+    "attempt-01/source-and-metadata-snapshot/artifacts/native-opening-rl-capacity-v1/RESULT.md": {
+      "bytes": 3202,
+      "sha256": "6328a7c655848b0a28a4897c3c763b4dcabe2321c9608d5b7eec6fbd7c2dc7ad"
+    },
+    "attempt-01/source-and-metadata-snapshot/artifacts/native-opening-rl-capacity-v1/output-sha256.json": {
+      "bytes": 287525,
+      "sha256": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d"
+    },
+    "attempt-01/source-and-metadata-snapshot/artifacts/native-opening-rl-capacity-v1/summary.json": {
+      "bytes": 9042,
+      "sha256": "f71c9d5e2c7e28692fefed904e57240c23f0fb00b7725a1fb83086bf1f4c78e8"
+    },
+    "attempt-01/source-and-metadata-snapshot/build/matched-estimate-methods-v1/candidate/frozen_preflight_supervisor.py": {
+      "bytes": 23824,
+      "sha256": "8d3db9c04e4b2e040f6b6f5bc153618f277233fb93c12c2cabdf418493e58048"
+    },
+    "attempt-01/source-and-metadata-snapshot/build/matched-estimate-methods-v1/candidate/matched_estimate_methods.py": {
+      "bytes": 14048,
+      "sha256": "738bc20079aa9e50e6bef8aecea7b8cfd88b0e729ca9dc910d3bfb5ee9f450ac"
+    },
+    "attempt-01/source-and-metadata-snapshot/build/matched-estimate-methods-v1/candidate/run_fixed_comparison.py": {
+      "bytes": 10764,
+      "sha256": "c312cfb63c94e39e301915a1bfd5d1c273d5e7dfa3b0a0e265407e503f9912e1"
+    },
+    "attempt-01/source-and-metadata-snapshot/scripts/preflight_real_spatial_policy.py": {
+      "bytes": 22680,
+      "sha256": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/anatomy.py": {
+      "bytes": 13915,
+      "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/__init__.py": {
+      "bytes": 324,
+      "sha256": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/annotation.py": {
+      "bytes": 1579,
+      "sha256": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/desktop.py": {
+      "bytes": 52112,
+      "sha256": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/refinement.py": {
+      "bytes": 10623,
+      "sha256": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/reslice.py": {
+      "bytes": 3963,
+      "sha256": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/scene.py": {
+      "bytes": 10251,
+      "sha256": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/slice_view.py": {
+      "bytes": 4846,
+      "sha256": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/style.py": {
+      "bytes": 3687,
+      "sha256": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/training_view.py": {
+      "bytes": 6651,
+      "sha256": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/app/workers.py": {
+      "bytes": 1692,
+      "sha256": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/brain_extraction.py": {
+      "bytes": 23276,
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/cohort.py": {
+      "bytes": 14491,
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/core.py": {
+      "bytes": 30914,
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/data_policy.py": {
+      "bytes": 7928,
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/desktop_bridge.py": {
+      "bytes": 90561,
+      "sha256": "f900380474782e8632353c44c0e1306766fe3b4c7bdd2bbf7167255b407ff6de"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/diffusion.py": {
+      "bytes": 22180,
+      "sha256": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/evaluation.py": {
+      "bytes": 60912,
+      "sha256": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/experimental_capsule_cache.py": {
+      "bytes": 11590,
+      "sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/functional_events.py": {
+      "bytes": 23198,
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/functional_evidence.py": {
+      "bytes": 11698,
+      "sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/geometry.py": {
+      "bytes": 31204,
+      "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/imaging.py": {
+      "bytes": 41897,
+      "sha256": "e02e09de5289b2151a2869df841e66acddc90a789bd5aff9c5a9ebed81512c36"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/independent_geometry_batch.py": {
+      "bytes": 9799,
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/lausanne_sub476_component.py": {
+      "bytes": 10954,
+      "sha256": "c885c0d45f21c3bb56b0aeeb20cf1a5fcf26cc3df320cfae2fcd48cf6a061867"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/learning.py": {
+      "bytes": 51360,
+      "sha256": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/learning_ppo.py": {
+      "bytes": 25323,
+      "sha256": "327dfb09884f0a125cbbab790b66a67dad98b5e180a820ab29f2c0c358b6a1d4"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/limited_observation_boundary.py": {
+      "bytes": 19777,
+      "sha256": "d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/low_memory_conv3d.py": {
+      "bytes": 7119,
+      "sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/mechanics_landmarks.py": {
+      "bytes": 22280,
+      "sha256": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_access_preparation.py": {
+      "bytes": 12234,
+      "sha256": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_axis_accounting.py": {
+      "bytes": 32191,
+      "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_axis_policy_schema.py": {
+      "bytes": 4443,
+      "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_axis_refinement.py": {
+      "bytes": 17552,
+      "sha256": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_axis_simulation.py": {
+      "bytes": 24485,
+      "sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_functional_evaluation.py": {
+      "bytes": 12986,
+      "sha256": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_ingress.py": {
+      "bytes": 12447,
+      "sha256": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_proposals.py": {
+      "bytes": 33903,
+      "sha256": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_refinement.py": {
+      "bytes": 34315,
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_resection.py": {
+      "bytes": 27879,
+      "sha256": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_routes.py": {
+      "bytes": 8680,
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_simulation.py": {
+      "bytes": 34916,
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_spatial_evaluation.py": {
+      "bytes": 9818,
+      "sha256": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/native_spatial_task.py": {
+      "bytes": 59280,
+      "sha256": "3d2d050b20a208683f2b803395e0cd46afe67b12d74b5abb548b91fb6ece9764"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/nifti_header_records.py": {
+      "bytes": 2533,
+      "sha256": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/observed_landmark_replay.py": {
+      "bytes": 11508,
+      "sha256": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/observed_search.py": {
+      "bytes": 12955,
+      "sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/pat05_forward_diagnostic.py": {
+      "bytes": 19560,
+      "sha256": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/planning.py": {
+      "bytes": 31212,
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/planning_budget.py": {
+      "bytes": 11579,
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/policy_inputs.py": {
+      "bytes": 3294,
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/population_learning.py": {
+      "bytes": 25672,
+      "sha256": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/preprocessing.py": {
+      "bytes": 17223,
+      "sha256": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/prior_proposals.py": {
+      "bytes": 27458,
+      "sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/prior_registration.py": {
+      "bytes": 21175,
+      "sha256": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/procedural_learning.py": {
+      "bytes": 40198,
+      "sha256": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/real_patient_learning.py": {
+      "bytes": 7420,
+      "sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/remind_header_inventory.py": {
+      "bytes": 15666,
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/research_estimate_planning.py": {
+      "bytes": 30612,
+      "sha256": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/rhuh_outcomes.py": {
+      "bytes": 13611,
+      "sha256": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/route_native_diagnostics.py": {
+      "bytes": 3685,
+      "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/scan_support_contract.py": {
+      "bytes": 2923,
+      "sha256": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/scan_target_adapter.py": {
+      "bytes": 32454,
+      "sha256": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/selection_contract.py": {
+      "bytes": 1927,
+      "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/simulation.py": {
+      "bytes": 47076,
+      "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/spatial_multiscale_views.py": {
+      "bytes": 30061,
+      "sha256": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/spatial_observations.py": {
+      "bytes": 24866,
+      "sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/spatial_policy.py": {
+      "bytes": 22722,
+      "sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/spatial_policy_diagnostics.py": {
+      "bytes": 20387,
+      "sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/spatial_task.py": {
+      "bytes": 25313,
+      "sha256": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/vitaldb_observed.py": {
+      "bytes": 28501,
+      "sha256": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be"
+    },
+    "attempt-01/source-and-metadata-snapshot/src/resectionlab/worlds.py": {
+      "bytes": 20428,
+      "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "attempt-01/supervisor-progress.json": {
+      "bytes": 238,
+      "sha256": "bf7c21cedf0ee910be8e7e70da38b4dc652df54b495b503d83e8262a972cab02"
+    },
+    "attempt-01/supervisor.json": {
+      "bytes": 669,
+      "sha256": "53cd5a3ffa86289d56e8be58dc057a09d3774eaa437265cbf4ca22bb87908bed"
+    },
+    "attempt-01/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "not_in_original_output_index": [
+    "output-sha256.json",
+    "source-and-metadata-snapshot/artifacts/native-opening-bc-capacity-v1/output-sha256.json",
+    "source-and-metadata-snapshot/artifacts/native-opening-rl-capacity-v1/output-sha256.json"
+  ],
+  "note": "All archive members match exact original bytes. The original output index excludes all files named output-sha256.json; its two nested prior metadata inventories are separately bound by declaration.metadata_sha256.",
+  "original_index_sha256": "e4a45383759d05748c1daf7425655a34ad7dea399973a956b3bcd36ac94a61ca",
+  "original_indexed_files": 108
+}

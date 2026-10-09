@@ -1,0 +1,20 @@
+{
+  "bounded_intervention": "One frozen RL forward on a diagnostic copy of the already generated actual-long initial observation: replace only the seven movement working-length features with each tool's original 2.2/12 mm value. Keep actual-long legal inventory, order, masks, other geometry/rays, state, image, weights and normalization fixed. Compare all seven logits with saved actual-long logits; STOP must remain identical. Do not execute these descriptor-modified actions or score a resulting strategy.",
+  "budget_if_root_approves": {
+    "automatic_retry": false,
+    "cpu_threads": 1,
+    "new_IL_forwards": 0,
+    "new_RL_forwards": 1,
+    "optimizer_updates": 0,
+    "patient_files_opened": 0,
+    "sampled_worker_rss_bytes": 1073741824,
+    "search_calls": 0,
+    "supervised_wall_seconds": 20
+  },
+  "interpretation": "Feature intervention diagnoses representation sensitivity only. It cannot validate fake short descriptors for actual long tools, serve as a policy repair, establish calibrated abstention, or replace limited-input unseen-patient evaluation.",
+  "optional_next_question": "Does the actual-long root movement-score change reside in the working-length geometry feature for the seven certified moves?",
+  "preparation_limit": "Reusing a certified generated actual-long observation may require bounded reconstruction previews; those must be declared/counted separately before release. This proposal is not yet a runnable approved declaration.",
+  "priority": "Primary progress remains real scan-derived limited-input planning with protected splits and independent full-history scoring. This tiny diagnostic need not delay patient-model preprocessing or mechanics validation.",
+  "smallest_step_completed": "Saved-only physical action matching and logit decomposition in logit-decomposition.json; zero native/model calls.",
+  "status": "proposal_only_no_additional_checkpoint_call_authorized_or_run"
+}
