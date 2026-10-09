@@ -1,0 +1,86 @@
+{
+  "schema": "resect-case4-v4-fidelity-witness-execution-v1",
+  "recorded_utc": "2026-10-09T03:22:05.134465+00:00",
+  "status": "completed_saved_geometry_diagnostic_only",
+  "source_commit": "6338f22d6e6660eca7f71cfaa696dbf022fa92f7",
+  "release_sha256": "10cee8e6be8723e4b35d33570b982af065b024d0beceb18f158692fa3feeb174",
+  "original_2mm_gate": "failed_unchanged",
+  "query_count": 1193462,
+  "source_to_mesh": {
+    "sample_count": 1027230,
+    "maximum_sample_distance_m": 0.0038691925286687217,
+    "full_surface_upper_bound_m": 0.004576299339337691
+  },
+  "mesh_to_source": {
+    "sample_count": 151644,
+    "maximum_sample_distance_m": 0.002263557449021836,
+    "full_surface_upper_bound_m": 0.003253715834290842
+  },
+  "witness_faces": {
+    "source_to_mesh": {
+      "face_count": 535,
+      "whole_face_area_fraction": 0.0028787626923893563,
+      "connected_components": 16
+    },
+    "mesh_to_source": {
+      "face_count": 5,
+      "whole_face_area_fraction": 0.0013130645094937604,
+      "connected_components": 5
+    }
+  },
+  "localization": {
+    "status": "local_refinement_premise_falsified_at_fixed_scale",
+    "best_cube_capture_fractions": {
+      "source_to_mesh": 0.2525150270837133,
+      "mesh_to_source": 0.45522831125567054
+    },
+    "whole_witness_face_area_fractions": {
+      "source_to_mesh": 0.0028787626923893563,
+      "mesh_to_source": 0.0013130645094937604
+    },
+    "scope": "30 mm cube on absolute 5 mm RAS grid, half-open; entire-face/centroid proxy only"
+  },
+  "probes": {
+    "boundary_corners": {
+      "count": 2428,
+      "maximum_m": 2.7755575615628914e-17,
+      "over_2mm": 0
+    },
+    "boundary_straight_midsides": {
+      "count": 7284,
+      "maximum_m": 0.0019939985530939936,
+      "over_2mm": 0
+    },
+    "boundary_face_centroids": {
+      "count": 4856,
+      "maximum_m": 0.0023146214395262286,
+      "over_2mm": 2
+    }
+  },
+  "resources": {
+    "supervised_seconds": 3.4754381661769003,
+    "sampled_peak_process_group_rss_bytes": 260177920,
+    "output_files": 6,
+    "output_bytes": 2113135,
+    "worker_exit_code": 0,
+    "kill_reason": null
+  },
+  "candidate_accepted": false,
+  "mesher_calls": 0,
+  "solver_calls": 0,
+  "retries": 0,
+  "anatomical_registration_accepted": false,
+  "clinical_validation": false,
+  "B_or_V_motion_accessed": false,
+  "duringUS_or_before_during_tag_opened": false,
+  "raw_private_output_sha256": {
+    "report.json": "119c2a325aca7af0a692b67e8c6f39c8d9fc9188de5590f334037caa288e8e86",
+    "per-triangle-diagnostics.npz": "16a38f0441360f5de8af2417688f1241ba6857976f481bc8fe9c6f4eccbaf3b2",
+    "acceptance.json": "9aaab2b69004514d907af7f5e489b20e204805ea60454e1f887442b09caee844"
+  },
+  "limitations": [
+    "Independent audit recomputed saved-array aggregates, not the full VTK distance oracle.",
+    "Whole-face/centroid localization is a proxy at fixed 30 mm cube scale.",
+    "The v4 patient-derived mesh remains rejected; no displacement/force/cutting/injury/clinical evidence or solver admission."
+  ]
+}

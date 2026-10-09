@@ -114,6 +114,12 @@ maxima 3.869/2.264 mm. No solve ran. Case4 V outcomes were previously
 revealed, limiting any later FEM comparison to retrospective development.
 The first catalogued evaluation-role full before/during landmark pair is
 Case19, whose payload, frame and eligibility gates remain unopened.
+The [one v4 saved-mesh fidelity witness](../artifacts/mechanics/resect-case4-v4-fidelity-witness-execution-v1/RESULT.md)
+replayed the failed 2 mm gate without remeshing or solving. Its predeclared
+30 mm localization rule failed (best joint-cube capture 25.25%/45.52% versus
+80% required in both directions); the estimated Case4 source anatomy and
+patient-size solver remain unqualified. This is a negative DEVELOPMENT
+engineering result, not observed tissue deformation or clinical evidence.
 
 ## Acquisition, QC and mechanics checkpoint, October 9 at 01:18 UTC (historical)
 

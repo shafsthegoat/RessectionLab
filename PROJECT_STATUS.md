@@ -133,12 +133,17 @@ known inferior/cerebellar exclusions; MRI-to-US local alignment, source-point
 support in the mask, and retained-tissue anatomical suitability are unaccepted.
 Saved-mesh error localization can diagnose the rejected candidate, but a new
 mesh or FEM run waits on these source and sparse-solver gates.
-The [unreleased v4 saved-geometry witness preparation](artifacts/mechanics/resect-case4-v4-fidelity-witness-preparation-v1/RESULT.md)
+The [v4 saved-geometry witness preparation](artifacts/mechanics/resect-case4-v4-fidelity-witness-preparation-v1/RESULT.md)
 passed 186 adjacent controls and ten independent isolated checks after two
-launcher safeguards were repaired. It would replay the original rejected
-2 mm fidelity result and test whether boundary errors are spatially
-concentrated. No saved patient array has been opened for this diagnostic;
-its execution needs a separate exact-source release and private audit.
+launcher safeguards were repaired. Before release, it fixed exact replay of
+the rejected 2 mm result and a spatial-concentration rule without opening
+saved patient arrays.
+That [one released private diagnostic](artifacts/mechanics/resect-case4-v4-fidelity-witness-execution-v1/RESULT.md)
+completed with exact replay and independent saved-output review. Its fixed
+30 mm cube captured only 25.25%/45.52% of the two directions' exceeding
+whole-face area, below the prospectively required 80% each. Thus the single
+local-refinement premise fails at that scale. The 2 mm mesh gate still fails,
+and no further Case4 mesh, mechanics solve or clinical admission follows.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
