@@ -1,0 +1,780 @@
+{
+  "copy_verification": "all copied source/JSON bytes, lengths and SHA256 compared with saved originals",
+  "destination": "artifacts/obstruction-opening-learning-rl8-v1",
+  "file_count": 110,
+  "files": [
+    {
+      "bytes": 3331,
+      "kind": "derived_from_packaged_evidence",
+      "path": "README.md",
+      "sha256": "141328b1b5943e7cd450b0d6ab7ecb15ee141b5415aba484ab150f33cfed4544",
+      "source_path": null
+    },
+    {
+      "bytes": 1560,
+      "kind": "exact_copy",
+      "path": "RL/update-01/ReMIND-008/gradient-contribution.json",
+      "sha256": "596b963567a888755df4dc47d341fcc1a4c0f99f365ac385b785b1b20779ef21",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-01/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 9499,
+      "kind": "exact_copy",
+      "path": "RL/update-01/ReMIND-010/gradient-contribution.json",
+      "sha256": "60a8a9749f5334bb9af77109184face31deefa80b1331d725fe5a98773f815af",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-01/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 18963,
+      "kind": "exact_copy",
+      "path": "RL/update-01/ReMIND-020/gradient-contribution.json",
+      "sha256": "70557c366f3dd693f1e2bdfb9179bf6c651a4f56f50962b3b8258e773e8b9652",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-01/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 9480,
+      "kind": "exact_copy",
+      "path": "RL/update-01/ReMIND-025/gradient-contribution.json",
+      "sha256": "5c71bcc56ac7b366f046a78002cb884544ed1e8863e6af47b7df8a93d4868498",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-01/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1764,
+      "kind": "exact_copy",
+      "path": "RL/update-01/update.json",
+      "sha256": "fd489bb4ecf778e0ff44a4b460a375e583ceb1906ef9ec420157b4a3a40f77e6",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-01/update.json"
+    },
+    {
+      "bytes": 9502,
+      "kind": "exact_copy",
+      "path": "RL/update-02/ReMIND-008/gradient-contribution.json",
+      "sha256": "bf1dcf9886baa22a4d9e43042112e5aea692e9ad7ae1bda3da531dd439ae8399",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-02/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 17427,
+      "kind": "exact_copy",
+      "path": "RL/update-02/ReMIND-010/gradient-contribution.json",
+      "sha256": "4a4cf92265e688b7ec13ed3cb88c2d253eaff2702a0dd713b525854bd5250f52",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-02/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 1563,
+      "kind": "exact_copy",
+      "path": "RL/update-02/ReMIND-020/gradient-contribution.json",
+      "sha256": "379d906e7fde378d6781fa212530461f72c4cd7d7029cdb02dd3761b42e7fa09",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-02/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 15063,
+      "kind": "exact_copy",
+      "path": "RL/update-02/ReMIND-025/gradient-contribution.json",
+      "sha256": "a4a5c4da7303252a5dd8793da923f4efe7ed10074fecd1bc3b0c7ed3c8ba5bd6",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-02/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1763,
+      "kind": "exact_copy",
+      "path": "RL/update-02/update.json",
+      "sha256": "5bbeb61984fa61d35faf06892026eeeb02b570d4d125d20d14aa1984a402b6e5",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-02/update.json"
+    },
+    {
+      "bytes": 3953,
+      "kind": "exact_copy",
+      "path": "RL/update-03/ReMIND-008/gradient-contribution.json",
+      "sha256": "5ba75d505a9a765704972d532efac4dcdff77fc1f5a436ea2fb3a0e03ff54b83",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-03/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 19856,
+      "kind": "exact_copy",
+      "path": "RL/update-03/ReMIND-010/gradient-contribution.json",
+      "sha256": "94e3ab8b92105559bc7a01b8791b512b05db16671057c79fb8bff6f98fd0061d",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-03/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 11877,
+      "kind": "exact_copy",
+      "path": "RL/update-03/ReMIND-020/gradient-contribution.json",
+      "sha256": "bbad2b8c542f7f2db3f6f2089a8348fa279f7ba185f1fb377a99c24ad2b29719",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-03/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 10310,
+      "kind": "exact_copy",
+      "path": "RL/update-03/ReMIND-025/gradient-contribution.json",
+      "sha256": "e427a70c3e09f36efa3209beefda22c130bd3b81237622252e52c1c8c65bfee4",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-03/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1762,
+      "kind": "exact_copy",
+      "path": "RL/update-03/update.json",
+      "sha256": "0610e6be3367a90a6151c67ab9e8fa3da7aba5defc3d55f74e7dd91d3ab4a64e",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-03/update.json"
+    },
+    {
+      "bytes": 19054,
+      "kind": "exact_copy",
+      "path": "RL/update-04/ReMIND-008/gradient-contribution.json",
+      "sha256": "ac3686356389cd0619ec4bd81234d63c4de477a7d9c3f3195889efa894ac4953",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-04/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 14281,
+      "kind": "exact_copy",
+      "path": "RL/update-04/ReMIND-010/gradient-contribution.json",
+      "sha256": "acd83fa31fa770b5ec835efd40365cdba6ae59262de4cd08c0d127f75fb4e592",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-04/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 11097,
+      "kind": "exact_copy",
+      "path": "RL/update-04/ReMIND-020/gradient-contribution.json",
+      "sha256": "ca3a3c82b9a5e787bcae2f76bc03513e929286f3baf0e858644dfb84507f1e44",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-04/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 2379,
+      "kind": "exact_copy",
+      "path": "RL/update-04/ReMIND-025/gradient-contribution.json",
+      "sha256": "1f70e94966f212f6a3b4062cacc0e409ccf024b5a6e76144e79835afbf6dfdb9",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-04/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1766,
+      "kind": "exact_copy",
+      "path": "RL/update-04/update.json",
+      "sha256": "cd4a11c9837b1e7e827024015beef1756780b4080f1d1bfc360d0fc0e61b83a9",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-04/update.json"
+    },
+    {
+      "bytes": 3947,
+      "kind": "exact_copy",
+      "path": "RL/update-05/ReMIND-008/gradient-contribution.json",
+      "sha256": "62bcf4c3439bd9ef763dffc878f0f1add170579b23a0af860119f53d813d0d51",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-05/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 10299,
+      "kind": "exact_copy",
+      "path": "RL/update-05/ReMIND-010/gradient-contribution.json",
+      "sha256": "8b79f18529582b8f2b22a67a75bd4953dbfb746b95e677f6cb756cae7295023f",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-05/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 5547,
+      "kind": "exact_copy",
+      "path": "RL/update-05/ReMIND-020/gradient-contribution.json",
+      "sha256": "ec35dfc8d1a05181e43ed364a04339cedd9d2f7461c6a0d8188dff1fe9e5f3f3",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-05/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 13475,
+      "kind": "exact_copy",
+      "path": "RL/update-05/ReMIND-025/gradient-contribution.json",
+      "sha256": "e798096c14872f39b5c8f2e3f2629a47d3cc401003b1fff0fc87b40b72df19df",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-05/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1762,
+      "kind": "exact_copy",
+      "path": "RL/update-05/update.json",
+      "sha256": "e01dc622656401d755975e8290459cd328a83390bb9143f76baaae6be73c4937",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-05/update.json"
+    },
+    {
+      "bytes": 4775,
+      "kind": "exact_copy",
+      "path": "RL/update-06/ReMIND-008/gradient-contribution.json",
+      "sha256": "841793a8f9cccae4d96064cf4257dc42fd4b99ce52a7b9fdfb8b0e583cabd655",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-06/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 6338,
+      "kind": "exact_copy",
+      "path": "RL/update-06/ReMIND-010/gradient-contribution.json",
+      "sha256": "b09103910bd4efab65592c4011d0a2b775be1830fd9c0dcdda906da4c7f96a7d",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-06/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 3163,
+      "kind": "exact_copy",
+      "path": "RL/update-06/ReMIND-020/gradient-contribution.json",
+      "sha256": "44e1ef6a4f4285ce91d63f76f481bfd16c8b65de7a168ee2253e113c365299c4",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-06/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 3176,
+      "kind": "exact_copy",
+      "path": "RL/update-06/ReMIND-025/gradient-contribution.json",
+      "sha256": "9e92e34a942720d1e5c28f84c1e2fba0b0ea9a8619ef5ca0ad82e6a03d738187",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-06/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1767,
+      "kind": "exact_copy",
+      "path": "RL/update-06/update.json",
+      "sha256": "dc7dd0507460bc564ba6d4d3e29131d0f5482a8431c94f06699dfc251056969b",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-06/update.json"
+    },
+    {
+      "bytes": 3969,
+      "kind": "exact_copy",
+      "path": "RL/update-07/ReMIND-008/gradient-contribution.json",
+      "sha256": "bde895acef9cd0eadea663ddeae61eed15a9a4e360c99b68b8f5a29d95ebb81f",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-07/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 3161,
+      "kind": "exact_copy",
+      "path": "RL/update-07/ReMIND-010/gradient-contribution.json",
+      "sha256": "9e93fbc10bf888f96f9929e0e3114a3cf7bdc056d26e53c90ade506a1359a4e2",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-07/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 3957,
+      "kind": "exact_copy",
+      "path": "RL/update-07/ReMIND-020/gradient-contribution.json",
+      "sha256": "cf3230125b060df2c4bd66fddbf8ded684b72abdee1976a840dac6c5df82ccc8",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-07/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 7126,
+      "kind": "exact_copy",
+      "path": "RL/update-07/ReMIND-025/gradient-contribution.json",
+      "sha256": "bd921bc338416c9d3c3450223c96d5c66864c5e5418922cdf40450be4307de17",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-07/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1763,
+      "kind": "exact_copy",
+      "path": "RL/update-07/update.json",
+      "sha256": "ac3fca7ebfc8491adc8d05122188b71def0873eb64e480943afc55408647bacc",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-07/update.json"
+    },
+    {
+      "bytes": 19013,
+      "kind": "exact_copy",
+      "path": "RL/update-08/ReMIND-008/gradient-contribution.json",
+      "sha256": "e763677efa4052c725aff15542abaa1a302bc76f220cb4d631f06cbe0d94606b",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-08/ReMIND-008/gradient-contribution.json"
+    },
+    {
+      "bytes": 7120,
+      "kind": "exact_copy",
+      "path": "RL/update-08/ReMIND-010/gradient-contribution.json",
+      "sha256": "24cf61dafb60cdd6c343c2ec4b561e12ddb8eaa665c534fad2e55cc1d450bd1f",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-08/ReMIND-010/gradient-contribution.json"
+    },
+    {
+      "bytes": 6336,
+      "kind": "exact_copy",
+      "path": "RL/update-08/ReMIND-020/gradient-contribution.json",
+      "sha256": "0b1b585c1a69eaced856abeac92fbd6dc5408c670cc1261b9e334c7f51f4b125",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-08/ReMIND-020/gradient-contribution.json"
+    },
+    {
+      "bytes": 1555,
+      "kind": "exact_copy",
+      "path": "RL/update-08/ReMIND-025/gradient-contribution.json",
+      "sha256": "66449feb2e953bf4848cb8e065573f4e6bfc28ee6b984911d15c3eebecfcedae",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-08/ReMIND-025/gradient-contribution.json"
+    },
+    {
+      "bytes": 1764,
+      "kind": "exact_copy",
+      "path": "RL/update-08/update.json",
+      "sha256": "08b4f130d573bbb0754b9a5fb8e3ade74288c036e2c349cdc48356896dcd0d6c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL/update-08/update.json"
+    },
+    {
+      "bytes": 12231,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-008/native-replay.json",
+      "sha256": "100b0275d6fa15709493c5380f0e026d6d9df67c3b357717d5d78e7e77132b33",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-008/native-replay.json"
+    },
+    {
+      "bytes": 1064,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-008/plan.json",
+      "sha256": "bdd0570f0d4ed3e8ddc60284f66ca85f9fdb821b5d26fd765ce0ff8d75edfa44",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-008/plan.json"
+    },
+    {
+      "bytes": 22219,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-010/native-replay.json",
+      "sha256": "49fb6cd7bc9afdd0c65e12ae3891b1abddc301f8b983faadbdad1ec54aeac1da",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-010/native-replay.json"
+    },
+    {
+      "bytes": 1064,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-010/plan.json",
+      "sha256": "fddd9b23e5ad4b66b811778c1778384788bd52d9f953b32a9b964973845d9db1",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-010/plan.json"
+    },
+    {
+      "bytes": 22200,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-020/native-replay.json",
+      "sha256": "3e76c03710f0eb83d4078305d7615092856bbd7775be7dc5ca6cd25d1afd8509",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-020/native-replay.json"
+    },
+    {
+      "bytes": 1064,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-020/plan.json",
+      "sha256": "60f6731c11999cfd7545b1cfd3b27011f8c3339b5f0b208c84ba495d892b8806",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-020/plan.json"
+    },
+    {
+      "bytes": 22252,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-025/native-replay.json",
+      "sha256": "44b0d79b24429a18b0e9d903ecad73c06698d7f3527ef1f240c9076dcc8fcf92",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-025/native-replay.json"
+    },
+    {
+      "bytes": 1064,
+      "kind": "exact_copy",
+      "path": "TRAIN-greedy/RL/ReMIND-025/plan.json",
+      "sha256": "20fbd2828ac12d1e2a8dbac613570bcc78377233fdf4ddba25b6aa0bae6d4806",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/TRAIN-greedy/RL/ReMIND-025/plan.json"
+    },
+    {
+      "bytes": 180353,
+      "kind": "exact_copy",
+      "path": "audit/audit-result.json",
+      "sha256": "9b8e4c41f2ba4d65e875f91fbb6292a4bba219695765ac154031cb2e3f56d2e9",
+      "source_path": "build/obstruction-opening-learning-independent-v1/RL8/audit-result.json"
+    },
+    {
+      "bytes": 18622,
+      "kind": "exact_copy",
+      "path": "audit/audit_saved.py",
+      "sha256": "6f6d5aa74d334b918c16be1c52fd8ebff31a008ddf2ac48421dc122412696931",
+      "source_path": "build/obstruction-opening-learning-independent-v1/audit_saved.py"
+    },
+    {
+      "bytes": 17669,
+      "kind": "exact_copy",
+      "path": "audit/audit_saved_rl.py",
+      "sha256": "5e415431628fac4e2cee7d6de2ef94966633a51982efc66a0b10f33f47349e72",
+      "source_path": "build/obstruction-opening-learning-independent-v1/audit_saved_rl.py"
+    },
+    {
+      "bytes": 26273,
+      "kind": "exact_copy",
+      "path": "audit/helpers/balanced64-audit_saved.py",
+      "sha256": "b12157e2a3d92e959798092d22e17d6c29ebfa2070b726cbd8b5b5b932261fb1",
+      "source_path": "build/balanced-teacher-il64-audit-v1/audit_saved.py"
+    },
+    {
+      "bytes": 57353,
+      "kind": "exact_copy",
+      "path": "audit/input-hashes.json",
+      "sha256": "9513f6a6db2fc0af309d0f99ac1bcb1b03387261effbb2342867901719499126",
+      "source_path": "build/obstruction-opening-learning-independent-v1/RL8/input-hashes.json"
+    },
+    {
+      "bytes": 771,
+      "kind": "derived_from_packaged_evidence",
+      "path": "checkpoint-metadata.json",
+      "sha256": "d149538cc294fb9abb62c306605a12d64156fb77ff1770d7207a27ce6c7b48c7",
+      "source_path": null
+    },
+    {
+      "bytes": 2940,
+      "kind": "exact_copy",
+      "path": "contexts/ReMIND-008.json",
+      "sha256": "a742ad1191da7d3f44a42f9afd668ea85ca5f7f9d31a1be264d6625237be29cf",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-008-context.json"
+    },
+    {
+      "bytes": 2940,
+      "kind": "exact_copy",
+      "path": "contexts/ReMIND-010.json",
+      "sha256": "8245d90f5fd755ff0539c5f6249acacebfef055e739c7f3248d229663acb8839",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-010-context.json"
+    },
+    {
+      "bytes": 2941,
+      "kind": "exact_copy",
+      "path": "contexts/ReMIND-020.json",
+      "sha256": "f5c553f46e81b321731ed01f30523d6a528b8f3092c98fb65ce3451d7ff86dc6",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-020-context.json"
+    },
+    {
+      "bytes": 2940,
+      "kind": "exact_copy",
+      "path": "contexts/ReMIND-025.json",
+      "sha256": "7895b3be4e6b34d3b243f3aec1071cdc4de0fb472ee4a3c0be19f9aeabb0fa99",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-025-context.json"
+    },
+    {
+      "bytes": 4069,
+      "kind": "exact_copy",
+      "path": "diagnosis/REPORT.txt",
+      "sha256": "5d0f8444e1661b0869941fb3c3fc255897c4f1681c5a02f4c4ab4c6c09582394",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/REPORT.txt"
+    },
+    {
+      "bytes": 5110,
+      "kind": "exact_copy",
+      "path": "diagnosis/derive.py",
+      "sha256": "822ee18f07970824ce919721df975494cfdf4f90e612d4fc105bddd5d40fdfe1",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/derive.py"
+    },
+    {
+      "bytes": 3667,
+      "kind": "exact_copy",
+      "path": "diagnosis/endpoint-table.json",
+      "sha256": "51a87c767f69fda9e9360d2925db52754838a4fa47344cc842db2481109824ce",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/endpoint-table.json"
+    },
+    {
+      "bytes": 20463,
+      "kind": "exact_copy",
+      "path": "diagnosis/episode-table.json",
+      "sha256": "4cd7ae01f14e7e183c37af91b8abddde9f238103bcbcb769c3bce44d9da51426",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/episode-table.json"
+    },
+    {
+      "bytes": 1429,
+      "kind": "exact_copy",
+      "path": "diagnosis/index.json",
+      "sha256": "1dc6cb1aef1905adc44a6eac9c438aa56de21d62e4b3a45050f6a9d9bc4e5d2b",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/index.json"
+    },
+    {
+      "bytes": 7123,
+      "kind": "exact_copy",
+      "path": "diagnosis/input-index.json",
+      "sha256": "66c7922939936d6cb8c4257320e5822c4cb01b116abbf79b9cc52bad427cae62",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/input-index.json"
+    },
+    {
+      "bytes": 7889,
+      "kind": "exact_copy",
+      "path": "diagnosis/positive-cut-table.json",
+      "sha256": "9e2e50d289db0198720ef25790bbeb59f25c80968a2e4e4ec137b42459ffde72",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/positive-cut-table.json"
+    },
+    {
+      "bytes": 1317,
+      "kind": "exact_copy",
+      "path": "diagnosis/summary.json",
+      "sha256": "4b8929e1b02a2028fc0b113f62fe9c0bf955fa3fcce24c6bdbb7a1529c936fa7",
+      "source_path": "build/obstruction-opening-rl8-diagnosis-v1/summary.json"
+    },
+    {
+      "bytes": 30558,
+      "kind": "derived_from_packaged_evidence",
+      "path": "episode-summary.json",
+      "sha256": "6899bb7b867f97fbabeed8fdd6d0f71bdee93176bdbea8e86e7fd7a803443d89",
+      "source_path": null
+    },
+    {
+      "bytes": 99,
+      "kind": "exact_copy",
+      "path": "generated-control/console.txt",
+      "sha256": "35185d65b2188335178d825954985a955d4c7f1114871cf9685a5c3efcfa85f6",
+      "source_path": "build/obstruction-opening-learning-v1/generated-attempt-01/console.txt"
+    },
+    {
+      "bytes": 344,
+      "kind": "exact_copy",
+      "path": "generated-control/receipt.json",
+      "sha256": "dbedc01ae1b88ec0d7047cb070934a7495837320989e90044ecafcfbded3471a",
+      "source_path": "build/obstruction-opening-learning-v1/generated-attempt-01/receipt.json"
+    },
+    {
+      "bytes": 1906,
+      "kind": "exact_copy",
+      "path": "matched-IL64/receipt.json",
+      "sha256": "ca9a8d8e3c78e8c99b294d5cef11addf47b63d6785159f7bf92e023ac519503a",
+      "source_path": "build/obstruction-opening-learning-v1/IL64/attempt-01.supervision/receipt.json"
+    },
+    {
+      "bytes": 7622,
+      "kind": "exact_copy",
+      "path": "matched-IL64/result.json",
+      "sha256": "b30dc1f8867b3c016ad9f88d2ded4265787e0c0e4ffc771c0fa28ef31a6bc518",
+      "source_path": "build/obstruction-opening-learning-v1/IL64/attempt-01/result.json"
+    },
+    {
+      "bytes": 8170,
+      "kind": "exact_copy",
+      "path": "provenance/release-template.json",
+      "sha256": "f99d437b71e7ae541da417789737ee92e2c6b2b15c279a32960c302d96ed0857",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/release-template.json"
+    },
+    {
+      "bytes": 3147,
+      "kind": "exact_copy",
+      "path": "provenance/review-references.json",
+      "sha256": "733e0e7f2ef2587b25b6494e9789853b2d389464ec8465d6551f2624df3851f6",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/compact-result/review-references.json"
+    },
+    {
+      "bytes": 8170,
+      "kind": "exact_copy",
+      "path": "provenance/root-release.json",
+      "sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/root-release.json"
+    },
+    {
+      "bytes": 13440,
+      "kind": "exact_copy",
+      "path": "provenance/source-index.json",
+      "sha256": "713ea019d83210aeca780f76fd63153e2443071b9bc78c68473203bc23824785",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/source-index.json"
+    },
+    {
+      "bytes": 237,
+      "kind": "exact_copy",
+      "path": "result/checkpoint-reload.json",
+      "sha256": "10ab8e598237cb49796a1aaee6723aa7f6d610c649b21737ec5de8db11ef39f6",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/checkpoint-reload.json"
+    },
+    {
+      "bytes": 3914,
+      "kind": "exact_copy",
+      "path": "result/configuration.json",
+      "sha256": "1d6200d237cdaecce1364555a150110fe1f96d114d49d05850ad830dc1f93ab1",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/configuration.json"
+    },
+    {
+      "bytes": 67504,
+      "kind": "exact_copy",
+      "path": "result/costs.json",
+      "sha256": "dfed26e37832221be4388f6e6b256d950068cf3c9726b7854220c3e068233c9c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/costs.json"
+    },
+    {
+      "bytes": 256,
+      "kind": "exact_copy",
+      "path": "result/endpoint-teacher-metrics.json",
+      "sha256": "e096d7b99c8137e9242a9b84984ab0b1d66de1542a41d3e8aec046163d233190",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/endpoint-teacher-metrics.json"
+    },
+    {
+      "bytes": 3851,
+      "kind": "exact_copy",
+      "path": "result/result.json",
+      "sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/result.json"
+    },
+    {
+      "bytes": 2066,
+      "kind": "exact_copy",
+      "path": "result/teacher-pins.json",
+      "sha256": "444f17c65d9f32d221c11782bbf76ae98dae6b73b7ece2283b326538e3f07dcc",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-pins.json"
+    },
+    {
+      "bytes": 6635,
+      "kind": "exact_copy",
+      "path": "result/training-dynamics.json",
+      "sha256": "9e88913b364f511da8843c7c965ba153790ebb2e07cfd8e5bc4dcb3f08b9380a",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/training-dynamics.json"
+    },
+    {
+      "bytes": 1934,
+      "kind": "exact_copy",
+      "path": "source/PREPARATION.json",
+      "sha256": "7845c4db1cd8b2a96a45edcf8ad4c0e9ad95dcf47356f35d19c671a784990884",
+      "source_path": "build/obstruction-opening-learning-v1/PREPARATION.json"
+    },
+    {
+      "bytes": 14520,
+      "kind": "exact_copy",
+      "path": "source/assemble.py",
+      "sha256": "c8190d49960b7433c1048812656fe01400a99a53850144026e14f18546ea4fc2",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/compact-result/assemble.py"
+    },
+    {
+      "bytes": 22237,
+      "kind": "exact_copy",
+      "path": "source/cohort_worker.py",
+      "sha256": "f77f0549c77c0826a58f97c3bc21c73ea491cfa3e94ae39a1d30b72c57130c82",
+      "source_path": "build/obstruction-opening-learning-v1/cohort_worker.py"
+    },
+    {
+      "bytes": 8179,
+      "kind": "exact_copy",
+      "path": "source/freeze-runtime.py",
+      "sha256": "1f750be640a1e21e1ded4d0a23d731961d850ad9f49d6af186d385c4a67a406a",
+      "source_path": "build/obstruction-opening-learning-v1/freeze-runtime.py"
+    },
+    {
+      "bytes": 14983,
+      "kind": "exact_copy",
+      "path": "source/pilot_contract.py",
+      "sha256": "b413e52d301928289ac9bc629d5ee2ad8be4c296490aa47a2432faa545843f37",
+      "source_path": "build/obstruction-opening-learning-v1/pilot_contract.py"
+    },
+    {
+      "bytes": 13172,
+      "kind": "exact_copy",
+      "path": "source/run_owned.py",
+      "sha256": "323165db06d3773c2b903d5f744321327a8125c6e08ef1b37821e694ee819b5f",
+      "source_path": "build/obstruction-opening-learning-v1/run_owned.py"
+    },
+    {
+      "bytes": 8783,
+      "kind": "exact_copy",
+      "path": "source/test_generated_worker_flow.py",
+      "sha256": "568a2d2f91eca8e4c6d4245e907554f262a25a778380e87eeed64fc6ff45ab3a",
+      "source_path": "build/obstruction-opening-learning-v1/test_generated_worker_flow.py"
+    },
+    {
+      "bytes": 9796,
+      "kind": "derived_from_packaged_evidence",
+      "path": "summary.json",
+      "sha256": "c55a82bc3eeb6d92c0714a52f8641c697d4c666d4adeb350641a437df40b9b24",
+      "source_path": null
+    },
+    {
+      "bytes": 15242,
+      "kind": "exact_copy",
+      "path": "supervision/declaration.json",
+      "sha256": "b3a9b4e48d712a4a30d95c1daa79d917c08be18b8d7ae038f0e50524de8a8021",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/declaration.json"
+    },
+    {
+      "bytes": 3423,
+      "kind": "exact_copy",
+      "path": "supervision/endpoint-control.json",
+      "sha256": "57f27a7177f1175277b25ce2547a3850ec261461eb7daa9546f729b5ff59d9fc",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/endpoint-control.json"
+    },
+    {
+      "bytes": 1908,
+      "kind": "exact_copy",
+      "path": "supervision/receipt.json",
+      "sha256": "4793146872f8dc71b80339fac76ee011a7bb9fbd72f1e567000556a08b658c1c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/receipt.json"
+    },
+    {
+      "bytes": 779,
+      "kind": "exact_copy",
+      "path": "supervision/worker-final.json",
+      "sha256": "f8311187a1a9c546629adb34d4859e27b0f38abdd60bda9b472ad5a421d70ff7",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/worker-final.json"
+    },
+    {
+      "bytes": 6223,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-008/state-00.json",
+      "sha256": "7ef7f274f3691f692c5908b7d85ec0ec331fd8483af1b15f07ab3bf592b74a52",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-008/state-00.json"
+    },
+    {
+      "bytes": 3879,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-010/state-00.json",
+      "sha256": "4aca1c8602be250c7009c4c5c2f72862cb52312ebec350eda187d9c25ac4a157",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-010/state-00.json"
+    },
+    {
+      "bytes": 3997,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-020/state-00.json",
+      "sha256": "fd116f4448b3c76b521a8f8dd392895c2ea9b7e9f892d22a8f13ed51222b5d7d",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-020/state-00.json"
+    },
+    {
+      "bytes": 2935,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-025/state-00.json",
+      "sha256": "794fa087158f0d6a08b211f5e0fc50f99c4ab28a7e235bdb37207457e593a79c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-025/state-00.json"
+    },
+    {
+      "bytes": 2828,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-025/state-01.json",
+      "sha256": "e38f45d99e79c6cf1a6daa2145e7f549255106ecec23081297a3de06710ba21d",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-025/state-01.json"
+    },
+    {
+      "bytes": 2826,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-025/state-02.json",
+      "sha256": "f05a64f48743904580d704a6c0dc2f692a29660922bdb5e92b0ed15c6b82fb24",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-025/state-02.json"
+    },
+    {
+      "bytes": 2660,
+      "kind": "exact_copy",
+      "path": "teacher-readout/ReMIND-025/state-03.json",
+      "sha256": "87c57e63a1fad44216f439733d57525e64029c7c07b7715d36163a9211d3864f",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teacher-readout/ReMIND-025/state-03.json"
+    },
+    {
+      "bytes": 12231,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-008/native-replay.json",
+      "sha256": "769c328a794518ca36debbc1a8195c3974beef1f772029969b290062c1bb62cd",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-008/native-replay.json"
+    },
+    {
+      "bytes": 926,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-008/plan.json",
+      "sha256": "a8a78aa86c4d7e45eca3c6f5eacaa1fdc8824ff224c0a12197c80c2f5ae01bd3",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-008/plan.json"
+    },
+    {
+      "bytes": 22220,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-010/native-replay.json",
+      "sha256": "3654662388f4db91aa87716915a55a33dce16d4472864c7f793f9a6864e5273c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-010/native-replay.json"
+    },
+    {
+      "bytes": 926,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-010/plan.json",
+      "sha256": "065148e97df0b24ff5e503f06d05b92d07b533a6c2c7aaa57c68be3f2c9f7d4c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-010/plan.json"
+    },
+    {
+      "bytes": 22200,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-020/native-replay.json",
+      "sha256": "ed219ea1103419f8a60fd3a4d82d520393259bfa82a233a549cdf03ecd936c03",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-020/native-replay.json"
+    },
+    {
+      "bytes": 926,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-020/plan.json",
+      "sha256": "eeb6c81fc99bd8df8bdb4839eb5ab231230a9f7e9bfe0890eff6c50b34517a2c",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-020/plan.json"
+    },
+    {
+      "bytes": 78179,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-025/native-replay.json",
+      "sha256": "0eb9952de2c5afff8c03eaae97676dd08ca52c01795f68067df753d2fa5d8d72",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-025/native-replay.json"
+    },
+    {
+      "bytes": 56734,
+      "kind": "exact_copy",
+      "path": "teachers/ReMIND-025/plan.json",
+      "sha256": "a8c04fa0e1ec47e2a74135e5682eef02c5fc6e859505dc1332dabc903a118dcf",
+      "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/teachers/ReMIND-025/plan.json"
+    }
+  ],
+  "payloads_excluded": true,
+  "total_bytes": 1235855,
+  "version": "compact-result-manifest-v1"
+}

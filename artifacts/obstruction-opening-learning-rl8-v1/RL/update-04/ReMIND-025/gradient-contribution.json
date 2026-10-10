@@ -1,0 +1,63 @@
+{
+  "actions": [
+    "nominal-cavity-e026d1f4c5208cbf312a1788",
+    "STOP"
+  ],
+  "actor_loss": -0.27414147183299065,
+  "context_hash": "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899",
+  "entropy": 0.7352472841739655,
+  "loss": -0.27131700329482555,
+  "loss_forward_calls": 2,
+  "patient_group": "ReMIND:025",
+  "plan_seal": "sha256:8995cfdb0d4287b6d449c027bb04d8f8d22a7f70b661d6fe911ed7d07ccac4b9",
+  "return": -0.41439960580077745,
+  "rl_decision_diagnostics": {
+    "behavior_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+    "decisions": [
+      {
+        "action_id": "nominal-cavity-e026d1f4c5208cbf312a1788",
+        "action_index": 11,
+        "actor_discount": 1.0,
+        "actor_score_term": -1.204650640487671,
+        "chosen_log_probability": -3.0007681846618652,
+        "detached_advantage": -0.4014474153518677,
+        "entropy": 2.993969202041626,
+        "legal_action_count": 20,
+        "observation_hash": "sha256:eb6eff1f4e3ff6b40ad4a335cc41840387d6c55d62f50d12c24660c9bd15e596",
+        "return_to_go": -0.41439960580077745,
+        "return_to_go_model_dtype": -0.4143995940685272,
+        "reward": -0.41439960580077745,
+        "step": 0,
+        "terminated": false,
+        "value": -0.012952178716659546,
+        "value_squared_error": 0.16116002202033997
+      },
+      {
+        "action_id": "STOP",
+        "action_index": 0,
+        "actor_discount": 1.0,
+        "actor_score_term": 0.10808475315570831,
+        "chosen_log_probability": -2.6441092491149902,
+        "detached_advantage": 0.040877565741539,
+        "entropy": 2.8880090713500977,
+        "legal_action_count": 18,
+        "observation_hash": "sha256:14f9b4d838087e32cc86cc80f8a3aee4148fda80f104fdbdb235040e6f28cc0a",
+        "return_to_go": 0.0,
+        "return_to_go_model_dtype": 0.0,
+        "reward": 0.0,
+        "step": 1,
+        "terminated": true,
+        "value": -0.040877565741539,
+        "value_squared_error": 0.001670975354500115
+      }
+    ],
+    "entropy_weight": 0.01,
+    "episodes_in_update": 4,
+    "scope": "same_on_policy_loss_forwards_before_shared_update",
+    "value_weight": 0.5,
+    "version": "patient-RL-decision-scalars-v1"
+  },
+  "steps": 2,
+  "trace_seal": "sha256:d1a99835bb29612623e0c7b85646640d87ccb1fc809718c0668a596d621ec882",
+  "value_loss": 0.02035387467185501
+}

@@ -1,0 +1,82 @@
+{
+  "actions": [
+    "nominal-cavity-8bc62b2451ce8835521c83dc",
+    "nominal-cavity-8139e910e90e9445e47ea6a5",
+    "STOP"
+  ],
+  "actor_loss": -0.11675067711621523,
+  "context_hash": "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899",
+  "entropy": 0.7302351196606954,
+  "loss": -0.10750467982143164,
+  "loss_forward_calls": 3,
+  "patient_group": "ReMIND:025",
+  "plan_seal": "sha256:5a5e3617c6813cf1d28263c6b3e092cc9c7c9a2d45c90366438850ae3fbcec7c",
+  "return": -0.856846086459319,
+  "rl_decision_diagnostics": {
+    "behavior_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+    "decisions": [
+      {
+        "action_id": "nominal-cavity-8bc62b2451ce8835521c83dc",
+        "action_index": 14,
+        "actor_discount": 1.0,
+        "actor_score_term": -1.3900047540664673,
+        "chosen_log_probability": -3.047311782836914,
+        "detached_advantage": -0.45614129304885864,
+        "entropy": 2.975576877593994,
+        "legal_action_count": 20,
+        "observation_hash": "sha256:eb6eff1f4e3ff6b40ad4a335cc41840387d6c55d62f50d12c24660c9bd15e596",
+        "return_to_go": -0.856846086459319,
+        "return_to_go_model_dtype": -0.8568460941314697,
+        "reward": -0.41244648065854156,
+        "step": 0,
+        "terminated": false,
+        "value": -0.4007048010826111,
+        "value_squared_error": 0.20806488394737244
+      },
+      {
+        "action_id": "nominal-cavity-8139e910e90e9445e47ea6a5",
+        "action_index": 10,
+        "actor_discount": 1.0,
+        "actor_score_term": -0.028638560324907303,
+        "chosen_log_probability": -3.0123844146728516,
+        "detached_advantage": -0.009506940841674805,
+        "entropy": 2.920753240585327,
+        "legal_action_count": 19,
+        "observation_hash": "sha256:fb2d217a0038018ef8f2d339ff8879fd07483a00bdaf43180b6571e3dbad2037",
+        "return_to_go": -0.4443996058007774,
+        "return_to_go_model_dtype": -0.4443995952606201,
+        "reward": -0.4443996058007774,
+        "step": 1,
+        "terminated": false,
+        "value": -0.4348926544189453,
+        "value_squared_error": 9.038192365551367e-05
+      },
+      {
+        "action_id": "STOP",
+        "action_index": 0,
+        "actor_discount": 1.0,
+        "actor_score_term": 0.9516406059265137,
+        "chosen_log_probability": -2.1889536380767822,
+        "detached_advantage": 0.43474680185317993,
+        "entropy": 2.8664913177490234,
+        "legal_action_count": 18,
+        "observation_hash": "sha256:53e11a248e07e975be57b989df47d8f7ef5d2a375d6b8c573fff5dc72e770b28",
+        "return_to_go": 0.0,
+        "return_to_go_model_dtype": 0.0,
+        "reward": 0.0,
+        "step": 2,
+        "terminated": true,
+        "value": -0.43474680185317993,
+        "value_squared_error": 0.1890047788619995
+      }
+    ],
+    "entropy_weight": 0.01,
+    "episodes_in_update": 4,
+    "scope": "same_on_policy_loss_forwards_before_shared_update",
+    "value_weight": 0.5,
+    "version": "patient-RL-decision-scalars-v1"
+  },
+  "steps": 3,
+  "trace_seal": "sha256:2053f6ded2eb9a604d5f5d2cfe0bced9267ca5aaefea55efc0f4468c46bcba93",
+  "value_loss": 0.03309667039441895
+}

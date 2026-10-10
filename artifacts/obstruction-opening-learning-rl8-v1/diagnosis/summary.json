@@ -1,0 +1,43 @@
+{
+  "SELECT_EVAL_opened": false,
+  "STOP_decisions": 32,
+  "STOP_negative_advantage": 12,
+  "STOP_positive_advantage": 20,
+  "all_four_reloaded_greedy_STOP": true,
+  "checkpoint": {
+    "bytes": 137635,
+    "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+    "path": "RL-final.psckpt",
+    "sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475"
+  },
+  "clipped_updates": 6,
+  "decisions": 320,
+  "endpoint_teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 1.4972998797893524,
+    "balanced_mean_CE": 2.3915640364090605,
+    "motion_count": 3,
+    "motion_mean_NLL": 3.285828193028768,
+    "teacher_action_accuracy": 0.5714285714285714,
+    "unweighted_mean_CE": 2.263812014034816
+  },
+  "episode_returns": {
+    "negative": 29,
+    "positive": 0,
+    "zero": 3
+  },
+  "episodes": 32,
+  "gradient_norm_range": [
+    4.211062431335449,
+    27.621164321899414
+  ],
+  "positive_cut_negative_advantage": 4,
+  "positive_cut_positive_RTG": 7,
+  "positive_cut_positive_advantage": 7,
+  "positive_immediate_cuts": 11,
+  "private_reference_reads": 0,
+  "root_STOP_episodes": 3,
+  "source_scope": "completed saved scalar JSON only; no model/checkpoint payload or patient-array reads",
+  "status": "complete_matched_TRAIN_endpoint",
+  "updates": 8
+}

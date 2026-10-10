@@ -1,0 +1,49 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_matched_TRAIN_endpoint",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 3600,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 3540,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoints": {
+    "RL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "path": "RL-final.psckpt",
+      "sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475"
+    }
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 987.0107005417813,
+  "endpoint_control_sha256": "57f27a7177f1175277b25ce2547a3850ec261461eb7daa9546f729b5ff59d9fc",
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "output_bytes": 41354524,
+  "private_reference_execution": false,
+  "release_sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6",
+  "result_sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897",
+  "sampled_peak_rss_bytes": 2527870976,
+  "samples": 4707,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/obstruction-opening-learning-v1/RL8/source-index.json",
+    "sha256": "713ea019d83210aeca780f76fd63153e2443071b9bc78c68473203bc23824785"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 20079,
+  "worker_final_sha256": "f8311187a1a9c546629adb34d4859e27b0f38abdd60bda9b472ad5a421d70ff7",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

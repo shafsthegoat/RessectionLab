@@ -1,0 +1,40 @@
+{
+  "scope": "saved-only complete RL8 scalar diagnosis",
+  "files": [
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/REPORT.txt",
+      "sha256": "5d0f8444e1661b0869941fb3c3fc255897c4f1681c5a02f4c4ab4c6c09582394",
+      "bytes": 4069
+    },
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/derive.py",
+      "sha256": "822ee18f07970824ce919721df975494cfdf4f90e612d4fc105bddd5d40fdfe1",
+      "bytes": 5110
+    },
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/endpoint-table.json",
+      "sha256": "51a87c767f69fda9e9360d2925db52754838a4fa47344cc842db2481109824ce",
+      "bytes": 3667
+    },
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/episode-table.json",
+      "sha256": "4cd7ae01f14e7e183c37af91b8abddde9f238103bcbcb769c3bce44d9da51426",
+      "bytes": 20463
+    },
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/input-index.json",
+      "sha256": "66c7922939936d6cb8c4257320e5822c4cb01b116abbf79b9cc52bad427cae62",
+      "bytes": 7123
+    },
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/positive-cut-table.json",
+      "sha256": "9e2e50d289db0198720ef25790bbeb59f25c80968a2e4e4ec137b42459ffde72",
+      "bytes": 7889
+    },
+    {
+      "path": "build/obstruction-opening-rl8-diagnosis-v1/summary.json",
+      "sha256": "4b8929e1b02a2028fc0b113f62fe9c0bf955fa3fcce24c6bdbb7a1529c936fa7",
+      "bytes": 1317
+    }
+  ]
+}

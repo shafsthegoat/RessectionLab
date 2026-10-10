@@ -1,0 +1,111 @@
+{
+  "SELECT_EVAL_opened": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "TRAIN_greedy": {
+    "ReMIND-008": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:603ffc1a76bad5a1f785c2ecda6758e33b3dcd95cde9a1652a27602147b5e4e3",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-010": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:2147f2e59d5c2801bfdf478b24822652ba506ec4c4a6cef62815406c5eb3fa26",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-020": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:99ef3eceecfa15242a111bba2e6e45acb3a7a4cac9197215ead59422ce06c769",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-025": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:bba78f093ff357c112144a56fb44290385ea8b668e6e39738b8ca7263f4eb969",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "checkpoint_loads": 1,
+  "checkpoints": {
+    "RL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "path": "RL-final.psckpt",
+      "sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475"
+    }
+  },
+  "complete_wall_seconds": 983.2458899579942,
+  "completed_source_visits": 44,
+  "endpoint_teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 1.4972998797893524,
+    "balanced_mean_CE": 2.3915640364090605,
+    "motion_count": 3,
+    "motion_mean_NLL": 3.285828193028768,
+    "teacher_action_accuracy": 0.5714285714285714,
+    "unweighted_mean_CE": 2.263812014034816
+  },
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "loss_forward_calls": 320,
+  "method": "RL",
+  "optimizer_updates": {
+    "IL": 0,
+    "RL": 8
+  },
+  "private_reference_reads": 0,
+  "search_calls": 0,
+  "selection_readiness": {
+    "execution_admitted": false,
+    "meaning": "fixed updates, authenticated reload, seven teacher readouts and four complete TRAIN replays; performance may be negative",
+    "ready": true
+  },
+  "status": "complete_matched_TRAIN_endpoint",
+  "teacher_logit_forwards": 7,
+  "teacher_statuses": {
+    "ReMIND-008": "complete_replayed",
+    "ReMIND-010": "complete_replayed",
+    "ReMIND-020": "complete_replayed",
+    "ReMIND-025": "complete_replayed"
+  },
+  "teacher_trace_reuses": 0,
+  "training_dynamics_sha256": "9e88913b364f511da8843c7c965ba153790ebb2e07cfd8e5bc4dcb3f08b9380a"
+}

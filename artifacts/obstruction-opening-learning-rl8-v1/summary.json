@@ -1,0 +1,241 @@
+{
+  "SELECT_EVAL_executed": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "checkpoint": {
+    "bytes": 137635,
+    "completed_updates": 8,
+    "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+    "learning_protocol_hash": "sha256:aead19b14ed7b8005dfa163379bfebccae45b9a2a64f25856702b46d302824e0",
+    "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+    "path": "RL-final.psckpt",
+    "reload_record": "result/checkpoint-reload.json",
+    "scope": "metadata only; ignored checkpoint payload deliberately excluded",
+    "sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475",
+    "source_path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL-final.psckpt",
+    "source_result_sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897"
+  },
+  "counts": {
+    "IL_updates": 0,
+    "cache_reuses": 0,
+    "checkpoint_reloads": 1,
+    "collection_forwards": 320,
+    "fresh_episodes": 32,
+    "greedy_forwards": 4,
+    "loss_decisions": 320,
+    "native_previews": 80356,
+    "negative_return_episodes": 29,
+    "positive_return_episodes": 0,
+    "positive_reward_decisions": 11,
+    "positive_reward_negative_advantage_decisions": 4,
+    "shared_RL_updates": 8,
+    "source_visits": 44,
+    "teacher_readout_forwards": 7,
+    "total_policy_forwards": 651,
+    "zero_return_episodes": 3
+  },
+  "dynamics": {
+    "final_gradient_norm": 27.621164321899414,
+    "final_pre_update_loss": -55.06702232733369,
+    "first_gradient_norm": 19.8663330078125,
+    "first_pre_update_loss": -110.90222196280956,
+    "trajectory_path": "result/training-dynamics.json",
+    "updates": 8,
+    "updates_exceeding_clip_threshold": 6
+  },
+  "endpoint_teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 1.4972998797893524,
+    "balanced_mean_CE": 2.3915640364090605,
+    "motion_count": 3,
+    "motion_mean_NLL": 3.285828193028768,
+    "teacher_action_accuracy": 0.5714285714285714,
+    "unweighted_mean_CE": 2.263812014034816
+  },
+  "greedy_routes": {
+    "ReMIND-008": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:603ffc1a76bad5a1f785c2ecda6758e33b3dcd95cde9a1652a27602147b5e4e3",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-010": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:2147f2e59d5c2801bfdf478b24822652ba506ec4c4a6cef62815406c5eb3fa26",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-020": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:99ef3eceecfa15242a111bba2e6e45acb3a7a4cac9197215ead59422ce06c769",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-025": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "plan_seal": "sha256:bba78f093ff357c112144a56fb44290385ea8b668e6e39738b8ca7263f4eb969",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "independent_audit": {
+    "checks": 6132,
+    "input_count": 302,
+    "status": "PASS_saved_RL8_metadata_scalar_audit"
+  },
+  "interpretation": "Negative scratch-RL endpoint on fixed TRAIN; no held-out, physical/material, clinical, or equal-compute claim",
+  "matched_IL64_comparison": {
+    "IL025_return": 2.7583290722311435,
+    "IL_parent_seconds": 161.91794291697443,
+    "IL_result_sha256": "b30dc1f8867b3c016ad9f88d2ded4265787e0c0e4ffc771c0fa28ef31a6bc518",
+    "RL025_return": 0.0,
+    "RL_parent_seconds": 987.0107005417813,
+    "different_fixed_update_counts_and_training_objectives": true,
+    "equal_compute_claim": false,
+    "same_initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9"
+  },
+  "omissions": [
+    "checkpoint payload",
+    "patient arrays/images",
+    "repeated inventory/source files",
+    "full per-episode native histories"
+  ],
+  "omitted_evidence_bindings": "independent audit input hashes and saved episode trace/plan seals; all 320 scalar credit rows and8 update receipts retained",
+  "release_sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6",
+  "result_sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897",
+  "reviews": {
+    "files": [
+      {
+        "package_path": "audit/audit-result.json",
+        "sha256": "9b8e4c41f2ba4d65e875f91fbb6292a4bba219695765ac154031cb2e3f56d2e9",
+        "source_path": "build/obstruction-opening-learning-independent-v1/RL8/audit-result.json"
+      },
+      {
+        "package_path": "audit/input-hashes.json",
+        "sha256": "9513f6a6db2fc0af309d0f99ac1bcb1b03387261effbb2342867901719499126",
+        "source_path": "build/obstruction-opening-learning-independent-v1/RL8/input-hashes.json"
+      },
+      {
+        "package_path": "audit/audit_saved_rl.py",
+        "sha256": "5e415431628fac4e2cee7d6de2ef94966633a51982efc66a0b10f33f47349e72",
+        "source_path": "build/obstruction-opening-learning-independent-v1/audit_saved_rl.py"
+      },
+      {
+        "package_path": "audit/audit_saved.py",
+        "sha256": "6f6d5aa74d334b918c16be1c52fd8ebff31a008ddf2ac48421dc122412696931",
+        "source_path": "build/obstruction-opening-learning-independent-v1/audit_saved.py"
+      },
+      {
+        "package_path": "audit/helpers/balanced64-audit_saved.py",
+        "sha256": "b12157e2a3d92e959798092d22e17d6c29ebfa2070b726cbd8b5b5b932261fb1",
+        "source_path": "build/balanced-teacher-il64-audit-v1/audit_saved.py"
+      },
+      {
+        "package_path": "diagnosis/index.json",
+        "sha256": "1dc6cb1aef1905adc44a6eac9c438aa56de21d62e4b3a45050f6a9d9bc4e5d2b",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/index.json"
+      },
+      {
+        "package_path": "diagnosis/REPORT.txt",
+        "sha256": "5d0f8444e1661b0869941fb3c3fc255897c4f1681c5a02f4c4ab4c6c09582394",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/REPORT.txt"
+      },
+      {
+        "package_path": "diagnosis/derive.py",
+        "sha256": "822ee18f07970824ce919721df975494cfdf4f90e612d4fc105bddd5d40fdfe1",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/derive.py"
+      },
+      {
+        "package_path": "diagnosis/endpoint-table.json",
+        "sha256": "51a87c767f69fda9e9360d2925db52754838a4fa47344cc842db2481109824ce",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/endpoint-table.json"
+      },
+      {
+        "package_path": "diagnosis/episode-table.json",
+        "sha256": "4cd7ae01f14e7e183c37af91b8abddde9f238103bcbcb769c3bce44d9da51426",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/episode-table.json"
+      },
+      {
+        "package_path": "diagnosis/input-index.json",
+        "sha256": "66c7922939936d6cb8c4257320e5822c4cb01b116abbf79b9cc52bad427cae62",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/input-index.json"
+      },
+      {
+        "package_path": "diagnosis/positive-cut-table.json",
+        "sha256": "9e2e50d289db0198720ef25790bbeb59f25c80968a2e4e4ec137b42459ffde72",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/positive-cut-table.json"
+      },
+      {
+        "package_path": "diagnosis/summary.json",
+        "sha256": "4b8929e1b02a2028fc0b113f62fe9c0bf955fa3fcce24c6bdbb7a1529c936fa7",
+        "source_path": "build/obstruction-opening-rl8-diagnosis-v1/summary.json"
+      }
+    ],
+    "scope": "Exact terminal independent saved audit and credit diagnosis; originals remain authoritative"
+  },
+  "runtime": {
+    "caps": {
+      "attempts": 1,
+      "automatic_retry": false,
+      "hard_total_wall_seconds": 3600,
+      "output_bytes": 134217728,
+      "output_sample_interval_seconds": 1.0,
+      "sample_interval_seconds": 0.2,
+      "sampled_owned_tree_rss_bytes": 3221225472,
+      "supervision_bytes": 16777216,
+      "threads": 1,
+      "worker_deadline_seconds": 3540,
+      "worker_log_bytes": 8388608
+    },
+    "cleanup_errors": [],
+    "final_owned_pids": [],
+    "owned_output_bytes": 41354524,
+    "parent_seconds": 987.0107005417813,
+    "sampled_peak_rss_bytes": 2527870976,
+    "worker_seconds": 983.2458899579942
+  },
+  "scope": "fixed-four TRAIN scratch RL8 endpoint on explicit S OR T occupancy/obstruction-opening world",
+  "source_head": "a86a5302bf1bf839329a621b74c8c87f7ddf8c39",
+  "status": "complete_matched_TRAIN_endpoint",
+  "teacher_top1": {
+    "correct": 4,
+    "total": 7
+  },
+  "version": "obstruction-opening-learning-rl8-v1"
+}

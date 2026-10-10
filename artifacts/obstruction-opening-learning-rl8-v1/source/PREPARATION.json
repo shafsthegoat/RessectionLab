@@ -1,0 +1,48 @@
+{
+  "status": "source_prepared_generated_flow_passed",
+  "canonical_head": "b5110ed5523cd164da050cdec537c0fb85fcbf5a",
+  "pins": {
+    "pilot_contract.py": "b413e52d301928289ac9bc629d5ee2ad8be4c296490aa47a2432faa545843f37",
+    "cohort_worker.py": "f77f0549c77c0826a58f97c3bc21c73ea491cfa3e94ae39a1d30b72c57130c82",
+    "run_owned.py": "323165db06d3773c2b903d5f744321327a8125c6e08ef1b37821e694ee819b5f",
+    "freeze-runtime.py": "1f750be640a1e21e1ded4d0a23d731961d850ad9f49d6af186d385c4a67a406a",
+    "test_generated_worker_flow.py": "568a2d2f91eca8e4c6d4245e907554f262a25a778380e87eeed64fc6ff45ab3a",
+    "generated-attempt-01/receipt.json": "dbedc01ae1b88ec0d7047cb070934a7495837320989e90044ecafcfbded3471a",
+    "generated-attempt-01/console.txt": "35185d65b2188335178d825954985a955d4c7f1114871cf9685a5c3efcfa85f6"
+  },
+  "scope": "Two serial distinct fixed endpoints; root owns freeze/release/actual execution",
+  "generated_scope": "Real policies,64 IL and8 RL shared updates, cache/checkpoint reload/accounting; tiny generated DTOs with simulated source/native boundaries, no patient reads/native steps",
+  "actual_limits": {
+    "IL": {
+      "worker_seconds": 900,
+      "parent_seconds": 960,
+      "source_visits": 8,
+      "loss_forwards": 448,
+      "total_forwards_cap": 551,
+      "preview_cap": 70080
+    },
+    "RL": {
+      "worker_seconds": 3540,
+      "parent_seconds": 3600,
+      "source_visits": 44,
+      "loss_forwards_cap": 768,
+      "total_forwards_cap": 1639,
+      "preview_cap": 385440
+    },
+    "per_method_rss_bytes": 3221225472,
+    "per_method_output_bytes": 134217728,
+    "threads": 1
+  },
+  "runtime_estimate_only": {
+    "IL_seconds": [
+      150,
+      220
+    ],
+    "RL_seconds": [
+      900,
+      1500
+    ],
+    "basis": "Historical cached IL5-state114s worker; scratchRL8 update cost about898s. New7-state world/action trajectories can change runtime."
+  },
+  "actual_execution": false
+}

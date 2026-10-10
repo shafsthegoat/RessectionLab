@@ -1,0 +1,39 @@
+{
+  "IL_reduction": "mean_all_teacher_actions",
+  "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+  "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+  "actor_loss": -28.03105639666319,
+  "after_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+  "before_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+  "completed_updates": 5,
+  "context_hashes": [
+    "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+    "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+    "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+    "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+  ],
+  "entropy": 3.127829860895872,
+  "gradient_norm_before_clip": 11.382131576538086,
+  "loss": -26.88519943319261,
+  "loss_forward_calls": 38,
+  "method": "RL",
+  "module_gradient_norms_before_clip": {
+    "actor": 5.846272945404053,
+    "critic": 5.832857608795166,
+    "encoder": 6.886674880981445,
+    "stop": 3.731696605682373
+  },
+  "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+  "optimizer_updates": 1,
+  "parameters_changed": true,
+  "patient_adaptation": false,
+  "population_training": true,
+  "trace_seals": [
+    "sha256:f9fd68c9192958110ce5c294cb5a3e24e447c0b0f380cbd2ba9ab84b1f3438ba",
+    "sha256:51e329fab2fdc041a00246ca320a6c231e28f52275f49938ed6261f1df5274c1",
+    "sha256:bb1e5ae47fb14ce93a23d7d811042fa1865cf1321a56268423ecb2edcdf07fbf",
+    "sha256:338e33d252c9175ea65b883e8a519c66f34c60c99dd8f9bfc2d39af786601046"
+  ],
+  "value_loss": 2.3542718315808697,
+  "version": "fixed-four-TRAIN-sequential-cohort-v2"
+}

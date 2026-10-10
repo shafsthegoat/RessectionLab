@@ -1,0 +1,44 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "actor_loss": -0.1548130214214325,
+  "context_hash": "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+  "entropy": 0.8502621650695801,
+  "loss": -0.15898612141609192,
+  "loss_forward_calls": 1,
+  "patient_group": "ReMIND:020",
+  "plan_seal": "sha256:0cca5e3bfb615e975a4843d75c476b42ff1561d99c861585a1185b31ca3e746b",
+  "return": 0.0,
+  "rl_decision_diagnostics": {
+    "behavior_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+    "decisions": [
+      {
+        "action_id": "STOP",
+        "action_index": 0,
+        "actor_discount": 1.0,
+        "actor_score_term": -0.61925208568573,
+        "chosen_log_probability": -3.327383041381836,
+        "detached_advantage": -0.1861078441143036,
+        "entropy": 3.4010486602783203,
+        "legal_action_count": 30,
+        "observation_hash": "sha256:30a47773a996b3e7b1ce45e8b6f85475522765a4a0a53fd8ad2a25f5a337ffff",
+        "return_to_go": 0.0,
+        "return_to_go_model_dtype": 0.0,
+        "reward": 0.0,
+        "step": 0,
+        "terminated": true,
+        "value": 0.1861078441143036,
+        "value_squared_error": 0.034636128693819046
+      }
+    ],
+    "entropy_weight": 0.01,
+    "episodes_in_update": 4,
+    "scope": "same_on_policy_loss_forwards_before_shared_update",
+    "value_weight": 0.5,
+    "version": "patient-RL-decision-scalars-v1"
+  },
+  "steps": 1,
+  "trace_seal": "sha256:93604a83e7a112bd9dca8ad2d5af1360f3f2ad1e978f2794fa8dac0be898271b",
+  "value_loss": 0.008659032173454762
+}

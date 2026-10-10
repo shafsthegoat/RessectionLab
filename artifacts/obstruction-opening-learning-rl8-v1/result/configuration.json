@@ -1,0 +1,155 @@
+{
+  "admission_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 3373440,
+    "max_optimizer_updates": 16,
+    "max_policy_forwards": 2496,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "comparison": "separate fixed endpoints; actual method costs differ; no intermediate selection or held-out execution",
+  "execution_limits": {
+    "loss_forward_cap": 768,
+    "native_preview_cap": 385440,
+    "parent_seconds": 3600,
+    "policy_forward_cap": 1639,
+    "source_visits": 44,
+    "teacher_cache_payload_bytes": 0,
+    "teacher_trace_reuses": 0,
+    "updates": 8,
+    "worker_seconds": 3540
+  },
+  "fixed_teachers": "7 complete replayed public generalized-search states:4 STOP+3 motion",
+  "initialization": "same canonical fresh initializer; unused identical clone discarded",
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+      "patient_order": [
+        "ReMIND-008",
+        "ReMIND-010",
+        "ReMIND-020",
+        "ReMIND-025"
+      ],
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "obstruction_opening": true,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:fd662062d44a86e45d04fc982685723d07dc7538289433924e60029e108635a0",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_observations": "recollect_complete_pinned_plan_each_IL_update"
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 8,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-sequential-cohort-v2"
+  },
+  "objective": "unchanged on-policy actor/value/entropy objective",
+  "preview_sizing": "source visits * 120 candidates * (1 + 3 * horizon24); conservative, not measured"
+}

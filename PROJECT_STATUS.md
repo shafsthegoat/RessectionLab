@@ -5,8 +5,8 @@ models and matched search on qualified acquired anatomy. The improved action
 space now supports a complete three-cut TRAIN route: cached balanced IL64 matches
 search's physical outcome, despite choosing an equivalent action order. This is
 only three target cells, not useful-scale resection or demonstrated transfer.
-Scratch RL8 has also finished; its saved-result audit is underway. The next
-inference comparison will preserve the exact tissue assumption, public inputs,
+Scratch RL8 has also finished and passed its saved-result audit, but all four
+final policies STOP. The next inference comparison will preserve the exact tissue assumption, public inputs,
 tools and reward across methods, with zero held-out model updates.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
@@ -19,6 +19,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Scratch RL misses the useful route; decision credit now explains part of the failure:** [the audited RL8 result](artifacts/obstruction-opening-learning-rl8-v1/README.md) finishes eight updates and32 fresh episodes, but all four final greedy policies STOP at zero. There are11 immediately positive cuts; four receive negative advantage after later losses. None of the32 complete training episodes has positive return. All320 decision diagnostics and the update chain pass6,132 independent saved checks. This is no detected credit-arithmetic bug, and greedy STOP does not mean the stochastic policy is deterministic. Runtime987.011s/2.528GB is reported separately from IL64; the comparison is not equal compute. Fixed-model SELECT transfer is next before another training sweep.
 
 - **Imitation learns the improved complete TRAIN route:** [the fixed IL64 result](artifacts/obstruction-opening-learning-il64-v1/README.md) matches search on all four cases. On025 it swaps two equally rewarded cuts, then takes the same third cut and STOP: identical three removed cells, score+2.758329, target2.861024mm³ and zero outside-target removal. Six-of-seven teacher top-1 agreement is therefore not an outcome failure. All64 updates,462 forwards,3224 previews and complete replays pass independent saved audit. Training/replay takes161.918s at1.980GB sampled peak. Useful transfer remains untested; fixed-model SELECT inference is next.
 

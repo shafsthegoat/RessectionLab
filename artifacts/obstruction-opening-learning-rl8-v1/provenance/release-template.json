@@ -1,0 +1,263 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "claim": "same world/model/init, distinct endpoint/objective and measured costs; no equal-cost or held-out claim",
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 3373440,
+    "max_optimizer_updates": 16,
+    "max_policy_forwards": 2496,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "completion": "fixed own updates and reloaded endpoint,7 teacher logits,4 complete learned replays; no performance threshold",
+  "execution_limits": {
+    "loss_forward_cap": 768,
+    "native_preview_cap": 385440,
+    "parent_seconds": 3600,
+    "policy_forward_cap": 1639,
+    "source_visits": 44,
+    "teacher_cache_payload_bytes": 0,
+    "teacher_trace_reuses": 0,
+    "updates": 8,
+    "worker_seconds": 3540
+  },
+  "expected_head": "a86a5302bf1bf839329a621b74c8c87f7ddf8c39",
+  "inputs": {
+    "initial_release": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+      "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+    },
+    "initial_result": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json",
+      "sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb"
+    },
+    "parent": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02.supervision/receipt.json",
+      "sha256": "54cef3f9163a1ebfb8d90752d930410e359747b8052051cdae320eb266320a99"
+    },
+    "plan_ReMIND-008": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-01/plan.json",
+      "sha256": "7cb388c8436db10555ea844e8c625a857cb8e1608bfd1d36d440ca0e01f50304"
+    },
+    "plan_ReMIND-010": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-03/plan.json",
+      "sha256": "45942cb56b20e1bb78f5da48609f7e8a19b1d413f6f148c5ce84f795a45ffbfd"
+    },
+    "plan_ReMIND-020": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-05/plan.json",
+      "sha256": "496fa90c28f4fec2e48fd5efdde8c855ebeee9fa82858deee9b5776c2a7273d8"
+    },
+    "plan_ReMIND-025": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-07/plan.json",
+      "sha256": "fa73149b4c2f3afea4a37041ccf83a82e8f67a6415e0c20cf6b5b62d3977f978"
+    },
+    "release": {
+      "path": "build/paired-obstruction-opening-search-v2/root-release.json",
+      "sha256": "16053b9b7f146b8a5d858496c5225f00f0270c39e1a6f605e968991c3c80434d"
+    },
+    "replay_ReMIND-008": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-01/replay.json",
+      "sha256": "9fc9a9d41434b403504a31823769112df681cab0a2dbcb7dc74bca2affbd18e8"
+    },
+    "replay_ReMIND-010": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-03/replay.json",
+      "sha256": "8849c6119c28508499c5544ee64da969ef1cbfcd2fe7a1ac597015c78cd2c223"
+    },
+    "replay_ReMIND-020": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-05/replay.json",
+      "sha256": "c55710b1cb4c2023418aa5c2fb6562e111633895a09351b4a3d46a76481a0500"
+    },
+    "replay_ReMIND-025": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-07/replay.json",
+      "sha256": "41e04e7b3dd565e6f50461b6ef203bce510cc0b9d562dad76f178c3eb5c1d776"
+    },
+    "result": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/result.json",
+      "sha256": "f9f690056ab5b263f7306f9ec6807fa3dc7629f0290b5077ae9c80d57b777d50"
+    },
+    "source_index": {
+      "path": "build/paired-obstruction-opening-search-v2/source-index.json",
+      "sha256": "688c320d979eaa919a1cd04d3fd57afd1480429a99d5aa1d7d0dde8761b639ce"
+    }
+  },
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+      "patient_order": [
+        "ReMIND-008",
+        "ReMIND-010",
+        "ReMIND-020",
+        "ReMIND-025"
+      ],
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "obstruction_opening": true,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:fd662062d44a86e45d04fc982685723d07dc7538289433924e60029e108635a0",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_observations": "recollect_complete_pinned_plan_each_IL_update"
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 8,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-sequential-cohort-v2"
+  },
+  "learning_protocol_hash": "sha256:aead19b14ed7b8005dfa163379bfebccae45b9a2a64f25856702b46d302824e0",
+  "limits": {
+    "max_native_previews": 3373440,
+    "max_optimizer_updates": 16,
+    "max_policy_forwards": 2496,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "matched_IL_completion": {
+    "path": "build/obstruction-opening-learning-v1/IL64/attempt-01.supervision/receipt.json",
+    "sha256": "ca9a8d8e3c78e8c99b294d5cef11addf47b63d6785159f7bf92e023ac519503a"
+  },
+  "method": "RL",
+  "new_four_training": false,
+  "output": "build/obstruction-opening-learning-v1/RL8/attempt-01",
+  "parent_seconds": 3600,
+  "public_manifest_index": {
+    "path": "build/remind-planning-qc-v1/public-cohort-v1/public-manifest-index.json",
+    "sha256": "11b5c1ae8f9b2c03695e7eb0768d2cc340db68631f3ddb50ba365910fe0187f7"
+  },
+  "source_index": {
+    "path": "build/obstruction-opening-learning-v1/RL8/source-index.json",
+    "sha256": "713ea019d83210aeca780f76fd63153e2443071b9bc78c68473203bc23824785"
+  },
+  "status": "pending_root_release",
+  "supervision_bytes": 16777216,
+  "version": "matched-union-obstruction-learning-v1"
+}

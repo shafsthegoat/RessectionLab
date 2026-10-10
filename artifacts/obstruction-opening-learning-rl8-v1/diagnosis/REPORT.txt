@@ -1,0 +1,22 @@
+Completed scratch RL8: useful cuts were sampled, but complete behavior remained costly
+
+Scope: all 32 completed TRAIN episodes (8 updates × 4 fixed patients), all 320 same-forward decision diagnostics, seven frozen teacher-state readouts, and the four reloaded native greedy endpoints. This is saved scalar JSON analysis; no patient arrays, checkpoint payloads, models, optimizer or simulator were opened/run. derive.py reproduces the tables and verifies reward sums, RTG sums and advantage arithmetic. input-index.json pins every input read.
+
+All four reloaded greedy endpoints selected STOP, return 0. Sampled episodes: 0 positive, 3 zero, 29 negative. All 11 positive immediate rewards were on025, across updates1/2/3/5/7. Seven positive cuts had positive RTG and positive detached advantage; four had negative RTG and advantage. Discovery was therefore real, and useful cuts were not uniformly suppressed. No positive complete rollout was sampled.
+
+A concrete continuation example: update1 sampled a root cut worth +0.920745, but its full RTG was -0.987596 and its advantage -1.377810. The observed prefix after the second positive cut was worth +1.613919; subsequent actions cost -2.601515 before STOP. This is correct on-policy behavior/continuation coupling, not a return-calculation bug. Positive immediate reward cannot ensure positive full-continuation credit.
+
+Every episode eventually chose STOP. Its RTG is exactly0; all12 STOP decisions in updates1–3 had negative advantages while values were positive, then all20 in updates4–8 had positive advantages as values became negative. Actor terms share network parameters and softmax normalization; individual advantage signs do not establish their net post-update effect. Six of eight shared gradients were clipped at5; preclip norms range4.211062–27.621164.
+
+High sampling entropy and greedy STOP are different facts. On025 the root entropy changed from2.994964 to2.877990 nats (maximum ln20=2.995732), while update8 sampled STOP with probability0.185411. The reloaded endpoint's root STOP probability was0.293120. Greedy nevertheless chooses STOP because each individual movement has much lower probability. No claim of deterministic sampling collapse follows.
+
+The final025 teacher motions ranked18/19,18/18 and18/18 among movements at the three teacher states. Their conditional movement probabilities were0.052055,0.055006 and0.055107; corresponding uniform values are1/19,1/18 and1/18. Their logit margins versusSTOP were-2.075179,-2.122694,-2.121356. After the teacher's three cuts, STOP probability was0.327426. Thus the endpoint has weak useful-motion discrimination as well as a STOP preference; this is not solely a constant STOP threshold issue. Teacher-state accuracy4/7 reflects four correctSTOP states, no correctmotion states.
+
+The positive route is physically available, and the separately trained IL64 endpoint can execute its three-target-cell outcome. That does not prove an architecture defect in RL, equal training cost, or generalization. Eight RL updates do not establish algorithmic impossibility. Stochastic exposure, poor continuation, value calibration and shared optimization remain coupled in this run. A Q-style bootstrap could change continuation targets but would introduce a new off-policy/overestimation contrast; imitation initialization would be a separately named IL+RL method with additional cost. Neither is selected here.
+
+Next priority: fixed-model SELECT013 comparison on the explicitly declared S-union-T/obstruction world, with zero updates and identical public inputs.037 remains held and067 closed. No next training change is selected.
+
+Checkpoint:05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475
+Parameter:sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1
+Result:60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897
+Time-accounting caution: collection_replay wall includes nested action_backward time. Do not add those timers as disjoint stages; the owned parent elapsed time is the total-cost authority.

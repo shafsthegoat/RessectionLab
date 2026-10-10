@@ -1,0 +1,10322 @@
+{
+  "audit_peak_rss_bytes": 34390016,
+  "audit_seconds": 0.24606741599999998,
+  "checks": 6132,
+  "counts": {
+    "IL_updates": 0,
+    "cache_reuses": 0,
+    "checkpoint_reloads": 1,
+    "fresh_training_episodes": 32,
+    "loss_forwards": 320,
+    "native_previews": 80356,
+    "policy_forwards": 651,
+    "shared_RL_updates": 8,
+    "source_visits": 44,
+    "teacher_readout_forwards": 7
+  },
+  "credit_diagnostics": {
+    "STOP_steps": 32,
+    "episodes_negative_return": 29,
+    "episodes_positive_return": 0,
+    "episodes_zero_return": 3,
+    "motion_steps": 288,
+    "positive_immediate_rewards": 11,
+    "positive_reward_rows": [
+      {
+        "action_id": "nominal-cavity-65eb7285418ab897be073b2e",
+        "action_index": 17,
+        "actor_discount": 1.0,
+        "actor_score_term": -4.116608619689941,
+        "chosen_log_probability": -2.987790584564209,
+        "detached_advantage": -1.3778103590011597,
+        "entropy": 2.994964122772217,
+        "legal_action_count": 20,
+        "observation_hash": "sha256:eb6eff1f4e3ff6b40ad4a335cc41840387d6c55d62f50d12c24660c9bd15e596",
+        "return_to_go": -0.9875955039802022,
+        "return_to_go_model_dtype": -0.9875954985618591,
+        "reward": 0.9207451075052051,
+        "step": 0,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 1,
+        "value": 0.39021486043930054,
+        "value_squared_error": 1.8983614444732666
+      },
+      {
+        "action_id": "nominal-cavity-21ec0dbfebf020555f0aa651",
+        "action_index": 10,
+        "actor_discount": 1.0,
+        "actor_score_term": -6.041719913482666,
+        "chosen_log_probability": -2.9223544597625732,
+        "detached_advantage": -2.067415237426758,
+        "entropy": 2.943495988845825,
+        "legal_action_count": 19,
+        "observation_hash": "sha256:a39007151b3838b162662cf994bba7a082aeb6ddbd756a14a1be1125340a1e97",
+        "return_to_go": -1.6846759647283416,
+        "return_to_go_model_dtype": -1.684675931930542,
+        "reward": 0.9168388572207332,
+        "step": 2,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 1,
+        "value": 0.3827393054962158,
+        "value_squared_error": 4.274205684661865
+      },
+      {
+        "action_id": "nominal-cavity-5619d55e2ea79350449322c1",
+        "action_index": 16,
+        "actor_discount": 1.0,
+        "actor_score_term": -5.629976272583008,
+        "chosen_log_probability": -2.987881898880005,
+        "detached_advantage": -1.8842699527740479,
+        "entropy": 2.9955599308013916,
+        "legal_action_count": 20,
+        "observation_hash": "sha256:eb6eff1f4e3ff6b40ad4a335cc41840387d6c55d62f50d12c24660c9bd15e596",
+        "return_to_go": -1.6071195261639761,
+        "return_to_go_model_dtype": -1.6071195602416992,
+        "reward": 0.9207451075052051,
+        "step": 0,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 2,
+        "value": 0.27715039253234863,
+        "value_squared_error": 3.550473213195801
+      },
+      {
+        "action_id": "nominal-cavity-f8807d50fc1b8aa1f4674c8c",
+        "action_index": 7,
+        "actor_discount": 1.0,
+        "actor_score_term": 0.14575201272964478,
+        "chosen_log_probability": -2.563222646713257,
+        "detached_advantage": 0.05686280131340027,
+        "entropy": 2.5648152828216553,
+        "legal_action_count": 13,
+        "observation_hash": "sha256:e8d488dcf4aea85e82a84a3c53e47b6d17d364d76c9bc462064608eaebc9469e",
+        "return_to_go": 0.320478897039134,
+        "return_to_go_model_dtype": 0.3204788863658905,
+        "reward": 0.8907451075052051,
+        "step": 8,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 2,
+        "value": 0.26361608505249023,
+        "value_squared_error": 0.0032333782874047756
+      },
+      {
+        "action_id": "nominal-cavity-e88fc5a571a734a77d9e71dd",
+        "action_index": 5,
+        "actor_discount": 1.0,
+        "actor_score_term": -2.114701509475708,
+        "chosen_log_probability": -2.54573130607605,
+        "detached_advantage": -0.8306853175163269,
+        "entropy": 2.5645358562469482,
+        "legal_action_count": 13,
+        "observation_hash": "sha256:53312ca2a80672b9bbabc9573fb4036f2175e31904cd219e1857076b870c385b",
+        "return_to_go": -0.5702662104660711,
+        "return_to_go_model_dtype": -0.5702661871910095,
+        "reward": 0.9168388572207332,
+        "step": 9,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 2,
+        "value": 0.2604191303253174,
+        "value_squared_error": 0.6900380849838257
+      },
+      {
+        "action_id": "nominal-cavity-9a5e517fe0072b1a42449eb8",
+        "action_index": 6,
+        "actor_discount": 1.0,
+        "actor_score_term": 0.34795665740966797,
+        "chosen_log_probability": -2.177855968475342,
+        "detached_advantage": 0.15977028012275696,
+        "entropy": 2.1966774463653564,
+        "legal_action_count": 9,
+        "observation_hash": "sha256:6857c5c687fa6155ce705da1acb6041a10a6f1187c25d5b28467706456e502c9",
+        "return_to_go": 0.4173220642755455,
+        "return_to_go_model_dtype": 0.4173220694065094,
+        "reward": 0.9207451075052051,
+        "step": 14,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 2,
+        "value": 0.25755178928375244,
+        "value_squared_error": 0.025526542216539383
+      },
+      {
+        "action_id": "nominal-cavity-411fe91d915cc8235523040b",
+        "action_index": 11,
+        "actor_discount": 1.0,
+        "actor_score_term": 1.198623776435852,
+        "chosen_log_probability": -2.888413667678833,
+        "detached_advantage": 0.41497647762298584,
+        "entropy": 2.8899691104888916,
+        "legal_action_count": 18,
+        "observation_hash": "sha256:a5195133e6b99122c6a1d835b59865d98027d29aac7e819e92e5fb0ca52d054e",
+        "return_to_go": 0.5421976478925495,
+        "return_to_go_model_dtype": 0.5421976447105408,
+        "reward": 0.9207451075052051,
+        "step": 6,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 3,
+        "value": 0.12722115218639374,
+        "value_squared_error": 0.17220547795295715
+      },
+      {
+        "action_id": "nominal-cavity-79119bfb1889ce70fb402453",
+        "action_index": 12,
+        "actor_discount": 1.0,
+        "actor_score_term": 2.130079746246338,
+        "chosen_log_probability": -2.7866997718811035,
+        "detached_advantage": 0.7643736004829407,
+        "entropy": 2.7723388671875,
+        "legal_action_count": 16,
+        "observation_hash": "sha256:a35e3e5e6e490cd4943464e9ae93e24bfbdd81d54e9a160db79b8591ba22e368",
+        "return_to_go": 0.8907451075052051,
+        "return_to_go_model_dtype": 0.8907451033592224,
+        "reward": 0.8907451075052051,
+        "step": 10,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 3,
+        "value": 0.12637148797512054,
+        "value_squared_error": 0.5842670202255249
+      },
+      {
+        "action_id": "nominal-cavity-e32c6d130832bb82e32e9453",
+        "action_index": 8,
+        "actor_discount": 1.0,
+        "actor_score_term": 2.546708822250366,
+        "chosen_log_probability": -2.6768364906311035,
+        "detached_advantage": 0.9513875246047974,
+        "entropy": 2.6289749145507812,
+        "legal_action_count": 14,
+        "observation_hash": "sha256:15d1887166aa5cc76768d3565f70337294ade8335e09e0afd805cbf05ad5c439",
+        "return_to_go": 0.7290263566517895,
+        "return_to_go_model_dtype": 0.7290263772010803,
+        "reward": 0.9207451075052051,
+        "step": 10,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 5,
+        "value": -0.22236116230487823,
+        "value_squared_error": 0.9051381945610046
+      },
+      {
+        "action_id": "nominal-cavity-89e0c7f0b302e5b3111c1878",
+        "action_index": 3,
+        "actor_discount": 1.0,
+        "actor_score_term": 2.8249526023864746,
+        "chosen_log_probability": -2.544421672821045,
+        "detached_advantage": 1.1102533340454102,
+        "entropy": 2.4729764461517334,
+        "legal_action_count": 12,
+        "observation_hash": "sha256:90c0060405c7623df3f8d0229bb01a316a8ec8cb1d0c7abe18b69ff721288ba1",
+        "return_to_go": 0.8868388572207332,
+        "return_to_go_model_dtype": 0.8868388533592224,
+        "reward": 0.8868388572207332,
+        "step": 14,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 5,
+        "value": -0.22341446578502655,
+        "value_squared_error": 1.2326624393463135
+      },
+      {
+        "action_id": "nominal-cavity-8a2082c7d15f313507690c57",
+        "action_index": 10,
+        "actor_discount": 1.0,
+        "actor_score_term": 3.1024179458618164,
+        "chosen_log_probability": -2.9043986797332764,
+        "detached_advantage": 1.0681791305541992,
+        "entropy": 2.707773447036743,
+        "legal_action_count": 16,
+        "observation_hash": "sha256:6f73f39fe17b38855653cf68645fdb24120406eded0a4e40d5efc35a786ec78d",
+        "return_to_go": 0.3873220642755455,
+        "return_to_go_model_dtype": 0.3873220682144165,
+        "reward": 0.8907451075052051,
+        "step": 4,
+        "subject": "ReMIND-025",
+        "terminated": false,
+        "update": 7,
+        "value": -0.6808570027351379,
+        "value_squared_error": 1.1410067081451416
+      }
+    ],
+    "positive_rewards_negative_advantage": 4,
+    "positive_rewards_negative_return_to_go": 4
+  },
+  "endpoint_metrics_recomputed": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 1.4972998797893524,
+    "balanced_mean_CE": 2.3915640364090605,
+    "motion_count": 3,
+    "motion_mean_NLL": 3.285828193028768,
+    "teacher_action_accuracy": 0.5714285714285714,
+    "unweighted_mean_CE": 2.263812014034816
+  },
+  "executed_head": "a86a5302bf1bf839329a621b74c8c87f7ddf8c39",
+  "greedy_routes": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:603ffc1a76bad5a1f785c2ecda6758e33b3dcd95cde9a1652a27602147b5e4e3",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:2147f2e59d5c2801bfdf478b24822652ba506ec4c4a6cef62815406c5eb3fa26",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:99ef3eceecfa15242a111bba2e6e45acb3a7a4cac9197215ead59422ce06c769",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:bba78f093ff357c112144a56fb44290385ea8b668e6e39738b8ca7263f4eb969",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-025",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP"
+    }
+  ],
+  "input_count": 302,
+  "limits": [
+    "Saved JSON/history/seal/scalar audit only; no acquired arrays, checkpoint tensors, models or native geometry re-execution.",
+    "Parameter/gradient/reload identity is recorded evidence, not independent tensor recomputation. Chosen log probabilities and values are not independently model-recomputed.",
+    "Scalar float32 comparisons allow absolute2e-6/relative2^-20 rounding tolerance; returns and model-dtype casts separately verified.",
+    "Fixed TRAIN endpoint under unvalidated S union T material; no heldout/clinical, global optimum or equal-compute claim. Return-to-go associations do not isolate the cause of learned STOP."
+  ],
+  "metadata_files": 22,
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 987.0107005417813,
+    "final_owned_pids": [],
+    "output_bytes": 41354524,
+    "sampled_peak_rss_bytes": 2527870976
+  },
+  "release_sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6",
+  "result_sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897",
+  "runtime": {
+    "device": "cpu",
+    "dtype": "float32",
+    "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "interop_threads": 1,
+    "numpy": "2.5.3",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "threads": 1,
+    "torch": "2.14.1"
+  },
+  "source_files": 85,
+  "source_index": {
+    "path": "build/obstruction-opening-learning-v1/RL8/source-index.json",
+    "sha256": "713ea019d83210aeca780f76fd63153e2443071b9bc78c68473203bc23824785"
+  },
+  "status": "PASS_saved_RL8_metadata_scalar_audit",
+  "teacher_readouts": [
+    {
+      "best_movement_minus_STOP": -1.813339114189148,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 8.879546209428213e-08,
+      "scalar_probability_max_absolute_error": 5.059185514966202e-09,
+      "step": 0,
+      "stop_probability": 0.11272405833005905,
+      "subject": "ReMIND-008",
+      "teacher_CE": 2.182812452316284,
+      "teacher_action": "STOP",
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.11272405833005905,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": -2.2185873985290527,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 6.253759909924383e-08,
+      "scalar_probability_max_absolute_error": 1.0792335469744785e-08,
+      "step": 0,
+      "stop_probability": 0.2528795003890991,
+      "subject": "ReMIND-010",
+      "teacher_CE": 1.3748421669006348,
+      "teacher_action": "STOP",
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.2528795003890991,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": -2.3526597023010254,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 2.6302291011859324e-08,
+      "scalar_probability_max_absolute_error": 2.4539815346447114e-08,
+      "step": 0,
+      "stop_probability": 0.2684607207775116,
+      "subject": "ReMIND-020",
+      "teacher_CE": 1.3150506019592285,
+      "teacher_action": "STOP",
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.2684607207775116,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": -2.0509984493255615,
+      "conditional_teacher_movement_probability": 0.052054744213819504,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 3.65828718429384e-08,
+      "scalar_probability_max_absolute_error": 3.1223061427998466e-09,
+      "step": 0,
+      "stop_probability": 0.2931196689605713,
+      "subject": "ReMIND-025",
+      "teacher_CE": 3.3023531436920166,
+      "teacher_action": "nominal-cavity-5619d55e2ea79350449322c1",
+      "teacher_minus_STOP": -2.075178861618042,
+      "teacher_movement_rank": 18,
+      "teacher_probability": 0.03679647669196129,
+      "teacher_rank": 19
+    },
+    {
+      "best_movement_minus_STOP": -2.1048386096954346,
+      "conditional_teacher_movement_probability": 0.055006466805934906,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 4.8813684205839536e-08,
+      "scalar_probability_max_absolute_error": 3.0858422206403446e-08,
+      "step": 1,
+      "stop_probability": 0.31483516097068787,
+      "subject": "ReMIND-025",
+      "teacher_CE": 3.278400421142578,
+      "teacher_action": "nominal-cavity-096b4307a0bac4b22f6f6649",
+      "teacher_minus_STOP": -2.122694492340088,
+      "teacher_movement_rank": 18,
+      "teacher_probability": 0.0376884900033474,
+      "teacher_rank": 19
+    },
+    {
+      "best_movement_minus_STOP": -2.1054558753967285,
+      "conditional_teacher_movement_probability": 0.0551067516207695,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 3.004312620902283e-08,
+      "scalar_probability_max_absolute_error": 3.404232296055909e-08,
+      "step": 2,
+      "stop_probability": 0.31493937969207764,
+      "subject": "ReMIND-025",
+      "teacher_CE": 3.276731014251709,
+      "teacher_action": "nominal-cavity-846c9a82267ad217d6b1d517",
+      "teacher_minus_STOP": -2.1213557720184326,
+      "teacher_movement_rank": 18,
+      "teacher_probability": 0.037751469761133194,
+      "teacher_rank": 19
+    },
+    {
+      "best_movement_minus_STOP": -2.1060738563537598,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 1.5755493087965533e-07,
+      "scalar_probability_max_absolute_error": 3.8804682134241375e-08,
+      "step": 3,
+      "stop_probability": 0.32742562890052795,
+      "subject": "ReMIND-025",
+      "teacher_CE": 1.1164942979812622,
+      "teacher_action": "STOP",
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.32742562890052795,
+      "teacher_rank": 1
+    }
+  ],
+  "training_episodes": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:8100186c2d77c5c8695340d776b73efe42dfdc5f397d3144e824fbde4e225fe1",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 1
+    },
+    {
+      "actions": [
+        "nominal-cavity-319457e38ca5bd6fb1cf7533",
+        "nominal-cavity-78280cea2add55cd434633b3",
+        "nominal-cavity-02f78abd7ca615a48ecdcc5f",
+        "nominal-cavity-dcb87bdc90eb92e3534a77c2",
+        "nominal-cavity-786b2a53b55a181712d93e9c",
+        "nominal-cavity-7ad18d4f1ff86567f1c201ce",
+        "nominal-cavity-97957632525ef48b822551ae",
+        "nominal-cavity-2ab60d7c1211bebb1dcb1c07",
+        "nominal-cavity-d82ddf20c9112a5be9d4579a",
+        "nominal-cavity-0fd68a04294c5774bc37e027",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "complete_tool_path_mm": 11.251195059631383,
+      "outside_supplied_goal_mm3": 21.318079240092118,
+      "physical_history_hash": "sha256:8ee182d748acb2c7390adbaff8082f04f344dd9299255a24af7c27a51b11b656",
+      "plan_seal": "sha256:401676e6bc434b5870741abeda9536e8278bb4be16d24a77d68b4da734c678d4",
+      "public_return": -4.664867043078054,
+      "removed_cells": [
+        [
+          0,
+          112,
+          74
+        ],
+        [
+          0,
+          113,
+          74
+        ],
+        [
+          0,
+          113,
+          75
+        ],
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          114,
+          75
+        ],
+        [
+          0,
+          115,
+          69
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          116,
+          69
+        ],
+        [
+          0,
+          116,
+          70
+        ],
+        [
+          0,
+          116,
+          71
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          117,
+          69
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          0,
+          118,
+          71
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          118,
+          73
+        ],
+        [
+          0,
+          119,
+          71
+        ],
+        [
+          0,
+          119,
+          72
+        ],
+        [
+          0,
+          119,
+          73
+        ],
+        [
+          0,
+          120,
+          71
+        ],
+        [
+          0,
+          120,
+          72
+        ],
+        [
+          0,
+          120,
+          73
+        ],
+        [
+          0,
+          121,
+          72
+        ],
+        [
+          1,
+          112,
+          74
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          113,
+          74
+        ],
+        [
+          1,
+          113,
+          75
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          114,
+          75
+        ],
+        [
+          1,
+          115,
+          69
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          116,
+          69
+        ],
+        [
+          1,
+          116,
+          70
+        ],
+        [
+          1,
+          116,
+          71
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          117,
+          69
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          1,
+          118,
+          71
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          118,
+          73
+        ],
+        [
+          1,
+          119,
+          71
+        ],
+        [
+          1,
+          119,
+          72
+        ],
+        [
+          1,
+          119,
+          73
+        ],
+        [
+          1,
+          120,
+          71
+        ],
+        [
+          1,
+          120,
+          72
+        ],
+        [
+          1,
+          120,
+          73
+        ],
+        [
+          1,
+          121,
+          72
+        ],
+        [
+          2,
+          112,
+          74
+        ],
+        [
+          2,
+          113,
+          70
+        ],
+        [
+          2,
+          113,
+          74
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          114,
+          75
+        ],
+        [
+          2,
+          115,
+          69
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          116,
+          69
+        ],
+        [
+          2,
+          116,
+          70
+        ],
+        [
+          2,
+          116,
+          71
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          117,
+          69
+        ],
+        [
+          2,
+          117,
+          70
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          2,
+          119,
+          71
+        ],
+        [
+          2,
+          119,
+          72
+        ],
+        [
+          2,
+          119,
+          73
+        ],
+        [
+          2,
+          120,
+          72
+        ],
+        [
+          2,
+          121,
+          72
+        ],
+        [
+          3,
+          113,
+          74
+        ],
+        [
+          3,
+          114,
+          74
+        ],
+        [
+          3,
+          115,
+          69
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          69
+        ],
+        [
+          3,
+          116,
+          70
+        ],
+        [
+          3,
+          117,
+          69
+        ],
+        [
+          3,
+          117,
+          70
+        ],
+        [
+          3,
+          117,
+          72
+        ],
+        [
+          3,
+          118,
+          72
+        ],
+        [
+          3,
+          119,
+          72
+        ],
+        [
+          3,
+          120,
+          72
+        ],
+        [
+          4,
+          116,
+          69
+        ],
+        [
+          4,
+          118,
+          72
+        ],
+        [
+          4,
+          118,
+          74
+        ]
+      ],
+      "steps": 11,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 1
+    },
+    {
+      "actions": [
+        "nominal-cavity-4b34f8e85fc48ddb71590425",
+        "nominal-cavity-1f26c0bdf7e4c061154d9d63",
+        "nominal-cavity-277a5e8c8704992b1837ec1e",
+        "nominal-cavity-484931b667b0f0d699b2abc4",
+        "nominal-cavity-8ade93da346e32c0789e93ae",
+        "nominal-cavity-0585d8c03e9d86cb8cd818ad",
+        "nominal-cavity-e589b5322fcc7fd2ba2df553",
+        "nominal-cavity-727369f4ea8315d6b37573d0",
+        "nominal-cavity-e1041e06a0c105add133af52",
+        "nominal-cavity-bd50fe176124020cec86cab5",
+        "nominal-cavity-a538a3f868acd0771232294b",
+        "nominal-cavity-af2091214e9229b79f8e1d72",
+        "nominal-cavity-9953f10c52b100ac128b787b",
+        "nominal-cavity-9bfeb08858887cb894dbcf79",
+        "nominal-cavity-89d2ca29e53b5344c8b59076",
+        "nominal-cavity-7a8113025e57b1b03c67a7f7",
+        "nominal-cavity-4c7a229052f93ae297eb3813",
+        "nominal-cavity-950031c106a6f6b49b3f1793",
+        "nominal-cavity-9fec09a255a4112dbb255211",
+        "nominal-cavity-da84d1ffcac8f79e57dc9fbe",
+        "nominal-cavity-7d016ce418598d47a47f68e6",
+        "nominal-cavity-b563c264da671c2ed3b15218",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "complete_tool_path_mm": 44.92187731057135,
+      "outside_supplied_goal_mm3": 41.00800655904673,
+      "physical_history_hash": "sha256:8b76f3ac088d30eab54c0698f315614a95a336131a0dc777e71ff68d38771f0c",
+      "plan_seal": "sha256:e74f677ced7b5a7bba974bacc1364d20b6dc9a48d05ed2be150711631fc8ee37",
+      "public_return": -9.206523189119919,
+      "removed_cells": [
+        [
+          1,
+          89,
+          80
+        ],
+        [
+          2,
+          85,
+          81
+        ],
+        [
+          2,
+          86,
+          79
+        ],
+        [
+          2,
+          86,
+          80
+        ],
+        [
+          2,
+          86,
+          81
+        ],
+        [
+          2,
+          86,
+          82
+        ],
+        [
+          2,
+          86,
+          83
+        ],
+        [
+          2,
+          87,
+          79
+        ],
+        [
+          2,
+          87,
+          80
+        ],
+        [
+          2,
+          87,
+          81
+        ],
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          2,
+          87,
+          83
+        ],
+        [
+          2,
+          87,
+          84
+        ],
+        [
+          2,
+          88,
+          78
+        ],
+        [
+          2,
+          88,
+          79
+        ],
+        [
+          2,
+          88,
+          80
+        ],
+        [
+          2,
+          88,
+          81
+        ],
+        [
+          2,
+          88,
+          82
+        ],
+        [
+          2,
+          88,
+          83
+        ],
+        [
+          2,
+          89,
+          78
+        ],
+        [
+          2,
+          89,
+          79
+        ],
+        [
+          2,
+          89,
+          80
+        ],
+        [
+          2,
+          89,
+          82
+        ],
+        [
+          2,
+          90,
+          78
+        ],
+        [
+          3,
+          84,
+          79
+        ],
+        [
+          3,
+          84,
+          81
+        ],
+        [
+          3,
+          85,
+          78
+        ],
+        [
+          3,
+          85,
+          79
+        ],
+        [
+          3,
+          85,
+          80
+        ],
+        [
+          3,
+          85,
+          81
+        ],
+        [
+          3,
+          85,
+          82
+        ],
+        [
+          3,
+          86,
+          78
+        ],
+        [
+          3,
+          86,
+          82
+        ],
+        [
+          3,
+          87,
+          77
+        ],
+        [
+          3,
+          87,
+          78
+        ],
+        [
+          3,
+          87,
+          80
+        ],
+        [
+          3,
+          87,
+          82
+        ],
+        [
+          3,
+          87,
+          83
+        ],
+        [
+          3,
+          89,
+          78
+        ],
+        [
+          4,
+          85,
+          78
+        ],
+        [
+          4,
+          85,
+          82
+        ],
+        [
+          4,
+          87,
+          78
+        ],
+        [
+          4,
+          87,
+          80
+        ]
+      ],
+      "steps": 23,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 1
+    },
+    {
+      "actions": [
+        "nominal-cavity-65eb7285418ab897be073b2e",
+        "nominal-cavity-f7237d223b7243b9cb768bbb",
+        "nominal-cavity-21ec0dbfebf020555f0aa651",
+        "nominal-cavity-8bfc43e7c187b93ec9ee39be",
+        "nominal-cavity-10a2351d8e47c4512453d88f",
+        "nominal-cavity-25def5ed630564d91d870cec",
+        "nominal-cavity-ae375c2e868855c1ab818f08",
+        "nominal-cavity-ac719cd8f213ea11c75ef61f",
+        "nominal-cavity-1f1616de920009b957d1b654",
+        "nominal-cavity-d1e733215e30bf1cbb34c760",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "complete_tool_path_mm": 25.390626849066837,
+      "outside_supplied_goal_mm3": 12.397772337841268,
+      "physical_history_hash": "sha256:50f29ae385ecda393de8449401ac0b70139aa948e9d3b58b90a65abea3e49583",
+      "plan_seal": "sha256:ef4223892c70f70fc8233e53ff76a6ff1c5f95a52ad1900b7ab40e678d472a3a",
+      "public_return": -0.9875955039802025,
+      "removed_cells": [
+        [
+          119,
+          45,
+          71
+        ],
+        [
+          120,
+          45,
+          70
+        ],
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          121,
+          44,
+          69
+        ],
+        [
+          121,
+          44,
+          72
+        ],
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          122,
+          43,
+          66
+        ],
+        [
+          122,
+          44,
+          67
+        ],
+        [
+          122,
+          45,
+          65
+        ],
+        [
+          122,
+          45,
+          67
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          46,
+          68
+        ],
+        [
+          122,
+          47,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          70
+        ]
+      ],
+      "steps": 11,
+      "subject": "ReMIND-025",
+      "target_fraction": 2.446124116337663e-05,
+      "target_mm3": 1.907349590437118,
+      "target_source_cells": 2,
+      "terminal": "STOP",
+      "update": 1
+    },
+    {
+      "actions": [
+        "nominal-cavity-e494bce491fbd4d819845fa9",
+        "nominal-cavity-1dd75050084eaf2210690f46",
+        "nominal-cavity-f8ac1b9044b2e65fbd124f1e",
+        "nominal-cavity-e68fbee55126128ce40f3d4f",
+        "nominal-cavity-4caff9310d39ad3ed3139c38",
+        "nominal-cavity-2f8b57ff9b7b1d104a43cd64",
+        "nominal-cavity-fa6100be2efc013fadfa6de5",
+        "nominal-cavity-9cad9a6107c5e26baf7f97b8",
+        "nominal-cavity-0fd17d85743319acc94fb826",
+        "nominal-cavity-0ee593534c14808e61b6b6f0",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+      "complete_tool_path_mm": 13.202801425456446,
+      "outside_supplied_goal_mm3": 17.534537797993405,
+      "physical_history_hash": "sha256:8d52c7d1a0ec2d2d4a6855281d8d3e39e92c995a402acf65ad355af878109781",
+      "plan_seal": "sha256:68b6c99a0e3f23f78adf961400d7717103d7216c52ac5b53e9a48c804391c982",
+      "public_return": -3.9701103610241373,
+      "removed_cells": [
+        [
+          242,
+          205,
+          118
+        ],
+        [
+          242,
+          205,
+          119
+        ],
+        [
+          242,
+          205,
+          120
+        ],
+        [
+          242,
+          206,
+          118
+        ],
+        [
+          242,
+          206,
+          119
+        ],
+        [
+          242,
+          206,
+          120
+        ],
+        [
+          242,
+          207,
+          118
+        ],
+        [
+          242,
+          207,
+          119
+        ],
+        [
+          242,
+          207,
+          120
+        ],
+        [
+          242,
+          209,
+          116
+        ],
+        [
+          243,
+          203,
+          115
+        ],
+        [
+          243,
+          204,
+          115
+        ],
+        [
+          243,
+          204,
+          118
+        ],
+        [
+          243,
+          204,
+          119
+        ],
+        [
+          243,
+          204,
+          120
+        ],
+        [
+          243,
+          205,
+          115
+        ],
+        [
+          243,
+          205,
+          117
+        ],
+        [
+          243,
+          205,
+          118
+        ],
+        [
+          243,
+          205,
+          119
+        ],
+        [
+          243,
+          205,
+          120
+        ],
+        [
+          243,
+          206,
+          117
+        ],
+        [
+          243,
+          206,
+          118
+        ],
+        [
+          243,
+          206,
+          119
+        ],
+        [
+          243,
+          206,
+          120
+        ],
+        [
+          243,
+          207,
+          117
+        ],
+        [
+          243,
+          207,
+          118
+        ],
+        [
+          243,
+          207,
+          119
+        ],
+        [
+          243,
+          207,
+          120
+        ],
+        [
+          243,
+          208,
+          116
+        ],
+        [
+          243,
+          208,
+          118
+        ],
+        [
+          243,
+          208,
+          119
+        ],
+        [
+          243,
+          208,
+          120
+        ],
+        [
+          243,
+          209,
+          115
+        ],
+        [
+          243,
+          209,
+          116
+        ],
+        [
+          243,
+          209,
+          117
+        ],
+        [
+          243,
+          210,
+          116
+        ],
+        [
+          244,
+          202,
+          115
+        ],
+        [
+          244,
+          202,
+          116
+        ],
+        [
+          244,
+          202,
+          117
+        ],
+        [
+          244,
+          203,
+          112
+        ],
+        [
+          244,
+          203,
+          115
+        ],
+        [
+          244,
+          203,
+          116
+        ],
+        [
+          244,
+          203,
+          117
+        ],
+        [
+          244,
+          204,
+          112
+        ],
+        [
+          244,
+          204,
+          115
+        ],
+        [
+          244,
+          204,
+          116
+        ],
+        [
+          244,
+          204,
+          117
+        ],
+        [
+          244,
+          204,
+          118
+        ],
+        [
+          244,
+          204,
+          119
+        ],
+        [
+          244,
+          204,
+          120
+        ],
+        [
+          244,
+          205,
+          112
+        ],
+        [
+          244,
+          205,
+          115
+        ],
+        [
+          244,
+          205,
+          116
+        ],
+        [
+          244,
+          205,
+          117
+        ],
+        [
+          244,
+          205,
+          118
+        ],
+        [
+          244,
+          205,
+          119
+        ],
+        [
+          244,
+          206,
+          115
+        ],
+        [
+          244,
+          206,
+          116
+        ],
+        [
+          244,
+          206,
+          117
+        ],
+        [
+          244,
+          206,
+          118
+        ],
+        [
+          244,
+          206,
+          119
+        ],
+        [
+          244,
+          207,
+          116
+        ],
+        [
+          244,
+          207,
+          117
+        ],
+        [
+          244,
+          207,
+          118
+        ],
+        [
+          244,
+          207,
+          119
+        ],
+        [
+          244,
+          208,
+          116
+        ],
+        [
+          244,
+          208,
+          117
+        ],
+        [
+          244,
+          208,
+          118
+        ],
+        [
+          244,
+          208,
+          119
+        ],
+        [
+          244,
+          209,
+          115
+        ],
+        [
+          244,
+          209,
+          116
+        ],
+        [
+          244,
+          209,
+          117
+        ],
+        [
+          244,
+          210,
+          116
+        ],
+        [
+          245,
+          201,
+          115
+        ],
+        [
+          245,
+          201,
+          116
+        ],
+        [
+          245,
+          201,
+          117
+        ],
+        [
+          245,
+          202,
+          115
+        ],
+        [
+          245,
+          202,
+          116
+        ],
+        [
+          245,
+          202,
+          117
+        ],
+        [
+          245,
+          202,
+          118
+        ],
+        [
+          245,
+          203,
+          112
+        ],
+        [
+          245,
+          203,
+          115
+        ],
+        [
+          245,
+          203,
+          116
+        ],
+        [
+          245,
+          203,
+          117
+        ],
+        [
+          245,
+          203,
+          118
+        ],
+        [
+          245,
+          204,
+          115
+        ],
+        [
+          245,
+          204,
+          116
+        ],
+        [
+          245,
+          204,
+          117
+        ],
+        [
+          245,
+          204,
+          118
+        ],
+        [
+          245,
+          204,
+          119
+        ],
+        [
+          245,
+          205,
+          115
+        ],
+        [
+          245,
+          205,
+          116
+        ],
+        [
+          245,
+          205,
+          117
+        ],
+        [
+          245,
+          205,
+          118
+        ],
+        [
+          245,
+          205,
+          119
+        ],
+        [
+          245,
+          206,
+          115
+        ],
+        [
+          245,
+          206,
+          116
+        ],
+        [
+          245,
+          206,
+          117
+        ],
+        [
+          245,
+          206,
+          118
+        ],
+        [
+          245,
+          206,
+          119
+        ],
+        [
+          245,
+          207,
+          116
+        ],
+        [
+          245,
+          207,
+          117
+        ],
+        [
+          245,
+          207,
+          118
+        ],
+        [
+          245,
+          208,
+          114
+        ],
+        [
+          245,
+          208,
+          116
+        ],
+        [
+          245,
+          208,
+          117
+        ],
+        [
+          245,
+          208,
+          118
+        ],
+        [
+          245,
+          209,
+          115
+        ],
+        [
+          245,
+          209,
+          116
+        ],
+        [
+          245,
+          209,
+          117
+        ],
+        [
+          246,
+          201,
+          115
+        ],
+        [
+          246,
+          201,
+          116
+        ],
+        [
+          246,
+          201,
+          117
+        ],
+        [
+          246,
+          202,
+          116
+        ],
+        [
+          246,
+          202,
+          117
+        ],
+        [
+          246,
+          202,
+          118
+        ],
+        [
+          246,
+          203,
+          115
+        ],
+        [
+          246,
+          203,
+          116
+        ],
+        [
+          246,
+          203,
+          117
+        ],
+        [
+          246,
+          203,
+          118
+        ],
+        [
+          246,
+          204,
+          115
+        ],
+        [
+          246,
+          204,
+          116
+        ],
+        [
+          246,
+          204,
+          117
+        ],
+        [
+          246,
+          204,
+          118
+        ],
+        [
+          246,
+          205,
+          115
+        ],
+        [
+          246,
+          205,
+          116
+        ],
+        [
+          246,
+          205,
+          117
+        ],
+        [
+          246,
+          205,
+          118
+        ],
+        [
+          246,
+          206,
+          115
+        ],
+        [
+          246,
+          206,
+          116
+        ],
+        [
+          246,
+          206,
+          117
+        ],
+        [
+          246,
+          206,
+          118
+        ],
+        [
+          246,
+          207,
+          116
+        ],
+        [
+          246,
+          208,
+          115
+        ],
+        [
+          247,
+          202,
+          113
+        ],
+        [
+          247,
+          202,
+          114
+        ]
+      ],
+      "steps": 11,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 2
+    },
+    {
+      "actions": [
+        "nominal-cavity-7b6ba60b4822e7456fdf21ef",
+        "nominal-cavity-6673173cff9c0ff83aa644c9",
+        "nominal-cavity-ba6deb3351dc55fc7c6bdcb5",
+        "nominal-cavity-ba720c5d465204488d2b4b6f",
+        "nominal-cavity-6333ce6ed8386bbd2f2b631e",
+        "nominal-cavity-934bcd9c239bc8efe3141e3c",
+        "nominal-cavity-6b36c0941fe0b00bcdc7439b",
+        "nominal-cavity-0bdec6df9829b5ba708e3fa3",
+        "nominal-cavity-85a09d6165352aea774424f4",
+        "nominal-cavity-7f97040523030b821241ec34",
+        "nominal-cavity-30b5fbd6aa6f8d08cc28e5f3",
+        "nominal-cavity-91d9fc5cdb83ea9be1029481",
+        "nominal-cavity-ef56217d7f056704752ea487",
+        "nominal-cavity-0fcb1ede5b8b903c62387367",
+        "nominal-cavity-891d889992b06ccdd37e3640",
+        "nominal-cavity-89bcb4fec22730cd4207fe6b",
+        "nominal-cavity-c90334cfd5352f83b5b113ba",
+        "nominal-cavity-ac8a1492ad183bca16954649",
+        "nominal-cavity-af52e1d28fdc1504232862b4",
+        "nominal-cavity-ada0030eaa5994e4303a9312",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+      "complete_tool_path_mm": 30.940786413986086,
+      "outside_supplied_goal_mm3": 30.988135802608127,
+      "physical_history_hash": "sha256:60135f63874886f9907e2c29ad2fe56971f60659716e69e2a84aa718c7f071b5",
+      "plan_seal": "sha256:20bb7a885920aea15b2118b604c87fc58038815ea09be9ef1f5705aff32d91c5",
+      "public_return": -7.218567946935611,
+      "removed_cells": [
+        [
+          0,
+          112,
+          70
+        ],
+        [
+          0,
+          112,
+          71
+        ],
+        [
+          0,
+          113,
+          69
+        ],
+        [
+          0,
+          113,
+          71
+        ],
+        [
+          0,
+          113,
+          74
+        ],
+        [
+          0,
+          114,
+          69
+        ],
+        [
+          0,
+          114,
+          71
+        ],
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          115,
+          69
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          116,
+          69
+        ],
+        [
+          0,
+          116,
+          70
+        ],
+        [
+          0,
+          116,
+          71
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          116,
+          75
+        ],
+        [
+          0,
+          117,
+          69
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          117,
+          75
+        ],
+        [
+          0,
+          118,
+          69
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          0,
+          118,
+          71
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          118,
+          73
+        ],
+        [
+          0,
+          119,
+          69
+        ],
+        [
+          0,
+          119,
+          70
+        ],
+        [
+          0,
+          119,
+          71
+        ],
+        [
+          0,
+          119,
+          72
+        ],
+        [
+          0,
+          119,
+          73
+        ],
+        [
+          0,
+          120,
+          70
+        ],
+        [
+          0,
+          120,
+          72
+        ],
+        [
+          1,
+          112,
+          70
+        ],
+        [
+          1,
+          112,
+          71
+        ],
+        [
+          1,
+          113,
+          69
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          113,
+          71
+        ],
+        [
+          1,
+          113,
+          74
+        ],
+        [
+          1,
+          114,
+          69
+        ],
+        [
+          1,
+          114,
+          71
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          115,
+          69
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          116,
+          69
+        ],
+        [
+          1,
+          116,
+          70
+        ],
+        [
+          1,
+          116,
+          71
+        ],
+        [
+          1,
+          116,
+          72
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          116,
+          75
+        ],
+        [
+          1,
+          117,
+          69
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          117,
+          75
+        ],
+        [
+          1,
+          118,
+          69
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          1,
+          118,
+          71
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          118,
+          73
+        ],
+        [
+          1,
+          119,
+          69
+        ],
+        [
+          1,
+          119,
+          70
+        ],
+        [
+          1,
+          119,
+          71
+        ],
+        [
+          1,
+          119,
+          72
+        ],
+        [
+          1,
+          119,
+          73
+        ],
+        [
+          1,
+          120,
+          70
+        ],
+        [
+          1,
+          120,
+          72
+        ],
+        [
+          2,
+          112,
+          70
+        ],
+        [
+          2,
+          112,
+          71
+        ],
+        [
+          2,
+          113,
+          69
+        ],
+        [
+          2,
+          113,
+          70
+        ],
+        [
+          2,
+          113,
+          71
+        ],
+        [
+          2,
+          113,
+          74
+        ],
+        [
+          2,
+          114,
+          69
+        ],
+        [
+          2,
+          114,
+          71
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          115,
+          69
+        ],
+        [
+          2,
+          115,
+          71
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          115,
+          75
+        ],
+        [
+          2,
+          116,
+          69
+        ],
+        [
+          2,
+          116,
+          70
+        ],
+        [
+          2,
+          116,
+          71
+        ],
+        [
+          2,
+          116,
+          72
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          117,
+          69
+        ],
+        [
+          2,
+          117,
+          70
+        ],
+        [
+          2,
+          117,
+          71
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          117,
+          75
+        ],
+        [
+          2,
+          118,
+          69
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          2,
+          118,
+          71
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          2,
+          118,
+          73
+        ],
+        [
+          2,
+          119,
+          69
+        ],
+        [
+          2,
+          119,
+          70
+        ],
+        [
+          2,
+          119,
+          71
+        ],
+        [
+          2,
+          119,
+          72
+        ],
+        [
+          2,
+          120,
+          70
+        ],
+        [
+          2,
+          120,
+          72
+        ],
+        [
+          3,
+          112,
+          70
+        ],
+        [
+          3,
+          113,
+          70
+        ],
+        [
+          3,
+          113,
+          71
+        ],
+        [
+          3,
+          113,
+          74
+        ],
+        [
+          3,
+          114,
+          69
+        ],
+        [
+          3,
+          114,
+          71
+        ],
+        [
+          3,
+          114,
+          74
+        ],
+        [
+          3,
+          115,
+          69
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          69
+        ],
+        [
+          3,
+          116,
+          70
+        ],
+        [
+          3,
+          116,
+          72
+        ],
+        [
+          3,
+          116,
+          74
+        ],
+        [
+          3,
+          117,
+          69
+        ],
+        [
+          3,
+          117,
+          70
+        ],
+        [
+          3,
+          117,
+          72
+        ],
+        [
+          3,
+          118,
+          69
+        ],
+        [
+          3,
+          118,
+          70
+        ],
+        [
+          3,
+          118,
+          71
+        ],
+        [
+          3,
+          118,
+          72
+        ],
+        [
+          3,
+          119,
+          70
+        ],
+        [
+          3,
+          119,
+          72
+        ],
+        [
+          3,
+          120,
+          70
+        ],
+        [
+          4,
+          113,
+          70
+        ],
+        [
+          4,
+          114,
+          70
+        ],
+        [
+          4,
+          115,
+          72
+        ],
+        [
+          4,
+          116,
+          69
+        ],
+        [
+          4,
+          116,
+          72
+        ],
+        [
+          4,
+          117,
+          70
+        ],
+        [
+          4,
+          117,
+          72
+        ],
+        [
+          4,
+          118,
+          70
+        ],
+        [
+          4,
+          119,
+          70
+        ],
+        [
+          5,
+          116,
+          72
+        ]
+      ],
+      "steps": 21,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 2
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:0cca5e3bfb615e975a4843d75c476b42ff1561d99c861585a1185b31ca3e746b",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 2
+    },
+    {
+      "actions": [
+        "nominal-cavity-5619d55e2ea79350449322c1",
+        "nominal-cavity-819b8b6afcdcf104fdd06cf9",
+        "nominal-cavity-27bd620a9a001bca931ebd1b",
+        "nominal-cavity-6b3df076d78ac6d0bea3692e",
+        "nominal-cavity-f1e995b51ddc022616cce0d1",
+        "nominal-cavity-9f3fe87659ac4f7d84bc7ff8",
+        "nominal-cavity-752bfd40566d6516f259155f",
+        "nominal-cavity-0e9925d70b843915e512e465",
+        "nominal-cavity-f8807d50fc1b8aa1f4674c8c",
+        "nominal-cavity-e88fc5a571a734a77d9e71dd",
+        "nominal-cavity-9b383a75d4b5d03ff35cba30",
+        "nominal-cavity-43241d6a3fc308615e646bbc",
+        "nominal-cavity-693f132b02468b0cb6e5bfb0",
+        "nominal-cavity-404f62c977ad3b4ea6f6e70d",
+        "nominal-cavity-9a5e517fe0072b1a42449eb8",
+        "nominal-cavity-10d7fbde91b83c2bc8b44a73",
+        "nominal-cavity-21c4a7baa627e1f625092ac7",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+      "complete_tool_path_mm": 34.17968998912833,
+      "outside_supplied_goal_mm3": 22.888195085245425,
+      "physical_history_hash": "sha256:6635f77f1f310c711441ef0794dc36815aaf7bbc93adef0ecbdd87be7b92fbbc",
+      "plan_seal": "sha256:770046745f796db815a05d34fbb3b97ef2a003009f2ae67af77d8db2038540bb",
+      "public_return": -1.6071195261639761,
+      "removed_cells": [
+        [
+          119,
+          45,
+          71
+        ],
+        [
+          120,
+          45,
+          70
+        ],
+        [
+          121,
+          42,
+          71
+        ],
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          121,
+          43,
+          68
+        ],
+        [
+          121,
+          43,
+          72
+        ],
+        [
+          121,
+          44,
+          69
+        ],
+        [
+          121,
+          44,
+          72
+        ],
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          121,
+          45,
+          69
+        ],
+        [
+          121,
+          46,
+          69
+        ],
+        [
+          122,
+          42,
+          66
+        ],
+        [
+          122,
+          42,
+          67
+        ],
+        [
+          122,
+          43,
+          65
+        ],
+        [
+          122,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          67
+        ],
+        [
+          122,
+          44,
+          66
+        ],
+        [
+          122,
+          44,
+          67
+        ],
+        [
+          122,
+          45,
+          65
+        ],
+        [
+          122,
+          45,
+          66
+        ],
+        [
+          122,
+          45,
+          67
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          46,
+          67
+        ],
+        [
+          122,
+          46,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          68
+        ],
+        [
+          122,
+          48,
+          70
+        ],
+        [
+          123,
+          45,
+          66
+        ]
+      ],
+      "steps": 18,
+      "subject": "ReMIND-025",
+      "target_fraction": 4.892248232675326e-05,
+      "target_mm3": 3.814699180874236,
+      "target_source_cells": 4,
+      "terminal": "STOP",
+      "update": 2
+    },
+    {
+      "actions": [
+        "nominal-cavity-6eedcc2dcc05da473b15d408",
+        "nominal-cavity-684cab11392fc3a5573fe2e1",
+        "nominal-cavity-778bc563dced4ff85a6dce85",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:9a348937102960ad314e8ce6fe473c0a8f5193f5a3bbe4ef0f206d068e918d3c",
+      "complete_tool_path_mm": 7.61700048471203,
+      "outside_supplied_goal_mm3": 7.220103799173754,
+      "physical_history_hash": "sha256:a7085e0c6672af47383fe10e44920770ab369d78f2bf2fbb4cb8f5996f2da40a",
+      "plan_seal": "sha256:a634ab77d6e536d9becb9cae55785deefe591ceb66bb949ed14012cf78ea6d80",
+      "public_return": -1.571637760319463,
+      "removed_cells": [
+        [
+          242,
+          209,
+          116
+        ],
+        [
+          243,
+          206,
+          118
+        ],
+        [
+          243,
+          207,
+          114
+        ],
+        [
+          243,
+          207,
+          115
+        ],
+        [
+          243,
+          208,
+          114
+        ],
+        [
+          243,
+          208,
+          115
+        ],
+        [
+          243,
+          208,
+          116
+        ],
+        [
+          243,
+          209,
+          114
+        ],
+        [
+          243,
+          209,
+          115
+        ],
+        [
+          243,
+          209,
+          116
+        ],
+        [
+          243,
+          209,
+          117
+        ],
+        [
+          243,
+          210,
+          116
+        ],
+        [
+          244,
+          205,
+          118
+        ],
+        [
+          244,
+          206,
+          115
+        ],
+        [
+          244,
+          206,
+          117
+        ],
+        [
+          244,
+          206,
+          118
+        ],
+        [
+          244,
+          206,
+          119
+        ],
+        [
+          244,
+          207,
+          112
+        ],
+        [
+          244,
+          207,
+          114
+        ],
+        [
+          244,
+          207,
+          115
+        ],
+        [
+          244,
+          207,
+          116
+        ],
+        [
+          244,
+          207,
+          118
+        ],
+        [
+          244,
+          208,
+          112
+        ],
+        [
+          244,
+          208,
+          113
+        ],
+        [
+          244,
+          208,
+          114
+        ],
+        [
+          244,
+          208,
+          115
+        ],
+        [
+          244,
+          208,
+          116
+        ],
+        [
+          244,
+          209,
+          114
+        ],
+        [
+          244,
+          209,
+          115
+        ],
+        [
+          244,
+          209,
+          116
+        ],
+        [
+          244,
+          209,
+          117
+        ],
+        [
+          244,
+          210,
+          115
+        ],
+        [
+          244,
+          210,
+          116
+        ],
+        [
+          245,
+          205,
+          118
+        ],
+        [
+          245,
+          206,
+          115
+        ],
+        [
+          245,
+          206,
+          117
+        ],
+        [
+          245,
+          206,
+          118
+        ],
+        [
+          245,
+          206,
+          119
+        ],
+        [
+          245,
+          207,
+          114
+        ],
+        [
+          245,
+          207,
+          115
+        ],
+        [
+          245,
+          207,
+          116
+        ],
+        [
+          245,
+          207,
+          118
+        ],
+        [
+          245,
+          208,
+          114
+        ],
+        [
+          245,
+          208,
+          115
+        ],
+        [
+          245,
+          208,
+          116
+        ],
+        [
+          245,
+          209,
+          115
+        ],
+        [
+          245,
+          209,
+          116
+        ],
+        [
+          245,
+          209,
+          117
+        ],
+        [
+          245,
+          210,
+          115
+        ],
+        [
+          246,
+          205,
+          118
+        ],
+        [
+          246,
+          206,
+          115
+        ],
+        [
+          246,
+          206,
+          117
+        ],
+        [
+          246,
+          206,
+          118
+        ],
+        [
+          246,
+          207,
+          115
+        ],
+        [
+          246,
+          207,
+          116
+        ],
+        [
+          246,
+          208,
+          115
+        ]
+      ],
+      "steps": 4,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 3
+    },
+    {
+      "actions": [
+        "nominal-cavity-eff4d5382797b592bf434937",
+        "nominal-cavity-8558dbaa17cc69e8e992adb2",
+        "nominal-cavity-e7c5b2772114c20eeb3160de",
+        "nominal-cavity-706d02851b6862ae6b68ebfe",
+        "nominal-cavity-3489eb2e523db5e12019ffa2",
+        "nominal-cavity-fa4d510391b9dc2337921a8c",
+        "nominal-cavity-4f9c2949e781abbc9edd9ddd",
+        "nominal-cavity-22e112ead52c1ff912ac7d0c",
+        "nominal-cavity-1c94d7162a92f801cebbec9d",
+        "nominal-cavity-07a454b0a5c275d931c5b96f",
+        "nominal-cavity-c73317db465528a4c449cd4d",
+        "nominal-cavity-f2921c122ae85d2b9ce22075",
+        "nominal-cavity-51210c1d3ffa96f16f9bc696",
+        "nominal-cavity-93bdd6e137bad908b766fbf7",
+        "nominal-cavity-cc8ea52b08028f6fa3c01b79",
+        "nominal-cavity-ce58195626667c6f4f20446f",
+        "nominal-cavity-894ec2f700482ae3491e90cf",
+        "nominal-cavity-a311b342dcebcb301d473f1b",
+        "nominal-cavity-269ba998a4aa65f32b914d5c",
+        "nominal-cavity-11cdf394b3f5b753aa797885",
+        "nominal-cavity-051f15c9b561ff3b94b8d36f",
+        "nominal-cavity-cdeac801d81cc9976c59c3b5",
+        "nominal-cavity-84f6bc841ee3f8b0823f6f66",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:9a348937102960ad314e8ce6fe473c0a8f5193f5a3bbe4ef0f206d068e918d3c",
+      "complete_tool_path_mm": 30.47198661983485,
+      "outside_supplied_goal_mm3": 33.84519796880604,
+      "physical_history_hash": "sha256:44bfb2f7159c3b3357560f0edc39e31f28cb036708bb4a6b34bca93609621c52",
+      "plan_seal": "sha256:e6fe6c27c0bab02ccd1a7393e5878bdbab71c7e46814538e9b5257954192fe13",
+      "public_return": -7.849511580381043,
+      "removed_cells": [
+        [
+          0,
+          112,
+          74
+        ],
+        [
+          0,
+          113,
+          71
+        ],
+        [
+          0,
+          113,
+          74
+        ],
+        [
+          0,
+          113,
+          75
+        ],
+        [
+          0,
+          114,
+          71
+        ],
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          114,
+          75
+        ],
+        [
+          0,
+          115,
+          69
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          115,
+          76
+        ],
+        [
+          0,
+          116,
+          69
+        ],
+        [
+          0,
+          116,
+          70
+        ],
+        [
+          0,
+          116,
+          71
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          116,
+          75
+        ],
+        [
+          0,
+          116,
+          76
+        ],
+        [
+          0,
+          117,
+          69
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          117,
+          75
+        ],
+        [
+          0,
+          117,
+          76
+        ],
+        [
+          0,
+          118,
+          69
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          0,
+          118,
+          71
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          118,
+          73
+        ],
+        [
+          0,
+          119,
+          69
+        ],
+        [
+          0,
+          119,
+          70
+        ],
+        [
+          0,
+          119,
+          71
+        ],
+        [
+          0,
+          119,
+          72
+        ],
+        [
+          0,
+          119,
+          73
+        ],
+        [
+          0,
+          120,
+          70
+        ],
+        [
+          0,
+          120,
+          71
+        ],
+        [
+          0,
+          120,
+          72
+        ],
+        [
+          0,
+          120,
+          73
+        ],
+        [
+          0,
+          121,
+          72
+        ],
+        [
+          1,
+          112,
+          74
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          113,
+          71
+        ],
+        [
+          1,
+          113,
+          74
+        ],
+        [
+          1,
+          113,
+          75
+        ],
+        [
+          1,
+          114,
+          71
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          114,
+          75
+        ],
+        [
+          1,
+          115,
+          69
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          115,
+          76
+        ],
+        [
+          1,
+          116,
+          69
+        ],
+        [
+          1,
+          116,
+          70
+        ],
+        [
+          1,
+          116,
+          71
+        ],
+        [
+          1,
+          116,
+          72
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          116,
+          75
+        ],
+        [
+          1,
+          116,
+          76
+        ],
+        [
+          1,
+          117,
+          69
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          117,
+          75
+        ],
+        [
+          1,
+          117,
+          76
+        ],
+        [
+          1,
+          118,
+          69
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          1,
+          118,
+          71
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          118,
+          73
+        ],
+        [
+          1,
+          119,
+          69
+        ],
+        [
+          1,
+          119,
+          70
+        ],
+        [
+          1,
+          119,
+          71
+        ],
+        [
+          1,
+          119,
+          72
+        ],
+        [
+          1,
+          119,
+          73
+        ],
+        [
+          1,
+          120,
+          70
+        ],
+        [
+          1,
+          120,
+          71
+        ],
+        [
+          1,
+          120,
+          72
+        ],
+        [
+          1,
+          120,
+          73
+        ],
+        [
+          1,
+          121,
+          72
+        ],
+        [
+          2,
+          112,
+          74
+        ],
+        [
+          2,
+          113,
+          70
+        ],
+        [
+          2,
+          113,
+          71
+        ],
+        [
+          2,
+          113,
+          74
+        ],
+        [
+          2,
+          113,
+          75
+        ],
+        [
+          2,
+          114,
+          71
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          114,
+          75
+        ],
+        [
+          2,
+          115,
+          69
+        ],
+        [
+          2,
+          115,
+          71
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          115,
+          75
+        ],
+        [
+          2,
+          116,
+          69
+        ],
+        [
+          2,
+          116,
+          70
+        ],
+        [
+          2,
+          116,
+          71
+        ],
+        [
+          2,
+          116,
+          72
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          116,
+          76
+        ],
+        [
+          2,
+          117,
+          69
+        ],
+        [
+          2,
+          117,
+          70
+        ],
+        [
+          2,
+          117,
+          71
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          117,
+          75
+        ],
+        [
+          2,
+          118,
+          69
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          2,
+          118,
+          71
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          2,
+          118,
+          73
+        ],
+        [
+          2,
+          119,
+          70
+        ],
+        [
+          2,
+          119,
+          71
+        ],
+        [
+          2,
+          119,
+          72
+        ],
+        [
+          2,
+          119,
+          73
+        ],
+        [
+          2,
+          120,
+          70
+        ],
+        [
+          2,
+          120,
+          72
+        ],
+        [
+          2,
+          121,
+          72
+        ],
+        [
+          3,
+          112,
+          74
+        ],
+        [
+          3,
+          113,
+          74
+        ],
+        [
+          3,
+          114,
+          71
+        ],
+        [
+          3,
+          114,
+          74
+        ],
+        [
+          3,
+          114,
+          75
+        ],
+        [
+          3,
+          115,
+          69
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          69
+        ],
+        [
+          3,
+          116,
+          70
+        ],
+        [
+          3,
+          116,
+          72
+        ],
+        [
+          3,
+          116,
+          74
+        ],
+        [
+          3,
+          117,
+          69
+        ],
+        [
+          3,
+          117,
+          70
+        ],
+        [
+          3,
+          117,
+          72
+        ],
+        [
+          3,
+          118,
+          70
+        ],
+        [
+          3,
+          118,
+          71
+        ],
+        [
+          3,
+          118,
+          72
+        ],
+        [
+          3,
+          119,
+          70
+        ],
+        [
+          3,
+          119,
+          72
+        ],
+        [
+          3,
+          120,
+          72
+        ],
+        [
+          4,
+          113,
+          74
+        ],
+        [
+          4,
+          115,
+          72
+        ],
+        [
+          4,
+          116,
+          69
+        ],
+        [
+          4,
+          116,
+          72
+        ],
+        [
+          4,
+          117,
+          72
+        ],
+        [
+          4,
+          118,
+          70
+        ],
+        [
+          4,
+          118,
+          72
+        ],
+        [
+          4,
+          118,
+          74
+        ],
+        [
+          4,
+          119,
+          72
+        ],
+        [
+          4,
+          119,
+          74
+        ],
+        [
+          5,
+          115,
+          72
+        ],
+        [
+          5,
+          116,
+          72
+        ],
+        [
+          5,
+          117,
+          72
+        ],
+        [
+          5,
+          118,
+          72
+        ],
+        [
+          6,
+          116,
+          72
+        ]
+      ],
+      "steps": 24,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 3
+    },
+    {
+      "actions": [
+        "nominal-cavity-32663cf260e45e8bab61d20b",
+        "nominal-cavity-8a09ad123d581c443441da85",
+        "nominal-cavity-05765a1666be976bf14a14ca",
+        "nominal-cavity-df51c105639eb5f11bd4ce51",
+        "nominal-cavity-00b5ca8d201d0966eca9c91a",
+        "nominal-cavity-aec9a56a9328a4c9ea2b5fc7",
+        "nominal-cavity-b5ddd23986b5328015f0264e",
+        "nominal-cavity-0dd4e248fa0bcafe3f74b372",
+        "nominal-cavity-f694f8aed20690380c4b806a",
+        "nominal-cavity-31f990c95dc986176799545e",
+        "nominal-cavity-05e64c9bc0544a6d9b922f2e",
+        "nominal-cavity-b6e17c2832ebe701deb37c39",
+        "nominal-cavity-13de173afc024c0b1cd67b66",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:9a348937102960ad314e8ce6fe473c0a8f5193f5a3bbe4ef0f206d068e918d3c",
+      "complete_tool_path_mm": 24.414063755745314,
+      "outside_supplied_goal_mm3": 26.702887991937406,
+      "physical_history_hash": "sha256:23c8086de534af9a8404fedb1d3684106673bad47ae0ae942bb74627c46500b9",
+      "plan_seal": "sha256:95a893d743fec5c4a3793a112bfa4c41e1d5bdde7b6707291e86a458111d70c2",
+      "public_return": -5.904991662143227,
+      "removed_cells": [
+        [
+          1,
+          89,
+          80
+        ],
+        [
+          2,
+          85,
+          81
+        ],
+        [
+          2,
+          86,
+          80
+        ],
+        [
+          2,
+          86,
+          81
+        ],
+        [
+          2,
+          86,
+          82
+        ],
+        [
+          2,
+          87,
+          80
+        ],
+        [
+          2,
+          87,
+          81
+        ],
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          2,
+          87,
+          83
+        ],
+        [
+          2,
+          88,
+          78
+        ],
+        [
+          2,
+          88,
+          79
+        ],
+        [
+          2,
+          88,
+          82
+        ],
+        [
+          2,
+          89,
+          78
+        ],
+        [
+          2,
+          89,
+          79
+        ],
+        [
+          2,
+          89,
+          80
+        ],
+        [
+          2,
+          89,
+          82
+        ],
+        [
+          2,
+          90,
+          78
+        ],
+        [
+          3,
+          85,
+          78
+        ],
+        [
+          3,
+          85,
+          80
+        ],
+        [
+          3,
+          86,
+          77
+        ],
+        [
+          3,
+          87,
+          77
+        ],
+        [
+          3,
+          87,
+          78
+        ],
+        [
+          3,
+          87,
+          80
+        ],
+        [
+          3,
+          87,
+          82
+        ],
+        [
+          3,
+          87,
+          83
+        ],
+        [
+          3,
+          88,
+          77
+        ],
+        [
+          3,
+          89,
+          78
+        ],
+        [
+          4,
+          87,
+          77
+        ]
+      ],
+      "steps": 14,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 3
+    },
+    {
+      "actions": [
+        "nominal-cavity-7e91d4f1dec562ec1ff56ecf",
+        "nominal-cavity-6842db783ad8c2359aa48184",
+        "nominal-cavity-62acd4e6073826e46407fc3a",
+        "nominal-cavity-2820af83ce40b67a66ce6d0e",
+        "nominal-cavity-7ced60d87bc3f16ac42b00ae",
+        "nominal-cavity-3fffd003b04af4830832fd55",
+        "nominal-cavity-411fe91d915cc8235523040b",
+        "nominal-cavity-044e6fbb321ac45167cd506c",
+        "nominal-cavity-01cc3fa52ccc65dbe483bb77",
+        "nominal-cavity-ca52a9b65a5d0c0e9034b288",
+        "nominal-cavity-79119bfb1889ce70fb402453",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:9a348937102960ad314e8ce6fe473c0a8f5193f5a3bbe4ef0f206d068e918d3c",
+      "complete_tool_path_mm": 24.414064277948814,
+      "outside_supplied_goal_mm3": 17.166146313934064,
+      "physical_history_hash": "sha256:96ca9c3e0f9c8261dde880a9df39933b850ab6a3f792383439d24b9bd0f6cbf3",
+      "plan_seal": "sha256:fc49ab18fc81d2610939cf06d5cfc4f47ef9e1c33b5304412073bbd5f504d268",
+      "public_return": -2.0002937366276434,
+      "removed_cells": [
+        [
+          120,
+          44,
+          69
+        ],
+        [
+          120,
+          45,
+          70
+        ],
+        [
+          121,
+          42,
+          71
+        ],
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          121,
+          43,
+          72
+        ],
+        [
+          121,
+          44,
+          68
+        ],
+        [
+          121,
+          44,
+          69
+        ],
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          121,
+          45,
+          69
+        ],
+        [
+          122,
+          41,
+          66
+        ],
+        [
+          122,
+          42,
+          65
+        ],
+        [
+          122,
+          42,
+          66
+        ],
+        [
+          122,
+          42,
+          67
+        ],
+        [
+          122,
+          43,
+          65
+        ],
+        [
+          122,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          67
+        ],
+        [
+          122,
+          44,
+          66
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          70
+        ]
+      ],
+      "steps": 12,
+      "subject": "ReMIND-025",
+      "target_fraction": 2.446124116337663e-05,
+      "target_mm3": 1.907349590437118,
+      "target_source_cells": 2,
+      "terminal": "STOP",
+      "update": 3
+    },
+    {
+      "actions": [
+        "nominal-cavity-f94e1d942a9e2af40190c77f",
+        "nominal-cavity-ea2931566c7649e4b42916a3",
+        "nominal-cavity-4433995a81d3b3ea67ae5a98",
+        "nominal-cavity-f95f91d12ec38a70efef89ed",
+        "nominal-cavity-4dfc238c9bf3ce70e6c0d91d",
+        "nominal-cavity-8ed83b1d18d998973729f9ce",
+        "nominal-cavity-658f0fd1669f95bbf09517e1",
+        "nominal-cavity-01f478fff0df5bf194c27b33",
+        "nominal-cavity-3bf8c64480622fce13d645d2",
+        "nominal-cavity-49089ff8de85269a61cf3235",
+        "nominal-cavity-16f85edf78991bc6157fd739",
+        "nominal-cavity-686d42722c2589febc2e37ea",
+        "nominal-cavity-1275ecf7edbe4625b84656f0",
+        "nominal-cavity-456db5b6c91eb85e312c64e8",
+        "nominal-cavity-e35c5cc4d53ec7b80f03d502",
+        "nominal-cavity-9436140b2a058e2ef96756f7",
+        "nominal-cavity-48d3ce51c6c161709e7e433e",
+        "nominal-cavity-b8bd4b084f946f9bf079720e",
+        "nominal-cavity-e1d10b232d82b496947a7fcb",
+        "nominal-cavity-3379baeb32ab5e362c5e1e40",
+        "nominal-cavity-1e534dd60cfc501d484bbe16",
+        "nominal-cavity-6f56394b2f7517f83c965528",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+      "complete_tool_path_mm": 51.7956034781464,
+      "outside_supplied_goal_mm3": 19.855285447727823,
+      "physical_history_hash": "sha256:5eb449cb646aa2e51eecb957764b89c106567f7078b9029f2511f24c3eb808dc",
+      "plan_seal": "sha256:e33330e8492d01ad3980977e02047f9c054c4571bd2b6302ac078c94fd5285cd",
+      "public_return": -4.982852693023712,
+      "removed_cells": [
+        [
+          240,
+          208,
+          116
+        ],
+        [
+          241,
+          206,
+          116
+        ],
+        [
+          241,
+          207,
+          116
+        ],
+        [
+          241,
+          208,
+          115
+        ],
+        [
+          241,
+          208,
+          116
+        ],
+        [
+          241,
+          208,
+          117
+        ],
+        [
+          241,
+          208,
+          118
+        ],
+        [
+          241,
+          209,
+          116
+        ],
+        [
+          242,
+          204,
+          118
+        ],
+        [
+          242,
+          205,
+          116
+        ],
+        [
+          242,
+          206,
+          115
+        ],
+        [
+          242,
+          206,
+          116
+        ],
+        [
+          242,
+          206,
+          117
+        ],
+        [
+          242,
+          207,
+          116
+        ],
+        [
+          242,
+          207,
+          118
+        ],
+        [
+          242,
+          208,
+          115
+        ],
+        [
+          242,
+          208,
+          116
+        ],
+        [
+          242,
+          208,
+          117
+        ],
+        [
+          242,
+          208,
+          118
+        ],
+        [
+          242,
+          208,
+          119
+        ],
+        [
+          242,
+          209,
+          116
+        ],
+        [
+          242,
+          209,
+          118
+        ],
+        [
+          243,
+          203,
+          118
+        ],
+        [
+          243,
+          204,
+          116
+        ],
+        [
+          243,
+          204,
+          117
+        ],
+        [
+          243,
+          204,
+          118
+        ],
+        [
+          243,
+          204,
+          119
+        ],
+        [
+          243,
+          205,
+          116
+        ],
+        [
+          243,
+          205,
+          118
+        ],
+        [
+          243,
+          206,
+          115
+        ],
+        [
+          243,
+          206,
+          116
+        ],
+        [
+          243,
+          206,
+          117
+        ],
+        [
+          243,
+          206,
+          118
+        ],
+        [
+          243,
+          207,
+          114
+        ],
+        [
+          243,
+          207,
+          115
+        ],
+        [
+          243,
+          207,
+          116
+        ],
+        [
+          243,
+          207,
+          117
+        ],
+        [
+          243,
+          207,
+          118
+        ],
+        [
+          243,
+          208,
+          114
+        ],
+        [
+          243,
+          208,
+          115
+        ],
+        [
+          243,
+          208,
+          116
+        ],
+        [
+          243,
+          208,
+          117
+        ],
+        [
+          243,
+          208,
+          118
+        ],
+        [
+          243,
+          208,
+          119
+        ],
+        [
+          243,
+          209,
+          114
+        ],
+        [
+          243,
+          209,
+          115
+        ],
+        [
+          243,
+          209,
+          116
+        ],
+        [
+          243,
+          209,
+          117
+        ],
+        [
+          243,
+          209,
+          118
+        ],
+        [
+          244,
+          203,
+          116
+        ],
+        [
+          244,
+          203,
+          117
+        ],
+        [
+          244,
+          203,
+          118
+        ],
+        [
+          244,
+          203,
+          119
+        ],
+        [
+          244,
+          204,
+          115
+        ],
+        [
+          244,
+          204,
+          116
+        ],
+        [
+          244,
+          204,
+          117
+        ],
+        [
+          244,
+          204,
+          118
+        ],
+        [
+          244,
+          204,
+          119
+        ],
+        [
+          244,
+          205,
+          115
+        ],
+        [
+          244,
+          205,
+          116
+        ],
+        [
+          244,
+          205,
+          117
+        ],
+        [
+          244,
+          205,
+          118
+        ],
+        [
+          244,
+          205,
+          119
+        ],
+        [
+          244,
+          206,
+          115
+        ],
+        [
+          244,
+          206,
+          116
+        ],
+        [
+          244,
+          206,
+          117
+        ],
+        [
+          244,
+          206,
+          118
+        ],
+        [
+          244,
+          206,
+          119
+        ],
+        [
+          244,
+          207,
+          114
+        ],
+        [
+          244,
+          207,
+          115
+        ],
+        [
+          244,
+          207,
+          116
+        ],
+        [
+          244,
+          207,
+          117
+        ],
+        [
+          244,
+          207,
+          118
+        ],
+        [
+          244,
+          207,
+          119
+        ],
+        [
+          244,
+          208,
+          113
+        ],
+        [
+          244,
+          208,
+          114
+        ],
+        [
+          244,
+          208,
+          115
+        ],
+        [
+          244,
+          208,
+          116
+        ],
+        [
+          244,
+          208,
+          117
+        ],
+        [
+          244,
+          208,
+          118
+        ],
+        [
+          244,
+          208,
+          119
+        ],
+        [
+          244,
+          209,
+          114
+        ],
+        [
+          244,
+          209,
+          115
+        ],
+        [
+          244,
+          209,
+          116
+        ],
+        [
+          244,
+          209,
+          117
+        ],
+        [
+          244,
+          209,
+          118
+        ],
+        [
+          244,
+          209,
+          119
+        ],
+        [
+          244,
+          210,
+          115
+        ],
+        [
+          244,
+          210,
+          116
+        ],
+        [
+          244,
+          210,
+          117
+        ],
+        [
+          245,
+          201,
+          118
+        ],
+        [
+          245,
+          202,
+          117
+        ],
+        [
+          245,
+          202,
+          118
+        ],
+        [
+          245,
+          202,
+          119
+        ],
+        [
+          245,
+          203,
+          116
+        ],
+        [
+          245,
+          203,
+          117
+        ],
+        [
+          245,
+          203,
+          118
+        ],
+        [
+          245,
+          203,
+          119
+        ],
+        [
+          245,
+          204,
+          115
+        ],
+        [
+          245,
+          204,
+          116
+        ],
+        [
+          245,
+          204,
+          117
+        ],
+        [
+          245,
+          204,
+          118
+        ],
+        [
+          245,
+          204,
+          119
+        ],
+        [
+          245,
+          205,
+          115
+        ],
+        [
+          245,
+          205,
+          116
+        ],
+        [
+          245,
+          205,
+          117
+        ],
+        [
+          245,
+          205,
+          118
+        ],
+        [
+          245,
+          205,
+          119
+        ],
+        [
+          245,
+          206,
+          115
+        ],
+        [
+          245,
+          206,
+          116
+        ],
+        [
+          245,
+          206,
+          117
+        ],
+        [
+          245,
+          206,
+          118
+        ],
+        [
+          245,
+          206,
+          119
+        ],
+        [
+          245,
+          207,
+          114
+        ],
+        [
+          245,
+          207,
+          115
+        ],
+        [
+          245,
+          207,
+          116
+        ],
+        [
+          245,
+          207,
+          117
+        ],
+        [
+          245,
+          207,
+          118
+        ],
+        [
+          245,
+          208,
+          114
+        ],
+        [
+          245,
+          208,
+          115
+        ],
+        [
+          245,
+          208,
+          116
+        ],
+        [
+          245,
+          208,
+          117
+        ],
+        [
+          245,
+          208,
+          118
+        ],
+        [
+          245,
+          209,
+          115
+        ],
+        [
+          245,
+          209,
+          116
+        ],
+        [
+          245,
+          209,
+          117
+        ],
+        [
+          245,
+          209,
+          118
+        ],
+        [
+          245,
+          210,
+          115
+        ],
+        [
+          246,
+          200,
+          118
+        ],
+        [
+          246,
+          201,
+          117
+        ],
+        [
+          246,
+          201,
+          118
+        ],
+        [
+          246,
+          201,
+          119
+        ],
+        [
+          246,
+          202,
+          117
+        ],
+        [
+          246,
+          202,
+          118
+        ],
+        [
+          246,
+          202,
+          119
+        ],
+        [
+          246,
+          203,
+          116
+        ],
+        [
+          246,
+          203,
+          117
+        ],
+        [
+          246,
+          203,
+          118
+        ],
+        [
+          246,
+          203,
+          119
+        ],
+        [
+          246,
+          204,
+          115
+        ],
+        [
+          246,
+          204,
+          116
+        ],
+        [
+          246,
+          204,
+          117
+        ],
+        [
+          246,
+          204,
+          118
+        ],
+        [
+          246,
+          205,
+          115
+        ],
+        [
+          246,
+          205,
+          116
+        ],
+        [
+          246,
+          205,
+          117
+        ],
+        [
+          246,
+          205,
+          118
+        ],
+        [
+          246,
+          206,
+          115
+        ],
+        [
+          246,
+          206,
+          116
+        ],
+        [
+          246,
+          206,
+          117
+        ],
+        [
+          246,
+          206,
+          118
+        ],
+        [
+          246,
+          207,
+          115
+        ],
+        [
+          246,
+          207,
+          116
+        ],
+        [
+          246,
+          208,
+          115
+        ]
+      ],
+      "steps": 23,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 4
+    },
+    {
+      "actions": [
+        "nominal-cavity-dcf8aae83f38fa820abd17f4",
+        "nominal-cavity-7572a2c916831419db797e85",
+        "nominal-cavity-d1339b907275eed002e12773",
+        "nominal-cavity-149a35ff924b8870d4c5f23f",
+        "nominal-cavity-72a90eba645d52bfb0d20122",
+        "nominal-cavity-a1439db938534a6bc87e6fb5",
+        "nominal-cavity-93e1c4a20968a942b99b9166",
+        "nominal-cavity-0f71984d48dc9ad91f5b4346",
+        "nominal-cavity-d35f0e96ba88f8a19349db01",
+        "nominal-cavity-fb8f7a20d5c4bd96023f6288",
+        "nominal-cavity-022064adc200e0f5b0de35fb",
+        "nominal-cavity-7cc56cf3f321b7292444646e",
+        "nominal-cavity-3143a5e84064937a50b979e5",
+        "nominal-cavity-0021f314ddd3fd01d41e0232",
+        "nominal-cavity-dc8e461b9259bdd4d44ea0ea",
+        "nominal-cavity-652c0f0fd1350af174b695c0",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+      "complete_tool_path_mm": 15.939193001144487,
+      "outside_supplied_goal_mm3": 24.39491541907448,
+      "physical_history_hash": "sha256:2804e4ae32c5f30efe99ef735f568ec9cc9d0b8b54d938cd902ad97a75a496bd",
+      "plan_seal": "sha256:62572b4c020d23d51d199d3be44ca7e93e20c0da6830e34d0589a914a3749724",
+      "public_return": -5.584922276816041,
+      "removed_cells": [
+        [
+          0,
+          112,
+          71
+        ],
+        [
+          0,
+          112,
+          74
+        ],
+        [
+          0,
+          113,
+          71
+        ],
+        [
+          0,
+          113,
+          74
+        ],
+        [
+          0,
+          113,
+          75
+        ],
+        [
+          0,
+          114,
+          71
+        ],
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          114,
+          75
+        ],
+        [
+          0,
+          115,
+          69
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          115,
+          76
+        ],
+        [
+          0,
+          116,
+          69
+        ],
+        [
+          0,
+          116,
+          70
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          116,
+          75
+        ],
+        [
+          0,
+          116,
+          76
+        ],
+        [
+          0,
+          117,
+          69
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          117,
+          75
+        ],
+        [
+          0,
+          117,
+          76
+        ],
+        [
+          0,
+          118,
+          69
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          0,
+          118,
+          71
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          119,
+          69
+        ],
+        [
+          0,
+          119,
+          70
+        ],
+        [
+          0,
+          119,
+          71
+        ],
+        [
+          0,
+          119,
+          72
+        ],
+        [
+          0,
+          120,
+          70
+        ],
+        [
+          1,
+          112,
+          71
+        ],
+        [
+          1,
+          112,
+          74
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          113,
+          71
+        ],
+        [
+          1,
+          113,
+          74
+        ],
+        [
+          1,
+          113,
+          75
+        ],
+        [
+          1,
+          114,
+          71
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          114,
+          75
+        ],
+        [
+          1,
+          115,
+          69
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          115,
+          76
+        ],
+        [
+          1,
+          116,
+          69
+        ],
+        [
+          1,
+          116,
+          70
+        ],
+        [
+          1,
+          116,
+          72
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          116,
+          75
+        ],
+        [
+          1,
+          116,
+          76
+        ],
+        [
+          1,
+          117,
+          69
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          117,
+          75
+        ],
+        [
+          1,
+          117,
+          76
+        ],
+        [
+          1,
+          118,
+          69
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          1,
+          118,
+          71
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          119,
+          69
+        ],
+        [
+          1,
+          119,
+          70
+        ],
+        [
+          1,
+          119,
+          71
+        ],
+        [
+          1,
+          119,
+          72
+        ],
+        [
+          1,
+          120,
+          70
+        ],
+        [
+          2,
+          112,
+          74
+        ],
+        [
+          2,
+          113,
+          71
+        ],
+        [
+          2,
+          113,
+          74
+        ],
+        [
+          2,
+          114,
+          71
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          114,
+          75
+        ],
+        [
+          2,
+          115,
+          71
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          115,
+          75
+        ],
+        [
+          2,
+          116,
+          69
+        ],
+        [
+          2,
+          116,
+          70
+        ],
+        [
+          2,
+          116,
+          72
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          116,
+          76
+        ],
+        [
+          2,
+          117,
+          70
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          117,
+          75
+        ],
+        [
+          2,
+          118,
+          69
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          2,
+          118,
+          71
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          2,
+          119,
+          70
+        ],
+        [
+          2,
+          119,
+          72
+        ],
+        [
+          2,
+          120,
+          70
+        ],
+        [
+          3,
+          113,
+          74
+        ],
+        [
+          3,
+          114,
+          71
+        ],
+        [
+          3,
+          114,
+          74
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          72
+        ],
+        [
+          3,
+          116,
+          74
+        ],
+        [
+          3,
+          117,
+          70
+        ],
+        [
+          3,
+          117,
+          72
+        ],
+        [
+          3,
+          118,
+          70
+        ],
+        [
+          3,
+          118,
+          72
+        ],
+        [
+          3,
+          119,
+          70
+        ],
+        [
+          3,
+          119,
+          72
+        ],
+        [
+          4,
+          115,
+          72
+        ],
+        [
+          4,
+          118,
+          70
+        ],
+        [
+          4,
+          118,
+          72
+        ]
+      ],
+      "steps": 17,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 4
+    },
+    {
+      "actions": [
+        "nominal-cavity-32663cf260e45e8bab61d20b",
+        "nominal-cavity-8a09ad123d581c443441da85",
+        "nominal-cavity-a5a6d1ce70a0c47232ea31a6",
+        "nominal-cavity-3d1f37f44b2f2914b6f59ecc",
+        "nominal-cavity-766e905e02d5907f39c4e2ee",
+        "nominal-cavity-28133b4aae4e1b708022f44f",
+        "nominal-cavity-dc5fb19f3465b0ae24d78884",
+        "nominal-cavity-a1ac1c15acf6e594c4076093",
+        "nominal-cavity-eb47ddec562b4f6561125767",
+        "nominal-cavity-86e6ab81d4a68f102d3a3335",
+        "nominal-cavity-7d9a9809771d09d37a2a0142",
+        "nominal-cavity-85119cd3686dabf7d801c9ab",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+      "complete_tool_path_mm": 21.484376105055862,
+      "outside_supplied_goal_mm3": 27.656562563078026,
+      "physical_history_hash": "sha256:9864896460b1fdac49fa3836ccee972b6da0256af9e49d956cb54fb0b7d9f603",
+      "plan_seal": "sha256:78f057d4a13157199ec6785df7beec14397b735e227c584e068336d683c851e4",
+      "public_return": -6.032796888720663,
+      "removed_cells": [
+        [
+          2,
+          85,
+          81
+        ],
+        [
+          2,
+          86,
+          79
+        ],
+        [
+          2,
+          86,
+          80
+        ],
+        [
+          2,
+          86,
+          81
+        ],
+        [
+          2,
+          86,
+          82
+        ],
+        [
+          2,
+          86,
+          83
+        ],
+        [
+          2,
+          87,
+          79
+        ],
+        [
+          2,
+          87,
+          80
+        ],
+        [
+          2,
+          87,
+          81
+        ],
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          2,
+          87,
+          83
+        ],
+        [
+          2,
+          87,
+          84
+        ],
+        [
+          2,
+          88,
+          78
+        ],
+        [
+          2,
+          88,
+          81
+        ],
+        [
+          2,
+          88,
+          82
+        ],
+        [
+          2,
+          88,
+          83
+        ],
+        [
+          3,
+          84,
+          79
+        ],
+        [
+          3,
+          84,
+          81
+        ],
+        [
+          3,
+          85,
+          78
+        ],
+        [
+          3,
+          85,
+          79
+        ],
+        [
+          3,
+          85,
+          80
+        ],
+        [
+          3,
+          85,
+          81
+        ],
+        [
+          3,
+          86,
+          79
+        ],
+        [
+          3,
+          86,
+          80
+        ],
+        [
+          3,
+          87,
+          78
+        ],
+        [
+          3,
+          87,
+          80
+        ],
+        [
+          3,
+          87,
+          82
+        ],
+        [
+          3,
+          87,
+          83
+        ],
+        [
+          4,
+          85,
+          80
+        ]
+      ],
+      "steps": 13,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 4
+    },
+    {
+      "actions": [
+        "nominal-cavity-e026d1f4c5208cbf312a1788",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+      "complete_tool_path_mm": 2.92968771335386,
+      "outside_supplied_goal_mm3": 1.907349590437118,
+      "physical_history_hash": "sha256:6fa7fea39331b8a6219b4976e13c2efb4fb236e1592e23e34a81590a26b6394e",
+      "plan_seal": "sha256:8995cfdb0d4287b6d449c027bb04d8f8d22a7f70b661d6fe911ed7d07ccac4b9",
+      "public_return": -0.41439960580077745,
+      "removed_cells": [
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          66
+        ]
+      ],
+      "steps": 2,
+      "subject": "ReMIND-025",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 4
+    },
+    {
+      "actions": [
+        "nominal-cavity-b483e46918b77983b1740697",
+        "nominal-cavity-0bc58f5613fde81acfc52601",
+        "nominal-cavity-8f231be538b10fc77af36901",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+      "complete_tool_path_mm": 3.5546004186831035,
+      "outside_supplied_goal_mm3": 13.40876419846554,
+      "physical_history_hash": "sha256:c272804b9f5d30c12da71268ea01f59bc0dc1ab2257613bd6ff4a2eec0fc93ab",
+      "plan_seal": "sha256:90edf5defb72a8c93c3b7cddffeff5c4c5a354cba124492c6aa435711f4db385",
+      "public_return": -2.8353074401117917,
+      "removed_cells": [
+        [
+          242,
+          203,
+          117
+        ],
+        [
+          242,
+          203,
+          118
+        ],
+        [
+          242,
+          203,
+          119
+        ],
+        [
+          242,
+          204,
+          117
+        ],
+        [
+          242,
+          204,
+          118
+        ],
+        [
+          242,
+          204,
+          119
+        ],
+        [
+          242,
+          205,
+          117
+        ],
+        [
+          242,
+          205,
+          118
+        ],
+        [
+          242,
+          205,
+          119
+        ],
+        [
+          243,
+          202,
+          117
+        ],
+        [
+          243,
+          202,
+          118
+        ],
+        [
+          243,
+          202,
+          119
+        ],
+        [
+          243,
+          203,
+          116
+        ],
+        [
+          243,
+          203,
+          117
+        ],
+        [
+          243,
+          203,
+          118
+        ],
+        [
+          243,
+          203,
+          119
+        ],
+        [
+          243,
+          203,
+          120
+        ],
+        [
+          243,
+          204,
+          116
+        ],
+        [
+          243,
+          204,
+          117
+        ],
+        [
+          243,
+          204,
+          118
+        ],
+        [
+          243,
+          204,
+          119
+        ],
+        [
+          243,
+          204,
+          120
+        ],
+        [
+          243,
+          205,
+          116
+        ],
+        [
+          243,
+          205,
+          117
+        ],
+        [
+          243,
+          205,
+          118
+        ],
+        [
+          243,
+          205,
+          119
+        ],
+        [
+          243,
+          205,
+          120
+        ],
+        [
+          243,
+          206,
+          117
+        ],
+        [
+          243,
+          206,
+          118
+        ],
+        [
+          243,
+          206,
+          119
+        ],
+        [
+          244,
+          202,
+          115
+        ],
+        [
+          244,
+          202,
+          116
+        ],
+        [
+          244,
+          202,
+          117
+        ],
+        [
+          244,
+          202,
+          118
+        ],
+        [
+          244,
+          202,
+          119
+        ],
+        [
+          244,
+          203,
+          115
+        ],
+        [
+          244,
+          203,
+          116
+        ],
+        [
+          244,
+          203,
+          117
+        ],
+        [
+          244,
+          203,
+          118
+        ],
+        [
+          244,
+          203,
+          119
+        ],
+        [
+          244,
+          203,
+          120
+        ],
+        [
+          244,
+          204,
+          115
+        ],
+        [
+          244,
+          204,
+          116
+        ],
+        [
+          244,
+          204,
+          117
+        ],
+        [
+          244,
+          204,
+          118
+        ],
+        [
+          244,
+          204,
+          119
+        ],
+        [
+          244,
+          204,
+          120
+        ],
+        [
+          244,
+          205,
+          116
+        ],
+        [
+          244,
+          205,
+          117
+        ],
+        [
+          244,
+          205,
+          118
+        ],
+        [
+          244,
+          205,
+          119
+        ],
+        [
+          244,
+          206,
+          117
+        ],
+        [
+          244,
+          206,
+          118
+        ],
+        [
+          244,
+          206,
+          119
+        ],
+        [
+          245,
+          201,
+          115
+        ],
+        [
+          245,
+          201,
+          116
+        ],
+        [
+          245,
+          201,
+          117
+        ],
+        [
+          245,
+          202,
+          115
+        ],
+        [
+          245,
+          202,
+          116
+        ],
+        [
+          245,
+          202,
+          117
+        ],
+        [
+          245,
+          202,
+          118
+        ],
+        [
+          245,
+          202,
+          119
+        ],
+        [
+          245,
+          203,
+          115
+        ],
+        [
+          245,
+          203,
+          116
+        ],
+        [
+          245,
+          203,
+          117
+        ],
+        [
+          245,
+          203,
+          118
+        ],
+        [
+          245,
+          203,
+          119
+        ],
+        [
+          245,
+          204,
+          115
+        ],
+        [
+          245,
+          204,
+          116
+        ],
+        [
+          245,
+          204,
+          117
+        ],
+        [
+          245,
+          204,
+          118
+        ],
+        [
+          245,
+          204,
+          119
+        ],
+        [
+          245,
+          205,
+          115
+        ],
+        [
+          245,
+          205,
+          116
+        ],
+        [
+          245,
+          205,
+          117
+        ],
+        [
+          245,
+          205,
+          118
+        ],
+        [
+          245,
+          205,
+          119
+        ],
+        [
+          245,
+          206,
+          117
+        ],
+        [
+          245,
+          206,
+          118
+        ],
+        [
+          245,
+          206,
+          119
+        ],
+        [
+          245,
+          208,
+          118
+        ],
+        [
+          246,
+          201,
+          115
+        ],
+        [
+          246,
+          201,
+          116
+        ],
+        [
+          246,
+          201,
+          117
+        ],
+        [
+          246,
+          202,
+          116
+        ],
+        [
+          246,
+          202,
+          117
+        ],
+        [
+          246,
+          202,
+          118
+        ],
+        [
+          246,
+          202,
+          119
+        ],
+        [
+          246,
+          203,
+          115
+        ],
+        [
+          246,
+          203,
+          116
+        ],
+        [
+          246,
+          203,
+          117
+        ],
+        [
+          246,
+          203,
+          118
+        ],
+        [
+          246,
+          203,
+          119
+        ],
+        [
+          246,
+          204,
+          115
+        ],
+        [
+          246,
+          204,
+          116
+        ],
+        [
+          246,
+          204,
+          117
+        ],
+        [
+          246,
+          204,
+          118
+        ],
+        [
+          246,
+          205,
+          115
+        ],
+        [
+          246,
+          205,
+          116
+        ],
+        [
+          246,
+          205,
+          117
+        ],
+        [
+          246,
+          205,
+          118
+        ],
+        [
+          246,
+          206,
+          117
+        ],
+        [
+          246,
+          206,
+          118
+        ],
+        [
+          247,
+          202,
+          114
+        ]
+      ],
+      "steps": 4,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 5
+    },
+    {
+      "actions": [
+        "nominal-cavity-7d1e95b0c4c4ea2cc5975485",
+        "nominal-cavity-95a5ac853133173eb40e8d97",
+        "nominal-cavity-5bae3cee87aee6248a9da5b3",
+        "nominal-cavity-f6e6c94584c17b2ac0fa1f93",
+        "nominal-cavity-64da5d6769a86fec82f1f107",
+        "nominal-cavity-22236103c1ba20991bdf1ea3",
+        "nominal-cavity-ef3a3cad5799c764f18c8d7c",
+        "nominal-cavity-fb097926a3744ea3634c2abf",
+        "nominal-cavity-14585d5d726811f223f875e1",
+        "nominal-cavity-c759881fb27478d340c317d1",
+        "nominal-cavity-b262bf2e3fd97fe79070e5cd",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+      "complete_tool_path_mm": 16.40799279529566,
+      "outside_supplied_goal_mm3": 18.680791086678656,
+      "physical_history_hash": "sha256:30b6c71a314117c295d21660520ab6e7a53814ef5dfe0db727adc7f14b387ec2",
+      "plan_seal": "sha256:45a79b12816753aed4085880b9bd475ebc7bd099e3e9cae2d89d4b5c34d3c21a",
+      "public_return": -4.142566210131027,
+      "removed_cells": [
+        [
+          0,
+          112,
+          74
+        ],
+        [
+          0,
+          113,
+          74
+        ],
+        [
+          0,
+          113,
+          75
+        ],
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          114,
+          75
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          115,
+          76
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          116,
+          75
+        ],
+        [
+          0,
+          116,
+          76
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          117,
+          75
+        ],
+        [
+          0,
+          117,
+          76
+        ],
+        [
+          0,
+          118,
+          71
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          118,
+          73
+        ],
+        [
+          0,
+          119,
+          71
+        ],
+        [
+          0,
+          119,
+          72
+        ],
+        [
+          0,
+          119,
+          73
+        ],
+        [
+          0,
+          120,
+          72
+        ],
+        [
+          1,
+          112,
+          74
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          113,
+          74
+        ],
+        [
+          1,
+          113,
+          75
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          114,
+          75
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          115,
+          76
+        ],
+        [
+          1,
+          116,
+          72
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          116,
+          75
+        ],
+        [
+          1,
+          116,
+          76
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          117,
+          75
+        ],
+        [
+          1,
+          117,
+          76
+        ],
+        [
+          1,
+          118,
+          71
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          118,
+          73
+        ],
+        [
+          1,
+          119,
+          71
+        ],
+        [
+          1,
+          119,
+          72
+        ],
+        [
+          1,
+          119,
+          73
+        ],
+        [
+          1,
+          120,
+          72
+        ],
+        [
+          2,
+          112,
+          74
+        ],
+        [
+          2,
+          113,
+          70
+        ],
+        [
+          2,
+          113,
+          74
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          114,
+          75
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          115,
+          75
+        ],
+        [
+          2,
+          116,
+          72
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          116,
+          76
+        ],
+        [
+          2,
+          117,
+          71
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          117,
+          75
+        ],
+        [
+          2,
+          118,
+          71
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          2,
+          118,
+          73
+        ],
+        [
+          2,
+          119,
+          71
+        ],
+        [
+          2,
+          119,
+          72
+        ],
+        [
+          2,
+          119,
+          73
+        ],
+        [
+          2,
+          120,
+          72
+        ],
+        [
+          3,
+          113,
+          74
+        ],
+        [
+          3,
+          114,
+          74
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          72
+        ],
+        [
+          3,
+          116,
+          74
+        ],
+        [
+          3,
+          117,
+          72
+        ],
+        [
+          3,
+          118,
+          71
+        ],
+        [
+          3,
+          118,
+          72
+        ],
+        [
+          3,
+          119,
+          72
+        ],
+        [
+          3,
+          120,
+          72
+        ],
+        [
+          4,
+          116,
+          72
+        ],
+        [
+          4,
+          117,
+          72
+        ],
+        [
+          4,
+          118,
+          72
+        ],
+        [
+          4,
+          118,
+          74
+        ],
+        [
+          4,
+          119,
+          72
+        ]
+      ],
+      "steps": 12,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 5
+    },
+    {
+      "actions": [
+        "nominal-cavity-26269fcd3b6f3ef67cd46f8c",
+        "nominal-cavity-036b5230b9d432502e3c6b77",
+        "nominal-cavity-bbf3bcd5cc163e166896911e",
+        "nominal-cavity-71237da05a3cd68a8044feba",
+        "nominal-cavity-84e71c21d6b8abbe5520d9fe",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+      "complete_tool_path_mm": 6.835937851608673,
+      "outside_supplied_goal_mm3": 13.351443995968705,
+      "physical_history_hash": "sha256:86f536557acae67389f36895cd7ffbf8a1f971a0774936853a276a8ebc42f97b",
+      "plan_seal": "sha256:d1c0bdb174ce59f3be7413360f3034a5975804a4cefb84007f28807436996476",
+      "public_return": -2.85712473704535,
+      "removed_cells": [
+        [
+          2,
+          86,
+          80
+        ],
+        [
+          2,
+          86,
+          81
+        ],
+        [
+          2,
+          87,
+          79
+        ],
+        [
+          2,
+          87,
+          80
+        ],
+        [
+          2,
+          87,
+          81
+        ],
+        [
+          2,
+          88,
+          78
+        ],
+        [
+          2,
+          88,
+          80
+        ],
+        [
+          2,
+          89,
+          78
+        ],
+        [
+          2,
+          89,
+          79
+        ],
+        [
+          2,
+          89,
+          82
+        ],
+        [
+          2,
+          90,
+          78
+        ],
+        [
+          3,
+          87,
+          78
+        ],
+        [
+          3,
+          87,
+          80
+        ],
+        [
+          3,
+          89,
+          78
+        ]
+      ],
+      "steps": 6,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 5
+    },
+    {
+      "actions": [
+        "nominal-cavity-9190407699eca1abe1e6b808",
+        "nominal-cavity-1e5e0ee45cdad9a95e91aa10",
+        "nominal-cavity-7729035eafbedc8b825f4812",
+        "nominal-cavity-c675f56bb819949013938ad4",
+        "nominal-cavity-d5afce444816b4ab4d5f07d2",
+        "nominal-cavity-a8d626a70fe4bccca39fd2b7",
+        "nominal-cavity-bd8e48ef53f9ed36bef2fad5",
+        "nominal-cavity-35a40290e91f8ba9699cb0ae",
+        "nominal-cavity-d0835439e2dd2f8ca551d3e6",
+        "nominal-cavity-46edd959f29331ad27165490",
+        "nominal-cavity-e32c6d130832bb82e32e9453",
+        "nominal-cavity-c22343e8d3393cde4d955acc",
+        "nominal-cavity-df66dafe41a07bf869b61a9b",
+        "nominal-cavity-d71caf660de05f4adcfd705b",
+        "nominal-cavity-89e0c7f0b302e5b3111c1878",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+      "complete_tool_path_mm": 28.320314562420542,
+      "outside_supplied_goal_mm3": 21.934520290026864,
+      "physical_history_hash": "sha256:89fc9faf7ed206cb00f089adb00bf6aecdb6ceb13c6ad0ea6f686d237b147e45",
+      "plan_seal": "sha256:21974d2f383cd13ae0330c4fabe1d20c209b52b23b5c9832c68050021b682614",
+      "public_return": -3.167874782130674,
+      "removed_cells": [
+        [
+          119,
+          43,
+          70
+        ],
+        [
+          120,
+          45,
+          70
+        ],
+        [
+          121,
+          42,
+          71
+        ],
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          121,
+          44,
+          69
+        ],
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          121,
+          45,
+          69
+        ],
+        [
+          121,
+          46,
+          69
+        ],
+        [
+          122,
+          42,
+          65
+        ],
+        [
+          122,
+          42,
+          66
+        ],
+        [
+          122,
+          42,
+          67
+        ],
+        [
+          122,
+          43,
+          65
+        ],
+        [
+          122,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          67
+        ],
+        [
+          122,
+          44,
+          66
+        ],
+        [
+          122,
+          45,
+          65
+        ],
+        [
+          122,
+          45,
+          66
+        ],
+        [
+          122,
+          45,
+          67
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          46,
+          68
+        ],
+        [
+          122,
+          47,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          68
+        ],
+        [
+          122,
+          48,
+          70
+        ],
+        [
+          123,
+          45,
+          66
+        ]
+      ],
+      "steps": 16,
+      "subject": "ReMIND-025",
+      "target_fraction": 2.446124116337663e-05,
+      "target_mm3": 1.907349590437118,
+      "target_source_cells": 2,
+      "terminal": "STOP",
+      "update": 5
+    },
+    {
+      "actions": [
+        "nominal-cavity-0243f6a2d512d50f6fb7d632",
+        "nominal-cavity-74a9ccb95384657ac908ca50",
+        "nominal-cavity-fab4b39b2035df76d7b181ce",
+        "nominal-cavity-f749e61e12de138e7bb4a1c8",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+      "complete_tool_path_mm": 5.078000570896988,
+      "outside_supplied_goal_mm3": 3.6100518995868764,
+      "physical_history_hash": "sha256:2fcb1ac9f82410e56fd25624173b0370ef14623f79fa1a3157d47b0eb5fcae69",
+      "plan_seal": "sha256:099ca2b00d192c1dcd302381b1a2d6b428c3904fe0bb660acfc5f222b5c14380",
+      "public_return": -0.8470883804882723,
+      "removed_cells": [
+        [
+          243,
+          206,
+          116
+        ],
+        [
+          244,
+          204,
+          116
+        ],
+        [
+          244,
+          205,
+          116
+        ],
+        [
+          244,
+          206,
+          115
+        ],
+        [
+          244,
+          206,
+          116
+        ],
+        [
+          244,
+          206,
+          117
+        ],
+        [
+          244,
+          207,
+          116
+        ],
+        [
+          245,
+          203,
+          116
+        ],
+        [
+          245,
+          204,
+          115
+        ],
+        [
+          245,
+          204,
+          116
+        ],
+        [
+          245,
+          204,
+          117
+        ],
+        [
+          245,
+          205,
+          116
+        ],
+        [
+          245,
+          206,
+          115
+        ],
+        [
+          245,
+          206,
+          116
+        ],
+        [
+          245,
+          206,
+          117
+        ],
+        [
+          245,
+          207,
+          116
+        ],
+        [
+          246,
+          202,
+          116
+        ],
+        [
+          246,
+          203,
+          115
+        ],
+        [
+          246,
+          203,
+          116
+        ],
+        [
+          246,
+          203,
+          117
+        ],
+        [
+          246,
+          204,
+          115
+        ],
+        [
+          246,
+          204,
+          116
+        ],
+        [
+          246,
+          204,
+          117
+        ],
+        [
+          246,
+          205,
+          116
+        ],
+        [
+          246,
+          206,
+          115
+        ],
+        [
+          246,
+          206,
+          116
+        ],
+        [
+          246,
+          206,
+          117
+        ],
+        [
+          246,
+          207,
+          116
+        ]
+      ],
+      "steps": 5,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 6
+    },
+    {
+      "actions": [
+        "nominal-cavity-476a2390c8171fed2040f06d",
+        "nominal-cavity-f8a9830db5f1f8c94778e473",
+        "nominal-cavity-de0bf74848f795731529468d",
+        "nominal-cavity-35c475cf24b103876025ac5b",
+        "nominal-cavity-b6a744f610dbb5c80a707d97",
+        "nominal-cavity-f56d8ad6b8d8af060a6816ec",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+      "complete_tool_path_mm": 3.7503983532105276,
+      "outside_supplied_goal_mm3": 13.625988792636198,
+      "physical_history_hash": "sha256:dcf1890d8a4a2711533a298882d4adbf51288886349d4e8cc2b47208ffffe3c5",
+      "plan_seal": "sha256:08be471b319ced803655959d62182d82da0539e3222f5093ce256a313324b152",
+      "public_return": -2.96894815688045,
+      "removed_cells": [
+        [
+          0,
+          112,
+          71
+        ],
+        [
+          0,
+          113,
+          71
+        ],
+        [
+          0,
+          114,
+          71
+        ],
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          114,
+          75
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          115,
+          76
+        ],
+        [
+          0,
+          116,
+          71
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          116,
+          75
+        ],
+        [
+          0,
+          116,
+          76
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          117,
+          75
+        ],
+        [
+          0,
+          117,
+          76
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          119,
+          70
+        ],
+        [
+          1,
+          112,
+          71
+        ],
+        [
+          1,
+          113,
+          71
+        ],
+        [
+          1,
+          114,
+          71
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          114,
+          75
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          115,
+          76
+        ],
+        [
+          1,
+          116,
+          71
+        ],
+        [
+          1,
+          116,
+          72
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          116,
+          75
+        ],
+        [
+          1,
+          116,
+          76
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          117,
+          75
+        ],
+        [
+          1,
+          117,
+          76
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          119,
+          70
+        ],
+        [
+          2,
+          113,
+          71
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          114,
+          75
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          115,
+          75
+        ],
+        [
+          2,
+          116,
+          71
+        ],
+        [
+          2,
+          116,
+          72
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          116,
+          76
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          117,
+          75
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          72
+        ],
+        [
+          3,
+          116,
+          74
+        ],
+        [
+          3,
+          117,
+          72
+        ]
+      ],
+      "steps": 7,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 6
+    },
+    {
+      "actions": [
+        "nominal-cavity-8e88b05afabc1afdaa19e12b",
+        "nominal-cavity-71012bbf36bb7d19880502f8",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+      "complete_tool_path_mm": 3.906250200919221,
+      "outside_supplied_goal_mm3": 1.9073491422812432,
+      "physical_history_hash": "sha256:235fee3ec67da9db1fe9db1d7557881c191d8a27883bece62ce5f09c01ceb8ba",
+      "plan_seal": "sha256:85f34eeac1c1246a1fa84a46898fe571b32febe2f67150645b62c0535563a360",
+      "public_return": -0.4453760786571679,
+      "removed_cells": [
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          3,
+          85,
+          78
+        ]
+      ],
+      "steps": 3,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 6
+    },
+    {
+      "actions": [
+        "nominal-cavity-8bc62b2451ce8835521c83dc",
+        "nominal-cavity-8139e910e90e9445e47ea6a5",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+      "complete_tool_path_mm": 3.906250284471799,
+      "outside_supplied_goal_mm3": 3.814699180874236,
+      "physical_history_hash": "sha256:73b4a170e4f5112e1084db2649a8859af3a9e0c20cd51a9d2d9fb83b06bed55e",
+      "plan_seal": "sha256:5a5e3617c6813cf1d28263c6b3e092cc9c7c9a2d45c90366438850ae3fbcec7c",
+      "public_return": -0.856846086459319,
+      "removed_cells": [
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          70
+        ]
+      ],
+      "steps": 3,
+      "subject": "ReMIND-025",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 6
+    },
+    {
+      "actions": [
+        "nominal-cavity-557adf561c9cf3f85cadb2ce",
+        "nominal-cavity-c6292a0cc59cd412335daa95",
+        "nominal-cavity-f5d9754d6b25125d222a5804",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:56efeb4177f88064f4074b4cb280e59c322ef1735ec5f7ade6b7b52256da50c7",
+      "complete_tool_path_mm": 3.5546004296643665,
+      "outside_supplied_goal_mm3": 3.0943301996458943,
+      "physical_history_hash": "sha256:7bd384d5285359f7aafd3d3cf5d60a67b1b91de457e943d98ad110bf5688ef86",
+      "plan_seal": "sha256:dba7cb2e4f5157d3d838377cdd4c6f9877cd12378d888a8822a88e513def0f48",
+      "public_return": -0.7424206403588434,
+      "removed_cells": [
+        [
+          244,
+          203,
+          115
+        ],
+        [
+          244,
+          204,
+          115
+        ],
+        [
+          244,
+          205,
+          115
+        ],
+        [
+          244,
+          206,
+          112
+        ],
+        [
+          245,
+          202,
+          115
+        ],
+        [
+          245,
+          203,
+          112
+        ],
+        [
+          245,
+          203,
+          115
+        ],
+        [
+          245,
+          203,
+          116
+        ],
+        [
+          245,
+          204,
+          115
+        ],
+        [
+          245,
+          204,
+          116
+        ],
+        [
+          245,
+          205,
+          115
+        ],
+        [
+          245,
+          205,
+          116
+        ],
+        [
+          245,
+          206,
+          115
+        ],
+        [
+          245,
+          208,
+          114
+        ],
+        [
+          246,
+          203,
+          115
+        ],
+        [
+          246,
+          203,
+          116
+        ],
+        [
+          246,
+          204,
+          115
+        ],
+        [
+          246,
+          204,
+          116
+        ],
+        [
+          246,
+          205,
+          115
+        ],
+        [
+          246,
+          205,
+          116
+        ],
+        [
+          246,
+          206,
+          115
+        ],
+        [
+          246,
+          208,
+          115
+        ],
+        [
+          247,
+          202,
+          113
+        ],
+        [
+          247,
+          202,
+          114
+        ]
+      ],
+      "steps": 4,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 7
+    },
+    {
+      "actions": [
+        "nominal-cavity-319457e38ca5bd6fb1cf7533",
+        "nominal-cavity-8b2fb382e8ca90483e6b3ac7",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:56efeb4177f88064f4074b4cb280e59c322ef1735ec5f7ade6b7b52256da50c7",
+      "complete_tool_path_mm": 0.9375995883026318,
+      "outside_supplied_goal_mm3": 6.153672357964734,
+      "physical_history_hash": "sha256:e98feb56640970d1ed3de2bbb91a7f210649150a34928119b8c9dda95da980af",
+      "plan_seal": "sha256:69055bcbefe89683a0a659eb307b7dfddcecb29a8cb54dd56b75ffcf02e0ebc8",
+      "public_return": -1.3216720711812495,
+      "removed_cells": [
+        [
+          0,
+          115,
+          69
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          116,
+          69
+        ],
+        [
+          0,
+          116,
+          70
+        ],
+        [
+          0,
+          116,
+          71
+        ],
+        [
+          0,
+          117,
+          69
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          115,
+          69
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          116,
+          69
+        ],
+        [
+          1,
+          116,
+          70
+        ],
+        [
+          1,
+          116,
+          71
+        ],
+        [
+          1,
+          117,
+          69
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          2,
+          116,
+          69
+        ],
+        [
+          2,
+          116,
+          70
+        ],
+        [
+          2,
+          116,
+          71
+        ],
+        [
+          2,
+          117,
+          70
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          3,
+          116,
+          70
+        ],
+        [
+          3,
+          117,
+          70
+        ]
+      ],
+      "steps": 3,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 7
+    },
+    {
+      "actions": [
+        "nominal-cavity-642648b8e396fe1b60e619cc",
+        "nominal-cavity-06b0bddd620b67881a4b0ced",
+        "nominal-cavity-9fcefc16e05716955dc97c12",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:56efeb4177f88064f4074b4cb280e59c322ef1735ec5f7ade6b7b52256da50c7",
+      "complete_tool_path_mm": 8.789062952068292,
+      "outside_supplied_goal_mm3": 2.861023713421865,
+      "physical_history_hash": "sha256:9cb003ed3f208146d6d0e493ebf80fd026e2226a895eb93eab7a9379fa2937bd",
+      "plan_seal": "sha256:2099f77cfb9ba3ad301f976699c79f2ffa99e53c63dd0215c475045352e80dbb",
+      "public_return": -0.6709938056364413,
+      "removed_cells": [
+        [
+          3,
+          85,
+          78
+        ],
+        [
+          3,
+          85,
+          82
+        ],
+        [
+          3,
+          87,
+          77
+        ]
+      ],
+      "steps": 4,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 7
+    },
+    {
+      "actions": [
+        "nominal-cavity-66ab1a8fccb6abf09f53e4db",
+        "nominal-cavity-60797a478d418ac661d05f25",
+        "nominal-cavity-0c01efd29b8ae19b5d0e5411",
+        "nominal-cavity-1fee232c0c1b542223ce5bce",
+        "nominal-cavity-8a2082c7d15f313507690c57",
+        "nominal-cavity-3a4d557d58a7489cf1c71406",
+        "nominal-cavity-857f7423e69cbc8624215af6",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:56efeb4177f88064f4074b4cb280e59c322ef1735ec5f7ade6b7b52256da50c7",
+      "complete_tool_path_mm": 14.648438566769267,
+      "outside_supplied_goal_mm3": 16.212471518715503,
+      "physical_history_hash": "sha256:92aa5a01179aa535936631e14cf5087a4870ce9afc97864cc3f1520db6e93281",
+      "plan_seal": "sha256:39859399c57e9cfb677a85bfa9b0a8826dc95016d8feaa62b6b8ccabe9294dc8",
+      "public_return": -2.6634679470913114,
+      "removed_cells": [
+        [
+          120,
+          44,
+          69
+        ],
+        [
+          120,
+          45,
+          70
+        ],
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          121,
+          44,
+          68
+        ],
+        [
+          121,
+          44,
+          69
+        ],
+        [
+          121,
+          44,
+          72
+        ],
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          121,
+          45,
+          69
+        ],
+        [
+          122,
+          42,
+          66
+        ],
+        [
+          122,
+          42,
+          67
+        ],
+        [
+          122,
+          43,
+          65
+        ],
+        [
+          122,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          67
+        ],
+        [
+          122,
+          44,
+          66
+        ],
+        [
+          122,
+          45,
+          65
+        ],
+        [
+          122,
+          45,
+          67
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          46,
+          68
+        ]
+      ],
+      "steps": 8,
+      "subject": "ReMIND-025",
+      "target_fraction": 1.2230620581688315e-05,
+      "target_mm3": 0.953674795218559,
+      "target_source_cells": 1,
+      "terminal": "STOP",
+      "update": 7
+    },
+    {
+      "actions": [
+        "nominal-cavity-c220f4ca0d9b06e833d2e374",
+        "nominal-cavity-b68900d8ae84b58cf254a5b9",
+        "nominal-cavity-fafd974b27e8bbd7d83ea3bf",
+        "nominal-cavity-8bd4bc5af7cfa1dcb1f025f0",
+        "nominal-cavity-6fe3b394ef4723600942edb9",
+        "nominal-cavity-3af7ace49c3d1af5ac637b46",
+        "nominal-cavity-d05e3b9e43b0e4aa2422f7ab",
+        "nominal-cavity-27789392b3c23b99945d4b8e",
+        "nominal-cavity-5af2d71ca747845e016f96f8",
+        "nominal-cavity-f2cb3c111c733cea345b3899",
+        "nominal-cavity-7689f365ebdc25bf558f31b0",
+        "nominal-cavity-8839779c26511331ad696b9d",
+        "nominal-cavity-fa9425e1cb04f5c6abf08e00",
+        "nominal-cavity-5d34f6736a9e2fe9324ebb25",
+        "nominal-cavity-c11d9b109e8b84ced2a0de34",
+        "nominal-cavity-4f2d74c43cf814e062f72471",
+        "nominal-cavity-22c7f598cb66fa5d103f4ee3",
+        "nominal-cavity-9c79ea323a8c6c0e35504ea9",
+        "nominal-cavity-b2b9b98ec75ac3af063aaa17",
+        "nominal-cavity-874f6dee7e5862a5eeddf95a",
+        "nominal-cavity-fc119f93030ad3ed2e42e04f",
+        "nominal-cavity-b0b9d24fff30c60e56f43eab",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5ec5d76af3ea08f1d1cef8aa24724c6b8ed50a6b9e536eb5ff88fac8cef8dc31",
+      "complete_tool_path_mm": 54.84240354704864,
+      "outside_supplied_goal_mm3": 29.396136896636,
+      "physical_history_hash": "sha256:2ea50b7741303570ce4a61389f1ac7ad12ffca3947184af70430230192a30dc0",
+      "plan_seal": "sha256:30e8fb3e6bc464e9c288553464033499eca443017b07aa44f84af49f6bfc4624",
+      "public_return": -6.924069782874248,
+      "removed_cells": [
+        [
+          239,
+          206,
+          116
+        ],
+        [
+          240,
+          205,
+          116
+        ],
+        [
+          240,
+          206,
+          115
+        ],
+        [
+          240,
+          206,
+          116
+        ],
+        [
+          240,
+          206,
+          117
+        ],
+        [
+          240,
+          206,
+          118
+        ],
+        [
+          240,
+          207,
+          116
+        ],
+        [
+          240,
+          208,
+          115
+        ],
+        [
+          240,
+          208,
+          116
+        ],
+        [
+          240,
+          208,
+          117
+        ],
+        [
+          240,
+          209,
+          115
+        ],
+        [
+          240,
+          209,
+          116
+        ],
+        [
+          240,
+          209,
+          117
+        ],
+        [
+          240,
+          210,
+          115
+        ],
+        [
+          240,
+          210,
+          116
+        ],
+        [
+          240,
+          210,
+          117
+        ],
+        [
+          241,
+          205,
+          116
+        ],
+        [
+          241,
+          205,
+          118
+        ],
+        [
+          241,
+          206,
+          115
+        ],
+        [
+          241,
+          206,
+          116
+        ],
+        [
+          241,
+          206,
+          117
+        ],
+        [
+          241,
+          206,
+          118
+        ],
+        [
+          241,
+          206,
+          119
+        ],
+        [
+          241,
+          207,
+          115
+        ],
+        [
+          241,
+          207,
+          116
+        ],
+        [
+          241,
+          207,
+          117
+        ],
+        [
+          241,
+          207,
+          118
+        ],
+        [
+          241,
+          208,
+          115
+        ],
+        [
+          241,
+          208,
+          116
+        ],
+        [
+          241,
+          208,
+          117
+        ],
+        [
+          241,
+          208,
+          118
+        ],
+        [
+          241,
+          209,
+          115
+        ],
+        [
+          241,
+          209,
+          116
+        ],
+        [
+          241,
+          209,
+          117
+        ],
+        [
+          241,
+          209,
+          118
+        ],
+        [
+          241,
+          210,
+          115
+        ],
+        [
+          241,
+          210,
+          116
+        ],
+        [
+          241,
+          210,
+          117
+        ],
+        [
+          241,
+          210,
+          118
+        ],
+        [
+          242,
+          205,
+          116
+        ],
+        [
+          242,
+          205,
+          118
+        ],
+        [
+          242,
+          206,
+          114
+        ],
+        [
+          242,
+          206,
+          115
+        ],
+        [
+          242,
+          206,
+          116
+        ],
+        [
+          242,
+          206,
+          117
+        ],
+        [
+          242,
+          206,
+          118
+        ],
+        [
+          242,
+          206,
+          119
+        ],
+        [
+          242,
+          207,
+          114
+        ],
+        [
+          242,
+          207,
+          115
+        ],
+        [
+          242,
+          207,
+          116
+        ],
+        [
+          242,
+          207,
+          117
+        ],
+        [
+          242,
+          207,
+          118
+        ],
+        [
+          242,
+          208,
+          115
+        ],
+        [
+          242,
+          208,
+          116
+        ],
+        [
+          242,
+          208,
+          117
+        ],
+        [
+          242,
+          208,
+          118
+        ],
+        [
+          242,
+          209,
+          115
+        ],
+        [
+          242,
+          209,
+          116
+        ],
+        [
+          242,
+          209,
+          117
+        ],
+        [
+          242,
+          209,
+          118
+        ],
+        [
+          242,
+          210,
+          115
+        ],
+        [
+          242,
+          210,
+          116
+        ],
+        [
+          242,
+          210,
+          117
+        ],
+        [
+          242,
+          210,
+          118
+        ],
+        [
+          243,
+          203,
+          115
+        ],
+        [
+          243,
+          203,
+          116
+        ],
+        [
+          243,
+          203,
+          117
+        ],
+        [
+          243,
+          204,
+          115
+        ],
+        [
+          243,
+          204,
+          116
+        ],
+        [
+          243,
+          204,
+          117
+        ],
+        [
+          243,
+          204,
+          118
+        ],
+        [
+          243,
+          205,
+          112
+        ],
+        [
+          243,
+          205,
+          115
+        ],
+        [
+          243,
+          205,
+          116
+        ],
+        [
+          243,
+          205,
+          117
+        ],
+        [
+          243,
+          205,
+          118
+        ],
+        [
+          243,
+          206,
+          112
+        ],
+        [
+          243,
+          206,
+          114
+        ],
+        [
+          243,
+          206,
+          115
+        ],
+        [
+          243,
+          206,
+          116
+        ],
+        [
+          243,
+          206,
+          117
+        ],
+        [
+          243,
+          206,
+          118
+        ],
+        [
+          243,
+          206,
+          119
+        ],
+        [
+          243,
+          207,
+          112
+        ],
+        [
+          243,
+          207,
+          114
+        ],
+        [
+          243,
+          207,
+          115
+        ],
+        [
+          243,
+          207,
+          116
+        ],
+        [
+          243,
+          207,
+          117
+        ],
+        [
+          243,
+          207,
+          118
+        ],
+        [
+          243,
+          208,
+          112
+        ],
+        [
+          243,
+          208,
+          114
+        ],
+        [
+          243,
+          208,
+          115
+        ],
+        [
+          243,
+          208,
+          116
+        ],
+        [
+          243,
+          208,
+          117
+        ],
+        [
+          243,
+          208,
+          118
+        ],
+        [
+          243,
+          209,
+          112
+        ],
+        [
+          243,
+          209,
+          114
+        ],
+        [
+          243,
+          209,
+          115
+        ],
+        [
+          243,
+          209,
+          116
+        ],
+        [
+          243,
+          209,
+          117
+        ],
+        [
+          243,
+          209,
+          118
+        ],
+        [
+          243,
+          210,
+          115
+        ],
+        [
+          243,
+          210,
+          116
+        ],
+        [
+          243,
+          210,
+          117
+        ],
+        [
+          243,
+          210,
+          118
+        ],
+        [
+          244,
+          202,
+          115
+        ],
+        [
+          244,
+          202,
+          116
+        ],
+        [
+          244,
+          202,
+          117
+        ],
+        [
+          244,
+          203,
+          115
+        ],
+        [
+          244,
+          203,
+          116
+        ],
+        [
+          244,
+          203,
+          117
+        ],
+        [
+          244,
+          203,
+          118
+        ],
+        [
+          244,
+          203,
+          119
+        ],
+        [
+          244,
+          204,
+          112
+        ],
+        [
+          244,
+          204,
+          115
+        ],
+        [
+          244,
+          204,
+          116
+        ],
+        [
+          244,
+          204,
+          117
+        ],
+        [
+          244,
+          204,
+          118
+        ],
+        [
+          244,
+          204,
+          119
+        ],
+        [
+          244,
+          205,
+          111
+        ],
+        [
+          244,
+          205,
+          112
+        ],
+        [
+          244,
+          205,
+          115
+        ],
+        [
+          244,
+          205,
+          116
+        ],
+        [
+          244,
+          205,
+          117
+        ],
+        [
+          244,
+          205,
+          118
+        ],
+        [
+          244,
+          205,
+          119
+        ],
+        [
+          244,
+          206,
+          111
+        ],
+        [
+          244,
+          206,
+          112
+        ],
+        [
+          244,
+          206,
+          115
+        ],
+        [
+          244,
+          206,
+          116
+        ],
+        [
+          244,
+          206,
+          117
+        ],
+        [
+          244,
+          206,
+          118
+        ],
+        [
+          244,
+          206,
+          119
+        ],
+        [
+          244,
+          207,
+          111
+        ],
+        [
+          244,
+          207,
+          112
+        ],
+        [
+          244,
+          207,
+          114
+        ],
+        [
+          244,
+          207,
+          115
+        ],
+        [
+          244,
+          207,
+          116
+        ],
+        [
+          244,
+          207,
+          117
+        ],
+        [
+          244,
+          207,
+          118
+        ],
+        [
+          244,
+          207,
+          119
+        ],
+        [
+          244,
+          208,
+          112
+        ],
+        [
+          244,
+          208,
+          113
+        ],
+        [
+          244,
+          208,
+          114
+        ],
+        [
+          244,
+          208,
+          115
+        ],
+        [
+          244,
+          208,
+          116
+        ],
+        [
+          244,
+          208,
+          117
+        ],
+        [
+          244,
+          208,
+          118
+        ],
+        [
+          244,
+          208,
+          119
+        ],
+        [
+          244,
+          209,
+          114
+        ],
+        [
+          244,
+          209,
+          115
+        ],
+        [
+          244,
+          209,
+          116
+        ],
+        [
+          244,
+          209,
+          117
+        ],
+        [
+          244,
+          209,
+          118
+        ],
+        [
+          244,
+          209,
+          119
+        ],
+        [
+          244,
+          210,
+          115
+        ],
+        [
+          244,
+          210,
+          116
+        ],
+        [
+          244,
+          210,
+          117
+        ],
+        [
+          244,
+          210,
+          118
+        ],
+        [
+          245,
+          202,
+          115
+        ],
+        [
+          245,
+          202,
+          116
+        ],
+        [
+          245,
+          202,
+          117
+        ],
+        [
+          245,
+          202,
+          118
+        ],
+        [
+          245,
+          202,
+          119
+        ],
+        [
+          245,
+          203,
+          115
+        ],
+        [
+          245,
+          203,
+          116
+        ],
+        [
+          245,
+          203,
+          117
+        ],
+        [
+          245,
+          203,
+          118
+        ],
+        [
+          245,
+          203,
+          119
+        ],
+        [
+          245,
+          204,
+          115
+        ],
+        [
+          245,
+          204,
+          116
+        ],
+        [
+          245,
+          204,
+          117
+        ],
+        [
+          245,
+          204,
+          118
+        ],
+        [
+          245,
+          204,
+          119
+        ],
+        [
+          245,
+          205,
+          111
+        ],
+        [
+          245,
+          205,
+          115
+        ],
+        [
+          245,
+          205,
+          116
+        ],
+        [
+          245,
+          205,
+          117
+        ],
+        [
+          245,
+          205,
+          118
+        ],
+        [
+          245,
+          205,
+          119
+        ],
+        [
+          245,
+          206,
+          111
+        ],
+        [
+          245,
+          206,
+          115
+        ],
+        [
+          245,
+          206,
+          116
+        ],
+        [
+          245,
+          206,
+          117
+        ],
+        [
+          245,
+          206,
+          118
+        ],
+        [
+          245,
+          206,
+          119
+        ],
+        [
+          245,
+          207,
+          111
+        ],
+        [
+          245,
+          207,
+          114
+        ],
+        [
+          245,
+          207,
+          115
+        ],
+        [
+          245,
+          207,
+          116
+        ],
+        [
+          245,
+          207,
+          117
+        ],
+        [
+          245,
+          207,
+          118
+        ],
+        [
+          245,
+          208,
+          114
+        ],
+        [
+          245,
+          208,
+          115
+        ],
+        [
+          245,
+          208,
+          116
+        ],
+        [
+          245,
+          208,
+          117
+        ],
+        [
+          245,
+          208,
+          118
+        ],
+        [
+          245,
+          209,
+          115
+        ],
+        [
+          245,
+          209,
+          116
+        ],
+        [
+          245,
+          209,
+          117
+        ],
+        [
+          245,
+          209,
+          118
+        ],
+        [
+          245,
+          210,
+          115
+        ],
+        [
+          246,
+          202,
+          116
+        ],
+        [
+          246,
+          202,
+          117
+        ],
+        [
+          246,
+          202,
+          118
+        ],
+        [
+          246,
+          202,
+          119
+        ],
+        [
+          246,
+          203,
+          115
+        ],
+        [
+          246,
+          203,
+          116
+        ],
+        [
+          246,
+          203,
+          117
+        ],
+        [
+          246,
+          203,
+          118
+        ],
+        [
+          246,
+          203,
+          119
+        ],
+        [
+          246,
+          204,
+          115
+        ],
+        [
+          246,
+          204,
+          116
+        ],
+        [
+          246,
+          204,
+          117
+        ],
+        [
+          246,
+          204,
+          118
+        ],
+        [
+          246,
+          205,
+          111
+        ],
+        [
+          246,
+          205,
+          115
+        ],
+        [
+          246,
+          205,
+          116
+        ],
+        [
+          246,
+          205,
+          117
+        ],
+        [
+          246,
+          205,
+          118
+        ],
+        [
+          246,
+          206,
+          111
+        ],
+        [
+          246,
+          206,
+          115
+        ],
+        [
+          246,
+          206,
+          116
+        ],
+        [
+          246,
+          206,
+          117
+        ],
+        [
+          246,
+          206,
+          118
+        ],
+        [
+          246,
+          207,
+          115
+        ],
+        [
+          246,
+          207,
+          116
+        ],
+        [
+          246,
+          208,
+          115
+        ]
+      ],
+      "steps": 23,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 8
+    },
+    {
+      "actions": [
+        "nominal-cavity-9ae3dd1a4ec686df6a34c71d",
+        "nominal-cavity-4bbe48eb1c2d80b55bee9c31",
+        "nominal-cavity-9709774ed05b625346dceebb",
+        "nominal-cavity-f1484e3711433677b9d521eb",
+        "nominal-cavity-98c6986116cc253db7c8c0b4",
+        "nominal-cavity-87b1363c9b13e31569cebcf4",
+        "nominal-cavity-ba9c686af6ea0d376ba080e5",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5ec5d76af3ea08f1d1cef8aa24724c6b8ed50a6b9e536eb5ff88fac8cef8dc31",
+      "complete_tool_path_mm": 9.844795677177407,
+      "outside_supplied_goal_mm3": 14.944632869342925,
+      "physical_history_hash": "sha256:b46bf7815bcc12831ceada85814fd1ce0b54e8ae84ed869f29b79b3ba2d1aa32",
+      "plan_seal": "sha256:9e77779386d955d7dc20196b60a1ac8d32feff99c60b19c3f97d3e9d7e273dca",
+      "public_return": -3.2987713695457623,
+      "removed_cells": [
+        [
+          0,
+          114,
+          74
+        ],
+        [
+          0,
+          115,
+          69
+        ],
+        [
+          0,
+          115,
+          70
+        ],
+        [
+          0,
+          115,
+          71
+        ],
+        [
+          0,
+          115,
+          74
+        ],
+        [
+          0,
+          115,
+          75
+        ],
+        [
+          0,
+          116,
+          69
+        ],
+        [
+          0,
+          116,
+          70
+        ],
+        [
+          0,
+          116,
+          71
+        ],
+        [
+          0,
+          116,
+          74
+        ],
+        [
+          0,
+          116,
+          75
+        ],
+        [
+          0,
+          117,
+          69
+        ],
+        [
+          0,
+          117,
+          70
+        ],
+        [
+          0,
+          117,
+          71
+        ],
+        [
+          0,
+          117,
+          72
+        ],
+        [
+          0,
+          117,
+          74
+        ],
+        [
+          0,
+          117,
+          75
+        ],
+        [
+          0,
+          118,
+          70
+        ],
+        [
+          0,
+          118,
+          72
+        ],
+        [
+          0,
+          119,
+          72
+        ],
+        [
+          1,
+          113,
+          70
+        ],
+        [
+          1,
+          114,
+          74
+        ],
+        [
+          1,
+          115,
+          69
+        ],
+        [
+          1,
+          115,
+          70
+        ],
+        [
+          1,
+          115,
+          71
+        ],
+        [
+          1,
+          115,
+          74
+        ],
+        [
+          1,
+          115,
+          75
+        ],
+        [
+          1,
+          116,
+          69
+        ],
+        [
+          1,
+          116,
+          70
+        ],
+        [
+          1,
+          116,
+          71
+        ],
+        [
+          1,
+          116,
+          72
+        ],
+        [
+          1,
+          116,
+          74
+        ],
+        [
+          1,
+          116,
+          75
+        ],
+        [
+          1,
+          117,
+          69
+        ],
+        [
+          1,
+          117,
+          70
+        ],
+        [
+          1,
+          117,
+          71
+        ],
+        [
+          1,
+          117,
+          72
+        ],
+        [
+          1,
+          117,
+          74
+        ],
+        [
+          1,
+          117,
+          75
+        ],
+        [
+          1,
+          118,
+          70
+        ],
+        [
+          1,
+          118,
+          72
+        ],
+        [
+          1,
+          119,
+          72
+        ],
+        [
+          2,
+          114,
+          74
+        ],
+        [
+          2,
+          115,
+          74
+        ],
+        [
+          2,
+          115,
+          75
+        ],
+        [
+          2,
+          116,
+          69
+        ],
+        [
+          2,
+          116,
+          70
+        ],
+        [
+          2,
+          116,
+          71
+        ],
+        [
+          2,
+          116,
+          72
+        ],
+        [
+          2,
+          116,
+          74
+        ],
+        [
+          2,
+          117,
+          70
+        ],
+        [
+          2,
+          117,
+          72
+        ],
+        [
+          2,
+          117,
+          75
+        ],
+        [
+          2,
+          118,
+          70
+        ],
+        [
+          2,
+          118,
+          72
+        ],
+        [
+          2,
+          119,
+          72
+        ],
+        [
+          3,
+          114,
+          74
+        ],
+        [
+          3,
+          115,
+          74
+        ],
+        [
+          3,
+          116,
+          70
+        ],
+        [
+          3,
+          116,
+          72
+        ],
+        [
+          3,
+          116,
+          74
+        ],
+        [
+          3,
+          117,
+          70
+        ],
+        [
+          3,
+          117,
+          72
+        ],
+        [
+          3,
+          118,
+          72
+        ],
+        [
+          3,
+          119,
+          72
+        ],
+        [
+          4,
+          116,
+          72
+        ],
+        [
+          4,
+          118,
+          72
+        ],
+        [
+          4,
+          118,
+          74
+        ]
+      ],
+      "steps": 8,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 8
+    },
+    {
+      "actions": [
+        "nominal-cavity-0992e46f8b7c466caea95002",
+        "nominal-cavity-e449f13e878e32d7c103cf1a",
+        "nominal-cavity-9d86b8134b33fedf04d62bab",
+        "nominal-cavity-23c5b0320dce8140087282c5",
+        "nominal-cavity-0423de575634975888d8869d",
+        "nominal-cavity-162c1f32ac5d898788b8c86f",
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5ec5d76af3ea08f1d1cef8aa24724c6b8ed50a6b9e536eb5ff88fac8cef8dc31",
+      "complete_tool_path_mm": 5.859375301378838,
+      "outside_supplied_goal_mm3": 13.351443995968703,
+      "physical_history_hash": "sha256:102350ee35ac7137ca6329578e73c2c9df28d4453a6d888403911ceae7e7ab4e",
+      "plan_seal": "sha256:ab37f7913426ae6d104cb6b1488012d2957c4ab1f787466c5becea834172ed5b",
+      "public_return": -2.976148174495119,
+      "removed_cells": [
+        [
+          2,
+          86,
+          79
+        ],
+        [
+          2,
+          86,
+          81
+        ],
+        [
+          2,
+          86,
+          82
+        ],
+        [
+          2,
+          87,
+          81
+        ],
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          2,
+          87,
+          83
+        ],
+        [
+          2,
+          88,
+          78
+        ],
+        [
+          2,
+          88,
+          82
+        ],
+        [
+          2,
+          88,
+          84
+        ],
+        [
+          2,
+          89,
+          78
+        ],
+        [
+          2,
+          89,
+          79
+        ],
+        [
+          2,
+          90,
+          78
+        ],
+        [
+          3,
+          87,
+          82
+        ],
+        [
+          3,
+          89,
+          78
+        ]
+      ],
+      "steps": 7,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 8
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:5ec5d76af3ea08f1d1cef8aa24724c6b8ed50a6b9e536eb5ff88fac8cef8dc31",
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:f3d0138466ccfe50ee11638ef5118d12629304f926f5d475538bbcb69f558fdb",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-025",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "update": 8
+    }
+  ],
+  "updates": [
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -116.15158927440643,
+      "after_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+      "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "completed_updates": 1,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.175394447189075,
+      "gradient_norm_before_clip": 19.8663330078125,
+      "loss": -110.90222196280956,
+      "loss_forward_calls": 46,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 9.602109909057617,
+        "critic": 15.596015930175781,
+        "encoder": 2.1250216960906982,
+        "stop": 7.397265911102295
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:0555239d978b1bc1d87ae6f587bb2b3989b620ee362cb760a5061b635413805a",
+        "sha256:7f3038282ca3901bd5c1c0d86c91db8d5d1e8cdbe08d812a4c7a33d8234ce649",
+        "sha256:cef9e6fe0ca8b7f0116f1eab5539a01bd83106ebae0e89be3ce7b8016f4115f6",
+        "sha256:3e8f0515fc00bced703c30f835a288528665cf91e5a9e6fcac89b0a107f00219"
+      ],
+      "value_loss": 10.562245397611335,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -84.27109269052744,
+      "after_parameter_hash": "sha256:9a348937102960ad314e8ce6fe473c0a8f5193f5a3bbe4ef0f206d068e918d3c",
+      "before_parameter_hash": "sha256:3cfe336819a8026b1f30c685f9f3483231e13d570c49c8a461715a879a51f34a",
+      "completed_updates": 2,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.106111531821852,
+      "gradient_norm_before_clip": 14.089214324951172,
+      "loss": -81.65131811052561,
+      "loss_forward_calls": 51,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 8.45654582977295,
+        "critic": 10.120450019836426,
+        "encoder": 3.1183478832244873,
+        "stop": 3.8529698848724365
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:4bd5f93dba2f9beefc54cd2dbb9218e40de5e8f800ef759b96120bf94ded4765",
+        "sha256:78c456b0e5dd8949e0e19c9d824212f32c2796d03cb5d35212a5bf7df5c07184",
+        "sha256:93604a83e7a112bd9dca8ad2d5af1360f3f2ad1e978f2794fa8dac0be898271b",
+        "sha256:ed771c85589c365023bf1350654acaa1245fad0ccc5cb5b73d9ddf7c2887a1b3"
+      ],
+      "value_loss": 5.301670962510463,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -100.34088342799805,
+      "after_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+      "before_parameter_hash": "sha256:9a348937102960ad314e8ce6fe473c0a8f5193f5a3bbe4ef0f206d068e918d3c",
+      "completed_updates": 3,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.1085431671568324,
+      "gradient_norm_before_clip": 19.778169631958008,
+      "loss": -96.8026490349439,
+      "loss_forward_calls": 54,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 11.53444766998291,
+        "critic": 12.49514389038086,
+        "encoder": 5.932058334350586,
+        "stop": 8.174031257629395
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:aeab94cf747e1f1b49a953eb9f20df1c5876a2b880500df20dba42f41496b0bd",
+        "sha256:45e5bf046dff72aa489c378eef1ebef4dc49e61b3ac0675723084a0923b1531f",
+        "sha256:021503f45b176fd79fc193b6adaa7c9c418ee61479130d798b4bcf5de4b77a64",
+        "sha256:0202dbc0a0a459451216e0faefb9cac171019dbece792847e184166037e64996"
+      ],
+      "value_loss": 7.138638018302156,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -110.51087326882407,
+      "after_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+      "before_parameter_hash": "sha256:ef443507cd9230f7027f5f7a805d33e2b7b5ad6746370ed69e134ec65b6591e2",
+      "completed_updates": 4,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.1461239720092102,
+      "gradient_norm_before_clip": 22.221559524536133,
+      "loss": -106.86378766596317,
+      "loss_forward_calls": 55,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 13.727682113647461,
+        "critic": 12.147319793701172,
+        "encoder": 10.22417163848877,
+        "stop": 7.29779052734375
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:20b3812910ba323e90aaa95a0c9014b0a27d3d773d7d12f48d15939dcada879a",
+        "sha256:33129bc99447263920d98f474be9f3243afca19566e32be193a982231e45d16c",
+        "sha256:63a281f1d1dd25e7c13f8b72c1a89b3bbdf2fe66d5cd5462775c072cb11bbaa5",
+        "sha256:d1a99835bb29612623e0c7b85646640d87ccb1fc809718c0668a596d621ec882"
+      ],
+      "value_loss": 7.3570967394891085,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -28.03105639666319,
+      "after_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+      "before_parameter_hash": "sha256:3f34a70e72405a90e0f5db30603e1c5d3a5fc84f353fc87a7e6c01786d7cf5e1",
+      "completed_updates": 5,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.127829860895872,
+      "gradient_norm_before_clip": 11.382131576538086,
+      "loss": -26.88519943319261,
+      "loss_forward_calls": 38,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 5.846272945404053,
+        "critic": 5.832857608795166,
+        "encoder": 6.886674880981445,
+        "stop": 3.731696605682373
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:f9fd68c9192958110ce5c294cb5a3e24e447c0b0f380cbd2ba9ab84b1f3438ba",
+        "sha256:51e329fab2fdc041a00246ca320a6c231e28f52275f49938ed6261f1df5274c1",
+        "sha256:bb1e5ae47fb14ce93a23d7d811042fa1865cf1321a56268423ecb2edcdf07fbf",
+        "sha256:338e33d252c9175ea65b883e8a519c66f34c60c99dd8f9bfc2d39af786601046"
+      ],
+      "value_loss": 2.3542718315808697,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -3.0961712449789047,
+      "after_parameter_hash": "sha256:56efeb4177f88064f4074b4cb280e59c322ef1735ec5f7ade6b7b52256da50c7",
+      "before_parameter_hash": "sha256:ed3c75d46911937fa8abf936d7e8ec24d1a14606815d4c95bf555d8c1c55c394",
+      "completed_updates": 6,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.3161780238151555,
+      "gradient_norm_before_clip": 4.211062431335449,
+      "loss": -2.914230148307979,
+      "loss_forward_calls": 18,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 2.77813458442688,
+        "critic": 0.49797165393829346,
+        "encoder": 2.3422234058380127,
+        "stop": 2.0690667629241943
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:78f9064ccd9570674f3059c5b03ae9acdac32a1a5191112eb9be1a5ce73a0fc7",
+        "sha256:9fbca3b9e77251ceeef4ce010c431a834bd40005927abb661e7f2f923958ff90",
+        "sha256:566b71d24cfe720e932a2e9f1795ac603d6c28362a3dc79bee1f3cba016ee2b0",
+        "sha256:2053f6ded2eb9a604d5f5d2cfe0bced9267ca5aaefea55efc0f4468c46bcba93"
+      ],
+      "value_loss": 0.43020573127514145,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": 1.062189313583076,
+      "after_parameter_hash": "sha256:5ec5d76af3ea08f1d1cef8aa24724c6b8ed50a6b9e536eb5ff88fac8cef8dc31",
+      "before_parameter_hash": "sha256:56efeb4177f88064f4074b4cb280e59c322ef1735ec5f7ade6b7b52256da50c7",
+      "completed_updates": 7,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.309693895280361,
+      "gradient_norm_before_clip": 4.930680274963379,
+      "loss": 1.2463335134088993,
+      "loss_forward_calls": 19,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 3.1825637817382812,
+        "critic": 1.2177566289901733,
+        "encoder": 2.654465913772583,
+        "stop": 2.377769708633423
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:1902aac55f514e0298d7299d788c10324e3e8adac97dfcc91bcdf23c6591b79c",
+        "sha256:15a9a947d03aaaa2137ae129da50e9b67d3afaca1a60a39c81be63d2cd9da3c5",
+        "sha256:4c509cdc7876e26e867b93b3b19c3aab882b26de2972e301ad6d8ab363496f8d",
+        "sha256:289e3a914a507efdc6d2d85a986f9e029568eac71f9d039f167c077d9e4ad98c"
+      ],
+      "value_loss": 0.43448225628890214,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    },
+    {
+      "IL_reduction": "mean_all_teacher_actions",
+      "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+      "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+      "actor_loss": -56.64841267094016,
+      "after_parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "before_parameter_hash": "sha256:5ec5d76af3ea08f1d1cef8aa24724c6b8ed50a6b9e536eb5ff88fac8cef8dc31",
+      "completed_updates": 8,
+      "context_hashes": [
+        "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      ],
+      "entropy": 3.0547312318538284,
+      "gradient_norm_before_clip": 27.621164321899414,
+      "loss": -55.06702232733369,
+      "loss_forward_calls": 39,
+      "method": "RL",
+      "module_gradient_norms_before_clip": {
+        "actor": 13.42698860168457,
+        "critic": 3.9017980098724365,
+        "encoder": 21.61902618408203,
+        "stop": 10.00192642211914
+      },
+      "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+      "optimizer_updates": 1,
+      "parameters_changed": true,
+      "patient_adaptation": false,
+      "population_training": true,
+      "trace_seals": [
+        "sha256:da872e16ffdca37382707d8c5029c83c29cd618a5baeca3d304e31368926a1af",
+        "sha256:36d7845218091c4b25c47513b00a7592c58d881da92d6fbb9be84750beb74d06",
+        "sha256:0e328d0f055a5a9da460bfe695ef3258d667e273296ead6ffc1750d6ee8fd214",
+        "sha256:dd14475ea9d7b23ac648358a3f9c0ca832c7d6c736655b68911a65e4e7226642"
+      ],
+      "value_loss": 3.2238752984925645,
+      "version": "fixed-four-TRAIN-sequential-cohort-v2"
+    }
+  ]
+}
