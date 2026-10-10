@@ -1,0 +1,70 @@
+{
+  "bindings": {
+    "actual-input-manifest-accounting-v2.json": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c",
+    "compare_worker.py": "94e2e93cb439cf4602f95fa475c430f77f14428c37e2f4f07ae03d5953e2dacf"
+  },
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "comparison_sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12",
+  "host_after": {
+    "available_percent": 72,
+    "host_read_seconds": 2.237502485513687e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 10737418240,
+    "swap_used_bytes": 9640345600
+  },
+  "host_before": {
+    "available_percent": 79,
+    "host_read_seconds": 2.8250040486454964e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 10737418240,
+    "swap_used_bytes": 9724362752
+  },
+  "native_calls": 0,
+  "numerical_qualification_passed": true,
+  "output_cap_bytes": 16777216,
+  "physical_validation_pass": null,
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 16777216,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-I",
+      "-B",
+      "-X",
+      "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/unused-worker-pycache",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-manifest-preparation-v1/compare_worker.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--manifest",
+      "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json",
+      "--manifest-sha256",
+      "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c",
+      "--output-directory",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-twelve-row-comparison-v1/attempt-02",
+      "--execute"
+    ],
+    "elapsed_seconds": 11.15518054109998,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 8695360,
+    "peak_sampled_process_group_rss_bytes": 254623744,
+    "pid": 42496,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 600
+  },
+  "rss_cap_bytes": 3221225472,
+  "saved_stream_replays": 0,
+  "schema": "hbe-v5-root-saved-comparison-supervision-v1",
+  "source_commit": "0fea50e1ce31b7dea41585bf67a857d71cfa8473",
+  "status": "completed_numerical_comparison",
+  "threads": 1,
+  "wall_cap_seconds": 600
+}

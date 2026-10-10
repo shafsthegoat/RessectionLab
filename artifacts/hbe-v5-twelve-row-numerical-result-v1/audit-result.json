@@ -1,0 +1,283 @@
+{
+  "canonical_comparator_calls": 0,
+  "cross_implementation_float_comparison": "at most4ULP for scalar norm results; no decision threshold tolerance",
+  "elapsed_seconds": 0.1613136250525713,
+  "exact_scalar_state_count": 122,
+  "file_count": 65,
+  "files_pre_post_identical": {
+    "artifacts/hbe-v5-tension-n12-nocache-v2-result-v1/v2-sidecar-receipt.json": {
+      "bytes": 25938,
+      "sha256": "dae900fcedd2dc61f1398a00e40be40b9fa355146c20599c6f01fc5a29b45eb8"
+    },
+    "artifacts/hbe-v5-tension-n16-continuation-result-v1/continuation/receipt.json": {
+      "bytes": 36910,
+      "sha256": "656dbcdc6edb69a516c68f0e5ff81ab22c2afe4732c7ad74f89efd595435f8eb"
+    },
+    "artifacts/hbe-v5-tension-n24-continuation-result-v1/continuation/receipt.json": {
+      "bytes": 39899,
+      "sha256": "e33b944da060641794e2b4171ac16c98c18a239a532b5b817e2009ccfd87cbb7"
+    },
+    "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json": {
+      "bytes": 35937,
+      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
+    },
+    "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest.json": {
+      "bytes": 35937,
+      "sha256": "ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449"
+    },
+    "build/hbe-v5-native-manifest-preparation-v1/compare_worker.py": {
+      "bytes": 3432,
+      "sha256": "94e2e93cb439cf4602f95fa475c430f77f14428c37e2f4f07ae03d5953e2dacf"
+    },
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json": {
+      "bytes": 8692939,
+      "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+    },
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/readout-console.txt": {
+      "bytes": 186,
+      "sha256": "d2b958cdcff74916aedc18b39307cdca7096e52ba27fb3d616c743b33d95b087"
+    },
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/receipt.json": {
+      "bytes": 2811,
+      "sha256": "441626ffb3226a6683319b55e3c4e04912bc72805c2408effb39cfe5e8da3577"
+    },
+    "manifests/experiments/hbe-01-03-branch-calibration-v4.json": {
+      "bytes": 30703,
+      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+    },
+    "manifests/experiments/hbe-01-03-branch-calibration-v5.json": {
+      "bytes": 11026,
+      "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+    },
+    "outputs/mechanics/hbe-v5-later-continuation-v1/11-tension-N24-S120-reference/attempt-01/receipt.json": {
+      "bytes": 47819,
+      "sha256": "a227e7146174c3e1586b16173cd3a314498346691225b33980669a1b77347d12"
+    },
+    "outputs/mechanics/hbe-v5-n8-one-shot-v1/attempt-01/receipt.json": {
+      "bytes": 590598,
+      "sha256": "8099c438caadf120d7269c14025fb92932fdda12a05f5ac8e8ade981cb20d45d"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/01-compression-N12-S60-reference/attempt-01/readout.json": {
+      "bytes": 539665,
+      "sha256": "960c7a4fdfb37b0823b07f88c19fe280b72583169fc73825a90b0dfe8c86772f"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/01-compression-N12-S60-reference/attempt-01/receipt.json": {
+      "bytes": 7949,
+      "sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/02-compression-N16-S60-reference/attempt-01/readout.json": {
+      "bytes": 539096,
+      "sha256": "d8af76cca9c40231fa6750bc71abae849c2dbce6ec23412799c58c39d00a21e0"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/02-compression-N16-S60-reference/attempt-01/receipt.json": {
+      "bytes": 13775,
+      "sha256": "9c5fb86a1264c1ff3bea06800b16fef7b3248908971d88cc543bcee0692d0f96"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/readout.json": {
+      "bytes": 543777,
+      "sha256": "6a8ee5db83518652949744a605774f23c3d0304d2c20e72367bf65fe35817761"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/receipt.json": {
+      "bytes": 13850,
+      "sha256": "823ab0b8260a56d62147dd4cc44dcc2e37ef2bf72092aa4c206d576f3831097d"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/04-compression-N32-S60-reference/attempt-01/readout.json": {
+      "bytes": 543501,
+      "sha256": "223ea86bdaa88ce7f6a596db0dda753d286cef7410c0323f99338ac84c0f3539"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/04-compression-N32-S60-reference/attempt-01/receipt.json": {
+      "bytes": 13929,
+      "sha256": "f6830c11c551f548b22152f1b2582f151072163f65e8250e40a41be768194168"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/05-compression-N36-S60-reference/attempt-01/readout.json": {
+      "bytes": 544196,
+      "sha256": "093777276e6270cea6ab76c8dc6d9e615acde78fedaa1517b2a8c04555398a48"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/05-compression-N36-S60-reference/attempt-01/receipt.json": {
+      "bytes": 14007,
+      "sha256": "b7f59dada629cd1fb8e61eac48a6eda86724b755055bdb7aa5dbf812d83fb013"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/readout.json": {
+      "bytes": 1076730,
+      "sha256": "14ca49981b0bf68df1a2a1d75489b9e8966c017635d3c4ba20a794e64a8eb18b"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/receipt.json": {
+      "bytes": 14106,
+      "sha256": "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/07-tension-N8-S60-reference/attempt-01/readout.json": {
+      "bytes": 534556,
+      "sha256": "7e572166c5734bbdab14c468c18d8bb6253e6525c70505935bc7ff55d5127bd6"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/07-tension-N8-S60-reference/attempt-01/receipt.json": {
+      "bytes": 14059,
+      "sha256": "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/readout.json": {
+      "bytes": 535343,
+      "sha256": "699d70d887ed4e17cc554cf18c8f1bd3e86e4adc00f1b981b2ea2e848dd42db8"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/receipt.json": {
+      "bytes": 14163,
+      "sha256": "67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/readout.json": {
+      "bytes": 538733,
+      "sha256": "2c854b9e5a10c2fd24851009810996a5334d59d24b7262a99af892c308b3f576"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/receipt.json": {
+      "bytes": 14247,
+      "sha256": "d2476c6355a4c23421c829eff4b9a5db1899b4013b73bacf7e2701eda0def144"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout.json": {
+      "bytes": 539102,
+      "sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/receipt.json": {
+      "bytes": 14314,
+      "sha256": "1485dec2cf0ca37785bc72f029ff78b46a6654e2430de874343269a24069c5d2"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout.json": {
+      "bytes": 1066783,
+      "sha256": "20d64b4952aee288c3fa43597e019f1456a7e31b1ea9189a9f43a51d8500b3e1"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/receipt.json": {
+      "bytes": 14405,
+      "sha256": "c108581d6afa8cd7edd41341deb76cf9ef40780ed0ff183235c6fe1f5d457b9c"
+    },
+    "scripts/febio_runtime.py": {
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/mechanics_febio_verification.py": {
+      "bytes": 20494,
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "bytes": 28370,
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v4.py": {
+      "bytes": 18988,
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    "scripts/mechanics_hbe_branch_calibration_v5.py": {
+      "bytes": 17567,
+      "sha256": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "bytes": 8744,
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts/mechanics_hbe_halfheight_global.py": {
+      "bytes": 12780,
+      "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36.py": {
+      "bytes": 12828,
+      "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": {
+      "bytes": 26682,
+      "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": {
+      "bytes": 8765,
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": {
+      "bytes": 19175,
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    "scripts/mechanics_hbe_halfheight_mesh.py": {
+      "bytes": 12115,
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    "scripts/mechanics_hbe_halfheight_readout.py": {
+      "bytes": 27043,
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    "scripts/mechanics_hbe_halfheight_spatial.py": {
+      "bytes": 10144,
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "bytes": 8702,
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "bytes": 18789,
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    "scripts/mechanics_hbe_v5_comparison.py": {
+      "bytes": 19890,
+      "sha256": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9"
+    },
+    "scripts/mechanics_hbe_v5_frame.py": {
+      "bytes": 14985,
+      "sha256": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9"
+    },
+    "scripts/mechanics_hbe_v5_n12_admission.py": {
+      "bytes": 13711,
+      "sha256": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a"
+    },
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": {
+      "bytes": 28179,
+      "sha256": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d"
+    },
+    "scripts/mechanics_hbe_v5_n8_canary.py": {
+      "bytes": 8949,
+      "sha256": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a"
+    },
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": {
+      "bytes": 28373,
+      "sha256": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0"
+    },
+    "scripts/mechanics_hbe_v5_native_comparison.py": {
+      "bytes": 31643,
+      "sha256": "31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e"
+    },
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": {
+      "bytes": 61999,
+      "sha256": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+    },
+    "scripts/mechanics_hbe_v5_source_bindings.py": {
+      "bytes": 14511,
+      "sha256": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208"
+    },
+    "scripts/mechanics_hbe_v5_stream.py": {
+      "bytes": 12369,
+      "sha256": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a"
+    },
+    "scripts/mechanics_patient_constraints.py": {
+      "bytes": 19006,
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    }
+  },
+  "independently_checked_signed_pairs": 10,
+  "measured_response_reads": 0,
+  "native_calls": 0,
+  "numerical_qualification_passed": true,
+  "patient_reads": 0,
+  "project_imports": 0,
+  "scope_limits": {
+    "observed_peak_rss_bytes": 268435456,
+    "wall_seconds": 60
+  },
+  "self_peak_rss_bytes": 76021760,
+  "source_manifest_change_only": "native comparator a00d3f0e to31fc3d66",
+  "status": "PASS",
+  "stream_replays": 0
+}

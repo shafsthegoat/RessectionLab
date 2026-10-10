@@ -1,0 +1,33 @@
+{
+  "canonical_comparator_rerun": false,
+  "files": {
+    "REPORT.txt": {
+      "bytes": 7714,
+      "sha256": "372929bff40fc5546320ff0aed11054ebd44ddac2a656decdb0369037d137bac"
+    },
+    "audit-console.txt": {
+      "bytes": 99,
+      "sha256": "12f4cb6167bf2fd3a3e571188a09e4268bc0c209f5ff1d33cdb14c89b23db394"
+    },
+    "audit-resource.txt": {
+      "bytes": 777,
+      "sha256": "e840847268887f75af48156ffda0594e06338df3215284fbe10c602d9e155dc7"
+    },
+    "audit-result.json": {
+      "bytes": 13016,
+      "sha256": "97d9eaec96f65e9fa9fea49ec624bba2908e6dceae6a59a8357cb4b6fd8e6f2d"
+    },
+    "audit_saved.py": {
+      "bytes": 20694,
+      "sha256": "b30feeeb56902ebb266737f967d01d407c6efc0fa253cc21eb21b18c169c76f0"
+    },
+    "result-summary.json": {
+      "bytes": 51232,
+      "sha256": "89ab6572891e2739d83ced2a6ee845e9b3eae1c0f9063b7d10fc4acb7edb86f1"
+    }
+  },
+  "full_comparison_copied": false,
+  "full_comparison_sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12",
+  "schema": "hbe-v5-native-verdict-audit-index-v1",
+  "total_bytes": 93532
+}

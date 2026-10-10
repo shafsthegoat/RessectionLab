@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "path": "comparison-receipt.json",
+      "source_path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/receipt.json",
+      "bytes": 2811,
+      "sha256": "441626ffb3226a6683319b55e3c4e04912bc72805c2408effb39cfe5e8da3577"
+    },
+    {
+      "path": "input-manifest.json",
+      "source_path": "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json",
+      "bytes": 35937,
+      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
+    },
+    {
+      "path": "compare_worker.py",
+      "source_path": "build/hbe-v5-native-manifest-preparation-v1/compare_worker.py",
+      "bytes": 3432,
+      "sha256": "94e2e93cb439cf4602f95fa475c430f77f14428c37e2f4f07ae03d5953e2dacf"
+    },
+    {
+      "path": "run_comparison_accounting_v2.py",
+      "source_path": "build/hbe-v5-native-manifest-preparation-v1/run_comparison_accounting_v2.py",
+      "bytes": 4358,
+      "sha256": "4504b46743c353c505d5cf96c73e4a4871b35da6859ea2f80aa429539026c54b"
+    }
+  ],
+  "independent_index_sha256": "9505a0458b1012d4c4f4e63cec8baadb8ecdc19a8b2910e8c4fcb45d6d18a825",
+  "bulk_comparison_included": false,
+  "full_comparison_sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+}

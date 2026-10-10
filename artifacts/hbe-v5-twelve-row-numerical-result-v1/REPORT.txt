@@ -1,0 +1,119 @@
+PASS — independent saved-result numerical-verdict audit
+
+Scope and exact evidence
+The corrected twelve-row native comparison passes the frozen software numerical
+criteria. The accepted full comparison remains build-only at
+build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json:
+SHA256 6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12
+(8,692,939 bytes). Its exact input manifest is
+4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c.
+
+One stdlib-only saved-result audit exited zero: 0.162295 s internal, 0.21 s
+external wall; external maximum resident set 76,152,832 bytes. The approved
+limits were 60 s and 268,435,456 bytes observed RSS. SIGALRM bounded wall time;
+self high-water RSS checks and /usr/bin/time observed memory. This is not an
+OS hard memory reservation or a continuously sampled process-group RSS limit.
+All 65 explicit compact input/source files matched their pre/post hashes.
+A file/process audit hook denied unlisted reads and all process/network calls.
+No native call, canonical comparator call, saved-stream replay, project import,
+measured response or patient read occurred. The later summary-formatting step
+read only this audit's compact summary, not the original arrays again.
+
+The twelve readouts, exact declared reference identities, domain representations,
+complete schedules, finite signed force histories and all 75 three-component
+probes were checked. Each stream passed its saved residual/work/positive-J
+criteria; all 30 frozen coordinate-only rows are covered by every applicable
+run with zero coverage tolerance. All 30 comparator source files and the exact
+worker hash were checked. The predecessor manifest differs only at the repaired
+native comparator hash a00d3f0e... -> 31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e.
+The numerical source is unchanged at
+895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9.
+
+Independent arithmetic
+The audit directly recomputed all ten signed adjacent/temporal force and probe
+differences, their maxima and limits, all spatial/temporal group metrics, mixed
+classifications and the complete final Boolean conjunction. Exact signed-array
+comparisons passed. Scalar norm/reduction agreement allowed at most four ULP;
+that is only a cross-implementation equality check, never a relaxed acceptance
+threshold. Actual pass/fail decisions use unchanged <= or strict < comparisons.
+
+The original scalar order_ratio, unequal_order and state_diagnostic functions
+were extracted from the pinned source as three isolated functions, with no
+module imports or I/O-capable statements. All 122 baseline/mixed compression
+states match exactly. Thus the conditional nonlinear order solve is reused,
+not a second independent derivation of that model; state reductions and final
+gating are independently recomputed. Native/deck authentication relies on the
+root's source-bound completed comparator and earlier row audits. This audit did
+not repeat the bulk native chain or re-authenticate solver primitives.
+
+Consequential values (actual versus frozen limit)
+* Compression N32 -> N36: max force difference 4.9442621256785835e-05 N <=
+  7.271855906326609e-04 N; max probe norm 1.7634981933016818e-06 m <= 8e-06 m.
+* Tension N16 -> N24: max force difference 1.2070333186100027e-04 N <=
+  5.330261193085620e-04 N; max probe norm 3.650539584205596e-06 m <= 8e-06 m.
+* Compression N36 S60 -> S120 common states: max force difference
+  1.8068706253426825e-12 N <= 7.271855906202017e-05 N; max probe norm
+  2.313705266673336e-14 m <= 8e-07 m.
+* Tension N24 S60 -> S120 common states: max force difference
+  6.586120537832585e-12 N <= 5.3302611936277914e-05 N; max probe norm
+  1.414249474120787e-14 m <= 8e-07 m.
+* Mesh force allowance = 1.6e-7 N + 0.02 max|fine force|; temporal allowance =
+  1.6e-8 N + 0.002 max|fine even-state force|. All 61 common states and 75 probes
+  are retained. Unmatched S120 midpoints do not enlarge the allowance.
+* Baseline compression maximum two-latest-limit envelope:
+  6.493139303259746e-04 N <= 7.271855906326609e-04 N.
+  Mixed S120 envelope: 6.493139297030145e-04 N <= 7.271855906202017e-04 N.
+  Maximum limit disagreements are respectively 7.345199225734095e-05 N and
+  7.345193210097495e-05 N. Every nonrest state resolves with no envelope
+  exceedance or instability. Endpoint latest-triplet orders are respectively
+  0.6993442170686113 and 0.699344156125369. No state/group classification changes.
+* Both tension triplet trend groups pass. N12-N16-N24 reaction trend:
+  1.2070333186100027e-04 N < 1.2479995041910288e-04 N, strict.
+* Minimum sampled J across all twelve rows = 0.5525190653076201 > 0;
+  minimum logged J = 0.979324390904 > 0. Maximum reported criterion ratio =
+  0.0011041910434665884 <= 1 (tension N16 native free-DOF reaction).
+  Sampled positivity is not proof of positivity everywhere.
+
+Preserved negative diagnostics and scope
+Compression N8-N12-N16 fails its motion criterion (1.0986348317677308e-05 m
+versus 8e-06 m). Compression N12-N16-N24 fails strict reaction trend
+(2.448427926464228e-04 N is not < 2.052146386622017e-04 N).
+N8-N12 and N12-N16 adjacent motion limits are exceeded in both branches.
+These coarse diagnostics are retained, not additional vetoes under the frozen
+v5 rule. Compression acceptance uses the finest reaction/motion check and the
+conditional all-state screen; historical/older trend failures are not erased.
+The old N32 negative remains: envelope 9.851889327635727e-04 N > allowance
+7.241685256994747e-04 N at states49–60. It is historical, not a v5 veto.
+
+This is a conditional compression discretization model, not a continuum error
+bound or a claim of physical/patient accuracy. physical_validation_pass=null;
+calibration_released=false; measured_response_accessed=false;
+patient_data_accessed=false; native_execution_released=false. All12 declared
+reference rows are numerical evidence, not calibration or held-out responses.
+
+Costs and historical exceptions
+The actual corrected comparison took11.15518054109998 s, sampled process-group
+RSS254,623,744 bytes, exit0, no kill reason, and clean owned reaping with no
+fallback/errors/surviving members. It made zero native calls and zero saved
+stream replays. The original failed attempt01 remains separate and unchanged.
+
+The saved campaign aggregate (with explicit four-sidecar reservations) is
+12 native calls; 2,083.633109751856 native seconds; 217.1380392916035 recorded
+remaining-row readout seconds; 87.38920575124212 recorded charged prep seconds;
+2,394.4440010867547 known combined seconds; 3,524,119,165 charged combined bytes.
+Each is within the original limits. The exact N12 supplement adds one replay,
+2.8474308329168707 replay seconds, 3.4362154591362923 prep seconds and557,392 bytes;
+its original failed receipt and missing post-run guard history remain disclosed.
+Historical N8 readout/preparation wall time was not recorded; the known total
+must not be presented as complete campaign wall time. Native closed bytes and
+sidecar reservations remain separate row scopes, summed once in aggregate.
+The audit checked the last native ledger extension and all four saved sidecar
+increments against the completed comparison; it did not re-run chain validation.
+
+Delivery
+result-summary.json is a51,232-byte scalar/metric summary with no signed arrays
+or all-state arrays. It retains all consequential pass/fail values and actual
+limits, selected endpoint diagnostics, coarse negatives, exact identities,
+resource counters and limitations. audit-result.json contains explicit file
+hashes and audit observations. source-index.json inventories this compact
+package. All files are ignored preparation; root alone promotes evidence.
