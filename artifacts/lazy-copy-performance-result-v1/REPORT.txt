@@ -1,0 +1,17 @@
+The lazy-copy change preserved the fixed TRAIN025 route and its complete replay while reducing measured working-mask copies by 17.66%.
+
+Baseline and candidate ran once each, in that order, in fresh owned children. They used the same explicit S-union-T occupancy assumption, obstruction-opening proposals, horizon 24, candidate cap 120, public inputs, tools and reward. Both selected three motions followed by STOP, removed three supplied-target cells (2.861024 mm³), removed no cells outside the target and returned +2.758329. This is simulated TRAIN evidence, not clinical removal or transfer performance.
+
+Each arm made 1,224 native previews, scored 72 legal motions and made 12 native transitions: four during greedy selection, four during execution and four during replay. Source, model, observation and context identities; all proposal inventories; scores and choices; complete histories; final states; metrics; and independent geometry results agree exactly. Only declared planning and evaluation times are excluded. The five inventory files per arm are byte-identical; their paths and hashes are retained without duplicating their large ledgers.
+
+Copies of the two committed working masks fell from 2,390 to 1,968, avoiding 422 copies and 1,014,926,458 cumulative copied bytes. This is a 17.6569% reduction in those measured copies, not in all memory allocations. Both arms used the same instrumentation. The candidate delays copying until an actual cut; it changes no geometry, reward or model inputs.
+
+No meaningful timing speedup was demonstrated. Greedy selection took 1.573734 → 1.587198 seconds; worker time was 6.295681 → 6.253825 seconds; total native-preview time was 4.391509 → 4.373277 seconds. Sampled peak RSS was 480.08 → 471.40 MB (decimal). The complete pair took 17.180385 seconds. One ordered pair cannot separate an implementation effect from timing noise or filesystem-cache effects, and sampled RSS can miss transient peaks. No training-speed claim follows.
+
+The independent saved-only audit passed 382 checks over 159 inputs, including executed source pins, both child receipts, full parity, the historical route and copy arithmetic. No patient arrays, weights or runtime models were read for that audit or this package.
+
+The original v1 attempt failed before scientific-worker spawn: parent declaration construction looked for execution_limits instead of execution_limits_per_child. Its failed result, release and source index are preserved. Native/model calls and acquired-array/checkpoint reads were zero; metadata/source guards did run. V2 fixes that lookup and binds a fresh output and the prior failure. A generated test reproduced the old failure, then exercised both corrected real subprocess children through lease checks, sampling, cleanup, receipts and final comparison in 1.320351 seconds.
+
+Validation: the 12 lazy-copy controls passed in 0.66 seconds, and the 18 existing post-exposure controls passed on the candidate overlay in 0.84 seconds. After promotion, the combined canonical suite passed 104 cases with one historical-file skip in 3.53 seconds; that exact historical case passed separately with its pinned baseline in 0.18 seconds. All 105 relevant canonical controls passed. The promoted test differs from the executed staged test only in docstring wording.
+
+Executed baseline 2aa19137 and candidate 79363aa6 are included. The separate root-preflight-note.json preserves two root-reported pre-release command refusals without inventing receipts. No repeat scientific run was performed for this package.

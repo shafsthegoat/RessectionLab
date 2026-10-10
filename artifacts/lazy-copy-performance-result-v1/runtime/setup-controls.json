@@ -1,0 +1,25 @@
+{
+  "fixed": {
+    "actual_pair_comparison_complete": true,
+    "both_durable_receipts_complete": true,
+    "both_real_generated_children_reached_and_reaped": true,
+    "exact_parent_declaration_fields": true
+  },
+  "old": {
+    "exit_code": 1,
+    "old_failure_reproduced_before_scientific_boundary": true
+  },
+  "per_case_timeout_seconds": 12,
+  "scope": "actual pair+owned parent setup, generated child only; no scientific runtime/patient/model imports",
+  "source_pins": {
+    "freeze-runtime.py": "c061c5391e66efa4b04e81d86fb817b684d65a26f716d444e7fcfcc11b1e33ad",
+    "pilot_contract.py": "2f1dd87d43ed172cc2f3158664919257de7c3c085141f7d13827f1731e7bd6a3",
+    "run_owned.py": "070f20d12b8766af93a7af5e0321dea26906624cf9b59ba8a6b6a40cef85a0d1",
+    "run_pair.py": "110c708e6bc9da57898db7246e053e7ecca70301730ed769f0c7d71ac0a21061",
+    "search_worker.py": "d48e951403a50625d211658fe29912745ff197566a3bd00306667e0d2ed3d7bf",
+    "test_owned_setup.py": "71ad184dbcf05c36b5ecd13216a5ce7f8bec383fc00e23465914a6466c3a766c"
+  },
+  "status": "PASS",
+  "threads": 1,
+  "wall_seconds": 1.3203508749138564
+}

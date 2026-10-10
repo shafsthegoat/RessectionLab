@@ -1,0 +1,23 @@
+{
+  "status": "generated_controls_pass",
+  "original_candidate": "build/immutable-preview-lazy-copy-v1/stage/resectionlab/native_resection.py",
+  "original_candidate_sha256": "4212e7f52112988c2f49099b7ceac26465cc32928f51269fceb0141995e0c327",
+  "change": "same two copy-allocation edits; post-exposure physical_start preserved; no runtime yet",
+  "files": {
+    "baseline/resectionlab/native_resection.py": "2aa191370f2dab441089dcd3d6b925c80d0da450d72fdc464d42fb93d13c8e1f",
+    "run_generated.py": "90b3adcc132dc8270579f3e05c6999644e7902f7ab986d8befedbd9551ee8e90",
+    "source.patch": "bb73dafe298e85e1109f7159b6addf90ac4caa7283b259eeb8ef161fe07f2090",
+    "stage/resectionlab/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "stage/tests/test_native_preview_lazy_copy.py": "24f6545a6f08033e6cbbc61d6fd0fd5b3bb03d23244f680ae3492d047e47b183"
+  },
+  "controls": {
+    "cases": 12,
+    "pytest_seconds": 0.66,
+    "parent_seconds": 0.838424582965672,
+    "receipt": "generated-controls.json",
+    "receipt_sha256": "d9869387d7998024612cf6f449d4ebded7dc4bba01d1ab69a03836e0fa428c71",
+    "log_sha256": "5af02ab3ce1a4a1e85f4e75799d1fddbdf29350ca4034adfd7a4df3ecbb835f3",
+    "acquired_payloads": false,
+    "canonical_edits": false
+  }
+}

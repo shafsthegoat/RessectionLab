@@ -1,0 +1,80 @@
+OLD (expected failure):
+Traceback (most recent call last):
+  File "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/lazy-copy-owned-setup-_yu7echc/old/build/driver/run_owned.py", line 202, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/lazy-copy-owned-setup-_yu7echc/old/build/driver/run_owned.py", line 199, in main
+    try:return _main()
+               ^^^^^^^
+  File "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/lazy-copy-owned-setup-_yu7echc/old/build/driver/run_owned.py", line 72, in _main
+    'execution_limits':release['execution_limits'],
+                       ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'execution_limits'
+Traceback (most recent call last):
+  File "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/lazy-copy-owned-setup-_yu7echc/old/build/driver/run_pair.py", line 79, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/lazy-copy-owned-setup-_yu7echc/old/build/driver/run_pair.py", line 65, in main
+    if current[0].wait()!=0:raise RuntimeError('Owned child incomplete: '+name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Owned child incomplete: baseline
+
+FIXED:
+{
+  "status": "complete_exact_parity",
+  "compared_fields": [
+    "identity",
+    "initial_inventory",
+    "inventories",
+    "search",
+    "plan",
+    "replay",
+    "final_state",
+    "native_counts",
+    "native_previews",
+    "preview_outcome_profile"
+  ],
+  "arms": {
+    "baseline": {
+      "receipt_sha256": "280f3db16df4b862f53735f73b2d0131692edf77abc33566815878867cdba005",
+      "result_sha256": "a468c59e6cfb3050241c112a3c42879ebdba01b5d9d26c7eac773ae104ca31b1",
+      "parent_wall_seconds": 0.5465217919554561,
+      "sampled_peak_rss_bytes": 28934144,
+      "worker_wall_seconds": 0.0,
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "native_preview_seconds": 0.0,
+      "greedy_seconds": 0.0,
+      "temporary_mask_copies": {
+        "copied_bytes": 0,
+        "copy_calls": 0
+      }
+    },
+    "lazy_copy": {
+      "receipt_sha256": "caff166d00f34b50f9a024f67b3a53960a095f6d512f00bdf9100d4fa767a91a",
+      "result_sha256": "7485d1f53c32bed95ed1ff4b6335ace7bc3d0842815543da4dcdd021ef6564fc",
+      "parent_wall_seconds": 0.5394961251877248,
+      "sampled_peak_rss_bytes": 28884992,
+      "worker_wall_seconds": 0.0,
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "native_preview_seconds": 0.0,
+      "greedy_seconds": 0.0,
+      "temporary_mask_copies": {
+        "copied_bytes": 0,
+        "copy_calls": 0
+      }
+    }
+  },
+  "interpretation": "Single sequential pair with identical instrumentation; filesystem-cache/order and sampled-RSS limits apply. No stable speedup or training-speed claim.",
+  "pair_wall_seconds": 1.1651355838403106,
+  "release_sha256": "33231f5aa7f682facf01b9ad0fddcc00ab455d19bec30aa11034146079b25731"
+}

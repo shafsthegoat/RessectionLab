@@ -1,0 +1,350 @@
+{
+  "excluded": "No acquired arrays, checkpoint weights, pycache or bulk proposal ledgers copied; ledger identity index records exact saved paths and byte hashes.",
+  "retained_exact_files": [
+    {
+      "bytes": 16048,
+      "original_path": "build/lazy-copy-train025-pair-v2/source-index.json",
+      "package_path": "runtime/source-index.json",
+      "sha256": "b6aec179a8adbb8a8f6cc8723da769f1ed669281baead8d9bc696602e124a8f5"
+    },
+    {
+      "bytes": 4232,
+      "original_path": "build/lazy-copy-train025-pair-v2/root-release.json",
+      "package_path": "runtime/root-release.json",
+      "sha256": "3de4f772674c3371de2484569f864bb499f284f4872eb501965c5952c55fcd0f"
+    },
+    {
+      "bytes": 4232,
+      "original_path": "build/lazy-copy-train025-pair-v2/release-template.json",
+      "package_path": "runtime/release-template.json",
+      "sha256": "fa0d5424a40023e6eb3df7a79ea4c6bad68fd32b9b765af806640704d2d59cb6"
+    },
+    {
+      "bytes": 1104,
+      "original_path": "build/lazy-copy-train025-pair-v2/setup-controls.json",
+      "package_path": "runtime/setup-controls.json",
+      "sha256": "61ce8281f0eb7fb1caf4c401bc98ff04581880588e749f8be1b6765124798150"
+    },
+    {
+      "bytes": 3166,
+      "original_path": "build/lazy-copy-train025-pair-v2/setup-controls.log",
+      "package_path": "runtime/setup-controls.log",
+      "sha256": "fdbf9bf4833d73ee6a45c883a505691dd449d7fb6cf4955ff81046400a72167d"
+    },
+    {
+      "bytes": 6200,
+      "original_path": "build/lazy-copy-train025-pair-v2/correction.patch",
+      "package_path": "runtime/correction.patch",
+      "sha256": "4a3ea1e83376f9f987c2a178ce483cc216cf5f5aa8df26e6b00f955a576bd220"
+    },
+    {
+      "bytes": 11781,
+      "original_path": "build/lazy-copy-train025-pair-v2/pilot_contract.py",
+      "package_path": "runtime/pilot_contract.py",
+      "sha256": "2f1dd87d43ed172cc2f3158664919257de7c3c085141f7d13827f1731e7bd6a3"
+    },
+    {
+      "bytes": 24539,
+      "original_path": "build/lazy-copy-train025-pair-v2/search_worker.py",
+      "package_path": "runtime/search_worker.py",
+      "sha256": "d48e951403a50625d211658fe29912745ff197566a3bd00306667e0d2ed3d7bf"
+    },
+    {
+      "bytes": 12604,
+      "original_path": "build/lazy-copy-train025-pair-v2/run_owned.py",
+      "package_path": "runtime/run_owned.py",
+      "sha256": "070f20d12b8766af93a7af5e0321dea26906624cf9b59ba8a6b6a40cef85a0d1"
+    },
+    {
+      "bytes": 5094,
+      "original_path": "build/lazy-copy-train025-pair-v2/run_pair.py",
+      "package_path": "runtime/run_pair.py",
+      "sha256": "110c708e6bc9da57898db7246e053e7ecca70301730ed769f0c7d71ac0a21061"
+    },
+    {
+      "bytes": 6679,
+      "original_path": "build/lazy-copy-train025-pair-v2/freeze-runtime.py",
+      "package_path": "runtime/freeze-runtime.py",
+      "sha256": "c061c5391e66efa4b04e81d86fb817b684d65a26f716d444e7fcfcc11b1e33ad"
+    },
+    {
+      "bytes": 7745,
+      "original_path": "build/lazy-copy-train025-pair-v2/test_owned_setup.py",
+      "package_path": "runtime/test_owned_setup.py",
+      "sha256": "71ad184dbcf05c36b5ecd13216a5ce7f8bec383fc00e23465914a6466c3a766c"
+    },
+    {
+      "bytes": 2738,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/pair-result.json",
+      "package_path": "pair-result.json",
+      "sha256": "610ea6fd753eff62935c030f5909fa72fdab75a08cb6a4ecaddff67919f6361b"
+    },
+    {
+      "bytes": 3462,
+      "original_path": "build/lazy-copy-train025-pair-v1/root-release.json",
+      "package_path": "prior-failure/root-release.json",
+      "sha256": "33231f5aa7f682facf01b9ad0fddcc00ab455d19bec30aa11034146079b25731"
+    },
+    {
+      "bytes": 15413,
+      "original_path": "build/lazy-copy-train025-pair-v1/source-index.json",
+      "package_path": "prior-failure/source-index.json",
+      "sha256": "b7e8a7d71fb74ce519d5965eb19b3d2fc6ae7ea6cd0ee4075f35360d08e512e5"
+    },
+    {
+      "bytes": 12594,
+      "original_path": "build/lazy-copy-train025-pair-v1/run_owned.py",
+      "package_path": "prior-failure/run_owned.py",
+      "sha256": "508175e7ae0c7bf2abb29496ec4f02c7eaf31f726e351c5929be33de4c2b2c97"
+    },
+    {
+      "bytes": 297,
+      "original_path": "build/lazy-copy-train025-pair-v1/attempt-01/pair-result.json",
+      "package_path": "prior-failure/pair-result.json",
+      "sha256": "836be5c561393b7d1fb53b937245898012ff46b105ffaa72ceb8fbed6f715574"
+    },
+    {
+      "bytes": 269,
+      "original_path": "build/immutable-preview-lazy-copy-v2/generated-controls.json",
+      "package_path": "candidate/generated-controls.json",
+      "sha256": "d9869387d7998024612cf6f449d4ebded7dc4bba01d1ab69a03836e0fa428c71"
+    },
+    {
+      "bytes": 99,
+      "original_path": "build/immutable-preview-lazy-copy-v2/generated-controls.log",
+      "package_path": "candidate/generated-controls.log",
+      "sha256": "5af02ab3ce1a4a1e85f4e75799d1fddbdf29350ca4034adfd7a4df3ecbb835f3"
+    },
+    {
+      "bytes": 308,
+      "original_path": "build/immutable-preview-lazy-copy-v2/post-exposure-controls.json",
+      "package_path": "candidate/post-exposure-controls.json",
+      "sha256": "ec5c73ce1c1035c35efc32b5e179813abf6879f2a29133944cd10cc6dd9b999b"
+    },
+    {
+      "bytes": 99,
+      "original_path": "build/immutable-preview-lazy-copy-v2/post-exposure-controls.log",
+      "package_path": "candidate/post-exposure-controls.log",
+      "sha256": "89917f9347c0d8949f3d37e9f475324731b65648b2cad420cbee5ece7d86c9b2"
+    },
+    {
+      "bytes": 1732,
+      "original_path": "build/immutable-preview-lazy-copy-v2/source.patch",
+      "package_path": "candidate/source.patch",
+      "sha256": "bb73dafe298e85e1109f7159b6addf90ac4caa7283b259eeb8ef161fe07f2090"
+    },
+    {
+      "bytes": 1280,
+      "original_path": "build/immutable-preview-lazy-copy-v2/rebase.json",
+      "package_path": "candidate/rebase.json",
+      "sha256": "614914fd8e2258cba5b3f8bc4eb730dd603fc44e73b6d218f5f588de754000de"
+    },
+    {
+      "bytes": 46379,
+      "original_path": "build/immutable-preview-lazy-copy-v2/baseline/resectionlab/native_resection.py",
+      "package_path": "candidate/native_resection.baseline.py",
+      "sha256": "2aa191370f2dab441089dcd3d6b925c80d0da450d72fdc464d42fb93d13c8e1f"
+    },
+    {
+      "bytes": 47035,
+      "original_path": "build/immutable-preview-lazy-copy-v2/stage/resectionlab/native_resection.py",
+      "package_path": "candidate/native_resection.candidate.py",
+      "sha256": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d"
+    },
+    {
+      "bytes": 10335,
+      "original_path": "build/immutable-preview-lazy-copy-v2/stage/tests/test_native_preview_lazy_copy.py",
+      "package_path": "candidate/test_native_preview_lazy_copy.executed.py",
+      "sha256": "24f6545a6f08033e6cbbc61d6fd0fd5b3bb03d23244f680ae3492d047e47b183"
+    },
+    {
+      "bytes": 10329,
+      "original_path": "tests/test_native_preview_lazy_copy.py",
+      "package_path": "candidate/test_native_preview_lazy_copy.canonical.py",
+      "sha256": "2c0e7697780282c5736632d89256db7e20fd67c4838f4747cea4c5ba111e1ac3"
+    },
+    {
+      "bytes": 56749,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/plan.json",
+      "package_path": "shared/plan.json",
+      "sha256": "d65ff82fa9df1bbdbe6b50221f1109027260b2766172c7a59c8190050909de51"
+    },
+    {
+      "bytes": 56749,
+      "deduplicated": true,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/plan.json",
+      "package_path": "shared/plan.json",
+      "sha256": "d65ff82fa9df1bbdbe6b50221f1109027260b2766172c7a59c8190050909de51"
+    },
+    {
+      "bytes": 7446,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/world.json",
+      "package_path": "shared/world.json",
+      "sha256": "b4ad440975d61e0db3d7c9c0bfab88697b8845663953e4044dfc3995aacef1fc"
+    },
+    {
+      "bytes": 7446,
+      "deduplicated": true,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/world.json",
+      "package_path": "shared/world.json",
+      "sha256": "b4ad440975d61e0db3d7c9c0bfab88697b8845663953e4044dfc3995aacef1fc"
+    },
+    {
+      "bytes": 2839,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/context.json",
+      "package_path": "shared/context.json",
+      "sha256": "4dcdccaa6c43f79954fb013f2e008c06bfde8bebce4ae4a16a17d01b783b9b4f"
+    },
+    {
+      "bytes": 2839,
+      "deduplicated": true,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/context.json",
+      "package_path": "shared/context.json",
+      "sha256": "4dcdccaa6c43f79954fb013f2e008c06bfde8bebce4ae4a16a17d01b783b9b4f"
+    },
+    {
+      "bytes": 48487,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/result.json",
+      "package_path": "baseline/result.json",
+      "sha256": "eb65a8762b6610dc91164b76604512ba2e5f84967bc630d4e84be91fa488423f"
+    },
+    {
+      "bytes": 2616,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/costs.json",
+      "package_path": "baseline/costs.json",
+      "sha256": "1ff0baffb32fcf55f26b7045e6b52c93501e855bf75623abd39704012a32d190"
+    },
+    {
+      "bytes": 1632,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline.supervision/receipt.json",
+      "package_path": "baseline/supervision/receipt.json",
+      "sha256": "efc6f6be74876a881ff7620a6ccf04c9e5cfa5738532c5fd57f5a176940d0b05"
+    },
+    {
+      "bytes": 691,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline.supervision/worker-final.json",
+      "package_path": "baseline/supervision/worker-final.json",
+      "sha256": "faf5140d9a20dcdb3197c2d3aca9e6babe7d25124da83e8d0161f27df9d1200d"
+    },
+    {
+      "bytes": 362,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline.supervision/endpoint-control.json",
+      "package_path": "baseline/supervision/endpoint-control.json",
+      "sha256": "a177b2ee61abcb314dd33135c40e4af4883730afc326cfb615e7cae2a58101e2"
+    },
+    {
+      "bytes": 78179,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/replay.json",
+      "package_path": "baseline/replay.json",
+      "sha256": "985fe5cd2a7c876926c5e91a0381be389a82861844c42f5f88fab7acca317ce4"
+    },
+    {
+      "bytes": 28402,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/search.json",
+      "package_path": "baseline/search.json",
+      "sha256": "906013f27737d4623fc0bf46d6b0f17e945fba25f260c129bc448f0a30d67bc3"
+    },
+    {
+      "bytes": 115783,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/decision-summary.json",
+      "package_path": "baseline/decision-summary.json",
+      "sha256": "ee5172475a8f61b1fbfb025808e6e7c2decd18effd3d25657f9166f9d0ed4f99"
+    },
+    {
+      "bytes": 43509,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/arm-result.json",
+      "package_path": "baseline/arm-result.json",
+      "sha256": "3585b43c36593347aafb282eccfc09f3273350ddb3ce14d904ad38fd1affb6ae"
+    },
+    {
+      "bytes": 124243,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/baseline/arm-00/search-inventories.json",
+      "package_path": "baseline/search-inventories.json",
+      "sha256": "13d7eb9f4915078ceda2ec3b12e2d86e5eb41b022d2a94a6157bc35cae3e33a1"
+    },
+    {
+      "bytes": 48489,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/result.json",
+      "package_path": "lazy_copy/result.json",
+      "sha256": "9c6ae3e2f543a811a9b8595e6917588fad9418ed2f313dd18873f24a340c5345"
+    },
+    {
+      "bytes": 2615,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/costs.json",
+      "package_path": "lazy_copy/costs.json",
+      "sha256": "a3178dbd6af5fe758765c4ba122b9b847abd43498edf12baa69638435d954dc4"
+    },
+    {
+      "bytes": 1632,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy.supervision/receipt.json",
+      "package_path": "lazy_copy/supervision/receipt.json",
+      "sha256": "a21f423166afdf7f416c0bae05a5b4a15107d33f1ec8c9d110b6628024c7a58c"
+    },
+    {
+      "bytes": 692,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy.supervision/worker-final.json",
+      "package_path": "lazy_copy/supervision/worker-final.json",
+      "sha256": "646d6b425cd113abc2b22c2738af32cc91d29df03186080082f0a11f4a8ce129"
+    },
+    {
+      "bytes": 363,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy.supervision/endpoint-control.json",
+      "package_path": "lazy_copy/supervision/endpoint-control.json",
+      "sha256": "cb0ddb1a93821e2ac33eb8d8a8288b1468966d3060be56cd94fc094480ecbfba"
+    },
+    {
+      "bytes": 78179,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/replay.json",
+      "package_path": "lazy_copy/replay.json",
+      "sha256": "576100393e45844cc9c43e17c1c526f23ac7ed0b5abc153e1e80121266062e9e"
+    },
+    {
+      "bytes": 28402,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/search.json",
+      "package_path": "lazy_copy/search.json",
+      "sha256": "36257a72fd820befd257c9498a0887150015ae8e25adc17b380c4ab32e90e2bb"
+    },
+    {
+      "bytes": 115783,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/decision-summary.json",
+      "package_path": "lazy_copy/decision-summary.json",
+      "sha256": "ee5172475a8f61b1fbfb025808e6e7c2decd18effd3d25657f9166f9d0ed4f99"
+    },
+    {
+      "bytes": 43509,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/arm-result.json",
+      "package_path": "lazy_copy/arm-result.json",
+      "sha256": "ed172379cbb91c5d3b0c822af704feb5df63303b0834a8ac947d52ad335805c7"
+    },
+    {
+      "bytes": 124243,
+      "original_path": "build/lazy-copy-train025-pair-v2/attempt-02/lazy_copy/arm-00/search-inventories.json",
+      "package_path": "lazy_copy/search-inventories.json",
+      "sha256": "13d7eb9f4915078ceda2ec3b12e2d86e5eb41b022d2a94a6157bc35cae3e33a1"
+    },
+    {
+      "bytes": 191,
+      "original_path": "build/immutable-preview-lazy-copy-v2/canonical-controls.log",
+      "package_path": "candidate/canonical-controls.log",
+      "sha256": "18fe3d229730ec768000fef234cff775d11552a9b1571eddf697c111753f1eba"
+    },
+    {
+      "bytes": 98,
+      "original_path": "build/immutable-preview-lazy-copy-v2/canonical-historical.log",
+      "package_path": "candidate/canonical-historical.log",
+      "sha256": "fa8e3e1f0a4b084326a7027307e5cc3a94f799f9733ea598c3b878fa3c70f37c"
+    },
+    {
+      "bytes": 22270,
+      "original_path": "build/lazy-copy-train025-pair-independent-v1/audit-result.json",
+      "package_path": "independent/audit-result.json",
+      "sha256": "ae251e8897edf70672eca73dad83f1431b5c926fad9647e58ae02530d9149bfc"
+    },
+    {
+      "bytes": 11048,
+      "original_path": "build/lazy-copy-train025-pair-independent-v1/audit_saved.py",
+      "package_path": "independent/audit_saved.py",
+      "sha256": "a8555de70c0b9b0d158ef1f96f8fc1ae5b3fb7ec0c78860078c6e4616b85ff81"
+    }
+  ]
+}

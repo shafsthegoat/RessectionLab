@@ -1,0 +1,18 @@
+{
+  "corrected_actual_release_sha256": "3de4f772674c3371de2484569f864bb499f284f4872eb501965c5952c55fcd0f",
+  "events": [
+    {
+      "event": "manual closure verifier iterated a dict as if it were a list",
+      "outcome": "verification command refused"
+    },
+    {
+      "event": "launcher invoked before release existed",
+      "outcome": "missing-release refusal"
+    }
+  ],
+  "provenance": "Root message after successful corrected pair; narrative preservation, not a synthesized execution receipt",
+  "release_or_attempt_created_by_these_two_preflights": false,
+  "scientific_calls": 0,
+  "scope": "manual preparation before actual corrected root release",
+  "separate_recorded_v1_failure": "prior-failure/pair-result.json"
+}

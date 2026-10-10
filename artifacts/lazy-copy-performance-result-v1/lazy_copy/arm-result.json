@@ -1,0 +1,1087 @@
+{
+  "actions": [
+    "nominal-cavity-5619d55e2ea79350449322c1",
+    "nominal-cavity-096b4307a0bac4b22f6f6649",
+    "nominal-cavity-846c9a82267ad217d6b1d517",
+    "STOP"
+  ],
+  "actual_model_work_permitted": false,
+  "arm_wall_seconds": 6.231928375083953,
+  "common_public_world": {
+    "S_intersect_T_voxels": 47404,
+    "S_voxels": 907842,
+    "T_minus_S_voxels": 34358,
+    "access": {
+      "center_mm": [
+        59.77458393130671,
+        55.24025259249733,
+        4.662257948051604
+      ],
+      "normal_inward": [
+        -0.9999369386924596,
+        -0.0016362328938979611,
+        -0.011110417646035976
+      ],
+      "radius_mm": 6.0,
+      "window_id": "fixed-public-target-side-axis0-v1"
+    },
+    "domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+    "full_target_mm3": 77974.35860665982,
+    "full_target_voxels": 81762,
+    "max_steps": 24,
+    "native_frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+    "occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+    "original_frame_hash": "sha256:50d845f92efc91b135f422497f6beb2ff3dcffea72bf33a23c149b17695f80d6",
+    "raw_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+    "raw_occupancy_target_fraction_upper_bound": 0.5797803380543529,
+    "reward": {
+      "action_cost": 0.03,
+      "graph_edge_cost": 0.0,
+      "language_per_mm3": 0.0,
+      "motion_per_mm": 0.001,
+      "motor_per_mm3": 0.0,
+      "normal_per_mm3": 0.2,
+      "target_per_mm3": 1.0,
+      "tool_change_cost": 0.03
+    },
+    "source_files": {
+      "image": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f",
+      "supplied_support": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9",
+      "supplied_whole_tumor": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861",
+      "whole_tumor_domain": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+    },
+    "target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+    "tools": [
+      {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.4,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 1.0,
+        "tool_id": "generic_suction",
+        "working_length_mm": 100.0
+      },
+      {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 2.7,
+        "tip_length_mm": 4.0,
+        "tip_radius_mm": 1.7,
+        "tool_id": "generic_aspirator",
+        "working_length_mm": 90.0
+      }
+    ]
+  },
+  "condition": "obstruction_opening",
+  "context_hash": "sha256:d5c8f0cf7d551901829e3aeabb8abd0cbd055f2afa8e7f55f2113e8e1227d2d5",
+  "decision_model_hash": "sha256:06a50fc48eedf574d4879c74c8516b96ef6fa2c065683eff6d7be817fe22c459",
+  "decision_summary": [
+    {
+      "added_legal_count": 4,
+      "added_nonT_removing_count": 2,
+      "added_positive_reward_count": 2,
+      "added_target_removing_count": 2,
+      "candidate_cap_omitted_count": 0,
+      "inventory_file": "search-inventory-00.json",
+      "inventory_sha256": "9a81e5afced75f056f981de667e6652b10bd9da8c62934dee24317ca1ba80fa9",
+      "obstruction_selection_omitted_count": 0,
+      "omitted_count": 0,
+      "selected_action_id": "nominal-cavity-5619d55e2ea79350449322c1",
+      "selected_family": "obstruction_opening",
+      "selected_score": {
+        "action_id": "nominal-cavity-5619d55e2ea79350449322c1",
+        "complete_tool_path_length_mm": 2.9296877133538737,
+        "insertion_distance_mm": 1.4648438566769368,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.9207451075052051,
+        "target_removed_mm3": 0.953674795218559
+      },
+      "state_hash": "sha256:abb6df2d1db8adde8f5bbd83b8f20aff276161a7be6fe7d4f9a807f84b758e48",
+      "step": 0
+    },
+    {
+      "added_legal_count": 3,
+      "added_nonT_removing_count": 2,
+      "added_positive_reward_count": 1,
+      "added_target_removing_count": 1,
+      "candidate_cap_omitted_count": 0,
+      "inventory_file": "search-inventory-01.json",
+      "inventory_sha256": "fbc95aa1d720cc1dfa6603821d2dc62c589d915c2476f995ae873d590b7291db",
+      "obstruction_selection_omitted_count": 0,
+      "omitted_count": 0,
+      "selected_action_id": "nominal-cavity-096b4307a0bac4b22f6f6649",
+      "selected_family": "obstruction_opening",
+      "selected_score": {
+        "action_id": "nominal-cavity-096b4307a0bac4b22f6f6649",
+        "complete_tool_path_length_mm": 2.9296877133538737,
+        "insertion_distance_mm": 1.4648438566769368,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.9207451075052051,
+        "target_removed_mm3": 0.953674795218559
+      },
+      "state_hash": "sha256:902bf01b1fb47c7320a8ae1b8176fb889379bd1e19f6a0909cdb8d69556aefe2",
+      "step": 1
+    },
+    {
+      "added_legal_count": 2,
+      "added_nonT_removing_count": 2,
+      "added_positive_reward_count": 0,
+      "added_target_removing_count": 0,
+      "candidate_cap_omitted_count": 0,
+      "inventory_file": "search-inventory-02.json",
+      "inventory_sha256": "f19270ec89c1f99e78cb7519b8b4de6ef1a241053521243152534308e895352a",
+      "obstruction_selection_omitted_count": 0,
+      "omitted_count": 0,
+      "selected_action_id": "nominal-cavity-846c9a82267ad217d6b1d517",
+      "selected_family": "exposed_opening",
+      "selected_score": {
+        "action_id": "nominal-cavity-846c9a82267ad217d6b1d517",
+        "complete_tool_path_length_mm": 6.8359379978257575,
+        "insertion_distance_mm": 3.4179689989128788,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.9168388572207332,
+        "target_removed_mm3": 0.953674795218559
+      },
+      "state_hash": "sha256:94cba14e829d17f44929ad0f3ed63fb2966683ce1bb7098ac5bcc257f86a58e2",
+      "step": 2
+    },
+    {
+      "added_legal_count": 2,
+      "added_nonT_removing_count": 2,
+      "added_positive_reward_count": 0,
+      "added_target_removing_count": 0,
+      "candidate_cap_omitted_count": 0,
+      "inventory_file": "search-inventory-03.json",
+      "inventory_sha256": "dd1e35ca7be29c4d23f219bbdb4696b182514dc99bafa37b22eede232d6211c6",
+      "obstruction_selection_omitted_count": 0,
+      "omitted_count": 0,
+      "selected_action_id": "STOP",
+      "selected_family": "STOP",
+      "selected_score": {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "insertion_distance_mm": 0.0,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0
+      },
+      "state_hash": "sha256:9a009fb8c1150c2e14a01d820f19de78232310bfabd9a8c2151203c031a67541",
+      "step": 3
+    }
+  ],
+  "derived_occupancy": {
+    "added_region_hash": "sha256:fe18ba50afb2c603ca103c727a3512a60071eadff11f9d2ddf30b6fba29706fe",
+    "added_region_positive_voxels": 34358,
+    "anatomical_or_material_validation": false,
+    "condition": "cerebrum_plus_supplied_tumor_assumption",
+    "derived_occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+    "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+    "operation": "S OR (T > 0)",
+    "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+    "source_support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+    "source_support_positive_voxels": 907842,
+    "source_support_unchanged": true,
+    "supplied_target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+    "target_unchanged": true,
+    "version": "supplied-support-target-union-v1"
+  },
+  "final_native_state": {
+    "mask_digests": {
+      "connected_free_mask": "sha256:1a616b37837c16bd3d9f56ce25c08b5519654167dc4117e86e335c755b14ced8",
+      "contact_mask": "sha256:498a73f638c1d61401fcf0e290e57536174979e53fe01b60f4915720da155020",
+      "probe_contact_mask": "sha256:d6cb22f32f214bacf24a9510b6add0c53415a7437d41d18e7322d807fc99109d",
+      "remaining_mask": "sha256:24e3e666ceba5ca496c763f2e45fbd6de99e1eb869605af9ecfa091c19a27468",
+      "removed_mask": "sha256:e7d0475423ee33bc375b9ff2ebfe7e67fb9df9bd72d1f5580349d251f55cb9a0"
+    },
+    "state_hash": "sha256:9a009fb8c1150c2e14a01d820f19de78232310bfabd9a8c2151203c031a67541"
+  },
+  "historical_enabled_union_identity_verified": true,
+  "independent_geometry_accepted": true,
+  "initial_inventory_summary": {
+    "accepted_count": 19,
+    "candidate_cap_omitted_count": 0,
+    "cavity_state_hash": "sha256:abb6df2d1db8adde8f5bbd83b8f20aff276161a7be6fe7d4f9a807f84b758e48",
+    "complete": true,
+    "decision_model_hash": "sha256:06a50fc48eedf574d4879c74c8516b96ef6fa2c065683eff6d7be817fe22c459",
+    "declared_slots": 188,
+    "discovery_complete": false,
+    "duplicate_count": 26,
+    "emitted_count": 114,
+    "families": {
+      "distal_nominal": {
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+        },
+        "emitted": 26,
+        "legal": 0,
+        "slots": 26
+      },
+      "exposed_opening": {
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 9,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 17
+        },
+        "emitted": 26,
+        "legal": 9,
+        "slots": 26
+      },
+      "intermediate_opening": {
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 4,
+          "NATIVE_CONNECTED_STROKE": 2,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20
+        },
+        "emitted": 22,
+        "legal": 2,
+        "slots": 26
+      },
+      "obstruction_opening": {
+        "dispositions": {
+          "BLOCKER_NOT_INWARD": 24,
+          "HARD_GEOMETRY:ACCESS_APERTURE": 4,
+          "NATIVE_CONNECTED_STROKE": 4,
+          "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED": 24,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 2
+        },
+        "emitted": 10,
+        "legal": 4,
+        "slots": 58
+      },
+      "proximal_nominal": {
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 4,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 22
+        },
+        "emitted": 22,
+        "legal": 0,
+        "slots": 26
+      },
+      "tool_footprint_opening": {
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 18,
+          "NATIVE_CONNECTED_STROKE": 4,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4
+        },
+        "emitted": 8,
+        "legal": 4,
+        "slots": 26
+      }
+    },
+    "ledger_complete": true,
+    "obstruction_accounting": {
+      "added_preview_calls": 10,
+      "base_preview_calls": 104,
+      "cells_per_preview_cap": 16,
+      "discovery_complete": false,
+      "evidence_truncated": false,
+      "first_failure_evidence": [
+        {
+          "base_proposal_id": "nominal-cavity-e1ccd77a55d0cd496858cba1",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:bda3f7e1f5d19b35e28f59eefe6df58a0d4f7aba498be24b39243e0595a940cc",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-b320176478a31c0de20e3b64",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:b5bedfedebd4a54196e291d0542d6cfc59f10bb082c15e066dd644b7a5f0f3f9",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-a1a9211e9ac92cd763c39552",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:97c55bd98cea01f11981590f472257ae6fab4ba65a8f6ceeaf4c1e7a3324f5b5",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-76b820ab41f7260024a46c95",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:11b2addfa518d29cc335e9182480d75a28fcde2bd09c5a45118259e09472aa6f",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-09d759a3158c82c3b7ca3c49",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:eaf1893ad3e8e3406fe0b8d7e77f6ac11a1d0ed3a7d7d5a11d7363b345df5bef",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-caaa0e34ea06804a0cdfcbee",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:372140445a2d05e7573c6446b69c787cd80483ddc55466007d6f3b606e42286b",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-56fe608bf10756b08677057e",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:79b72937fc18f55b1bd795262d2e1040e68025c420dee67be7b71e2456402a00",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-2efde6955520428b647025c0",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:b06379751212a485f926c33a944dfb9add839087f156b89e8c71210abd272f29",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-33c8d8d00fc6e77c825072b3",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:e15708a77cb22c2c425826dd78d4ad4f62492ee9921877c680d40f9d94add5cc",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-464e29594cb92b1c7fb0b80d",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:30e425e4737ea07ad6e9c90db4d094620a85a005c4c1d18a178d32bb3385934f",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-ca72be719776606f2f4c7d17",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:c45bfb3cf0da14b33835f9e1b56f81cfa02ad1f9d823173a5c5df66b493599c7",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-99e5a643bd70eba8b4d1a9be",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:7741448a81b9c57b7e7c0d953e0968cd9a9919ace7c0e0bd6e4bd710389bb792",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-a4d655e0eae40c8812f8a357",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:a72d159eb12acea5b773372cfe9be61640f1c9fdde106f1139312abd8cd77129",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-408beccfef53143f62aa87fc",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:222f3706fd46b41ac2d7228e13a516e68c213c7d643091fc10c6d7e442862987",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-aa59d5b2ef6042a9fc8eeccc",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:b158ee394604f3da35f252ae85360b2f20c9726c98f604d30b3e94b694d2d52e",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-fdbfdb80773d8c95557e645d",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:a845d24bbef64da1f16958a74be212642280c80de9b45cc4581924997bc277f1",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-faab4b73e5bf3ebb87071897",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:062b6bac6d81cc38b18638ac1427a60a33f9d1fb619aab153a04875fb0abbda5",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-5b742a158aa051d5d61d4a09",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:ec966e14b42f8e7a75709c99055a4f99e888d8b8786fb4b76eb0f0309a5d353a",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-b78c018096096fb4320af0af",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:53c787f40dad2cc6a6acff58ffb28d8e73c8aa2c6766bb7a6e2453e69446393e",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-39c66469989b2708078a9faf",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:347df06570018f64a6f5006a0785d90f614264f42751517ec4f90ce0c2632bf4",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-72ae33d006bafaf5e07a6d28",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:c62c489c507db4aebc68cb5761e81096e0456f64b7113aed888ecc9eb2c5db45",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-8c7410d5c9cb965681650ea3",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:711e42f7453d650f4cf6c8870f1278dd722c179d764bd477b3d99fa442b04db0",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-0face733a33fc944fd68ade1",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:83b83ae59ea91a15cbe0d39faee6c84a5f9564f278d5e76aed3640a7b095a5c1",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-9e6f0471a248a4626f92a046",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:b9c7747755b50fa93eca973aa42fe89642a6aa6a94f92cc81afadc35fdaa15de",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-7170b999cfa56da94b1d4ff8",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:672e3d4aecab94e08ff907f7483040ac5edc381d921552cd96d82fb4ef2d3d61",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-73f06c4a10965027db1d5452",
+          "blocked_cell_count": 4,
+          "diagnostic_hash": "sha256:fe8141375c6add399a52a1d28671b58b7efb7cebedf3fee738564e3c3450e6a0",
+          "retained_cell_count": 4,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-f1d38ef66ed42736ad3810c3",
+          "blocked_cell_count": 4,
+          "diagnostic_hash": "sha256:c4c967db9620db7da44a6da866861f22ee1199aa806a6c2e9a89d0480063aa2e",
+          "retained_cell_count": 4,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-d0932e60e755b3734c17cd05",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:9ba17cac95b3aaabd3f916a4b3312859a2b1c53b5a5ce493f48eb65d336615f1",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-2d81862fb225dbd9d0c70c10",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:8d54d67492b794c7b96cb2030a042885da29677d91fdc6a4d7b6097828616d9a",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-7c2e48ec3b4f8546d382e0a4",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:1cc0b796e9c130db6da355779d1d0d064807a09ed5dc6719a1b8f5c5efbccca3",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-ab6c1df2683b976e1c342315",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:087f7d3b0e5613cd1d680a6e219a9f0a94d1c2a310b51eb9d4725fb67cc63370",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-6ba92368e5c6aeb99e4ea66c",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:ce51faf2cfebc90f89e390280090d13ecde1396fcc2f5ce57d6bbcea63406b09",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-c05e4f04efb03768cbd7ff4c",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:e0e7aeb9363fe1b12d3d0473ecda20e76c2f6027e23282bf0e60534a5c9785a9",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-46ed60900c9cdbec2f392f90",
+          "blocked_cell_count": 4,
+          "diagnostic_hash": "sha256:ca11abd079bd1cce7daeb1716a9d2da26fe8a819cbf427774a92395643e57887",
+          "retained_cell_count": 4,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-6b0a046f8da452f8e0c535ec",
+          "blocked_cell_count": 4,
+          "diagnostic_hash": "sha256:fd83d53a8dcd29235dcded50f218ad6950bdf0374d4a1d1695dfce922a925600",
+          "retained_cell_count": 4,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-9438a7824996edbcb159bdcf",
+          "blocked_cell_count": 4,
+          "diagnostic_hash": "sha256:e2bfa3220d1fe8f1c827379732cf9b652e9079a22b0bdaa8fa1dc0eefd2fe89e",
+          "retained_cell_count": 4,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-06d7700b5136ea0f08130841",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:a0615272e6ee04b39c5d2a6b0b0d2a6378bab55cc58e3ddca1ce841261cad22c",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-30b711bcdf594324873d02c0",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:2878900fe57fa2c7e1ebf8a90b294c8b18bbb51a67723be0a2fa0d0c0ce382fa",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-1868de6c56eb132fc93ce747",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:71f955d026cbb1bc22f6854e29697b03a0a90d14c0db31be54efe1eee9433a07",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-1087d7984c8a65c513cc0a29",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:1f27291d54b2f33bcbb6373ff8890a47886ffcf90e5b90540b8960535d1ea550",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-1a36cace1675d2cd3fb46b49",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:757cc4ecb5cea26590d90a59083e101373819b2d5a935ded4015259205cb1298",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-658759e0ef5eeb713bf2597a",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:3dfbb6293894de3ba57afe1ca97b804bbdf05a0d7db5a27cdc6c21c53793181c",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-cc45d62f4d77cbed81b9e919",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:be3c05be5521c191be3f67aba61feb7dc61fcfae0a0ca8a66471378695a42e9e",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-9002c47dd6c8053d5d576c8c",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:9b8975f0f0592a1adc89b0bc20666183021d6086140a4a673795bf6f09b1b3f9",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-37c565f8473718a9a1b8f906",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:c83b81ff670a2e5923e08a05108f683eba5d0f6f560d701c5b0c0d8c0264143a",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-c037c47d6cb878c8fae0f81c",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:0018760270b431efacc67227f22085c98da96dbe4dcef49d27df4cf01e6755f6",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-5758c24df6418793e07fd3dc",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:ee9e8e6fa69698298841a21b8ccc2bffdfba164f6bfbf73bb6fe220183e304e1",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-a20e766728b138f242e29a7e",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:50bfa59f9105f1863cf00d1500650e6ce4b9e75dabdc1574f6ce196a6e1f3d38",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-4a6640f8b988e3881299fdb3",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:12756580a37bbdfb6501c883cfd254073cecfa98681e7075e3a265b56492313a",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-65d2b50be9c1f1624ae277bc",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:6fb31c40ee3566658b70c99fee7ee1b692abdd31a9b534412fae71f3a9213b49",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-5c69f2fa226804ec961aa081",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:246657130fe12b21d195348c0f8e07664744e5168c155cb6e05b18dcfda9f80e",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-83f6e7106dff8d8659ef5734",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:bde8c18716627637382cd4ae901c96d7df7849f6dbd7267a857c70163f16378e",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-b1b6386a1592801888885bf3",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:8f76403c9491dcc0a6169659b7eeac7489ca775d1a0c9502eb8a5017588a8eb0",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-4425ebcc679c6d82d0d8fc4d",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:bfbd5b9056dd211dbaf9ce5f0f058ed3e6a50a65550c26a090cedfda5a7c2025",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-055a6686524ca00845da2cd9",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:38804cd0f7806332ce7ca19d289832c3110e494d91d2dc9108a7df58316b3919",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-4245ac79a2813006f3039887",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:2b013a1b7ba679870f2a37db7ae95ebe1e2c48106bf950ed5c4f5e976dc413d0",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-dae5ffb9f27e12a55d20379b",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:aeed4c6436a81814ace8d8eea2a3e754d7393ba85fc061a33208e910ca4ac092",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-da5d8a347f4183939a2a0dda",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:e4ce1f6e6db15bd778267ce6dae0c724a360f7fd0c44c80fbdaf05f68697a602",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-6db07376f1bc9c5fb03adadc",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:59279d37033dec442c4ea0828a9caae2f565ef0beda67bd4c4dfbd6c8d8a5174",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-2ccc0f67cb707428b49fa8be",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:17702064978a278bd69033afb904dba94f7e25e77e3ab393c94ee85bea6e1410",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-5bb377f2827c7c1796af1e7a",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:0cd565d7acf6f4d0d9bddb1072d4f137d1e3cb6c37707e2a5a17ae7e2c1bbd34",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-ec66a3b4b47ee059e7fec6a5",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:48591fa8c09f4707d23f2173703fd0153585924efc0aeeeb57b3c0801c4ed88d",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-7fc8cc66d713d2fbf68feeda",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:30aa4f9908dd92b47e591017764fa1f8635aa9a38a0e43bb20cb8ac8de095171",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-4f92fe826b270355a993fba0",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:fef35467a3801f121e07d002e080510c00c1b689879108413e55e8aab354bc74",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-7198b5a11d36a3ec31de0a4c",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:a25f0a8b8d1e8081d70e72a48029b64e24ec95813410c226aa03b73e23d94dea",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-5833148cdadc08fc627ad93e",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:530108dc65faa96dc8d129a456b54de4373b312d3ea0f455caf93e938c06fa16",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-5272132554d8c461ffa1f0cb",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:a39071c0c511fcf924cf110fcc826a6e3aadc24827839cdd98dfb3fad151c982",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-13936b75f8abfed346c53922",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:83928b8732e18dba631257a4dfcd9012db6cf1fd149fd9069664b124d8015dfe",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-6be6826d86d17fee8d48e261",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:fa1bc7c5821032ddda656a588f3d85f8476506810307ed9d570e57b7b3a146b0",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-94601e4d98a1c8778589b9d0",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:1d19f776e47c816127df5bfc3be1112d6bb9acefa9a92ff6016a5bce9c83f5b9",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-0f95ac6acc5a6a4c3f223773",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:e036a171a9544ca758cda1e064f5ad17dd8065289a2d8d4703928f024d97a9fe",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-068dd36881a1a807560cf43b",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:79c82ed680add5d2f5b1158f5702ca48f2d8a210d5cb62d27b027ca8cce314d5",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-7a2caaa1f1edaf93ab2b41c7",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:383a057c15367d29213f7c93f19b016ac75c8dfd59b018ca3cbeaa8c70dc6d74",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-d1e2458e3aabd5f34f7f2c5d",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:3789674b0ab7eca0592889bbf3f12be99174de7bb86890a272b0eb6f3cb3291a",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-8b86aa454f4161fb34288bb6",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:d0a25e206cd6c2ee142ebe77eff2e41ed5bac697d37f8dc9240027823edcdd1e",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-932b73088da0ee8d3023beaf",
+          "blocked_cell_count": 4,
+          "diagnostic_hash": "sha256:5ad97a48c5e0bda2822e71541a6933b028fb78a8b441f38c9819bd5d880ec9b5",
+          "retained_cell_count": 4,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-d2d223e85ae54271bfcb0dc2",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:fbe2a436a361537ca0b15af49bfbc5ae638086002264fd7e5c92960cf97efc0e",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-30e3186e8dfaac44063705f8",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:5faf19335c5ed00ff3e908b7238aa0b634061b0fcf3c9e17dbb752510e862d00",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-09625f097731d6fec2601c48",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:0c1731c623caf2a82cb0c75e5c8f44ac2de3a59fc69d5fd6e5716de892456a8a",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-03d62a79203e6d65eb5c929a",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:780c86197eaf3b620860897f6f064ffcdf02f265a2da917d424c56d78b2401c0",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-13fdf827e8c4a2faf52a6ae3",
+          "blocked_cell_count": 2,
+          "diagnostic_hash": "sha256:d58060fa8ccb3b57a91cbef57d2c5b64a4c170982ee58e6a1f2b8714db29eac3",
+          "retained_cell_count": 2,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-c54678ab2d104c9f84c8b4d1",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:01d50c9c39baa63ef00c83ef77bce6fd185fed8ba6e9ae2802561400a7f02d98",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-3a9967817c8e0e20d0fea58e",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:f154b16ca215e88c160391e4aa3c17efe5357c22cdef9ae92c7150ab51d896af",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-a65dc7043a737395e9e05fd7",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:23704526290c593f5cf58508749a70356384fa436ff3bf1012487f9c8db4e4cd",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-e39e9773f60f7164c7093aae",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:6c2ebf1a9943e24055e84519e2429173a6314c92ccc51d5e7f8fe14519f2fb26",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-8d1b5459a427481c66447942",
+          "blocked_cell_count": 1,
+          "diagnostic_hash": "sha256:67cba509e845c32d27c684a7ed798b65877fe2dbd31a3355f13bc1866ac5a206",
+          "retained_cell_count": 1,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-2ffec8905e097831d79bb90c",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:a61b22beeddb309112486d0b57cd7634e123b59b6429638dcda71618c3ec3680",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-6f9599bd51ca7b3cc488a915",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:1afd511668190ca2c65356146af032f37eb451012332a92bfa912ee6f301eaa4",
+          "retained_cell_count": 3,
+          "truncated": false
+        },
+        {
+          "base_proposal_id": "nominal-cavity-aececdf36e3edb9ad955618f",
+          "blocked_cell_count": 3,
+          "diagnostic_hash": "sha256:e13c05353afb23012893cc6ddd74ec703932b6fdf7761adad2199b8ecc3ced81",
+          "retained_cell_count": 3,
+          "truncated": false
+        }
+      ],
+      "priority": "permitted_public_nominal_membership_then_native_index; no_reference_or_reward_queries",
+      "recursive_expansion": false,
+      "repeated_preview_calls": 0,
+      "retained_unique_cells": 29,
+      "scope": "bounded first rejected intervals of emitted base rays only; not all blockers or paths",
+      "selected_cells": 5,
+      "selected_cells_cap": 16,
+      "selection_omitted_cells": 0,
+      "unretained_blocker_mentions": 0
+    },
+    "obstruction_selection_omitted_count": 0,
+    "omitted_count": 0,
+    "provider_version": "permitted-first-obstruction-opening-v1",
+    "rejected_count": 95,
+    "source_hash": "sha256:33151ab0354452b1060aa384286011380ade6477626464f96ff6ae4f443cb846",
+    "unavailable_count": 48
+  },
+  "initial_observation_hash": "sha256:eb6eff1f4e3ff6b40ad4a335cc41840387d6c55d62f50d12c24660c9bd15e596",
+  "max_removed_cell_depth_mm": 3.417968998912881,
+  "native_counts": {
+    "replay": 4,
+    "rollout": 4,
+    "search": 4
+  },
+  "native_previews": 1224,
+  "normalization": {
+    "clip": [
+      0.0,
+      1.0
+    ],
+    "crop_used_for_statistics": false,
+    "lower": 193.0,
+    "method": "support_percentile_1_99",
+    "percentile_method": "linear",
+    "percentiles": [
+      1.0,
+      99.0
+    ],
+    "raw_source_preserved": true,
+    "reference_labels_used": false,
+    "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+    "statistics_scope": "entire_permitted_support",
+    "statistics_voxels": 942200,
+    "support_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+    "upper": 535.0
+  },
+  "outcomes": {
+    "clinical_deficit_probability": null,
+    "complete_tool_path_length_mm": 12.695313424533506,
+    "cumulative_contacted_tissue_upper_bound_mm3": 41.00801619439804,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 38.146991808742364,
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "nonstop_actions": 3,
+    "normal_removed_mm3": 0.0,
+    "partial_contact_reward_weight": 0.0,
+    "positive_target_source_cells_removed": 3,
+    "reference_target_fraction_removed": 3.6691861745064946e-05,
+    "simulated_removed_volume_mm3": 2.861024385655677,
+    "target_removed_mm3": 2.861024385655677,
+    "tool_changes": 0,
+    "total_reference_target_mm3": 77974.35860665982,
+    "total_reward": 2.7583290722311435
+  },
+  "pairing": {
+    "historical_world_and_initial_inventory_equal": true
+  },
+  "phase": "complete",
+  "plan_seal": "sha256:fffb03210c58e210326a43f8928f6e65f37e38e9abd0f997e24e5b535586d20b",
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "obstruction_opening": true,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "proposal_rule_hash": "sha256:fd662062d44a86e45d04fc982685723d07dc7538289433924e60029e108635a0",
+  "search_accounting": {
+    "complete": true,
+    "estimated_incremental_return": 2.7583290722311435,
+    "evaluated_nonstop_actions": 72,
+    "global_optimality_proven": false,
+    "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+    "initial_steps": 0,
+    "max_steps": 24,
+    "method": "observed_greedy",
+    "model_transition_calls": 4,
+    "native_replay_required": true,
+    "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+    "planning_seconds": 1.5871984579134732,
+    "time_budget_seconds": 45,
+    "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+  },
+  "source_hash": "sha256:33151ab0354452b1060aa384286011380ade6477626464f96ff6ae4f443cb846",
+  "source_released": true,
+  "status": "complete",
+  "stop_only": false,
+  "subject": "ReMIND-025",
+  "supplied_goal_extent": {
+    "condition": "PARTIAL_TARGET_PROGRESS",
+    "derived_occupancy": true,
+    "fraction_denominator": "entire_unchanged_supplied_region",
+    "full_region_membership_mm3": 77974.35860665982,
+    "full_region_positive_voxels": 81762,
+    "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+    "occupancy_derivation": {
+      "added_region_hash": "sha256:fe18ba50afb2c603ca103c727a3512a60071eadff11f9d2ddf30b6fba29706fe",
+      "added_region_positive_voxels": 34358,
+      "anatomical_or_material_validation": false,
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "derived_occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+      "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+      "operation": "S OR (T > 0)",
+      "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+      "source_support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+      "source_support_positive_voxels": 907842,
+      "source_support_unchanged": true,
+      "supplied_target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+      "target_unchanged": true,
+      "version": "supplied-support-target-union-v1"
+    },
+    "occupancy_modified": true,
+    "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+    "supported_region_membership_mm3": 77974.35860665982,
+    "target_modified": false,
+    "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+    "unsupported_region_membership_mm3": 0.0,
+    "unsupported_region_positive_voxels": 0,
+    "unsupported_region_removable": false
+  },
+  "target_access_success": true
+}

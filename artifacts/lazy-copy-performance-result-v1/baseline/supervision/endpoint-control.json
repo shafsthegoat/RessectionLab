@@ -1,0 +1,13 @@
+{
+  "status": "fixed_TRAIN025_complete_exact_historical_route",
+  "implementation": "baseline",
+  "plan_seal": "sha256:fffb03210c58e210326a43f8928f6e65f37e38e9abd0f997e24e5b535586d20b",
+  "native_counts": {
+    "replay": 4,
+    "rollout": 4,
+    "search": 4
+  },
+  "native_previews": 1224,
+  "historical_world_and_route_equal": true,
+  "zero_model_work": true
+}

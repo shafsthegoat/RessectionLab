@@ -1,0 +1,73 @@
+{
+  "complete_wall_seconds": 6.29568099998869,
+  "count_scope": "attempted existing native transitions including failed calls; search,rollout,replay separate",
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 6.295667957980186,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 10000,
+      "planning_execution_seconds": 60.0
+    },
+    "native_preview_entries": 1224,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 197,
+          "raised": 0,
+          "rejected": 1027,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 29,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 998
+          },
+          "returned": 1224,
+          "returned_microsteps": 6351,
+          "seconds": 4.391509363660589,
+          "started": 1224
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 1224,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_counts": {
+    "replay": 4,
+    "rollout": 4,
+    "search": 4
+  },
+  "prohibited_calls": {
+    "checkpoint_loads": 0,
+    "optimizer_updates": 0,
+    "policy_forwards": 0
+  },
+  "source_visits_attempted": 1,
+  "temporary_mask_copies": {
+    "by_mask": {
+      "connected_free": {
+        "bytes": 2874021605,
+        "calls": 1195
+      },
+      "remaining": {
+        "bytes": 2874021605,
+        "calls": 1195
+      }
+    },
+    "copied_bytes": 5748043210,
+    "copy_calls": 2390,
+    "preview_calls": 1224,
+    "scope": "committed remaining/connected-free copy calls inside preview only; identical wrapper both arms; not total allocator traffic"
+  }
+}

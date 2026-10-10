@@ -1,0 +1,82 @@
+{
+  "arms": {
+    "baseline": {
+      "greedy_seconds": 1.5737335418816656,
+      "native_counts": {
+        "replay": 4,
+        "rollout": 4,
+        "search": 4
+      },
+      "native_preview_seconds": 4.391509363660589,
+      "native_previews": 1224,
+      "parent_wall_seconds": 8.724179957993329,
+      "receipt_sha256": "efc6f6be74876a881ff7620a6ccf04c9e5cfa5738532c5fd57f5a176940d0b05",
+      "result_sha256": "eb65a8762b6610dc91164b76604512ba2e5f84967bc630d4e84be91fa488423f",
+      "sampled_peak_rss_bytes": 480083968,
+      "temporary_mask_copies": {
+        "by_mask": {
+          "connected_free": {
+            "bytes": 2874021605,
+            "calls": 1195
+          },
+          "remaining": {
+            "bytes": 2874021605,
+            "calls": 1195
+          }
+        },
+        "copied_bytes": 5748043210,
+        "copy_calls": 2390,
+        "preview_calls": 1224,
+        "scope": "committed remaining/connected-free copy calls inside preview only; identical wrapper both arms; not total allocator traffic"
+      },
+      "worker_wall_seconds": 6.29568099998869
+    },
+    "lazy_copy": {
+      "greedy_seconds": 1.5871984579134732,
+      "native_counts": {
+        "replay": 4,
+        "rollout": 4,
+        "search": 4
+      },
+      "native_preview_seconds": 4.373277194565162,
+      "native_previews": 1224,
+      "parent_wall_seconds": 8.320691999979317,
+      "receipt_sha256": "a21f423166afdf7f416c0bae05a5b4a15107d33f1ec8c9d110b6628024c7a58c",
+      "result_sha256": "9c6ae3e2f543a811a9b8595e6917588fad9418ed2f313dd18873f24a340c5345",
+      "sampled_peak_rss_bytes": 471400448,
+      "temporary_mask_copies": {
+        "by_mask": {
+          "connected_free": {
+            "bytes": 2366558376,
+            "calls": 984
+          },
+          "remaining": {
+            "bytes": 2366558376,
+            "calls": 984
+          }
+        },
+        "copied_bytes": 4733116752,
+        "copy_calls": 1968,
+        "preview_calls": 1224,
+        "scope": "committed remaining/connected-free copy calls inside preview only; identical wrapper both arms; not total allocator traffic"
+      },
+      "worker_wall_seconds": 6.253825082909316
+    }
+  },
+  "compared_fields": [
+    "identity",
+    "initial_inventory",
+    "inventories",
+    "search",
+    "plan",
+    "replay",
+    "final_state",
+    "native_counts",
+    "native_previews",
+    "preview_outcome_profile"
+  ],
+  "interpretation": "Single sequential pair with identical instrumentation; filesystem-cache/order and sampled-RSS limits apply. No stable speedup or training-speed claim.",
+  "pair_wall_seconds": 17.180385125102475,
+  "release_sha256": "3de4f772674c3371de2484569f864bb499f284f4872eb501965c5952c55fcd0f",
+  "status": "complete_exact_parity"
+}

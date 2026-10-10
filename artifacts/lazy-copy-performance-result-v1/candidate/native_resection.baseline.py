@@ -554,11 +554,8 @@ class NativeResectionEngine:
             if not domain_geometry.feasible:
                 failure = domain_geometry.failures[0]
                 return finish(False, "UNKNOWN_DOMAIN:" + failure.reason, np.asarray(failure.position_mm))
-        # Verified immutable snapshots may be read until the first real cut.
-        # Keep standalone mutable engines' eager-copy isolation unchanged.
-        temporary_masks_owned = not self._immutable_state
-        remaining = self.remaining_mask if self._immutable_state else self.remaining_mask.copy()
-        connected_free = self.connected_free_mask if self._immutable_state else self.connected_free_mask.copy()
+        remaining = self.remaining_mask.copy()
+        connected_free = self.connected_free_mask.copy()
         previous = np.asarray(physical_start)
         for step in range(number + 1):
             current = physical_start + physical_displacement * (step / number)
@@ -626,11 +623,6 @@ class NativeResectionEngine:
             else:
                 eligible = _connected_surface_cells(fully_inside, connected_free)
             if len(eligible):
-                if not temporary_masks_owned:
-                    # Copy both before any write; failed previews never mutate
-                    # committed masks, including after partial temporary cuts.
-                    remaining, connected_free = remaining.copy(), connected_free.copy()
-                    temporary_masks_owned = True
                 remaining[tuple(eligible.T)] = False
                 _extend_connected_free(eligible, remaining, connected_free, self.config.interaction_domain)
             contacts.append(_frozen(touched, np.int64))

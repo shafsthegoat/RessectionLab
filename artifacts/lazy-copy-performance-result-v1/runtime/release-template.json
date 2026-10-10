@@ -1,0 +1,126 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "checkpoint_loads": 0,
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ],
+    "other_TRAIN": [
+      "ReMIND-008",
+      "ReMIND-010",
+      "ReMIND-020"
+    ]
+  },
+  "condition_admission": {
+    "obstruction_opening": {
+      "actual_model_optimizer_checkpoint_calls": 0,
+      "initialization_performed": false,
+      "learning_protocol_hash": "sha256:e4ef44fd4ed44d01047bd8ffb46688bc5fd19c8900bb6831d84a41a1b1e87eec",
+      "limits": {
+        "max_native_previews": 7297920,
+        "max_optimizer_updates": 0,
+        "max_policy_forwards": 0,
+        "max_steps": 24,
+        "memory_bytes": 3221225472,
+        "search": {
+          "beam_width": 2,
+          "max_calls": 5640,
+          "seconds": 300
+        },
+        "threads": 1,
+        "worker_seconds": 3540
+      }
+    }
+  },
+  "correction": {
+    "preserved_v1": {
+      "failed_pair_result": {
+        "path": "build/lazy-copy-train025-pair-v1/attempt-01/pair-result.json",
+        "sha256": "836be5c561393b7d1fb53b937245898012ff46b105ffaa72ceb8fbed6f715574"
+      },
+      "failed_release": {
+        "path": "build/lazy-copy-train025-pair-v1/root-release.json",
+        "sha256": "33231f5aa7f682facf01b9ad0fddcc00ab455d19bec30aa11034146079b25731"
+      },
+      "failed_source_index": {
+        "path": "build/lazy-copy-train025-pair-v1/source-index.json",
+        "sha256": "b7e8a7d71fb74ce519d5965eb19b3d2fc6ae7ea6cd0ee4075f35360d08e512e5"
+      }
+    },
+    "scope": "parent declaration reads execution_limits_per_child; no scientific change"
+  },
+  "engine_sources": {
+    "baseline": {
+      "path": "src/resectionlab/native_resection.py",
+      "sha256": "2aa191370f2dab441089dcd3d6b925c80d0da450d72fdc464d42fb93d13c8e1f"
+    },
+    "lazy_copy": {
+      "path": "build/immutable-preview-lazy-copy-v2/stage/resectionlab/native_resection.py",
+      "sha256": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d"
+    }
+  },
+  "execution_limits_per_child": {
+    "arms_per_child": 1,
+    "candidate_cap": 120,
+    "checkpoint_loads": 0,
+    "max_execution_replay_commits": 48,
+    "max_native_previews": 10000,
+    "max_native_transition_calls": 72,
+    "max_search_commits": 24,
+    "max_steps": 24,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "post_exposure_condition": null,
+    "search_method": "observed_greedy_search",
+    "search_seconds_per_arm": 45,
+    "threads": 1
+  },
+  "expected_head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+  "implementations": [
+    "baseline",
+    "lazy_copy"
+  ],
+  "input_index": {
+    "path": "build/paired-obstruction-opening-search-v2/input-index.json",
+    "sha256": "aa2930fccf3e8a5812403e28725b6c2ec5e99a363de26796ef1cc3a909e17efc"
+  },
+  "manual_corrected_attempt_ordinal": 2,
+  "maximum_pair_child_parent_seconds": 180,
+  "memory_bytes": 3221225472,
+  "optimizer_updates": 0,
+  "output": "build/lazy-copy-train025-pair-v2/attempt-02",
+  "output_bytes_per_child": 33554432,
+  "parent_seconds_per_child": 90,
+  "planned_arms": [
+    {
+      "condition": "obstruction_opening",
+      "subject": "ReMIND-025"
+    }
+  ],
+  "policy_forwards": 0,
+  "private_reference_reads": 0,
+  "recipe": {
+    "measurement": "same copy-count wrapper in both children; fresh processes baseline first; single pair not stable speedup benchmark",
+    "only_change": "immutable preview working-mask copies deferred until first actual cut",
+    "parity": "exact source/model/observation/context, all inventories/scores/actions, native state/history/metrics and independent geometry; only timing excluded",
+    "selector": "unchanged observed_greedy_search; no new choices, thresholds or tuning",
+    "task": "exact completed TRAIN025 S-union-T obstruction-opening h24/cap120"
+  },
+  "source_index": {
+    "path": "build/lazy-copy-train025-pair-v2/source-index.json",
+    "sha256": "b6aec179a8adbb8a8f6cc8723da769f1ed669281baead8d9bc696602e124a8f5"
+  },
+  "status": "pending_root_release",
+  "supervision_bytes_per_child": 16777216,
+  "version": "fixed025-lazy-copy-pair-release-v2",
+  "worker_seconds_per_child": 60
+}

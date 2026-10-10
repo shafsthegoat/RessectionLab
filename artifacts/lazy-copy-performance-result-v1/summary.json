@@ -1,0 +1,131 @@
+{
+  "all_compared_fields": [
+    "identity",
+    "initial_inventory",
+    "inventories",
+    "search",
+    "plan",
+    "replay",
+    "final_state",
+    "native_counts",
+    "native_previews",
+    "preview_outcome_profile"
+  ],
+  "all_inventory_bytes_equal": true,
+  "arms": {
+    "baseline": {
+      "greedy_seconds": 1.5737335418816656,
+      "native_counts": {
+        "replay": 4,
+        "rollout": 4,
+        "search": 4
+      },
+      "native_preview_seconds": 4.391509363660589,
+      "native_previews": 1224,
+      "parent_wall_seconds": 8.724179957993329,
+      "receipt_sha256": "efc6f6be74876a881ff7620a6ccf04c9e5cfa5738532c5fd57f5a176940d0b05",
+      "result_sha256": "eb65a8762b6610dc91164b76604512ba2e5f84967bc630d4e84be91fa488423f",
+      "sampled_peak_rss_bytes": 480083968,
+      "temporary_mask_copies": {
+        "by_mask": {
+          "connected_free": {
+            "bytes": 2874021605,
+            "calls": 1195
+          },
+          "remaining": {
+            "bytes": 2874021605,
+            "calls": 1195
+          }
+        },
+        "copied_bytes": 5748043210,
+        "copy_calls": 2390,
+        "preview_calls": 1224,
+        "scope": "committed remaining/connected-free copy calls inside preview only; identical wrapper both arms; not total allocator traffic"
+      },
+      "worker_wall_seconds": 6.29568099998869
+    },
+    "lazy_copy": {
+      "greedy_seconds": 1.5871984579134732,
+      "native_counts": {
+        "replay": 4,
+        "rollout": 4,
+        "search": 4
+      },
+      "native_preview_seconds": 4.373277194565162,
+      "native_previews": 1224,
+      "parent_wall_seconds": 8.320691999979317,
+      "receipt_sha256": "a21f423166afdf7f416c0bae05a5b4a15107d33f1ec8c9d110b6628024c7a58c",
+      "result_sha256": "9c6ae3e2f543a811a9b8595e6917588fad9418ed2f313dd18873f24a340c5345",
+      "sampled_peak_rss_bytes": 471400448,
+      "temporary_mask_copies": {
+        "by_mask": {
+          "connected_free": {
+            "bytes": 2366558376,
+            "calls": 984
+          },
+          "remaining": {
+            "bytes": 2366558376,
+            "calls": 984
+          }
+        },
+        "copied_bytes": 4733116752,
+        "copy_calls": 1968,
+        "preview_calls": 1224,
+        "scope": "committed remaining/connected-free copy calls inside preview only; identical wrapper both arms; not total allocator traffic"
+      },
+      "worker_wall_seconds": 6.253825082909316
+    }
+  },
+  "canonical_regression_seconds": {
+    "combined": 3.53,
+    "historical_case": 0.18
+  },
+  "canonical_regression_status": "PASS: combined104pass/1historicalskip; exact historical case separately1pass;105controls passed",
+  "count_scope": "committed remaining/connected-free copy calls inside preview only; identical wrapper both arms; not total allocator traffic",
+  "executed_head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+  "independent_saved_audit": {
+    "audit_sha256": "ae251e8897edf70672eca73dad83f1431b5c926fad9647e58ae02530d9149bfc",
+    "checks": 382,
+    "saved_inputs": 159,
+    "status": "PASS",
+    "wall_seconds": 0.059
+  },
+  "mask_copy_bytes_avoided": 1014926458,
+  "mask_copy_calls_avoided": 422,
+  "mask_copy_reduction_percent": 17.65690376569038,
+  "no_meaningful_timing_speedup_demonstrated": true,
+  "no_total_allocator_traffic_measurement": true,
+  "no_training_speed_or_model_claim": true,
+  "pair_result_sha256": "610ea6fd753eff62935c030f5909fa72fdab75a08cb6a4ecaddff67919f6361b",
+  "pair_wall_seconds": 17.180385125102475,
+  "performance_reruns": 0,
+  "plan_seal": "sha256:fffb03210c58e210326a43f8928f6e65f37e38e9abd0f997e24e5b535586d20b",
+  "public_outcomes": {
+    "clinical_deficit_probability": null,
+    "complete_tool_path_length_mm": 12.695313424533506,
+    "cumulative_contacted_tissue_upper_bound_mm3": 41.00801619439804,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 38.146991808742364,
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "nonstop_actions": 3,
+    "normal_removed_mm3": 0.0,
+    "partial_contact_reward_weight": 0.0,
+    "positive_target_source_cells_removed": 3,
+    "reference_target_fraction_removed": 3.6691861745064946e-05,
+    "simulated_removed_volume_mm3": 2.861024385655677,
+    "target_removed_mm3": 2.861024385655677,
+    "tool_changes": 0,
+    "total_reference_target_mm3": 77974.35860665982,
+    "total_reward": 2.7583290722311435
+  },
+  "route_actions": [
+    "nominal-cavity-5619d55e2ea79350449322c1",
+    "nominal-cavity-096b4307a0bac4b22f6f6649",
+    "nominal-cavity-846c9a82267ad217d6b1d517",
+    "STOP"
+  ],
+  "same_native_previews": true,
+  "same_transition_counts": true,
+  "single_ordered_pair": true,
+  "status": "complete_exact_parity"
+}
