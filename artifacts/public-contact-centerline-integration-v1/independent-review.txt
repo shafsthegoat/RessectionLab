@@ -1,0 +1,34 @@
+Independent source review: public-contact family centerline candidate v2
+
+Decision: GO for the coupled source promotion. No remaining material source defect found. This review does not release search, training, held-out execution, or patient use.
+
+Scope and method
+Read the staged source, complete production diff, candidate tests, saved 49-control receipt/log, coupled learning declaration diff, and root's saved canonical test log. Checked hashes of all seven promoted files against the frozen package declarations. No Python imports, tests, search, model, native execution, held-out tasks, or patient reads were performed by this review.
+
+Findings
+1. The new generated-only proposal mode retains physical float entry/tip poses. Continuous centerline endpoints have voxel:null; a separately named half-open owning cell is used only for crop/cavity prerequisites. Source/action/model identities include the new version and exact candidate geometry. Actor inputs, preview, committed history and replay consume the existing physical poses; no snapped tool substitute is introduced.
+2. The final crop repair derives endpoint_cell only when the actual endpoint is in the actor crop. Thus legacy small-support candidates outside that crop are refused before preview while their descriptive voxel and physical pose remain recorded. The added regression replaces preview with a refusal sentinel and asserts only STOP plus explicit ENDPOINT_OUTSIDE_ACTOR_CROP rows. This closes the already identified 48-control snapshot gap.
+3. The existing engine still certifies every eligible complete instrument. No tool dimensions, collision thresholds, removal rules, probe rules, reward equations, candidate cap, or default fixed_lattice execution branch changed. The opt-in branch fails rather than enlarging the existing capacity. Existing default source/model/action identity checks remain in the saved tests.
+4. All 24 recipes, source arrays, access geometry, tools, goals and frozen 12/4/8 roles are unchanged. The family/source candidate versions intentionally change. Public source/support/cavity geometry drives the inventory; private reference labels do not. The saved invariance test changes the private reference without changing public identities/inventory/observations. The all-layout test is source-only and does not instantiate held-out tasks.
+5. Coupled TRAIN and held-out declarations plus v3 export metadata carry the same candidate version. Experiment, family, source, context and lineage bindings therefore reject stale family identities. Architecture, losses, protocol and split assignments are unchanged; this is not checkpoint compatibility or learned-performance evidence.
+
+Evidence inspected, not independently rerun
+- Final author controls: 49 passed in 0.92 s; one-thread parent 1.3312808331102133 s under 20 s. Receipt records all candidate/reused source hashes equal before/after. Includes fractional pose history/replay, stale and rounded-motion refusal, full-shaft/probe refusal, deduplication and exact crop refusal.
+- Root canonical combined log: 207 passed in 15.00 s after seven-file promotion. SHA256 7d0024c0034633d092ce72d3d2f38e8ea6ea4a8c7b321959011fbb95879491eb.
+- Preserved initial subprocess-guard failure and superseded 48-pass crop snapshot are explicitly distinguished in the author report. The final focused receipt SHA256 is 40ce27953e423202fb2a22694236432cd49f7b04cfed67197412849b79398a41; final test log SHA256 is 39ea1c698b85c919fc4f85cb779ef2c90b53af504a532c1e85e19950366b1fae.
+
+Frozen packages
+- build/public-contact-family-centerline-v1/promotion-index.json: f1ba1ca710962f08b9d512aaa20a44f4a600e47e79f8095234a17e3f143df54f
+- build/public-contact-family-centerline-v1/source.patch: 0d333cd10b21a9145ad6c929157698f84ac338b183b5daa1699aed7beb1f2faf
+- build/goal-conditioned-policy-v1/candidate-v2-consumer-promotion.json: fad802fb1e45c3e3753c8d148edcbc81da2c80beba456d086202a644bdb3966f
+
+Canonical bytes verified against both packages
+src/resectionlab/native_spatial_task.py 1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea
+src/resectionlab/public_contact_family.py f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800
+src/resectionlab/contact_learning_contract.py 22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a
+src/resectionlab/contact_family_episode.py b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6
+tests/test_native_centerline_candidates.py f7013c9b10e94581841ec2070aa606d28b149a1795189efaa96cb77e87b88b56
+tests/test_public_contact_family_structural.py f1b3edd2e7de4b2cb8e668d55d23fceb6efdc64da358a4e8597bba5c4307d8f3
+tests/test_contact_learning.py 82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200
+
+Limits: This makes an omitted, publicly specified physical ray available to the bounded generated task. It establishes neither useful retained contact nor task success, learner efficacy, medical validity, or transfer to patient anatomy. The candidate inventory remains finite and does not claim exhaustive surgical paths. Existing owned-Python trust limits remain unchanged.

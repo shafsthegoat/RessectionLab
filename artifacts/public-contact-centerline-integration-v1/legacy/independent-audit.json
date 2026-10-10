@@ -1,0 +1,23 @@
+{
+  "decision": "GO_source_only_exact_repin",
+  "base_commit": "ca4333ca7d764b95b93296a2e1db4f13f9bea328",
+  "files": [
+    {
+      "path": "build/legacy-transfer-source-repin-v1/stage/resectionlab/legacy_transfer_supervisor.py",
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+      "only_declared_replacements": true
+    },
+    {
+      "path": "build/legacy-transfer-source-repin-v1/stage/resectionlab/desktop_bridge.py",
+      "sha256": "cc0158f8caaef8e777eb2d68d12d6577e3b4c9d9b6c52bfaf3497cb88055c801",
+      "only_declared_replacements": true
+    }
+  ],
+  "full_family_outer_pin_matches": true,
+  "protocol_or_resource_delta": false,
+  "checkpoint_reads": 0,
+  "model_imports": 0,
+  "inference_calls": 0,
+  "check_sources_execution": false,
+  "scope": "Exact byte-transform and current dependency hashes; author source closure execution not repeated"
+}

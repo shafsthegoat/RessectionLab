@@ -1,0 +1,4956 @@
+{
+  "access": {
+    "center_mm": [
+      5.75,
+      6.0,
+      1.5
+    ],
+    "radius_mm": 1.5
+  },
+  "actor_forwards": 0,
+  "analytic_aperture_margins": [
+    {
+      "clearance_mm": -0.5,
+      "entry_x_mm": 5.0,
+      "radial_offset_mm": 0.75
+    },
+    {
+      "clearance_mm": 0.0,
+      "entry_x_mm": 6.0,
+      "radial_offset_mm": 0.25
+    },
+    {
+      "clearance_mm": -1.0,
+      "entry_x_mm": 7.0,
+      "radial_offset_mm": 1.25
+    },
+    {
+      "clearance_mm": 0.25,
+      "entry_x_mm": 5.75,
+      "radial_offset_mm": 0.0
+    }
+  ],
+  "committed_actions": 0,
+  "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+  "family_hash": "sha256:7a4d4d7cbb9eec9702a6e333e85d14af5b0928290b806774cde1d70858b58523",
+  "geometry_previews": 20,
+  "goal_id": "surface",
+  "held_out_execution": false,
+  "initial_inventory": {
+    "accepted_count": 0,
+    "all_support_cell_tool_pairs": 410,
+    "basis": "fixed_access_grid_3columns_8depths_within_actor_crop",
+    "cavity_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+    "complete": true,
+    "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+    "declared_slots": 30,
+    "emitted": [
+      {
+        "action_id": "NATIVE-SPATIAL:e76135c7d8c8ea1aa1aedfce",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:342e3bb4615448dceaf3ae52",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:51c206e235420a78fa0ee8f6",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:67db9a3116a36067238411c2",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:32a80791ac2d5b34396c9058",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:99d637219ad9db05cdb75051",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:92ba80ba4e3536176b420fbb",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:331f2aeb967afe49b1ea582f",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:07151055f5dcadd7792c1994",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:631ce111ef40ce8aed8634f3",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:9a6bca554ac8762f524760f3",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:24f4745c450136f7d6391763",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:772e2e1729eb3a2519560876",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:73b1a99284907c2f759f6f52",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:c288801c094661aebdcb6fac",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:03b83faff2a4c4171c14b930",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:2b1264152250ad0c4ac5cc30",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:1a8686fa46832c811b214525",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:9959f7c70fe45fd4cbecd632",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:feb8a93e8d08bcebb2ae9f1d",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:35ac9e198bb71315cb868f61",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:5da1fed083ef86ca5a504d67",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:1342cd8c09be60127ef444d2",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:41fbb009013cecdff0714dae",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:d462bfd67cafa610a8b860bf",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:316273de1470b7b7ee8b5c6a",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:590e6264839d559926eabde7",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:52239a0717f8e2ea1896f5d4",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:9b39d0e2c7b91c433ea4f293",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:60108dc8d164df935a277341",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          10
+        ]
+      }
+    ],
+    "emitted_count": 30,
+    "evaluated_slots": 30,
+    "ledger": [
+      {
+        "action_id": "NATIVE-SPATIAL:e76135c7d8c8ea1aa1aedfce",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:342e3bb4615448dceaf3ae52",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:51c206e235420a78fa0ee8f6",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:67db9a3116a36067238411c2",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:32a80791ac2d5b34396c9058",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:99d637219ad9db05cdb75051",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:92ba80ba4e3536176b420fbb",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:331f2aeb967afe49b1ea582f",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:07151055f5dcadd7792c1994",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          5,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:631ce111ef40ce8aed8634f3",
+        "entry_mm": [
+          5.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          5.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          5,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:9a6bca554ac8762f524760f3",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:24f4745c450136f7d6391763",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:772e2e1729eb3a2519560876",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:73b1a99284907c2f759f6f52",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:c288801c094661aebdcb6fac",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:03b83faff2a4c4171c14b930",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:2b1264152250ad0c4ac5cc30",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:1a8686fa46832c811b214525",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:9959f7c70fe45fd4cbecd632",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          6.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          6,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:feb8a93e8d08bcebb2ae9f1d",
+        "entry_mm": [
+          6.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          6.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          6,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:35ac9e198bb71315cb868f61",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:5da1fed083ef86ca5a504d67",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          2.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:1342cd8c09be60127ef444d2",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:41fbb009013cecdff0714dae",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          3.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:d462bfd67cafa610a8b860bf",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:316273de1470b7b7ee8b5c6a",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          4.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:590e6264839d559926eabde7",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:52239a0717f8e2ea1896f5d4",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          6.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          6
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:9b39d0e2c7b91c433ea4f293",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "aspirate",
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          7.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-aspirator",
+        "voxel": [
+          7,
+          6,
+          10
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:60108dc8d164df935a277341",
+        "entry_mm": [
+          7.0,
+          6.0,
+          1.5
+        ],
+        "feasible": false,
+        "interaction_mode": "probe",
+        "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+        "tip_mm": [
+          7.0,
+          6.0,
+          10.0
+        ],
+        "tool_id": "development-probe",
+        "voxel": [
+          7,
+          6,
+          10
+        ]
+      }
+    ],
+    "max_steps": 2,
+    "omitted_count": 0,
+    "rejected_count": 30,
+    "remaining_steps": 2,
+    "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+    "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+    "steps_taken": 0,
+    "terminal": false,
+    "terminated_slots": 0
+  },
+  "layout_id": "pcf-06",
+  "optimizer_updates": 0,
+  "patient_reads": 0,
+  "physical_state_unchanged": true,
+  "previews": [
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        5.0,
+        6.0,
+        2.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        5.0,
+        6.0,
+        3.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        5.0,
+        6.0,
+        4.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        5.0,
+        6.0,
+        6.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        5.0,
+        6.0,
+        10.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        6.0,
+        6.0,
+        2.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        6.0,
+        6.0,
+        3.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        6.0,
+        6.0,
+        4.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        6.0,
+        6.0,
+        6.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        6.0,
+        6.0,
+        10.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        7.0,
+        6.0,
+        2.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        7.0,
+        6.0,
+        3.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        7.0,
+        6.0,
+        4.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        7.0,
+        6.0,
+        6.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        7.0,
+        6.0,
+        1.5
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "original_fixed_lattice",
+      "tip_mm": [
+        7.0,
+        6.0,
+        10.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.75,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": null,
+      "feasible": true,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              2
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.25
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.75
+          ]
+        }
+      ],
+      "proposed_contact_indices_native": [
+        [
+          5,
+          5,
+          2
+        ],
+        [
+          5,
+          5,
+          3
+        ],
+        [
+          5,
+          6,
+          2
+        ],
+        [
+          5,
+          6,
+          3
+        ],
+        [
+          5,
+          7,
+          2
+        ],
+        [
+          5,
+          7,
+          3
+        ],
+        [
+          6,
+          5,
+          2
+        ],
+        [
+          6,
+          5,
+          3
+        ],
+        [
+          6,
+          6,
+          2
+        ],
+        [
+          6,
+          6,
+          3
+        ],
+        [
+          6,
+          7,
+          2
+        ],
+        [
+          6,
+          7,
+          3
+        ]
+      ],
+      "proposed_removed_indices_native": [
+        [
+          6,
+          6,
+          2
+        ]
+      ],
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "same_access_centerline",
+      "tip_mm": [
+        5.75,
+        6.0,
+        2.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.75,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.75,
+        6.0,
+        3.0
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              2
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.25
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.75
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.5
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.0
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.75
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.25
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            1.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              5,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ],
+            [
+              7,
+              7,
+              4
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              3
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.5
+          ]
+        }
+      ],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "same_access_centerline",
+      "tip_mm": [
+        5.75,
+        6.0,
+        3.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.75,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.75,
+        6.0,
+        3.0
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              2
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.25
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.75
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.5
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.0
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.75
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.25
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            1.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              5,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ],
+            [
+              7,
+              7,
+              4
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              3
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.5
+          ]
+        }
+      ],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "same_access_centerline",
+      "tip_mm": [
+        5.75,
+        6.0,
+        4.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.75,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.75,
+        6.0,
+        3.0
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              2
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.25
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.75
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.5
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.0
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.75
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.25
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            1.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              5,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ],
+            [
+              7,
+              7,
+              4
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              3
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.5
+          ]
+        }
+      ],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "same_access_centerline",
+      "tip_mm": [
+        5.75,
+        6.0,
+        6.0
+      ],
+      "tool_id": "development-aspirator"
+    },
+    {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "engine_model_hash": "sha256:8bb5d6197a1ce0cdd78eee1cce9ba25e84b1b5f1d1ec16692bcac7c8ce190158",
+      "entry_mm": [
+        5.75,
+        6.0,
+        1.5
+      ],
+      "failure_tip_mm": [
+        5.75,
+        6.0,
+        3.0
+      ],
+      "feasible": false,
+      "geometry_unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "interaction_mode": "aspirate",
+      "preview_microsteps": [
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              2
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            1.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.5
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.25
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.0
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            1.75
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.5
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.25
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.0
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            0.75
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ]
+          ],
+          "removed_indices_native": [],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.5
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.25
+          ]
+        },
+        {
+          "active_radius_mm": 1.25,
+          "active_stroke_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "active_stroke_start_mm": [
+            5.75,
+            6.0,
+            1.0
+          ],
+          "contact_indices_native": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              5,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              5,
+              7,
+              2
+            ],
+            [
+              5,
+              7,
+              3
+            ],
+            [
+              5,
+              7,
+              4
+            ],
+            [
+              6,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              3
+            ],
+            [
+              6,
+              5,
+              4
+            ],
+            [
+              6,
+              6,
+              2
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              6,
+              6,
+              4
+            ],
+            [
+              6,
+              7,
+              2
+            ],
+            [
+              6,
+              7,
+              3
+            ],
+            [
+              6,
+              7,
+              4
+            ],
+            [
+              7,
+              5,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ],
+            [
+              7,
+              7,
+              4
+            ]
+          ],
+          "removed_indices_native": [
+            [
+              6,
+              6,
+              3
+            ]
+          ],
+          "tip_end_mm": [
+            5.75,
+            6.0,
+            2.75
+          ],
+          "tip_start_mm": [
+            5.75,
+            6.0,
+            2.5
+          ]
+        }
+      ],
+      "proposed_contact_indices_native": [],
+      "proposed_removed_indices_native": [],
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "record_kind": "uncommitted_geometry_preview_not_action_history",
+      "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+      "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+      "stage": "same_access_centerline",
+      "tip_mm": [
+        5.75,
+        6.0,
+        10.0
+      ],
+      "tool_id": "development-aspirator"
+    }
+  ],
+  "scope": "one_frozen_TRAIN_layout_uncommitted_candidate_omission_diagnostic",
+  "search_calls": 0,
+  "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+  "state_after": {
+    "connected_free_mask": "sha256:dc1d67922bbda06a0545dc112873b8f4b11387c04a096874b7de565b7f198fc6",
+    "contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+    "history_length": 0,
+    "probe_contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+    "remaining_mask": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+    "removed_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+    "state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad"
+  },
+  "state_before": {
+    "connected_free_mask": "sha256:dc1d67922bbda06a0545dc112873b8f4b11387c04a096874b7de565b7f198fc6",
+    "contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+    "history_length": 0,
+    "probe_contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+    "remaining_mask": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+    "removed_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+    "state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad"
+  },
+  "status": "PASS",
+  "worker_seconds": 0.021079208003357053
+}

@@ -84,8 +84,10 @@ def test_generated_source_and_goal_contract(layout_id):
     assert np.array_equal(source.structural_intensity > 0, source.observed_support)
     assert not np.any(source.reference_target) and not np.any(source.nominal_target)
     assert not np.any(source._native_config.target_labels)
-    assert source._candidate_scope == 'fixed_access_grid_3columns_8depths_within_actor_crop'
+    assert source._candidate_scope == 'fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1'
     assert len(source._candidate_voxels) == 15
+    assert source.proposal_mode == 'fixed_lattice_access_centerline_v1'
+    assert len(source._physical_candidates) in (15, 20)
     assert len(source.tools) == 2
     assert source._crop_origin == (0, 0, 0) and source._crop_shape == family.SHAPE
     for goal in metadata['goals'].values():

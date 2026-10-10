@@ -1,0 +1,9 @@
+# Shared aperture-centred actions for generated contact learning
+
+The original `pcf-06` TRAIN smoke had only STOP because its integer entries missed an access aperture centred at x=5.75. A separate 20-preview diagnostic found one legal shallow aperture-centred aspiration. The deeper versions still fail shaft clearance. The same case and split are retained.
+
+The shared native task now has an explicit optional candidate mode that keeps the old rays and adds continuous aperture-centred rays at the existing depths. Exact fractional poses pass through policy observations, search, engine certification, sealed history and desktop replay. Endpoints outside the actor crop are refused before preview. Full-tool collision, tissue removal, probe contact, tools, rewards and the default lattice remain unchanged.
+
+The generated family is versioned v2. All 24 source recipes, arrays and 12/4/8 roles are unchanged; old contexts and checkpoints cannot silently acquire the revised action set. Learning and export consumers carry the new candidate identity. The canonical combined regression passes **207 tests in 15.00 seconds**, including default source/action identities and exact fractional execution/replay. The source review caught an outside-crop eligibility error; its correction and earlier test evidence are retained.
+
+This fixes action availability. It does not yet demonstrate useful policy learning, goal attainment, RL superiority, physical interaction fidelity or patient transfer. A new actual TRAIN smoke must precede the fixed pilot. The legacy actor source closure is explicitly refreshed without weakening checks. Eight compatibility tests pass, and one actual owned transfer completes in 4.588 seconds at 266.1 MB sampled peak: the same aspiration followed by STOP, 72 replay frames, reward 3.353 and 4/3 mm³ target/other removal, with zero new optimizer updates. This verifies backend compatibility; a new live UI session was not needed or claimed.

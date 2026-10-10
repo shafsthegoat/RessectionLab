@@ -1,0 +1,36 @@
+{
+  "elapsed_seconds": 1.3312808331102133,
+  "exit_code": 0,
+  "scope": "generated_pcf06_and_source_structural_controls_only_no_search_models_training_or_heldout_execution",
+  "source_hashes_after": {
+    "build/public-contact-family-centerline-v1/stage/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+    "build/public-contact-family-centerline-v1/stage/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "build/public-contact-family-centerline-v1/stage/tests/test_native_centerline_candidates.py": "f7013c9b10e94581841ec2070aa606d28b149a1795189efaa96cb77e87b88b56",
+    "build/public-contact-family-centerline-v1/stage/tests/test_public_contact_family_structural.py": "f1b3edd2e7de4b2cb8e668d55d23fceb6efdc64da358a4e8597bba5c4307d8f3",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "source_hashes_before": {
+    "build/public-contact-family-centerline-v1/stage/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+    "build/public-contact-family-centerline-v1/stage/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "build/public-contact-family-centerline-v1/stage/tests/test_native_centerline_candidates.py": "f7013c9b10e94581841ec2070aa606d28b149a1795189efaa96cb77e87b88b56",
+    "build/public-contact-family-centerline-v1/stage/tests/test_public_contact_family_structural.py": "f1b3edd2e7de4b2cb8e668d55d23fceb6efdc64da358a4e8597bba5c4307d8f3",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "status": "PASS",
+  "thread_count": 1,
+  "wall_cap_seconds": 20
+}

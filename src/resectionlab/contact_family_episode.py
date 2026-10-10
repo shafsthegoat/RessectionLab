@@ -13,7 +13,8 @@ from .contact_checkpoint import load_contact_checkpoint, VerifiedContactCheckpoi
 from .contact_learning_contract import ContactExperiment, PROTOCOL
 from .core import CaseData, SourceRef, array_digest, freeze_json, semantic_digest, thaw_json
 from .development_episode import _execute_sealed_development_plan
-from .public_contact_family import FAMILY_VERSION, build_family_source, bind_family_context, make_family_task
+from .public_contact_family import (FAMILY_VERSION, SOURCE_CANDIDATE_VERSION, build_family_source,
+    bind_family_context, make_family_task)
 from .public_surface_contact import (PublicSurfaceGoal, SurfaceContactTask, SurfaceContactDevelopmentContext,
     OBJECTIVE_VERSION, OBSERVATION_VERSION, CONTEXT_VERSION)
 from .spatial_observations import CHANNEL_NAMES
@@ -88,6 +89,7 @@ def bind_family_episode(experiment, task, *, layout_id, goal_id, release=None):
     if task.case.source_hash != row['source_hash'] or task.objective.fingerprint != row['goals'][goal_id]['objective_hash']:
         raise ValueError('Held-out task differs from the frozen source/objective')
     declaration = freeze_json({'version': FAMILY_VERSION, 'experiment_hash': experiment.fingerprint,
+        'proposal_mode': SOURCE_CANDIDATE_VERSION, 'source_candidate_version': SOURCE_CANDIDATE_VERSION,
         'layout_id': layout_id, 'goal_id': goal_id, 'role': row['role'], 'family_hash': experiment.manifest['family_hash'],
         'recipe_hash': row['recipe_hash'], 'source_hash': row['source_hash'],
         'objective_hash': task.objective.fingerprint, 'decision_model_hash': task.decision_model_hash,
@@ -184,6 +186,7 @@ def export_family_strategy(experiment, task, *, layout_id, goal_id, selector, pl
             'goalGridHash': context.goal_grid_hash, 'objectiveHash': context.objective_hash,
             'meaning': 'committed geometric probe contact with a retained source cell'},
         'taskContract': {'objectiveVersion': OBJECTIVE_VERSION, 'observationVersion': OBSERVATION_VERSION,
+            'proposalMode': SOURCE_CANDIDATE_VERSION, 'sourceCandidateVersion': SOURCE_CANDIDATE_VERSION,
             'contextVersion': CONTEXT_VERSION, 'maxSteps': 2, 'objective': task.objective.record(),
             'declaration': thaw_json(declaration), 'detachedObservationBinding': context._record(),
             'nominalTargetRole': 'zero compatibility field unused by public contact objective',

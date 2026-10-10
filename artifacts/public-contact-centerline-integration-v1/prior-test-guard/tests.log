@@ -1,0 +1,41 @@
+...........F....................................                         [100%]
+=================================== FAILURES ===================================
+__________ test_clean_import_has_no_model_or_image_loader_dependency ___________
+
+    def test_clean_import_has_no_model_or_image_loader_dependency():
+        code = (
+            "import sys; from resectionlab import public_contact_family; "
+            "assert 'torch' not in sys.modules; assert 'nibabel' not in sys.modules"
+        )
+>       subprocess.run([sys.executable, '-B', '-c', code], check=True,
+                       capture_output=True, text=True, timeout=10)
+
+build/public-contact-family-centerline-v1/stage/tests/test_public_contact_family_structural.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:548: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1823: in _execute_child
+    sys.audit("subprocess.Popen", executable, args, cwd, env)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+event = 'subprocess.Popen'
+args = ('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python', ['/...lab import public_contact_family; assert 'torch' not in sys.modules; assert 'nibabel' not in sys.modules"], None, None)
+
+    def guard(event,args):
+        if event in ('socket.connect','socket.bind','subprocess.Popen'):
+>           forbidden.append(event);raise AssertionError('No network/subprocess')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: No network/subprocess
+
+build/public-contact-family-centerline-v1/run_tests.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED build/public-contact-family-centerline-v1/stage/tests/test_public_contact_family_structural.py::test_clean_import_has_no_model_or_image_loader_dependency
+1 failed, 47 passed in 0.78s
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/public-contact-family-centerline-v1/run_tests.py", line 24, in <module>
+    assert not forbidden and 'torch' not in sys.modules and 'nibabel' not in sys.modules
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

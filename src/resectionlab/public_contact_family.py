@@ -16,9 +16,10 @@ import numpy as np
 from .core import array_digest, freeze_json, semantic_digest
 from .development_episode import TOOLS
 from .geometry import AccessWindow
-from .native_spatial_task import NativeSpatialCase
+from .native_spatial_task import NativeSpatialCase, ACCESS_CENTERLINE_PROPOSAL_VERSION
 
-FAMILY_VERSION = 'generated-public-contact-family-v1'
+FAMILY_VERSION = 'generated-public-contact-family-v2'
+SOURCE_CANDIDATE_VERSION = ACCESS_CENTERLINE_PROPOSAL_VERSION
 SPLIT_VERSION = 'fixed-stratified-geometry-split-v1'
 GOAL_IDS = ('surface', 'deep')
 ROLES = ('TRAIN', 'SELECT', 'MEASUREMENT_EVAL')
@@ -86,6 +87,7 @@ def _goal_index(recipe, goal_id):
 def family_record():
     """Split metadata is deliberately separate from actor-side source fields."""
     return {'version': FAMILY_VERSION, 'split_version': SPLIT_VERSION,
+        'proposal_mode': SOURCE_CANDIDATE_VERSION, 'source_candidate_version': SOURCE_CANDIDATE_VERSION,
         'layouts': [{'recipe': r.record(), 'recipe_hash': r.digest,
             'role': _ROLE_BY_ID[r.layout_id]} for r in _RECIPES],
         'tools': [asdict(t) for t in TOOLS],
@@ -103,6 +105,7 @@ def family_digest():
 def layout_metadata(layout_id):
     recipe = _recipe(layout_id)
     return {'layout_id': recipe.layout_id, 'role': _ROLE_BY_ID[layout_id],
+        'proposal_mode': SOURCE_CANDIDATE_VERSION, 'source_candidate_version': SOURCE_CANDIDATE_VERSION,
         'recipe_hash': recipe.digest, 'family_hash': family_digest(),
         'goals': {g: {'native_index': _goal_index(recipe, g)} for g in GOAL_IDS},
         'task_execution_available': _ROLE_BY_ID[layout_id] in ('TRAIN', 'SELECT'),
@@ -130,7 +133,7 @@ def build_family_source(layout_id):
         support_derivation='analytic generated signal is nonzero exactly on the stepped occupied support',
         nominal_target=zero, target_source_kind='derived_from_scan',
         target_derivation='constant zero compatibility field; unused by public surface-contact objective',
-        proposal_mode='fixed_lattice')
+        proposal_mode=SOURCE_CANDIDATE_VERSION)
 
 
 def topology_digest(support):
@@ -176,7 +179,7 @@ def family_manifest():
             'crop_origin_native': case._crop_origin, 'crop_shape': case._crop_shape,
             'crop_affine_hash': array_digest(crop_affine),
             'support_cell_count': int(case.observed_support.sum()),
-            'candidate_descriptor_count': len(case._candidate_voxels)*len(case.tools),
+            'candidate_descriptor_count': len(case._physical_candidates)*len(case.tools),
             'candidate_scope': case._candidate_scope, 'decision_model_hash': None,
             'execution_binding_status': 'not_materialized_source_only',
             'actions_executed': 0, 'geometry_previews': 0})
@@ -219,6 +222,7 @@ def bind_family_context(task, *, layout_id, goal_id, experiment_hash):
     if task.case.source_hash != case.source_hash or task.objective.fingerprint != goal.fingerprint:
         raise ValueError('Task differs from the canonical layout/goal recipe')
     declaration = freeze_json({'version': FAMILY_VERSION, 'experiment_hash': experiment_hash,
+        'proposal_mode': SOURCE_CANDIDATE_VERSION, 'source_candidate_version': SOURCE_CANDIDATE_VERSION,
         'layout_id': layout_id, 'goal_id': goal_id, 'role': _ROLE_BY_ID[layout_id],
         'family_hash': family_digest(), 'recipe_hash': recipe.digest,
         'source_hash': case.source_hash, 'objective_hash': goal.fingerprint,

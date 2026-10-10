@@ -1,0 +1,57 @@
+CONFIRMED — public candidate omission, not a collision-check failure
+
+The canonical pcf-06 / surface / TRAIN smoke had no legal non-STOP action.
+SEARCH correctly returned STOP with zero searched transitions. With a one-action
+categorical policy, the IL loss gradient is zero; an optimizer call need not
+change a parameter. The smoke assertion correctly stopped publication. Existing
+family structural and explicit-STOP controls did not establish useful decisions;
+their saved initial ledger already contained the aperture rejection. This is a
+limitation those earlier checks missed, not evidence of a learned result.
+
+Saved and source-derived diagnosis
+pcf-06 has access center (5.75,6,1.5) mm, radius 1.5 mm and unchanged aspirator
+maximum envelope radius 1.25 mm. The fixed proposal lattice rounds the lateral
+coordinate then projects integer x=5,6,7 columns onto the access plane. Their
+radial offsets are .75,.25,1.25 mm. Aperture clearances are respectively -.5,0,-1
+mm. geometry.py intentionally rejects contact (clearance <=1e-9), so all 15
+aspiration candidates fail HARD_GEOMETRY:ACCESS_APERTURE. Initial probe rows
+correctly require an existing committed cavity. This is not image coverage,
+private target information, reward tuning or a shaft failure in those 15 rays.
+
+The original finite integer catalog therefore legitimately has no legal action.
+It does not establish that this same physical world has no admissible motion:
+an aperture-centered source-normal ray was omitted. The strict geometry rule
+must stay unchanged; giving an exactly tangent integer ray permission would be
+a wrong repair.
+
+One released diagnostic, now terminal
+Root fixed pcf-06 surface and exactly five additional continuous centerline
+previews at existing depths 2,3,4,6,10 before execution. The same engine, support,
+affine, access, tools and state were reused. Nothing was committed or scored.
+
+  Entry (5.75,6,1.5), tip (5.75,6,2): feasible NATIVE_CONNECTED_STROKE;
+  proposed removal exactly native cell (6,6,2), three preview microsteps.
+  Same entry, tip depth 3/4/6/10: SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE,
+  first failure at (5.75,6,3), six preceding preview microsteps each.
+
+The centered aperture clearance is +.25 mm. Deeper failures remain strict:
+partially contacted tissue cannot be borrowed as a cleared shaft corridor.
+Rejected-preview microsteps describe an uncommitted hypothetical prefix, not an
+executed history, and the records are labelled accordingly.
+
+Exactly 20 previews (15 original plus five centered), zero committed actions,
+search calls, rewards, model forwards, updates, patient reads or held-out tasks.
+Before/after engine state and remaining/removal/contact/probe/connected-free masks
+were identical. Parent .258349708 s under a 15 s cap, worker .021079208 s, one
+numeric thread. No model child remains; sources were unchanged before/after.
+The legal opening does not establish that the original public goal can be reached
+within two actions. Keep the goal, all24 recipes and every role unchanged.
+
+Exact result SHA d935b560f24367ea8e17c7a56ce516d0fd4fc604ecceae7fa1af3e4e57a15975
+Declaration SHA 53c0a056a373d30d18f977db92423924e3519307739dc147d6e056d8a51ac6b9
+Receipt SHA a58d25832af55256ca7320848b9887d79788a051ee24f864e46df0bb48a114c7
+Runner SHA ae1bb865294a9a40756c47817f3b3b27994728631eae2fe276c4217e04ee39ce
+
+See CANDIDATE-PROPOSAL.txt for the minimal shared-inventory revision. It is a
+proposal only; no canonical edit, new family outcome or second diagnostic run
+was performed in this slice.

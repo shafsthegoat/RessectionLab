@@ -1,0 +1,26 @@
+{
+  "schema": "legacy-transfer-source-repin-v1",
+  "scope": "Exact source binding repair for the existing generated aspiration-only actor; no model or protocol change",
+  "copy": [
+    {
+      "from": "build/legacy-transfer-source-repin-v1/stage/resectionlab/legacy_transfer_supervisor.py",
+      "to": "src/resectionlab/legacy_transfer_supervisor.py",
+      "beforeSha256": "60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24",
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+      "bytes": 10427
+    },
+    {
+      "from": "build/legacy-transfer-source-repin-v1/stage/resectionlab/desktop_bridge.py",
+      "to": "src/resectionlab/desktop_bridge.py",
+      "beforeSha256": "a25cfd8e209ee13379acca409816352f9ddfa47612b9dbafb086ec868d82e15e",
+      "sha256": "cc0158f8caaef8e777eb2d68d12d6577e3b4c9d9b6c52bfaf3497cb88055c801",
+      "bytes": 116881
+    }
+  ],
+  "sourceChanges": [
+    "local:development_episode.py de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162 -> 8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/native_spatial_task.py 503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255 -> 1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea"
+  ],
+  "modelCalls": 0,
+  "resourceLimitsChanged": false
+}

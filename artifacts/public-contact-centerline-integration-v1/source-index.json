@@ -1,0 +1,114 @@
+{
+  "files": [
+    {
+      "path": "candidate-report.txt",
+      "source_path": "build/public-contact-family-centerline-v1/REPORT.txt",
+      "bytes": 4218,
+      "sha256": "326da7b652820a93d43875eee65f2d7893f4ab99fdd10a0e8e6b78177236fc61"
+    },
+    {
+      "path": "candidate-promotion.json",
+      "source_path": "build/public-contact-family-centerline-v1/promotion-index.json",
+      "bytes": 3576,
+      "sha256": "f1ba1ca710962f08b9d512aaa20a44f4a600e47e79f8095234a17e3f143df54f"
+    },
+    {
+      "path": "consumer-promotion.json",
+      "source_path": "build/goal-conditioned-policy-v1/candidate-v2-consumer-promotion.json",
+      "bytes": 1540,
+      "sha256": "fad802fb1e45c3e3753c8d148edcbc81da2c80beba456d086202a644bdb3966f"
+    },
+    {
+      "path": "root-canonical-tests.log",
+      "source_path": "build/public-contact-family-centerline-v1/root-canonical-tests.log",
+      "bytes": 261,
+      "sha256": "7d0024c0034633d092ce72d3d2f38e8ea6ea4a8c7b321959011fbb95879491eb"
+    },
+    {
+      "path": "focused-tests.log",
+      "source_path": "build/public-contact-family-centerline-v1/tests.log",
+      "bytes": 99,
+      "sha256": "39ea1c698b85c919fc4f85cb779ef2c90b53af504a532c1e85e19950366b1fae"
+    },
+    {
+      "path": "focused-test-receipt.json",
+      "source_path": "build/public-contact-family-centerline-v1/test-receipt.json",
+      "bytes": 3411,
+      "sha256": "40ce27953e423202fb2a22694236432cd49f7b04cfed67197412849b79398a41"
+    },
+    {
+      "path": "diagnosis/REPORT.txt",
+      "source_path": "build/public-contact-family-legality-diagnosis-v1/REPORT.txt",
+      "bytes": 3532,
+      "sha256": "4576790ae0a39db57fe704931cf51a5e322368e47f08a9bd7b57db774041ad78"
+    },
+    {
+      "path": "diagnosis/result.json",
+      "source_path": "build/public-contact-family-legality-diagnosis-v1/result.json",
+      "bytes": 99978,
+      "sha256": "d935b560f24367ea8e17c7a56ce516d0fd4fc604ecceae7fa1af3e4e57a15975"
+    },
+    {
+      "path": "diagnosis/receipt.json",
+      "source_path": "build/public-contact-family-legality-diagnosis-v1/receipt.json",
+      "bytes": 1837,
+      "sha256": "a58d25832af55256ca7320848b9887d79788a051ee24f864e46df0bb48a114c7"
+    },
+    {
+      "path": "diagnosis/declaration.json",
+      "source_path": "build/public-contact-family-legality-diagnosis-v1/declaration.json",
+      "bytes": 1281,
+      "sha256": "53c0a056a373d30d18f977db92423924e3519307739dc147d6e056d8a51ac6b9"
+    },
+    {
+      "path": "prior-crop-review/tests.log",
+      "source_path": "build/public-contact-family-centerline-v1/prior-crop-review/tests.log",
+      "bytes": 99,
+      "sha256": "e9e3c89cf1e5b466987eb2b543583a8870ecfcccb39f99d22c7a1fee35c3a3a2"
+    },
+    {
+      "path": "prior-test-guard/tests.log",
+      "source_path": "build/public-contact-family-centerline-v1/prior-test-guard/tests.log",
+      "bytes": 2827,
+      "sha256": "b83d38a1a9f52b3fc8c376e6ee34a29c8b618d594ae15de40ef0092443114ef6"
+    },
+    {
+      "path": "independent-review.txt",
+      "source_path": "build/public-contact-family-centerline-independent-v1/REPORT.txt",
+      "bytes": 5093,
+      "sha256": "e54d155d5bc9ece2e933ea51b6e0c3789f4c61342e5de7ee23ff243cbff94eeb"
+    },
+    {
+      "path": "legacy/source-repin.json",
+      "source_path": "build/legacy-transfer-source-repin-v1/promotion-files.json",
+      "bytes": 1338,
+      "sha256": "58c0ec9d9fff7a293023805b814e48c3ebed7f6748af0d7fd009924a4617ddac"
+    },
+    {
+      "path": "legacy/independent-audit.json",
+      "source_path": "build/legacy-transfer-source-repin-independent-v1/audit.json",
+      "bytes": 895,
+      "sha256": "b9b53c2c70cf7a0208445fb825163757112372bf9bce1d468bd6092c8bf2010a"
+    },
+    {
+      "path": "legacy/root-tests.log",
+      "source_path": "build/legacy-transfer-source-repin-v1/root-tests.log",
+      "bytes": 98,
+      "sha256": "aebadd66519bd5e05747560ce9a6dd84eced8fb80d133c0de0087d03927fbbf9"
+    },
+    {
+      "path": "legacy/supervision.json",
+      "source_path": "build/legacy-transfer-source-repin-v1/actual-compatibility-v1/supervision.json",
+      "bytes": 353,
+      "sha256": "75ff94d310ef76065145e792e696415b411d94c3356bda4759ecaa60d04377d9"
+    },
+    {
+      "path": "legacy/completion.json",
+      "source_path": "build/legacy-transfer-source-repin-v1/actual-compatibility-v1/completion.json",
+      "bytes": 204,
+      "sha256": "407481d6465a78667c45f2f990acc99be365b42c9b481dabc2546cede551776a"
+    }
+  ],
+  "raw_patient_data_included": false,
+  "model_weights_included": false
+}

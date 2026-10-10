@@ -12,7 +12,7 @@ import torch
 
 from .core import freeze_json, semantic_digest, thaw_json
 from .goal_mode_spatial_policy import GoalModeSpatialPolicy
-from .public_contact_family import (FAMILY_VERSION, GOAL_IDS, family_digest, family_manifest,
+from .public_contact_family import (FAMILY_VERSION, SOURCE_CANDIDATE_VERSION, GOAL_IDS, family_digest, family_manifest,
     layout_metadata, bind_family_context)
 from .public_surface_contact import HASH, SurfaceContactDevelopmentContext, SurfaceContactObservation
 from .spatial_policy import SpatialPolicyConfig, parameter_hash
@@ -123,6 +123,7 @@ class ContactTrainBinding:
         self.context.assert_intact()
         goal = row['goals'][self.goal_id]
         declaration = {'version': FAMILY_VERSION, 'experiment_hash': self.experiment.fingerprint,
+            'proposal_mode': SOURCE_CANDIDATE_VERSION, 'source_candidate_version': SOURCE_CANDIDATE_VERSION,
             'layout_id': self.layout_id, 'goal_id': self.goal_id, 'role': 'TRAIN',
             'family_hash': family_digest(), 'recipe_hash': row['recipe_hash'],
             'source_hash': row['source_hash'], 'objective_hash': goal['objective_hash'],

@@ -1,0 +1,30 @@
+{
+  "version": "public-contact-candidate-v2-learning-consumer-promotion-v1",
+  "files": [
+    {
+      "proposal": "candidate-v2-stage/resectionlab/contact_learning_contract.py",
+      "destination": "src/resectionlab/contact_learning_contract.py",
+      "sha256": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a",
+      "base_sha256": "2d8eea67cc2280a62959d9e676960cca4243d0a07fa152d56481f1edca7b9827"
+    },
+    {
+      "proposal": "candidate-v2-stage/resectionlab/contact_family_episode.py",
+      "destination": "src/resectionlab/contact_family_episode.py",
+      "sha256": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+      "base_sha256": "01722c9e71d7e31fd3b5aef2b0e3ae1c7353240d2605a339d471b4b3d7b8fa31"
+    },
+    {
+      "proposal": "candidate-v2-stage/tests/test_contact_learning.py",
+      "destination": "tests/test_contact_learning.py",
+      "sha256": "82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200",
+      "base_sha256": "cdd4bd692336ce5fcf03d27fb3d41992c6b2a921633b64cd6b81e3b86ed3abc0"
+    }
+  ],
+  "patch_sha256": "de4ca031cad2ce84b687c77b7ff27f63af55c7b3d4045374536603b37666575f",
+  "requires_family_version": "generated-public-contact-family-v2",
+  "requires_source_candidate_version": "fixed_lattice_access_centerline_v1",
+  "model_architecture_change": false,
+  "protocol_change": false,
+  "test_status": "source_only; parent will test after matching family candidate promotion",
+  "prior_failed_smoke": "canonical-smoke-v1/result.json preserved unchanged"
+}

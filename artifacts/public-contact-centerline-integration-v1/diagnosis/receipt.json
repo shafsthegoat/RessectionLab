@@ -1,0 +1,25 @@
+{
+  "exit_code": 0,
+  "source_hashes_after": {
+    "build/public-contact-family-legality-diagnosis-v1/run_diagnostic.py": "ae1bb865294a9a40756c47817f3b3b27994728631eae2fe276c4217e04ee39ce",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/public_contact_family.py": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0"
+  },
+  "source_hashes_before": {
+    "build/public-contact-family-legality-diagnosis-v1/run_diagnostic.py": "ae1bb865294a9a40756c47817f3b3b27994728631eae2fe276c4217e04ee39ce",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/public_contact_family.py": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0"
+  },
+  "status": "PASS",
+  "thread_count": 1,
+  "wall_cap_seconds": 15,
+  "wall_seconds": 0.2583497080486268
+}

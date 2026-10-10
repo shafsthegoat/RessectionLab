@@ -30,6 +30,7 @@ from .spatial_observations import (ObservedChannel, ObservedProcedureState,
     SpatialAction, SpatialInputs, build_spatial_observation)
 
 NATIVE_SPATIAL_VERSION = "native-spatial-observed-openings-v1"
+ACCESS_CENTERLINE_PROPOSAL_VERSION = "fixed_lattice_access_centerline_v1"
 MAX_PRIMITIVES = 96  # Below the unchanged engine's 128-certificate capacity.
 GRID_ROUNDOFF_MAX_DISPLACEMENT_MM = 1e-6
 GRID_ROUNDOFF_MAX_GRAM_ERROR = 1e-8
@@ -81,6 +82,43 @@ def _native_identity(config):
             "source_hash": config.source_hash, "case_id": config.case_id, "step": config.max_tip_step_mm,
             "max_microsteps": config.max_microsteps, "support": config.tissue_support_provenance,
             "fingerprint": config.fingerprint}))
+
+
+def _fixed_physical_candidates(voxels, affine, access, axis, origin, shape):
+    """Retain the old rays, then add one exact aperture-center ray per depth.
+
+    A continuous endpoint is not an integer voxel. Its separately named owning
+    cell uses [i-.5, i+.5), solely for public crop/cavity prerequisites; the
+    unchanged engine must still certify the complete physical instrument.
+    """
+    rows, seen = [], set()
+
+    def add(voxel, entry, tip, family):
+        key = (tuple(float(x) for x in entry), tuple(float(x) for x in tip))
+        if key in seen:
+            return
+        seen.add(key)
+        endpoint = np.linalg.solve(affine[:3, :3], tip-affine[:3, 3])
+        cell = np.floor(endpoint+.5).astype(int)
+        inside = bool(np.all(cell >= origin) and np.all(cell < np.add(origin, shape)))
+        rows.append(freeze_json({"family": family, "voxel": voxel,
+            "entry_mm": key[0], "tip_mm": key[1],
+            "endpoint_native": tuple(float(x) for x in endpoint),
+            "endpoint_cell": tuple(int(x) for x in cell) if inside else None,
+            "endpoint_in_actor_crop": inside}))
+
+    for voxel in voxels:
+        tip = affine[:3, :3] @ voxel + affine[:3, 3]
+        depth = float((tip-access.center_mm) @ access.normal_inward)
+        add(voxel, tip-depth*access.normal_inward, tip, "legacy_integer_lattice")
+    access_native = np.linalg.solve(affine[:3, :3], access.center_mm-affine[:3, 3])
+    for depth_index in dict.fromkeys(voxel[axis] for voxel in voxels):
+        point = access_native.copy()
+        point[axis] = depth_index
+        plane_point = affine[:3, :3] @ point + affine[:3, 3]
+        depth = float((plane_point-access.center_mm) @ access.normal_inward)
+        add(None, access.center_mm, access.center_mm+depth*access.normal_inward, "access_centerline")
+    return tuple(rows)
 
 
 def reconcile_native_grid_roundoff(affine, shape):
@@ -170,6 +208,7 @@ class NativeSpatialCase:
     _crop_shape: tuple[int, int, int] = field(init=False, repr=False)
     _candidate_voxels: tuple[tuple[int, int, int], ...] = field(init=False, repr=False)
     _candidate_scope: str = field(init=False, repr=False)
+    _physical_candidates: tuple = field(init=False, repr=False, default=())
 
     def __post_init__(self):
         image = np.asarray(self.structural_intensity)
@@ -196,8 +235,10 @@ class NativeSpatialCase:
             if not isinstance(rule, NominalCavityProposalConfig):
                 raise ValueError("Nominal/cavity proposal configuration must be typed or an explicit object")
             object.__setattr__(self, "proposal_config", rule)
-        elif self.proposal_mode != "fixed_lattice" or self.proposal_config is not None:
+        elif self.proposal_mode not in {"fixed_lattice", ACCESS_CENTERLINE_PROPOSAL_VERSION} or self.proposal_config is not None:
             raise ValueError("Unknown proposal mode or a configuration supplied to the unchanged fixed lattice")
+        if self.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION and self.track != "synthetic_scan":
+            raise ValueError("Access-centerline proposals currently require explicit generated sources")
         affine = np.asarray(self.affine_ras_mm)
         if affine.dtype.kind not in "iuf" or not np.isfinite(affine).all():
             raise ValueError("A real finite RAS affine is required")
@@ -280,6 +321,13 @@ class NativeSpatialCase:
                         points.append(tuple(int(v) for v in point))
             voxels, scope = tuple(points), "fixed_access_grid_3columns_8depths_within_actor_crop"
         object.__setattr__(self, "_candidate_voxels", voxels)
+        if self.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION:
+            physical = _fixed_physical_candidates(voxels, self._native_affine_ras_mm,
+                self.access, axis, origin, actual_shape)
+            if len(physical)*len(tools) > MAX_PRIMITIVES:
+                raise ValueError("Access-centerline inventory exceeds the unchanged candidate capacity")
+            object.__setattr__(self, "_physical_candidates", physical)
+            scope += "; plus_exact_access_centerline_at_existing_depths_v1"
         object.__setattr__(self, "_candidate_scope", scope)
         object.__setattr__(self, "_identity", self._identity_record())
         source_hash = semantic_digest({"version": NATIVE_SPATIAL_VERSION,
@@ -293,7 +341,11 @@ class NativeSpatialCase:
             **({"intensity_normalization": self._normalization_record} if self.intensity_normalization != "raw" else {}),
             **({"native_grid_reconciliation": self._grid_record} if self.native_grid_reconciliation != "none" else {}),
             **({"proposal_mode": self.proposal_mode, "proposal_rule": self.proposal_config.fingerprint}
-               if self.proposal_mode != "fixed_lattice" else {})})
+               if self.proposal_mode == "nominal_cavity_v1" else {}),
+            **({"proposal_mode": self.proposal_mode, "physical_candidates": self._physical_candidates,
+                "source_candidate_version": ACCESS_CENTERLINE_PROPOSAL_VERSION,
+                "endpoint_cell_convention": "half_open_[i-.5,i+.5)_prerequisite_only"}
+               if self.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION else {})})
         object.__setattr__(self, "_source_hash", source_hash)
         object.__setattr__(self, "_reference_hash", semantic_digest({"source": source_hash, "target": array_digest(target)}))
         config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self._native_affine_ras_mm,
@@ -334,6 +386,7 @@ class NativeSpatialCase:
             self.intensity_normalization, semantic_digest(self._normalization_record),
             self.native_grid_reconciliation, semantic_digest(self._grid_record),
             self.proposal_mode, None if self.proposal_config is None else self.proposal_config.fingerprint,
+            *((semantic_digest(self._physical_candidates),) if self.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION else ()),
             None if self._nominal_proposer is None else (id(self._nominal_proposer), self._nominal_proposer.model_hash))
 
     def assert_intact(self):
@@ -396,7 +449,7 @@ class NativeSpatialTask:
             raise ValueError("Planning must use the explicitly supplied nominal target field")
         modes = None if tool_modes is None else dict(tool_modes)
         if modes is not None:
-            if (case.track != "synthetic_scan" or case.proposal_mode != "fixed_lattice"
+            if (case.track != "synthetic_scan" or case.proposal_mode not in {"fixed_lattice", ACCESS_CENTERLINE_PROPOSAL_VERSION}
                     or set(modes) != {tool.tool_id for tool in case.tools}
                     or any(mode not in {"aspirate", "probe"} for mode in modes.values())):
                 raise ValueError("Mixed native interactions currently require an explicit generated fixed-lattice tool registry")
@@ -413,6 +466,8 @@ class NativeSpatialTask:
     def _contract_record(self):
         return {**({"instrument_interaction_version": "native-tangential-probe-v1",
                      "tool_modes": thaw_json(self.tool_modes)} if self.tool_modes is not None else {}),
+            **({"source_candidate_version": ACCESS_CENTERLINE_PROPOSAL_VERSION}
+               if self.case.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION else {}),
             "source": self.case.source_hash, "max_steps": self.max_steps, "reward": asdict(self.reward_spec),
             "native_config": self._config.fingerprint, "partial_contact_weight": 0.,
             "proposal_rule": self.case._candidate_scope + "; source-normal entry projection",
@@ -486,6 +541,32 @@ class NativeSpatialTask:
                 if slot.reason == "PROPOSED_UNCERTIFIED":
                     row.update(outcomes[slot.proposal_id])
                 ledger.append(row)
+        elif not self._terminated and self.case.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION:
+            cavity = array_digest(self._engine.removed_mask)
+            for candidate in self.case._physical_candidates:
+                entry, tip = np.asarray(candidate["entry_mm"]), np.asarray(candidate["tip_mm"])
+                depth = float((tip-entry) @ self.case.access.normal_inward)
+                cell = candidate["endpoint_cell"]
+                for tool in self.case.tools:
+                    self._check_cancelled()
+                    mode = "aspirate" if self.tool_modes is None else self.tool_modes[tool.tool_id]
+                    identity = semantic_digest({"source": self._source_hash, "cavity": cavity,
+                        "candidate": candidate, "tool_id": tool.tool_id, "interaction_mode": mode,
+                        "engine_state": self._engine.state_hash, "task_model": self.decision_model_hash,
+                        "source_candidate_version": ACCESS_CENTERLINE_PROPOSAL_VERSION})
+                    action_id = "NATIVE-SPATIAL:" + identity.split(":")[1][:24]
+                    in_cavity = cell is not None and bool(self._engine.removed_mask[tuple(cell)])
+                    reason = ("ENDPOINT_OUTSIDE_ACTOR_CROP" if cell is None else
+                        "OUTSIDE_DECLARED_INWARD_WORKSPACE" if depth <= 0 else
+                        "PROBE_REQUIRES_EXISTING_CAVITY" if mode == "probe" and not in_cavity else None)
+                    result = None if reason is not None else self._engine.preview_stroke(tool.tool_id, tip,
+                        entry_mm=entry, interaction_mode=mode)
+                    feasible = result is not None and result.feasible
+                    ledger.append({**thaw_json(candidate), "tool_id": tool.tool_id,
+                        "interaction_mode": mode, "action_id": action_id, "feasible": bool(feasible),
+                        "reason": reason if result is None else result.reason})
+                    if feasible:
+                        inventory[action_id] = result
         elif not self._terminated:
             cavity = array_digest(self._engine.removed_mask)
             for voxel in self.case._candidate_voxels:
@@ -773,9 +854,12 @@ class NativeSpatialTask:
                 "all_support_cell_tool_pairs": int(self.case.observed_support.sum())*len(self.case.tools),
                 "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
                 "disposition_counts": counts, "emitted": emitted, "ledger": copy.deepcopy(list(self._ledger))}
-        slots = len(self.case._candidate_voxels) * len(self.case.tools)
+        physical = self.case.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION
+        slots = len(self.case._physical_candidates if physical else self.case._candidate_voxels) * len(self.case.tools)
         emitted = [copy.deepcopy(row) for row in self._ledger if row["reason"] != "OUTSIDE_DECLARED_INWARD_WORKSPACE"]
         return {"basis": self.case._candidate_scope, "declared_slots": slots,
+            **({"provider_version": ACCESS_CENTERLINE_PROPOSAL_VERSION,
+                "source_candidate_version": ACCESS_CENTERLINE_PROPOSAL_VERSION} if physical else {}),
             "source_hash": self._source_hash, "decision_model_hash": self.decision_model_hash,
             "cavity_state_hash": self._engine.state_hash,
             "evaluated_slots": len(self._ledger), "accepted_count": len(self._inventory),

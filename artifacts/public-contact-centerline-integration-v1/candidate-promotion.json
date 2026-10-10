@@ -1,0 +1,66 @@
+{
+  "base_head": "ca4333ca7d764b95b93296a2e1db4f13f9bea328",
+  "canonical_test_paths": [
+    "tests/test_native_centerline_candidates.py",
+    "tests/test_public_contact_family_structural.py"
+  ],
+  "coupled_consumer_index": "build/goal-conditioned-policy-v1/candidate-v2-consumer-promotion.json",
+  "coupled_consumer_index_sha256": "fad802fb1e45c3e3753c8d148edcbc81da2c80beba456d086202a644bdb3966f",
+  "evidence": {
+    "REPORT.txt": "326da7b652820a93d43875eee65f2d7893f4ab99fdd10a0e8e6b78177236fc61",
+    "prior-crop-review/test-receipt.json": "ac89d9616b36cbff34471083a0ac3f914d3c12a4b9c1b0cb530c0f6f1f34a554",
+    "prior-crop-review/tests.log": "e9e3c89cf1e5b466987eb2b543583a8870ecfcccb39f99d22c7a1fee35c3a3a2",
+    "prior-test-guard/run_tests.py": "7bb3f0c83246b75777dbe0a5a9f787aac0f033d8ae6544702b1634a2ff8f6f3d",
+    "prior-test-guard/test-receipt.json": "b636f9f228e37a5dfae2ab02ab2a907473b8ed0affa3612515bf0a678d631ca8",
+    "prior-test-guard/tests.log": "b83d38a1a9f52b3fc8c376e6ee34a29c8b618d594ae15de40ef0092443114ef6",
+    "run_tests.py": "0e567e646106580a1b6419f79a13738efcaa849c47bbd0a63ab4e55d53c34e45",
+    "test-receipt.json": "40ce27953e423202fb2a22694236432cd49f7b04cfed67197412849b79398a41",
+    "tests.log": "39ea1c698b85c919fc4f85cb779ef2c90b53af504a532c1e85e19950366b1fae"
+  },
+  "family_version": "generated-public-contact-family-v2",
+  "focused_test_result": {
+    "elapsed_seconds": 1.3312808331102133,
+    "exit_code": 0,
+    "scope": "generated_pcf06_and_source_structural_controls_only_no_search_models_training_or_heldout_execution",
+    "status": "PASS",
+    "thread_count": 1,
+    "wall_cap_seconds": 20
+  },
+  "overlay_command": ".venv/bin/python build/public-contact-family-centerline-v1/run_tests.py",
+  "patch": {
+    "path": "build/public-contact-family-centerline-v1/source.patch",
+    "sha256": "0d333cd10b21a9145ad6c929157698f84ac338b183b5daa1699aed7beb1f2faf"
+  },
+  "promotion_files": [
+    {
+      "base_sha256": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+      "bytes": 68231,
+      "candidate": "build/public-contact-family-centerline-v1/stage/resectionlab/native_spatial_task.py",
+      "candidate_sha256": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+      "destination": "src/resectionlab/native_spatial_task.py"
+    },
+    {
+      "base_sha256": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+      "bytes": 11219,
+      "candidate": "build/public-contact-family-centerline-v1/stage/resectionlab/public_contact_family.py",
+      "candidate_sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+      "destination": "src/resectionlab/public_contact_family.py"
+    },
+    {
+      "base_sha256": null,
+      "bytes": 10479,
+      "candidate": "build/public-contact-family-centerline-v1/stage/tests/test_native_centerline_candidates.py",
+      "candidate_sha256": "f7013c9b10e94581841ec2070aa606d28b149a1795189efaa96cb77e87b88b56",
+      "destination": "tests/test_native_centerline_candidates.py"
+    },
+    {
+      "base_sha256": "986cf9bdc50eb6c99d3c69a8808968d222d5debd66384142e15f408dbfc87f21",
+      "bytes": 7867,
+      "candidate": "build/public-contact-family-centerline-v1/stage/tests/test_public_contact_family_structural.py",
+      "candidate_sha256": "f1b3edd2e7de4b2cb8e668d55d23fceb6efdc64da358a4e8597bba5c4307d8f3",
+      "destination": "tests/test_public_contact_family_structural.py"
+    }
+  ],
+  "schema": "public-contact-centerline-promotion-v1",
+  "source_candidate_version": "fixed_lattice_access_centerline_v1"
+}

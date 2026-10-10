@@ -25,7 +25,7 @@ from resectionlab.contact_learning_contract import (ContactExperiment, ContactTr
 from resectionlab.contact_learning import (ContactLearningSession, contact_imitation_loss,
     contact_reinforce_loss, contact_gradient_step)
 from resectionlab.core import array_digest, semantic_digest, thaw_json
-from resectionlab.public_contact_family import FAMILY_VERSION, build_family_source
+from resectionlab.public_contact_family import FAMILY_VERSION, SOURCE_CANDIDATE_VERSION, build_family_source
 from resectionlab.public_surface_contact import PublicSurfaceGoal, SurfaceContactDevelopmentContext, SurfaceContactObservation
 from resectionlab.sequential_spatial_observation import SequentialSpatialObservation
 from resectionlab.spatial_observations import SpatialAction, ObservedProcedureState, build_spatial_observation
@@ -51,6 +51,7 @@ def tensor_sample(experiment, *, role='TRAIN', goal_id='surface', steps=0, actio
     obs = SurfaceContactObservation(SequentialSpatialObservation(base, ('stop', 'aspirate'), contact), grid,
         PublicSurfaceGoal(case.source_hash, tuple(row['goals'][goal_id]['native_index'])), tuple(row['crop_origin_native']), model_hash)
     declaration = {'version': FAMILY_VERSION, 'experiment_hash': experiment.fingerprint,
+        'proposal_mode': SOURCE_CANDIDATE_VERSION, 'source_candidate_version': SOURCE_CANDIDATE_VERSION,
         'layout_id': layout, 'goal_id': goal_id, 'role': role, 'family_hash': experiment.manifest['family_hash'],
         'recipe_hash': row['recipe_hash'], 'source_hash': row['source_hash'], 'objective_hash': obs.objective_hash,
         'decision_model_hash': model_hash, 'training_admission': False, 'scope': 'generated_forward_context_only'}

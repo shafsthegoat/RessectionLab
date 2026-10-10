@@ -1,0 +1,27 @@
+{
+  "scope": "actual_unchanged_generated_legacy_actor_after_source_repin",
+  "source_result_path": "build/legacy-transfer-source-repin-v1/actual-compatibility-v1/result.json",
+  "source_result_sha256": "be8acd02b46bd1428032c20e13236421b8b9c92f1aed70bf1b7240685e8634b6",
+  "episodeId": "sha256:8ae586f8cc7cb82b41c5318a7744dcaebedc9a4fb73e9065e6d6a6c77446c671",
+  "sourceHash": "sha256:271789605cf5b6510f47995b743782d3d298d44b780a39e9929aec72b37b18b4",
+  "caseHash": "sha256:6946fad14898d0040ad6f4b1368d52a54100d213d587e81dfa79eed82a22d6eb",
+  "checkpointSha256": "sha256:1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+  "newOptimizerUpdates": 0,
+  "episodeAuthorship": {
+    "checkpointSha256": "sha256:1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+    "projectionHash": "sha256:0777d9055fd7b0981e8f4ed6514db2f345407f4ff923990e241b7e2c8c359a3f",
+    "status": "verified_live_backend_run"
+  },
+  "replayFrameCount": 72,
+  "actions": [
+    "NATIVE-SPATIAL:70d5e941f289e1ced3bcf449",
+    "STOP"
+  ],
+  "metrics": {
+    "total_reward": 3.353,
+    "target_removed_mm3": 4.0,
+    "normal_removed_mm3": 3.0,
+    "simulated_removed_volume_mm3": 7.0
+  },
+  "clinicalValidation": false
+}
