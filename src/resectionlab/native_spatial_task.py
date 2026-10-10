@@ -13,7 +13,7 @@ import copy
 import math
 import time
 from itertools import product
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from types import SimpleNamespace
 from typing import Callable
 from collections.abc import Mapping
@@ -198,6 +198,9 @@ class NativeSpatialCase:
     proposal_mode: str = "fixed_lattice"
     proposal_config: NominalCavityProposalConfig | None = None
     target_semantics: str = TARGET_WITHIN_SUPPORT
+    public_target_context_variant: str | None = None
+    public_target_domain: np.ndarray | None = None
+    _public_target_source: object | None = field(init=False,repr=False,default=None)
     _nominal_proposer: PreparedNominalCavityProposer | None = field(init=False, repr=False, default=None)
     _normalization_record: Mapping = field(init=False, repr=False)
     _supplied_goal_extent: Mapping = field(init=False, repr=False, default_factory=dict)
@@ -274,6 +277,16 @@ class NativeSpatialCase:
         crop_shape = tuple(self.crop_shape)
         if len(crop_shape) != 3 or any(type(v) is not int or not 3 <= v <= 64 for v in crop_shape):
             raise ValueError("The fixed source/access crop requires three dimensions in [3,64]")
+        if self.public_target_context_variant is None:
+            if self.public_target_domain is not None:raise ValueError('Target domain requires explicit context variant')
+        else:
+            from .public_target_context import VERSION
+            domain=np.asarray(self.public_target_domain)
+            if (self.public_target_context_variant!=VERSION or self.track!='annotation_assisted'
+                    or self.target_source_kind!='supplied_annotation' or nominal is None
+                    or domain.dtype!=bool or domain.shape!=image.shape or np.any((nominal>0)&~domain)):
+                raise ValueError('Opt-in public target context requires unchanged supplied target/domain')
+            object.__setattr__(self,'public_target_domain',immutable_array(domain,bool))
         if not isinstance(self.support_provenance, Mapping):
             raise ValueError("Support provenance must be an immutable JSON object")
         object.__setattr__(self, "support_provenance", freeze_json(self.support_provenance))
@@ -358,6 +371,9 @@ class NativeSpatialCase:
         source_hash = semantic_digest({"version": NATIVE_SPATIAL_VERSION,
             "scan": array_digest(image), "support": array_digest(support), "affine": array_digest(self.affine_ras_mm),
             "nominal_target": None if nominal is None else array_digest(nominal),
+            **({'public_target_context_variant':self.public_target_context_variant,
+                'public_target_domain':array_digest(self.public_target_domain)}
+               if self.public_target_context_variant is not None else {}),
             **({"target_semantics": self.target_semantics} if self.target_semantics != TARGET_WITHIN_SUPPORT else {}),
             "access": _access_record(self.access), "tools": [asdict(tool) for tool in tools],
             "track": self.track, "crop_origin": self._crop_origin, "crop_shape": self._crop_shape,
@@ -390,6 +406,14 @@ class NativeSpatialCase:
                 target_semantics=self.target_semantics)
             object.__setattr__(self, "_nominal_proposer", proposer)
             object.__setattr__(self, "_identity", self._identity_record())
+        if self.public_target_context_variant is not None:
+            from .public_target_context import prepare_public_target
+            prepared=prepare_public_target(nominal_target=nominal,target_domain=self.public_target_domain,
+                observed_support=support,affine_ras_mm=native_affine,crop_origin=self._crop_origin,
+                crop_shape=self._crop_shape,source_hash=self._source_hash,track=self.track,
+                source_kind=self.target_source_kind,derivation=self.target_derivation)
+            object.__setattr__(self,'_public_target_source',prepared)
+            object.__setattr__(self,'_identity',self._identity_record())
         # Enforce the same observed-frame contract as the policy boundary now.
         self.spatial_inputs(np.zeros(image.shape, bool))
 
@@ -409,6 +433,9 @@ class NativeSpatialCase:
         return (arrays, None if self.nominal_target is None else _array_identity(self.nominal_target),
             semantic_digest({"access": _access_record(self.access), "tools": [asdict(t) for t in self.tools]}),
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
+            *((self.public_target_context_variant,_array_identity(self.public_target_domain),
+                None if self._public_target_source is None else self._public_target_source.fingerprint)
+              if self.public_target_context_variant is not None else ()),
             self.target_derivation, self.target_semantics, semantic_digest(self._supplied_goal_extent),
             self.crop_shape, self._crop_origin, self._crop_shape,
             self._candidate_voxels, self._candidate_scope, semantic_digest(self.support_provenance),
@@ -447,6 +474,7 @@ class NativeSpatialCase:
                 derivation="committed fully contained connected native cells")}
         if self.nominal_target is not None:
             channels["nominal_target"] = ObservedChannel(self.nominal_target[region], source_kind=self.target_source_kind,
+                coverage=None if self.public_target_context_variant is None else self.public_target_domain[region],
                 derivation=self.target_derivation,
                 derived_from=("structural_intensity",) if self.target_source_kind == "derived_from_scan" else ())
         return SpatialInputs(channels, affine, self.track, self.source_hash)
@@ -636,6 +664,8 @@ class NativeSpatialTask:
                        for identifier, result in inventory.items())
         state = ObservedProcedureState(self.case.access, self._steps, self.max_steps, self._current_tool)
         base = build_spatial_observation(self.case.spatial_inputs(self._engine.removed_mask), actions, state)
+        if self.case._public_target_source is not None:
+            base=replace(base,public_target_context=self.case._public_target_source.observe(self._engine.removed_mask))
         if self.tool_modes is None:
             return base
         from .sequential_spatial_observation import SequentialSpatialObservation

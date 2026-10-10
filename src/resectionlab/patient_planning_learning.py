@@ -47,7 +47,11 @@ def common_patient_policies(contexts, protocol):
     """Construct once and copy exact tensors; do not reinterpret old weights."""
     contexts = tuple(contexts); protocol = freeze_json(protocol)
     if not contexts: raise ValueError("At least one admitted TRAIN context required")
-    if (set(protocol) != set(PREFLIGHT_PROTOCOL) or protocol["methods"] != PREFLIGHT_PROTOCOL["methods"]
+    variant=protocol.get('public_target_context_variant')
+    if variant is not None:
+        from .public_target_context import VERSION
+        if variant!=VERSION:raise ValueError('Unknown opt-in patient public target variant')
+    if (set(protocol) != set(PREFLIGHT_PROTOCOL)|({'public_target_context_variant'} if variant is not None else set()) or protocol["methods"] != PREFLIGHT_PROTOCOL["methods"]
             or type(protocol["seed"]) is not int or protocol["seed"] < 0
             or type(protocol["updates_per_method"]) is not int or protocol["updates_per_method"] < 1
             or protocol["architecture"] != PREFLIGHT_PROTOCOL["architecture"]
@@ -60,11 +64,14 @@ def common_patient_policies(contexts, protocol):
         _context(context)
         if context.record()["learning_protocol_hash"] != semantic_digest(protocol):
             raise ValueError("Learning protocol differs from admitted patient context")
+        if context.record().get('public_target_context_variant')!=variant:
+            raise ValueError('Patient observation and policy context variants differ')
         if len(protocol["methods"])*protocol["updates_per_method"] > context.record()["max_optimizer_updates"]:
             raise ValueError("Learning updates exceed aggregate admitted context budget")
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(protocol["seed"])
-        il = SpatialPolicy(SpatialPolicyConfig(**thaw_json(protocol["architecture"])))
+        il = SpatialPolicy(SpatialPolicyConfig(**thaw_json(protocol["architecture"])),
+            **({} if variant is None else {'public_target_context_variant':variant}))
         rl = copy.deepcopy(il)
     if parameter_hash(il) != parameter_hash(rl):
         raise RuntimeError("Common fresh initialization differs")

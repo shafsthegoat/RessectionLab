@@ -118,9 +118,13 @@ Row permutation changes only the logit order. Global 2x2x2 pooling deliberately
 retains coarse spatial information; neither this CNN nor that pooling is
 claimed equivariant to voxel reindexing or complete for partially observed tasks.
 """
-    def __init__(self, config: SpatialPolicyConfig | None = None):
+    def __init__(self, config: SpatialPolicyConfig | None = None, *, public_target_context_variant=None):
         super().__init__()
         self.config = config or SpatialPolicyConfig()
+        self.public_target_context_variant=public_target_context_variant
+        if public_target_context_variant is not None:
+            from .public_target_context import VERSION
+            if public_target_context_variant!=VERSION:raise ValueError('Unknown opt-in public target context variant')
         a, b = self.config.encoder_channels
         self.encoder = nn.Sequential(nn.Conv3d(18, a, 3, padding=1), nn.ReLU(),
                                      nn.Conv3d(a, b, 3, padding=1), nn.ReLU())
@@ -135,6 +139,15 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
         candidate_count = 2 * (16 + self.config.ray_samples * (b + 1)) + 1
         critic_count = context_count + (candidate_count if self.config.critic_candidate_context else 0)
         self.critic = nn.Sequential(nn.Linear(critic_count, width), nn.ReLU(), nn.Linear(width, 1))
+        if public_target_context_variant is not None:
+            from .public_target_context import FEATURE_WIDTH,RELATION_WIDTH
+            # Extend after every baseline tensor is initialized; preserve all old
+            # columns/biases and give added features zero initial influence.
+            for head,extra in ((self.actor,FEATURE_WIDTH+RELATION_WIDTH),(self.stop,FEATURE_WIDTH),(self.critic,FEATURE_WIDTH)):
+                old=head[0];new=nn.Linear(old.in_features+extra,old.out_features,device=old.weight.device,dtype=old.weight.dtype)
+                with torch.no_grad():
+                    new.weight.zero_();new.weight[:,:old.in_features].copy_(old.weight);new.bias.copy_(old.bias)
+                head[0]=new
 
     def architecture_record(self) -> dict:
         config_record = asdict(self.config)
@@ -160,6 +173,13 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
                 "pooling": "mean_then_max", "count_divisor": MAX_ACTIONS - 1,
                 "empty_inventory": "zero_summary_and_count",
                 "tool_coverage": "current_legal_inventory_only_not_full_tool_catalog"}
+        if self.public_target_context_variant is not None:
+            record.update(public_target_context_variant=self.public_target_context_variant,
+                public_target_global='availability,domain_fraction,positive,centroid3,extent_min3,extent_max3,log1p_mass,crop_fraction,unsupported_fraction,committed_overlap_fraction',
+                public_target_relation='centroid_minus_candidate_tip_source_axis_mm_and_distance',
+                public_target_input_scope='full_permitted_supplied_target_and_committed_observed_cavity;lossy_summary',
+                public_target_initialization='baseline_tensors_exact_added_columns_zero',
+                public_target_context_heads=['actor','STOP','critic'])
         return record
 
     @property
@@ -172,6 +192,9 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
         if type(observation) is not SpatialObservation:
             raise TypeError("SpatialPolicy requires the explicit SpatialObservation DTO")
         observation.assert_intact()
+        variant=getattr(self,'public_target_context_variant',None)
+        if (observation.public_target_context is None)!=(variant is None):
+            raise ValueError('Public target observation and opt-in policy variant must match')
         images = np.asarray(observation.image_channels)
         coverage = np.asarray(observation.coverage)
         available = np.asarray(observation.channel_available)
@@ -236,6 +259,12 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
 
     def forward(self, observation) -> tuple[Tensor, Tensor]:
         volume, grid, inside, geometry, state, spacing, mask = self._inputs(observation)
+        target=relation=None
+        if self.public_target_context_variant is not None:
+            from .public_target_context import public_target_features
+            public,relative=public_target_features(observation,reference_mm=self.config.physical_reference_mm)
+            target=torch.tensor(public,dtype=volume.dtype,device=volume.device)
+            relation=torch.tensor(relative,dtype=volume.dtype,device=volume.device)
         features = self.encoder(volume[None])[0]
         spatial = F.adaptive_avg_pool3d(features[None], (2, 2, 2)).flatten()
         context = torch.cat((spatial, state, spacing))
@@ -245,11 +274,14 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
         rays = rays * inside[:, :, None]
         rays = torch.cat((rays, inside[:, :, None]), dim=-1).flatten(1)
         action_inputs = torch.cat((context.expand(len(geometry), -1), geometry, rays), dim=-1)
+        if target is not None:action_inputs=torch.cat((action_inputs,target.expand(len(geometry),-1),relation),dim=-1)
         non_stop = self.actor(action_inputs).squeeze(-1)
-        logits = torch.cat((self.stop(context).reshape(1), non_stop[1:]))
+        stop_context=context if target is None else torch.cat((context,target))
+        logits = torch.cat((self.stop(stop_context).reshape(1), non_stop[1:]))
         logits = logits.masked_fill(~mask, -torch.inf)
         critic_context = (torch.cat((context, _candidate_critic_context(geometry, rays, mask)))
                           if self.config.critic_candidate_context else context)
+        if target is not None:critic_context=torch.cat((critic_context,target))
         value = self.critic(critic_context).squeeze(-1)
         if not torch.isfinite(logits[mask]).all() or not torch.isfinite(value):
             raise FloatingPointError("Nonfinite spatial policy output")

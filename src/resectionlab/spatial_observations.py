@@ -261,6 +261,7 @@ class SpatialObservation:
     track: str
     source_id: str
     channel_provenance: Mapping[str, Mapping]
+    public_target_context: object | None = None
     _layouts: tuple = field(init=False, repr=False)
     _fingerprint: str = field(init=False, repr=False)
     _metadata: tuple = field(init=False, repr=False)
@@ -345,6 +346,11 @@ class SpatialObservation:
         object.__setattr__(self, "action_tool_ids", tuple(self.action_tool_ids))
         provenance = freeze_json(self.channel_provenance)
         object.__setattr__(self, "channel_provenance", provenance)
+        if self.public_target_context is not None:
+            from .public_target_context import PublicTargetContext
+            if type(self.public_target_context) is not PublicTargetContext:
+                raise SpatialInputError("Exact optional public target context required")
+            self.public_target_context.require_observation(self)
         object.__setattr__(self, "_layouts", tuple(_layout(getattr(self, name)) for name in names))
         object.__setattr__(self, "_metadata", self._metadata_record())
         record = {"version": SPATIAL_OBSERVATION_VERSION, "track": self.track,
@@ -352,12 +358,15 @@ class SpatialObservation:
             "arrays": {name: array_digest(getattr(self, name)) for name in names},
             "action_ids": self.action_ids, "action_tool_ids": self.action_tool_ids,
             "provenance": {k: dict(v) for k, v in provenance.items()}}
+        if self.public_target_context is not None:
+            record['public_target_context']=self.public_target_context.fingerprint
         object.__setattr__(self, "_fingerprint", semantic_digest(record))
 
     def _metadata_record(self):
         return (self.track, self.source_id, self.action_ids, self.action_tool_ids,
                 tuple((name, record["source_kind"], record["derivation"], record["derived_from"])
-                      for name, record in self.channel_provenance.items()))
+                      for name, record in self.channel_provenance.items()),
+                *((self.public_target_context.fingerprint,) if self.public_target_context is not None else ()))
 
     def assert_intact(self):
         names = ("image_channels", "coverage", "channel_available", "affine_ras_mm", "spacing_mm",

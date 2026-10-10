@@ -64,7 +64,7 @@ def check_public_labels(support, target, domain, manifest):
 
 def prepare_public_source(output, original_release, original_release_sha256, expected_protocol, progress,
         *, public_manifest_path, public_manifest_sha256, cohort_bytes,
-        learning_protocol_hash=None, proposal_config=None):
+        learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None):
     """Build one public source and admission inputs; caller owns supervised use.
 
     expected_protocol may be None for a first construction; then a learning
@@ -149,7 +149,10 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         intensity_normalization="support_percentile_1_99",
         native_grid_reconciliation="orthogonal_roundoff_1e-6mm",
         proposal_mode="nominal_cavity_v1", proposal_config=NominalCavityProposalConfig() if proposal_config is None else proposal_config,
-        target_semantics=SUPPLIED_GOAL_REGION)
+        target_semantics=SUPPLIED_GOAL_REGION,
+        **({} if public_target_context_variant is None else {
+            'public_target_context_variant':public_target_context_variant,
+            'public_target_domain':np.asarray(domain,dtype=bool)}))
     if "baseline_public_source_hash" in release and source.source_hash != release["baseline_public_source_hash"]:
         raise ValueError("Exact supplied baseline public world changed")
     progress("native_case_constructed", source_hash=source.source_hash)

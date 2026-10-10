@@ -67,7 +67,9 @@ def _public_observation_binding(observation):
         "affine": array_digest(observation.affine_ras_mm),
         "spacing": array_digest(observation.spacing_mm),
         "access": array_digest(observation.state_features[3:]),
-        "provenance": observation.channel_provenance})
+        "provenance": observation.channel_provenance,
+        **({} if observation.public_target_context is None else {
+            'public_target_context':observation.public_target_context.static_fingerprint})})
 
 
 @dataclass(frozen=True)
@@ -215,6 +217,8 @@ bound here and enforced by the separately supervised caller.
     _digest(plan["learning_protocol_hash"])
     task = NativeSpatialTask(case, max_steps=plan["max_steps"])
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
+        **({} if case.public_target_context_variant is None else {
+            'public_target_context_variant':case.public_target_context_variant}),
         "patient_group": source["patient_group"], "role": member["role"], "evidence_domain": domain,
         "real_patient_count": 1 if domain == "acquired_patient" else 0,
         "cohort_sha256": COHORT_SHA256, "source_hash": case.source_hash,
