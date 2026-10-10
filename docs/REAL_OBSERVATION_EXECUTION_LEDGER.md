@@ -1079,3 +1079,12 @@ completed in 5.2540 seconds / 272,302,080 bytes sampled peak with two forwards a
 zero updates; outcomes equal the earlier run. The app exited zero in 113.809
 seconds / 1,095,450,624 bytes sampled tree peak. Genuine screenshots and the
 independent saved-metadata/AX audit are in the same comparison artifact.
+
+### October 10: shared continuation for the final numerical rows
+
+The [later-row runtime](../artifacts/hbe-v5-later-continuation-integration-v1/RESULT.md)
+is integrated with five canonical controls passing and independent source review.
+It reuses the frozen solver/validator, verifies historical source/release bindings
+and carries wrapper overhead once. Row 10 still requires a fresh exact release
+and full preflight; row 11 refuses until row 10 exists. No native or physical
+validation result is created by this source commit.

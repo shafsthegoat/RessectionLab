@@ -1,0 +1,46 @@
+{
+  "schema": "hbe-v5-later-continuation-source-promotion-v1",
+  "status": "source_only_go_native_hold",
+  "review_report": {
+    "path": "build/hbe-v5-later-continuation-independent-v1/REPORT.md",
+    "sha256": "976ae38726d19f780179155daa8ae562b0039ffd554773fa794700e35ba46038"
+  },
+  "source_files": [
+    {
+      "candidate": "build/hbe-v5-later-continuation-v1/runtime.py",
+      "destination": "launchers/hbe_v5_later_continuation_runtime_v1.py",
+      "sha256": "1d8ca9f8b419a65c4d21fe6e4c9724070d5c891f253d3aadffbcc49cbcdd5d0e"
+    },
+    {
+      "candidate": "build/hbe-v5-later-continuation-v1/core.py",
+      "destination": "launchers/hbe_v5_later_continuation_core_v1.py",
+      "sha256": "bfb780356194b9e86f72e118b955d2da18fcf0d3643e34f40a5839e9b478d792"
+    },
+    {
+      "candidate": "build/hbe-v5-later-continuation-v1/ledger_math.py",
+      "destination": "launchers/hbe_v5_later_ledger_math_v1.py",
+      "sha256": "2d85072008bb2ebc5f2c4b9bc7b174c1756e6bc2b75bfdbb3daf89ea28ba558c"
+    },
+    {
+      "candidate": "build/hbe-v5-later-continuation-v1/ancestry.py",
+      "destination": "launchers/hbe_v5_later_ancestry_v1.py",
+      "sha256": "286ef2b90a5dfb5f8a5292e1e0bad6e3b81b20efa3b5902fda6e313cf05baee6"
+    },
+    {
+      "candidate": "build/hbe-v5-later-continuation-v1/row10.py",
+      "destination": "launchers/hbe_v5_ordinal10_continuation_v1.py",
+      "sha256": "d32e5dcd72fbd39b8c2091499571dd2de545ee7b927717cc199aaadef242ce10"
+    },
+    {
+      "candidate": "build/hbe-v5-later-continuation-v1/row11.py",
+      "destination": "launchers/hbe_v5_ordinal11_continuation_v1.py",
+      "sha256": "a52de6d981e99ada7ffbcd4eff62512ba1f79461940bd179090d8ba425a0beca"
+    }
+  ],
+  "canonical_test_candidate": "build/hbe-v5-later-continuation-v1/test_portable_later_continuation.py",
+  "canonical_test_destination": "tests/test_hbe_v5_later_continuation.py",
+  "canonical_test_sha256": "e5a9b28e841fe9f67b7cc4c3f8fc90cfa19b9bafc7e6ffb831252cb15db95cc3",
+  "release_status": "none_issued",
+  "row10_run_id": "tension:N24:S60:reference",
+  "row11_status": "fail_closed_until_exact_row10_saved_evidence"
+}

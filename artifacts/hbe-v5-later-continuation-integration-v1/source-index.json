@@ -1,0 +1,31 @@
+{
+  "schema": "hbe-v5-later-continuation-integration-v1",
+  "files": [
+    {
+      "path": "promotion.json",
+      "source_path": "build/hbe-v5-later-continuation-v1/PROMOTION_MANIFEST.json",
+      "bytes": 2125,
+      "sha256": "d58ee988c8407da80a0c52088ce1323546f48b6971475e15cb87788ad1105e36"
+    },
+    {
+      "path": "proposal-result.md",
+      "source_path": "build/hbe-v5-later-continuation-v1/RESULT.md",
+      "bytes": 3547,
+      "sha256": "6e17d68dffea95a46ddff23749198bb4301c7d477384503868c3cd907e2dc3e3"
+    },
+    {
+      "path": "independent-review.md",
+      "source_path": "build/hbe-v5-later-continuation-independent-v1/REPORT.md",
+      "bytes": 3601,
+      "sha256": "976ae38726d19f780179155daa8ae562b0039ffd554773fa794700e35ba46038"
+    },
+    {
+      "path": "root-canonical-tests.txt",
+      "source_path": "build/hbe-v5-later-continuation-v1/root-canonical-tests.txt",
+      "bytes": 98,
+      "sha256": "ad430bcd751b836a91fab4ff65c168e7e4f252c79243c40745308b866b554cb7"
+    }
+  ],
+  "native_calls": 0,
+  "physical_validation": null
+}
