@@ -1228,3 +1228,8 @@ The source change required an exact legacy actor closure refresh, including the 
 ### October 10: corrected actual TRAIN learning smoke passes
 
 The [same-case successor smoke](../artifacts/contact-learning-canonical-smoke-v2/RESULT.md) completes in 5.933 supervised seconds at 365.8 MB sampled peak. One IL step changes encoder/actor/STOP parameters, its partial checkpoint reloads exactly, shared execution/sealing/replay and nonlearned v3 exports pass, and partial learned publication refuses. The prior failure remains unchanged. Search evaluates two negative prefixes and still selects STOP (zero return). No task replacement, reward tuning, real-patient read or held-out execution occurred. The separate fixed pilot must use identical fresh scratch initialization for IL/RL.
+
+
+## Optional scan preprocessing integrated, October 10 UTC
+
+[Canonical result](../artifacts/scan-preprocess-bridge-integration-v1/RESULT.md): four source/test/document/type files promoted from the independently reviewed algorithm. Seven canonical generated controls pass (0.154 s); base-runtime collection skips the optional dependency. No patient/model call; diagnostic-only output coverage, typed contract not yet renderer integration.

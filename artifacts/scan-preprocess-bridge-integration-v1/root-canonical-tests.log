@@ -1,0 +1,15 @@
+test_anisotropic_partial_patch_never_turns_missing_logits_into_negatives (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_anisotropic_partial_patch_never_turns_missing_logits_into_negatives) ... ok
+test_inverse_crop_pad_and_output_coverage_preserve_unknown (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_inverse_crop_pad_and_output_coverage_preserve_unknown) ... ok
+test_logits_decode_matches_upstream_nnunet_export_and_partial_coverage (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_logits_decode_matches_upstream_nnunet_export_and_partial_coverage) ... ok
+test_real_default_preprocessor_and_analytic_masked_zscore (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_real_default_preprocessor_and_analytic_masked_zscore) ... ok
+test_reversed_source_and_changed_plan_fail_closed (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_reversed_source_and_changed_plan_fail_closed) ... ok
+test_two_mm_scan_spacing_uses_pinned_inverse_resampling (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_two_mm_scan_spacing_uses_pinned_inverse_resampling) ... ok
+test_wrong_support_frame_and_unmasked_intensity_refuse (tests.test_scan_preprocess_bridge.GeneratedBridgeTests.test_wrong_support_frame_and_unmasked_intensity_refuse) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.154s
+
+OK
+nnUNet_raw is not defined and nnU-Net can only be used on data for which preprocessed files are already present on your system. nnU-Net cannot be used for experiment planning and preprocessing like this. If this is not intended, please read documentation/setting_up_paths.md for information on how to set this up properly.
+nnUNet_preprocessed is not defined and nnU-Net can not be used for preprocessing or training. If this is not intended, please read documentation/setting_up_paths.md for information on how to set this up.
+nnUNet_results is not defined and nnU-Net cannot be used for training or inference. If this is not intended behavior, please read documentation/setting_up_paths.md for information on how to set this up.

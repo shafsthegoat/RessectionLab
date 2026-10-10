@@ -1,0 +1,35 @@
+{
+  "schema": "case4_scan_preprocess_bridge_canonical_promotion_v1",
+  "scope": "source_only_optional_runtime_generated_controls",
+  "working_head_when_prepared": "46d5a47928d4749fbd62faed609e3bab8e3e0388",
+  "tracked_edits_by_preparer": false,
+  "patient_or_model_execution_by_preparer": false,
+  "tests_on_canonical_bytes": "pending_root_pilot_terminal",
+  "reviewed_algorithm_source_sha256": "4e6319a5f080c63611429e2b1cda91510d213bae53620baab4cd1f2f4fc9fe71",
+  "reviewed_algorithm_test_sha256": "4f4f0991709d862df54fa5a94ca80ca31f5d8d09b23036145c2b2420719a44ae",
+  "canonical_files": {
+    "src/resectionlab/scan_preprocess_bridge.py": "54642e83a421f46626395d609109cbb052820dc56011b3f7d744689534ea6fce",
+    "tests/test_scan_preprocess_bridge.py": "b6158322df0156d128c265a84fab6c8660e2c9c9efd58abaf3b2183d51aa57c5",
+    "docs/scan-preprocess-bridge.md": "f7c26e4a6893c07bac8b86058622ddc64d8861496807bb757a9c4e5ed64d9b12",
+    "desktop/src/scan-diagnostic-display.ts": "dc0addd434d45e40cd6a80bf2266c2c68d0e0077f36b4777534e3bb44baef1e5"
+  },
+  "desktop_type_status": "proposed_filename_only_not_integrated",
+  "source_dependencies_at_preparation": {
+    "src/resectionlab/scan_target_adapter.py": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2",
+    "src/resectionlab/scan_support_contract.py": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a"
+  },
+  "fixed_model_metadata_sha256": {
+    "plans_json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+    "dataset_json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f"
+  },
+  "independent_reviews": {
+    "algorithm": "build/scan-target-estimator-independent/case4-nnunet-preprocess-bridge-v2-revised-review.md",
+    "algorithm_sha256": "b4a17c54122c701dc5807f44788e793fa5df3d30324ffd3eb6de5ca970cdc935",
+    "canonical_static": "build/scan-target-estimator-independent/case4-nnunet-bridge-canonical-v1-static-review.md",
+    "canonical_static_sha256": "c7d46c4e45feaebd712691468dad39fb542cc682d60e1d005a394dd613bd0bb3"
+  },
+  "promotion_condition": "copy_exact_bytes_without_overwrite_then_test_in_pinned_runtime_and_base_collection_after_pilot",
+  "patient_admission": false,
+  "planner_admission": false,
+  "evaluation_admission": false
+}
