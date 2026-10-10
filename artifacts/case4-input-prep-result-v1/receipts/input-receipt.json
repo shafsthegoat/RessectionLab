@@ -1,0 +1,73 @@
+{
+  "anatomical_qc": "unreviewed_inferior_mask_omission",
+  "atlas_affine_ras_mm": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -1.0,
+      0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "atlas_shape_xyz": [
+    240,
+    240,
+    155
+  ],
+  "clinical_evidence": false,
+  "coordinate_frame": "atlas_RAS_mm_coded_sform",
+  "evaluation_eligible": false,
+  "evidence_sha256": {
+    "manifest": "d37948a4dc7acd16bdfac0244b926cfda5c684c60da1f6e4dfccb09ddcf21b26",
+    "preparation": "92fdc93f1240c81ac0ecbd7910a8256a18693480bd4bed48b19e109fe308d72c",
+    "preparation_supervision": "bc105184dd05502e334ed9b758ee3faf37be97d0a45eb2a084c551bdd461d3fd",
+    "support": "c3dbdd2b167bfe200575d78401ef4ca02b27bd34249ab180e0e11a5896faff8c",
+    "support_supervision": "af4cb2afb1bc70bebc1534f94f52aaf2b97464f65f16895dcfaecc641e72dd26"
+  },
+  "geometry_sha256": "1b372a9accbf1cf9060cd15b36e16d969a553725b1caf3927fbd87576ff018bb",
+  "input_npy_sha256": "d95383a2c60690f7c4ccbc7f73b37a210b9f6cefef93bf9d3516cc7430ec3f3f",
+  "input_raw_sha256": "8d1c0ee902c365056c8b089b1c4c9d0efdae184941397ab9731eeffde7274a17",
+  "input_shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "model_backend": "accepted_full128_recompute_stage0_cpu_v3_requires_case4_adaptation",
+  "model_forward_performed": false,
+  "patch_start_preprocessed_zyx": [
+    -9,
+    14,
+    6
+  ],
+  "planning_eligible": false,
+  "schema": "case4_unreviewed_diagnostic_input_v1",
+  "scope": "one scan-derived 128-cube patch; no annotation",
+  "source_origin": "verified_case4_source_receipts",
+  "source_sha256": {
+    "dataset": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "flair": "046a8b7aa9620bdf0aeb2b0e40632b4c10ff58cff1ed83a458bd7b05cd86f993",
+    "plans": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+    "support_map": "4932902a641aac5d884fbfec543b8da9cdefa9437407e488c1ebef6b9ca700f2",
+    "t1c": "608516aa3c55e8450e777d892dfa5fb5db5824046f85085a25b884e0fcf9d953"
+  },
+  "training_overlap_status": "unknown"
+}

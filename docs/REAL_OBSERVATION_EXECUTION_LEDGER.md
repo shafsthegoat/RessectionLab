@@ -1292,3 +1292,7 @@ Acquisition03:33:57UTC:6552verifiedfiles228983622779B, +337/+11.93GB. Originalwo
 ## Full-teacher imitation optimization source
 
 [Source integration](../artifacts/contact-full-teacher-refit-source-v1/RESULT.md) preserves the default pilot while adding one explicitly identified TRAIN-only fit: all 40 original states at each of 32 updates, including eight STOP labels. No architecture, reward, loss or optimizer change. Forty-six canonical controls pass in 5.99 seconds; independent source review passes. Additional compute is declared (1,280 loss forwards plus 80 readouts). The actual bounded attempt follows separately.
+
+## Case4 scan-input handoff, October 10
+
+The [actual DEVELOPMENT input preparation](../artifacts/case4-input-prep-result-v1/RESULT.md) completed once after a separate 30-second normal-pressure preflight. Worker duration was 3.620 seconds with 1,055,850,496 bytes sampled peak descendant-aware RSS and clean finalization. Independent saved-tensor checks match both NPY/raw hashes, finite FP32 shape [1,2,128,128,128], source receipts and geometry. The package preserves exact metadata and runner sources; images, tensor and weights stay out of Git. This establishes the real-scan input handoff only: inferior mask coverage, training overlap, anatomical validity and planning eligibility remain unresolved. A separately reviewed one-shot trained forward is the next executable step.

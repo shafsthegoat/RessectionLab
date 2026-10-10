@@ -1,0 +1,24 @@
+{
+  "c_contiguous": true,
+  "dtype": "float32",
+  "elapsed_seconds": 0.024288457818329334,
+  "file_size_bytes": 16777344,
+  "hard_address_space_limit_enforced": false,
+  "nonfinite_count": 0,
+  "nonzero_count_positive": true,
+  "npy_sha256": "d95383a2c60690f7c4ccbc7f73b37a210b9f6cefef93bf9d3516cc7430ec3f3f",
+  "npy_sha_matches_receipt": true,
+  "observed_rss_cap_bytes": 268435456,
+  "peak_rss_darwin_bytes": 66535424,
+  "raw_sha256": "8d1c0ee902c365056c8b089b1c4c9d0efdae184941397ab9731eeffde7274a17",
+  "raw_sha_matches_receipt": true,
+  "scope": "saved Case4 preprocessed input tensor only; no source patient image/checkpoint/model opened",
+  "shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "wall_alarm_seconds": 30
+}
