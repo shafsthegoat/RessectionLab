@@ -1,0 +1,1913 @@
+{
+  "status": "all_declared_opening_orders_saturated",
+  "counters": {
+    "previews": 724,
+    "commits": 82
+  },
+  "patient_array_reads": 0,
+  "model_calls": 0,
+  "algorithm": {
+    "families": [
+      "exposed_opening",
+      "intermediate_opening"
+    ],
+    "nominal_target": "all zero, no proximal/distal nominal endpoints",
+    "order": "interleaved complete passes across four arms; per arm family then declared column then canonical tool",
+    "freshness": "repropose for each slot, fresh native preview and immediate authenticated commit only if feasible",
+    "stop": "complete no-change pass per arm or aggregate caps; no episode reward/search/horizon",
+    "diagnostic": "after saturation, noncommitting central source-cell-depth probes; count toward same preview cap",
+    "limits": {
+      "worker_seconds": 55,
+      "previews": 3000,
+      "commits": 256,
+      "rss_bytes": 2147483648
+    }
+  },
+  "tools": [
+    {
+      "tool_id": "generic_suction",
+      "tip_radius_mm": 1.0,
+      "shaft_radius_mm": 1.4,
+      "working_length_mm": 100.0,
+      "max_access_angle_deg": 45.0,
+      "tip_length_mm": 3.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    {
+      "tool_id": "generic_aspirator",
+      "tip_radius_mm": 1.7,
+      "shaft_radius_mm": 2.7,
+      "working_length_mm": 90.0,
+      "max_access_angle_deg": 45.0,
+      "tip_length_mm": 4.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    }
+  ],
+  "elapsed_seconds": 5.191115874797106,
+  "peak_rss_bytes": 85557248,
+  "interpretation": "Saturation only for stated generated slab/families/order. No exhaustive surgery or patient reachability claim.",
+  "arms": [
+    {
+      "arm": "ReMIND-008-current13",
+      "status": "saturated_declared_opening_order",
+      "native_config_hash": "sha256:bb88d848c6809ffd94d296e1231a74e29400062402df858771fd274977e225cd",
+      "proposal_config_hash": "sha256:95d26afeaf513fcf8eea1ae698295874158f6421e7b568a0f94f560f510359a2",
+      "passes": [
+        {
+          "pass": 1,
+          "previews": 52,
+          "commits": 11,
+          "new_removed": 349,
+          "removed_total": 349,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 11,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 41
+          }
+        },
+        {
+          "pass": 2,
+          "previews": 52,
+          "commits": 0,
+          "new_removed": 0,
+          "removed_total": 349,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 52
+          }
+        }
+      ],
+      "commits": [
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 6,
+          "state_hash": "sha256:1845c443575e4b8cf0e7f9558586940e57d882b6dfe5dbbaa817a90412e54cff"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 87,
+          "state_hash": "sha256:9e8ac72f60728ce4edfb4a52bce9422b7d46c03d77c19413f4f4943fe2dd868c"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:8588e87b0e36366119e27a9ed0a1b17e9f8b2e20eb4a09f298b5a44630f4174d"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 60,
+          "state_hash": "sha256:56e53b824f7a50095905f6537b829d19ec314e86bf4cfd2df1e2d8037fd078fc"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:be44b68ac4c131bcdd8491422b11fee72f1614cd49215059dcf3583dbdd59b67"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 56,
+          "state_hash": "sha256:d3ea3366f0b00f49a9fe132d3cf4a5a0340bc563d7fa5604cdcfc3b730310ad2"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:fe773145a9b71530784d1760ed0a578640a159e74b24fba2662cc6e1a2dd8e3a"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 56,
+          "state_hash": "sha256:185e6b0640dd51c146d626cf3b31d072aafdd24d4301ed070972e63cc769b9b9"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:35005bd32960df42c1b1c7c24fa76e62a88c9b8136c4a9135a5645741a0e8d0e"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 52,
+          "state_hash": "sha256:5f8b3afac6d680d0bc660bce4a22ee586befb8e7041c5925f8236e6c67cce610"
+        },
+        {
+          "family": "intermediate_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 3.808500058347072,
+          "removed_count": 16,
+          "state_hash": "sha256:63c78f7c4c9d1d8bf73d1a6b6ce09279992c6bc9f2596b544193fa0a3fe67707"
+        }
+      ],
+      "central_depth_probes": {
+        "generic_suction": [
+          {
+            "depth_mm": 0.2539000038898048,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 0.7617000116694145,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.269500019449024,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.777300027228634,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.2851000350082433,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.792900042787853,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.3007000505674626,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.8085000583470725,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.316300066126682,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.824100073906291,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.331900081685902,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.839700089465511,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.3475000972451205,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.85530010502473,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.36310011280434,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.87090012058395,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.37870012836356,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.88650013614317,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.394300143922779,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.902100151702388,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ],
+        "generic_aspirator": [
+          {
+            "depth_mm": 0.2539000038898048,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 0.7617000116694145,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.269500019449024,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.777300027228634,
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "would_remove": 8
+          },
+          {
+            "depth_mm": 2.2851000350082433,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.792900042787853,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.3007000505674626,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.8085000583470725,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.316300066126682,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.824100073906291,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.331900081685902,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.839700089465511,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.3475000972451205,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.85530010502473,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.36310011280434,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.87090012058395,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.37870012836356,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.88650013614317,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.394300143922779,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.902100151702388,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ]
+      },
+      "removed_count": 349,
+      "removal_closure_hash": "sha256:286c3d72b43d43b682c649da52dd4cc8e112c4ae0bfdfb510e146fef17625d89",
+      "maximum_removed_cell_center_depth_mm": 4.316300066126682,
+      "central_removed_axial_indices": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "final_state_hash": "sha256:63c78f7c4c9d1d8bf73d1a6b6ce09279992c6bc9f2596b544193fa0a3fe67707"
+    },
+    {
+      "arm": "ReMIND-008-plus_nearest17",
+      "status": "saturated_declared_opening_order",
+      "native_config_hash": "sha256:9acb83fd7903f08d2973b252785cf343291b96e4b47f282f476857cff3f9f9ce",
+      "proposal_config_hash": "sha256:7249f6b4b6e1f69650ea97262c383d8f5103cd4d0ae38566804de0345969697d",
+      "passes": [
+        {
+          "pass": 1,
+          "previews": 68,
+          "commits": 11,
+          "new_removed": 349,
+          "removed_total": 349,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 11,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 57
+          }
+        },
+        {
+          "pass": 2,
+          "previews": 68,
+          "commits": 0,
+          "new_removed": 0,
+          "removed_total": 349,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 68
+          }
+        }
+      ],
+      "commits": [
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 6,
+          "state_hash": "sha256:5213dd125456986f2a1fa0c8bbdaa92a0f1d80029856b1d90677a1a5e2554c6d"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 87,
+          "state_hash": "sha256:e540828904a3aeb6aa98c5d162bc2fd3036e12b7f94655132329020ff2021600"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:0d5a7a6b60b00cab4481c4d134e8a2e76173d9c0f5fb35f10a543a7623d91121"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 60,
+          "state_hash": "sha256:54664511fa1475373d0ef89a2e0193be91f1be3f7888447321d2b59cfe33e70e"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:e4f301b38614afd7c2871fd523c8021eceae0c3c63798e03dfeec7747cf5dfd6"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 56,
+          "state_hash": "sha256:bb2e367de0dbd6b765223785e9c5b9871571f7c53f797c970ec45e3481d134ed"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:37ab4766a89828abdd4e2faf4dc343e01714e216ddde26163a6e96f4a73234bf"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 56,
+          "state_hash": "sha256:4c9286c0b51345f9cc25b4cdc37e4f65d1a8039a616a97989ab5a6246cdda396"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.2539000038898048,
+          "removed_count": 4,
+          "state_hash": "sha256:9a30e60b6ec4903895243397fb4476ab1762aba8eeb8304960da1f21f7182a0a"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_aspirator",
+          "tip_depth_mm": 1.269500019449024,
+          "removed_count": 52,
+          "state_hash": "sha256:3f86c0da5f04c2ff5cee07c3caa583398f7bc57415263b86ecc0d0d07dc9f795"
+        },
+        {
+          "family": "intermediate_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 3.808500058347072,
+          "removed_count": 16,
+          "state_hash": "sha256:4cd227203addd2f1503ef78ea9068f5794e3842e05cf9af0cc9a08e85a760704"
+        }
+      ],
+      "central_depth_probes": {
+        "generic_suction": [
+          {
+            "depth_mm": 0.2539000038898048,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 0.7617000116694145,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.269500019449024,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.777300027228634,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.2851000350082433,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.792900042787853,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.3007000505674626,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.8085000583470725,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.316300066126682,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.824100073906291,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.331900081685902,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.839700089465511,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.3475000972451205,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.85530010502473,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.36310011280434,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.87090012058395,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.37870012836356,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.88650013614317,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.394300143922779,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.902100151702388,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ],
+        "generic_aspirator": [
+          {
+            "depth_mm": 0.2539000038898048,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 0.7617000116694145,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.269500019449024,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.777300027228634,
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "would_remove": 8
+          },
+          {
+            "depth_mm": 2.2851000350082433,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.792900042787853,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.3007000505674626,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.8085000583470725,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.316300066126682,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.824100073906291,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.331900081685902,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.839700089465511,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.3475000972451205,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.85530010502473,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.36310011280434,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.87090012058395,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.37870012836356,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.88650013614317,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.394300143922779,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.902100151702388,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ]
+      },
+      "removed_count": 349,
+      "removal_closure_hash": "sha256:286c3d72b43d43b682c649da52dd4cc8e112c4ae0bfdfb510e146fef17625d89",
+      "maximum_removed_cell_center_depth_mm": 4.316300066126682,
+      "central_removed_axial_indices": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "final_state_hash": "sha256:4cd227203addd2f1503ef78ea9068f5794e3842e05cf9af0cc9a08e85a760704"
+    },
+    {
+      "arm": "ReMIND-020-current13",
+      "status": "saturated_declared_opening_order",
+      "native_config_hash": "sha256:f9d6c1ce0391480c8e34e66398ffff00040c7634088f7371ce506c6d39d61f07",
+      "proposal_config_hash": "sha256:95d26afeaf513fcf8eea1ae698295874158f6421e7b568a0f94f560f510359a2",
+      "passes": [
+        {
+          "pass": 1,
+          "previews": 52,
+          "commits": 13,
+          "new_removed": 13,
+          "removed_total": 13,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 13,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 39
+          }
+        },
+        {
+          "pass": 2,
+          "previews": 52,
+          "commits": 13,
+          "new_removed": 13,
+          "removed_total": 26,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 13,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 39
+          }
+        },
+        {
+          "pass": 3,
+          "previews": 52,
+          "commits": 0,
+          "new_removed": 0,
+          "removed_total": 26,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 52
+          }
+        }
+      ],
+      "commits": [
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:5befeedf1c43662c832c22d782460ec6d1f570f89f2d4e53b8f511c09c6d2555"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:256d58470404a31284ae7b3f6c9844a728607bb1b87ad047a283d15091b31302"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:550bf9d647da8ba2b36064f1e8bce6f3139ec0f14fc7146f96eac803699830ab"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:42a93911ee7cb79fe0e690576e3b8273f618c1b17e42078cad95ffdb221f60a0"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:953665210e0a48801d4c2bef15fcc002c7bec717d758682a674a8f2a6fe30d61"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:b88bce25a802fa8e687b46ee315613a3e8fc088b1724ea94928d28d00a84a150"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:cf4e3e42bd09eb4ccd7b7de215b3e9937da28bce4cb444a4ef62b44efa3aa24f"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:d5b98ccc1f226f49ae98036ebca69ef6eaceb619d34c1485f871ba4e4a27a987"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:d8fd75d5853cefd5d469f2bbf2f622beb049d0f48d0462b97511167824d385af"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:fdcd03f0f9fe9e41f6a822ae518a897e0c5226ea64865b22f96d7be269c20f1d"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:b38998a4735da62c924378ebfac73ee42c7ca405bf2e9c26a42caafa502f8e54"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:621c0249ce85f574cafb8622bda94467cba0fafccbce8fad6e65278bbba051a2"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:bbcb92b25e8e15861ff74c940a966fab6a38c8e55d14470dc9fd99727ab388c8"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:7f4059034e68d08cf5d7062070ed5aacbca90f41eda3fdf748a7d68af2f33956"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:78e0dba7fd4320e4640e04322b39f6e6a07d145d79fd8ae3a3518ff4b9871d8c"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:a248d56ef755d112bc93c82b58b8246aacd7671a979673fcbc587cd7b14e8f66"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:29948e7239552bc62135ee2902a0b021aeb5e7a1f0ac0bc6a10470d7530fe84c"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:ed5c7f3938c4cf23d3238a7e92d6ff4c24b7ac382fdfa911b040e60fdb4f5e69"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:3f19ba0cea59c5b36bd9cb6d4cf8e1c95c63b767a66fd6b73f442de1bc7671cb"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:9deb184dcb7eadcf4d970385ef6b3b905ed41818cf1922a2e2db146e1f001720"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:6baa875247e579ad374db82b16c6c37968d8a03ccaf29f1b08a92d78dbac7833"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:75293e232a51f4c5458b418a68bdd8c5f15f0b48f8055b1910abcdad94b12c8a"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:c0386e6c8beb5a6442c48e7af636b6367b1021644957b02bba4cb4b3465c17a8"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:971e485d63e05656616626f84e24ee854b072b10ce63cacade991fe75c222fbe"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:89133b73aa80c05d48e75d865dc63279b63cbe23862cff6c0e3175a2b41f07ff"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:d80746c55ec1ffa25aa1b2277e9cfe1d43531292d8ae9037f7f87cb706948d4b"
+        }
+      ],
+      "central_depth_probes": {
+        "generic_suction": [
+          {
+            "depth_mm": 0.4882812751149064,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.4648438253447191,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.441406375574532,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.4179689258043444,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.394531476034158,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.37109402626397,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.347656576493783,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.324219126723595,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.300781676953408,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.277344227183221,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 10.253906777413034,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ],
+        "generic_aspirator": [
+          {
+            "depth_mm": 0.4882812751149064,
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "would_remove": 4
+          },
+          {
+            "depth_mm": 1.4648438253447191,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.441406375574532,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.4179689258043444,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.394531476034158,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.37109402626397,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.347656576493783,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.324219126723595,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.300781676953408,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.277344227183221,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 10.253906777413034,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ]
+      },
+      "removed_count": 26,
+      "removal_closure_hash": "sha256:aef15fc50c38c72931a5d240160df7672a2f8c6f4a11f57ab85840e93843d861",
+      "maximum_removed_cell_center_depth_mm": 1.4648438253447191,
+      "central_removed_axial_indices": [
+        2,
+        3
+      ],
+      "final_state_hash": "sha256:d80746c55ec1ffa25aa1b2277e9cfe1d43531292d8ae9037f7f87cb706948d4b"
+    },
+    {
+      "arm": "ReMIND-020-plus_nearest17",
+      "status": "saturated_declared_opening_order",
+      "native_config_hash": "sha256:1496d037fb23c28f8d2a0eb56d43806992cd3f483f8840f03f0b6fad90105c07",
+      "proposal_config_hash": "sha256:7249f6b4b6e1f69650ea97262c383d8f5103cd4d0ae38566804de0345969697d",
+      "passes": [
+        {
+          "pass": 1,
+          "previews": 68,
+          "commits": 17,
+          "new_removed": 17,
+          "removed_total": 17,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 17,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 51
+          }
+        },
+        {
+          "pass": 2,
+          "previews": 68,
+          "commits": 17,
+          "new_removed": 17,
+          "removed_total": 34,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 17,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 51
+          }
+        },
+        {
+          "pass": 3,
+          "previews": 68,
+          "commits": 0,
+          "new_removed": 0,
+          "removed_total": 34,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 68
+          }
+        }
+      ],
+      "commits": [
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:14b0d6ad052d06a3287b913c214cf145df31d589cb76acb35d1ca9b0543bd59f"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:7e135a8c4b39a4d42cc38b764950340239d13b6e642f964575d2733e1343453d"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:5bd8d6f6e51fd184eb224d5bf2a55461e9876ecb1f738d715c0807e4721e116e"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:8da422dcb28c5ab8d4f6f6301e767d509a2f8d239c11ec355e39bd76a4132a4d"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:2c005347868b7b637b087f4b29517ff1b1c46b3bc0a1dc1fc18a3e367c55b390"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:727beb8527dea13ca922460e590d391e7bcbc7be7c7eb8b01f3528ed00dd6bf8"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:0e70f4a5b254b0a8f2de42d6cff2f928db716d978261a7b0f46ef4552b04c5aa"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:0328a3b3fe6ab53f3c3728fe2a30a057b9b52c13f772ebf8cc6ce752c413055a"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:ab3d990992afbd4a638c0d45da373255b5a5c4029d61ea0fd2fa4ba42845183a"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:3147e033c02e9862698c5fa6cbf0ad9acf0d26f7c3781dd357635694722e2529"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:281e5e8c5352a8ae4c0d4542f3d30681c5e770776391f2a073c04426eb74b171"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:68d29e1bff11a083b08962536d4e075d3cd9db14a9e80d620cc20c2e4bb18ff2"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:a5675c4e3027c1f805bedd22ca30b81ee4a363ec98e3e6d4b907cd80cc20df44"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -1,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:968eea5953ef415e1ac04274fb698a0b8e0669a35c1655acdec9902d9911db0c"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            1,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:582d55a656f6280f159ac51a006a88abfe88f5688545957de0af7fa325409944"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -1
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:99fc1088086290359cf240c8a8583a5555161c9a91982df7766b9685d1045540"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            1
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 0.4882812751149064,
+          "removed_count": 1,
+          "state_hash": "sha256:e42f2cb11e68dd89097a0d39f8e3608b4e883d76876c8c5dbbcdb62a03e91e01"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:8c186034e3b4c97e7ae89ba634740f18c5dd90e951f93f29805213615ebe3121"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:fa0afce052b85df145ac77c2f1299e3dde4e2a00c8266fb366a4de011b359bf4"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:b2dced7e31a33ad702c11d8917ddfc8137731e5c04fb7a38335ee9de8b343a05"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:86c859c0827c2215bd402d9287c389169507f4645339afaa32c6ea2cffa2ee4b"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:9f70481b0663584f2dc20003de09481d1b2f0c11517f3eda35356b2efe609e05"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:6cc462264b59f3e70b1a689889456964566b23a86a167f3c8e5358b2d5edd7ba"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:d9ab4eda145dd57eb55d43e3cf91729f7f8c09a4d09ac4d10973ce440a7266a0"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            -2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:b40f5ea4d0abcbf372e1eee7701837dae125297248bb3eb681112bca1051fe67"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            2,
+            2
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:c927ab6514c27b3acad62668107fe1db1d4105bba8bddfe87f25ab75373783b3"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:181fb68890757409df27e0927c63e8a3c4db1c80bae60711cb7fb42995db4fbc"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            3,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:22a19beb1fdd298df598e8de931b2945c9462d29e5b7ab61f6a031eb19269d83"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:de2b62cd5bbd2ced18ada9d4f5bf15c729c8af8b011725042e9b1f6be887c3f3"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            3
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:e8dacafa819484e97af51ee6bdd96bcbb9f7dd8d6904ea589f413c0809be8165"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            -1,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:53399afecc96b6f89288f5282f6d6b30dac2a133a849b4e55002bcdb1b544492"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            1,
+            0
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:1f36d5b62e5bfc0c51b99f0021d34fb7e920e5cd039516c94e400ba121162bac"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            -1
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:8161f6ad3de6c6f4d27ac813ac0f162ebdd5d0fff4156a7a80e701f93472f526"
+        },
+        {
+          "family": "exposed_opening",
+          "column": [
+            0,
+            1
+          ],
+          "tool_id": "generic_suction",
+          "tip_depth_mm": 1.4648438253447191,
+          "removed_count": 1,
+          "state_hash": "sha256:8aca9fa2b99bb0671bb1a57e44a0c13556315cdf6d5e8fa4c4678323659bcbd4"
+        }
+      ],
+      "central_depth_probes": {
+        "generic_suction": [
+          {
+            "depth_mm": 0.4882812751149064,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.4648438253447191,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.441406375574532,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.4179689258043444,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.394531476034158,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.37109402626397,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.347656576493783,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.324219126723595,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.300781676953408,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.277344227183221,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 10.253906777413034,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ],
+        "generic_aspirator": [
+          {
+            "depth_mm": 0.4882812751149064,
+            "feasible": false,
+            "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 1.4648438253447191,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 2.441406375574532,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 3.4179689258043444,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 4.394531476034158,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 5.37109402626397,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 6.347656576493783,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 7.324219126723595,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 8.300781676953408,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 9.277344227183221,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          },
+          {
+            "depth_mm": 10.253906777413034,
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "would_remove": 0
+          }
+        ]
+      },
+      "removed_count": 34,
+      "removal_closure_hash": "sha256:73cc3cbfc42fab8e49531f8d09d3c1cfb3f04a25ace90e7d112fe4fb0ba3209a",
+      "maximum_removed_cell_center_depth_mm": 1.4648438253447191,
+      "central_removed_axial_indices": [
+        2,
+        3
+      ],
+      "final_state_hash": "sha256:8aca9fa2b99bb0671bb1a57e44a0c13556315cdf6d5e8fa4c4678323659bcbd4"
+    }
+  ]
+}

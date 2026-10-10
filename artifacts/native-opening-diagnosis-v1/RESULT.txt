@@ -1,0 +1,42 @@
+The action generator can omit a legal opening after clearing its centerline.
+
+A bounded generated slab experiment used the canonical tool geometry, complete
+shaft checks and contained-cell removal rules at the saved 008 and 020 spacings.
+It compared the existing 13 columns with 17 columns that add the missing nearest
+cardinal neighbors. No patient image, policy, training or clinical outcome was
+used. These are simulated geometric interactions, not observed surgery.
+
+After complete no-change passes through the declared opening families, shallow
+central aspirator previews remained legal: one would remove eight additional
+cells at the 008 spacing, and another four at 020 with the original columns.
+Those endpoint centerline cells were already removed. The proposer considers
+remaining centerline cells, so it skips an older shallow endpoint even when
+that pose can still clear off-axis tissue. The probes were not committed.
+
+Both 008 arms reached exactly the same 349-cell removal mask. Adding columns
+alone did not resolve this endpoint omission under the tested action order.
+020 removed 26 versus 34 cells, with the same maximum removed-cell-center depth
+of 1.465 mm. These are not exhaustive searches or patient reachability results.
+Different earlier orders or supplied target endpoints could avoid these states.
+
+The single run completed in 5.436 parent seconds / 5.191 worker seconds,
+with 724 previews, 82 commits, 85,557,248 bytes peak RSS and clean termination.
+Independent source/saved-result review verified the omitted endpoint and exact
+008 closure equality. The next experiment adds tool-footprint-aware shallow
+openings while retaining native certification, tools and the frozen objective.
+
+A separate pure geometric calculation finds permanent shaft blockers in the
+current fixed-column vocabulary for a uniform solid slab at the coarser grids.
+Its infinite-cylinder removal union is an optimistic bound, not a patient model.
+The two-tool 008 tip-depth upper bound is 5.201 mm under slab assumptions;
+this is tip-center depth, not removed-tissue depth or a target failure bound.
+Actual patient occupancy, curved surfaces and free spaces were not inspected.
+The calculation shows why more optimization steps alone cannot repair absent
+actions; it does not establish that every actual patient route is impossible.
+
+Exact source copies, native summary, pass/action/probe evidence and supervisor
+receipts are included. summary.json binds original detailed calculation and
+native outputs retained at build/remind-planning-qc-v1/column-reachability-v1.
+Restore the source scripts to that original path with the recorded dependencies
+and metadata to reproduce; completed output directories are intentionally not
+reused. No arrays, checkpoints or bulk native histories are included.

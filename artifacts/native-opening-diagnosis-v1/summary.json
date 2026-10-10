@@ -1,0 +1,145 @@
+{
+  "scope": "generated native slab only; declared opening families and fixed order; no patient inference",
+  "terminal": {
+    "status": "all_declared_opening_orders_saturated",
+    "elapsed_seconds": 5.191115874797106,
+    "peak_rss_bytes": 85557248,
+    "counters": {
+      "previews": 724,
+      "commits": 82
+    }
+  },
+  "arms": [
+    {
+      "arm": "ReMIND-008-current13",
+      "spacing_xyz_mm": [
+        0.5078000077796097,
+        0.5077999957666476,
+        0.5000000158412999
+      ],
+      "status": "saturated_declared_opening_order",
+      "removed_count": 349,
+      "removal_closure_hash": "sha256:286c3d72b43d43b682c649da52dd4cc8e112c4ae0bfdfb510e146fef17625d89",
+      "maximum_removed_cell_center_depth_mm": 4.316300066126682,
+      "previews": 144,
+      "commits": 11,
+      "complete_passes": 2,
+      "post_saturation_feasible_central_probes": {
+        "generic_suction": [],
+        "generic_aspirator": [
+          {
+            "depth_mm": 1.777300027228634,
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "would_remove": 8
+          }
+        ]
+      },
+      "remaining_shaft_cells_at4mm": {
+        "generic_suction": 4,
+        "generic_aspirator": 136
+      }
+    },
+    {
+      "arm": "ReMIND-008-plus_nearest17",
+      "spacing_xyz_mm": [
+        0.5078000077796097,
+        0.5077999957666476,
+        0.5000000158412999
+      ],
+      "status": "saturated_declared_opening_order",
+      "removed_count": 349,
+      "removal_closure_hash": "sha256:286c3d72b43d43b682c649da52dd4cc8e112c4ae0bfdfb510e146fef17625d89",
+      "maximum_removed_cell_center_depth_mm": 4.316300066126682,
+      "previews": 176,
+      "commits": 11,
+      "complete_passes": 2,
+      "post_saturation_feasible_central_probes": {
+        "generic_suction": [],
+        "generic_aspirator": [
+          {
+            "depth_mm": 1.777300027228634,
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "would_remove": 8
+          }
+        ]
+      },
+      "remaining_shaft_cells_at4mm": {
+        "generic_suction": 4,
+        "generic_aspirator": 136
+      }
+    },
+    {
+      "arm": "ReMIND-020-current13",
+      "spacing_xyz_mm": [
+        0.9765625502298128,
+        0.9765627411857793,
+        0.9999999686987783
+      ],
+      "status": "saturated_declared_opening_order",
+      "removed_count": 26,
+      "removal_closure_hash": "sha256:aef15fc50c38c72931a5d240160df7672a2f8c6f4a11f57ab85840e93843d861",
+      "maximum_removed_cell_center_depth_mm": 1.4648438253447191,
+      "previews": 178,
+      "commits": 26,
+      "complete_passes": 3,
+      "post_saturation_feasible_central_probes": {
+        "generic_suction": [],
+        "generic_aspirator": [
+          {
+            "depth_mm": 0.4882812751149064,
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "would_remove": 4
+          }
+        ]
+      },
+      "remaining_shaft_cells_at4mm": {
+        "generic_suction": 25,
+        "generic_aspirator": 65
+      }
+    },
+    {
+      "arm": "ReMIND-020-plus_nearest17",
+      "spacing_xyz_mm": [
+        0.9765625502298128,
+        0.9765627411857793,
+        0.9999999686987783
+      ],
+      "status": "saturated_declared_opening_order",
+      "removed_count": 34,
+      "removal_closure_hash": "sha256:73cc3cbfc42fab8e49531f8d09d3c1cfb3f04a25ace90e7d112fe4fb0ba3209a",
+      "maximum_removed_cell_center_depth_mm": 1.4648438253447191,
+      "previews": 226,
+      "commits": 34,
+      "complete_passes": 3,
+      "post_saturation_feasible_central_probes": {
+        "generic_suction": [],
+        "generic_aspirator": []
+      },
+      "remaining_shaft_cells_at4mm": {
+        "generic_suction": 17,
+        "generic_aspirator": 57
+      }
+    }
+  ],
+  "interpretation": [
+    "Complete no-change pass only certifies this exposed/intermediate provider order; shallower central probes can remain feasible.",
+    "Exposed endpoint tracks first remaining centerline cell, so cleared axial centers can skip remaining off-axis tissue within older active capsules.",
+    "17-column addition keeps existing13 and adds cardinal+/-1; no geometry or96 candidate cap change. Proximal/distal nominal endpoints are absent because the nominal field is zero; exposed and intermediate opening families remain active.",
+    "No patient occupancy was inspected; slab tools/clearance/cell rules are canonical. Max removed depth is cell-center depth, not tip depth or continuous resection front.",
+    "Central probes require newly removable cells to count feasible; NO_NEW_FULLY_CONTAINED_SURFACE_CELLS is not a shaft-clearance failure."
+  ],
+  "bindings": {
+    "cross_section.py": "bdadd8493a965513debd8d06aa135ec67ea9cb3a2a21249fb39c94474d327d69",
+    "result.json": "e5625081cb21b9417a94b18698212bdc5ae481098d352c2a8dbd172595fa8988",
+    "dependency_bound.py": "f04244cdef491bd66e529d84d9ffc459cec92e008f6778716ff5c5915774770e",
+    "dependency-result.json": "bbd16be898ebec04baa01726c52735739e4da977fbbe9e1b52a7b3a6cafca0f3",
+    "native_saturation_worker.py": "31e6b90b64b415e2419092a9bd25d4354d670b5a3e1e1dcbd106b0276add30fa",
+    "run_native_owned.py": "93d8193fa61acd22654d0e98279f408d12a75d3e989a7258200586bbf454038e",
+    "native-run-v1/result.json": "f341a3374755cea8ec394212b95c8c0b0e295450be6a903d5211842e6c7145cc",
+    "native-run-v1.supervision/declaration.json": "9c6db1ee4b823e6e18b75aa9076fa7ecf1ad64697cc0edc8716d91cac0ff4031",
+    "native-run-v1.supervision/receipt.json": "079b7a5bf3d44d13e8f27f606c1adf6723b1be34c3e180d4648a571aa1e294ec"
+  }
+}
