@@ -1,0 +1,163 @@
+{
+  "architecture_hash": "sha256:3889a11c26502b85ea02dd8ff4f6be214f5d0828cd2e7bc5e50320505d1762e9",
+  "archived_files": [
+    {
+      "archive": "prospective/run-recipe.json",
+      "bytes": 1395,
+      "sha256": "e779bff3f289c9e034b36fc3c75ed3313e444adfb7c4678400cf746eead7d7a5",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/run-recipe.json"
+    },
+    {
+      "archive": "prospective/source-index.json",
+      "bytes": 5346,
+      "sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/source-index.json"
+    },
+    {
+      "archive": "prospective/input-index.json",
+      "bytes": 20753,
+      "sha256": "1445050033adfa7e1dfcc2acb39949a80361d2673b1fe0d8bdbbe32bbbc8563d",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/input-index.json"
+    },
+    {
+      "archive": "prospective/prospective-experiment.json",
+      "bytes": 113698,
+      "sha256": "0a9f30f33693a2d85ecea8540cdf2c39ce0106edce9ec7df551310b0efb2dcbd",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/prospective-experiment.json"
+    },
+    {
+      "archive": "prospective/prospective-architecture.json",
+      "bytes": 2395,
+      "sha256": "2e5ad596637469fa2a1bf02f2c07bf49a57c98bdf6fce2bf1ef5f5513fcb5c62",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/prospective-architecture.json"
+    },
+    {
+      "archive": "prospective/promotion-index.json",
+      "bytes": 3971,
+      "sha256": "d9aedf35f5819bb350951ce11f0172e893e70a7e7553614fad3c2d5b034ea512",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/promotion-index.json"
+    },
+    {
+      "archive": "prospective/PROTOCOL.txt",
+      "bytes": 4439,
+      "sha256": "e544500829095b55c43acbf78f33fd266db84d1c6b2840eb1d5282c68f29ce57",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/PROTOCOL.txt"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "source": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/goal-relation-policy-v1/relation_fit_worker.py",
+      "bytes": 15175,
+      "sha256": "2d12134b2459f9be29cba09920d038f22bb5e75150ec5a950f5046f17174429e",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/relation_fit_worker.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/goal-relation-policy-v1/run_relation_fit_owned.py",
+      "bytes": 5675,
+      "sha256": "95a47f657a3272958e150d987d286d932a7afae5cdc7b84be4753cab1dcb9dc5",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/run_relation_fit_owned.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+      "source": "build/goal-conditioned-policy-v1/run_contact_owned.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/train_diagnostic_readout.py",
+      "bytes": 5125,
+      "sha256": "a80b760eb2dea363c6646161c20e41f7028a3dc8c48c07616c6610b387a66a33",
+      "source": "build/goal-conditioned-policy-v1/train_diagnostic_readout.py"
+    },
+    {
+      "archive": "independent-source-review/REPORT.txt",
+      "bytes": 4760,
+      "sha256": "8e8ab2b6a5ed5d93cb2888199eafa4839e1a1af1aec89994c32916b87b91205f",
+      "source": "build/goal-relation-independent-v1/REPORT.txt"
+    },
+    {
+      "archive": "independent-source-review/review.json",
+      "bytes": 2161,
+      "sha256": "488cea47c6087dd3afc9d1e0ba6fabc3f882671251b4d0ef031838a4597535fe",
+      "source": "build/goal-relation-independent-v1/review.json"
+    },
+    {
+      "archive": "independent-source-review/source-inventory.json",
+      "bytes": 839,
+      "sha256": "772a6195c14c70409f21b56f5fadcd8e43ddab220daf76659f6c77c598249e4c",
+      "source": "build/goal-relation-independent-v1/source-inventory.json"
+    },
+    {
+      "archive": "independent-source-review/source_inventory.py",
+      "bytes": 4302,
+      "sha256": "b2339a68a059e080f90db847aa15113f54fa251f54a13fad04501cf60f771b4d",
+      "source": "build/goal-relation-independent-v1/source_inventory.py"
+    },
+    {
+      "archive": "independent-source-review/index.json",
+      "bytes": 683,
+      "sha256": "f903609de0a01d66326b0af378b35793a5e89d5afa3d4b0bf3fffee27485bca9",
+      "source": "build/goal-relation-independent-v1/index.json"
+    }
+  ],
+  "baseline_full40_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "bulk_histories_arrays_weights_included": false,
+  "canonical_source_files": {
+    "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+    "src/resectionlab/contact_costs.py": "def9a4eee4bcb289823e306385d83b94d0e1d3efb6c1f9675ba5b8bbbfa90a14",
+    "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+    "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+    "src/resectionlab/contact_learning_contract.py": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+    "src/resectionlab/contact_learning_pilot.py": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/goal_mode_episode_adapter.py": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/legacy_transfer_supervisor.py": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+    "src/resectionlab/legacy_transfer_worker.py": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/shared_episode.py": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+    "src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "src/resectionlab/surface_contact_episode.py": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "canonical_test_receipt_sha256": "7a1ff0c30d2192e418d018ebf17eea8517bcd0aed7ce32dd205449b500f0cff5",
+  "current_nine_source_pins": {
+    "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+    "src/resectionlab/contact_costs.py": "def9a4eee4bcb289823e306385d83b94d0e1d3efb6c1f9675ba5b8bbbfa90a14",
+    "src/resectionlab/contact_family_desktop_bridge.py": "286ee14708ee2a745407b5a8f49871142ddcab20ea3f3d08519ccba45b9cc745",
+    "src/resectionlab/contact_family_supervisor.py": "06b2ee711b6840f26e34f542555ae9081997a0b6baddb5ac8af103251ca5db61",
+    "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+    "src/resectionlab/contact_learning_contract.py": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+    "src/resectionlab/goal_mode_episode_adapter.py": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+    "tests/test_goal_relation_spatial_policy.py": "d8236ff1ea0530d61b1caea706af66a6e484d000d7c08e89df74104001bb08d9"
+  },
+  "distinct_from": "IL_TRAIN_REFIT desktop publication of already audited old-architecture full40 checkpoint",
+  "experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+  "input_index_sha256": "1445050033adfa7e1dfcc2acb39949a80361d2673b1fe0d8bdbbe32bbbc8563d",
+  "promotion_index_sha256": "d9aedf35f5819bb350951ce11f0172e893e70a7e7553614fad3c2d5b034ea512",
+  "recipe_sha256": "e779bff3f289c9e034b36fc3c75ed3313e444adfb7c4678400cf746eead7d7a5",
+  "runtime_index_sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+  "source_review": "GO_SOURCE_ONLY_PENDING_RELEASED_CANONICAL_TESTS",
+  "status": "CANONICAL_TESTS_PASS_107_NO_FIT",
+  "version": "public-goal-relation-policy-source-evidence-v1"
+}

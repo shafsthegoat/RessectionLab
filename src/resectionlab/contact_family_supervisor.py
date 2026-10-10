@@ -25,6 +25,7 @@ SAMPLE_INTERVAL_SECONDS = .2
 # modules, new family candidate, and this worker. An empty or partial closure
 # refuses release, including STOP.
 SOURCE_FILES = frozenset({
+    "src/resectionlab/goal_relation_spatial_policy.py",
     "local:contact_family_worker.py",
     "local:contact_family_desktop_release.py",
     "src/resectionlab/contact_learning_contract.py",
@@ -53,17 +54,18 @@ SOURCE_FILES = frozenset({
     "src/resectionlab/sequential_spatial_observation.py",
 })
 SOURCE_SHA256 = {
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
     "local:contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
     "local:contact_family_worker.py": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
-    "src/resectionlab/contact_checkpoint.py": "f696facdacfb92f19a0816abfecd506eeb16b6426adb67f53a7c5f158b9e3877",
+    "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
     "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
-    "src/resectionlab/contact_learning.py": "9f969bc9773bbaacdb2cb79e2c071c5412ad74c2793b8b536274afc9ce143368",
-    "src/resectionlab/contact_learning_contract.py": "f592b6308e3ef382261a4fc505fac5e0b0a9780a8682bfefa1c1a8efe1ad911f",
+    "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+    "src/resectionlab/contact_learning_contract.py": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
     "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
     "src/resectionlab/data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
     "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
     "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
-    "src/resectionlab/goal_mode_episode_adapter.py": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+    "src/resectionlab/goal_mode_episode_adapter.py": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
     "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
     "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
     "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",

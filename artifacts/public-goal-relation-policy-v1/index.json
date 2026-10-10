@@ -1,0 +1,126 @@
+{
+  "files": [
+    {
+      "bytes": 5541,
+      "path": "README.txt",
+      "sha256": "01fbef4c65c7a11da93656956240e2487c5951d6866ceefb335a6fa80c5c1f10"
+    },
+    {
+      "bytes": 677,
+      "path": "TEST-COMMAND.txt",
+      "sha256": "d104c6c5a7f7f25bce32a165095910f25ab53659cfa1dcc3dab11d319bf56168"
+    },
+    {
+      "bytes": 2897,
+      "path": "canonical-test-receipt.json",
+      "sha256": "7a1ff0c30d2192e418d018ebf17eea8517bcd0aed7ce32dd205449b500f0cff5"
+    },
+    {
+      "bytes": 10472,
+      "path": "evidence.json",
+      "sha256": "f61a634f77e3eccef3386d56fca240b56683f8845c8627d8a2e265372accbbba"
+    },
+    {
+      "bytes": 4760,
+      "path": "independent-source-review/REPORT.txt",
+      "sha256": "8e8ab2b6a5ed5d93cb2888199eafa4839e1a1af1aec89994c32916b87b91205f"
+    },
+    {
+      "bytes": 683,
+      "path": "independent-source-review/index.json",
+      "sha256": "f903609de0a01d66326b0af378b35793a5e89d5afa3d4b0bf3fffee27485bca9"
+    },
+    {
+      "bytes": 2161,
+      "path": "independent-source-review/review.json",
+      "sha256": "488cea47c6087dd3afc9d1e0ba6fabc3f882671251b4d0ef031838a4597535fe"
+    },
+    {
+      "bytes": 839,
+      "path": "independent-source-review/source-inventory.json",
+      "sha256": "772a6195c14c70409f21b56f5fadcd8e43ddab220daf76659f6c77c598249e4c"
+    },
+    {
+      "bytes": 4302,
+      "path": "independent-source-review/source_inventory.py",
+      "sha256": "b2339a68a059e080f90db847aa15113f54fa251f54a13fad04501cf60f771b4d"
+    },
+    {
+      "bytes": 4439,
+      "path": "prospective/PROTOCOL.txt",
+      "sha256": "e544500829095b55c43acbf78f33fd266db84d1c6b2840eb1d5282c68f29ce57"
+    },
+    {
+      "bytes": 20753,
+      "path": "prospective/input-index.json",
+      "sha256": "1445050033adfa7e1dfcc2acb39949a80361d2673b1fe0d8bdbbe32bbbc8563d"
+    },
+    {
+      "bytes": 3971,
+      "path": "prospective/promotion-index.json",
+      "sha256": "d9aedf35f5819bb350951ce11f0172e893e70a7e7553614fad3c2d5b034ea512"
+    },
+    {
+      "bytes": 2395,
+      "path": "prospective/prospective-architecture.json",
+      "sha256": "2e5ad596637469fa2a1bf02f2c07bf49a57c98bdf6fce2bf1ef5f5513fcb5c62"
+    },
+    {
+      "bytes": 113698,
+      "path": "prospective/prospective-experiment.json",
+      "sha256": "0a9f30f33693a2d85ecea8540cdf2c39ce0106edce9ec7df551310b0efb2dcbd"
+    },
+    {
+      "bytes": 1395,
+      "path": "prospective/run-recipe.json",
+      "sha256": "e779bff3f289c9e034b36fc3c75ed3313e444adfb7c4678400cf746eead7d7a5"
+    },
+    {
+      "bytes": 5346,
+      "path": "prospective/source-index.json",
+      "sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c"
+    },
+    {
+      "bytes": 180,
+      "path": "root-canonical-tests.log",
+      "sha256": "c7f97ceeb7e0db7c132d0da73cf06cd128b213e31c740dc030091cb10f696a90"
+    },
+    {
+      "bytes": 2177,
+      "path": "runtime-archive.json",
+      "sha256": "ff65302184389ae111f36e7125d96610122191441f1ed1fc1b1e44ff908ed9b1"
+    },
+    {
+      "bytes": 9482,
+      "path": "runtime-source-tree/build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "bytes": 15175,
+      "path": "runtime-source-tree/build/goal-conditioned-policy-v1/goal-relation-policy-v1/relation_fit_worker.py",
+      "sha256": "2d12134b2459f9be29cba09920d038f22bb5e75150ec5a950f5046f17174429e"
+    },
+    {
+      "bytes": 5675,
+      "path": "runtime-source-tree/build/goal-conditioned-policy-v1/goal-relation-policy-v1/run_relation_fit_owned.py",
+      "sha256": "95a47f657a3272958e150d987d286d932a7afae5cdc7b84be4753cab1dcb9dc5"
+    },
+    {
+      "bytes": 8730,
+      "path": "runtime-source-tree/build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "bytes": 5125,
+      "path": "runtime-source-tree/build/goal-conditioned-policy-v1/train_diagnostic_readout.py",
+      "sha256": "a80b760eb2dea363c6646161c20e41f7028a3dc8c48c07616c6610b387a66a33"
+    },
+    {
+      "bytes": 2195,
+      "path": "test-status.json",
+      "sha256": "3633dd146457fff5c3cfaf7884ba8d57a6519308176f68b493ff111dcf71f609"
+    }
+  ],
+  "status": "PASS_CANONICAL_107_NO_FIT",
+  "total_bytes_excluding_index": 233068
+}

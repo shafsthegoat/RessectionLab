@@ -1,0 +1,61 @@
+{
+  "action_geometry": "shared_normalized_16_columns+mode_one_hot_3",
+  "action_id_or_tool_id_embedding": false,
+  "action_relation": "goal_minus_candidate_tip_crop_axis_mm_and_euclidean_distance_divided_by_physical_reference",
+  "added_channel_coverage": "structural_coverage_and_availability",
+  "align_corners": true,
+  "channels": [
+    "structural_intensity",
+    "nominal_tissue",
+    "nominal_target",
+    "observed_cavity",
+    "nominal_motor",
+    "nominal_language",
+    "public_goal",
+    "observed_probe_contact"
+  ],
+  "checkpoint_version": "public-goal-relation-spatial-checkpoint-v1",
+  "config": {
+    "critic_candidate_context": true,
+    "encoder_channels": [
+      8,
+      16
+    ],
+    "hidden_features": 32,
+    "physical_reference_mm": 10.0,
+    "ray_samples": 5
+  },
+  "context_version": "generated-public-contact-context-v2",
+  "critic_candidate_context": "aspirate_then_probe_legal_geometry_modes_rays_mean_max_count",
+  "critic_relation_change": "none_IL_only_control",
+  "deployment_scope": "bound_generated_public_surface_contact_only",
+  "grid_roundoff_band": 1.4210854715202004e-14,
+  "grid_sample_order": "ZYX",
+  "image_input": "8_masked_values+8_coverage+8_availability",
+  "image_layout": "CXYZ",
+  "inference_ties": "argmax_first_in_inventory_STOP_index0",
+  "initialization": "original_shared_tensors_exact;four_actor_and_eighteen_STOP_new_input_columns_zero",
+  "input_adapter": "SpatialPolicy._inputs_exact_base_DTO_after_goal_context_validation",
+  "legacy_aspiration_checkpoint_compatible": false,
+  "legacy_goal_mode_checkpoint_compatible": false,
+  "mode_order": [
+    "stop",
+    "aspirate",
+    "probe"
+  ],
+  "objective_coefficients": "fixed_by_public_objective_v1",
+  "objective_version": "public-retained-surface-contact-objective-v1",
+  "observation_version": "public-goal-sequential-spatial-observation-v2",
+  "padding": "zeros_with_inbounds_flags",
+  "relation_frame": "orthogonal_crop_axes;joint_RAS_rigid_transform_invariant;shear_refused",
+  "relation_source": "context_bound_public_goal_one_hot_affine_and_current_candidate_tip_poses_only",
+  "relation_version": "public-goal-minus-tip-crop-axis-mm-v1",
+  "return_transform": "none",
+  "spatial_pool": [
+    2,
+    2,
+    2
+  ],
+  "stop_relation_summary": "legal_aspirate_then_probe_mean4_max4_log1p_count;empty_group_zero",
+  "version": "public-goal-relation-spatial-ray-conv-policy-v1"
+}

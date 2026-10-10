@@ -1355,3 +1355,7 @@ and metadata files unchanged; raw primitives were not replayed. No new measured
 member, held-out or refit call occurred. The substantial prior axial fit errors
 remain unchanged; physical validation is null. This is numerical confirmation
 and a prediction freeze, not patient-mechanics admission or held-out access.
+
+## Public goal-to-tip policy source, October 10
+
+The [opt-in public goal-to-tip representation](../artifacts/public-goal-relation-policy-v1/README.txt) now passes 107 canonical checks. It adds physical goal displacement/distance and legal per-mode summaries with 704 zero-initialized additional weights while preserving every shared initial tensor. The fixed prospective 40-state, 32-update IL experiment retains the earlier negative baseline, sealed patient roles and original architecture defaults. Training and full-trajectory improvement remain untested for this variant. The 107-test run completed in 9.07 seconds. No held-out read, native trajectory evaluation or new fit occurred in this source slice. The one prospective fit retains its original 180-second/1-GiB/one-thread bounds, complete fixed TRAIN corpus and numerical shared-initialization check before any update.

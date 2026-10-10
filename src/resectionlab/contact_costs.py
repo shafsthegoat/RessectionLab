@@ -10,6 +10,7 @@ import sys
 import time
 
 from .goal_mode_spatial_policy import GoalModeSpatialPolicy
+from .goal_relation_spatial_policy import GoalRelationSpatialPolicy
 from .native_resection import NativeResectionEngine
 from .native_spatial_task import NativeSpatialTask
 
@@ -57,6 +58,7 @@ class ContactCostMeter:
         wrap(NativeResectionEngine, 'preview_stroke', 'geometry_preview')
         wrap(NativeResectionEngine, 'commit_preview', 'native_nonstop_commit')
         wrap(GoalModeSpatialPolicy, 'forward', 'actor_forward')
+        wrap(GoalRelationSpatialPolicy, 'forward', 'actor_forward')
         return self
 
     def __exit__(self, *unused):

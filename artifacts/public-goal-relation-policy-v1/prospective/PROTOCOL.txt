@@ -1,0 +1,63 @@
+One public goal-to-tip relation path; prospective fixed TRAIN control
+
+Saved native errors: policy succeeds whenever it starts moving (6/6), but stops
+on 10 tasks where original SEARCH reaches the public goal. All12 goal pairs
+choose the same physical root candidate although their score differences are
+nonzero. The two alternative surface aspirations, pcf14 and pcf23, reach their
+goals but remove3mm3 instead of1mm3 and lose .412/.408 return. These are cost
+selection errors, not failed probes. STOP8 negative cases remain correct.
+
+One new versioned relation path, preserving the old architecture and checkpoint
+contract as defaults: give each existing candidate scorer the public goal-minus-
+candidate-tip vector in crop-axis physical millimeters divided by the existing
+10mm reference, plus its Euclidean distance/reference. Give the STOP scorer the
+legal non-STOP per-mode mean/max/count summary of these same relation values.
+The original public image/ray/geometry/state inputs remain. The critic is unchanged
+for this IL-only experiment. No future simulator score, proposed removal outcome,
+private target, teacher action ID, withheld annotation or reward enters features.
+The source-bound public goal one-hot grid, affine and current candidate tip poses
+are sufficient. Context validation precedes extraction and forward execution.
+
+The crop-axis vector is computed using the affine's normalized orthogonal axes;
+rotating the entire bound source and tool/goal geometry together preserves it.
+RAS translation cancels. Voxel spacing is used to recover millimeters and is not
+confused with index distance. Explicitly refuse sheared/non-orthogonal axes in this
+new relation contract unless a separately specified general-frame rule is added.
+The public family already uses orthogonal axes; this does not change old admission.
+STOP and masked rows contribute no relation summary. No mode or candidate ID is
+embedded. Pooling is permutation invariant; per-candidate relation rows permute
+with their actions. Empty legal mode groups have a zero vector/count.
+
+Controlled initialization: construct the old default model under the original
+seed; copy every shared tensor exactly into the expanded model. Append zero
+columns to the first actor and STOP linear weights; preserve their biases and
+remaining layers exactly. No randomly initialized new trainable tensor remains.
+Thus the initial logits/value are functionally identical on valid observations;
+this is checked directly before any fit. The full parameter hash and architecture
+hash differ and are separately recorded. Same seed alone is not the control.
+
+Later, if root releases it, use exactly the same ordered40 TRAIN states, eight
+STOP labels, unchanged categorical CE/Adam/learning rate, fresh controlled shared
+initialization and32 full40 updates (1280 loss+80 fixed readout forwards). No
+new teacher, tuning, checkpoint selection, original-checkpoint warm-start,
+SELECT/MEASUREMENT task or patient read. Compare the fixed endpoint to the
+already saved full40 baseline at the same sample/update/forward count, reporting
+extra parameter count, wall time and memory. Baseline artifacts remain intact.
+
+Fixed readouts: all40/root24/probe-second16/STOP8/aspiration-root16 CE, margins,
+action agreement, legal movement rank and paired goal-dependent score/choice
+changes. Predefined targeted questions: do more positive roots move while STOP8
+remain correct, and do pcf14/23 surface cases favor the lower-cost demonstrated
+root action while deep cases remain correct? All other fixed states stay in the
+report. A better new endpoint at this budget supports usefulness of the explicit
+relation path; it does not establish that the old model could never fit with
+more optimization. No benefit or failure proves representational impossibility.
+No third arm or extension is selected based on these results. A subsequent native
+pass, if released, uses all24 TRAIN tasks, not only improved examples.
+
+Meaningful controls to stage: physical units/anisotropic spacing; joint translation
+and proper rotation; moving only public goal changes relation; candidate and
+mask permutation; masked/STOP exclusion; controlled initial tensor equality and
+logit equivalence; controlled nonzero added weights demonstrate goal sensitivity;
+no rewards/task/private properties in the extraction API; prior context mismatch
+refused before forward. No model/native/optimizer execution is authorized here.

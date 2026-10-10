@@ -1,0 +1,402 @@
+{
+  "baseline_experiment_hash": "sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894",
+  "baseline_full40_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "count": {
+    "STOP_labels": 8,
+    "TRAIN_tasks": 24,
+    "original_checkpoints_read": 0,
+    "states": 40
+  },
+  "data": {
+    "IL-update-01.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-01.json",
+      "sha256": "b8e3b0ae3167d3f59b3362579b58a0f2ba30d81f069c041cdc669b556b283ea7"
+    },
+    "IL-update-02.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-02.json",
+      "sha256": "62c2ef890490864d21200815ce6c1921e9a52c8501138b3a1222671ecf30bd12"
+    },
+    "IL-update-03.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-03.json",
+      "sha256": "6d28447ac5f86ce5779322c1f86a1d7d5815c8adadc010df18abc58ce296ac7a"
+    },
+    "IL-update-04.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-04.json",
+      "sha256": "cb047e152adf78cde4de0c4c4f9a1f9f5e0cd1513910286cda5e291ccb5d1e3e"
+    },
+    "IL-update-05.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-05.json",
+      "sha256": "6286420e15f5b49c18dedfb9a56c31e8f9d741d4a92e4ef15a81874e0f04e465"
+    },
+    "IL-update-06.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-06.json",
+      "sha256": "4467f14c2a943b70af95cceefba6391efea0755f2b193c6eb7d512c3548c07f8"
+    },
+    "IL-update-07.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-07.json",
+      "sha256": "7a7662f44bb563c30afd0076f428a420d42259638c4422b445bf0c426dfee811"
+    },
+    "IL-update-08.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-08.json",
+      "sha256": "e283bc028856647f227a61bc346bebe3235e5248dfc43face689ca30c8836707"
+    },
+    "IL-update-09.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-09.json",
+      "sha256": "8929e465850a73bb69805e2c1ed4347b44eb07a63c42504a5c7ac0486e7bfee5"
+    },
+    "IL-update-10.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-10.json",
+      "sha256": "a82fda55f4d3ebd5ef55715155c6faa4fdb353aa10808d3891ec26ada128f611"
+    },
+    "IL-update-11.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-11.json",
+      "sha256": "f995881c6b5adc70f77608aa2f26deb3ecf7562d55f6038c4500702f36a2e643"
+    },
+    "IL-update-12.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-12.json",
+      "sha256": "834f2d35f11dd9657afb534e2ff9abceddd2ae1e6bf9be22cfc8143a76be23b4"
+    },
+    "IL-update-13.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-13.json",
+      "sha256": "61ffd522f168dd23039fdca128c2045571d4a21b2b61c33519907ea4e2a35e01"
+    },
+    "IL-update-14.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-14.json",
+      "sha256": "5c4ea2a75c007e2ee1df5cfd0a6926bdbd9c7dc58104da7b4c8cae0874d1be5d"
+    },
+    "IL-update-15.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-15.json",
+      "sha256": "75f891d7e2fba54bc83b7fb8a536f4c6ac869562c3cebb003fdd577678eecaac"
+    },
+    "IL-update-16.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-16.json",
+      "sha256": "9a1023e8864aae1d1a8bc3f308b7b55148566601676f512aa0eab3f903ca2136"
+    },
+    "IL-update-17.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-17.json",
+      "sha256": "da580c3376a8cef513a7aba614e7eca5c594a1c8ad496780cf286858ff80b3c9"
+    },
+    "IL-update-18.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-18.json",
+      "sha256": "94f0502c506b6c3bb7583ec1bc22ffe0a8a243350585f472a47cc670527d0f94"
+    },
+    "IL-update-19.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-19.json",
+      "sha256": "fb426641ec9ed1ddc14de70bec8f31588e9f64f10363308d2d3692c8268ef31e"
+    },
+    "IL-update-20.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-20.json",
+      "sha256": "f98b016984ae9749ebc734807c911f49805af63587677aeaa1e7831793791b82"
+    },
+    "IL-update-21.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-21.json",
+      "sha256": "71a3e441fa5c56714d4434d270a3445d03ff2b36db3fff8fba5fc8ac5b9171ac"
+    },
+    "IL-update-22.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-22.json",
+      "sha256": "979372119bfa9f2b66d8c20d9cf98fec9f18213bd5249ca3285bad51d8714d10"
+    },
+    "IL-update-23.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-23.json",
+      "sha256": "cfcc0bd17aa80289f7f62dd4d3e85d38739bbc815cefbd6655b1db2f72b26cbc"
+    },
+    "IL-update-24.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-24.json",
+      "sha256": "499e6d02c9ce1ab428c9740064dadcf8c31ac53f9431d9da318c45734cc287fb"
+    },
+    "IL-update-25.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-25.json",
+      "sha256": "809137f3ec0a42f10c068d70085faec0079e0f1a57ed931b2cb3b5d5c021a222"
+    },
+    "IL-update-26.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-26.json",
+      "sha256": "e1af9d6f8d1e9ca1ceeda5a503184232c91684494598cc0ee500751822652275"
+    },
+    "IL-update-27.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-27.json",
+      "sha256": "c5379cd149608d2ca3355e9463c682cc31c165f2e92eea0718c3ce3639cc4637"
+    },
+    "IL-update-28.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-28.json",
+      "sha256": "815d3890cffca0a2cf506be71ed33fae82a4e6678cf740353904c1a619861c07"
+    },
+    "IL-update-29.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-29.json",
+      "sha256": "6f86d83820237823163dc2bc80a470242e1389fb1c93c247ec3fef436907d6f9"
+    },
+    "IL-update-30.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-30.json",
+      "sha256": "74b856ea9224343fb9b784cf56acd8e14b2d88f9bba59ae70dd3e334d304713d"
+    },
+    "IL-update-31.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-31.json",
+      "sha256": "cc1f8e83ac4fa52207522a01c9755e1d29303cebfde4ac61e548d91cbd57c5bf"
+    },
+    "IL-update-32.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-update-32.json",
+      "sha256": "e07e4ee630e4fba738ed5c7fbc5b798c5c44da241cc785c389c3339becb7c6cb"
+    },
+    "baseline-before-state-00.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-00.json",
+      "sha256": "6299faf5d3c6b75eb51a8d422764869076d193d6c5e37d5621c93ef053836834"
+    },
+    "baseline-before-state-01.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-01.json",
+      "sha256": "43fb7ce132db370fde761cd0feef087a8f0c3e334c224d9e80d60be131fc9b23"
+    },
+    "baseline-before-state-02.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-02.json",
+      "sha256": "8b0bf710ee0f1eefc86fc7323a361f912cde3a643107ec6006137a66b4398e85"
+    },
+    "baseline-before-state-03.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-03.json",
+      "sha256": "7e159d907c47df9d18a43f7dc60fd42eb4c8665337c78e0b0d4c24946ae9ca38"
+    },
+    "baseline-before-state-04.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-04.json",
+      "sha256": "75c90d5a8461267fa0e888453b6966845aa65b23961b6e70d80baed58e840b0e"
+    },
+    "baseline-before-state-05.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-05.json",
+      "sha256": "0327ee697f16461066608d906e9c0a70dfd4f76c4ca517b099839d4039dcb57e"
+    },
+    "baseline-before-state-06.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-06.json",
+      "sha256": "dd86ec276592f02c36f7bd1e523d17c54a99d4b5075e38a6b287d92ce8a83af1"
+    },
+    "baseline-before-state-07.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-07.json",
+      "sha256": "036a51be09d8aa5a3cb643dde03be424c02e16ab82833e25d9dfea2a8b2d5b16"
+    },
+    "baseline-before-state-08.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-08.json",
+      "sha256": "2376edede2a43cab90d1801114c0e30712ba726a9d289009654c53b9910eb356"
+    },
+    "baseline-before-state-09.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-09.json",
+      "sha256": "8909a7014fb66e9a5111389d44c29209777cd4b8051bd3edf77b6a84d5440122"
+    },
+    "baseline-before-state-10.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-10.json",
+      "sha256": "9846ae6db3c7e08edef723fde10e0564c09e7bb4e4c372b7c6137ad945e9f1aa"
+    },
+    "baseline-before-state-11.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-11.json",
+      "sha256": "df9afcfb45412790e6787b981e469c3f7fd35234f313ac1d7d3df3b9c6546970"
+    },
+    "baseline-before-state-12.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-12.json",
+      "sha256": "3c3094f428cbe700fe7517011ba56ffa570a8be855be6443c2c0938c9ad2981e"
+    },
+    "baseline-before-state-13.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-13.json",
+      "sha256": "8041b25c2c65fe16e8eb2db67c071151c50e56d224309d5e7bc1847cc083edfe"
+    },
+    "baseline-before-state-14.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-14.json",
+      "sha256": "39d7d59309c3dc7aa09ba0d1aeec24ef91996effd418db9f6f414f5851257157"
+    },
+    "baseline-before-state-15.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-15.json",
+      "sha256": "ffdf137be3c9d2db8c07e5eb5d6539931239dd3ffbf6675b4ca95c622992a7dc"
+    },
+    "baseline-before-state-16.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-16.json",
+      "sha256": "f4e5ae8e22cc083e81c8811ac7689011219a4365b4e7319a8744eb7ef370bb5e"
+    },
+    "baseline-before-state-17.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-17.json",
+      "sha256": "b8974a06ac63539e69b065542031f58d5010aa82555650fa9797e5e7e710b1ea"
+    },
+    "baseline-before-state-18.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-18.json",
+      "sha256": "fb61545b484053c37f47feab3693552dfd6300a22aec9fa205bf00f46bbca712"
+    },
+    "baseline-before-state-19.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-19.json",
+      "sha256": "e4eb04c4fccd312bdb6be32d224593f0d8f68bb387581636b119638aa18974e6"
+    },
+    "baseline-before-state-20.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-20.json",
+      "sha256": "439346fd1b513c427614cd03c366218b3e54d00f03635fc97715f9d65abd98c7"
+    },
+    "baseline-before-state-21.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-21.json",
+      "sha256": "21ed54e7a9963dafc922a25c23550833cf1a6451e68df2ae604727b039b961e8"
+    },
+    "baseline-before-state-22.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-22.json",
+      "sha256": "7140a131c86058eea76aa84c1d7754937b025cb6ded3bd9945d3784e98a1b9e4"
+    },
+    "baseline-before-state-23.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-23.json",
+      "sha256": "a0971938b801024fda221167e2401ef2cbaa1939d98bc7ac17778c5305ada153"
+    },
+    "baseline-before-state-24.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-24.json",
+      "sha256": "c4ae31855d012a018594d5db97026317cab786071e57ff6940fee09ba65ecb2e"
+    },
+    "baseline-before-state-25.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-25.json",
+      "sha256": "be30b4e18ed26f5833fb10be717099f0deb84cde29471f0b3cf4cc03a3cf7af9"
+    },
+    "baseline-before-state-26.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-26.json",
+      "sha256": "cf3a0bd3e7367d3435c81d85cb669321c1d122e5c1f36727262a49ce5448eb55"
+    },
+    "baseline-before-state-27.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-27.json",
+      "sha256": "fe3cbe62f1e87c189ad94d9419369d77cb4321699ba347387fb26f58f341f5a3"
+    },
+    "baseline-before-state-28.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-28.json",
+      "sha256": "9b25b27b46b3dcedc85e434fb3844fa33e4b15fcb6502fd4140ead310e37ea09"
+    },
+    "baseline-before-state-29.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-29.json",
+      "sha256": "bc36bd7eec3c9328e5293a177ac113fb4d616801f0ad0a4cabb6d03594cb1599"
+    },
+    "baseline-before-state-30.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-30.json",
+      "sha256": "71e9f012d9e7477af5b99e9616a620c2fab2e5aa272ed7a5f926537fd3f8ecb7"
+    },
+    "baseline-before-state-31.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-31.json",
+      "sha256": "c242691437e88e9463368b6dd51c5249bdc559ceb11913e807cf590ab3971891"
+    },
+    "baseline-before-state-32.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-32.json",
+      "sha256": "8be4b1ea39bab5be9fcb3f069d997f197093520465b4b31de25188374c10d790"
+    },
+    "baseline-before-state-33.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-33.json",
+      "sha256": "29afdb4fbb32ffe8548b3bbe8761043d31d4356bfb72fddf9117e7c3f624dcb5"
+    },
+    "baseline-before-state-34.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-34.json",
+      "sha256": "ae5ccb9532a4815fed12b2806103b32a8a9ce78f495d8e2acbead2e9d8023617"
+    },
+    "baseline-before-state-35.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-35.json",
+      "sha256": "e3e9f0605640f7d8511a14c4a135c4816e9e05dbdf891622f1d4fe0e83fad8c3"
+    },
+    "baseline-before-state-36.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-36.json",
+      "sha256": "48589ce7653dc7875cddd73f193490e8d785b5e993244f11d831874b352dcbae"
+    },
+    "baseline-before-state-37.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-37.json",
+      "sha256": "1338aafdabc69c721787c1c7f091b60db7935e346912b0eecfaa21702ee9c41c"
+    },
+    "baseline-before-state-38.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-38.json",
+      "sha256": "0f4ce818ce834fa0325ee66c256eb091eae8cdf825d78e26de468006f4c96aff"
+    },
+    "baseline-before-state-39.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/before-state-39.json",
+      "sha256": "a98231d3cd3f8e2db59e0922ba4a0ad5b0d6db52110e4230261248b22316e8b7"
+    },
+    "experiment-freeze.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/experiment-freeze.json",
+      "sha256": "f6d782ab8dbb53814f42ae86166b4b5463adcb1fba5d0891266e0720a0c742c4"
+    },
+    "teacher-00.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-00.json",
+      "sha256": "7950ffecb97f0972ea86fee79a46a7ceb4219d5520bf7e9efc0c802fec73d18a"
+    },
+    "teacher-01.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-01.json",
+      "sha256": "7a28ee779a64708ee6b86f74e7d27ffaf719546693ee43c77aad05170d5433be"
+    },
+    "teacher-02.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-02.json",
+      "sha256": "d368d615bdb30aef0a43dc761da3aba42bd8515517b6f843db6701ab473c8b13"
+    },
+    "teacher-03.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-03.json",
+      "sha256": "7710cd4cdcfdf7c77ee39d40d6bcc969e6754951226a135c8d69866ffd67cd70"
+    },
+    "teacher-04.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-04.json",
+      "sha256": "d53063622261ac5b61cbf4d54e999479fa9a4c7f339afcc10e7d2d04c35b5584"
+    },
+    "teacher-05.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-05.json",
+      "sha256": "0ef8ac5363950a22ebd07558fd223ddfcaed21b096371b68bcc86bf6746caf53"
+    },
+    "teacher-06.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-06.json",
+      "sha256": "253cb47a9d41a76424eb23d1bef29e25d3cfb1761436a7446600c46f3953088a"
+    },
+    "teacher-07.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-07.json",
+      "sha256": "24a422b2ddb43737c4089c3b2a8f8708e5ddbb6405cecaf95ea6b3eb262240db"
+    },
+    "teacher-08.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-08.json",
+      "sha256": "24546d398bd281790cd8ec3b61834413c650f39a0c20095b94f1a735ff826811"
+    },
+    "teacher-09.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-09.json",
+      "sha256": "91887860668a827de538ba955ce92454f6ce1e1fb8425d88f4617f85e2f2d428"
+    },
+    "teacher-10.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-10.json",
+      "sha256": "7edce9f2c9df90357e67e9ab7ee728363d6a2b698d5ac1310c73a3e72f7b1b36"
+    },
+    "teacher-11.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-11.json",
+      "sha256": "b196fb216157d448716308871fd1c87ceb1342700ade6b9399a2d11bddf0157e"
+    },
+    "teacher-12.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-12.json",
+      "sha256": "6eab8b96a33d5d4cd31bed22489fa66c27a27916bfb1820491c0e80a3470359f"
+    },
+    "teacher-13.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-13.json",
+      "sha256": "a81c3bb8ff0bb2c29cf93acb4870ef70c3367fa5030e442cae17d614719f67a6"
+    },
+    "teacher-14.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-14.json",
+      "sha256": "ce55b8f32ec7759e19bb51d8ca705f24c3f06b34059267f923ab8289462cb56f"
+    },
+    "teacher-15.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-15.json",
+      "sha256": "f3468d43739f2b7c19dc6ec45577a8763caa0199effb8c56166b3dbb86fbef81"
+    },
+    "teacher-16.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-16.json",
+      "sha256": "37e8c40119774afe6fbc832a277d254e601a75c98d876cd05dad7023bfb96190"
+    },
+    "teacher-17.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-17.json",
+      "sha256": "68ca0b7def4e5ccf3bfdc9e6f3774925b991eaa6d5f50826b3a0f436fece3889"
+    },
+    "teacher-18.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-18.json",
+      "sha256": "d859168690734bdd5056f8214b642ea1628eeaa350bf99d7dd58cd66e168b478"
+    },
+    "teacher-19.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-19.json",
+      "sha256": "f0254deefa0105139e7402c2ece9f146510612e302463f8169ab4066332dc070"
+    },
+    "teacher-20.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-20.json",
+      "sha256": "710e8f4109db43aa5bd16f1799053121e23bcb44aa03185b49e48a4409638ff3"
+    },
+    "teacher-21.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-21.json",
+      "sha256": "d1c5e9eea87a41f30861200be75b70b49ef5d25f1a1292262650ef7364ad2cd0"
+    },
+    "teacher-22.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-22.json",
+      "sha256": "cdcaca9e969f5557ce8e6d33d45075afe4a0fc821821a39f0999d1f1ab27cb19"
+    },
+    "teacher-23.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-23.json",
+      "sha256": "5e225812ff3c4f595d3a31e295ef1a707edb0ebf626d25ba2e09659ca03724ef"
+    }
+  },
+  "refit_experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+  "version": "fixed-full40-TRAIN-goal-relation-inputs-v1"
+}

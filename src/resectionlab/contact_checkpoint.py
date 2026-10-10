@@ -56,8 +56,8 @@ def initial_lineage(experiment):
     if type(experiment) is not ContactExperiment: raise TypeError('Frozen contact experiment required')
     return {'kind': 'initial', 'method': 'COMMON_INITIALIZATION', 'experiment_hash': experiment.fingerprint,
         'family_hash': experiment.manifest['family_hash'], 'learning_contract_version': experiment.record()['version'],
-        'optimizer_updates': 0, 'initial_parameter_hash': expected_initial_parameter_hash(),
-        'parameter_hash': expected_initial_parameter_hash(), 'training_bindings': [],
+        'optimizer_updates': 0, 'initial_parameter_hash': expected_initial_parameter_hash(experiment.policy_variant),
+        'parameter_hash': expected_initial_parameter_hash(experiment.policy_variant), 'training_bindings': [],
         'training_status': 'not_started', 'real_patient_count': 0}
 
 
@@ -103,7 +103,7 @@ def _validate_lineage(lineage, experiment, *, kind):
             or lineage['family_hash'] != experiment.manifest['family_hash']
             or lineage['learning_contract_version'] != experiment.record()['version'] or type(lineage['real_patient_count']) is not int
             or lineage['real_patient_count'] != 0 or type(lineage['optimizer_updates']) is not int
-            or lineage['initial_parameter_hash'] != expected_initial_parameter_hash()):
+            or lineage['initial_parameter_hash'] != expected_initial_parameter_hash(experiment.policy_variant)):
         raise ValueError('Checkpoint training lineage differs from frozen generated experiment')
     if kind == 'initial':
         if semantic_digest(lineage) != semantic_digest(initial_lineage(experiment)):
@@ -129,7 +129,7 @@ def _validate_lineage(lineage, experiment, *, kind):
 
 
 def encode_contact_checkpoint(policy, experiment, lineage):
-    if type(policy) is not GoalModeSpatialPolicy or policy.architecture_hash != experiment.record()['architecture_hash']:
+    if type(policy) is not experiment.policy_type or policy.architecture_hash != experiment.record()['architecture_hash']:
         raise ValueError('Only the new exact goal/mode architecture is a contact checkpoint')
     lineage = freeze_json(lineage); _validate_lineage(lineage, experiment, kind=lineage['kind'])
     if lineage['parameter_hash'] != parameter_hash(policy): raise ValueError('Lineage parameter hash changed')
@@ -142,7 +142,7 @@ def encode_contact_checkpoint(policy, experiment, lineage):
         payloads[filename] = payload
         entries.append({'name': name, 'entry': filename, 'shape': list(array.shape), 'dtype': '<f4',
                         'sha256': hashlib.sha256(payload).hexdigest()})
-    metadata = {'version': CHECKPOINT_VERSION, 'architecture': policy.architecture_record(),
+    metadata = {'version': policy.checkpoint_identity()['version'], 'architecture': policy.architecture_record(),
         'architecture_hash': policy.architecture_hash, 'parameter_hash': parameter_hash(policy),
         'lineage': lineage, 'tensors': entries, 'format': 'bounded_zip_stored_json_float32_npy_v1'}
     metadata_bytes = json.dumps(thaw_json(freeze_json(metadata)), sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
@@ -168,7 +168,7 @@ def decode_contact_checkpoint(payload, *, expected_sha256, experiment, kind):
     if (type(payload) is not bytes or not 0 < len(payload) <= MAX_BYTES
             or hashlib.sha256(payload).hexdigest() != expected_sha256):
         raise ValueError('Checkpoint bytes/hash differ from expected bounded artifact')
-    with torch.random.fork_rng(devices=[]): model = GoalModeSpatialPolicy(policy_config())
+    with torch.random.fork_rng(devices=[]): model = experiment.policy_type(policy_config())
     expected = model.state_dict()
     with zipfile.ZipFile(io.BytesIO(payload)) as archive:
         infos = archive.infolist(); names = [info.filename for info in infos]
@@ -179,7 +179,7 @@ def decode_contact_checkpoint(payload, *, expected_sha256, experiment, kind):
             raise ValueError('Invalid bounded checkpoint archive inventory')
         metadata = json.loads(archive.read('manifest.json'), object_pairs_hook=_unique_json)
         if (set(metadata) != {'version', 'architecture', 'architecture_hash', 'parameter_hash', 'lineage', 'tensors', 'format'}
-                or metadata['version'] != CHECKPOINT_VERSION
+                or metadata['version'] != model.checkpoint_identity()['version']
                 or metadata['format'] != 'bounded_zip_stored_json_float32_npy_v1'
                 or metadata['architecture_hash'] != model.architecture_hash
                 or semantic_digest(metadata['architecture']) != semantic_digest(model.architecture_record())):

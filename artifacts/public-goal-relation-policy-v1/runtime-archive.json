@@ -1,0 +1,43 @@
+{
+  "authorization": "Source archive is not permission to execute; root separately releases tests and any one fit.",
+  "execution": "Restore each source to its exact repository-relative source path; do not execute from archive directories.",
+  "files": [
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "source": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/goal-relation-policy-v1/relation_fit_worker.py",
+      "bytes": 15175,
+      "sha256": "2d12134b2459f9be29cba09920d038f22bb5e75150ec5a950f5046f17174429e",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/relation_fit_worker.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/goal-relation-policy-v1/run_relation_fit_owned.py",
+      "bytes": 5675,
+      "sha256": "95a47f657a3272958e150d987d286d932a7afae5cdc7b84be4753cab1dcb9dc5",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/run_relation_fit_owned.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+      "source": "build/goal-conditioned-policy-v1/run_contact_owned.py"
+    },
+    {
+      "archive": "runtime-source-tree/build/goal-conditioned-policy-v1/train_diagnostic_readout.py",
+      "bytes": 5125,
+      "sha256": "a80b760eb2dea363c6646161c20e41f7028a3dc8c48c07616c6610b387a66a33",
+      "source": "build/goal-conditioned-policy-v1/train_diagnostic_readout.py"
+    }
+  ],
+  "inputs": "97 JSON records remain referenced by immutable input-index hashes; histories/arrays/weights are not duplicated.",
+  "restore_without_editing": {
+    "input_index": "prospective/input-index.json",
+    "recipe": "prospective/run-recipe.json",
+    "runtime_index": "prospective/source-index.json"
+  },
+  "version": "exact-ignored-runtime-source-archive-v1"
+}

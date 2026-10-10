@@ -1,0 +1,5 @@
+env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_goal_relation_spatial_policy.py tests/test_goal_mode_spatial_policy.py tests/test_contact_learning.py tests/test_contact_full_teacher_refit.py tests/test_public_contact_family_structural.py tests/test_desktop_development_episode.py
+
+Root terminal result:107 passed in9.07s. Exact log and hashes:canonical-test-receipt.json.
+Six new controls plus old policy, learning/checkpoint, full40, family and legacy exporter compatibility.
+The model fit remains unexecuted and requires a separate root release.

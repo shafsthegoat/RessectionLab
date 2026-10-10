@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from .core import freeze_json, semantic_digest
 from .goal_mode_spatial_policy import GoalModeSpatialPolicy
+from .goal_relation_spatial_policy import GoalRelationSpatialPolicy
 from .public_surface_contact import OBSERVATION_VERSION, SurfaceContactDevelopmentContext
 from .spatial_policy import parameter_hash
 
@@ -19,7 +20,7 @@ def plan_goal_mode_strategy(policy, task, *, context):
     and termination. Geometry, candidate certification, modes, reward and state
     evolution therefore remain owned by the existing NativeSpatialTask path.
     """
-    if type(policy) is not GoalModeSpatialPolicy:
+    if type(policy) not in (GoalModeSpatialPolicy, GoalRelationSpatialPolicy):
         raise TypeError("Shared contact planner requires the versioned goal/mode policy")
     if type(context) is not SurfaceContactDevelopmentContext:
         raise TypeError("Shared contact planner requires its captured public task context")

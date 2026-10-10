@@ -22,10 +22,10 @@ class ContactLearningSession:
 
     def __post_init__(self):
         if (type(self.experiment) is not ContactExperiment or self.method not in self.experiment.protocol['methods']
-                or type(self.policy) is not GoalModeSpatialPolicy or self.updates != 0
+                or type(self.policy) is not self.experiment.policy_type or self.updates != 0
                 or self.policy.architecture_hash != self.experiment.record()['architecture_hash']
                 or parameter_hash(self.policy) != self.initial_parameter_hash
-                or self.initial_parameter_hash != expected_initial_parameter_hash()):
+                or self.initial_parameter_hash != expected_initial_parameter_hash(self.experiment.policy_variant)):
             raise ValueError('New common-initialized policy and exact fixed learning contract required')
         self._session_identity = (id(self.experiment), self.experiment.fingerprint, self.method,
             id(self.policy), self.initial_parameter_hash, self.policy.architecture_hash)

@@ -1,0 +1,65 @@
+{
+  "architecture_hash": "sha256:3889a11c26502b85ea02dd8ff4f6be214f5d0828cd2e7bc5e50320505d1762e9",
+  "baseline_full40_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+  "files": [
+    {
+      "destination": "src/resectionlab/contact_checkpoint.py",
+      "previous_sha256": "f696facdacfb92f19a0816abfecd506eeb16b6426adb67f53a7c5f158b9e3877",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/contact_checkpoint.py",
+      "source_sha256": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40"
+    },
+    {
+      "destination": "src/resectionlab/contact_costs.py",
+      "previous_sha256": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/contact_costs.py",
+      "source_sha256": "def9a4eee4bcb289823e306385d83b94d0e1d3efb6c1f9675ba5b8bbbfa90a14"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_desktop_bridge.py",
+      "previous_sha256": "d187ed35ac3b66166b5356539a9826eeb76f60068a6bd0d7eb26f315cda2ff1d",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/contact_family_desktop_bridge.py",
+      "source_sha256": "286ee14708ee2a745407b5a8f49871142ddcab20ea3f3d08519ccba45b9cc745"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_supervisor.py",
+      "previous_sha256": "4ab53f23a49ac61340ec5738e8240500a0eb67118177c8b5c2d8d5056b1e06f8",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/contact_family_supervisor.py",
+      "source_sha256": "06b2ee711b6840f26e34f542555ae9081997a0b6baddb5ac8af103251ca5db61"
+    },
+    {
+      "destination": "src/resectionlab/contact_learning.py",
+      "previous_sha256": "9f969bc9773bbaacdb2cb79e2c071c5412ad74c2793b8b536274afc9ce143368",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/contact_learning.py",
+      "source_sha256": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b"
+    },
+    {
+      "destination": "src/resectionlab/contact_learning_contract.py",
+      "previous_sha256": "f592b6308e3ef382261a4fc505fac5e0b0a9780a8682bfefa1c1a8efe1ad911f",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/contact_learning_contract.py",
+      "source_sha256": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19"
+    },
+    {
+      "destination": "src/resectionlab/goal_mode_episode_adapter.py",
+      "previous_sha256": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/goal_mode_episode_adapter.py",
+      "source_sha256": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865"
+    },
+    {
+      "destination": "src/resectionlab/goal_relation_spatial_policy.py",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/src/resectionlab/goal_relation_spatial_policy.py",
+      "source_sha256": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd"
+    },
+    {
+      "destination": "tests/test_goal_relation_spatial_policy.py",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/stage/tests/test_goal_relation_spatial_policy.py",
+      "source_sha256": "d8236ff1ea0530d61b1caea706af66a6e484d000d7c08e89df74104001bb08d9"
+    }
+  ],
+  "patch_sha256": "f2852b977966f755a1c1880a8bd049306a53535a3e2aa8e3801bc60cba6dc17e",
+  "source_index_sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+  "tests_status": "staged_unexecuted",
+  "version": "goal-relation-fit-source-proposal-v1"
+}

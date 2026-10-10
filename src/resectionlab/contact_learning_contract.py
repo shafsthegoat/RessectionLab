@@ -35,6 +35,9 @@ PROTOCOL = freeze_json({'version': VERSION, 'seed': 20261009,
     'unresolved_teachers': 'preserve_slot_without_label_no_replacement',
     'hybrid_arm': False})
 
+RELATION_FIT_VERSION = 'generated-public-contact-goal-relation-fit-v1'
+RELATION_VARIANT = 'public_goal_tip_relation_v1'
+
 FULL_TEACHER_VERSION = 'generated-public-contact-full-teacher-refit-v1'
 FULL_TEACHER_PROTOCOL = freeze_json({**thaw_json(PROTOCOL), 'version': FULL_TEACHER_VERSION,
     'methods': ['IL'], 'batch_size': 40, 'select_passes': 0, 'measurement_passes': 0,
@@ -43,6 +46,12 @@ FULL_TEACHER_PROTOCOL = freeze_json({**thaw_json(PROTOCOL), 'version': FULL_TEAC
     'initialization': 'same_fresh_scratch_seed_not_a_pilot_checkpoint',
     'loss_forward_calls': 1280, 'fixed_before_after_TRAIN_forwards': 80,
     'method_seconds': 180., 'scope': 'extra_compute_TRAIN_optimization_diagnosis_no_comparison_claim'})
+
+
+RELATION_FIT_PROTOCOL = freeze_json({**thaw_json(FULL_TEACHER_PROTOCOL), 'version': RELATION_FIT_VERSION,
+    'policy_variant': RELATION_VARIANT, 'shared_initialization': 'exact_original_shared_tensors;added_columns_zero',
+    'baseline_shared_initial_parameter_hash': 'sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487',
+    'comparison': 'fixed_full40_baseline_same_updates_samples_forwards;report_extra_parameters_and_actual_cost'})
 
 
 def _validated_teacher_states(manifest, states):
@@ -89,9 +98,17 @@ def policy_config():
     return SpatialPolicyConfig(**thaw_json(PROTOCOL['architecture_config']))
 
 
-def policy_architecture_hash():
+def policy_class(variant=None):
+    if variant is None: return GoalModeSpatialPolicy
+    if variant == RELATION_VARIANT:
+        from .goal_relation_spatial_policy import GoalRelationSpatialPolicy
+        return GoalRelationSpatialPolicy
+    raise ValueError('Unknown explicit policy variant')
+
+
+def policy_architecture_hash(variant=None):
     with torch.random.fork_rng(devices=[]):
-        return GoalModeSpatialPolicy(policy_config()).architecture_hash
+        return policy_class(variant)(policy_config()).architecture_hash
 
 
 @dataclass(frozen=True)
@@ -99,10 +116,13 @@ class ContactExperiment:
     """Full source-only manifest frozen before the first teacher or rollout."""
     manifest: Mapping
     teacher_states: tuple[Mapping, ...] | None = None
+    policy_variant: str | None = None
     _identity: str = field(init=False, repr=False)
     _architecture_hash: str = field(init=False, repr=False)
 
     def __post_init__(self):
+        if self.policy_variant not in (None, RELATION_VARIANT) or (self.policy_variant is not None and self.teacher_states is None):
+            raise ValueError('Goal-relation fit requires the exact full40 TRAIN corpus')
         candidate = freeze_json(self.manifest)
         # Validate canonical sources/roles, not a caller-written TRAIN label.
         if semantic_digest(candidate) != semantic_digest(family_manifest()):
@@ -110,7 +130,7 @@ class ContactExperiment:
         object.__setattr__(self, 'manifest', candidate)
         if self.teacher_states is not None:
             object.__setattr__(self, 'teacher_states', _validated_teacher_states(candidate, self.teacher_states))
-        object.__setattr__(self, '_architecture_hash', policy_architecture_hash())
+        object.__setattr__(self, '_architecture_hash', policy_architecture_hash(self.policy_variant))
         object.__setattr__(self, '_identity', semantic_digest(self.record()))
 
     def record(self):
@@ -119,10 +139,17 @@ class ContactExperiment:
         if self.teacher_states is not None:
             record.update(version=FULL_TEACHER_VERSION, protocol=FULL_TEACHER_PROTOCOL,
                           teacher_states=self.teacher_states)
+        if self.policy_variant is not None:
+            record.update(version=RELATION_FIT_VERSION, protocol=RELATION_FIT_PROTOCOL, policy_variant=self.policy_variant)
         return record
 
     @property
+    def policy_type(self):
+        return policy_class(self.policy_variant)
+
+    @property
     def protocol(self):
+        if self.policy_variant is not None: return RELATION_FIT_PROTOCOL
         return PROTOCOL if self.teacher_states is None else FULL_TEACHER_PROTOCOL
 
     def assert_intact(self):
@@ -158,6 +185,10 @@ def freeze_contact_experiment():
 def freeze_full_teacher_refit(teacher_states):
     """Explicit opt-in; default pilot records and checkpoint identities stay exact."""
     return ContactExperiment(family_manifest(), teacher_states=teacher_states)
+
+
+def freeze_goal_relation_fit(teacher_states):
+    return ContactExperiment(family_manifest(), teacher_states=teacher_states, policy_variant=RELATION_VARIANT)
 
 
 @dataclass(frozen=True)
@@ -265,13 +296,13 @@ def common_initial_policies(experiment):
     for method in experiment.protocol['methods']:
         with torch.random.fork_rng(devices=[]):
             torch.manual_seed(PROTOCOL['seed'])
-            policies[method] = GoalModeSpatialPolicy(policy_config())
+            policies[method] = experiment.policy_type(policy_config())
     if len({parameter_hash(policy) for policy in policies.values()}) != 1:
         raise RuntimeError('Common scratch initialization differed')
     return policies
 
 
-def expected_initial_parameter_hash():
+def expected_initial_parameter_hash(variant=None):
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(PROTOCOL['seed'])
-        return parameter_hash(GoalModeSpatialPolicy(policy_config()))
+        return parameter_hash(policy_class(variant)(policy_config()))

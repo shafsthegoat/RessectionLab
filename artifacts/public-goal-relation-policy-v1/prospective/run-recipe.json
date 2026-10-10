@@ -1,0 +1,28 @@
+{
+  "baseline_full40_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "caps": {
+    "attempts": 1,
+    "geometry_previews": 2048,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "threads": 1,
+    "wall_seconds": 180
+  },
+  "command": ".venv/bin/python build/goal-conditioned-policy-v1/goal-relation-policy-v1/run_relation_fit_owned.py --expected-head <PROMOTED_COMMIT> --source-index build/goal-conditioned-policy-v1/goal-relation-policy-v1/source-index.json --source-index-sha256 c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+  "counts": {
+    "checkpoint_loads": 1,
+    "loss_forwards": 1280,
+    "native_teacher_steps": 40,
+    "prior_checkpoint_loads": 0,
+    "readout_forwards": 80,
+    "search_calls": 0,
+    "states": 40,
+    "tasks": 24,
+    "updates": 32
+  },
+  "experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+  "output": "build/goal-conditioned-policy-v1/goal-relation-fit-run-v1",
+  "promotion_index_sha256": "d9aedf35f5819bb350951ce11f0172e893e70a7e7553614fad3c2d5b034ea512",
+  "shared_initialization": "all shared tensors exact;added704 parameters zero;all40 initial readouts compared to saved baseline before any update",
+  "source_index_sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+  "status": "STAGED_NOT_RELEASED_NOT_EXECUTED"
+}

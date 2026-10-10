@@ -1,0 +1,43 @@
+{
+  "argv": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_goal_relation_spatial_policy.py",
+    "tests/test_goal_mode_spatial_policy.py",
+    "tests/test_contact_learning.py",
+    "tests/test_contact_full_teacher_refit.py",
+    "tests/test_public_contact_family_structural.py",
+    "tests/test_desktop_development_episode.py"
+  ],
+  "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_goal_relation_spatial_policy.py tests/test_goal_mode_spatial_policy.py tests/test_contact_learning.py tests/test_contact_full_teacher_refit.py tests/test_public_contact_family_structural.py tests/test_desktop_development_episode.py",
+  "cwd": "repository root",
+  "env": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "fit_executed": false,
+  "new_controls": 6,
+  "reason": "root supplied terminal canonical log; fit remains unexecuted",
+  "root_terminal_result": {
+    "log_sha256": "c7f97ceeb7e0db7c132d0da73cf06cd128b213e31c740dc030091cb10f696a90",
+    "passed": 107,
+    "pytest_elapsed_seconds": 9.07,
+    "receipt_sha256": "7a1ff0c30d2192e418d018ebf17eea8517bcd0aed7ce32dd205449b500f0cff5"
+  },
+  "status": "PASS_ROOT_CANONICAL_107",
+  "test_source_sha256": {
+    "tests/test_contact_full_teacher_refit.py": "2d9b4dcc9c4bbfb6f7232452b777b1932af1d5c90039019b81723d043e5f3811",
+    "tests/test_contact_learning.py": "82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200",
+    "tests/test_desktop_development_episode.py": "dc80cd05d0cf9bf6aba61deafd22d423881ff4942d6f9bc6c1f7f6a871ce00ca",
+    "tests/test_goal_mode_spatial_policy.py": "12773c247425c802e1ecc53e8899f0e7049d8b53a6413cf84cbc56e4f336281b",
+    "tests/test_goal_relation_spatial_policy.py": "d8236ff1ea0530d61b1caea706af66a6e484d000d7c08e89df74104001bb08d9",
+    "tests/test_public_contact_family_structural.py": "f1b3edd2e7de4b2cb8e668d55d23fceb6efdc64da358a4e8597bba5c4307d8f3"
+  },
+  "tests_executed": true
+}

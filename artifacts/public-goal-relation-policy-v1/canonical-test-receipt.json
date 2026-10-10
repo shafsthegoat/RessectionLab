@@ -1,0 +1,36 @@
+{
+  "additional_execution_by_packager": false,
+  "canonical_test_source_pins": {
+    "tests/test_contact_full_teacher_refit.py": "2d9b4dcc9c4bbfb6f7232452b777b1932af1d5c90039019b81723d043e5f3811",
+    "tests/test_contact_learning.py": "82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200",
+    "tests/test_desktop_development_episode.py": "dc80cd05d0cf9bf6aba61deafd22d423881ff4942d6f9bc6c1f7f6a871ce00ca",
+    "tests/test_goal_mode_spatial_policy.py": "12773c247425c802e1ecc53e8899f0e7049d8b53a6413cf84cbc56e4f336281b",
+    "tests/test_goal_relation_spatial_policy.py": "d8236ff1ea0530d61b1caea706af66a6e484d000d7c08e89df74104001bb08d9",
+    "tests/test_public_contact_family_structural.py": "f1b3edd2e7de4b2cb8e668d55d23fceb6efdc64da358a4e8597bba5c4307d8f3"
+  },
+  "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_goal_relation_spatial_policy.py tests/test_goal_mode_spatial_policy.py tests/test_contact_learning.py tests/test_contact_full_teacher_refit.py tests/test_public_contact_family_structural.py tests/test_desktop_development_episode.py",
+  "current_nine_source_pins": {
+    "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+    "src/resectionlab/contact_costs.py": "def9a4eee4bcb289823e306385d83b94d0e1d3efb6c1f9675ba5b8bbbfa90a14",
+    "src/resectionlab/contact_family_desktop_bridge.py": "286ee14708ee2a745407b5a8f49871142ddcab20ea3f3d08519ccba45b9cc745",
+    "src/resectionlab/contact_family_supervisor.py": "06b2ee711b6840f26e34f542555ae9081997a0b6baddb5ac8af103251ca5db61",
+    "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+    "src/resectionlab/contact_learning_contract.py": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+    "src/resectionlab/goal_mode_episode_adapter.py": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+    "tests/test_goal_relation_spatial_policy.py": "d8236ff1ea0530d61b1caea706af66a6e484d000d7c08e89df74104001bb08d9"
+  },
+  "fit_executed": false,
+  "log_bytes": 180,
+  "log_sha256": "c7f97ceeb7e0db7c132d0da73cf06cd128b213e31c740dc030091cb10f696a90",
+  "log_source": "build/goal-conditioned-policy-v1/goal-relation-policy-v1/root-canonical-tests.log",
+  "passed": 107,
+  "pytest_elapsed_seconds": 9.07,
+  "reported_by": "root",
+  "result": "107 passed in 9.07s",
+  "runtime_recipe_unchanged": true,
+  "runtime_source_index_unchanged": true,
+  "source_promotion_sha256": "d9aedf35f5819bb350951ce11f0172e893e70a7e7553614fad3c2d5b034ea512",
+  "status": "PASS",
+  "version": "root-canonical-relation-test-receipt-v1"
+}
