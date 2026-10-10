@@ -1,0 +1,33 @@
+{
+  "schema": "hbe-v5-torsion-source-candidate-v1",
+  "status": "v3_test_guard_repair_source_review_and_controls_pending",
+  "execution_released": false,
+  "upstream": null,
+  "false_release_sha256": "e43c8d1986822400d5861dcd3fc3a9317bfa176fd13f6120605060fec30dc60f",
+  "files": [
+    {
+      "path": "scripts/mechanics_hbe_v5_torsion_evaluation.py",
+      "sha256": "f9b5c22b1c7954e49f8553a085de7758ea5e67daf0f90c0db0e04fd2c5dc4304"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "sha256": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2"
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+      "sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072"
+    },
+    {
+      "path": "tests/test_hbe_v5_torsion_evaluation.py",
+      "sha256": "cab0bd901321ff6d0f99b714205ef4fc0e0a1484630fdc777f22fb663b340408"
+    }
+  ],
+  "tests_run": false,
+  "native_calls": 0,
+  "fit_calls": 0,
+  "actual_predictions_read": false,
+  "measured_response_reads": 0,
+  "prior_candidate": "build/hbe-v5-torsion-readout-adapter-v2/source-index.json",
+  "prior_test_sha256": "6a54bf72d5816e15fac18454952ba02a7f93c8a6c0dcc0a1b05b521d3925b610",
+  "test_only_delta": true
+}

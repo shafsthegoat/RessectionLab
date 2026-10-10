@@ -1,0 +1,12 @@
+Source-only review of the test-fixture repair: no blocker found.
+
+The socket.socket class is retained so ssl.SSLSocket can subclass it normally. Six instance network entry methods and two module entry methods still refuse calls; a new control checks class preservation and those refusals without constructing a socket. The outer generated runner's process/socket audit remains active. Scientific core, launcher, declaration and false release are byte-identical to V2.
+
+Repaired test SHA256 cab0bd901321ff6d0f99b714205ef4fc0e0a1484630fdc777f22fb663b340408.
+Runner SHA256 b8ccb4ebe46ecc4ba3bfb1854401e61784dab53999bc495429f1eb2d320cc97e.
+The runner differs from attempt02 only in TEST_SHA and the new attempt03 output directory. Its own directory selects the preserved V3 source/test staging copy. Earlier runner/logging fix and exact traceback-source guard remain unchanged.
+
+Root-only command, not run by reviewer:
+.venv/bin/python -I -S -B build/hbe-v5-torsion-readout-adapter-v3/run_generated_controls_v3.py
+
+Output: build/hbe-v5-torsion-generated-controls-v2/attempt-03. Same 20-second total acceptance envelope, one thread, 512-MiB sampled RSS and 1-MiB log cap. Original attempts01/02 remain untouched. No scientific measurements were read by this repair/review; no imports, tests, compilation or runner execution by reviewer. Final source GO still requires root's passing saved test, guard and cleanup results.

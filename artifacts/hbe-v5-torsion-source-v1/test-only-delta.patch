@@ -1,0 +1,29 @@
+diff --git a/build/hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py b/build/hbe-v5-torsion-readout-adapter-v3/stage/tests/test_hbe_v5_torsion_evaluation.py
+index d1b54ad..64ec714 100644
+--- a/build/hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py
++++ b/build/hbe-v5-torsion-readout-adapter-v3/stage/tests/test_hbe_v5_torsion_evaluation.py
+@@ -31,7 +31,23 @@ def no_process(monkeypatch):
+     import socket
+     def forbidden(*a,**k):raise AssertionError('No process/network in generated tests')
+     monkeypatch.setattr(subprocess,'Popen',forbidden)
+-    monkeypatch.setattr(socket,'socket',forbidden)
++    # Keep the class intact: ssl.SSLSocket subclasses it during source imports.
++    for name in ('connect','connect_ex','bind','listen','accept','sendto'):
++        monkeypatch.setattr(socket.socket,name,forbidden)
++    for name in ('create_connection','getaddrinfo'):
++        monkeypatch.setattr(socket,name,forbidden)
++
++
++def test_network_guard_preserves_socket_class_and_refuses_entry():
++    import socket
++    import ssl
++    assert isinstance(socket.socket,type) and issubclass(ssl.SSLSocket,socket.socket)
++    for name in ('connect','connect_ex','bind','listen','accept','sendto'):
++        with pytest.raises(AssertionError,match='No process/network'):
++            getattr(socket.socket,name)(None)
++    for name in ('create_connection','getaddrinfo'):
++        with pytest.raises(AssertionError,match='No process/network'):
++            getattr(socket,name)()
+ 
+ 
+ def saved(root,name,value):

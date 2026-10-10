@@ -1,0 +1,679 @@
+..........................FFFFFFFFF.                                     [100%]
+=================================== FAILURES ===================================
+_____________ test_fake_parent_wiring_and_durable_failure[success] _____________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a7efec0>
+mode = 'success'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+_________ test_fake_parent_wiring_and_durable_failure[observer_raise] __________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10abaac00>
+mode = 'observer_raise'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+_____________ test_fake_parent_wiring_and_durable_failure[timeout] _____________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a2da480>
+mode = 'timeout'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+__________ test_fake_parent_wiring_and_durable_failure[cleanup_eperm] __________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ac5a6c0>
+mode = 'cleanup_eperm'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+____________ test_fake_parent_wiring_and_durable_failure[unreaped] _____________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10abee960>
+mode = 'unreaped'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+___________ test_fake_parent_wiring_and_durable_failure[late_output] ___________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ae27650>
+mode = 'late_output'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+___________ test_fake_parent_wiring_and_durable_failure[late_source] ___________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ab7e960>
+mode = 'late_source'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+________ test_fake_parent_wiring_and_durable_failure[late_publication] _________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ae27ef0>
+mode = 'late_publication'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+_______ test_fake_parent_wiring_and_durable_failure[elapsed_after_exit0] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-generated-controls-v2/attempt-02/worker/fixtures/test_fake_parent_wiring_and_du8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10abef740>
+mode = 'elapsed_after_exit0'
+
+    @pytest.mark.parametrize('mode',['success','observer_raise','timeout','cleanup_eperm','unreaped',
+        'late_output','late_source','late_publication','elapsed_after_exit0'])
+    def test_fake_parent_wiring_and_durable_failure(tmp_path,monkeypatch,mode):
+        import sys
+        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
+        from launchers import hbe_v5_ordinal9_continuation_v1 as owned
+        rb={'path':'release.json','sha256':'2'*64}
+        release={'execution_released':True,'source_commit':'a'*40,
+                 'declaration':{'path':'declaration.json','sha256':'1'*64},'upstream':{'fixture':True}}
+        roles={'held_out_validation':{'members':[{'path':b+'.csv'} for b in core.TORSION]}}
+        declaration={'roles':saved(tmp_path,'roles.json',roles),'protocol':{'path':'protocol.json','sha256':'3'*64}}
+        clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
+               'fallback_used':False,'exit_code':0}
+        if mode=='cleanup_eperm':clean.update(errors=['killpg:PermissionError'],fallback_used=True)
+        if mode=='unreaped':clean.update(contained=False,direct_child_reaped=False,remaining_members=[999999])
+        cleanup_calls=[]
+        class Owner:
+            def cleanup(self,*a):cleanup_calls.append(True);return dict(clean)
+        monkeypatch.setattr(owned,'OwnedStage',Owner)
+        monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,declaration))
+        monkeypatch.setattr(core,'verify_sources',lambda *a,**k:None)
+        monkeypatch.setattr(core,'audit_loaded',lambda *a,**k:None)
+        monkeypatch.setattr(core,'admit_upstream',lambda *a,**k:None)
+        monkeypatch.setattr(sys,'pycache_prefix',str(tmp_path/'build/unused-parent-cache'))
+        original=core.exclusive_json;clock=launcher.time.monotonic;shift=[0.]
+        monkeypatch.setattr(launcher.time,'monotonic',lambda:clock()+shift[0])
+        def save(path,value,**kwargs):
+            if path.name=='terminal.json' and mode=='late_output':
+                (path.parent/'held-out-metrics.json').write_text('{"tampered":true}\n')
+            if path.name=='publication.json' and value.get('accepted') is True:
+                if mode=='late_source':monkeypatch.setattr(core,'check_release',lambda *a,**k:({},{}))
+                if mode=='late_publication':value={**value,'outputs':{}}
+                if mode=='elapsed_after_exit0':shift[0]=100.
+            return original(path,value,**kwargs)
+        monkeypatch.setattr(core,'exclusive_json',save)
+        def stage(kind,command,out,record,**kwargs):
+            assert kind=='readout' and '--worker' in command and '-S' in command and '-B' in command
+            assert 0<kwargs['wall_cap']<=60 and kwargs['rss_cap']==512*1024**2
+            if mode=='observer_raise':raise RuntimeError('generated observer failure')
+            metric=original(out/'held-out-metrics.json',{'physical_validation_pass':None,'empirical_tolerance':None,
+                'independent_donor_validation':False,'branches':{b:{} for b in core.TORSION}})
+            hashes={b:('4' if b.endswith('neg') else '5')*64 for b in core.TORSION}
+            observed=original(out/'observed-torsion.json',{'schema':'hbe-held-out-torsion-curves-v1',
+                'release':rb,'curves':{b:{'source_sha256':hashes[b]} for b in core.TORSION}})
+            original(out/'state.json',{'status':core.DONE,'fit_calls':0,'native_calls':0,'mesher_calls':0,
+                'held_out_member_reads':2,'held_out_responses_accessed':True,'new_freeze_saved':False,
+                'physical_validation_pass':None,'empirical_tolerance':None,'release':rb,'upstream':release['upstream'],
+                'held_out_metrics':{'path':core.OUTPUT+'/held-out-metrics.json','sha256':metric},
+                'observed_torsion':{'path':core.OUTPUT+'/observed-torsion.json','sha256':observed},'member_sha256':hashes})
+            events=[]
+            for i,phase in enumerate(('upstream_freeze_admitted','held_out_attempt','held_out_completed')):
+                row={'sequence':i,'phase':phase,'protocol_sha256':declaration['protocol']['sha256'],
+                    'release_sha256':rb['sha256'],'members':[] if i==0 else [b+'.csv' for b in core.TORSION]}
+                if i==0:row['upstream']=release['upstream']
+                if i==2:row['member_sha256']=hashes
+                events.append(json.dumps(row)+'\n')
+            (out/'access.jsonl').write_text(''.join(events));(out/'readout-console.txt').write_bytes(b'')
+            original(out/'receipt.json',{'generated':True})
+            return {'status':'failed_or_incomplete' if mode=='timeout' else 'completed_within_caps','exit_code':0}
+        monkeypatch.setattr(stages,'supervise_stage',stage)
+        result=launcher.execute(tmp_path,core,rb,release,declaration)
+>       assert cleanup_calls==[True]
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+../../../hbe-v5-torsion-readout-adapter-v2/stage/tests/test_hbe_v5_torsion_evaluation.py:295: AssertionError
+=========================== short test summary info ============================
+FAILED ::test_fake_parent_wiring_and_durable_failure[success] - assert [] == ...
+FAILED ::test_fake_parent_wiring_and_durable_failure[observer_raise] - assert...
+FAILED ::test_fake_parent_wiring_and_durable_failure[timeout] - assert [] == ...
+FAILED ::test_fake_parent_wiring_and_durable_failure[cleanup_eperm] - assert ...
+FAILED ::test_fake_parent_wiring_and_durable_failure[unreaped] - assert [] ==...
+FAILED ::test_fake_parent_wiring_and_durable_failure[late_output] - assert []...
+FAILED ::test_fake_parent_wiring_and_durable_failure[late_source] - assert []...
+FAILED ::test_fake_parent_wiring_and_durable_failure[late_publication] - asse...
+FAILED ::test_fake_parent_wiring_and_durable_failure[elapsed_after_exit0] - a...
+9 failed, 27 passed in 0.42s

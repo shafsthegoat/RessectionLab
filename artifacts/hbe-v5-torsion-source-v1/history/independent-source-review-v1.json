@@ -1,0 +1,34 @@
+{
+  "schema": "hbe-v5-torsion-independent-static-review-v1",
+  "decision": "SOURCE_GO_PENDING_GENERATED_CONTROLS",
+  "execution_released": false,
+  "release_candidate_sha256": "50661bf60abd3da605a5fc8f64ae8cad13d465e89b7e7646b31a7efc44717604",
+  "source_hashes": {
+    "scripts/mechanics_hbe_v5_torsion_evaluation.py": "95fc1650124717034eb253d290bffbcd971935bf330bb570c66ad25f033ee331",
+    "scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2"
+  },
+  "declaration_sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072",
+  "tests_sha256": "cdc1a087751eb65dcc413671af323e8e49930077b5c34b3d080d22efd0011559",
+  "inherited_sources_read": {
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_v5_axial_calibration.py": "20fa7411cb2a194e62c9fc0b4b4b1aa3f4e10f28cba4ac758c4dc190a47fd6be",
+    "scripts/mechanics_hbe_v5_fitted_confirmation.py": "80774c4ffa11b4944227a750e25b92145249170f886f6e13996ee39fc803f045",
+    "scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py": "78d9ee5b0c1a2ad404c56f92eab5b7a1ed9c9981bdb657a2405a96ebfeacd6cb",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+    "launchers/hbe_v5_ordinal9_continuation_v1.py": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4"
+  },
+  "findings": [],
+  "controls_run": 0,
+  "source_only": true,
+  "upstream_outputs_read": false,
+  "measured_archives_read": false,
+  "patient_payload_reads": 0,
+  "remaining": [
+    "Run the authored generated controls after the root compute slot is released.",
+    "Add and run narrow fake supervisor/finalization failure controls before execution release.",
+    "Supply and independently admit exact completed upstream freeze/publication/output bindings; this review did not inspect active outputs.",
+    "Root must separately commit, bind final source, issue the true execution release, and retain the one-attempt scope."
+  ],
+  "scope": "Original torsion parser and descriptive evaluator; no fitting/native/meshing, no physical validation pass or empirical tolerance. Normalization removes only dynamic upstream plus root execution/source-commit/review fields."
+}

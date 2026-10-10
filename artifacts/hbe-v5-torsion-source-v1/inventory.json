@@ -1,0 +1,257 @@
+{
+  "schema": "hbe-torsion-compact-source-evidence-v2",
+  "prior_package_inventory": {
+    "path": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/inventory.json",
+    "sha256": "c2a0e95c4fd91642c37dac07db270ba3e36d57c00dbac8dcbaa88c641786a8cc"
+  },
+  "files": [
+    {
+      "path": "source/scripts/mechanics_hbe_v5_torsion_evaluation.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/source/scripts/mechanics_hbe_v5_torsion_evaluation.py",
+      "bytes": 17727,
+      "sha256": "f9b5c22b1c7954e49f8553a085de7758ea5e67daf0f90c0db0e04fd2c5dc4304"
+    },
+    {
+      "path": "source/scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/source/scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "bytes": 19928,
+      "sha256": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2"
+    },
+    {
+      "path": "source/manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/source/manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+      "bytes": 2015,
+      "sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072"
+    },
+    {
+      "path": "source/tests/test_hbe_v5_torsion_evaluation.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/source/tests/test_hbe_v5_torsion_evaluation.py",
+      "bytes": 19799,
+      "sha256": "cab0bd901321ff6d0f99b714205ef4fc0e0a1484630fdc777f22fb663b340408"
+    },
+    {
+      "path": "false-release.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/false-release.json",
+      "bytes": 83317,
+      "sha256": "e43c8d1986822400d5861dcd3fc3a9317bfa176fd13f6120605060fec30dc60f"
+    },
+    {
+      "path": "final-source-review.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/final-source-review.json",
+      "bytes": 3371,
+      "sha256": "77568b052fc24a507d4af622b3c9831c80cf7672d0aad8a45745559749205453"
+    },
+    {
+      "path": "static-preflight.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/static-preflight.json",
+      "bytes": 1055,
+      "sha256": "a1fc22fadf8e47389c6df25312bd99888949400b4066febae0b9d51a78c6ac0a"
+    },
+    {
+      "path": "FINAL-REVIEW.txt",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/FINAL-REVIEW.txt",
+      "bytes": 1199,
+      "sha256": "34ece9da851aa261cb076e51e18c5edbf925724e02cd2cb1d8657801f07c4214"
+    },
+    {
+      "path": "source-index.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/source-index.json",
+      "bytes": 1274,
+      "sha256": "c3169866fc672f3f09521af35837528e0d1e77c7bd6f4bcdd46cebdf7833e135"
+    },
+    {
+      "path": "source.patch",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/source.patch",
+      "bytes": 61451,
+      "sha256": "d2c6c1f40bb517eef782486b8749948e743c7659ff44487c2886f9e05e9ae7de"
+    },
+    {
+      "path": "test-only-delta.patch",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/test-only-delta.patch",
+      "bytes": 1572,
+      "sha256": "3ed4304576680522395ed8895e1f10e5105e36b2450059ea81464e3d7c7c3333"
+    },
+    {
+      "path": "INDEPENDENT-TEST-REPAIR.txt",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/INDEPENDENT-TEST-REPAIR.txt",
+      "bytes": 1417,
+      "sha256": "ba4e3eae5c4e5a7190a138152cbc89d7dff5ef958ddb622be84cca31ef3a8e39"
+    },
+    {
+      "path": "run_generated_controls_v3.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/run_generated_controls_v3.py",
+      "bytes": 12129,
+      "sha256": "b8ccb4ebe46ecc4ba3bfb1854401e61784dab53999bc495429f1eb2d320cc97e"
+    },
+    {
+      "path": "run_canonical_generated_controls.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/run_canonical_generated_controls.py",
+      "bytes": 12376,
+      "sha256": "32755756aaeb26563312884b27f1e65e4b070435512ae446dd72c72d9c68b314"
+    },
+    {
+      "path": "history/independent-source-review-v1.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/history/independent-source-review-v1.json",
+      "bytes": 2442,
+      "sha256": "9735fd487a635930ea73f98717989b46acc488beffcb760e042a6ca65095b82a"
+    },
+    {
+      "path": "history/independent-source-review-v2.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/history/independent-source-review-v2.json",
+      "bytes": 2616,
+      "sha256": "9ff13331b4356082373530564060c2e0574b13511ca309535072e66d26afd3a8"
+    },
+    {
+      "path": "history/run_generated_controls.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/history/run_generated_controls.py",
+      "bytes": 11590,
+      "sha256": "4ff073b8f63dad420e0246ea720a8771844033ad5f85647aa060f993ffd6c2ef"
+    },
+    {
+      "path": "history/run_generated_controls_v2.py",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/history/run_generated_controls_v2.py",
+      "bytes": 12129,
+      "sha256": "20daefde64345242586eed7db3f9936c4bda4013d31bd27513cf854877aa5ce0"
+    },
+    {
+      "path": "controls/attempt-01/intent.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-01/intent.json",
+      "bytes": 10873,
+      "sha256": "658b09dd86155df39cbc86935c919f8b6e06f8351caac9efc3c18ba331f03ff1"
+    },
+    {
+      "path": "controls/attempt-01/supervisor.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-01/supervisor.json",
+      "bytes": 11757,
+      "sha256": "1d148751b5476e8dca73b38ac8c20c2b87320d52980ff2838ed9a022c1a163eb"
+    },
+    {
+      "path": "controls/attempt-01/pytest.log",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-01/pytest.log",
+      "bytes": 3629,
+      "sha256": "49343bc96ad50b579e22c5931c3cb35829ab430b12dda046dbd6984492a518dd"
+    },
+    {
+      "path": "controls/attempt-01/worker/guard-receipt.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-01/worker/guard-receipt.json",
+      "bytes": 1562,
+      "sha256": "98b13a77a269af5e34a116e70163aa9c71a6a0a32dc57fb5948a90ee61fba02f"
+    },
+    {
+      "path": "controls/attempt-02/intent.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-02/intent.json",
+      "bytes": 10873,
+      "sha256": "8cd2e40280da0c760ebe5a34d674310795fce2dc6915937464306e1595d0ac35"
+    },
+    {
+      "path": "controls/attempt-02/supervisor.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-02/supervisor.json",
+      "bytes": 11760,
+      "sha256": "b70ecf856b5b92b3d3aee82c6d881900e9761fa2aabdb261ef831f808d1257f2"
+    },
+    {
+      "path": "controls/attempt-02/pytest.log",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-02/pytest.log",
+      "bytes": 50426,
+      "sha256": "6ecd2a8122f42c671c7258cfae2880684d78ccf170dd303f53f1472780b602cd"
+    },
+    {
+      "path": "controls/attempt-02/worker/guard-receipt.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-02/worker/guard-receipt.json",
+      "bytes": 1085,
+      "sha256": "bca5f8bbc0b73587b1def3f9c9e5353b44212f2b4a939a624aef31927bef830d"
+    },
+    {
+      "path": "controls/attempt-02/worker/junit.xml",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-02/worker/junit.xml",
+      "bytes": 53774,
+      "sha256": "d686b74b81112f6be01f0b5b08c207e95dc129ba1412f5e8fdcf97e8973297ad"
+    },
+    {
+      "path": "controls/attempt-03/intent.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-03/intent.json",
+      "bytes": 10873,
+      "sha256": "a958b5ac48368683b00abd59db4bcceaf76c3692998f9454d5d6ae5dd25e81da"
+    },
+    {
+      "path": "controls/attempt-03/supervisor.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-03/supervisor.json",
+      "bytes": 11758,
+      "sha256": "c952aa9c978c6e2f4f152df9c6bb2613d704202236e95d390d8cc5d9584805da"
+    },
+    {
+      "path": "controls/attempt-03/pytest.log",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-03/pytest.log",
+      "bytes": 99,
+      "sha256": "843c4a3d30a4eb34f4ebf2c948b630a0d24fa0b9394af0368c1225174f0d25cd"
+    },
+    {
+      "path": "controls/attempt-03/worker/guard-receipt.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-03/worker/guard-receipt.json",
+      "bytes": 1085,
+      "sha256": "41a0e0bb73a66fba6888084d011f5a04ddc2d44b89f0b60742d798887f559da3"
+    },
+    {
+      "path": "controls/attempt-03/worker/junit.xml",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/compact-source-evidence-v1/controls/attempt-03/worker/junit.xml",
+      "bytes": 3841,
+      "sha256": "cd32d7bd86673b7b22edddc89823f63fa053755ff11e1bb8dee5423baa278b8d"
+    },
+    {
+      "path": "final-canonical-source-review.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/final-canonical-source-review.json",
+      "bytes": 5137,
+      "sha256": "10f578bc4c0de6595bce45b3a28fcd27d534ae9e86bae62d0346d853d5ee0a38"
+    },
+    {
+      "path": "FINAL-CANONICAL-REVIEW.txt",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/FINAL-CANONICAL-REVIEW.txt",
+      "bytes": 1203,
+      "sha256": "18fb7062b09e532e2d3054d406d128f0551953807c017163508de58407d7da85"
+    },
+    {
+      "path": "ROOT-RELEASE-COMMANDS.txt",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/ROOT-RELEASE-COMMANDS.txt",
+      "bytes": 5622,
+      "sha256": "cf93552de8deedc028d26595e8185aa23c881ebd1ede2676cfffb70e6e14b996"
+    },
+    {
+      "path": "controls/canonical-attempt-01/intent.json",
+      "origin": "build/hbe-v5-torsion-generated-controls-v2/canonical-attempt-01/intent.json",
+      "bytes": 10966,
+      "sha256": "a930919e863cba83a9e67a253791ffc79b0a623d9602f95d1686c231c00d87c4"
+    },
+    {
+      "path": "controls/canonical-attempt-01/supervisor.json",
+      "origin": "build/hbe-v5-torsion-generated-controls-v2/canonical-attempt-01/supervisor.json",
+      "bytes": 11868,
+      "sha256": "e504cc763f1e258e0370338a073aa883b84b26e25319eaff8566eddaaef288f0"
+    },
+    {
+      "path": "controls/canonical-attempt-01/pytest.log",
+      "origin": "build/hbe-v5-torsion-generated-controls-v2/canonical-attempt-01/pytest.log",
+      "bytes": 99,
+      "sha256": "8dde6dcc576d2d59437a08f2fb8a45aa79901db414c92f94959b9ea7a0c3314b"
+    },
+    {
+      "path": "controls/canonical-attempt-01/worker/guard-receipt.json",
+      "origin": "build/hbe-v5-torsion-generated-controls-v2/canonical-attempt-01/worker/guard-receipt.json",
+      "bytes": 1086,
+      "sha256": "df6d2136bac9a6f082ad4ab8df4de16f0cf958c005165c34b580214844b67f8d"
+    },
+    {
+      "path": "controls/canonical-attempt-01/worker/junit.xml",
+      "origin": "build/hbe-v5-torsion-generated-controls-v2/canonical-attempt-01/worker/junit.xml",
+      "bytes": 3841,
+      "sha256": "af4c1a20b2f73ce41d1da8a529c375285d96d6304e7e1a94dbea6a7b6b1704b6"
+    },
+    {
+      "path": "proposed-unreleased.json",
+      "origin": "build/hbe-v5-torsion-release-proposal-v1/proposed-unreleased.json",
+      "bytes": 84763,
+      "sha256": "5f19fd8bc5f2ccfe210df4d00c8ce54144d6ed8b22a5ef84972d5cd3ce3de735"
+    }
+  ],
+  "total_bytes": 575387,
+  "excludes": "Generated bulk fixture trees, runtime caches, real experimental archives, predictions and responses."
+}

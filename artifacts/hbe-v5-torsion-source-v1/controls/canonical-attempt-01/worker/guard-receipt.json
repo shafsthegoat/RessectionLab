@@ -1,0 +1,16 @@
+{
+  "actual_archive_response_reads": 0,
+  "elapsed_pytest_seconds": 0.39993820805102587,
+  "error": null,
+  "expected_refusals": [
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/forbidden-generated-probe.zip",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/forbidden-predictions.json",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/forbidden-response.csv",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/sources/forbidden-source.bin"
+  ],
+  "no_process_or_network_from_tests": true,
+  "pytest_exit_code": 0,
+  "test_sha256": "cab0bd901321ff6d0f99b714205ef4fc0e0a1484630fdc777f22fb663b340408",
+  "unexpected_refusals": [],
+  "version": "hbe-torsion-generated-guard-v1"
+}

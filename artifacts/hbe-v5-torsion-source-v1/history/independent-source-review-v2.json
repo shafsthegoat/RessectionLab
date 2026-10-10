@@ -1,0 +1,39 @@
+{
+  "schema": "hbe-v5-torsion-independent-static-review-v2",
+  "decision": "SOURCE_GO_PENDING_GENERATED_CONTROLS",
+  "execution_released": false,
+  "release_candidate_sha256": "e43c8d1986822400d5861dcd3fc3a9317bfa176fd13f6120605060fec30dc60f",
+  "source_hashes": {
+    "scripts/mechanics_hbe_v5_torsion_evaluation.py": "f9b5c22b1c7954e49f8553a085de7758ea5e67daf0f90c0db0e04fd2c5dc4304",
+    "scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2"
+  },
+  "declaration_sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072",
+  "tests_sha256": "6a54bf72d5816e15fac18454952ba02a7f93c8a6c0dcc0a1b05b521d3925b610",
+  "prior_source_review": {
+    "path": "build/hbe-v5-torsion-readout-adapter-v1/independent-source-review-v1.json",
+    "sha256": "9735fd487a635930ea73f98717989b46acc488beffcb760e042a6ca65095b82a"
+  },
+  "accepted_metadata_read": {
+    "path": "artifacts/hbe-v5-fixed-fit-result-v1/audit/heldout-admission-review.json",
+    "sha256": "bbaebe463d8d3d701007060368cadd255b2d5923561e341574f19f78da1b20ff"
+  },
+  "findings": [],
+  "delta_review": [
+    "Top-level six exact bindings now match the actual accepted independent review shape.",
+    "Two fitted PASS checks, fixed parameters, 121 states, original release identity and zero previous response reads are required.",
+    "Evidence-only scope and held_out_access_released=false preserve the separate root permission boundary.",
+    "Launcher/declaration byte-identical; false-release delta is only the new core source hash.",
+    "Added generated controls cover admission-schema/permission/scope drift and fake cleanup, unreaped/timeout, post-exit deadline, late output/source/publication changes. These were inspected, not run."
+  ],
+  "source_only": true,
+  "tests_or_imports_run": 0,
+  "upstream_output_bodies_read": false,
+  "measured_archives_read": false,
+  "patient_payload_reads": 0,
+  "remaining": [
+    "Run all generated controls in a root-released slot; the requested fake failure controls are now drafted.",
+    "Root separately commits/binds source and supplies the exact completed predecessor bindings plus accepted independent review.",
+    "Current decision is not an execution-authorizing hbe-v5-torsion-source-review-v1 GO."
+  ],
+  "scientific_limit": "Descriptive two torsion branches of the same specimen; unchanged poor axial fit, no new fit/native call, no empirical threshold or physical/clinical pass. The accepted predecessor review states saved JSON arithmetic/authenticated producer receipts, not independent raw primitive replay."
+}

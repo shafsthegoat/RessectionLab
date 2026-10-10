@@ -1414,3 +1414,17 @@ actual insertion/final frames, Save refusal and SELECT refusal; the auditor did
 not reopen the UI. The 93.204-second app session exited 0 with no resource cap.
 No new held-out or patient performance follows. See the
 [integration evidence](../artifacts/train-refit-desktop-integration-v1/REPORT.txt).
+
+## October 10, 2026 — Frozen torsion comparison passes generated controls
+
+The torsion-only adapter uses the existing CSV reader and paired evaluator with
+unchanged material fit and pre-reveal predictions. Independent review accepted
+its fixed scope; 37 generated controls pass in both staged and canonical paths.
+The first harness attempt failed on pytest logging outside its allowed directory;
+the second exposed a test-only socket-class replacement that broke SSL imports.
+Both negatives remain preserved. The fixture now blocks network methods while
+preserving the socket class; production scientific code was unchanged by these
+repairs. Canonical controls completed in 0.884 seconds at 60,375,040 bytes sampled
+group RSS, with clean cleanup and no actual measurement access. The separately
+bound root run remains next. [Source evidence](../artifacts/hbe-v5-torsion-source-v1/inventory.json)
+does not establish physical validity.

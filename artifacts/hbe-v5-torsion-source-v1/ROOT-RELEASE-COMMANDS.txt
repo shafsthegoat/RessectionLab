@@ -1,0 +1,77 @@
+Prepared instructions only; reviewer did not execute them. Both generated suites passed; do not repeat consumed test attempts. The exact false candidate remains disabled. Root must deliberately authorize the one torsion evaluation.
+
+ROOT TRUE-RELEASE CREATION (requires a separate explicit one-run decision)
+
+Set these two values from the final independent source review, not the earlier
+SOURCE_GO_PENDING_GENERATED_CONTROLS review:
+  TORSION_SOURCE_REVIEW_PATH=build/hbe-v5-torsion-readout-adapter-v3/final-canonical-source-review.json
+  TORSION_SOURCE_REVIEW_SHA256=10f578bc4c0de6595bce45b3a28fcd27d534ae9e86bae62d0346d853d5ee0a38
+Then execute the following metadata-only command. It refuses placeholders,
+uncommitted source drift, an existing release or a consumed attempt. It does not
+read archive/prediction values or invoke the evaluator. Both old false templates
+remain unchanged. Dynamic upstream identities come solely from the reviewed draft.
+
+env TORSION_SOURCE_REVIEW_PATH="$TORSION_SOURCE_REVIEW_PATH" \
+  TORSION_SOURCE_REVIEW_SHA256="$TORSION_SOURCE_REVIEW_SHA256" \
+  /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 -I -S -B - <<'PY'
+from pathlib import Path
+import hashlib,json,os,re,shlex,subprocess
+root=Path.cwd().resolve()
+sha=lambda b:hashlib.sha256(b).hexdigest()
+canonical=lambda o:(json.dumps(o,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+def exact(relative,digest):
+    p=Path(relative)
+    if p.is_absolute() or '..' in p.parts or not re.fullmatch('[a-f0-9]{64}',digest):raise ValueError('Exact local binding required')
+    p=root/p
+    if any(x.is_symlink() for x in (p,*p.parents)) or not p.is_file() or p.stat().st_size>1024**2:raise ValueError('Small regular metadata required')
+    raw=p.read_bytes()
+    if sha(raw)!=digest:raise ValueError('Binding changed: '+str(p))
+    return raw
+false_sha='e43c8d1986822400d5861dcd3fc3a9317bfa176fd13f6120605060fec30dc60f'
+false_path='build/hbe-v5-torsion-readout-adapter-v3/false-release.json'
+proposal_path='build/hbe-v5-torsion-release-proposal-v1/proposed-unreleased.json'
+template=json.loads(exact(false_path,false_sha))
+draft=json.loads(exact(proposal_path,'5f19fd8bc5f2ccfe210df4d00c8ce54144d6ed8b22a5ef84972d5cd3ce3de735'))
+if draft['execution_released'] is not False or draft['source_commit'] is not None or draft['independent_source_review'] is not None:raise ValueError('Draft is not disabled')
+if dict(draft,upstream=None)!=template:raise ValueError('Unexpected proposal delta')
+review_path=os.environ['TORSION_SOURCE_REVIEW_PATH'];review_sha=os.environ['TORSION_SOURCE_REVIEW_SHA256']
+review=json.loads(exact(review_path,review_sha))
+if review.get('schema')!='hbe-v5-torsion-source-review-v1' or review.get('decision')!='GO' or review.get('release_candidate_sha256')!=sha(canonical(template)):raise ValueError('Final exact source GO required')
+upstream=draft['upstream'];admission=upstream['independent_review']
+metadata=json.loads(exact(admission['path'],admission['sha256']))
+if metadata.get('held_out_access_released') is not False or metadata.get('decision')!='GO':raise ValueError('Evidence admission mismatch')
+for key in ('publication','terminal','freeze','predictions','numerical','continuation_ledger'):
+    if upstream[key]!=metadata[key]:raise ValueError('Upstream metadata differs')
+head=subprocess.check_output(['/usr/bin/git','rev-parse','HEAD'],text=True,timeout=5).strip()
+bindings=dict(draft['source_bindings']);bindings[draft['declaration']['path']]=draft['declaration']['sha256']
+bindings['tests/test_hbe_v5_torsion_evaluation.py']='cab0bd901321ff6d0f99b714205ef4fc0e0a1484630fdc777f22fb663b340408'
+for relative,digest in bindings.items():
+    raw=exact(relative,digest)
+    blob=subprocess.check_output(['/usr/bin/git','cat-file','blob',head+':'+relative],timeout=5)
+    if blob!=raw:raise ValueError('Uncommitted source: '+relative)
+draft.update(execution_released=True,source_commit=head,
+    independent_source_review={'path':review_path,'sha256':review_sha})
+cache=root/'build'/('hbe-v5-torsion-root-cache-'+head[:12])
+if cache.exists() or cache.is_symlink() or (root/draft['output_directory']).exists():raise ValueError('Cache/one-shot output already exists')
+out=root/'build/hbe-v5-torsion-root-release-v1.json';raw=canonical(draft)
+fd=os.open(out,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+with os.fdopen(fd,'wb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
+fd=os.open(out.parent,os.O_RDONLY)
+try:os.fsync(fd)
+finally:os.close(fd)
+args=[draft['runtime']['executable'],'-I','-S','-B','-X','pycache_prefix='+str(cache),
+    'scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py','--root',str(root),
+    '--release',str(out.relative_to(root)),'--release-sha256',sha(raw)]
+print(json.dumps({'release':str(out.relative_to(root)),'sha256':sha(raw),'source_commit':head}))
+print('SOURCE-ONLY PREFLIGHT: '+shlex.join(args))
+print('ONE AUTHORIZED ROOT EVALUATION: '+shlex.join(args+['--execute']))
+PY
+
+Root may then run the printed source-only preflight and, only in the separately
+reserved slot, the printed --execute command once. Preflight checks source and
+role metadata; actual worker admission checks all six saved upstream objects
+before any archive read. A failure is retained and consumes the attempt.
+No second reveal, header repair, offset/sign change, refit or native call follows.
+Caps are60s work+10s cleanup,512MiB sampled child RSS,16MiB new outputs,one thread.
+Success remains descriptive, with null empirical tolerance/physical pass; root
+must independently review saved metrics before presenting any scientific result.

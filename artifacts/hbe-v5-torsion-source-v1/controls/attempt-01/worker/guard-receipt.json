@@ -1,0 +1,20 @@
+{
+  "actual_archive_response_reads": 0,
+  "elapsed_pytest_seconds": 0.05170412501320243,
+  "error": null,
+  "expected_refusals": [
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/forbidden-generated-probe.zip",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/forbidden-predictions.json",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/forbidden-response.csv",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/sources/forbidden-source.bin"
+  ],
+  "no_process_or_network_from_tests": true,
+  "pytest_exit_code": 3,
+  "test_sha256": "6a54bf72d5816e15fac18454952ba02a7f93c8a6c0dcc0a1b05b521d3925b610",
+  "unexpected_refusals": [
+    "write_outside_generated_worker:/dev/null",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-readout-adapter-v2/run_generated_controls.py",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-readout-adapter-v2/run_generated_controls.py"
+  ],
+  "version": "hbe-torsion-generated-guard-v1"
+}

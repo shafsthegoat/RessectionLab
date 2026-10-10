@@ -1,0 +1,21 @@
+{
+  "schema": "hbe-torsion-static-source-preflight-v1",
+  "status": "passed_static_hash_and_scope_checks",
+  "execution_preflight_performed": false,
+  "execution_released": false,
+  "release_candidate": {
+    "path": "build/hbe-v5-torsion-readout-adapter-v3/false-release.json",
+    "sha256": "e43c8d1986822400d5861dcd3fc3a9317bfa176fd13f6120605060fec30dc60f"
+  },
+  "source_bindings": {
+    "scripts/mechanics_hbe_v5_torsion_evaluation.py": "f9b5c22b1c7954e49f8553a085de7758ea5e67daf0f90c0db0e04fd2c5dc4304",
+    "scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2",
+    "manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072",
+    "tests/test_hbe_v5_torsion_evaluation.py": "cab0bd901321ff6d0f99b714205ef4fc0e0a1484630fdc777f22fb663b340408"
+  },
+  "inherited_source_count": 46,
+  "source_and_test_postguard_verified": true,
+  "upstream": null,
+  "source_commit": null,
+  "measured_response_reads": 0
+}
