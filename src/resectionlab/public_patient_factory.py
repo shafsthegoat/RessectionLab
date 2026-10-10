@@ -9,10 +9,12 @@ import json
 from pathlib import Path
 import numpy as np
 from resectionlab.core import array_digest, semantic_digest, thaw_json
-from resectionlab.patient_planning_admission import VERSION, COHORT_SHA256, QC_SCOPE
+from resectionlab.patient_planning_admission import (VERSION, COHORT_SHA256, QC_SCOPE,
+    PARTIAL_DOMAIN_TRAIN_SUBJECTS, PARTIAL_DOMAIN_UNION_OCCUPANCY, PARTIAL_DOMAIN_QC_SCOPE)
 TRAIN_SUBJECTS = ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025")
 SELECT_SUBJECTS = ("ReMIND-013", "ReMIND-037")
 ARRAY_KEYS = ("image", "supplied_support", "supplied_whole_tumor", "whole_tumor_domain")
+PARTIAL_DOMAIN_ARRAY_KEYS = (*ARRAY_KEYS, "supplied_support_domain")
 
 def sha(path):
     h = hashlib.sha256()
@@ -24,7 +26,9 @@ def write(path, value):
     with Path(path).open("x") as stream:
         json.dump(value, stream, indent=2, allow_nan=False); stream.write("\n")
 
-def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="TRAIN"):
+def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="TRAIN", partial_domain=False):
+    if type(partial_domain) is not bool or (partial_domain and expected_role != "TRAIN"):
+        raise ValueError("Partial source domain is explicit fixed TRAIN search-only")
     raw = Path(path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != expected_sha256:
         raise ValueError("Public manifest changed")
@@ -33,17 +37,23 @@ def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="
     manifest = json.loads(raw)
     subject = manifest["patient_id"]
     members = [m for m in json.loads(cohort_bytes)["members"] if m["subject"] == subject]
-    subjects = {"TRAIN": TRAIN_SUBJECTS, "SELECT": SELECT_SUBJECTS}.get(expected_role, ())
+    subjects = (PARTIAL_DOMAIN_TRAIN_SUBJECTS if partial_domain else
+        {"TRAIN": TRAIN_SUBJECTS, "SELECT": SELECT_SUBJECTS}.get(expected_role, ()))
+    keys = PARTIAL_DOMAIN_ARRAY_KEYS if partial_domain else ARRAY_KEYS
     if (subject not in subjects or len(members) != 1 or members[0]["role"] != expected_role
             or manifest["role"] != expected_role or manifest["patient_group"] != members[0]["patient_group"]
             or manifest["private_evaluation_files_included"] is not False
-            or set(manifest["input_files"]) != set(ARRAY_KEYS)
+            or set(manifest["input_files"]) != set(keys)
             or manifest.get("task_condition", "PARTIAL_TARGET_PROGRESS") != "PARTIAL_TARGET_PROGRESS"):
-        raise ValueError("Exact four public arrays and frozen requested role partial-target condition required")
+        raise ValueError("Exact five public arrays and fixed TRAIN partial-domain condition required" if partial_domain else
+            "Exact four public arrays and frozen requested role partial-target condition required")
     if expected_role == "SELECT" and manifest.get("public_only") is not True:
         raise ValueError("SELECT requires public-only qualification")
+    if partial_domain and (manifest.get("source_domain_condition") != PARTIAL_DOMAIN_UNION_OCCUPANCY
+            or manifest.get("public_only") is not True or manifest.get("training_admitted") is not False):
+        raise ValueError("Explicit partial-domain public-only nontraining condition required")
     if subject != "ReMIND-008" and (
-            manifest.get("public_support_domain_fully_covered") is not True
+            manifest.get("public_support_domain_fully_covered") is not (not partial_domain)
             or manifest["source_bindings"]["cohort_sha256"] != COHORT_SHA256
             or manifest["reindex_policy"]["source_MR_samples_preserved"] is not True
             or manifest["reindex_policy"]["original_MR_affine_overwritten"] is not False):
@@ -83,9 +93,10 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         SUPPLIED_TUMOR_UNION_OCCUPANCY, DERIVED_OCCUPANCY_SOURCE_KIND)
     release = original_release
     limits = release["limits"]
-    if occupancy_condition not in (RAW_CEREBRUM_OCCUPANCY, SUPPLIED_TUMOR_UNION_OCCUPANCY):
+    partial_domain = occupancy_condition == PARTIAL_DOMAIN_UNION_OCCUPANCY
+    if occupancy_condition not in (RAW_CEREBRUM_OCCUPANCY, SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY):
         raise ValueError("Unknown explicit occupancy condition")
-    derived_occupancy = occupancy_condition == SUPPLIED_TUMOR_UNION_OCCUPANCY
+    derived_occupancy = occupancy_condition in (SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY)
     if derived_occupancy and (expected_role != "TRAIN" or checkpoint_lineage is not None
             or type(limits.get("max_optimizer_updates")) is not int or limits["max_optimizer_updates"] != 0
             or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] != 0
@@ -112,10 +123,12 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     else:
         raise ValueError("Only frozen TRAIN or SELECT public construction is supported")
     progress("before_public_array_loading")
-    manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes, expected_role=expected_role)
+    manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes,
+        expected_role=expected_role, partial_domain=partial_domain)
     subject = manifest["patient_id"]
     arrays = {}
-    for key in ARRAY_KEYS:
+    input_keys = PARTIAL_DOMAIN_ARRAY_KEYS if partial_domain else ARRAY_KEYS
+    for key in input_keys:
         record = manifest["input_files"][key]; path = Path(record["path"])
         if path.stat().st_size != record["bytes"] or sha(path) != record["sha256"]:
             raise ValueError("Public input changed: "+key)
@@ -126,6 +139,19 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         progress("public_array_loaded:"+key, bytes=record["bytes"])
     image, support, target, domain = (arrays[key] for key in ARRAY_KEYS)
     positive, unsupported = check_public_labels(support, target, domain, manifest)
+    support_domain = None
+    if partial_domain:
+        values = arrays["supplied_support_domain"]
+        if not np.isin(values, (0, 1)).all(): raise ValueError("Source support domain must be binary")
+        support_domain = np.asarray(values, bool)
+        if not support_domain.any() or np.any((support != 0) & ~support_domain):
+            raise ValueError("Source support positives must stay within unchanged source coverage")
+        counts = {"support_domain": int(support_domain.sum()),
+            "target_in_known_support_positive": int(np.count_nonzero((target != 0) & support_domain & (support != 0))),
+            "target_in_known_support_zero": int(np.count_nonzero((target != 0) & support_domain & (support == 0))),
+            "target_in_unknown_support_domain": int(np.count_nonzero((target != 0) & ~support_domain))}
+        if counts != manifest["public_source_domain_counts"]:
+            raise ValueError("Source-domain/full-target partition differs from saved qualification")
 
     # Fixed source-axis0, hemisphere-side rule; no route/outcome ranking.
     # Both target and support are explicitly supplied public inputs.
@@ -178,6 +204,9 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
                 "target_domain_binary_hash": array_digest(np.asarray(domain, bool)),
                 "source_QC_scope": "unchanged supplied annotations and frame; derived occupancy is not anatomically validated"}
                if derived_occupancy else {}),
+            **({"support_domain_file_sha256": manifest["input_files"]["supplied_support_domain"]["sha256"],
+                "support_domain_binary_hash": array_digest(support_domain),
+                "partial_source_domain_preserved": True} if partial_domain else {}),
             **({} if subject == "ReMIND-008" else {"source_MR_crop_affine_ras_mm": manifest["source_MR_crop_affine_ras_mm"],
                 "explicit_planning_grid": manifest["reindex_policy"], "public_source_bindings": manifest["source_bindings"],
                 "public_label_resampling": manifest["public_label_resampling"]})},
@@ -186,6 +215,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         proposal_mode="nominal_cavity_v1", proposal_config=NominalCavityProposalConfig() if proposal_config is None else proposal_config,
         target_semantics=SUPPLIED_GOAL_REGION,
         **({"occupancy_source_support": support} if derived_occupancy else {}),
+        **({"support_domain": support_domain} if partial_domain else {}),
         **({} if public_target_context_variant is None else {
             'public_target_context_variant':public_target_context_variant,
             'public_target_domain':np.asarray(domain,dtype=bool)}))
@@ -208,14 +238,19 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         "target_semantics": "source_manual_whole_tumor_annotation",
         **({"occupancy_derivation": thaw_json(source._occupancy_derivation),
             "target_domain_source_sha256": files["whole_tumor_domain"]["sha256"],
-            "target_domain_binary_hash": array_digest(np.asarray(domain, bool))} if derived_occupancy else {})}
+            "target_domain_binary_hash": array_digest(np.asarray(domain, bool))} if derived_occupancy else {}),
+        **({"support_domain_source_sha256": files["supplied_support_domain"]["sha256"],
+            "support_domain_binary_hash": array_digest(support_domain),
+            "source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {})}
     qc = {"version": VERSION, "evidence_domain": "acquired_patient", "subject": subject,
-        "public_source_binding_hash": semantic_digest(binding), "status": "pass", "scope": QC_SCOPE,
+        "public_source_binding_hash": semantic_digest(binding), "status": "pass",
+        "scope": PARTIAL_DOMAIN_QC_SCOPE if partial_domain else QC_SCOPE,
         "source_linkage_checked": True, "frame_geometry_checked": True, "coverage_checked": True,
         "annotation_meaning_checked": True, "public_support_assumption": True,
-        "native_domain_fully_covered": True, "hypothetical_access_assumption": True,
+        "native_domain_fully_covered": not partial_domain, "hypothetical_access_assumption": True,
         "evidence_record_sha256": manifest.get("source_bindings", {}).get("saved_array_review_sha256", original_release_sha256),
-        **({"derived_occupancy_anatomically_validated": False} if derived_occupancy else {})}
+        **({"derived_occupancy_anatomically_validated": False} if derived_occupancy else {}),
+        **({"partial_source_domain_preserved": True} if partial_domain else {})}
     protocol = {"version": VERSION, "scope": "patient_native_planning_experiment",
         "subject": subject, "role": expected_role, "evidence_domain": "acquired_patient",
         "public_source_binding_hash": semantic_digest(binding), "qc_receipt_hash": semantic_digest(qc),
@@ -229,7 +264,8 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         write(output / "derived-occupancy-assumption.json", {"condition": occupancy_condition,
             "derivation": thaw_json(source._occupancy_derivation),
             "raw_public_files": {key: {"sha256": files[key]["sha256"], "bytes": files[key]["bytes"]}
-                for key in ARRAY_KEYS},
+                for key in input_keys},
+            **({"source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {}),
             "target_domain_hash": array_digest(domain), "access_derived_from": "raw S and unchanged T",
             "public_access_rule": derived, "source_QC_validates_derived_material": False,
             "policy_comparison_permitted": False,

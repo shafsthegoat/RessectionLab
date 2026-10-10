@@ -1,0 +1,22 @@
+Public partial-domain task factory — October 10, 2026
+
+The optional public factory/admission branch now constructs the fixed TRAIN
+cases002,015,018,045 from five source-bound arrays: MRI, raw automatic support S,
+full supplied tumor T, target-label domain and observed support-label domain Ds.
+It preserves source-knownness separately from the explicitly simulated material
+S OR T and interaction domain Ds OR T. Unknown within-image regions remain
+unavailable. Full native/placed target discrepancies remain in source records.
+
+This branch is restricted to qualification/search, with zero model forwards,
+checkpoint reloads or optimizer updates. Old four-array defaults, original four
+TRAIN subjects, patient roles and their fingerprints remain unchanged. Access
+still uses the existing fixed public S/T rule, with no outcome-driven replacement.
+Existing outside-image shaft extent remains unassessed; this change establishes
+no physical, expert anatomical or clinical validation.
+
+Independent source review accepted the two production pins. Generated24 tests
+passed0.79s, including exact old raw/union bindings, context, observations and
+inventories. Root canonical integration:116 passed and9 subtests passed2.89s.
+Test-path portability was corrected before canonical execution; old logs remain.
+The new four-patient construction/inventory experiment is pending. No patient
+array or policy execution occurred in these generated controls.

@@ -22,6 +22,10 @@ from .spatial_observations import SpatialObservation
 VERSION = "remind-public-annotation-assisted-native-v1"
 COHORT_SHA256 = "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
 QC_SCOPE = "public_T1_cerebrum_tumor_native_geometry_coverage_and_intended_use"
+PARTIAL_DOMAIN_TRAIN_SUBJECTS = ("ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045")
+PARTIAL_DOMAIN_UNION_OCCUPANCY = "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain"
+PARTIAL_DOMAIN_QC_SCOPE = "public_T1_cerebrum_tumor_preserved_source_domains_search_only"
+PARTIAL_DOMAIN_SOURCE_FIELDS = frozenset({"support_domain_source_sha256", "support_domain_binary_hash", "source_and_simulated_domains"})
 SOURCE_FIELDS = frozenset({"version", "evidence_domain", "subject", "patient_group",
     "cohort_sha256", "t1_source_sha256", "support_source_sha256", "target_source_sha256",
     "image_array_hash", "support_array_hash", "target_array_hash", "affine_array_hash",
@@ -164,6 +168,10 @@ class PatientPlanningContext:
               and np.array_equal(task.case.reference_target, task.case.nominal_target)
               and not np.any(task._config.hard_exclusion),
               "public_patient_task_or_private_reference_changed")
+        if task.case.support_domain is not None:
+            _need(record.get("occupancy_condition") == PARTIAL_DOMAIN_UNION_OCCUPANCY
+                  and record.get("source_and_simulated_domains") == thaw_json(task.case._domain_record),
+                  "partial_source_domain_context_changed")
 
     def require_observations(self, observations):
         record = self.record()
@@ -183,21 +191,25 @@ def make_patient_planning_task(case: NativeSpatialCase, *, cohort_bytes: bytes,
 
 The source annotation-assisted target and support are disclosed inputs. The
 reference_target slot must already equal the nominal target; it never carries
-ventricular evaluation labels. Full source coverage is required for this first
-native adapter, which has no partial-support coverage argument. Missing coverage
-must be refused by upstream QC, not filled with background. Runtime budgets are
-bound here and enforced by the separately supervised caller.
+ventricular evaluation labels. The default requires complete support coverage.
+The explicit fixed-four TRAIN search-only condition preserves observed Ds and
+the declared D=Ds union T interaction domain; unknown support is not background.
+Runtime budgets are bound here and enforced by the separately supervised caller.
 """
     _need(type(case) is NativeSpatialCase, "exact_public_native_source_required")
     _need(type(cohort_bytes) is bytes and hashlib.sha256(cohort_bytes).hexdigest() == COHORT_SHA256,
           "original_ReMIND_cohort_bytes_required")
     cohort = json.loads(cohort_bytes)
     derived_occupancy = case.occupancy_source_support is not None
+    partial_domain = case.support_domain is not None
+    _need(not partial_domain or derived_occupancy, "partial_domain_requires_explicit_S_union_T_assumption")
     source = _fields(source_binding, SOURCE_FIELDS | ({"occupancy_derivation",
-        "target_domain_source_sha256", "target_domain_binary_hash"} if derived_occupancy else set()),
+        "target_domain_source_sha256", "target_domain_binary_hash"} if derived_occupancy else set())
+        | (PARTIAL_DOMAIN_SOURCE_FIELDS if partial_domain else set()),
         "exact_public_source_fields_required")
     qc = _fields(qc_receipt, QC_FIELDS | ({"derived_occupancy_anatomically_validated"}
-        if derived_occupancy else set()), "exact_public_QC_fields_required")
+        if derived_occupancy else set()) | ({"partial_source_domain_preserved"} if partial_domain else set()),
+        "exact_public_QC_fields_required")
     checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
     plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
         | ({"occupancy_condition"} if derived_occupancy else set()),
@@ -224,9 +236,11 @@ bound here and enforced by the separately supervised caller.
                  ("generated_support_interface_control", "generated_target_interface_control"))
     if derived_occupancy:
         semantics = ("derived_simulated_S_union_T_occupancy_assumption", semantics[1])
+        expected_condition = PARTIAL_DOMAIN_UNION_OCCUPANCY if partial_domain else SUPPLIED_TUMOR_UNION_OCCUPANCY
+        expected_subjects = PARTIAL_DOMAIN_TRAIN_SUBJECTS if partial_domain else ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025")
         _need(domain == "acquired_patient" and member["role"] == "TRAIN"
-              and source["subject"] in {"ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025"}
-              and not checkpoint_reload and plan["occupancy_condition"] == SUPPLIED_TUMOR_UNION_OCCUPANCY
+              and source["subject"] in expected_subjects
+              and not checkpoint_reload and plan["occupancy_condition"] == expected_condition
               and plan["initialization"] == "public_world_search_only"
               and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
               and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0,
@@ -237,7 +251,7 @@ bound here and enforced by the separately supervised caller.
                   case.support_provenance.get("raw_support_array_hash"))
               and case.public_target_domain is not None
               and _same_hash(source["target_domain_binary_hash"], array_digest(case.public_target_domain))
-              and case.support_provenance.get("occupancy_condition") == SUPPLIED_TUMOR_UNION_OCCUPANCY
+              and case.support_provenance.get("occupancy_condition") == expected_condition
               and case.support_provenance.get("occupancy_unchanged") is
                   (case._occupancy_derivation["added_region_positive_voxels"] == 0)
               and case.support_provenance.get("target_unchanged") is True,
@@ -248,6 +262,17 @@ bound here and enforced by the separately supervised caller.
                 ("target_domain_binary_hash", "target_domain_binary_hash")):
             _need(_same_hash(source[key], case.support_provenance.get(provenance_key)),
                   "unchanged_public_annotation_provenance_required")
+        if partial_domain:
+            _need(qc["partial_source_domain_preserved"] is True
+                  and qc["native_domain_fully_covered"] is False
+                  and case.public_target_context_variant is not None
+                  and semantic_digest(source["source_and_simulated_domains"]) == semantic_digest(case._domain_record)
+                  and _same_hash(source["support_domain_binary_hash"], array_digest(case.support_domain))
+                  and _same_hash(source["support_domain_source_sha256"], case.support_provenance.get("support_domain_file_sha256"))
+                  and _same_hash(source["support_domain_binary_hash"], case.support_provenance.get("support_domain_binary_hash"))
+                  and np.array_equal(case._native_config.interaction_domain, case.support_domain | (case.nominal_target > 0))
+                  and not np.any(case.occupancy_source_support & ~case.support_domain),
+                  "unchanged_source_Ds_full_T_and_explicit_simulated_D_required")
     _need((source["support_semantics"], source["target_semantics"]) == semantics,
           "exact_disclosed_annotation_semantics_required")
     for field in ("t1_source_sha256", "support_source_sha256", "target_source_sha256"):
@@ -271,10 +296,11 @@ bound here and enforced by the separately supervised caller.
     source_hash = semantic_digest(source)
     _need(qc["public_source_binding_hash"] == plan["public_source_binding_hash"] == source_hash
           and plan["qc_receipt_hash"] == semantic_digest(qc), "source_QC_protocol_join_required")
-    _need(qc["status"] == "pass" and qc["scope"] == QC_SCOPE
+    _need(qc["status"] == "pass" and qc["scope"] == (PARTIAL_DOMAIN_QC_SCOPE if partial_domain else QC_SCOPE)
           and all(qc[key] is True for key in ("source_linkage_checked", "frame_geometry_checked",
               "coverage_checked", "annotation_meaning_checked", "public_support_assumption",
-              "native_domain_fully_covered", "hypothetical_access_assumption")),
+              "hypothetical_access_assumption"))
+          and qc["native_domain_fully_covered"] is (not partial_domain),
           "intended_use_QC_not_header_only_required")
     _digest(qc["evidence_record_sha256"])
     lineage = None
@@ -304,11 +330,13 @@ bound here and enforced by the separately supervised caller.
     task = NativeSpatialTask(case, max_steps=plan["max_steps"])
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
-        **({"occupancy_condition": SUPPLIED_TUMOR_UNION_OCCUPANCY,
+        **({"occupancy_condition": plan["occupancy_condition"],
             "occupancy_derivation": case._occupancy_derivation, "execution_kind": "search_only_no_policy",
             "derived_occupancy_anatomically_validated": False,
             "policy_comparison_permitted": False}
            if derived_occupancy else {}),
+        **({"source_and_simulated_domains": case._domain_record,
+            "source_domain_fully_covered": False} if partial_domain else {}),
         **({} if case.public_target_context_variant is None else {
             'public_target_context_variant':case.public_target_context_variant}),
         "patient_group": source["patient_group"], "role": member["role"], "evidence_domain": domain,
