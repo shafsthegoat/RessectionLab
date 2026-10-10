@@ -1,3 +1,4 @@
+import type { DisplaySeriesPayload, ImportDisplaySeriesRequest } from "./workspace-imaging-types";
 export type Vec3 = [number, number, number];
 export type Mat4 = number[][];
 
@@ -454,12 +455,14 @@ export interface ObservedLandmarkResult {
 }
 
 export interface ResectionApi extends TrainingApi {
+  executeDevelopmentEpisode?(args: import("./episode-types").DevelopmentEpisodeRequest): Promise<import("./episode-types").DevelopmentEpisodeResult>;
   readOnly?: boolean;
   ping(): Promise<unknown>;
   startupCase(): Promise<CasePayload | null>;
   createSyntheticCase(): Promise<CasePayload>;
   openCase(): Promise<CasePayload | null>;
   importNifti(): Promise<CasePayload | null>;
+  importDisplaySeries?(args: ImportDisplaySeriesRequest): Promise<DisplaySeriesPayload | null>;
   importStructuralEvidence?(args: {
     caseHash: string;
     variant: "main" | "nocsf";

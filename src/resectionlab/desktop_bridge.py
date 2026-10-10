@@ -46,7 +46,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
 RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
@@ -193,6 +193,7 @@ class _CaseEntry:
     descriptor: dict
     artifacts: Any
     routes: Any = None
+    display_series: dict[str, dict] = field(default_factory=dict)
 
 
 @dataclass
@@ -374,6 +375,8 @@ class BridgeSession:
         """Discard generated arrays belonging to failed or cancelled imports."""
         retained = set()
         for cached in self.cases.values():
+            from .workspace_imaging import retained_paths
+            retained.update(retained_paths(cached.display_series))
             retained.add(cached.descriptor["mri"]["path"])
             if cached.descriptor["brainMask"]:
                 retained.add(cached.descriptor["brainMask"]["path"])
@@ -887,6 +890,27 @@ class BridgeSession:
             request.begin_commit()
             self.observed_replay = candidate
             return result
+        if operation == "executeDevelopmentEpisode":
+            # Explicitly authorized generated development path. The legacy
+            # createSyntheticCase policy exclusion remains unchanged above.
+            _keys(args, {"fixture", "selector"})
+            if (set(args) != {"fixture", "selector"} or args.get("fixture") != "generated-sequential-v1"
+                    or args.get("selector") not in ("scripted", "SEARCH")):
+                raise BridgeError("INVALID_ARGUMENT", "Choose the fixed generated episode and selector")
+            from .development_episode import execute_development_episode
+            progress(0.1, "Executing the generated multistep software fixture")
+            case, episode = execute_development_episode(selector=args["selector"], cancelled=request.cancelled.is_set)
+            request.check()
+            if (episode.get("caseHash") != case.semantic_hash or episode.get("patientAdmission") is not False
+                    or episode.get("clinicalValidation") is not False or episode.get("evidenceKind") != "generated_software_fixture"):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Generated episode differs from its display case")
+            _require_json_budget(episode, 2 * 1024 * 1024, "EPISODE_SIZE_LIMIT", "Generated episode exceeds 2 MiB")
+            progress(0.9, "Publishing checked native history and source-grid transfers")
+            canonical = json.dumps({key: value for key, value in episode.items() if key != "episodeId"},
+                                   sort_keys=True, separators=(",", ":"), allow_nan=False)
+            if "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest() != episode.get("episodeId"):
+                raise BridgeError("EPISODE_DIGEST_MISMATCH", "Generated episode identity changed before publication")
+            return {"case": self._install_case(case, {}, request), "episode": episode, "episodeCanonicalJson": canonical}
         if operation == "createSyntheticCase":
             _keys(args, {"shape"})
             shape = args.get("shape", [64, 64, 64])
@@ -902,6 +926,9 @@ class BridgeSession:
             request.check()
             artifacts = read_case_artifacts(path)
             return self._install_case(case, artifacts, request)
+        if operation == "importDisplaySeries":
+            from .workspace_imaging import import_display_series
+            return import_display_series(self, args, request, progress)
         if operation == "importNifti":
             _keys(args, {"structuralPath", "tumorMaskPath", "brainMaskPath", "caseId", "labelMap"})
             structural = _path(args.get("structuralPath"), kind="NIfTI")

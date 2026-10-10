@@ -386,13 +386,21 @@ class NativeSpatialTask:
     """Canonical native execution, geometric objective, evaluator-only labels."""
     def __init__(self, case: NativeSpatialCase, *, max_steps: int = 3,
                  reward: RewardSpec = DEFAULT_NATIVE_SPATIAL_REWARD,
-                 cancelled: Callable[[], bool] | None = None, _planning: bool = False):
+                 cancelled: Callable[[], bool] | None = None, _planning: bool = False,
+                 tool_modes: Mapping[str, str] | None = None):
         if not isinstance(case, NativeSpatialCase) or type(max_steps) is not int or not 1 <= max_steps <= 6:
             raise ValueError("A typed native source and horizon1–6 are required")
         if not isinstance(reward, RewardSpec) or reward.motor_per_mm3 or reward.language_per_mm3 or reward.graph_edge_cost:
             raise ValueError("Functional and graph costs must be disabled: function remains unassessed")
         if _planning and (case.nominal_target is None or not np.array_equal(case.reference_target, case.nominal_target)):
             raise ValueError("Planning must use the explicitly supplied nominal target field")
+        modes = None if tool_modes is None else dict(tool_modes)
+        if modes is not None:
+            if (case.track != "synthetic_scan" or case.proposal_mode != "fixed_lattice"
+                    or set(modes) != {tool.tool_id for tool in case.tools}
+                    or any(mode not in {"aspirate", "probe"} for mode in modes.values())):
+                raise ValueError("Mixed native interactions currently require an explicit generated fixed-lattice tool registry")
+        self.tool_modes = None if modes is None else freeze_json(modes)
         self.case, self.max_steps, self.reward_spec = case, max_steps, reward
         self._cancelled, self._planning = cancelled, bool(_planning)
         self._source_hash, self._reference_hash = case.source_hash, case.reference_hash
@@ -403,13 +411,17 @@ class NativeSpatialTask:
         self.reset()
 
     def _contract_record(self):
-        return {"source": self.case.source_hash, "max_steps": self.max_steps, "reward": asdict(self.reward_spec),
+        return {**({"instrument_interaction_version": "native-tangential-probe-v1",
+                     "tool_modes": thaw_json(self.tool_modes)} if self.tool_modes is not None else {}),
+            "source": self.case.source_hash, "max_steps": self.max_steps, "reward": asdict(self.reward_spec),
             "native_config": self._config.fingerprint, "partial_contact_weight": 0.,
             "proposal_rule": self.case._candidate_scope + "; source-normal entry projection",
             "target_model": self.case.target_derivation or "unavailable_no_search_objective"}
 
     def _state_record(self):
-        return {"removed": array_digest(self._engine.removed_mask), "remaining": array_digest(self._engine.remaining_mask),
+        return {**({"probe_contact": array_digest(self._engine.probe_contact_mask)}
+                   if self.tool_modes is not None else {}),
+            "removed": array_digest(self._engine.removed_mask), "remaining": array_digest(self._engine.remaining_mask),
             "contact": array_digest(self._engine.contact_mask), "connected_free": array_digest(self._engine.connected_free_mask),
             "engine_history": self._engine.history, "engine_state": self._engine.state_hash,
             "history": self._history, "steps": self._steps, "current_tool": self._current_tool,
@@ -482,14 +494,23 @@ class NativeSpatialTask:
                 entry = tip - depth * self.case.access.normal_inward
                 for tool in self.case.tools:
                     self._check_cancelled()
+                    mode = "aspirate" if self.tool_modes is None else self.tool_modes[tool.tool_id]
                     identity = semantic_digest({"source": self._source_hash, "cavity": cavity,
-                        "voxel": list(voxel), "tool_id": tool.tool_id})
+                        "voxel": list(voxel), "tool_id": tool.tool_id,
+                        **({"interaction_mode": mode, "engine_state": self._engine.state_hash,
+                            "task_model": self.decision_model_hash} if self.tool_modes is not None else {})})
                     action_id = "NATIVE-SPATIAL:" + identity.split(":")[1][:24]
-                    result = None if depth <= 0 else self._engine.preview_stroke(tool.tool_id, tip, entry_mm=entry)
+                    # Probe only previously opened cells; the engine still independently
+                    # enforces nonpenetration and exposed contact on the complete path.
+                    eligible = depth > 0 and (mode != "probe" or self._engine.removed_mask[voxel])
+                    result = None if not eligible else self._engine.preview_stroke(tool.tool_id, tip,
+                        entry_mm=entry, **({"interaction_mode": mode} if self.tool_modes is not None else {}))
                     feasible = result is not None and result.feasible
                     ledger.append({"voxel": list(voxel), "tool_id": tool.tool_id, "entry_mm": entry.tolist(),
                         "tip_mm": tip.tolist(), "action_id": action_id, "feasible": bool(feasible),
-                        "reason": "OUTSIDE_DECLARED_INWARD_WORKSPACE" if result is None else result.reason})
+                        **({"interaction_mode": mode} if self.tool_modes is not None else {}),
+                        "reason": ("PROBE_REQUIRES_EXISTING_CAVITY" if mode == "probe" and not self._engine.removed_mask[voxel]
+                                   else "OUTSIDE_DECLARED_INWARD_WORKSPACE") if result is None else result.reason})
                     if feasible:
                         inventory[action_id] = result
         self._check_cancelled()
@@ -503,13 +524,20 @@ class NativeSpatialTask:
         actions.extend(SpatialAction(identifier, result.entry_mm, result.tip_mm, tools[result.tool_id])
                        for identifier, result in inventory.items())
         state = ObservedProcedureState(self.case.access, self._steps, self.max_steps, self._current_tool)
-        return build_spatial_observation(self.case.spatial_inputs(self._engine.removed_mask), actions, state)
+        base = build_spatial_observation(self.case.spatial_inputs(self._engine.removed_mask), actions, state)
+        if self.tool_modes is None:
+            return base
+        from .sequential_spatial_observation import SequentialSpatialObservation
+        origin, shape = self.case._crop_origin, self.case._crop_shape
+        region = tuple(slice(a, a+n) for a, n in zip(origin, shape))
+        return SequentialSpatialObservation(base, ("stop", *(result.interaction_mode for result in inventory.values())),
+                                            self._engine.probe_contact_mask[region])
 
     def _score_record(self, geometry, prior_tool):
         if geometry.get("action_id") == "STOP":
             return {"action_id": "STOP", "reward": 0., "target_removed_mm3": 0., "normal_removed_mm3": 0.,
                     "insertion_distance_mm": 0., "complete_tool_path_length_mm": 0.}
-        indices = np.asarray(geometry["removed_indices_native"], dtype=int)
+        indices = np.asarray(geometry["removed_indices_native"], dtype=int).reshape(-1, 3)
         # Float32 source memberships stay unchanged; physical accounting uses
         # float64 before multiplication, including NumPy's scalar promotion.
         voxel = float(self._config.voxel_volume_mm3)
@@ -553,6 +581,7 @@ class NativeSpatialTask:
         if not isinstance(action, str) or action not in ids:
             raise InvalidActionError("Unknown, stale or infeasible native spatial action")
         self._check_cancelled()
+        prior_state = self._engine.state_hash
         if action == "STOP":
             record = self._score_record({"action_id": "STOP"}, self._current_tool)
         else:
@@ -560,6 +589,15 @@ class NativeSpatialTask:
             record = self._score_record({**result.to_history_record(), "action_id": action}, self._current_tool)
             self._engine.commit_preview(result)
             self._current_tool = result.tool_id
+        if self.tool_modes is not None:
+            mode = "stop" if action == "STOP" else result.interaction_mode
+            probe_contacts = ([] if mode != "probe" else [[int(v) for v in cell] for cell in result.contact_indices_native
+                              if self._engine.remaining_mask[tuple(cell)]])
+            record.update(interaction_mode=mode, source_state_hash=prior_state,
+                          result_state_hash=self._engine.state_hash,
+                          probe_contact_indices_native=probe_contacts)
+            if action == "STOP":
+                record.update(removed_indices_native=[], contact_indices_native=[], microsteps=[])
         self._steps += 1
         self._total_reward += record["reward"]
         self._terminated = action == "STOP" or self._steps >= self.max_steps
@@ -616,7 +654,7 @@ class NativeSpatialTask:
     def fresh(self):
         self._assert_frozen()
         return type(self)(self.case, max_steps=self.max_steps, reward=self.reward_spec,
-                          cancelled=self._cancelled, _planning=self._planning)
+                          cancelled=self._cancelled, _planning=self._planning, tool_modes=self.tool_modes)
 
     def observed_one_step_search(self, *, seconds: float = 60.):
         """Score every current certified nominal action, then stop after the best.
@@ -788,7 +826,8 @@ class NativeSpatialTask:
         source = SimpleNamespace(mri=self.case.structural_intensity, affine=self.case._native_affine_ras_mm,
                                  frame="RAS+", semantic_hash=self._source_hash)
         return independent_check_native_history(source, self.case.tools, self._history,
-            tissue_mask=self.case.observed_support, access=self.case.access, geometry_frame="RAS+")
+            tissue_mask=self.case.observed_support, access=self.case.access, geometry_frame="RAS+",
+            tool_modes=self.tool_modes)
 
 
 def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None):

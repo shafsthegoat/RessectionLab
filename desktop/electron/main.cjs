@@ -5,10 +5,12 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const os = require('node:os');
 const { pathToFileURL } = require('node:url');
+const { episodeRequest } = require('./development-episode.cjs');
 const { Sidecar } = require('./sidecar.cjs');
 const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
 const { importStructuralEvidence } = require('./structural-import.cjs');
+const { importDisplaySeries } = require('./display-series-import.cjs');
 const { inspectAxisPlanning } = require('./axis-inspection.cjs');
 const { observedRequest, validateObservedResult } = require('./observed-landmark-contract.cjs');
 
@@ -61,6 +63,7 @@ function bindOperations() {
     if (casePath) return engine.request('loadCase', { path: path.resolve(casePath) });
     return process.argv.includes('--demo') ? engine.request('createSyntheticCase') : null;
   });
+  handle('executeDevelopmentEpisode', args => engine.request('executeDevelopmentEpisode', episodeRequest(args), 30000));
   handle('createSyntheticCase', () => engine.request('createSyntheticCase'));
   handle('openCase', async () => {
     const selected = await pick('Open a saved research case', ['ressectionlab', 'rslab']);
@@ -72,6 +75,7 @@ function bindOperations() {
     const tumorMaskPath = await pick('Select the tumor segmentation (Cancel to import MRI only)', ['nii', 'gz']);
     return engine.request('importNifti', { structuralPath, ...(tumorMaskPath ? { tumorMaskPath } : {}) });
   });
+  handle('importDisplaySeries', args => importDisplaySeries(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('saveCase', async args => {
     plainArgs(args, ['caseHash', 'workspace']);

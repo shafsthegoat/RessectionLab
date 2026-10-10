@@ -45,7 +45,7 @@ function renderer(volume) {
     uRouteColors: { value: [new THREE.Color(), new THREE.Color()] },
   } }));
   Object.assign(r, { volume, instrumentDisplay: new inspection.InstrumentDisplayState(),
-    tools: new THREE.Group(), inspectionTools: new THREE.Group(), anatomy: new THREE.Group(),
+    tools: new THREE.Group(), inspectionTools: new THREE.Group(), recordedTools: new THREE.Group(), recordedDisplay: null, anatomy: new THREE.Group(),
     replayGroup: new THREE.Group(), replayGeneration: 0, replayWorker: null,
     pendingReplayGroup: null, replayActive: false, disposed: false,
     removedTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
@@ -160,4 +160,23 @@ test("oblique LPS fixture creates the full physical capsule envelope without a s
     assert.ok(localCap.distanceTo(new THREE.Vector3(...expected)) < 1e-12);
     mesh.geometry.dispose(); mesh.material.dispose();
   }
+});
+
+test("actual replay renderer installs recorded tool capsules and MRI uniforms, then clears them", async () => {
+  const f=JSON.parse(await fs.readFile(new URL('../../tests/fixtures/development-scripted.json',import.meta.url),'utf8'));
+  const {hydrateDevelopmentEpisode}=await server.ssrLoadModule('/src/episode-data.ts');
+  const view=await hydrateDevelopmentEpisode(f.result,{readAsset:async id=>new Uint8Array(Buffer.from(f.assets[id],'base64'))});
+  const {r,shaders}=renderer(view.volume), prior=globalThis.Worker;
+  globalThis.Worker=class {postMessage(){} terminate(){}};
+  try {
+    const index=view.episode.replayFrames.findIndex(frame=>frame.mode==='probe');
+    r.setReplay(view.frames[index]);
+    assert.equal(r.recordedTools.visible,true);assert.equal(r.tools.visible,false);assert.equal(r.inspectionTools.visible,false);
+    const capsules=r.recordedTools.children[0].children;assert.equal(capsules.length,2);
+    for(const mesh of capsules) {assert.equal(mesh.userData.scope,'executed-generated-episode');assert(!('inspectionIdentity'in mesh.userData));}
+    for(const shader of shaders){assert.equal(shader.uniforms.uRouteCount.value,1);assert.deepEqual(shader.uniforms.uTipEnd.value[0].toArray(),view.episode.replayFrames[index].tipRasMm);}
+    const withdrawal=view.episode.replayFrames.findIndex(frame=>frame.phase==='withdrawal');r.setReplay(view.frames[withdrawal]);
+    for(const shader of shaders)assert.deepEqual(shader.uniforms.uTipEnd.value[0].toArray(),view.episode.replayFrames[withdrawal].tipRasMm);
+    r.setReplay(null);assert.equal(r.recordedTools.children.length,0);assert.equal(r.recordedTools.visible,false);
+  }finally{globalThis.Worker=prior;}
 });

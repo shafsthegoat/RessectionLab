@@ -1,3 +1,6 @@
+import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
+import { useWorkspaceImaging } from "./use-workspace-imaging";
+import { workspaceDisplay } from "./workspace-imaging-data";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabs from "@radix-ui/react-tabs";
@@ -35,6 +38,10 @@ import {
 import { AnnotationCenterButton } from "./AnnotationCenterButton";
 import { WorkspaceBreadcrumb } from "./WorkspaceBreadcrumb";
 import { readOnlyPreview } from "./preview-api";
+import { EpisodePanel } from "./EpisodePanel";
+import { hydrateDevelopmentEpisode } from "./episode-data";
+import type { EpisodeView } from "./episode-data";
+import type { DevelopmentEpisodeRequest } from "./episode-types";
 import { RefinementPanel } from "./RefinementPanel";
 import { hydratePriorProposal } from "./prior-data";
 import { PriorInventory, PriorProvenance } from "./PriorInventory";
@@ -524,6 +531,12 @@ export default function App() {
     "anatomy",
   );
   const [routes, setRoutes] = useState<RouteCandidate[]>([]);
+  const [episodeView, setEpisodeView] = useState<EpisodeView | null>(null);
+  const [episodeStep, setEpisodeStep] = useState(0);
+  const [episodeVisible, setEpisodeVisible] = useState(false);
+  const [episodePending, setEpisodePending] = useState(false);
+  const [episodeSelector, setEpisodeSelector] = useState<DevelopmentEpisodeRequest["selector"]>("scripted");
+  const episodeGeneration = useRef(0);
   const [certifiedReplay, setCertifiedReplay] =
     useState<CertifiedReplay | null>(null);
   const [proposalView, setProposalView] =
@@ -551,6 +564,7 @@ export default function App() {
   const receiveReplay = useCallback(
     (replay: CertifiedReplay | null) => {
       if (replay) {
+        setEpisodeVisible(false);
         clearProposal();
         clearPrior();
       }
@@ -564,6 +578,7 @@ export default function App() {
   );
   const [routeA, setRouteA] = useState("");
   const [routeB, setRouteB] = useState("");
+  const [planningTab, setPlanningTab] = useState("routes");
   const [instrument, setInstrument] = useState("all");
   const [allowEstimatedSupport, setAllowEstimatedSupport] = useState(false);
   const [operation, setOperation] = useState<Operation | null>(null);
@@ -583,10 +598,22 @@ export default function App() {
   const mounted = useRef(true);
   const caseGeneration = useRef(0);
   const activeCaseHash = useRef<string | null>(null);
-  const busy = !!operation || hydrating;
+  const imaging = useWorkspaceImaging(payload, api);
+  const resetDisplayToPrimary = imaging.resetDisplayToPrimary;
+  const viewerCase = useMemo(() => caseData ? {...caseData, planningHash: payload?.planningHash} : null,
+    [caseData, payload?.planningHash]);
+  const display = workspaceDisplay(viewerCase, imaging.selected);
+  const displayedCase = display.caseData;
+  const displayedSource = imaging.selected?.descriptor.volume ?? payload;
+  const displayedCursor = imaging.selected ? imaging.cursor : cursor;
+  const displayedLayers = imaging.selected ? imaging.visibleLayers : visibleLayers;
+  const setDisplayedLayers = imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
+  const busy = !!operation || hydrating || episodePending || imaging.pending;
   const readonly = !!api?.readOnly;
-  const controlsBlocked = busy || engineStopped;
+  const controlsBlocked = busy || engineStopped || !display.planningInteractionPermitted;
   const restoreSourceView = () => {
+    resetDisplayToPrimary();
+    setEpisodeVisible(false);
     clearPrior();
     clearProposal();
     setCertifiedReplay(null);
@@ -629,6 +656,7 @@ export default function App() {
   const installCase = useCallback(
     async (source: CasePayload, runtime: ResectionApi) => {
       const generation = ++caseGeneration.current;
+      setEpisodeVisible(false);
       setHydrating(true);
       setError(null);
       try {
@@ -638,6 +666,7 @@ export default function App() {
         activeCaseHash.current = source.caseHash;
         clearPrior();
         clearProposal();
+        resetDisplayToPrimary();
         setPayload(source);
         setCaseData(loaded);
         setCertifiedReplay(null);
@@ -739,6 +768,33 @@ export default function App() {
     },
     [],
   );
+
+  const showEpisode = () => {
+    resetDisplayToPrimary();
+    if (!episodeView || episodeView.source.caseHash !== activeCaseHash.current) return;
+    clearPrior(); clearProposal(); setCertifiedReplay(null); setEpisodeVisible(false);
+    setEpisodeVisible(true); setCameraMode("instruments");
+    setMessage("Generated episode · recorded tool poses and modeled cavity · no patient admission");
+  };
+  const requestEpisodeStep = (step: number) => {
+    if (!episodeView || !Number.isInteger(step) || step < 0 || step >= episodeView.frames.length) return;
+    setEpisodeStep(step); showEpisode();
+  };
+  const executeEpisode = async () => {
+    if (!api?.executeDevelopmentEpisode || controlsBlocked || readonly) return;
+    const generation = ++episodeGeneration.current;
+    setEpisodePending(true); setError(null);
+    try {
+      const result = await api.executeDevelopmentEpisode({fixture:"generated-sequential-v1",selector:episodeSelector});
+      const checked = await hydrateDevelopmentEpisode(result,api);
+      if (!mounted.current || generation !== episodeGeneration.current) return;
+      if (!await installCase(checked.source,api)) return;
+      setEpisodeView(checked); setEpisodeStep(0); setEpisodeVisible(true);
+      setCameraMode("instruments"); setPlanningTab("episode");
+      setMessage("Generated software episode executed · all recorded frame masks checked · no patient admission");
+    } catch (failure) { if (mounted.current && generation === episodeGeneration.current) reportError(failure); }
+    finally { if (mounted.current && generation === episodeGeneration.current) setEpisodePending(false); }
+  };
 
   useEffect(() => {
     mounted.current = true;
@@ -859,7 +915,7 @@ export default function App() {
       if (source) await installCase(source, api);
     });
   const viewPrior = async (proposalId: string) => {
-    if (!payload || !caseData || !api || certifiedReplay || controlsBlocked)
+    if (!payload || !caseData || !api || episodeVisible || certifiedReplay || controlsBlocked)
       return;
     clearPrior();
     clearProposal();
@@ -899,7 +955,7 @@ export default function App() {
     }
   };
   const viewProposal = async (evidenceId: string) => {
-    if (!payload || !caseData || !api || certifiedReplay || controlsBlocked)
+    if (!payload || !caseData || !api || episodeVisible || certifiedReplay || controlsBlocked)
       return;
     clearPrior();
     clearProposal();
@@ -1062,7 +1118,9 @@ export default function App() {
   );
   const viewerReplay = useMemo(
     () =>
-      certifiedReplay && caseData
+      episodeVisible && episodeView && episodeView.source.caseHash === caseData?.caseHash
+        ? episodeView.frames[episodeStep]
+        : certifiedReplay && caseData
         ? {
             removedMask: certifiedReplay.mask,
             step: certifiedReplay.result.step,
@@ -1080,7 +1138,7 @@ export default function App() {
               certifiedReplay.result.modeledResidualTargetVolumeMm3,
           }
         : null,
-    [certifiedReplay, caseData],
+    [certifiedReplay, caseData, episodeVisible, episodeView, episodeStep],
   );
   const synthetic = !!payload?.metadata.is_synthetic;
   const supportGate = researchSupportGate(payload);
@@ -1095,7 +1153,7 @@ export default function App() {
   const fractionalAnnotation = payload?.metadata.fractional_annotation as
     | Record<string, unknown>
     | undefined;
-  const annotationDescription =
+  const annotationDescription = synthetic ? "Generated target" :
     fractionalAnnotation?.derived_provenance === "estimated"
       ? "Threshold-derived annotation"
       : "Supplied annotation";
@@ -1193,10 +1251,12 @@ export default function App() {
         </div>
         <h1>{title}</h1>
         <p className="case-subtitle">
-          {payload
-            ? synthetic
+          {displayedSource
+            ? displayedSource.metadata.is_synthetic
               ? "Geometry demonstration · no patient data"
-              : "Annotation-assisted structural workspace"
+              : displayedSource.compartments.length > 0
+                ? "Annotation-assisted structural workspace"
+                : "Source-image workspace · no target annotations"
             : "A focused workspace for inspecting anatomy and candidate routes."}
         </p>
         {payload?.metadata.primary_source_equivalence === "unverified" && (
@@ -1207,15 +1267,18 @@ export default function App() {
         {!payload && (
           <button
             className="outline-button demo-button"
-            onClick={() => load("createSyntheticCase")}
+            onClick={() => setPlanningTab("episode")}
             disabled={!api || readonly || controlsBlocked}
           >
-            <FlaskConical size={15} /> Explore synthetic fixture
+            <FlaskConical size={15} /> Open generated episode
           </button>
         )}
+        {payload && <ImagingWorkspacePanel caseHash={payload.caseHash} series={imaging.series} selectedId={imaging.selectedId}
+          busy={busy || engineStopped} importAvailable={!!api?.importDisplaySeries && engineOperations.has("importDisplaySeries") && !readonly}
+          onSelect={imaging.select} onImport={request => void act(() => imaging.importSeries(request))} />}
         <section className="case-section">
           <h2>
-            Source imaging <span>{payload ? "01" : "—"}</span>
+            Displayed image <span>{displayedSource ? "01" : "—"}</span>
           </h2>
           <div className="sequence-card">
             <span className="sequence-icon">
@@ -1223,47 +1286,52 @@ export default function App() {
             </span>
             <div>
               <strong>
-                {payload
+                {displayedSource
                   ? String(
-                      payload.metadata.selected_modality ?? "Structural MRI",
+                      displayedSource.metadata.is_synthetic ? "Generated analytic signal" : imaging.selected?.descriptor.modality ?? displayedSource.metadata.selected_modality ?? "Structural MRI",
                     )
                   : "No MRI loaded"}
               </strong>
               <p>
-                {payload
-                  ? `${payload.shape.join(" × ")} voxels`
+                {displayedSource
+                  ? `${displayedSource.shape.join(" × ")} voxels`
                   : "NIfTI source volume"}
               </p>
             </div>
-            {payload && <Check size={13} className="subtle-check" />}
+            {displayedSource && <Check size={13} className="subtle-check" />}
           </div>
-          {payload && (
+          {displayedSource && (
             <p className="grid-note">
-              {payload.spacingMm
+              {displayedSource.spacingMm
                 .map((value) => `${value.toFixed(1)}`)
                 .join(" × ")}{" "}
-              mm · {payload.frame}
+              mm · {displayedSource.frame}
+            </p>
+          )}
+          {displayedSource?.metadata.source_anatomy_review === "not_planning_accepted" && (
+            <p className="muted-note" role="note">
+              Source-reported coordinates. Anatomical orientation and planning suitability remain unreviewed.
             </p>
           )}
         </section>
         <section className="case-section">
           <h2>
-            Target annotations{" "}
+            {imaging.selected ? (imaging.selected.descriptor.annotationKind === "estimated" ? "Estimated labels · display only" : "Source labels · display only") : "Target annotations"}{" "}
             <span>
-              {caseData?.compartments.length.toString().padStart(2, "0") ?? "—"}
+              {displayedCase?.compartments.length.toString().padStart(2, "0") ?? "—"}
             </span>
           </h2>
           <AnnotationCenterButton
-            center={annotationCenterMm}
+            center={imaging.selected ? null : annotationCenterMm}
             onCenter={setCursor}
           />
-          {caseData?.compartments.map((layer) => (
+          {displayedCase?.compartments.map((layer) => (
             <label className="layer-row" key={layer.name}>
               <input
                 type="checkbox"
-                checked={visibleLayers[layer.name] ?? false}
+                checked={displayedLayers[layer.name] ?? false}
                 onChange={(event) =>
-                  setVisibleLayers((current) => ({
+                  setDisplayedLayers((current) => ({
                     ...current,
                     [layer.name]: event.target.checked,
                   }))
@@ -1277,12 +1345,12 @@ export default function App() {
                 <strong>{readableName(layer.name)}</strong>
                 <span>
                   {(layer.volumeMm3 / 1000).toFixed(2)} mL ·{" "}
-                  {annotationDescription.toLowerCase()}
+                  {imaging.selected ? imaging.selected.descriptor.annotationKind : annotationDescription.toLowerCase()}
                 </span>
               </div>
             </label>
           ))}
-          {!caseData?.compartments.length && (
+          {!displayedCase?.compartments.length && (
             <p className="muted-note">
               Import a supplied mask to inspect its target compartments.
             </p>
@@ -1310,7 +1378,7 @@ export default function App() {
           inspection={{
             selectedId: proposalView?.evidenceId,
             loadingId: proposalLoadingId ?? undefined,
-            disabled: controlsBlocked || !!certifiedReplay,
+            disabled: controlsBlocked || episodeVisible || !!certifiedReplay,
             onSelect: (id) => void viewProposal(id),
             onClear: restoreSourceView,
             outsideCount: proposalView?.annotationOutsideVoxelCount,
@@ -1328,7 +1396,7 @@ export default function App() {
           items={payload?.priorProposals ?? []}
           selected={priorView}
           loadingId={priorLoadingId}
-          disabled={controlsBlocked || !!certifiedReplay}
+          disabled={controlsBlocked || episodeVisible || !!certifiedReplay}
           onSelect={(id) => void viewPrior(id)}
           onClear={restoreSourceView}
           cursor={cursor}
@@ -1433,6 +1501,9 @@ export default function App() {
             </button>
           </div>
         )}
+        {episodeVisible && episodeView && (
+          <div className="modeled-replay-notice" role="status"><span>GENERATED · modeled cavity · frame {episodeStep}/{episodeView.frames.length-1} · {episodeView.episode.replayFrames[episodeStep].phase} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>
+        )}
         {certifiedReplay && (
           <div className="modeled-replay-notice">
             <span>
@@ -1448,16 +1519,17 @@ export default function App() {
         <div className="viewer-shell">
           {caseData && (
             <ViewerWorkspace
-              caseData={caseData}
-              visibleLayers={visibleLayers}
+              generatedSignal={display.primaryOverlaysPermitted && synthetic}
+              caseData={displayedCase}
+              visibleLayers={displayedLayers}
               overlayOpacity={overlayOpacity}
-              cursor={cursor}
-              onCursorChange={setCursor}
-              routes={viewerRoutes}
+              cursor={displayedCursor}
+              onCursorChange={imaging.selected ? imaging.setCursor : setCursor}
+              routes={display.primaryOverlaysPermitted ? viewerRoutes : []}
               cameraMode={cameraMode}
-              replay={viewerReplay}
-              structuralProposal={proposalView}
-              priorLayer={priorView}
+              replay={display.primaryOverlaysPermitted ? viewerReplay : null}
+              structuralProposal={display.primaryOverlaysPermitted ? proposalView : null}
+              priorLayer={display.primaryOverlaysPermitted ? priorView : null}
             />
           )}
           {!caseData && (
@@ -1485,9 +1557,9 @@ export default function App() {
               <button
                 className="text-button"
                 disabled={!api || readonly || controlsBlocked}
-                onClick={() => load("createSyntheticCase")}
+                onClick={() => setPlanningTab("episode")}
               >
-                Explore the synthetic fixture <ChevronRight size={13} />
+                Open the generated episode workflow <ChevronRight size={13} />
               </button>
             </div>
           )}
@@ -1512,7 +1584,9 @@ export default function App() {
       </main>
 
       <aside className="planning-panel" data-route-panel tabIndex={-1}>
-        <Tabs.Root defaultValue="routes" className="planning-tabs">
+        <Tabs.Root value={planningTab} onValueChange={(tab) => {
+                setPlanningTab(tab);
+        }} className="planning-tabs">
           <Tabs.List
             className="planning-tab-list"
             aria-label="Planning workflows"
@@ -1520,10 +1594,17 @@ export default function App() {
             <Tabs.Trigger value="routes">
               <Waypoints size={14} /> Routes
             </Tabs.Trigger>
+            <Tabs.Trigger value="episode"><FlaskConical size={14} /> Episode</Tabs.Trigger>
             <Tabs.Trigger value="refinement">
               <Sparkles size={14} /> Refine
             </Tabs.Trigger>
           </Tabs.List>
+          <Tabs.Content value="episode" className="planning-tab-content">
+            <EpisodePanel view={episodeView?.source.caseHash === payload?.caseHash ? episodeView : null} step={episodeStep}
+              selector={episodeSelector} onSelector={setEpisodeSelector} busy={controlsBlocked}
+              onExecute={executeEpisode} onStep={requestEpisodeStep} onShow={showEpisode} onSource={restoreSourceView} visible={episodeVisible}
+              unavailableReason={engineStopped ? "The local engine stopped. Reopen the app to execute." : readonly ? "This browser preview is read only. Open the desktop app to execute." : !api?.executeDevelopmentEpisode || !engineOperations.has("executeDevelopmentEpisode") ? "This engine does not provide generated development episodes." : undefined}/>
+          </Tabs.Content>
           <Tabs.Content value="routes" className="planning-tab-content">
             <div className="planning-title">
               <span className="eyebrow">INSTRUMENT-AWARE SEARCH</span>
@@ -1756,8 +1837,8 @@ export default function App() {
         )}
         <span className="status-frame">
           {readonly && <strong>READ-ONLY PREVIEW</strong>}
-          {cursor
-            ? `RAS  ${cursor.map((value) => value.toFixed(1)).join("  /  ")} mm`
+          {displayedCursor
+            ? `RAS  ${displayedCursor.map((value) => value.toFixed(1)).join("  /  ")} mm`
             : "RAS+ · millimeters"}
         </span>
       </footer>

@@ -5,10 +5,11 @@ const { randomUUID } = require('node:crypto');
 const { EventEmitter } = require('node:events');
 const path = require('node:path');
 const fs = require('node:fs/promises');
+const { episodeRequest, validateEpisodeResult } = require('./development-episode.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
-const OPERATIONS = new Set(['ping', 'createSyntheticCase', 'loadCase', 'importNifti', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['ping', 'executeDevelopmentEpisode', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
@@ -44,6 +45,9 @@ class Sidecar extends EventEmitter {
     if (op === 'inspectObservedLandmarkUpdate') {
       try { args = observedRequest(args); } catch (error) { return Promise.reject(error); }
     }
+    if (op === 'executeDevelopmentEpisode') {
+      try { args = episodeRequest(args); } catch (error) { return Promise.reject(error); }
+    }
     const id = randomUUID();
     const message = JSON.stringify({ id, op, args, timeoutMs });
     if (Buffer.byteLength(message) > 1024 * 1024) return Promise.reject(new Error('Operation request is too large'));
@@ -54,6 +58,7 @@ class Sidecar extends EventEmitter {
         reject(new Error('Operation exceeded its local time budget'));
       }, timeoutMs + 5000);
       this.pending.set(id, { resolve, reject, timeout, op,
+        ...(op === 'executeDevelopmentEpisode' ? { episodeArgs: args } : {}),
         ...(op === 'inspectObservedLandmarkUpdate' ? { observedArgs: args } : {}) });
       this.child.stdin.write(message + '\n', error => { if (error) this.failAll(error); });
     });
@@ -81,7 +86,8 @@ class Sidecar extends EventEmitter {
     // traversal or event forwarding, not just after the request resolves.
     if (observed) validateObservedEvent(message, pending.observedArgs);
     if (message.event === 'result') {
-      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase'].includes(pending.op)) this.assets.clear();
+      if (pending.op === 'executeDevelopmentEpisode') validateEpisodeResult(message.result, pending.episodeArgs);
+      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode'].includes(pending.op)) this.assets.clear();
       if (!observed) message.result = await this.assets.expose(message.result);
     }
     this.emit('event', { ...message, op: pending.op });

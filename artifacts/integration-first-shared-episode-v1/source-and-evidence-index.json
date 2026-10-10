@@ -1,0 +1,342 @@
+{
+  "source": "git index before milestone documentation",
+  "base_commit": "23570f7c257559f8ecd7b7fa27581dbbbe3af1a4",
+  "staged_source_files": [
+    {
+      "path": "IMPLEMENTING_AGENT_HANDOFF.md",
+      "bytes": 14953,
+      "sha256": "c75fc685f3cd5652f81706e3ef37b964661e2318c2a6de04e228fa54bb08229c"
+    },
+    {
+      "path": "desktop/electron/development-episode.cjs",
+      "bytes": 2968,
+      "sha256": "2be74ca44db0a01b056c12ecfc1b49561062ca587d17c9169e98073583d4131b"
+    },
+    {
+      "path": "desktop/electron/development-episode.test.cjs",
+      "bytes": 2780,
+      "sha256": "52ba14261f8a776acb15494f8e2b6276188aee9075c5d9c53279b0a76d05aaca"
+    },
+    {
+      "path": "desktop/electron/display-series-import.cjs",
+      "bytes": 1005,
+      "sha256": "cc9145b0e8301bb99e20114443b9cc3ad7f51fba77737bb0da72fa09c8e1b4ab"
+    },
+    {
+      "path": "desktop/electron/main.cjs",
+      "bytes": 10016,
+      "sha256": "7f2dab34f93daf750b6aa238e40462a75cfd6ab86c9fc731eeafedbb725df3a3"
+    },
+    {
+      "path": "desktop/electron/preload.cjs",
+      "bytes": 2175,
+      "sha256": "fa141bfda63d78bec2148f22d344befd16b37ff4cc8ee4f69c1d31d225400833"
+    },
+    {
+      "path": "desktop/electron/sidecar.cjs",
+      "bytes": 6884,
+      "sha256": "2f6dc20b57cff57ed5e44ac4cdcc30e2a62266b258852d083e76f10c714cb34d"
+    },
+    {
+      "path": "desktop/src/App.tsx",
+      "bytes": 66954,
+      "sha256": "1f2301eb80c345cab1368c0fc9992d5ebbd3bf02995faeb17a8d7ce9b1764d51"
+    },
+    {
+      "path": "desktop/src/EpisodePanel.tsx",
+      "bytes": 5336,
+      "sha256": "73ace850f98c11b65389a6499c9320382d06aafbf11e2f9e8bdbdda72b1c10a2"
+    },
+    {
+      "path": "desktop/src/ImagingWorkspacePanel.tsx",
+      "bytes": 2878,
+      "sha256": "092cc53afaa80e263d8a1b0f9abee84344de27ecfc131bebddf5a6a7f150f58c"
+    },
+    {
+      "path": "desktop/src/ReplayStepControl.tsx",
+      "bytes": 1435,
+      "sha256": "098366680b56209c857bf37c52faeccb6e5c20b1eeeed2d458871cbb4f5def33"
+    },
+    {
+      "path": "desktop/src/episode-data.ts",
+      "bytes": 12484,
+      "sha256": "f5ee0bc8ac4817e04dad9c7f9ec61217c7e51b63024da1e0d3824c54eac97298"
+    },
+    {
+      "path": "desktop/src/episode-types.ts",
+      "bytes": 4216,
+      "sha256": "a3c3d56932dae0921ce41fe807f6ba3cb007ebc1c16fb03dfda2a7ab6d640ae1"
+    },
+    {
+      "path": "desktop/src/styles.css",
+      "bytes": 43164,
+      "sha256": "6bb16a207ba502d6a131c30178a62e50b9f7de4d258d7aa4eb1e98e4b9231775"
+    },
+    {
+      "path": "desktop/src/types.ts",
+      "bytes": 13639,
+      "sha256": "fbc189ae6d91f6649e8d2c1b06600cd233331afd421f81fbe78ae61a195a3903"
+    },
+    {
+      "path": "desktop/src/use-workspace-imaging.ts",
+      "bytes": 2768,
+      "sha256": "faa4fe648022ca47416cb4d3de0db14fe64f38dec6eac305cc575fdadfb789dd"
+    },
+    {
+      "path": "desktop/src/viewer/ViewerWorkspace.tsx",
+      "bytes": 25854,
+      "sha256": "8f1bb859e992e3bcee25a86090d4c3303c47db1eb3d2165b4d67ac8068ed1739"
+    },
+    {
+      "path": "desktop/src/viewer/VolumeRenderer.ts",
+      "bytes": 39210,
+      "sha256": "d32da6505b48a152d17c2a826bac6827fdb6c77807c6fef00bc0e48c81303521"
+    },
+    {
+      "path": "desktop/src/viewer/contracts.ts",
+      "bytes": 2834,
+      "sha256": "1ece5278a5260c3a5a0a09c3f92247630a207d0b2d531dfeea440e2747f69ee8"
+    },
+    {
+      "path": "desktop/src/viewer/inspectionTool-independent.test.mjs",
+      "bytes": 11535,
+      "sha256": "7644b090c3d2c9fa01ccd95ea447baaba8924300b3cd7a458746f84e48b32fab"
+    },
+    {
+      "path": "desktop/src/viewer/inspectionToolGeometry.ts",
+      "bytes": 1755,
+      "sha256": "b2db67b5ae17e2dc814caa7679e5803b34439047e801efaaa1b810ebc8240f36"
+    },
+    {
+      "path": "desktop/src/viewer/recordedTool.ts",
+      "bytes": 2160,
+      "sha256": "fab69817085b92ef9fc1ce0ed4170d4b2b615f602cd8d1baac6822e0f9092e70"
+    },
+    {
+      "path": "desktop/src/workspace-imaging-data.ts",
+      "bytes": 2505,
+      "sha256": "4a48880889fdceeb5cafa50d075988acd6fde6a34f3e789d99ebd579ba815283"
+    },
+    {
+      "path": "desktop/src/workspace-imaging-types.ts",
+      "bytes": 1343,
+      "sha256": "4e012ac81866afdc38ad0550ab12d69da550371cb2888d49b0090917cbb2edd4"
+    },
+    {
+      "path": "desktop/tests/development-episode.test.mjs",
+      "bytes": 4264,
+      "sha256": "26df99123715a8e0214e2a064d0a0c9360f93e98ab44b18370c328cbcfadcd62"
+    },
+    {
+      "path": "desktop/tests/episode-panel.test.mjs",
+      "bytes": 3615,
+      "sha256": "73336c1fd839890aa6025c692f4a0afb6d6466cfdeddec1ade61fd6536452374"
+    },
+    {
+      "path": "desktop/tests/fixtures/development-scripted.json",
+      "bytes": 382820,
+      "sha256": "051a38f39bc70ba051b397675347c58df4a60e4790f6b2f2a0ccbea526a1e1bf"
+    },
+    {
+      "path": "desktop/tests/fixtures/development-search.json",
+      "bytes": 290450,
+      "sha256": "fc3806ffd1ac707b9770bd103006d8e21c8b667cb398da7bf46919ece939d272"
+    },
+    {
+      "path": "desktop/tests/workspace-imaging-crossstack.mjs",
+      "bytes": 1750,
+      "sha256": "7dc5ed85956977e5cf41cd83f655754382431e9beea51dd35e1feca675899384"
+    },
+    {
+      "path": "desktop/tests/workspace-imaging.test.mjs",
+      "bytes": 3992,
+      "sha256": "52ff4504735cebd6969e8638a34d2605f9a521f42b6245acc66bccbb3f9ae6e5"
+    },
+    {
+      "path": "docs/INTEGRATION_FIRST_MULTIMODAL_STEERING.md",
+      "bytes": 43631,
+      "sha256": "801ee4257f46d304da55cd786fc0e6b3ac30afc402f5bbc959975fe8d4410827"
+    },
+    {
+      "path": "src/resectionlab/desktop_bridge.py",
+      "bytes": 92936,
+      "sha256": "0c1413c158c0a705bb164a968abab4e8a809a712fb08d9fb7a3e9aa41ef65bb7"
+    },
+    {
+      "path": "src/resectionlab/development_episode.py",
+      "bytes": 12914,
+      "sha256": "bf9e6f89eb90a3483af2f95491e5937d6b8748b53425d72b4448c27880c83da6"
+    },
+    {
+      "path": "src/resectionlab/evaluation.py",
+      "bytes": 64077,
+      "sha256": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010"
+    },
+    {
+      "path": "src/resectionlab/native_resection.py",
+      "bytes": 30492,
+      "sha256": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c"
+    },
+    {
+      "path": "src/resectionlab/native_spatial_task.py",
+      "bytes": 62405,
+      "sha256": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255"
+    },
+    {
+      "path": "src/resectionlab/sequential_spatial_observation.py",
+      "bytes": 3742,
+      "sha256": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3"
+    },
+    {
+      "path": "src/resectionlab/shared_episode.py",
+      "bytes": 12206,
+      "sha256": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d"
+    },
+    {
+      "path": "src/resectionlab/workspace_imaging.py",
+      "bytes": 6617,
+      "sha256": "01768290295a8776f7b68d78caee4fdbfaed6ca680f3c60b93f02b53bbd5b68e"
+    },
+    {
+      "path": "tests/test_desktop_development_episode.py",
+      "bytes": 2011,
+      "sha256": "dc80cd05d0cf9bf6aba61deafd22d423881ff4942d6f9bc6c1f7f6a871ce00ca"
+    },
+    {
+      "path": "tests/test_shared_mixed_policy_episode.py",
+      "bytes": 2833,
+      "sha256": "1a2f4926690da197b016c79a062672d0588983b86a56ccec8951f57fc1f695a3"
+    },
+    {
+      "path": "tests/test_shared_native_episode.py",
+      "bytes": 6822,
+      "sha256": "98c5c7becbd239032ccfeed41d2be072a7279bf1cfef5b6143490db2615b6115"
+    },
+    {
+      "path": "tests/test_shared_policy_episode.py",
+      "bytes": 4777,
+      "sha256": "93f13bccfe55f96607dd99bf61b69aa2b46e1df159e917528dadd9e55d0ee68c"
+    },
+    {
+      "path": "tests/test_workspace_imaging.py",
+      "bytes": 6350,
+      "sha256": "5ebefe4c7f832f52237951c8793742067a88a46917936794f9363dcadfeb9206"
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "backend-tests.txt",
+      "source": "build/integration-first-root/backend-promoted-tests.txt",
+      "bytes": 99,
+      "sha256": "c7e6fe9eb0bc922bf2f718cd3371c6e7b7141a3a354792db832af709b320a7ca"
+    },
+    {
+      "path": "bridge-tests.txt",
+      "source": "build/integration-first-root/bridge-promoted-tests.txt",
+      "bytes": 98,
+      "sha256": "154d265f2d75809bfb45921b8dad2dc4cb6901ad7750f070bc6aba67456f8171"
+    },
+    {
+      "path": "imaging-tests.txt",
+      "source": "build/integration-first-root/imaging-promoted-tests.txt",
+      "bytes": 98,
+      "sha256": "0ce88768a9473be1e7b8becbb63962f3be004760e3e27bda4664d1d0167f549a"
+    },
+    {
+      "path": "desktop-tests.txt",
+      "source": "build/integration-first-root/desktop-final-tests.txt",
+      "bytes": 25626,
+      "sha256": "1a049b3f90981d271f4cb1f761949b37b2ac1cfbcab332faf6e1c7dbdc32b4c8"
+    },
+    {
+      "path": "desktop-build.txt",
+      "source": "build/integration-first-root/desktop-final-build.txt",
+      "bytes": 1010,
+      "sha256": "21add402b28714f9c17ddd7f6deec1994d7d152690a04d109d8aa368f85feec2"
+    },
+    {
+      "path": "index-projection-build.txt",
+      "source": "build/integration-first-root/index-projection-build.txt",
+      "bytes": 1854,
+      "sha256": "f74d69f4c23f830c1f2d0cbd0a4594d96adc3cba5810188913202196be3d3758"
+    },
+    {
+      "path": "backend-regressions.txt",
+      "source": "build/integration-first-root/backend-regressions.txt",
+      "bytes": 11159,
+      "sha256": "d4ed28d849d30042c9e0c49c07051c4e0a151786192d52bf55df34d52dca2e94"
+    },
+    {
+      "path": "baseline-failure-receipt.json",
+      "source": "build/integration-first-episode-v1/head-failure-reproduction-v1/receipt.json",
+      "bytes": 5479,
+      "sha256": "1ec18b7d230fa44b1772cefb35501cb7a2d45499bb7d47788e9bebdb869539f1"
+    },
+    {
+      "path": "baseline-failures.txt",
+      "source": "build/integration-first-episode-v1/head-failure-reproduction-v1/head-five-failures.txt",
+      "bytes": 12240,
+      "sha256": "5f3115a0978282d6a2b562dd0500a7032ebbed464780f615c95312dcc9c2b1f2"
+    },
+    {
+      "path": "independent-review.md",
+      "source": "build/shared-episode-integration-independent-v1/REPORT.md",
+      "bytes": 5246,
+      "sha256": "a16ddf3512197ef1b2b31361c5633fe9b846b8c4f705001681d4fe76774ecb7f"
+    },
+    {
+      "path": "independent-backend.json",
+      "source": "build/shared-episode-integration-independent-v1/backend-test-review.json",
+      "bytes": 2625,
+      "sha256": "45cd7d5264014091600cc9001c54379c60470925b707a83d59b575718dff1328"
+    },
+    {
+      "path": "independent-saved-episodes.json",
+      "source": "build/shared-episode-integration-independent-v1/saved-episode-audit.json",
+      "bytes": 1382,
+      "sha256": "13a3da7c55cd27ab99b1f5b93dd4feeb0b21a24f15b3819a8db2975bee798d71"
+    },
+    {
+      "path": "independent-desktop-replay.json",
+      "source": "build/shared-episode-integration-independent-v1/desktop-replay-review.json",
+      "bytes": 1864,
+      "sha256": "e36b08884a03d21be7b8907144bf9e9713550ca94654e3226adf409329942eff"
+    },
+    {
+      "path": "case4-preparation.json",
+      "source": "build/case4-native-display-v1/preparation-receipt.json",
+      "bytes": 1649,
+      "sha256": "fefb9d579ead5c75dce9d4079c0079b0a85ba086697fc61d735111d48893edb1"
+    },
+    {
+      "path": "case4-first-display-supervision.json",
+      "source": "build/case4-native-display-ui-v1/terminal.json",
+      "bytes": 218,
+      "sha256": "28948da53ef320464ae4d6ffb17ab481e144ff1fd2a26a904e4546363fa983f3"
+    },
+    {
+      "path": "case4-final-display-supervision.json",
+      "source": "build/case4-native-display-ui-v2/terminal.json",
+      "bytes": 244,
+      "sha256": "ff433d372298fb049b6ff1ccdda63d253bba1064a9395a44030a1b0831be6fd6"
+    },
+    {
+      "path": "case4-cpu-mpr-assessment.json",
+      "source": "build/case4-cpu-mpr-check-v1/assessment.json",
+      "bytes": 1892,
+      "sha256": "a19c9a1d337d788d53805a27c41c49a8ca9d04627eb8284a9404a167282551c9"
+    },
+    {
+      "path": "case4-cpu-mpr-supervision.json",
+      "source": "build/case4-cpu-mpr-check-v1/supervisor-receipt.json",
+      "bytes": 329,
+      "sha256": "12b0b932e6fb3458c676e83b32b07e9bf3e3b0529c38506ebd8add1af2478b4a"
+    },
+    {
+      "path": "case4-header-review.json",
+      "source": "build/case4-cpu-mpr-check-v1/saved-header-qc-review.json",
+      "bytes": 2316,
+      "sha256": "3565a90a73a39ea88f3e4b204a352348219b5e279c173ac3377c57c913f0c7e2"
+    }
+  ]
+}

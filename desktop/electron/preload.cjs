@@ -5,9 +5,11 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   startupCase: () => ipcRenderer.invoke('research:startupCase'),
   ping: () => ipcRenderer.invoke('research:ping'),
+  executeDevelopmentEpisode: args => ipcRenderer.invoke('research:executeDevelopmentEpisode', args),
   createSyntheticCase: () => ipcRenderer.invoke('research:createSyntheticCase'),
   openCase: () => ipcRenderer.invoke('research:openCase'),
   importNifti: () => ipcRenderer.invoke('research:importNifti'),
+  importDisplaySeries: args => ipcRenderer.invoke('research:importDisplaySeries', args),
   importStructuralEvidence: args => ipcRenderer.invoke('research:importStructuralEvidence', args || {}),
   saveCase: args => ipcRenderer.invoke('research:saveCase', args || {}),
   generateRoutes: args => ipcRenderer.invoke('research:generateRoutes', args || {}),

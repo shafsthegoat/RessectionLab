@@ -1,0 +1,57 @@
+{
+  "verification_kind": "root CUA interaction and screenshot observation; manually recorded facts",
+  "screenshots_saved_as_repository_files": false,
+  "generated_episode": {
+    "scripted": {
+      "committed_actions": 6,
+      "frames": 96,
+      "removed_target_mm3": 2,
+      "removed_other_tissue_mm3": 3,
+      "historical_probe_contact_cells": 14
+    },
+    "SEARCH": {
+      "committed_actions": 2,
+      "frames": 72,
+      "removed_target_mm3": 4,
+      "removed_other_tissue_mm3": 3
+    },
+    "observed_controls": [
+      "execute",
+      "probe frame selection",
+      "next microstep",
+      "STOP endpoint",
+      "source view restores original tissue",
+      "SEARCH selection and execute"
+    ],
+    "observed_full_tool_geometry": true
+  },
+  "public_patient_display": {
+    "source": "RESECT Case4 T1 and FLAIR",
+    "license": "CC BY 4.0",
+    "attribution": "Xiao, Fortin, Unsg\u00e5rd, Rivaz and Reinertsen (2017), RESECT, DOI 10.11582/2017.00004",
+    "source_url": "https://archive.sigma2.no/dataset/5D6BFC33-F58D-4F56-88E8-C40AF269D6F2",
+    "planning_admitted": false,
+    "same_patient_association_verified_by_application": false,
+    "registration_claimed": false,
+    "observed_controls": [
+      "primary T1 load",
+      "native file dialog FLAIR attachment",
+      "native-grid selection",
+      "return to primary frame"
+    ],
+    "fixed_from_first_observation": [
+      "displayed-series metadata card",
+      "footer coordinate of displayed series",
+      "false annotation-assisted heading"
+    ],
+    "final_observation": "Updated FLAIR native-grid label, metadata card and RAS footer agree. Primary source-image heading and unreviewed source-coordinate notice observed. Final session ended at supervisor wall cap with child reaped; no final extra screenshot taken after compaction.",
+    "CPU_MPR": "Independent CPU resampling visually agrees with live source-reported frame. No quantitative pixel comparison or independent anatomical orientation acceptance."
+  },
+  "unsupported": [
+    "learned mixed-mode policy",
+    "registered multimodal planning",
+    "sensor measurement from probe",
+    "force or deformation validity",
+    "real surgical outcomes"
+  ]
+}

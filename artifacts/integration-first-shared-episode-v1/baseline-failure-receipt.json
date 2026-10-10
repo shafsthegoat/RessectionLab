@@ -1,0 +1,58 @@
+{
+  "head": "23570f7c257559f8ecd7b7fa27581dbbbe3af1a4",
+  "exit_code": 1,
+  "elapsed_seconds": 1.109538083197549,
+  "results": [
+    {
+      "test": "build/integration-first-episode-v1/head-failure-reproduction-v1/head/tests/test_native_resection.py::test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame",
+      "outcome": "failed",
+      "duration_seconds": 0.006266958778724074,
+      "error": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/critical_evidence.py:477: AttributeError: 'types.SimpleNamespace' object has no attribute 'context'"
+    },
+    {
+      "test": "build/integration-first-episode-v1/head-failure-reproduction-v1/head/tests/test_spatial_policy.py::test_actual_spatial_encoder_receives_scan_gradient_and_updates",
+      "outcome": "failed",
+      "duration_seconds": 0.008407624904066324,
+      "error": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/data_policy.py:126: resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: reinforce_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission."
+    },
+    {
+      "test": "build/integration-first-episode-v1/head-failure-reproduction-v1/head/tests/test_spatial_policy.py::test_behavior_cloning_has_real_encoder_gradients_without_claiming_rl",
+      "outcome": "failed",
+      "duration_seconds": 0.0012366250157356262,
+      "error": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/data_policy.py:126: resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: imitation_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission."
+    },
+    {
+      "test": "build/integration-first-episode-v1/head-failure-reproduction-v1/head/tests/test_spatial_policy.py::test_analytic_variable_length_expected_return_gradient",
+      "outcome": "failed",
+      "duration_seconds": 0.0006911670789122581,
+      "error": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/data_policy.py:126: resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: reinforce_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission."
+    },
+    {
+      "test": "build/integration-first-episode-v1/head-failure-reproduction-v1/head/tests/test_spatial_policy.py::test_analytic_discounted_start_state_return_gradient",
+      "outcome": "failed",
+      "duration_seconds": 0.0001040829811245203,
+      "error": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/data_policy.py:126: resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: reinforce_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission."
+    }
+  ],
+  "source_modules_verified_from_HEAD_overlay": {
+    "resectionlab.native_resection": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/native_resection.py",
+      "sha256": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40"
+    },
+    "resectionlab.critical_evidence": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/critical_evidence.py",
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "resectionlab.spatial_policy": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/spatial_policy.py",
+      "sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+    },
+    "resectionlab.data_policy": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-episode-v1/head-failure-reproduction-v1/head/src/resectionlab/data_policy.py",
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208"
+    }
+  },
+  "tracked_writes": 0,
+  "scientific_guards_modified": false,
+  "interpretation": "Expected reproduction: five already-existing failures on committed HEAD, not introduced by uncommitted backend integration."
+}

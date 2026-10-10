@@ -1,0 +1,28 @@
+{
+  "blocked_payload_or_network_attempts": [],
+  "elapsed_seconds": 4.502426208928227,
+  "files_unchanged": true,
+  "nibabel_imported": false,
+  "pytest_exit_code": 0,
+  "scope": "Fourteen bounded generated controls over shared native engine/task, same independent geometry oracle, exported complete episodes and saved motion-frame prefix contract. No model forwards, training, patient inputs or external native solver.",
+  "source_hashes_after": {
+    "build/integration-first-episode-v1/candidate/resectionlab/development_episode.py": "bf9e6f89eb90a3483af2f95491e5937d6b8748b53425d72b4448c27880c83da6",
+    "build/integration-first-episode-v1/candidate/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "build/integration-first-episode-v1/candidate/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "build/integration-first-episode-v1/candidate/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "build/integration-first-episode-v1/test_shared_native_episode.py": "98c5c7becbd239032ccfeed41d2be072a7279bf1cfef5b6143490db2615b6115",
+    "build/integration-first-policy-v1/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "build/shared-episode-integration-independent-v1/test_episode_integration.py": "f394066aad4c4769a37edb8277d7fcd1386f0d44c7e0e53e20e01f1e11680025"
+  },
+  "source_hashes_before": {
+    "build/integration-first-episode-v1/candidate/resectionlab/development_episode.py": "bf9e6f89eb90a3483af2f95491e5937d6b8748b53425d72b4448c27880c83da6",
+    "build/integration-first-episode-v1/candidate/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "build/integration-first-episode-v1/candidate/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "build/integration-first-episode-v1/candidate/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "build/integration-first-episode-v1/test_shared_native_episode.py": "98c5c7becbd239032ccfeed41d2be072a7279bf1cfef5b6143490db2615b6115",
+    "build/integration-first-policy-v1/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "build/shared-episode-integration-independent-v1/test_episode_integration.py": "f394066aad4c4769a37edb8277d7fcd1386f0d44c7e0e53e20e01f1e11680025"
+  },
+  "status": "PASS",
+  "torch_imported": false
+}

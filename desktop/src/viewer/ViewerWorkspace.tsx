@@ -54,6 +54,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     priorLayer,
     inspectionTool,
   } = props;
+  const signalName = props.generatedSignal ? "analytic signal" : "MRI";
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
     anatomy = useRef<HTMLDivElement>(null);
@@ -198,6 +199,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   }, [
     ready,
     caseData,
+    replay?.recordedTool,
     replay?.removedMask,
     replay?.step,
     replay?.stepCount,
@@ -457,7 +459,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               setExpanded(null);
             }}
           >
-            MRI review
+            {props.generatedSignal ? "Signal review" : "MRI review"}
           </button>
         </div>
         <div className="rl-viewer-toolbar" hidden={Boolean(expanded)}>
@@ -465,13 +467,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             className={`rl-viewer-reset rl-viewer-plane-toggle ${showPlane ? "is-active" : ""}`}
             aria-pressed={showPlane}
             onClick={() => setShowPlane(!showPlane)}
-            title="Show or hide the source MRI plane in 3D; linked MRI views remain visible"
+            title={`Show or hide the source ${signalName} plane in 3D; linked ${signalName} views remain visible`}
           >
-            MRI plane {showPlane ? "on" : "off"}
+            {props.generatedSignal ? "Signal" : "MRI"} plane {showPlane ? "on" : "off"}
           </button>
           <select
             className="rl-viewer-plane-select"
-            aria-label="MRI plane shown in 3D"
+            aria-label={`${signalName} plane shown in 3D`}
             value={activePlane}
             onChange={(event) => {
               setActivePlane(event.target.value as SlicePlane);
@@ -495,7 +497,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </div>
         {expanded && (
           <span className="rl-viewer-expanded-note">
-            {TITLES[expanded]} MRI expanded
+            {TITLES[expanded]} {signalName} expanded
           </span>
         )}
         {displayedPrior && priorSample && (
@@ -543,7 +545,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               : "Source annotation surfaces"}
             {modeled && (
               <span className="rl-viewer-replay-key">
-                Mint mesh: modeled removal · source MRI unchanged
+                Mint mesh: modeled removal · source {signalName} unchanged
               </span>
             )}
             {inspected && (
@@ -589,7 +591,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 className="rl-viewer-proposal-key"
                 style={{ color: STRUCTURAL_PROPOSAL_COLOR }}
               >
-                <span aria-hidden="true">┄</span> Estimated envelope on MRI ·{" "}
+                <span aria-hidden="true">┄</span> Estimated envelope on {signalName} ·{" "}
                 {proposalReviewLabel}
               </span>
             )}
@@ -640,13 +642,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 aria-label={
                   expanded === plane
                     ? "Restore linked views"
-                    : `Expand ${TITLES[plane]} MRI`
+                    : `Expand ${TITLES[plane]} ${signalName}`
                 }
                 aria-pressed={expanded === plane}
                 title={
                   expanded === plane
                     ? "Restore linked views"
-                    : `Expand ${TITLES[plane]} MRI`
+                    : `Expand ${TITLES[plane]} ${signalName}`
                 }
                 onClick={() => setExpanded(expanded === plane ? null : plane)}
               >
@@ -657,7 +659,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ref={refs[plane]}
               className="rl-viewer-slice-image"
               tabIndex={0}
-              aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${inspected ? "Inspection tool, unexecuted initial preview. No tissue removed. " : ""}${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
+              aria-label={`${TITLES[plane]} source ${signalName}, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${inspected ? "Inspection tool, unexecuted initial preview. No tissue removed. " : ""}${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
               onPointerDown={(event) => {
                 if (event.button === 0) {
                   event.currentTarget.focus({ preventScroll: true });
@@ -686,7 +688,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                SOURCE MRI
+                {props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : "SOURCE MRI"}
                 {inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel
@@ -716,7 +718,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             step="0.05"
             value={contrast}
             onChange={(event) => setContrast(Number(event.target.value))}
-            aria-label="Source MRI window width"
+            aria-label={`Source ${signalName} window width`}
           />
         </label>
         <span>Neurological convention</span>

@@ -1,0 +1,42 @@
+{
+  "episodes": [
+    {
+      "actions": 6,
+      "episode_id": "sha256:cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d",
+      "frames": 96,
+      "modes": [
+        "aspirate",
+        "probe",
+        "aspirate",
+        "probe",
+        "aspirate",
+        "stop"
+      ],
+      "normal_removed_mm3": 3,
+      "path": "build/integration-first-episode-v1/scripted-episode.json",
+      "probe_contact_cells": 14,
+      "removed_cells": 5,
+      "sha256": "bcd79b26a334fe6be43d15866834b082663bd356056c789ec7e3e9fbf526025f",
+      "target_removed_mm3": 2,
+      "total_reward": 1.109
+    },
+    {
+      "actions": 2,
+      "episode_id": "sha256:5be7101a405bbfa30ab65a3bb818055f778ae7809931b7c80147aa441844548d",
+      "frames": 72,
+      "modes": [
+        "aspirate",
+        "stop"
+      ],
+      "normal_removed_mm3": 3,
+      "path": "build/integration-first-episode-v1/search-episode.json",
+      "probe_contact_cells": 0,
+      "removed_cells": 7,
+      "sha256": "338f8dc270b1e7f70ffa8d654e606a120c9d6bef0e48053528d8fef2636b4b28",
+      "target_removed_mm3": 4,
+      "total_reward": 3.353
+    }
+  ],
+  "scope": "Saved generated JSON identities, complete physical history, insertion/reverse-withdrawal frame records, every prefix mask/hash, seal, ancestry and final reward/removal arithmetic; no model/geometry rerun or payload reads.",
+  "status": "PASS"
+}

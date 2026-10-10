@@ -2373,3 +2373,18 @@ h3 {
   font-size: 10px;
   color: #c4d2e7;
 }
+
+/* Generated episode workflow inherits the existing workspace controls. */
+.planning-tab-list:has([data-state][value="episode"]), .planning-tab-list { gap: 14px; }
+.episode-panel select { width:100%; margin:8px 0 12px; padding:9px; background:var(--surface); color:inherit; border:1px solid var(--line); border-radius:6px; }
+.episode-panel > .primary-button { width:100%; }
+.episode-status { display:flex; flex-direction:column; gap:5px; padding:10px; margin:15px 0; border:1px solid #886838; border-radius:6px; background:#efb56612; font-size:11px; }
+.episode-replay-buttons { display:flex; gap:9px; margin:10px 0; }
+.episode-pose { display:flex; flex-direction:column; gap:5px; font-size:11px; line-height:1.6; }
+.episode-quantities { display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:11px; }
+.episode-quantities dt { opacity:.7; } .episode-quantities dd { margin:4px 0; }
+.episode-timeline { list-style:none; padding:0; display:grid; gap:5px; }
+.episode-timeline button { width:100%; padding:9px; border:1px solid var(--line); border-radius:5px; background:transparent; color:inherit; text-align:left; display:flex; flex-direction:column; gap:4px; }
+.episode-timeline button.selected { border-color:#efb566; background:#efb56615; }
+.episode-timeline small { opacity:.65; } .episode-evidence { font-size:11px; line-height:1.6; }
+.episode-identities dd { margin:0 0 8px; overflow-wrap:anywhere; font-family:monospace; font-size:9px; }

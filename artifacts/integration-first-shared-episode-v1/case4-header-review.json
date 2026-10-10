@@ -1,0 +1,36 @@
+{
+  "anatomy_or_planning_admitted": false,
+  "interpretation": "Display uses the original coded sform under the NIfTI RAS+ coordinate convention. Uncoded qform provides no independently competing orientation. Orthogonality/invertibility/source identity verify coordinate implementation, not correspondence to anatomical directions.",
+  "prior_qc_conclusion": "Independent anatomical orientation acceptance is unavailable in the reviewed evidence. Header audit explicitly withheld anatomy/landmark frame acceptance; later nonexpert montages and registration/source-support checks did not establish clinical anatomical acceptance.",
+  "scope": "saved metadata and prior QC only; no additional patient read",
+  "source_header": {
+    "determinant": 1.0000000698462757,
+    "native_axis_codes": [
+      "P",
+      "S",
+      "L"
+    ],
+    "normalized_gram_max_error": 2.1717270046338197e-09,
+    "qform": null,
+    "qform_code": 0,
+    "qform_sform_corner_difference": null,
+    "selected_by_nifti_header": "sform",
+    "sform_code": 1,
+    "sform_code_name": "scanner / NIFTI_XFORM_SCANNER_ANAT per installed nibabel/nifti1.py",
+    "spatial_units": "mm"
+  },
+  "source_or_affine_changed": false,
+  "source_reported_plane_scope": {
+    "axial": "constant reported RAS S, image varies R and A",
+    "coronal": "constant reported RAS A, image varies R and S",
+    "sagittal": "constant reported RAS R, image varies A and S"
+  },
+  "sources": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/root-visual-qc.json": "7703f86e7e91fdd3f5d523f1116a6a0895ff7a8bf5c7633fad80444170f5f2f0",
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/README.md": "670e63511c44e6676575f45d5cfa43818b487b8457c181529283f98e3851df75",
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+    "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json": "5ed4158a8247eb731175b70d8194ac290731455cc6ce34ed08056dc3f715a2c2",
+    "artifacts/resect-case4-preoperative-input-qc-v1/RESULT.md": "c5174051d76d8157754aa244e415b2ae1f87b614cb763caf6fbca6a62083124e",
+    "artifacts/resect-case4-scan-preparation-qa-v1/RESULT.md": "7fad64befb3795027b5b3bb3f503ccc3c81997907aa65344347304dacab41946"
+  }
+}

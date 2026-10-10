@@ -33,6 +33,8 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  /** Analytic software-fixture intensities; never an acquired MRI. */
+  generatedSignal?: boolean;
   caseData: ViewerVolume | null;
   visibleLayers: Record<string, boolean>;
   overlayOpacity: number;
@@ -93,6 +95,7 @@ export interface ViewerStructuralProposal {
 }
 
 export interface ViewerReplay {
+  recordedTool?: import("./recordedTool").RecordedToolPose | null;
   removedMask: Uint8Array;
   step: number;
   stepCount: number;

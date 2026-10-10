@@ -1,8 +1,13 @@
 import * as THREE from "three";
-import type { InspectionToolDisplay } from "./inspectionTool.ts";
+import type { InstrumentCapsuleDisplay, InspectionToolDisplay } from "./inspectionTool.ts";
 
 /** RAS points are already canonical. Never apply the source-frame conversion here. */
 export function inspectionToolMeshes(display: InspectionToolDisplay): THREE.Group {
+  return instrumentCapsuleMeshes(display, "unexecuted-native-axis-inspection", display.identity);
+}
+
+/** Shared capsule geometry, with execution provenance supplied explicitly. */
+export function instrumentCapsuleMeshes(display: InstrumentCapsuleDisplay, scope: string, identity: string): THREE.Group {
   const group = new THREE.Group();
   const vector = (point: readonly number[]) => new THREE.Vector3(point[0], point[1], point[2]);
   const capsule = (a: readonly number[], b: readonly number[], radius: number, active: boolean) => {
@@ -14,8 +19,9 @@ export function inspectionToolMeshes(display: InspectionToolDisplay): THREE.Grou
     );
     mesh.position.copy(start).add(end).multiplyScalar(0.5);
     mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.sub(start).normalize());
-    mesh.userData.inspectionIdentity = display.identity;
-    mesh.userData.scope = "unexecuted-native-axis-inspection";
+    if (scope === "unexecuted-native-axis-inspection") mesh.userData.inspectionIdentity = identity;
+    else mesh.userData.replayIdentity = identity;
+    mesh.userData.scope = scope;
     mesh.userData.part = active ? "active-tip" : "shaft";
     group.add(mesh);
   };

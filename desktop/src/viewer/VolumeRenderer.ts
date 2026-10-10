@@ -19,7 +19,9 @@ import type {
 } from "./contracts";
 import { InstrumentDisplayState } from "./inspectionTool";
 import type { InspectionToolDisplay, InstrumentCapsuleDisplay } from "./inspectionTool";
-import { inspectionToolMeshes } from "./inspectionToolGeometry";
+import { recordedToolDisplay } from "./recordedTool";
+import type { RecordedToolDisplay } from "./recordedTool";
+import { instrumentCapsuleMeshes, inspectionToolMeshes } from "./inspectionToolGeometry";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { paneViewport } from "./layout";
@@ -123,6 +125,8 @@ export class VolumeRenderer {
   private readonly anatomy = new THREE.Group();
   private readonly tools = new THREE.Group();
   private readonly inspectionTools = new THREE.Group();
+  private readonly recordedTools = new THREE.Group();
+  private recordedDisplay: RecordedToolDisplay | null = null;
   private readonly instrumentDisplay = new InstrumentDisplayState();
   private readonly replayGroup = new THREE.Group();
   private replayWorker: Worker | null = null;
@@ -317,6 +321,7 @@ export class VolumeRenderer {
       this.anatomy,
       this.tools,
       this.inspectionTools,
+      this.recordedTools,
       this.replayGroup,
     );
     this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, 2.1));
@@ -505,6 +510,9 @@ export class VolumeRenderer {
     disposeObject(this.replayGroup);
     this.replayGroup.clear();
     this.replayActive = false;
+    this.recordedDisplay = null;
+    disposeObject(this.recordedTools);
+    this.recordedTools.clear();
     this.anatomy.visible = true;
     this.instrumentDisplay.setReplay(false);
     this.syncInstrumentDisplay();
@@ -514,6 +522,7 @@ export class VolumeRenderer {
     this.requestRender();
     if (!replay) return;
     validateReplay(this.volume, replay);
+    const recorded = recordedToolDisplay(this.volume, replay);
     this.setStructuralProposal(null);
     this.setPriorLayer(null);
 
@@ -529,6 +538,8 @@ export class VolumeRenderer {
     });
     this.replayActive = true;
     this.instrumentDisplay.setReplay(true);
+    this.recordedDisplay = recorded;
+    if (recorded) this.recordedTools.add(instrumentCapsuleMeshes(recorded, "executed-generated-episode", recorded.identity));
     disposeObject(this.inspectionTools);
     this.inspectionTools.clear();
     this.syncInstrumentDisplay();
@@ -859,7 +870,8 @@ export class VolumeRenderer {
   private syncInstrumentDisplay(): void {
     this.tools.visible = this.instrumentDisplay.routeVisible;
     this.inspectionTools.visible = this.instrumentDisplay.inspected !== null;
-    const shown = this.instrumentDisplay.displayed;
+    this.recordedTools.visible = this.replayActive && this.recordedDisplay !== null;
+    const shown = this.recordedTools.visible ? [this.recordedDisplay!] : this.instrumentDisplay.displayed;
     this.materials().forEach((shader) => {
       shader.uniforms.uRouteCount.value = shown.length;
       shown.forEach((capsule, index) => {
@@ -887,7 +899,7 @@ export class VolumeRenderer {
         new THREE.Vector3(...this.bounds[1]),
       );
     else box.expandByScalar(12);
-    const visibleTools = this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
+    const visibleTools = this.recordedTools.visible ? this.recordedTools : this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
     if (mode === "instruments" && visibleTools.visible && !new THREE.Box3().setFromObject(visibleTools).isEmpty())
       box.union(new THREE.Box3().setFromObject(visibleTools)).expandByScalar(8);
     const centre = box.getCenter(new THREE.Vector3()),

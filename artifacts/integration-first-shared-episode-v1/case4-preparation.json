@@ -1,0 +1,40 @@
+{
+  "status": "prepared_primary_display_bundle",
+  "patient_group": "RESECT:Case4",
+  "role": "DEVELOPMENT",
+  "source_reads_attempted": [
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz"
+  ],
+  "source_fixity_verified": [
+    {
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+      "sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787"
+    },
+    {
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz",
+      "sha256": "e4b2e09f6d47e256a0af3e515d321a393cfc1b5d6c704a6b23bbfeed8c712d26"
+    }
+  ],
+  "primary_decoded": true,
+  "case_hash": "sha256:0b340accf802a857e1a97d59779fae2f31756874157f0063b589e2b36742f559",
+  "planning_hash": "sha256:b6a8a34ddcebbe2de58da060e93efa278f1b784ac3205a21d3ee6378cd040359",
+  "source_frame_hash": "sha256:5af578062ffd2e9d3f2bd6e9e61116bc62330c44549a15604d0bf81f4225d6e7",
+  "primary_source_sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787",
+  "shape": [
+    256,
+    256,
+    192
+  ],
+  "bundle": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/case4-native-display-v1/Case4-T1-display.ressectionlab",
+    "sha256": "98fd72f60f9b43fd041635a2a37e12a811bcdf638370679c216da73f5fb12af5",
+    "bytes": 16198267
+  },
+  "compartment_count": 0,
+  "working_brain_present": false,
+  "auxiliary_voxels_decoded": false,
+  "displayed": false,
+  "planning_or_evaluation_executed": false,
+  "elapsed_seconds": 0.9560010000132024
+}

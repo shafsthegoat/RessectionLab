@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "scope": "Actual saved generated backend envelopes through staged renderer hydration and existing viewer mask/tool contracts. No Electron launch, screenshot, patient image, model, training, or network call.",
+  "source_hashes": {
+    "src/episode-data.ts": "f5ee0bc8ac4817e04dad9c7f9ec61217c7e51b63024da1e0d3824c54eac97298",
+    "src/viewer/recordedTool.ts": "fab69817085b92ef9fc1ce0ed4170d4b2b615f602cd8d1baac6822e0f9092e70",
+    "src/viewer/replay.ts": "e52999977d77117899cba99dedaeaf6dcd63a09ea27523e400797bd43336369a",
+    "src/source-integrity.ts": "8a525fef3c9c9564c8a7a985d2cafaadd803f5fc5952795708e82709cd2a1f57",
+    "src/case-data.ts": "06546601279541a204da813f2e3b5a875265dabc8d4da7eb96464a5efb9b865d"
+  },
+  "source_unchanged": true,
+  "results": [
+    {
+      "selector": "scripted",
+      "fixture_sha256": "051a38f39bc70ba051b397675347c58df4a60e4790f6b2f2a0ccbea526a1e1bf",
+      "episode_id": "sha256:cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d",
+      "frames": 96,
+      "final_removed_cells": 5,
+      "cumulative_probe_contacts": 14,
+      "currently_retained_probe_contacts": 12,
+      "exact_delta_prefixes": true,
+      "exact_full_tool_projections": true,
+      "mutation_rejected_before_assets": true,
+      "async_caller_mutation_isolated": true
+    },
+    {
+      "selector": "search",
+      "fixture_sha256": "fc3806ffd1ac707b9770bd103006d8e21c8b667cb398da7bf46919ece939d272",
+      "episode_id": "sha256:5be7101a405bbfa30ab65a3bb818055f778ae7809931b7c80147aa441844548d",
+      "frames": 72,
+      "final_removed_cells": 7,
+      "cumulative_probe_contacts": 0,
+      "currently_retained_probe_contacts": 0,
+      "exact_delta_prefixes": true,
+      "exact_full_tool_projections": true,
+      "mutation_rejected_before_assets": true,
+      "async_caller_mutation_isolated": true
+    }
+  ]
+}

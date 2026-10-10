@@ -25,7 +25,7 @@ from scipy.ndimage import binary_fill_holes
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
-    check_motion, point_segment_distances, _immutable,
+    check_motion, point_segment_distances, _immutable, _segment_cell_distances,
 )
 
 NATIVE_RESECTION_VERSION = "contained-native-cell-connected-suction-v2"
@@ -181,6 +181,7 @@ class NativeStrokeResult:
     failure_tip_mm: tuple[float, float, float] | None = None
     geometry_unknowns: tuple[str, ...] = ()
     native_footprint: str = "fully_contained_connected_cells_v1"
+    interaction_mode: str = "aspirate"
 
     @property
     def removed_volume_mm3(self) -> float:
@@ -190,6 +191,7 @@ class NativeStrokeResult:
         if not self.feasible:
             raise ValueError("A rejected preview is not an executed removal history")
         return {
+            **({"interaction_mode": self.interaction_mode} if self.interaction_mode != "aspirate" else {}),
             "tool_id": self.tool_id, "tip_mm": self.tip_mm, "axis_unit": self.axis_unit,
             "entry_mm": self.entry_mm,
             "removed_indices_native": self.removed_indices_native.tolist(),
@@ -299,6 +301,7 @@ class NativeResectionEngine:
         self.remaining_mask = self.config.tissue_mask.copy()
         self.removed_mask = np.zeros(self.config.tissue_mask.shape, bool)
         self.contact_mask = np.zeros(self.config.tissue_mask.shape, bool)
+        self.probe_contact_mask = np.zeros(self.config.tissue_mask.shape, bool)
         self.connected_free_mask = self._initial_connected_free.copy()
         self.history: list[dict[str, Any]] = []
         self.revision = 0
@@ -311,13 +314,23 @@ class NativeResectionEngine:
         result.remaining_mask = self.remaining_mask.copy()
         result.removed_mask = self.removed_mask.copy()
         result.contact_mask = self.contact_mask.copy()
+        result.probe_contact_mask = self.probe_contact_mask.copy()
         result.connected_free_mask = self.connected_free_mask.copy()
         result.history = copy.deepcopy(self.history)
         result._preview_records = self._preview_records.copy()
         result._preview_digests = self._preview_digests.copy()
         return result
 
-    def preview_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None) -> NativeStrokeResult:
+    def preview_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None,
+                       interaction_mode: str = "aspirate") -> NativeStrokeResult:
+        """Certify aspiration or a non-removing tangential exposed-tip probe.
+
+        Probe contact is geometric occupancy only, with no sensor, force or
+        deformation model. A 1e-8 mm numerical tangency tolerance permits no
+        material penetration; all remaining contacted cells must be exposed.
+        """
+        if interaction_mode not in {"aspirate", "probe"}:
+            raise ValueError("Unsupported native instrument interaction")
         if tool_id not in self._tools:
             raise ValueError("Unknown native instrument configuration")
         source_state_hash = self.state_hash
@@ -340,6 +353,7 @@ class NativeResectionEngine:
         records: list[NativeMicrostep] = []
         contacts: list[np.ndarray] = []
         removed: list[np.ndarray] = []
+        probe_contacts: list[np.ndarray] = []
         unknowns: tuple[str, ...] = ()
 
         def finish(feasible: bool, reason: str, failure_tip: np.ndarray | None = None) -> NativeStrokeResult:
@@ -349,6 +363,7 @@ class NativeResectionEngine:
                 tuple(records), self.config.source_hash, source_state_hash, self.config.fingerprint,
                 self.config.affine, self.config.tissue_mask.shape, self.config.tissue_support_provenance,
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
+                interaction_mode=interaction_mode,
             )
             if feasible:
                 # Bound retained proposal certificates; committed histories are
@@ -389,7 +404,21 @@ class NativeResectionEngine:
             blocked = shaft[remaining[tuple(shaft.T)]]
             if len(blocked):
                 return finish(False, "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE", current)
-            eligible = _connected_surface_cells(fully_inside, connected_free)
+            if interaction_mode == "probe":
+                # Unlike aspiration the active region may not enter occupied
+                # source-cell interiors, even though contact is recorded.
+                distances = _segment_cell_distances(self._cell_scene, occupied, active_start, active_end)
+                if len(occupied) and np.any(distances < tool.tip_radius_mm - 1e-8):
+                    return finish(False, "PROBE_ACTIVE_REGION_PENETRATES_REMAINING_TISSUE", current)
+                for cell in occupied:
+                    neighbors = cell + _NEIGHBORS
+                    inside = np.all((neighbors >= 0) & (neighbors < remaining.shape), axis=1)
+                    if inside.all() and not connected_free[tuple(neighbors[inside].T)].any():
+                        return finish(False, "PROBE_CONTACT_NOT_EXPOSED", current)
+                probe_contacts.append(_frozen(occupied, np.int64))
+                eligible = _EMPTY
+            else:
+                eligible = _connected_surface_cells(fully_inside, connected_free)
             if len(eligible):
                 remaining[tuple(eligible.T)] = False
                 _extend_connected_free(eligible, remaining, connected_free)
@@ -398,6 +427,10 @@ class NativeResectionEngine:
             records.append(NativeMicrostep(tuple(previous), tuple(current), tuple(active_start), tuple(active_end),
                                           tool.tip_radius_mm, eligible, _frozen(touched, np.int64)))
             previous = current
+        if interaction_mode == "probe":
+            if not any(len(indices) for indices in probe_contacts):
+                return finish(False, "NO_EXPOSED_PROBE_CONTACT", tip)
+            return finish(True, "NATIVE_NONREMOVING_TANGENTIAL_PROBE")
         if not any(len(indices) for indices in removed):
             return finish(False, "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS", tip)
         return finish(True, "NATIVE_CONNECTED_STROKE")
@@ -415,10 +448,16 @@ class NativeResectionEngine:
             raise ValueError("Preview removal accounting differs from its unique native microstep cells")
         if not np.all(self.remaining_mask[tuple(indices.T)]):
             raise ValueError("Preview contains already removed tissue")
+        if result.interaction_mode == "probe" and len(indices):
+            raise ValueError("A probe certificate cannot remove tissue")
         self.remaining_mask[tuple(indices.T)] = False
         self.removed_mask[tuple(indices.T)] = True
         _extend_connected_free(indices, self.remaining_mask, self.connected_free_mask)
         self.contact_mask[tuple(result.contact_indices_native.T)] = True
+        if result.interaction_mode == "probe":
+            contacted = result.contact_indices_native
+            occupied = contacted[self.remaining_mask[tuple(contacted.T)]]
+            self.probe_contact_mask[tuple(occupied.T)] = True
         self.history.append(result.to_history_record())
         self.revision += 1
         # The ancestry includes the full certified history/contact record, not
@@ -438,8 +477,9 @@ class NativeResectionEngine:
              *(step.contact_indices_native for step in result.microsteps))]
         return sha256(json.dumps(record, sort_keys=True).encode()).hexdigest()
 
-    def execute_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None) -> NativeStrokeResult:
-        result = self.preview_stroke(tool_id, tip_mm, entry_mm=entry_mm)
+    def execute_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None,
+                       interaction_mode: str = "aspirate") -> NativeStrokeResult:
+        result = self.preview_stroke(tool_id, tip_mm, entry_mm=entry_mm, interaction_mode=interaction_mode)
         return self.commit_preview(result) if result.feasible else result
 
     def metrics(self) -> dict[str, Any]:

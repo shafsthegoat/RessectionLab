@@ -846,7 +846,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      geometry_frame: str = "RAS+",
                                      cancelled: Callable[[], bool] | None = None,
                                      distance_backend: str = "scalar",
-                                     distance_batch_size: int = 256) -> NativeRemovalAudit:
+                                     distance_batch_size: int = 256,
+                                     tool_modes: Mapping[str, str] | None = None) -> NativeRemovalAudit:
     """Independent source-cell audit of the native contained-cell cutting model.
 
     All tissue removed in a microstep must be fully inside its active capsule and
@@ -903,6 +904,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     catalog = {tool.tool_id: tool for tool in tools}
     if len(catalog) != len(tools):
         raise ValueError("Native tool IDs must be unique")
+    if tool_modes is not None:
+        tool_modes = dict(tool_modes)
+        if set(tool_modes) != set(catalog) or any(mode not in {"aspirate", "probe"} for mode in tool_modes.values()):
+            raise ValueError("Independent interaction registry must bind every frozen tool")
     connectivity = generate_binary_structure(3, 1)
     hard_scene = SimpleNamespace(forbidden_mask=hard, affine=matrix,
                                  sphere_obstacles=(), enforce_tip_in_bounds=False)
@@ -961,6 +966,12 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         normal = normal / np.linalg.norm(normal)
         if abs(float((previous - access.center_mm) @ normal)) > 1e-7:
             return report("native_entry_outside_access_plane", action_id)
+        mode = record.get("interaction_mode", "aspirate")
+        if mode not in {"aspirate", "probe"}:
+            return report("unsupported_native_interaction_mode", action_id)
+        if tool_modes is not None and mode != tool_modes[tool.tool_id]:
+            return report("native_interaction_differs_from_frozen_tool_registry", action_id)
+        macro_contacts, probe_contacts = set(), set()
         macro_removed: set[tuple[int, int, int]] = set()
         microsteps = record.get("microsteps", ())
         if not microsteps:
@@ -982,6 +993,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             removed = indices(micro.get("removed_indices_native", ()))
             keys = {tuple(int(v) for v in index) for index in removed}
             declared.update(keys)
+            if mode == "probe" and keys:
+                return report("probe_must_not_remove_native_tissue", action_id)
             if any(not remaining[key] for key in keys):
                 return report("repeated_or_non_tissue_native_removal", action_id, next(key for key in keys if not remaining[key]))
             if len(removed):
@@ -1019,6 +1032,29 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                 if reached != keys:
                     return report("disconnected_native_removal", action_id, next(iter(keys - reached)))
             contacts = {tuple(int(v) for v in index) for index in indices(micro.get("contact_indices_native", ()))}
+            macro_contacts.update(contacts)
+            if mode == "probe":
+                expected_contacts = _native_active_contacts(original, rotation, spacing, matrix[:3, 3],
+                    start, end, tip_radius, distance_backend=distance_backend,
+                    distance_batch_size=distance_batch_size, cancelled=cancelled)
+                if contacts != expected_contacts:
+                    return report("probe_contact_record_differs_from_independent_geometry", action_id)
+                occupied_contacts = {key for key in contacts if remaining[key]}
+                probe_contacts.update(occupied_contacts)
+                occupied_scene = SimpleNamespace(forbidden_mask=remaining, affine=matrix,
+                    sphere_obstacles=(), enforce_tip_in_bounds=False)
+                if _cell_collision(occupied_scene, start, end, max(0., tip_radius - 1e-8)) is not None:
+                    return report("probe_active_region_penetrates_remaining_tissue", action_id)
+                for key in occupied_contacts:
+                    exposed = False
+                    for dimension in range(3):
+                        for sign in (-1, 1):
+                            neighbor = list(key)
+                            neighbor[dimension] += sign
+                            if any(v < 0 or v >= n for v, n in zip(neighbor, remaining.shape)) or free[tuple(neighbor)]:
+                                exposed = True
+                    if not exposed:
+                        return report("probe_contact_not_exposed", action_id, key)
             try:
                 omitted = _native_active_contacts(remaining, rotation, spacing, matrix[:3, 3],
                     start, end, tip_radius, distance_backend=distance_backend,
@@ -1054,6 +1090,16 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             macro_removed.update(keys)
             _extend_independent_free_space(remaining, free, keys)
             previous = tip_end
+        if mode == "probe":
+            if not probe_contacts:
+                return report("probe_missing_exposed_contact", action_id)
+            declared_contacts = {tuple(int(v) for v in index) for index in indices(record.get("contact_indices_native", ()))}
+            if declared_contacts != macro_contacts:
+                return report("probe_macro_contact_accounting_mismatch", action_id)
+            if "probe_contact_indices_native" in record:
+                declared_probe = {tuple(int(v) for v in index) for index in indices(record["probe_contact_indices_native"])}
+                if declared_probe != probe_contacts:
+                    return report("probe_committed_contact_accounting_mismatch", action_id)
         declared_macro = {tuple(int(v) for v in index) for index in indices(record.get("removed_indices_native", ()))}
         if declared_macro != macro_removed:
             return report("native_macro_removal_accounting_mismatch", action_id)

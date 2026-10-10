@@ -1,0 +1,163 @@
+................F....................................................... [ 50%]
+........................................................FF..........FF   [100%]
+=================================== FAILURES ===================================
+_ test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame _
+
+    def test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame():
+        from resectionlab.core import SourceRef
+        cfg = config()
+        case = SimpleNamespace(mri=cfg.tissue_mask.astype(float), compartments={"target": cfg.target_labels > 0},
+                               brain_mask=cfg.tissue_mask, affine=cfg.affine, metadata={},
+                               case_id="analytic", semantic_hash="source-hash", frame="LPS+",
+                               source_refs=(SourceRef("fixture", "synthetic://native-helper", provenance="simulated"),))
+>       converted = native_config_from_case(case, access=cfg.access)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_resection.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/native_resection.py:517: in native_config_from_case
+    hard_exclusion, critical = canonical_hard_exclusion(case, hard_exclusion)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/resectionlab/critical_evidence.py:494: in canonical_hard_exclusion
+    constraints = resolve_critical_evidence(case)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = namespace(mri=_ImmutableArray([[[0., 0., 0., ..., 0., 0., 0.],
+                  [0., 0., 0., ..., 0., 0., 0.],
+      ...ixture', uri='synthetic://native-helper', sha256=None, license=None, native_frame='unknown', provenance='simulated'),))
+
+    def resolve_critical_evidence(case: Any) -> CriticalConstraints:
+        masks = {name: None for name in STRUCTURES}
+        coverage = {name: None for name in STRUCTURES}
+        records, seen = {}, set()
+        for key, item in sorted(getattr(case, "critical_evidence", {}).items()):
+            if not isinstance(item, CriticalStructureEvidence) or key != item.evidence_id:
+                raise ValueError("Critical evidence must map IDs to typed records")
+            if item.structure in seen:
+                raise ValueError("Only one selected critical record per structure is supported")
+            seen.add(item.structure)
+            reason = item.exclusion_reason(case)
+            records[key] = {"evidence_hash": item.evidence_hash, "structure": item.structure,
+                            "exclusion_reason": reason, "source": item.source.to_dict(),
+                            "source_binding": thaw_json(item.source_binding), "review": thaw_json(item.review),
+                            "derivation": thaw_json(item.derivation),
+                            "lineage": thaw_json(item.lineage),
+                            "acquisition_time": None if item.acquisition_time is None else item.acquisition_time.isoformat(),
+                            "available_at": None if item.available_at is None else item.available_at.isoformat(),
+                            "annotated_cells": int(np.count_nonzero(item.annotation_coverage)),
+                            "image_cells": item.mask.size, "coverage_hash": array_digest(item.annotation_coverage)}
+            if reason is None:
+                masks[item.structure], coverage[item.structure] = item.mask, item.annotation_coverage
+        receipt = {"schema": "critical-constraints-v1", "records": records,
+                   "missing": [name for name in STRUCTURES if masks[name] is None],
+                   "objective_structures": [name for name in STRUCTURES
+                                             if coverage[name] is not None and bool(np.all(coverage[name]))],
+>                  "time_scope": "retrospective_image_geometry_availability_unassessed" if case.context is None else "timestamp_filtered",
+                                                                                           ^^^^^^^^^^^^
+                   "coverage_meaning": "Annotation domain only; unseen structures and outside-image anatomy remain unknown",
+                   "trajectory_coverage": "not_computed", "clinical_clearance": False}
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'context'
+
+src/resectionlab/critical_evidence.py:477: AttributeError
+________ test_actual_spatial_encoder_receives_scan_gradient_and_updates ________
+
+    def test_actual_spatial_encoder_receives_scan_gradient_and_updates():
+        model = policy(); obs = observation()
+        initial = parameter_hash(model)
+>       loss, stats = reinforce_loss(model, [[SpatialTransition(obs, "left", 2., True)]])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_spatial_policy.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (SpatialPolicy(
+  (encoder): Sequential(
+    (0): Conv3d(18, 8, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1...urce_kind': 'unavailable', 'derivation': '', 'derived_from': ()})})), action_id='left', reward=2.0, terminated=True)]])
+kwargs = {}
+
+    @wraps(function)
+    def admitted(*args, **kwargs):
+        context = kwargs.get("learning_context")
+        if type(context) is not GeneratedDevelopmentContext:
+>           raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", function.__qualname__)
+E           resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: reinforce_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:126: DataPolicyError
+_____ test_behavior_cloning_has_real_encoder_gradients_without_claiming_rl _____
+
+    def test_behavior_cloning_has_real_encoder_gradients_without_claiming_rl():
+        model = policy(); obs = observation()
+>       loss, stats = imitation_loss(model, [(obs, "right")])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_spatial_policy.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (SpatialPolicy(
+  (encoder): Sequential(
+    (0): Conv3d(18, 8, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1..., 'nominal_language': mappingproxy({'source_kind': 'unavailable', 'derivation': '', 'derived_from': ()})})), 'right')])
+kwargs = {}
+
+    @wraps(function)
+    def admitted(*args, **kwargs):
+        context = kwargs.get("learning_context")
+        if type(context) is not GeneratedDevelopmentContext:
+>           raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", function.__qualname__)
+E           resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: imitation_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:126: DataPolicyError
+____________ test_analytic_variable_length_expected_return_gradient ____________
+
+    def test_analytic_variable_length_expected_return_gradient():
+        model = AnalyticPolicy()
+        obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
+        episodes = [[SpatialTransition(obs, "cut", 1., True)],
+                    [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]]
+>       loss, _ = reinforce_loss(model, episodes, entropy_weight=0., value_weight=0.)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_spatial_policy.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (AnalyticPolicy(), [[SpatialTransition(observation=namespace(action_ids=('STOP', 'cut'), action_mask=(True, True)), ac...ation=namespace(action_ids=('STOP', 'cut'), action_mask=(True, True)), action_id='cut', reward=2.0, terminated=True)]])
+kwargs = {'entropy_weight': 0.0, 'value_weight': 0.0}
+
+    @wraps(function)
+    def admitted(*args, **kwargs):
+        context = kwargs.get("learning_context")
+        if type(context) is not GeneratedDevelopmentContext:
+>           raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", function.__qualname__)
+E           resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: reinforce_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:126: DataPolicyError
+_____________ test_analytic_discounted_start_state_return_gradient _____________
+
+    def test_analytic_discounted_start_state_return_gradient():
+        model = AnalyticPolicy()
+        obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
+        episode = [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]
+>       loss, _ = reinforce_loss(model, [episode], gamma=.5, entropy_weight=0., value_weight=0.)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_spatial_policy.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (AnalyticPolicy(), [[SpatialTransition(observation=namespace(action_ids=('STOP', 'cut'), action_mask=(True, True)), ac...ation=namespace(action_ids=('STOP', 'cut'), action_mask=(True, True)), action_id='cut', reward=2.0, terminated=True)]])
+kwargs = {'gamma': 0.5, 'entropy_weight': 0.0, 'value_weight': 0.0}
+
+    @wraps(function)
+    def admitted(*args, **kwargs):
+        context = kwargs.get("learning_context")
+        if type(context) is not GeneratedDevelopmentContext:
+>           raise DataPolicyError("RECORDED_EXPERIENCE_REQUIRED", function.__qualname__)
+E           resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: reinforce_loss: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:126: DataPolicyError
+=========================== short test summary info ============================
+FAILED tests/test_native_resection.py::test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame
+FAILED tests/test_spatial_policy.py::test_actual_spatial_encoder_receives_scan_gradient_and_updates
+FAILED tests/test_spatial_policy.py::test_behavior_cloning_has_real_encoder_gradients_without_claiming_rl
+FAILED tests/test_spatial_policy.py::test_analytic_variable_length_expected_return_gradient
+FAILED tests/test_spatial_policy.py::test_analytic_discounted_start_state_return_gradient
+5 failed, 137 passed in 4.99s
