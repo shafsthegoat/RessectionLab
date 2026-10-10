@@ -42,20 +42,55 @@ def _legal_actions(observation):
     return [(index, action) for index, action in enumerate(ids) if index and mask[index]]
 
 
+def _prefix_progress(parent, path, total, outcome):
+    """Copy only public scalar progress from the transition already performed.
+
+    No task, array, observation, history or geometry callback is consulted.
+    Missing or differently scoped records remain unknown, never zero progress.
+    """
+    row = {"actions": list(path), "estimated_incremental_return": total,
+           "target_removed_mm3": None, "outside_supplied_target_removed_mm3": None,
+           "max_insertion_distance_mm": None, "progress_status": "nominal_record_unavailable",
+           "legal_nonstop_actions": None, "legal_target_family_actions": None,
+           "successor_inventory_status": "not_observed_by_search"}
+    record = getattr(outcome, "info", None)
+    if (not isinstance(record, dict) or record.get("outcome_scope") != "permitted_nominal_model"
+            or record.get("action_id") != path[-1]
+            or parent["progress_status"] != "available"):
+        return row
+    values = [record.get(key) for key in
+              ("target_removed_mm3", "normal_removed_mm3", "insertion_distance_mm")]
+    if not all(type(value) in (int, float) and math.isfinite(value) and value >= 0
+               for value in values):
+        return row
+    target = parent["target_removed_mm3"] + values[0]
+    outside = parent["outside_supplied_target_removed_mm3"] + values[1]
+    distance = max(parent["max_insertion_distance_mm"], values[2])
+    if not all(math.isfinite(value) for value in (target, outside, distance)):
+        return row
+    row.update(target_removed_mm3=target, outside_supplied_target_removed_mm3=outside,
+               max_insertion_distance_mm=distance, progress_status="available")
+    return row
+
+
 def observed_beam_search(task, *, max_calls: int, beam_width: int, seconds: float = 2.,
                          policy=None, objective_source: str = "observed_scan_estimator_only",
-                         transition_mode: str = "eager"):
+                         transition_mode: str = "eager", retained_prefix_diagnostics: bool = False):
     """Run observed beam search with optional, state-checked actor ordering.
 
 The before/after state_dict hashes cover parameters and registered buffers,
 including exceptional exits. Hashing and checks count toward the wall budget.
 Python-side counters are not model state, and are outside this check.
+Optional diagnostics retain public nominal transition scalars for the beam and
+best terminal prefixes. They do not request extra observations or previews;
+their bookkeeping time remains inside the same wall budget.
 """
     started = time.perf_counter()
     integrity = {"policy_state_checks": 0, "policy_state_check_seconds": 0.,
                  "initial_policy_state_hash": None, "final_policy_state_hash": None}
     arguments = dict(max_calls=max_calls, beam_width=beam_width, seconds=seconds, policy=policy,
                      objective_source=objective_source, transition_mode=transition_mode,
+                     retained_prefix_diagnostics=retained_prefix_diagnostics,
                      started=started, integrity=integrity)
     if policy is None:
         return _observed_beam_search(task, **arguments)
@@ -91,7 +126,7 @@ Python-side counters are not model state, and are outside this check.
 
 
 def _observed_beam_search(task, *, max_calls, beam_width, seconds, policy,
-                          objective_source, transition_mode, started, integrity):
+                          objective_source, transition_mode, retained_prefix_diagnostics, started, integrity):
     """Return the best evaluated prefix and accounting within declared bounds.
 
 Every prefix has a known zero-increment STOP option. Negative opening prefixes
@@ -112,6 +147,8 @@ planning clone. It defers successor observations, not current-action geometry.
         raise ValueError("Invalid observed-search budget or objective description")
     if transition_mode not in {"eager", "lazy_planning"}:
         raise ValueError("Choose explicit eager or lazy_planning transition mode")
+    if type(retained_prefix_diagnostics) is not bool:
+        raise ValueError("retained_prefix_diagnostics must be an explicit bool")
     observed = task.planning_clone()
     metrics = observed.metrics()
     if not metrics["planning_estimator_only"]:
@@ -129,6 +166,9 @@ planning clone. It defers successor observations, not current-action geometry.
     peak_next_layer_states = 0
     truncated, root_inventory = False, 0
     layers = []
+    if retained_prefix_diagnostics:
+        frontier_progress = {(): {"progress_status": "available", "target_removed_mm3": 0.,
+            "outside_supplied_target_removed_mm3": 0., "max_insertion_distance_mm": 0.}}
 
     def executable():
         remaining = task.max_steps - initial_steps
@@ -153,7 +193,17 @@ planning clone. It defers successor observations, not current-action geometry.
             "negative_prefixes_pruned_by_beam": negative_pruned,
             "beam_pruned_prefixes": beam_pruned,
             "peak_next_layer_states": peak_next_layer_states,
-            "layers": [dict(row) for row in layers], **integrity}
+            "layers": [dict(row) for row in layers], **integrity,
+            **({"retained_prefix_diagnostics": {
+                "schema": "observed-search-retained-prefixes-v1",
+                "scope": "public_nominal_incremental_progress_from_this_search_root",
+                "outside_removal_semantics": "outside_supplied_target; not verified normal tissue",
+                "distance_semantics": "maximum recorded entry-to-tip insertion distance; not cumulative path length",
+                "family_count_status": "unavailable_in_shared_observation; null_is_not_zero",
+                "terminal_selection": "best at most beam_width by the existing return/path ordering",
+                "extra_observations_or_previews": 0,
+                "wall_accounting": "diagnostic bookkeeping included in existing wall budget"}}
+               if retained_prefix_diagnostics else {})}
 
     def check_time():
         if time.perf_counter() - started > seconds:
@@ -163,18 +213,27 @@ planning clone. It defers successor observations, not current-action geometry.
     try:
         while frontier:
             children = []
+            if retained_prefix_diagnostics:
+                child_progress, terminal_progress = {}, []
             child_count = negative_children = 0
             layer = {"depth": len(layers) + 1, "completed": False, "expanded_nodes": 0,
                      "model_transition_calls": 0, "negative_prefixes_evaluated": 0,
                      "negative_prefixes_retained": 0, "negative_prefixes_pruned_by_beam": 0,
                      "negative_prefixes_pending_at_cap": 0}
             layers.append(layer)
+            if retained_prefix_diagnostics:
+                layer["retained_prefix_diagnostics"] = {
+                    "selection_status": "partial_layer_not_advanced",
+                    "retained_nonterminal_prefixes": [], "best_terminal_prefixes": []}
             for value, prefix, node in frontier:
                 if node.terminated:
                     continue
                 observation_requests += 1
                 observation = node.observation()
                 actions = _legal_actions(observation)
+                if retained_prefix_diagnostics and prefix:
+                    frontier_progress[prefix].update(legal_nonstop_actions=len(actions),
+                        successor_inventory_status="observed_during_normal_expansion")
                 if not prefix:
                     root_inventory = len(actions)
                 expanded_nodes += 1
@@ -218,6 +277,15 @@ planning clone. It defers successor observations, not current-action geometry.
                     if total > incumbent:
                         incumbent, sequence = total, path
                         incumbent_terminated = child.terminated
+                    if retained_prefix_diagnostics:
+                        progress = _prefix_progress(frontier_progress[prefix], path, total, outcome)
+                        if child.terminated:
+                            progress["successor_inventory_status"] = "terminal_not_observed"
+                            insort(terminal_progress, (total, path, progress), key=lambda row: (-row[0], row[1]))
+                            if len(terminal_progress) > beam_width:
+                                terminal_progress.pop()
+                            layer["retained_prefix_diagnostics"]["best_terminal_prefixes"] = [
+                                row[2] for row in terminal_progress]
                     if not child.terminated:
                         child_count += 1
                         negative_children += int(total < 0)
@@ -225,8 +293,16 @@ planning clone. It defers successor observations, not current-action geometry.
                         # still execute, but full native child states do not
                         # accumulate until the end of a potentially wide layer.
                         insort(children, (total, path, child), key=lambda row: (-row[0], row[1]))
+                        if retained_prefix_diagnostics:
+                            child_progress[path] = progress
                         if len(children) > beam_width:
-                            children.pop()
+                            discarded = children.pop()
+                            if retained_prefix_diagnostics:
+                                child_progress.pop(discarded[1])
+                            del discarded
+                        if retained_prefix_diagnostics:
+                            layer["retained_prefix_diagnostics"]["retained_nonterminal_prefixes"] = [
+                                child_progress[row[1]] for row in children]
                     del child
                 if truncated:
                     break
@@ -237,6 +313,9 @@ planning clone. It defers successor observations, not current-action geometry.
                 break
             completed_layers += 1
             layer["completed"] = True
+            if retained_prefix_diagnostics:
+                layer["retained_prefix_diagnostics"]["selection_status"] = "completed_layer"
+                frontier_progress = child_progress
             frontier = children
             kept = sum(value < 0 for value, _, _ in frontier)
             pruned = negative_children - kept
