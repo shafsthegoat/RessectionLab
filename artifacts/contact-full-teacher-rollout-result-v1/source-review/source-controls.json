@@ -1,0 +1,22 @@
+{
+  "checkpoint_payload_reads": 0,
+  "checks": [
+    "exact_executing_source_input_protocol_recipe_pins",
+    "fixed24_TRAIN_source_order_saved_search_metrics_and_single_refit_identity_no_payload_read",
+    "single_bounded_eval_path_uses_shared_sealed_exporter_and_retains_fixed_failure_slots",
+    "pure_summary_retains_bad_outcomes_refuses_incomplete_or_nonTRAIN_pass",
+    "existing_owned_monitor_final_elapsed_and_single_attempt_refusals_intact"
+  ],
+  "control_groups": 5,
+  "elapsed_seconds": 0.026109999977052212,
+  "forwards": 0,
+  "imports": "stdlib only",
+  "input_index_sha256": "5f29e8a0ae1d2a5bc92e0e3e344aac98d58c4acaaf011c2df1dca2c46ffd7a97",
+  "model_constructions": 0,
+  "native_tasks": 0,
+  "optimizer_steps": 0,
+  "recipe_sha256": "2d2994322c492cff6a57d8fdf072abc9a2ef526667a7ac4c3c8bea493c3f5d9b",
+  "searches": 0,
+  "source_index_sha256": "f3cf38fbcb3b0d5a743272fca7e081e263f0d462a6b7101c528d28f0b56bed76",
+  "status": "PASS_SOURCE_ONLY"
+}

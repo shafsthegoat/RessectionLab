@@ -1,0 +1,75 @@
+{
+  "status": "PASS_SAVED_ONLY",
+  "summary": {
+    "all24": {
+      "n": 24,
+      "goal_contacts": 6,
+      "saved_search_goal_contacts": 16,
+      "mean_return": 0.05633333333333332,
+      "saved_search_mean_return": 0.25616666666666665,
+      "STOP_only": 18,
+      "same_action_sequence_as_saved_search": 12,
+      "lower_return_than_saved_search": 12,
+      "same_return_as_saved_search": 12,
+      "higher_return_than_saved_search": 0,
+      "mean_removed_volume_mm3": 0.8333333333333334
+    },
+    "surface": {
+      "n": 12,
+      "goal_contacts": 3,
+      "saved_search_goal_contacts": 8,
+      "mean_return": 0.05633333333333332,
+      "saved_search_mean_return": 0.38433333333333336,
+      "STOP_only": 9,
+      "same_action_sequence_as_saved_search": 5,
+      "lower_return_than_saved_search": 7,
+      "same_return_as_saved_search": 5,
+      "higher_return_than_saved_search": 0,
+      "mean_removed_volume_mm3": 0.8333333333333334
+    },
+    "deep": {
+      "n": 12,
+      "goal_contacts": 3,
+      "saved_search_goal_contacts": 8,
+      "mean_return": 0.05633333333333332,
+      "saved_search_mean_return": 0.12799999999999997,
+      "STOP_only": 9,
+      "same_action_sequence_as_saved_search": 7,
+      "lower_return_than_saved_search": 5,
+      "same_return_as_saved_search": 7,
+      "higher_return_than_saved_search": 0,
+      "mean_removed_volume_mm3": 0.8333333333333334
+    }
+  },
+  "counters": {
+    "checkpoint_loads": 1,
+    "actor_forward_calls": 30,
+    "geometry_previews": 704,
+    "optimizer_updates": 0,
+    "new_search_calls": 0,
+    "new_teacher_calls": 0,
+    "patient_reads": 0,
+    "SELECT_or_MEASUREMENT_reads": 0,
+    "planning_transition_calls": 30,
+    "authoritative_execution_transition_calls": 30,
+    "observed_native_transition_calls": 60
+  },
+  "history_counts": {
+    "frames": 498,
+    "microsteps": 228,
+    "actions": 30,
+    "nonstop_actions": 12,
+    "removed_cells": 20
+  },
+  "saved_search_transition_calls": 1346,
+  "saved_search_planning_seconds": 24.41199395665899,
+  "parent_seconds": 24.631683540996164,
+  "worker_seconds": 24.15910387504846,
+  "sampled_peak_rss_bytes": 278315008,
+  "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+  "checkpoint_sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7",
+  "run_head": "d09c78d8a90bbc1d6e507499c43c0db145b9f45e",
+  "result_sha256": "32dd1bdcbd61f9ba41dd6654aaf33c9c446cf1ba35dc222e88c4734aec0782d8",
+  "limits": "No rerun: verifies saved engine/audit receipts, seals, exact frame/microstep correspondence, independent delta-mask hashes and reward arithmetic. Does not recompute collision/containment geometry or remaining tissue masks from source arrays. No project/ML import, model/native task, checkpoint decode or held-out access.",
+  "elapsed_seconds": 0.06278508296236396
+}

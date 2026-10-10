@@ -1,0 +1,122 @@
+{
+  "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "checkpoint": {
+    "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+    "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt",
+    "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7",
+    "lineage_hash": "sha256:0da9731dd247aac6289139d5ed0828a0bc8144d3de9a725d44ec101da539b927"
+  },
+  "keys": [
+    [
+      "pcf-06",
+      "surface"
+    ],
+    [
+      "pcf-06",
+      "deep"
+    ],
+    [
+      "pcf-09",
+      "surface"
+    ],
+    [
+      "pcf-09",
+      "deep"
+    ],
+    [
+      "pcf-10",
+      "surface"
+    ],
+    [
+      "pcf-10",
+      "deep"
+    ],
+    [
+      "pcf-11",
+      "surface"
+    ],
+    [
+      "pcf-11",
+      "deep"
+    ],
+    [
+      "pcf-13",
+      "surface"
+    ],
+    [
+      "pcf-13",
+      "deep"
+    ],
+    [
+      "pcf-14",
+      "surface"
+    ],
+    [
+      "pcf-14",
+      "deep"
+    ],
+    [
+      "pcf-15",
+      "surface"
+    ],
+    [
+      "pcf-15",
+      "deep"
+    ],
+    [
+      "pcf-19",
+      "surface"
+    ],
+    [
+      "pcf-19",
+      "deep"
+    ],
+    [
+      "pcf-20",
+      "surface"
+    ],
+    [
+      "pcf-20",
+      "deep"
+    ],
+    [
+      "pcf-21",
+      "surface"
+    ],
+    [
+      "pcf-21",
+      "deep"
+    ],
+    [
+      "pcf-22",
+      "surface"
+    ],
+    [
+      "pcf-22",
+      "deep"
+    ],
+    [
+      "pcf-23",
+      "surface"
+    ],
+    [
+      "pcf-23",
+      "deep"
+    ]
+  ],
+  "horizon": 2,
+  "search_comparator": "original_saved_bounded_TRAIN_teacher_native_outcomes",
+  "comparison_scope": "same_tasks_goals_masks_reward_horizon_not_matched_training_or_total_compute",
+  "caps": {
+    "actor_forwards": 48,
+    "attempts": 1,
+    "authoritative_execution_transitions": 48,
+    "geometry_previews": 2048,
+    "hard_total_wall_seconds": 45,
+    "planning_transitions": 48,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "threads": 1
+  },
+  "optimizer_updates": 0,
+  "new_search_calls": 0
+}

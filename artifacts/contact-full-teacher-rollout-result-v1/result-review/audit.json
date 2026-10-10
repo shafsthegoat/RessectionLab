@@ -1,0 +1,593 @@
+{
+  "checkpoint_sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7",
+  "counters": {
+    "SELECT_or_MEASUREMENT_reads": 0,
+    "actor_forward_calls": 30,
+    "authoritative_execution_transition_calls": 30,
+    "checkpoint_loads": 1,
+    "geometry_previews": 704,
+    "new_search_calls": 0,
+    "new_teacher_calls": 0,
+    "observed_native_transition_calls": 60,
+    "optimizer_updates": 0,
+    "patient_reads": 0,
+    "planning_transition_calls": 30
+  },
+  "elapsed_seconds": 0.06278508296236396,
+  "history_counts": {
+    "actions": 30,
+    "frames": 498,
+    "microsteps": 228,
+    "nonstop_actions": 12,
+    "removed_cells": 20
+  },
+  "limits": "No rerun: verifies saved engine/audit receipts, seals, exact frame/microstep correspondence, independent delta-mask hashes and reward arithmetic. Does not recompute collision/containment geometry or remaining tissue masks from source arrays. No project/ML import, model/native task, checkpoint decode or held-out access.",
+  "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+  "parent_seconds": 24.631683540996164,
+  "result_sha256": "32dd1bdcbd61f9ba41dd6654aaf33c9c446cf1ba35dc222e88c4734aec0782d8",
+  "rows": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:8506a025d9bb617ac23f8c36d503334909d0f5baf2336e63a0c7c825ece9f31b",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 0,
+      "layout_id": "pcf-06",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:88e107db1655cac006ac7898e99476bac2cce0410268d0ebadc7d78f42a08b92"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:6b410ab999f7c6036694909e19668a55315e65da612881aaf5cab2dedeee0b30",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 1,
+      "layout_id": "pcf-06",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:580c92e9df76d331b59c0ce9c06c11a0630b3327dbda00512517db02018926ce"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:9368e22ae9aad371e92d9dbfc76a04f35a6613523daaea429c99ced649d7b55d",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 2,
+      "layout_id": "pcf-09",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:0fdae8eb01ca68691f9f1cc33139d009ddaa13c2fdb7300fa336060dc51bf086"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:77666c80ba8e54e63bc044d54f4fc1fa719e1ff8ae2d94fb934f146550da3c46",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 3,
+      "layout_id": "pcf-09",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:7ef55648555d532283b844d63fc7152b519fa5189f8b81ec15575971e8d1211e"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:4a45625feda08611ab2f2ef26ff409e59d3492003f9f79f1a2477644f7f72f36",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 4,
+      "layout_id": "pcf-10",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 1.0,
+      "saved_search_return": 0.7040000000000001,
+      "seal": "sha256:c65eb734b036a29d33e5fa17003322a3d12b78fdd14dfc9f2ee84d2eac4d15dd"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:a7ac6d7d4a74b115907630478e2e61c49e3886244b4d08cc56c55f8e7abfcfe2",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 5,
+      "layout_id": "pcf-10",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 4.0,
+      "saved_search_return": 0.09199999999999997,
+      "seal": "sha256:ba22db7b1455045e287d599eb76fe059f0f679a75b9b51d4e1f51de00d118f7a"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:95205b5f5e166b97d46960272438781dd4ee85e231b71a6bee098e4273e705e6",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 6,
+      "layout_id": "pcf-11",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 1.0,
+      "saved_search_return": 0.7040000000000001,
+      "seal": "sha256:bf1e28039ca20de2e1c9dca4e0578d152705cc7175d68f6671b48a06cd11f870"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:69eb912795222448a593025a53acad8fdb50c6bde7674b36e20fce28e784f74d",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 7,
+      "layout_id": "pcf-11",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 3.0,
+      "saved_search_return": 0.2919999999999999,
+      "seal": "sha256:70025ed1334beeb363aedd7a6213a6ab10bf43ce3e63f271bb8b8072c7f0a453"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:2b8790cf4ecc0cae26ef026c0232440e47eb99236b4b3db1568644b7366214b9",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 8,
+      "layout_id": "pcf-13",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 2.0,
+      "saved_search_return": 0.5,
+      "seal": "sha256:85101588e2f1a7f47e4496ae38b60e27fe398703df9ca422b94a3e06bf163c3a"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:0226e2caaa479e4a5f357cc9acdd142567eae8a4542b5cca0b039fab2a8c37c9",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 9,
+      "layout_id": "pcf-13",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 4.0,
+      "saved_search_return": 0.09199999999999997,
+      "seal": "sha256:f3b05865c5c0402ebc61ec282352da715faee98e027164bfcfdaa0aa30eb8e98"
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:d57c8f281475e9d57aefe78e",
+        "NATIVE-SPATIAL:1ca05aeddbc79bbec7027d50"
+      ],
+      "contact": true,
+      "episode_id": "sha256:8ed19dfe1624d14b887dde09177fb028737362e64bdcedb84baeeb01df6e054c",
+      "frames": 77,
+      "goal_id": "surface",
+      "index": 10,
+      "layout_id": "pcf-14",
+      "modes": [
+        "aspirate",
+        "probe"
+      ],
+      "removed_mm3": 3,
+      "return": 0.2919999999999999,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 1.0,
+      "saved_search_return": 0.7040000000000001,
+      "seal": "sha256:22f72bff872d55794fa37651cd72b805d44b2683252f904ed24fc9791bc4b6fc"
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39",
+        "NATIVE-SPATIAL:841950062db8a39a360d86df"
+      ],
+      "contact": true,
+      "episode_id": "sha256:da5ae8cc753909be481e304ec0da16a4276be071b2c441d9e160676397f895cd",
+      "frames": 77,
+      "goal_id": "deep",
+      "index": 11,
+      "layout_id": "pcf-14",
+      "modes": [
+        "aspirate",
+        "probe"
+      ],
+      "removed_mm3": 3,
+      "return": 0.2919999999999999,
+      "same_sequence": true,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 3.0,
+      "saved_search_return": 0.2919999999999999,
+      "seal": "sha256:f1758371c2f59430197a13de81c8b5cf55f34367d4201f43350629a7f246cf20"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:939be292f4db52692672d23e0ed88eef80a90e3ec3f70bd1d68bcb9e2643161e",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 12,
+      "layout_id": "pcf-15",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:2282ea625d2d4e5d758d8d90f93681188120c3ba1fad9661fde1f08ff8a49b1f"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:52e151f0e04df42fcfd685279c65e140e1a40e0711458a57ef524aa03fbfbc9b",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 13,
+      "layout_id": "pcf-15",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:f340f7780b99c6d4e6c6bd38de09e0588bd024814afa6d5a522e66f2d10f5a82"
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2",
+        "NATIVE-SPATIAL:36631e81ae203ac6f0600c3d"
+      ],
+      "contact": true,
+      "episode_id": "sha256:f0d1ed170a040c6b20176470e336016fbe08c989f00e2b1d8746cd68778231ac",
+      "frames": 77,
+      "goal_id": "surface",
+      "index": 14,
+      "layout_id": "pcf-19",
+      "modes": [
+        "aspirate",
+        "probe"
+      ],
+      "removed_mm3": 4,
+      "return": 0.09199999999999997,
+      "same_sequence": true,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 4.0,
+      "saved_search_return": 0.09199999999999997,
+      "seal": "sha256:08d3168fe260b7b14457fe159b85af062ce187a6b33277d011f70b873312a1b0"
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:7c447a4bf55da09f684d0057",
+        "NATIVE-SPATIAL:0248990fe717d1aa5f056968"
+      ],
+      "contact": true,
+      "episode_id": "sha256:7e59a1f0c3bb22d7573e7afe29203508e90e503babceaa718250ae8f856a7972",
+      "frames": 77,
+      "goal_id": "deep",
+      "index": 15,
+      "layout_id": "pcf-19",
+      "modes": [
+        "aspirate",
+        "probe"
+      ],
+      "removed_mm3": 4,
+      "return": 0.09199999999999997,
+      "same_sequence": true,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 4.0,
+      "saved_search_return": 0.09199999999999997,
+      "seal": "sha256:0b786a689b8e91145e1783f4dec6edb0e68f0a410fa5526b1e4232dbad9063a5"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:1d682f94ed09f7330c31ac6944d68286f3898e99b5b21f4b1b61ad2269a8b4dc",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 16,
+      "layout_id": "pcf-20",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 1.0,
+      "saved_search_return": 0.7080000000000001,
+      "seal": "sha256:b58c144ed778e1e558a49c48f7d5d5f07d95fd2507e83f4f5371e40fe4864910"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:a76dbe0f7f9d7a4afb54ac90cae03777560aa839a9cb1aef274903cfc68405cf",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 17,
+      "layout_id": "pcf-20",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 3.0,
+      "saved_search_return": 0.2919999999999999,
+      "seal": "sha256:b2516bd505cd480881249fa0f56175af1e7addd1fce82811a146b4c3e3662eae"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:f3e9ce6f5132c6f0928057491752249cc2ddd314cd01c8f6126340f2e7b52fa8",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 18,
+      "layout_id": "pcf-21",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:dc6a7e806ae31061dff0b7bfe9d06676629766c631401b2fa6ddd09ce555a02c"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:914a840b67a00514639eb772047ebd42f6c58fd0ea2477fa6138a3b03f36b4f5",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 19,
+      "layout_id": "pcf-21",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": true,
+      "saved_search_contact": false,
+      "saved_search_removed_mm3": 0.0,
+      "saved_search_return": 0.0,
+      "seal": "sha256:6d26c0779e0e23598bd57468edd62d777bac253d15ce68667159d32b09fe3317"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:e0fe56e835ce28389fe49b43882e6da451016385bf32930cbc4cec1f27bc808a",
+      "frames": 2,
+      "goal_id": "surface",
+      "index": 20,
+      "layout_id": "pcf-22",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 2.0,
+      "saved_search_return": 0.5,
+      "seal": "sha256:a39c3d597f5a3906988858e2dc9ebc1e5f3589067ee5a1a12db2259f1729ae1e"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "contact": false,
+      "episode_id": "sha256:76c3f034b2585c524a0d0d1157263afeb06f2ae1e1f00e76d4147f8dffeb0358",
+      "frames": 2,
+      "goal_id": "deep",
+      "index": 21,
+      "layout_id": "pcf-22",
+      "modes": [
+        "stop"
+      ],
+      "removed_mm3": 0,
+      "return": 0.0,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 4.0,
+      "saved_search_return": 0.09199999999999997,
+      "seal": "sha256:16764e9ef3ce8c8e12713a3d8ff3d8e66d7e7a7b287c2a03a6a0121d6c180ee1"
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:811c0385e09535b488116e59",
+        "NATIVE-SPATIAL:16e5329bc50eab4881a1fec6"
+      ],
+      "contact": true,
+      "episode_id": "sha256:3b2bb790d7a215bf3cc18ff2efb1f92d25ade1a329ee82147ef887dadc188405",
+      "frames": 77,
+      "goal_id": "surface",
+      "index": 22,
+      "layout_id": "pcf-23",
+      "modes": [
+        "aspirate",
+        "probe"
+      ],
+      "removed_mm3": 3,
+      "return": 0.2919999999999999,
+      "same_sequence": false,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 1.0,
+      "saved_search_return": 0.7000000000000001,
+      "seal": "sha256:2a15c6c97342efcaab190749a2adb7a8e70afc15a842b7aaf94f1352ffb031f3"
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3",
+        "NATIVE-SPATIAL:ef9696a6b58d60a4a18b086c"
+      ],
+      "contact": true,
+      "episode_id": "sha256:2cc1e9be8fe3d61660f024c7158b48bb697c26eb90bff8f3f78b2ee9bd38c14b",
+      "frames": 77,
+      "goal_id": "deep",
+      "index": 23,
+      "layout_id": "pcf-23",
+      "modes": [
+        "aspirate",
+        "probe"
+      ],
+      "removed_mm3": 3,
+      "return": 0.2919999999999999,
+      "same_sequence": true,
+      "saved_search_contact": true,
+      "saved_search_removed_mm3": 3.0,
+      "saved_search_return": 0.2919999999999999,
+      "seal": "sha256:42cd4bc0e663187bb6346f264b6462b6ca46d5760451a94bb09dd26c94652018"
+    }
+  ],
+  "run_head": "d09c78d8a90bbc1d6e507499c43c0db145b9f45e",
+  "sampled_peak_rss_bytes": 278315008,
+  "saved_search_planning_seconds": 24.41199395665899,
+  "saved_search_transition_calls": 1346,
+  "status": "PASS_SAVED_ONLY",
+  "summary": {
+    "all24": {
+      "STOP_only": 18,
+      "goal_contacts": 6,
+      "higher_return_than_saved_search": 0,
+      "lower_return_than_saved_search": 12,
+      "mean_removed_volume_mm3": 0.8333333333333334,
+      "mean_return": 0.05633333333333332,
+      "n": 24,
+      "same_action_sequence_as_saved_search": 12,
+      "same_return_as_saved_search": 12,
+      "saved_search_goal_contacts": 16,
+      "saved_search_mean_return": 0.25616666666666665
+    },
+    "deep": {
+      "STOP_only": 9,
+      "goal_contacts": 3,
+      "higher_return_than_saved_search": 0,
+      "lower_return_than_saved_search": 5,
+      "mean_removed_volume_mm3": 0.8333333333333334,
+      "mean_return": 0.05633333333333332,
+      "n": 12,
+      "same_action_sequence_as_saved_search": 7,
+      "same_return_as_saved_search": 7,
+      "saved_search_goal_contacts": 8,
+      "saved_search_mean_return": 0.12799999999999997
+    },
+    "surface": {
+      "STOP_only": 9,
+      "goal_contacts": 3,
+      "higher_return_than_saved_search": 0,
+      "lower_return_than_saved_search": 7,
+      "mean_removed_volume_mm3": 0.8333333333333334,
+      "mean_return": 0.05633333333333332,
+      "n": 12,
+      "same_action_sequence_as_saved_search": 5,
+      "same_return_as_saved_search": 5,
+      "saved_search_goal_contacts": 8,
+      "saved_search_mean_return": 0.38433333333333336
+    }
+  },
+  "worker_seconds": 24.15910387504846
+}

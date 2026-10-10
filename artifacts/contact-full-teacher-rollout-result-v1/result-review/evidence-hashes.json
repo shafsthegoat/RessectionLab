@@ -1,0 +1,570 @@
+{
+  "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": {
+    "bytes": 9482,
+    "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/experiment-freeze.json": {
+    "bytes": 113281,
+    "sha256": "1f6965eb5b292c795636df197b084f984fb08c32fbcf32b04830d361a434a3e7"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt": {
+    "bytes": 185330,
+    "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/result.json": {
+    "bytes": 44061,
+    "sha256": "e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1.supervision/declaration.json": {
+    "bytes": 5098,
+    "sha256": "ad8832160485a451151f4e21e51deb3eccf4d1a4d35cbf5b1302bb9c06821ef5"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1.supervision/progress.json": {
+    "bytes": 394,
+    "sha256": "d2a3cda64f183fff067eb5cf03114812d2e00fd116b289d984e69e79a2041f3b"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1.supervision/receipt.json": {
+    "bytes": 823,
+    "sha256": "7efdf482cd91ee25167d56e0584f17ffec45ba6cfb6c5c158e33cdac0f46a5a5"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1.supervision/worker.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-00-episode.json": {
+    "bytes": 90298,
+    "sha256": "36c1feb70cb758849729490018e68ea76176249c6cb8387ee75dd6103deb5156"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-00-plan.json": {
+    "bytes": 2780,
+    "sha256": "c674dc935dc38d3447f63bcc28a5cb35799dca87578b1a46613a57e7648ff802"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-00-result.json": {
+    "bytes": 5338,
+    "sha256": "23df1ef5084ecd83f1c5ba43cc115e33c5efabba29082b656894796b79bd0983"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-01-episode.json": {
+    "bytes": 90286,
+    "sha256": "5bd444a11c7df33a2be1625e74373b8c1751ba9b088c15f41f1a56ac95b5d064"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-01-plan.json": {
+    "bytes": 2780,
+    "sha256": "7b27b1d4b51cf85c0eeacb1a2ba6d278dc79437ef9736cbed820e77760ed581e"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-01-result.json": {
+    "bytes": 5335,
+    "sha256": "0cb0e0d5b8d45ae2d5fbc8cbe706862272231f56d6d6531becb267311136dbef"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-02-episode.json": {
+    "bytes": 90298,
+    "sha256": "f513eed2e64d833bfe1345520c6a45106c6e027f410b9f82686a5db6dfcd23f9"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-02-plan.json": {
+    "bytes": 2780,
+    "sha256": "f461eaa9aa606256ada24e50eed556174666c3c15ab5cead3874bcde204c4e1f"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-02-result.json": {
+    "bytes": 5337,
+    "sha256": "aa5ffcaaea779fb86b209071bc2cafa6b30b4aeb3a0ebf13907d86a149f169a6"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-03-episode.json": {
+    "bytes": 90286,
+    "sha256": "c6d221d2309febdbe43c4ba12b85eb9db36c100f76280984c245909db0416012"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-03-plan.json": {
+    "bytes": 2780,
+    "sha256": "f3139f293e9e6e58ced1c254715e7cde8034b9bd1f765b7f51b9db224d241a53"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-03-result.json": {
+    "bytes": 5334,
+    "sha256": "51f5bddce94124180f45ff11fd9a1364e5599eda2b634ad3465dabf83da778b4"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-04-episode.json": {
+    "bytes": 90296,
+    "sha256": "f293a7228b39732346a0a15515c3e750162d5a9c29e40f6d9dd566621551ef67"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-04-plan.json": {
+    "bytes": 2780,
+    "sha256": "3365e491be68384b1b7b78244ae130cf2586e6c665be3ab727bef1525ddd8969"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-04-result.json": {
+    "bytes": 5470,
+    "sha256": "79524caf97f0dccd9b4652ebfdbb33614a0730a80832396d71d07505c12bf626"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-05-episode.json": {
+    "bytes": 90284,
+    "sha256": "65ffa44652faed63a6af80241c3a2166d8b1e3862a6179abd5151ad3393ceaf9"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-05-plan.json": {
+    "bytes": 2780,
+    "sha256": "48ef8340bf8334965967630127d1ec6861028c1de99b1a89196f3bed82e7963f"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-05-result.json": {
+    "bytes": 5470,
+    "sha256": "5857ba8606623b3487629b42813f44be1996488ff0a27c00ad48ac33da13313e"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-06-episode.json": {
+    "bytes": 90298,
+    "sha256": "8f3d09293dcd7e1299138ab9701b8575d3fbc7dcb3c021e8c123f2d2ca7ba978"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-06-plan.json": {
+    "bytes": 2780,
+    "sha256": "22e266c97ddf6c69b96c4b2a6299055dee7041fb5b6c2f97c624a84252bc9d8b"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-06-result.json": {
+    "bytes": 5485,
+    "sha256": "12cb75407bd90d5e8286b46e7e2a3535083195c512a569e214b9d5e0289a00be"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-07-episode.json": {
+    "bytes": 90286,
+    "sha256": "88d5debf333da0747d86a5ac0dddffc60f006b97d5a569436ce9ca3bac07eb23"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-07-plan.json": {
+    "bytes": 2780,
+    "sha256": "ebf628f4f5559357abc80d484b9605092a5944064f14c2172198dc44c019bc3a"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-07-result.json": {
+    "bytes": 5483,
+    "sha256": "6698807aee0acbc1c5fe95aa0dac7a7d0bbaf00dc58a418d7eb3f77300693162"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-08-episode.json": {
+    "bytes": 90296,
+    "sha256": "4720eb72360b5f23c88c174017a95e1667e10e0487cd70e83cb5c6b08dfc8a3b"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-08-plan.json": {
+    "bytes": 2780,
+    "sha256": "4e41e82642e5c8d6a33f843ea4b579e82ee41f5a925eae074c6b6a71c36601a1"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-08-result.json": {
+    "bytes": 5425,
+    "sha256": "dc580cb8c053ccf7c9270b094e492d4d86ab693fedc03fb30d6e4d41d50a97af"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-09-episode.json": {
+    "bytes": 90284,
+    "sha256": "d57a14dac91f5a8af0299647ec10fedbeb61a5de4b75365693024740fa032901"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-09-plan.json": {
+    "bytes": 2780,
+    "sha256": "4ae5b3041f475faabaa465771e9b0a2c2a282f28840bc0e30bcecdbf5f7c0dd9"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-09-result.json": {
+    "bytes": 5470,
+    "sha256": "031200fe01e4212a2b448c033bd671af7f52034cf58f855df5034e5d2f00ceee"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-10-episode.json": {
+    "bytes": 598808,
+    "sha256": "cf438823d0e06c41415c19e99206ddf62ec8c8b422fd9365c42756c41b97e989"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-10-plan.json": {
+    "bytes": 84185,
+    "sha256": "cda4637f503143483632bf4516b9ba9952d3f335dca53498fcaf9adbef3a694f"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-10-result.json": {
+    "bytes": 5665,
+    "sha256": "94e0a994508d219f0fc265f85eccd686f87a461f6bfa219f33ec01b12938405f"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-11-episode.json": {
+    "bytes": 598788,
+    "sha256": "5bf640d7fa07da0a147c84ba54a46c38b0954f03ab06d1eb5493e7d79dda9211"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-11-plan.json": {
+    "bytes": 84185,
+    "sha256": "8a4a05faf3ee88d94b02b0d5415c662551266f635e36c60536bd5500e793e815"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-11-result.json": {
+    "bytes": 5645,
+    "sha256": "fab6ec417e2385dd2f6133d456f687031aa058a72bfb9252fb0d8a8b06eb0dc1"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-12-episode.json": {
+    "bytes": 90298,
+    "sha256": "0db9da9eb7f3cd186e702974d15a1a21acad20aac2818ad08965e9f8e51b57a9"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-12-plan.json": {
+    "bytes": 2780,
+    "sha256": "29a6240f571a13aa4d0c2b0f65d7d403f4b3323c5bde1ac9be92e8186167d9b7"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-12-result.json": {
+    "bytes": 5338,
+    "sha256": "a11079ff7573d8eb1c9cc97a33623e59312c1cc9be4035faf6e37d0c084d5867"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-13-episode.json": {
+    "bytes": 90286,
+    "sha256": "6236fdc19000af4b4e48c6ab46478e22a4fb7b54f987a2b65b2abe333cdbb578"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-13-plan.json": {
+    "bytes": 2780,
+    "sha256": "df58d9239cd3466c50883a8f7e051c43ce367aa620bd6b1e6d7a53eac94abbb8"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-13-result.json": {
+    "bytes": 5335,
+    "sha256": "e9ef1ceecb80086f0e386377ee8112000a71af4f7c7de6fd22624c79bd67b65e"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-14-episode.json": {
+    "bytes": 632478,
+    "sha256": "5764e1285a984fb8b6671821e465c5b165994d5e3d67dcf7cd4b3c9ef67eae4f"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-14-plan.json": {
+    "bytes": 91512,
+    "sha256": "be21fbed57d489021491cb655e74b0215b9eb761f4226b8bce690570b96497ef"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-14-result.json": {
+    "bytes": 5636,
+    "sha256": "6afd8de5e67d435b54fccfd0a51a11b0d91683db1c4a06196f106b28a1067e6e"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-15-episode.json": {
+    "bytes": 632466,
+    "sha256": "12912d71235ef3988591cdec0c14270c8cbe6c6e06b91d7deab05627a87be885"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-15-plan.json": {
+    "bytes": 91512,
+    "sha256": "c29cebf3b0ad36c7b66b920ec829f197237c7f93ac2a31d3f623da30db5bd5fd"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-15-result.json": {
+    "bytes": 5629,
+    "sha256": "dcca11c5e8b3662b5d10b45d5930a47f103186e1c1f86c034eee80a2854e85b3"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-16-episode.json": {
+    "bytes": 90298,
+    "sha256": "f3a905df8670e990cf5db24415f33689a6e8c32b8fd9a0fe979df2aae8ec10f0"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-16-plan.json": {
+    "bytes": 2780,
+    "sha256": "d161844f101092b745420bf9737c1959ef3790f5fba0d226b4d3c2ab6c83e8f1"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-16-result.json": {
+    "bytes": 5487,
+    "sha256": "b3325590e141125c63127c7cd89ce7cb8704d16c113e035801a0361fb0fbcb8e"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-17-episode.json": {
+    "bytes": 90286,
+    "sha256": "680413a5d84473f7648ea0d542539e5abe634e41f4e64b8f31e88e23baf42267"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-17-plan.json": {
+    "bytes": 2780,
+    "sha256": "48de750c222fe4c0f4d64b0fcda7dae7e981c311f86f28f813f77a74c005c409"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-17-result.json": {
+    "bytes": 5483,
+    "sha256": "59d6e77c7e26f4657051d35afc682081e76fad23082e12bf3be6d411cabf6de6"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-18-episode.json": {
+    "bytes": 90298,
+    "sha256": "ed76b478b0acebebef98baf5ef927258ac2e086a54df8ad496bfb75671eb9b59"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-18-plan.json": {
+    "bytes": 2780,
+    "sha256": "ac933aead20d8339aac6ea3e14050b55d59d96f7f905798fdc04dcac726d73d0"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-18-result.json": {
+    "bytes": 5345,
+    "sha256": "6db42ac000f08dfb901448368636199e4f13bf8945abbdd0b62e533e01e9adc8"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-19-episode.json": {
+    "bytes": 90286,
+    "sha256": "f42e50943e77f8db2576b83766f05c9ce78e5b90818c982af7a69ff2a45eb434"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-19-plan.json": {
+    "bytes": 2780,
+    "sha256": "3adfc2a60e2897367eed9855f9300d88a4d3afca1767ca4e3143976531364db0"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-19-result.json": {
+    "bytes": 5341,
+    "sha256": "fe806aa5228eb2ae281e4152f8425650a413bf8147ceb85236f277d3443f69b2"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-20-episode.json": {
+    "bytes": 90296,
+    "sha256": "7a8f838e1ced5d18786fed5281ca14e9140cc26002ff946290e8174cf1046c10"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-20-plan.json": {
+    "bytes": 2780,
+    "sha256": "73517482c196c8516accff2d62162c7f352eeb920d646175e4fc6e35d8128c39"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-20-result.json": {
+    "bytes": 5426,
+    "sha256": "235d94bae77dc9f120bfceddbe5c996f55eb6c235340d7eb736aadcf591bfa11"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-21-episode.json": {
+    "bytes": 90284,
+    "sha256": "7ce73388aeafd7e09ed25d8969999ce421f244525c0a755096281f569d0fdad2"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-21-plan.json": {
+    "bytes": 2780,
+    "sha256": "e4eb27b6af87f20551afa4f7f8a544d7b5af00f85876d378fcfe7f19e591d750"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-21-result.json": {
+    "bytes": 5472,
+    "sha256": "8a9b91b54ce4dc8218376ddaa2e5e7da9e209042431d07bb3a2882756a826fe4"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-22-episode.json": {
+    "bytes": 571086,
+    "sha256": "52df420fdc5227f4f02230fd696034891cd647145c539d966d8047e4d5121ec6"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-22-plan.json": {
+    "bytes": 78095,
+    "sha256": "980285c70f60a564f865e97310003c85d9ae74e417b0de90501cf8c908d5c65d"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-22-result.json": {
+    "bytes": 5662,
+    "sha256": "2d007684a3cb6b36f94733eabc0bc9c70a81bcbbb0deb2ce0c738af690394809"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-23-episode.json": {
+    "bytes": 571074,
+    "sha256": "bc176c23015ecf2a37c3099f5239c16df6689c7ffe42e5524a79cd82a21291db"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-23-plan.json": {
+    "bytes": 78095,
+    "sha256": "3878f3f06579fc8c6508771c4c4396f056aac20009794532b096ba4183507b45"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/TRAIN-23-result.json": {
+    "bytes": 5644,
+    "sha256": "9225ff41fcfdfc5958e722f38d10011487de4f373df6de8776cda3af58325fc4"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/declaration.json": {
+    "bytes": 2070,
+    "sha256": "b3257bb18fb56e6257fbc4f619fb7e389fd970ec01add4fa1294235e7ce0f02c"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/result.json": {
+    "bytes": 150593,
+    "sha256": "32dd1bdcbd61f9ba41dd6654aaf33c9c446cf1ba35dc222e88c4734aec0782d8"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-v1/input-index.json": {
+    "bytes": 5820,
+    "sha256": "5f29e8a0ae1d2a5bc92e0e3e344aac98d58c4acaaf011c2df1dca2c46ffd7a97"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-v1/rollout_summary.py": {
+    "bytes": 1491,
+    "sha256": "67cff0bbe541275a1e3c7b947bb226de89053a75abc1a113805b2c14aab0ea31"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-v1/rollout_worker.py": {
+    "bytes": 13064,
+    "sha256": "cffdad5059a4c14db04cdce152f1861ba9c42dee6bbfefa520cb7083ea697900"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-v1/run_rollout_owned.py": {
+    "bytes": 5837,
+    "sha256": "1ecb16cffb26b3dcbfef6a02b2fe8fccca0bb1b719f023ffcbebd0e6b6286b6e"
+  },
+  "build/goal-conditioned-policy-v1/full-teacher-rollout-v1/source-index.json": {
+    "bytes": 4988,
+    "sha256": "f3cf38fbcb3b0d5a743272fca7e081e263f0d462a6b7101c528d28f0b56bed76"
+  },
+  "build/goal-conditioned-policy-v1/run_contact_owned.py": {
+    "bytes": 8730,
+    "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-00.json": {
+    "bytes": 9566,
+    "sha256": "7950ffecb97f0972ea86fee79a46a7ceb4219d5520bf7e9efc0c802fec73d18a"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-01.json": {
+    "bytes": 9560,
+    "sha256": "7a28ee779a64708ee6b86f74e7d27ffaf719546693ee43c77aad05170d5433be"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-02.json": {
+    "bytes": 9565,
+    "sha256": "d368d615bdb30aef0a43dc761da3aba42bd8515517b6f843db6701ab473c8b13"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-03.json": {
+    "bytes": 9559,
+    "sha256": "7710cd4cdcfdf7c77ee39d40d6bcc969e6754951226a135c8d69866ffd67cd70"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-04.json": {
+    "bytes": 108422,
+    "sha256": "d53063622261ac5b61cbf4d54e999479fa9a4c7f339afcc10e7d2d04c35b5584"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-05.json": {
+    "bytes": 350710,
+    "sha256": "0ef8ac5363950a22ebd07558fd223ddfcaed21b096371b68bcc86bf6746caf53"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-06.json": {
+    "bytes": 101031,
+    "sha256": "253cb47a9d41a76424eb23d1bef29e25d3cfb1761436a7446600c46f3953088a"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-07.json": {
+    "bytes": 326139,
+    "sha256": "24a422b2ddb43737c4089c3b2a8f8708e5ddbb6405cecaf95ea6b3eb262240db"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-08.json": {
+    "bytes": 167970,
+    "sha256": "24546d398bd281790cd8ec3b61834413c650f39a0c20095b94f1a735ff826811"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-09.json": {
+    "bytes": 334648,
+    "sha256": "91887860668a827de538ba955ce92454f6ce1e1fb8425d88f4617f85e2f2d428"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-10.json": {
+    "bytes": 85124,
+    "sha256": "7edce9f2c9df90357e67e9ab7ee728363d6a2b698d5ac1310c73a3e72f7b1b36"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-11.json": {
+    "bytes": 310643,
+    "sha256": "b196fb216157d448716308871fd1c87ceb1342700ade6b9399a2d11bddf0157e"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-12.json": {
+    "bytes": 9566,
+    "sha256": "6eab8b96a33d5d4cd31bed22489fa66c27a27916bfb1820491c0e80a3470359f"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-13.json": {
+    "bytes": 9560,
+    "sha256": "a81c3bb8ff0bb2c29cf93acb4870ef70c3367fa5030e442cae17d614719f67a6"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-14.json": {
+    "bytes": 333176,
+    "sha256": "ce55b8f32ec7759e19bb51d8ca705f24c3f06b34059267f923ab8289462cb56f"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-15.json": {
+    "bytes": 333169,
+    "sha256": "f3468d43739f2b7c19dc6ec45577a8763caa0199effb8c56166b3dbb86fbef81"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-16.json": {
+    "bytes": 51512,
+    "sha256": "37e8c40119774afe6fbc832a277d254e601a75c98d876cd05dad7023bfb96190"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-17.json": {
+    "bytes": 308316,
+    "sha256": "68ca0b7def4e5ccf3bfdc9e6f3774925b991eaa6d5f50826b3a0f436fece3889"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-18.json": {
+    "bytes": 9573,
+    "sha256": "d859168690734bdd5056f8214b642ea1628eeaa350bf99d7dd58cd66e168b478"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-19.json": {
+    "bytes": 9566,
+    "sha256": "f0254deefa0105139e7402c2ece9f146510612e302463f8169ab4066332dc070"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-20.json": {
+    "bytes": 156238,
+    "sha256": "710e8f4109db43aa5bd16f1799053121e23bcb44aa03185b49e48a4409638ff3"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-21.json": {
+    "bytes": 316867,
+    "sha256": "d1c5e9eea87a41f30861200be75b70b49ef5d25f1a1292262650ef7364ad2cd0"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-22.json": {
+    "bytes": 138501,
+    "sha256": "cdcaca9e969f5557ce8e6d33d45075afe4a0fc821821a39f0999d1f1ab27cb19"
+  },
+  "outputs/learning/public-contact-v1/attempt-01/teacher-23.json": {
+    "bytes": 292131,
+    "sha256": "5e225812ff3c4f595d3a31e295ef1a707edb0ebf626d25ba2e09659ca03724ef"
+  },
+  "src/resectionlab/contact_checkpoint.py": {
+    "bytes": 15016,
+    "sha256": "f696facdacfb92f19a0816abfecd506eeb16b6426adb67f53a7c5f158b9e3877"
+  },
+  "src/resectionlab/contact_costs.py": {
+    "bytes": 3617,
+    "sha256": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f"
+  },
+  "src/resectionlab/contact_family_episode.py": {
+    "bytes": 14476,
+    "sha256": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6"
+  },
+  "src/resectionlab/contact_learning.py": {
+    "bytes": 12673,
+    "sha256": "9f969bc9773bbaacdb2cb79e2c071c5412ad74c2793b8b536274afc9ce143368"
+  },
+  "src/resectionlab/contact_learning_contract.py": {
+    "bytes": 13864,
+    "sha256": "f592b6308e3ef382261a4fc505fac5e0b0a9780a8682bfefa1c1a8efe1ad911f"
+  },
+  "src/resectionlab/contact_learning_pilot.py": {
+    "bytes": 19731,
+    "sha256": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e"
+  },
+  "src/resectionlab/core.py": {
+    "bytes": 30914,
+    "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+  },
+  "src/resectionlab/data_policy.py": {
+    "bytes": 7928,
+    "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208"
+  },
+  "src/resectionlab/development_episode.py": {
+    "bytes": 14114,
+    "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e"
+  },
+  "src/resectionlab/evaluation.py": {
+    "bytes": 64077,
+    "sha256": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010"
+  },
+  "src/resectionlab/geometry.py": {
+    "bytes": 31204,
+    "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+  },
+  "src/resectionlab/goal_mode_episode_adapter.py": {
+    "bytes": 3775,
+    "sha256": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2"
+  },
+  "src/resectionlab/goal_mode_spatial_policy.py": {
+    "bytes": 8789,
+    "sha256": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a"
+  },
+  "src/resectionlab/independent_geometry_batch.py": {
+    "bytes": 9799,
+    "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+  },
+  "src/resectionlab/legacy_transfer_supervisor.py": {
+    "bytes": 10427,
+    "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+  },
+  "src/resectionlab/legacy_transfer_worker.py": {
+    "bytes": 4685,
+    "sha256": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01"
+  },
+  "src/resectionlab/native_proposals.py": {
+    "bytes": 33903,
+    "sha256": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee"
+  },
+  "src/resectionlab/native_resection.py": {
+    "bytes": 30492,
+    "sha256": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c"
+  },
+  "src/resectionlab/native_spatial_task.py": {
+    "bytes": 68231,
+    "sha256": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea"
+  },
+  "src/resectionlab/observed_search.py": {
+    "bytes": 12955,
+    "sha256": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd"
+  },
+  "src/resectionlab/public_contact_family.py": {
+    "bytes": 11219,
+    "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800"
+  },
+  "src/resectionlab/public_surface_contact.py": {
+    "bytes": 16277,
+    "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0"
+  },
+  "src/resectionlab/sequential_spatial_observation.py": {
+    "bytes": 3742,
+    "sha256": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3"
+  },
+  "src/resectionlab/shared_episode.py": {
+    "bytes": 12206,
+    "sha256": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d"
+  },
+  "src/resectionlab/simulation.py": {
+    "bytes": 47076,
+    "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253"
+  },
+  "src/resectionlab/spatial_observations.py": {
+    "bytes": 24866,
+    "sha256": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "src/resectionlab/spatial_policy.py": {
+    "bytes": 22722,
+    "sha256": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "src/resectionlab/structural_evidence.py": {
+    "bytes": 13719,
+    "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+  },
+  "src/resectionlab/surface_contact_episode.py": {
+    "bytes": 6579,
+    "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e"
+  },
+  "src/resectionlab/worlds.py": {
+    "bytes": 20428,
+    "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  }
+}

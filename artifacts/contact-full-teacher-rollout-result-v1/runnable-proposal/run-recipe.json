@@ -1,0 +1,23 @@
+{
+  "caps": {
+    "actor_forwards": 48,
+    "attempts": 1,
+    "authoritative_execution_transitions": 48,
+    "geometry_previews": 2048,
+    "hard_total_wall_seconds": 45,
+    "planning_transitions": 48,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "threads": 1
+  },
+  "checkpoint": {
+    "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+    "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt",
+    "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7"
+  },
+  "command": ".venv/bin/python build/goal-conditioned-policy-v1/full-teacher-rollout-v1/run_rollout_owned.py --expected-head <RELEASED_COMMIT> --source-index build/goal-conditioned-policy-v1/full-teacher-rollout-v1/source-index.json --source-index-sha256 f3cf38fbcb3b0d5a743272fca7e081e263f0d462a6b7101c528d28f0b56bed76",
+  "input_index_sha256": "5f29e8a0ae1d2a5bc92e0e3e344aac98d58c4acaaf011c2df1dca2c46ffd7a97",
+  "output": "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1",
+  "protocol_sha256": "02d748ba4940289ebc1072e945dc5414b7a12e5dbf6704ee839d11cc7a0d9eec",
+  "source_index_sha256": "f3cf38fbcb3b0d5a743272fca7e081e263f0d462a6b7101c528d28f0b56bed76",
+  "status": "STAGED_NOT_RELEASED_NOT_EXECUTED"
+}

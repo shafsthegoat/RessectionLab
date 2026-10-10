@@ -1,0 +1,9 @@
+Promote this compact package to artifacts/contact-full-teacher-rollout-result-v1.
+
+Actual generated TRAIN rollout: 6/24 contacts versus saved SEARCH 16/24; 18 STOP-only. Return 0.056333 versus 0.256167, with 12 lower-return and 12 equal-return rows. No runtime-failed or negative-return actor row was dropped. This demonstrates six useful learned trajectories on TRAIN data, while preserving the substantial performance gap.
+
+Exact result, supervised receipts, compact 24-row summary and both independent reviews are included. external-output-index.json binds all 78 local output/supervision files; these include the full 24 plans and v3 replay histories but their bulk arrays are deliberately not copied. No weights, compressed histories or duplicate anatomy are included.
+
+runnable-proposal preserves the exact original worker/monitor/summary, protocol, source/input indexes, command recipe and source controls. The recipe is a historical one-attempt command: its output already exists and rerunning must refuse. Canonical source dependencies and original build paths remain bound by source-index.json; do not rename, mutate or rerun the original experiment to exercise this package. Root owns any separately declared future execution.
+
+The source-review and result-review indexes are copied exactly with every indexed member preserved. Prior fitting evidence/source is separately promoted under artifacts/contact-full-teacher-refit-result-v1 and artifacts/contact-full-teacher-refit-source-v1. No desktop selector is released by this artifact, and no generalization or clinical claim follows.

@@ -1,0 +1,56 @@
+One frozen 24-goal TRAIN greedy native pass
+
+Purpose: establish whether the fixed full-teacher refit can reach useful states
+under its own choices. The saved 28/40 agreement includes 16 teacher-produced
+second states and is not an episode success result. Do not infer success before
+executing and validating the complete shared native trajectories.
+
+Use only final checkpoint 5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7,
+parameter sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20,
+experiment sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f.
+One bounded decode, eval/no_grad deterministic greedy actions through the existing
+plan_goal_mode_strategy and export_family_strategy. No update, further fit,
+threshold, manual STOP adjustment, action masking change or checkpoint selection.
+
+Exactly the original 24 TRAIN tasks, in original order; horizon two for all.
+Bind every original teacher's source/goal/decision model and original context to
+the fresh canonical task. Verify the initial public observation fingerprint
+against the fixed teacher corpus. Reuse the same public observations, candidate
+masks, objective and reward. Preserve continuous native poses and full histories.
+Never construct SELECT or MEASUREMENT tasks; no patient source read.
+
+The paired reference is each original saved bounded SEARCH/native outcome on the
+same task, goal, reward, mask and horizon. No search or teacher regeneration.
+Report saved search accounting separately from new online planning/replay costs
+and prior refit training costs. This is a same-task comparison, not a matched
+training/total-compute comparison or an untouched held-out test. Saved bounded
+SEARCH is not asserted globally optimal.
+
+Save every policy plan before authoritative native execution. Save the full v3
+native replay envelope, geometry audit and source/authorship bindings for each
+completed episode. Compare final goal contact-and-retention, total return,
+removal volume, STOP-only behavior and exact action sequence with saved SEARCH.
+Summarize all 24 and each fixed 12-goal objective group. Keep worse returns and
+failed rows; teacher-state accuracy is not substituted for final task metrics.
+
+Single attempt: 45 seconds hard owned wall, 1 GiB sampled process-tree RSS,
+one thread, 2048 previews, <=48 actor forwards, <=48 planning and <=48 authoritative
+execution transitions. No extra teacher replay: the exporter performs complete
+sealed-history equality and independent geometry audit. Its frame replay is
+included in the same operation and cost scope. Existing supervisor, parent lease,
+process-group/descendant sampler and identity-matched cleanup are reused.
+
+The fixed output directory must be absent:
+build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1
+Preserve per-row plans/envelopes/results, cap/error records and completed rows;
+stop on the first failure or cap, retain subsequent slots as not_executed, with
+no retry, larger cap, alternate task or replacement. Hard kill may prevent the
+worker's final summary; the parent receipt and already-written files remain.
+No checkpoint is rewritten or published by this run.
+
+Desktop path after evidence: original IL/RL negative pilot and its release stay
+intact. A successful audit of this pass could support a separately named,
+TRAIN-only refit variant with this exact checkpoint/experiment and explicit
+extra-training provenance. Its future owned admission must remain distinct from
+the original paired IL/RL held-out release. This proposal makes no desktop release
+or selector change; full v3 envelopes provide concrete material for later review.

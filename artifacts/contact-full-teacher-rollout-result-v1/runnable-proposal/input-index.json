@@ -1,0 +1,125 @@
+{
+  "caps": {
+    "actor_forwards": 48,
+    "attempts": 1,
+    "authoritative_execution_transitions": 48,
+    "geometry_previews": 2048,
+    "hard_total_wall_seconds": 45,
+    "planning_transitions": 48,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "threads": 1
+  },
+  "checkpoint": {
+    "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+    "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt",
+    "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7"
+  },
+  "data": {
+    "refit-experiment.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/experiment-freeze.json",
+      "sha256": "1f6965eb5b292c795636df197b084f984fb08c32fbcf32b04830d361a434a3e7"
+    },
+    "refit-result.json": {
+      "path": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/result.json",
+      "sha256": "e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51"
+    },
+    "teacher-00.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-00.json",
+      "sha256": "7950ffecb97f0972ea86fee79a46a7ceb4219d5520bf7e9efc0c802fec73d18a"
+    },
+    "teacher-01.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-01.json",
+      "sha256": "7a28ee779a64708ee6b86f74e7d27ffaf719546693ee43c77aad05170d5433be"
+    },
+    "teacher-02.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-02.json",
+      "sha256": "d368d615bdb30aef0a43dc761da3aba42bd8515517b6f843db6701ab473c8b13"
+    },
+    "teacher-03.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-03.json",
+      "sha256": "7710cd4cdcfdf7c77ee39d40d6bcc969e6754951226a135c8d69866ffd67cd70"
+    },
+    "teacher-04.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-04.json",
+      "sha256": "d53063622261ac5b61cbf4d54e999479fa9a4c7f339afcc10e7d2d04c35b5584"
+    },
+    "teacher-05.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-05.json",
+      "sha256": "0ef8ac5363950a22ebd07558fd223ddfcaed21b096371b68bcc86bf6746caf53"
+    },
+    "teacher-06.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-06.json",
+      "sha256": "253cb47a9d41a76424eb23d1bef29e25d3cfb1761436a7446600c46f3953088a"
+    },
+    "teacher-07.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-07.json",
+      "sha256": "24a422b2ddb43737c4089c3b2a8f8708e5ddbb6405cecaf95ea6b3eb262240db"
+    },
+    "teacher-08.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-08.json",
+      "sha256": "24546d398bd281790cd8ec3b61834413c650f39a0c20095b94f1a735ff826811"
+    },
+    "teacher-09.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-09.json",
+      "sha256": "91887860668a827de538ba955ce92454f6ce1e1fb8425d88f4617f85e2f2d428"
+    },
+    "teacher-10.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-10.json",
+      "sha256": "7edce9f2c9df90357e67e9ab7ee728363d6a2b698d5ac1310c73a3e72f7b1b36"
+    },
+    "teacher-11.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-11.json",
+      "sha256": "b196fb216157d448716308871fd1c87ceb1342700ade6b9399a2d11bddf0157e"
+    },
+    "teacher-12.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-12.json",
+      "sha256": "6eab8b96a33d5d4cd31bed22489fa66c27a27916bfb1820491c0e80a3470359f"
+    },
+    "teacher-13.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-13.json",
+      "sha256": "a81c3bb8ff0bb2c29cf93acb4870ef70c3367fa5030e442cae17d614719f67a6"
+    },
+    "teacher-14.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-14.json",
+      "sha256": "ce55b8f32ec7759e19bb51d8ca705f24c3f06b34059267f923ab8289462cb56f"
+    },
+    "teacher-15.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-15.json",
+      "sha256": "f3468d43739f2b7c19dc6ec45577a8763caa0199effb8c56166b3dbb86fbef81"
+    },
+    "teacher-16.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-16.json",
+      "sha256": "37e8c40119774afe6fbc832a277d254e601a75c98d876cd05dad7023bfb96190"
+    },
+    "teacher-17.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-17.json",
+      "sha256": "68ca0b7def4e5ccf3bfdc9e6f3774925b991eaa6d5f50826b3a0f436fece3889"
+    },
+    "teacher-18.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-18.json",
+      "sha256": "d859168690734bdd5056f8214b642ea1628eeaa350bf99d7dd58cd66e168b478"
+    },
+    "teacher-19.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-19.json",
+      "sha256": "f0254deefa0105139e7402c2ece9f146510612e302463f8169ab4066332dc070"
+    },
+    "teacher-20.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-20.json",
+      "sha256": "710e8f4109db43aa5bd16f1799053121e23bcb44aa03185b49e48a4409638ff3"
+    },
+    "teacher-21.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-21.json",
+      "sha256": "d1c5e9eea87a41f30861200be75b70b49ef5d25f1a1292262650ef7364ad2cd0"
+    },
+    "teacher-22.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-22.json",
+      "sha256": "cdcaca9e969f5557ce8e6d33d45075afe4a0fc821821a39f0999d1f1ab27cb19"
+    },
+    "teacher-23.json": {
+      "path": "outputs/learning/public-contact-v1/attempt-01/teacher-23.json",
+      "sha256": "5e225812ff3c4f595d3a31e295ef1a707edb0ebf626d25ba2e09659ca03724ef"
+    }
+  },
+  "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "version": "fixed24-TRAIN-greedy-rollout-inputs-v1"
+}

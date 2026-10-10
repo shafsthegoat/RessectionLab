@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checks": [
+    "exact_runtime_source_and_input_index_pins",
+    "26_exact_TRAIN_reference_inputs_one_fixed_final_artifact_metadata",
+    "same_shared_planner_exporter_fixed_role_horizon_and_owned45s_caps",
+    "actual_final_metric_summary_preserves_negative_outcomes",
+    "incomplete_failed_or_nonTRAIN_summary_refused"
+  ],
+  "count": 5,
+  "wall_seconds": 0.016133250202983618,
+  "project_or_ML_imports": 0,
+  "model_forwards": 0,
+  "checkpoint_decodes": 0,
+  "native_steps": 0,
+  "optimizer_updates": 0,
+  "source_index_sha256": "f3cf38fbcb3b0d5a743272fca7e081e263f0d462a6b7101c528d28f0b56bed76",
+  "control_sha256": "4c5abb1d98751c1d491b71a55d1552818e810eee37211c5c466662cd731e7bd2"
+}
