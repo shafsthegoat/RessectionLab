@@ -1,0 +1,11 @@
+# Row-11 continuation source candidate
+
+This ignored proposal changes only the existing later-continuation runtime, ancestry helper and row-11 adapter. It preserves the twenty frozen native verifier sources, all prior releases, receipts and sidecars, and the same solver, geometry assumptions, resource caps and one-use semantics. No row-11 release or native call exists.
+
+The actual row-10 numerical event has native receipt SHA-256 `1485dec2cf0ca37785bc72f029ff78b46a6654e2430de874343269a24069c5d2`, sidecar `e33b944da060641794e2b4171ac16c98c18a239a532b5b817e2009ccfd87cbb7`, inner/outer release `316b6a86…` / `459adee6…`, source commit `19889bd8…`, and committed independent metadata `38dab6da…`. Its native receipt binds 118,531,657 node-log bytes and 74,276,117 element-log bytes. Adding those to the prior 2,908,379,069 bytes yields the exact row-11 predecessor hint total of **3,101,186,843 bytes across 20 opens**.
+
+The proposed runtime accepts row 11 only when the outer release contains the exact row-10 descriptor. During the unchanged frozen predecessor validation, it authenticates the committed independent saved-replay metadata, all nine historical row-10 source blobs, both original and archived release copies, the one-file sidecar, exact native receipt/output geometry and full row-10 resource/cleanup/host lineage. It reconstructs the row-8/9 charges, verifies row 10 against the old frozen ledger, and charges its sidecar once. The existing per-row and cumulative caps are unchanged.
+
+Three small saved-metadata controls pass, including an exact three-charge positive, wrong descriptor and five in-memory lineage/resource mutations. They read only compact receipts/releases and Git source blobs; no predecessor solver logs, native solver, readout or patient/measurement data. Numerical software success is not physical or clinical validation.
+
+Proposed tracked replacements after independent review: `runtime.py` → `launchers/hbe_v5_later_continuation_runtime_v1.py`, `ancestry.py` → `launchers/hbe_v5_later_ancestry_v1.py`, and `row11.py` → `launchers/hbe_v5_ordinal11_continuation_v1.py`. A final current-HEAD release must be derived only after these source bytes are promoted and separately reviewed.

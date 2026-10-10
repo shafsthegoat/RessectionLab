@@ -32,6 +32,7 @@ def load(name: str, basename: str):
 runtime = load("portable_later_runtime", "hbe_v5_later_continuation_runtime_v1.py")
 core = load("portable_later_core", "hbe_v5_later_continuation_core_v1.py")
 ledger = load("portable_later_ledger", "hbe_v5_later_ledger_math_v1.py")
+ancestry = load("portable_later_ancestry", "hbe_v5_later_ancestry_v1.py")
 row10 = load("portable_later_row10", "hbe_v5_ordinal10_continuation_v1.py")
 row11 = load("portable_later_row11", "hbe_v5_ordinal11_continuation_v1.py")
 
@@ -123,14 +124,22 @@ class PortableLaterContinuation(unittest.TestCase):
                           remaining.supervise_stage,
                           remaining.io.file_hash), originals)
 
-    def test_frozen_row_selection_and_row11_refusal(self):
+    def test_frozen_row_selection_and_exact_row11_geometry(self):
         runtime.validate_spec(row10.SPEC)
         self.assertEqual(row10.SPEC["run_id"], "tension:N24:S60:reference")
         self.assertEqual(runtime.policy(row10.SPEC)["expected_preflight_hint_opens"], 18)
         self.assertEqual(runtime.policy(row10.SPEC)["expected_preflight_hint_bytes"],
                          2_908_379_069)
-        with self.assertRaisesRegex(ValueError, "awaits independently bound"):
-            runtime.validate_spec(row11.SPEC)
+        runtime.validate_spec(row11.SPEC)
+        self.assertEqual(row11.SPEC["expected_preflight_hint_opens"], 20)
+        self.assertEqual(row11.SPEC["expected_preflight_hint_bytes"],
+                         2_908_379_069 + 118_531_657 + 74_276_117)
+        self.assertEqual(ancestry.ROW10_DESCRIPTOR["row11_preflight_hint_bytes"],
+                         row11.SPEC["expected_preflight_hint_bytes"])
+        changed_row11 = copy.deepcopy(row11.SPEC)
+        changed_row11["expected_preflight_hint_bytes"] += 1
+        with self.assertRaisesRegex(ValueError, "exact observed row-10 geometry"):
+            runtime.validate_spec(changed_row11)
         wrong = copy.deepcopy(row10.SPEC)
         wrong["run_id"] = "tension:N16:S60:reference"
         with self.assertRaisesRegex(ValueError, "frozen later tension"):
@@ -149,6 +158,14 @@ class PortableLaterContinuation(unittest.TestCase):
         omitted = charges(old)[:1]
         with self.assertRaisesRegex(ValueError, "Every declared"):
             ledger.charge_old_baseline(old, verified, omitted, 10)
+        old11 = old_baseline(11)
+        charged11 = ledger.charge_old_baseline(
+            old11, copy.deepcopy(old11), charges(old11), 11)
+        self.assertEqual(charged11["authenticated_charge_order"], [8, 9, 10])
+        self.assertEqual(charged11["incremental_output_bytes"], 3 * 1024**2)
+        with self.assertRaisesRegex(ValueError, "Every declared"):
+            ledger.charge_old_baseline(old11, copy.deepcopy(old11),
+                                       charges(old11)[:2], 11)
 
     def test_adapter_bytes_are_never_executed_during_selection(self):
         with tempfile.TemporaryDirectory() as directory:

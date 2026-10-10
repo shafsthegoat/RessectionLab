@@ -84,8 +84,9 @@ def validate_spec(spec: dict) -> None:
                ("outputs/mechanics/hbe-v5-later-continuation-v1/"
                 f"{spec['index']:02d}-{spec['run_id'].replace(':', '-')}/attempt-01")):
         raise ValueError("Only exact frozen later tension rows are selectable")
-    if spec["index"] == 11 and spec["expected_preflight_hint_bytes"] is None:
-        raise ValueError("Ordinal 11 awaits independently bound row-10 geometry bytes")
+    if (spec["index"] == 11
+            and spec["expected_preflight_hint_bytes"] != 3_101_186_843):
+        raise ValueError("Ordinal 11 requires exact observed row-10 geometry bytes")
     policy(spec)
 
 
@@ -303,10 +304,10 @@ def _bind_native_receipt(root: Path, spec: dict, record: dict) -> dict | None:
 def _ancestors(root: Path, spec: dict, context: dict, modules: dict,
                descriptor: dict | None) -> tuple[list[dict], dict]:
     """Bind all previous extension charges to the already validated old chain."""
+    if spec["index"] == 11:
+        return _ancestors_through10(root, spec, context, modules, descriptor)
     if spec["index"] != 10 or descriptor is not None:
-        # Row 11 needs an exact, independently reviewed ordinal-10 event.
-        # No source-only placeholder can spend a native call in its place.
-        raise ValueError("Ordinal-11 extension ancestry awaits row-10 saved audit")
+        raise ValueError("Exact ordered extension ancestry required")
     row9 = modules["row9"]
     v2 = row9._load_bound_admission(
         root, modules["bindings"]["scripts/mechanics_hbe_v5_n12_v2_admission.py"])
@@ -372,6 +373,98 @@ def _ancestors(root: Path, spec: dict, context: dict, modules: dict,
                                  ancestry.ROW9_NATIVE_SHA,
                              "ordinal9_sidecar_sha256":
                                  ancestry.ROW9_SIDECAR_SHA}
+
+
+def _ancestors_through10(root: Path, spec: dict, context: dict, modules: dict,
+                         descriptor: dict | None) -> tuple[list[dict], dict, dict]:
+    """Bind the actual row-10 policy event after the frozen chain reached it."""
+    ancestry = modules["ancestry"]
+    if descriptor != ancestry.ROW10_DESCRIPTOR:
+        raise ValueError("Exact independently reviewed row-10 descriptor required")
+    review, _ = _small_saved(root, ancestry.ROW10_INDEPENDENT_PATH,
+                             ancestry.ROW10_INDEPENDENT_SHA)
+    replay = review.get("saved_replay", {})
+    if (review.get("verdict") != "GO_saved_numerical_software_result_only"
+            or review.get("source_commit") != ancestry.ROW10_COMMIT
+            or review.get("native_receipt_sha256") != ancestry.ROW10_NATIVE_SHA
+            or review.get("sidecar_receipt_sha256") != ancestry.ROW10_SIDECAR_SHA
+            or review.get("inner_release_sha256") != ancestry.ROW10_INNER_SHA
+            or review.get("outer_envelope_sha256") != ancestry.ROW10_OUTER_SHA
+            or review.get("physical_validation_pass") is not None
+            or replay.get("numerical_passed") is not True
+            or replay.get("exact_readout_equality") is not True
+            or replay.get("frame_count") != 61
+            or replay.get("representation") != "reconstructed_full"):
+        raise ValueError("Committed independent row-10 numerical audit differs")
+    original = "build/hbe-v5-ordinal10-pending-release-v1/"
+    archived = "artifacts/hbe-v5-tension-n24-continuation-result-v1/release/"
+    outer10, _ = _small_saved(root, original + "outer-envelope.json",
+                              ancestry.ROW10_OUTER_SHA)
+    inner10, _ = _small_saved(root, original + "inner-release.json",
+                              ancestry.ROW10_INNER_SHA)
+    _small_saved(root, archived + "outer-envelope.json", ancestry.ROW10_OUTER_SHA)
+    _small_saved(root, archived + "inner-release.json", ancestry.ROW10_INNER_SHA)
+    sidecar10, _ = _small_saved(
+        root, "outputs/mechanics/hbe-v5-later-continuation-v1/"
+        "10-tension-N24-S60-reference/attempt-01/receipt.json",
+        ancestry.ROW10_SIDECAR_SHA)
+    native10, native_raw = _small_saved(
+        root, "outputs/mechanics/hbe-v5-remaining-one-shot-v1/"
+        "10-tension-N24-S60-reference/attempt-01/receipt.json",
+        ancestry.ROW10_NATIVE_SHA)
+    if (replay.get("readout_sha256") !=
+            native10.get("saved_numerical_readout", {}).get("readout_sha256")
+            or replay.get("readout_sha256") !=
+               native10.get("output_bindings", {}).get("readout.json", {}).get("sha256")):
+        raise ValueError("Independent row-10 replay/readout binding differs")
+    source_hashes10 = sidecar10.get("extension_sources_before", {}).get("source_hashes")
+    _historical_source_blobs(root, ancestry.ROW10_COMMIT, source_hashes10,
+                             sources({"adapter_source":
+                                      "launchers/hbe_v5_ordinal10_continuation_v1.py"}))
+    if (outer10.get("source_commit") != ancestry.ROW10_COMMIT
+            or outer10.get("extension_source_bindings") != source_hashes10
+            or outer10.get("inner_release") != {
+                "path": original + "inner-release.json",
+                "sha256": ancestry.ROW10_INNER_SHA}
+            or inner10.get("source_commit") != ancestry.ROW10_COMMIT
+            or inner10.get("ordinal") != 10
+            or inner10.get("run_id") != ancestry.ROW10_RUN
+            or native10.get("release_sha256") != ancestry.ROW10_INNER_SHA):
+        raise ValueError("Ordinal-10 release/source lineage differs")
+    side_dir = _local(root, "outputs/mechanics/hbe-v5-later-continuation-v1/"
+                      "10-tension-N24-S60-reference/attempt-01")
+    if (side_dir.is_symlink() or {item.name for item in side_dir.iterdir()}
+            != {"receipt.json"} or (side_dir / "receipt.json").stat().st_size > 1024**2):
+        raise ValueError("Ordinal-10 sidecar inventory or cap differs")
+    old_after9 = sidecar10.get("old_validation_identity", {}).get("previous")
+    if not isinstance(old_after9, dict):
+        raise ValueError("Ordinal-10 old-chain checkpoint missing")
+    claims, charged9, evidence9 = _ancestors(
+        root, {"index": 10}, {"previous": old_after9}, modules, None)
+    row10_policy = policy({"index": 10,
+                           "expected_preflight_hint_opens": 18,
+                           "expected_preflight_hint_bytes": 2_908_379_069})
+    claim10 = ancestry.row10_charge(
+        old_after10=context["previous"], old_after9=old_after9,
+        charged_after9=charged9["charged_cumulative_ledger"],
+        prior_claims=claims, sidecar=sidecar10,
+        sidecar_sha256=ancestry.ROW10_SIDECAR_SHA,
+        native=native10, native_sha256=ancestry.ROW10_NATIVE_SHA,
+        native_receipt_bytes=len(native_raw), remaining=modules["remaining"],
+        row10_policy=row10_policy)
+    claims = [*claims, claim10]
+    charged = modules["ledger"].charge_old_baseline(
+        context["previous"], copy.deepcopy(context["previous"]), claims, 11)
+    if (charged["charged_cumulative_ledger"] !=
+            sidecar10["supplemental_ledger_after_row"]["charged_cumulative_ledger"]):
+        raise ValueError("Ordinal-10 cumulative ledger cannot continue")
+    return claims, charged, {**evidence9,
+                             "ordinal10_independent_metadata_sha256":
+                                 ancestry.ROW10_INDEPENDENT_SHA,
+                             "ordinal10_native_receipt_sha256":
+                                 ancestry.ROW10_NATIVE_SHA,
+                             "ordinal10_sidecar_sha256":
+                                 ancestry.ROW10_SIDECAR_SHA}
 
 
 def _charge(remaining, spec: dict, record: dict, started: float,

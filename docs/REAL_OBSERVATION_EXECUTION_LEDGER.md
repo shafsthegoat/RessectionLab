@@ -1151,3 +1151,17 @@ actor reopen at frame 71/71. Exact staged renderer was used with source WIP
 preserved. The app exited normally in 105.190 seconds at 874,725,376 bytes sampled
 tree peak. Unmodified screenshots/AX snapshots and final independent review are
 in the same artifact; no live contact-envelope persistence is claimed.
+
+### October 10: final-row admission binds the actual row-10 result
+
+The [source integration](../artifacts/hbe-v5-ordinal11-admission-integration-v1/RESULT.md)
+authenticates the exact row-10 numerical/replay/source chain and three once-only
+sidecar charges. Five canonical controls pass in 0.04 seconds; independent review
+also passes three compact saved-evidence controls. No final release or native
+run is created by this source commit. Full original preflight remains required.
+
+Acquisition at [02:23:41 UTC](../artifacts/acquisition-progress/20261010T022341Z.json)
+reaches 5,160 verified files / 183,816,049,664 bytes, up 401 files / 13,291,784,722
+bytes. Original worker/lock remain live, no terminal receipt exists, failures are
+unchanged and capacity is sufficient. Recovery remains unlaunched; payload QC is
+still deferred and no planning/training admission follows from verified bytes.
