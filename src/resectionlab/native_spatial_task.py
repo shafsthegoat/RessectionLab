@@ -861,13 +861,13 @@ class NativeSpatialTask:
         self._prepare_inventory()
         if self.case._nominal_proposer is not None:
             config = self.case.proposal_config
-            slots = len(config.offsets_source_voxels) * len(self.case.tools) * len(NOMINAL_CAVITY_FAMILIES)
+            slots = len(config.offsets_source_voxels) * len(self.case.tools) * len(config.families)
             emitted = [copy.deepcopy(row) for row in self._ledger if row["proposal_reason"] == "PROPOSED_UNCERTIFIED"]
             counts = {}
             for row in self._ledger:
                 counts[row["proposal_reason"]] = counts.get(row["proposal_reason"], 0)+1
             omitted, duplicate = counts.get("CANDIDATE_CAP",0), counts.get("DUPLICATE_GEOMETRY",0)
-            return {"basis": self.case._candidate_scope, "provider_version": NOMINAL_CAVITY_PROPOSAL_VERSION,
+            return {"basis": self.case._candidate_scope, "provider_version": config.version,
                 "source_hash": self._source_hash, "decision_model_hash": self.decision_model_hash,
                 "cavity_state_hash": self._engine.state_hash,
                 "provider_model_hash": self.case._nominal_proposer.model_hash,

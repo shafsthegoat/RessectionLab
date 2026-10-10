@@ -355,14 +355,22 @@ class PreparedAxisColumnProposer:
 
 NOMINAL_CAVITY_PROPOSAL_VERSION = "permitted-nominal-cavity-columns-v1"
 NOMINAL_CAVITY_FAMILIES = ("exposed_opening", "proximal_nominal", "distal_nominal")
+INTERMEDIATE_OPENING_VERSION = "permitted-nominal-cavity-intermediate-opening-v1"
+INTERMEDIATE_OPENING_FAMILY = "intermediate_opening"
 
 
 @dataclass(frozen=True)
 class NominalCavityProposalConfig:
-    """A complete ledger over a bounded family, never all possible tool paths."""
+    """A bounded family ledger, never all possible tool paths.
+
+    Optional requested 1 mm lookahead is rounded to a positive source-cell
+    count, not an exact physical advance. Coarse cells can exceed the request;
+    every extra slot records its anchor, endpoint and actual physical advance.
+    """
     offsets_source_voxels: tuple[tuple[int, int], ...] = DEFAULT_COLUMN_OFFSETS
     max_candidates: int = 96
     nominal_min_membership: float = 0.
+    intermediate_opening_mm: float | None = None
 
     def __post_init__(self):
         offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
@@ -373,13 +381,35 @@ class NominalCavityProposalConfig:
             raise ValueError("Nominal membership threshold must be a declared finite value in [0,1)")
         object.__setattr__(self, "offsets_source_voxels", offsets)
         object.__setattr__(self, "nominal_min_membership", float(value))
+        advance = self.intermediate_opening_mm
+        if advance is not None:
+            if isinstance(advance, (bool, np.bool_)) or not isinstance(advance, (int, float, np.integer, np.floating)) or float(advance) != 1.:
+                raise ValueError("Intermediate opening is an explicit fixed 1 mm option")
+            object.__setattr__(self, "intermediate_opening_mm", 1.)
+
+    @property
+    def families(self):
+        return NOMINAL_CAVITY_FAMILIES + (() if self.intermediate_opening_mm is None else (INTERMEDIATE_OPENING_FAMILY,))
+
+    @property
+    def version(self):
+        return NOMINAL_CAVITY_PROPOSAL_VERSION if self.intermediate_opening_mm is None else INTERMEDIATE_OPENING_VERSION
 
     @property
     def fingerprint(self):
-        return semantic_digest({"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **asdict(self),
+        record = asdict(self)
+        record.pop("intermediate_opening_mm")
+        legacy = {"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **record,
             "families": NOMINAL_CAVITY_FAMILIES, "order": "column_tool_family",
             "deduplication": "identical_tool_entry_tip", "crop_clipping": False,
-            "opening": "nearest_remaining_tissue_with_face_adjacent_to_connected_free"})
+            "opening": "nearest_remaining_tissue_with_face_adjacent_to_connected_free"}
+        if self.intermediate_opening_mm is not None:
+            legacy.update(version=self.version, families=self.families,
+                order="all_original_column_tool_families_then_intermediate_column_tool",
+                intermediate_opening_mm=self.intermediate_opening_mm,
+                advance_rule="nearest_positive_source_axis_voxel_count; numpy_rint_ties_to_even; minimum_one",
+                endpoint_rule="actual_source_voxel_center; physical_increment_recorded; native_preview_required")
+        return semantic_digest(legacy)
 
 
 @dataclass(frozen=True)
@@ -406,6 +436,14 @@ class NominalCavitySlot:
 
 
 @dataclass(frozen=True)
+class IntermediateOpeningSlot(NominalCavitySlot):
+    opening_anchor_voxel: tuple[int, int, int] | None = None
+    requested_opening_advance_mm: float = 1.
+    advance_source_axis_voxels: int = 0
+    actual_opening_advance_mm: float = 0.
+
+
+@dataclass(frozen=True)
 class NominalCavityBatch:
     model_hash: str
     cavity_state_hash: str
@@ -420,7 +458,9 @@ class NominalCavityBatch:
             counts[row.reason] = counts.get(row.reason, 0) + 1
         return {**asdict(self), "counts": counts, "slot_count": len(self.ledger),
             "emitted_count": len(self.proposals), "geometry_certified": False,
-            "scope": "declared_columns_and_three_endpoint_families_not_all_paths"}
+            "scope": ("declared_columns_and_original_plus_intermediate_endpoint_families_not_all_paths"
+                      if any(row.family == INTERMEDIATE_OPENING_FAMILY for row in self.ledger)
+                      else "declared_columns_and_three_endpoint_families_not_all_paths")}
 
 
 class PreparedNominalCavityProposer:
@@ -546,6 +586,7 @@ class PreparedNominalCavityProposer:
         shape, affine = self._native.tissue_mask.shape, self._native.affine
         access = self._native.access
         rays, ledger, seen = [], [], {}
+        opening_anchors = []
         for column_index, (offset, column) in enumerate(zip(self._config.offsets_source_voxels, self._columns)):
             if cancelled is not None and cancelled():
                 raise InterruptedError("Nominal/cavity proposal preparation cancelled")
@@ -576,6 +617,8 @@ class PreparedNominalCavityProposer:
                 if len(nominal):
                     candidates["proximal_nominal"] = tuple(int(v) for v in nominal[0])
                     candidates["distal_nominal"] = tuple(int(v) for v in nominal[-1])
+            if self._config.intermediate_opening_mm is not None:
+                opening_anchors.append((column_index, offset, candidates.get("exposed_opening"), outside))
             for tool in self._native.tools:
                 for family in NOMINAL_CAVITY_FAMILIES:
                     voxel = candidates.get(family)
@@ -597,6 +640,43 @@ class PreparedNominalCavityProposer:
                                 tool.tool_id, voxel, key[1], key[2]))
                             seen[key], reason = identifier, "PROPOSED_UNCERTIFIED"
                     ledger.append(NominalCavitySlot(column_index, offset, tool.tool_id, family, reason, identifier, voxel))
+        # Append only after every original slot: the extra family can never
+        # displace a legacy candidate at the unchanged 96-certificate cap.
+        if self._config.intermediate_opening_mm is not None:
+            spacing = float(np.linalg.norm(affine[:3, self._axis]))
+            count = max(1, int(np.rint(self._config.intermediate_opening_mm / spacing)))
+            advance_mm = count * spacing
+            for column_index, offset, anchor, outside in opening_anchors:
+                if cancelled is not None and cancelled():
+                    raise InterruptedError("Intermediate opening preparation cancelled")
+                endpoint = None
+                if anchor is not None:
+                    shifted = list(anchor); shifted[self._axis] += self._sign * count
+                    endpoint = tuple(shifted)
+                for tool in self._native.tools:
+                    identifier = None
+                    reason = "COLUMN_OUT_OF_IMAGE" if outside else "NO_EXPOSED_REMAINING_TISSUE"
+                    if endpoint is not None:
+                        if not all(0 <= v < n for v, n in zip(endpoint, shape)):
+                            reason = "ENDPOINT_OUT_OF_IMAGE"
+                        else:
+                            tip = affine[:3, :3] @ endpoint + affine[:3, 3]
+                            depth = float((tip-access.center_mm) @ access.normal_inward)
+                            entry = tip-depth*access.normal_inward
+                            key = (tool.tool_id, _point(entry), _point(tip))
+                            if key in seen:
+                                identifier, reason = seen[key], "DUPLICATE_GEOMETRY"
+                            elif len(rays) >= self._config.max_candidates:
+                                reason = "CANDIDATE_CAP"
+                            else:
+                                identifier = "nominal-cavity-" + semantic_digest({"model": self._model_hash,
+                                    "cavity": cavity_hash, "geometry": key}).split(":", 1)[1][:24]
+                                rays.append(NominalCavityRay(identifier, INTERMEDIATE_OPENING_FAMILY,
+                                    column_index, offset, tool.tool_id, endpoint, key[1], key[2]))
+                                seen[key], reason = identifier, "PROPOSED_UNCERTIFIED"
+                    ledger.append(IntermediateOpeningSlot(column_index, offset, tool.tool_id,
+                        INTERMEDIATE_OPENING_FAMILY, reason, identifier, endpoint, anchor,
+                        self._config.intermediate_opening_mm, count, advance_mm))
         return NominalCavityBatch(self._model_hash, cavity_hash, self._nominal_hash,
             self._provenance_hash, tuple(rays), tuple(ledger))
 
