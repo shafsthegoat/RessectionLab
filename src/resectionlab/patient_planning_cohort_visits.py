@@ -37,6 +37,9 @@ def make_train_visit_factories(*, manifest_index_path, manifest_index_sha256,
     release = freeze_json(released_record); protocol = freeze_json(learning_protocol)
     selected = {r['patient_id']: freeze_json(r) for r in rows}
     config = NominalCavityProposalConfig(**thaw_json(protocol['cohort_execution']['proposal_config']))
+    occupancy_options = ({} if 'occupancy_condition' not in protocol['cohort_execution'] else {
+        'occupancy_condition': protocol['cohort_execution']['occupancy_condition'],
+        'occupancy_learning_protocol': protocol})
     def closure(subject):
         def construct(*, output):
             from .public_patient_factory import prepare_public_source
@@ -50,7 +53,8 @@ def make_train_visit_factories(*, manifest_index_path, manifest_index_sha256,
                 thaw_json(release), released_sha256, None, progress,
                 public_manifest_path=Path(row['path']), public_manifest_sha256=row['sha256'],
                 cohort_bytes=cohort_bytes, learning_protocol_hash=semantic_digest(protocol),
-                proposal_config=config, public_target_context_variant=protocol['public_target_context_variant'])
+                proposal_config=config, public_target_context_variant=protocol['public_target_context_variant'],
+                **occupancy_options)
             return make_patient_planning_task(source, cohort_bytes=cohort_bytes,
                 source_binding=binding, qc_receipt=qc, protocol=admission)
         return construct

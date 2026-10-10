@@ -211,7 +211,11 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         if derived_occupancy else set()) | ({"partial_source_domain_preserved"} if partial_domain else set()),
         "exact_public_QC_fields_required")
     checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
+    occupancy_learning = isinstance(protocol, Mapping) and protocol.get("occupancy_learning_protocol") is not None
+    _need(not occupancy_learning or (derived_occupancy and not partial_domain),
+          "union_learning_requires_original_full_coverage_condition")
     plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
+        | ({"occupancy_learning_protocol"} if occupancy_learning else set())
         | ({"occupancy_condition"} if derived_occupancy else set()),
         "exact_preflight_protocol_fields_required")
     domain = source["evidence_domain"]
@@ -241,10 +245,23 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         _need(domain == "acquired_patient" and member["role"] == "TRAIN"
               and source["subject"] in expected_subjects
               and not checkpoint_reload and plan["occupancy_condition"] == expected_condition
-              and plan["initialization"] == "public_world_search_only"
-              and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
-              and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0,
-              "derived_occupancy_requires_fixed_TRAIN_search_only")
+              and (occupancy_learning or (
+                  plan["initialization"] == "public_world_search_only"
+                  and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
+                  and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0)),
+              "derived_occupancy_requires_fixed_TRAIN_search_only_or_explicit_learning")
+        if occupancy_learning:
+            from .patient_planning_cohort_spec import validate_union_obstruction_learning
+            learning = validate_union_obstruction_learning(plan["occupancy_learning_protocol"],
+                learning_protocol_hash=plan["learning_protocol_hash"], proposal_config=case.proposal_config,
+                max_steps=plan["max_steps"])
+            _need(plan["initialization"] == "fresh_seeded_shared_initialization"
+                  and case.proposal_mode == "nominal_cavity_v1"
+                  and case.public_target_context_variant == learning["public_target_context_variant"]
+                  and type(plan["max_optimizer_updates"]) is int
+                  and plan["max_optimizer_updates"] >= 2*learning["updates_per_method"]
+                  and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] > 0,
+                  "union_learning_requires_fresh_declared_public_context_and_positive_budgets")
         _need(qc["derived_occupancy_anatomically_validated"] is False
               and semantic_digest(source["occupancy_derivation"]) == semantic_digest(case._occupancy_derivation)
               and _same_hash(case._occupancy_derivation["source_support_hash"],
@@ -321,7 +338,7 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
           and plan["private_reference_used"] is False and plan["clinical_claim"] is False
           and plan["split_changes"] is False, "exact_nonclinical_role_and_budget_contract_required")
     for key in ("max_native_previews", "max_policy_forwards", "worker_seconds", "memory_bytes"):
-        _need(type(plan[key]) is int and (plan[key] == 0 if derived_occupancy and key == "max_policy_forwards"
+        _need(type(plan[key]) is int and (plan[key] == 0 if derived_occupancy and not occupancy_learning and key == "max_policy_forwards"
               else plan[key] > 0), "positive_integer_runtime_budgets_required")
     search = _fields(plan["search"], {"max_calls", "beam_width", "seconds"}, "exact_search_budget_required")
     _need(all(type(search[k]) is int and search[k] > 0 for k in search), "positive_integer_search_budgets_required")
@@ -331,9 +348,11 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
         **({"occupancy_condition": plan["occupancy_condition"],
-            "occupancy_derivation": case._occupancy_derivation, "execution_kind": "search_only_no_policy",
+            "occupancy_derivation": case._occupancy_derivation,
+            "execution_kind": "fixed_four_TRAIN_union_obstruction_learning_v1" if occupancy_learning else "search_only_no_policy",
             "derived_occupancy_anatomically_validated": False,
-            "policy_comparison_permitted": False}
+            "policy_comparison_permitted": occupancy_learning,
+            **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {})}
            if derived_occupancy else {}),
         **({"source_and_simulated_domains": case._domain_record,
             "source_domain_fully_covered": False} if partial_domain else {}),

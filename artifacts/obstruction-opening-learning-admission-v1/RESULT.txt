@@ -1,0 +1,30 @@
+Matched learning can use the tested blocker-directed public world
+October 10, 2026
+
+An explicit sequential-protocol option now admits learning on the original
+four TRAIN patients in the declared S OR T occupancy condition with blocker
+proposals, tool-footprint/intermediate proposals, horizon24 and cap120. The
+factory passes the exact protocol through repeated visits; admission validates
+it again and model initialization checks its occupancy condition before weights.
+Fresh initialization and positive declared budgets are required. Source arrays,
+world geometry, reward, policy architecture, losses and cache math are unchanged.
+
+Default protocol and source records stay unchanged. Implicit union learning,
+new partial-domain patients, SELECT/EVAL learning, private reward, changed
+configuration and mismatched protocol/context remain refused. Search-only and
+learning tasks have identical source/model/observation/inventory identities;
+only their permitted operations and learning context differ.
+
+Independent source review accepted five production modules and the focused
+regression test. Author102 controls passed with3 optional historical-source
+skips; the earlier inconsistent negative fixture failure is retained. Root
+canonical regression passed all229 tests in7.15s with the historical fixtures
+provided, including cache/sequential accumulation, balanced teacher loss, RL
+credit diagnostics and old saved protocols. These are generated software tests,
+not new patient training or evidence that learning improved.
+
+Next fixed experiment: cached balanced imitation64 and scratch RL8 on the same
+four worlds and seven complete search-teacher decision states. Separate endpoint
+protocols and actual per-method costs are reported; no equal-training-cost claim.
+Actual complete learned histories are evaluated even when they differ from the
+teacher or perform poorly. No new architecture or parameter sweep is introduced.

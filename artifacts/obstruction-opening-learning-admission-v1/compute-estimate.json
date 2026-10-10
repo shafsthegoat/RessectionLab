@@ -1,0 +1,69 @@
+{
+  "purpose": "Prospective old-four TRAIN fitting of the improved shared inventory; not transfer or equal-training-cost comparison",
+  "input_evidence": {
+    "cached_IL64_result": {
+      "path": "build/balanced-teacher-il64-cached-v1/attempt-01/result.json",
+      "sha256": "dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7"
+    },
+    "cached_IL64_costs": {
+      "path": "build/balanced-teacher-il64-cached-v1/attempt-01/costs.json",
+      "sha256": "c9221ff70503cd85b1e644d21770e4bd8cb19302c3ba52be709c89a343ebe36b"
+    },
+    "cached_IL64_parent": {
+      "path": "build/balanced-teacher-il64-cached-v1/attempt-01.supervision/receipt.json",
+      "sha256": "c3ac843bf291c95f150aac85aed621df96dd1cf319e84f04e6c9f3b820b51bb8"
+    },
+    "scratch_RL8_costs": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/costs.json",
+      "sha256": "a528b749204968efede3864fb968e1e74cae4d63b0fa839a7910c68ac92413ad"
+    },
+    "paired_improved_tasks": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/result.json",
+      "sha256": "f9f690056ab5b263f7306f9ec6807fa3dc7629f0290b5077ae9c80d57b777d50"
+    }
+  },
+  "IL64": {
+    "updates": 64,
+    "frozen_teacher_decisions": 7,
+    "loss_forwards": 448,
+    "endpoint_teacher_forwards": 7,
+    "maximum_final_greedy_forwards": 96,
+    "maximum_total_forwards": 551,
+    "source_visits": 8,
+    "conservative_native_preview_cap": 70080,
+    "teacher_cache_payload_bytes": 67108864,
+    "old_actual_5_state_loss_forwards": 320,
+    "old_actual_loss_seconds": 84.1206418753136,
+    "old_actual_worker_seconds": 114.36446666694246,
+    "old_actual_parent_seconds": 118.29643466696143,
+    "old_actual_parent_peak_bytes": 2413871104,
+    "linear_7_vs_5_loss_only_estimate_seconds": 117.76889862543904,
+    "rough_total_estimate_seconds": [
+      150,
+      220
+    ]
+  },
+  "scratch_RL8": {
+    "updates": 8,
+    "episodes": 32,
+    "maximum_episode_decisions": 768,
+    "maximum_collection_plus_loss_forwards": 1536,
+    "endpoint_teacher_forwards": 7,
+    "maximum_final_greedy_forwards": 96,
+    "maximum_total_forwards": 1639,
+    "source_visits_upper_estimate": 40,
+    "conservative_native_preview_cap": 350400,
+    "old_actual_episode_decisions": 291,
+    "old_actual_RL_update_seconds_including_source_collection_replay_loss": 897.6759973729495,
+    "old_actual_RL_update_previews": 63032,
+    "old_actual_RL_update_forwards": 582,
+    "old_actual_final_RL_replay_seconds": 11.221120168222114
+  },
+  "recommended_separate_owned_envelopes": {
+    "worker_seconds": 3540,
+    "parent_seconds": 3600,
+    "memory_bytes": 3221225472,
+    "threads": 1
+  },
+  "limits": "Projections are sizing, not runtime guarantees. Changed occupancy/inventory changes stochastic path lengths. Keep actual counters per method; native previews include constructors and replay. Protocol conservative two-method envelopes do not authorize unused-method work. No search rerun, SELECT, EVAL, private labels, warmstart or architecture change implied."
+}

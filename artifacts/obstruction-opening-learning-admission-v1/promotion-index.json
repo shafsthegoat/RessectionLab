@@ -1,0 +1,81 @@
+{
+  "scope": "explicit original-four TRAIN union occupancy obstruction learning admission only",
+  "files": [
+    {
+      "source": "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_admission.py",
+      "destination": "src/resectionlab/patient_planning_admission.py",
+      "sha256": "d48e1b138653c6b38c81f33d91541849c532ea78a0b7db0a7132f03e7a05a8df",
+      "before_sha256": "22cff875c5ddd31b11873076791ff86533a9601e7ab0e3bfa9423141d8fc1df3"
+    },
+    {
+      "source": "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_cohort_spec.py",
+      "destination": "src/resectionlab/patient_planning_cohort_spec.py",
+      "sha256": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+      "before_sha256": "69d4954749151a66783257832d6211a06cf19b225e9707b8c44f3461eab500fd"
+    },
+    {
+      "source": "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_cohort_visits.py",
+      "destination": "src/resectionlab/patient_planning_cohort_visits.py",
+      "sha256": "c145fc9427a4ba271b74840d9c164ad4571553f2c446ad12ac98ffd61ed24e6f",
+      "before_sha256": "0c0b356d9acdbe43aa99421a59c1e8fafd64720f4e9ed82a9749e729d2fabea7"
+    },
+    {
+      "source": "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_learning.py",
+      "destination": "src/resectionlab/patient_planning_learning.py",
+      "sha256": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+      "before_sha256": "4eb8e40adffe2b70e37b9dec9d09f7ddb27ab1f558669f336165cc06658e6434"
+    },
+    {
+      "source": "build/obstruction-opening-learning-admission-v1/stage/resectionlab/public_patient_factory.py",
+      "destination": "src/resectionlab/public_patient_factory.py",
+      "sha256": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f",
+      "before_sha256": "df9e9fe80c157c7e0b4a857c302ca440f400cb69cee8cb6349a268a32441387e"
+    },
+    {
+      "source": "build/obstruction-opening-learning-admission-v1/stage/tests/test_obstruction_opening_learning_admission.py",
+      "destination": "tests/test_obstruction_opening_learning_admission.py",
+      "sha256": "a7f5021eccfdb52ed1705f590c8f1a471fb0144c5596b8597fd2423bcf71c297",
+      "before_sha256": null
+    }
+  ],
+  "patch_sha256": "04cde92423660bf988586274db5f9c803f2c01a6d6b6047103bd63ec186554dc",
+  "baseline_files": [
+    {
+      "path": "build/obstruction-opening-learning-admission-v1/baseline/resectionlab/patient_planning_admission.py",
+      "sha256": "22cff875c5ddd31b11873076791ff86533a9601e7ab0e3bfa9423141d8fc1df3"
+    },
+    {
+      "path": "build/obstruction-opening-learning-admission-v1/baseline/resectionlab/patient_planning_cohort_spec.py",
+      "sha256": "69d4954749151a66783257832d6211a06cf19b225e9707b8c44f3461eab500fd"
+    },
+    {
+      "path": "build/obstruction-opening-learning-admission-v1/baseline/resectionlab/patient_planning_cohort_visits.py",
+      "sha256": "0c0b356d9acdbe43aa99421a59c1e8fafd64720f4e9ed82a9749e729d2fabea7"
+    },
+    {
+      "path": "build/obstruction-opening-learning-admission-v1/baseline/resectionlab/patient_planning_learning.py",
+      "sha256": "4eb8e40adffe2b70e37b9dec9d09f7ddb27ab1f558669f336165cc06658e6434"
+    },
+    {
+      "path": "build/obstruction-opening-learning-admission-v1/baseline/resectionlab/public_patient_factory.py",
+      "sha256": "df9e9fe80c157c7e0b4a857c302ca440f400cb69cee8cb6349a268a32441387e"
+    }
+  ],
+  "controls": {
+    "result": "102 passed, 3 historical-source comparisons skipped",
+    "pytest_seconds": 2.51,
+    "parent_seconds": 3.022439542,
+    "peak_child_rss_bytes": 261718016,
+    "threads": 1,
+    "source_unchanged": true,
+    "log": "build/obstruction-opening-learning-admission-v1/controls-02.log",
+    "log_sha256": "b54e158504bddf83c2d675c1f6797bf6f0d02178e2a0a02505a6ea37593d5d32",
+    "receipt_sha256": "86f1b2f61669b6d5cbafd30ea7aa54c8c5865f980fb674ba27d19e9722c29d78"
+  },
+  "preserved_failure": {
+    "log": "build/obstruction-opening-learning-admission-v1/controls-01.log",
+    "sha256": "2a952401efaadfc0d074ff8dae4b4bfa3b22bead1a9a42308a4aff8158cd77f0",
+    "cause": "Negative variant fixture retained a domain while removing its mandatory context; constructor correctly refused before intended admission assertion. Test alone repaired."
+  },
+  "execution": "No model construction, forward, optimizer, acquired arrays, SELECT/EVAL execution."
+}

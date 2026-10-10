@@ -20,7 +20,7 @@ CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
 
 def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
         retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None,
-        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None):
+        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None, occupancy_condition=None):
     from .patient_planning_learning import PREFLIGHT_PROTOCOL
     # The sole longer endpoint is a fixed balanced-teacher optimization contrast.
     # Existing 1..8 protocols retain their exact records and bounds.
@@ -46,6 +46,12 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
     if (type(retention_mode) is not str or retention_mode not in {
             'return_plus_opening_depth_v1', 'return_plus_opening_depth_volume_v1'}):
         raise ValueError('Explicit reviewed depth or depth-volume two-lane retention required')
+    if occupancy_condition is not None:
+        from .native_spatial_task import SUPPLIED_TUMOR_UNION_OCCUPANCY
+        if (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
+                or proposal_config.obstruction_opening is not True
+                or proposal_config.max_candidates != 120 or max_steps != 24):
+            raise ValueError('Only explicit old-four TRAIN S-union-T obstruction h24/cap120 learning is admitted')
     candidates = proposal_config.max_candidates
     search = thaw_json(freeze_json(search))
     if (set(search) != {'max_calls', 'beam_width', 'seconds'}
@@ -68,6 +74,8 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
             'teacher_observations': teacher_observations,
             'task_condition': 'PARTIAL_TARGET_PROGRESS',
             'heldout_execution': False})
+    if occupancy_condition is not None:
+        record['cohort_execution']['occupancy_condition'] = occupancy_condition
     if il_teacher_weighting is not None:
         record['cohort_execution']['il_teacher_weighting'] = il_teacher_weighting
     if teacher_observations == CACHED_TEACHERS:
@@ -85,10 +93,25 @@ def validate_sequential_protocol(protocol):
         retention_mode=execution.get('retention_mode'),
         il_teacher_weighting=execution.get('il_teacher_weighting'),
         teacher_observations=execution.get('teacher_observations'),
-        teacher_cache_payload_bytes=execution.get('teacher_cache_payload_bytes'))
+        teacher_cache_payload_bytes=execution.get('teacher_cache_payload_bytes'),
+        occupancy_condition=execution.get('occupancy_condition'))
     if semantic_digest(expected) != semantic_digest(protocol):
         raise ValueError('Sequential objective, scheduling or task options changed')
     return expected
+
+
+def validate_union_obstruction_learning(protocol, *, learning_protocol_hash, proposal_config, max_steps):
+    """Exact opt-in condition; source QC and native validation remain separate."""
+    from .native_spatial_task import SUPPLIED_TUMOR_UNION_OCCUPANCY
+    protocol = validate_sequential_protocol(protocol)
+    execution = protocol['cohort_execution']
+    if (execution.get('occupancy_condition') != SUPPLIED_TUMOR_UNION_OCCUPANCY
+            or semantic_digest(protocol) != learning_protocol_hash
+            or type(proposal_config) is not NominalCavityProposalConfig
+            or proposal_config.fingerprint != execution['proposal_rule_hash']
+            or max_steps != execution['max_steps']):
+        raise ValueError('Declared union learning protocol, proposal configuration or horizon differs')
+    return protocol
 
 
 def preview_budget_sizing(protocol):

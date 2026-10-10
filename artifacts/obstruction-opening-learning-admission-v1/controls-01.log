@@ -1,0 +1,160 @@
+......................F...................s............................. [ 68%]
+...............ss................                                        [100%]
+=================================== FAILURES ===================================
+_ test_admission_rejects_rebound_learning_mismatches_before_inventory[variant] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1063/test_admission_rejects_rebound7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10dbda660>
+change = 'variant'
+
+    @pytest.mark.parametrize('change',['hash','config','horizon','initializer','budget','zero_updates','zero_forwards','variant','condition','private','QC'])
+    def test_admission_rejects_rebound_learning_mismatches_before_inventory(tmp_path,monkeypatch,change):
+        inputs,_=helper.fixture(tmp_path);built=build(tmp_path/'source',inputs,protocol())
+        case,args=helper.contract(built,inputs);args=copy.deepcopy(args)
+        if change=='hash':args['protocol']['learning_protocol_hash']='sha256:'+'0'*64
+        elif change=='config':
+            altered=thaw_json(args['protocol']['occupancy_learning_protocol'])
+            altered['cohort_execution']['proposal_config']['obstruction_opening']=False
+            args['protocol']['occupancy_learning_protocol']=altered
+        elif change=='horizon':args['protocol']['max_steps']=6
+        elif change=='initializer':args['protocol']['initialization']='checkpoint_warmstart'
+        elif change=='budget':args['protocol']['max_optimizer_updates']=1
+        elif change=='zero_updates':args['protocol']['max_optimizer_updates']=0
+        elif change=='zero_forwards':args['protocol']['max_policy_forwards']=0
+>       elif change=='variant':case=replace(case,public_target_context_variant=None)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/obstruction-opening-learning-admission-v1/stage/tests/test_obstruction_opening_learning_admission.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:1588: in replace
+    return obj.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:29: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[  0.,   1.,   2.,   3.,   4.],
+        [  5.,   6.,   7.,   8.,   9.],...lse],
+        [False, False, False, False, False],
+        [False, False, False, False, False]]]), support_domain=None)
+
+    def __post_init__(self):
+        image = np.asarray(self.structural_intensity)
+        if (image.ndim != 3 or min(image.shape) < 3 or image.size > 32_000_000
+                or image.dtype.kind not in "iuf" or not np.isfinite(image).all()):
+            raise ValueError("A finite native structural scan within the local memory bound is required")
+        image = immutable_array(image, np.float32)
+        if not np.isfinite(image).all():
+            raise ValueError("Structural values exceed finite float32 representation")
+        support = _binary(self.observed_support, image.shape, "observed_support")
+        target = _fraction(self.reference_target, image.shape, "reference_target")
+        nominal = None if self.nominal_target is None else _fraction(self.nominal_target, image.shape, "nominal_target")
+        if not support.any():
+            raise ValueError("Explicit tissue support is essential; full-head signal is not a brain envelope")
+        if self.target_semantics not in {TARGET_WITHIN_SUPPORT, SUPPLIED_GOAL_REGION}:
+            raise ValueError("Unknown explicit target semantics")
+        if self.target_semantics == SUPPLIED_GOAL_REGION:
+            if (self.track != "annotation_assisted" or self.target_source_kind != "supplied_annotation"
+                    or nominal is None or not np.any(nominal)):
+                raise ValueError("Supplied goal region requires explicit annotation-assisted public target")
+        elif nominal is not None and np.any((nominal > 0) & ~support):
+            raise ValueError("Permitted target estimates conflict with supplied tissue support")
+        if self.occupancy_source_support is None:
+            if self.support_source_kind == DERIVED_OCCUPANCY_SOURCE_KIND:
+                raise ValueError("Derived occupancy requires the unchanged source support")
+        else:
+            raw_support = _binary(self.occupancy_source_support, image.shape, "occupancy_source_support")
+            if (self.track != "annotation_assisted" or self.target_semantics != SUPPLIED_GOAL_REGION
+                    or self.support_source_kind != DERIVED_OCCUPANCY_SOURCE_KIND
+                    or not raw_support.any() or nominal is None
+                    or not np.array_equal(support, raw_support | (nominal > 0))):
+                raise ValueError("Derived occupancy must be exactly supplied S union unchanged supplied T")
+            added = (nominal > 0) & ~raw_support
+            object.__setattr__(self, "occupancy_source_support", raw_support)
+            object.__setattr__(self, "_occupancy_derivation", freeze_json({
+                "version": "supplied-support-target-union-v1",
+                "condition": SUPPLIED_TUMOR_UNION_OCCUPANCY,
+                "operation": "S OR (T > 0)",
+                "source_support_hash": array_digest(raw_support),
+                "supplied_target_hash": array_digest(nominal),
+                "derived_occupancy_hash": array_digest(support),
+                "added_region_hash": array_digest(added),
+                "source_support_positive_voxels": int(raw_support.sum()),
+                "added_region_positive_voxels": int(added.sum()),
+                "source_support_unchanged": True, "target_unchanged": True,
+                "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+                "anatomical_or_material_validation": False,
+                "outside_union": "unchanged simulation zeros; not certified empty anatomy"}))
+        if self.support_domain is not None:
+            source_domain = _binary(self.support_domain, image.shape, "support_domain")
+            raw_support = support if self.occupancy_source_support is None else self.occupancy_source_support
+            if not source_domain.any() or np.any(raw_support & ~source_domain):
+                raise ValueError("Source support positives require observed support coverage")
+            assumed_target = (np.zeros(image.shape, bool) if self.occupancy_source_support is None else nominal > 0)
+            interaction_domain = immutable_array(source_domain | assumed_target, bool)
+            object.__setattr__(self, "support_domain", source_domain)
+            object.__setattr__(self, "_interaction_domain", interaction_domain)
+            object.__setattr__(self, "_domain_record", freeze_json({
+                "version": "separate-source-and-simulated-domain-v1",
+                "source_support_domain_hash": array_digest(source_domain),
+                "interaction_domain_hash": array_digest(interaction_domain),
+                "interaction_domain_rule": "Ds OR (T > 0)" if self.occupancy_source_support is not None else "Ds",
+                "source_support_known_voxels": int(source_domain.sum()),
+                "source_support_unknown_voxels": int((~source_domain).sum()),
+                "target_in_unknown_support_voxels": 0 if nominal is None else int(((nominal > 0) & ~source_domain).sum()),
+                "assumed_material_beyond_source_domain_voxels": int((assumed_target & ~source_domain).sum()),
+                "unavailable_interaction_voxels": int((~interaction_domain).sum()),
+                "source_domain_extended": False,
+                "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+                "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+                "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+                "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+                "anatomical_or_material_validation": False}))
+        if self.proposal_mode == "nominal_cavity_v1":
+            if nominal is None:
+                raise ValueError("ESSENTIAL_EVIDENCE_MISSING: nominal/cavity proposals need explicit permitted target evidence")
+            rule = self.proposal_config
+            if isinstance(rule, Mapping):
+                rule = NominalCavityProposalConfig(**dict(rule))
+            rule = rule or NominalCavityProposalConfig()
+            if not isinstance(rule, NominalCavityProposalConfig):
+                raise ValueError("Nominal/cavity proposal configuration must be typed or an explicit object")
+            object.__setattr__(self, "proposal_config", rule)
+        elif self.proposal_mode not in {"fixed_lattice", ACCESS_CENTERLINE_PROPOSAL_VERSION} or self.proposal_config is not None:
+            raise ValueError("Unknown proposal mode or a configuration supplied to the unchanged fixed lattice")
+        if self.proposal_mode == ACCESS_CENTERLINE_PROPOSAL_VERSION and self.track != "synthetic_scan":
+            raise ValueError("Access-centerline proposals currently require explicit generated sources")
+        affine = np.asarray(self.affine_ras_mm)
+        if affine.dtype.kind not in "iuf" or not np.isfinite(affine).all():
+            raise ValueError("A real finite RAS affine is required")
+        if self.native_grid_reconciliation == "orthogonal_roundoff_1e-6mm":
+            native_affine, grid_record = reconcile_native_grid_roundoff(affine, image.shape)
+            grid_record = freeze_json({**grid_record, "source_image_hash": array_digest(image),
+                "support_hash": array_digest(support)})
+        elif self.native_grid_reconciliation == "none":
+            native_affine, grid_record = immutable_array(affine, np.float64), freeze_json({"method": "none"})
+        else:
+            raise ValueError("Unknown explicit native grid reconciliation")
+        object.__setattr__(self, "_native_affine_ras_mm", native_affine)
+        object.__setattr__(self, "_grid_record", grid_record)
+        tools = tuple(self.tools)
+        if (not 1 <= len(tools) <= 4 or any(not isinstance(t, ToolGeometry) for t in tools)
+                or len({t.tool_id for t in tools}) != len(tools)):
+            raise ValueError("One to four distinct explicit tool configurations are required")
+        if not isinstance(self.access, AccessWindow):
+            raise ValueError("One explicit hypothetical access window is required")
+        for value in (self.support_derivation, self.target_derivation):
+            if not isinstance(value, str) or len(value) > 2048:
+                raise ValueError("Source derivations must be bounded text")
+        crop_shape = tuple(self.crop_shape)
+        if len(crop_shape) != 3 or any(type(v) is not int or not 3 <= v <= 64 for v in crop_shape):
+            raise ValueError("The fixed source/access crop requires three dimensions in [3,64]")
+        if self.public_target_context_variant is None:
+>           if self.public_target_domain is not None:raise ValueError('Target domain requires explicit context variant')
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: Target domain requires explicit context variant
+
+src/resectionlab/native_spatial_task.py:344: ValueError
+=========================== short test summary info ============================
+FAILED build/obstruction-opening-learning-admission-v1/stage/tests/test_obstruction_opening_learning_admission.py::test_admission_rejects_rebound_learning_mismatches_before_inventory[variant]
+1 failed, 101 passed, 3 skipped in 2.69s

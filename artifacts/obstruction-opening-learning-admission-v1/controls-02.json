@@ -1,0 +1,25 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 3.022439542,
+  "peak_child_rss_bytes": 261718016,
+  "threads": 1,
+  "timeout_seconds": 30,
+  "source_before": {
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_admission.py": "d48e1b138653c6b38c81f33d91541849c532ea78a0b7db0a7132f03e7a05a8df",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_cohort_spec.py": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_cohort_visits.py": "c145fc9427a4ba271b74840d9c164ad4571553f2c446ad12ac98ffd61ed24e6f",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_learning.py": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/public_patient_factory.py": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f",
+    "build/obstruction-opening-learning-admission-v1/stage/tests/test_obstruction_opening_learning_admission.py": "a7f5021eccfdb52ed1705f590c8f1a471fb0144c5596b8597fd2423bcf71c297"
+  },
+  "source_after": {
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_admission.py": "d48e1b138653c6b38c81f33d91541849c532ea78a0b7db0a7132f03e7a05a8df",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_cohort_spec.py": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_cohort_visits.py": "c145fc9427a4ba271b74840d9c164ad4571553f2c446ad12ac98ffd61ed24e6f",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/patient_planning_learning.py": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+    "build/obstruction-opening-learning-admission-v1/stage/resectionlab/public_patient_factory.py": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f",
+    "build/obstruction-opening-learning-admission-v1/stage/tests/test_obstruction_opening_learning_admission.py": "a7f5021eccfdb52ed1705f590c8f1a471fb0144c5596b8597fd2423bcf71c297"
+  },
+  "source_unchanged": true,
+  "scope": "generated admission/native controls; no model construction, forward, optimizer, acquired arrays, SELECT or EVAL execution"
+}

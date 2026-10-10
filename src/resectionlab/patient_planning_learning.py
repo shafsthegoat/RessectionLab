@@ -68,6 +68,8 @@ def common_patient_policies(contexts, protocol):
         _context(context)
         if context.record()["learning_protocol_hash"] != semantic_digest(protocol):
             raise ValueError("Learning protocol differs from admitted patient context")
+        if sequential and context.record().get('occupancy_condition') != protocol['cohort_execution'].get('occupancy_condition'):
+            raise ValueError('Learning occupancy condition differs from the admitted source')
         if context.record().get('public_target_context_variant')!=variant:
             raise ValueError('Patient observation and policy context variants differ')
         if len(protocol["methods"])*protocol["updates_per_method"] > context.record()["max_optimizer_updates"]:
