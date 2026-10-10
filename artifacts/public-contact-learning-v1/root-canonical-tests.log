@@ -1,0 +1,59 @@
+.........FF..                                                            [100%]
+=================================== FAILURES ===================================
+_________ test_catalog_has_exact_roles_and_unpublished_learned_methods _________
+
+    def test_catalog_has_exact_roles_and_unpublished_learned_methods():
+        catalog = candidate.public_contact_family_availability()
+        assert set(catalog) == {"version", "fixture", "familyHash", "experimentHash",
+                                "releaseHash", "layouts", "methods"}
+        assert catalog["version"] == "generated-public-contact-learning-availability-v1"
+        assert catalog["fixture"] == candidate.FAMILY_VERSION
+>       assert catalog["experimentHash"] is None and catalog["releaseHash"] is None
+E       AssertionError: assert ('sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894' is None)
+
+tests/test_contact_family_catalog.py:16: AssertionError
+________ test_heldout_and_unpublished_learned_refuse_before_controller _________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1012/test_heldout_and_unpublished_l0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10fb0bf20>
+
+    def test_heldout_and_unpublished_learned_refuse_before_controller(tmp_path, monkeypatch):
+        catalog = candidate.public_contact_family_availability()
+        heldout = next(row["layoutId"] for row in catalog["layouts"]
+                       if row["role"] == "MEASUREMENT_EVAL")
+        train = next(row["layoutId"] for row in catalog["layouts"] if row["role"] == "TRAIN")
+        monkeypatch.setattr(candidate, "_read_exact_supervisor",
+                            lambda: (_ for _ in ()).throw(AssertionError("child controller opened")))
+        with pytest.raises(ValueError, match="HELD_OUT_EXECUTION_CLOSED"):
+            candidate.execute_public_contact_family_episode(attempts_root=tmp_path,
+                layout_id=heldout, goal_id="surface", selector="STOP")
+        with pytest.raises(candidate.ContactReleaseUnavailable, match="No reviewed final"):
+>           candidate.execute_public_contact_family_episode(attempts_root=tmp_path,
+                layout_id=train, goal_id="surface", selector="IL")
+
+tests/test_contact_family_catalog.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/contact_family_desktop_bridge.py:127: in execute_public_contact_family_episode
+    if public_contact_family_availability()["releaseHash"] is None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/resectionlab/contact_family_desktop_bridge.py:91: in public_contact_family_availability
+    controller_ready = _controller_ready()
+                       ^^^^^^^^^^^^^^^^^^^
+src/resectionlab/contact_family_desktop_bridge.py:56: in _controller_ready
+    _read_exact_supervisor()._check_sources()
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_contact_family_catalog.py:38: in <lambda>
+    lambda: (_ for _ in ()).throw(AssertionError("child controller opened")))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x10f99ad40>
+
+>   lambda: (_ for _ in ()).throw(AssertionError("child controller opened")))
+E   AssertionError: child controller opened
+
+tests/test_contact_family_catalog.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_contact_family_catalog.py::test_catalog_has_exact_roles_and_unpublished_learned_methods
+FAILED tests/test_contact_family_catalog.py::test_heldout_and_unpublished_learned_refuse_before_controller
+2 failed, 11 passed in 1.73s

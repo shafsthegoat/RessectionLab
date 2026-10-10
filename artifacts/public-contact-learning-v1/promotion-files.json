@@ -1,0 +1,46 @@
+{
+  "clinicalValidation": false,
+  "copy": [
+    {
+      "beforeSha256": null,
+      "bytes": 1371,
+      "from": "build/contact-learning-publication-v1/desktop-release.json",
+      "sha256": "4bc4a93f453fb4064c3291b55c60481de554adfe706ab7db24a3a023f5e20dae",
+      "to": "artifacts/public-contact-learning-v1/desktop-release.json"
+    },
+    {
+      "beforeSha256": "2420c57dc9cc63a98276bc6ecc4cafc5373cf3cf6a1c8af11bbf950d293b0bd9",
+      "bytes": 10805,
+      "from": "build/contact-learning-publication-v1/stage/resectionlab/contact_family_desktop_release.py",
+      "sha256": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
+      "to": "src/resectionlab/contact_family_desktop_release.py"
+    },
+    {
+      "beforeSha256": "59f152ba79ac952e1c9270ea1c4776bb48b0c29ca790ef30551fd2d3d50c1495",
+      "bytes": 13929,
+      "from": "build/contact-learning-publication-v1/stage/resectionlab/contact_family_supervisor.py",
+      "sha256": "933c8e8df128691a77a0b346c1d0037fbc39038e1b99c7313b470212956b606f",
+      "to": "src/resectionlab/contact_family_supervisor.py"
+    },
+    {
+      "beforeSha256": "5ffde0ee3747f34a4054a6fddd5c397bf009149cdac554002902b9952463a679",
+      "bytes": 11290,
+      "from": "build/contact-learning-publication-v1/stage/resectionlab/contact_family_desktop_bridge.py",
+      "sha256": "a9f78cc38fd383583473362f0839367c5d3445b7a976e556ca2b9a34034843e1",
+      "to": "src/resectionlab/contact_family_desktop_bridge.py"
+    },
+    {
+      "beforeSha256": "cb892dfca637897f06d6bf5271c0f915eb5fd110104d635ee10d4da567ad8e17",
+      "bytes": 7037,
+      "from": "build/contact-learning-publication-v1/portable_tests/test_contact_family_release.py",
+      "sha256": "adbd11049ca78a0aea39d6063741c235d17dec511701fda1166e0bb0532df5d3",
+      "to": "tests/test_contact_family_release.py"
+    }
+  ],
+  "learnedResult": "both policies immediate STOP on all 16 held-out tasks each; SEARCH reached goal on 12/16",
+  "manifestSha256": "4bc4a93f453fb4064c3291b55c60481de554adfe706ab7db24a3a023f5e20dae",
+  "patientAdmission": false,
+  "schema": "generated-contact-family-desktop-publication-v1",
+  "scope": "publish fixed completed 32-update IL/RL endpoints after negative evaluation; retain held-out interactive refusal",
+  "weightsTracked": false
+}

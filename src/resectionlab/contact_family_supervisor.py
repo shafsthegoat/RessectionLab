@@ -53,7 +53,7 @@ SOURCE_FILES = frozenset({
     "src/resectionlab/sequential_spatial_observation.py",
 })
 SOURCE_SHA256 = {
-    "local:contact_family_desktop_release.py": "2420c57dc9cc63a98276bc6ecc4cafc5373cf3cf6a1c8af11bbf950d293b0bd9",
+    "local:contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
     "local:contact_family_worker.py": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
     "src/resectionlab/contact_checkpoint.py": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
     "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",

@@ -1255,3 +1255,8 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 ## Contact-family Electron integration
 
 [Result](../artifacts/contact-family-desktop-integration-v1/RESULT.md): 494 canonical desktop tests and both working/exact staged builds pass. Genuine STOP and positive SEARCH transport replay admitted; both role/model provenance and physical paths checked. Original neighboring WIP preserved. One existing temp-cleanup failure retained and fixed with bounded retry. Live Mac and final learned publication follow separately.
+
+
+## Final contact checkpoint publication
+
+[Fixed local publication](../artifacts/public-contact-learning-v1/RESULT.md) now binds both independently reviewed32-update endpoints. Thirteen canonical controls pass after making unpublished-catalog fixtures explicit; no production guard change. InteractiveTRAIN/SELECTonly, no weights tracked. Live inference follows separately; the negative12/16SEARCH versus0/16IL/RL result is preserved.

@@ -1,0 +1,33 @@
+{
+  "checkpoints": {
+    "IL": {
+      "file": {
+        "bytes": 185320,
+        "relativePath": "outputs/learning/public-contact-v1/attempt-01/IL-final.gmckpt",
+        "sha256": "5295add15d4504db9148a307deaaf503ee8fadbf070a03ffd0968ce7e06ae719"
+      },
+      "parameterHash": "sha256:4dcbb6fb39976f80d635c571c5f4679b0831daab310a9c2d2529a499613015f7"
+    },
+    "RL": {
+      "file": {
+        "bytes": 185320,
+        "relativePath": "outputs/learning/public-contact-v1/attempt-01/RL-final.gmckpt",
+        "sha256": "adc27f7bfb3498fb13953d853d4b0e41a0b927f66c3dd93cccd51b60c52424ce"
+      },
+      "parameterHash": "sha256:d220d73c9aed40f1385bcc06839b48a5046e17efd5d229ddd1b295fbea64b53a"
+    }
+  },
+  "experimentHash": "sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894",
+  "familyHash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+  "finalFreeze": {
+    "bytes": 845,
+    "relativePath": "outputs/learning/public-contact-v1/attempt-01/final-checkpoint-freeze.json",
+    "sha256": "49fadaae1a891b0c29c9d4076e13505811ae24d0c62beb4cc62cfa763a794625"
+  },
+  "pilotResult": {
+    "bytes": 7952064,
+    "relativePath": "outputs/learning/public-contact-v1/attempt-01/result.json",
+    "sha256": "d57a6590c2ecc058429576d9dd0e0714278dbac5fec5029ee22ef7844ce213c1"
+  },
+  "version": "public-contact-desktop-release-v1"
+}

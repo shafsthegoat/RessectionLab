@@ -107,3 +107,19 @@ def test_missing_measurement_row_cannot_publish_learned_method(tmp_path, monkeyp
     with pytest.raises(release.ContactReleaseUnavailable, match="missing rows"):
         release.read_published_contact_release(tmp_path,
             family_manifest=family, experiment_hash=experiment)
+
+
+def test_complete_negative_learned_outcomes_remain_reportable(tmp_path, monkeypatch):
+    family, experiment, manifest, pilot, _ = _fixture(tmp_path)
+    for role in ("SELECT", "MEASUREMENT_EVAL"):
+        for row in pilot[role]:
+            if row["method"] in ("IL", "RL"):
+                row["metrics"] = {"goal_retained": True,
+                                  "goal_contacted_and_retained": False,
+                                  "total_reward": 0.0}
+    manifest["pilotResult"] = _save(tmp_path, release.PILOT_PREFIX + "result.json", pilot)
+    manifest_record = _save(tmp_path, release.RELEASE_RELATIVE_PATH, manifest)
+    monkeypatch.setattr(release, "RELEASE_MANIFEST_SHA256", manifest_record["sha256"])
+    admitted = release.read_published_contact_release(tmp_path,
+        family_manifest=family, experiment_hash=experiment)
+    assert admitted["pilotResultSha256"] == manifest["pilotResult"]["sha256"]

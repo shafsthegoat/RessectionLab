@@ -7,6 +7,12 @@ import pytest
 from resectionlab import contact_family_desktop_bridge as candidate
 
 
+@pytest.fixture(autouse=True)
+def unpublished_catalog(monkeypatch):
+    """Keep these absent-publication controls independent of local checkpoints."""
+    monkeypatch.setattr(candidate, "RELEASE_MANIFEST_SHA256", None)
+
+
 def test_catalog_has_exact_roles_and_unpublished_learned_methods():
     catalog = candidate.public_contact_family_availability()
     assert set(catalog) == {"version", "fixture", "familyHash", "experimentHash",

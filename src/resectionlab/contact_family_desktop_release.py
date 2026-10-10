@@ -14,7 +14,7 @@ from pathlib import Path
 RELEASE_VERSION = "public-contact-desktop-release-v1"
 RELEASE_RELATIVE_PATH = "artifacts/public-contact-learning-v1/desktop-release.json"
 PILOT_PREFIX = "outputs/learning/public-contact-v1/attempt-01/"
-RELEASE_MANIFEST_SHA256 = None  # Pin the actual reviewed release in a later exact-source change.
+RELEASE_MANIFEST_SHA256 = "4bc4a93f453fb4064c3291b55c60481de554adfe706ab7db24a3a023f5e20dae"  # Pin the actual reviewed release in a later exact-source change.
 MAX_MANIFEST_BYTES = 32 * 1024
 MAX_RESULT_BYTES = 8 * 1024 * 1024
 MAX_FREEZE_BYTES = 128 * 1024
