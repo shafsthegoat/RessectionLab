@@ -1,0 +1,37 @@
+........F                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_generated_bridge_binds_auxiliary_without_mutating_planning_case _____
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1018/test_generated_bridge_binds_au0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b1d2c30>
+
+    def test_generated_bridge_binds_auxiliary_without_mutating_planning_case(tmp_path,monkeypatch):
+        events=[];runtime=BridgeRuntime(tmp_path/'transfers',events.append)
+        def call(op,args):
+            identity=str(len(events));runtime.submit({'id':identity,'op':op,'args':args});assert runtime.wait_idle(5)
+            return [e for e in events if e['id']==identity][-1]
+        try:
+            image=nib.Nifti1Image(np.arange(8,dtype=np.float32).reshape(2,2,2),np.eye(4));image.header.set_xyzt_units('mm')
+            source_path=tmp_path/'selected.nii.gz';nib.save(image,source_path)
+            primary_event=call('importNifti',{'structuralPath':str(source_path)})
+            assert primary_event['event']=='result',primary_event
+            primary=primary_event['result']
+            selected=call('importDisplaySeries',{'caseHash':primary['caseHash'],'imagePath':str(source_path),'modality':'T1CE','annotationKind':'none'})['result']
+            _,descriptor_path,d=fixture(tmp_path);d['source_sha256']['t1c']=hashlib.sha256(source_path.read_bytes()).hexdigest();descriptor_path.write_text(json.dumps(d))
+            args={'caseHash':primary['caseHash'],'seriesId':selected['seriesId'],'descriptorPath':str(descriptor_path)}
+            parent=runtime.session.cases[primary['caseHash']];before=parent.case
+            monkeypatch.setattr(module,'CASE4_DESCRIPTOR_SHA256',None)
+            assert call('importDiagnosticLayer',args)['error']['code']=='DIAGNOSTIC_NOT_PUBLISHED'
+            monkeypatch.setattr(module,'CASE4_DESCRIPTOR_SHA256',hashlib.sha256(descriptor_path.read_bytes()).hexdigest())
+>           result=call('importDiagnosticLayer',args);assert result['event']=='result',result
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: {'id': '8', 'event': 'error', 'error': {'code': 'OPERATION_FAILED', 'message': "'diagnostic JSON'"}}
+E           assert 'error' == 'result'
+E             
+E             - result
+E             + error
+
+tests/test_workspace_diagnostic_bridge.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_workspace_diagnostic_bridge.py::test_generated_bridge_binds_auxiliary_without_mutating_planning_case
+1 failed, 8 passed in 0.27s

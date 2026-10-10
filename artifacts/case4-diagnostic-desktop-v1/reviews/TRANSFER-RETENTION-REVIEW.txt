@@ -1,0 +1,67 @@
+Diagnostic transfer lifetime repair — source candidate ready
+
+Cause confirmed by source: import_diagnostic_layer creates two BinaryTransfers
+snapshots and returns their descriptors, but neither snapshot belongs to an
+existing prune root. BridgeRuntime._work emits the result and then unconditionally
+calls session.prune_transfers in finally. The previous Bridge regression waited
+for completion but inspected descriptor metadata without opening the returned
+files, so it did not detect this lifetime failure.
+
+Minimal production change
+- _CaseEntry retains diagnostic_transfer_paths, an internal tuple of exactly the
+  latest diagnostic's state and coverage paths. No arrays/results are added to
+  CaseData, saved workspace fields, source descriptors, actor or planning inputs.
+- prune_transfers includes those paths for each still-cached case. Replacing a
+  diagnostic overwrites the tuple, allowing ordinary finally pruning to remove
+  old unshared files. Existing content-address sharing remains respected.
+- Both same-hash _install_case replacement branches reset the tuple. A new case
+  starts empty; LRU eviction and session close naturally release its retention.
+- After validation and both snapshot writes, the importer uses the existing
+  request.begin_commit gate before replacing the tuple. Cancellation before this
+  gate preserves the previous tuple; existing runtime finally pruning discards
+  new uncommitted files. After the gate, the established request contract refuses
+  cancellation through the small assignment/publication commit.
+
+Bound: latest result only per cached case, independent of attachment count: at
+most two one-byte-per-voxel files under the unchanged 64-Mi-voxel importer bound
+(128 MiB per case before content-address sharing). Only paths are retained in
+memory. No new persistence, registration, source admission or scientific claim.
+
+Generated regression source (not run)
+1. Existing real BridgeRuntime import test now reads/hash-checks returned files
+   after wait_idle, then again after inspectEvidence's unrelated worker/finally
+   prune; verifies the live tuple and preserves original CaseData assertions.
+2. A second distinct generated diagnostic replaces the first and deletes old
+   unshared files. Same-hash primary reinstall clears both retained paths; a new
+   successful diagnostic followed by max_cases=1 LRU eviction deletes them.
+   The workspace descriptor is checked for absence of diagnostic transfer paths.
+3. Public cancel is submitted at the existing begin_commit boundary, after both
+   new snapshots exist. The result must be cancelled, old retained files remain
+   readable, and exactly the newly staged files disappear after wait_idle.
+All images/state/coverage are generated 2x2x2; no patient source, model or native
+engine use is introduced. Pin monkeypatching remains limited to generated tests.
+
+Source assessment: GO for this narrowly scoped repair and root's runtime checks.
+No tests/imports, application/model/native execution or real payload reads were
+performed here. Read-only git apply --check passed against current canonical
+bytes. Root must execute the generated controls before relying on runtime success.
+
+Exact patch:
+build/scan-diagnostic-transfer-retention-v1/source.patch
+SHA256 1e64757a20768e74adcef9c15df358561d77536df71a094c88f26a8fd9c0a2c8
+
+Baseline -> candidate SHA256 (copies preserved under baseline/ and stage/):
+src/resectionlab/desktop_bridge.py
+  1e2742b6b3a525d9e0acd562f6c77a1521475faf0d736be9a508cb314599e77c
+  7fd77ab6ae0c17e8e795837b379e2663aac1f7b16e531237cbbc453ea74f26e8
+src/resectionlab/workspace_diagnostic.py
+  0252b5f5adca99767d533d6f49a2cad7520a539b39ec3eef3e676ff8e72bc29b
+  f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8
+tests/test_workspace_diagnostic_bridge.py
+  c27fbe8355c8ae875ad68a13ad9e8ce9353c7c139ff33f06b56dcf783f89cf08
+  4d6d33250d815edcb197197a7d730e279c141eb1b24607b1293aebe81a3be0ce
+
+Suggested root verification after promotion:
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src .venv/bin/python -B -m pytest -q tests/test_workspace_diagnostic.py tests/test_workspace_diagnostic_bridge.py
+Expected collected controls: eight saved-file controls plus three Bridge tests.
+This command is a proposal only; it was not run by this agent.

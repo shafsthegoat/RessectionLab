@@ -15,6 +15,7 @@ const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
 const { importStructuralEvidence } = require('./structural-import.cjs');
 const { importDisplaySeries } = require('./display-series-import.cjs');
+const { importDiagnosticLayer } = require('./diagnostic-import.cjs');
 const { inspectAxisPlanning } = require('./axis-inspection.cjs');
 const { observedRequest, validateObservedResult } = require('./observed-landmark-contract.cjs');
 
@@ -84,6 +85,7 @@ function bindOperations() {
     const tumorMaskPath = await pick('Select the tumor segmentation (Cancel to import MRI only)', ['nii', 'gz']);
     return engine.request('importNifti', { structuralPath, ...(tumorMaskPath ? { tumorMaskPath } : {}) });
   });
+  handle('importDiagnosticLayer', args => importDiagnosticLayer(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('importDisplaySeries', args => importDisplaySeries(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('saveCase', async args => {

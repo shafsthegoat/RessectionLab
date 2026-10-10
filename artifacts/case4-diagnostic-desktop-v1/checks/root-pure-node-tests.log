@@ -1,0 +1,21 @@
+✔ generated signed state and separate coverage remain display-only (8.143459ms)
+✔ refuses wrong source before assets (0.489208ms)
+✔ refuses wrong series before assets (0.127542ms)
+✔ refuses metadata asset injection before assets (0.393459ms)
+✔ refuses asset alias before assets (0.301042ms)
+✔ refuses expanded bytes before assets (0.142ms)
+✔ refuses clinical admission before assets (0.085459ms)
+✔ changed transfer and decoded affine refuse (1.513209ms)
+✔ main supplies picked path; renderer path override and cancelled pick cannot read (0.39825ms)
+✔ raw transfer envelope exposes only the two bounded slots (0.185291ms)
+✔ actual sidecar validates before any asset publication (4.886541ms)
+✔ source change before response refuses hydration and cannot install old diagnostic (0.659875ms)
+✔ source change or unmount during hydration refuses late diagnostic installation (0.164208ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.844917

@@ -1,0 +1,1024 @@
+--- a/src/resectionlab/workspace_diagnostic.py
++++ b/src/resectionlab/workspace_diagnostic.py
+@@ -0,0 +1,123 @@
++"""Import one reviewed saved diagnostic for an existing auxiliary image.
++
++This decodes saved state/coverage only; it never invokes a model, updates the
++planning case, or turns the separate unreviewed output into an annotation.
++"""
++from __future__ import annotations
++import gzip
++import hashlib
++import io
++import json
++import math
++from pathlib import Path
++import numpy as np
++
++# Exact saved decoder descriptor accepted by the independent numeric/frame audit.
++# This authenticates that saved unreviewed output, not anatomical/clinical quality.
++CASE4_DESCRIPTOR_SHA256 = 'd5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4'
++MAX_VOXELS = 64 * 1024**2
++MAX_JSON_BYTES = 64 * 1024
++HEADER_ALLOWANCE = 1024**2
++
++
++def _bytes(path: Path, limit: int) -> bytes:
++    if path.is_symlink() or not path.is_file():
++        raise ValueError('Diagnostic file must be a regular local file')
++    with path.open('rb') as stream:
++        data = stream.read(limit + 1)
++    if len(data) > limit:
++        raise ValueError('Diagnostic file exceeds the bounded display limit')
++    return data
++
++
++def _nifti(path, expected, dtype, shape, affine):
++    import nibabel as nib
++    compressed = _bytes(path, math.prod(shape) + HEADER_ALLOWANCE)
++    if hashlib.sha256(compressed).hexdigest() != expected:
++        raise ValueError('Saved diagnostic file checksum changed')
++    with gzip.GzipFile(fileobj=io.BytesIO(compressed)) as stream:
++        raw = stream.read(math.prod(shape) + HEADER_ALLOWANCE + 1)
++    if len(raw) > math.prod(shape) + HEADER_ALLOWANCE:
++        raise ValueError('Diagnostic expansion exceeds its declared grid')
++    header = nib.Nifti1Header.from_fileobj(io.BytesIO(raw), check=True)
++    offset = float(header['vox_offset'])
++    slope, intercept = float(header['scl_slope']), float(header['scl_inter'])
++    if (header.get_data_shape() != tuple(shape) or header.get_data_dtype() != np.dtype(dtype)
++            or not math.isfinite(offset) or offset < 352 or offset > HEADER_ALLOWANCE
++            or offset != int(offset) or len(raw) != int(offset) + math.prod(shape)
++            or (math.isfinite(slope) and slope != 1) or (math.isfinite(intercept) and intercept != 0)
++            or header.get_xyzt_units()[0] != 'mm' or int(header['sform_code']) <= 0):
++        raise ValueError('Diagnostic NIfTI shape, dtype, units or scaling changed')
++    frame = np.asarray(header.get_sform(), dtype=float)
++    if frame.shape != (4, 4) or not np.isfinite(frame).all() or not np.allclose(frame, affine, atol=1e-5, rtol=0):
++        raise ValueError('Diagnostic authoritative sform differs from selected image')
++    image = nib.Nifti1Image.from_bytes(raw)
++    array = np.ascontiguousarray(np.asanyarray(image.dataobj), dtype=dtype)
++    return array, {'shape': list(shape), 'affineRAS': frame.tolist(), 'sformCode': int(header['sform_code'])}
++
++
++def load_saved_diagnostic(path: Path, expected_sha256: str, source, check=lambda: None):
++    raw = _bytes(Path(path), MAX_JSON_BYTES)
++    if hashlib.sha256(raw).hexdigest() != expected_sha256:
++        raise ValueError('This is not the reviewed saved diagnostic descriptor')
++    d = json.loads(raw)
++    check()
++    shape = d['shape_xyz']
++    refs = [r for r in source.source_refs if r.source_id == 'structural' and r.provenance == 'observed']
++    if (len(refs) != 1 or refs[0].sha256 != d['source_sha256']['t1c']
++            or d['schema'] != 'case4_unreviewed_diagnostic_display_layer_v1'
++            or d['scope'] != 'display_only_atlas_native_grid'
++            or d['model_output_verified'] is not True
++            or d['anatomical_qc'] != 'unreviewed_inferior_mask_omission'
++            or d['training_overlap_status'] != 'unknown'
++            or d['same_grid_only'] is not True
++            or any(d[key] is not False for key in ('planning_eligible','evaluation_eligible','clinical_evidence'))
++            or not isinstance(shape, list) or len(shape) != 3
++            or any(type(n) is not int or n <= 0 or n > 4096 for n in shape)
++            or math.prod(shape) > MAX_VOXELS or tuple(shape) != source.mri.shape):
++        raise ValueError('Diagnostic is not bound to the selected auxiliary prepared T1c')
++    affine = np.asarray(d['affine_ras_mm'], dtype=float)
++    expected_affine = (np.diag([-1.,-1.,1.,1.]) @ source.affine if source.frame == 'LPS+' else source.affine)
++    if source.frame not in {'RAS+','LPS+'} or affine.shape != (4,4) or not np.isfinite(affine).all() or not np.allclose(affine, expected_affine, atol=1e-5, rtol=0):
++        raise ValueError('Diagnostic and selected auxiliary source frames disagree')
++    arrays, grids = {}, {}
++    for name, dtype in (('state','int8'),('coverage','uint8')):
++        output = d['outputs'][name]
++        if output['path'] != name+'.nii.gz' or output['dtype'] != dtype:
++            raise ValueError('Only the exact colocated saved state and coverage are accepted')
++        arrays[name], grids[name] = _nifti(Path(path).parent/output['path'], output['sha256'], dtype, shape, affine)
++        check()
++    state, coverage = arrays['state'], arrays['coverage']
++    if (not np.isin(coverage, (0,1)).all() or not np.isin(state, (-1,0,1)).all()
++            or not np.array_equal(state == -1, coverage == 0)
++            or type(d['predicted_voxels']) is not int or int(coverage.sum()) != d['predicted_voxels']
++            or type(d['unknown_voxels']) is not int or int((state == -1).sum()) != d['unknown_voxels']):
++        raise ValueError('Diagnostic unknown/covered states or counts disagree')
++    return d, arrays, grids
++
++
++def import_diagnostic_layer(session, args, request, progress):
++    from .desktop_bridge import BridgeError, _keys, _path
++    _keys(args, {'caseHash','seriesId','descriptorPath'})
++    if CASE4_DESCRIPTOR_SHA256 is None:
++        raise BridgeError('DIAGNOSTIC_NOT_PUBLISHED','No reviewed saved diagnostic has been published for display.')
++    entry = session._get_case(args.get('caseHash'))
++    series_id = args.get('seriesId')
++    source = entry.display_sources.get(series_id) if isinstance(series_id, str) else None
++    if source is None:
++        raise BridgeError('DIAGNOSTIC_SOURCE_REQUIRED','Select the prepared T1c in the imaging workspace first.')
++    progress(.1,'Checking a saved diagnostic against the selected image')
++    descriptor, arrays, grids = load_saved_diagnostic(
++        _path(args.get('descriptorPath'), kind='diagnostic JSON'), CASE4_DESCRIPTOR_SHA256, source.case, request.check)
++    request.check()
++    if session._get_case(args.get('caseHash')) is not entry or entry.display_sources.get(series_id) is not source:
++        raise BridgeError('STALE_CASE','The selected diagnostic image changed during import.')
++    result = {'caseHash': entry.case.semantic_hash, 'seriesId': series_id,
++              'descriptor': descriptor, 'sourceSha256': descriptor['source_sha256']['t1c'],
++              'stateGrid': grids['state'], 'coverageGrid': grids['coverage'],
++              'loadedStateSha256': descriptor['outputs']['state']['sha256'],
++              'loadedCoverageSha256': descriptor['outputs']['coverage']['sha256'],
++              'state': session.transfers.array(arrays['state'], 'int8'),
++              'coverage': session.transfers.array(arrays['coverage'], 'uint8')}
++    request.check()
++    return result
+--- a/src/resectionlab/desktop_bridge.py
++++ b/src/resectionlab/desktop_bridge.py
+@@ -47,7 +47,7 @@
+ MAX_AXIS_INSPECTION_VOXELS = 16_000_000
+ MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
+ MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
+-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
++OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+ MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
+ TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+ RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
+@@ -1282,6 +1282,9 @@
+             if saved is None:
+                 saved={'sources':[],'imagingState':None,'episode':None,'selection':None,'sessionHash':None}
+             return self._install_case(case, artifacts, request,workspace=saved)
++        if operation == "importDiagnosticLayer":
++            from .workspace_diagnostic import import_diagnostic_layer
++            return import_diagnostic_layer(self, args, request, progress)
+         if operation == "importDisplaySeries":
+             from .workspace_imaging import import_display_series
+             return import_display_series(self, args, request, progress)
+--- a/desktop/src/types.ts
++++ b/desktop/src/types.ts
+@@ -468,6 +468,7 @@
+   createSyntheticCase(): Promise<CasePayload>;
+   openCase(): Promise<CasePayload | null>;
+   importNifti(): Promise<CasePayload | null>;
++  importDiagnosticLayer?(args: import("./scan-diagnostic-data").DiagnosticRequest): Promise<import("./scan-diagnostic-data").DiagnosticTransport|null>;
+   importDisplaySeries?(args: ImportDisplaySeriesRequest): Promise<DisplaySeriesPayload | null>;
+   importStructuralEvidence?(args: {
+     caseHash: string;
+--- a/desktop/src/scan-diagnostic-data.ts
++++ b/desktop/src/scan-diagnostic-data.ts
+@@ -0,0 +1,30 @@
++import type {ArrayDescriptor,ResectionApi} from './types.ts';
++import type {DisplaySeriesView} from './workspace-imaging-types.ts';
++import type {UnreviewedCase4DiagnosticLayerV1} from './scan-diagnostic-layer.ts';
++import type {LoadedDiagnosticLayer} from './viewer/diagnosticLayer.ts';
++import {validateDiagnosticLayer} from './viewer/diagnosticLayer.ts';
++import {sha256Bytes} from './source-integrity.ts';
++import {validateDiagnosticResult} from './scan-diagnostic-contract.ts';
++
++export interface DiagnosticRequest {caseHash:string;seriesId:string}
++export interface DiagnosticTransport {
++  caseHash:string;seriesId:string;descriptor:UnreviewedCase4DiagnosticLayerV1;sourceSha256:string;
++  stateGrid:LoadedDiagnosticLayer['stateGrid'];coverageGrid:LoadedDiagnosticLayer['coverageGrid'];
++  loadedStateSha256:string;loadedCoverageSha256:string;state:ArrayDescriptor;coverage:ArrayDescriptor;
++}
++export interface DiagnosticView {source:DisplaySeriesView;layer:LoadedDiagnosticLayer;sourceSha256:string}
++export async function hydrateDiagnostic(input:DiagnosticTransport,selected:DisplaySeriesView,api:ResectionApi):Promise<DiagnosticView>{
++  const value=structuredClone(input);
++  const request={caseHash:selected.descriptor.referenceCaseHash,seriesId:selected.descriptor.seriesId};
++  validateDiagnosticResult(value,request);
++  const refs=selected.descriptor.volume.sourceRefs?.filter(r=>r.source_id==='structural'&&r.provenance==='observed')??[];
++  if(refs.length!==1||refs[0].sha256!==value.sourceSha256)throw Error('Select the exact prepared T1c image for this diagnostic.');
++  if(JSON.stringify(value.descriptor.shape_xyz)!==JSON.stringify(selected.volume.shape))throw Error('Diagnostic grid differs from the displayed image.');
++  const read=async(d:ArrayDescriptor)=>{const bytes=new Uint8Array(await api.readAsset(d.assetId)).slice();if(bytes.byteLength!==d.byteLength||await sha256Bytes(bytes)!==d.sha256)throw Error('Diagnostic transfer checksum changed.');return bytes};
++  const [state,coverage]=await Promise.all([read(value.state),read(value.coverage)]);
++  const layer:LoadedDiagnosticLayer={descriptor:value.descriptor,stateXYZ:new Int8Array(state.buffer),coverageXYZ:coverage,
++    stateGrid:value.stateGrid,coverageGrid:value.coverageGrid,loadedStateSha256:value.loadedStateSha256,loadedCoverageSha256:value.loadedCoverageSha256,
++    primaryOverlaysPermitted:false,planningInteractionPermitted:false};
++  validateDiagnosticLayer(layer,selected.volume,value.sourceSha256);
++  return {source:selected,layer,sourceSha256:value.sourceSha256};
++}
+--- a/desktop/src/scan-diagnostic-contract.ts
++++ b/desktop/src/scan-diagnostic-contract.ts
+@@ -0,0 +1,27 @@
++const HASH=/^sha256:[a-f0-9]{64}$/,HEX=/^[a-f0-9]{64}$/;
++function requireValue(v:unknown,message:string):asserts v {if(!v)throw Error(`Diagnostic import withheld: ${message}`)}
++function object(value:unknown):Record<string,any>{requireValue(value!==null&&typeof value==='object'&&!Array.isArray(value),'expected object');return value as Record<string,any>}
++function exact(value:unknown,keys:string[]){const o=object(value);requireValue(JSON.stringify(Object.keys(o).sort())===JSON.stringify([...keys].sort()),'unexpected fields');return o}
++export function diagnosticRequest(value:unknown){const r=exact(value,['caseHash','seriesId']);requireValue(HASH.test(r.caseHash)&&HASH.test(r.seriesId),'current workspace/image identity required');return {caseHash:r.caseHash as string,seriesId:r.seriesId as string}}
++export function validateDiagnosticResult(value:unknown,request:unknown):void{
++  const r=diagnosticRequest(request),v=exact(value,['caseHash','seriesId','descriptor','sourceSha256','stateGrid','coverageGrid','loadedStateSha256','loadedCoverageSha256','state','coverage']);
++  requireValue(v.caseHash===r.caseHash&&v.seriesId===r.seriesId,'response belongs to another image');
++  const d=object(v.descriptor),shape=d.shape_xyz;
++  requireValue(d.schema==='case4_unreviewed_diagnostic_display_layer_v1'&&d.scope==='display_only_atlas_native_grid'&&
++    d.output_origin==='model_generated_from_observed_case4_preoperative_scans'&&d.model_output_verified===true&&d.same_grid_only===true&&
++    d.anatomical_qc==='unreviewed_inferior_mask_omission'&&d.training_overlap_status==='unknown'&&d.planning_eligible===false&&d.evaluation_eligible===false&&d.clinical_evidence===false,'unreviewed display scope changed');
++  requireValue(HEX.test(v.sourceSha256)&&d.source_sha256?.t1c===v.sourceSha256,'source binding missing');
++  requireValue(Array.isArray(shape)&&shape.length===3&&shape.every(n=>Number.isSafeInteger(n)&&n>0&&n<=4096),'invalid grid');
++  const count=shape.reduce((a:number,b:number)=>a*b,1);requireValue(count<=64*1024**2,'display grid too large');
++  for(const [name,dtype]of [['state','int8'],['coverage','uint8']]){
++    const a=object(v[name]);requireValue(Object.keys(a).every(k=>['path','assetId','dtype','shape','byteOrder','order','sha256','byteLength'].includes(k))&&
++      (typeof a.path==='string')!==(typeof a.assetId==='string')&&a.dtype===dtype&&a.byteOrder==='little'&&a.order==='C'&&
++      JSON.stringify(a.shape)===JSON.stringify(shape)&&a.byteLength===count&&HEX.test(a.sha256),'invalid state/coverage transfer');
++    const file=exact(d.outputs?.[name],['path','sha256','dtype']);requireValue(file.path===name+'.nii.gz'&&file.dtype===dtype&&HEX.test(file.sha256),'saved file binding missing');
++    requireValue(v[name==='state'?'loadedStateSha256':'loadedCoverageSha256']===file.sha256,'decoded file identity changed');
++    const grid=exact(v[name+'Grid'],['shape','affineRAS','sformCode']);requireValue(JSON.stringify(grid.shape)===JSON.stringify(shape)&&Number.isSafeInteger(grid.sformCode)&&grid.sformCode>0,'invalid decoded grid');
++  }
++  // AssetRegistry recursively visits results; no transfer may hide in metadata.
++  const noAssets=(x:unknown):void=>{if(Array.isArray(x)){x.forEach(noAssets);return}if(x&&typeof x==='object'){const o=object(x);requireValue(!('assetId'in o)&&!(typeof o.path==='string'&&'byteLength'in o),'asset outside diagnostic slots');Object.values(o).forEach(noAssets)}};
++  noAssets(d);noAssets(v.stateGrid);noAssets(v.coverageGrid);
++}
+--- a/desktop/src/use-diagnostic-layer.ts
++++ b/desktop/src/use-diagnostic-layer.ts
+@@ -0,0 +1,22 @@
++import {useCallback,useEffect,useRef,useState} from 'react';
++import type {ResectionApi} from './types';
++import type {DisplaySeriesView} from './workspace-imaging-types';
++import {hydrateDiagnostic} from './scan-diagnostic-data';
++import type {DiagnosticView} from './scan-diagnostic-data';
++export function useDiagnosticLayer(selected:DisplaySeriesView|null,api:ResectionApi|null){
++  const [view,setView]=useState<DiagnosticView|null>(null),[pending,setPending]=useState(false),[error,setError]=useState<string|null>(null);
++  const current=useRef(selected);current.current=selected;const generation=useRef(0),mounted=useRef(true);
++  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;generation.current++}},[]);
++  const clear=useCallback(()=>{generation.current++;setPending(false);setView(null);setError(null)},[]);
++  useEffect(clear,[selected,clear]);
++  const load=useCallback(async()=>{
++    if(!selected||!api?.importDiagnosticLayer||pending)return;
++    const source=selected,id=++generation.current;setPending(true);setError(null);setView(null);
++    const live=()=>mounted.current&&current.current===source&&generation.current===id;
++    try{const result=await api.importDiagnosticLayer({caseHash:source.descriptor.referenceCaseHash,seriesId:source.descriptor.seriesId});
++      if(!result||!live())return;const hydrated=await hydrateDiagnostic(result,source,api);if(live())setView(hydrated);
++    }catch(cause){if(live())setError(cause instanceof Error?cause.message:String(cause));}
++    finally{if(live())setPending(false);}
++  },[selected,api,pending]);
++  return {view:view?.source===selected?view:null,pending,error,load,clear};
++}
+--- a/desktop/src/viewer/diagnosticLayer.ts
++++ b/desktop/src/viewer/diagnosticLayer.ts
+@@ -0,0 +1,117 @@
++/** Display-only Case4 diagnostic layer admission; never creates planning data. */
++import type { UnreviewedDiagnosticLayerView } from "../scan-diagnostic-layer";
++import { inverseAffine, rasAffine, transformPoint } from "./coordinates.ts";
++import type { Affine, Point3 } from "./coordinates";
++import type { ViewerVolume } from "./contracts";
++
++export interface LoadedDiagnosticLayer extends UnreviewedDiagnosticLayerView {
++  /** `stateXYZ` and `coverageXYZ` must be decoded into XYZ C order
++   * (flat index `(x * Y + y) * Z + z`), not raw NIfTI on-disk order. */
++  /** Computed by the local loader over the exact saved NIfTI bytes. */
++  loadedStateSha256: string;
++  loadedCoverageSha256: string;
++  /** Actual authoritative sforms and shapes parsed independently from each file. */
++  stateGrid: { shape: [number, number, number]; affineRAS: Affine; sformCode: number };
++  coverageGrid: { shape: [number, number, number]; affineRAS: Affine; sformCode: number };
++}
++
++export interface CheckedDiagnosticLayer {
++  layer: LoadedDiagnosticLayer;
++  worldToVoxel: Affine;
++  shape: [number, number, number];
++  /** Routes/replay/planning remain disabled while inspecting this layer. */
++  primaryOverlaysPermitted: false;
++  planningInteractionPermitted: false;
++}
++
++const HEX64 = /^[0-9a-f]{64}$/;
++
++function sameShape(a: readonly number[], b: readonly number[]): boolean {
++  return a.length === 3 && b.length === 3 && a.every((n, i) => n === b[i]);
++}
++
++function sameAffine(a: Affine, b: Affine): boolean {
++  return a.every((row, i) => row.every((n, j) =>
++    Number.isFinite(n) && Number.isFinite(b[i][j]) && Math.abs(n - b[i][j]) <= 1e-5));
++}
++
++/** The host supplies a SHA over the *selected displayed atlas T1c file*.
++ * A native T1, FLAIR or unregistered scan cannot borrow this overlay. */
++export function validateDiagnosticLayer(
++  layer: LoadedDiagnosticLayer,
++  volume: ViewerVolume,
++  selectedSourceSha256: string,
++): CheckedDiagnosticLayer {
++  const d = layer.descriptor;
++  if (d.schema !== "case4_unreviewed_diagnostic_display_layer_v1" ||
++      d.scope !== "display_only_atlas_native_grid" ||
++      d.output_origin !== "model_generated_from_observed_case4_preoperative_scans" ||
++      d.model_output_verified !== true || d.same_grid_only !== true ||
++      d.anatomical_qc !== "unreviewed_inferior_mask_omission" ||
++      d.training_overlap_status !== "unknown" ||
++      d.planning_eligible !== false || d.evaluation_eligible !== false ||
++      d.clinical_evidence !== false ||
++      layer.primaryOverlaysPermitted !== false ||
++      layer.planningInteractionPermitted !== false ||
++      !HEX64.test(selectedSourceSha256) ||
++      selectedSourceSha256 !== d.source_sha256.t1c ||
++      !HEX64.test(d.geometry_sha256) ||
++      !HEX64.test(d.input_receipt_sha256) ||
++      !HEX64.test(d.forward_receipt_sha256) ||
++      !HEX64.test(d.outputs.state.sha256) ||
++      !HEX64.test(d.outputs.coverage.sha256) ||
++      layer.loadedStateSha256 !== d.outputs.state.sha256 ||
++      layer.loadedCoverageSha256 !== d.outputs.coverage.sha256 ||
++      volume.compartments.length !== 0 ||
++      d.outputs.state.dtype !== "int8" || d.outputs.coverage.dtype !== "uint8" ||
++      layer.stateGrid.sformCode === 0 || layer.coverageGrid.sformCode === 0 ||
++      !sameShape(d.shape_xyz, volume.shape) ||
++      !sameShape(d.shape_xyz, layer.stateGrid.shape) ||
++      !sameShape(d.shape_xyz, layer.coverageGrid.shape)) {
++    throw new Error("Diagnostic layer source, role, receipt or grid is not accepted for display.");
++  }
++  const sourceRAS = rasAffine(volume.affine, volume.frame);
++  if (!sameAffine(d.affine_ras_mm as Affine, sourceRAS) ||
++      !sameAffine(d.affine_ras_mm as Affine, layer.stateGrid.affineRAS) ||
++      !sameAffine(d.affine_ras_mm as Affine, layer.coverageGrid.affineRAS)) {
++    throw new Error("Diagnostic layer sform differs from selected image frame.");
++  }
++  const count = volume.shape.reduce((n, size) => n * size, 1);
++  if (!Number.isSafeInteger(count) || count <= 0 ||
++      layer.stateXYZ.length !== count || layer.coverageXYZ.length !== count) {
++    throw new Error("Diagnostic state/coverage arrays do not match the selected grid.");
++  }
++  let covered = 0, unknown = 0, positive = 0;
++  for (let i = 0; i < count; i++) {
++    const state = layer.stateXYZ[i], coverage = layer.coverageXYZ[i];
++    if (coverage !== 0 && coverage !== 1) {
++      throw new Error("Diagnostic coverage contains a nonbinary value.");
++    }
++    if ((coverage === 0 && state !== -1) ||
++        (coverage === 1 && state !== 0 && state !== 1)) {
++      throw new Error("Diagnostic unknown, negative and positive states disagree with coverage.");
++    }
++    covered += coverage;
++    unknown += state === -1 ? 1 : 0;
++    positive += state === 1 ? 1 : 0;
++  }
++  if (covered !== d.predicted_voxels || unknown !== d.unknown_voxels ||
++      d.excluded_positive_voxels < 0 || positive > covered) {
++    throw new Error("Diagnostic count receipt disagrees with loaded state/coverage.");
++  }
++  return {
++    layer, worldToVoxel: inverseAffine(d.affine_ras_mm as Affine),
++    shape: [...d.shape_xyz], primaryOverlaysPermitted: false,
++    planningInteractionPermitted: false,
++  };
++}
++
++export function sampleDiagnosticLayer(checked: CheckedDiagnosticLayer, world: Point3):
++  "unknown" | "candidate_negative" | "candidate_positive" {
++  const v = transformPoint(checked.worldToVoxel, world);
++  const index = v.map((x) => Math.floor(x + 0.5));
++  if (index.some((x, i) => x < 0 || x >= checked.shape[i])) return "unknown";
++  const flat = (index[0] * checked.shape[1] + index[1]) * checked.shape[2] + index[2];
++  const state = checked.layer.stateXYZ[flat];
++  return state === 1 ? "candidate_positive" : state === 0 ? "candidate_negative" : "unknown";
++}
+--- a/desktop/src/viewer/contracts.ts
++++ b/desktop/src/viewer/contracts.ts
+@@ -33,6 +33,10 @@
+ }
+ 
+ export interface ViewerWorkspaceProps {
++  /** Separate, unreviewed scan diagnostic; never becomes a CaseData compartment. */
++  diagnosticLayer?: import("./diagnosticLayer").LoadedDiagnosticLayer | null;
++  /** SHA-256 of the selected, displayed atlas-grid T1c image bytes. */
++  diagnosticSourceSha256?: string | null;
+   publicGoal?: import('./publicGoal').ViewerPublicGoal | null;
+   /** Analytic software-fixture intensities; never an acquired MRI. */
+   generatedSignal?: boolean;
+--- a/desktop/src/viewer/ViewerWorkspace.tsx
++++ b/desktop/src/viewer/ViewerWorkspace.tsx
+@@ -1,3 +1,5 @@
++import {sampleDiagnosticLayer} from "./diagnosticLayer";
++import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
+ import {checkedPublicGoal,publicGoalSlicePoint,PUBLIC_GOAL_COLOR} from './publicGoal';
+ import { useEffect, useMemo, useRef, useState } from "react";
+ import type { KeyboardEvent, PointerEvent } from "react";
+@@ -48,17 +50,28 @@
+     onCursorChange,
+     visibleLayers,
+     overlayOpacity,
+-    routes,
++    routes: requestedRoutes,
+     cameraMode,
+-    replay,
+-    structuralProposal,
+-    priorLayer,
++    replay: requestedReplay,
++    structuralProposal: requestedProposal,
++    priorLayer: requestedPrior,
+     inspectionTool,
++    diagnosticLayer,
++    diagnosticSourceSha256,
+   } = props;
+-  const goalSelection = useMemo(() => {
+-    try { return {goal:caseData ? checkedPublicGoal(caseData,props.publicGoal ?? null):null,error:null}; }
++  // This independent image layer cannot share planning/replay overlays.
++  const diagnosticRequested = Boolean(diagnosticLayer);
++  const routes = diagnosticRequested ? [] : requestedRoutes;
++  const replay = diagnosticRequested ? null : requestedReplay;
++  const structuralProposal = diagnosticRequested ? null : requestedProposal;
++  const priorLayer = diagnosticRequested ? null : requestedPrior;
++  const [diagnosticVisible, setDiagnosticVisible] = useState(true);
++  const [displayedDiagnostic, setDisplayedDiagnostic] = useState<CheckedDiagnosticLayer|null>(null);
++  const [diagnosticError, setDiagnosticError] = useState<string|null>(null);
++  const goalSelection = useMemo(() => {
++    try { return {goal:caseData ? checkedPublicGoal(caseData,diagnosticRequested ? null : (props.publicGoal ?? null)):null,error:null}; }
+     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
+-  },[caseData,props.publicGoal]);
++  },[caseData,props.publicGoal,diagnosticRequested]);
+   const publicGoal = goalSelection.goal;
+   const signalName = props.generatedSignal ? "analytic signal" : "MRI";
+   const container = useRef<HTMLDivElement>(null),
+@@ -227,7 +240,7 @@
+     if (!renderer) return;
+     setInspectionError(null);
+     setDisplayedInspection(null);
+-    const suppressed = Boolean(replay || structuralProposal || priorLayer);
++    const suppressed = diagnosticRequested || Boolean(replay || structuralProposal || priorLayer);
+     if (inspectionTool && suppressed) {
+       if (inspectionSelection.current.clear(inspectionTool)) latestProps.current.onClearInspection?.();
+     }
+@@ -240,7 +253,7 @@
+       setInspectionError(cause instanceof Error ? cause.message : String(cause));
+       latestProps.current.onClearInspection?.();
+     }
+-  }, [ready, caseData, inspectionTool, Boolean(replay), Boolean(structuralProposal), Boolean(priorLayer)]);
++  }, [ready, caseData, inspectionTool, Boolean(replay), Boolean(structuralProposal), Boolean(priorLayer), diagnosticRequested]);
+ 
+   useEffect(() => {
+     const renderer = engine.current;
+@@ -362,6 +375,25 @@
+     priorLayer?.spatialUnits,
+   ]);
+ 
++  useEffect(() => {setDiagnosticVisible(true);}, [diagnosticLayer, diagnosticSourceSha256, caseData]);
++
++  useEffect(() => {
++    if (!engine.current) return;
++    setDiagnosticError(null);
++    setDisplayedDiagnostic(null);
++    try {
++      setDisplayedDiagnostic(engine.current.setDiagnosticLayer(
++        diagnosticVisible ? (diagnosticLayer ?? null) : null,
++        diagnosticSourceSha256 ?? null,
++      ));
++    } catch (cause) {
++      setDiagnosticError(cause instanceof Error ? cause.message : String(cause));
++    }
++  }, [ready, caseData, diagnosticLayer, diagnosticSourceSha256, diagnosticVisible]);
++  const diagnosticSample = displayedDiagnostic && diagnosticVisible &&
++    displayedDiagnostic.layer.descriptor.source_sha256.t1c === diagnosticSourceSha256
++      ? sampleDiagnosticLayer(displayedDiagnostic, currentCursor) : null;
++
+   function moveCursor(
+     event: PointerEvent<HTMLDivElement>,
+     plane: SlicePlane,
+@@ -422,7 +454,7 @@
+ 
+   const refs = { axial, coronal, sagittal };
+   const modeled = replay && !replayError;
+-  const inspected = !replay && !structuralProposal && !priorLayer &&
++  const inspected = !diagnosticRequested && !replay && !structuralProposal && !priorLayer &&
+     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
+   const clearInspection = () => {
+     inspectionSelection.current.clear(inspectionTool ?? null);
+@@ -495,6 +527,11 @@
+               </option>
+             ))}
+           </select>
++          {diagnosticLayer && <label className="rl-viewer-expanded-note">
++            <input type="checkbox" checked={diagnosticVisible}
++              onChange={event=>setDiagnosticVisible(event.target.checked)} />
++            Diagnostic overlay
++          </label>}
+           <button
+             className="rl-viewer-reset"
+             onClick={() => engine.current?.fitCamera(cameraMode)}
+@@ -509,6 +546,14 @@
+             {TITLES[expanded]} {signalName} expanded
+           </span>
+         )}
++        {diagnosticLayer && <div className="rl-viewer-prior-readout" role="status" aria-live="polite">
++          <span><strong>Model diagnostic · unreviewed</strong> · prepared T1c grid</span>
++          <span className="rl-viewer-prior-value">{!diagnosticVisible ? "Overlay hidden" :
++            diagnosticSample === "candidate_positive" ? "Cursor: model-positive candidate" :
++            diagnosticSample === "candidate_negative" ? "Cursor: model-negative within output coverage" :
++            "Cursor: unknown — no output coverage"}</span>
++          <span className="rl-viewer-prior-note">Inferior support is omitted; training overlap is unknown. Hatching marks unknown coverage. Display only; not planning or clinical evidence.</span>
++        </div>}
+         {displayedPrior && priorSample && (
+           <div
+             className="rl-viewer-prior-readout"
+@@ -707,7 +752,9 @@
+                   ? " · ESTIMATE"
+                   : displayedPrior
+                     ? " · PRIOR"
+-                    : ""}
++                    : displayedDiagnostic
++                      ? " · UNREVIEWED DIAGNOSTIC"
++                      : ""}
+               </span>
+             </div>
+           </div>
+@@ -735,10 +782,10 @@
+         </label>
+         <span>Neurological convention</span>
+       </div>
+-      {(error || replayError || proposalError || priorError || inspectionError || goalSelection.error) && (
++      {(error || replayError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error) && (
+         <div className="rl-viewer-error" role="alert">
+           <strong>Imaging view needs attention</strong>
+-          <p>{error || replayError || proposalError || priorError || inspectionError || goalSelection.error}</p>
++          <p>{error || replayError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error}</p>
+         </div>
+       )}
+     </div>
+--- a/desktop/src/viewer/VolumeRenderer.ts
++++ b/desktop/src/viewer/VolumeRenderer.ts
+@@ -25,6 +25,8 @@
+ import type { RecordedEpisodeBounds, RecordedToolDisplay } from "./recordedTool";
+ import { instrumentCapsuleMeshes, inspectionToolMeshes } from "./inspectionToolGeometry";
+ import { fragmentShader, vertexShader } from "./shaders";
++import { validateDiagnosticLayer } from "./diagnosticLayer";
++import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
+ import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
+ import { paneViewport } from "./layout";
+ import {
+@@ -139,6 +141,8 @@
+   private replayActive = false;
+   private removedTexture: THREE.Data3DTexture;
+   private proposalTexture: THREE.Data3DTexture;
++  private diagnosticStateTexture: THREE.Data3DTexture;
++  private diagnosticCoverageTexture: THREE.Data3DTexture;
+   private priorTexture: THREE.Data3DTexture;
+   private priorCoverageTexture: THREE.Data3DTexture;
+   private readonly surfaces = new Map<string, THREE.Mesh>();
+@@ -235,6 +239,8 @@
+     this.labelTexture = dataTexture(packed, volume.shape);
+     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+     this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
++    this.diagnosticStateTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
++    this.diagnosticCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+     this.priorTexture = dataTexture(new Float32Array(1), [1, 1, 1]);
+     this.priorCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+     const material = (threeD: boolean, plane: SlicePlane) =>
+@@ -253,6 +259,9 @@
+           uReplayActive: { value: 0 },
+           uProposal: { value: this.proposalTexture },
+           uProposalActive: { value: 0 },
++          uDiagnosticState: { value: this.diagnosticStateTexture },
++          uDiagnosticCoverage: { value: this.diagnosticCoverageTexture },
++          uDiagnosticActive: { value: 0 },
+           uProposalColor: {
+             value: new THREE.Color(
+               STRUCTURAL_PROPOSAL_COLOR,
+@@ -518,7 +527,10 @@
+   /** A certified effect overlays the original MRI; source labels remain immutable. */
+   setReplay(replay: ViewerReplay | null): void {
+     // A requested mode switch clears an unexecuted tool even if replay rejects.
+-    if (replay) this.setInspectionTool(null);
++    if (replay) {
++      this.setInspectionTool(null);
++      this.setDiagnosticLayer(null, null);
++    }
+     if (this.replayActive) this.onSurfaceStatus(0);
+     const generation = ++this.replayGeneration;
+     this.replayWorker?.terminate();
+@@ -689,6 +701,7 @@
+     this.requestRender();
+     if (!proposal || this.replayActive) return;
+     validateStructuralProposal(this.volume, proposal);
++    this.setDiagnosticLayer(null, null);
+     this.setPriorLayer(null);
+     const snapshot = proposal.mask.slice();
+     this.proposalTexture.dispose();
+@@ -696,8 +709,48 @@
+     this.materials().forEach((shader) => {
+       shader.uniforms.uProposal.value = this.proposalTexture;
+       shader.uniforms.uProposalActive.value = 1;
++    });
++    this.requestRender();
++  }
++
++  /** A separate MRI-plane diagnostic; no route, replay, or planning data. */
++  setDiagnosticLayer(layer: LoadedDiagnosticLayer | null,
++                     selectedSourceSha256: string | null): CheckedDiagnosticLayer | null {
++    this.materials().forEach((shader) => { shader.uniforms.uDiagnosticActive.value = 0; });
++    this.diagnosticStateTexture.dispose();
++    this.diagnosticCoverageTexture.dispose();
++    this.diagnosticStateTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
++    this.diagnosticCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
++    this.materials().forEach((shader) => {
++      shader.uniforms.uDiagnosticState.value = this.diagnosticStateTexture;
++      shader.uniforms.uDiagnosticCoverage.value = this.diagnosticCoverageTexture;
++    });
++    this.requestRender();
++    if (!layer) return null;
++    // A rejected diagnostic must not leave an earlier planning overlay visible.
++    // Keep the null path narrow so hiding this layer does not alter other modes.
++    this.setReplay(null);
++    this.setStructuralProposal(null);
++    this.setPriorLayer(null);
++    this.setInspectionTool(null);
++    this.setPublicGoal(null);
++    this.routeSignature = "[]";
++    this.updateRoutes([]);
++    if (!selectedSourceSha256) throw new Error("The displayed diagnostic source SHA is unavailable.");
++    const checked = validateDiagnosticLayer(layer, this.volume, selectedSourceSha256);
++    const positive = new Uint8Array(layer.stateXYZ.length);
++    for (let i = 0; i < positive.length; i++) positive[i] = layer.stateXYZ[i] === 1 ? 1 : 0;
++    this.diagnosticStateTexture.dispose();
++    this.diagnosticCoverageTexture.dispose();
++    this.diagnosticStateTexture = dataTexture(positive, checked.shape);
++    this.diagnosticCoverageTexture = dataTexture(layer.coverageXYZ.slice(), checked.shape);
++    this.materials().forEach((shader) => {
++      shader.uniforms.uDiagnosticState.value = this.diagnosticStateTexture;
++      shader.uniforms.uDiagnosticCoverage.value = this.diagnosticCoverageTexture;
++      shader.uniforms.uDiagnosticActive.value = 1;
+     });
+     this.requestRender();
++    return checked;
+   }
+ 
+   /** Population maps have independent values, FOV coverage, and physical frame. */
+@@ -716,6 +769,7 @@
+     this.requestRender();
+     if (!layer || this.replayActive) return null;
+     validatePriorLayer(this.volume, layer);
++    this.setDiagnosticLayer(null, null);
+     const snapshot: ViewerPriorLayer = {
+       ...layer,
+       values: layer.values.slice(),
+@@ -1069,6 +1123,8 @@
+     this.labelTexture.dispose();
+     this.removedTexture.dispose();
+     this.proposalTexture.dispose();
++    this.diagnosticStateTexture.dispose();
++    this.diagnosticCoverageTexture.dispose();
+     this.priorTexture.dispose();
+     this.priorCoverageTexture.dispose();
+     this.renderer.dispose();
+--- a/desktop/src/viewer/shaders.ts
++++ b/desktop/src/viewer/shaders.ts
+@@ -21,6 +21,9 @@
+ uniform int uReplayActive;
+ uniform sampler3D uProposal;
+ uniform int uProposalActive;
++uniform sampler3D uDiagnosticState;
++uniform sampler3D uDiagnosticCoverage;
++uniform int uDiagnosticActive;
+ uniform vec3 uProposalColor;
+ uniform sampler3D uPrior;
+ uniform sampler3D uPriorCoverage;
+@@ -77,6 +80,12 @@
+   if(any(lessThan(index,ivec3(0)))||any(greaterThanEqual(index,ivec3(uShape)))) return false;
+   return texelFetch(uProposal,index.zyx,0).r>0.0;
+ }
++int diagnosticAt(vec3 voxel) {
++  ivec3 index=ivec3(floor(voxel+0.5));
++  if(any(lessThan(index,ivec3(0)))||any(greaterThanEqual(index,ivec3(uShape))))return -1;
++  if(texelFetch(uDiagnosticCoverage,index.zyx,0).r<=0.0)return -1;
++  return texelFetch(uDiagnosticState,index.zyx,0).r>0.0?1:0;
++}
+ bool priorAt(vec3 world,out float result) {
+   vec3 voxel=(uWorldToPrior*vec4(world,1.0)).xyz;
+   result=0.0;
+@@ -121,6 +130,25 @@
+   if (uThreeD==1 && abs(signal)<0.000001) discard;
+   float gray=clamp((signal-uWindow.x)/max(uWindow.y-uWindow.x,0.000001),0.0,1.0);
+   vec3 color=vec3(gray);
++  if(uThreeD==0 && uDiagnosticActive==1 && uReplayActive==0) {
++    int candidate=diagnosticAt(voxel);
++    if(candidate<0) {
++      // Unknown is hatching, never a negative prediction.
++      bool hatch=mod(floor(gl_FragCoord.x)+floor(gl_FragCoord.y),15.0)<1.2;
++      if(hatch)color=mix(color,vec3(0.58,0.64,0.68),uOverlay*0.42);
++    } else if(candidate==1) {
++      vec3 stepA=vec3(0.0),stepB=vec3(0.0);
++      stepA[uAxes.x]=(uHigh[uAxes.x]-uLow[uAxes.x])/max(uRect.z*uResolution.x,1.0)*1.25;
++      stepB[uAxes.y]=(uHigh[uAxes.y]-uLow[uAxes.y])/max(uRect.w*uResolution.y,1.0)*1.25;
++      vec3 a=(uWorldToVoxel*vec4(stepA,0.0)).xyz;
++      vec3 b=(uWorldToVoxel*vec4(stepB,0.0)).xyz;
++      bool edge=diagnosticAt(voxel+a)!=1||diagnosticAt(voxel-a)!=1||
++                diagnosticAt(voxel+b)!=1||diagnosticAt(voxel-b)!=1;
++      bool dash=mod(floor(gl_FragCoord.x)+floor(gl_FragCoord.y),9.0)<6.0;
++      if(edge&&dash)color=mix(color,vec3(0.98,0.48,0.42),uOverlay*0.92);
++      else color=mix(color,vec3(0.98,0.48,0.42),uOverlay*0.08);
++    }
++  }
+   if(uThreeD==0 && uPriorActive==1 && uReplayActive==0) {
+     float priorValue;
+     bool covered=priorAt(world,priorValue);
+--- a/desktop/electron/diagnostic-import.cjs
++++ b/desktop/electron/diagnostic-import.cjs
+@@ -0,0 +1,9 @@
++'use strict';
++const {diagnosticRequest}=require('./diagnostic-contract.cjs');
++async function importDiagnosticLayer(args,{pick,request}){
++  const checked=diagnosticRequest(args);
++  const descriptorPath=await pick('Select the saved unreviewed diagnostic display-layer.json',['json']);
++  if(!descriptorPath)return null;
++  return request('importDiagnosticLayer',{...checked,descriptorPath});
++}
++module.exports={importDiagnosticLayer};
+--- a/desktop/electron/diagnostic-contract.cjs
++++ b/desktop/electron/diagnostic-contract.cjs
+@@ -0,0 +1,29 @@
++const HASH=/^sha256:[a-f0-9]{64}$/,HEX=/^[a-f0-9]{64}$/;
++function requireValue(v        ,message       )           {if(!v)throw Error(`Diagnostic import withheld: ${message}`)}
++function object(value        )                   {requireValue(value!==null&&typeof value==='object'&&!Array.isArray(value),'expected object');return value                      }
++function exact(value        ,keys         ){const o=object(value);requireValue(JSON.stringify(Object.keys(o).sort())===JSON.stringify([...keys].sort()),'unexpected fields');return o}
++function diagnosticRequest(value        ){const r=exact(value,['caseHash','seriesId']);requireValue(HASH.test(r.caseHash)&&HASH.test(r.seriesId),'current workspace/image identity required');return {caseHash:r.caseHash          ,seriesId:r.seriesId          }}
++function validateDiagnosticResult(value        ,request        )     {
++  const r=diagnosticRequest(request),v=exact(value,['caseHash','seriesId','descriptor','sourceSha256','stateGrid','coverageGrid','loadedStateSha256','loadedCoverageSha256','state','coverage']);
++  requireValue(v.caseHash===r.caseHash&&v.seriesId===r.seriesId,'response belongs to another image');
++  const d=object(v.descriptor),shape=d.shape_xyz;
++  requireValue(d.schema==='case4_unreviewed_diagnostic_display_layer_v1'&&d.scope==='display_only_atlas_native_grid'&&
++    d.output_origin==='model_generated_from_observed_case4_preoperative_scans'&&d.model_output_verified===true&&d.same_grid_only===true&&
++    d.anatomical_qc==='unreviewed_inferior_mask_omission'&&d.training_overlap_status==='unknown'&&d.planning_eligible===false&&d.evaluation_eligible===false&&d.clinical_evidence===false,'unreviewed display scope changed');
++  requireValue(HEX.test(v.sourceSha256)&&d.source_sha256?.t1c===v.sourceSha256,'source binding missing');
++  requireValue(Array.isArray(shape)&&shape.length===3&&shape.every(n=>Number.isSafeInteger(n)&&n>0&&n<=4096),'invalid grid');
++  const count=shape.reduce((a       ,b       )=>a*b,1);requireValue(count<=64*1024**2,'display grid too large');
++  for(const [name,dtype]of [['state','int8'],['coverage','uint8']]){
++    const a=object(v[name]);requireValue(Object.keys(a).every(k=>['path','assetId','dtype','shape','byteOrder','order','sha256','byteLength'].includes(k))&&
++      (typeof a.path==='string')!==(typeof a.assetId==='string')&&a.dtype===dtype&&a.byteOrder==='little'&&a.order==='C'&&
++      JSON.stringify(a.shape)===JSON.stringify(shape)&&a.byteLength===count&&HEX.test(a.sha256),'invalid state/coverage transfer');
++    const file=exact(d.outputs?.[name],['path','sha256','dtype']);requireValue(file.path===name+'.nii.gz'&&file.dtype===dtype&&HEX.test(file.sha256),'saved file binding missing');
++    requireValue(v[name==='state'?'loadedStateSha256':'loadedCoverageSha256']===file.sha256,'decoded file identity changed');
++    const grid=exact(v[name+'Grid'],['shape','affineRAS','sformCode']);requireValue(JSON.stringify(grid.shape)===JSON.stringify(shape)&&Number.isSafeInteger(grid.sformCode)&&grid.sformCode>0,'invalid decoded grid');
++  }
++  // AssetRegistry recursively visits results; no transfer may hide in metadata.
++  const noAssets=(x        )     =>{if(Array.isArray(x)){x.forEach(noAssets);return}if(x&&typeof x==='object'){const o=object(x);requireValue(!('assetId'in o)&&!(typeof o.path==='string'&&'byteLength'in o),'asset outside diagnostic slots');Object.values(o).forEach(noAssets)}};
++  noAssets(d);noAssets(v.stateGrid);noAssets(v.coverageGrid);
++}
++
++module.exports={diagnosticRequest,validateDiagnosticResult};
+--- a/desktop/electron/main.cjs
++++ b/desktop/electron/main.cjs
+@@ -15,6 +15,7 @@
+ const { assertSender, plainArgs } = require('./security.cjs');
+ const { importStructuralEvidence } = require('./structural-import.cjs');
+ const { importDisplaySeries } = require('./display-series-import.cjs');
++const { importDiagnosticLayer } = require('./diagnostic-import.cjs');
+ const { inspectAxisPlanning } = require('./axis-inspection.cjs');
+ const { observedRequest, validateObservedResult } = require('./observed-landmark-contract.cjs');
+ 
+@@ -84,6 +85,7 @@
+     const tumorMaskPath = await pick('Select the tumor segmentation (Cancel to import MRI only)', ['nii', 'gz']);
+     return engine.request('importNifti', { structuralPath, ...(tumorMaskPath ? { tumorMaskPath } : {}) });
+   });
++  handle('importDiagnosticLayer', args => importDiagnosticLayer(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
+   handle('importDisplaySeries', args => importDisplaySeries(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
+   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
+   handle('saveCase', async args => {
+--- a/desktop/electron/preload.cjs
++++ b/desktop/electron/preload.cjs
+@@ -14,6 +14,7 @@
+   createSyntheticCase: () => ipcRenderer.invoke('research:createSyntheticCase'),
+   openCase: () => ipcRenderer.invoke('research:openCase'),
+   importNifti: () => ipcRenderer.invoke('research:importNifti'),
++  importDiagnosticLayer: args => ipcRenderer.invoke('research:importDiagnosticLayer', args),
+   importDisplaySeries: args => ipcRenderer.invoke('research:importDisplaySeries', args),
+   importStructuralEvidence: args => ipcRenderer.invoke('research:importStructuralEvidence', args || {}),
+   saveCase: args => ipcRenderer.invoke('research:saveCase', args || {}),
+--- a/desktop/electron/sidecar.cjs
++++ b/desktop/electron/sidecar.cjs
+@@ -14,7 +14,8 @@
+ const { AssetRegistry } = require('./assets.cjs');
+ const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
+ 
+-const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
++const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
++const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+ 
+ class Sidecar extends EventEmitter {
+   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
+@@ -47,6 +48,12 @@
+     if (!OPERATIONS.has(op)) return Promise.reject(new Error('Unsupported research operation'));
+     if (this.closed) return Promise.reject(new Error('Local research engine is not running'));
+     if (!args || typeof args !== 'object' || Array.isArray(args)) return Promise.reject(new Error('Operation arguments must be an object'));
++    if (op === 'importDiagnosticLayer') {
++      try { const {descriptorPath,...identity}=args; const checked=diagnosticRequest(identity);
++        if(typeof descriptorPath!=='string'||!descriptorPath||descriptorPath.length>4096)throw Error('Choose a local diagnostic descriptor');
++        args={...checked,descriptorPath};
++      } catch(error) { return Promise.reject(error); }
++    }
+     if (op === 'inspectObservedLandmarkUpdate') {
+       try { args = observedRequest(args); } catch (error) { return Promise.reject(error); }
+     }
+@@ -75,6 +82,7 @@
+         reject(new Error('Operation exceeded its local time budget'));
+       }, timeoutMs + 5000);
+       this.pending.set(id, { resolve, reject, timeout, op,
++        ...(op === 'importDiagnosticLayer' ? {diagnosticArgs:{caseHash:args.caseHash,seriesId:args.seriesId}} : {}),
+         ...(op === 'evaluateDevelopmentEpisodeVascular' ? { vascularArgs: args } : {}),
+         ...(op === 'executePublicContactFamilyEpisode' ? {familyArgs:args,familyCatalog:structuredClone(this.contactFamilyAvailability)} : {}),
+         ...(op === 'executePublicSurfaceContactEpisode' ? { contactArgs: args } : {}),
+@@ -107,6 +115,7 @@
+     // traversal or event forwarding, not just after the request resolves.
+     if (observed) validateObservedEvent(message, pending.observedArgs);
+     if (message.event === 'result') {
++      if (pending.op === 'importDiagnosticLayer') validateDiagnosticResult(message.result,pending.diagnosticArgs);
+       if (pending.op === 'evaluateDevelopmentEpisodeVascular') validateVascularResult(message.result,pending.vascularArgs);
+       if (pending.op === 'publicContactFamilyAvailability') this.contactFamilyAvailability=checkedFamilyAvailability(message.result);
+       if (pending.op === 'executePublicContactFamilyEpisode') validateFamilyResult(message.result,pending.familyArgs,pending.familyCatalog);
+--- a/desktop/tests/diagnostic-import.test.mjs
++++ b/desktop/tests/diagnostic-import.test.mjs
+@@ -0,0 +1,30 @@
++import assert from 'node:assert/strict';import{test}from'node:test';import{createHash}from'node:crypto';import{createRequire}from'node:module';
++import{hydrateDiagnostic}from'../src/scan-diagnostic-data.ts';import{validateDiagnosticResult}from'../src/scan-diagnostic-contract.ts';
++const require=createRequire(import.meta.url),{importDiagnosticLayer}=require('../electron/diagnostic-import.cjs');
++const hex=c=>c.repeat(64),hash=c=>'sha256:'+hex(c),affine=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],shape=[2,2,2];
++function fixture(){
++ const raw={state:new Int8Array([-1,0,1,-1,-1,-1,-1,-1]),coverage:new Uint8Array([0,1,1,0,0,0,0,0])};
++ const array=(name,dtype)=>({assetId:name,dtype,shape,byteOrder:'little',order:'C',byteLength:8,sha256:createHash('sha256').update(raw[name]).digest('hex')});
++ const descriptor={schema:'case4_unreviewed_diagnostic_display_layer_v1',scope:'display_only_atlas_native_grid',output_origin:'model_generated_from_observed_case4_preoperative_scans',model_output_verified:true,shape_xyz:shape,affine_ras_mm:affine,source_sha256:{t1c:hex('a'),flair:hex('b'),support_map:hex('c'),plans:hex('d'),dataset:hex('e')},geometry_sha256:hex('f'),input_receipt_sha256:hex('1'),forward_receipt_sha256:hex('2'),outputs:{state:{path:'state.nii.gz',sha256:hex('3'),dtype:'int8'},coverage:{path:'coverage.nii.gz',sha256:hex('4'),dtype:'uint8'}},state_semantics:{'-1':'unknown','0':'candidate_negative_where_output_covered','1':'candidate_positive_where_output_covered'},predicted_voxels:2,unknown_voxels:6,excluded_positive_voxels:0,anatomical_qc:'unreviewed_inferior_mask_omission',training_overlap_status:'unknown',same_grid_only:true,planning_eligible:false,evaluation_eligible:false,clinical_evidence:false};
++ const request={caseHash:hash('5'),seriesId:hash('6')},grid=()=>({shape,affineRAS:affine,sformCode:2});
++ const result={...request,descriptor,sourceSha256:hex('a'),stateGrid:grid(),coverageGrid:grid(),loadedStateSha256:hex('3'),loadedCoverageSha256:hex('4'),state:array('state','int8'),coverage:array('coverage','uint8')};
++ const source={descriptor:{referenceCaseHash:request.caseHash,seriesId:request.seriesId,volume:{sourceRefs:[{source_id:'structural',sha256:hex('a'),provenance:'observed'}]}},volume:{caseId:'generated-test',caseHash:hash('7'),frame:'RAS+',shape,affine,mri:new Float32Array(8),compartments:[]}};
++ return{request,result,source,api:{readAsset:async id=>new Uint8Array(raw[id].buffer).slice()}};
++}
++test('generated signed state and separate coverage remain display-only',async()=>{const f=fixture(),v=await hydrateDiagnostic(f.result,f.source,f.api);assert.deepEqual(Array.from(v.layer.stateXYZ),[-1,0,1,-1,-1,-1,-1,-1]);assert.equal(v.layer.planningInteractionPermitted,false);assert.equal(f.source.volume.compartments.length,0)});
++for(const[name,mutate]of [
++ ['wrong source',f=>f.source.descriptor.volume.sourceRefs[0].sha256=hex('b')],['wrong series',f=>f.result.seriesId=hash('8')],
++ ['metadata asset injection',f=>f.result.descriptor.private={path:'/private',dtype:'uint8',byteLength:1}],['asset alias',f=>f.result.state.path='/private'],
++ ['expanded bytes',f=>f.result.state.byteLength=9],['clinical admission',f=>f.result.descriptor.clinical_evidence=true]
++])test(`refuses ${name} before assets`,async()=>{const f=fixture();mutate(f);await assert.rejects(hydrateDiagnostic(f.result,f.source,{readAsset:()=>assert.fail('before assets')}))});
++test('changed transfer and decoded affine refuse',async()=>{let f=fixture();await assert.rejects(hydrateDiagnostic(f.result,f.source,{readAsset:async()=>new Uint8Array(8)}),/checksum/);f=fixture();f.result.coverageGrid.affineRAS=structuredClone(affine);f.result.coverageGrid.affineRAS[0][3]=.25;await assert.rejects(hydrateDiagnostic(f.result,f.source,f.api),/sform/)});
++test('main supplies picked path; renderer path override and cancelled pick cannot read',async()=>{const f=fixture();let called=0;assert.equal(await importDiagnosticLayer(f.request,{pick:async()=>null,request:()=>assert.fail()}),null);await assert.rejects(importDiagnosticLayer({...f.request,descriptorPath:'/caller'},{pick:()=>assert.fail()}));await importDiagnosticLayer(f.request,{pick:async()=>'/picked/display-layer.json',request:async(op,args)=>{called++;assert.equal(op,'importDiagnosticLayer');assert.deepEqual(args,{...f.request,descriptorPath:'/picked/display-layer.json'})}});assert.equal(called,1)});
++test('raw transfer envelope exposes only the two bounded slots',()=>{const f=fixture();for(const name of ['state','coverage']){delete f.result[name].assetId;f.result[name].path='/session/'+name+'.bin'}validateDiagnosticResult(f.result,f.request);f.result.extra=f.result.state;assert.throws(()=>validateDiagnosticResult(f.result,f.request))});
++test('actual sidecar validates before any asset publication',async()=>{
++ const {Sidecar}=require('../electron/sidecar.cjs');for(const tampered of [false,true]){
++  const f=fixture();if(tampered)f.result.descriptor.hidden={path:'/private',dtype:'uint8',byteLength:1};let exposed=0,resolved=0;
++  const sidecar=Object.create(Sidecar.prototype);sidecar.pending=new Map([['id',{op:'importDiagnosticLayer',diagnosticArgs:f.request,resolve:()=>resolved++}]]);sidecar.assets={expose:async value=>{exposed++;return value}};sidecar.emit=()=>{};
++  const promise=sidecar.handle({id:'id',event:'result',result:f.result});if(tampered)await assert.rejects(promise);else await promise;
++  assert.equal(exposed,tampered?0:1);assert.equal(resolved,tampered?0:1);
++ }
++});
+--- a/desktop/tests/diagnostic-race.test.mjs
++++ b/desktop/tests/diagnostic-race.test.mjs
+@@ -0,0 +1,11 @@
++import assert from'node:assert/strict';import{test}from'node:test';import fs from'node:fs';
++const source=fs.readFileSync(new URL('../src/use-diagnostic-layer.ts',import.meta.url),'utf8');
++const body=source.split('const load=useCallback(async()=>{')[1].split('},[selected,api,pending]);')[0];
++const deferred=()=>{let resolve;const promise=new Promise(r=>resolve=r);return{promise,resolve}};
++function setup(){const selected={descriptor:{referenceCaseHash:'case',seriesId:'series'}},request=deferred(),hydration=deferred(),writes=[];
++ const current={current:selected},generation={current:0},mounted={current:true};let hydrated=0;
++ const scope={selected,api:{importDiagnosticLayer:()=>request.promise},pending:false,current,generation,mounted,
++ setPending:x=>writes.push(['pending',x]),setError:x=>writes.push(['error',x]),setView:x=>writes.push(['view',x]),hydrateDiagnostic:()=>{hydrated++;return hydration.promise}};
++ const load=Function(...Object.keys(scope),`return async()=>{${body}}`)(...Object.values(scope));return{selected,request,hydration,writes,current,mounted,load,get hydrated(){return hydrated}};}
++test('source change before response refuses hydration and cannot install old diagnostic',async()=>{const x=setup(),job=x.load();x.current.current={};x.request.resolve({});await job;assert.equal(x.hydrated,0);assert(!x.writes.some(([k,v])=>k==='view'&&v));});
++test('source change or unmount during hydration refuses late diagnostic installation',async()=>{for(const reason of ['source','unmount']){const x=setup(),job=x.load();x.request.resolve({});await Promise.resolve();assert.equal(x.hydrated,1);if(reason==='source')x.current.current={};else x.mounted.current=false;x.hydration.resolve({layer:'late'});await job;assert(!x.writes.some(([k,v])=>k==='view'&&v));}});
+--- a/tests/test_workspace_diagnostic.py
++++ b/tests/test_workspace_diagnostic.py
+@@ -0,0 +1,32 @@
++"""Generated-only saved-file importer controls; no Case4 payload access."""
++import hashlib, json
++from types import SimpleNamespace
++import numpy as np
++import nibabel as nib
++import pytest
++from resectionlab import workspace_diagnostic as m
++def fixture(tmp_path):
++    source=SimpleNamespace(mri=np.zeros((2,2,2)),affine=np.eye(4),frame='RAS+',source_refs=[SimpleNamespace(source_id='structural',provenance='observed',sha256='a'*64)])
++    state=np.array([-1,0,1,-1,-1,-1,-1,-1],dtype=np.int8).reshape((2,2,2));coverage=(state!=-1).astype(np.uint8);outputs={}
++    for name,array in [('state',state),('coverage',coverage)]:
++        img=nib.Nifti1Image(array,np.eye(4));img.header.set_xyzt_units('mm');img.set_sform(np.eye(4),code=2);img.set_qform(None,code=0)
++        path=tmp_path/(name+'.nii.gz');nib.save(img,path);outputs[name]={'path':path.name,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'dtype':str(array.dtype)}
++    d={'schema':'case4_unreviewed_diagnostic_display_layer_v1','scope':'display_only_atlas_native_grid','source_sha256':{'t1c':'a'*64},'model_output_verified':True,'anatomical_qc':'unreviewed_inferior_mask_omission','training_overlap_status':'unknown','same_grid_only':True,'planning_eligible':False,'evaluation_eligible':False,'clinical_evidence':False,'shape_xyz':[2,2,2],'affine_ras_mm':np.eye(4).tolist(),'outputs':outputs,'predicted_voxels':2,'unknown_voxels':6}
++    path=tmp_path/'display-layer.json';path.write_text(json.dumps(d));return source,path,d
++
++def test_signed_unknown_and_xyz_order(tmp_path):
++    source,path,d=fixture(tmp_path);_,arrays,grids=m.load_saved_diagnostic(path,hashlib.sha256(path.read_bytes()).hexdigest(),source)
++    assert arrays['state'].dtype==np.int8 and arrays['state'][0,1,0]==1 and arrays['state'][0,0,0]==-1
++    assert grids['state']['sformCode']==2
++
++@pytest.mark.parametrize('change',['source','pin','bytes','path','grid','counts','admission'])
++def test_refuses_changed_bindings(tmp_path,change):
++    source,path,d=fixture(tmp_path)
++    if change=='source':source.source_refs[0].sha256='b'*64
++    if change=='bytes':(tmp_path/'state.nii.gz').write_bytes(b'changed')
++    if change=='path':d['outputs']['state']['path']='../state.nii.gz'
++    if change=='grid':d['affine_ras_mm'][0][3]=1
++    if change=='counts':d['predicted_voxels']=3
++    if change=='admission':d['planning_eligible']=True
++    path.write_text(json.dumps(d));pin=hashlib.sha256(path.read_bytes()).hexdigest()
++    with pytest.raises(ValueError):m.load_saved_diagnostic(path,'0'*64 if change=='pin' else pin,source)
+--- a/tests/test_workspace_diagnostic_bridge.py
++++ b/tests/test_workspace_diagnostic_bridge.py
+@@ -0,0 +1,32 @@
++"""Small generated BridgeRuntime -> existing auxiliary source -> diagnostic path."""
++import hashlib
++import json
++import numpy as np
++import nibabel as nib
++from resectionlab.desktop_bridge import BridgeRuntime
++from resectionlab import workspace_diagnostic as module
++from test_workspace_diagnostic import fixture
++
++
++def test_generated_bridge_binds_auxiliary_without_mutating_planning_case(tmp_path,monkeypatch):
++    events=[];runtime=BridgeRuntime(tmp_path/'transfers',events.append)
++    def call(op,args):
++        identity=str(len(events));runtime.submit({'id':identity,'op':op,'args':args});assert runtime.wait_idle(5)
++        return [e for e in events if e['id']==identity][-1]
++    try:
++        image=nib.Nifti1Image(np.ones((2,2,2),dtype=np.float32),np.eye(4));image.header.set_xyzt_units('mm')
++        source_path=tmp_path/'selected.nii.gz';nib.save(image,source_path)
++        primary=call('importNifti',{'structuralPath':str(source_path)})['result']
++        selected=call('importDisplaySeries',{'caseHash':primary['caseHash'],'imagePath':str(source_path),'modality':'T1CE','annotationKind':'none'})['result']
++        _,descriptor_path,d=fixture(tmp_path);d['source_sha256']['t1c']=hashlib.sha256(source_path.read_bytes()).hexdigest();descriptor_path.write_text(json.dumps(d))
++        args={'caseHash':primary['caseHash'],'seriesId':selected['seriesId'],'descriptorPath':str(descriptor_path)}
++        parent=runtime.session.cases[primary['caseHash']];before=parent.case
++        monkeypatch.setattr(module,'CASE4_DESCRIPTOR_SHA256',None)
++        assert call('importDiagnosticLayer',args)['error']['code']=='DIAGNOSTIC_NOT_PUBLISHED'
++        monkeypatch.setattr(module,'CASE4_DESCRIPTOR_SHA256',hashlib.sha256(descriptor_path.read_bytes()).hexdigest())
++        result=call('importDiagnosticLayer',args);assert result['event']=='result',result
++        value=result['result'];assert value['state']['dtype']=='int8' and value['coverage']['dtype']=='uint8'
++        assert value['caseHash']==primary['caseHash'] and value['seriesId']==selected['seriesId']
++        assert parent.case is before and parent.case.semantic_hash==primary['caseHash'] and len(runtime.session.cases)==1
++        assert selected['volume']['caseHash'] not in runtime.session.cases or selected['volume']['caseHash']==primary['caseHash']
++    finally:runtime.close()
+--- a/desktop/src/viewer/diagnosticRendererTransition.test.mjs
++++ b/desktop/src/viewer/diagnosticRendererTransition.test.mjs
+@@ -0,0 +1,59 @@
++import { after, before, test } from "node:test";
++import assert from "node:assert/strict";
++import fs from "node:fs/promises";
++import os from "node:os";
++import path from "node:path";
++import { fileURLToPath } from "node:url";
++import { createServer } from "vite";
++
++let server, cache, VolumeRenderer;
++before(async () => {
++  cache = await fs.mkdtemp(path.join(os.tmpdir(), "diagnostic-transition-"));
++  server = await createServer({
++    root: fileURLToPath(new URL("../../", import.meta.url)), cacheDir: cache,
++    logLevel: "error", server: { middlewareMode: true, hmr: false, ws: false },
++    appType: "custom",
++  });
++  VolumeRenderer = (await server.ssrLoadModule("/src/viewer/VolumeRenderer.ts")).VolumeRenderer;
++});
++after(async () => {
++  await server?.close();
++  if (cache) await fs.rm(cache, { recursive: true, force: true });
++});
++
++function fakeRenderer() {
++  const calls = [];
++  const uniforms = {
++    uDiagnosticActive: { value: 1 },
++    uDiagnosticState: { value: null },
++    uDiagnosticCoverage: { value: null },
++  };
++  const engine = Object.create(VolumeRenderer.prototype);
++  engine.materials = () => [{ uniforms }];
++  engine.requestRender = () => {};
++  engine.diagnosticStateTexture = { dispose() {} };
++  engine.diagnosticCoverageTexture = { dispose() {} };
++  for (const method of ["setReplay", "setStructuralProposal", "setPriorLayer",
++    "setInspectionTool", "setPublicGoal", "updateRoutes"]) {
++    engine[method] = (...args) => calls.push([method, ...args]);
++  }
++  return { engine, calls, uniforms };
++}
++
++test("invalid diagnostic request clears existing inspection modes before refusal", () => {
++  const { engine, calls, uniforms } = fakeRenderer();
++  assert.throws(() => engine.setDiagnosticLayer({}, null), /source SHA is unavailable/);
++  assert.deepEqual(calls.map(([method]) => method), ["setReplay", "setStructuralProposal",
++    "setPriorLayer", "setInspectionTool", "setPublicGoal", "updateRoutes"]);
++  assert.ok(calls.every(([, argument]) => argument === null ||
++    Array.isArray(argument) && argument.length === 0));
++  assert.equal(uniforms.uDiagnosticActive.value, 0);
++  assert.equal(engine.routeSignature, "[]");
++});
++
++test("hiding diagnostic alone leaves other modes intact", () => {
++  const { engine, calls, uniforms } = fakeRenderer();
++  assert.equal(engine.setDiagnosticLayer(null, null), null);
++  assert.deepEqual(calls, []);
++  assert.equal(uniforms.uDiagnosticActive.value, 0);
++});
+--- a/desktop/src/viewer/episodeCamera.test.mjs
++++ b/desktop/src/viewer/episodeCamera.test.mjs
+@@ -29,6 +29,8 @@
+     panes:{anatomy:{getBoundingClientRect:()=>({width,height}),dataset:{}}},surfaces:new Map(),instrumentDisplay:new InstrumentDisplayState(),
+     tools:new THREE.Group(),inspectionTools:new THREE.Group(),recordedTools:new THREE.Group(),recordedDisplay:null,anatomy:new THREE.Group(),
+     replayBounds:null,fittedReplayId:null,replayGroup:new THREE.Group(),replayGeneration:0,replayWorker:null,pendingReplayGroup:null,replayActive:false,disposed:false,
++    diagnosticStateTexture:new THREE.Data3DTexture(new Uint8Array(1),1,1,1),
++    diagnosticCoverageTexture:new THREE.Data3DTexture(new Uint8Array(1),1,1,1),
+     removedTexture:new THREE.Data3DTexture(new Uint8Array(1),1,1,1),materials:()=>[],requestRender(){},onSurfaceStatus(){},onReplayError(){},setStructuralProposal(){},setPriorLayer(){},mode:'instruments'});
+   return r;
+ }
+--- a/desktop/src/viewer/inspectionTool-independent.test.mjs
++++ b/desktop/src/viewer/inspectionTool-independent.test.mjs
+@@ -38,6 +38,7 @@
+ function renderer(volume) {
+   const r = Object.create(VolumeRenderer.prototype);
+   const shaders = Array.from({ length: 4 }, () => ({ uniforms: {
++    uDiagnosticActive: { value: 0 }, uDiagnosticState: { value: null }, uDiagnosticCoverage: { value: null },
+     uRouteCount: { value: 0 }, uReplayActive: { value: 0 }, uRemoved: { value: null },
+     ...Object.fromEntries(["uShaftStart", "uShaftEnd", "uTipEnd"].map((key) =>
+       [key, { value: [new THREE.Vector3(), new THREE.Vector3()] }])),
+@@ -48,6 +49,8 @@
+     tools: new THREE.Group(), inspectionTools: new THREE.Group(), recordedTools: new THREE.Group(), recordedDisplay: null, anatomy: new THREE.Group(),
+     replayGroup: new THREE.Group(), replayGeneration: 0, replayWorker: null,
+     pendingReplayGroup: null, replayActive: false, disposed: false,
++    diagnosticStateTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
++    diagnosticCoverageTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
+     removedTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
+     materials: () => shaders, requestRender() {}, onSurfaceStatus() {}, onReplayError() {},
+     setStructuralProposal() {}, setPriorLayer() {}, mode: "anatomy" });

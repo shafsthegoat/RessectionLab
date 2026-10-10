@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -257,6 +257,8 @@ class _CaseEntry:
     routes: Any = None
     display_series: dict[str, dict] = field(default_factory=dict)
     display_sources: dict[str, Any] = field(default_factory=dict)
+    # Latest diagnostic only: two live transfer paths, never workspace/planning data.
+    diagnostic_transfer_paths: tuple[str, ...] = ()
     imaging_state: dict | None = None
     episode: dict | None = None
     episode_selection: dict | None = None
@@ -411,11 +413,13 @@ class BridgeSession:
             if transient_public_contact:
                 entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
                     episode=None,episode_selection=None,workspace_hash=None,
+                    diagnostic_transfer_paths=(),
                     comparison_pair=None,comparison_actor_episode_id=None,
                     public_surface_contact_active=True)
                 extra={}
             else:
                 entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
+                    diagnostic_transfer_paths=(),
                     comparison_pair=None,comparison_actor_episode_id=None,
                     public_surface_contact_active=False,**restored)
                 extra=self._workspace_payload(entry)
@@ -486,6 +490,7 @@ class BridgeSession:
         for cached in self.cases.values():
             from .workspace_imaging import retained_paths
             retained.update(retained_paths(cached.display_series))
+            retained.update(cached.diagnostic_transfer_paths)
             retained.add(cached.descriptor["mri"]["path"])
             if cached.descriptor["brainMask"]:
                 retained.add(cached.descriptor["brainMask"]["path"])
@@ -1282,6 +1287,9 @@ class BridgeSession:
             if saved is None:
                 saved={'sources':[],'imagingState':None,'episode':None,'selection':None,'sessionHash':None}
             return self._install_case(case, artifacts, request,workspace=saved)
+        if operation == "importDiagnosticLayer":
+            from .workspace_diagnostic import import_diagnostic_layer
+            return import_diagnostic_layer(self, args, request, progress)
         if operation == "importDisplaySeries":
             from .workspace_imaging import import_display_series
             return import_display_series(self, args, request, progress)

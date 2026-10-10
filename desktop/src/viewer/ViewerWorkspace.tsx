@@ -1,3 +1,5 @@
+import {sampleDiagnosticLayer} from "./diagnosticLayer";
+import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
 import {checkedPublicGoal,publicGoalSlicePoint,PUBLIC_GOAL_COLOR} from './publicGoal';
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
@@ -48,17 +50,28 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     onCursorChange,
     visibleLayers,
     overlayOpacity,
-    routes,
+    routes: requestedRoutes,
     cameraMode,
-    replay,
-    structuralProposal,
-    priorLayer,
+    replay: requestedReplay,
+    structuralProposal: requestedProposal,
+    priorLayer: requestedPrior,
     inspectionTool,
+    diagnosticLayer,
+    diagnosticSourceSha256,
   } = props;
+  // This independent image layer cannot share planning/replay overlays.
+  const diagnosticRequested = Boolean(diagnosticLayer);
+  const routes = diagnosticRequested ? [] : requestedRoutes;
+  const replay = diagnosticRequested ? null : requestedReplay;
+  const structuralProposal = diagnosticRequested ? null : requestedProposal;
+  const priorLayer = diagnosticRequested ? null : requestedPrior;
+  const [diagnosticVisible, setDiagnosticVisible] = useState(true);
+  const [displayedDiagnostic, setDisplayedDiagnostic] = useState<CheckedDiagnosticLayer|null>(null);
+  const [diagnosticError, setDiagnosticError] = useState<string|null>(null);
   const goalSelection = useMemo(() => {
-    try { return {goal:caseData ? checkedPublicGoal(caseData,props.publicGoal ?? null):null,error:null}; }
+    try { return {goal:caseData ? checkedPublicGoal(caseData,diagnosticRequested ? null : (props.publicGoal ?? null)):null,error:null}; }
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
-  },[caseData,props.publicGoal]);
+  },[caseData,props.publicGoal,diagnosticRequested]);
   const publicGoal = goalSelection.goal;
   const signalName = props.generatedSignal ? "analytic signal" : "MRI";
   const container = useRef<HTMLDivElement>(null),
@@ -227,7 +240,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     if (!renderer) return;
     setInspectionError(null);
     setDisplayedInspection(null);
-    const suppressed = Boolean(replay || structuralProposal || priorLayer);
+    const suppressed = diagnosticRequested || Boolean(replay || structuralProposal || priorLayer);
     if (inspectionTool && suppressed) {
       if (inspectionSelection.current.clear(inspectionTool)) latestProps.current.onClearInspection?.();
     }
@@ -240,7 +253,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       setInspectionError(cause instanceof Error ? cause.message : String(cause));
       latestProps.current.onClearInspection?.();
     }
-  }, [ready, caseData, inspectionTool, Boolean(replay), Boolean(structuralProposal), Boolean(priorLayer)]);
+  }, [ready, caseData, inspectionTool, Boolean(replay), Boolean(structuralProposal), Boolean(priorLayer), diagnosticRequested]);
 
   useEffect(() => {
     const renderer = engine.current;
@@ -362,6 +375,25 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     priorLayer?.spatialUnits,
   ]);
 
+  useEffect(() => {setDiagnosticVisible(true);}, [diagnosticLayer, diagnosticSourceSha256, caseData]);
+
+  useEffect(() => {
+    if (!engine.current) return;
+    setDiagnosticError(null);
+    setDisplayedDiagnostic(null);
+    try {
+      setDisplayedDiagnostic(engine.current.setDiagnosticLayer(
+        diagnosticVisible ? (diagnosticLayer ?? null) : null,
+        diagnosticSourceSha256 ?? null,
+      ));
+    } catch (cause) {
+      setDiagnosticError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }, [ready, caseData, diagnosticLayer, diagnosticSourceSha256, diagnosticVisible]);
+  const diagnosticSample = displayedDiagnostic && diagnosticVisible &&
+    displayedDiagnostic.layer.descriptor.source_sha256.t1c === diagnosticSourceSha256
+      ? sampleDiagnosticLayer(displayedDiagnostic, currentCursor) : null;
+
   function moveCursor(
     event: PointerEvent<HTMLDivElement>,
     plane: SlicePlane,
@@ -422,7 +454,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
 
   const refs = { axial, coronal, sagittal };
   const modeled = replay && !replayError;
-  const inspected = !replay && !structuralProposal && !priorLayer &&
+  const inspected = !diagnosticRequested && !replay && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const clearInspection = () => {
     inspectionSelection.current.clear(inspectionTool ?? null);
@@ -495,6 +527,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </option>
             ))}
           </select>
+          {diagnosticLayer && <label className="rl-viewer-expanded-note">
+            <input type="checkbox" checked={diagnosticVisible}
+              onChange={event=>setDiagnosticVisible(event.target.checked)} />
+            Diagnostic overlay
+          </label>}
           <button
             className="rl-viewer-reset"
             onClick={() => engine.current?.fitCamera(cameraMode)}
@@ -509,6 +546,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             {TITLES[expanded]} {signalName} expanded
           </span>
         )}
+        {diagnosticLayer && <div className="rl-viewer-prior-readout" role="status" aria-live="polite">
+          <span><strong>Model diagnostic · unreviewed</strong> · prepared T1c grid</span>
+          <span className="rl-viewer-prior-value">{!diagnosticVisible ? "Overlay hidden" :
+            diagnosticSample === "candidate_positive" ? "Cursor: model-positive candidate" :
+            diagnosticSample === "candidate_negative" ? "Cursor: model-negative within output coverage" :
+            "Cursor: unknown — no output coverage"}</span>
+          <span className="rl-viewer-prior-note">Inferior support is omitted; training overlap is unknown. Hatching marks unknown coverage. Display only; not planning or clinical evidence.</span>
+        </div>}
         {displayedPrior && priorSample && (
           <div
             className="rl-viewer-prior-readout"
@@ -707,7 +752,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                   ? " · ESTIMATE"
                   : displayedPrior
                     ? " · PRIOR"
-                    : ""}
+                    : displayedDiagnostic
+                      ? " · UNREVIEWED DIAGNOSTIC"
+                      : ""}
               </span>
             </div>
           </div>
@@ -735,10 +782,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || proposalError || priorError || inspectionError || goalSelection.error) && (
+      {(error || replayError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || proposalError || priorError || inspectionError || goalSelection.error}</p>
+          <p>{error || replayError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error}</p>
         </div>
       )}
     </div>

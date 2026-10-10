@@ -14,7 +14,8 @@ const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
-const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
+const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
@@ -47,6 +48,12 @@ class Sidecar extends EventEmitter {
     if (!OPERATIONS.has(op)) return Promise.reject(new Error('Unsupported research operation'));
     if (this.closed) return Promise.reject(new Error('Local research engine is not running'));
     if (!args || typeof args !== 'object' || Array.isArray(args)) return Promise.reject(new Error('Operation arguments must be an object'));
+    if (op === 'importDiagnosticLayer') {
+      try { const {descriptorPath,...identity}=args; const checked=diagnosticRequest(identity);
+        if(typeof descriptorPath!=='string'||!descriptorPath||descriptorPath.length>4096)throw Error('Choose a local diagnostic descriptor');
+        args={...checked,descriptorPath};
+      } catch(error) { return Promise.reject(error); }
+    }
     if (op === 'inspectObservedLandmarkUpdate') {
       try { args = observedRequest(args); } catch (error) { return Promise.reject(error); }
     }
@@ -75,6 +82,7 @@ class Sidecar extends EventEmitter {
         reject(new Error('Operation exceeded its local time budget'));
       }, timeoutMs + 5000);
       this.pending.set(id, { resolve, reject, timeout, op,
+        ...(op === 'importDiagnosticLayer' ? {diagnosticArgs:{caseHash:args.caseHash,seriesId:args.seriesId}} : {}),
         ...(op === 'evaluateDevelopmentEpisodeVascular' ? { vascularArgs: args } : {}),
         ...(op === 'executePublicContactFamilyEpisode' ? {familyArgs:args,familyCatalog:structuredClone(this.contactFamilyAvailability)} : {}),
         ...(op === 'executePublicSurfaceContactEpisode' ? { contactArgs: args } : {}),
@@ -107,6 +115,7 @@ class Sidecar extends EventEmitter {
     // traversal or event forwarding, not just after the request resolves.
     if (observed) validateObservedEvent(message, pending.observedArgs);
     if (message.event === 'result') {
+      if (pending.op === 'importDiagnosticLayer') validateDiagnosticResult(message.result,pending.diagnosticArgs);
       if (pending.op === 'evaluateDevelopmentEpisodeVascular') validateVascularResult(message.result,pending.vascularArgs);
       if (pending.op === 'publicContactFamilyAvailability') this.contactFamilyAvailability=checkedFamilyAvailability(message.result);
       if (pending.op === 'executePublicContactFamilyEpisode') validateFamilyResult(message.result,pending.familyArgs,pending.familyCatalog);

@@ -468,6 +468,7 @@ export interface ResectionApi extends TrainingApi {
   createSyntheticCase(): Promise<CasePayload>;
   openCase(): Promise<CasePayload | null>;
   importNifti(): Promise<CasePayload | null>;
+  importDiagnosticLayer?(args: import("./scan-diagnostic-data").DiagnosticRequest): Promise<import("./scan-diagnostic-data").DiagnosticTransport|null>;
   importDisplaySeries?(args: ImportDisplaySeriesRequest): Promise<DisplaySeriesPayload | null>;
   importStructuralEvidence?(args: {
     caseHash: string;

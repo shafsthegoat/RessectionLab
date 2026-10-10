@@ -1,0 +1,73 @@
+Case4 diagnostic desktop integration — independent source review
+
+Decision: GO for promotion of the exact source candidate below. No remaining
+production source blocker was found. This is source approval; final generated
+runtime checks and actual Electron import/display remain pending with root.
+
+Reviewed candidate: build/scan-diagnostic-desktop-v1/
+source-index.json SHA256 b0b02445a56c4bb6444cfa279e78d1a7e47305a805585e2c537791c12aa2ae18
+source.patch SHA256 d6a5caf4f6fe8261eff73c708d9d30fedfc379bad4c516711df553ecd1924782
+HANDOFF.txt SHA256 c5ca3fcfad3e9cefecc8acaa0e92880a52e80114a91be77f9c308fc4a2199a2b
+Independently checked all 23 indexed non-App file hashes/lengths (304,012 bytes)
+and 11 current canonical baseline hashes using only Node filesystem/crypto.
+
+App preservation
+The worktree patch preserves the existing neighboring-path WIP; the separate
+clean-HEAD variant adds the same diagnostic integration without that WIP.
+Worktree baseline ad4d290cae1aa9eac65e585b03b9f6c1fabc4efdea20ac1b1d7ad220b5831845
+Worktree patch df16e496128cccfed631995e42704623d1263c8898e03f4345a0369e045cf076
+Worktree result c74c7e1e8ad12341b9226fc12b3a0c8f200cfe9a4e717c296e9852e1496989d2
+Clean baseline 0491ac9b0ff068890aca8666bcd28ec0c08d6299032b211fde8f670ae1fc9a7c
+Clean patch 2cc64a93cc2b6a6101958d802bd0835dff3da6ff2e5521227e9a8fc964930e8b
+Clean result 9be043ca876e94d4281e8b5580b74eeb3a8b3fa66be39ba37a1ea936490c9be8
+
+Verified source boundaries
+- The saved-only importer pins descriptor d5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4,
+  selected observed T1c source SHA, native shape and RAS affine. It authenticates
+  the two bounded saved NIfTI files, checks actual decoded grids and signed
+  state/coverage/count consistency, and returns only existing binary transfers.
+  It invokes no model and does not alter CaseData compartments or planning input.
+- The host selects the descriptor path, validates the exact response before
+  AssetRegistry publication, and preserves the selected image assets. Renderer
+  hydration clones before awaiting, checks identity and asset bytes/hashes, then
+  validates signed state and actual grid. Selection, generation and unmount
+  guards discard stale asynchronous results; case installation clears the layer.
+- XYZ C-order textures and the existing z-y-x texture addressing agree. Sampling
+  uses physical RAS coordinates and the validated source affine. Outside-FOV and
+  uncovered regions stay unknown; the shader hatches unknown and colors positive
+  candidates. No unknown-as-negative or inferred orientation is introduced.
+- A non-null diagnostic request clears all six incompatible overlay modes before
+  validation, including on refusal. The null path is narrow and preserves other
+  display modes. App auxiliary-image gates still suppress primary routes/replay
+  and planning interaction. Display neither asserts cross-image registration nor
+  same-person/time identity beyond the existing source contract.
+- UI states display-only, unreviewed anatomy/inferior omission, unknown training
+  overlap, and no planning/clinical admission. The temporary layer is not silently
+  persisted as anatomy or a target.
+
+One concrete integration defect was found and repaired: two existing CPU renderer
+fixtures constructed with Object.create lacked the new diagnostic textures (and
+one lacked uniforms), so setReplay would throw before their existing assertions.
+The final index includes minimal initialization changes in episodeCamera.test.mjs
+and inspectionTool-independent.test.mjs. Production bytes were unchanged by this
+repair. The new diagnostic transition fixture already supplied these members.
+
+Evidence and pending checks
+Read saved author results: 13 pure Node controls passed, 8 tiny generated NIfTI
+controls passed, and the earlier working-tree typecheck passed. These results do
+not claim execution of the final transition/fixture changes. Final generated
+BridgeRuntime import, renderer transition and repaired existing renderer tests,
+clean-HEAD typecheck/build, and real saved-layer Electron display remain root-owned
+and pending after the mechanics quiet window.
+
+The independent saved-array audit authorizes the pinned same-grid display decode:
+build/scan-target-estimator-independent/case4-display-decode-v1-actual-audit.md
+SHA256 b8fcad49c4323d9b259a4d2fd4b1eb233718d88975ff49ae702f089de4517363.
+Its reported counts are 2,625 positive, 1,116,094 covered and 7,811,906 unknown.
+Those numbers were not independently recomputed in this source review. That audit
+and this integration approval confer no tumor accuracy, anatomical QC, policy,
+planning, evaluation or clinical validity.
+
+Review activity: source/diff/log reading and small metadata hash checks only;
+no candidate imports, Python/TS/build/tests, patient arrays, Electron, model,
+native solver or replay execution. All review writes are under ignored build/.

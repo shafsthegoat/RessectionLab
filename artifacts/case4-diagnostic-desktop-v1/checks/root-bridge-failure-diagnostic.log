@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_generated_bridge_binds_auxiliary_without_mutating_planning_case _____
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1017/test_generated_bridge_binds_au0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108952f90>
+
+    def test_generated_bridge_binds_auxiliary_without_mutating_planning_case(tmp_path,monkeypatch):
+        events=[];runtime=BridgeRuntime(tmp_path/'transfers',events.append)
+        def call(op,args):
+            identity=str(len(events));runtime.submit({'id':identity,'op':op,'args':args});assert runtime.wait_idle(5)
+            return [e for e in events if e['id']==identity][-1]
+        try:
+            image=nib.Nifti1Image(np.ones((2,2,2),dtype=np.float32),np.eye(4));image.header.set_xyzt_units('mm')
+            source_path=tmp_path/'selected.nii.gz';nib.save(image,source_path)
+            primary_event=call('importNifti',{'structuralPath':str(source_path)})
+>           assert primary_event['event']=='result',primary_event
+E           AssertionError: {'id': '0', 'event': 'error', 'error': {'code': 'CONSTANT_STRUCTURAL_IMAGE', 'message': 'CONSTANT_STRUCTURAL_IMAGE: The structural image has no intensity variation.'}}
+E           assert 'error' == 'result'
+E             
+E             - result
+E             + error
+
+tests/test_workspace_diagnostic_bridge.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_workspace_diagnostic_bridge.py::test_generated_bridge_binds_auxiliary_without_mutating_planning_case
+1 failed in 0.41s

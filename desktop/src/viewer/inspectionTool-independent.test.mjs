@@ -38,6 +38,7 @@ after(async () => { await server?.close(); if (cache) await fs.rm(cache, { recur
 function renderer(volume) {
   const r = Object.create(VolumeRenderer.prototype);
   const shaders = Array.from({ length: 4 }, () => ({ uniforms: {
+    uDiagnosticActive: { value: 0 }, uDiagnosticState: { value: null }, uDiagnosticCoverage: { value: null },
     uRouteCount: { value: 0 }, uReplayActive: { value: 0 }, uRemoved: { value: null },
     ...Object.fromEntries(["uShaftStart", "uShaftEnd", "uTipEnd"].map((key) =>
       [key, { value: [new THREE.Vector3(), new THREE.Vector3()] }])),
@@ -48,6 +49,8 @@ function renderer(volume) {
     tools: new THREE.Group(), inspectionTools: new THREE.Group(), recordedTools: new THREE.Group(), recordedDisplay: null, anatomy: new THREE.Group(),
     replayGroup: new THREE.Group(), replayGeneration: 0, replayWorker: null,
     pendingReplayGroup: null, replayActive: false, disposed: false,
+    diagnosticStateTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
+    diagnosticCoverageTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
     removedTexture: new THREE.Data3DTexture(new Uint8Array(1), 1, 1, 1),
     materials: () => shaders, requestRender() {}, onSurfaceStatus() {}, onReplayError() {},
     setStructuralProposal() {}, setPriorLayer() {}, mode: "anatomy" });

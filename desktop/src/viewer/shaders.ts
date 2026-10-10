@@ -21,6 +21,9 @@ uniform sampler3D uRemoved;
 uniform int uReplayActive;
 uniform sampler3D uProposal;
 uniform int uProposalActive;
+uniform sampler3D uDiagnosticState;
+uniform sampler3D uDiagnosticCoverage;
+uniform int uDiagnosticActive;
 uniform vec3 uProposalColor;
 uniform sampler3D uPrior;
 uniform sampler3D uPriorCoverage;
@@ -77,6 +80,12 @@ bool proposalAt(vec3 voxel) {
   if(any(lessThan(index,ivec3(0)))||any(greaterThanEqual(index,ivec3(uShape)))) return false;
   return texelFetch(uProposal,index.zyx,0).r>0.0;
 }
+int diagnosticAt(vec3 voxel) {
+  ivec3 index=ivec3(floor(voxel+0.5));
+  if(any(lessThan(index,ivec3(0)))||any(greaterThanEqual(index,ivec3(uShape))))return -1;
+  if(texelFetch(uDiagnosticCoverage,index.zyx,0).r<=0.0)return -1;
+  return texelFetch(uDiagnosticState,index.zyx,0).r>0.0?1:0;
+}
 bool priorAt(vec3 world,out float result) {
   vec3 voxel=(uWorldToPrior*vec4(world,1.0)).xyz;
   result=0.0;
@@ -121,6 +130,25 @@ void main() {
   if (uThreeD==1 && abs(signal)<0.000001) discard;
   float gray=clamp((signal-uWindow.x)/max(uWindow.y-uWindow.x,0.000001),0.0,1.0);
   vec3 color=vec3(gray);
+  if(uThreeD==0 && uDiagnosticActive==1 && uReplayActive==0) {
+    int candidate=diagnosticAt(voxel);
+    if(candidate<0) {
+      // Unknown is hatching, never a negative prediction.
+      bool hatch=mod(floor(gl_FragCoord.x)+floor(gl_FragCoord.y),15.0)<1.2;
+      if(hatch)color=mix(color,vec3(0.58,0.64,0.68),uOverlay*0.42);
+    } else if(candidate==1) {
+      vec3 stepA=vec3(0.0),stepB=vec3(0.0);
+      stepA[uAxes.x]=(uHigh[uAxes.x]-uLow[uAxes.x])/max(uRect.z*uResolution.x,1.0)*1.25;
+      stepB[uAxes.y]=(uHigh[uAxes.y]-uLow[uAxes.y])/max(uRect.w*uResolution.y,1.0)*1.25;
+      vec3 a=(uWorldToVoxel*vec4(stepA,0.0)).xyz;
+      vec3 b=(uWorldToVoxel*vec4(stepB,0.0)).xyz;
+      bool edge=diagnosticAt(voxel+a)!=1||diagnosticAt(voxel-a)!=1||
+                diagnosticAt(voxel+b)!=1||diagnosticAt(voxel-b)!=1;
+      bool dash=mod(floor(gl_FragCoord.x)+floor(gl_FragCoord.y),9.0)<6.0;
+      if(edge&&dash)color=mix(color,vec3(0.98,0.48,0.42),uOverlay*0.92);
+      else color=mix(color,vec3(0.98,0.48,0.42),uOverlay*0.08);
+    }
+  }
   if(uThreeD==0 && uPriorActive==1 && uReplayActive==0) {
     float priorValue;
     bool covered=priorAt(world,priorValue);

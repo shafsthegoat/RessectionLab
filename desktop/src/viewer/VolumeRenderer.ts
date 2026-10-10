@@ -25,6 +25,8 @@ import { checkedRecordedEpisodeBounds, recordedToolDisplay } from "./recordedToo
 import type { RecordedEpisodeBounds, RecordedToolDisplay } from "./recordedTool";
 import { instrumentCapsuleMeshes, inspectionToolMeshes } from "./inspectionToolGeometry";
 import { fragmentShader, vertexShader } from "./shaders";
+import { validateDiagnosticLayer } from "./diagnosticLayer";
+import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { paneViewport } from "./layout";
 import {
@@ -139,6 +141,8 @@ export class VolumeRenderer {
   private replayActive = false;
   private removedTexture: THREE.Data3DTexture;
   private proposalTexture: THREE.Data3DTexture;
+  private diagnosticStateTexture: THREE.Data3DTexture;
+  private diagnosticCoverageTexture: THREE.Data3DTexture;
   private priorTexture: THREE.Data3DTexture;
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
@@ -235,6 +239,8 @@ export class VolumeRenderer {
     this.labelTexture = dataTexture(packed, volume.shape);
     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.diagnosticStateTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.diagnosticCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.priorTexture = dataTexture(new Float32Array(1), [1, 1, 1]);
     this.priorCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     const material = (threeD: boolean, plane: SlicePlane) =>
@@ -253,6 +259,9 @@ export class VolumeRenderer {
           uReplayActive: { value: 0 },
           uProposal: { value: this.proposalTexture },
           uProposalActive: { value: 0 },
+          uDiagnosticState: { value: this.diagnosticStateTexture },
+          uDiagnosticCoverage: { value: this.diagnosticCoverageTexture },
+          uDiagnosticActive: { value: 0 },
           uProposalColor: {
             value: new THREE.Color(
               STRUCTURAL_PROPOSAL_COLOR,
@@ -518,7 +527,10 @@ export class VolumeRenderer {
   /** A certified effect overlays the original MRI; source labels remain immutable. */
   setReplay(replay: ViewerReplay | null): void {
     // A requested mode switch clears an unexecuted tool even if replay rejects.
-    if (replay) this.setInspectionTool(null);
+    if (replay) {
+      this.setInspectionTool(null);
+      this.setDiagnosticLayer(null, null);
+    }
     if (this.replayActive) this.onSurfaceStatus(0);
     const generation = ++this.replayGeneration;
     this.replayWorker?.terminate();
@@ -689,6 +701,7 @@ export class VolumeRenderer {
     this.requestRender();
     if (!proposal || this.replayActive) return;
     validateStructuralProposal(this.volume, proposal);
+    this.setDiagnosticLayer(null, null);
     this.setPriorLayer(null);
     const snapshot = proposal.mask.slice();
     this.proposalTexture.dispose();
@@ -698,6 +711,46 @@ export class VolumeRenderer {
       shader.uniforms.uProposalActive.value = 1;
     });
     this.requestRender();
+  }
+
+  /** A separate MRI-plane diagnostic; no route, replay, or planning data. */
+  setDiagnosticLayer(layer: LoadedDiagnosticLayer | null,
+                     selectedSourceSha256: string | null): CheckedDiagnosticLayer | null {
+    this.materials().forEach((shader) => { shader.uniforms.uDiagnosticActive.value = 0; });
+    this.diagnosticStateTexture.dispose();
+    this.diagnosticCoverageTexture.dispose();
+    this.diagnosticStateTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.diagnosticCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.materials().forEach((shader) => {
+      shader.uniforms.uDiagnosticState.value = this.diagnosticStateTexture;
+      shader.uniforms.uDiagnosticCoverage.value = this.diagnosticCoverageTexture;
+    });
+    this.requestRender();
+    if (!layer) return null;
+    // A rejected diagnostic must not leave an earlier planning overlay visible.
+    // Keep the null path narrow so hiding this layer does not alter other modes.
+    this.setReplay(null);
+    this.setStructuralProposal(null);
+    this.setPriorLayer(null);
+    this.setInspectionTool(null);
+    this.setPublicGoal(null);
+    this.routeSignature = "[]";
+    this.updateRoutes([]);
+    if (!selectedSourceSha256) throw new Error("The displayed diagnostic source SHA is unavailable.");
+    const checked = validateDiagnosticLayer(layer, this.volume, selectedSourceSha256);
+    const positive = new Uint8Array(layer.stateXYZ.length);
+    for (let i = 0; i < positive.length; i++) positive[i] = layer.stateXYZ[i] === 1 ? 1 : 0;
+    this.diagnosticStateTexture.dispose();
+    this.diagnosticCoverageTexture.dispose();
+    this.diagnosticStateTexture = dataTexture(positive, checked.shape);
+    this.diagnosticCoverageTexture = dataTexture(layer.coverageXYZ.slice(), checked.shape);
+    this.materials().forEach((shader) => {
+      shader.uniforms.uDiagnosticState.value = this.diagnosticStateTexture;
+      shader.uniforms.uDiagnosticCoverage.value = this.diagnosticCoverageTexture;
+      shader.uniforms.uDiagnosticActive.value = 1;
+    });
+    this.requestRender();
+    return checked;
   }
 
   /** Population maps have independent values, FOV coverage, and physical frame. */
@@ -716,6 +769,7 @@ export class VolumeRenderer {
     this.requestRender();
     if (!layer || this.replayActive) return null;
     validatePriorLayer(this.volume, layer);
+    this.setDiagnosticLayer(null, null);
     const snapshot: ViewerPriorLayer = {
       ...layer,
       values: layer.values.slice(),
@@ -1069,6 +1123,8 @@ export class VolumeRenderer {
     this.labelTexture.dispose();
     this.removedTexture.dispose();
     this.proposalTexture.dispose();
+    this.diagnosticStateTexture.dispose();
+    this.diagnosticCoverageTexture.dispose();
     this.priorTexture.dispose();
     this.priorCoverageTexture.dispose();
     this.renderer.dispose();

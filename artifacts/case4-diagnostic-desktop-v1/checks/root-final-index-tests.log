@@ -1,0 +1,203 @@
+✓ Lockfile passes supply-chain policies (verified 5d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 257ms using pnpm v11.25.0
+$ pnpm test:main && pnpm test:renderer && pnpm test:viewer
+$ node --test electron/*.test.cjs
+✔ registered arrays expose opaque, unique IDs and preserve verified bytes (17.735709ms)
+✔ recursive exposure handles nested arrays while stripping transfer paths (3.818ms)
+✔ unknown IDs, filesystem paths, and expired session IDs are rejected (3.231375ms)
+✔ registration rejects traversal, sibling-prefix directories, and escaped symlinks (5.382667ms)
+✔ registration permits a symlink resolving to an asset inside the same session (3.021291ms)
+✔ registered file replacement with an escaped symlink is rejected on read (3.331333ms)
+✔ changed file size, same-size corruption, and deletion are detected (3.448167ms)
+✔ directories cannot be read as transfer assets (6.499ms)
+✔ invalid dtype, shape, dimensions and overflowing layouts are rejected (4.635167ms)
+✔ declared byte lengths, endianness and memory order must match the array contract (3.176792ms)
+✔ invalid checksum syntax is rejected and a valid but wrong checksum fails on read (4.0665ms)
+✔ read-only inspection forwards the exact bound request and accepts canonical tool order (1.82025ms)
+✔ inspection refuses renderer paths, geometry, execution and learner controls before dispatch (0.333083ms)
+✔ inspection requires exact hash formats, bounded route IDs and explicit acknowledgments (0.22225ms)
+✔ inspection restricts tools to one or two distinct named native profiles (0.099792ms)
+✔ stale or substituted result identities cannot cross the main-process boundary (0.408834ms)
+✔ the bound request survives caller mutation and engine rejection is propagated without retry (0.104875ms)
+✔ oversized inspection data is refused before reaching the renderer (5.5365ms)
+✔ sidecar retains normal request IDs, progress and default budget without changing fixed-route APIs (1.421708ms)
+✔ cancelled inspection withholds late results while other request IDs remain live (0.396625ms)
+✔ preload exposes a named inspection method, not arbitrary operation execution (1.3575ms)
+✔ real main/preload binds metadata and execution IPC with 30 second bound and no artifact override (12.869292ms)
+✔ captures runtime transitive closure, omits dev tools and reports absent upstream text (36.384834ms)
+✔ refuses installed renderer versions missing from captured lock (5.134292ms)
+✔ binds notices to numerical executable and actual native payload (13.750458ms)
+✔ rejects stale engine notice inventories and altered upstream notice bytes (8.586ms)
+✔ rejects changed internal payload links even when the target bytes match (3.940083ms)
+✔ rejects notice inventory traversal and external symlinks (4.589083ms)
+✔ requires both Electron and Chromium upstream notices (2.411ms)
+✔ exact generated request supports only explicitly named fixture and selectors (0.689375ms)
+✔ actual source-bound generated episode accepted before asset exposure (7.669958ms)
+✔ main withholds changed tool (2.083459ms)
+✔ main withholds changed case (4.402917ms)
+✔ main withholds changed clinical (2.559917ms)
+✔ main withholds changed selector (2.29425ms)
+✔ main withholds changed raw serialization (0.981458ms)
+✔ IPC is advertised, request checked in main/sidecar, response checked before asset/event forwarding (0.348458ms)
+✔ sidecar accepts display-series without expiring primary assets (2.118375ms)
+✔ Electron runtime matches the resolved importer version, not its semver specifier (1.397041ms)
+✔ missing Electron or its resolved version fails without using packages, snapshots or specifier (0.12125ms)
+✔ duplicate or ambiguous importer resolutions are rejected (0.392875ms)
+✔ unsupported YAML aliases, merges, inline maps and schemas fail closed (0.101333ms)
+✔ local paths, semver ranges, peer suffixes and malformed installed versions are rejected (0.114334ms)
+✔ sidecar preserves primary assets and exposes only accepted companion (10.399ms)
+✔ sidecar rejects injected companion assets and re-sealed forward counts before traversal/event (16.210792ms)
+✔ real main/preload method passes only identities under bounded IPC timeout (9.992541ms)
+✔ main accepts only exact episode identity selection, never supplied private inputs (1.30175ms)
+✔ host validates scalar result and rejects added asset before traversal/events (3.50275ms)
+✔ sidecar advertises evaluator and preserves primary assets on accepted scalar report (3.065125ms)
+✔ actual main and preload expose only identity-selected evaluation through IPC (6.521125ms)
+✔ failed publication restores the previous app at its stable path (10.055625ms)
+✔ successful publication retains the prior app and installs the verified replacement (5.042334ms)
+✔ diagnostics rotate during a long-running app session (8.831666ms)
+✖ actual six-B replay traverses Electron main, sidecar and Python without an anatomical case (5.999833ms)
+✔ main refuses renderer paths, geometry, unknown studies and invalid state selectors before dispatch (1.077916ms)
+✔ preload exposes only the named operation and forwards its request unchanged (0.731875ms)
+✖ all 12 real phase/row states have the same Python and JavaScript transport digest (0.448708ms)
+✖ sidecar rejects corrupted real responses before asset traversal, event emission or resolution (0.463625ms)
+✔ packaged main and packaged sidecar omit new arguments for the existing bundled engine (1.976208ms)
+✔ fixed task request refuses trained selectors and caller-supplied goals/paths (1.244625ms)
+✔ both saved generated goal responses are separate v2 and bound to request (10.803708ms)
+✔ re-sealed private asset, training or altered reward contract refused before traversal (4.9125ms)
+✔ contact install expires previous actor assets only after valid response (2.2545ms)
+✔ real main/preload exposes only exact public-contact request with bounded timeout (3.493792ms)
+✔ source metadata cannot publish private transfer descriptors before asset exposure (3.581834ms)
+✔ plainArgs preserves allowed argument records, including null-prototype records (1.19925ms)
+✔ plainArgs rejects primitives, arrays and non-record objects accepted by structured cloning (0.269708ms)
+✔ plainArgs rejects undeclared operations and prototype-like own keys (0.222417ms)
+✔ plainArgs enforces its serialized byte limit, including multibyte text (2.881125ms)
+✔ plainArgs rejects arguments that cannot be serialized (0.088125ms)
+✔ assertSender accepts only the trusted window main frame at its exact URL (0.095125ms)
+✔ assertSender rejects another window, same-origin child frame, and destroyed window (0.08ms)
+✔ assertSender rejects navigation, URL suffixes and lookalike origins (0.063416ms)
+✔ assertSender accepts the configured development URL and rejects a different port (0.051583ms)
+✔ structural import uses only native selected paths after all dialogs complete (0.598792ms)
+✔ cancelling any structural dialog leaves the case untouched (0.082792ms)
+✔ renderer paths and unsupported variants are rejected before opening dialogs (0.394625ms)
+✔ complete synthetic protocol inventory is counted without treating previews as removal (1.296167ms)
+✔ LPS source grids and cached windows must retain their exact physical RAS geometry (0.599459ms)
+✔ complete supported STOP-only inventory remains an honest no-action result (0.206459ms)
+✔ receipt checker rejects stale identity, partial inventories, forged counts and clinical promotion (2.3535ms)
+✔ a missing required fallback and a fallback after primary acceptance are rejected (0.397792ms)
+✔ explicit path parser refuses defaults, duplicates, relative paths and unknown flags (0.11125ms)
+✔ cancellation before completion has one cancelled terminal and no published inventory (0.2695ms)
+✔ completion winning cancellation is recorded honestly instead of failing on cancelled false (0.174834ms)
+✔ a true cancellation acknowledgement followed by a successful result is inconsistent (0.228167ms)
+✔ raw wire verification catches a late result that a completed Sidecar promise would hide (0.209583ms)
+✔ mock workflow preserves raw result, rejects both acknowledgments and identities, never trains (0.887167ms)
+✔ raw inspection result is retained before a failed summary validation (0.77025ms)
+✔ old source and valid revalidated recorded workspace accepted by host envelope (4.964542ms)
+✔ host refuses stale source before clearing/exposing assets or sending result (1.444792ms)
+✔ host refuses stale admission before clearing/exposing assets or sending result (0.955542ms)
+✔ host refuses stale timing before clearing/exposing assets or sending result (0.808916ms)
+✔ host refuses stale geometry before clearing/exposing assets or sending result (1.271542ms)
+✔ host refuses stale selection before clearing/exposing assets or sending result (0.714167ms)
+✔ host refuses stale aux replay before clearing/exposing assets or sending result (0.817708ms)
+✔ valid loaded workspace is exposed before its renderer result (2.457542ms)
+ℹ tests 97
+ℹ suites 0
+ℹ pass 94
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.958791
+
+✖ failing tests:
+
+test at electron/observed-landmark-replay.test.cjs:47:1
+✖ actual six-B replay traverses Electron main, sidecar and Python without an anatomical case (5.999833ms)
+  Error: spawn /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python',
+    path: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python',
+    spawnargs: [ '-u', '-m', 'resectionlab.desktop_bridge', '--transfer-dir', '/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/observed-replay-7O04y2', '--observed-source-root', '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24' ]
+  }
+
+test at electron/observed-landmark-replay.test.cjs:128:1
+✖ all 12 real phase/row states have the same Python and JavaScript transport digest (0.448708ms)
+  Error: spawnSync /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at actualFrames (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:19:21)
+      at TestContext.<anonymous> (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:129:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python',
+    path: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python',
+    spawnargs: [ '-c', 'import json; from pathlib import Path; from resectionlab.observed_landmark_replay import ObservedLandmarkReplay,B_IDS,transport_digest; r=ObservedLandmarkReplay.load(Path.cwd()); frames=[r.advance(phase,row).frame() for phase in ("before","during") for row in B_IDS]; print(json.dumps([{"result":f,"digest":transport_digest(f)} for f in frames]))' ],
+    error: Error: spawnSync /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at actualFrames (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:19:21)
+        at TestContext.<anonymous> (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:129:18)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at electron/observed-landmark-replay.test.cjs:140:1
+✖ sidecar rejects corrupted real responses before asset traversal, event emission or resolution (0.463625ms)
+  Error: spawnSync /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at actualFrames (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:19:21)
+      at TestContext.<anonymous> (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:141:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python',
+    path: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python',
+    spawnargs: [ '-c', 'import json; from pathlib import Path; from resectionlab.observed_landmark_replay import ObservedLandmarkReplay,B_IDS,transport_digest; r=ObservedLandmarkReplay.load(Path.cwd()); frames=[r.advance(phase,row).frame() for phase in ("before","during") for row in B_IDS]; print(json.dumps([{"result":f,"digest":transport_digest(f)} for f in frames]))' ],
+    error: Error: spawnSync /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/.venv/bin/python ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at actualFrames (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:19:21)
+        at TestContext.<anonymous> (/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/scan-diagnostic-index-final.sv8glg24/desktop/electron/observed-landmark-replay.test.cjs:141:18)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+[ELIFECYCLE] Command failed with exit code 1.
+[ELIFECYCLE] Test failed. See above for more details.

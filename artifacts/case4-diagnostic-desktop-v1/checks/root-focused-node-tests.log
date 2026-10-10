@@ -1,0 +1,36 @@
+✔ invalid diagnostic request clears existing inspection modes before refusal (2748.982209ms)
+✔ hiding diagnostic alone leaves other modes intact (0.370709ms)
+✔ saved full episode envelope includes every shaft and tip cap before the first pose (2791.174708ms)
+✔ first replay installation fits full episode at narrow and wide pane aspect ratios (2.45375ms)
+✔ tool switches and frame scrubbing preserve a user orbit; explicit Fit uses the whole episode (5.423792ms)
+✔ new episode refits once while anatomy mode and replay hide/show do not reset orbit (0.479834ms)
+✔ rotated fractional capsules use both cap radii and reject mixed episode identities (0.30775ms)
+✔ inspection requires available planning identity even when case and grid agree (2728.436958ms)
+✔ same-identity cloned wrappers cannot resurrect cleared or replay-suppressed inspection (0.920917ms)
+✔ actual renderer gives all MRI planes one inspection capsule pair, preserves A/B, and clears invalid replacement (3.894667ms)
+✔ actual replay methods suppress both mesh and MRI inspection and cannot restore it when replay clears (2.4065ms)
+✔ rejected replay replacement also clears the earlier unexecuted tool (0.902ms)
+✔ selected-tool geometry warning does not inherit another preview's report-level warning (0.162458ms)
+✔ oblique LPS fixture creates the full physical capsule envelope without a second frame conversion (0.683667ms)
+✔ actual replay renderer installs recorded tool capsules and MRI uniforms, then clears them (43.2925ms)
+✔ generated signed state and separate coverage remain display-only (4.616792ms)
+✔ refuses wrong source before assets (0.246792ms)
+✔ refuses wrong series before assets (0.096583ms)
+✔ refuses metadata asset injection before assets (0.197875ms)
+✔ refuses asset alias before assets (0.157084ms)
+✔ refuses expanded bytes before assets (0.089917ms)
+✔ refuses clinical admission before assets (0.073667ms)
+✔ changed transfer and decoded affine refuse (0.932416ms)
+✔ main supplies picked path; renderer path override and cancelled pick cannot read (0.197959ms)
+✔ raw transfer envelope exposes only the two bounded slots (0.282042ms)
+✔ actual sidecar validates before any asset publication (5.5895ms)
+✔ source change before response refuses hydration and cannot install old diagnostic (0.694667ms)
+✔ source change or unmount during hydration refuses late diagnostic installation (0.169667ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3301.667375

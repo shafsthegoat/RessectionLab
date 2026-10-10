@@ -9,7 +9,7 @@ export function ImagingWorkspacePanel(props:{caseHash:string;series:DisplaySerie
       <option value="">Primary planning image</option>
       {props.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality} · separate image grid</option>)}
     </select></label>
-    {props.selectedId && <p className="muted-note">Separate native frame. Registration and same-person association are unverified. Planning overlays and episode replay are hidden.</p>}
+    {props.selectedId && <p className="muted-note">Separate image frame. Registration and same-person association are unverified. Planning overlays and episode replay are hidden.</p>}
     <label>Additional image modality<select aria-label="Additional image modality" value={modality} onChange={e=>setModality(e.target.value as DisplayModality)}>
       {(['T1','T1CE','T2','FLAIR','CT','CTA','TOF-MRA','MRA','SWI','other-3D-scalar'] as const).map(m=><option key={m}>{m}</option>)}
     </select></label>

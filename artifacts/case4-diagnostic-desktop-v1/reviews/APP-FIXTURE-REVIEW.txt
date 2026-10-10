@@ -1,0 +1,47 @@
+Diagnostic App extracted-fixture repair — SOURCE GO
+
+Patch: build/scan-diagnostic-app-fixture-repair-v1/source.patch
+SHA256 c829328277d7dc821e9ce5bc366e645c539465e1b7a71c8a571140bf4963edba
+Read-only git apply --check against current canonical files passed.
+
+Only two test fixtures change. Both ordinary-reopen VM contexts now supply the
+declared diagnostic.clear member. Each records a clear counter, requires exactly
+one clear before hydrateWorkspace begins, and requires exactly one after reopen.
+All existing family/contact reset, actor workflow, saved frame and visibility
+assertions remain. No production behavior, skip, mock of installCase itself, or
+assertion relaxation is introduced.
+
+Production ordering review
+App.installCase checks the requested case generation before any invalidation.
+For an active install it invalidates imaging and calls diagnostic.clear before
+the hydration await; successful hydration checks mounted/current generation
+again before publishing the new source and replay. useDiagnosticLayer.clear is
+a stable useCallback with no dependencies: it synchronously increments its
+request generation and schedules pending/view/error resets. The load path checks
+that generation, selected-object identity and mounted state both before and after
+asset hydration. An old diagnostic cannot publish across this reset, including
+when the reopened primary hash repeats. The empty-dependency install callback
+captures a stable clear function, not a changing selected-source closure.
+An unsuccessful new hydration leaves the temporary diagnostic cleared; this is
+existing fail-closed behavior and no production change is proposed.
+
+Reviewed production hashes:
+desktop/src/App.tsx
+  c74c7e1e8ad12341b9226fc12b3a0c8f200cfe9a4e717c296e9852e1496989d2
+desktop/src/use-diagnostic-layer.ts
+  95243bc687e4ec9649d5c5db489865d7ff0c4ed5c51adc75aac3e64b6f374b7c
+
+Baseline -> proposed hashes (copies preserved in baseline/ and stage/):
+desktop/tests/contact-family-app.test.mjs
+  67d35edcc98b26d65a22ddb518009bd4e86b2aca42bf23a25362fc32e4b61b89
+  3ad1dd89c008f151670661b37b1db32aea3958d0f76cfc0c39310785e1de3042
+desktop/tests/public-contact-app.test.mjs
+  68fc66eb588383ac15405cd5180b0d2b58f2091263b06f1c25fff49c5ffd28b5
+  f17faacecca105c3c66f5d5d836428787fd9e2b4000f1a31380fee77717bbc8e
+
+Read root's retained root-all-desktop-tests.log: renderer 336/338 passed; these
+two extracted callbacks failed with ReferenceError: diagnostic is not defined.
+The viewer stage was not reached. No passing result for the repair is claimed.
+Root owns promotion and rerun. Review used source/log reads, ignored source
+editing, hashing and apply --check only. No tests, imports, model/native/UI run,
+patient arrays or tracked writes.

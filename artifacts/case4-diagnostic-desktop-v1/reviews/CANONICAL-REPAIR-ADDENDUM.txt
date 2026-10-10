@@ -1,0 +1,53 @@
+Narrow canonical integration repair review — GO
+
+This addendum preserves the original source-only REPORT.txt and its SHA256
+52b51fcd64f9a81f56407bb541472a0994b089abe99f19ca2295e298f7f7d8e0.
+Root's subsequent actual generated BridgeRuntime test exposed a production
+call-path defect missed by that static review. No real diagnostic UI load had
+occurred at the point of these fixes.
+
+Independently compared canonical bytes with the frozen candidate:
+
+1. workspace_diagnostic.py has exactly one production delta: the descriptor
+   _path call now uses kind='json' instead of kind='diagnostic JSON'. The existing
+   _path helper accepts only case/json/NIfTI keys; the former value necessarily
+   raised KeyError before the pinned descriptor could load. The correction uses
+   the existing absolute-path, no-symlink, .json suffix and regular-file/size
+   checks. Descriptor pin, selected source/frame checks, decoded signed-state
+   validation and all nonplanning behavior are unchanged.
+   Canonical SHA256:
+   0252b5f5adca99767d533d6f49a2cad7520a539b39ec3eef3e676ff8e72bc29b
+
+2. test_workspace_diagnostic_bridge.py changes only the generated primary image
+   from constant ones to float32 arange(8).reshape(2,2,2), and adds an explicit
+   result-event assertion before reading its result. This passes the existing
+   source-intensity-variation admission without weakening it. The actual import
+   chain still checks unpublished refusal, signed transfer types, selected
+   series/case identity and unchanged primary CaseData object/hash.
+   Canonical SHA256:
+   c27fbe8355c8ae875ad68a13ad9e8ce9353c7c139ff33f06b56dcf783f89cf08
+
+3. ImagingWorkspacePanel.tsx changes only two displayed phrases against the
+   frozen stage: 'native-grid display' becomes 'separate image grid', and
+   'Separate native frame' becomes 'Separate image frame'. Registration and
+   same-person association remain explicitly unverified. No coordinates, grid,
+   selection, overlay rule or data logic changes.
+   Canonical SHA256:
+   18d97d9c50c9dd4ec627c2a5cb43f839325f1263a0506b331fa612dce52e72e3
+
+Read root's retained evidence, without rerunning it:
+- root-python-tests.log: eight file controls passed; Bridge fixture failed.
+- root-bridge-failure-diagnostic.log: constant source refusal made explicit.
+- root-python-tests-fixed.log: after source fixture repair, eight file controls
+  passed and the real operation exposed the unsupported _path kind.
+- root-python-tests-repaired.log: all nine generated importer/Bridge controls
+  passed in 0.42 seconds after the one-argument production fix.
+Final log SHA256:
+5d89c643a3a1f03b310c4d048040dd9c8e729af7a6b897fb3080783344dd9608
+All logs are under build/scan-diagnostic-desktop-v1/; negatives remain preserved.
+
+No remaining blocker in these narrow deltas. This addendum confirms source
+correctness and records root's generated runtime evidence, not an independent
+test rerun or real-patient display/accuracy/clinical acceptance. Review activity
+was source/diff/log reading and hashing only; no imports, tests, arrays, model,
+native execution, replay or Electron work. No tracked writes.

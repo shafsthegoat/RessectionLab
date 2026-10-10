@@ -1,0 +1,207 @@
+{
+  "version": "scan-diagnostic-desktop-proposal-v1",
+  "status": "SOURCE_REVIEW_READY_RUNTIME_CHECKS_HELD",
+  "files": [
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/resectionlab/workspace_diagnostic.py",
+      "target": "src/resectionlab/workspace_diagnostic.py",
+      "sha256": "a74ffe719014272814d72c059f574f98e54f35b1229b99fb4595ab0621e83440",
+      "bytes": 7223,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/resectionlab/desktop_bridge.py",
+      "target": "src/resectionlab/desktop_bridge.py",
+      "sha256": "1e2742b6b3a525d9e0acd562f6c77a1521475faf0d736be9a508cb314599e77c",
+      "bytes": 120969,
+      "beforeSha256": "30d81383243919bf73309b0d3b8ccbcd63c48d3a7b63b6e8eb5941a56395e6bd"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/types.ts",
+      "target": "desktop/src/types.ts",
+      "sha256": "6b240304add488a6e853eef111a6e25882855fcb71ecf3da4a453a3a60036085",
+      "bytes": 14710,
+      "beforeSha256": "eefa72e534e0b753e3f9129fe04d128101144061d9c9ae7dad5c67a7af78f3fb"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/scan-diagnostic-data.ts",
+      "target": "desktop/src/scan-diagnostic-data.ts",
+      "sha256": "8ef32a8895962e57071639eea98fecaddbd8ea6e2f7d5d7a8f0838d70fc31854",
+      "bytes": 2543,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/scan-diagnostic-contract.ts",
+      "target": "desktop/src/scan-diagnostic-contract.ts",
+      "sha256": "af85f63c7e7e27290a81a7fde7f4ead16200e8e9861366f7d59060ebd8bfc5ad",
+      "bytes": 3485,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/use-diagnostic-layer.ts",
+      "target": "desktop/src/use-diagnostic-layer.ts",
+      "sha256": "95243bc687e4ec9649d5c5db489865d7ff0c4ed5c51adc75aac3e64b6f374b7c",
+      "bytes": 1650,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/diagnosticLayer.ts",
+      "target": "desktop/src/viewer/diagnosticLayer.ts",
+      "sha256": "a3e43a2ee875cdb2f6e937ae6f180005f5c0da8dd83f306079eb372ddebf3d0e",
+      "bytes": 5697,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/contracts.ts",
+      "target": "desktop/src/viewer/contracts.ts",
+      "sha256": "55c79edd761dfc9c1c029792f440900a077a43c74f9081e781ec0534f1303b27",
+      "bytes": 3255,
+      "beforeSha256": "63252df005839ac8c5512a3a3c709afb72b36e308e5c245b668f4889838cc8ee"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/ViewerWorkspace.tsx",
+      "target": "desktop/src/viewer/ViewerWorkspace.tsx",
+      "sha256": "6aad40add19d2f1c0676865454d0f1a4c11b3e53b93d69198b1fc2084b47d27a",
+      "bytes": 30045,
+      "beforeSha256": "9c2df8c89285fb7d9f48eab9482d388a4b4831143e784f0e825964508106c8bd"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/VolumeRenderer.ts",
+      "target": "desktop/src/viewer/VolumeRenderer.ts",
+      "sha256": "4d4b1507a01ae9f42d09bec37b5056b385e43410a419ff8a84a8d522d3e92a71",
+      "bytes": 43910,
+      "beforeSha256": "5037f42d9cbad88b8a86fbd951d2578b0784e1bc1c57e841fddc1cdebec846a0"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/shaders.ts",
+      "target": "desktop/src/viewer/shaders.ts",
+      "sha256": "356b5a490cb8843a4b9a2465468366791b2fe9e53770dfd11c34aa7a4e6f5118",
+      "bytes": 8840,
+      "beforeSha256": "7501b3a47996b825e13b98f0b5ce2a33e481b150fecdec6fa3b7b8e3dc00b0fe"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/electron/diagnostic-import.cjs",
+      "target": "desktop/electron/diagnostic-import.cjs",
+      "sha256": "eeef29b398a6be7c950c8c9916ad7cc2e11efdd3a733a7ef14cda592944f9fc0",
+      "bytes": 430,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/electron/diagnostic-contract.cjs",
+      "target": "desktop/electron/diagnostic-contract.cjs",
+      "sha256": "41e54ea117e54e96cd5e132d84b96668672550a3f832bc1621790f6291c895a1",
+      "bytes": 3533,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/electron/main.cjs",
+      "target": "desktop/electron/main.cjs",
+      "sha256": "1fd412b5bd36a4eee10e05c89bc95960fc42476dd7dee6522139c8ee7dd61387",
+      "bytes": 11717,
+      "beforeSha256": "2757736d4d28d3ead4b436fa4ce391e452bf1b175a50df808c9a7967f4ba7138"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/electron/preload.cjs",
+      "target": "desktop/electron/preload.cjs",
+      "sha256": "97d3d5fc54c5e5bff7abbc02262bb4872470f2a839cc72effc513929ab6bbb6d",
+      "bytes": 2855,
+      "beforeSha256": "6afae381c05211ef54d05407c365eddbf642c9315b491f76d3d3350d9644ffa4"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/electron/sidecar.cjs",
+      "target": "desktop/electron/sidecar.cjs",
+      "sha256": "afca03faaee75d451b54f0cc3d38748a8b700c25aae9be05ffcde09c31a84d23",
+      "bytes": 10200,
+      "beforeSha256": "5f1d505a9ecf17b0987911a0aa8a194116f2d8c870c1c0fcf517f5d4b7ad47ab"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/tests/diagnostic-import.test.mjs",
+      "target": "desktop/tests/diagnostic-import.test.mjs",
+      "sha256": "7ed355eabbaa432527d4d471d037e9944c2a9e6e6bbb873917c12ff63f68384b",
+      "bytes": 5461,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/tests/diagnostic-race.test.mjs",
+      "target": "desktop/tests/diagnostic-race.test.mjs",
+      "sha256": "131f7ee4d8e3658dd119f7d7e5c2c269c1d1e73e5f279929d5e78c551c7316a4",
+      "bytes": 1778,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/tests/test_workspace_diagnostic.py",
+      "target": "tests/test_workspace_diagnostic.py",
+      "sha256": "f26c93b8d9e1e059f30988e703236e0884adb54864b3a79314032bb3e1490e88",
+      "bytes": 2541,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/tests/test_workspace_diagnostic_bridge.py",
+      "target": "tests/test_workspace_diagnostic_bridge.py",
+      "sha256": "7e2048de20038e01de047b9c7b1b7a266edef5c61b5eb6f2d23d01a567dcb024",
+      "bytes": 2329,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/diagnosticRendererTransition.test.mjs",
+      "target": "desktop/src/viewer/diagnosticRendererTransition.test.mjs",
+      "sha256": "435448ba36302af2dc6c47f9065a9202865f92637e817e40c697d81f97754d51",
+      "bytes": 2408,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/episodeCamera.test.mjs",
+      "target": "desktop/src/viewer/episodeCamera.test.mjs",
+      "sha256": "55cf840f45634daf3fd6314ff624b055082e7f96c7a2e6db4be2fa960fddb7d3",
+      "bytes": 6623,
+      "beforeSha256": "532a8d8a7d1aed086ae8c00de2803cd35287eb0766f1bfc2a0e3ed791c169a46"
+    },
+    {
+      "source": "build/scan-diagnostic-desktop-v1/stage/desktop/src/viewer/inspectionTool-independent.test.mjs",
+      "target": "desktop/src/viewer/inspectionTool-independent.test.mjs",
+      "sha256": "4aa6a5abce0fd81fe5114fef198d395bcc7457a9a3b216eb9d49c949b0be31d9",
+      "bytes": 11810,
+      "beforeSha256": "7644b090c3d2c9fa01ccd95ea447baaba8924300b3cd7a458746f84e48b32fab"
+    }
+  ],
+  "app": {
+    "target": "desktop/src/App.tsx",
+    "worktreeBaseline": {
+      "sha256": "ad4d290cae1aa9eac65e585b03b9f6c1fabc4efdea20ac1b1d7ad220b5831845",
+      "bytes": 84430
+    },
+    "worktreeAfter": {
+      "sha256": "c74c7e1e8ad12341b9226fc12b3a0c8f200cfe9a4e717c296e9852e1496989d2",
+      "bytes": 85799
+    },
+    "worktreePatch": {
+      "sha256": "df16e496128cccfed631995e42704623d1263c8898e03f4345a0369e045cf076",
+      "bytes": 4146
+    },
+    "cleanHeadBaseline": {
+      "sha256": "0491ac9b0ff068890aca8666bcd28ec0c08d6299032b211fde8f670ae1fc9a7c",
+      "bytes": 79147
+    },
+    "cleanHeadAfter": {
+      "sha256": "9be043ca876e94d4281e8b5580b74eeb3a8b3fa66be39ba37a1ea936490c9be8",
+      "bytes": 80516
+    },
+    "cleanHeadPatch": {
+      "sha256": "2cc64a93cc2b6a6101958d802bd0835dff3da6ff2e5521227e9a8fc964930e8b",
+      "bytes": 4102
+    }
+  },
+  "scope": {
+    "descriptorPin": "d5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4",
+    "patientPayloadReads": 0,
+    "modelCalls": 0,
+    "actualDiagnosticDisplayed": false
+  },
+  "validation": {
+    "pureNode": 13,
+    "generatedNifti": 8,
+    "typecheck": "passed before final renderer clearing-order repair and canonical test bootstrap",
+    "bridgeTest": "written, not yet run under root compute hold",
+    "rendererVisual": "not run"
+  }
+}

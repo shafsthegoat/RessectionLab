@@ -1,0 +1,7 @@
+2026-10-10T04:34:14.781Z Starting 0.2.0 (development)
+Error occurred in handler for 'research:importDiagnosticLayer': [Error: ENOENT: no such file or directory, realpath '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-mUttln/bridge-pdtryts3/f5791a6573d49a3897c8358e7795433b68714d532a5ea8441ce66f6d669ced83.bin'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'realpath',
+  path: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-mUttln/bridge-pdtryts3/f5791a6573d49a3897c8358e7795433b68714d532a5ea8441ce66f6d669ced83.bin'
+}

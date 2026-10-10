@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   createSyntheticCase: () => ipcRenderer.invoke('research:createSyntheticCase'),
   openCase: () => ipcRenderer.invoke('research:openCase'),
   importNifti: () => ipcRenderer.invoke('research:importNifti'),
+  importDiagnosticLayer: args => ipcRenderer.invoke('research:importDiagnosticLayer', args),
   importDisplaySeries: args => ipcRenderer.invoke('research:importDisplaySeries', args),
   importStructuralEvidence: args => ipcRenderer.invoke('research:importStructuralEvidence', args || {}),
   saveCase: args => ipcRenderer.invoke('research:saveCase', args || {}),

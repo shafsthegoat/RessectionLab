@@ -33,6 +33,10 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  /** Separate, unreviewed scan diagnostic; never becomes a CaseData compartment. */
+  diagnosticLayer?: import("./diagnosticLayer").LoadedDiagnosticLayer | null;
+  /** SHA-256 of the selected, displayed atlas-grid T1c image bytes. */
+  diagnosticSourceSha256?: string | null;
   publicGoal?: import('./publicGoal').ViewerPublicGoal | null;
   /** Analytic software-fixture intensities; never an acquired MRI. */
   generatedSignal?: boolean;

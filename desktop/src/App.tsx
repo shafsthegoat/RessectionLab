@@ -1,3 +1,4 @@
+import {useDiagnosticLayer} from "./use-diagnostic-layer";
 import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
 import { useWorkspaceImaging } from "./use-workspace-imaging";
 import { workspaceDisplay } from "./workspace-imaging-data";
@@ -620,12 +621,13 @@ export default function App() {
   const viewerCase = useMemo(() => caseData ? {...caseData, planningHash: payload?.planningHash} : null,
     [caseData, payload?.planningHash]);
   const display = workspaceDisplay(viewerCase, imaging.selected);
+  const diagnostic = useDiagnosticLayer(imaging.selected, api);
   const displayedCase = display.caseData;
   const displayedSource = imaging.selected?.descriptor.volume ?? payload;
   const displayedCursor = imaging.selected ? imaging.cursor : cursor;
   const displayedLayers = imaging.selected ? imaging.visibleLayers : visibleLayers;
   const setDisplayedLayers = imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
-  const busy = !!operation || hydrating || episodePending || imaging.pending;
+  const busy = !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = busy || engineStopped || !display.planningInteractionPermitted;
   const comparisonAvailable = !readonly && !engineStopped && engineOperations.has("inspectDevelopmentEpisodeComparison");
@@ -685,6 +687,7 @@ export default function App() {
       const generation = requestedGeneration ?? ++caseGeneration.current;
       if (generation !== caseGeneration.current) return false;
       imaging.invalidate();
+      diagnostic.clear();
       setEpisodeVisible(false);
       setHydrating(true);
       setError(null);
@@ -1394,6 +1397,15 @@ export default function App() {
             <FlaskConical size={15} /> Open generated episode
           </button>
         )}
+        {imaging.selected && <section className="control-section" aria-label="Saved model diagnostic">
+          <h2>Saved diagnostic</h2>
+          <p className="muted-note">Select the prepared atlas T1c, then load its saved diagnostic. This layer is unreviewed, temporary and excluded from planning.</p>
+          <button className="outline-button" disabled={busy || engineStopped || readonly || !api?.importDiagnosticLayer || !engineOperations.has("importDiagnosticLayer")}
+            onClick={()=>void diagnostic.load()}>{diagnostic.pending ? "Loading diagnostic…" : "Load diagnostic"}</button>
+          {diagnostic.view && <><p className="muted-note">Coral contour: model-positive candidate. Neutral hatching: unknown output coverage. Covered negatives leave the MRI unchanged.</p>
+            <button className="text-button" onClick={diagnostic.clear}>Remove diagnostic layer</button></>}
+          {diagnostic.error && <p role="alert" className="muted-note">{diagnostic.error}</p>}
+        </section>}
         {payload && <ImagingWorkspacePanel caseHash={payload.caseHash} series={imaging.series} selectedId={imaging.selectedId}
           busy={busy || engineStopped} importAvailable={!!api?.importDisplaySeries && engineOperations.has("importDisplaySeries") && !readonly}
           onSelect={imaging.select} onImport={request => void act(() => imaging.importSeries(request))} />}
@@ -1479,7 +1491,7 @@ export default function App() {
           )}
           <div className="opacity-control">
             <label htmlFor="opacity">
-              Overlay opacity <span>{Math.round(overlayOpacity * 100)}%</span>
+              {diagnostic.view ? "Diagnostic opacity" : "Overlay opacity"} <span>{Math.round(overlayOpacity * 100)}%</span>
             </label>
             <input
               id="opacity"
@@ -1642,6 +1654,8 @@ export default function App() {
         <div className="viewer-shell">
           {caseData && (
             <ViewerWorkspace
+              diagnosticLayer={diagnostic.view?.layer ?? null}
+              diagnosticSourceSha256={diagnostic.view?.sourceSha256 ?? null}
               generatedSignal={display.primaryOverlaysPermitted && synthetic}
               publicGoal={display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={displayedCase}

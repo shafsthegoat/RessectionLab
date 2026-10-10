@@ -29,6 +29,8 @@ function renderer(volume,width=720,height=800){
     panes:{anatomy:{getBoundingClientRect:()=>({width,height}),dataset:{}}},surfaces:new Map(),instrumentDisplay:new InstrumentDisplayState(),
     tools:new THREE.Group(),inspectionTools:new THREE.Group(),recordedTools:new THREE.Group(),recordedDisplay:null,anatomy:new THREE.Group(),
     replayBounds:null,fittedReplayId:null,replayGroup:new THREE.Group(),replayGeneration:0,replayWorker:null,pendingReplayGroup:null,replayActive:false,disposed:false,
+    diagnosticStateTexture:new THREE.Data3DTexture(new Uint8Array(1),1,1,1),
+    diagnosticCoverageTexture:new THREE.Data3DTexture(new Uint8Array(1),1,1,1),
     removedTexture:new THREE.Data3DTexture(new Uint8Array(1),1,1,1),materials:()=>[],requestRender(){},onSurfaceStatus(){},onReplayError(){},setStructuralProposal(){},setPriorLayer(){},mode:'instruments'});
   return r;
 }
