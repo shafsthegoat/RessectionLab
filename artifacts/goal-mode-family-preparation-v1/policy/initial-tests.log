@@ -1,0 +1,93 @@
+...............FFF..                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_public_features_can_change_untrained_outputs[goal] ____________
+
+model = GoalModeSpatialPolicy(
+  (encoder): Sequential(
+    (0): Conv3d(24, 2, kernel_size=(3, 3, 3), stride=(1, 1, 1), paddin...eatures=100, out_features=8, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+kind = 'goal'
+
+    @pytest.mark.parametrize("kind", ["scan", "support", "cavity", "goal", "contact", "mode"])
+    def test_public_features_can_change_untrained_outputs(model, kind):
+        # Architectural sensitivity only; this does not measure learned utility.
+        obs = observation()
+        if kind == "goal": other = observation(goal=(3, 2, 3))
+        elif kind == "contact": other = observation(contact=True)
+        elif kind == "mode": other = observation(modes=("stop", "probe", "aspirate"))
+        else: other = observation(channel_change=kind)
+        with torch.no_grad():
+            logits, value = model(obs, context=context(obs))
+            changed, other_value = model(other, context=context(other))
+>       assert not torch.equal(logits, changed)
+E       assert not True
+E        +  where True = <built-in method equal of type object at 0x10d6e53a0>(tensor([-0.0129,  0.0186, -0.0591]), tensor([-0.0129,  0.0186, -0.0591]))
+E        +    where <built-in method equal of type object at 0x10d6e53a0> = torch.equal
+
+build/goal-conditioned-policy-v1/stage/tests/test_goal_mode_spatial_policy.py:155: AssertionError
+__________ test_public_features_can_change_untrained_outputs[contact] __________
+
+model = GoalModeSpatialPolicy(
+  (encoder): Sequential(
+    (0): Conv3d(24, 2, kernel_size=(3, 3, 3), stride=(1, 1, 1), paddin...eatures=100, out_features=8, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+kind = 'contact'
+
+    @pytest.mark.parametrize("kind", ["scan", "support", "cavity", "goal", "contact", "mode"])
+    def test_public_features_can_change_untrained_outputs(model, kind):
+        # Architectural sensitivity only; this does not measure learned utility.
+        obs = observation()
+        if kind == "goal": other = observation(goal=(3, 2, 3))
+        elif kind == "contact": other = observation(contact=True)
+        elif kind == "mode": other = observation(modes=("stop", "probe", "aspirate"))
+        else: other = observation(channel_change=kind)
+        with torch.no_grad():
+            logits, value = model(obs, context=context(obs))
+            changed, other_value = model(other, context=context(other))
+>       assert not torch.equal(logits, changed)
+E       assert not True
+E        +  where True = <built-in method equal of type object at 0x10d6e53a0>(tensor([-0.0129,  0.0186, -0.0591]), tensor([-0.0129,  0.0186, -0.0591]))
+E        +    where <built-in method equal of type object at 0x10d6e53a0> = torch.equal
+
+build/goal-conditioned-policy-v1/stage/tests/test_goal_mode_spatial_policy.py:155: AssertionError
+___________ test_public_features_can_change_untrained_outputs[mode] ____________
+
+model = GoalModeSpatialPolicy(
+  (encoder): Sequential(
+    (0): Conv3d(24, 2, kernel_size=(3, 3, 3), stride=(1, 1, 1), paddin...eatures=100, out_features=8, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+kind = 'mode'
+
+    @pytest.mark.parametrize("kind", ["scan", "support", "cavity", "goal", "contact", "mode"])
+    def test_public_features_can_change_untrained_outputs(model, kind):
+        # Architectural sensitivity only; this does not measure learned utility.
+        obs = observation()
+        if kind == "goal": other = observation(goal=(3, 2, 3))
+        elif kind == "contact": other = observation(contact=True)
+        elif kind == "mode": other = observation(modes=("stop", "probe", "aspirate"))
+        else: other = observation(channel_change=kind)
+        with torch.no_grad():
+            logits, value = model(obs, context=context(obs))
+            changed, other_value = model(other, context=context(other))
+        assert not torch.equal(logits, changed)
+>       assert not torch.equal(value, other_value)
+E       assert not True
+E        +  where True = <built-in method equal of type object at 0x10d6e53a0>(tensor(-0.0201), tensor(-0.0201))
+E        +    where <built-in method equal of type object at 0x10d6e53a0> = torch.equal
+
+build/goal-conditioned-policy-v1/stage/tests/test_goal_mode_spatial_policy.py:156: AssertionError
+=========================== short test summary info ============================
+FAILED build/goal-conditioned-policy-v1/stage/tests/test_goal_mode_spatial_policy.py::test_public_features_can_change_untrained_outputs[goal]
+FAILED build/goal-conditioned-policy-v1/stage/tests/test_goal_mode_spatial_policy.py::test_public_features_can_change_untrained_outputs[contact]
+FAILED build/goal-conditioned-policy-v1/stage/tests/test_goal_mode_spatial_policy.py::test_public_features_can_change_untrained_outputs[mode]
+3 failed, 17 passed in 0.59s
+{"exit_code": 1, "wall_seconds": 1.36557558295317, "torch_threads": 1, "torch_interop_threads": 1, "native_transitions": 0, "optimizer_steps": 0, "checkpoint_loads": 0, "patient_reads": 0}

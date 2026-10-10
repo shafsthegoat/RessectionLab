@@ -1,0 +1,115 @@
+Independent review — goal/mode policy and shared-task planning adapter
+
+Decision: GO for exact three-file source promotion. No substantive defect found
+in the reviewed input adapter, actor, repaired candidate critic or shared-task
+planner. This is software/forward/gradient-path evidence, not learned policy
+quality, training admission, checkpoint lineage, medical validity or deployment.
+The author's separate learning-stage work is outside this review.
+
+Candidate: build/goal-conditioned-policy-v1
+promotion.json SHA256 71f49c4b75f5bb2cc9403b23c5ce4f538329d08b5680e90e278104c8ab45e21b
+promotion.patch SHA256 389977237f809d86e3186591aa35909c792cafb7de11a7e86b3dac1ef64995b4
+policy source cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a
+planner source 8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2
+author tests 12773c247425c802e1ecc53e8899f0e7049d8b53a6413cf84cbc56e4f336281b
+The patch applies cleanly. Dependencies match the promotion map; canonical
+public_surface_contact.py also matches the reviewed def4c741... task dependency.
+
+Information and geometry boundary
+
+Each forward/act requires exact goal/mode DTO and separately captured context.
+Source, goal, objective, decision model, crop origin, goal-grid digest, affine
+and horizon checks occur before the encoder. The neural inputs contain public
+image/coverage/availability planes, procedure state, physical tool geometry,
+source-grid ray samples and action modes. Identity strings are not embeddings.
+No task object, reference target, reward, hidden material property or evaluator
+outcome is passed to the actor. The six inherited nominal channels keep their
+existing permitted-provenance rules. The new channels are the public goal and
+committed observed probe-contact grid.
+
+These are consistency checks against a task-captured context, not authentication
+of an arbitrary producer's mode or anatomy claims. A consumer must not create a
+new self-issued context from substituted observations. The authoritative task,
+source and legal-action certificates remain the provenance boundary.
+
+Structural availability concern: SpatialObservation requires structural data
+and nonempty coverage. A correctly reconstructed unavailable structural channel
+is refused as ESSENTIAL_EVIDENCE_MISSING before a goal DTO or encoder can be used;
+post-construction availability mutation is also refused. Thus structural
+availability is true for every admitted input. Goal/contact availability planes
+of ones mean those task-created channels exist globally and are equivalent to
+structural availability on this accepted domain. Their values and voxel coverage
+remain masked by structural coverage; a coverage hole has false coverage and
+zero value, not a claim of observed absence. Both cases were independently
+tested. No source repair was required for this concern.
+
+The existing physical normalization and ray sampler are reused directly.
+Independent rigid-frame translation with consistently translated affine,
+actions and access leaves inputs/outputs unchanged; reusing the original frame
+context rejects the moved observation. Candidate-row permutations permute only
+logits and leave value unchanged. Renaming action/tool IDs gives identical
+outputs. STOP-first tie behavior remains explicitly inventory-dependent.
+
+Actor, critic and gradients
+
+The repaired critic groups legal candidate geometry/ray summaries separately
+for aspiration and probe. Mode swaps between different candidate geometries
+can therefore affect value; absent groups are zero and exhausted masked
+candidates contribute nothing. The tested default enables this candidate
+context. An explicit config can disable it under a distinct architecture hash.
+Mean/max pooling still loses within-mode associations and is not a complete
+state representation or a guarantee of learnability.
+
+One generated backward control, without any optimizer step, verified finite
+gradients through all parameter groups and nonzero paths to goal/contact
+encoder channels, actor mode inputs and both critic mode summaries. Parameter
+hash was unchanged by that backward call. Deterministic positive test tensors
+were used to keep paths active; this does not assert every random ReLU network
+will be sensitive to every feature or that trained behavior will be useful.
+The author's initial 17-pass/3-failure log and initial source remain preserved;
+their hashes are bound in promotion-check.json.
+
+Actual shared-task adapter check
+
+The previously source-only planner was exercised on the real generated
+SurfaceContactTask using explicitly handwired test weights: prefer a legal
+probe, otherwise the first aspiration, over STOP. Actual forward/act calls
+produced a two-action aspiration/probe plan. It was source/decision/context
+bound, sealed, and reproduced by authoritative complete-strategy execution,
+including full native history, withdrawal frames, geometry audit and +0.708
+public return. This is a plumbing fixture, not a learned result.
+
+The original task remains unchanged because planning uses its public planning
+clone. Model train/eval flag is restored; ordinary inference creates no
+gradients or parameter changes. Changing private reference labels between zero
+and one cannot alter the sealed plan or accounting. Changed weights during
+planning, a nonfresh task and a wrong context are rejected; original task state
+is preserved on failure. The accounting accurately limits itself to planning
+forwards/transitions. Inventory certification, authoritative execution/replay,
+wall time and memory still require caller-level accounting.
+
+Architecture and checkpoint identities are distinct from legacy aspiration.
+checkpoint_identity reports parameter/architecture identity and explicitly
+does not attest training. No loader or training/loss admission is added. Actual
+desktop selector/export wiring and verified learning/checkpoint lineage remain
+separate integration work. No old weights were loaded or reinterpreted.
+
+Validation and scope
+
+30 generated controls passed in 1.04 seconds: the author's 22 plus eight
+independent tests. The externally bounded one-thread child completed in
+2.299 seconds under a 30-second cap. Torch intra/inter-op threads were both one;
+process peak RSS was 305905664 bytes. Ten generated shared-task transition
+commits occurred across normal replay and negative/invariance controls. There
+were zero native solver calls, optimizer steps, checkpoint loads, patient reads
+or training runs. Test tensors were assigned explicitly, including one deliberate
+mutation for the refusal check; no fitted or claimed trained weights exist.
+
+The child denied subprocess/network access and original data, model/image and
+native-mechanics payload reads. All bound candidate/dependency/production source
+bytes were unchanged before/after. No tests failed or timed out. Only ignored
+review artifacts were written; no tracked or neighboring work was edited.
+
+Commands from repository root:
+  .venv/bin/python -B build/goal-conditioned-policy-independent-v1/run_review.py
+  git apply --check build/goal-conditioned-policy-v1/promotion.patch

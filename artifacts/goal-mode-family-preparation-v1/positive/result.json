@@ -1,0 +1,3149 @@
+{
+  "actor_forwards": 0,
+  "counts_by_stage": {
+    "pcf-00:context_and_inventory": {
+      "inventory_requests": 5
+    },
+    "pcf-00:execute_stop": {
+      "inventory_requests": 3,
+      "stop_transitions": 1,
+      "terminal_inventory_builds": 1
+    },
+    "pcf-00:factory": {
+      "active_inventory_builds": 1,
+      "geometry_previews": 15,
+      "inventory_requests": 1
+    },
+    "pcf-00:seal_stop": {
+      "active_inventory_builds": 1,
+      "geometry_previews": 15,
+      "inventory_requests": 3,
+      "stop_transitions": 1,
+      "terminal_inventory_builds": 1
+    },
+    "pcf-00:verify_replay": {
+      "active_inventory_builds": 1,
+      "geometry_previews": 15,
+      "inventory_requests": 3,
+      "stop_transitions": 1,
+      "terminal_inventory_builds": 1
+    },
+    "pcf-06:context_and_inventory": {
+      "inventory_requests": 5
+    },
+    "pcf-06:execute_stop": {
+      "inventory_requests": 3,
+      "stop_transitions": 1,
+      "terminal_inventory_builds": 1
+    },
+    "pcf-06:factory": {
+      "active_inventory_builds": 1,
+      "geometry_previews": 15,
+      "inventory_requests": 1
+    },
+    "pcf-06:seal_stop": {
+      "active_inventory_builds": 1,
+      "geometry_previews": 15,
+      "inventory_requests": 3,
+      "stop_transitions": 1,
+      "terminal_inventory_builds": 1
+    },
+    "pcf-06:verify_replay": {
+      "active_inventory_builds": 1,
+      "geometry_previews": 15,
+      "inventory_requests": 3,
+      "stop_transitions": 1,
+      "terminal_inventory_builds": 1
+    }
+  },
+  "elapsed_seconds": 0.23171870806254447,
+  "held_out_task_executions": 0,
+  "optimizer_updates": 0,
+  "patient_reads": 0,
+  "rows": [
+    {
+      "assertions_passed": true,
+      "binding": {
+        "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+        "experiment_hash": "sha256:21f2de5cb5f968dec7a44fca1b0d9c6de56f1ced64cb09bb8cdaa4ac4d4765fc",
+        "family_hash": "sha256:7a4d4d7cbb9eec9702a6e333e85d14af5b0928290b806774cde1d70858b58523",
+        "goal_id": "surface",
+        "layout_id": "pcf-06",
+        "objective_hash": "sha256:6e4d568e4d95e1f5908f733440d07c93b317d4302a42ff9ba76405531a25d618",
+        "recipe_hash": "sha256:500c1619dc10d913de334286f1731c1502b1b62760634b32046205cc07a02b42",
+        "role": "TRAIN",
+        "scope": "generated_forward_context_only",
+        "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+        "training_admission": false,
+        "version": "generated-public-contact-family-v1"
+      },
+      "context": {
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+        "declaration_hash": "sha256:f0e3dc2691c3ddc354f9cdcb55912c9ac0584ae0d9207fa9e9e0fbee8929019b",
+        "goal_grid_hash": "sha256:9227c51ae371dc1c98b4232ec692a8d6f16ba6aba0b4895fa0a8891d0fe44ec1",
+        "objective_hash": "sha256:6e4d568e4d95e1f5908f733440d07c93b317d4302a42ff9ba76405531a25d618",
+        "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+        "version": "generated-public-contact-context-v2"
+      },
+      "final_physical_masks": {
+        "contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+        "probe_contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+        "remaining_mask": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+        "removed_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43"
+      },
+      "initial_inventory": {
+        "accepted_count": 0,
+        "all_support_cell_tool_pairs": 410,
+        "basis": "fixed_access_grid_3columns_8depths_within_actor_crop",
+        "cavity_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+        "complete": true,
+        "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+        "declared_slots": 30,
+        "emitted": [
+          {
+            "action_id": "NATIVE-SPATIAL:e76135c7d8c8ea1aa1aedfce",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:342e3bb4615448dceaf3ae52",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:51c206e235420a78fa0ee8f6",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:67db9a3116a36067238411c2",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:32a80791ac2d5b34396c9058",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:99d637219ad9db05cdb75051",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:92ba80ba4e3536176b420fbb",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:331f2aeb967afe49b1ea582f",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:07151055f5dcadd7792c1994",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:631ce111ef40ce8aed8634f3",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9a6bca554ac8762f524760f3",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:24f4745c450136f7d6391763",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:772e2e1729eb3a2519560876",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:73b1a99284907c2f759f6f52",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:c288801c094661aebdcb6fac",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:03b83faff2a4c4171c14b930",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:2b1264152250ad0c4ac5cc30",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1a8686fa46832c811b214525",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9959f7c70fe45fd4cbecd632",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:feb8a93e8d08bcebb2ae9f1d",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:35ac9e198bb71315cb868f61",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:5da1fed083ef86ca5a504d67",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1342cd8c09be60127ef444d2",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:41fbb009013cecdff0714dae",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:d462bfd67cafa610a8b860bf",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:316273de1470b7b7ee8b5c6a",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:590e6264839d559926eabde7",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:52239a0717f8e2ea1896f5d4",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9b39d0e2c7b91c433ea4f293",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:60108dc8d164df935a277341",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              10
+            ]
+          }
+        ],
+        "emitted_count": 30,
+        "evaluated_slots": 30,
+        "ledger": [
+          {
+            "action_id": "NATIVE-SPATIAL:e76135c7d8c8ea1aa1aedfce",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:342e3bb4615448dceaf3ae52",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:51c206e235420a78fa0ee8f6",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:67db9a3116a36067238411c2",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:32a80791ac2d5b34396c9058",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:99d637219ad9db05cdb75051",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:92ba80ba4e3536176b420fbb",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:331f2aeb967afe49b1ea582f",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:07151055f5dcadd7792c1994",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:631ce111ef40ce8aed8634f3",
+            "entry_mm": [
+              5.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9a6bca554ac8762f524760f3",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:24f4745c450136f7d6391763",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:772e2e1729eb3a2519560876",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:73b1a99284907c2f759f6f52",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:c288801c094661aebdcb6fac",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:03b83faff2a4c4171c14b930",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:2b1264152250ad0c4ac5cc30",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1a8686fa46832c811b214525",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9959f7c70fe45fd4cbecd632",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:feb8a93e8d08bcebb2ae9f1d",
+            "entry_mm": [
+              6.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:35ac9e198bb71315cb868f61",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:5da1fed083ef86ca5a504d67",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1342cd8c09be60127ef444d2",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:41fbb009013cecdff0714dae",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:d462bfd67cafa610a8b860bf",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:316273de1470b7b7ee8b5c6a",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:590e6264839d559926eabde7",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:52239a0717f8e2ea1896f5d4",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9b39d0e2c7b91c433ea4f293",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              7.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              7,
+              6,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:60108dc8d164df935a277341",
+            "entry_mm": [
+              7.0,
+              6.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              7.0,
+              6.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              7,
+              6,
+              10
+            ]
+          }
+        ],
+        "max_steps": 2,
+        "omitted_count": 0,
+        "rejected_count": 30,
+        "remaining_steps": 2,
+        "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+        "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0
+      },
+      "initial_observation_hash": "sha256:099c2276d49ec5e913efc06ac8c6b66655d65e3df675996aa2807e0331eb2b23",
+      "package": {
+        "geometryAudit": {
+          "action_count": 0,
+          "checker_version": "independent-native-sequence-v2",
+          "claimed_source_tissue_volume_mm3": 0.0,
+          "complete_tool_checked": true,
+          "contained_source_tissue_volume_mm3": 0.0,
+          "failures": [],
+          "feasible": true,
+          "first_failed_action": null,
+          "first_unsupported_position_mm": null,
+          "first_unsupported_source_voxel": null,
+          "frontier_checked": true,
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "source_case_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+          "source_voxel_volume_mm3": 1.0,
+          "unsupported_source_tissue_volume_mm3": 0.0
+        },
+        "metrics": {
+          "clinical_validation": false,
+          "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+          "goal_contacted_and_retained": false,
+          "goal_retained": true,
+          "history": [
+            {
+              "action_id": "STOP",
+              "clinical_deficit_probability": null,
+              "complete_tool_path_length_mm": 0.0,
+              "contact_indices_native": [],
+              "effort_and_removal_cost": 0.0,
+              "goal_potential_after": 0,
+              "goal_potential_before": 0,
+              "insertion_distance_mm": 0.0,
+              "interaction_mode": "stop",
+              "microsteps": [],
+              "outcome_scope": "public_geometric_retained_surface_contact",
+              "probe_contact_indices_native": [],
+              "public_objective_hash": "sha256:6e4d568e4d95e1f5908f733440d07c93b317d4302a42ff9ba76405531a25d618",
+              "removal_cost_volume_mm3": 0.0,
+              "removed_indices_native": [],
+              "result_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+              "reward": 0.0,
+              "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+              "tool_change_count": 0
+            }
+          ],
+          "objective": {
+            "clinical_or_sensor_claim": false,
+            "completion_value": 1.0,
+            "costs": {
+              "action_cost": 0.03,
+              "graph_edge_cost": 0.0,
+              "language_per_mm3": 0.0,
+              "motion_per_mm": 0.001,
+              "motor_per_mm3": 0.0,
+              "normal_per_mm3": 0.2,
+              "target_per_mm3": 0.0,
+              "tool_change_cost": 0.03
+            },
+            "meaning": "committed_probe_contact_AND_currently_retained_cell",
+            "native_index": [
+              7,
+              6,
+              5
+            ],
+            "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+            "version": "public-retained-surface-contact-objective-v1"
+          },
+          "observation_track": "synthetic_scan",
+          "outcome_scope": "public_geometric_goal_no_private_target_scoring",
+          "planning_estimator_only": false,
+          "removed_volume_mm3": 0.0,
+          "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0",
+          "steps": 1,
+          "task_version": "public-retained-surface-contact-objective-v1",
+          "terminated": true,
+          "total_reward": 0.0
+        },
+        "replayFrames": [
+          {
+            "actionIndex": -1,
+            "axis": null,
+            "cavityHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactIndicesNative": [],
+            "frameIndex": 0,
+            "mode": null,
+            "phase": "initial",
+            "probeContactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "probeContactIndicesNative": [],
+            "remainingHash": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+            "removedIndicesNative": [],
+            "stateAfter": "sha256:591bf598d7072ef8bb1860eb9e46ab4f5da0c80b9a8b061505fc4a952d602ba3",
+            "stateBefore": "sha256:591bf598d7072ef8bb1860eb9e46ab4f5da0c80b9a8b061505fc4a952d602ba3",
+            "tipRasMm": null,
+            "toolId": null
+          },
+          {
+            "actionIndex": 0,
+            "axis": null,
+            "cavityHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactIndicesNative": [],
+            "frameIndex": 1,
+            "mode": "stop",
+            "phase": "stop",
+            "probeContactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "probeContactIndicesNative": [],
+            "remainingHash": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+            "removedIndicesNative": [],
+            "stateAfter": "sha256:d6d6d06adf740f8282f153a2759cc29adfed3bcaf1523b028a5031a3f7cf258a",
+            "stateBefore": "sha256:591bf598d7072ef8bb1860eb9e46ab4f5da0c80b9a8b061505fc4a952d602ba3",
+            "tipRasMm": null,
+            "toolId": null
+          }
+        ],
+        "strategy": {
+          "actions": [
+            "STOP"
+          ],
+          "decision_model_hash": "sha256:d9126a6fcc427e2791122dd09858b69bd8419f302ce380b322955d94a6e4e21a",
+          "history": [
+            {
+              "action_id": "STOP",
+              "clinical_deficit_probability": null,
+              "complete_tool_path_length_mm": 0.0,
+              "contact_indices_native": [],
+              "effort_and_removal_cost": 0.0,
+              "goal_potential_after": 0,
+              "goal_potential_before": 0,
+              "insertion_distance_mm": 0.0,
+              "interaction_mode": "stop",
+              "microsteps": [],
+              "outcome_scope": "public_geometric_retained_surface_contact",
+              "probe_contact_indices_native": [],
+              "public_objective_hash": "sha256:6e4d568e4d95e1f5908f733440d07c93b317d4302a42ff9ba76405531a25d618",
+              "removal_cost_volume_mm3": 0.0,
+              "removed_indices_native": [],
+              "result_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+              "reward": 0.0,
+              "source_state_hash": "sha256:fd6d83d28e34b35b922221931b0e4a6834c3d7e77b5a48a6f90337ae2a3f16ad",
+              "tool_change_count": 0
+            }
+          ],
+          "max_steps": 2,
+          "observation_contract": "public-goal-sequential-spatial-observation-v2",
+          "source_hash": "sha256:39ce8e6223a24af6c503b48f3f4b0472a5b61e21a905e4bf39883929ebf2f5a0"
+        },
+        "strategySeal": "sha256:faff770c232d9250a0280610bd924939f9f9b1968366ef4080831eab8927073b"
+      },
+      "selection": {
+        "actions": [
+          "STOP"
+        ],
+        "goal_id": "surface",
+        "layout_id": "pcf-06",
+        "role": "TRAIN"
+      }
+    },
+    {
+      "assertions_passed": true,
+      "binding": {
+        "decision_model_hash": "sha256:0cce605ba3983e57f5bed2f87013d34298a32787d03a897d4cc527a4b2702b52",
+        "experiment_hash": "sha256:21f2de5cb5f968dec7a44fca1b0d9c6de56f1ced64cb09bb8cdaa4ac4d4765fc",
+        "family_hash": "sha256:7a4d4d7cbb9eec9702a6e333e85d14af5b0928290b806774cde1d70858b58523",
+        "goal_id": "surface",
+        "layout_id": "pcf-00",
+        "objective_hash": "sha256:67622324cd60f102bd3fd285dee76f89dad0fa463be17bc0201b59fea5ac6ff5",
+        "recipe_hash": "sha256:d723aed3f587a6700fcad601b3281b74005ca7d0f9668e49176813daace88c3d",
+        "role": "SELECT",
+        "scope": "generated_forward_context_only",
+        "source_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe",
+        "training_admission": false,
+        "version": "generated-public-contact-family-v1"
+      },
+      "context": {
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "decision_model_hash": "sha256:0cce605ba3983e57f5bed2f87013d34298a32787d03a897d4cc527a4b2702b52",
+        "declaration_hash": "sha256:556c7dc218a6cad3f9aad2dfb15dc2cd9d4d2806d5630f9a2dbae9d5b76efe25",
+        "goal_grid_hash": "sha256:5cd7c66c5fd0a32754bbfc687517491a6c4ff20e8a1bdfd856f84108cf9673ec",
+        "objective_hash": "sha256:67622324cd60f102bd3fd285dee76f89dad0fa463be17bc0201b59fea5ac6ff5",
+        "source_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe",
+        "version": "generated-public-contact-context-v2"
+      },
+      "final_physical_masks": {
+        "contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+        "probe_contact_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+        "remaining_mask": "sha256:3c7265ffd9ed98d481f11bedabe1713977fa61dd5fd9ff8bdb07813820275348",
+        "removed_mask": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43"
+      },
+      "initial_inventory": {
+        "accepted_count": 0,
+        "all_support_cell_tool_pairs": 440,
+        "basis": "fixed_access_grid_3columns_8depths_within_actor_crop",
+        "cavity_state_hash": "sha256:420bfd89a6909b8ee77696e9aadb268f2a69fee0a4617a3d0ea6525c3ede0bfb",
+        "complete": true,
+        "decision_model_hash": "sha256:0cce605ba3983e57f5bed2f87013d34298a32787d03a897d4cc527a4b2702b52",
+        "declared_slots": 30,
+        "emitted": [
+          {
+            "action_id": "NATIVE-SPATIAL:36cdd80e94d5989e72b5bb75",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:fc0679eb04e8468ea46ab541",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1455510756c2d5305ee7cfc4",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:00056685d8b8ccc51985a279",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:092c36395f3746116d88968f",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:ab76902e372cf1ebed36cc5a",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:d9368de1006826d94ca179d7",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9005ede768227666aa650711",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1f84b330878bb2b1d3dccb03",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:247c4b834ffc000822f91393",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:c32a96a7ddf8c3a316d5da7e",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:d9a5d572a92003f2f4a85d2b",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:b36d87f961f7f2d8a344a0df",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:180003f36d67a586b8370c64",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:0f0f887b86d5f5e77581394d",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:4b33a97a9dba254c049a7aed",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:99dc130347692bf39a4d24ac",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:826919d6686f3b63d9f1394a",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:003bbe0b1c1b48eea8fbd5ea",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:4bd3d1b4ea9af6aa468c6fbe",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:5d19e315f48e1ef167311059",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:f0912e661d5f12b7266d3785",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:dbf2c0101ee386c4f68fed9a",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:43ff14259e2fca6a6561df77",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1c15a80fa92caeb9bf5d07b7",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e3b8038816b8e8816554d069",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:cf47f7b022c88759e3e9cbd3",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:12e3abbd15a233d86cec8a46",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e0b5bdacacf9db90adaaa300",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:63e4d0bde9a54ccc2322ca9a",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              10
+            ]
+          }
+        ],
+        "emitted_count": 30,
+        "evaluated_slots": 30,
+        "ledger": [
+          {
+            "action_id": "NATIVE-SPATIAL:36cdd80e94d5989e72b5bb75",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:fc0679eb04e8468ea46ab541",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1455510756c2d5305ee7cfc4",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:00056685d8b8ccc51985a279",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:092c36395f3746116d88968f",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:ab76902e372cf1ebed36cc5a",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:d9368de1006826d94ca179d7",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:9005ede768227666aa650711",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1f84b330878bb2b1d3dccb03",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              4.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              4,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:247c4b834ffc000822f91393",
+            "entry_mm": [
+              4.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              4.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              4,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:c32a96a7ddf8c3a316d5da7e",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:d9a5d572a92003f2f4a85d2b",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:b36d87f961f7f2d8a344a0df",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:180003f36d67a586b8370c64",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:0f0f887b86d5f5e77581394d",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:4b33a97a9dba254c049a7aed",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:99dc130347692bf39a4d24ac",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:826919d6686f3b63d9f1394a",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:003bbe0b1c1b48eea8fbd5ea",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              5,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:4bd3d1b4ea9af6aa468c6fbe",
+            "entry_mm": [
+              5.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              5.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              5,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:5d19e315f48e1ef167311059",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:f0912e661d5f12b7266d3785",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              2.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:dbf2c0101ee386c4f68fed9a",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:43ff14259e2fca6a6561df77",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              3.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1c15a80fa92caeb9bf5d07b7",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e3b8038816b8e8816554d069",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              4.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:cf47f7b022c88759e3e9cbd3",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:12e3abbd15a233d86cec8a46",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              6.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              6
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e0b5bdacacf9db90adaaa300",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "aspirate",
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              6.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-aspirator",
+            "voxel": [
+              6,
+              5,
+              10
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:63e4d0bde9a54ccc2322ca9a",
+            "entry_mm": [
+              6.0,
+              5.0,
+              1.5
+            ],
+            "feasible": false,
+            "interaction_mode": "probe",
+            "reason": "PROBE_REQUIRES_EXISTING_CAVITY",
+            "tip_mm": [
+              6.0,
+              5.0,
+              10.0
+            ],
+            "tool_id": "development-probe",
+            "voxel": [
+              6,
+              5,
+              10
+            ]
+          }
+        ],
+        "max_steps": 2,
+        "omitted_count": 0,
+        "rejected_count": 30,
+        "remaining_steps": 2,
+        "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+        "source_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0
+      },
+      "initial_observation_hash": "sha256:bbeee3039205fec0250bcf2f34c7b1ea83d61a45dbad0e63da449b307f18a738",
+      "package": {
+        "geometryAudit": {
+          "action_count": 0,
+          "checker_version": "independent-native-sequence-v2",
+          "claimed_source_tissue_volume_mm3": 0.0,
+          "complete_tool_checked": true,
+          "contained_source_tissue_volume_mm3": 0.0,
+          "failures": [],
+          "feasible": true,
+          "first_failed_action": null,
+          "first_unsupported_position_mm": null,
+          "first_unsupported_source_voxel": null,
+          "frontier_checked": true,
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "source_case_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe",
+          "source_voxel_volume_mm3": 1.0,
+          "unsupported_source_tissue_volume_mm3": 0.0
+        },
+        "metrics": {
+          "clinical_validation": false,
+          "decision_model_hash": "sha256:0cce605ba3983e57f5bed2f87013d34298a32787d03a897d4cc527a4b2702b52",
+          "goal_contacted_and_retained": false,
+          "goal_retained": true,
+          "history": [
+            {
+              "action_id": "STOP",
+              "clinical_deficit_probability": null,
+              "complete_tool_path_length_mm": 0.0,
+              "contact_indices_native": [],
+              "effort_and_removal_cost": 0.0,
+              "goal_potential_after": 0,
+              "goal_potential_before": 0,
+              "insertion_distance_mm": 0.0,
+              "interaction_mode": "stop",
+              "microsteps": [],
+              "outcome_scope": "public_geometric_retained_surface_contact",
+              "probe_contact_indices_native": [],
+              "public_objective_hash": "sha256:67622324cd60f102bd3fd285dee76f89dad0fa463be17bc0201b59fea5ac6ff5",
+              "removal_cost_volume_mm3": 0.0,
+              "removed_indices_native": [],
+              "result_state_hash": "sha256:420bfd89a6909b8ee77696e9aadb268f2a69fee0a4617a3d0ea6525c3ede0bfb",
+              "reward": 0.0,
+              "source_state_hash": "sha256:420bfd89a6909b8ee77696e9aadb268f2a69fee0a4617a3d0ea6525c3ede0bfb",
+              "tool_change_count": 0
+            }
+          ],
+          "objective": {
+            "clinical_or_sensor_claim": false,
+            "completion_value": 1.0,
+            "costs": {
+              "action_cost": 0.03,
+              "graph_edge_cost": 0.0,
+              "language_per_mm3": 0.0,
+              "motion_per_mm": 0.001,
+              "motor_per_mm3": 0.0,
+              "normal_per_mm3": 0.2,
+              "target_per_mm3": 0.0,
+              "tool_change_cost": 0.03
+            },
+            "meaning": "committed_probe_contact_AND_currently_retained_cell",
+            "native_index": [
+              6,
+              5,
+              3
+            ],
+            "source_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe",
+            "version": "public-retained-surface-contact-objective-v1"
+          },
+          "observation_track": "synthetic_scan",
+          "outcome_scope": "public_geometric_goal_no_private_target_scoring",
+          "planning_estimator_only": false,
+          "removed_volume_mm3": 0.0,
+          "source_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe",
+          "steps": 1,
+          "task_version": "public-retained-surface-contact-objective-v1",
+          "terminated": true,
+          "total_reward": 0.0
+        },
+        "replayFrames": [
+          {
+            "actionIndex": -1,
+            "axis": null,
+            "cavityHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactIndicesNative": [],
+            "frameIndex": 0,
+            "mode": null,
+            "phase": "initial",
+            "probeContactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "probeContactIndicesNative": [],
+            "remainingHash": "sha256:3c7265ffd9ed98d481f11bedabe1713977fa61dd5fd9ff8bdb07813820275348",
+            "removedIndicesNative": [],
+            "stateAfter": "sha256:b826563f804f0e16da99e162e593a51b5461261d451fdc3ec164bd8d6101a00e",
+            "stateBefore": "sha256:b826563f804f0e16da99e162e593a51b5461261d451fdc3ec164bd8d6101a00e",
+            "tipRasMm": null,
+            "toolId": null
+          },
+          {
+            "actionIndex": 0,
+            "axis": null,
+            "cavityHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "contactIndicesNative": [],
+            "frameIndex": 1,
+            "mode": "stop",
+            "phase": "stop",
+            "probeContactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+            "probeContactIndicesNative": [],
+            "remainingHash": "sha256:3c7265ffd9ed98d481f11bedabe1713977fa61dd5fd9ff8bdb07813820275348",
+            "removedIndicesNative": [],
+            "stateAfter": "sha256:c40aaf5365a66185ec8aac4564ef4bf5d7d70a9ec378cac41cf3b9156d587512",
+            "stateBefore": "sha256:b826563f804f0e16da99e162e593a51b5461261d451fdc3ec164bd8d6101a00e",
+            "tipRasMm": null,
+            "toolId": null
+          }
+        ],
+        "strategy": {
+          "actions": [
+            "STOP"
+          ],
+          "decision_model_hash": "sha256:0cce605ba3983e57f5bed2f87013d34298a32787d03a897d4cc527a4b2702b52",
+          "history": [
+            {
+              "action_id": "STOP",
+              "clinical_deficit_probability": null,
+              "complete_tool_path_length_mm": 0.0,
+              "contact_indices_native": [],
+              "effort_and_removal_cost": 0.0,
+              "goal_potential_after": 0,
+              "goal_potential_before": 0,
+              "insertion_distance_mm": 0.0,
+              "interaction_mode": "stop",
+              "microsteps": [],
+              "outcome_scope": "public_geometric_retained_surface_contact",
+              "probe_contact_indices_native": [],
+              "public_objective_hash": "sha256:67622324cd60f102bd3fd285dee76f89dad0fa463be17bc0201b59fea5ac6ff5",
+              "removal_cost_volume_mm3": 0.0,
+              "removed_indices_native": [],
+              "result_state_hash": "sha256:420bfd89a6909b8ee77696e9aadb268f2a69fee0a4617a3d0ea6525c3ede0bfb",
+              "reward": 0.0,
+              "source_state_hash": "sha256:420bfd89a6909b8ee77696e9aadb268f2a69fee0a4617a3d0ea6525c3ede0bfb",
+              "tool_change_count": 0
+            }
+          ],
+          "max_steps": 2,
+          "observation_contract": "public-goal-sequential-spatial-observation-v2",
+          "source_hash": "sha256:60075a11fff5940fc2851b6bec2ea0752c5e420735815e0fac3a47e79add5dbe"
+        },
+        "strategySeal": "sha256:6504095e5486e45af62e93bdbfc9175146514f27bc9afc434b57169e524a5181"
+      },
+      "selection": {
+        "actions": [
+          "STOP"
+        ],
+        "goal_id": "surface",
+        "layout_id": "pcf-00",
+        "role": "SELECT"
+      }
+    }
+  ],
+  "schema": "family-positive-stop-control-v1",
+  "scope": "factory/context/STOP correctness only; no goal-achievement evidence",
+  "status": "PASS",
+  "teacher_or_search_calls": 0
+}

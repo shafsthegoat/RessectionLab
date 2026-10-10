@@ -1,0 +1,35 @@
+{
+  "declaration_sha256": "870c020efb500df5f25822d83bfe5fbc5c62812e3de752f34df8a06c47695daa",
+  "elapsed_seconds": 0.9567612910177559,
+  "exit_code": 0,
+  "result_sha256": "4415ce34bca041937a6dd32be1c94c17ab695cf2d5f5310e6ab81e762d86d0ff",
+  "source_hashes_after": {
+    "build/public-contact-family-positive-v1/run_positive.py": "880202338131f124dd745834ff5ed9a308375d3c35abcce2ea5b74db3a828576",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/development_episode.py": "de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/public_contact_family.py": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "source_hashes_before": {
+    "build/public-contact-family-positive-v1/run_positive.py": "880202338131f124dd745834ff5ed9a308375d3c35abcce2ea5b74db3a828576",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/development_episode.py": "de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/public_contact_family.py": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "status": "PASS",
+  "thread_count": 1,
+  "wall_cap_seconds": 20
+}

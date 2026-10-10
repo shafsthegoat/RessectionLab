@@ -1130,3 +1130,16 @@ could alter reward, and hidden metadata could expose an extra transfer slot.
 Both now refuse. Contact Save remains explicitly unsupported; ordinary actor
 reopen restores its workflow. Live Mac checking follows; no learned or patient
 result is claimed by generated transport controls.
+
+### October 10: goal/mode policy and distinct family reach shared-task integration
+
+The [preparation milestone](../artifacts/goal-mode-family-preparation-v1/RESULT.md)
+adds a versioned public goal/contact/mode actor and a critic that preserves the
+mode–geometry relationship. Initial three failed controls remain preserved.
+Twenty-four generated layouts with distinct candidate profiles and support masks
+have frozen 12/4/8 roles before outcomes. Root policy/family tests pass 22/36,
+independent controls 30/41. A declared positive factory/context check on TRAIN
+pcf-06 and SELECT pcf-00 replays STOP exactly: 90 previews and six STOP transitions
+across sealing/execution/verification, 0.957 seconds total. No learned family
+result, teacher search, optimizer update or patient access occurred. Actual
+TRAIN-only loss/update/checkpoint wiring is the next dependency.

@@ -1,0 +1,42 @@
+PASS — canonical family factory/context/shared STOP integration
+
+Root released one bounded control after promoting the reviewed family source.
+The declaration selected lexicographically first canonical TRAIN (pcf-06), then
+first canonical SELECT (pcf-00), surface goal only, before either task was built.
+The sole selected action was explicit STOP. No recipe, split or goal changed.
+
+The canonical task factory and exact context declaration worked for both roles.
+Bindings preserve role, family/recipe/source/objective/decision-model identities,
+training_admission=false and captured goal-grid/crop/frame identity. Contexts
+validated the initial observation and the terminated successor observation.
+
+For each selected task, the existing shared complete-strategy routine executed
+STOP on a fresh worker and sealed its history; direct NativeSpatialTask.step
+then produced the same history and replay frames; JSON round-trip followed by
+verify_complete_strategy independently rebuilt the package through the same
+native transition path and passed its geometry audit. Replay frames were exactly
+initial,stop. All tissue remained, removal/contact/probe masks stayed empty,
+modeled return was zero and no goal-contact credit was earned. This verifies the
+positive API and STOP path, not useful-contact success, method performance or
+nontrivial full-tool motion in this new family.
+
+Cost accounting includes verification overhead rather than hiding it:
+- Initial factory construction: two active inventories, 30 geometry previews.
+- Fresh seal workers: two active inventories, 30 previews, two STOP transitions.
+- Direct original-task STOP: zero previews, two STOP transitions.
+- Fresh verification workers: two active inventories, 30 previews, two STOPs.
+- Total: six active inventory builds, six terminal empty inventory builds,
+  30 inventory requests, 90 geometry previews and six STOP transitions.
+- Parent elapsed 0.956761291 s under 20 s; measured worker action block
+  0.231718708 s; one numeric thread. These are correctness-test costs, not an
+  actor/search latency benchmark. Import/startup is included only in parent time.
+
+No teacher/search, policy forward, checkpoint, optimizer update, patient access
+or held-out task execution occurred. Guarded access attempted none of those;
+Torch/nibabel were absent. All ten canonical sources and the runner were unchanged
+before/after. The one-shot runner refuses to overwrite an existing declaration.
+The family source-only handoff remains unchanged in public-contact-family-v1.
+
+Declaration SHA 870c020efb500df5f25822d83bfe5fbc5c62812e3de752f34df8a06c47695daa
+Result SHA 4415ce34bca041937a6dd32be1c94c17ab695cf2d5f5310e6ab81e762d86d0ff
+Receipt SHA dd13456f7c9140bb291ab152e1565bf7679dffa8ad33706d239441b3fa5682d8

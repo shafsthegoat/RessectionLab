@@ -1,0 +1,21 @@
+{
+  "exit_code": 0,
+  "wall_seconds": 1.3415183329489082,
+  "torch_threads": 1,
+  "torch_interop_threads": 1,
+  "peak_rss_bytes": 289488896,
+  "rss_scope": "ru_maxrss_of_single_test_runner_process",
+  "native_transitions": 0,
+  "optimizer_steps": 0,
+  "checkpoint_loads": 0,
+  "patient_reads": 0,
+  "passed": 22,
+  "failed": 0,
+  "log_sha256": "f2b6848945c81bb9e9c3c102adefdf0ae8ccf9d335299df0593fb028d6d52264",
+  "source_sha256": {
+    "stage/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "stage/resectionlab/goal_mode_episode_adapter.py": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+    "stage/tests/test_goal_mode_spatial_policy.py": "12773c247425c802e1ecc53e8899f0e7049d8b53a6413cf84cbc56e4f336281b",
+    "run_tensor_tests.py": "6aa390cc5f3091fd517e4fc1ac2286d991f6a199a2b31e4e8553dcbe11a378ca"
+  }
+}

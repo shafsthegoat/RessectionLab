@@ -1,0 +1,45 @@
+{
+  "version": "goal-mode-policy-promotion-proposal-v1",
+  "files": [
+    {
+      "proposal": "stage/resectionlab/goal_mode_spatial_policy.py",
+      "destination": "src/resectionlab/goal_mode_spatial_policy.py",
+      "sha256": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a"
+    },
+    {
+      "proposal": "stage/resectionlab/goal_mode_episode_adapter.py",
+      "destination": "src/resectionlab/goal_mode_episode_adapter.py",
+      "sha256": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2"
+    },
+    {
+      "proposal": "stage/tests/test_goal_mode_spatial_policy.py",
+      "destination": "tests/test_goal_mode_spatial_policy.py",
+      "sha256": "12773c247425c802e1ecc53e8899f0e7049d8b53a6413cf84cbc56e4f336281b"
+    }
+  ],
+  "dependencies": {
+    "build/public-surface-contact-integration-v1/stage/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711"
+  },
+  "canonical_files_modified": false,
+  "native_transitions_executed": 0,
+  "training_updates": 0,
+  "checkpoint_loads": 0,
+  "patient_reads": 0,
+  "test_status": "22_passed_in_bounded_one_thread_forward_suite; original17_pass3_fail_preserved",
+  "native_planner_helper_status": "source_only_not_executed",
+  "desktop_status": "documented_existing_exporter_integration_point; not_connected",
+  "learning_status": "no_new_admission_or_loss_api; closed_until_distinct_family_gate",
+  "documentation": [
+    "INTEGRATION.md",
+    "EXPERIMENT_PROTOCOL.md"
+  ],
+  "preserved_negative_evidence": [
+    "tensor-tests.initial.log",
+    "initial-policy.py"
+  ],
+  "test_receipt": "tensor-tests.receipt.json",
+  "source_hashes_verified": true
+}

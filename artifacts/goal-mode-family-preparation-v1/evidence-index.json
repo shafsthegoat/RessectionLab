@@ -1,0 +1,92 @@
+{
+  "schema": "goal-mode-family-preparation-evidence-v1",
+  "files": [
+    {
+      "path": "policy/REPORT.txt",
+      "source_path": "build/goal-conditioned-policy-independent-v1/REPORT.txt",
+      "bytes": 7089,
+      "sha256": "324567a78f9670f0670fa0c3640407ecb8676f8cd78f9d1d1cb8e0f3ed5ce6b7"
+    },
+    {
+      "path": "policy/promotion.json",
+      "source_path": "build/goal-conditioned-policy-v1/promotion.json",
+      "bytes": 2041,
+      "sha256": "71f49c4b75f5bb2cc9403b23c5ce4f538329d08b5680e90e278104c8ab45e21b"
+    },
+    {
+      "path": "policy/initial-tests.log",
+      "source_path": "build/goal-conditioned-policy-v1/tensor-tests.initial.log",
+      "bytes": 5304,
+      "sha256": "9588cc47437ae9aaf39a4a527d75233b61580d28618d43a11f173aedaa97331c"
+    },
+    {
+      "path": "policy/initial-policy.py",
+      "source_path": "build/goal-conditioned-policy-v1/initial-policy.py",
+      "bytes": 8162,
+      "sha256": "ac794b662ad623ab1753e27cb85713c2a106aa844357fdc5848dcb81ed6d5a66"
+    },
+    {
+      "path": "policy/tensor-tests.receipt.json",
+      "source_path": "build/goal-conditioned-policy-v1/tensor-tests.receipt.json",
+      "bytes": 898,
+      "sha256": "114fe40e5eeb431606bd72da0e61732f5b685ce14df3a4c379424cad9aae8d32"
+    },
+    {
+      "path": "family/REPORT.txt",
+      "source_path": "build/public-contact-family-v1/REPORT.txt",
+      "bytes": 5890,
+      "sha256": "7703db09704a3d82cd3555f0759deb50a764703c4b738b0f54e51e47c57c9031"
+    },
+    {
+      "path": "family/INDEPENDENT.txt",
+      "source_path": "build/public-contact-family-independent-v1/REPORT.txt",
+      "bytes": 3021,
+      "sha256": "d93710b5f8ec0a465607f2fddb899fed7f130797695675968b35de6c45d023cd"
+    },
+    {
+      "path": "family/promotion.json",
+      "source_path": "build/public-contact-family-v1/promotion.json",
+      "bytes": 640,
+      "sha256": "07a7db1b33998ba762eb3b431cbd50793aca8d3161b274c5b30cc28ee35b0991"
+    },
+    {
+      "path": "positive/REPORT.txt",
+      "source_path": "build/public-contact-family-positive-v1/REPORT.txt",
+      "bytes": 2765,
+      "sha256": "b06c1b9afc7f785726944640ae42c4cd010307be561676e4c8ffe99a5633f8cc"
+    },
+    {
+      "path": "positive/declaration.json",
+      "source_path": "build/public-contact-family-positive-v1/declaration.json",
+      "bytes": 2247,
+      "sha256": "870c020efb500df5f25822d83bfe5fbc5c62812e3de752f34df8a06c47695daa"
+    },
+    {
+      "path": "positive/receipt.json",
+      "source_path": "build/public-contact-family-positive-v1/receipt.json",
+      "bytes": 2891,
+      "sha256": "dd13456f7c9140bb291ab152e1565bf7679dffa8ad33706d239441b3fa5682d8"
+    },
+    {
+      "path": "positive/result.json",
+      "source_path": "build/public-contact-family-positive-v1/result.json",
+      "bytes": 88685,
+      "sha256": "4415ce34bca041937a6dd32be1c94c17ab695cf2d5f5310e6ab81e762d86d0ff"
+    },
+    {
+      "path": "positive/run_positive.py",
+      "source_path": "build/public-contact-family-positive-v1/run_positive.py",
+      "bytes": 9759,
+      "sha256": "880202338131f124dd745834ff5ed9a308375d3c35abcce2ea5b74db3a828576"
+    }
+  ],
+  "canonical_tests": {
+    "policy": 22,
+    "policy_seconds": 1.35,
+    "family": 36,
+    "family_seconds": 0.34
+  },
+  "training_updates": 0,
+  "patient_reads": 0,
+  "checkpoint_loads": 0
+}

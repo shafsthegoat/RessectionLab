@@ -1,0 +1,18 @@
+{
+  "files": [
+    {
+      "destination": "src/resectionlab/public_contact_family.py",
+      "sha256": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+      "source": "stage/resectionlab/public_contact_family.py"
+    },
+    {
+      "destination": "tests/test_public_contact_family_structural.py",
+      "sha256": "c8bff5a8a1b6b2967f6fe7d1b35540e4a56796361cc1074bf150c020144a60c4",
+      "source": "stage/tests/test_public_contact_family_structural.py"
+    }
+  ],
+  "held_out_task_execution": false,
+  "schema": "ignored-generated-family-promotion-v1",
+  "tracked_writes_by": "root_only",
+  "training_admission": false
+}
