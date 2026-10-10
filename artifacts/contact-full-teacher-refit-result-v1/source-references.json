@@ -1,0 +1,58 @@
+{
+  "canonical_tests": "46 passed in 5.99s (root-owned receipt below)",
+  "executed_build_source_closure": "declaration.json",
+  "files": [
+    {
+      "bytes": 4117,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/PROTOCOL.txt",
+      "sha256": "ccc019b2533360843c5a27e4ab9f16bf6e9ea37826e5c7e2a230b335232a3180"
+    },
+    {
+      "bytes": 3178,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/promotion-index.json",
+      "sha256": "20ea93bf4a1d1763e42ab5057086f65fc5ad5a3be94b718fbfc826776a09409f"
+    },
+    {
+      "bytes": 4999,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/source-index.json",
+      "sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff"
+    },
+    {
+      "bytes": 1694,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/run-recipe.json",
+      "sha256": "ef37d69ed338d3d20f46662c9a5cded4bf69831ddfddc25129bbd254b7e78a49"
+    },
+    {
+      "bytes": 13786,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/full_teacher_worker.py",
+      "sha256": "c18cb0b8b93a436abb96aaa09aac81d59e8cbb3870c6a59b96f0ab4baadf14f6"
+    },
+    {
+      "bytes": 5664,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/run_full_teacher_owned.py",
+      "sha256": "145e2d505f8974012410dafff44080ddf3a74eb8207681723042f3a798f5ffbf"
+    },
+    {
+      "bytes": 99,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/root-canonical-tests.txt",
+      "sha256": "74583db457fdf2f7a127305123834698055f5c0a249b364fc570d976e1e8b809"
+    },
+    {
+      "bytes": 2956,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/independent-REPORT.txt",
+      "sha256": "4e83fbc4041c376e451284b05689f1eda577120d6f026e3d2ad309599f35d834"
+    },
+    {
+      "bytes": 2723,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/independent-review.json",
+      "sha256": "3fa788dde07f2b13baec385124bf53d9831d2747f4451bc5905c833867c17624"
+    },
+    {
+      "bytes": 646,
+      "path": "artifacts/contact-full-teacher-refit-source-v1/independent-index.json",
+      "sha256": "f8a568c9ede5c25d73240a3774f100f6f09f060f9d441c0d8a12c2864d9035b1"
+    }
+  ],
+  "independent_complete_source_and_output_identity": "independent-review/source-and-output-hashes.json",
+  "source_commit": "ad819927258f251446b08ba378de3d80d7355e4f"
+}

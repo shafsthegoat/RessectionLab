@@ -1,0 +1,211 @@
+{
+  "all32_parameter_transitions_changed_and_chained": true,
+  "audit_elapsed_seconds": 0.01699916599318385,
+  "clipping_triggered_updates": 0,
+  "counts": {
+    "SELECT_or_MEASUREMENT_reads": 0,
+    "geometry_previews": 760,
+    "loss_forward_calls": 1280,
+    "native_teacher_steps": 40,
+    "new_checkpoint_loads": 1,
+    "optimizer_updates": 32,
+    "patient_reads": 0,
+    "prior_checkpoint_loads": 0,
+    "readout_forward_calls": 80,
+    "search_calls": 0
+  },
+  "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "final_parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+  "full40_manifest_hash": "sha256:4cda20c67489dce1c6df4f49fe41da9aa31a5fef4bdaed03bc10b697618ccd77",
+  "gradient_norm_range": [
+    0.16957536339759827,
+    0.45644068717956543
+  ],
+  "initial_parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+  "on_policy_rollout_evidence": false,
+  "parent_wall_seconds": 110.95483941701241,
+  "read_scope": "Saved run/supervision metadata, frozen prospective identity/source bytes, and two new opaque checkpoint hashes only. No checkpoint decoding or project/ML imports. No old payload or held-out task reads.",
+  "root_movement_failures": {
+    "STOP": 10,
+    "different_movement": 2
+  },
+  "run_head": "ad819927258f251446b08ba378de3d80d7355e4f",
+  "sampled_peak_rss_bytes": 399704064,
+  "source_index_sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+  "status": "PASS_SAVED_ONLY",
+  "summaries": {
+    "after": {
+      "STOP8": {
+        "accuracy": 1,
+        "correct_count": 8,
+        "greedy_STOP": 8,
+        "greedy_modes": {
+          "aspirate": 0,
+          "probe": 0,
+          "stop": 8
+        },
+        "mean_STOP_probability": 0.4192510918486331,
+        "mean_cross_entropy": 0.9005803884708409,
+        "n": 8,
+        "teacher_movement_rank1": 0
+      },
+      "all40": {
+        "accuracy": 0.7,
+        "correct_count": 28,
+        "greedy_STOP": 18,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 16,
+          "stop": 18
+        },
+        "mean_STOP_probability": 0.19718519636112608,
+        "mean_cross_entropy": 1.7003271295033964,
+        "n": 40,
+        "teacher_movement_rank1": 24
+      },
+      "aspiration_root16": {
+        "accuracy": 0.25,
+        "correct_count": 4,
+        "greedy_STOP": 10,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 0,
+          "stop": 10
+        },
+        "mean_STOP_probability": 0.16219558235382797,
+        "mean_cross_entropy": 1.9894468599511834,
+        "n": 16,
+        "teacher_movement_rank1": 8
+      },
+      "movement32": {
+        "accuracy": 0.625,
+        "correct_count": 20,
+        "greedy_STOP": 10,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 16,
+          "stop": 10
+        },
+        "mean_STOP_probability": 0.14166872248924933,
+        "mean_cross_entropy": 1.9002638147615352,
+        "n": 32,
+        "teacher_movement_rank1": 24
+      },
+      "root24": {
+        "accuracy": 0.5,
+        "correct_count": 12,
+        "greedy_STOP": 18,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 0,
+          "stop": 18
+        },
+        "mean_STOP_probability": 0.24788075218542965,
+        "mean_cross_entropy": 1.6264913694577359,
+        "n": 24,
+        "teacher_movement_rank1": 8
+      },
+      "second16": {
+        "accuracy": 1,
+        "correct_count": 16,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 0,
+          "probe": 16,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.12114186262467072,
+        "mean_cross_entropy": 1.811080769571887,
+        "n": 16,
+        "teacher_movement_rank1": 16
+      }
+    },
+    "before": {
+      "STOP8": {
+        "accuracy": 0,
+        "correct_count": 0,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 8,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.3455508106360374,
+        "mean_cross_entropy": 1.0937191708739107,
+        "n": 8,
+        "teacher_movement_rank1": 0
+      },
+      "all40": {
+        "accuracy": 0.025,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 40,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.17901157579639562,
+        "mean_cross_entropy": 1.8617800560226367,
+        "n": 40,
+        "teacher_movement_rank1": 1
+      },
+      "aspiration_root16": {
+        "accuracy": 0.0625,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 16,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.13736389059612034,
+        "mean_cross_entropy": 2.041838281106285,
+        "n": 16,
+        "teacher_movement_rank1": 1
+      },
+      "movement32": {
+        "accuracy": 0.03125,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 32,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.1373767670864852,
+        "mean_cross_entropy": 2.0537952773098183,
+        "n": 32,
+        "teacher_movement_rank1": 1
+      },
+      "root24": {
+        "accuracy": 0.041666666666666664,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 24,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.206759530609426,
+        "mean_cross_entropy": 1.7257985776954938,
+        "n": 24,
+        "teacher_movement_rank1": 1
+      },
+      "second16": {
+        "accuracy": 0,
+        "correct_count": 0,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 16,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.13738964357685005,
+        "mean_cross_entropy": 2.0657522735133513,
+        "n": 16,
+        "teacher_movement_rank1": 0
+      }
+    }
+  },
+  "worker_wall_seconds": 110.51591654191725
+}

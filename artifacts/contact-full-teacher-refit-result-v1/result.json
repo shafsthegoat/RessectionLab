@@ -1,0 +1,880 @@
+{
+  "status": "complete_fixed_full40_TRAIN_refit",
+  "scope": "additional_compute_TRAIN_IL_fit_not_a_new_benchmark",
+  "optimizer_updates": 32,
+  "native_teacher_steps": 40,
+  "geometry_previews": 760,
+  "loss_forward_calls": 1280,
+  "readout_forward_calls": 80,
+  "new_checkpoint_loads": 1,
+  "prior_checkpoint_loads": 0,
+  "search_calls": 0,
+  "patient_reads": 0,
+  "SELECT_or_MEASUREMENT_reads": 0,
+  "completed_teacher_reconstructions": [
+    {
+      "teacher_index": 0,
+      "original_binding_hash": "sha256:1a740c7c3b4635ea2f10ac21dadd808802ed55c786917dc03eb81c65ed784187",
+      "refit_binding_hash": "sha256:d963d881e0cfdc263ee3f4de140389e442f84e9e246c9eea79e2a7f447785b34",
+      "strategy_seal": "sha256:88e107db1655cac006ac7898e99476bac2cce0410268d0ebadc7d78f42a08b92"
+    },
+    {
+      "teacher_index": 1,
+      "original_binding_hash": "sha256:48010b35871a72cb71308d53a35832b47d43fb7dcd92a860d6b608ee106aeaca",
+      "refit_binding_hash": "sha256:c8dd8234fd9135a8122be1e9d139ab38a3a199214435a5174bff2c45f2e3a6c4",
+      "strategy_seal": "sha256:580c92e9df76d331b59c0ce9c06c11a0630b3327dbda00512517db02018926ce"
+    },
+    {
+      "teacher_index": 2,
+      "original_binding_hash": "sha256:2485c17d2f3c30f14ad957538c9833670230a5fe175e06eb76c290b6bda4f830",
+      "refit_binding_hash": "sha256:91777fafd7f0732264ac290af163f449d4385c4cf51b1cd167a4280ed3fc0c38",
+      "strategy_seal": "sha256:0fdae8eb01ca68691f9f1cc33139d009ddaa13c2fdb7300fa336060dc51bf086"
+    },
+    {
+      "teacher_index": 3,
+      "original_binding_hash": "sha256:422b0f7d7061339889ed84fca7b24a8f7bb61a2fdf07658352a075ad1a723c0d",
+      "refit_binding_hash": "sha256:b76606ac9b9068524e4810a139887a79dd9adaa63cadd1d74b953649cbbbea57",
+      "strategy_seal": "sha256:7ef55648555d532283b844d63fc7152b519fa5189f8b81ec15575971e8d1211e"
+    },
+    {
+      "teacher_index": 4,
+      "original_binding_hash": "sha256:df96d9769633da1a68c88b879589c979c416cc09df326440b019670eeb9b4d4a",
+      "refit_binding_hash": "sha256:2e182c063489585fb7971b0e16c85922df39d0740bbe8c236ef2239c1ccd8df8",
+      "strategy_seal": "sha256:415e374e6d290fb33dc7ad0ffe679dec7215e6f894816b45fb0355889a874db1"
+    },
+    {
+      "teacher_index": 5,
+      "original_binding_hash": "sha256:f9da2378236c8297b20760a0617fc070c9ed805789aff2249043348db9d0bad1",
+      "refit_binding_hash": "sha256:0a23a3bc64db9fea304e638add04263c123fda923bd6f95361f5727ce5297cb2",
+      "strategy_seal": "sha256:00dd1414d6e99ec8485bd0fb2662058d84978fd4c0e3cbeb6a3f1cde12d08e43"
+    },
+    {
+      "teacher_index": 6,
+      "original_binding_hash": "sha256:0021318c988a38e4cb70b41577fa365c23c130df01e977f8c3c64efb054f7203",
+      "refit_binding_hash": "sha256:6b5d797d7bbe97f8a179c51a1f0b373f01dc6abe4ce4b6c917364b82cae48942",
+      "strategy_seal": "sha256:dc01532ad29a5b43f9ed04d4b3f50e701197e6e79f48615319fb77d34fa3993d"
+    },
+    {
+      "teacher_index": 7,
+      "original_binding_hash": "sha256:0a6e155d8ae6c80aed1c3f1e2ab79248c62528ef69501cd075dc3df67ce93ffb",
+      "refit_binding_hash": "sha256:ef6cb55a39c4bb40a430e1c14c49f151340824e78125a63f0b48156571b0cc24",
+      "strategy_seal": "sha256:32329c5ef8e14160cdd1178b35401681a1b75cf067fff4760c3882e71c23eb13"
+    },
+    {
+      "teacher_index": 8,
+      "original_binding_hash": "sha256:08eec93cfd966b63e7df56a29c8addc951e57ea4f19bbae09a88fce672f00180",
+      "refit_binding_hash": "sha256:aece0e3ac09e028a4bd1bdd455e1db00faae372f3242824ed87cbf089025c245",
+      "strategy_seal": "sha256:e5927043c11500feb5e708078c6336f2e24f8ea25e1c3fa35cf4334d7678a3b7"
+    },
+    {
+      "teacher_index": 9,
+      "original_binding_hash": "sha256:f50b0928e32687aceed0ae91a8adcf274566ca8c0aa906f1fd268b3e02660ee9",
+      "refit_binding_hash": "sha256:32c2e1392dc6510d7c5475bfe4305b055197f6140ae9197d12c31c4980c415c0",
+      "strategy_seal": "sha256:87eacda0b3cf3f7c5d95b9b6c20d2695fcd3d1320345e5a70be288021d73fe92"
+    },
+    {
+      "teacher_index": 10,
+      "original_binding_hash": "sha256:61627b63f69aa2639a1cc8b3b30402eb38e11bec93a9a38a8ebd3a73bd1528fb",
+      "refit_binding_hash": "sha256:6dcdb9d71da3a53b0edc3163dd1551897d3d2e40681be5bce99fcf6c1667860e",
+      "strategy_seal": "sha256:2bd2e62e4449468d8ed695d686491cb49a1b8ae9fcaf47972d31a48613d53d00"
+    },
+    {
+      "teacher_index": 11,
+      "original_binding_hash": "sha256:0cba93458828fcaa7d914b3b0fabdb78c20fb8f0043bdc9bf89cf0519747182b",
+      "refit_binding_hash": "sha256:2816c712411aea90e1975a5d946e11a1fa9a97dad1a3797d02c5f2ddb768b919",
+      "strategy_seal": "sha256:f1758371c2f59430197a13de81c8b5cf55f34367d4201f43350629a7f246cf20"
+    },
+    {
+      "teacher_index": 12,
+      "original_binding_hash": "sha256:06738c7b348de2d1d561fa34a823ec765d354f2d690e94d07bd84f2f0b9ba1dd",
+      "refit_binding_hash": "sha256:cd86fa882e6f809342d17d08304f8359026dcb79eff4268ca147d2d7a256a602",
+      "strategy_seal": "sha256:2282ea625d2d4e5d758d8d90f93681188120c3ba1fad9661fde1f08ff8a49b1f"
+    },
+    {
+      "teacher_index": 13,
+      "original_binding_hash": "sha256:9ef7a25b48e9cf573dbb90c557056bcf249dad7fad4884d4e1517ef128b31866",
+      "refit_binding_hash": "sha256:b8e3e3416956956eb9c527ae669ae79f2f8f733fdd6607968c5879c207d9dad3",
+      "strategy_seal": "sha256:f340f7780b99c6d4e6c6bd38de09e0588bd024814afa6d5a522e66f2d10f5a82"
+    },
+    {
+      "teacher_index": 14,
+      "original_binding_hash": "sha256:da77dccebae1ed922783ccca24edbec4c461c6339e7555cfd6d4c3f8130fac2f",
+      "refit_binding_hash": "sha256:6a0dd634d446cfa107a6c0ba4237215e5ba4282811395554de1c9dda46ac353e",
+      "strategy_seal": "sha256:08d3168fe260b7b14457fe159b85af062ce187a6b33277d011f70b873312a1b0"
+    },
+    {
+      "teacher_index": 15,
+      "original_binding_hash": "sha256:fd7142728bcce22a3fd70c8ac0c183eae29903608f80801b07dd1a556b356edd",
+      "refit_binding_hash": "sha256:53e6fddae2e5c0bd441648978efabc4eaec8b27d236f8a364b1c64d2cfe57c96",
+      "strategy_seal": "sha256:0b786a689b8e91145e1783f4dec6edb0e68f0a410fa5526b1e4232dbad9063a5"
+    },
+    {
+      "teacher_index": 16,
+      "original_binding_hash": "sha256:cd40c989f573dbd48b9d1da576f71a4dfb8230ffa9f823e639dc7292c78c184a",
+      "refit_binding_hash": "sha256:6b929ef06055ae62155ffb73e3528a1cdecfe2a199346da5110cae9694da35cb",
+      "strategy_seal": "sha256:0321a41b0d84826c392cf7dc25877036bc0e7b8abd76e2a139ae9a293661e1bc"
+    },
+    {
+      "teacher_index": 17,
+      "original_binding_hash": "sha256:a6116ff65cde63ef23861ffb84020bee90ac28cd43b7f9393b8ea593f009647c",
+      "refit_binding_hash": "sha256:538b3152eb52062d365910f83b43fca2022351531827e4fcdadbcaf0163852b5",
+      "strategy_seal": "sha256:0f6148caf7029dfa246c7d4f7a88fb9552557379ba6af890f053d2db7bc893d7"
+    },
+    {
+      "teacher_index": 18,
+      "original_binding_hash": "sha256:ce373de36e148de93d11e36bfd7b1a91ac149a3a259986365449eaf80ac241b3",
+      "refit_binding_hash": "sha256:ed4d858c43c8f6e411ff0def7ed0facfbd26950c701c4298d23409443e5628d4",
+      "strategy_seal": "sha256:dc6a7e806ae31061dff0b7bfe9d06676629766c631401b2fa6ddd09ce555a02c"
+    },
+    {
+      "teacher_index": 19,
+      "original_binding_hash": "sha256:b80785fd0f32c5cc3e7018d069ad32bff3cdf6e8e5abab0896638112bbd5c9b6",
+      "refit_binding_hash": "sha256:3b3364a029873eff8f95252d99161f3083f1e195599c440c5f56a393043fe144",
+      "strategy_seal": "sha256:6d26c0779e0e23598bd57468edd62d777bac253d15ce68667159d32b09fe3317"
+    },
+    {
+      "teacher_index": 20,
+      "original_binding_hash": "sha256:f90eb6c704cc2e315b6889778b5177ad41d4ee43bbe6cf06ce5faaec9c2f3094",
+      "refit_binding_hash": "sha256:c61604dac18e8bd5ade0b1e415d9c714300219e5f2a925f2714c5e0d7a596f6e",
+      "strategy_seal": "sha256:801c902a808765189886ac0734ee252847b0dbdd4d85ce0e84a3662521271944"
+    },
+    {
+      "teacher_index": 21,
+      "original_binding_hash": "sha256:ace6dc81c16527e588016004528fff8695e01b47349669420270d202d4174ed8",
+      "refit_binding_hash": "sha256:6ba10823a145b0b03c1b15e97d0230853d2a6031c20725b950833e21219a865b",
+      "strategy_seal": "sha256:37b8ec21e0d0886793570e355462899c85e7fd635b19d987b61022e748d055bc"
+    },
+    {
+      "teacher_index": 22,
+      "original_binding_hash": "sha256:f4d6e6782180e4da95bea3d7d3eeb8ec0ab27179683b348d855325781770753d",
+      "refit_binding_hash": "sha256:e325d32b9d9dbc4cf75dbdd6e8214c782c88b8b1248e465fed7ac46fa877a039",
+      "strategy_seal": "sha256:f2259ca326c1756222c9babea760d5030e73295e1369eb8fad2f0e856e5c91ec"
+    },
+    {
+      "teacher_index": 23,
+      "original_binding_hash": "sha256:5817c9e6c6f07bbc7434b5292503deccc29761cde3b687e473df16ffab8c6732",
+      "refit_binding_hash": "sha256:2bfd717226ee0cc69c0954ba328a4a3e251ee91d45e6a0c3c8aff4ca8ad0b091",
+      "strategy_seal": "sha256:42cd4bc0e663187bb6346f264b6462b6ca46d5760451a94bb09dd26c94652018"
+    }
+  ],
+  "baseline_experiment_hash": "sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894",
+  "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "initial_checkpoint": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-initial.gmckpt",
+    "sha256": "d243059278a766282141f1aac5cf1ab831914daaae7b0b87428aeadaf5b3fd3e",
+    "bytes": 165214,
+    "parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+    "lineage": {
+      "kind": "initial",
+      "method": "COMMON_INITIALIZATION",
+      "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+      "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+      "learning_contract_version": "generated-public-contact-full-teacher-refit-v1",
+      "optimizer_updates": 0,
+      "initial_parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+      "parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+      "training_bindings": [],
+      "training_status": "not_started",
+      "real_patient_count": 0
+    }
+  },
+  "before": {
+    "all40": {
+      "n": 40,
+      "mean_cross_entropy": 1.8617800560226367,
+      "accuracy": 0.025,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.17901157579639562
+    },
+    "root24": {
+      "n": 24,
+      "mean_cross_entropy": 1.7257985776954936,
+      "accuracy": 0.041666666666666664,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.206759530609426
+    },
+    "second16": {
+      "n": 16,
+      "mean_cross_entropy": 2.0657522735133513,
+      "accuracy": 0.0,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 0,
+      "mean_STOP_probability": 0.13738964357685005
+    },
+    "STOP8": {
+      "n": 8,
+      "mean_cross_entropy": 1.0937191708739107,
+      "accuracy": 0.0,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 0,
+      "mean_STOP_probability": 0.3455508106360374
+    },
+    "movement32": {
+      "n": 32,
+      "mean_cross_entropy": 2.0537952773098183,
+      "accuracy": 0.03125,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.1373767670864852
+    },
+    "aspiration_root16": {
+      "n": 16,
+      "mean_cross_entropy": 2.041838281106285,
+      "accuracy": 0.0625,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.13736389059612034
+    }
+  },
+  "final_checkpoint": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt",
+    "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7",
+    "bytes": 185330,
+    "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+    "lineage": {
+      "kind": "final",
+      "method": "IL",
+      "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+      "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+      "learning_contract_version": "generated-public-contact-full-teacher-refit-v1",
+      "optimizer_updates": 32,
+      "initial_parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+      "parameter_hash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+      "training_bindings": [
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-06",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:9898206ed67c35f100c20609db9e8640589bdc3e796b7a66edf7885edc6d3a47",
+            "source_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+            "decision_model_hash": "sha256:14c84fcaf17c89de6b46a7cfdec3efa56f27522491842e8e5892e2ef9fa65228",
+            "objective_hash": "sha256:60c0b889ff9bcadf9eedf28d6956beeb4656405d5f52891bb44387d95eae480a",
+            "goal_grid_hash": "sha256:9227c51ae371dc1c98b4232ec692a8d6f16ba6aba0b4895fa0a8891d0fe44ec1",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-06",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:bd049cb54539f6e804c7c8beb7adddbe9bb26f06207666d8d51bf0116f2119f9",
+            "source_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+            "decision_model_hash": "sha256:5481e2464e47fb06eabbb33d0099da978e6f0755d6dbba5c7ef7c49109c35a10",
+            "objective_hash": "sha256:86af532f4b2165546ba266784ae034da1ca29bcdf2dca799ecd4936235491d8d",
+            "goal_grid_hash": "sha256:08ea82a082e62bc292528f23133008a4b218a47807da5f71e4f78945c2966f20",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-09",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:96e84f22286a42954b66028bd85e6a7bd0def85fc0a31da5e3bcfb6b642eeaab",
+            "source_hash": "sha256:6870aebb9dbabe89c8c788ba998d8cbe8ca3853be72e3bd090c9977560987843",
+            "decision_model_hash": "sha256:4fb2d462662e293d1db306227466bd8af85255ef80a4c128e2f3bed92a9aebd5",
+            "objective_hash": "sha256:5e48e4f492d02e0de0e1fd2d0066739d64a7dcc929d07c13b0381529d39ab202",
+            "goal_grid_hash": "sha256:878839f4dcca6914299a8bd1fe404d5540b8016e5754e19a2a604b2072e758e9",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-09",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:e829e78a8eb07b669956ac12389a7f9a90f77d8f8845832769580451d6f1691f",
+            "source_hash": "sha256:6870aebb9dbabe89c8c788ba998d8cbe8ca3853be72e3bd090c9977560987843",
+            "decision_model_hash": "sha256:3eb56c55b3637e0b82f7c161cdc0373ce67636dda1e53a1a0da6f404b5b5151a",
+            "objective_hash": "sha256:696be3306546b2e0cb5e0c4f390b55e64882aa5ad29798b2e2c3a12c11d6ec2d",
+            "goal_grid_hash": "sha256:9f6a887078d9ed1f1ba9944bfecb0cc683cdd17e3657913af041bb2c66e79a99",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-10",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:b4bd2a00fcf4a8240dc27114c0352405aeaccf249b72646e9c666d7bc87e9fb3",
+            "source_hash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+            "decision_model_hash": "sha256:cbdd4a7f58f2aea973574fd3e90ba192a1f9463dbb7b6d74c947ab1c39ad50af",
+            "objective_hash": "sha256:381f3f9d96bacb8d6776b009f2645d3407c8d66d46e995e0a30cd39a53d2cea3",
+            "goal_grid_hash": "sha256:0918f159c8fd52a2667a63363114f41254f8a0a1cbf52e534aaae9ff551c6a39",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-10",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:23a3559e8f1e0f38e6e6fe43f36e44fce4169c3e42400fda94f31e2e6c94294b",
+            "source_hash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+            "decision_model_hash": "sha256:1a224e74a22b6b54936ca57468ee29c82c7a23713cb2d9ffbcbfd1c17032c24a",
+            "objective_hash": "sha256:16394afff6d86bca15f35b6534b59612707b852d5d81112786f4791d5221f993",
+            "goal_grid_hash": "sha256:4ec369a533e37d61774a837cfb4e205c6325003f52305c5715a11ed510465fc9",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-11",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:c6375bdf18199447945b8e3b3cf290f8ac77da8221b69eb6dde3c85138db020c",
+            "source_hash": "sha256:8b9ce49fb5f8e390dce66aa3aebadc50b0ce917f5a8c78adf2739c8f0e5b9920",
+            "decision_model_hash": "sha256:d10bfe4893e82075103e66cdc7235189ab8303d155bc21a5373825d130a42478",
+            "objective_hash": "sha256:ba1c52ba4fad6fb3c46ede43b7f2cb9db36cda6e4aeb3c2e8ec479a0f5c0e63c",
+            "goal_grid_hash": "sha256:f97604de59ad3844447d6eed31a788af2327e6b0c4def4e343f76df4973ecf04",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-11",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:71bb504db5049dbe43d8a1b9c1467f1b4ed58e1b1a86cae2c94ede8e31ec2582",
+            "source_hash": "sha256:8b9ce49fb5f8e390dce66aa3aebadc50b0ce917f5a8c78adf2739c8f0e5b9920",
+            "decision_model_hash": "sha256:fc5719d693a50309d6f4d40e46485a06a144681fba26b070ea40fd8fb7f784bf",
+            "objective_hash": "sha256:0cd9cba7c8b59e591bc9e105408d48e5162884bbde632e9da32c1c5005e5f93d",
+            "goal_grid_hash": "sha256:1fa9da1e71feee164b2677db69e491f7f2157c098bc72ebf7a4562f9040f22bc",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-13",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:909282a9cf0ebfd976247963c2c22d242a5eafd909a4c1ec35e1d56f16e6908a",
+            "source_hash": "sha256:6ddc236aef158b61569ab1891ada5f4b65ba3f52ec1630b2da5df3024d9eb13e",
+            "decision_model_hash": "sha256:3a052e20e1e872c649c1dbdc233edd334cf77e6b52b67f24e1286873febbc363",
+            "objective_hash": "sha256:826915f0012b3c17b12c2e6644086671b9271dbb423c2142c8bbb41b2373146f",
+            "goal_grid_hash": "sha256:0657b18880b21400ce64241eedffcacfb638bc86f072536f1eb903f4453cddbe",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-13",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:9ec18112222b7b965f574db232583a0f7b7dd31253789790d13f8bbe5b9bba16",
+            "source_hash": "sha256:6ddc236aef158b61569ab1891ada5f4b65ba3f52ec1630b2da5df3024d9eb13e",
+            "decision_model_hash": "sha256:2fd13677a3aeebf7d3407ad7ffb2e8085a1441c7bddbf37a7a93b34c81f52690",
+            "objective_hash": "sha256:b11de0132d24766cd210359031f6a667e8d185fc8a949bdfecb191144181c5a7",
+            "goal_grid_hash": "sha256:89b89f4fe4df13a3f33ca871c7c6443cbf18c8433595fbda1b506dc260c5bc28",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-14",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:a5cd493449d88d52f92904474f55afc3e95ec908c32a66eda308f02ec170bcad",
+            "source_hash": "sha256:265e4c3236258906ff5617304d178fb893f18e5c941f9a336654b5e193f63dd1",
+            "decision_model_hash": "sha256:4638a4b9cab5e192d7bec22f8afcbee6c6277a98963a9920b75a139585dcd95c",
+            "objective_hash": "sha256:7442ead6417474064646b86aea7b2965b026209e963ad46e7159f9c5de4e99ac",
+            "goal_grid_hash": "sha256:c99b6df500eda1f86ff57c380a5cc65f6a2586f9170f9767a80e6b393cf628f7",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-14",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:79101ac89d93fcd66821b5fbe1e26572c500e72d88a6a266ad9992a60ebfd8fc",
+            "source_hash": "sha256:265e4c3236258906ff5617304d178fb893f18e5c941f9a336654b5e193f63dd1",
+            "decision_model_hash": "sha256:dab58155dd5f52080072ab9ca97c01a6f7815a6c72910978de58100df68708cc",
+            "objective_hash": "sha256:3d3ef91e7c6f70fae3bcc2aa39959dbcd8568d965c2cfe8292699d417e6f0ddf",
+            "goal_grid_hash": "sha256:cd528d0848842916f707ac2a8807ce66c866b1373afb1d3f3f3d17f4b90ac261",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-15",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:fd027c7102f67a9a0b6cef10f4bccee7d9a36df142fddce6312584bf222c4a0d",
+            "source_hash": "sha256:c66fd604ca33925f226f45bb019ef306da8f6b4390b46e23c8e28553d9eca0ae",
+            "decision_model_hash": "sha256:e3346abad1a7ee3c4d485d6bae6bd9b3ddeb259b6bea13ee5054e9f6eec50248",
+            "objective_hash": "sha256:b4e9f424858b4b152553a4702968f549502475c3f29dbbc644a64afc0af109a6",
+            "goal_grid_hash": "sha256:71aedad17ab36862092c9165343c56d7c25ccbcc271cd8d17281f0741f1d9cdd",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-15",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:49ff99e9a3d4423a470edb5a1dee2fafed1a6400423a471a2c78c55723e56145",
+            "source_hash": "sha256:c66fd604ca33925f226f45bb019ef306da8f6b4390b46e23c8e28553d9eca0ae",
+            "decision_model_hash": "sha256:86cd506737d0c0192393cc391a2a2631b72856cfe5eb79c1ee4eaeada14df684",
+            "objective_hash": "sha256:a95443d99b762ad34ecbd31c21c246d7163ac94e5bab1057859bdfd57948aba3",
+            "goal_grid_hash": "sha256:99494f8059b98f18574c2a6dbbdf4ceb420171434b9de9849e194d70d297a7bc",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-19",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:dc7015d6386d5e74464e73854b45346238d1c76ac9e2490ea899041e7f135edf",
+            "source_hash": "sha256:eef79a00e15e861ea28c2b06b39532f02a000378facc51757c13de12fe41ad5c",
+            "decision_model_hash": "sha256:6177d006399fea9334b27352e73f69486437bfe6988b92881f43a9ea324b1199",
+            "objective_hash": "sha256:85ee790a095eb5bbe3b0b40a3d44a748159a0436d5c4e0532ae8412cea244eac",
+            "goal_grid_hash": "sha256:73d1e8cb9773542bf116d151cfc722f1022cf9c9cd2808871d760a15ef22589b",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-19",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:921d9dc2a537b48dafb89259fc03e89b63a758ca9e0e46948049f18c663597a8",
+            "source_hash": "sha256:eef79a00e15e861ea28c2b06b39532f02a000378facc51757c13de12fe41ad5c",
+            "decision_model_hash": "sha256:ebad36bbea1e196fef27e0087e1f9240bf2dae8ba5b915c9c47d94509e9b6a09",
+            "objective_hash": "sha256:83689e398faf0903f8bd4974418a7dd9818aed46fe21089bff91f62046a55d21",
+            "goal_grid_hash": "sha256:e2c79ab72fc3d4c7a243c0f8d8aa0b9ae5a9ed40e84fc1b3eec547d7632c9e07",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-20",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:2cce4d40b5f4f310dcf40cdeb8e5e95b08f0e8ff5ec5f3810c524ccaf76d669a",
+            "source_hash": "sha256:de7ede2e982d29a693f53db4e032289de4cfde511fe6b633ecafbaed572e49a9",
+            "decision_model_hash": "sha256:e8192ad910e1338b12d847ca2321061614b8d0ba181632263885ec0842dccdd5",
+            "objective_hash": "sha256:f310e8225a638bac031379dfd3db971a2fa433fa8a6fe249e61761f1df904490",
+            "goal_grid_hash": "sha256:78f0d5c96a86b601b289abaa890f53da4523acc702e6ba305cd9873fb068e780",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-20",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:0bd7d6d0da9fd00b597e12cd263e32028c35acbb4bcbae725e2dca582e623b64",
+            "source_hash": "sha256:de7ede2e982d29a693f53db4e032289de4cfde511fe6b633ecafbaed572e49a9",
+            "decision_model_hash": "sha256:6a7a66c8460084ea30a5047a34769308fa34420d7dbbe537d822ae4193bb586c",
+            "objective_hash": "sha256:d1df93e92e86909eff801e66f03021be7567115a917cb13b67f00d08388ca77a",
+            "goal_grid_hash": "sha256:325eefe05e713d3ee96585b8cbe711c939727ea9eb58db00aa7a4c6feaef2295",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-21",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:d1507c4c0e0c7ef1d19817e3e8d9c2ecb7c3f30699f4a9aaa7110f74cc177fe6",
+            "source_hash": "sha256:0cdf79d399b21577f30c5cdb8487bba2276fc67951d40970bb47dbb5916e5bfe",
+            "decision_model_hash": "sha256:16cedc956521a9f1508dbd72ec8736179838597d622870cd695c8e338ce1eb18",
+            "objective_hash": "sha256:13f315075dea271804b370e1ec55446bb96e26d5fb8b0064a36ddc3fd352b49f",
+            "goal_grid_hash": "sha256:64cd4f2e66eedf9671d1571498e806e4b6f90b453b4f266df4dc8c9720f4b2df",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-21",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:6a2058f63916b32363c8fc00b6aca24de726ef7edf77571104b47135e90c9bc3",
+            "source_hash": "sha256:0cdf79d399b21577f30c5cdb8487bba2276fc67951d40970bb47dbb5916e5bfe",
+            "decision_model_hash": "sha256:ee5b6787917919ea480ab7883a13ed6421ed1e7972921481cc83a3a81dfb8efb",
+            "objective_hash": "sha256:b22773b4f9a0b25ad4ff47ff7e6e101a28623a98c8551f52c0db8939f31cc515",
+            "goal_grid_hash": "sha256:8306772c5da5edc72697f4f5c208c033e66bc11db7caf5e8e30d42a428a893f0",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-22",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:60180378023fb2b82d902f0dec3944f6b2cf37f7c1f82709617cd84d9980958f",
+            "source_hash": "sha256:5a1de995366c9ee3497493b0c2da02ce9d3823f86751bc9e199dc7f6eec59eda",
+            "decision_model_hash": "sha256:d21730595bd4672007708bf58dd41f2fee997ac98ca2bcc4d189242337fd107d",
+            "objective_hash": "sha256:006dbba6a1a39332936ee892bc84c1a980a759dc99082d417834f51428ee6662",
+            "goal_grid_hash": "sha256:ac2829847805badd9c730e05bbe1bf13293f086810202d9ce1cd8e95b8459c76",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-22",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:4f0c0422f0c25f039bf09d001cfbb2db0bcbef179f3af8f1b72ad543f98fdf01",
+            "source_hash": "sha256:5a1de995366c9ee3497493b0c2da02ce9d3823f86751bc9e199dc7f6eec59eda",
+            "decision_model_hash": "sha256:bf0d505b90ade50916517a29aec94e90720a817d42cf559b88a02bda0e12fcfc",
+            "objective_hash": "sha256:6f51069ea92f1762f2dfe9a4d4d5392ebb927b3b80e9ccf27db69978552f30e2",
+            "goal_grid_hash": "sha256:3e6b25d3c1bad1e2be3523ee046c656ec69bea4720a602a7fdaec516c5342827",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-23",
+          "goal_id": "surface",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:4aa129efd2b827bea3a32bef6d4d29bb249196b0a67a5a1eab12f97661c9e7d5",
+            "source_hash": "sha256:5436436500d060d16c3e0836b6b790ef947e6b6d991a2651dc400aacec104b22",
+            "decision_model_hash": "sha256:38185b719d1bfe0daf558fe0b214e418d39a23bec32c28a2d9a1d22601528057",
+            "objective_hash": "sha256:21644f6e2ec3b4f5ce56efac64a193c690aef4dbbf4665c792f92b169774cbf7",
+            "goal_grid_hash": "sha256:5aab133a21dc5c48b6add907870956fc753698083ff08a291f8553fd2a4cc500",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        },
+        {
+          "version": "generated-public-contact-learning-v1",
+          "experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+          "layout_id": "pcf-23",
+          "goal_id": "deep",
+          "role": "TRAIN",
+          "context": {
+            "declaration_hash": "sha256:5e3004a7820ef83f3823d6c67efbeed0a6add7c60c8affede29211d390784507",
+            "source_hash": "sha256:5436436500d060d16c3e0836b6b790ef947e6b6d991a2651dc400aacec104b22",
+            "decision_model_hash": "sha256:dbb44bbb67ad1f7c16edb00b770a6c238d50b0ee84c49447c96b7cf08d6b0c83",
+            "objective_hash": "sha256:651544a5b300ed4cb7ac3db9f5e859b56d53c2eae3ca4e7794c6a649d5881178",
+            "goal_grid_hash": "sha256:6fe844db23fe0f8f61e3b44e01b6b56c09f97786e3065f1d4e9e17914b079a03",
+            "crop_origin_native": [
+              0,
+              0,
+              0
+            ],
+            "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+            "version": "generated-public-contact-context-v2"
+          }
+        }
+      ],
+      "training_status": "completed_fixed_endpoint",
+      "real_patient_count": 0
+    }
+  },
+  "after": {
+    "all40": {
+      "n": 40,
+      "mean_cross_entropy": 1.7003271295033966,
+      "accuracy": 0.7,
+      "greedy_STOP": 18,
+      "teacher_movement_rank1": 24,
+      "mean_STOP_probability": 0.19718519636112608
+    },
+    "root24": {
+      "n": 24,
+      "mean_cross_entropy": 1.6264913694577359,
+      "accuracy": 0.5,
+      "greedy_STOP": 18,
+      "teacher_movement_rank1": 8,
+      "mean_STOP_probability": 0.24788075218542968
+    },
+    "second16": {
+      "n": 16,
+      "mean_cross_entropy": 1.811080769571887,
+      "accuracy": 1.0,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 16,
+      "mean_STOP_probability": 0.12114186262467072
+    },
+    "STOP8": {
+      "n": 8,
+      "mean_cross_entropy": 0.9005803884708409,
+      "accuracy": 1.0,
+      "greedy_STOP": 8,
+      "teacher_movement_rank1": 0,
+      "mean_STOP_probability": 0.4192510918486331
+    },
+    "movement32": {
+      "n": 32,
+      "mean_cross_entropy": 1.9002638147615352,
+      "accuracy": 0.625,
+      "greedy_STOP": 10,
+      "teacher_movement_rank1": 24,
+      "mean_STOP_probability": 0.14166872248924933
+    },
+    "aspiration_root16": {
+      "n": 16,
+      "mean_cross_entropy": 1.9894468599511834,
+      "accuracy": 0.25,
+      "greedy_STOP": 10,
+      "teacher_movement_rank1": 8,
+      "mean_STOP_probability": 0.16219558235382797
+    }
+  },
+  "wall_seconds": 110.51591654191725,
+  "costs": {
+    "refit.fixed_corpus_identity": {
+      "complete_wall_seconds": 0.4547137077897787,
+      "process_lifetime_peak_rss_bytes_so_far": 258818048,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.reconstruct40_native_teacher_states": {
+      "inventory_build_or_terminal_empty_calls": 64,
+      "inventory_request_calls": 240,
+      "geometry_preview_calls": 760,
+      "geometry_preview_returned_calls": 760,
+      "geometry_preview_inclusive_seconds": 1.7405382439028472,
+      "inventory_request_returned_calls": 240,
+      "inventory_request_inclusive_seconds": 1.9785051739308983,
+      "inventory_build_or_terminal_empty_returned_calls": 64,
+      "inventory_build_or_terminal_empty_inclusive_seconds": 1.8748366215731949,
+      "task_clone_calls": 24,
+      "task_clone_returned_calls": 24,
+      "task_clone_inclusive_seconds": 0.014693832490593195,
+      "native_transition_calls": 40,
+      "native_transition_returned_calls": 40,
+      "native_transition_inclusive_seconds": 1.0986588736996055,
+      "geometry_audit_calls": 24,
+      "geometry_audit_returned_calls": 24,
+      "geometry_audit_inclusive_seconds": 0.8839434175752103,
+      "native_nonstop_commit_calls": 32,
+      "native_nonstop_commit_returned_calls": 32,
+      "native_nonstop_commit_inclusive_seconds": 0.005869291024282575,
+      "complete_wall_seconds": 5.49071208294481,
+      "process_lifetime_peak_rss_bytes_so_far": 264716288,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.fresh_initialization": {
+      "complete_wall_seconds": 0.01723537500947714,
+      "process_lifetime_peak_rss_bytes_so_far": 265142272,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.before.readout40": {
+      "actor_forward_calls": 40,
+      "actor_forward_returned_calls": 40,
+      "actor_forward_inclusive_seconds": 0.06479233712889254,
+      "complete_wall_seconds": 0.3975442908704281,
+      "process_lifetime_peak_rss_bytes_so_far": 280952832,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.loss40": {
+      "actor_forward_calls": 1280,
+      "actor_forward_returned_calls": 1280,
+      "actor_forward_inclusive_seconds": 2.127483454765752,
+      "complete_wall_seconds": 56.304491544142365,
+      "process_lifetime_peak_rss_bytes_so_far": 399572992,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.optimizer": {
+      "complete_wall_seconds": 42.714013000018895,
+      "process_lifetime_peak_rss_bytes_so_far": 399572992,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.final_save_reload": {
+      "complete_wall_seconds": 1.347678791033104,
+      "process_lifetime_peak_rss_bytes_so_far": 399704064,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    },
+    "refit.after.readout40": {
+      "actor_forward_calls": 40,
+      "actor_forward_returned_calls": 40,
+      "actor_forward_inclusive_seconds": 0.0666050803847611,
+      "complete_wall_seconds": 0.4119373329449445,
+      "process_lifetime_peak_rss_bytes_so_far": 399704064,
+      "timing_scope": "inclusive_subcalls_not_additive; complete_wall_is_authoritative"
+    }
+  },
+  "clinical_validation": false,
+  "greedy_native_rollout_executed": false
+}

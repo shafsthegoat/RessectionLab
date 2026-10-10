@@ -1,0 +1,77 @@
+{
+  "file_count": 14,
+  "files": [
+    {
+      "bytes": 1182,
+      "path": "HANDOFF.txt",
+      "sha256": "48bbded4b490f60f328bf14e00a32ddfd0b93539a484829191acb642322de7ac"
+    },
+    {
+      "bytes": 4511,
+      "path": "REPORT.txt",
+      "sha256": "c7ffdac8fe017b48ce1ae87224e79c888ad190232d45f1e791a846d4170b22cd"
+    },
+    {
+      "bytes": 5084,
+      "path": "declaration.json",
+      "sha256": "e2e60e9b13b7524aa229d66ac58ca3ab93d51015815da24909240f4bfa1ce389"
+    },
+    {
+      "bytes": 31041,
+      "path": "external-evidence-index.json",
+      "sha256": "6bf7d9d89e4e4792bb7197d7e975ec0e3b8e274f7c08b89c41ed14ea1ab137fd"
+    },
+    {
+      "bytes": 4511,
+      "path": "independent-review/REPORT.txt",
+      "sha256": "c7ffdac8fe017b48ce1ae87224e79c888ad190232d45f1e791a846d4170b22cd"
+    },
+    {
+      "bytes": 6133,
+      "path": "independent-review/audit.json",
+      "sha256": "53471677aeb44e5e455cda41cad6658e6ae1bba8a34fb54f57f11c4cf4593055"
+    },
+    {
+      "bytes": 12779,
+      "path": "independent-review/audit_saved.py",
+      "sha256": "1fc12a5eae462255f45a31ad7cfd275588d7b65866a789a64fcd31b19c8e068f"
+    },
+    {
+      "bytes": 804,
+      "path": "independent-review/index.json",
+      "sha256": "da0929d5ec42d06eca7fa403800252ad34c8730bee888145ba96dfc3d3a075ac"
+    },
+    {
+      "bytes": 33656,
+      "path": "independent-review/source-and-output-hashes.json",
+      "sha256": "4d5c11872d6dc3524b84cbc7a485df5efc548cc860dc70e49c65b1f70df5b030"
+    },
+    {
+      "bytes": 4268,
+      "path": "independent-review/terminal.json",
+      "sha256": "66a682dfacfc39afa9e1ceb5edc6e31b9dd0d6c95f382972173e9d31b45b6b1c"
+    },
+    {
+      "bytes": 824,
+      "path": "receipt.json",
+      "sha256": "ee30237f90565928aa4b05a7afb44dfce6f518f93e6603f6b5d4f070c1b5b441"
+    },
+    {
+      "bytes": 44061,
+      "path": "result.json",
+      "sha256": "e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51"
+    },
+    {
+      "bytes": 2333,
+      "path": "source-references.json",
+      "sha256": "0052b9bb58e29c15698be9c0188fd2567e1b5ee4dc84caaeac69e6fc60c43d94"
+    },
+    {
+      "bytes": 24244,
+      "path": "update-summary.json",
+      "sha256": "50982247b6d0ddf5a83d2037f3a999bc9491b0f49122de48582089feb627e1ef"
+    }
+  ],
+  "indexed_bytes": 175431,
+  "status": "PASS_SAVED_ONLY_RESULT_PACKAGE"
+}

@@ -1,0 +1,33 @@
+Independent full40 TRAIN refit saved-result audit — PASS
+
+The fit improved actual greedy choices on the fixed saved TRAIN teacher states: 1/40 to 28/40 exact teacher actions (2.5% to 70%). Mean categorical cross-entropy fell from 1.861780056 to 1.700327130. The final readout follows saving and reloading the refit checkpoint. This audit recomputes saved logits/softmax/entropy/CE, mask-respecting argmax, movement ranks and subgroup totals without loading a model or executing a task.
+
+Decision breakdown (before -> after):
+  Teacher STOP states: 0/8 -> 8/8 correct.
+  Teacher second-step probe states: 0/16 -> 16/16 correct.
+  Teacher first-step aspiration states: 1/16 -> 4/16 exact.
+  All movement teacher states: 1/32 -> 20/32 exact.
+  All initial states: 1/24 -> 12/24 exact.
+
+After fitting, those 16 aspiration roots produce 4 exact teacher aspirations, 2 different aspirations and 10 STOP decisions. Across all 40 states the actor chooses 18 STOP, 6 aspiration and 16 probe actions. Conditional movement-only teacher rank is first in 24/32 rows; this is score arithmetic, not a policy with STOP removed. The policy's ability to initiate the teacher sequence remains weak.
+
+All 32 updates bind the exact same ordered 40-state manifest and retain its 8 STOP labels. Each update records 40 supervised actions/forwards; every pre/post parameter hash changes and chains exactly from scratch initialization to the final checkpoint. The critic gradient is zero as expected for IL. All total gradient norms are below the fixed clip threshold (range 0.169575363 to 0.456440687); no clipping was triggered.
+
+Counts reconcile across result, update files, cost ledger, readout files and source protocol: 24 teacher reconstructions, 40 saved teacher steps (32 non-STOP), 760 geometry previews, 1,280 loss forwards, 80 fixed readout forwards, 32 optimizer updates, one reload of the newly saved final checkpoint, zero prior-checkpoint loads, zero new teacher/search calls, zero patient inputs or SELECT/MEASUREMENT task reads. The unchanged prospective family manifest contains all-role metadata; no held-out task or anatomy was executed or inspected in this audit.
+
+Parent receipt: complete, exit 0, 110.954839417 seconds, sampled peak RSS 399,704,064 bytes, no remaining owned PIDs or cleanup errors. Worker time 110.515916542 seconds. Both meet the fixed 180-second / 1-GiB caps. Sampling cannot rule out transient peaks between samples. Source closure is unchanged and matches the admitted declaration at HEAD ad819927258f251446b08ba378de3d80d7355e4f.
+
+Checkpoint separation:
+  Refit experiment sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f
+  Initial parameters sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487
+  Final parameters sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20
+  Initial checkpoint d243059278a766282141f1aac5cf1ab831914daaae7b0b87428aeadaf5b3fd3e
+  Final checkpoint 5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7
+The two new checkpoint files were hashed as opaque bytes, never decoded. Their recorded lineage binds the separate refit experiment and TRAIN bindings; the original pilot/checkpoints were not opened by this audit. This remains a separate experimental artifact, not an automatic replacement for the desktop's existing checkpoint.
+
+Interpretation: this is meaningful improvement in fitting the fixed TRAIN labels. The 16 correct probe decisions are measured on teacher-produced cavity states; the actor has not demonstrated reaching those states. No on-policy rollout was executed, so 70% teacher-state accuracy is not episode success or return. The enlarged 1,280-forward training budget also prevents a matched-compute claim against the original 128-forward pilot. No generalization, clinical or patient-transfer conclusion follows, and prior exposed measurement outcomes were not used here.
+
+Reproducibility: audit_saved.py uses only the standard library. It checks 182 bound source/output files, including 144 complete run/supervision files totaling 699,162 bytes. Evidence includes exact 80 readouts, all 32 updates, 24 reconstruction receipts and independent source/prospective identity checks. Saved assertions validate receipt claims and arithmetic; the audit does not independently reexecute native histories or gradients.
+
+Result SHA256 e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51
+Receipt SHA256 ee30237f90565928aa4b05a7afb44dfce6f518f93e6603f6b5d4f070c1b5b441

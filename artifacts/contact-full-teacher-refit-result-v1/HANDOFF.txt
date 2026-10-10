@@ -1,0 +1,7 @@
+Compact result package for artifacts/contact-full-teacher-refit-result-v1.
+
+Fixed TRAIN teacher-state fit improved 1/40 to 28/40 exact greedy choices: all 8 STOP and 16 teacher-produced probe states, but only 4/16 initial aspirations. Ten aspiration roots still stop; two choose another aspiration. No on-policy learned rollout was executed. This is extra-compute fit evidence, not generalization or clinical evidence.
+
+The package contains the result, supervised receipt, all-update summary, exact independent saved-output review and hashes of every external run file. No weights and no duplicated 40-state dumps are included. external-evidence-index.json binds all 144 original run/supervision files, including both opaque checkpoint files. source-references.json points to the already promoted source/protocol artifact; source code is not recopied here.
+
+The independent audit was run in the original repository workspace and uses its original build paths. Its index is copied byte-for-byte under independent-review, with every indexed member preserved. The package index separately binds this integration handoff. Root owns tracked promotion and any next rollout authorization.

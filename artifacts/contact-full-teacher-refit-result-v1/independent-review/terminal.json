@@ -1,0 +1,177 @@
+{
+  "status": "PASS_SAVED_ONLY",
+  "before": {
+    "all40": {
+      "n": 40,
+      "mean_cross_entropy": 1.8617800560226367,
+      "accuracy": 0.025,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.17901157579639562,
+      "correct_count": 1,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 40,
+        "probe": 0
+      }
+    },
+    "root24": {
+      "n": 24,
+      "mean_cross_entropy": 1.7257985776954938,
+      "accuracy": 0.041666666666666664,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.206759530609426,
+      "correct_count": 1,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 24,
+        "probe": 0
+      }
+    },
+    "second16": {
+      "n": 16,
+      "mean_cross_entropy": 2.0657522735133513,
+      "accuracy": 0,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 0,
+      "mean_STOP_probability": 0.13738964357685005,
+      "correct_count": 0,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 16,
+        "probe": 0
+      }
+    },
+    "STOP8": {
+      "n": 8,
+      "mean_cross_entropy": 1.0937191708739107,
+      "accuracy": 0,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 0,
+      "mean_STOP_probability": 0.3455508106360374,
+      "correct_count": 0,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 8,
+        "probe": 0
+      }
+    },
+    "movement32": {
+      "n": 32,
+      "mean_cross_entropy": 2.0537952773098183,
+      "accuracy": 0.03125,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.1373767670864852,
+      "correct_count": 1,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 32,
+        "probe": 0
+      }
+    },
+    "aspiration_root16": {
+      "n": 16,
+      "mean_cross_entropy": 2.041838281106285,
+      "accuracy": 0.0625,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 1,
+      "mean_STOP_probability": 0.13736389059612034,
+      "correct_count": 1,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 16,
+        "probe": 0
+      }
+    }
+  },
+  "after": {
+    "all40": {
+      "n": 40,
+      "mean_cross_entropy": 1.7003271295033964,
+      "accuracy": 0.7,
+      "greedy_STOP": 18,
+      "teacher_movement_rank1": 24,
+      "mean_STOP_probability": 0.19718519636112608,
+      "correct_count": 28,
+      "greedy_modes": {
+        "stop": 18,
+        "aspirate": 6,
+        "probe": 16
+      }
+    },
+    "root24": {
+      "n": 24,
+      "mean_cross_entropy": 1.6264913694577359,
+      "accuracy": 0.5,
+      "greedy_STOP": 18,
+      "teacher_movement_rank1": 8,
+      "mean_STOP_probability": 0.24788075218542965,
+      "correct_count": 12,
+      "greedy_modes": {
+        "stop": 18,
+        "aspirate": 6,
+        "probe": 0
+      }
+    },
+    "second16": {
+      "n": 16,
+      "mean_cross_entropy": 1.811080769571887,
+      "accuracy": 1,
+      "greedy_STOP": 0,
+      "teacher_movement_rank1": 16,
+      "mean_STOP_probability": 0.12114186262467072,
+      "correct_count": 16,
+      "greedy_modes": {
+        "stop": 0,
+        "aspirate": 0,
+        "probe": 16
+      }
+    },
+    "STOP8": {
+      "n": 8,
+      "mean_cross_entropy": 0.9005803884708409,
+      "accuracy": 1,
+      "greedy_STOP": 8,
+      "teacher_movement_rank1": 0,
+      "mean_STOP_probability": 0.4192510918486331,
+      "correct_count": 8,
+      "greedy_modes": {
+        "stop": 8,
+        "aspirate": 0,
+        "probe": 0
+      }
+    },
+    "movement32": {
+      "n": 32,
+      "mean_cross_entropy": 1.9002638147615352,
+      "accuracy": 0.625,
+      "greedy_STOP": 10,
+      "teacher_movement_rank1": 24,
+      "mean_STOP_probability": 0.14166872248924933,
+      "correct_count": 20,
+      "greedy_modes": {
+        "stop": 10,
+        "aspirate": 6,
+        "probe": 16
+      }
+    },
+    "aspiration_root16": {
+      "n": 16,
+      "mean_cross_entropy": 1.9894468599511834,
+      "accuracy": 0.25,
+      "greedy_STOP": 10,
+      "teacher_movement_rank1": 8,
+      "mean_STOP_probability": 0.16219558235382797,
+      "correct_count": 4,
+      "greedy_modes": {
+        "stop": 10,
+        "aspirate": 6,
+        "probe": 0
+      }
+    }
+  },
+  "audited_files": 182,
+  "elapsed_seconds": 0.01699916599318385
+}
