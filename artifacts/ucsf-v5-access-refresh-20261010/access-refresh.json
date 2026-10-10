@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-10T04:59:37.949565+00:00",
+  "scope": "Official public UCSF v5 metadata only; no payload, transfer specification, clinical CSV, or client execution",
+  "case_id": "UCSF-PDGM-0004",
+  "source_metadata_id": "UCSF-PDGM-004",
+  "role": "previously_consulted_development_demo",
+  "role_changed": false,
+  "imaging_downloaded": false,
+  "transfer_requested": false,
+  "credentials_changed": false,
+  "tls_certificate_and_hostname_verified": true,
+  "redirects_followed": false,
+  "limits": {
+    "requests": 10,
+    "per_response_bytes": 1048576,
+    "total_response_bytes": 4194304,
+    "per_request_timeout_seconds": 15,
+    "total_seconds": 150,
+    "retries": 0
+  },
+  "requests": [
+    {
+      "label": "collection",
+      "method": "GET",
+      "endpoint_without_query": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+      "started_at_utc": "2026-10-10T04:59:37.960011+00:00",
+      "http_status": 200,
+      "response_bytes": 342033,
+      "response_sha256": "c579f88e5aee064fc226fab14907a17421325640140d1d652c69151a14d876bf",
+      "response_persisted": true
+    },
+    {
+      "label": "datacite",
+      "method": "GET",
+      "endpoint_without_query": "https://api.datacite.org/dois/10.7937/tcia.bdgf-8v37",
+      "started_at_utc": "2026-10-10T04:59:39.735907+00:00",
+      "http_status": 200,
+      "response_bytes": 21010,
+      "response_sha256": "dd9ba5f49f056b9b1ae7cf19c1ed861960156184b3b60137049b8bbc10539f50",
+      "response_persisted": true
+    },
+    {
+      "label": "public_client_config",
+      "method": "GET",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/config.js",
+      "started_at_utc": "2026-10-10T04:59:40.256726+00:00",
+      "http_status": 200,
+      "response_bytes": 267,
+      "response_sha256": "0f9a5e1ce439f59dc79853b71f3ae0c273fe9da6078167885845ae74512c6508",
+      "response_persisted": true
+    },
+    {
+      "label": "public_link_authorization",
+      "method": "GET",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/auth/authorize_public_link",
+      "started_at_utc": "2026-10-10T04:59:40.464058+00:00",
+      "http_status": 302,
+      "response_bytes": 0,
+      "response_persisted": false
+    },
+    {
+      "label": "public_link_token",
+      "method": "POST",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/auth/token",
+      "started_at_utc": "2026-10-10T04:59:40.686897+00:00",
+      "http_status": 201,
+      "response_bytes": 796,
+      "response_persisted": false
+    },
+    {
+      "label": "package",
+      "method": "GET",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/api/v5/packages/1065",
+      "started_at_utc": "2026-10-10T04:59:40.984071+00:00",
+      "http_status": 200,
+      "response_bytes": 6593,
+      "response_sha256": "27abe918261431c9b02c664f2da074a623c14c3d4d104b068f0b09c20799de76",
+      "response_persisted": false
+    },
+    {
+      "label": "root_listing",
+      "method": "POST",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/api/v5/packages/1065/files/received",
+      "started_at_utc": "2026-10-10T04:59:41.928169+00:00",
+      "error_type": "timeout"
+    }
+  ],
+  "operations": [
+    {
+      "operation": "package",
+      "path": "/api/v5/packages/1065",
+      "request_body": null,
+      "http_status": 200,
+      "response_bytes": 6593,
+      "response_sha256": "27abe918261431c9b02c664f2da074a623c14c3d4d104b068f0b09c20799de76",
+      "sanitized_response": {
+        "id": "1065",
+        "title": "UCSF-PDGM Version 5 ",
+        "files_on_server": "yes",
+        "total_bytes": 885200,
+        "total_files": 12030,
+        "status": "completed",
+        "message": "UCSF-PDGM version 5: Fixed a header issue with the DTI_eddy_noreg files by providing NIfTI files in the original orientation and spacing (i.e. after conversion from DICOM to NIfTI and FSL eddy correction but no other processing). Also added rotated bvecs files for each individual exam (as outputted from FSL eddy).\n\nData are 142 GB (.nii.gz, .bvec) across 501 folders (495 people), 12,030 files. For more detail see https://doi.org/10.7937/tcia.bdgf-8v37"
+      }
+    }
+  ],
+  "previous_evidence": [
+    {
+      "path": "manifests/data_acquisition_ucsf_v5_official_0004.json",
+      "bytes": 4276,
+      "sha256": "69e22829fd239b0d8699940aa5dd16310feb789683478656e3f9383e58b6bfc0"
+    },
+    {
+      "path": "artifacts/ucsf-v5-targeted-access-2026-10-04/access-report.json",
+      "bytes": 4270,
+      "sha256": "9ab1e66887009603f2ed6b825b1075bcfbb31a0fcaa8402a83b6e0f601b08ed6"
+    },
+    {
+      "path": "docs/ucsf-primary-access-recheck-2026-10-04.md",
+      "bytes": 5067,
+      "sha256": "555d0912c577d6376f0030a817776a084f1020ed55b1d89fb984589eb3b520c9"
+    }
+  ],
+  "collection_summary": {
+    "same_bytes_as_20261004": false,
+    "published_package_id": "1065",
+    "v5_context_sha256": "6f6062da7a673c5473850db42795b6ec083f1cedf1e665137bd1c89f0b0c31ec",
+    "metadata_or_fixity_links": [
+      "/wp-content/uploads/UCSF-PDGM-metadata_glossary.csv",
+      "https://www.cancerimagingarchive.net/wp-content/uploads/UCSF-PDGM-metadata_glossary.csv",
+      "https://www.cancerimagingarchive.net/wp-content/uploads/UCSF-PDGM-metadata_v5.csv"
+    ],
+    "current_version_claims": [
+      [
+        "5",
+        "2025/05/30"
+      ]
+    ]
+  },
+  "datacite_summary": {
+    "version": "5",
+    "updated": "2025-06-01T01:01:08.000Z",
+    "url": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "sizes": [],
+    "formats": [],
+    "rightsList": [
+      {
+        "rights": "Creative Commons Attribution 4.0 International",
+        "rightsUri": "https://creativecommons.org/licenses/by/4.0/legalcode",
+        "schemeUri": "https://spdx.org/licenses/",
+        "rightsIdentifier": "cc-by-4.0",
+        "rightsIdentifierScheme": "SPDX"
+      }
+    ],
+    "relatedItems": [],
+    "contentUrl": []
+  },
+  "public_session": {
+    "anonymous_published_link_only": true,
+    "authorization_http_status": 302,
+    "token_http_status": 201,
+    "personal_credentials_used": false,
+    "token_or_code_persisted": false
+  },
+  "outcome": "metadata_refresh_stopped",
+  "failure_type": "timeout",
+  "ended_at_utc": "2026-10-10T04:59:57.077602+00:00",
+  "total_response_bytes": 370699,
+  "source_sha256": "86bca08fe7e0ec2c04326fd53d36590ca16fddfae527e614b535512fa4f13a2c"
+}

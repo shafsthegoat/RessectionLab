@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "scope": "compact metadata-only UCSF official route delta; no imaging, codes or tokens",
+  "files": [
+    {
+      "path": "access-refresh.json",
+      "bytes": 6500,
+      "sha256": "97fcee162f8b7fd42cb1d285ec5e736b135ba61121f2afbcae30baefa9e1c2a0"
+    },
+    {
+      "path": "followup-receipt.json",
+      "bytes": 1737,
+      "sha256": "3b4cc36f188520db56c95653feee57fe3ce1863c398d49505e078526be7e2e4e"
+    },
+    {
+      "path": "delta.json",
+      "bytes": 4377,
+      "sha256": "4342356132b3beb26c0f980212b15cc86de04f7db686942225f7b6d937b5ecb7"
+    },
+    {
+      "path": "RESULT.txt",
+      "bytes": 2220,
+      "sha256": "079aff24f341ea3752453ed4dfe47637637253bd1b9584390841595ef618573b"
+    }
+  ],
+  "ignored_source_captures": [
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/collection.html",
+      "sha256": "c579f88e5aee064fc226fab14907a17421325640140d1d652c69151a14d876bf"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/datacite.json",
+      "sha256": "dd9ba5f49f056b9b1ae7cf19c1ed861960156184b3b60137049b8bbc10539f50"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/client-config.js",
+      "sha256": "0f9a5e1ce439f59dc79853b71f3ae0c273fe9da6078167885845ae74512c6508"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/refresh.py",
+      "sha256": "86bca08fe7e0ec2c04326fd53d36590ca16fddfae527e614b535512fa4f13a2c"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/followup.py",
+      "sha256": "9ee2c09b10dc74d474e4ae6633c3154b3707257a15ef8da18530720f01dd22d6"
+    }
+  ]
+}

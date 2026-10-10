@@ -1,0 +1,13 @@
+UCSF v5 official access refresh — 2026-10-10 05:01 UTC
+
+The official package 1065 availability flag changed from files_on_server=no to yes. Its title/status remain UCSF-PDGM Version 5 / completed. The official collection still names v5 (2025-05-30); DataCite metadata is byte-identical to the earlier capture and retains CC-BY-4.0. This is a material provider-metadata change, not verified image access.
+
+Two bounded metadata-only directory requests did not return an HTTP response: the initial request timed out after 15 seconds, and the separately authorized follow-up hit its 30-second whole-process cap after about 29.6 seconds for the listing. Both public anonymous OAuth flows succeeded. Transient codes/tokens stayed in memory; no personal credentials, accounts, software installation, legal acceptance, transfer specification, clinical CSV, or imaging request was used.
+
+The prior listing HTTP500/code1202 and transfer HTTP400/code1228 are preserved as historical evidence and were not observed again. The new timeouts neither demonstrate that files are absent nor establish that their contents are downloadable.
+
+No eligible image transfer can yet be bound: the exact UCSF-PDGM-0004 baseline file inventory, lengths and publisher fixity remain unavailable, as does exact per-exam v5 DTI_eddy_noreg-to-rotated-bvec/bvalue mapping. Existing development/demo role, no outer-test eligibility, mirror-equivalence unknown, 1GiB initial imaging cap and no bulk acquisition remain unchanged. Package total_bytes=885200 is inconsistent with its own 142GB/12030-file description and is not a storage estimate.
+
+The concrete dependency is an authoritative working package listing or a bounded official 0004 exam manifest/download with those identities. No further polling or payload was launched. Files remain wholly separate from anatomy QC or training admission.
+
+Evidence: access-refresh.json and followup-receipt.json preserve each attempt; delta.json binds the old/new comparison, official URLs, unchanged declaration and captured source hashes. Full public HTML/DataCite/config captures stay in this ignored directory; the compact package needs only the two receipts, delta and this result plus its hash manifest.

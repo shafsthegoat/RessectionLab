@@ -1,0 +1,91 @@
+{
+  "observed_at_utc": "2026-10-10T05:01:19.955703+00:00",
+  "selected_case": "UCSF-PDGM-0004",
+  "role": "previously_consulted_development_demo",
+  "role_changed": false,
+  "prior_20261004": {
+    "package_http_status": 200,
+    "files_on_server": "no",
+    "root_listing_http_status": 500,
+    "root_listing_error_code": "1202",
+    "connect_transfer_spec_http_status": 400,
+    "connect_transfer_spec_error_code": "1228"
+  },
+  "current": {
+    "package_http_status": 200,
+    "files_on_server": "yes",
+    "package_status": "completed",
+    "release": 5,
+    "release_date": "2025-05-30",
+    "anonymous_public_authorization_succeeded": true,
+    "root_listing_attempts": 2,
+    "root_listing_http_status": null,
+    "first_listing_timeout_seconds": 15,
+    "followup_whole_process_wall_seconds": 30,
+    "followup_elapsed_seconds": 30.004173917,
+    "per_exam_inventory_obtained": false,
+    "official_case_checksums_obtained": false,
+    "transfer_spec_requested": false,
+    "payload_requested": false
+  },
+  "interpretation": "Source availability flag changed to yes; bounded directory browsing remains unresolved. No current HSTS 500/1202 or transfer 400/1228 was observed. Those codes remain historical only. Timeouts do not prove absent server files.",
+  "ready_for_imaging_intake": false,
+  "actual_dependency": "A successful authoritative package 1065 listing or official bounded UCSF-PDGM-0004 baseline manifest with exact file lengths/checksums, plus release-specific DTI_eddy_noreg and its corresponding exam-specific rotated bvec/bvalues mapping.",
+  "unchanged_restrictions": {
+    "max_imaging_download_bytes": 1073741824,
+    "bulk_download_allowed": false,
+    "patient_role_changed": false,
+    "existing_mirror_primary_byte_match": null,
+    "clinical_outcome_fields_accessed": false,
+    "anatomical_qc_performed": false
+  },
+  "next_action": "Do not repeat polling in this task. Preserve the restored package flag and listing timeouts. When provider browsing is responsive or an official case manifest becomes available, bind existing 0004 filenames, sizes, fixity and gradient pair before any new byte-intake release.",
+  "size_warning": "Package total_bytes=885200 remains inconsistent with its own 142GB/12030-file description; do not use it as a storage estimate.",
+  "primary_urls": [
+    "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "https://api.datacite.org/dois/10.7937/tcia.bdgf-8v37",
+    "https://faspex.cancerimagingarchive.net/aspera/faspex/api/v5/packages/1065"
+  ],
+  "web_reader_failure_note": "web reader returned500, while direct verified-TLS official collection GET returned200; web reader failure is not treated as provider collection outage.",
+  "evidence": [
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/access-refresh.json",
+      "sha256": "97fcee162f8b7fd42cb1d285ec5e736b135ba61121f2afbcae30baefa9e1c2a0"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/followup-receipt.json",
+      "sha256": "3b4cc36f188520db56c95653feee57fe3ce1863c398d49505e078526be7e2e4e"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/collection.html",
+      "sha256": "c579f88e5aee064fc226fab14907a17421325640140d1d652c69151a14d876bf"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/datacite.json",
+      "sha256": "dd9ba5f49f056b9b1ae7cf19c1ed861960156184b3b60137049b8bbc10539f50"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/client-config.js",
+      "sha256": "0f9a5e1ce439f59dc79853b71f3ae0c273fe9da6078167885845ae74512c6508"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/refresh.py",
+      "sha256": "86bca08fe7e0ec2c04326fd53d36590ca16fddfae527e614b535512fa4f13a2c"
+    },
+    {
+      "path": "build/ucsf-v5-access-refresh-20261010/followup.py",
+      "sha256": "9ee2c09b10dc74d474e4ae6633c3154b3707257a15ef8da18530720f01dd22d6"
+    }
+  ],
+  "collection_change_summary": {
+    "changed_lines": 23,
+    "release_or_download_context_change_observed": false,
+    "categories": [
+      "cache asset URLs and cache generation timestamp",
+      "public page UI identifiers/nonces",
+      "FAQ navigation URL/text"
+    ],
+    "full_ignored_diff_path": "build/ucsf-v5-access-refresh-20261010/collection-page-diff.json",
+    "full_ignored_diff_sha256": "cb56ea719949702c08acefc1a0da15eb31d0ffe75def4e7f829b3eb3bf8c9c2c"
+  }
+}

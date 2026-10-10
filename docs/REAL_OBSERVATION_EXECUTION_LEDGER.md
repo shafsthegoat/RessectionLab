@@ -1428,3 +1428,15 @@ repairs. Canonical controls completed in 0.884 seconds at 60,375,040 bytes sampl
 group RSS, with clean cleanup and no actual measurement access. The separately
 bound root run remains next. [Source evidence](../artifacts/hbe-v5-torsion-source-v1/inventory.json)
 does not establish physical validity.
+
+## October 10, 2026 — Official UCSF v5 availability changes; listing remains unresolved
+
+The official package 1065 flag now reports files_on_server=yes, superseding the
+old no flag as a current observation. The original 15-second and separately
+bounded 30-second listing requests both timed out without an HTTP response;
+public anonymous authentication succeeded and transient tokens stayed in memory.
+No payload or transfer specification was requested. Exact baseline 0004 files,
+lengths, fixity and exam-specific rotated gradients remain unqualified. Historical
+provider errors are preserved, not reported as newly observed. Existing patient
+role and 1-GiB prospective cap remain unchanged. See
+[metadata delta](../artifacts/ucsf-v5-access-refresh-20261010/RESULT.txt).

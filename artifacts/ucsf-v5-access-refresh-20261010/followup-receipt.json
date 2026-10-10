@@ -1,0 +1,46 @@
+{
+  "started_at_utc": "2026-10-10T05:00:49.951696+00:00",
+  "authorization": "Root authorized exactly one metadata-only follow-up after initial 15s timeout",
+  "initial_receipt_sha256": "97fcee162f8b7fd42cb1d285ec5e736b135ba61121f2afbcae30baefa9e1c2a0",
+  "tls_certificate_and_hostname_verified": true,
+  "redirects_followed": false,
+  "imaging_downloaded": false,
+  "transfer_requested": false,
+  "personal_credentials_used": false,
+  "tokens_or_codes_persisted": false,
+  "requests": [
+    {
+      "label": "public_link_authorization",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/auth/authorize_public_link",
+      "method": "GET",
+      "started_at_utc": "2026-10-10T05:00:49.956980+00:00",
+      "http_status": 302,
+      "response_bytes": 0
+    },
+    {
+      "label": "public_link_token",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/auth/token",
+      "method": "POST",
+      "started_at_utc": "2026-10-10T05:00:50.173711+00:00",
+      "http_status": 201,
+      "response_bytes": 796
+    },
+    {
+      "label": "root_listing",
+      "endpoint_without_query": "https://faspex.cancerimagingarchive.net/aspera/faspex/api/v5/packages/1065/files/received",
+      "method": "POST",
+      "started_at_utc": "2026-10-10T05:00:50.387493+00:00",
+      "error_type": "TimeoutError"
+    }
+  ],
+  "limits": {
+    "whole_process_wall_seconds": 30,
+    "root_response_bytes": 10485760,
+    "retries": 0
+  },
+  "outcome": "metadata_followup_stopped",
+  "error_type": "TimeoutError",
+  "ended_at_utc": "2026-10-10T05:01:19.955703+00:00",
+  "elapsed_seconds": 30.004173917,
+  "source_sha256": "9ee2c09b10dc74d474e4ae6633c3154b3707257a15ef8da18530720f01dd22d6"
+}
