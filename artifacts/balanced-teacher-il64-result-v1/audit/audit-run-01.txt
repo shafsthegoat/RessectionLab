@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/balanced-teacher-il64-audit-v1/audit_saved.py", line 204, in <module>
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--terminal-result-sha256',required=True);parser.add_argument('--terminal-release-sha256',required=True);args=parser.parse_args();main(args.terminal_result_sha256,args.terminal_release_sha256)
+                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/balanced-teacher-il64-audit-v1/audit_saved.py", line 168, in main
+    for name in ['balanced_IL_64','balanced_IL_8','unweighted_IL_8']:row[name]=score(state[name],ids,mask,label)
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/balanced-teacher-il64-audit-v1/audit_saved.py", line 60, in score
+    require(max(abs(a-b) for a,b in zip(p,row['probabilities']))<=2e-7 and near(row['teacher_CE'],ce,2e-6),'saved float32 probability/CE arithmetic')
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/balanced-teacher-il64-audit-v1/audit_saved.py", line 13, in require
+    if not ok:raise AssertionError(msg)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: saved float32 probability/CE arithmetic
+        0.28 real         0.13 user         0.03 sys
+            27770880  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                2011  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1224  voluntary context switches
+                  21  involuntary context switches
+          3118991798  instructions retired
+           722261840  cycles elapsed
+            16843184  peak memory footprint

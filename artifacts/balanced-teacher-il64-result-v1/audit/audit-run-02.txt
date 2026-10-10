@@ -1,0 +1,19 @@
+{"audit_peak_rss_bytes": 28196864, "audit_seconds": 0.20944629213772714, "checks": 18140, "counts": {"RL_updates": 0, "checkpoint_reloads": 1, "loss_forwards": 320, "native_previews": 68876, "policy_forwards": 330, "search_calls": 0, "shared_IL_updates": 64, "teacher_logit_forwards": 5, "visits": 268}, "endpoint_group_metrics": {"balanced_IL_64": {"STOP_count": 4, "STOP_mean_NLL": 0.01534666697011744, "balanced_mean_CE": 0.021651699293784077, "motion_count": 1, "motion_mean_NLL": 0.027956731617450714, "unweighted_mean_CE": 0.017868679899584093}, "balanced_IL_8": {"STOP_count": 4, "STOP_mean_NLL": 0.5954422056674957, "balanced_mean_CE": 2.2371668368577957, "motion_count": 1, "motion_mean_NLL": 3.8788914680480957, "unweighted_mean_CE": 1.2521320581436157}, "unweighted_IL_8": {"STOP_count": 4, "STOP_mean_NLL": 0.4022485315799713, "balanced_mean_CE": 2.444551780819893, "motion_count": 1, "motion_mean_NLL": 4.4868550300598145, "unweighted_mean_CE": 1.21916983127594}}, "input_count": 1275, "metadata_files": 37, "parent": {"cleanup_errors": [], "elapsed_seconds": 1117.7770654999185, "final_owned_pids": [], "output_bytes": 21671471, "sampled_peak_rss_bytes": 2575335424}, "release_sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22", "result_sha256": "ed6292fa743c2f3349899ebb43df7208adb2f2f4687d2dd543eb50661dba36a8", "scope": "Saved scalar/metadata audit only; no weights, arrays, model or geometry execution. Recorded checkpoint/parameter identities are authenticated metadata, not an independent tensor reload. Training receipts do not expose per-label NLL after update1: subsequent training group contributions cannot be separately reconstructed. Endpoint group losses are independently recomputed from five states and three saved endpoint vectors each (only five new forwards). Complete route comparison uses saved nominal/replayed histories, not new geometry execution. Same five teacher labels and all four TRAIN cases remain; no held-out/clinical claim.", "score_arithmetic_tolerances": {"CE_absolute": 2e-06, "margin_absolute": 1e-06, "probability_absolute": 2.384185791015625e-07, "ranks_and_actions": "exact"}, "source_files": 84, "status": "PASS_saved_balanced_IL64_metadata_and_scalar_audit", "training_dynamics_summary": {"changed_parameter_updates": 64, "clip_threshold": 5.0, "gradient_exceeds_clip_count": 8, "gradient_norm_at64": 0.9151538014411926, "gradient_norm_max": 7.644491672515869, "gradient_norm_min": 0.36233144998550415, "post_update64_balanced_CE": 0.021651699293784077, "pre_update_loss_at64": 0.02574958839051078, "pre_update_loss_at8": 2.2283670157194138, "pre_update_loss_first": 3.1298843324184418, "pre_update_loss_max": 3.1298843324184418, "pre_update_loss_min": 0.02574958839051078, "scope": "Pre-update receipts and post-update64 teacher logits have distinct evaluation times; fixed64 schedule, no endpoint selection.", "strict_loss_increases": 4}}
+        0.24 real         0.18 user         0.04 sys
+            28229632  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                2047  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  27  voluntary context switches
+                  43  involuntary context switches
+          4443469993  instructions retired
+           995720033  cycles elapsed
+            17367472  peak memory footprint

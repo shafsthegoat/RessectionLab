@@ -1,0 +1,94 @@
+PASS — independent saved-only balanced IL64 audit
+
+The fixed64 endpoint reproduces the complete saved SEARCH actions and physical
+histories on all four TRAIN cases (only outcome_scope labels normalized). This
+is successful imitation of the same five training labels, not held-out or
+clinical evidence, a population result, or proof that SEARCH is optimal.
+
+ReMIND-008, 010 and 020: immediate STOP, return/target/outside all zero.
+ReMIND-025: nominal-cavity-968f3758c3de3eab8c99ca99 then STOP; return
+0.9168388572207332, one target cell / 0.953674795218559 mm3, outside supplied
+target zero. The full unchanged supplied-target fraction is only
+0.000012230620581688315. Both eight-update comparators stopped immediately on
+025; the first route divergence is its initial decision. All four full saved
+native replays are accepted, complete, and bind the exact sealed histories;
+full-tool geometry and unchanged unsupported-target denominator checks pass.
+No new geometry or model replay was run by this audit.
+
+Endpoint scalar readout (probabilities are saved float32 values):
+  Case/state  teacher       teacher rank  teacher p     STOP p        motion rank
+  008/0       STOP          1             .9999269247   .9999269247   n/a
+  010/0       STOP          1             .9999734163   .9999734163   n/a
+  020/0       STOP          1             .9999947548   .9999947548   n/a
+  025/0       movement      1             .9724304676   .0253804065   1
+  025/1       STOP          1             .9405581951   .9405581951   n/a
+
+On 025/0, conditional teacher probability among legal movements is
+.9977537989616394 (balanced8 .0653868839; unweighted8 .0619076904).
+Teacher-minus-STOP logit margin is +3.6458210945 (balanced8 -3.4988374710;
+unweighted8 -4.2861833572). All15 saved endpoint score vectors were checked
+against stable scalar softmax/log-sum-exp; ranks and tie ordering are exact.
+
+Group loss                IL64 balanced    IL8 balanced     IL8 unweighted
+  STOP mean NLL           .01534666697     .5954422057      .4022485316
+  Motion mean NLL         .02795673162     3.8788914680     4.4868550301
+  Balanced mean CE        .02165169929     2.2371668369     2.4445517808
+  Unweighted mean CE      .01786867990     1.2521320581     1.2191698313
+
+The same initializer, architecture, world, labels and balanced objective are
+retained; protocol changes only updates_per_method 8 to64. Every first-eight
+update field is exactly equal to the completed balanced8 receipt apart from
+context_hashes and trace_seals, including before/after parameter hashes.
+All64 updates consume all four contexts and all five labels. Four STOP labels
+have weight .125 each; the one movement label has weight .5. Per-case recorded
+loss/actor/value/entropy/forward contributions sum to each shared receipt.
+
+Pre-update balanced loss falls from3.1298843324 at1 to2.2283670157 at8 and
+.02574958839 at64. Four adjacent increases are retained; no monotonicity claim.
+All64 parameter hashes change. Pre-clip gradient norms range .36233145 to
+7.64449167, final .91515380; eight exceed the fixed5.0 clip threshold. All64
+saved dynamics entries and their receipt hashes match independent arithmetic.
+Final post-update teacher CE .02165169929 is a distinct evaluation time from
+the final pre-update loss. Training receipts do not expose individual-label
+NLL at each intermediate step; no intermediate group curve is invented.
+
+Recorded executed work:268 complete source visits,64 shared IL updates,
+320 loss forwards +5 endpoint readouts +5 greedy forwards =330 total, one
+checkpoint reload,68,876 native previews. Zero RL/search/private-reference
+execution and no SELECT/EVAL opening. This audit reads only saved JSON and
+source. It authenticates recorded checkpoint identities without reading or
+reloading tensor bytes.
+
+Parent:1117.7770654999185s of3600; worker1117.1096924578305s of3540;
+peak sampled owned RSS2,575,335,424B of3GiB; output21,671,471B of128MiB.
+No final owned PIDs, cleanup errors or stop reason; direct child exited zero.
+Per-scope costs are inclusive and overlapping and must not be summed into a
+purported end-to-end speed comparison. No inference-vs-SEARCH speedup claim.
+
+Audit correction preserved: audit-run-01.txt and the original prepared script
+retain a probability-tolerance refusal. For 008/IL64 the largest float32-vs-
+scalar probability discrepancy is2.0998601291122299e-7, exceeding the inherited
+2e-7 bound by9.98601291122299e-9. diagnose_score_arithmetic.py records all15
+vectors; final probability tolerance is explicitly2^-22 =2.384185791015625e-7
+(four float32 unit roundoffs), CE2e-6 and margins1e-6. This corrects the audit's
+rounding allowance; results, ranks, learning criteria and executing sources
+are unchanged. audit-run-02.txt passes18,140 checks in .2094462921s with
+28,196,864B observed RSS;1,275 input bindings,84 sources and37 metadata files
+remain byte-identical. No tests, patient arrays, checkpoint/model execution,
+training, native replay, or measured responses were opened/run by the audit.
+
+Exact bindings:
+  actual result ed6292fa743c2f3349899ebb43df7208adb2f2f4687d2dd543eb50661dba36a8
+  root release 5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22
+  source index 5be1b0f70de0065e0ce79b518d1380d98612b3efbace3ed6985159b6ff042dc4
+  parent receipt 02fd92d8ecbdb3d69e3f81bd5b81b642080734fd610cda74dab3fae1f1c4d1b2
+  checkpoint SHA (parent-authenticated, not opened) 85470cafa0829d22cb0f2a6a02f80cbbbbc5addd183a1e9e585a93c0ead056da
+  final parameter hash sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8
+  final audit source b12157e2a3d92e959798092d22e17d6c29ebfa2070b726cbd8b5b5b932261fb1
+  audit-result.json 581da35cf020822e17dd93d8f92b633446c9c68ff7b3c57a5f06d2b2cb6be5e0
+  input-hashes.json eb5fa27e922cf8c8eaa07d7e2425e7b219c206c589458bf55f17573fd6d4b0bc
+
+Scope: closed TRAIN imitation/readout check. Three STOP teachers and one
+single-cell positive teacher remain a severe task/label limitation. Successful
+reproduction establishes neither broad target removal nor generalization,
+clinical utility, unseen-pretraining status, or private-reference safety.

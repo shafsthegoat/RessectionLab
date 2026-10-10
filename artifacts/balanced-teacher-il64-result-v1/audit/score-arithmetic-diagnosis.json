@@ -1,0 +1,206 @@
+{
+  "input_hashes": {
+    "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-008/state-00.json": {
+      "bytes": 11762,
+      "sha256": "0dddeadbab431c85e775d98c0ede2f65daa4eb3cb0675fb9c535ab1514a270dc"
+    },
+    "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-010/state-00.json": {
+      "bytes": 8436,
+      "sha256": "672b9474fb06877087a6b9f5750eb6b5873807968cbec0afb9da9e9919a4e24e"
+    },
+    "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-020/state-00.json": {
+      "bytes": 6876,
+      "sha256": "24bbacb81b5201fc1c608070df492577d267203476a3013fc354fe0b5e5fba24"
+    },
+    "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-025/state-00.json": {
+      "bytes": 5476,
+      "sha256": "1faf2d46ae5874985c5fe189e0018edb7837cda301658a96315697e4306d9fb3"
+    },
+    "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-025/state-01.json": {
+      "bytes": 5094,
+      "sha256": "0fe62e9ce311d69e75a49c08699b31502a45558216dcd30443707eb7bd811542"
+    }
+  },
+  "scores": [
+    {
+      "CE_absolute_error": 2.046609308692382e-07,
+      "endpoint": "balanced_IL_64",
+      "logit_max": -3.8336281776428223,
+      "logit_min": -20.22399139404297,
+      "probability_max_absolute_error": 2.0998601291122299e-07,
+      "scalar_CE": 7.286796328731526e-05,
+      "step": 0,
+      "subject": "ReMIND-008",
+      "teacher_CE": 7.30726242181845e-05,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 7.325255957368881e-09,
+      "endpoint": "balanced_IL_8",
+      "logit_max": 1.3812416791915894,
+      "logit_min": -2.0372345447540283,
+      "probability_max_absolute_error": 2.3173045322899544e-09,
+      "scalar_CE": 0.9282497094334721,
+      "step": 0,
+      "subject": "ReMIND-008",
+      "teacher_CE": 0.928249716758728,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 1.22571575555952e-07,
+      "endpoint": "unweighted_IL_8",
+      "logit_max": 1.6220533847808838,
+      "logit_min": -2.3501904010772705,
+      "probability_max_absolute_error": 4.428385325105921e-08,
+      "scalar_CE": 0.6338275041335941,
+      "step": 0,
+      "subject": "ReMIND-008",
+      "teacher_CE": 0.6338276267051697,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 4.512094609054884e-08,
+      "endpoint": "balanced_IL_64",
+      "logit_max": -3.1800413131713867,
+      "logit_min": -21.598587036132812,
+      "probability_max_absolute_error": 4.441352852158076e-08,
+      "scalar_CE": 2.662843963197048e-05,
+      "step": 0,
+      "subject": "ReMIND-010",
+      "teacher_CE": 2.658331868587993e-05,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 2.5762547206653608e-08,
+      "endpoint": "balanced_IL_8",
+      "logit_max": 1.4551445245742798,
+      "logit_min": -2.112311840057373,
+      "probability_max_absolute_error": 2.284774147653934e-08,
+      "scalar_CE": 0.6584061126575578,
+      "step": 0,
+      "subject": "ReMIND-010",
+      "teacher_CE": 0.658406138420105,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 3.224109823563026e-08,
+      "endpoint": "unweighted_IL_8",
+      "logit_max": 1.58151113986969,
+      "logit_min": -2.339172601699829,
+      "probability_max_absolute_error": 1.6954717074746384e-08,
+      "scalar_CE": 0.5068678582260531,
+      "step": 0,
+      "subject": "ReMIND-010",
+      "teacher_CE": 0.5068678259849548,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 1.0929511473634079e-07,
+      "endpoint": "balanced_IL_64",
+      "logit_max": -3.0042977333068848,
+      "logit_min": -20.318389892578125,
+      "probability_max_absolute_error": 1.0932194605128842e-07,
+      "scalar_CE": 5.135899983077508e-06,
+      "step": 0,
+      "subject": "ReMIND-020",
+      "teacher_CE": 5.245195097813848e-06,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 1.6653873169403255e-08,
+      "endpoint": "balanced_IL_8",
+      "logit_max": 1.5478390455245972,
+      "logit_min": -2.1917600631713867,
+      "probability_max_absolute_error": 8.683320396052352e-09,
+      "scalar_CE": 0.4441647661086543,
+      "step": 0,
+      "subject": "ReMIND-020",
+      "teacher_CE": 0.44416478276252747,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 1.3027848844160417e-07,
+      "endpoint": "unweighted_IL_8",
+      "logit_max": 1.7770371437072754,
+      "logit_min": -2.503615140914917,
+      "probability_max_absolute_error": 9.88234317711445e-08,
+      "scalar_CE": 0.283530879872421,
+      "step": 0,
+      "subject": "ReMIND-020",
+      "teacher_CE": 0.2835310101509094,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 2.1883376777331875e-08,
+      "endpoint": "balanced_IL_64",
+      "logit_max": 0.22286616265773773,
+      "logit_min": -15.89266586303711,
+      "probability_max_absolute_error": 4.942197762147771e-09,
+      "scalar_CE": 0.027956709734073937,
+      "step": 0,
+      "subject": "ReMIND-025",
+      "teacher_CE": 0.027956731617450714,
+      "teacher_margin_absolute_error": 1.043081283569336e-07
+    },
+    {
+      "CE_absolute_error": 1.346950395664237e-07,
+      "endpoint": "balanced_IL_8",
+      "logit_max": 1.4566730260849,
+      "logit_min": -2.1197350025177,
+      "probability_max_absolute_error": 1.4727180586149302e-08,
+      "scalar_CE": 3.878891333353056,
+      "step": 0,
+      "subject": "ReMIND-025",
+      "teacher_CE": 3.8788914680480957,
+      "teacher_margin_absolute_error": 1.1920928955078125e-07
+    },
+    {
+      "CE_absolute_error": 2.8006796526369726e-07,
+      "endpoint": "unweighted_IL_8",
+      "logit_max": 1.7666547298431396,
+      "logit_min": -2.5299229621887207,
+      "probability_max_absolute_error": 4.490580673977007e-08,
+      "scalar_CE": 4.486854749991849,
+      "step": 0,
+      "subject": "ReMIND-025",
+      "teacher_CE": 4.4868550300598145,
+      "teacher_margin_absolute_error": 2.384185791015625e-07
+    },
+    {
+      "CE_absolute_error": 9.275355594695611e-09,
+      "endpoint": "balanced_IL_64",
+      "logit_max": -3.371896982192993,
+      "logit_min": -15.982072830200195,
+      "probability_max_absolute_error": 2.9314045357775598e-09,
+      "scalar_CE": 0.061281757467112286,
+      "step": 1,
+      "subject": "ReMIND-025",
+      "teacher_CE": 0.06128176674246788,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 1.0369781988650573e-07,
+      "endpoint": "balanced_IL_8",
+      "logit_max": 1.4681698083877563,
+      "logit_min": -2.128530740737915,
+      "probability_max_absolute_error": 4.325531666182769e-08,
+      "scalar_CE": 0.3509482884264423,
+      "step": 1,
+      "subject": "ReMIND-025",
+      "teacher_CE": 0.35094818472862244,
+      "teacher_margin_absolute_error": 0.0
+    },
+    {
+      "CE_absolute_error": 1.360768422387082e-07,
+      "endpoint": "unweighted_IL_8",
+      "logit_max": 1.7776120901107788,
+      "logit_min": -2.540817975997925,
+      "probability_max_absolute_error": 1.176703049443617e-07,
+      "scalar_CE": 0.18476752740200908,
+      "step": 1,
+      "subject": "ReMIND-025",
+      "teacher_CE": 0.18476766347885132,
+      "teacher_margin_absolute_error": 0.0
+    }
+  ]
+}

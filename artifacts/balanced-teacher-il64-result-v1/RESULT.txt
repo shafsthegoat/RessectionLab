@@ -1,0 +1,44 @@
+Balanced64 learns the useful complete TRAIN route; unseen-patient comparison next
+October 10, 2026
+
+The predetermined 64-update balanced imitation endpoint reproduces all four
+existing search action sequences and native removal histories. On ReMIND-025
+it takes the useful movement and then STOPs: public return +0.916838857,
+0.953674795 mm3 target removal (one modeled source cell), zero removal outside
+the supplied target. The other three cases STOP. This resolves the immediate
+STOP collapse seen after eight updates without changing architecture, actions,
+world assumptions, rewards, initial weights or teacher examples.
+
+Five-state balanced cross-entropy falls from 2.237166837 after eight updates to
+0.021651699 after 64. The useful movement probability rises from 0.020673729
+to 0.972430468; its margin above STOP becomes +3.645821. All first-eight update
+numerical/scalar fields and exact tensor hashes match the earlier balanced8
+run, excluding the deliberately different protocol context/trace identifiers.
+The final endpoint was fixed before execution; no intermediate selection was
+used. Final evaluation used an authenticated saved checkpoint reload.
+
+These are five training states from four anatomies. This is capacity/fit
+evidence, not generalization, superiority to search, useful resection volume,
+validated mechanics, neurological safety or clinical evidence. This experiment
+uses imitation learning, with zero new RL updates. It preserves the weaker IL8
+and RL8 results. The next fixed SELECT013 experiment compares both searches
+and all four predetermined model endpoints. SELECT037 remains held for its
+source support-mask artifact, in the original two-case denominator; EVAL closed.
+
+Owned execution: 1117.777 seconds parent / 1114.227 seconds worker, sampled peak
+2,575,335,424 B; 64 IL updates, zero RL/new search; 320 loss forwards, five final
+teacher readouts, five greedy decision forwards; 268 patient visits released;
+68,876 native previews. Search-teacher generation cost is historical and separate.
+Clean exit with no remaining owned processes. Arrays, weights and full trace
+output remain outside Git; compact receipts and full output hashes are preserved.
+
+Independent saved audit passes 18,140 checks over 1,275 unchanged inputs.
+The first audit's inherited probability tolerance was exceeded by about 1e-8.
+All 15 saved score vectors were diagnosed using independent scalar arithmetic;
+maximum probability discrepancy was 2.09986e-7. The revised float32 check uses
+2^-22 absolute tolerance; no model or result changed. Both audit attempts and
+the diagnosis are retained. This is a numerical audit correction, not a rerun.
+
+Executed HEAD 8701ae713f8d2635e71f420b8b3827333a4ac96d.
+Result SHA256 ed6292fa743c2f3349899ebb43df7208adb2f2f4687d2dd543eb50661dba36a8.
+SELECT/EVAL/private model reads: zero. All four TRAIN cases remain included.

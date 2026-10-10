@@ -1,0 +1,82 @@
+{
+  "exact_match": true,
+  "excluded_metadata_fields": [
+    "context_hashes",
+    "trace_seals"
+  ],
+  "scope": "all remaining numerical/scalar update fields and canonical full tensor hashes identical",
+  "updates": [
+    {
+      "actual_sha256": "b35380c805275ad7699e3a018e3022bfeeb5021921e05e59c7bcfc5c6c1d21d2",
+      "after_parameter_hash": "sha256:ab9d91a6d379264d9cec714a548701c6baf251029461727465bf191d359eb5b5",
+      "baseline_sha256": "87c7842af6288535f25a5edc03257ac6271909dd5938ec759c66defbf6882d85",
+      "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "gradient_norm_before_clip": 2.878401279449463,
+      "loss": 3.1298843324184418,
+      "update": 1
+    },
+    {
+      "actual_sha256": "29b001658f10580d04830b71c7237e6f649fbe9843e96d4bd2a686b63e6069ca",
+      "after_parameter_hash": "sha256:a14736d082835f08de650869003e8a07f8e75fbdbaa43d3bff2aff6bb9d7fc16",
+      "baseline_sha256": "f289f987b4cf1d68583fd5de897e66ec89b2c3f83704ff0b04014a1805af0e15",
+      "before_parameter_hash": "sha256:ab9d91a6d379264d9cec714a548701c6baf251029461727465bf191d359eb5b5",
+      "gradient_norm_before_clip": 2.9908242225646973,
+      "loss": 3.041562646627426,
+      "update": 2
+    },
+    {
+      "actual_sha256": "ddf5d8f4be9765295a7a31b0e156753c69934724da8712521716c883f3a207a0",
+      "after_parameter_hash": "sha256:2db0ccd937f2796429a10ca0d7c9c8fe8f94c42a1509fde882d0be0208709448",
+      "baseline_sha256": "f802739dbae030cfd92dab5dd3c55ca20c3a4338daa43991074e03d97d3dc3c7",
+      "before_parameter_hash": "sha256:a14736d082835f08de650869003e8a07f8e75fbdbaa43d3bff2aff6bb9d7fc16",
+      "gradient_norm_before_clip": 3.183922290802002,
+      "loss": 2.9358518421649933,
+      "update": 3
+    },
+    {
+      "actual_sha256": "bf79b977fa4b621aff1b673260e4de421119b36aeeed1077dc78713477e8dc9f",
+      "after_parameter_hash": "sha256:02053c23787617d9a9e4229f441f8177106efc1688cd4b68957e0450b75dff5f",
+      "baseline_sha256": "b579b9720c9b829774ba3d01f8cc361b56186efae120dc847f5db2dce73102c0",
+      "before_parameter_hash": "sha256:2db0ccd937f2796429a10ca0d7c9c8fe8f94c42a1509fde882d0be0208709448",
+      "gradient_norm_before_clip": 3.068371295928955,
+      "loss": 2.805980235338211,
+      "update": 4
+    },
+    {
+      "actual_sha256": "46ca2c1b6d5302c366f0a2ffb5aa71644482201ee5e3dcc21eb90ecd18757a73",
+      "after_parameter_hash": "sha256:b26c51d44b52094ee561b24b9373d709973a39d490ee907e25ffcbf525794901",
+      "baseline_sha256": "306794a6a57bb5923547afe95e4e79fc5c5f87032b0c3c244652be5dc30a0407",
+      "before_parameter_hash": "sha256:02053c23787617d9a9e4229f441f8177106efc1688cd4b68957e0450b75dff5f",
+      "gradient_norm_before_clip": 2.968939781188965,
+      "loss": 2.6786842048168182,
+      "update": 5
+    },
+    {
+      "actual_sha256": "fc5b2b3460f4893aedf9489686f3942b29d0a45bb27b79e2103ffd9708f5b749",
+      "after_parameter_hash": "sha256:efa2f1eff62ae7bf8593f646b75fa4fbb018ded2eaf4a8d9c93e15949a800b2d",
+      "baseline_sha256": "e45b7afb4f66ee608eb76d796c122116871ebef0bbc3bbc798574e2c38d8fe3e",
+      "before_parameter_hash": "sha256:b26c51d44b52094ee561b24b9373d709973a39d490ee907e25ffcbf525794901",
+      "gradient_norm_before_clip": 3.263530969619751,
+      "loss": 2.53461155295372,
+      "update": 6
+    },
+    {
+      "actual_sha256": "2b246ba98dbb264d132ada04f0ed2cc16b973c9f8269b2a799beb72c039b1953",
+      "after_parameter_hash": "sha256:a619b45db77a43da9c3156baac4fb988369eea854daf13e897c5bdb57ebdd245",
+      "baseline_sha256": "aecaf1e14c864cba7fec8c772378332223e180010e0d2d225ac85f21f2d2fc50",
+      "before_parameter_hash": "sha256:efa2f1eff62ae7bf8593f646b75fa4fbb018ded2eaf4a8d9c93e15949a800b2d",
+      "gradient_norm_before_clip": 3.1918373107910156,
+      "loss": 2.3696551471948624,
+      "update": 7
+    },
+    {
+      "actual_sha256": "81314d24bfcfe9e81781eb2ca21129f52d3f893c9e9bb91e95cdccfb7c8fe26f",
+      "after_parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "baseline_sha256": "a7082f6838fc80894bcf40bb3bca2c04478e9933831c5d12b70d9e8ca24993e7",
+      "before_parameter_hash": "sha256:a619b45db77a43da9c3156baac4fb988369eea854daf13e897c5bdb57ebdd245",
+      "gradient_norm_before_clip": 2.0130081176757812,
+      "loss": 2.2283670157194138,
+      "update": 8
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "ReMIND-008": {
+    "actions": [
+      "STOP"
+    ],
+    "context_hash": "sha256:974a4fe24b87f331d0da9b7dbd6f4c33fd1d6a8a85c66346ec93f826fdcd1659",
+    "plan_seal": "sha256:726120528e8216949625ae530fa6f38dae68e60b0171ba4960c8faa159b00a4e",
+    "steps": 1,
+    "stop_steps": 1,
+    "trace_seal": "sha256:914ab6532629e153294309fbb1fc08de20ee17d83cb0428a4ff0a27c3df88e8c"
+  },
+  "ReMIND-010": {
+    "actions": [
+      "STOP"
+    ],
+    "context_hash": "sha256:72289f94c4d1eb9cff899893204b7668778ccc8a64c842ecccb90b4ebea8f6d0",
+    "plan_seal": "sha256:346712efde410587e29354b854324225ca7dbbc35c250678f1d2d4db1f2c25fb",
+    "steps": 1,
+    "stop_steps": 1,
+    "trace_seal": "sha256:81507b7e0757dac0460adc155e75d8e050de934dd7116ed69905b511b55b0a01"
+  },
+  "ReMIND-020": {
+    "actions": [
+      "STOP"
+    ],
+    "context_hash": "sha256:58f997c62361e96854b7f36d6d1425dd424bc22c585c5e5b2e1f6fc04ae1ab37",
+    "plan_seal": "sha256:4c4ecad1478b2618bcdedcf61e6fb66509cc1271d9df6a9e1bcc757b1c411426",
+    "steps": 1,
+    "stop_steps": 1,
+    "trace_seal": "sha256:068f5f4c3996b4b59aef4af06694b09c5b1595682dee7759f62c9e80d79a0ddd"
+  },
+  "ReMIND-025": {
+    "actions": [
+      "nominal-cavity-968f3758c3de3eab8c99ca99",
+      "STOP"
+    ],
+    "context_hash": "sha256:21a14b9656ef82d56153d9e83acea04e6062e19a361aeb02c35618c001fac8cd",
+    "plan_seal": "sha256:b583bdb7c0f5ff14785297575bd6945570515788f432c83ce68ee2b5f2c92769",
+    "steps": 2,
+    "stop_steps": 1,
+    "trace_seal": "sha256:dfe37b25a98ded51e69ff37c9df2c914c0f45d58d6653e0d14089d1e85ee8e4c"
+  }
+}

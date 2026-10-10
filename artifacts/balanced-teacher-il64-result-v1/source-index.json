@@ -1,0 +1,254 @@
+{
+  "bytes": 1898561,
+  "file_count": 41,
+  "files": [
+    {
+      "bytes": 19783,
+      "path": "driver/pilot_contract.py",
+      "sha256": "e44e4846981a89c1bd760161b3d3aecb041ed3b786cc6e233b919db0a10b0d5a",
+      "source": "build/balanced-teacher-il64-v1/pilot_contract.py"
+    },
+    {
+      "bytes": 21365,
+      "path": "driver/cohort_worker.py",
+      "sha256": "4cddc0938549a0391389a39dfa5f8ad5748e96c2081327d3b9ed166ad14a7da2",
+      "source": "build/balanced-teacher-il64-v1/cohort_worker.py"
+    },
+    {
+      "bytes": 12790,
+      "path": "driver/run_owned.py",
+      "sha256": "cc806c3d1162cc46e0f5f2ca629b99d6dc6cd905eefd14a48a9b95e3f7658e29",
+      "source": "build/balanced-teacher-il64-v1/run_owned.py"
+    },
+    {
+      "bytes": 8654,
+      "path": "driver/freeze-runtime.py",
+      "sha256": "6a4df778bcde004a6ae2c565d6d314aac2dbe27a608dab849e20bb601e732b20",
+      "source": "build/balanced-teacher-il64-v1/freeze-runtime.py"
+    },
+    {
+      "bytes": 11918,
+      "path": "bindings/root-release.json",
+      "sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22",
+      "source": "build/balanced-teacher-il64-v1/root-release.json"
+    },
+    {
+      "bytes": 17533,
+      "path": "bindings/source-index.json",
+      "sha256": "5be1b0f70de0065e0ce79b518d1380d98612b3efbace3ed6985159b6ff042dc4",
+      "source": "build/balanced-teacher-il64-v1/source-index.json"
+    },
+    {
+      "bytes": 8982,
+      "path": "run/result.json",
+      "sha256": "ed6292fa743c2f3349899ebb43df7208adb2f2f4687d2dd543eb50661dba36a8",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/result.json"
+    },
+    {
+      "bytes": 3816,
+      "path": "run/configuration.json",
+      "sha256": "f93d174c8befdee5d19048e6625bd86d723a011c63b843eae7ec6752b5957e63",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/configuration.json"
+    },
+    {
+      "bytes": 379858,
+      "path": "run/costs.json",
+      "sha256": "55e6e5e132f93f988bad4e71138666c936e63e96c0ab501b2506094b22d54025",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/costs.json"
+    },
+    {
+      "bytes": 1556,
+      "path": "run/teacher-pins.json",
+      "sha256": "f521f4725492053fa408a552a8087e468a5915b3f4fd670d4c5312286ccc78fe",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/teacher-pins.json"
+    },
+    {
+      "bytes": 341,
+      "path": "run/checkpoint-reload.json",
+      "sha256": "c297883b62510437914276f2492598f605d5cc57fd3d8d48f49d04bfbf56523e",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/checkpoint-reload.json"
+    },
+    {
+      "bytes": 739,
+      "path": "run/endpoint-teacher-metrics.json",
+      "sha256": "b2baba3a240411bf244591e95c17d9e56fa13145158c70fb93547f5207c2ed02",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/endpoint-teacher-metrics.json"
+    },
+    {
+      "bytes": 51662,
+      "path": "run/training-dynamics.json",
+      "sha256": "98eb004a5835bb8b4d7a1c5030f790aadc89e5818bbeeca1f1190aef7ab8fe0a",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/training-dynamics.json"
+    },
+    {
+      "bytes": 4335,
+      "path": "run/first-eight-update-control.json",
+      "sha256": "967ebc1833e1d7d18cf944c209758d1c6cde8cbc30308eb58148516f1fa2532f",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/first-eight-update-control.json"
+    },
+    {
+      "bytes": 11762,
+      "path": "run/readouts/ReMIND-008-state-00.json",
+      "sha256": "0dddeadbab431c85e775d98c0ede2f65daa4eb3cb0675fb9c535ab1514a270dc",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-008/state-00.json"
+    },
+    {
+      "bytes": 8436,
+      "path": "run/readouts/ReMIND-010-state-00.json",
+      "sha256": "672b9474fb06877087a6b9f5750eb6b5873807968cbec0afb9da9e9919a4e24e",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-010/state-00.json"
+    },
+    {
+      "bytes": 6876,
+      "path": "run/readouts/ReMIND-020-state-00.json",
+      "sha256": "24bbacb81b5201fc1c608070df492577d267203476a3013fc354fe0b5e5fba24",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-020/state-00.json"
+    },
+    {
+      "bytes": 5476,
+      "path": "run/readouts/ReMIND-025-state-00.json",
+      "sha256": "1faf2d46ae5874985c5fe189e0018edb7837cda301658a96315697e4306d9fb3",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-025/state-00.json"
+    },
+    {
+      "bytes": 5094,
+      "path": "run/readouts/ReMIND-025-state-01.json",
+      "sha256": "0fe62e9ce311d69e75a49c08699b31502a45558216dcd30443707eb7bd811542",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/teacher-readout/ReMIND-025/state-01.json"
+    },
+    {
+      "bytes": 10692,
+      "path": "run/replays/ReMIND-008-native-replay.json",
+      "sha256": "7bf6ada6713466768603d4f28e6405a490c470255ac8e756d149bc27471f7de5",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/TRAIN-greedy/IL/ReMIND-008/native-replay.json"
+    },
+    {
+      "bytes": 20682,
+      "path": "run/replays/ReMIND-010-native-replay.json",
+      "sha256": "984a199476f38c306ca0c9f52b27dfdb3abcb7378ffd48a6cb014c02ad8af35d",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/TRAIN-greedy/IL/ReMIND-010/native-replay.json"
+    },
+    {
+      "bytes": 20660,
+      "path": "run/replays/ReMIND-020-native-replay.json",
+      "sha256": "dd8a8aa7b4172bb9d1e993fbfb87236e6eb1aad0783bdfd426d66b1d2f5d0c40",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/TRAIN-greedy/IL/ReMIND-020/native-replay.json"
+    },
+    {
+      "bytes": 43384,
+      "path": "run/replays/ReMIND-025-native-replay.json",
+      "sha256": "4f2e8d4976fd196feaaa8e47acc1e3df201c499760a7542e71730c828c78a87c",
+      "source": "build/balanced-teacher-il64-v1/attempt-01/TRAIN-greedy/IL/ReMIND-025/native-replay.json"
+    },
+    {
+      "bytes": 1900,
+      "path": "supervision/receipt.json",
+      "sha256": "02fd92d8ecbdb3d69e3f81bd5b81b642080734fd610cda74dab3fae1f1c4d1b2",
+      "source": "build/balanced-teacher-il64-v1/attempt-01.supervision/receipt.json"
+    },
+    {
+      "bytes": 753,
+      "path": "supervision/worker-final.json",
+      "sha256": "f0246349561c2af1a8c48004db784c4ba4070c3171df66310139ba701f446fdf",
+      "source": "build/balanced-teacher-il64-v1/attempt-01.supervision/worker-final.json"
+    },
+    {
+      "bytes": 13067,
+      "path": "supervision/endpoint-control.json",
+      "sha256": "82ff172da93ce40c0073bcc2cc1a5a074f8b789521e5e9569e53ee3041187f83",
+      "source": "build/balanced-teacher-il64-v1/attempt-01.supervision/endpoint-control.json"
+    },
+    {
+      "bytes": 18607,
+      "path": "supervision/declaration.json",
+      "sha256": "637082e4dc31301150df559a4b57fa64cad93dc27edcf07014883acf2d72390b",
+      "source": "build/balanced-teacher-il64-v1/attempt-01.supervision/declaration.json"
+    },
+    {
+      "bytes": 6134,
+      "path": "audit/REPORT.txt",
+      "sha256": "ac34bdc6a773e0dfdf940efeb92df610cc85999bf48ab31dad219d668c4c4f4d",
+      "source": "build/balanced-teacher-il64-audit-v1/REPORT.txt"
+    },
+    {
+      "bytes": 73687,
+      "path": "audit/audit-result.json",
+      "sha256": "581da35cf020822e17dd93d8f92b633446c9c68ff7b3c57a5f06d2b2cb6be5e0",
+      "source": "build/balanced-teacher-il64-audit-v1/audit-result.json"
+    },
+    {
+      "bytes": 2564,
+      "path": "audit/audit-run-01.txt",
+      "sha256": "c36d276ab8fa39ebe2f25fac7e6ba8e6f87a9c04e2e394d4250dce7f8a0dd1a9",
+      "source": "build/balanced-teacher-il64-audit-v1/audit-run-01.txt"
+    },
+    {
+      "bytes": 3700,
+      "path": "audit/audit-run-02.txt",
+      "sha256": "4ba54a7152b90e39474ba45d5f21ee76ea0f23950a7f29e61584c8a08b5f3c9c",
+      "source": "build/balanced-teacher-il64-audit-v1/audit-run-02.txt"
+    },
+    {
+      "bytes": 26273,
+      "path": "audit/audit_saved.py",
+      "sha256": "b12157e2a3d92e959798092d22e17d6c29ebfa2070b726cbd8b5b5b932261fb1",
+      "source": "build/balanced-teacher-il64-audit-v1/audit_saved.py"
+    },
+    {
+      "bytes": 25766,
+      "path": "audit/audit_saved_pre_float32_bound.py",
+      "sha256": "6f6ad7cf888617dea5dd18af44d42f853102ddfb894f225ef24858bbcf2314ff",
+      "source": "build/balanced-teacher-il64-audit-v1/audit_saved_pre_float32_bound.py"
+    },
+    {
+      "bytes": 1363,
+      "path": "audit/diagnose_score_arithmetic.py",
+      "sha256": "e460bf7d71d84fdfb46dcd6cbfd4db4f0c9fb28b3ff48a2895cd5d8bbd72ae8f",
+      "source": "build/balanced-teacher-il64-audit-v1/diagnose_score_arithmetic.py"
+    },
+    {
+      "bytes": 245840,
+      "path": "audit/input-hashes.json",
+      "sha256": "eb5fa27e922cf8c8eaa07d7e2425e7b219c206c589458bf55f17573fd6d4b0bc",
+      "source": "build/balanced-teacher-il64-audit-v1/input-hashes.json"
+    },
+    {
+      "bytes": 279,
+      "path": "audit/package-run-01.txt",
+      "sha256": "d688df429e5ff88e7dc4e8af3aae518b531382c091e0101647f96d4aa1ca41c2",
+      "source": "build/balanced-teacher-il64-audit-v1/package-run-01.txt"
+    },
+    {
+      "bytes": 4900,
+      "path": "audit/package_saved.py",
+      "sha256": "3b88f0019574c3fc8ba36cec8ce5b29c727afa7c27405fd59c29c654316e718b",
+      "source": "build/balanced-teacher-il64-audit-v1/package_saved.py"
+    },
+    {
+      "bytes": 7304,
+      "path": "audit/score-arithmetic-diagnosis.json",
+      "sha256": "83ed78ffdfdeb05e5fdf0694544db2a23cf72dcf6d3d907e947077a06cde4844",
+      "source": "build/balanced-teacher-il64-audit-v1/score-arithmetic-diagnosis.json"
+    },
+    {
+      "bytes": 5886,
+      "path": "audit/score-arithmetic-diagnosis.txt",
+      "sha256": "3076b85920e9854076f3710808256f70ee2d92a7813e557023e62a8234c6e19b",
+      "source": "build/balanced-teacher-il64-audit-v1/score-arithmetic-diagnosis.txt"
+    },
+    {
+      "bytes": 2873,
+      "path": "RESULT.txt",
+      "sha256": "a383973489953424bac8b6cc69d8e28645b585b38d7a9b84cacd798d3e85f34c",
+      "source": "root packaging from saved experiment evidence"
+    },
+    {
+      "bytes": 781271,
+      "path": "full-output-bindings.json",
+      "sha256": "7e3c65398e3b13ae7b9472b0ec64e52dbf99b4a6c6c85cf96026f62bf6a00cdf",
+      "source": "root packaging from saved experiment evidence"
+    }
+  ],
+  "scope": "No arrays, checkpoints or bulk traces included",
+  "status": "audited_compact_evidence"
+}

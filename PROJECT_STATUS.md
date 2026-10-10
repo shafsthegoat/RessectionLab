@@ -5,16 +5,19 @@ planning experiment on qualified acquired anatomy. Preserve the negative learned
 results below; additional generated-task architecture sweeps and mechanics format
 work are deferred. The controlled eight-update run is complete: both learners now stop on all four
 TRAIN cases, avoiding harmful continuation but losing the one useful teacher action.
-Balanced teacher loss restores the useful movement to first among movements, but
-all four complete policies still STOP. The next fixed 64-update contrast tests
-undertraining before any architecture change; eight updates are not convergence.
+Balanced teacher loss alone at eight updates still STOPs. At the predetermined
+64-update endpoint, the same model now reproduces all four TRAIN search routes,
+including the useful motion followed by STOP. This is fit of five teacher states;
+the next test compares all four fixed checkpoints and two searches on SELECT013.
 ReMIND preoperative MRI uses a supplied tumor region and automatic tissue support;
 source ventricular estimates remain separate from deployment inputs. Those automatic
 Brainlab estimates are not manual ground truth or evidence of neurological injury.
-Existing patient roles remain fixed. No patient model benefit has been demonstrated.
+Existing patient roles remain fixed. No held-out patient or clinical benefit has been demonstrated.
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Longer balanced training recovers the useful complete TRAIN route:** [the fixed64 experiment](artifacts/balanced-teacher-il64-result-v1/RESULT.txt) matches all four search action sequences and native histories. On025 it takes the useful action and then STOPs (+0.916839, one modeled target cell, 0.953675 mm³, zero outside-target removal); the other three STOP. Endpoint balanced loss falls 2.237167→0.021652 versus balanced8, with exact first-eight update parity. The 1117.777-second owned run passes 18,140 independent saved checks, with 64 IL/zero RL updates and an authenticated final reload. This demonstrates fit of five TRAIN states, not generalization, useful resection volume or physical fidelity. The next predeclared SELECT comparison includes both search baselines and all four checkpoints; EVAL stays closed.
 
 - **Balanced training improves ordering but not complete plans:** [the fixed eight-update contrast](artifacts/balanced-teacher-il-result-v1/RESULT.txt) moves the useful025 action from tenth to first among movements, yet STOP still wins and all four greedy returns remain zero. Balanced endpoint loss improves 2.44455→2.23717 versus unweighted IL8. The 144.704-second run passes 3,912 independent saved checks, with actual checkpoint reload and complete native replay. The next fixed64 contrast tests whether training is insufficient, preserving the model, data and objective; no learned route or held-out benefit is established. The [loss integration](artifacts/balanced-teacher-loss-v1/RESULT.txt) remains covered by 96 tests and nine subtests.
 
