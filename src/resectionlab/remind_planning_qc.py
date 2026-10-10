@@ -1,4 +1,4 @@
-"""Reusable TRAIN ReMIND MR/SEG geometry and explicit public-grid crop QC.
+"""ReMIND MR/SEG geometry and explicit public-grid crop QC.
 
 Inputs are an exact hash-bound case manifest and the existing family-role cohort.
 Header projection precedes a separately invoked crop conversion. The source
@@ -24,6 +24,9 @@ CORE_SHA = "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
 COHORT_SHA = "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
 MAX_RSS = 2*1024**3
 MAX_CORNER_MM = .001
+PUBLIC_SERIES_KINDS = frozenset(("structural_t1ce", "whole_tumor", "cerebrum"))
+PUBLIC_SUBJECTS_BY_ROLE = {"TRAIN": ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025"),
+                           "SELECT": ("ReMIND-013", "ReMIND-037")}
 
 
 def need(value, reason):
@@ -149,10 +152,21 @@ def pairing(mr, seg):
             "correspondence": "shared_frame_plus_source_description" if same and not refs else "explicit_refs_and_frame_match" if same and refs <= sops else "unresolved"}
 
 
-def project(case, core, accounting):
-    need(case["role"] == "TRAIN", "TRAIN_case_required")
+def validate_public_scope(case, *, public_only=False):
+    """Public mode is an exact three-series read boundary, never a filter."""
+    if public_only:
+        need(case["patient_id"] in PUBLIC_SUBJECTS_BY_ROLE.get(case["role"], ()), "frozen_public_pilot_role")
+        kinds = [s["kind"] for s in case["series"]]
+        need(len(kinds) == 3 and set(kinds) == PUBLIC_SERIES_KINDS, "exact_public_series_only")
+    else:
+        need(case["role"] == "TRAIN", "TRAIN_case_required")
+
+
+def project(case, core, accounting, *, public_only=False):
+    validate_public_scope(case, public_only=public_only)
     need(len({s["kind"] for s in case["series"]}) == len(case["series"]) and
-         {s["kind"] for s in case["series"]} >= {"structural_t1ce", "whole_tumor", "ventricles"}, "case_series_kinds")
+         {s["kind"] for s in case["series"]} >= (PUBLIC_SERIES_KINDS if public_only else
+             {"structural_t1ce", "whole_tumor", "ventricles"}), "case_series_kinds")
     rows = []
     for series in case["series"]:
         need(series["kind"] in ("structural_t1ce", "whole_tumor", "ventricles", "cerebrum"), "undeclared_series_kind")
@@ -179,15 +193,17 @@ def project(case, core, accounting):
             "within_existing_32million_voxel_case_cap": voxels <= 32000000, "downsampling_performed": False}
 
 
-def validate_role(case, cohort):
-    """Preserve the existing family-level TRAIN role; no role creation here."""
+def validate_role(case, cohort, *, public_only=False):
+    """Preserve original family roles; SELECT has no optimization admission."""
     members = [row for row in cohort["members"] if row["subject"] == case["patient_id"]]
-    need(len(members) == 1 and case["role"] == members[0]["role"] == "TRAIN" and
-         case["patient_group"] == members[0]["patient_group"], "immutable_TRAIN_role")
+    allowed = (case["patient_id"] in PUBLIC_SUBJECTS_BY_ROLE.get(case["role"], ())) if public_only else case["role"] == "TRAIN"
+    need(len(members) == 1 and allowed and case["role"] == members[0]["role"] and
+         case["patient_group"] == members[0]["patient_group"], "immutable_public_pilot_role" if public_only else "immutable_TRAIN_role")
 
 
-def validate_case(case, repository_root):
+def validate_case(case, repository_root, *, public_only=False):
     repository_root = Path(repository_root).resolve()
+    if public_only: validate_public_scope(case, public_only=True)
     parents = case["parent_bindings"]
     parent = parents.get("source_binding", parents.get("first_train_source_binding_v2"))
     need(isinstance(parent, dict), "source_binding_required")
@@ -197,7 +213,7 @@ def validate_case(case, repository_root):
     binding = json.loads(raw)
     cohort_raw = (repository_root / "manifests/experiments/remind-component-cohort-v1.json").read_bytes()
     need(digest(cohort_raw) == COHORT_SHA, "cohort_digest")
-    validate_role(case, json.loads(cohort_raw))
+    validate_role(case, json.loads(cohort_raw), public_only=public_only)
     need(all(binding[k] == case[k] for k in ("patient_id", "patient_group", "role")), "binding_role")
     count = sum(len(s["objects"]) for s in case["series"])
     need(count == binding["total_objects"] and sum(o["bytes"] for s in case["series"] for o in s["objects"]) == binding["total_bytes"], "exact_object_extent")
@@ -213,16 +229,19 @@ def validate_case(case, repository_root):
              all(series[key] == original[key] for key in ("SeriesInstanceUID", "StudyInstanceUID", "Modality")) and
              series.get("source_description") == original["SeriesDescription"] and
              len(series["objects"]) == int(original["instanceCount"]), "source_series_identity")
-    return {"source_binding_sha256": parent["sha256"], "cohort_sha256": COHORT_SHA, "role": "TRAIN", "patient_group": case["patient_group"]}
+    return {"source_binding_sha256": parent["sha256"], "cohort_sha256": COHORT_SHA, "role": case["role"], "patient_group": case["patient_group"]}
 
 
-def validate_header_binding(headers, case, case_sha256):
+def validate_header_binding(headers, case, case_sha256, *, public_only=False):
     """Reject a different case, source set or unresolved frame before decoding."""
+    validate_public_scope(case, public_only=public_only)
+    if public_only: need(headers.get("public_only") is True, "public_header_scope_required")
     need(headers["case_sha256"] == case_sha256 and headers["status"] == "header_geometry_and_ancestry_projected" and
          headers["reused_converter_sha256"] == CORE_SHA, "completed_header_case")
     rows = {s["kind"]: s for s in headers["series"]}
     need(len(rows) == len(headers["series"]) == len(case["series"]) and
-         set(rows) == {s["kind"] for s in case["series"]} == {"structural_t1ce", "whole_tumor", "ventricles", "cerebrum"}, "crop_series_kinds")
+         set(rows) == {s["kind"] for s in case["series"]} == (PUBLIC_SERIES_KINDS if public_only else
+             {"structural_t1ce", "whole_tumor", "ventricles", "cerebrum"}), "crop_series_kinds")
     for series in case["series"]:
         row = rows[series["kind"]]
         need(row["source_objects"] == series["objects"] and row["series_instance_uid"] == series["SeriesInstanceUID"] and
@@ -235,17 +254,20 @@ def validate_header_binding(headers, case, case_sha256):
 
 def run_headers(args):
     repository_root = Path(args.repository_root or ROOT).resolve()
+    public_only = bool(getattr(args, "public_only", False))
     started = time.monotonic(); output = args.output.resolve(); output.mkdir(parents=True, exist_ok=False)
-    result = {"status": "failed", "phase": args.phase, "role": "TRAIN", "training_admitted": False,
+    result = {"status": "failed", "phase": args.phase, "role": None if public_only else "TRAIN", "training_admitted": False,
               "planner_inputs_admitted": False, "actor_inputs_admitted": False, "anatomy_and_coverage_review": "unreviewed",
               "source_file_returned_bytes": 0, "objects_verified": 0, "pixel_decode_calls": 0}
     try:
         raw = args.case.read_bytes(); need(digest(raw) == args.case_sha256, "case_manifest_digest")
         case = json.loads(raw); result["case_sha256"] = args.case_sha256; result.update(patient_id=case["patient_id"], patient_group=case["patient_group"])
-        result["immutable_role_binding"] = validate_case(case, repository_root)
+        result["immutable_role_binding"] = validate_case(case, repository_root, public_only=public_only)
+        result["role"] = case["role"]
+        if public_only: result.update(public_only=True, optimizer_updates_performed=0, private_reference_loaded=False)
         result["case_uncertainties"] = case.get("case_uncertainties", [])
         core = source_module(repository_root / "scripts/convert_remind_development.py", CORE_SHA)
-        result.update(project(case, core, result))
+        result.update(project(case, core, result, public_only=public_only))
         result.update(status="header_geometry_and_ancestry_projected", native_conversion_performed=False,
                       missing_anatomy=["patient-specific vessels", "functional anatomy"],
                       target_meaning="Whole-tumor source annotation; not a prescribed resection target.",
@@ -344,7 +366,7 @@ def png(path, rgb):
     Path(path).write_bytes(b"\x89PNG\r\n\x1a\n"+chunk(b"IHDR", struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0))+chunk(b"IDAT", zlib.compress(raw))+chunk(b"IEND", b""))
 
 
-def overlays(image, masks, output, sample_point):
+def overlays(image, masks, output, sample_point, *, public_only=False):
     import numpy as np
     sample = image[::4, ::4, ::4]; lo, hi = np.percentile(sample, [1, 99.5]); need(hi > lo, "degenerate_display_window")
     records = []
@@ -352,12 +374,14 @@ def overlays(image, masks, output, sample_point):
         index = int(sample_point[axis]); plane = np.take(image, index, axis=axis).T
         gray = np.clip((plane-lo)/(hi-lo), 0, 1); rgb = np.repeat(gray[:, :, None], 3, axis=2)
         for kind, color in (("cerebrum", [0, 1, 0]), ("whole_tumor", [1, .15, 0]), ("ventricles", [0, .4, 1])):
+            if public_only and kind == "ventricles": continue
             mask = np.take(masks[kind], index, axis=axis).T.astype(bool)
             if kind == "cerebrum": mask &= ~(np.roll(mask, 1, 0)&np.roll(mask, -1, 0)&np.roll(mask, 1, 1)&np.roll(mask, -1, 1))
             rgb[mask] = .35*rgb[mask]+.65*np.asarray(color)
-        path = output/f"evaluation-only-axis{axis}-index{index}.png"; png(path, rgb*255)
+        prefix = "public-qc" if public_only else "evaluation-only"
+        path = output/f"{prefix}-axis{axis}-index{index}.png"; png(path, rgb*255)
         records.append({"file": path.name, "axis": axis, "index": index, "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention", "available_to_actor": False})
-    return {"images": records, "window": [float(lo), float(hi)], "selection": "source whole-tumor grid centre for QC only", "colors": {"cerebrum_boundary": "green", "whole_tumor": "red", "ventricles": "blue"}}
+    return {"images": records, "window": [float(lo), float(hi)], "selection": "source whole-tumor grid centre for QC only", "colors": {"cerebrum_boundary": "green", "whole_tumor": "red", **({} if public_only else {"ventricles": "blue"})}}
 
 
 def public_target_support_relation(target, support):
@@ -454,16 +478,18 @@ def resample_binary_nn(source, source_affine, target_affine, target_shape, check
 
 def run_crop(args):
     repository_root = Path(args.repository_root or ROOT).resolve()
+    public_only = bool(getattr(args, "public_only", False))
     import numpy as np
     started = time.monotonic(); output = args.output.resolve(); output.mkdir(parents=True, exist_ok=False)
-    report = {"status": "failed", "role": "TRAIN", "source_file_returned_bytes": 0, "objects_verified": 0,
+    report = {"status": "failed", "role": None if public_only else "TRAIN", "source_file_returned_bytes": 0, "objects_verified": 0,
               "training_admitted": False, "actor_inputs_admitted": False, "clinical_validity": "unreviewed", "artifacts": {}}
     try:
         raw = args.case.read_bytes(); need(digest(raw) == args.case_sha256, "exact_case"); case = json.loads(raw)
-        report["immutable_role_binding"] = validate_case(case, repository_root)
-        report.update(patient_id=case["patient_id"], patient_group=case["patient_group"])
+        report["immutable_role_binding"] = validate_case(case, repository_root, public_only=public_only)
+        report.update(patient_id=case["patient_id"], patient_group=case["patient_group"], role=case["role"])
+        if public_only: report.update(public_only=True, optimizer_updates_performed=0, private_reference_loaded=False)
         raw = args.headers.read_bytes(); need(digest(raw) == args.headers_sha256, "exact_header_snapshot"); headers = json.loads(raw)
-        by_kind = validate_header_binding(headers, case, args.case_sha256)
+        by_kind = validate_header_binding(headers, case, args.case_sha256, public_only=public_only)
         series = {s["kind"]: s for s in case["series"]}
         core = source_module(repository_root / "scripts/convert_remind_development.py", CORE_SHA)
         mr = by_kind["structural_t1ce"]; public = by_kind["cerebrum"]
@@ -505,7 +531,8 @@ def run_crop(args):
             full_MR_native_array_written=False, selected_MR_pixels_match_independent_raw_bytes=True, source_cropping_map=crop_map,
             case_uncertainties=case.get("case_uncertainties", []), annotations={})
         masks = {}; tumor_point = None
-        for kind in ("cerebrum", "whole_tumor", "ventricles"):
+        label_kinds = ("cerebrum", "whole_tumor") if public_only else ("cerebrum", "whole_tumor", "ventricles")
+        for kind in label_kinds:
             guard(started); source = series[kind]; saved = by_kind[kind]
             need(saved["geometry"]["frame_of_reference_uid"] == mr["geometry"]["frame_of_reference_uid"], "SEG_cross_frame")
             ds = read_object(source["objects"][0], pixels=True, accounting=report); identity(ds, case, source)
@@ -536,22 +563,24 @@ def run_crop(args):
                     tumor_point = np.clip(np.floor(centre+.5).astype(int), 0, np.asarray(shape)-1)
                 else: tumor_point = offset+(np.asarray(native.shape)-1)//2
             del native, expected, domain, ds; gc.collect()
-        report["public_support_private_ventricle_relation"] = {"ventricle_positive_voxels": int(masks["ventricles"].sum()),
-            "ventricle_positive_in_public_support_zero": int(np.count_nonzero(masks["ventricles"] & (masks["cerebrum"] == 0))),
-            "ventricle_positive_in_public_support_one": int(np.count_nonzero(masks["ventricles"] & masks["cerebrum"])),
-            "public_support_zero_voxels": int(np.count_nonzero(masks["cerebrum"] == 0)),
-            "support_filled_or_modified": False, "information_boundary": "The automatic cerebrum mask is explicitly supplied public estimated support. Its holes/zeros may reveal anatomy; retain and declare this cue, never fill or hide it to manufacture difficulty."}
+        if not public_only:
+            report["public_support_private_ventricle_relation"] = {"ventricle_positive_voxels": int(masks["ventricles"].sum()),
+                "ventricle_positive_in_public_support_zero": int(np.count_nonzero(masks["ventricles"] & (masks["cerebrum"] == 0))),
+                "ventricle_positive_in_public_support_one": int(np.count_nonzero(masks["ventricles"] & masks["cerebrum"])),
+                "public_support_zero_voxels": int(np.count_nonzero(masks["cerebrum"] == 0)),
+                "support_filled_or_modified": False, "information_boundary": "The automatic cerebrum mask is explicitly supplied public estimated support. Its holes/zeros may reveal anatomy; retain and declare this cue, never fill or hide it to manufacture difficulty."}
         report["public_target_support_relation"] = public_target_support_relation(masks["whole_tumor"], masks["cerebrum"])
-        report["evaluation_only_target_ventricle_relation"] = {"overlap_positive_voxels": int(np.count_nonzero(masks["whole_tumor"] & masks["ventricles"])),
-            "interpretation": "Source-reference overlap can contradict simultaneous perfect target-removal and zero-contact hard goals; it is not clinical truth."}
-        report["evaluation_only_overlays"] = overlays(crop, masks, output, tumor_point)
+        if not public_only:
+            report["evaluation_only_target_ventricle_relation"] = {"overlap_positive_voxels": int(np.count_nonzero(masks["whole_tumor"] & masks["ventricles"])),
+                "interpretation": "Source-reference overlap can contradict simultaneous perfect target-removal and zero-contact hard goals; it is not clinical truth."}
+        report["public_overlays" if public_only else "evaluation_only_overlays"] = overlays(crop, masks, output, tumor_point, public_only=public_only)
         for path in sorted(output.iterdir()):
             if path.suffix in (".npy", ".png"): report["artifacts"][path.name] = {"bytes": path.stat().st_size, "sha256": file_sha(path)}
         guard(started)
         report.update(status="public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
-            explicit_source_SOP_links_present={kind: by_kind[kind]["alignment"]["explicit_SOP_refs_present"] for kind in ("cerebrum", "whole_tumor", "ventricles")},
+            explicit_source_SOP_links_present={kind: by_kind[kind]["alignment"]["explicit_SOP_refs_present"] for kind in label_kinds},
             whole_tumor_is_prescribed_resection_target=False, anatomical_coverage="Only source annotation domains; other anatomy remains unknown", registration_performed=False,
-            declared_conditions={"support": "supplied automatic Brainlab cerebrum estimate", "whole_tumor": "manual source annotation; any task target use must be explicit", "ventricles": "automatic source reference, not independent manual truth", "vessels_and_function": "unknown"})
+            declared_conditions={"support": "supplied automatic Brainlab cerebrum estimate", "whole_tumor": "manual source annotation; any task target use must be explicit", **({} if public_only else {"ventricles": "automatic source reference, not independent manual truth"}), "vessels_and_function": "unknown"})
     except BaseException as error: report.update(status="failed", error_type=type(error).__name__, error=str(error))
     finally:
         report.update(elapsed_seconds=time.monotonic()-started, peak_RSS_bytes=peak(), executing_script_sha256=file_sha(__file__), reused_converter_sha256=CORE_SHA,

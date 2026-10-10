@@ -1,0 +1,32 @@
+{
+  "scope": "generated software controls; no acquired SELECT execution",
+  "canonical_pytest": {
+    "passed": 116,
+    "skipped_missing_pydicom": 5,
+    "subtests_passed": 16,
+    "seconds": 8.26
+  },
+  "imaging_runtime_unittest": {
+    "passed": 9,
+    "skipped": 0,
+    "seconds": 0.011,
+    "meaning": "Includes the five geometry tests skipped by torch runtime"
+  },
+  "staged_inference": {
+    "passed": 41,
+    "seconds": 4.94
+  },
+  "staged_public_qc": {
+    "passed": 8,
+    "seconds": 0.28
+  },
+  "sources": {
+    "src/resectionlab/remind_planning_qc.py": "db146b0610b0b2aaf8c9d3cc08478920b2746f4b5065937a43a320054700f9a8",
+    "src/resectionlab/public_patient_factory.py": "bf918d5f5ae2f4b2b49843a1ea2949e3359106f56c57111b31e0aca93aac4d99",
+    "src/resectionlab/patient_planning_admission.py": "ab40a866af7bf0deaf65ecd57f7fb6ceb5b997e4a8af291dd15466e01694c1c3",
+    "src/resectionlab/patient_select_inference.py": "63a2e7a9a4133b2b5492c7c49623efcd87d84ce15936ebf7916484fe25dc1770",
+    "scripts/prepare_remind_planning.py": "155e32f3c4605407fe4c3e65de5c0445bae7918002daf803d2dde470fe350b35",
+    "tests/test_remind_public_select_preparation.py": "c5f1192a686c2a6b406a947342ce270a6d0a5f0557ca58976b7da2037550333e",
+    "tests/test_patient_select_inference.py": "db38c434b1b234664b6ef11d8e19d4f3d44d5a4f359562e329cbc419f82bb2fa"
+  }
+}

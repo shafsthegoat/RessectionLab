@@ -35,6 +35,12 @@ PROTOCOL_FIELDS = frozenset({"version", "scope", "subject", "role", "evidence_do
     "search", "max_native_previews", "max_policy_forwards", "worker_seconds",
     "memory_bytes", "threads", "initialization", "private_reference_used",
     "clinical_claim", "split_changes", "runtime_release_sha256", "learning_protocol_hash"})
+SELECT_SUBJECTS = ("ReMIND-013", "ReMIND-037")
+SELECT_INITIALIZATION = "frozen_TRAIN_checkpoint_reload"
+CHECKPOINT_LINEAGE_FIELDS = frozenset({"version", "checkpoint_sha256", "method",
+    "training_release_sha256", "learning_protocol_hash", "initial_parameter_hash",
+    "parameter_hash", "architecture_hash", "completed_updates", "training_context_hashes",
+    "public_target_context_variant", "optimizer_updates_on_SELECT"})
 
 
 def _need(condition, reason):
@@ -56,6 +62,38 @@ def _fields(value, expected, reason):
 
 def _same_hash(a, b):
     return _digest(a) == _digest(b)
+
+
+def validate_select_checkpoint_lineage(value, *, learning_protocol_hash=None):
+    """Validate declared lineage only; the inference loader authenticates weights.
+
+The owning runner binds the original TRAIN release/terminal receipts before
+supplying external pins. This metadata validator does not prove their provenance.
+"""
+    lineage = _fields(value, CHECKPOINT_LINEAGE_FIELDS, "exact_SELECT_checkpoint_lineage_required")
+    _need(lineage["version"] == "frozen-TRAIN-checkpoint-lineage-v1"
+          and lineage["method"] in {"IL", "RL"}
+          and type(lineage["completed_updates"]) is int and 1 <= lineage["completed_updates"] <= 32
+          and type(lineage["optimizer_updates_on_SELECT"]) is int
+          and lineage["optimizer_updates_on_SELECT"] == 0,
+          "frozen_TRAIN_endpoint_zero_SELECT_updates_required")
+    for key in ("checkpoint_sha256", "training_release_sha256"):
+        _need(type(lineage[key]) is str and len(lineage[key]) == 64, "raw_checkpoint_or_release_sha_required")
+        _digest(lineage[key])
+    for key in ("learning_protocol_hash", "initial_parameter_hash", "parameter_hash", "architecture_hash"):
+        _need(type(lineage[key]) is str and lineage[key].startswith("sha256:"), "semantic_checkpoint_hash_required")
+        _digest(lineage[key])
+    groups = {"ReMIND:"+suffix for suffix in ("008", "010", "020", "025")}
+    _need(isinstance(lineage["training_context_hashes"], Mapping)
+          and set(lineage["training_context_hashes"]) == groups, "original_four_TRAIN_context_pins_required")
+    for digest in lineage["training_context_hashes"].values():
+        _need(type(digest) is str and digest.startswith("sha256:"), "semantic_TRAIN_context_hash_required")
+        _digest(digest)
+    from .public_target_context import VERSION as TARGET_CONTEXT
+    _need(lineage["public_target_context_variant"] in (None, TARGET_CONTEXT), "known_checkpoint_observation_variant_required")
+    if learning_protocol_hash is not None:
+        _need(_same_hash(lineage["learning_protocol_hash"], learning_protocol_hash), "checkpoint_learning_protocol_mismatch")
+    return lineage
 
 
 def _public_observation_binding(observation):
@@ -152,7 +190,9 @@ bound here and enforced by the separately supervised caller.
     cohort = json.loads(cohort_bytes)
     source = _fields(source_binding, SOURCE_FIELDS, "exact_public_source_fields_required")
     qc = _fields(qc_receipt, QC_FIELDS, "exact_public_QC_fields_required")
-    plan = _fields(protocol, PROTOCOL_FIELDS, "exact_preflight_protocol_fields_required")
+    checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
+    plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set()),
+        "exact_preflight_protocol_fields_required")
     domain = source["evidence_domain"]
     _need(domain in {"acquired_patient", "generated_interface_control"}, "explicit_evidence_domain_required")
     _need(source["version"] == qc["version"] == plan["version"] == VERSION
@@ -201,12 +241,21 @@ bound here and enforced by the separately supervised caller.
               "native_domain_fully_covered", "hypothetical_access_assumption")),
           "intended_use_QC_not_header_only_required")
     _digest(qc["evidence_record_sha256"])
+    lineage = None
+    if checkpoint_reload:
+        _need(source["subject"] in SELECT_SUBJECTS and member["role"] == "SELECT"
+              and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0,
+              "checkpoint_reload_requires_fixed_SELECT_zero_gradients")
+        lineage = validate_select_checkpoint_lineage(plan["checkpoint_lineage"],
+            learning_protocol_hash=plan["learning_protocol_hash"])
+        _need(case.public_target_context_variant == lineage["public_target_context_variant"],
+              "checkpoint_observation_variant_mismatch")
     _need(plan["scope"] == "patient_native_planning_experiment"
           and type(plan["max_steps"]) is int and 1 <= plan["max_steps"] <= MAX_NATIVE_SPATIAL_STEPS
           and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] >= 0
           and (member["role"] == "TRAIN" or plan["max_optimizer_updates"] == 0)
           and type(plan["threads"]) is int and plan["threads"] == 1
-          and plan["initialization"] == "fresh_seeded_shared_initialization"
+          and (checkpoint_reload or plan["initialization"] == "fresh_seeded_shared_initialization")
           and plan["private_reference_used"] is False and plan["clinical_claim"] is False
           and plan["split_changes"] is False, "exact_nonclinical_role_and_budget_contract_required")
     for key in ("max_native_previews", "max_policy_forwards", "worker_seconds", "memory_bytes"):
@@ -217,6 +266,7 @@ bound here and enforced by the separately supervised caller.
     _digest(plan["learning_protocol_hash"])
     task = NativeSpatialTask(case, max_steps=plan["max_steps"])
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
+        **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
         **({} if case.public_target_context_variant is None else {
             'public_target_context_variant':case.public_target_context_variant}),
         "patient_group": source["patient_group"], "role": member["role"], "evidence_domain": domain,

@@ -1,4 +1,4 @@
-"""Public-only factory for the four frozen TRAIN planning cases.
+"""Public-only factory for frozen TRAIN and explicitly requested SELECT cases.
 
 Reuses the executed first-case access/tools/context condition. The owning runner
 binds runtime limits and authenticates saved QC; this does not run a simulation.
@@ -11,6 +11,7 @@ import numpy as np
 from resectionlab.core import array_digest, semantic_digest, thaw_json
 from resectionlab.patient_planning_admission import VERSION, COHORT_SHA256, QC_SCOPE
 TRAIN_SUBJECTS = ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025")
+SELECT_SUBJECTS = ("ReMIND-013", "ReMIND-037")
 ARRAY_KEYS = ("image", "supplied_support", "supplied_whole_tumor", "whole_tumor_domain")
 
 def sha(path):
@@ -23,7 +24,7 @@ def write(path, value):
     with Path(path).open("x") as stream:
         json.dump(value, stream, indent=2, allow_nan=False); stream.write("\n")
 
-def load_public_manifest(path, expected_sha256, cohort_bytes):
+def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="TRAIN"):
     raw = Path(path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != expected_sha256:
         raise ValueError("Public manifest changed")
@@ -32,12 +33,15 @@ def load_public_manifest(path, expected_sha256, cohort_bytes):
     manifest = json.loads(raw)
     subject = manifest["patient_id"]
     members = [m for m in json.loads(cohort_bytes)["members"] if m["subject"] == subject]
-    if (subject not in TRAIN_SUBJECTS or len(members) != 1 or members[0]["role"] != "TRAIN"
-            or manifest["role"] != "TRAIN" or manifest["patient_group"] != members[0]["patient_group"]
+    subjects = {"TRAIN": TRAIN_SUBJECTS, "SELECT": SELECT_SUBJECTS}.get(expected_role, ())
+    if (subject not in subjects or len(members) != 1 or members[0]["role"] != expected_role
+            or manifest["role"] != expected_role or manifest["patient_group"] != members[0]["patient_group"]
             or manifest["private_evaluation_files_included"] is not False
             or set(manifest["input_files"]) != set(ARRAY_KEYS)
             or manifest.get("task_condition", "PARTIAL_TARGET_PROGRESS") != "PARTIAL_TARGET_PROGRESS"):
-        raise ValueError("Exact four public arrays and frozen TRAIN partial-target condition required")
+        raise ValueError("Exact four public arrays and frozen requested role partial-target condition required")
+    if expected_role == "SELECT" and manifest.get("public_only") is not True:
+        raise ValueError("SELECT requires public-only qualification")
     if subject != "ReMIND-008" and (
             manifest.get("public_support_domain_fully_covered") is not True
             or manifest["source_bindings"]["cohort_sha256"] != COHORT_SHA256
@@ -64,7 +68,8 @@ def check_public_labels(support, target, domain, manifest):
 
 def prepare_public_source(output, original_release, original_release_sha256, expected_protocol, progress,
         *, public_manifest_path, public_manifest_sha256, cohort_bytes,
-        learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None):
+        learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None,
+        expected_role="TRAIN", checkpoint_lineage=None):
     """Build one public source and admission inputs; caller owns supervised use.
 
     expected_protocol may be None for a first construction; then a learning
@@ -84,8 +89,21 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     token = learning_protocol_hash.removeprefix("sha256:") if isinstance(learning_protocol_hash, str) else ""
     if len(token) != 64 or any(c not in "0123456789abcdef" for c in token):
         raise ValueError("Explicit learning protocol hash required")
+    if expected_role == "TRAIN":
+        if checkpoint_lineage is not None:
+            raise ValueError("TRAIN factory does not accept SELECT checkpoint lineage")
+    elif expected_role == "SELECT":
+        from resectionlab.patient_planning_admission import validate_select_checkpoint_lineage
+        if (set(limits) != {"max_steps", "max_optimizer_updates", "max_native_previews", "max_policy_forwards",
+                           "worker_seconds", "memory_bytes", "threads", "search"}
+                or type(limits["max_optimizer_updates"]) is not int or limits["max_optimizer_updates"] != 0):
+            raise ValueError("SELECT requires an explicit zero-update runtime budget")
+        checkpoint_lineage = thaw_json(validate_select_checkpoint_lineage(
+            checkpoint_lineage, learning_protocol_hash=learning_protocol_hash))
+    else:
+        raise ValueError("Only frozen TRAIN or SELECT public construction is supported")
     progress("before_public_array_loading")
-    manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes)
+    manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes, expected_role=expected_role)
     subject = manifest["patient_id"]
     arrays = {}
     for key in ARRAY_KEYS:
@@ -176,11 +194,12 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         "native_domain_fully_covered": True, "hypothetical_access_assumption": True,
         "evidence_record_sha256": manifest.get("source_bindings", {}).get("saved_array_review_sha256", original_release_sha256)}
     protocol = {"version": VERSION, "scope": "patient_native_planning_experiment",
-        "subject": subject, "role": "TRAIN", "evidence_domain": "acquired_patient",
+        "subject": subject, "role": expected_role, "evidence_domain": "acquired_patient",
         "public_source_binding_hash": semantic_digest(binding), "qc_receipt_hash": semantic_digest(qc),
-        **limits, "initialization": "fresh_seeded_shared_initialization", "private_reference_used": False,
+        **limits, "initialization": "fresh_seeded_shared_initialization" if expected_role == "TRAIN" else "frozen_TRAIN_checkpoint_reload", "private_reference_used": False,
         "clinical_claim": False, "split_changes": False, "runtime_release_sha256": original_release_sha256,
-        "learning_protocol_hash": learning_protocol_hash}
+        "learning_protocol_hash": learning_protocol_hash,
+        **({} if expected_role == "TRAIN" else {"checkpoint_lineage": checkpoint_lineage})}
     write(output / "admitted-public-bindings.json", {"source_binding": binding, "qc": qc,
         "protocol": protocol, "supplied_goal_extent": thaw_json(source._supplied_goal_extent),
         "native_grid_reconciliation": thaw_json(source._grid_record),

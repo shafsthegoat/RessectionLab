@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Project ReMIND TRAIN headers or convert an explicit public-support crop."""
+"""Project ReMIND headers or convert an explicit public-support crop."""
 import argparse
 from pathlib import Path
 import sys
@@ -16,6 +16,8 @@ def main():
     parser.add_argument("--headers", type=Path)
     parser.add_argument("--headers-sha256")
     parser.add_argument("--repository-root", type=Path)
+    parser.add_argument("--public-only", action="store_true",
+                        help="Require only MRI, cerebrum and whole-tumor series; allow frozen SELECT013/037 without private reads")
     args = parser.parse_args()
     if args.phase != "headers" and (args.headers is None or args.headers_sha256 is None):
         parser.error("crop requires --headers and --headers-sha256")

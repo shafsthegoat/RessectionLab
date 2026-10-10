@@ -1,0 +1,23 @@
+Frozen patient checkpoint comparison is now supported for SELECT013/037.
+
+Public-only preparation accepts exactly acquired MRI, supplied whole-tumor and
+automatic cerebrum. Explicit SELECT factory requests require zero-update budgets
+and checkpoint lineage; original TRAIN defaults and cohort roles are preserved.
+The bounded weight-only loader authenticates the four TRAIN contexts and frozen
+protocol. Greedy inference and matched public search use the same native task,
+collection and independent geometry replay. SELECT traces cannot become TRAIN
+optimizer capabilities. Search is not attributed to learned weights.
+
+Canonical regression:116 passed and16 subtests in8.26s. Five geometry tests
+initially skipped because the torch runtime lacks pydicom; the existing imaging
+runtime then ran all9 corresponding unittest controls, including those five,
+with zero skips in0.011s. Earlier independent staged checks passed41 inference
+and8 public-QC tests. Generated controls exercise actual sequential global-context
+checkpoint save/reload, frozen-weight inference, unchanged search/native replay,
+source-role rejection and horizon/proposal mismatch. No real SELECT file, patient
+inference or generalization metric is produced by this integration.
+
+The owning runner must still authenticate completed TRAIN receipts, qualify real
+SELECT image geometry/coverage/intended use, and charge all source preparation,
+search, inference and native replay costs. Stored lineage alone is not proof of
+training or clinical QC. EVAL067 and private annotations remain excluded.
