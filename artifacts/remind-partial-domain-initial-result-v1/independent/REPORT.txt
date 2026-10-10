@@ -1,0 +1,59 @@
+Independent saved-metadata audit: PASS
+
+The one owned initial-inventory batch completed cleanly: 8.5143325001 s,
+793,575,424 B sampled peak process-group RSS, 166 native previews, zero
+transitions/search/model/optimizer/checkpoint calls. All four fixed TRAIN cases
+constructed; no source/task references survived per-case cleanup. The parent
+reaped its worker without cleanup actions, errors or surviving owned PIDs.
+Declared caps remain 300 s worker / 330 s parent / 3 GiB sampled RSS / 512 previews,
+64 MiB output, one attempt. The parent is sampled containment, not a proof of
+every instantaneous memory peak.
+
+Case       emitted  legal  cap omissions  full placed T  T outside observed Ds
+ReMIND-002       52      0              0          24274                 1010
+ReMIND-015       52      0              0           7745                    0
+ReMIND-018       10      0              0           1247                    0
+ReMIND-045       52      0              0          25301                    0
+
+All 166 actually emitted previews report UNKNOWN_DOMAIN:FORBIDDEN_COLLISION.
+Each catalog retains all 130 declared family/tool/column dispositions. Each has
+52 NO_EXPOSED_REMAINING_TISSUE and 26
+NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL slots; 018 additionally has 40
+NO_REMAINING_NOMINAL_TARGET and two DUPLICATE_GEOMETRY slots. These un-emitted
+dispositions were not relabeled as tested geometry failures. Accepted envelopes
+are null, correctly granting no removal or reachability credit.
+
+This is a negative fixed-access, initial-catalog feasibility result under the
+declared domain and generic tool model. It supplies no usable initial motion for
+these four cases. It is not global trajectory impossibility, a full search,
+physical safety evidence, or a learning/clinical result. The saved reason alone
+does not locate the collision or distinguish shaft from tip contact. The
+within-grid unknown-domain refusal is distinct from the preserved unassessed
+outside-image shaft flag. Unknown space must not be silently filled to reverse
+the result.
+
+The audit independently reconciled emitted/accepted/rejected/omitted/duplicate/
+unavailable counts, complete ledger subsets, coverage summaries, source/context/
+QC identities, the 20 reported public array loads, all-four preview accounting,
+Ds and D=Ds union positive T counts, native-versus-placed label records and the
+unchanged full placed-target denominator. Source, manifest and metadata pins
+were checked before and after. The 002 native target count remains 24,294 versus
+24,274 placed cells; zero source-positive crop loss did not erase NN differences.
+Ds was not extended; assumed target cells outside Ds remain explicitly unknown
+support. No private evaluator input, patient array, image or checkpoint was opened
+by this audit, and no geometry/native/model execution was repeated.
+
+One bounded stdlib audit completed on its first attempt: 1,368 checks,
+0.0210265829 s, 23,494,656 B process peak RSS, within 60 s / 512 MiB.
+
+Root result SHA256:
+3da8a30111f1305ee53d2f011c5099d4b36e1f0ac12e17dca1af2e6ed334c2f1
+Root release SHA256:
+605f0293abd4270ca88a57ac3374e8ffbeda6d218be27e9eaa6bfe7e3697ede9
+Parent receipt SHA256:
+165dd933180e16654d67a920f010a406426e0b710103338aa80dec1d396ed270
+Source index SHA256:
+a005c6ac5fb5f28867d72bec3fa6460cbc7a0402f526ff144f9f4c02ee75950d
+
+This directory contains the exact audit_saved.py, audit-result.json,
+input-hashes.json and audit-run-01.txt; no copied arrays or duplicate run package.

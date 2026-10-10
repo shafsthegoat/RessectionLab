@@ -1,0 +1,40 @@
+Four recovered TRAIN cases: initial tool access is blocked by unknown coverage
+October 10, 2026; executed source ec909a5e41a5aeacbcc81777a351a93e8b609b40
+
+All four fixed TRAIN anatomies constructed successfully with raw support S,
+unchanged supplied target T, observed support domain Ds and explicitly assumed
+material S OR T / interaction domain Ds OR T. All proposed movements were
+rejected because the complete tool encounters unknown within-grid coverage.
+
+Patient    Emitted / legal / capped    Full placed target cells
+002        52 / 0 / 0                 24,274
+015        52 / 0 / 0                  7,745
+018        10 / 0 / 0                  1,247
+045        52 / 0 / 0                 25,301
+
+All130 original proposal slots per patient are recorded. Unemitted exposed-cell,
+footprint, absent-target and duplicate dispositions remain separate from the166
+actual full-tool rejections. No candidate was omitted by the120-emission cap.
+All166 native previews report UNKNOWN_DOMAIN:FORBIDDEN_COLLISION. The saved
+reason alone does not identify shaft versus tip or exact blocked cells. No
+search, transition, policy, optimizer or checkpoint call ran; no failed case or
+access was replaced. This is not four learned STOP outcomes or proof that every
+possible trajectory is impossible.
+
+Owned runtime8.514332500s, sampled peak793575424B,20 verified public-array loads,
+166 previews; child exited0, clean reap and unchanged source/metadata bindings.
+Independent saved-only audit passed1368 checks in0.02103s at23494656B. No new
+array or geometry execution occurred during that independent audit.
+
+The recovered full targets and native-to-grid sampling differences stay visible:
+002 has20 fewer placed labels than native and1010 target cells beyond observed
+support coverage. Unknown source coverage is not air. Automatic label zero is
+also not validated physical emptiness. External shaft beyond the MRI retains
+its prior unassessed limitation. Root's three-plane display review per case is
+not expert anatomical or physical validation. All four remain outside training.
+
+The next task diagnosis must localize the unknown collision relative to the
+fixed aperture and identify whether known free space has a valid exposure seed.
+Do not cure this negative result by filling unknown tissue, changing rewards or
+choosing a replacement access after seeing the outcome. Source arrays/images
+and full generated inventories remain local; compact exact bindings are saved.

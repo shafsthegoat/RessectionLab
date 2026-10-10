@@ -1,0 +1,31 @@
+{
+  "rule": "fixed_source_axis0_target_centroid_side_of_support_extent",
+  "target_centroid_source_voxels": [
+    15.592253066494512,
+    116.46881859264042,
+    64.0692059393157
+  ],
+  "access_index": [
+    5.5,
+    116.0,
+    64.0
+  ],
+  "access_side": "negative_source_axis0",
+  "support_extent_axis0": [
+    2,
+    131
+  ],
+  "transverse_rounding": "numpy_rint_ties_to_even",
+  "source_voxel_entry_offset": 0.5,
+  "radius_mm": 6.0,
+  "route_search": false,
+  "private_reference_used": false,
+  "public_target_positive_voxels": 7745,
+  "unsupported_target_positive_voxels": 1758,
+  "task_condition": "PARTIAL_TARGET_PROGRESS",
+  "annotation_domain_hash": "sha256:0c276cd5b64d47b649dd86d67b8411aecd472b0b100154e130c8888821220a81",
+  "annotation_domain_meaning": "outside source annotation domain remains unknown anatomy",
+  "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
+  "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
+  "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation"
+}

@@ -1,0 +1,43 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "log_bytes": 4194304,
+    "max_native_previews": 512,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 8.51433250005357,
+  "exit_code": 0,
+  "output_bytes": 779460,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "605f0293abd4270ca88a57ac3374e8ffbeda6d218be27e9eaa6bfe7e3697ede9",
+  "remaining_owned_pids": [],
+  "result_sha256": "3da8a30111f1305ee53d2f011c5099d4b36e1f0ac12e17dca1af2e6ed334c2f1",
+  "result_status": "initial_inventory_batch_complete",
+  "sampled_peak_rss_bytes": 793575424,
+  "samples": 40,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/source-index.json",
+    "sha256": "a005c6ac5fb5f28867d72bec3fa6460cbc7a0402f526ff144f9f4c02ee75950d"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2207,
+  "training_admitted": false,
+  "worker_pid": 83206,
+  "worker_termination_confirmed": true
+}

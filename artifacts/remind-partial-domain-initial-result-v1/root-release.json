@@ -1,0 +1,105 @@
+{
+  "execution_released": true,
+  "expected_head": "ec909a5e41a5aeacbcc81777a351a93e8b609b40",
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "caps": {
+    "worker_seconds": 300,
+    "parent_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes": 67108864,
+    "supervision_bytes": 8388608,
+    "log_bytes": 4194304,
+    "threads": 1,
+    "max_native_previews": 512,
+    "attempts": 1,
+    "automatic_retry": false
+  },
+  "source_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/source-index.json",
+    "sha256": "a005c6ac5fb5f28867d72bec3fa6460cbc7a0402f526ff144f9f4c02ee75950d"
+  },
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "historical_learning_release": {
+    "path": "build/balanced-teacher-il64-v1/root-release.json",
+    "sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22"
+  },
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "max_steps": 24,
+  "retention_reference": "return_plus_opening_depth_volume_v1",
+  "retention_applied": false,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "qualification": "initial emitted inventory and full-tool within-grid feasibility only; no transitions/search/access replacement",
+  "models_or_optimizer_updates": 0,
+  "training_admitted": false
+}

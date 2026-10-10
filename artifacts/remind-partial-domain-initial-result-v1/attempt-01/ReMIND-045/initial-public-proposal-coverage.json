@@ -1,0 +1,1396 @@
+{
+  "scope": "current_state_actual_emitted_proposals_only",
+  "catalog_metadata": {
+    "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+    "provider_version": "permitted-nominal-cavity-tool-footprint-opening-v1",
+    "source_hash": "sha256:1aece92b7b433fe81870dc6250e3056ccf09c0faa44f6ba8f4290e1991724458",
+    "decision_model_hash": "sha256:3ba32686d4197ac924e154fd0f70cd401531d925c97a23b342781ab9d8bdf006",
+    "cavity_state_hash": "sha256:d608454f5f3eaf1ceaded9b502f007b887380492826397303d3de3e96502dd07",
+    "provider_model_hash": "sha256:41ee3d8390e6bee8adc0f2ce9ae887107d284ec9b06ecee753212148436693e8",
+    "nominal_target_hash": "sha256:38aa00203163f20e76114d08898a58d6833a8d2cb8077d2ba9a4cd4c1ec4078b",
+    "nominal_provenance_hash": "sha256:6335c47b36ec6ebc34b198853ab11a668047bcbfcb78b57c1c797b40d8b48f9a",
+    "declared_slots": 130,
+    "evaluated_slots": 52,
+    "emitted_count": 52,
+    "accepted_count": 0,
+    "rejected_count": 52,
+    "omitted_count": 0,
+    "duplicate_count": 0,
+    "unavailable_count": 78,
+    "complete": true,
+    "ledger_complete": true,
+    "terminal": false,
+    "steps_taken": 0,
+    "max_steps": 24,
+    "remaining_steps": 24,
+    "terminated_slots": 0,
+    "candidate_cap": 120,
+    "crop_clipping": false,
+    "endpoint_centers_in_actor_crop": 52,
+    "all_support_cell_tool_pairs": 1685874,
+    "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+    "disposition_counts": {
+      "NO_EXPOSED_REMAINING_TISSUE": 52,
+      "PROPOSED_UNCERTIFIED": 52,
+      "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+    }
+  },
+  "catalog_count_basis": "Declared/omitted/duplicate/unavailable counts are family-tool-column slots; capped slots need not be unique geometries. Emitted actions are unique, actually previewed attempts. Legacy fixed rejected_count includes non-previewed outside-workspace slots.",
+  "original_source_affine_ras_mm": [
+    [
+      0.5052881028261165,
+      -0.8019989554809558,
+      0.240491700254241,
+      65.17072200254734
+    ],
+    [
+      -0.8346173450586629,
+      -0.47047946827885667,
+      0.19358247861843497,
+      17.082850182016166
+    ],
+    [
+      -0.042106522489067544,
+      -0.2985334627729551,
+      -0.951151912340891,
+      110.66196355125925
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_physical_affine_ras_mm": [
+    [
+      0.5052881028261165,
+      -0.8019989554809556,
+      0.24049170025424108,
+      65.17072200254734
+    ],
+    [
+      -0.8346173450586629,
+      -0.4704794682788561,
+      0.1935824786184353,
+      17.082850182016166
+    ],
+    [
+      -0.04210652248906755,
+      -0.29853346277295506,
+      -0.9511519123408909,
+      110.66196355125925
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "steps_taken": 0,
+  "max_steps": 24,
+  "remaining_step_budget": 24,
+  "episode_terminal": false,
+  "proposal_dispositions": {
+    "NO_EXPOSED_REMAINING_TISSUE": 52,
+    "PROPOSED_UNCERTIFIED": 52,
+    "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+  },
+  "preview_dispositions": {
+    "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 52
+  },
+  "nominal_target_centers_total": 25301,
+  "nominal_target_center_depth_range_mm": [
+    -8.30078482891106,
+    32.714857855120194
+  ],
+  "emitted_envelope": {
+    "proposal_count": 52,
+    "distal_active_tip_axial_upper_bound_mm": 33.43829493407181,
+    "active_sweep_aabb_ras_mm": [
+      [
+        68.76623032859395,
+        -104.79505290659715,
+        8.400702373547546
+      ],
+      [
+        94.4591703745112,
+        -69.69382952513466,
+        18.88011798028627
+      ]
+    ],
+    "target_centers_beyond_axial_bound": 0,
+    "target_centers_outside_aabb": 17380,
+    "endpoint_depth_range_mm": [
+      0.4882814605242074,
+      31.738294934071813
+    ]
+  },
+  "accepted_envelope": {
+    "proposal_count": 0,
+    "distal_active_tip_axial_upper_bound_mm": null,
+    "active_sweep_aabb_ras_mm": null,
+    "target_centers_beyond_axial_bound": null,
+    "target_centers_outside_aabb": null,
+    "endpoint_depth_range_mm": null
+  },
+  "actions": [
+    {
+      "action_id": "nominal-cavity-05c3ba76e390454d9325985a",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.28351433123339,
+        -98.2650233303379,
+        13.126626352325157
+      ],
+      "tip_mm": [
+        88.0308702798203,
+        -97.84771465780852,
+        13.147679613569693
+      ],
+      "tip_depth_mm": 0.48828146052422605,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5e8c1a8825d6cce955de5960",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.28351433123339,
+        -98.2650233303379,
+        13.12662635232515
+      ],
+      "tip_mm": [
+        72.87222719503681,
+        -72.80919430604862,
+        14.410875288241712
+      ],
+      "tip_depth_mm": 29.785169091975103,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-71a5088f38e952372e1bc7c1",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.28351433123339,
+        -98.2650233303379,
+        13.126626352325157
+      ],
+      "tip_mm": [
+        88.0308702798203,
+        -97.84771465780852,
+        13.147679613569693
+      ],
+      "tip_depth_mm": 0.48828146052422605,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-200a9c60e40a25d941aa3b46",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.28351433123339,
+        -98.2650233303379,
+        13.12662635232515
+      ],
+      "tip_mm": [
+        72.87222719503681,
+        -72.80919430604862,
+        14.410875288241712
+      ],
+      "tip_depth_mm": 29.785169091975103,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-20683807b4eae4279db53c19",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.8875122421953,
+        -97.32406439378019,
+        13.72369327787106
+      ],
+      "tip_mm": [
+        89.63486819078221,
+        -96.90675572125082,
+        13.744746539115596
+      ],
+      "tip_depth_mm": 0.4882814605242218,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5aede5d8ee0cfbbed743b605",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.8875122421953,
+        -97.32406439378019,
+        13.723693277871057
+      ],
+      "tip_mm": [
+        74.98151320882484,
+        -72.70285271454958,
+        14.965835691298551
+      ],
+      "tip_depth_mm": 28.808606170926737,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-67a66cd075db059cfeff050d",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.8875122421953,
+        -97.32406439378019,
+        13.72369327787106
+      ],
+      "tip_mm": [
+        89.63486819078221,
+        -96.90675572125082,
+        13.744746539115596
+      ],
+      "tip_depth_mm": 0.4882814605242218,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-0edbef200590ebb576fc87ac",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.8875122421953,
+        -97.32406439378019,
+        13.723693277871057
+      ],
+      "tip_mm": [
+        74.98151320882484,
+        -72.70285271454958,
+        14.965835691298551
+      ],
+      "tip_depth_mm": 28.808606170926737,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fed5ca11a6bf3d998551e44e",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.67951642027148,
+        -99.2059822668956,
+        12.52955942677924
+      ],
+      "tip_mm": [
+        86.4268723688584,
+        -98.78867359436623,
+        12.550612688023776
+      ],
+      "tip_depth_mm": 0.4882814605242296,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-39fdb71f787c62c44c9bee7e",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.67951642027148,
+        -99.20598226689562,
+        12.529559426779233
+      ],
+      "tip_mm": [
+        71.2682292840749,
+        -73.75015324260636,
+        13.813808362695795
+      ],
+      "tip_depth_mm": 29.78516909197508,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-27b9ec5ab010a406d59b5b59",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.67951642027148,
+        -99.2059822668956,
+        12.52955942677924
+      ],
+      "tip_mm": [
+        86.4268723688584,
+        -98.78867359436623,
+        12.550612688023776
+      ],
+      "tip_depth_mm": 0.4882814605242296,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-a92f886a657dd73e024151e0",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.67951642027148,
+        -99.20598226689562,
+        12.529559426779233
+      ],
+      "tip_mm": [
+        71.2682292840749,
+        -73.75015324260636,
+        13.813808362695795
+      ],
+      "tip_depth_mm": 29.78516909197508,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-145a884f64c2735b0ec07e82",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.8025309307249,
+        -98.65218828757476,
+        15.028930177006938
+      ],
+      "tip_mm": [
+        87.54988687931183,
+        -98.2348796150454,
+        15.049983438251473
+      ],
+      "tip_depth_mm": 0.4882814605242187,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fd90e6c7d5a8216c32abe266",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.80253093072491,
+        -98.65218828757477,
+        15.028930177006952
+      ],
+      "tip_mm": [
+        73.40182000018056,
+        -74.86559395340282,
+        16.22896606794538
+      ],
+      "tip_depth_mm": 27.83204324987838,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-05b53af82da5d70b4752b852",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.8025309307249,
+        -98.65218828757476,
+        15.028930177006938
+      ],
+      "tip_mm": [
+        87.54988687931183,
+        -98.2348796150454,
+        15.049983438251473
+      ],
+      "tip_depth_mm": 0.4882814605242187,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fd6dcf6cc25412a8ddc379ba",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.80253093072491,
+        -98.65218828757477,
+        15.028930177006952
+      ],
+      "tip_mm": [
+        73.40182000018056,
+        -74.86559395340282,
+        16.22896606794538
+      ],
+      "tip_depth_mm": 27.83204324987838,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-aab19ff60bba7550a92cdde8",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.76449773174187,
+        -97.87785837310102,
+        11.224322527643377
+      ],
+      "tip_mm": [
+        88.51185368032878,
+        -97.46054970057165,
+        11.245375788887912
+      ],
+      "tip_depth_mm": 0.4882814605242334,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-4b60473ff4803301c8ebf274",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.76449773174187,
+        -97.87785837310103,
+        11.22432252764337
+      ],
+      "tip_mm": [
+        73.35321059554529,
+        -72.42202934881178,
+        12.508571463559932
+      ],
+      "tip_depth_mm": 29.785169091975085,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-0e67f04a786eacc44e48e947",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.76449773174187,
+        -97.87785837310102,
+        11.224322527643377
+      ],
+      "tip_mm": [
+        88.51185368032878,
+        -97.46054970057165,
+        11.245375788887912
+      ],
+      "tip_depth_mm": 0.4882814605242334,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-dda20ab2d623735de401b39d",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        88.76449773174187,
+        -97.87785837310103,
+        11.22432252764337
+      ],
+      "tip_mm": [
+        73.35321059554529,
+        -72.42202934881178,
+        12.508571463559932
+      ],
+      "tip_depth_mm": 29.785169091975085,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b06b1186879003eb49d6a5ee",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.40652884168681,
+        -97.71122935101705,
+        15.625997102552855
+      ],
+      "tip_mm": [
+        89.15388479027374,
+        -97.2939206784877,
+        15.64705036379739
+      ],
+      "tip_depth_mm": 0.48828146052421506,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1053726cf98da3c6dc4bd9ab",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.40652884168684,
+        -97.71122935101705,
+        15.625997102552855
+      ],
+      "tip_mm": [
+        75.00581791114249,
+        -73.92463501684512,
+        16.826032993491282
+      ],
+      "tip_depth_mm": 27.832043249878367,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-f0723c8dc6b52969c5fcd14f",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.40652884168681,
+        -97.71122935101705,
+        15.625997102552855
+      ],
+      "tip_mm": [
+        89.15388479027374,
+        -97.2939206784877,
+        15.64705036379739
+      ],
+      "tip_depth_mm": 0.48828146052421506,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-520c0f46a8aa891b72f58bd5",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.40652884168684,
+        -97.71122935101705,
+        15.625997102552855
+      ],
+      "tip_mm": [
+        75.00581791114249,
+        -73.92463501684512,
+        16.826032993491282
+      ],
+      "tip_depth_mm": 27.832043249878367,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-3cb16be7e68907327b4ecb95",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.36849564270378,
+        -96.93689943654331,
+        11.82138945318928
+      ],
+      "tip_mm": [
+        90.11585159129069,
+        -96.51959076401394,
+        11.842442714433815
+      ],
+      "tip_depth_mm": 0.48828146052422927,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-df81e5bda527a6d414383ad5",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.36849564270378,
+        -96.93689943654331,
+        11.821389453189276
+      ],
+      "tip_mm": [
+        75.46249660933333,
+        -72.31568775731273,
+        13.06353186661677
+      ],
+      "tip_depth_mm": 28.808606170926716,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-dda6d623b36daabbfbb4ca5a",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.36849564270378,
+        -96.93689943654331,
+        11.82138945318928
+      ],
+      "tip_mm": [
+        90.11585159129069,
+        -96.51959076401394,
+        11.842442714433815
+      ],
+      "tip_depth_mm": 0.48828146052422927,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fab12ca296419fa1e9cb6e00",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.36849564270378,
+        -96.93689943654331,
+        11.821389453189276
+      ],
+      "tip_mm": [
+        75.46249660933333,
+        -72.31568775731273,
+        13.06353186661677
+      ],
+      "tip_depth_mm": 28.808606170926716,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-cac4ffcea43701d91d7c236f",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.198533019763,
+        -99.59314722413248,
+        14.431863251461035
+      ],
+      "tip_mm": [
+        85.94588896834992,
+        -99.1758385516031,
+        14.45291651270557
+      ],
+      "tip_depth_mm": 0.48828146052422294,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-7c6f70f3e7ed7f89e774326d",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.198533019763,
+        -99.59314722413248,
+        14.431863251461035
+      ],
+      "tip_mm": [
+        71.79782208921866,
+        -75.80655288996056,
+        15.631899142399462
+      ],
+      "tip_depth_mm": 27.83204324987836,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-be56689d85a4772d3fca1845",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.198533019763,
+        -99.59314722413248,
+        14.431863251461035
+      ],
+      "tip_mm": [
+        85.94588896834992,
+        -99.1758385516031,
+        14.45291651270557
+      ],
+      "tip_depth_mm": 0.48828146052422294,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5639727d22484370adc9a6b9",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        86.198533019763,
+        -99.59314722413248,
+        14.431863251461035
+      ],
+      "tip_mm": [
+        71.79782208921866,
+        -75.80655288996056,
+        15.631899142399462
+      ],
+      "tip_depth_mm": 27.83204324987836,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-07ccc74f8e5fb854af0c994a",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.16049982077996,
+        -98.81881730965873,
+        10.62725560209746
+      ],
+      "tip_mm": [
+        86.90785576936688,
+        -98.40150863712935,
+        10.648308863341995
+      ],
+      "tip_depth_mm": 0.488281460524237,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-c77f22ecc5b2471c62d5c320",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.16049982077995,
+        -98.81881730965875,
+        10.62725560209746
+      ],
+      "tip_mm": [
+        70.73863647893114,
+        -71.69375359525216,
+        11.995717582992157
+      ],
+      "tip_depth_mm": 31.738294934071813,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-8cd5ea4ab6b23a98ab118081",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.16049982077996,
+        -98.81881730965873,
+        10.62725560209746
+      ],
+      "tip_mm": [
+        86.90785576936688,
+        -98.40150863712935,
+        10.648308863341995
+      ],
+      "tip_depth_mm": 0.488281460524237,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b4cf4c5ca48838bceac4a2cd",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.16049982077995,
+        -98.81881730965875,
+        10.62725560209746
+      ],
+      "tip_mm": [
+        70.73863647893114,
+        -71.69375359525216,
+        11.995717582992157
+      ],
+      "tip_depth_mm": 31.738294934071813,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6494e223244311cff503848a",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.68951119767624,
+        -96.85358492550132,
+        14.022226740644012
+      ],
+      "tip_mm": [
+        90.43686714626317,
+        -96.43627625297196,
+        14.043280001888547
+      ],
+      "tip_depth_mm": 0.4882814605242198,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2a13891b603ca56217531bd0",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.68951119767627,
+        -96.85358492550132,
+        14.022226740644012
+      ],
+      "tip_mm": [
+        76.28880026713192,
+        -73.06699059132939,
+        15.222262631582439
+      ],
+      "tip_depth_mm": 27.83204324987837,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1e6e024fa5060b10aa25c6b8",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.68951119767624,
+        -96.85358492550132,
+        14.022226740644012
+      ],
+      "tip_mm": [
+        90.43686714626317,
+        -96.43627625297196,
+        14.043280001888547
+      ],
+      "tip_depth_mm": 0.4882814605242198,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-552104135077627c77badd44",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        90.68951119767627,
+        -96.85358492550132,
+        14.022226740644012
+      ],
+      "tip_mm": [
+        76.28880026713192,
+        -73.06699059132939,
+        15.222262631582439
+      ],
+      "tip_depth_mm": 27.83204324987837,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6bd74bb802b3fe433c9d30ce",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        85.87751746479051,
+        -99.67646173517447,
+        12.231025964006289
+      ],
+      "tip_mm": [
+        85.62487341337744,
+        -99.25915306264511,
+        12.252079225250824
+      ],
+      "tip_depth_mm": 0.4882814605242074,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-81f2fe6517969279257d2a27",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        85.87751746479053,
+        -99.67646173517447,
+        12.231025964006282
+      ],
+      "tip_mm": [
+        70.46623032859395,
+        -74.22063271088521,
+        13.515274899922844
+      ],
+      "tip_depth_mm": 29.785169091975085,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6bb9a29e7d3df517fca2ad6a",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        85.87751746479051,
+        -99.67646173517447,
+        12.231025964006289
+      ],
+      "tip_mm": [
+        85.62487341337744,
+        -99.25915306264511,
+        12.252079225250824
+      ],
+      "tip_depth_mm": 0.4882814605242074,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-17692960941b5822282dacc9",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        85.87751746479053,
+        -99.67646173517447,
+        12.231025964006282
+      ],
+      "tip_mm": [
+        70.46623032859395,
+        -74.22063271088521,
+        13.515274899922844
+      ],
+      "tip_depth_mm": 29.785169091975085,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-ac55088e8a75655d68225d05",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.56203923047067,
+        -98.8457707661932,
+        15.980082089347828
+      ],
+      "tip_mm": [
+        87.30939517905759,
+        -98.42846209366382,
+        16.001135350592364
+      ],
+      "tip_depth_mm": 0.48828146052422716,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-f0d757e731698014e5db75e7",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.56203923047067,
+        -98.84577076619321,
+        15.980082089347842
+      ],
+      "tip_mm": [
+        73.16132829992632,
+        -75.05917643202127,
+        17.18011798028627
+      ],
+      "tip_depth_mm": 27.832043249878364,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b3e88ef4e4ddda9fc9302663",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.56203923047067,
+        -98.8457707661932,
+        15.980082089347828
+      ],
+      "tip_mm": [
+        87.30939517905759,
+        -98.42846209366382,
+        16.001135350592364
+      ],
+      "tip_depth_mm": 0.48828146052422716,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-cdc6504a18e2317682617b29",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        87.56203923047067,
+        -98.84577076619321,
+        15.980082089347842
+      ],
+      "tip_mm": [
+        73.16132829992632,
+        -75.05917643202127,
+        17.18011798028627
+      ],
+      "tip_depth_mm": 27.832043249878364,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-94e734551624e55c10933a99",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.00498943199611,
+        -97.6842758944826,
+        10.273170615302487
+      ],
+      "tip_mm": [
+        88.75234538058302,
+        -97.26696722195322,
+        10.294223876547022
+      ],
+      "tip_depth_mm": 0.48828146052422494,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-58e41a7b02ca24db0e177954",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.00498943199611,
+        -97.6842758944826,
+        10.273170615302476
+      ],
+      "tip_mm": [
+        73.08841419297342,
+        -71.39382952513466,
+        11.599526073708105
+      ],
+      "tip_depth_mm": 30.76173201302346,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1423e6a6a1a48ac83bdf3aa0",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.00498943199611,
+        -97.6842758944826,
+        10.273170615302487
+      ],
+      "tip_mm": [
+        88.75234538058302,
+        -97.26696722195322,
+        10.294223876547022
+      ],
+      "tip_depth_mm": 0.48828146052422494,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-bc8764ce35c285c9d4b4759a",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        89.00498943199611,
+        -97.6842758944826,
+        10.273170615302476
+      ],
+      "tip_mm": [
+        73.08841419297342,
+        -71.39382952513466,
+        11.599526073708105
+      ],
+      "tip_depth_mm": 30.76173201302346,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    }
+  ],
+  "ray_sample_coverage_counts": {
+    "none": 0,
+    "partial": 0,
+    "full": 52
+  },
+  "target_basis": "static permitted nominal field; no private reference or residual/removal credit",
+  "binding_scope": "Source/provider/nominal and source-cell geometry checked; accepted actions exactly match observation dtype projection and tools. Cavity/decision hashes are task-reported provenance, not reconstructed from cropped images; rejected feasibility remains native-preview authority.",
+  "interpretation": "Current emitted/accepted active-tip sweep envelopes only. Bounds ignore cell containment, lateral gaps within the bounding box, prior-shaft clearance, interactions and horizon; future dynamic catalogs may extend them. No reachability or safety claim."
+}

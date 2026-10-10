@@ -1,0 +1,392 @@
+{
+  "scope": "current_state_actual_emitted_proposals_only",
+  "catalog_metadata": {
+    "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+    "provider_version": "permitted-nominal-cavity-tool-footprint-opening-v1",
+    "source_hash": "sha256:768507b2ab9911c00d58427f5ebce29d254ebb557aac55ca027d2d6f5f607672",
+    "decision_model_hash": "sha256:e371aadbdcfc31b351110a781a416918a5027ea38ccebe201ce7dd6f4f057534",
+    "cavity_state_hash": "sha256:da5cd24d090de57e945d862be2181a1953b3338ffa940364680d56fc469d6d46",
+    "provider_model_hash": "sha256:c4dbd427a95d3d9de540f27c3214aeb7daf9a9527cb235d6c398ab3bad7d11fa",
+    "nominal_target_hash": "sha256:4d2781b08afed89ea00e71a215f3be587726e500e8f98d271e62aea3f0e4f394",
+    "nominal_provenance_hash": "sha256:34795ba38972cbf5ceef287e43848982a55d2b49d94d8176f0358624d3cd2619",
+    "declared_slots": 130,
+    "evaluated_slots": 10,
+    "emitted_count": 10,
+    "accepted_count": 0,
+    "rejected_count": 10,
+    "omitted_count": 0,
+    "duplicate_count": 2,
+    "unavailable_count": 118,
+    "complete": true,
+    "ledger_complete": true,
+    "terminal": false,
+    "steps_taken": 0,
+    "max_steps": 24,
+    "remaining_steps": 24,
+    "terminated_slots": 0,
+    "candidate_cap": 120,
+    "crop_clipping": false,
+    "endpoint_centers_in_actor_crop": 10,
+    "all_support_cell_tool_pairs": 1819212,
+    "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+    "disposition_counts": {
+      "NO_EXPOSED_REMAINING_TISSUE": 52,
+      "NO_REMAINING_NOMINAL_TARGET": 40,
+      "PROPOSED_UNCERTIFIED": 10,
+      "DUPLICATE_GEOMETRY": 2,
+      "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+    }
+  },
+  "catalog_count_basis": "Declared/omitted/duplicate/unavailable counts are family-tool-column slots; capped slots need not be unique geometries. Emitted actions are unique, actually previewed attempts. Legacy fixed rejected_count includes non-previewed outside-workspace slots.",
+  "original_source_affine_ras_mm": [
+    [
+      0.9765615265100828,
+      -0.0003996131995572975,
+      -0.001510309995578218,
+      -58.95142515419404
+    ],
+    [
+      -0.000403087363357807,
+      -0.976559562254609,
+      -0.0023558451180249406,
+      86.4499382463316
+    ],
+    [
+      -0.0014739663680106172,
+      0.0023012349613170113,
+      -0.9999963739861931,
+      75.49046262417195
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_physical_affine_ras_mm": [
+    [
+      0.9765615265100827,
+      -0.000399613199557236,
+      -0.0015103099955782364,
+      -58.95142515419404
+    ],
+    [
+      -0.00040308736335780684,
+      -0.9765595622546092,
+      -0.0023558451180245785,
+      86.4499382463316
+    ],
+    [
+      -0.0014739663680106167,
+      0.0023012349613172017,
+      -0.999996373986193,
+      75.49046262417195
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "steps_taken": 0,
+  "max_steps": 24,
+  "remaining_step_budget": 24,
+  "episode_terminal": false,
+  "proposal_dispositions": {
+    "NO_EXPOSED_REMAINING_TISSUE": 52,
+    "NO_REMAINING_NOMINAL_TARGET": 40,
+    "PROPOSED_UNCERTIFIED": 10,
+    "DUPLICATE_GEOMETRY": 2,
+    "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+  },
+  "preview_dispositions": {
+    "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 10
+  },
+  "nominal_target_centers_total": 1247,
+  "nominal_target_center_depth_range_mm": [
+    -10.253908581623243,
+    6.34765769338582
+  ],
+  "emitted_envelope": {
+    "proposal_count": 10,
+    "distal_active_tip_axial_upper_bound_mm": 5.117969527207747,
+    "active_sweep_aabb_ras_mm": [
+      [
+        -38.86594381448922,
+        11.396932961378145,
+        31.91898854781032
+      ],
+      [
+        -28.04798336867264,
+        15.781266065105427,
+        37.32787630797998
+      ]
+    ],
+    "target_centers_beyond_axial_bound": 38,
+    "target_centers_outside_aabb": 1144,
+    "endpoint_depth_range_mm": [
+      0.48828136102967523,
+      3.417969527207747
+    ]
+  },
+  "accepted_envelope": {
+    "proposal_count": 0,
+    "distal_active_tip_axial_upper_bound_mm": null,
+    "active_sweep_aabb_ras_mm": null,
+    "target_centers_beyond_axial_bound": null,
+    "target_centers_outside_aabb": null,
+    "endpoint_depth_range_mm": null
+  },
+  "actions": [
+    {
+      "action_id": "nominal-cavity-01bffe998eccf6ce2385957e",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.165549098258374,
+        14.074903329404501,
+        33.62184619513704
+      ],
+      "tip_mm": [
+        -32.67726833500333,
+        14.074701785722823,
+        33.62110921195303
+      ],
+      "tip_depth_mm": 0.48828136102967523,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-255f3294aeccb90533375928",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.165549098258374,
+        14.074903329404506,
+        33.62184619513704
+      ],
+      "tip_mm": [
+        -31.70070680849325,
+        14.07429869835947,
+        33.61963524558502
+      ],
+      "tip_depth_mm": 1.4648440830890306,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-4ab7567ff3abcf533f901053",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.165549098258374,
+        14.074903329404501,
+        33.62184619513704
+      ],
+      "tip_mm": [
+        -32.67726833500333,
+        14.074701785722823,
+        33.62110921195303
+      ],
+      "tip_depth_mm": 0.48828136102967523,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2a5fe47eb1fc4f1f62832a79",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.165549098258374,
+        14.074903329404506,
+        33.62184619513704
+      ],
+      "tip_mm": [
+        -31.70070680849325,
+        14.07429869835947,
+        33.61963524558502
+      ],
+      "tip_depth_mm": 1.4648440830890306,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-ff9ed423e9e4ca2b9f9abc92",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.16252847826721,
+        14.079615019640551,
+        35.62183894310943
+      ],
+      "tip_mm": [
+        -32.67424771501217,
+        14.079413475958873,
+        35.621101959925426
+      ],
+      "tip_depth_mm": 0.4882813610296805,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2702262c3f2bb432dc6983d8",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.16252847826721,
+        14.079615019640551,
+        35.62183894310943
+      ],
+      "tip_mm": [
+        -32.67424771501217,
+        14.079413475958873,
+        35.621101959925426
+      ],
+      "tip_depth_mm": 0.4882813610296805,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-ecf95904f89119c81bbdacd8",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.16594871145793,
+        13.098343767149894,
+        33.624147430098354
+      ],
+      "tip_mm": [
+        -32.67766794820289,
+        13.098142223468216,
+        33.62341044691435
+      ],
+      "tip_depth_mm": 0.4882813610296775,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-8dd78c8f349937b06b847eb5",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.16594871145793,
+        13.098343767149895,
+        33.624147430098354
+      ],
+      "tip_mm": [
+        -29.74798336867264,
+        13.096932961378144,
+        33.61898854781032
+      ],
+      "tip_depth_mm": 3.417969527207747,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-127d853f5e1f7ea0b66a10cb",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.16594871145793,
+        13.098343767149894,
+        33.624147430098354
+      ],
+      "tip_mm": [
+        -32.67766794820289,
+        13.098142223468216,
+        33.62341044691435
+      ],
+      "tip_depth_mm": 0.4882813610296775,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-20dec086da11ccb398528919",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION",
+      "entry_mm": [
+        -33.16594871145793,
+        13.098343767149895,
+        33.624147430098354
+      ],
+      "tip_mm": [
+        -29.74798336867264,
+        13.096932961378144,
+        33.61898854781032
+      ],
+      "tip_depth_mm": 3.417969527207747,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    }
+  ],
+  "ray_sample_coverage_counts": {
+    "none": 0,
+    "partial": 0,
+    "full": 10
+  },
+  "target_basis": "static permitted nominal field; no private reference or residual/removal credit",
+  "binding_scope": "Source/provider/nominal and source-cell geometry checked; accepted actions exactly match observation dtype projection and tools. Cavity/decision hashes are task-reported provenance, not reconstructed from cropped images; rejected feasibility remains native-preview authority.",
+  "interpretation": "Current emitted/accepted active-tip sweep envelopes only. Bounds ignore cell containment, lateral gaps within the bounding box, prior-shaft clearance, interactions and horizon; future dynamic catalogs may extend them. No reachability or safety claim."
+}

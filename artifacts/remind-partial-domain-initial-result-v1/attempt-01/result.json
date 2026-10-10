@@ -1,0 +1,1127 @@
+{
+  "status": "initial_inventory_batch_complete",
+  "scope": "four_frozen_TRAIN_partial_domain_fixed_access_initial_inventory_only",
+  "release_sha256": "605f0293abd4270ca88a57ac3374e8ffbeda6d218be27e9eaa6bfe7e3697ede9",
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "training_admitted": false,
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 249200640,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.00035791704431176186,
+          "rss_bytes": 249200640
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.011130041908472776,
+          "rss_bytes": 250839040,
+          "bytes": 11903912
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.01314691687002778,
+          "rss_bytes": 250839040,
+          "bytes": 2976074
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.014676084043458104,
+          "rss_bytes": 250839040,
+          "bytes": 2976074
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.016601125011220574,
+          "rss_bytes": 250839040,
+          "bytes": 2976074
+        },
+        {
+          "phase": "public_array_loaded:supplied_support_domain",
+          "seconds": 0.01826204196549952,
+          "rss_bytes": 250839040,
+          "bytes": 2976074
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.04744450002908707,
+          "rss_bytes": 298942464,
+          "native_shape": [
+            141,
+            173,
+            122
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.18521216697990894,
+          "rss_bytes": 452083712,
+          "source_hash": "sha256:70886d7368dde91c893d512f8d18b61a793462bf386eaef9a49d579b2547799a"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.19667324982583523,
+          "rss_bytes": 428244992
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 3.0937778339721262,
+          "rss_bytes": 748568576
+        }
+      ],
+      "source_hash": "sha256:70886d7368dde91c893d512f8d18b61a793462bf386eaef9a49d579b2547799a",
+      "context_hash": "sha256:22dc675d36a659b6594b0b4eca2dd48ad4dd6439995e505042717285500e834d",
+      "families": {
+        "proximal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 26
+          }
+        },
+        "distal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 26
+          }
+        }
+      },
+      "emitted_count": 52,
+      "accepted_count": 0,
+      "steps_taken": 0,
+      "model_or_optimizer_calls": 0,
+      "source_domain_extended": false,
+      "full_target_preserved": true,
+      "fixed_access_outcome": "no_legal_emitted_motion",
+      "source_and_simulated_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:49a6782bf2e0d3de3a5677fff61f58186cf4b578cc593382669d73b7003cbd8b",
+        "interaction_domain_hash": "sha256:2640f044f223ca13c04aeb68e5f8e05511b2d7e12e9c491d040c15f05f4039e6",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2561900,
+        "source_support_unknown_voxels": 414046,
+        "target_in_unknown_support_voxels": 1010,
+        "assumed_material_beyond_source_domain_voxels": 1010,
+        "unavailable_interaction_voxels": 413036,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+        "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+        "anatomical_or_material_validation": false
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 24274,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 23149.488478878036,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 23149.488478878036,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:600cc9fdbf515556d021b4f37f881bb658e4f2722a8101b32981d075ac0876ef",
+          "supplied_target_hash": "sha256:80e3d3e2f5ba890ab8c56b7c994d54aeb860358059f78538a35f7f3bf59e88ff",
+          "derived_occupancy_hash": "sha256:e9fd36a3f7d18e9124b40987a1882508e46660d213277aa259eaf2682ee9483e",
+          "added_region_hash": "sha256:d446f2f22a1a37e7cb422556f32091ba9fc651378f0f0409a177116c9bfae7bd",
+          "source_support_positive_voxels": 988741,
+          "added_region_positive_voxels": 22569,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:49a6782bf2e0d3de3a5677fff61f58186cf4b578cc593382669d73b7003cbd8b",
+          "interaction_domain_hash": "sha256:2640f044f223ca13c04aeb68e5f8e05511b2d7e12e9c491d040c15f05f4039e6",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2561900,
+          "source_support_unknown_voxels": 414046,
+          "target_in_unknown_support_voxels": 1010,
+          "assumed_material_beyond_source_domain_voxels": 1010,
+          "unavailable_interaction_voxels": 413036,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+          "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+          "anatomical_or_material_validation": false
+        }
+      },
+      "target_native_and_NN_sampling": {
+        "cerebrum": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 2561900,
+          "saved_positive_volume_mm3": 942936.8207998007,
+          "saved_positive_voxels": 988741,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 942880.7793434919,
+          "source_positive_voxels_from_bound_execution": 14747939,
+          "volume_change_percent": 0.005943641819472489
+        },
+        "whole_tumor": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 56453,
+          "saved_positive_volume_mm3": 23149.48847887805,
+          "saved_positive_voxels": 24274,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 23168.564910448822,
+          "source_positive_voxels_from_bound_execution": 24294,
+          "volume_change_percent": -0.08233756231560418
+        }
+      },
+      "support_knownness_proxy_limit": "Assumed T beyond Ds remains excluded from actor-covered opening retention proxy; no retention/search applied here",
+      "external_shaft_extent": "Outside-image full tool extent remains unassessed under declared aperture/workspace assumptions",
+      "proposal_dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "PROPOSED_UNCERTIFIED": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+      },
+      "endpoint_centers_in_actor_crop": 52,
+      "target_denominator": 24274,
+      "target_depth_range_mm": [
+        5.371092836183633,
+        35.64452518558235
+      ],
+      "accepted_envelope": {
+        "proposal_count": 0,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "active_sweep_aabb_ras_mm": null,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null,
+        "endpoint_depth_range_mm": null
+      },
+      "emitted_envelope": {
+        "proposal_count": 52,
+        "distal_active_tip_axial_upper_bound_mm": 36.36796285173077,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -18.64807417139836,
+            159.05386606744207,
+            -2.8628510735490362
+          ],
+          [
+            23.83185157555518,
+            171.63203483247787,
+            8.009170473543886
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 20064,
+        "endpoint_depth_range_mm": [
+          5.371092836183638,
+          34.66796285173077
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:b3aa856b28aa6de4640d4841db55a8b730d1725f80a3c14a8844b050786e0f99",
+      "array_outputs_written": false,
+      "live_source_or_task_after_cleanup": 0,
+      "elapsed_seconds": 3.1113856669981033,
+      "rss_after_cleanup_bytes": 754073600,
+      "cumulative_process_peak_rss_bytes": 754434048,
+      "phase_sampled_peak_rss_bytes": 748568576,
+      "native_preview_entries": 52,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 754073600,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.00030450010672211647,
+          "rss_bytes": 754073600
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.011465083109214902,
+          "rss_bytes": 753762304,
+          "bytes": 10880928
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.013010499998927116,
+          "rss_bytes": 753762304,
+          "bytes": 2720328
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.014549457933753729,
+          "rss_bytes": 753762304,
+          "bytes": 2720328
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.016518416116014123,
+          "rss_bytes": 753762304,
+          "bytes": 2720328
+        },
+        {
+          "phase": "public_array_loaded:supplied_support_domain",
+          "seconds": 0.018221416044980288,
+          "rss_bytes": 753762304,
+          "bytes": 2720328
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.041268666042014956,
+          "rss_bytes": 769605632,
+          "native_shape": [
+            134,
+            175,
+            116
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.14775749994441867,
+          "rss_bytes": 787283968,
+          "source_hash": "sha256:d4eaff3e464f2d7956361747b9ab40eb2e950a9e1c96ae721a7c2dcf5d15a806"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.15824045799672604,
+          "rss_bytes": 765444096
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 0.6808015410788357,
+          "rss_bytes": 767983616
+        }
+      ],
+      "source_hash": "sha256:d4eaff3e464f2d7956361747b9ab40eb2e950a9e1c96ae721a7c2dcf5d15a806",
+      "context_hash": "sha256:f15318ec86cce780434956676e59057c77334b5b92a2a6b9c734bda086fa50ee",
+      "families": {
+        "proximal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 26
+          }
+        },
+        "distal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 26
+          }
+        }
+      },
+      "emitted_count": 52,
+      "accepted_count": 0,
+      "steps_taken": 0,
+      "model_or_optimizer_calls": 0,
+      "source_domain_extended": false,
+      "full_target_preserved": true,
+      "fixed_access_outcome": "no_legal_emitted_motion",
+      "source_and_simulated_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+        "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2546116,
+        "source_support_unknown_voxels": 174084,
+        "target_in_unknown_support_voxels": 0,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "unavailable_interaction_voxels": 174084,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+        "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+        "anatomical_or_material_validation": false
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 7745,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 7386.207580165663,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 7386.207580165663,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:9ada4b66d74fffee3a0ff584e96c8e94733bb5f277d906c17e520a3e7c3718c8",
+          "supplied_target_hash": "sha256:accc5fc2bc6914f3be555178d91e2aef731b0df299c2807f019e04f07d0c850b",
+          "derived_occupancy_hash": "sha256:089b6f75f694bc2a8830aae0eb5d3bc1bc37d5457d233287b2a9836670b46340",
+          "added_region_hash": "sha256:4adf1864e33b9eae5c230cf50908d1202ac3e655b4ab9f16f0f6657cf5b85098",
+          "source_support_positive_voxels": 896879,
+          "added_region_positive_voxels": 1758,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+          "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2546116,
+          "source_support_unknown_voxels": 174084,
+          "target_in_unknown_support_voxels": 0,
+          "assumed_material_beyond_source_domain_voxels": 0,
+          "unavailable_interaction_voxels": 174084,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+          "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+          "anatomical_or_material_validation": false
+        }
+      },
+      "target_native_and_NN_sampling": {
+        "cerebrum": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 2546116,
+          "saved_positive_volume_mm3": 855330.4671777147,
+          "saved_positive_voxels": 896879,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 855373.4384411727,
+          "source_positive_voxels_from_bound_execution": 7175391,
+          "volume_change_percent": -0.0050236845717699374
+        },
+        "whole_tumor": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 20956,
+          "saved_positive_volume_mm3": 7386.207580165663,
+          "saved_positive_voxels": 7745,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 7386.207564051604,
+          "source_positive_voxels_from_bound_execution": 7745,
+          "volume_change_percent": 2.1816417561382195e-07
+        }
+      },
+      "support_knownness_proxy_limit": "Assumed T beyond Ds remains excluded from actor-covered opening retention proxy; no retention/search applied here",
+      "external_shaft_extent": "Outside-image full tool extent remains unassessed under declared aperture/workspace assumptions",
+      "proposal_dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "PROPOSED_UNCERTIFIED": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+      },
+      "endpoint_centers_in_actor_crop": 52,
+      "target_denominator": 7745,
+      "target_depth_range_mm": [
+        -2.4414062500000075,
+        21.972656249999996
+      ],
+      "accepted_envelope": {
+        "proposal_count": 0,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "active_sweep_aabb_ras_mm": null,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null,
+        "endpoint_depth_range_mm": null
+      },
+      "emitted_envelope": {
+        "proposal_count": 52,
+        "distal_active_tip_axial_upper_bound_mm": 23.672656249999996,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -59.10471874916782,
+            -17.099249999787734,
+            6.880700041422489
+          ],
+          [
+            -29.732062499139133,
+            -7.83987499966054,
+            16.28070004109696
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 5909,
+        "endpoint_depth_range_mm": [
+          0.48828124999999345,
+          21.972656249999996
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:df333b54463c303e434bf4b64e0f06a9f28479f2c4d7c6d12e4b95f88c059203",
+      "array_outputs_written": false,
+      "live_source_or_task_after_cleanup": 0,
+      "elapsed_seconds": 0.6987784160301089,
+      "rss_after_cleanup_bytes": 767983616,
+      "cumulative_process_peak_rss_bytes": 787283968,
+      "phase_sampled_peak_rss_bytes": 787283968,
+      "native_preview_entries": 52,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 767983616,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.0003267910797148943,
+          "rss_bytes": 767983616
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.012761207995936275,
+          "rss_bytes": 767983616,
+          "bytes": 10398368
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.014536125119775534,
+          "rss_bytes": 767983616,
+          "bytes": 2599688
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.01627158303745091,
+          "rss_bytes": 767983616,
+          "bytes": 2599688
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.01839695801027119,
+          "rss_bytes": 767983616,
+          "bytes": 2599688
+        },
+        {
+          "phase": "public_array_loaded:supplied_support_domain",
+          "seconds": 0.02095670811831951,
+          "rss_bytes": 767983616,
+          "bytes": 2599688
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.041365208104252815,
+          "rss_bytes": 778403840,
+          "native_shape": [
+            135,
+            166,
+            116
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.1443317080847919,
+          "rss_bytes": 789135360,
+          "source_hash": "sha256:768507b2ab9911c00d58427f5ebce29d254ebb557aac55ca027d2d6f5f607672"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.15452841599471867,
+          "rss_bytes": 768311296
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 0.43369758292101324,
+          "rss_bytes": 768622592
+        }
+      ],
+      "source_hash": "sha256:768507b2ab9911c00d58427f5ebce29d254ebb557aac55ca027d2d6f5f607672",
+      "context_hash": "sha256:98738538359da33ecbc4b350b7740b0ef2f3aa9dcb3b949c9629a1c6ba0280a3",
+      "families": {
+        "proximal_nominal": {
+          "emitted": 6,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 6
+          }
+        },
+        "distal_nominal": {
+          "emitted": 4,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 4
+          }
+        }
+      },
+      "emitted_count": 10,
+      "accepted_count": 0,
+      "steps_taken": 0,
+      "model_or_optimizer_calls": 0,
+      "source_domain_extended": false,
+      "full_target_preserved": true,
+      "fixed_access_outcome": "no_legal_emitted_motion",
+      "source_and_simulated_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+        "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2452824,
+        "source_support_unknown_voxels": 146736,
+        "target_in_unknown_support_voxels": 0,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "unavailable_interaction_voxels": 146736,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+        "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+        "anatomical_or_material_validation": false
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 1247,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 1189.2323111979806,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 1189.2323111979806,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:be8a66ee02cfedfd1f83d303ec8174aa705023fd2181635c98306c62add7dcab",
+          "supplied_target_hash": "sha256:4d2781b08afed89ea00e71a215f3be587726e500e8f98d271e62aea3f0e4f394",
+          "derived_occupancy_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd",
+          "added_region_hash": "sha256:d52b614f3e79704f14dd5395a818048d97d0fe9f1cddcfa5945c9fb0a386f4ae",
+          "source_support_positive_voxels": 909356,
+          "added_region_positive_voxels": 250,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+          "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2452824,
+          "source_support_unknown_voxels": 146736,
+          "target_in_unknown_support_voxels": 0,
+          "assumed_material_beyond_source_domain_voxels": 0,
+          "unavailable_interaction_voxels": 146736,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+          "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+          "anatomical_or_material_validation": false
+        }
+      },
+      "target_native_and_NN_sampling": {
+        "cerebrum": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 2452824,
+          "saved_positive_volume_mm3": 867229.7815410994,
+          "saved_positive_voxels": 909356,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 872233.9442726342,
+          "source_positive_voxels_from_bound_execution": 7316829,
+          "volume_change_percent": -0.573717953124131
+        },
+        "whole_tumor": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 7920,
+          "saved_positive_volume_mm3": 1189.2323111979808,
+          "saved_positive_voxels": 1247,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 1189.23177457601,
+          "source_positive_voxels_from_bound_execution": 1247,
+          "volume_change_percent": 4.512341349460769e-05
+        }
+      },
+      "support_knownness_proxy_limit": "Assumed T beyond Ds remains excluded from actor-covered opening retention proxy; no retention/search applied here",
+      "external_shaft_extent": "Outside-image full tool extent remains unassessed under declared aperture/workspace assumptions",
+      "proposal_dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "NO_REMAINING_NOMINAL_TARGET": 40,
+        "PROPOSED_UNCERTIFIED": 10,
+        "DUPLICATE_GEOMETRY": 2,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+      },
+      "endpoint_centers_in_actor_crop": 10,
+      "target_denominator": 1247,
+      "target_depth_range_mm": [
+        -10.253908581623243,
+        6.34765769338582
+      ],
+      "accepted_envelope": {
+        "proposal_count": 0,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "active_sweep_aabb_ras_mm": null,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null,
+        "endpoint_depth_range_mm": null
+      },
+      "emitted_envelope": {
+        "proposal_count": 10,
+        "distal_active_tip_axial_upper_bound_mm": 5.117969527207747,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -38.86594381448922,
+            11.396932961378145,
+            31.91898854781032
+          ],
+          [
+            -28.04798336867264,
+            15.781266065105427,
+            37.32787630797998
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 38,
+        "target_centers_outside_aabb": 1144,
+        "endpoint_depth_range_mm": [
+          0.48828136102967523,
+          3.417969527207747
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:7c8c2da10cf6fcdf1fad5a229bd9a84debd47adf00ebd3b49dd2866f87906627",
+      "array_outputs_written": false,
+      "live_source_or_task_after_cleanup": 0,
+      "elapsed_seconds": 0.4490608749911189,
+      "rss_after_cleanup_bytes": 768622592,
+      "cumulative_process_peak_rss_bytes": 789135360,
+      "phase_sampled_peak_rss_bytes": 789135360,
+      "native_preview_entries": 10,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 768622592,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.0003071250393986702,
+          "rss_bytes": 768622592
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.010593208950012922,
+          "rss_bytes": 768622592,
+          "bytes": 11621936
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.012463167076930404,
+          "rss_bytes": 768622592,
+          "bytes": 2905580
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.014002500101923943,
+          "rss_bytes": 768622592,
+          "bytes": 2905580
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.01598262507468462,
+          "rss_bytes": 768622592,
+          "bytes": 2905580
+        },
+        {
+          "phase": "public_array_loaded:supplied_support_domain",
+          "seconds": 0.018024666933342814,
+          "rss_bytes": 768622592,
+          "bytes": 2905580
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.03949954197742045,
+          "rss_bytes": 780288000,
+          "native_shape": [
+            138,
+            174,
+            121
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.15128845907747746,
+          "rss_bytes": 793575424,
+          "source_hash": "sha256:1aece92b7b433fe81870dc6250e3056ccf09c0faa44f6ba8f4290e1991724458"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.16234937496483326,
+          "rss_bytes": 770277376
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 2.2664014170877635,
+          "rss_bytes": 769818624
+        }
+      ],
+      "source_hash": "sha256:1aece92b7b433fe81870dc6250e3056ccf09c0faa44f6ba8f4290e1991724458",
+      "context_hash": "sha256:fcd2a44f80b589aa6057194192af60290d1083a5b24465cd64703c40c6b6c5e3",
+      "families": {
+        "proximal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 26
+          }
+        },
+        "distal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 26
+          }
+        }
+      },
+      "emitted_count": 52,
+      "accepted_count": 0,
+      "steps_taken": 0,
+      "model_or_optimizer_calls": 0,
+      "source_domain_extended": false,
+      "full_target_preserved": true,
+      "fixed_access_outcome": "no_legal_emitted_motion",
+      "source_and_simulated_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+        "interaction_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2304431,
+        "source_support_unknown_voxels": 601021,
+        "target_in_unknown_support_voxels": 0,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "unavailable_interaction_voxels": 601021,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+        "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+        "anatomical_or_material_validation": false
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 25301,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 24128.943798057662,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 24128.943798057662,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:45368fa95d7abb5d17121f0b73831560027eecbcd5a32b96a4c4960e1a49832a",
+          "supplied_target_hash": "sha256:38aa00203163f20e76114d08898a58d6833a8d2cb8077d2ba9a4cd4c1ec4078b",
+          "derived_occupancy_hash": "sha256:49e11d2b7ad2710a1ddf0e8809565d207f9e5da5c0e9dc79eeb8faa1ca9288d5",
+          "added_region_hash": "sha256:84694f3294a0fd5d8fcae4bef50973252561bbfd2686141fddf653b950680171",
+          "source_support_positive_voxels": 823052,
+          "added_region_positive_voxels": 19885,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+          "interaction_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2304431,
+          "source_support_unknown_voxels": 601021,
+          "target_in_unknown_support_voxels": 0,
+          "assumed_material_beyond_source_domain_voxels": 0,
+          "unavailable_interaction_voxels": 601021,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+          "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+          "anatomical_or_material_validation": false
+        }
+      },
+      "target_native_and_NN_sampling": {
+        "cerebrum": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 2304431,
+          "saved_positive_volume_mm3": 784924.5267332898,
+          "saved_positive_voxels": 823052,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 785078.1886258661,
+          "source_positive_voxels_from_bound_execution": 29092192,
+          "volume_change_percent": -0.019572813867774208
+        },
+        "whole_tumor": {
+          "resampling_can_omit_subvoxel_labels": true,
+          "saved_domain_voxels": 96406,
+          "saved_positive_volume_mm3": 24128.943798057677,
+          "saved_positive_voxels": 25301,
+          "source_positive_centres_cropped_from_bound_execution": 0,
+          "source_positive_volume_mm3_from_bound_execution": 24128.916310283985,
+          "source_positive_voxels_from_bound_execution": 25301,
+          "volume_change_percent": 0.00011392046512792575
+        }
+      },
+      "support_knownness_proxy_limit": "Assumed T beyond Ds remains excluded from actor-covered opening retention proxy; no retention/search applied here",
+      "external_shaft_extent": "Outside-image full tool extent remains unassessed under declared aperture/workspace assumptions",
+      "proposal_dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "PROPOSED_UNCERTIFIED": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26
+      },
+      "endpoint_centers_in_actor_crop": 52,
+      "target_denominator": 25301,
+      "target_depth_range_mm": [
+        -8.30078482891106,
+        32.714857855120194
+      ],
+      "accepted_envelope": {
+        "proposal_count": 0,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "active_sweep_aabb_ras_mm": null,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null,
+        "endpoint_depth_range_mm": null
+      },
+      "emitted_envelope": {
+        "proposal_count": 52,
+        "distal_active_tip_axial_upper_bound_mm": 33.43829493407181,
+        "active_sweep_aabb_ras_mm": [
+          [
+            68.76623032859395,
+            -104.79505290659715,
+            8.400702373547546
+          ],
+          [
+            94.4591703745112,
+            -69.69382952513466,
+            18.88011798028627
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 17380,
+        "endpoint_depth_range_mm": [
+          0.4882814605242074,
+          31.738294934071813
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:265e5fb592b71b45bee2e5435c5e799643a1d32d0e66f6351d13847a470d2699",
+      "array_outputs_written": false,
+      "live_source_or_task_after_cleanup": 0,
+      "elapsed_seconds": 2.2819086250383407,
+      "rss_after_cleanup_bytes": 769818624,
+      "cumulative_process_peak_rss_bytes": 793575424,
+      "phase_sampled_peak_rss_bytes": 793575424,
+      "native_preview_entries": 52,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    }
+  ],
+  "model_calls": 0,
+  "optimizer_calls": 0,
+  "checkpoint_loads": 0,
+  "search_calls": 0,
+  "transition_calls": 0,
+  "blocked_file_or_external_calls": 0,
+  "public_array_loads": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/cerebrum_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/cerebrum_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/cerebrum_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/cerebrum_source_grid_domain.npy"
+  ],
+  "source_arrays_written": 0,
+  "failed_cases_replaced": false,
+  "all_four_cases_retained": true,
+  "elapsed_seconds": 8.108930750051513,
+  "cumulative_process_peak_rss_bytes": 793575424,
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "complete_history_awaiting_independent_audit",
+    "failure": null,
+    "limits": {
+      "native_preview_entries": 512,
+      "planning_execution_seconds": 300.0
+    },
+    "native_preview_entries": 166,
+    "observed_admissions_before_accounting_failure": 166,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 6.5443221249151975,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": true,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 166,
+          "returned": 166,
+          "raised": 0,
+          "seconds": 4.9860966231208295,
+          "feasible": 0,
+          "rejected": 166,
+          "returned_microsteps": 0,
+          "rejection_reasons": {
+            "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 166
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "budget_history_scope": "construction ledger only; zero transitions or episodes",
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "max_steps": 24,
+  "historical13axis120": true,
+  "retention_applied": false,
+  "methods_executed": [],
+  "clinical_claim": false
+}

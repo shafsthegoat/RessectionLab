@@ -1,0 +1,35 @@
+{
+  "schema": "remind-partial-domain-fixed-TRAIN-public-index-v1",
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json",
+      "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753"
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json",
+      "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81"
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json",
+      "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed"
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json",
+      "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df"
+    }
+  ],
+  "planned_denominator": 4,
+  "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "models_or_updates": 0,
+  "execution_released": false,
+  "failed_cases_replaced": false
+}

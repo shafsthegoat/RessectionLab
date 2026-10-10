@@ -18,6 +18,8 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
+- **The four recovered TRAIN cases have no legal initial movement under the declared coverage rule:** [the completed fixed-access check](artifacts/remind-partial-domain-initial-result-v1/RESULT.txt) constructs all four but rejects all166 emitted motions for unknown within-grid coverage, with zero cap omissions. The8.514s run uses793.6MB sampled peak; independent saved audit passes1368 checks. No search or training runs. Next: localize whether missing coverage blocks the shaft, tip or initial cavity boundary; keep unknown tissue unavailable rather than learning around a false free-space assumption.
+
 - **Recovered TRAIN anatomy can now preserve missing source coverage:** [the optional five-array factory](artifacts/remind-partial-domain-factory-v1/RESULT.txt) supports the fixed002/015/018/045 qualification/search condition, retaining raw labels, full targets and explicit unknown regions. Model updates remain disabled for this condition. Independent review and116 canonical tests plus9 subtests pass; the fixed-access patient feasibility run is next.
 
 - **The reusable missing-approach fix is integrated:** [public blocker-directed proposals](artifacts/obstruction-opening-proposals-v1/RESULT.txt) retain the original choices, add bounded clearing rays and check every full tool before offering it. Both search and learners receive the same choices; old defaults and saved protocols are unchanged. Canonical128 tests and9 subtests pass. The fixed four-TRAIN paired search run is next; no patient improvement or new model training is claimed from generated controls.

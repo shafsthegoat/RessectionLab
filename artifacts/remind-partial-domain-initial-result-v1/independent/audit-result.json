@@ -1,0 +1,149 @@
+{
+  "cases": [
+    {
+      "accepted": 0,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "cap_omitted": 0,
+      "dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26,
+        "PROPOSED_UNCERTIFIED": 52
+      },
+      "emitted": 52,
+      "full_target_cells": 24274,
+      "native_preview_entries": 52,
+      "preview_reasons": {
+        "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 52
+      },
+      "rejected": 52,
+      "source_hash": "sha256:70886d7368dde91c893d512f8d18b61a793462bf386eaef9a49d579b2547799a",
+      "status": "constructed_initial_inventory_only",
+      "subject": "ReMIND-002",
+      "target_depth_range_mm": [
+        5.371092836183633,
+        35.64452518558235
+      ],
+      "target_unknown_support_cells": 1010,
+      "within_grid_unavailable_cells": 413036
+    },
+    {
+      "accepted": 0,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "cap_omitted": 0,
+      "dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26,
+        "PROPOSED_UNCERTIFIED": 52
+      },
+      "emitted": 52,
+      "full_target_cells": 7745,
+      "native_preview_entries": 52,
+      "preview_reasons": {
+        "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 52
+      },
+      "rejected": 52,
+      "source_hash": "sha256:d4eaff3e464f2d7956361747b9ab40eb2e950a9e1c96ae721a7c2dcf5d15a806",
+      "status": "constructed_initial_inventory_only",
+      "subject": "ReMIND-015",
+      "target_depth_range_mm": [
+        -2.4414062500000075,
+        21.972656249999996
+      ],
+      "target_unknown_support_cells": 0,
+      "within_grid_unavailable_cells": 174084
+    },
+    {
+      "accepted": 0,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "cap_omitted": 0,
+      "dispositions": {
+        "DUPLICATE_GEOMETRY": 2,
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26,
+        "NO_REMAINING_NOMINAL_TARGET": 40,
+        "PROPOSED_UNCERTIFIED": 10
+      },
+      "emitted": 10,
+      "full_target_cells": 1247,
+      "native_preview_entries": 10,
+      "preview_reasons": {
+        "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 10
+      },
+      "rejected": 10,
+      "source_hash": "sha256:768507b2ab9911c00d58427f5ebce29d254ebb557aac55ca027d2d6f5f607672",
+      "status": "constructed_initial_inventory_only",
+      "subject": "ReMIND-018",
+      "target_depth_range_mm": [
+        -10.253908581623243,
+        6.34765769338582
+      ],
+      "target_unknown_support_cells": 0,
+      "within_grid_unavailable_cells": 146736
+    },
+    {
+      "accepted": 0,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "cap_omitted": 0,
+      "dispositions": {
+        "NO_EXPOSED_REMAINING_TISSUE": 52,
+        "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL": 26,
+        "PROPOSED_UNCERTIFIED": 52
+      },
+      "emitted": 52,
+      "full_target_cells": 25301,
+      "native_preview_entries": 52,
+      "preview_reasons": {
+        "UNKNOWN_DOMAIN:FORBIDDEN_COLLISION": 52
+      },
+      "rejected": 52,
+      "source_hash": "sha256:1aece92b7b433fe81870dc6250e3056ccf09c0faa44f6ba8f4290e1991724458",
+      "status": "constructed_initial_inventory_only",
+      "subject": "ReMIND-045",
+      "target_depth_range_mm": [
+        -8.30078482891106,
+        32.714857855120194
+      ],
+      "target_unknown_support_cells": 0,
+      "within_grid_unavailable_cells": 601021
+    }
+  ],
+  "checks": 1368,
+  "elapsed_seconds": 0.021026582922786474,
+  "limitation": "No patient array opens or geometry replay. Initial emitted feasibility only; cap omissions untested; no episode, global reachability, learning, anatomical or clinical success inferred.",
+  "native_preview_entries": 166,
+  "parent_peak_sampled_rss_bytes": 793575424,
+  "parent_seconds": 8.51433250005357,
+  "peak_rss_bytes": 23494656,
+  "receipt_sha256": "165dd933180e16654d67a920f010a406426e0b710103338aa80dec1d396ed270",
+  "root_release_sha256": "605f0293abd4270ca88a57ac3374e8ffbeda6d218be27e9eaa6bfe7e3697ede9",
+  "root_result_sha256": "3da8a30111f1305ee53d2f011c5099d4b36e1f0ac12e17dca1af2e6ed334c2f1",
+  "status": "PASS_saved_metadata_only"
+}
