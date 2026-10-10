@@ -369,6 +369,8 @@ class NominalCavityProposalConfig:
     Optional requested 1 mm lookahead is rounded to a positive source-cell
     count, not an exact physical advance. Coarse cells can exceed the request;
     every extra slot records its anchor, endpoint and actual physical advance.
+    Footprint-enabled callers may explicitly raise the shared cap to 120;
+    the default and all other configurations retain the 96-candidate limit.
     """
     offsets_source_voxels: tuple[tuple[int, int], ...] = DEFAULT_COLUMN_OFFSETS
     max_candidates: int = 96
@@ -378,15 +380,16 @@ class NominalCavityProposalConfig:
 
     def __post_init__(self):
         offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
-        if type(self.max_candidates) is not int or not 1 <= self.max_candidates <= 96:
-            raise ValueError("Nominal/cavity candidate cap must be between one and96")
+        if type(self.tool_footprint_opening) is not bool:
+            raise ValueError("Tool-footprint opening must be an explicit bool")
+        limit = 120 if self.tool_footprint_opening else 96
+        if type(self.max_candidates) is not int or not 1 <= self.max_candidates <= limit:
+            raise ValueError(f"Nominal/cavity candidate cap must be between one and{limit}")
         value = self.nominal_min_membership
         if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, float, np.integer, np.floating)) or not np.isfinite(value) or not 0 <= value < 1:
             raise ValueError("Nominal membership threshold must be a declared finite value in [0,1)")
         object.__setattr__(self, "offsets_source_voxels", offsets)
         object.__setattr__(self, "nominal_min_membership", float(value))
-        if type(self.tool_footprint_opening) is not bool:
-            raise ValueError("Tool-footprint opening must be an explicit bool")
         advance = self.intermediate_opening_mm
         if advance is not None:
             if isinstance(advance, (bool, np.bool_)) or not isinstance(advance, (int, float, np.integer, np.floating)) or float(advance) != 1.:
@@ -740,7 +743,7 @@ class PreparedNominalCavityProposer:
                             seen[key], reason = identifier, "PROPOSED_UNCERTIFIED"
                     ledger.append(NominalCavitySlot(column_index, offset, tool.tool_id, family, reason, identifier, voxel))
         # Append only after every original slot: the extra family can never
-        # displace a legacy candidate at the unchanged 96-certificate cap.
+        # displace a legacy candidate at the shared declared candidate cap.
         if self._config.intermediate_opening_mm is not None:
             spacing = float(np.linalg.norm(affine[:3, self._axis]))
             count = max(1, int(np.rint(self._config.intermediate_opening_mm / spacing)))
