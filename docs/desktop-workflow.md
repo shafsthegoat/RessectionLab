@@ -2,7 +2,14 @@
 
 RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
 
-The current verified renderer is `c09ee50` (`834c7ceb…`) with the unchanged
+The [October 9 shared-episode integration](../artifacts/integration-first-shared-episode-v1/RESULT.md)
+was built and exercised in the actual Electron app with generated replay and
+public RESECT T1/FLAIR display. Its exact staged desktop builds; the worktree
+desktop suite passed 282 checks. Packaging is separate and has not been repeated
+for this source. The trained-policy smoke is headless; it is not a learned option
+in the desktop episode selector.
+
+An earlier verified renderer was `c09ee50` (`834c7ceb…`) with the unchanged
 `0b4e334` numerical engine (`85a92eff…`). Its 153 desktop checks passed, and all
 73 captured desktop source inputs match the commit. The
 [latest native checks](../artifacts/electron-route-empty-state-v1/native-workflow.json)
@@ -18,7 +25,14 @@ learning and the RAW-only axis pilot are not included in this app. See the
 
 ## Open and inspect the source
 
-Choose **Open case** (⌘O) for a saved `.ressectionlab` workspace. **Import MRI** first asks for a structural NIfTI image, then a tumor segmentation; cancel the second chooser to open MRI only. **Explore synthetic fixture** is a labeled fixture for learning the controls.
+Choose **Open case** (⌘O) for a saved `.ressectionlab` workspace. **Import MRI** first asks for a structural NIfTI image, then a tumor segmentation; cancel the second chooser to open MRI only. **Open generated episode** provides a labeled software example for learning the controls.
+
+The imaging workspace can attach additional 3D scalar NIfTI images, optionally
+with aligned source-provided or estimated annotations. Select a modality and use
+**Inspect scan** to view each native grid. Source association, acquisition time,
+registration and annotation coverage remain unverified. Primary routes and
+simulation overlays are hidden while a separate grid is displayed. These
+attachments are session-only in this version; a save/reopen extension is in progress.
 
 Check the loaded identifier in the fixed central header; it stays visible when the left panel scrolls and changes when another case opens. It identifies the research bundle, not a verified clinical patient match. The left panel shows the source badge, image dimensions and target annotation labels. **Inspect evidence** shows source provenance, transforms, unresolved inputs and any recorded annotation threshold. A public mirror remains identified as a mirror.
 
@@ -59,7 +73,26 @@ Choose a feasible route **A**, open **Refine**, and select **Check modeled cutti
 
 **Need another research geometry? → Generate additional research routes** adds alternatives with different hypothetical access windows, routes and instruments. Return to **Routes** to select one, then check it again.
 
-Choose a **Learning budget** and **Seed**, then **Freeze assumptions & train**. The app performs actual policy updates with fixed image, geometry, rewards and optimization/selection worlds. Preparation and independent checking take additional time. This prototype chooses between stopping and one declared modeled stroke; it does not optimize a free-form trajectory or entry. Selection curves are used to choose a checkpoint, not as final evaluation evidence.
+The historical **Learning budget**, **Seed**, and **Freeze assumptions & train**
+flow is currently guarded off at the patient-training bridge. Earlier snapshots
+performed fixed-world prototype updates, but those historical checks do not enable
+patient learning in this build. Current generated learning and its actual results
+are described in the [opening-task guide](native-opening-learning.md).
+
+## Execute a generated sequential episode
+
+Choose **Open generated episode**, select **Scripted** or **SEARCH**, and choose
+**Execute generated episode**. This opens a generated source case, not a simulation
+derived from the previously displayed patient. The scripted sequence demonstrates
+aspiration and non-removing probe contact; SEARCH chooses its own actions under
+the same modeled task.
+
+Use the action timeline, **Previous frame**, **Next frame** and replay slider to
+inspect recorded insertion and withdrawal poses, full-tool geometry and changing
+tissue. **Source view** restores the original source. Probe contact counts are
+geometric history, not force measurements. Modeled removed volume is distinct
+from accessible target volume. No trained mixed-mode policy or clinical outcome
+is represented by this workflow.
 
 ## Replay, save and resume
 
@@ -67,4 +100,8 @@ If the independent check accepts the sequence, use **Inspect selection replay**.
 
 **Save** (⌘S) writes the case and view settings locally. After an app restart, saved routes may require a fresh search; their presence in a file is not renewed validation. **Export checked candidate** writes a JSON research record after the replay checks; it does not export a clinically approved plan.
 
-Use **Cancel** in the bottom operation bar to stop a running operation, and wait for acknowledgement before quitting. Available training checkpoints stay in the app's local run storage, separately from the case bundle. After restarting, reopen the same case version, open **Refine → Local run history**, and use **Resume cancelled run**. Resume preserves the saved run's original geometry and budget, even if another route is currently selected. **Recheck and inspect saved replay** reruns the saved replay gate. Incompatible or altered records can be withheld.
+Use **Cancel** in the bottom operation bar to stop a running operation, and wait
+for acknowledgement before quitting. Historical training checkpoints remain in
+local run storage, separately from the case bundle. The retained resume controls
+do not bypass the current patient-training guard. Any saved replay requires its
+matching source and completed checks; incompatible or altered records can be withheld.

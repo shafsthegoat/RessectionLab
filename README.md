@@ -5,7 +5,8 @@ routes and testing simulated resection strategies.
 
 Development is in progress. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
 and [October 8 human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8)
-govern the work. The later steering permits separately labeled synthetic and
+govern the work, with the later [integration-first directive](docs/INTEGRATION_FIRST_MULTIMODAL_STEERING.md)
+requiring shared runtime and desktop integration. The steering permits separately labeled synthetic and
 simulator-generated experience for RL development/training, with transfer evaluated
 on held-out real patients and appropriate physical measurements.
 See the [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md) and
@@ -24,11 +25,16 @@ historical reference. Application source is in `desktop/`; the
 [desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
 inspecting evidence, comparing routes, refinement, replay and local saving.
 
-Historical Electron snapshots passed MRI loading, full-tool route comparison
-and workspace-save checks on this Mac. Earlier training/replay checks used
-simulated experience and are historical evidence only. The current exclusion
-changes have protocol-level checks; this revised desktop has not been repackaged. See [Electron packaging](docs/electron-packaging.md) for building and
-validating each complete app snapshot.
+The [current development app](artifacts/integration-first-shared-episode-v1/RESULT.md)
+has been exercised on this Mac with generated sequential aspiration/probe episodes,
+exact full-tool replay, and public RESECT T1/FLAIR display in separate native frames.
+Additional images are display-only; opening them does not register them or make
+them policy inputs. A legacy trained actor runs through the shared backend, while
+the desktop episode selector currently offers scripted and SEARCH execution.
+The [matched generated search control](artifacts/shared-search-width4-generated-v1/RESULT.md)
+slightly outperforms that actor on one fixed task. No patient generalization is established.
+This revised desktop has not been repackaged; see [Electron packaging](docs/electron-packaging.md)
+for building and validating each complete app snapshot.
 
 ## Local development
 
