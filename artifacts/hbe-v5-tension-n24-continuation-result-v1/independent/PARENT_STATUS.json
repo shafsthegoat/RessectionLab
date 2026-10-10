@@ -1,0 +1,97 @@
+{
+  "child": {
+    "exact_readout_equality": true,
+    "final_force_N": 0.026643305965428098,
+    "final_load_m": 0.0007360099999999,
+    "frame_count": 61,
+    "largest_criterion_ratio": 0.0007468015981490504,
+    "minimum_sampled_J": 0.878487300202767,
+    "numerical_passed": true,
+    "provenance": {
+      "generated_fixture_only": null,
+      "native_output_observed": null,
+      "output_origin": "unverified_saved_stream",
+      "reconstruction_provenance": "reflected_native_half_not_native_full"
+    },
+    "readout_sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac",
+    "representation": "reconstructed_full",
+    "schema": "hbe-v5-ordinal10-independent-saved-replay-v1",
+    "steps": 60
+  },
+  "child_result_sha256": "37ef16083427838995b8779c0c6ff54829468b769a3b19d5a9783876dd676426",
+  "independent_replay_calls_attempted": 1,
+  "native_calls_attempted": 0,
+  "official_hbe_readout_calls_attempted": 0,
+  "preflight": {
+    "aggregate": {
+      "aggregate_combined_output_bytes": 3133419421,
+      "aggregate_combined_wall_seconds": 2229.209226044826,
+      "aggregate_native_calls": 11,
+      "aggregate_native_wall_seconds": 1954.7603108349722,
+      "aggregate_output_bytes": 3132862029,
+      "aggregate_prep_wall_seconds": 75.15648371027783,
+      "aggregate_readout_wall_seconds": 193.00878520752303,
+      "aggregate_supplement_prep_wall_seconds": 3.4362154591362923,
+      "aggregate_supplement_replay_calls": 1,
+      "aggregate_supplement_replay_wall_seconds": 2.8474308329168707
+    },
+    "charged_row_output_bytes": 197744985,
+    "host_available_percent": [
+      78,
+      78,
+      78
+    ],
+    "native_closed_output_bytes": 196696409,
+    "native_output_file_count": 8,
+    "native_receipt_sha256": "1485dec2cf0ca37785bc72f029ff78b46a6654e2430de874343269a24069c5d2",
+    "native_stage": {
+      "active_output_cap_bytes": 402653184,
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "elapsed_seconds": 65.75571195781231,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 196142252,
+      "peak_sampled_process_group_rss_bytes": 496304128,
+      "pid": 35246,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "status": "completed_within_caps",
+      "wall_cap_seconds": 600
+    },
+    "readout_sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac",
+    "readout_stage": {
+      "active_output_cap_bytes": 402653184,
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.mechanics_hbe_v5_remaining_one_shot",
+        "--readout-worker",
+        "--work-order",
+        "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout-work-order.json"
+      ],
+      "elapsed_seconds": 12.716261833906174,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 196690897,
+      "peak_sampled_process_group_rss_bytes": 299008000,
+      "pid": 35614,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "status": "completed_within_caps",
+      "wall_cap_seconds": 600
+    },
+    "sidecar_sha256": "e33b944da060641794e2b4171ac16c98c18a239a532b5b817e2009ccfd87cbb7",
+    "sidecar_status": "passed_numerical_software_only_with_cumulative_ledger_v1",
+    "source_commit": "19889bd8ca804f9c1a686a05b4ddc3ae56c0124b"
+  },
+  "schema": "hbe-v5-ordinal10-independent-parent-v1",
+  "status": "passed_independent_saved_replay",
+  "supervision_receipt_sha256": "8a0a9832b5b967d8b07271bac650e18e08ae8ada02b4c04ef4b32cd5c8f2c6ff"
+}

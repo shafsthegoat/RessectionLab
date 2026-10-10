@@ -1088,3 +1088,22 @@ It reuses the frozen solver/validator, verifies historical source/release bindin
 and carries wrapper overhead once. Row 10 still requires a fresh exact release
 and full preflight; row 11 refuses until row 10 exists. No native or physical
 validation result is created by this source commit.
+
+### October 10: N24 tension completes once; eleven numerical rows complete
+
+The [ordinal-10 result](../artifacts/hbe-v5-tension-n24-continuation-result-v1/RESULT.md)
+records one 65.756-second native solve and a 12.716-second official readout at
+source `19889bd8`. Independent saved-stream replay took 12.919 seconds and
+exactly reproduced all 61 frames and 60 steps. Both original children and the
+independent checker exited zero and were reaped. Native receipt `1485dec2cf0c…`
+and sidecar `e33b944da060…` are retained with exact releases and the audit.
+Cumulative native-chain accounting is 11 calls, 2,229.209 seconds and
+3,133,419,421 bytes; independent replay cost is separately reported.
+No physical, patient or neurological-harm validation follows. The twelfth row
+and the complete unchanged-threshold comparison remain outstanding.
+
+The [02:02:34 UTC acquisition snapshot](../artifacts/acquisition-progress/20261010T020234Z.json)
+records 4,759 verified files / 170,524,264,942 bytes, up 293 files / 9,324,063,922
+bytes. The original worker and queue lock remain active; failure counts are
+unchanged and capacity is sufficient. Recovery remains unlaunched. Payloads
+remain unreviewed for intended use.

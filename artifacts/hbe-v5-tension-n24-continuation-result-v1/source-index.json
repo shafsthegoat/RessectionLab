@@ -1,0 +1,94 @@
+{
+  "schema": "hbe-v5-n24-result-evidence-v1",
+  "source_commit": "19889bd8ca804f9c1a686a05b4ddc3ae56c0124b",
+  "files": [
+    {
+      "path": "native/receipt.json",
+      "source_path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/receipt.json",
+      "bytes": 14314,
+      "sha256": "1485dec2cf0ca37785bc72f029ff78b46a6654e2430de874343269a24069c5d2"
+    },
+    {
+      "path": "native/readout-work-order.json",
+      "source_path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout-work-order.json",
+      "bytes": 7370,
+      "sha256": "681c79679bf6a40ed15ff5a56b55223e678f60f589a563f48d91d3ca315e14d1"
+    },
+    {
+      "path": "continuation/receipt.json",
+      "source_path": "outputs/mechanics/hbe-v5-later-continuation-v1/10-tension-N24-S60-reference/attempt-01/receipt.json",
+      "bytes": 39899,
+      "sha256": "e33b944da060641794e2b4171ac16c98c18a239a532b5b817e2009ccfd87cbb7"
+    },
+    {
+      "path": "independent/RESULT_METADATA.json",
+      "source_path": "build/hbe-v5-ordinal10-native-independent-v1/RESULT_METADATA.json",
+      "bytes": 2563,
+      "sha256": "38dab6da24348684c79887c69f6eb575076628e712a45a428f531a95e617d0eb"
+    },
+    {
+      "path": "independent/REPORT.md",
+      "source_path": "build/hbe-v5-ordinal10-native-independent-v1/REPORT.md",
+      "bytes": 3478,
+      "sha256": "2c720c4989419444a57decc925c7286b433221bcb27dd870cd326a1e5ea73cce"
+    },
+    {
+      "path": "independent/PARENT_STATUS.json",
+      "source_path": "build/hbe-v5-ordinal10-native-independent-v1/PARENT_STATUS.json",
+      "bytes": 3932,
+      "sha256": "43537f66d92a827e4b29785ddab4c89be35be78a0c75e0cc28dec1f23657b3fa"
+    },
+    {
+      "path": "independent/audit.py",
+      "source_path": "build/hbe-v5-ordinal10-native-independent-v1/audit.py",
+      "bytes": 16314,
+      "sha256": "4b186b5e434f3f96ab026d30376095c188370f7ede9d4e476ffc7dd619d84c55"
+    },
+    {
+      "path": "release/INDEPENDENT_REVIEW.md",
+      "source_path": "build/hbe-v5-ordinal10-release-independent-v1/REPORT.md",
+      "bytes": 3280,
+      "sha256": "cb717415373e0227adf0d38d1cca17ae096b0ac300e6a8e3699494b3deea60da"
+    },
+    {
+      "path": "release/derive_pending.py",
+      "source_path": "build/hbe-v5-ordinal10-pending-release-v1/derive_pending.py",
+      "bytes": 8944,
+      "sha256": "985c300269ad03d3748735291ebe00b78a0b2dc47e52641a27c44a4d8c97d2a0"
+    },
+    {
+      "path": "release/DERIVATION.json",
+      "source_path": "build/hbe-v5-ordinal10-pending-release-v1/DERIVATION.json",
+      "bytes": 6936,
+      "sha256": "be90ee79aaec07798c30cc691afcf39c4bdd2a076c1dd6379d747e318a8d54ee"
+    },
+    {
+      "path": "release/inner-release.json",
+      "source_path": "build/hbe-v5-ordinal10-pending-release-v1/inner-release.json",
+      "bytes": 14633,
+      "sha256": "316b6a866a0feebac0f9ae7342baa0ba4336f330cea39cf774d9a4c6ecc33449"
+    },
+    {
+      "path": "release/outer-envelope.json",
+      "source_path": "build/hbe-v5-ordinal10-pending-release-v1/outer-envelope.json",
+      "bytes": 2452,
+      "sha256": "459adee627841eefb2bd8362db5171354131fc86e4c5336cff615ca8963d102b"
+    },
+    {
+      "path": "release/root-launch-admission.json",
+      "source_path": "build/hbe-v5-ordinal10-pending-release-v1/root-launch-admission.json",
+      "bytes": 425,
+      "sha256": "83dac342e16bd636ba6fae31584fdbebfd76056d34c8e475090b1c9f906c1229"
+    },
+    {
+      "path": "release/root-launcher.log",
+      "source_path": "build/hbe-v5-ordinal10-pending-release-v1/root-launcher.log",
+      "bytes": 197,
+      "sha256": "96a29c9dbbf176e255831dda81d61e353ba3624d971c891ff00cbc49d1d4af1c"
+    }
+  ],
+  "total_bytes": 124737,
+  "native_streams_included": false,
+  "patient_data_included": false,
+  "physical_validation_pass": null
+}

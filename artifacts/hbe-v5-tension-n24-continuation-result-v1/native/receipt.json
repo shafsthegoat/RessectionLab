@@ -1,0 +1,248 @@
+{
+  "adapted_deck_sha256": "f487ec0347ee250586c78c452db06d45f5175e3bbfe5c39857cc95cc6aee30d3",
+  "aggregate_caps": {
+    "active_output_bytes_all_12": 6442450944,
+    "known_stage_total_wall_seconds": 18000,
+    "maximum_native_calls_all_12": 12,
+    "native_wall_seconds_all_12": 9600,
+    "remaining_prep_wall_seconds": 1800,
+    "remaining_readout_wall_seconds": 6600,
+    "storage_free_reserve_bytes": 2147483648
+  },
+  "aggregate_combined_wall_seconds": 2225.2766092952807,
+  "aggregate_native_calls": 11,
+  "aggregate_native_wall_seconds": 1954.7603108349722,
+  "aggregate_prep_wall_seconds": 71.22386696073227,
+  "aggregate_readout_wall_seconds": 193.00878520752303,
+  "aggregate_supplement_prep_wall_seconds": 3.4362154591362923,
+  "aggregate_supplement_replay_calls": 1,
+  "aggregate_supplement_replay_wall_seconds": 2.8474308329168707,
+  "backend_profile_sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1",
+  "caps": {
+    "active_output_bytes": 402653184,
+    "attempts": 1,
+    "native_calls": 1,
+    "native_sampled_process_group_rss_bytes": 3221225472,
+    "native_wall_seconds": 600,
+    "numerical_threads": 1,
+    "prep_wall_seconds": 150,
+    "readout_sampled_process_group_rss_bytes": 3221225472,
+    "readout_wall_seconds": 600
+  },
+  "interpretation": "Numerical HBE specimen fixture only; no measured force or patient validation.",
+  "known_timing_gap": "Historical N8 readout and preparation wall time were not recorded.",
+  "native_calls_attempted": 1,
+  "native_mesh_sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2",
+  "native_output_bindings": {
+    "console.txt": {
+      "bytes": 172281,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/console.txt",
+      "sha256": "0f8c637dc7f6343fad6af00701b16fae1eb181ec304e6784f171a0b261340476"
+    },
+    "elements.log": {
+      "bytes": 74276117,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/elements.log",
+      "sha256": "2da10bbc01c30e95f5a13a6ef01bca6dc1d1fbc89f63fa6055422db075b99b99"
+    },
+    "nodes.log": {
+      "bytes": 118531657,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/nodes.log",
+      "sha256": "064f15439cbe8bd289cfb3847f4a4bb17010a9acdefe81125e2d72f69b838099"
+    },
+    "solver.log": {
+      "bytes": 697239,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/solver.log",
+      "sha256": "b818e7b02576792c4d69a2da66293b3734cc7da304ef8cb0c0149ae1a1bb1d03"
+    },
+    "specimen.feb": {
+      "bytes": 2458329,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/specimen.feb",
+      "sha256": "f487ec0347ee250586c78c452db06d45f5175e3bbfe5c39857cc95cc6aee30d3"
+    }
+  },
+  "native_stage": {
+    "active_output_cap_bytes": 402653184,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+      "-noconfig",
+      "-no_title",
+      "-i",
+      "specimen.feb",
+      "-o",
+      "solver.log"
+    ],
+    "elapsed_seconds": 65.75571195781231,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 196142252,
+    "peak_sampled_process_group_rss_bytes": 496304128,
+    "pid": 35246,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 600
+  },
+  "no_retry": true,
+  "observed_head_after": "19889bd8ca804f9c1a686a05b4ddc3ae56c0124b",
+  "observed_head_preflight": "19889bd8ca804f9c1a686a05b4ddc3ae56c0124b",
+  "old_source_deck_sha256": "0b66988b46c7d9af1286b24a646ba6279975f17c9bda9d3c78a7b242bdc670c5",
+  "ordinal": 10,
+  "output_bindings": {
+    "console.txt": {
+      "bytes": 172281,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/console.txt",
+      "sha256": "0f8c637dc7f6343fad6af00701b16fae1eb181ec304e6784f171a0b261340476"
+    },
+    "elements.log": {
+      "bytes": 74276117,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/elements.log",
+      "sha256": "2da10bbc01c30e95f5a13a6ef01bca6dc1d1fbc89f63fa6055422db075b99b99"
+    },
+    "nodes.log": {
+      "bytes": 118531657,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/nodes.log",
+      "sha256": "064f15439cbe8bd289cfb3847f4a4bb17010a9acdefe81125e2d72f69b838099"
+    },
+    "readout-console.txt": {
+      "bytes": 0,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout-console.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readout-work-order.json": {
+      "bytes": 7370,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout-work-order.json",
+      "sha256": "681c79679bf6a40ed15ff5a56b55223e678f60f589a563f48d91d3ca315e14d1"
+    },
+    "readout.json": {
+      "bytes": 539102,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout.json",
+      "sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac"
+    },
+    "solver.log": {
+      "bytes": 697239,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/solver.log",
+      "sha256": "b818e7b02576792c4d69a2da66293b3734cc7da304ef8cb0c0149ae1a1bb1d03"
+    },
+    "specimen.feb": {
+      "bytes": 2458329,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/specimen.feb",
+      "sha256": "f487ec0347ee250586c78c452db06d45f5175e3bbfe5c39857cc95cc6aee30d3"
+    }
+  },
+  "preflight_free_bytes": 458094551040,
+  "preflight_required_free_bytes": 5656914700,
+  "prep_elapsed_seconds": 10.035617041168734,
+  "preparation_sha256": "42a66a35bb9aaa70d994189b4f7f7459510c360d3c6c3c1e6f407b6083edbbda",
+  "prior_active_output_bytes": 2933019892,
+  "prior_combined_output_bytes": 2933577284,
+  "prior_combined_wall_seconds": 2136.7690184623934,
+  "prior_native_wall_seconds": 1889.0045988771599,
+  "prior_prep_wall_seconds": 61.18824991956353,
+  "prior_readout_wall_seconds": 180.29252337361686,
+  "prior_receipt_sha256": [
+    "8099c438caadf120d7269c14025fb92932fdda12a05f5ac8e8ade981cb20d45d",
+    "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2",
+    "9c5fb86a1264c1ff3bea06800b16fef7b3248908971d88cc543bcee0692d0f96",
+    "823ab0b8260a56d62147dd4cc44dcc2e37ef2bf72092aa4c206d576f3831097d",
+    "f6830c11c551f548b22152f1b2582f151072163f65e8250e40a41be768194168",
+    "b7f59dada629cd1fb8e61eac48a6eda86724b755055bdb7aa5dbf812d83fb013",
+    "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4",
+    "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5",
+    "67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e",
+    "d2476c6355a4c23421c829eff4b9a5db1899b4013b73bacf7e2701eda0def144"
+  ],
+  "prior_supplement_output_bytes": 557392,
+  "prior_supplement_prep_wall_seconds": 3.4362154591362923,
+  "prior_supplement_replay_calls": 1,
+  "prior_supplement_replay_wall_seconds": 2.8474308329168707,
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 402653184,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.mechanics_hbe_v5_remaining_one_shot",
+      "--readout-worker",
+      "--work-order",
+      "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout-work-order.json"
+    ],
+    "elapsed_seconds": 12.716261833906174,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 196690897,
+    "peak_sampled_process_group_rss_bytes": 299008000,
+    "pid": 35614,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 600
+  },
+  "readout_token_sha256": "7fea50588478b91c48fbfc0b7d7da21233efede96fd9d4d66a3608ce01fb025e",
+  "release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal10-pending-release-v1/inner-release.json",
+  "release_sha256": "316b6a866a0feebac0f9ae7342baa0ba4336f330cea39cf774d9a4c6ecc33449",
+  "run_id": "tension:N24:S60:reference",
+  "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+  "runtime_profile_verified_after": true,
+  "sampling_limit": "Brief between-sample RSS/output peaks may be missed.",
+  "saved_numerical_readout": {
+    "frame_count": 61,
+    "generated_fixture_only": false,
+    "interpretation": "One supervised specimen numerical software result only.",
+    "measured_response_accessed": false,
+    "native_output_observed": true,
+    "numerical_passed": true,
+    "patient_data_accessed": false,
+    "physical_validation_pass": null,
+    "readout_sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac",
+    "run_id": "tension:N24:S60:reference",
+    "schema": "hbe-v5-complete-stream-v1"
+  },
+  "schema": "hbe-v5-remaining-one-call-receipt-v1",
+  "source_commit": "19889bd8ca804f9c1a686a05b4ddc3ae56c0124b",
+  "source_hashes_after": {
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+    "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_v5_frame.py": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+    "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+    "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+    "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+    "scripts/mechanics_hbe_v5_stream.py": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "source_hashes_before": {
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+    "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_v5_frame.py": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+    "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+    "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+    "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+    "scripts/mechanics_hbe_v5_stream.py": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "source_map_sha256": "65ab3d9b2056e43e3a193b6d0288078f3617159483e271d0ab3cd0d624fb02e0",
+  "status": "passed_numerical_software_only",
+  "v5_declaration_sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+}
