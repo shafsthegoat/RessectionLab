@@ -1,0 +1,42 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_paired_TRAIN_search",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 660,
+    "output_bytes": 67108864,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 600,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoint_loads": 0,
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 25.625766084063798,
+  "endpoint_control_sha256": "b00d55b427588f1afa0eff886f89a1344d09e450505ffc8d958fbb93d32e147c",
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "output_bytes": 2498570,
+  "private_reference_execution": false,
+  "release_sha256": "d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a",
+  "result_sha256": "e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b",
+  "sampled_peak_rss_bytes": 1772158976,
+  "samples": 122,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/paired-train-occupancy-search-v1/source-index.json",
+    "sha256": "6053fa4a32a73c07d5ad133b34e662105a9acf832b6c9b5270d6f6d5fa6f938c"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 18906,
+  "worker_final_sha256": "c35f6a85fbebcaddf3eabba8b728c6843cd2e00d6637e4045f493f50478a2cd6",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

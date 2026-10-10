@@ -1,0 +1,45 @@
+{
+  "scope": "source and fixed TRAIN metadata only; no array/checkpoint payload",
+  "files": {
+    "release": {
+      "path": "build/balanced-teacher-il64-v1/root-release.json",
+      "sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22",
+      "bytes": 11918
+    },
+    "teacher_ReMIND-008": {
+      "path": "build/balanced-teacher-il64-v1/attempt-01/teachers/ReMIND-008/plan.json",
+      "sha256": "54a8755b090bc0cabbda9761bc8910944a94559f4c323d8fc8ad7c5a9fa8925d",
+      "bytes": 926
+    },
+    "teacher_ReMIND-010": {
+      "path": "build/balanced-teacher-il64-v1/attempt-01/teachers/ReMIND-010/plan.json",
+      "sha256": "ac122d4fbc96f09486ea332c4a02c4d15c5b89ff01c10871d9dd754ee8f46dba",
+      "bytes": 926
+    },
+    "teacher_ReMIND-020": {
+      "path": "build/balanced-teacher-il64-v1/attempt-01/teachers/ReMIND-020/plan.json",
+      "sha256": "f880b601ffe576c40a6e3b0503d8479e1cca56f502918264826abab496e02dc4",
+      "bytes": 926
+    },
+    "teacher_ReMIND-025": {
+      "path": "build/balanced-teacher-il64-v1/attempt-01/teachers/ReMIND-025/plan.json",
+      "sha256": "a617f2192263d1bd2807ab36c606f3aea42d24fda60cf2bed20379f4f4bd9fc3",
+      "bytes": 23389
+    },
+    "recipe": {
+      "path": "build/remind-cerebrum-semantics-v1/paired-train-recipe.json",
+      "sha256": "55e08ec2e9e7b3c9cd418bc6d39c0c835ac614aa605810a2432d0edd7f6846f8",
+      "bytes": 8312
+    },
+    "public_index": {
+      "path": "build/remind-planning-qc-v1/public-cohort-v1/public-manifest-index.json",
+      "sha256": "11b5c1ae8f9b2c03695e7eb0768d2cc340db68631f3ddb50ba365910fe0187f7",
+      "bytes": 1591
+    },
+    "cohort": {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "bytes": 70925
+    }
+  }
+}

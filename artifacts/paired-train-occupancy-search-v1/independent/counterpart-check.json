@@ -1,0 +1,251 @@
+{
+  "checks": 176,
+  "exact_geometry_keys": [
+    "column_index",
+    "offset_source_voxels",
+    "voxel",
+    "entry_mm",
+    "tip_mm",
+    "tool_id",
+    "family"
+  ],
+  "inputs": {
+    "build/paired-train-occupancy-independent-v1/audit-result.json": {
+      "bytes": 78755,
+      "sha256": "a146b86e4597919971862a5f14426d9a24ecb8093ccce45b902fdef3cd418be1"
+    },
+    "build/paired-train-occupancy-independent-v1/input-hashes.json": {
+      "bytes": 27255,
+      "sha256": "1b18b6b46694ce5d36aa2468891196dda1ce4e8a588495d762499c72a1234a15"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-00/search.json": {
+      "bytes": 17040,
+      "sha256": "1fb7db26349285558bb492d7ef5e433029cbb5f74e46fa887cf13d71b27e670d"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-01/search.json": {
+      "bytes": 17040,
+      "sha256": "ee9ddc9fecee09e9ba291ada757b0272a9993fe16ba67648ce65dd143b314579"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-02/search.json": {
+      "bytes": 11818,
+      "sha256": "0414748c7a656b52d0e2c5212c5346630832a4eae8acaa8ebfa1f186d4823f60"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-03/initial-inventory.json": {
+      "bytes": 206886,
+      "sha256": "019e69d7ddcf258ef513021074f3b9b241907096dcc242e5ad0c6f9fa3949df5"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-03/search.json": {
+      "bytes": 11122,
+      "sha256": "fe1f36d11372a4972a23e7e8c4d061016b6bd9aeae88646ebf88368b319eeecb"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-04/search.json": {
+      "bytes": 9375,
+      "sha256": "aef986317a144cb2491557c94e341429bf8fc3dcc68efc6bb173604f7d7cdd3f"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-05/search.json": {
+      "bytes": 9375,
+      "sha256": "f825e76d83fcf31ae638d04a0f7163030bb780d9a05cbc1c148a93f587bad76a"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-06/initial-inventory.json": {
+      "bytes": 186598,
+      "sha256": "6c8efebb10740179208374394291f219a6f17ff10b7f38d44ee2621a5f8d771f"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-06/search.json": {
+      "bytes": 12811,
+      "sha256": "baf400417c04051ae7bfcb89f165d79a67621955bf7f22d33c605de5ddfb41af"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-07/initial-inventory.json": {
+      "bytes": 187896,
+      "sha256": "21b332aa00a543ca1587b99bbf892a63e67ec5f32bc1ce47f2be61c85ab2830a"
+    },
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-07/search.json": {
+      "bytes": 6563,
+      "sha256": "906761e7b752d076c10a020371d74269629abea0c767dc49dea3390ecbf96a7b"
+    }
+  },
+  "raw_025": {
+    "action_id": "nominal-cavity-968f3758c3de3eab8c99ca99",
+    "column_index": 12,
+    "endpoint_center_in_actor_crop": true,
+    "entry_mm": [
+      59.80788894373058,
+      55.25603988714608,
+      1.6624837794409706
+    ],
+    "family": "exposed_opening",
+    "feasible": true,
+    "offset_source_voxels": [
+      0,
+      3
+    ],
+    "proposal_id": "nominal-cavity-968f3758c3de3eab8c99ca99",
+    "proposal_reason": "PROPOSED_UNCERTIFIED",
+    "reason": "NATIVE_CONNECTED_STROKE",
+    "tip_mm": [
+      56.39013548641191,
+      55.250447293839734,
+      1.624508716361845
+    ],
+    "tool_id": "generic_suction",
+    "voxel": [
+      119,
+      45,
+      71
+    ]
+  },
+  "scope": "Exact saved metadata join. Full physical endpoints/tools are identical; only source-bound IDs and saved native admissibility change. No blocker-cell localization or fresh geometry check is claimed. Omitted candidates are untested, not infeasible.",
+  "scores": [
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.05629388512547917,
+      "ordinal": 0,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 45,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.05629388512547917,
+      "ordinal": 1,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 45,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.11837840490793324,
+      "ordinal": 2,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 30,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.11837840490793324,
+      "ordinal": 3,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 28,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.22171147677835415,
+      "ordinal": 4,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 23,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.22171147677835415,
+      "ordinal": 5,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 23,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 2,
+      "maximum_nonstop_reward": 0.9168388572207332,
+      "ordinal": 6,
+      "positive_nonstop_scores": 1,
+      "scored_nonstop": 31,
+      "zero_nonstop_scores": 0
+    },
+    {
+      "decisions": 1,
+      "maximum_nonstop_reward": -0.22171152161482974,
+      "ordinal": 7,
+      "positive_nonstop_scores": 0,
+      "scored_nonstop": 15,
+      "zero_nonstop_scores": 0
+    }
+  ],
+  "seconds": 0.005961500108242035,
+  "status": "PASS_saved_geometric_counterpart_join",
+  "union_010_omissions": [
+    {
+      "action_id": null,
+      "column_index": 11,
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "footprint_anchor_voxel": [
+        2,
+        115,
+        69
+      ],
+      "footprint_endpoint_tests": 2,
+      "footprint_exposed_cells": 2605,
+      "footprint_radially_eligible_cells": 275,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "proposal_id": null,
+      "proposal_reason": "CANDIDATE_CAP",
+      "reason": "CANDIDATE_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        2,
+        116,
+        69
+      ]
+    },
+    {
+      "action_id": null,
+      "column_index": 11,
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "footprint_anchor_voxel": [
+        1,
+        114,
+        69
+      ],
+      "footprint_endpoint_tests": 1,
+      "footprint_exposed_cells": 5669,
+      "footprint_radially_eligible_cells": 915,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "proposal_id": null,
+      "proposal_reason": "CANDIDATE_CAP",
+      "reason": "CANDIDATE_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        1,
+        116,
+        69
+      ]
+    }
+  ],
+  "union_025": {
+    "action_id": "nominal-cavity-46a1de812d8b084a94f7f41c",
+    "column_index": 12,
+    "endpoint_center_in_actor_crop": true,
+    "entry_mm": [
+      59.80788894373058,
+      55.25603988714608,
+      1.6624837794409706
+    ],
+    "family": "exposed_opening",
+    "feasible": false,
+    "offset_source_voxels": [
+      0,
+      3
+    ],
+    "proposal_id": "nominal-cavity-46a1de812d8b084a94f7f41c",
+    "proposal_reason": "PROPOSED_UNCERTIFIED",
+    "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+    "tip_mm": [
+      56.39013548641191,
+      55.250447293839734,
+      1.624508716361845
+    ],
+    "tool_id": "generic_suction",
+    "voxel": [
+      119,
+      45,
+      71
+    ]
+  }
+}

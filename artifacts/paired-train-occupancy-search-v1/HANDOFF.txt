@@ -1,0 +1,30 @@
+Paired TRAIN occupancy search — frozen source preparation
+
+Root froze HEAD947e1d13b78b726aa290ce6a4f63ab6d09a8f357.
+Source-index SHA2566053fa4a32a73c07d5ad133b34e662105a9acf832b6c9b5270d6f6d5fa6f938c.
+Pending release-template SHA2563be998e3831c850ac36a7b0424805bacf3d9f642d6451055a5f8915b18d981e0.
+No source author scientific attempt. Root separately changes the copied template status to released_one_attempt, binds its actual SHA, and launches once with the existing scientific Python:
+  <scientific-python> -I -B build/paired-train-occupancy-search-v1/run_owned.py --release build/paired-train-occupancy-search-v1/root-release.json --release-sha256 <exact-root-release-sha>
+
+Fixed order: ReMIND-008 raw S,008 S union T,010 raw,010 union,020 raw,020 union,025 raw,025 union. No replacement or condition selection. Only the same four qualified public arrays are loaded through the canonical factory. No original DICOM, private ventricular label, SELECT or EVAL input is opened. The native reference_target slot must equal the same permitted full supplied T; the geometric evaluator therefore scores public T, not a privileged endpoint label.
+
+The occupancy seam is separately reviewed/promoted canonical code. Access uses raw S and unchanged T in both arms. Raw source/model/initial observation must exactly match the saved completed64 world. New greedy routes need not match the historical beam teacher routes. Union binds the original S,T,D plus its added region and remains an explicit rigid-cell material assumption, including unseparated necrotic components. It is not corrected anatomy, measured material or a resection prescription. Full T/domain/denominator, source MRI/frame, access, tools, proposal120 and reward are paired exactly. Support-percentile normalization may differ; raw/derived records and equality are saved. No neural-policy comparison is made. Existing candidate ordering/tie semantics remain unchanged; changed source-bound IDs and occupancy may alter equal-score choices.
+
+Existing observed_greedy_search has horizon24 and45s per arm. It scores every currently emitted certified legal action using the unchanged immediate geometric reward; STOP wins zero ties. It does not try negative preparatory moves. Complete STOP is a retained negative result, not a no-route proof. Candidate-cap omissions remain visible in the full initial inventory. Every search decision saves all current candidate scores; no extra simulator query is used for diagnostic scoring.
+
+Each completed search sequence is rolled out on its own authoritative task, sealed with exact full native history/source/model/context and no policy identity, replayed on a fresh task under the SAME world, and checked by evaluate_native_spatial_episode. Parent success independently joins raw identity, paired public inputs and normalization, complete plan seals/actions, exact replayed history, independent geometry and outcomes. Removed-cell depth is a physical cell-center diagnostic, not cleared-shaft reach or tip travel.
+
+Eight rows exist before work. Recoverable per-arm source/search errors retain their reason and allow the remaining fixed rows. Any unresolved arm makes the WHOLE attempt explicitly failed after the denominator is preserved; no incomplete history is attested complete. Global preview/time/RSS/output/lifetime refusal stops remaining work and leaves explicit not-run rows. No retries. This preserves all-negative STOP outcomes and makes failures distinct from STOP.
+
+Owned framework unchanged: one owned child/process group, parent lease before scientific imports, one thread,600s child/660s parent,3GiB sampled tree RSS,64MiB output,16MiB supervision,8MiB log. Aggregate previews≤100000. Search planning transitions≤192, authoritative rollout+replay≤384, total attempted native transitions≤576. Failed calls still count. Zero actual policy forwards, optimizer updates and checkpoint loads in BOTH arms. Raw historical positive admission envelope remains unchanged; union admission is0/0 and public_world_search_only. This envelope difference is declared and does not authorize model execution. No PatientTrainSession is constructed.
+
+Source ownership/lifetime is sequential: a weak reference must confirm each NativeSpatialCase has been released before the next arm. Only compact JSON metadata crosses arms. No arrays or images are duplicated into output. Parent retains sampled RSS/time limitations and all failed output records.
+
+Six stdlib-only source/metadata control groups PASS0.260s: pending/type/order/budget release refusal; exact raw versus derived admission; eight negative STOP rows accepted while failed/missing/leaked/prohibited rows refuse; lease/import and native replay structure; unchanged supervisor sampling/cleanup AST;80-file conservative lazy source closure. These are source controls, not a patient result. Canonical seam already passed root162 tests plus9 subtests. n36_result_audit_fresh supplied source-scoped GO and owns later saved-only audit.
+
+Frozen SHA256:
+pilot_contract.py 339697d4fbb4c24c1e7fe334d5926e58fd296c8a118b396c6b97bdb3da60ad17
+search_worker.py a2869ec424208a680d6b0b10519ee9a84451df607db123ad31ea8cc9563c02ab
+run_owned.py 6cc1801db32bae2adcc8a77894cca1513280a87f242c5062380ec4050ca7becf
+freeze-runtime.py f2b8cf50da1ce9aeae5c4fed2e17afcee70f5a035ebe6210576f02f1ad8963ea
+input-index.json 2ca8758aa64d17b4490ad4753e79a66b227cdc3992fc085bc8ef187e4fb42a95

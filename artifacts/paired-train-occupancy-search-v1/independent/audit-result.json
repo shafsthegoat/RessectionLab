@@ -1,0 +1,1977 @@
+{
+  "arms": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 4.930661957943812,
+      "condition": "raw_cerebrum_baseline",
+      "historical_beam_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:726120528e8216949625ae530fa6f38dae68e60b0171ba4960c8faa159b00a4e",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "historical_greedy_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:d11945f524e0bea1f5798600e59f0b45498c58f17582d2bf867dc55734064d1f",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "initial_catalog": {
+        "accepted_count": 45,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 108,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 216,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 1014.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 6799033,
+        "support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+        "upper": 2665.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:c3b8efb1f03f2d3c48f8027259155bfbd7e3e598e437507db90fb423b540367a",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 45,
+      "search_seconds": 0.05501837516203523,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 12115,
+        "S_voxels": 6799033,
+        "T_minus_S_voxels": 6394,
+        "access": {
+          "center_mm": [
+            57.81281617159064,
+            -28.73810767915333,
+            39.01393683913569
+          ],
+          "normal_inward": [
+            -0.9999990906797902,
+            0.0011870757218137345,
+            -0.0006399147001963637
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+        "full_target_mm3": 2386.3732360519107,
+        "full_target_voxels": 18509,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+        "original_frame_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "raw_occupancy_target_fraction_upper_bound": 0.6545464368685504,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123",
+          "supplied_support": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+          "supplied_whole_tumor": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+          "whole_tumor_domain": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+        },
+        "target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 4.911555791972205,
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:0e3c08d56afc5cfaeb26ad04f62fe1994344ca29db3b54db4216311def2f9e14",
+        "added_region_positive_voxels": 6394,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+        "source_support_positive_voxels": 6799033,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "initial_catalog": {
+        "accepted_count": 45,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 116,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 232,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 1014.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 6805427,
+        "support_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+        "upper": 2688.0
+      },
+      "normalization_changed": true,
+      "outside_supplied_goal_mm3": 0.0,
+      "paired_raw_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "complete_arm_seconds": 4.930661957943812,
+          "condition": "raw_cerebrum_baseline",
+          "historical_beam_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+              "plan_seal": "sha256:726120528e8216949625ae530fa6f38dae68e60b0171ba4960c8faa159b00a4e",
+              "public_return": 0.0,
+              "steps": 1,
+              "target_mm3": 0.0,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "historical_greedy_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+              "plan_seal": "sha256:d11945f524e0bea1f5798600e59f0b45498c58f17582d2bf867dc55734064d1f",
+              "public_return": 0.0,
+              "steps": 1,
+              "target_mm3": 0.0,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "initial_catalog": {
+            "accepted_count": 45,
+            "complete": true,
+            "declared_slots": 130,
+            "emitted_count": 108,
+            "omitted_count": 0
+          },
+          "max_removed_cell_depth_mm": null,
+          "native_counts": {
+            "replay": 1,
+            "rollout": 1,
+            "search": 1
+          },
+          "native_previews": 216,
+          "normalization": {
+            "clip": [
+              0.0,
+              1.0
+            ],
+            "crop_used_for_statistics": false,
+            "lower": 1014.0,
+            "method": "support_percentile_1_99",
+            "percentile_method": "linear",
+            "percentiles": [
+              1.0,
+              99.0
+            ],
+            "raw_source_preserved": true,
+            "reference_labels_used": false,
+            "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+            "statistics_scope": "entire_permitted_support",
+            "statistics_voxels": 6799033,
+            "support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+            "upper": 2665.0
+          },
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:c3b8efb1f03f2d3c48f8027259155bfbd7e3e598e437507db90fb423b540367a",
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "scores": 45,
+          "search_seconds": 0.05501837516203523,
+          "status": "complete",
+          "steps": 1,
+          "subject": "ReMIND-008",
+          "target_access_success": false,
+          "target_fraction": 0.0,
+          "target_mm3": 0.0,
+          "target_source_cells": 0,
+          "terminal": "STOP",
+          "world": {
+            "S_intersect_T_voxels": 12115,
+            "S_voxels": 6799033,
+            "T_minus_S_voxels": 6394,
+            "access": {
+              "center_mm": [
+                57.81281617159064,
+                -28.73810767915333,
+                39.01393683913569
+              ],
+              "normal_inward": [
+                -0.9999990906797902,
+                0.0011870757218137345,
+                -0.0006399147001963637
+              ],
+              "radius_mm": 6.0,
+              "window_id": "fixed-public-target-side-axis0-v1"
+            },
+            "domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+            "full_target_mm3": 2386.3732360519107,
+            "full_target_voxels": 18509,
+            "max_steps": 24,
+            "native_frame_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+            "original_frame_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+            "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+            "raw_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+            "raw_occupancy_target_fraction_upper_bound": 0.6545464368685504,
+            "reward": {
+              "action_cost": 0.03,
+              "graph_edge_cost": 0.0,
+              "language_per_mm3": 0.0,
+              "motion_per_mm": 0.001,
+              "motor_per_mm3": 0.0,
+              "normal_per_mm3": 0.2,
+              "target_per_mm3": 1.0,
+              "tool_change_cost": 0.03
+            },
+            "source_files": {
+              "image": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123",
+              "supplied_support": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+              "supplied_whole_tumor": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+              "whole_tumor_domain": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+            },
+            "target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+            "tools": [
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.4,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 1.0,
+                "tool_id": "generic_suction",
+                "working_length_mm": 100.0
+              },
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 2.7,
+                "tip_length_mm": 4.0,
+                "tip_radius_mm": 1.7,
+                "tool_id": "generic_aspirator",
+                "working_length_mm": 90.0
+              }
+            ]
+          }
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:2e1d922cd83fab89a5cafda6fb349a607fe5ba7d49945cbba4a70cf1bf62a191",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 45,
+      "search_seconds": 0.03223441704176366,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 12115,
+        "S_voxels": 6799033,
+        "T_minus_S_voxels": 6394,
+        "access": {
+          "center_mm": [
+            57.81281617159064,
+            -28.73810767915333,
+            39.01393683913569
+          ],
+          "normal_inward": [
+            -0.9999990906797902,
+            0.0011870757218137345,
+            -0.0006399147001963637
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+        "full_target_mm3": 2386.3732360519107,
+        "full_target_voxels": 18509,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+        "original_frame_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "raw_occupancy_target_fraction_upper_bound": 0.6545464368685504,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123",
+          "supplied_support": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+          "supplied_whole_tumor": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+          "whole_tumor_domain": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+        },
+        "target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 2.9926477919798344,
+      "condition": "raw_cerebrum_baseline",
+      "historical_beam_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:346712efde410587e29354b854324225ca7dbbc35c250678f1d2d4db1f2c25fb",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "historical_greedy_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:05831777fd22e52a306aecedcd6c2d504483147c0acf766581fd8acf9f1f3376",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "initial_catalog": {
+        "accepted_count": 30,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 106,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 212,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 147.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 4015977,
+        "support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+        "upper": 3135.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:b8ba5045d39a7e7dca7b752260d50958244f0e81f31c909cce182b743d92554a",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 30,
+      "search_seconds": 0.019581499975174665,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 8221,
+        "S_voxels": 4015977,
+        "T_minus_S_voxels": 6988,
+        "access": {
+          "center_mm": [
+            -66.62907810879854,
+            71.0186065557066,
+            4.348500436327257
+          ],
+          "normal_inward": [
+            0.9995954109502866,
+            -0.0005557399202198454,
+            0.028437748860780897
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:4abd215e9bd848e47442a7dba17f7cc055d27c7051b8cdf4138b374ef0e4f270",
+        "full_target_mm3": 3342.5429604387728,
+        "full_target_voxels": 15209,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:c20ab341be62bf7ccec001976e919e5e873e0e4b3cc1f980bc8bb9733e67d003",
+        "original_frame_hash": "sha256:783182506a1a78322c8c40518c6d6478be3c4582ca91d9514d39eac663e9564c",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "raw_occupancy_target_fraction_upper_bound": 0.5405352094154777,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ce084ea074aafff25491d493b0654c45e444a285a16f9e4af86d73a34baf2f1c",
+          "supplied_support": "f370f83e6ee40489778bb44882523f2108f47d1c966d94eb1a124237f737cef3",
+          "supplied_whole_tumor": "e41b782c7d701887e5e09e11bbe81daa8e15ca9b04a6da22aab92a38051ba50d",
+          "whole_tumor_domain": "789fa19facc5ec7d6614656bd6753fdba13b8ac44c1b57a6b9b69912e0f870ec"
+        },
+        "target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 3.6875859999563545,
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:96eb79398b7b63a4f45b5432c37397f706591362970caccf8b688857eeadc99b",
+        "added_region_positive_voxels": 6988,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:0f79a9ae7d15cea06954c4a7ea2df7f771dc6eda3eaff9e424dc86b1715bf946",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+        "source_support_positive_voxels": 4015977,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "initial_catalog": {
+        "accepted_count": 28,
+        "complete": false,
+        "declared_slots": 130,
+        "emitted_count": 120,
+        "omitted_count": 2
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 240,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 147.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 4022965,
+        "support_hash": "sha256:0f79a9ae7d15cea06954c4a7ea2df7f771dc6eda3eaff9e424dc86b1715bf946",
+        "upper": 3135.0
+      },
+      "normalization_changed": true,
+      "outside_supplied_goal_mm3": 0.0,
+      "paired_raw_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "complete_arm_seconds": 2.9926477919798344,
+          "condition": "raw_cerebrum_baseline",
+          "historical_beam_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+              "plan_seal": "sha256:346712efde410587e29354b854324225ca7dbbc35c250678f1d2d4db1f2c25fb",
+              "public_return": 0.0,
+              "steps": 1,
+              "target_mm3": 0.0,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "historical_greedy_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+              "plan_seal": "sha256:05831777fd22e52a306aecedcd6c2d504483147c0acf766581fd8acf9f1f3376",
+              "public_return": 0.0,
+              "steps": 1,
+              "target_mm3": 0.0,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "initial_catalog": {
+            "accepted_count": 30,
+            "complete": true,
+            "declared_slots": 130,
+            "emitted_count": 106,
+            "omitted_count": 0
+          },
+          "max_removed_cell_depth_mm": null,
+          "native_counts": {
+            "replay": 1,
+            "rollout": 1,
+            "search": 1
+          },
+          "native_previews": 212,
+          "normalization": {
+            "clip": [
+              0.0,
+              1.0
+            ],
+            "crop_used_for_statistics": false,
+            "lower": 147.0,
+            "method": "support_percentile_1_99",
+            "percentile_method": "linear",
+            "percentiles": [
+              1.0,
+              99.0
+            ],
+            "raw_source_preserved": true,
+            "reference_labels_used": false,
+            "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+            "statistics_scope": "entire_permitted_support",
+            "statistics_voxels": 4015977,
+            "support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+            "upper": 3135.0
+          },
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:b8ba5045d39a7e7dca7b752260d50958244f0e81f31c909cce182b743d92554a",
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "scores": 30,
+          "search_seconds": 0.019581499975174665,
+          "status": "complete",
+          "steps": 1,
+          "subject": "ReMIND-010",
+          "target_access_success": false,
+          "target_fraction": 0.0,
+          "target_mm3": 0.0,
+          "target_source_cells": 0,
+          "terminal": "STOP",
+          "world": {
+            "S_intersect_T_voxels": 8221,
+            "S_voxels": 4015977,
+            "T_minus_S_voxels": 6988,
+            "access": {
+              "center_mm": [
+                -66.62907810879854,
+                71.0186065557066,
+                4.348500436327257
+              ],
+              "normal_inward": [
+                0.9995954109502866,
+                -0.0005557399202198454,
+                0.028437748860780897
+              ],
+              "radius_mm": 6.0,
+              "window_id": "fixed-public-target-side-axis0-v1"
+            },
+            "domain_hash": "sha256:4abd215e9bd848e47442a7dba17f7cc055d27c7051b8cdf4138b374ef0e4f270",
+            "full_target_mm3": 3342.5429604387728,
+            "full_target_voxels": 15209,
+            "max_steps": 24,
+            "native_frame_hash": "sha256:c20ab341be62bf7ccec001976e919e5e873e0e4b3cc1f980bc8bb9733e67d003",
+            "original_frame_hash": "sha256:783182506a1a78322c8c40518c6d6478be3c4582ca91d9514d39eac663e9564c",
+            "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+            "raw_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+            "raw_occupancy_target_fraction_upper_bound": 0.5405352094154777,
+            "reward": {
+              "action_cost": 0.03,
+              "graph_edge_cost": 0.0,
+              "language_per_mm3": 0.0,
+              "motion_per_mm": 0.001,
+              "motor_per_mm3": 0.0,
+              "normal_per_mm3": 0.2,
+              "target_per_mm3": 1.0,
+              "tool_change_cost": 0.03
+            },
+            "source_files": {
+              "image": "ce084ea074aafff25491d493b0654c45e444a285a16f9e4af86d73a34baf2f1c",
+              "supplied_support": "f370f83e6ee40489778bb44882523f2108f47d1c966d94eb1a124237f737cef3",
+              "supplied_whole_tumor": "e41b782c7d701887e5e09e11bbe81daa8e15ca9b04a6da22aab92a38051ba50d",
+              "whole_tumor_domain": "789fa19facc5ec7d6614656bd6753fdba13b8ac44c1b57a6b9b69912e0f870ec"
+            },
+            "target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+            "tools": [
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.4,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 1.0,
+                "tool_id": "generic_suction",
+                "working_length_mm": 100.0
+              },
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 2.7,
+                "tip_length_mm": 4.0,
+                "tip_radius_mm": 1.7,
+                "tool_id": "generic_aspirator",
+                "working_length_mm": 90.0
+              }
+            ]
+          }
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:103001838e509477fea7a0b657e51fbd010d33c5d3bd505ebe4a55d414eb9811",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 28,
+      "search_seconds": 0.019932500086724758,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 8221,
+        "S_voxels": 4015977,
+        "T_minus_S_voxels": 6988,
+        "access": {
+          "center_mm": [
+            -66.62907810879854,
+            71.0186065557066,
+            4.348500436327257
+          ],
+          "normal_inward": [
+            0.9995954109502866,
+            -0.0005557399202198454,
+            0.028437748860780897
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:4abd215e9bd848e47442a7dba17f7cc055d27c7051b8cdf4138b374ef0e4f270",
+        "full_target_mm3": 3342.5429604387728,
+        "full_target_voxels": 15209,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:c20ab341be62bf7ccec001976e919e5e873e0e4b3cc1f980bc8bb9733e67d003",
+        "original_frame_hash": "sha256:783182506a1a78322c8c40518c6d6478be3c4582ca91d9514d39eac663e9564c",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "raw_occupancy_target_fraction_upper_bound": 0.5405352094154777,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ce084ea074aafff25491d493b0654c45e444a285a16f9e4af86d73a34baf2f1c",
+          "supplied_support": "f370f83e6ee40489778bb44882523f2108f47d1c966d94eb1a124237f737cef3",
+          "supplied_whole_tumor": "e41b782c7d701887e5e09e11bbe81daa8e15ca9b04a6da22aab92a38051ba50d",
+          "whole_tumor_domain": "789fa19facc5ec7d6614656bd6753fdba13b8ac44c1b57a6b9b69912e0f870ec"
+        },
+        "target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 1.024790083989501,
+      "condition": "raw_cerebrum_baseline",
+      "historical_beam_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:4c4ecad1478b2618bcdedcf61e6fb66509cc1271d9df6a9e1bcc757b1c411426",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "historical_greedy_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:3480304b806e2b400bab00cc51a2440acb6da03d0c1e115e77bb5c9c31b1ba78",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "initial_catalog": {
+        "accepted_count": 23,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 94,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 188,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 212.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 1046082,
+        "support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+        "upper": 432.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:64f868a12534cf47ad890f64110ec93659e4fc886b3d0c4236b6ea3a751147d1",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 23,
+      "search_seconds": 0.009137290995568037,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 9448,
+        "S_voxels": 1046082,
+        "T_minus_S_voxels": 40373,
+        "access": {
+          "center_mm": [
+            -60.34199242118159,
+            114.61073380240123,
+            15.888856066076315
+          ],
+          "normal_inward": [
+            0.8596891986698184,
+            -0.5039338130073375,
+            0.08357747183500662
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:d5f2b582534ac7c56a7f6f625f3f0863f01e013b31bce256870fcd6ad8798ee4",
+        "full_target_mm3": 47513.02080879691,
+        "full_target_voxels": 49821,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:7c31b9764e6e53ce2d7ae80c8ff34875a66b5f79b3d02dbf1b2077b1db7d0f8e",
+        "original_frame_hash": "sha256:54b85fc61ca8944f22c3ed831b412e095a582f9b66b0c0822fa7d2941f05f4aa",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "raw_occupancy_target_fraction_upper_bound": 0.18963890728809138,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "c24ee394731b2a5764533c28bbc5e162d9845a8e098babe92fd2d691293479a9",
+          "supplied_support": "143882dd58dd57c34c4209226b62174a6b5e6b64c350c443d3d28534307b1e1c",
+          "supplied_whole_tumor": "66aed85f91e9e9c90473bd5216d745cac78f8335998f376a288251aecb4fc7ff",
+          "whole_tumor_domain": "f4609ee6fab9f0cdf7adc1d7730336bcb42a39dac4ff5e3d4d2df02573480c20"
+        },
+        "target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 1.2021577500272542,
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:6a12f10b2cbdd90b67e98bd92a6417eeaac2d966c8eeb04ca206b3ee0a8d0c29",
+        "added_region_positive_voxels": 40373,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:4adaca58029b55bcd06676b0e555d1af461159947e4098b6207ef0805fb4ad68",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+        "source_support_positive_voxels": 1046082,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "initial_catalog": {
+        "accepted_count": 23,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 112,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 224,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 204.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 1086455,
+        "support_hash": "sha256:4adaca58029b55bcd06676b0e555d1af461159947e4098b6207ef0805fb4ad68",
+        "upper": 703.0
+      },
+      "normalization_changed": true,
+      "outside_supplied_goal_mm3": 0.0,
+      "paired_raw_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "complete_arm_seconds": 1.024790083989501,
+          "condition": "raw_cerebrum_baseline",
+          "historical_beam_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+              "plan_seal": "sha256:4c4ecad1478b2618bcdedcf61e6fb66509cc1271d9df6a9e1bcc757b1c411426",
+              "public_return": 0.0,
+              "steps": 1,
+              "target_mm3": 0.0,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "historical_greedy_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+              "plan_seal": "sha256:3480304b806e2b400bab00cc51a2440acb6da03d0c1e115e77bb5c9c31b1ba78",
+              "public_return": 0.0,
+              "steps": 1,
+              "target_mm3": 0.0,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "initial_catalog": {
+            "accepted_count": 23,
+            "complete": true,
+            "declared_slots": 130,
+            "emitted_count": 94,
+            "omitted_count": 0
+          },
+          "max_removed_cell_depth_mm": null,
+          "native_counts": {
+            "replay": 1,
+            "rollout": 1,
+            "search": 1
+          },
+          "native_previews": 188,
+          "normalization": {
+            "clip": [
+              0.0,
+              1.0
+            ],
+            "crop_used_for_statistics": false,
+            "lower": 212.0,
+            "method": "support_percentile_1_99",
+            "percentile_method": "linear",
+            "percentiles": [
+              1.0,
+              99.0
+            ],
+            "raw_source_preserved": true,
+            "reference_labels_used": false,
+            "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+            "statistics_scope": "entire_permitted_support",
+            "statistics_voxels": 1046082,
+            "support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+            "upper": 432.0
+          },
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:64f868a12534cf47ad890f64110ec93659e4fc886b3d0c4236b6ea3a751147d1",
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "scores": 23,
+          "search_seconds": 0.009137290995568037,
+          "status": "complete",
+          "steps": 1,
+          "subject": "ReMIND-020",
+          "target_access_success": false,
+          "target_fraction": 0.0,
+          "target_mm3": 0.0,
+          "target_source_cells": 0,
+          "terminal": "STOP",
+          "world": {
+            "S_intersect_T_voxels": 9448,
+            "S_voxels": 1046082,
+            "T_minus_S_voxels": 40373,
+            "access": {
+              "center_mm": [
+                -60.34199242118159,
+                114.61073380240123,
+                15.888856066076315
+              ],
+              "normal_inward": [
+                0.8596891986698184,
+                -0.5039338130073375,
+                0.08357747183500662
+              ],
+              "radius_mm": 6.0,
+              "window_id": "fixed-public-target-side-axis0-v1"
+            },
+            "domain_hash": "sha256:d5f2b582534ac7c56a7f6f625f3f0863f01e013b31bce256870fcd6ad8798ee4",
+            "full_target_mm3": 47513.02080879691,
+            "full_target_voxels": 49821,
+            "max_steps": 24,
+            "native_frame_hash": "sha256:7c31b9764e6e53ce2d7ae80c8ff34875a66b5f79b3d02dbf1b2077b1db7d0f8e",
+            "original_frame_hash": "sha256:54b85fc61ca8944f22c3ed831b412e095a582f9b66b0c0822fa7d2941f05f4aa",
+            "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+            "raw_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+            "raw_occupancy_target_fraction_upper_bound": 0.18963890728809138,
+            "reward": {
+              "action_cost": 0.03,
+              "graph_edge_cost": 0.0,
+              "language_per_mm3": 0.0,
+              "motion_per_mm": 0.001,
+              "motor_per_mm3": 0.0,
+              "normal_per_mm3": 0.2,
+              "target_per_mm3": 1.0,
+              "tool_change_cost": 0.03
+            },
+            "source_files": {
+              "image": "c24ee394731b2a5764533c28bbc5e162d9845a8e098babe92fd2d691293479a9",
+              "supplied_support": "143882dd58dd57c34c4209226b62174a6b5e6b64c350c443d3d28534307b1e1c",
+              "supplied_whole_tumor": "66aed85f91e9e9c90473bd5216d745cac78f8335998f376a288251aecb4fc7ff",
+              "whole_tumor_domain": "f4609ee6fab9f0cdf7adc1d7730336bcb42a39dac4ff5e3d4d2df02573480c20"
+            },
+            "target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+            "tools": [
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.4,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 1.0,
+                "tool_id": "generic_suction",
+                "working_length_mm": 100.0
+              },
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 2.7,
+                "tip_length_mm": 4.0,
+                "tip_radius_mm": 1.7,
+                "tool_id": "generic_aspirator",
+                "working_length_mm": 90.0
+              }
+            ]
+          }
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:99ca1ae7dc965dcaddc2b4cebc23d865c2367a2dace4aab6e5c48abee3706e64",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 23,
+      "search_seconds": 0.009540209081023932,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 9448,
+        "S_voxels": 1046082,
+        "T_minus_S_voxels": 40373,
+        "access": {
+          "center_mm": [
+            -60.34199242118159,
+            114.61073380240123,
+            15.888856066076315
+          ],
+          "normal_inward": [
+            0.8596891986698184,
+            -0.5039338130073375,
+            0.08357747183500662
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:d5f2b582534ac7c56a7f6f625f3f0863f01e013b31bce256870fcd6ad8798ee4",
+        "full_target_mm3": 47513.02080879691,
+        "full_target_voxels": 49821,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:7c31b9764e6e53ce2d7ae80c8ff34875a66b5f79b3d02dbf1b2077b1db7d0f8e",
+        "original_frame_hash": "sha256:54b85fc61ca8944f22c3ed831b412e095a582f9b66b0c0822fa7d2941f05f4aa",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "raw_occupancy_target_fraction_upper_bound": 0.18963890728809138,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "c24ee394731b2a5764533c28bbc5e162d9845a8e098babe92fd2d691293479a9",
+          "supplied_support": "143882dd58dd57c34c4209226b62174a6b5e6b64c350c443d3d28534307b1e1c",
+          "supplied_whole_tumor": "66aed85f91e9e9c90473bd5216d745cac78f8335998f376a288251aecb4fc7ff",
+          "whole_tumor_domain": "f4609ee6fab9f0cdf7adc1d7730336bcb42a39dac4ff5e3d4d2df02573480c20"
+        },
+        "target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "nominal-cavity-968f3758c3de3eab8c99ca99",
+        "STOP"
+      ],
+      "complete_arm_seconds": 2.8580839168280363,
+      "condition": "raw_cerebrum_baseline",
+      "historical_beam_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "nominal-cavity-968f3758c3de3eab8c99ca99",
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+          "plan_seal": "sha256:b583bdb7c0f5ff14785297575bd6945570515788f432c83ce68ee2b5f2c92769",
+          "public_return": 0.9168388572207332,
+          "steps": 2,
+          "target_mm3": 0.953674795218559,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "historical_greedy_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "nominal-cavity-968f3758c3de3eab8c99ca99",
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+          "plan_seal": "sha256:d20fc8a3f843ad6290b18a69725b81f2d7a407d7855473f91a0567830849fc6e",
+          "public_return": 0.9168388572207332,
+          "steps": 2,
+          "target_mm3": 0.953674795218559,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "initial_catalog": {
+        "accepted_count": 16,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 103,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": 3.417968998912881,
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2,
+        "search": 2
+      },
+      "native_previews": 515,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 208.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 907842,
+        "support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+        "upper": 505.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+      "plan_seal": "sha256:d70cb29574f3b51545ef67f2dad533110c301ba2a1318db9f6a6d52a995291c0",
+      "public_return": 0.9168388572207332,
+      "removed_cells": 1,
+      "scores": 31,
+      "search_seconds": 0.4287397500593215,
+      "status": "complete",
+      "steps": 2,
+      "subject": "ReMIND-025",
+      "target_access_success": true,
+      "target_fraction": 1.2230620581688315e-05,
+      "target_mm3": 0.953674795218559,
+      "target_source_cells": 1,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 47404,
+        "S_voxels": 907842,
+        "T_minus_S_voxels": 34358,
+        "access": {
+          "center_mm": [
+            59.77458393130671,
+            55.24025259249733,
+            4.662257948051604
+          ],
+          "normal_inward": [
+            -0.9999369386924596,
+            -0.0016362328938979611,
+            -0.011110417646035976
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+        "full_target_mm3": 77974.35860665982,
+        "full_target_voxels": 81762,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+        "original_frame_hash": "sha256:50d845f92efc91b135f422497f6beb2ff3dcffea72bf33a23c149b17695f80d6",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "raw_occupancy_target_fraction_upper_bound": 0.5797803380543529,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f",
+          "supplied_support": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9",
+          "supplied_whole_tumor": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861",
+          "whole_tumor_domain": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+        },
+        "target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_arm_seconds": 1.4575049169361591,
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:fe18ba50afb2c603ca103c727a3512a60071eadff11f9d2ddf30b6fba29706fe",
+        "added_region_positive_voxels": 34358,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+        "source_support_positive_voxels": 907842,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "initial_catalog": {
+        "accepted_count": 15,
+        "complete": true,
+        "declared_slots": 130,
+        "emitted_count": 104,
+        "omitted_count": 0
+      },
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 208,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 193.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 942200,
+        "support_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+        "upper": 535.0
+      },
+      "normalization_changed": true,
+      "outside_supplied_goal_mm3": 0.0,
+      "paired_raw_comparison": {
+        "first_different_action_step_0based": 0,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "nominal-cavity-968f3758c3de3eab8c99ca99",
+            "STOP"
+          ],
+          "complete_arm_seconds": 2.8580839168280363,
+          "condition": "raw_cerebrum_baseline",
+          "historical_beam_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "nominal-cavity-968f3758c3de3eab8c99ca99",
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+              "plan_seal": "sha256:b583bdb7c0f5ff14785297575bd6945570515788f432c83ce68ee2b5f2c92769",
+              "public_return": 0.9168388572207332,
+              "steps": 2,
+              "target_mm3": 0.953674795218559,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "historical_greedy_comparison": {
+            "first_different_action_step_0based": null,
+            "outside_mm3_difference": 0.0,
+            "reference": {
+              "actions": [
+                "nominal-cavity-968f3758c3de3eab8c99ca99",
+                "STOP"
+              ],
+              "outside_supplied_goal_mm3": 0.0,
+              "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+              "plan_seal": "sha256:d20fc8a3f843ad6290b18a69725b81f2d7a407d7855473f91a0567830849fc6e",
+              "public_return": 0.9168388572207332,
+              "steps": 2,
+              "target_mm3": 0.953674795218559,
+              "terminal": "STOP"
+            },
+            "return_difference": 0.0,
+            "same_actions": true,
+            "same_physical_history": true,
+            "target_mm3_difference": 0.0
+          },
+          "initial_catalog": {
+            "accepted_count": 16,
+            "complete": true,
+            "declared_slots": 130,
+            "emitted_count": 103,
+            "omitted_count": 0
+          },
+          "max_removed_cell_depth_mm": 3.417968998912881,
+          "native_counts": {
+            "replay": 2,
+            "rollout": 2,
+            "search": 2
+          },
+          "native_previews": 515,
+          "normalization": {
+            "clip": [
+              0.0,
+              1.0
+            ],
+            "crop_used_for_statistics": false,
+            "lower": 208.0,
+            "method": "support_percentile_1_99",
+            "percentile_method": "linear",
+            "percentiles": [
+              1.0,
+              99.0
+            ],
+            "raw_source_preserved": true,
+            "reference_labels_used": false,
+            "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+            "statistics_scope": "entire_permitted_support",
+            "statistics_voxels": 907842,
+            "support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+            "upper": 505.0
+          },
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+          "plan_seal": "sha256:d70cb29574f3b51545ef67f2dad533110c301ba2a1318db9f6a6d52a995291c0",
+          "public_return": 0.9168388572207332,
+          "removed_cells": 1,
+          "scores": 31,
+          "search_seconds": 0.4287397500593215,
+          "status": "complete",
+          "steps": 2,
+          "subject": "ReMIND-025",
+          "target_access_success": true,
+          "target_fraction": 1.2230620581688315e-05,
+          "target_mm3": 0.953674795218559,
+          "target_source_cells": 1,
+          "terminal": "STOP",
+          "world": {
+            "S_intersect_T_voxels": 47404,
+            "S_voxels": 907842,
+            "T_minus_S_voxels": 34358,
+            "access": {
+              "center_mm": [
+                59.77458393130671,
+                55.24025259249733,
+                4.662257948051604
+              ],
+              "normal_inward": [
+                -0.9999369386924596,
+                -0.0016362328938979611,
+                -0.011110417646035976
+              ],
+              "radius_mm": 6.0,
+              "window_id": "fixed-public-target-side-axis0-v1"
+            },
+            "domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+            "full_target_mm3": 77974.35860665982,
+            "full_target_voxels": 81762,
+            "max_steps": 24,
+            "native_frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+            "original_frame_hash": "sha256:50d845f92efc91b135f422497f6beb2ff3dcffea72bf33a23c149b17695f80d6",
+            "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+            "raw_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+            "raw_occupancy_target_fraction_upper_bound": 0.5797803380543529,
+            "reward": {
+              "action_cost": 0.03,
+              "graph_edge_cost": 0.0,
+              "language_per_mm3": 0.0,
+              "motion_per_mm": 0.001,
+              "motor_per_mm3": 0.0,
+              "normal_per_mm3": 0.2,
+              "target_per_mm3": 1.0,
+              "tool_change_cost": 0.03
+            },
+            "source_files": {
+              "image": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f",
+              "supplied_support": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9",
+              "supplied_whole_tumor": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861",
+              "whole_tumor_domain": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+            },
+            "target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+            "tools": [
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.4,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 1.0,
+                "tool_id": "generic_suction",
+                "working_length_mm": 100.0
+              },
+              {
+                "max_access_angle_deg": 45.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 2.7,
+                "tip_length_mm": 4.0,
+                "tip_radius_mm": 1.7,
+                "tool_id": "generic_aspirator",
+                "working_length_mm": 90.0
+              }
+            ]
+          }
+        },
+        "return_difference": -0.9168388572207332,
+        "same_actions": false,
+        "same_physical_history": false,
+        "target_mm3_difference": -0.953674795218559
+      },
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:ee17d5578159083aded633e5b1dfa6e08476d9d2c8f028efb3ffec34c2b9ac0d",
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "scores": 15,
+      "search_seconds": 0.00896633299998939,
+      "status": "complete",
+      "steps": 1,
+      "subject": "ReMIND-025",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "world": {
+        "S_intersect_T_voxels": 47404,
+        "S_voxels": 907842,
+        "T_minus_S_voxels": 34358,
+        "access": {
+          "center_mm": [
+            59.77458393130671,
+            55.24025259249733,
+            4.662257948051604
+          ],
+          "normal_inward": [
+            -0.9999369386924596,
+            -0.0016362328938979611,
+            -0.011110417646035976
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+        "full_target_mm3": 77974.35860665982,
+        "full_target_voxels": 81762,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+        "original_frame_hash": "sha256:50d845f92efc91b135f422497f6beb2ff3dcffea72bf33a23c149b17695f80d6",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "raw_occupancy_target_fraction_upper_bound": 0.5797803380543529,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f",
+          "supplied_support": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9",
+          "supplied_whole_tumor": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861",
+          "whole_tumor_domain": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+        },
+        "target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      }
+    }
+  ],
+  "attempt_complete": true,
+  "audit_peak_rss_bytes": 28557312,
+  "audit_seconds": 0.029162042075768113,
+  "checks": 2151,
+  "costs": {
+    "complete_wall_seconds": 23.240567584056407,
+    "count_scope": "attempted existing native transitions including failed calls; search,rollout,replay separate",
+    "native_budget": {
+      "blocked_preview_attempts": 0,
+      "cache_hits": null,
+      "counting_reliable": true,
+      "elapsed_seconds": 23.24055941682309,
+      "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+      "failure": null,
+      "history_complete_caller_attestation": true,
+      "independent_audit": "outside_this_guard_not_verified",
+      "limits": {
+        "native_preview_entries": 100000,
+        "planning_execution_seconds": 600.0
+      },
+      "native_preview_entries": 2035,
+      "native_preview_profile": {
+        "phases": {
+          "unclassified": {
+            "feasible": 495,
+            "raised": 0,
+            "rejected": 1540,
+            "rejection_reasons": {
+              "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1540
+            },
+            "returned": 2035,
+            "returned_microsteps": 10883,
+            "seconds": 9.732191850664094,
+            "started": 2035
+          }
+        },
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "observed_admissions_before_accounting_failure": 2035,
+      "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+      "requests": {},
+      "score": null,
+      "status": "complete_history_awaiting_independent_audit",
+      "time_overshoot_seconds": 0.0,
+      "version": "native-planning-budget-v1",
+      "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+    },
+    "native_counts": {
+      "replay": 9,
+      "rollout": 9,
+      "search": 9
+    },
+    "prohibited_calls": {
+      "checkpoint_loads": 0,
+      "optimizer_updates": 0,
+      "policy_forwards": 0
+    },
+    "source_visits_attempted": 8
+  },
+  "input_count": 162,
+  "limitations": [
+    "Saved scalar/history/seal audit; no arrays, checkpoints, geometry or model rerun.",
+    "Only public T is scored. S union T is an explicit unvalidated simulation occupancy, not anatomical correction.",
+    "Greedy scores the currently emitted legal catalog; STOP does not prove absence of a negative-preparation route.",
+    "Catalog omission is available only for initial inventories; no assumption about later unreported omissions.",
+    "Complete-arm and parent costs include source preparation and replay; search selection time alone is not comparable with full learning/search runs.",
+    "Eight paired TRAIN arms do not establish transfer, patient benefit, clinical safety or validated material semantics."
+  ],
+  "metadata_files": 13,
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 25.625766084063798,
+    "final_owned_pids": [],
+    "output_bytes": 2498570,
+    "sampled_peak_rss_bytes": 1772158976,
+    "status": "complete"
+  },
+  "release_sha256": "d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a",
+  "result_sha256": "e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b",
+  "result_status": "complete_paired_TRAIN_search",
+  "source_files": 80,
+  "status": "PASS_saved_metadata_audit"
+}

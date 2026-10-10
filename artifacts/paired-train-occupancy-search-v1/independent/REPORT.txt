@@ -1,0 +1,84 @@
+PASS — saved-only independent audit of the fixed eight-arm TRAIN occupancy attempt.
+
+The explicit S union T condition did not produce a useful positive greedy route
+in these four TRAIN cases. All four union arms chose STOP with zero removal and
+reward. Raw 025 retained its one-cell positive route; the other three raw arms
+also chose STOP. All four raw complete physical histories, actions and scalar
+outcomes match both the prior balanced64 SEARCH teachers and the saved five-state
+diagnostic's cheap greedy routes. This is a negative result of the declared
+occupancy sensitivity test, not evidence that S or S union T is true anatomy.
+
+                 Raw target / outside / reward          Union target / outside / reward
+ReMIND-008        0 / 0 / 0                              0 / 0 / 0
+ReMIND-010        0 / 0 / 0                              0 / 0 / 0
+ReMIND-020        0 / 0 / 0                              0 / 0 / 0
+ReMIND-025        0.953674795218559 / 0 / +0.9168388572207332  0 / 0 / 0
+Volumes are mm3. Raw 025 removed one positive target cell, then stopped; maximum
+removed-cell-center depth was 3.417968998912881 mm. This is partial target access,
+not full resection or clinical utility.
+
+The 025 loss is a physical-counterpart finding, not an action-ID mismatch. Both
+initial ledgers contain the identical generic_suction exposed_opening primitive:
+column 12, offset [0,3], source voxel [119,45,71], and byte-equivalent entry/tip
+coordinate lists. Raw admits it as NATIVE_CONNECTED_STROKE. Union emits it but
+records SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE. The saved metadata therefore
+supports changed clearance under the added occupancy. This audit neither opened
+source arrays nor located/recomputed individual blocking cells.
+
+Catalog limitation: union 010 emits 120 candidates and omits two as CANDIDATE_CAP;
+its initial complete flag is false. Those omitted candidates are untested, not
+infeasible. The other seven initial inventories have no cap omissions. No later
+inventory-completeness claim is inferred from the saved search score tables.
+All currently emitted legal candidates are scored at each decision, and every
+selected action is the exact maximum under the saved STOP-first stable tie rule.
+There are 240 non-STOP scores: 129 raw and 111 union. Raw 025 has the sole positive
+score; all other scored movements are strictly negative. Greedy does not explore
+negative preparatory moves, so these STOP endpoints do not establish global
+unreachability or trajectory optimality.
+
+The pair joins preserve exact raw image/source-file bindings, full target and
+annotation domain, original/native frames, raw-derived access, tools, reward,
+proposal rule, horizon 24 and cap 120. Derived occupancy is explicitly S OR T;
+target values and the full target denominator are unchanged. Added cells count
+6394 / 6988 / 40373 / 34358 for 008 / 010 / 020 / 025 respectively. The derived
+occupancy has distinct source identities and no anatomical/material-validation
+claim. Normalization records change in all four pairs; numerical percentile
+endpoints change in 008, 020 and 025, while 010's 147/3135 endpoints stay equal.
+No policy comparison was performed, and the geometric greedy reward/legality
+path does not use those image intensities.
+
+All eight arms are complete and source objects released. Each has a sealed own-
+world plan, exact fresh native replay history, and accepted saved independent
+full-tool geometry with complete history seals. The audit independently checks
+scalar reward equations, removal sums, unique newly removed indices, target
+fractions, complete STOP/horizon termination, greedy score selection and all
+result/parent/worker/control joins. Geometry was not re-executed by this audit.
+Model forwards, updates, checkpoint loads and private-reference reads are zero;
+SELECT/EVAL were not opened. The public supplied T alone occupies the scoring
+reference slot. No functional, vascular or clinical probability is asserted.
+
+Owned cost: 25.625766084063798 s; peak sampled RSS 1,772,158,976 B; final output
+2,498,570 B; no cleanup errors or remaining owned PIDs. Work: 2,035 / 100,000
+previews; 9 search + 9 rollout + 9 replay = 27 / 576 transitions; 8 source visits.
+Caps remain 600 s worker / 660 s parent, 3 GiB sampled RSS and 64 MiB output.
+The sum of selection-only search times is about 0.58315 s and excludes source
+preparation, authoritative rollout and independent replay. It is not a full-run
+speedup comparison with learning or beam-search experiments.
+
+Independent scope: first audit passed 2,151 checks in 0.029162 s, observed RSS
+28,557,312 B; all 80 source and 13 metadata pins and 162 read inputs rechecked.
+The additional saved counterpart join passed 176 checks in 0.005962 s. Both are
+stdlib-only bounded JSON/source reads; no arrays, checkpoint payloads, scientific
+imports, models, native calls or patient reconstruction. No failures or retries
+were hidden. No separate promotion package is needed; root may copy this folder.
+
+Exact bindings (SHA-256):
+Root result: e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b
+Root release: d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a
+Source index: 6053fa4a32a73c07d5ad133b34e662105a9acf832b6c9b5270d6f6d5fa6f938c
+Parent receipt: 57e353139d4e283cd0fb302fe2fd8c954ff31ab8626cfc529045b332ffb22456
+audit_saved.py: cc5e2f4e34c82aeea07d05968c176da87275e2c33276a4b14c0e1aed23d6a827
+audit-result.json: a146b86e4597919971862a5f14426d9a24ecb8093ccce45b902fdef3cd418be1
+input-hashes.json: 1b18b6b46694ce5d36aa2468891196dda1ce4e8a588495d762499c72a1234a15
+check_saved_counterpart.py: ea70dbb7294dc8df7fc1e6335c26276044e0acd04099f3ee0c31e13ecb017ff8
+counterpart-check.json: e9bdbfb6892d7b945bfe69dbbf7f4fec4b05db6474e1653a43edc78ca37116d2

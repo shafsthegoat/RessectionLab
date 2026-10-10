@@ -1,0 +1,3754 @@
+{
+  "SELECT_EVAL_opened": false,
+  "arms": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 4.930661957943812,
+      "common_public_world": {
+        "S_intersect_T_voxels": 12115,
+        "S_voxels": 6799033,
+        "T_minus_S_voxels": 6394,
+        "access": {
+          "center_mm": [
+            57.81281617159064,
+            -28.73810767915333,
+            39.01393683913569
+          ],
+          "normal_inward": [
+            -0.9999990906797902,
+            0.0011870757218137345,
+            -0.0006399147001963637
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+        "full_target_mm3": 2386.3732360519107,
+        "full_target_voxels": 18509,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+        "original_frame_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "raw_occupancy_target_fraction_upper_bound": 0.6545464368685504,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123",
+          "supplied_support": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+          "supplied_whole_tumor": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+          "whole_tumor_domain": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+        },
+        "target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "raw_cerebrum_baseline",
+      "context_hash": "sha256:6bbe99e87d7b0e9b9cf8ab3f595a494628072a0ea771d50ee5f5ecd35fcef209",
+      "decision_model_hash": "sha256:8d45419eb5ebff809b39aa6639d1f5ee24b8692f272c742b6798d7b7d401628f",
+      "derived_occupancy": {},
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:fe16629c70208cb5de7431a96d72b1b7a4c6401ed77fbc6b1c093a7e29c27ce0",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 216,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 1014.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 6799033,
+        "support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+        "upper": 2665.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2386.3732360519107,
+        "total_reward": 0.0
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:c3b8efb1f03f2d3c48f8027259155bfbd7e3e598e437507db90fb423b540367a",
+      "raw_baseline_identity_verified": true,
+      "raw_positive_admission_envelope_retained": true,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 45,
+            "scored_nonstop_actions": 45,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-28493d9bce7b3d4410dab0ad",
+                "complete_tool_path_length_mm": 0.5078001305007858,
+                "insertion_distance_mm": 0.2539000652503929,
+                "normal_removed_mm3": 0.7735825499114736,
+                "reward": -0.1852243101127955,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-0ca4713b8b08370a355dbd98",
+                "complete_tool_path_length_mm": 0.5078001305007858,
+                "insertion_distance_mm": 0.2539000652503929,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1135233700065639,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b9f37497643f962546081d03",
+                "complete_tool_path_length_mm": 0.5078001305589934,
+                "insertion_distance_mm": 0.2539000652794967,
+                "normal_removed_mm3": 0.7735825499114736,
+                "reward": -0.1852243101128537,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-32a56b4fb206995ef01b20ab",
+                "complete_tool_path_length_mm": 0.5078001305589934,
+                "insertion_distance_mm": 0.2539000652794967,
+                "normal_removed_mm3": 5.672938699350806,
+                "reward": -1.1650955400007201,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e7ec1ed1f61292c2395ff992",
+                "complete_tool_path_length_mm": 1.5234001460017603,
+                "insertion_distance_mm": 0.7617000730008802,
+                "normal_removed_mm3": 1.0314433998819648,
+                "reward": -0.23781208012239474,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-48c7729fa85073e7045f927d",
+                "complete_tool_path_length_mm": 1.5234001460017603,
+                "insertion_distance_mm": 0.7617000730008802,
+                "normal_removed_mm3": 6.9622429492032625,
+                "reward": -1.4239719899866545,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b868494bbf47b3be663a0c40",
+                "complete_tool_path_length_mm": 0.5078001284882854,
+                "insertion_distance_mm": 0.2539000642441427,
+                "normal_removed_mm3": 0.5157216999409824,
+                "reward": -0.13365214011668475,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fcb17063a03de489ca728d16",
+                "complete_tool_path_length_mm": 0.5078001284882854,
+                "insertion_distance_mm": 0.2539000642441427,
+                "normal_removed_mm3": 4.38363444949835,
+                "reward": -0.9072346900281584,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-03cdb665f162499388be93a7",
+                "complete_tool_path_length_mm": 0.5078001285465072,
+                "insertion_distance_mm": 0.2539000642732536,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.15943822511379213,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-6b1e226000e5bf7e80926182",
+                "complete_tool_path_length_mm": 0.5078001285465072,
+                "insertion_distance_mm": 0.2539000642732536,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1135233700046097,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-68acba3c4e24adc5deeaf034",
+                "complete_tool_path_length_mm": 1.5234001480142179,
+                "insertion_distance_mm": 0.7617000740071089,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.16045382513325984,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5712958a1709c4fd4ee6e3e7",
+                "complete_tool_path_length_mm": 1.5234001480142179,
+                "insertion_distance_mm": 0.7617000740071089,
+                "normal_removed_mm3": 4.38363444949835,
+                "reward": -0.9082502900476843,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-cb4caef23642bdeb74703a37",
+                "complete_tool_path_length_mm": 1.5234001439892741,
+                "insertion_distance_mm": 0.7617000719946371,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.1604538251292349,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-2e89ba0398e9c028f03a4437",
+                "complete_tool_path_length_mm": 1.5234001439892741,
+                "insertion_distance_mm": 0.7617000719946371,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1145389700200523,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ee0b2dcb66332faa425d5ae1",
+                "complete_tool_path_length_mm": 0.5078001305881116,
+                "insertion_distance_mm": 0.2539000652940558,
+                "normal_removed_mm3": 0.7735825499114736,
+                "reward": -0.18522431011288282,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-6bf125397619a1fdd9ab8a25",
+                "complete_tool_path_length_mm": 0.5078001305881116,
+                "insertion_distance_mm": 0.2539000652940558,
+                "normal_removed_mm3": 5.801869124336052,
+                "reward": -1.1908816249977985,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-3527f8bdb96d0c221bedb028",
+                "complete_tool_path_length_mm": 1.5234001459726423,
+                "insertion_distance_mm": 0.7617000729863211,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.16045382513121825,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1983c4a87b0d7d4a8b2dd5aa",
+                "complete_tool_path_length_mm": 1.5234001459726423,
+                "insertion_distance_mm": 0.7617000729863211,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1145389700220358,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8170809e3a379ebaacbeab41",
+                "complete_tool_path_length_mm": 1.5234001430412814,
+                "insertion_distance_mm": 0.7617000715206407,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.1604538251282869,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-509f3324ec3127a712feffea",
+                "complete_tool_path_length_mm": 1.5234001430412814,
+                "insertion_distance_mm": 0.7617000715206407,
+                "normal_removed_mm3": 5.028286574424579,
+                "reward": -1.037180715027957,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-9fbb33b742307109b8af9f2e",
+                "complete_tool_path_length_mm": 2.5390001616192213,
+                "insertion_distance_mm": 1.2695000808096106,
+                "normal_removed_mm3": 2.0628867997639295,
+                "reward": -0.44511636011440514,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-544da0419891279c032c205a",
+                "complete_tool_path_length_mm": 2.5390001616192213,
+                "insertion_distance_mm": 1.2695000808096106,
+                "normal_removed_mm3": 10.443364423804892,
+                "reward": -2.1212118849225976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4b8f52fb827c7ad14001bc70",
+                "complete_tool_path_length_mm": 2.539000161677429,
+                "insertion_distance_mm": 1.2695000808387145,
+                "normal_removed_mm3": 2.0628867997639295,
+                "reward": -0.4451163601144633,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-69930a8b2aed970d93eb3120",
+                "complete_tool_path_length_mm": 2.539000159606735,
+                "insertion_distance_mm": 1.2695000798033675,
+                "normal_removed_mm3": 1.8050259497934382,
+                "reward": -0.39354419011829445,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-90583030ac54cd11fbb05d14",
+                "complete_tool_path_length_mm": 2.539000159606735,
+                "insertion_distance_mm": 1.2695000798033675,
+                "normal_removed_mm3": 9.411921023922929,
+                "reward": -1.9149232049441927,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-3752f95ad522eab4b4117bb6",
+                "complete_tool_path_length_mm": 2.5390001596649427,
+                "insertion_distance_mm": 1.2695000798324714,
+                "normal_removed_mm3": 1.9339563747786839,
+                "reward": -0.4193302751154017,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-eab26ff809477bbc018509e5",
+                "complete_tool_path_length_mm": 2.5390001596649427,
+                "insertion_distance_mm": 1.2695000798324714,
+                "normal_removed_mm3": 10.701225273775384,
+                "reward": -2.1727840549147412,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-cd2d4b730a6015f97c3cf86c",
+                "complete_tool_path_length_mm": 3.5546001751077094,
+                "insertion_distance_mm": 1.7773000875538547,
+                "normal_removed_mm3": 1.9339563747786839,
+                "reward": -0.4203458751308445,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d4902602b1481b9d3a9f0c6a",
+                "complete_tool_path_length_mm": 2.539000161706547,
+                "insertion_distance_mm": 1.2695000808532735,
+                "normal_removed_mm3": 2.0628867997639295,
+                "reward": -0.44511636011449246,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c343ac97eb4ea1e71c47a704",
+                "complete_tool_path_length_mm": 0.5078001304425497,
+                "insertion_distance_mm": 0.25390006522127484,
+                "normal_removed_mm3": 0.3867912749557368,
+                "reward": -0.10786605512158991,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c4477bdda222eb4a7b4382ba",
+                "complete_tool_path_length_mm": 0.5078001304425497,
+                "insertion_distance_mm": 0.25390006522127484,
+                "normal_removed_mm3": 4.254704024513105,
+                "reward": -0.8814486050330637,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-6e086e5caf327862acea3d43",
+                "complete_tool_path_length_mm": 0.5078001325132436,
+                "insertion_distance_mm": 0.2539000662566218,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512956237,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b026c54a6f45efc68bce6bf3",
+                "complete_tool_path_length_mm": 0.5078001325132436,
+                "insertion_distance_mm": 0.2539000662566218,
+                "normal_removed_mm3": 2.836469349675403,
+                "reward": -0.5978016700675939,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f873d38de13f3def390e9264",
+                "complete_tool_path_length_mm": 0.5078001325714513,
+                "insertion_distance_mm": 0.25390006628572565,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512962057,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-288c36885267d321e737357d",
+                "complete_tool_path_length_mm": 0.5078001325714513,
+                "insertion_distance_mm": 0.25390006628572565,
+                "normal_removed_mm3": 2.7075389246901573,
+                "reward": -0.572015585070603,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e1162664983b2b9b03a9589f",
+                "complete_tool_path_length_mm": 0.5078001324550074,
+                "insertion_distance_mm": 0.2539000662275037,
+                "normal_removed_mm3": 0.2578608499704912,
+                "reward": -0.08207997012655326,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a6ffde2848d0ffb78ccabeb2",
+                "complete_tool_path_length_mm": 0.5078001324550074,
+                "insertion_distance_mm": 0.2539000662275037,
+                "normal_removed_mm3": 2.7075389246901573,
+                "reward": -0.5720155850704866,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-3cfcc0a53dec341bd6897b76",
+                "complete_tool_path_length_mm": 0.5078001284300492,
+                "insertion_distance_mm": 0.2539000642150246,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512547917,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f6a62d43f7f60240b71edf80",
+                "complete_tool_path_length_mm": 0.5078001284300492,
+                "insertion_distance_mm": 0.2539000642150246,
+                "normal_removed_mm3": 3.0943301996458943,
+                "reward": -0.649373840057609,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5cbdf656c348f389787b81fb",
+                "complete_tool_path_length_mm": 0.5078001304134173,
+                "insertion_distance_mm": 0.25390006520670866,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512746254,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a6a3a56789e43b5d2f78e347",
+                "complete_tool_path_length_mm": 0.5078001304134173,
+                "insertion_distance_mm": 0.25390006520670866,
+                "normal_removed_mm3": 3.22326062463114,
+                "reward": -0.6751599250566415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-791b0296bad254a5e9b20f62",
+                "complete_tool_path_length_mm": 2.539000164637908,
+                "insertion_distance_mm": 1.269500082318954,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05832508516168703,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b1d4a08332c6d70223f6e2b0",
+                "complete_tool_path_length_mm": 0.5078001335194725,
+                "insertion_distance_mm": 0.25390006675973625,
+                "normal_removed_mm3": 2.191817224749175,
+                "reward": -0.46887124508335454,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-538c387a3b1cec40483f47bb",
+                "complete_tool_path_length_mm": 0.5078001274820564,
+                "insertion_distance_mm": 0.2539000637410282,
+                "normal_removed_mm3": 0.2578608499704912,
+                "reward": -0.0820799701215803,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-cc91c2ab15c311b9f4842ffa",
+                "complete_tool_path_length_mm": 0.5078001274820564,
+                "insertion_distance_mm": 0.2539000637410282,
+                "normal_removed_mm3": 2.836469349675403,
+                "reward": -0.5978016700625627,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:405c0ad591ec458ed6ee3d4da5770c806b323642722bbdbc189739832da9bb23",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 45,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.05501837516203523,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:c139f41ffb4cefe3efe946683d782ddd20662a94c57ea9772bed00061e682593",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-008",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 2386.3732360519107,
+        "full_region_positive_voxels": 18509,
+        "occupancy_modified": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 1561.9920986962502,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 824.3811373556604,
+        "unsupported_region_positive_voxels": 6394,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 4.911555791972205,
+      "common_public_world": {
+        "S_intersect_T_voxels": 12115,
+        "S_voxels": 6799033,
+        "T_minus_S_voxels": 6394,
+        "access": {
+          "center_mm": [
+            57.81281617159064,
+            -28.73810767915333,
+            39.01393683913569
+          ],
+          "normal_inward": [
+            -0.9999990906797902,
+            0.0011870757218137345,
+            -0.0006399147001963637
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+        "full_target_mm3": 2386.3732360519107,
+        "full_target_voxels": 18509,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+        "original_frame_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "raw_occupancy_target_fraction_upper_bound": 0.6545464368685504,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123",
+          "supplied_support": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+          "supplied_whole_tumor": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+          "whole_tumor_domain": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+        },
+        "target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "context_hash": "sha256:1aba685ba56b9cb7051ac0cdb962faa390457af4df32c5b8b11b3fbe1a5855fe",
+      "decision_model_hash": "sha256:6f3af1adfdc88149e70ab9fa79f321dbd5541ab76885f17842d97a89f8c297ba",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:0e3c08d56afc5cfaeb26ad04f62fe1994344ca29db3b54db4216311def2f9e14",
+        "added_region_positive_voxels": 6394,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+        "source_support_positive_voxels": 6799033,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:a858fbc914f92ace192c0f044cf0c79d183cf54b673282bffda82e34e37171ec",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 232,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 1014.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 6805427,
+        "support_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+        "upper": 2688.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2386.3732360519107,
+        "total_reward": 0.0
+      },
+      "pairing": {
+        "baseline_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 1014.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 6799033,
+          "support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+          "upper": 2665.0
+        },
+        "common_inputs_equal": true,
+        "derived_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 1014.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 6805427,
+          "support_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+          "upper": 2688.0
+        },
+        "normalization_equal": false,
+        "policy_comparison_permitted": false,
+        "source_QC_validates_added_material": false
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:2e1d922cd83fab89a5cafda6fb349a607fe5ba7d49945cbba4a70cf1bf62a191",
+      "raw_baseline_identity_verified": false,
+      "raw_positive_admission_envelope_retained": false,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 45,
+            "scored_nonstop_actions": 45,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a7d83a08820b0aaef6bb7650",
+                "complete_tool_path_length_mm": 0.5078001305007858,
+                "insertion_distance_mm": 0.2539000652503929,
+                "normal_removed_mm3": 0.7735825499114736,
+                "reward": -0.1852243101127955,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-48272f09eee28d6dd94e878e",
+                "complete_tool_path_length_mm": 0.5078001305007858,
+                "insertion_distance_mm": 0.2539000652503929,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1135233700065639,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-88285b1b2015ac48c20ab46f",
+                "complete_tool_path_length_mm": 0.5078001305589934,
+                "insertion_distance_mm": 0.2539000652794967,
+                "normal_removed_mm3": 0.7735825499114736,
+                "reward": -0.1852243101128537,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-622cf91cec1e52decfa2102e",
+                "complete_tool_path_length_mm": 0.5078001305589934,
+                "insertion_distance_mm": 0.2539000652794967,
+                "normal_removed_mm3": 5.672938699350806,
+                "reward": -1.1650955400007201,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-3a8e56c8ebb3962cd1e499a7",
+                "complete_tool_path_length_mm": 1.5234001460017603,
+                "insertion_distance_mm": 0.7617000730008802,
+                "normal_removed_mm3": 1.0314433998819648,
+                "reward": -0.23781208012239474,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7c9a3e60da4b35d5c4ace11f",
+                "complete_tool_path_length_mm": 1.5234001460017603,
+                "insertion_distance_mm": 0.7617000730008802,
+                "normal_removed_mm3": 6.9622429492032625,
+                "reward": -1.4239719899866545,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5270f3a5b494188a2599fc93",
+                "complete_tool_path_length_mm": 0.5078001284882854,
+                "insertion_distance_mm": 0.2539000642441427,
+                "normal_removed_mm3": 0.5157216999409824,
+                "reward": -0.13365214011668475,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-bc13308f6f4a8d8e5fd08f33",
+                "complete_tool_path_length_mm": 0.5078001284882854,
+                "insertion_distance_mm": 0.2539000642441427,
+                "normal_removed_mm3": 4.38363444949835,
+                "reward": -0.9072346900281584,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-64f8237064f6c49ec92e2200",
+                "complete_tool_path_length_mm": 0.5078001285465072,
+                "insertion_distance_mm": 0.2539000642732536,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.15943822511379213,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-bbf8107206e6101710f3f3e3",
+                "complete_tool_path_length_mm": 0.5078001285465072,
+                "insertion_distance_mm": 0.2539000642732536,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1135233700046097,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fb183033526e0ea3cb2d919e",
+                "complete_tool_path_length_mm": 1.5234001480142179,
+                "insertion_distance_mm": 0.7617000740071089,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.16045382513325984,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c5e02688c3d05e14772e810c",
+                "complete_tool_path_length_mm": 1.5234001480142179,
+                "insertion_distance_mm": 0.7617000740071089,
+                "normal_removed_mm3": 4.38363444949835,
+                "reward": -0.9082502900476843,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f08c3c384da0ac4bedd12012",
+                "complete_tool_path_length_mm": 1.5234001439892741,
+                "insertion_distance_mm": 0.7617000719946371,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.1604538251292349,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5a48813411a8ebef5f2bad1e",
+                "complete_tool_path_length_mm": 1.5234001439892741,
+                "insertion_distance_mm": 0.7617000719946371,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1145389700200523,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8c3f81460ed75277b2d78f0e",
+                "complete_tool_path_length_mm": 0.5078001305881116,
+                "insertion_distance_mm": 0.2539000652940558,
+                "normal_removed_mm3": 0.7735825499114736,
+                "reward": -0.18522431011288282,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b22e5bf571167599ee65ebb6",
+                "complete_tool_path_length_mm": 0.5078001305881116,
+                "insertion_distance_mm": 0.2539000652940558,
+                "normal_removed_mm3": 5.801869124336052,
+                "reward": -1.1908816249977985,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-495e8b76ca25305b33c15a6f",
+                "complete_tool_path_length_mm": 1.5234001459726423,
+                "insertion_distance_mm": 0.7617000729863211,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.16045382513121825,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7702cecd5b537b0a6ee7f0df",
+                "complete_tool_path_length_mm": 1.5234001459726423,
+                "insertion_distance_mm": 0.7617000729863211,
+                "normal_removed_mm3": 5.415077849380315,
+                "reward": -1.1145389700220358,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fe44ec12517ee2368a52393f",
+                "complete_tool_path_length_mm": 1.5234001430412814,
+                "insertion_distance_mm": 0.7617000715206407,
+                "normal_removed_mm3": 0.644652124926228,
+                "reward": -0.1604538251282869,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fdfd64434343eeb3170b751c",
+                "complete_tool_path_length_mm": 1.5234001430412814,
+                "insertion_distance_mm": 0.7617000715206407,
+                "normal_removed_mm3": 5.028286574424579,
+                "reward": -1.037180715027957,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b413243e089ab53206194eb3",
+                "complete_tool_path_length_mm": 2.5390001616192213,
+                "insertion_distance_mm": 1.2695000808096106,
+                "normal_removed_mm3": 2.0628867997639295,
+                "reward": -0.44511636011440514,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-da90b7090c9559b2b3e8c734",
+                "complete_tool_path_length_mm": 2.5390001616192213,
+                "insertion_distance_mm": 1.2695000808096106,
+                "normal_removed_mm3": 10.443364423804892,
+                "reward": -2.1212118849225976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-6ebf68dbcd481ac356c46cbe",
+                "complete_tool_path_length_mm": 2.539000161677429,
+                "insertion_distance_mm": 1.2695000808387145,
+                "normal_removed_mm3": 2.0628867997639295,
+                "reward": -0.4451163601144633,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-93f61debaf826b72fc2190b3",
+                "complete_tool_path_length_mm": 2.539000159606735,
+                "insertion_distance_mm": 1.2695000798033675,
+                "normal_removed_mm3": 1.8050259497934382,
+                "reward": -0.39354419011829445,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b4e15784cc142f667ecc17bb",
+                "complete_tool_path_length_mm": 2.539000159606735,
+                "insertion_distance_mm": 1.2695000798033675,
+                "normal_removed_mm3": 9.411921023922929,
+                "reward": -1.9149232049441927,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a786a98343f26c81a67d58c5",
+                "complete_tool_path_length_mm": 2.5390001596649427,
+                "insertion_distance_mm": 1.2695000798324714,
+                "normal_removed_mm3": 1.9339563747786839,
+                "reward": -0.4193302751154017,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1153c6c494cbf2348f429195",
+                "complete_tool_path_length_mm": 2.5390001596649427,
+                "insertion_distance_mm": 1.2695000798324714,
+                "normal_removed_mm3": 10.701225273775384,
+                "reward": -2.1727840549147412,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5dfd272d0a7156e0e62d1ae4",
+                "complete_tool_path_length_mm": 3.5546001751077094,
+                "insertion_distance_mm": 1.7773000875538547,
+                "normal_removed_mm3": 1.9339563747786839,
+                "reward": -0.4203458751308445,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7136ec47cae64fe1b48c9e21",
+                "complete_tool_path_length_mm": 2.539000161706547,
+                "insertion_distance_mm": 1.2695000808532735,
+                "normal_removed_mm3": 2.0628867997639295,
+                "reward": -0.44511636011449246,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-cfa9ac5ecd47928904ca936f",
+                "complete_tool_path_length_mm": 0.5078001304425497,
+                "insertion_distance_mm": 0.25390006522127484,
+                "normal_removed_mm3": 0.3867912749557368,
+                "reward": -0.10786605512158991,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5740813e4d8a6d7907959d89",
+                "complete_tool_path_length_mm": 0.5078001304425497,
+                "insertion_distance_mm": 0.25390006522127484,
+                "normal_removed_mm3": 4.254704024513105,
+                "reward": -0.8814486050330637,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e015b506026373589435fe87",
+                "complete_tool_path_length_mm": 0.5078001325132436,
+                "insertion_distance_mm": 0.2539000662566218,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512956237,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c7e482ee3085e639a541c7ae",
+                "complete_tool_path_length_mm": 0.5078001325132436,
+                "insertion_distance_mm": 0.2539000662566218,
+                "normal_removed_mm3": 2.836469349675403,
+                "reward": -0.5978016700675939,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d086e4a39f9ba7f40bab6826",
+                "complete_tool_path_length_mm": 0.5078001325714513,
+                "insertion_distance_mm": 0.25390006628572565,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512962057,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-14fb263869c4d60a8b27cd8f",
+                "complete_tool_path_length_mm": 0.5078001325714513,
+                "insertion_distance_mm": 0.25390006628572565,
+                "normal_removed_mm3": 2.7075389246901573,
+                "reward": -0.572015585070603,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a0153df8b1ab672ab81a4223",
+                "complete_tool_path_length_mm": 0.5078001324550074,
+                "insertion_distance_mm": 0.2539000662275037,
+                "normal_removed_mm3": 0.2578608499704912,
+                "reward": -0.08207997012655326,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1d4cd6a80ba04805473bb200",
+                "complete_tool_path_length_mm": 0.5078001324550074,
+                "insertion_distance_mm": 0.2539000662275037,
+                "normal_removed_mm3": 2.7075389246901573,
+                "reward": -0.5720155850704866,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-06e1d4105cb8614abfa073ff",
+                "complete_tool_path_length_mm": 0.5078001284300492,
+                "insertion_distance_mm": 0.2539000642150246,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512547917,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f65a5ee820c14a8cf17edc64",
+                "complete_tool_path_length_mm": 0.5078001284300492,
+                "insertion_distance_mm": 0.2539000642150246,
+                "normal_removed_mm3": 3.0943301996458943,
+                "reward": -0.649373840057609,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-0dccfec5bcee9e2d8079bd40",
+                "complete_tool_path_length_mm": 0.5078001304134173,
+                "insertion_distance_mm": 0.25390006520670866,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05629388512746254,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-24265c53bfb39c92779748f7",
+                "complete_tool_path_length_mm": 0.5078001304134173,
+                "insertion_distance_mm": 0.25390006520670866,
+                "normal_removed_mm3": 3.22326062463114,
+                "reward": -0.6751599250566415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c618aff8197ef82080dae02d",
+                "complete_tool_path_length_mm": 2.539000164637908,
+                "insertion_distance_mm": 1.269500082318954,
+                "normal_removed_mm3": 0.1289304249852456,
+                "reward": -0.05832508516168703,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a7019359a29e94df0cb2e03b",
+                "complete_tool_path_length_mm": 0.5078001335194725,
+                "insertion_distance_mm": 0.25390006675973625,
+                "normal_removed_mm3": 2.191817224749175,
+                "reward": -0.46887124508335454,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4e0c377cc97c41745d266f59",
+                "complete_tool_path_length_mm": 0.5078001274820564,
+                "insertion_distance_mm": 0.2539000637410282,
+                "normal_removed_mm3": 0.2578608499704912,
+                "reward": -0.0820799701215803,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c6aa535d36ff9e8c15feb198",
+                "complete_tool_path_length_mm": 0.5078001274820564,
+                "insertion_distance_mm": 0.2539000637410282,
+                "normal_removed_mm3": 2.836469349675403,
+                "reward": -0.5978016700625627,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:679cfc4cecfc768ef74cda0996a99c2147081eb5fb274913a54ef23b3d398c16",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 45,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.03223441704176366,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:2a50e735980b8d00422096f398f4edf07a7cff9a61bb51e6577d677bef668140",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-008",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "derived_occupancy": true,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 2386.3732360519107,
+        "full_region_positive_voxels": 18509,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "added_region_hash": "sha256:0e3c08d56afc5cfaeb26ad04f62fe1994344ca29db3b54db4216311def2f9e14",
+          "added_region_positive_voxels": 6394,
+          "anatomical_or_material_validation": false,
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "derived_occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "operation": "S OR (T > 0)",
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+          "source_support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+          "source_support_positive_voxels": 6799033,
+          "source_support_unchanged": true,
+          "supplied_target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+          "target_unchanged": true,
+          "version": "supplied-support-target-union-v1"
+        },
+        "occupancy_modified": true,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 2386.3732360519107,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 0.0,
+        "unsupported_region_positive_voxels": 0,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 2.9926477919798344,
+      "common_public_world": {
+        "S_intersect_T_voxels": 8221,
+        "S_voxels": 4015977,
+        "T_minus_S_voxels": 6988,
+        "access": {
+          "center_mm": [
+            -66.62907810879854,
+            71.0186065557066,
+            4.348500436327257
+          ],
+          "normal_inward": [
+            0.9995954109502866,
+            -0.0005557399202198454,
+            0.028437748860780897
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:4abd215e9bd848e47442a7dba17f7cc055d27c7051b8cdf4138b374ef0e4f270",
+        "full_target_mm3": 3342.5429604387728,
+        "full_target_voxels": 15209,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:c20ab341be62bf7ccec001976e919e5e873e0e4b3cc1f980bc8bb9733e67d003",
+        "original_frame_hash": "sha256:783182506a1a78322c8c40518c6d6478be3c4582ca91d9514d39eac663e9564c",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "raw_occupancy_target_fraction_upper_bound": 0.5405352094154777,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ce084ea074aafff25491d493b0654c45e444a285a16f9e4af86d73a34baf2f1c",
+          "supplied_support": "f370f83e6ee40489778bb44882523f2108f47d1c966d94eb1a124237f737cef3",
+          "supplied_whole_tumor": "e41b782c7d701887e5e09e11bbe81daa8e15ca9b04a6da22aab92a38051ba50d",
+          "whole_tumor_domain": "789fa19facc5ec7d6614656bd6753fdba13b8ac44c1b57a6b9b69912e0f870ec"
+        },
+        "target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "raw_cerebrum_baseline",
+      "context_hash": "sha256:0d13e97ef370832b2cf151a221823cd03bbe2b064a06db4e6359b1e6feb5fd3a",
+      "decision_model_hash": "sha256:3ec61164da3d3024857a16b9b04a0e15d80a832b7dbbbdcd5655b7acc2eb3124",
+      "derived_occupancy": {},
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:3b02753d3b9ab332ff548ee159dc0027fc704b6af6967fedd6758cfb508beed0",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 212,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 147.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 4015977,
+        "support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+        "upper": 3135.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 3342.5429604387728,
+        "total_reward": 0.0
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:b8ba5045d39a7e7dca7b752260d50958244f0e81f31c909cce182b743d92554a",
+      "raw_baseline_identity_verified": true,
+      "raw_positive_admission_envelope_retained": true,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 30,
+            "scored_nonstop_actions": 30,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-9e764d5d4cc9488372c30244",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 0.8790960511378191,
+                "reward": -0.20628801002171515,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c5e8cb5df14a76e11927b811",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 3.7361582173357313,
+                "reward": -0.7777004432612976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ae3e59aaf9f340d6bb7f32c4",
+                "complete_tool_path_length_mm": 2.3439989707565227,
+                "insertion_distance_mm": 1.1719994853782614,
+                "normal_removed_mm3": 2.857062166197912,
+                "reward": -0.6037564322103389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8aafaf8386c0c3b1ceaf799d",
+                "complete_tool_path_length_mm": 1.4063993824539194,
+                "insertion_distance_mm": 0.7031996912269597,
+                "normal_removed_mm3": 1.977966115060093,
+                "reward": -0.42699962239447253,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-547bf552e5d624e379313002",
+                "complete_tool_path_length_mm": 1.4063993824539194,
+                "insertion_distance_mm": 0.7031996912269597,
+                "normal_removed_mm3": 7.692090447455917,
+                "reward": -1.5698244888736375,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-347faa700bab35a4e1d246df",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-41e893537e9037f2c215b90d",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 4.17570624290464,
+                "reward": -0.8656100483750794,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1e8f8a95e5c71c613558a358",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8a1c0fa03b9c616ec1e0f67e",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.494350319611369,
+                "reward": -1.1293388637164252,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7083741c931cd52c854118ce",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.3186440767067287,
+                "reward": -0.2941976151354971,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-feb82af607ee0641ac90868a",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.494350319611369,
+                "reward": -1.1293388637164252,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e1abbc5b6df0c77f8cb6e30c",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 1.7581921022756382,
+                "reward": -0.3839824194258841,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f56ba3f378f2dde462786dd8",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 2.197740127844548,
+                "reward": -0.4718920245396661,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-17159f3f528341a58bc3260e",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 2.6372881534134573,
+                "reward": -0.559801629653448,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-3be93e8795186ca00df4c7d6",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 1.7581921022756382,
+                "reward": -0.3839824194258841,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4d2ab80ca6993012b4c41f56",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.977966115060093,
+                "reward": -0.42606202280616995,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4831b77168b34c186d8ed914",
+                "complete_tool_path_length_mm": 0.4687997941513443,
+                "insertion_distance_mm": 0.23439989707567216,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5df6add7e31509c142934fd2",
+                "complete_tool_path_length_mm": 0.4687997941513443,
+                "insertion_distance_mm": 0.23439989707567216,
+                "normal_removed_mm3": 6.373446370749188,
+                "reward": -1.305158073943989,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-69a762b868e67d144268cdd8",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a0e03267aded41f62752c63a",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.933898345180279,
+                "reward": -1.2172484688302072,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-c520da18b5a5909feda0a7d4",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 0.6593220383533643,
+                "reward": -0.1623332074648242,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1279bfd342bde389a9e0065d",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.494350319611369,
+                "reward": -1.1293388637164252,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-71beede5edb405948c4ef7e6",
+                "complete_tool_path_length_mm": 0.4687997941513443,
+                "insertion_distance_mm": 0.23439989707567216,
+                "normal_removed_mm3": 7.032768409102553,
+                "reward": -1.437022481614662,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b1111059563f439f63ec88e0",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 0.43954802556890954,
+                "reward": -0.11837840490793324,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-52ea090a476d659726f0a5c7",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 2.6372881534134573,
+                "reward": -0.5579264304768428,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-68a24ac4b3fb14830a53c584",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f1f928c31a81aa491c61af7f",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 2.857062166197912,
+                "reward": -0.6037564322103389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-661ea25df80891ac49a23bc4",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 7.032768409102553,
+                "reward": -1.437022481614662,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-54b2392151cb1351de9014e7",
+                "complete_tool_path_length_mm": 1.4063993824539194,
+                "insertion_distance_mm": 0.7031996912269597,
+                "normal_removed_mm3": 2.197740127844548,
+                "reward": -0.4709544249513635,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5f0d8216a8803f09ba129ba3",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 7.032768409102553,
+                "reward": -1.437022481614662,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:9ba10ab5f16a5756c16b163d6de2e093c5cbc6b3c23af53321fdd22f2e2ead72",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 30,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.019581499975174665,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:3cd4c784e23494690bbf5ba1a3bbccdf10a098825f4adbe0257f3ba994336d7a",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-010",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 3342.5429604387728,
+        "full_region_positive_voxels": 15209,
+        "occupancy_modified": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 1806.762159101003,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 1535.7808013377698,
+        "unsupported_region_positive_voxels": 6988,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 3.6875859999563545,
+      "common_public_world": {
+        "S_intersect_T_voxels": 8221,
+        "S_voxels": 4015977,
+        "T_minus_S_voxels": 6988,
+        "access": {
+          "center_mm": [
+            -66.62907810879854,
+            71.0186065557066,
+            4.348500436327257
+          ],
+          "normal_inward": [
+            0.9995954109502866,
+            -0.0005557399202198454,
+            0.028437748860780897
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:4abd215e9bd848e47442a7dba17f7cc055d27c7051b8cdf4138b374ef0e4f270",
+        "full_target_mm3": 3342.5429604387728,
+        "full_target_voxels": 15209,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:c20ab341be62bf7ccec001976e919e5e873e0e4b3cc1f980bc8bb9733e67d003",
+        "original_frame_hash": "sha256:783182506a1a78322c8c40518c6d6478be3c4582ca91d9514d39eac663e9564c",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "raw_occupancy_target_fraction_upper_bound": 0.5405352094154777,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ce084ea074aafff25491d493b0654c45e444a285a16f9e4af86d73a34baf2f1c",
+          "supplied_support": "f370f83e6ee40489778bb44882523f2108f47d1c966d94eb1a124237f737cef3",
+          "supplied_whole_tumor": "e41b782c7d701887e5e09e11bbe81daa8e15ca9b04a6da22aab92a38051ba50d",
+          "whole_tumor_domain": "789fa19facc5ec7d6614656bd6753fdba13b8ac44c1b57a6b9b69912e0f870ec"
+        },
+        "target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "context_hash": "sha256:38655fff6990da1710a21be373bc42c272232b52dbff4390f0e641d0e6b3f7b9",
+      "decision_model_hash": "sha256:cb4142042ebb7df2d23d2b7383ca0a11124b51042760227d0cdfadfae541be6a",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:96eb79398b7b63a4f45b5432c37397f706591362970caccf8b688857eeadc99b",
+        "added_region_positive_voxels": 6988,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:0f79a9ae7d15cea06954c4a7ea2df7f771dc6eda3eaff9e424dc86b1715bf946",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+        "source_support_positive_voxels": 4015977,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:f9e580c81bb5edf8357149f8e0587a5f2599cfd072d23e1d45d6c2d71b6cd23e",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 240,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 147.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 4022965,
+        "support_hash": "sha256:0f79a9ae7d15cea06954c4a7ea2df7f771dc6eda3eaff9e424dc86b1715bf946",
+        "upper": 3135.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 3342.5429604387728,
+        "total_reward": 0.0
+      },
+      "pairing": {
+        "baseline_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 147.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 4015977,
+          "support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+          "upper": 3135.0
+        },
+        "common_inputs_equal": true,
+        "derived_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 147.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:8e9481d5a3b0a7150d841d11ab35af06cba40217dc0243da785dd30b552697ca",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 4022965,
+          "support_hash": "sha256:0f79a9ae7d15cea06954c4a7ea2df7f771dc6eda3eaff9e424dc86b1715bf946",
+          "upper": 3135.0
+        },
+        "normalization_equal": false,
+        "policy_comparison_permitted": false,
+        "source_QC_validates_added_material": false
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:103001838e509477fea7a0b657e51fbd010d33c5d3bd505ebe4a55d414eb9811",
+      "raw_baseline_identity_verified": false,
+      "raw_positive_admission_envelope_retained": false,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 28,
+            "scored_nonstop_actions": 28,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-85716ca84b63c9a0b0559ed1",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 0.8790960511378191,
+                "reward": -0.20628801002171515,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f302ddd11e9ef44e1705a923",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 3.7361582173357313,
+                "reward": -0.7777004432612976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-aae42193edb20e629da19279",
+                "complete_tool_path_length_mm": 2.3439989707565227,
+                "insertion_distance_mm": 1.1719994853782614,
+                "normal_removed_mm3": 2.857062166197912,
+                "reward": -0.6037564322103389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-133c782d81c599246ced6023",
+                "complete_tool_path_length_mm": 1.4063993824539194,
+                "insertion_distance_mm": 0.7031996912269597,
+                "normal_removed_mm3": 1.977966115060093,
+                "reward": -0.42699962239447253,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-53a13f216835fab7ad9d7c74",
+                "complete_tool_path_length_mm": 1.4063993824539194,
+                "insertion_distance_mm": 0.7031996912269597,
+                "normal_removed_mm3": 7.692090447455917,
+                "reward": -1.5698244888736375,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-97a376e68f2203b29ce63e67",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ac0e3a6acd70ee79d49ef0c4",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 4.17570624290464,
+                "reward": -0.8656100483750794,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-cc7ab3a1de5c1dbaf265ea44",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-938d152340712f266c4db7de",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.494350319611369,
+                "reward": -1.1293388637164252,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-08f6080dc519c2e75b9f62d9",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.3186440767067287,
+                "reward": -0.2941976151354971,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ffe46a8f4e727bdf95843692",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.494350319611369,
+                "reward": -1.1293388637164252,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fbbd6425a18cacf975844c73",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 1.7581921022756382,
+                "reward": -0.3839824194258841,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-2513bf670cf42077bf8d6ce7",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 2.197740127844548,
+                "reward": -0.4718920245396661,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-234a226774be8d2a1e8bb9cf",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 2.6372881534134573,
+                "reward": -0.559801629653448,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-6ef002df0c583f0a96b6ae1c",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 1.7581921022756382,
+                "reward": -0.3839824194258841,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a849af02b65636b5d653ca9e",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.977966115060093,
+                "reward": -0.42606202280616995,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-21a07325c3e7c740c12d822a",
+                "complete_tool_path_length_mm": 0.4687997941513443,
+                "insertion_distance_mm": 0.23439989707567216,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1eef3b9601fe32f6675948bc",
+                "complete_tool_path_length_mm": 0.4687997941513443,
+                "insertion_distance_mm": 0.23439989707567216,
+                "normal_removed_mm3": 6.373446370749188,
+                "reward": -1.305158073943989,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-55cbd52a010788717e13489c",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-050429899d9f3a5b42ddf5aa",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.933898345180279,
+                "reward": -1.2172484688302072,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b9150f67c1b18ffc1f55f86f",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 0.6593220383533643,
+                "reward": -0.1623332074648242,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e865691a3190d123faa66080",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 5.494350319611369,
+                "reward": -1.1293388637164252,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ff8dc8a8f733507905625a29",
+                "complete_tool_path_length_mm": 0.4687997941513443,
+                "insertion_distance_mm": 0.23439989707567216,
+                "normal_removed_mm3": 7.032768409102553,
+                "reward": -1.437022481614662,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ccfcdc5aa044d36085e850f0",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 0.43954802556890954,
+                "reward": -0.11837840490793324,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-faeec43a8ba685c39dcdbf4a",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 2.6372881534134573,
+                "reward": -0.5579264304768428,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-74ec3cbd86090e5de70988b4",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 1.5384180894911834,
+                "reward": -0.3381524176923881,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f8682da86033c2e721c3328d",
+                "complete_tool_path_length_mm": 2.3439989707564943,
+                "insertion_distance_mm": 1.1719994853782472,
+                "normal_removed_mm3": 2.857062166197912,
+                "reward": -0.6037564322103389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4f3aa84d0720ef1c630e8019",
+                "complete_tool_path_length_mm": 0.4687997941513159,
+                "insertion_distance_mm": 0.23439989707565795,
+                "normal_removed_mm3": 7.032768409102553,
+                "reward": -1.437022481614662,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:149a1aacb80364c7b6165cbc044edbf082b078a4b7c58573b424d5871523f79d",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 28,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.019932500086724758,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:2d7b172212588952adad7d4400ccedaf1358006468afae98d1e08c40aeb61fee",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-010",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "derived_occupancy": true,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 3342.5429604387728,
+        "full_region_positive_voxels": 15209,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "added_region_hash": "sha256:96eb79398b7b63a4f45b5432c37397f706591362970caccf8b688857eeadc99b",
+          "added_region_positive_voxels": 6988,
+          "anatomical_or_material_validation": false,
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "derived_occupancy_hash": "sha256:0f79a9ae7d15cea06954c4a7ea2df7f771dc6eda3eaff9e424dc86b1715bf946",
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "operation": "S OR (T > 0)",
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+          "source_support_hash": "sha256:e8ab042041b08289189f173f87e6bfaff5a1b5b81bb50ae8a36601a8f9b48bc1",
+          "source_support_positive_voxels": 4015977,
+          "source_support_unchanged": true,
+          "supplied_target_hash": "sha256:6f8fb769f5472cde7f4d96040117e98812c74b8fbcd879126c08f100807a1ffd",
+          "target_unchanged": true,
+          "version": "supplied-support-target-union-v1"
+        },
+        "occupancy_modified": true,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 3342.5429604387728,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 0.0,
+        "unsupported_region_positive_voxels": 0,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 1.024790083989501,
+      "common_public_world": {
+        "S_intersect_T_voxels": 9448,
+        "S_voxels": 1046082,
+        "T_minus_S_voxels": 40373,
+        "access": {
+          "center_mm": [
+            -60.34199242118159,
+            114.61073380240123,
+            15.888856066076315
+          ],
+          "normal_inward": [
+            0.8596891986698184,
+            -0.5039338130073375,
+            0.08357747183500662
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:d5f2b582534ac7c56a7f6f625f3f0863f01e013b31bce256870fcd6ad8798ee4",
+        "full_target_mm3": 47513.02080879691,
+        "full_target_voxels": 49821,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:7c31b9764e6e53ce2d7ae80c8ff34875a66b5f79b3d02dbf1b2077b1db7d0f8e",
+        "original_frame_hash": "sha256:54b85fc61ca8944f22c3ed831b412e095a582f9b66b0c0822fa7d2941f05f4aa",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "raw_occupancy_target_fraction_upper_bound": 0.18963890728809138,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "c24ee394731b2a5764533c28bbc5e162d9845a8e098babe92fd2d691293479a9",
+          "supplied_support": "143882dd58dd57c34c4209226b62174a6b5e6b64c350c443d3d28534307b1e1c",
+          "supplied_whole_tumor": "66aed85f91e9e9c90473bd5216d745cac78f8335998f376a288251aecb4fc7ff",
+          "whole_tumor_domain": "f4609ee6fab9f0cdf7adc1d7730336bcb42a39dac4ff5e3d4d2df02573480c20"
+        },
+        "target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "raw_cerebrum_baseline",
+      "context_hash": "sha256:b6364dccfa71afa4b626bcd3d898c187a901a82cc0025e3780b1a5ec150b1b5f",
+      "decision_model_hash": "sha256:331a15ade57b20836de475153bdaf52ce8e23c51c3c7101e5292a698c2220023",
+      "derived_occupancy": {},
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:b59d28122182a38d091d4deb22c82c816dc8fedaa59cbe703f214dd3a7193677",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 188,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 212.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 1046082,
+        "support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+        "upper": 432.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 47513.02080879691,
+        "total_reward": 0.0
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:64f868a12534cf47ad890f64110ec93659e4fc886b3d0c4236b6ea3a751147d1",
+      "raw_baseline_identity_verified": true,
+      "raw_positive_admission_envelope_retained": true,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 23,
+            "scored_nonstop_actions": 23,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-984f7bcc2dc4ac183c8df257",
+                "complete_tool_path_length_mm": 0.9765625502298085,
+                "insertion_distance_mm": 0.48828127511490427,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f3d3fff0caf32a846aa8845b",
+                "complete_tool_path_length_mm": 0.9765625502298085,
+                "insertion_distance_mm": 0.48828127511490427,
+                "normal_removed_mm3": 5.72204742684373,
+                "reward": -1.175386047918976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b69f009866383af78f0afec2",
+                "complete_tool_path_length_mm": 2.9296876506894516,
+                "insertion_distance_mm": 1.4648438253447258,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.2236646018788138,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-965811b8cc2d73fa6fee7550",
+                "complete_tool_path_length_mm": 2.92968765068944,
+                "insertion_distance_mm": 1.46484382534472,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881376,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-6e670d20822f2c6b8196c689",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8b713f0f34bb2819947f4a1c",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 5.72204742684373,
+                "reward": -1.175386047918976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-0f4e76c727d5cccff959581f",
+                "complete_tool_path_length_mm": 2.9296876506894125,
+                "insertion_distance_mm": 1.4648438253447063,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881373,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4e470e9bd61d6622331b7baa",
+                "complete_tool_path_length_mm": 2.9296876506894396,
+                "insertion_distance_mm": 1.4648438253447198,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881376,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-931cd4fab96dbfbbf801185f",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7cf189e4b5c8ad5d381304d0",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 4.768372855703108,
+                "reward": -0.9846511336908514,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-77273c58066ec91e570bab44",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-3785b94fcb1eea615aaa8d2c",
+                "complete_tool_path_length_mm": 2.92968765068944,
+                "insertion_distance_mm": 1.46484382534472,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881376,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fcfa13f14693674e2e07d7ec",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-0b4487c6eb407f560c3feae4",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 5.72204742684373,
+                "reward": -1.175386047918976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-aad33f9a1b331215902bc56d",
+                "complete_tool_path_length_mm": 2.9296876506894516,
+                "insertion_distance_mm": 1.4648438253447258,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-910d7babc3cce9571ee3de16",
+                "complete_tool_path_length_mm": 2.9296876506894516,
+                "insertion_distance_mm": 1.4648438253447258,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7ef2ac28690985fbabfd86d8",
+                "complete_tool_path_length_mm": 2.92968765068944,
+                "insertion_distance_mm": 1.46484382534472,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-33397188f0c108d3994692c5",
+                "complete_tool_path_length_mm": 2.9296876506894396,
+                "insertion_distance_mm": 1.4648438253447198,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d9b07c96e081a43fa19956fe",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 2.861023713421865,
+                "reward": -0.6031813052346029,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a85a5e6c362b9040b90f78ae",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 2.861023713421865,
+                "reward": -0.6031813052346029,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b011bc75d1e14f49ec16ef07",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d1e81cd47605aafa1f5d820f",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 2.861023713421865,
+                "reward": -0.6031813052346029,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-ec94fd6a55a6909a7c6c21a5",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:4efcadf07f80fea61b95cba1bd916b1cf37e768f10325791e54c5b955e8e37ec",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 23,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.009137290995568037,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:4c0d3bb55c611a238d4776c221af63560f11850921f6fef6ea29f4fa00099f54",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-020",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 47513.02080879691,
+        "full_region_positive_voxels": 49821,
+        "occupancy_modified": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 9010.317348136588,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 38502.70346066032,
+        "unsupported_region_positive_voxels": 40373,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 1.2021577500272542,
+      "common_public_world": {
+        "S_intersect_T_voxels": 9448,
+        "S_voxels": 1046082,
+        "T_minus_S_voxels": 40373,
+        "access": {
+          "center_mm": [
+            -60.34199242118159,
+            114.61073380240123,
+            15.888856066076315
+          ],
+          "normal_inward": [
+            0.8596891986698184,
+            -0.5039338130073375,
+            0.08357747183500662
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:d5f2b582534ac7c56a7f6f625f3f0863f01e013b31bce256870fcd6ad8798ee4",
+        "full_target_mm3": 47513.02080879691,
+        "full_target_voxels": 49821,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:7c31b9764e6e53ce2d7ae80c8ff34875a66b5f79b3d02dbf1b2077b1db7d0f8e",
+        "original_frame_hash": "sha256:54b85fc61ca8944f22c3ed831b412e095a582f9b66b0c0822fa7d2941f05f4aa",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "raw_occupancy_target_fraction_upper_bound": 0.18963890728809138,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "c24ee394731b2a5764533c28bbc5e162d9845a8e098babe92fd2d691293479a9",
+          "supplied_support": "143882dd58dd57c34c4209226b62174a6b5e6b64c350c443d3d28534307b1e1c",
+          "supplied_whole_tumor": "66aed85f91e9e9c90473bd5216d745cac78f8335998f376a288251aecb4fc7ff",
+          "whole_tumor_domain": "f4609ee6fab9f0cdf7adc1d7730336bcb42a39dac4ff5e3d4d2df02573480c20"
+        },
+        "target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "context_hash": "sha256:081e6d666a96200838d978f260060c44f825e623a90eaaa468d14be9bcbc1d1a",
+      "decision_model_hash": "sha256:a46389096ad21319bbf71a2a7e2dadacc8e4ab16d4575741a9c07facf8b583c8",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:6a12f10b2cbdd90b67e98bd92a6417eeaac2d966c8eeb04ca206b3ee0a8d0c29",
+        "added_region_positive_voxels": 40373,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:4adaca58029b55bcd06676b0e555d1af461159947e4098b6207ef0805fb4ad68",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+        "source_support_positive_voxels": 1046082,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:9291903a0cc987755ba8a14fec3bea1afd6fe9cf3e39fd56019e825e8d7bd8f1",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 224,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 204.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 1086455,
+        "support_hash": "sha256:4adaca58029b55bcd06676b0e555d1af461159947e4098b6207ef0805fb4ad68",
+        "upper": 703.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 47513.02080879691,
+        "total_reward": 0.0
+      },
+      "pairing": {
+        "baseline_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 212.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 1046082,
+          "support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+          "upper": 432.0
+        },
+        "common_inputs_equal": true,
+        "derived_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 204.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:4b81d3518446a94bc63bc754116151a1abcfa5d2e82324230249ba5c9ba6360c",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 1086455,
+          "support_hash": "sha256:4adaca58029b55bcd06676b0e555d1af461159947e4098b6207ef0805fb4ad68",
+          "upper": 703.0
+        },
+        "normalization_equal": false,
+        "policy_comparison_permitted": false,
+        "source_QC_validates_added_material": false
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:99ca1ae7dc965dcaddc2b4cebc23d865c2367a2dace4aab6e5c48abee3706e64",
+      "raw_baseline_identity_verified": false,
+      "raw_positive_admission_envelope_retained": false,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 23,
+            "scored_nonstop_actions": 23,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1839cbe7fda6d72e800c3dd6",
+                "complete_tool_path_length_mm": 0.9765625502298085,
+                "insertion_distance_mm": 0.48828127511490427,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4b9a51a8220bf86cb21092c3",
+                "complete_tool_path_length_mm": 0.9765625502298085,
+                "insertion_distance_mm": 0.48828127511490427,
+                "normal_removed_mm3": 5.72204742684373,
+                "reward": -1.175386047918976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f0f6c90d77efcb9feb07f976",
+                "complete_tool_path_length_mm": 2.9296876506894516,
+                "insertion_distance_mm": 1.4648438253447258,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.2236646018788138,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-61be8e788374ea5ad3ad50d2",
+                "complete_tool_path_length_mm": 2.92968765068944,
+                "insertion_distance_mm": 1.46484382534472,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881376,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e034fa4cbfcfffb6801ba91e",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d2d9a94a21215f0c2f212b78",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 5.72204742684373,
+                "reward": -1.175386047918976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-112539e825ad4f4b0b726b8e",
+                "complete_tool_path_length_mm": 2.9296876506894125,
+                "insertion_distance_mm": 1.4648438253447063,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881373,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b54073687e1608c945e5bfe4",
+                "complete_tool_path_length_mm": 2.9296876506894396,
+                "insertion_distance_mm": 1.4648438253447198,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881376,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4dc99b0257dd051794a86fe9",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-2fe0cdc2499e6417763001a0",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 4.768372855703108,
+                "reward": -0.9846511336908514,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-295d1e3e67de8a70bdf5c9cc",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b37ab644eda06c1ee2188984",
+                "complete_tool_path_length_mm": 2.92968765068944,
+                "insertion_distance_mm": 1.46484382534472,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22366460187881376,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-722107b705c9d47f0351fba4",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-59c3673031193232134fb7a0",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 5.72204742684373,
+                "reward": -1.175386047918976,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fbe8b28e731f1df97dbed0f8",
+                "complete_tool_path_length_mm": 2.9296876506894516,
+                "insertion_distance_mm": 1.4648438253447258,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f5c4ead1243eb36cb793832d",
+                "complete_tool_path_length_mm": 2.9296876506894516,
+                "insertion_distance_mm": 1.4648438253447258,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-83cce03cad0402372b5db8b1",
+                "complete_tool_path_length_mm": 2.92968765068944,
+                "insertion_distance_mm": 1.46484382534472,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-319ed9f5146d522142c94bf6",
+                "complete_tool_path_length_mm": 2.9296876506894396,
+                "insertion_distance_mm": 1.4648438253447198,
+                "normal_removed_mm3": 1.9073491422812432,
+                "reward": -0.41439951610693815,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-68a2c1bc3ba1aece7d27d8e5",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 2.861023713421865,
+                "reward": -0.6031813052346029,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-83ebc60b0e84309dbc3337e7",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 2.861023713421865,
+                "reward": -0.6031813052346029,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8fd3d01cedc417cdf85b43fb",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-41307239d092a28d827cb3a9",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 2.861023713421865,
+                "reward": -0.6031813052346029,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-638b8fda63aef8176da2df6b",
+                "complete_tool_path_length_mm": 0.9765625502298083,
+                "insertion_distance_mm": 0.48828127511490416,
+                "normal_removed_mm3": 0.9536745711406216,
+                "reward": -0.22171147677835415,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:05a40cb3f38b7b65bae2ac6a0691e97dbbfc29a9fceb2a2245c8c81b33b0ae2f",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 23,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.009540209081023932,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:bdb82e67d236d3ff789cc8af028c7a384398cbaa7e9c7459689442865f73d3b0",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-020",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "derived_occupancy": true,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 47513.02080879691,
+        "full_region_positive_voxels": 49821,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "added_region_hash": "sha256:6a12f10b2cbdd90b67e98bd92a6417eeaac2d966c8eeb04ca206b3ee0a8d0c29",
+          "added_region_positive_voxels": 40373,
+          "anatomical_or_material_validation": false,
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "derived_occupancy_hash": "sha256:4adaca58029b55bcd06676b0e555d1af461159947e4098b6207ef0805fb4ad68",
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "operation": "S OR (T > 0)",
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+          "source_support_hash": "sha256:a940515e197f0367c70b9b8484bd09131bfcd6185fc486236107d75b7ec9009e",
+          "source_support_positive_voxels": 1046082,
+          "source_support_unchanged": true,
+          "supplied_target_hash": "sha256:8769ad7c9857b950a82ab2dd4678bc1f27dac78644064dfe01fea2defcff2aeb",
+          "target_unchanged": true,
+          "version": "supplied-support-target-union-v1"
+        },
+        "occupancy_modified": true,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 47513.02080879691,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 0.0,
+        "unsupported_region_positive_voxels": 0,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-968f3758c3de3eab8c99ca99",
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 2.8580839168280363,
+      "common_public_world": {
+        "S_intersect_T_voxels": 47404,
+        "S_voxels": 907842,
+        "T_minus_S_voxels": 34358,
+        "access": {
+          "center_mm": [
+            59.77458393130671,
+            55.24025259249733,
+            4.662257948051604
+          ],
+          "normal_inward": [
+            -0.9999369386924596,
+            -0.0016362328938979611,
+            -0.011110417646035976
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+        "full_target_mm3": 77974.35860665982,
+        "full_target_voxels": 81762,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+        "original_frame_hash": "sha256:50d845f92efc91b135f422497f6beb2ff3dcffea72bf33a23c149b17695f80d6",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "raw_occupancy_target_fraction_upper_bound": 0.5797803380543529,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f",
+          "supplied_support": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9",
+          "supplied_whole_tumor": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861",
+          "whole_tumor_domain": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+        },
+        "target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "raw_cerebrum_baseline",
+      "context_hash": "sha256:2515a7a39c63fcd7d710902defb3e61bfec76608fc0abc5b4b22b65faeb134f8",
+      "decision_model_hash": "sha256:586d6ebf4777cc4294ffa031eac9687e57ddfec6800e3fbd13f36e0b9d8a7267",
+      "derived_occupancy": {},
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:8d167affbd5b7e8ae153935b6dd83eb2c0815b2be9a4bb13dc2c07396d56e150",
+      "max_removed_cell_depth_mm": 3.417968998912881,
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2,
+        "search": 2
+      },
+      "native_previews": 515,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 208.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 907842,
+        "support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+        "upper": 505.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 6.8359379978257575,
+        "cumulative_contacted_tissue_upper_bound_mm3": 17.166146313934064,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 16.212471518715503,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 1,
+        "reference_target_fraction_removed": 1.2230620581688315e-05,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.953674795218559,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": 0.9168388572207332
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:d70cb29574f3b51545ef67f2dad533110c301ba2a1318db9f6a6d52a995291c0",
+      "raw_baseline_identity_verified": true,
+      "raw_positive_admission_envelope_retained": true,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 16,
+            "scored_nonstop_actions": 16,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-48cb85e90fc8c3c0a05bd5dd",
+                "complete_tool_path_length_mm": 0.9765625711179106,
+                "insertion_distance_mm": 0.4882812855589553,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-526c9efbe066ff78eef137a9",
+                "complete_tool_path_length_mm": 0.9765625711179106,
+                "insertion_distance_mm": 0.4882812855589553,
+                "normal_removed_mm3": 3.814699180874236,
+                "reward": -0.7939163987459652,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-74f2025bb28f14b59c49ec40",
+                "complete_tool_path_length_mm": 2.929687713353888,
+                "insertion_distance_mm": 1.464843856676944,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.2236646467570657,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-644ef929ec0421ddcfa2a1a5",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-b9cc75dd7b09a208a36250b7",
+                "complete_tool_path_length_mm": 4.882812855589808,
+                "insertion_distance_mm": 2.441406427794904,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22561777189930163,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-4ae9296fdc162e24172b443b",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f4aa66a5202c9368e9167d37",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 5.722048771311354,
+                "reward": -1.175386316833389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-718f67a489ff653d82d16672",
+                "complete_tool_path_length_mm": 0.976562571117939,
+                "insertion_distance_mm": 0.4882812855589695,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482977,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e05fc7b45d50d581b0a44c9d",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-968f3758c3de3eab8c99ca99",
+                "complete_tool_path_length_mm": 6.8359379978257575,
+                "insertion_distance_mm": 3.4179689989128788,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.9168388572207332,
+                "target_removed_mm3": 0.953674795218559
+              },
+              {
+                "action_id": "nominal-cavity-daaa57392cb78cff11cde1aa",
+                "complete_tool_path_length_mm": 2.9296877133538457,
+                "insertion_distance_mm": 1.4648438566769229,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41439960580077745,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-03560bbb0f0ba3a31978b2c1",
+                "complete_tool_path_length_mm": 2.92968771335386,
+                "insertion_distance_mm": 1.46484385667693,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41439960580077745,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-9b09c30a5e4a92e289fe573e",
+                "complete_tool_path_length_mm": 0.9765625711179532,
+                "insertion_distance_mm": 0.4882812855589766,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41244648065854156,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fea9e0491e2d9cbf31fe8936",
+                "complete_tool_path_length_mm": 2.9296877133538737,
+                "insertion_distance_mm": 1.4648438566769368,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.4143996058007775,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-dd689e0ee3d7c8f040fad82e",
+                "complete_tool_path_length_mm": 0.9765625711179532,
+                "insertion_distance_mm": 0.4882812855589766,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41244648065854156,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-86424493e848fcec314ff5f1",
+                "complete_tool_path_length_mm": 0.976562571117939,
+                "insertion_distance_mm": 0.4882812855589695,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482977,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "nominal-cavity-968f3758c3de3eab8c99ca99",
+            "source_state_hash": "sha256:21e01cd5a9b663028b6ddeef1a0b92865d85d8b97b7743d0eb9a726bcc29063a",
+            "step": 0
+          },
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 15,
+            "scored_nonstop_actions": 15,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-28d5089db31c5c10229b5279",
+                "complete_tool_path_length_mm": 0.9765625711179106,
+                "insertion_distance_mm": 0.4882812855589553,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fb962b4a99f5ac7d6083786d",
+                "complete_tool_path_length_mm": 0.9765625711179106,
+                "insertion_distance_mm": 0.4882812855589553,
+                "normal_removed_mm3": 3.814699180874236,
+                "reward": -0.8239163987459652,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-27ec5a291166519f58c50b86",
+                "complete_tool_path_length_mm": 2.929687713353888,
+                "insertion_distance_mm": 1.464843856676944,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.2236646467570657,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-94926637309adaaaf79c48a5",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-68d3bddca12c3a239d5cb85a",
+                "complete_tool_path_length_mm": 4.882812855589808,
+                "insertion_distance_mm": 2.441406427794904,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22561777189930163,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-56e21d27f741e20971cb2303",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1953fc4524d2386ffc8ba872",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 5.722048771311354,
+                "reward": -1.205386316833389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a710471c535eb89abb35a96b",
+                "complete_tool_path_length_mm": 0.976562571117939,
+                "insertion_distance_mm": 0.4882812855589695,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482977,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-8b58ca407630af6655a502db",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-bd330409e4d41961fb56dfb4",
+                "complete_tool_path_length_mm": 2.9296877133538457,
+                "insertion_distance_mm": 1.4648438566769229,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41439960580077745,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e1a8103e21db9142d959d2b3",
+                "complete_tool_path_length_mm": 2.92968771335386,
+                "insertion_distance_mm": 1.46484385667693,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41439960580077745,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-656e3c46fb71e89e3efbc089",
+                "complete_tool_path_length_mm": 0.9765625711179532,
+                "insertion_distance_mm": 0.4882812855589766,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.44244648065854153,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-f99eb52c26b89b1cd94aabf6",
+                "complete_tool_path_length_mm": 2.9296877133538737,
+                "insertion_distance_mm": 1.4648438566769368,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.44439960580077753,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-00a1c27b53d8ccb3a5f8c28b",
+                "complete_tool_path_length_mm": 0.9765625711179532,
+                "insertion_distance_mm": 0.4882812855589766,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.44244648065854153,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-a52c6e05ea53fdc4b60e651a",
+                "complete_tool_path_length_mm": 0.976562571117939,
+                "insertion_distance_mm": 0.4882812855589695,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.2517115216148298,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:4ed9a28a8204eb6b5b02366334c86ce5e73836fbaa3559d17d71c340bd563554",
+            "step": 1
+          }
+        ],
+        "estimated_incremental_return": 0.9168388572207332,
+        "evaluated_nonstop_actions": 31,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 2,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.4287397500593215,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:de8cdc49c6a9cfc58377a1ef77b1e453eb8afb84f69740fcfed74b1cba80a5ec",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": false,
+      "subject": "ReMIND-025",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 77974.35860665982,
+        "full_region_positive_voxels": 81762,
+        "occupancy_modified": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 45207.99999254057,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 32766.35861411925,
+        "unsupported_region_positive_voxels": 34358,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": true
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "actual_model_work_permitted": false,
+      "arm_wall_seconds": 1.4575049169361591,
+      "common_public_world": {
+        "S_intersect_T_voxels": 47404,
+        "S_voxels": 907842,
+        "T_minus_S_voxels": 34358,
+        "access": {
+          "center_mm": [
+            59.77458393130671,
+            55.24025259249733,
+            4.662257948051604
+          ],
+          "normal_inward": [
+            -0.9999369386924596,
+            -0.0016362328938979611,
+            -0.011110417646035976
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+        "full_target_mm3": 77974.35860665982,
+        "full_target_voxels": 81762,
+        "max_steps": 24,
+        "native_frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+        "original_frame_hash": "sha256:50d845f92efc91b135f422497f6beb2ff3dcffea72bf33a23c149b17695f80d6",
+        "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+        "raw_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "raw_occupancy_target_fraction_upper_bound": 0.5797803380543529,
+        "reward": {
+          "action_cost": 0.03,
+          "graph_edge_cost": 0.0,
+          "language_per_mm3": 0.0,
+          "motion_per_mm": 0.001,
+          "motor_per_mm3": 0.0,
+          "normal_per_mm3": 0.2,
+          "target_per_mm3": 1.0,
+          "tool_change_cost": 0.03
+        },
+        "source_files": {
+          "image": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f",
+          "supplied_support": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9",
+          "supplied_whole_tumor": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861",
+          "whole_tumor_domain": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+        },
+        "target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+        "tools": [
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "tip_radius_mm": 1.0,
+            "tool_id": "generic_suction",
+            "working_length_mm": 100.0
+          },
+          {
+            "max_access_angle_deg": 45.0,
+            "parameter_source": "generic research geometry; not a verified commercial device",
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "tip_radius_mm": 1.7,
+            "tool_id": "generic_aspirator",
+            "working_length_mm": 90.0
+          }
+        ]
+      },
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "context_hash": "sha256:2f472eb9e0791b0bea873b2b1ef59da583cc4c7bfe6483726d9a00ea9f112a0d",
+      "decision_model_hash": "sha256:c1062a4a0b2dbdd9edcc8fbc1082e9ff8360b7d6eeb1aff68f8f24b266205b62",
+      "derived_occupancy": {
+        "added_region_hash": "sha256:fe18ba50afb2c603ca103c727a3512a60071eadff11f9d2ddf30b6fba29706fe",
+        "added_region_positive_voxels": 34358,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+        "source_support_positive_voxels": 907842,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "independent_geometry_accepted": true,
+      "initial_observation_hash": "sha256:911142e756260c5058b8e8969d75f8fc5f4f80c320052232f4fcd4ae5e658f2d",
+      "max_removed_cell_depth_mm": null,
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1
+      },
+      "native_previews": 208,
+      "normalization": {
+        "clip": [
+          0.0,
+          1.0
+        ],
+        "crop_used_for_statistics": false,
+        "lower": 193.0,
+        "method": "support_percentile_1_99",
+        "percentile_method": "linear",
+        "percentiles": [
+          1.0,
+          99.0
+        ],
+        "raw_source_preserved": true,
+        "reference_labels_used": false,
+        "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+        "statistics_scope": "entire_permitted_support",
+        "statistics_voxels": 942200,
+        "support_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+        "upper": 535.0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": 0.0
+      },
+      "pairing": {
+        "baseline_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 208.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 907842,
+          "support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+          "upper": 505.0
+        },
+        "common_inputs_equal": true,
+        "derived_normalization": {
+          "clip": [
+            0.0,
+            1.0
+          ],
+          "crop_used_for_statistics": false,
+          "lower": 193.0,
+          "method": "support_percentile_1_99",
+          "percentile_method": "linear",
+          "percentiles": [
+            1.0,
+            99.0
+          ],
+          "raw_source_preserved": true,
+          "reference_labels_used": false,
+          "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+          "statistics_scope": "entire_permitted_support",
+          "statistics_voxels": 942200,
+          "support_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+          "upper": 535.0
+        },
+        "normalization_equal": false,
+        "policy_comparison_permitted": false,
+        "source_QC_validates_added_material": false
+      },
+      "phase": "complete",
+      "plan_seal": "sha256:ee17d5578159083aded633e5b1dfa6e08476d9d2c8f028efb3ffec34c2b9ac0d",
+      "raw_baseline_identity_verified": false,
+      "raw_positive_admission_envelope_retained": false,
+      "search_accounting": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 15,
+            "scored_nonstop_actions": 15,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1f4f2f86ac1c5143f2ac9e92",
+                "complete_tool_path_length_mm": 0.9765625711179106,
+                "insertion_distance_mm": 0.4882812855589553,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d3c8e4756621ee770136eb82",
+                "complete_tool_path_length_mm": 0.9765625711179106,
+                "insertion_distance_mm": 0.4882812855589553,
+                "normal_removed_mm3": 3.814699180874236,
+                "reward": -0.7939163987459652,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-563d92d39f1026eff3a77db5",
+                "complete_tool_path_length_mm": 2.929687713353888,
+                "insertion_distance_mm": 1.464843856676944,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.2236646467570657,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-75df81638fd4cb878168aa9d",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-1096e79fdb94663becadd8ba",
+                "complete_tool_path_length_mm": 4.882812855589808,
+                "insertion_distance_mm": 2.441406427794904,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22561777189930163,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-254464af721d8e6c20b250ac",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-66679e0d78ac840600fd3090",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 5.722048771311354,
+                "reward": -1.175386316833389,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-20cd0ba564e2e563774d1878",
+                "complete_tool_path_length_mm": 0.976562571117939,
+                "insertion_distance_mm": 0.4882812855589695,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482977,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-28a76bc09680e016555bf5eb",
+                "complete_tool_path_length_mm": 0.9765625711179248,
+                "insertion_distance_mm": 0.4882812855589624,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482974,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-5287ad155b741d273dbc3e66",
+                "complete_tool_path_length_mm": 2.9296877133538457,
+                "insertion_distance_mm": 1.4648438566769229,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41439960580077745,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-e2c67e40f12fee7279d254b1",
+                "complete_tool_path_length_mm": 2.92968771335386,
+                "insertion_distance_mm": 1.46484385667693,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41439960580077745,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-fc987fe4fb3ebc37beb7c4e4",
+                "complete_tool_path_length_mm": 0.9765625711179532,
+                "insertion_distance_mm": 0.4882812855589766,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41244648065854156,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-7c5133bc999ec59f3af12733",
+                "complete_tool_path_length_mm": 2.9296877133538737,
+                "insertion_distance_mm": 1.4648438566769368,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.4143996058007775,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-d0c8a0b4f4e1561cc99076d2",
+                "complete_tool_path_length_mm": 0.9765625711179532,
+                "insertion_distance_mm": 0.4882812855589766,
+                "normal_removed_mm3": 1.907349590437118,
+                "reward": -0.41244648065854156,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "nominal-cavity-175a15d3bff5cd888d216ccd",
+                "complete_tool_path_length_mm": 0.976562571117939,
+                "insertion_distance_mm": 0.4882812855589695,
+                "normal_removed_mm3": 0.953674795218559,
+                "reward": -0.22171152161482977,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:03f31849d13e3f9cd2e5762ee9ac61ba9f787db75b5b081afdbc094854c2d56d",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 15,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 24,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.00896633299998939,
+        "time_budget_seconds": 45,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "source_hash": "sha256:99ef94f954b5856ef9cd638845d9ab0d43faaec80f57278289f021d627aaf8dc",
+      "source_released": true,
+      "status": "complete",
+      "stop_only": true,
+      "subject": "ReMIND-025",
+      "supplied_goal_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "derived_occupancy": true,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "full_region_membership_mm3": 77974.35860665982,
+        "full_region_positive_voxels": 81762,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "added_region_hash": "sha256:fe18ba50afb2c603ca103c727a3512a60071eadff11f9d2ddf30b6fba29706fe",
+          "added_region_positive_voxels": 34358,
+          "anatomical_or_material_validation": false,
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "derived_occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "operation": "S OR (T > 0)",
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+          "source_support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+          "source_support_positive_voxels": 907842,
+          "source_support_unchanged": true,
+          "supplied_target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+          "target_unchanged": true,
+          "version": "supplied-support-target-union-v1"
+        },
+        "occupancy_modified": true,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "supported_region_membership_mm3": 77974.35860665982,
+        "target_modified": false,
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "unsupported_region_membership_mm3": 0.0,
+        "unsupported_region_positive_voxels": 0,
+        "unsupported_region_removable": false
+      },
+      "target_access_success": false
+    }
+  ],
+  "checkpoint_loads": 0,
+  "complete_wall_seconds": 23.240567584056407,
+  "global_resource_failure": null,
+  "interpretation": "S union T is an explicit unvalidated rigid-material assumption; neither condition is clinical truth",
+  "native_counts": {
+    "replay": 9,
+    "rollout": 9,
+    "search": 9
+  },
+  "negative_preparatory_moves": "not explored by existing greedy selector; STOP is not an impossibility proof",
+  "optimizer_updates": 0,
+  "policy_forwards": 0,
+  "private_reference_reads": 0,
+  "status": "complete_paired_TRAIN_search"
+}

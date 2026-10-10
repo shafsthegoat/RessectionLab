@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "groups": [
+    "Exact_raw_admission_envelope_derived_zero_budget_and_separate_protocol_transition_accounting",
+    "Pending_release_changed_order_type_model_budget_and_horizon_refused",
+    "Eight_complete_negative_STOP_rows_valid_but_missing_failed_leaked_or_prohibited_rows_refused",
+    "Owned_lease_before_scientific_import_no_learner_calls_existing_greedy_full_rollout_seal_fresh_replay_audit_and_strict_failure",
+    "Reused_owned_supervisor_loop_cleanup_and_metadata_checks_no_checkpoint_payload_hashing",
+    "Static_source_closure_includes_factory_admission_geometry_with_no_scientific_import_or_freeze"
+  ],
+  "elapsed_seconds": 0.259942375,
+  "scope": "metadata and AST only; not a patient/engine/model run",
+  "patient_array_reads": 0,
+  "native_steps": 0,
+  "model_forwards": 0,
+  "optimizer_updates": 0,
+  "checkpoint_payload_reads": 0,
+  "runtime_source_count": 80,
+  "files": {
+    "pilot_contract.py": "339697d4fbb4c24c1e7fe334d5926e58fd296c8a118b396c6b97bdb3da60ad17",
+    "search_worker.py": "a2869ec424208a680d6b0b10519ee9a84451df607db123ad31ea8cc9563c02ab",
+    "run_owned.py": "6cc1801db32bae2adcc8a77894cca1513280a87f242c5062380ec4050ca7becf",
+    "freeze-runtime.py": "f2b8cf50da1ce9aeae5c4fed2e17afcee70f5a035ebe6210576f02f1ad8963ea",
+    "check_source.py": "4608340c7f0edf1e481cb23bd57454790a42021eda71f5dce6de6f556ab2a8b7",
+    "input-index.json": "2ca8758aa64d17b4490ad4753e79a66b227cdc3992fc085bc8ef187e4fb42a95"
+  }
+}

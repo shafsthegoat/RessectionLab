@@ -1,0 +1,141 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "checkpoint_loads": 0,
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "completion": "all eight planned rows retained; capped/failed searches unresolved; each complete plan independently replayed under its own world",
+  "condition_admission": {
+    "cerebrum_plus_supplied_tumor_assumption": {
+      "actual_model_optimizer_checkpoint_calls": 0,
+      "initialization_performed": false,
+      "learning_protocol_hash": "sha256:a1deac62dd0d1506bdd186a3d4e01a68e1f191d0896fada119955453bd3ca887",
+      "limits": {
+        "max_native_previews": 7297920,
+        "max_optimizer_updates": 0,
+        "max_policy_forwards": 0,
+        "max_steps": 24,
+        "memory_bytes": 3221225472,
+        "search": {
+          "beam_width": 2,
+          "max_calls": 5640,
+          "seconds": 300
+        },
+        "threads": 1,
+        "worker_seconds": 3540
+      },
+      "raw_envelope_note": "historical raw positive admission envelope retained; runner forbids actual model work"
+    },
+    "raw_cerebrum_baseline": {
+      "actual_model_optimizer_checkpoint_calls": 0,
+      "initialization_performed": false,
+      "learning_protocol_hash": "sha256:4661fbea9a10af9919a83307b789eb1b5e798cb38089848377c10287a46824bb",
+      "limits": {
+        "max_native_previews": 7297920,
+        "max_optimizer_updates": 128,
+        "max_policy_forwards": 18624,
+        "max_steps": 24,
+        "memory_bytes": 3221225472,
+        "search": {
+          "beam_width": 2,
+          "max_calls": 5640,
+          "seconds": 300
+        },
+        "threads": 1,
+        "worker_seconds": 3540
+      },
+      "raw_envelope_note": "historical raw positive admission envelope retained; runner forbids actual model work"
+    }
+  },
+  "execution_limits": {
+    "arms": 8,
+    "candidate_cap": 120,
+    "checkpoint_loads": 0,
+    "max_execution_replay_commits": 384,
+    "max_native_previews": 100000,
+    "max_native_transition_calls": 576,
+    "max_search_commits": 192,
+    "max_steps": 24,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "search_method": "observed_greedy_search",
+    "search_seconds_per_arm": 45,
+    "threads": 1
+  },
+  "expected_head": "947e1d13b78b726aa290ce6a4f63ab6d09a8f357",
+  "input_index": {
+    "path": "build/paired-train-occupancy-search-v1/input-index.json",
+    "sha256": "2ca8758aa64d17b4490ad4753e79a66b227cdc3992fc085bc8ef187e4fb42a95"
+  },
+  "memory_bytes": 3221225472,
+  "model_forwards": 0,
+  "normalization": "raw image identical; support-percentile normalization may change and must be reported",
+  "optimizer_updates": 0,
+  "output": "build/paired-train-occupancy-search-v1/attempt-01",
+  "output_bytes": 67108864,
+  "parent_seconds": 660,
+  "planned_arms": [
+    {
+      "condition": "raw_cerebrum_baseline",
+      "subject": "ReMIND-008"
+    },
+    {
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "subject": "ReMIND-008"
+    },
+    {
+      "condition": "raw_cerebrum_baseline",
+      "subject": "ReMIND-010"
+    },
+    {
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "subject": "ReMIND-010"
+    },
+    {
+      "condition": "raw_cerebrum_baseline",
+      "subject": "ReMIND-020"
+    },
+    {
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "subject": "ReMIND-020"
+    },
+    {
+      "condition": "raw_cerebrum_baseline",
+      "subject": "ReMIND-025"
+    },
+    {
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "subject": "ReMIND-025"
+    }
+  ],
+  "private_reference_reads": 0,
+  "recipe": {
+    "bytes": 8312,
+    "path": "build/remind-cerebrum-semantics-v1/paired-train-recipe.json",
+    "sha256": "55e08ec2e9e7b3c9cd418bc6d39c0c835ac614aa605810a2432d0edd7f6846f8"
+  },
+  "scope": "source-label S versus explicit simulated S union T, not corrected anatomy",
+  "search_limit": "greedy scores all currently emitted legal actions; no negative preparatory moves/global optimum proof",
+  "source_index": {
+    "path": "build/paired-train-occupancy-search-v1/source-index.json",
+    "sha256": "6053fa4a32a73c07d5ad133b34e662105a9acf832b6c9b5270d6f6d5fa6f938c"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "version": "paired-TRAIN-occupancy-search-release-v1",
+  "worker_seconds": 600
+}

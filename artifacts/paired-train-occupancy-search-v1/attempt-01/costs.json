@@ -1,0 +1,56 @@
+{
+  "complete_wall_seconds": 23.240567584056407,
+  "count_scope": "attempted existing native transitions including failed calls; search,rollout,replay separate",
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 23.24055941682309,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 100000,
+      "planning_execution_seconds": 600.0
+    },
+    "native_preview_entries": 2035,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 495,
+          "raised": 0,
+          "rejected": 1540,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1540
+          },
+          "returned": 2035,
+          "returned_microsteps": 10883,
+          "seconds": 9.732191850664094,
+          "started": 2035
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 2035,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_counts": {
+    "replay": 9,
+    "rollout": 9,
+    "search": 9
+  },
+  "prohibited_calls": {
+    "checkpoint_loads": 0,
+    "optimizer_updates": 0,
+    "policy_forwards": 0
+  },
+  "source_visits_attempted": 8
+}

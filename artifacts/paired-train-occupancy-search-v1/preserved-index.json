@@ -1,0 +1,287 @@
+{
+  "files": [
+    {
+      "source": "build/paired-train-occupancy-search-v1/root-release.json",
+      "preserved": "root-release.json",
+      "bytes": 4477,
+      "sha256": "d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/source-index.json",
+      "preserved": "source-index.json",
+      "bytes": 11443,
+      "sha256": "6053fa4a32a73c07d5ad133b34e662105a9acf832b6c9b5270d6f6d5fa6f938c"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/input-index.json",
+      "preserved": "input-index.json",
+      "bytes": 1830,
+      "sha256": "2ca8758aa64d17b4490ad4753e79a66b227cdc3992fc085bc8ef187e4fb42a95"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/source-controls.json",
+      "preserved": "source-controls.json",
+      "bytes": 1473,
+      "sha256": "407760530fc0e9ccd12b0afa4e7a82a0d9a5eb34ab1e7a7e8d3745daa7d55954"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/pilot_contract.py",
+      "preserved": "pilot_contract.py",
+      "bytes": 10977,
+      "sha256": "339697d4fbb4c24c1e7fe334d5926e58fd296c8a118b396c6b97bdb3da60ad17"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/search_worker.py",
+      "preserved": "search_worker.py",
+      "bytes": 18850,
+      "sha256": "a2869ec424208a680d6b0b10519ee9a84451df607db123ad31ea8cc9563c02ab"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/run_owned.py",
+      "preserved": "run_owned.py",
+      "bytes": 12335,
+      "sha256": "6cc1801db32bae2adcc8a77894cca1513280a87f242c5062380ec4050ca7becf"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/freeze-runtime.py",
+      "preserved": "freeze-runtime.py",
+      "bytes": 4853,
+      "sha256": "f2b8cf50da1ce9aeae5c4fed2e17afcee70f5a035ebe6210576f02f1ad8963ea"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/check_source.py",
+      "preserved": "check_source.py",
+      "bytes": 5845,
+      "sha256": "4608340c7f0edf1e481cb23bd57454790a42021eda71f5dce6de6f556ab2a8b7"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/HANDOFF.txt",
+      "preserved": "HANDOFF.txt",
+      "bytes": 5420,
+      "sha256": "4d77055c019fc8bd9863facce242d5f669299c0b1a6182595edd753ab2f2bba8"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/result.json",
+      "preserved": "attempt-01/result.json",
+      "bytes": 169380,
+      "sha256": "e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/costs.json",
+      "preserved": "attempt-01/costs.json",
+      "bytes": 2127,
+      "sha256": "285550d91ac7ae544689d1478382b8c7d54d82a25dfd21b6560cbbbcaf006b50"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01.supervision/receipt.json",
+      "preserved": "attempt-01.supervision/receipt.json",
+      "bytes": 1643,
+      "sha256": "57e353139d4e283cd0fb302fe2fd8c954ff31ab8626cfc529045b332ffb22456"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01.supervision/worker-final.json",
+      "preserved": "attempt-01.supervision/worker-final.json",
+      "bytes": 691,
+      "sha256": "c35f6a85fbebcaddf3eabba8b728c6843cd2e00d6637e4045f493f50478a2cd6"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01.supervision/endpoint-control.json",
+      "preserved": "attempt-01.supervision/endpoint-control.json",
+      "bytes": 3642,
+      "sha256": "b00d55b427588f1afa0eff886f89a1344d09e450505ffc8d958fbb93d32e147c"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-00/plan.json",
+      "preserved": "attempt-01/arm-00/plan.json",
+      "bytes": 926,
+      "sha256": "9a499bd9242640f005d222d372ba071aa7839e525d99f5367f8cb52b1f832a36"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-00/replay.json",
+      "preserved": "attempt-01/arm-00/replay.json",
+      "bytes": 10693,
+      "sha256": "a0c202fd1c2ea154f8f91cbc723cd49c76d2782e41b938cc391612829a262a1c"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-00/search.json",
+      "preserved": "attempt-01/arm-00/search.json",
+      "bytes": 17040,
+      "sha256": "1fb7db26349285558bb492d7ef5e433029cbb5f74e46fa887cf13d71b27e670d"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-01/plan.json",
+      "preserved": "attempt-01/arm-01/plan.json",
+      "bytes": 926,
+      "sha256": "f7aef870f82f7a415e4cdd469d60bf2e06a86d0040f199902b07673266507ec0"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-01/replay.json",
+      "preserved": "attempt-01/arm-01/replay.json",
+      "bytes": 12231,
+      "sha256": "156649543d87964fac180335b9e8628bc5526df2f5b91af8b5cbd6fe7b5a26e7"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-01/search.json",
+      "preserved": "attempt-01/arm-01/search.json",
+      "bytes": 17040,
+      "sha256": "ee9ddc9fecee09e9ba291ada757b0272a9993fe16ba67648ce65dd143b314579"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-02/plan.json",
+      "preserved": "attempt-01/arm-02/plan.json",
+      "bytes": 926,
+      "sha256": "78e55482b98048f3af87371de5c76107aab3806373fa3b12df88085f7c4e3c32"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-02/replay.json",
+      "preserved": "attempt-01/arm-02/replay.json",
+      "bytes": 20682,
+      "sha256": "707c1af3e14a0c0ac16bbdfadcbff9f5ee3ad980e1464263bc22f23175955c2d"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-02/search.json",
+      "preserved": "attempt-01/arm-02/search.json",
+      "bytes": 11818,
+      "sha256": "0414748c7a656b52d0e2c5212c5346630832a4eae8acaa8ebfa1f186d4823f60"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-03/plan.json",
+      "preserved": "attempt-01/arm-03/plan.json",
+      "bytes": 926,
+      "sha256": "b27cb0c0fb5695b5c6e05a7d8cd8b8dcd13697555119dee0003d7088799964e7"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-03/replay.json",
+      "preserved": "attempt-01/arm-03/replay.json",
+      "bytes": 22220,
+      "sha256": "0bce365776a3c0e978b2682acb2a0450b6eb22f9b283d07880159f415535b1d8"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-03/search.json",
+      "preserved": "attempt-01/arm-03/search.json",
+      "bytes": 11122,
+      "sha256": "fe1f36d11372a4972a23e7e8c4d061016b6bd9aeae88646ebf88368b319eeecb"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-04/plan.json",
+      "preserved": "attempt-01/arm-04/plan.json",
+      "bytes": 926,
+      "sha256": "16ea1b3c0b2ab629f39de26c1e71c6035a976db03247e631e1aefecf28ebea57"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-04/replay.json",
+      "preserved": "attempt-01/arm-04/replay.json",
+      "bytes": 20661,
+      "sha256": "e3103e197a017cd831cf0b5c0531ac851173321ba998d01708e6557e4414b5ce"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-04/search.json",
+      "preserved": "attempt-01/arm-04/search.json",
+      "bytes": 9375,
+      "sha256": "aef986317a144cb2491557c94e341429bf8fc3dcc68efc6bb173604f7d7cdd3f"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-05/plan.json",
+      "preserved": "attempt-01/arm-05/plan.json",
+      "bytes": 926,
+      "sha256": "dcc2fe347623483db792398f11c8762c845ac793f568da39be4668827c9c0944"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-05/replay.json",
+      "preserved": "attempt-01/arm-05/replay.json",
+      "bytes": 22201,
+      "sha256": "d4fa9ac3724dd0ac4befe7a67533aaed805fec179d668019904b1924530da5ad"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-05/search.json",
+      "preserved": "attempt-01/arm-05/search.json",
+      "bytes": 9375,
+      "sha256": "f825e76d83fcf31ae638d04a0f7163030bb780d9a05cbc1c148a93f587bad76a"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-06/plan.json",
+      "preserved": "attempt-01/arm-06/plan.json",
+      "bytes": 23394,
+      "sha256": "792b2a232236b1c6b9af101ce8bee368a0ed8b50cc363b64e3a2f27c4fdd6707"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-06/replay.json",
+      "preserved": "attempt-01/arm-06/replay.json",
+      "bytes": 43386,
+      "sha256": "c3a6358dbe61d85dca22a3bbfb10a0ad18f66c432bd876724cbf6294ec930390"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-06/search.json",
+      "preserved": "attempt-01/arm-06/search.json",
+      "bytes": 12811,
+      "sha256": "baf400417c04051ae7bfcb89f165d79a67621955bf7f22d33c605de5ddfb41af"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-07/plan.json",
+      "preserved": "attempt-01/arm-07/plan.json",
+      "bytes": 926,
+      "sha256": "f5be8b579ccb552ac5c43ec0344c78e089fd88226f280284f256858310aa2ed6"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-07/replay.json",
+      "preserved": "attempt-01/arm-07/replay.json",
+      "bytes": 22252,
+      "sha256": "add9ad8af66e8fd4e54646941a0667e63aaf0475d1b9a6919bd0cf44c0ed4556"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-07/search.json",
+      "preserved": "attempt-01/arm-07/search.json",
+      "bytes": 6563,
+      "sha256": "906761e7b752d076c10a020371d74269629abea0c767dc49dea3390ecbf96a7b"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-03/initial-inventory.json",
+      "preserved": "attempt-01/arm-03/initial-inventory.json",
+      "bytes": 206886,
+      "sha256": "019e69d7ddcf258ef513021074f3b9b241907096dcc242e5ad0c6f9fa3949df5"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-06/initial-inventory.json",
+      "preserved": "attempt-01/arm-06/initial-inventory.json",
+      "bytes": 186598,
+      "sha256": "6c8efebb10740179208374394291f219a6f17ff10b7f38d44ee2621a5f8d771f"
+    },
+    {
+      "source": "build/paired-train-occupancy-search-v1/attempt-01/arm-07/initial-inventory.json",
+      "preserved": "attempt-01/arm-07/initial-inventory.json",
+      "bytes": 187896,
+      "sha256": "21b332aa00a543ca1587b99bbf892a63e67ec5f32bc1ce47f2be61c85ab2830a"
+    },
+    {
+      "source": "build/paired-train-occupancy-independent-v1/REPORT.txt",
+      "preserved": "independent/REPORT.txt",
+      "bytes": 5768,
+      "sha256": "e5107c6206440418ae7b55466a5933698160f976f9e208d3efd906511731b95e"
+    },
+    {
+      "source": "build/paired-train-occupancy-independent-v1/audit_saved.py",
+      "preserved": "independent/audit_saved.py",
+      "bytes": 17437,
+      "sha256": "cc5e2f4e34c82aeea07d05968c176da87275e2c33276a4b14c0e1aed23d6a827"
+    },
+    {
+      "source": "build/paired-train-occupancy-independent-v1/audit-result.json",
+      "preserved": "independent/audit-result.json",
+      "bytes": 78755,
+      "sha256": "a146b86e4597919971862a5f14426d9a24ecb8093ccce45b902fdef3cd418be1"
+    },
+    {
+      "source": "build/paired-train-occupancy-independent-v1/input-hashes.json",
+      "preserved": "independent/input-hashes.json",
+      "bytes": 27255,
+      "sha256": "1b18b6b46694ce5d36aa2468891196dda1ce4e8a588495d762499c72a1234a15"
+    },
+    {
+      "source": "build/paired-train-occupancy-independent-v1/counterpart-check.json",
+      "preserved": "independent/counterpart-check.json",
+      "bytes": 7294,
+      "sha256": "e9bdbfb6892d7b945bfe69dbbf7f4fec4b05db6474e1653a43edc78ca37116d2"
+    }
+  ],
+  "patient_arrays_or_weights": false
+}

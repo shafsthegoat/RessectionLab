@@ -1,0 +1,13 @@
+Paired TRAIN occupancy sensitivity: negative result, all eight arms complete.
+
+Fixed TRAIN008/010/020/025 each compare unchanged raw cerebrum S with explicitly simulated S union supplied tumor T. Access, tools, reward, raw MRI, full target/domain and proposal rule remain paired. No patient material/anatomy truth is inferred from the union. No learning, policy forwards, checkpoint loads, private references or held-out cases are used.
+
+Raw routes exactly match previous beam and cheap greedy: 008/010/020 STOP;025 removes one supplied-target source cell (0.953674795218559 mm3), then STOP, reward +0.9168388572207332. All four union arms STOP with zero reward/removal. Exact025 tool/entry/tip/endpoint counterpart changes from feasible to SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE, so this is a geometric admissibility change rather than changed action identifiers. Neither occupancy interpretation is physically validated.
+
+Union010 has two omitted tool-footprint proposals at cap120; their legality remains unknown. The greedy searches score all emitted legal actions, not every declared or surgical path; negative preparation is not explored. Consequently STOP does not prove no beneficial route exists. The raw positive cannot be treated as robust to occupancy assumptions.
+
+Owned execution: 25.625766084 s, sampled peak1772158976 bytes,2498570 output bytes,2035 native previews;9 search +9 rollout +9 replay transitions. All eight full sequences pass native and independent geometric replay. Independent saved audit passes2151 checks and a176-check geometric join, verifies80 source+13 metadata files, and opens no patient arrays/models.
+
+Executed HEAD947e1d13b78b726aa290ce6a4f63ab6d09a8f357. Release d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a; result e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b.
+
+Next: enumerate all15 legal root preparation actions for the fixed union025 target ray, accounting for actual first-failure shaft blockers and full prep+ray costs. Preserve reward, geometry and STOP comparator. Resolve the two010 omitted rays separately. Further neural training awaits a useful, explicitly scoped task; current evidence establishes no held-out or clinical benefit.
