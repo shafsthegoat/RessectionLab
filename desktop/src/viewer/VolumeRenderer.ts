@@ -21,8 +21,8 @@ import type {
 } from "./contracts";
 import { InstrumentDisplayState } from "./inspectionTool";
 import type { InspectionToolDisplay, InstrumentCapsuleDisplay } from "./inspectionTool";
-import { recordedToolDisplay } from "./recordedTool";
-import type { RecordedToolDisplay } from "./recordedTool";
+import { checkedRecordedEpisodeBounds, recordedToolDisplay } from "./recordedTool";
+import type { RecordedEpisodeBounds, RecordedToolDisplay } from "./recordedTool";
 import { instrumentCapsuleMeshes, inspectionToolMeshes } from "./inspectionToolGeometry";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
@@ -129,6 +129,8 @@ export class VolumeRenderer {
   private readonly inspectionTools = new THREE.Group();
   private readonly recordedTools = new THREE.Group();
   private recordedDisplay: RecordedToolDisplay | null = null;
+  private replayBounds: RecordedEpisodeBounds | null = null;
+  private fittedReplayId: string | null = null;
   private readonly instrumentDisplay = new InstrumentDisplayState();
   private readonly replayGroup = new THREE.Group();
   private replayWorker: Worker | null = null;
@@ -527,6 +529,7 @@ export class VolumeRenderer {
     this.replayGroup.clear();
     this.replayActive = false;
     this.recordedDisplay = null;
+    this.replayBounds = null;
     disposeObject(this.recordedTools);
     this.recordedTools.clear();
     this.anatomy.visible = true;
@@ -539,6 +542,7 @@ export class VolumeRenderer {
     if (!replay) return;
     validateReplay(this.volume, replay);
     const recorded = recordedToolDisplay(this.volume, replay);
+    const cameraBounds = checkedRecordedEpisodeBounds(this.volume, replay);
     this.setStructuralProposal(null);
     this.setPriorLayer(null);
 
@@ -555,11 +559,16 @@ export class VolumeRenderer {
     this.replayActive = true;
     this.instrumentDisplay.setReplay(true);
     this.recordedDisplay = recorded;
+    this.replayBounds = cameraBounds;
     if (recorded) this.recordedTools.add(instrumentCapsuleMeshes(recorded, "executed-generated-episode", recorded.identity));
     disposeObject(this.inspectionTools);
     this.inspectionTools.clear();
     this.syncInstrumentDisplay();
     this.anatomy.visible = false;
+    // Fit after the replay is installed, once per episode. All later frame/tool
+    // changes share this envelope and preserve the user's orbit and zoom.
+    if (this.mode === "instruments" && cameraBounds && this.fittedReplayId !== cameraBounds.episodeId)
+      this.fitCamera("instruments");
     // Route candidates show terminal approach poses, not certified replay motions.
     this.tools.visible = false;
     const pending = new THREE.Group();
@@ -916,7 +925,11 @@ export class VolumeRenderer {
       );
     else box.expandByScalar(12);
     const visibleTools = this.recordedTools.visible ? this.recordedTools : this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
-    if (mode === "instruments" && visibleTools.visible && !new THREE.Box3().setFromObject(visibleTools).isEmpty())
+    if (mode === "instruments" && this.replayActive && this.replayBounds) {
+      const [low, high] = this.replayBounds.boundsRasMm;
+      box.union(new THREE.Box3(new THREE.Vector3(...low), new THREE.Vector3(...high))).expandByScalar(8);
+      this.fittedReplayId = this.replayBounds.episodeId;
+    } else if (mode === "instruments" && visibleTools.visible && !new THREE.Box3().setFromObject(visibleTools).isEmpty())
       box.union(new THREE.Box3().setFromObject(visibleTools)).expandByScalar(8);
     const centre = box.getCenter(new THREE.Vector3()),
       size = box.getSize(new THREE.Vector3());

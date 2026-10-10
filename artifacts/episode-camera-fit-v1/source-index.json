@@ -1,0 +1,54 @@
+{
+  "version": "episode-camera-fit-v1",
+  "files": [
+    {
+      "source": "build/episode-camera-fit-v1/stage/desktop/src/native-episode-replay.ts",
+      "target": "desktop/src/native-episode-replay.ts",
+      "bytes": 12648,
+      "sha256": "0e687be51835d8b38719a48e541a57045b3b955d2e5e76b98cf0276636426ef7",
+      "beforeSha256": "26a8e6f98a03ae523d13285777065d7358ca667eda7bfb81bb385650aee0761f"
+    },
+    {
+      "source": "build/episode-camera-fit-v1/stage/desktop/src/viewer/contracts.ts",
+      "target": "desktop/src/viewer/contracts.ts",
+      "bytes": 2978,
+      "sha256": "63252df005839ac8c5512a3a3c709afb72b36e308e5c245b668f4889838cc8ee",
+      "beforeSha256": "cbe9afc0bde419641b2552f2f14aa99b05a310a65927d787542e7965985dfd21"
+    },
+    {
+      "source": "build/episode-camera-fit-v1/stage/desktop/src/viewer/recordedTool.ts",
+      "target": "desktop/src/viewer/recordedTool.ts",
+      "bytes": 4292,
+      "sha256": "1893b64ef8123a4da48073889c034aaa0d9cde12ad76e9b5ed5d3904abb6367f",
+      "beforeSha256": "fab69817085b92ef9fc1ce0ed4170d4b2b615f602cd8d1baac6822e0f9092e70"
+    },
+    {
+      "source": "build/episode-camera-fit-v1/stage/desktop/src/viewer/ViewerWorkspace.tsx",
+      "target": "desktop/src/viewer/ViewerWorkspace.tsx",
+      "bytes": 27054,
+      "sha256": "9c2df8c89285fb7d9f48eab9482d388a4b4831143e784f0e825964508106c8bd",
+      "beforeSha256": "f5a748267cd3aeab708716c9db272327ecedc6ce153e41c04acbfdfe0a66aacc"
+    },
+    {
+      "source": "build/episode-camera-fit-v1/stage/desktop/src/viewer/VolumeRenderer.ts",
+      "target": "desktop/src/viewer/VolumeRenderer.ts",
+      "bytes": 40962,
+      "sha256": "5037f42d9cbad88b8a86fbd951d2578b0784e1bc1c57e841fddc1cdebec846a0",
+      "beforeSha256": "982859a14599333163142384e05b1754369dee581e7129fb342758f7b614eaaa"
+    },
+    {
+      "source": "build/episode-camera-fit-v1/stage/desktop/src/viewer/episodeCamera.test.mjs",
+      "target": "desktop/src/viewer/episodeCamera.test.mjs",
+      "bytes": 6466,
+      "sha256": "532a8d8a7d1aed086ae8c00de2803cd35287eb0766f1bfc2a0e3ed791c169a46",
+      "beforeSha256": null
+    }
+  ],
+  "sourcePatchSha256": "d2bc5ffb770e6c201b181c84874c569b52e883945b6b381118a1a0f649b500fe",
+  "validation": {
+    "geometryControls": 5,
+    "testsSha256": "a2024f5950a5e953c09791faa92c2ae694e94f26f631498a87552a1c3d9f4743",
+    "typecheck": "pass"
+  },
+  "scope": "Saved generated geometry / CPU THREE only; no UI/native/model. No App edits."
+}

@@ -1,6 +1,7 @@
 import type {CasePayload,ResectionApi} from './types.ts';
 import type {DevelopmentEpisode,NativeCell} from './episode-types.ts';
 import type {ViewerReplay} from './viewer/contracts.ts';
+import {recordedEpisodeBounds} from './viewer/recordedTool.ts';
 import {hydrateCase,validateCaseDescriptor} from './case-data.ts';
 import {arrayDigest,sha256Bytes,sourceImageDigest,sourceFrameDigest} from './source-integrity.ts';
 export type NativeEpisodeGeometry=Omit<DevelopmentEpisode,'schema'|'selector'|'history'|'metrics'|'planning'> & {schema:string;history:Array<Omit<DevelopmentEpisode['history'][number],'reward'|'target_removed_mm3'|'normal_removed_mm3'>>};
@@ -118,5 +119,7 @@ export async function hydrateNativeEpisodeReplay<T extends NativeEpisodeGeometry
   }
   requireValue(episode.initialStateId===episode.replayFrames[0].stateAfter && episode.finalStateId===episode.replayFrames.at(-1)!.stateAfter &&
     same(sorted(episode.finalRemovedIndicesNative),Array.from(removed.keys()).filter(n=>removed[n])), "final cavity differs from executed history.");
+  const cameraBounds = recordedEpisodeBounds(volume, frames, episode.episodeId);
+  for (const frame of frames) frame.recordedEpisodeBounds = cameraBounds;
   return {episode,source,volume,frames,contactCounts,probeCounts};
 }

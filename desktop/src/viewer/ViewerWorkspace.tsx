@@ -208,6 +208,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     ready,
     caseData,
     replay?.recordedTool,
+    replay?.recordedEpisodeBounds,
     replay?.removedMask,
     replay?.step,
     replay?.stepCount,

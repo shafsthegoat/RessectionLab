@@ -96,6 +96,7 @@ export interface ViewerStructuralProposal {
 }
 
 export interface ViewerReplay {
+  recordedEpisodeBounds?: import("./recordedTool").RecordedEpisodeBounds | null;
   recordedTool?: import("./recordedTool").RecordedToolPose | null;
   removedMask: Uint8Array;
   step: number;

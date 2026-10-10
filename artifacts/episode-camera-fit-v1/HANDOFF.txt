@@ -1,0 +1,14 @@
+Camera-only correction for observed clipped long probe during generated family replay.
+
+Cause: camera mode/update runs before setReplay installs its tool. setReplay does not fit the camera, and manual Fit instruments uses only the current capsule. The camera can therefore retain anatomy/aspiration bounds when the long probe appears.
+
+Fix: after complete native replay validation, derive one display-only full-episode shaft/tip capsule envelope, including radii and reversed withdrawal poses. Give it to all replay frames including the initial and STOP frames. When instruments mode receives a new episode, fit after installation once. Manual Fit instruments uses the same envelope. Timeline changes and switching tools preserve orbit/zoom; hiding and showing the same episode also preserve them. Anatomy mode does not auto-refit. Existing unrecorded inspection/route fallback remains.
+
+Exactly five source files plus one test in source-index.json/source.patch. No App edit or transport/backend/schema/evidence change; the camera bounds are derived renderer data, never backend input. Neighboring copied source is excluded.
+
+Five focused controls pass using actual saved generated SEARCH and STOP assets, existing hydration, real renderer methods and CPU THREE objects: every capsule/radius enclosed; perspective fit across three aspect ratios at initial frame; orbit preserved across all 29 frames and aspiration/probe switch; new episode/refit versus anatomy/hide behavior; rotated fractional geometry and mismatched source/episode rejection. TypeScript passes. No WebGL/Electron/UI process, Python, native transitions, checkpoint/model/private data calls.
+
+Command from repository root: NODE --experimental-strip-types --test build/episode-camera-fit-v1/stage/desktop/src/viewer/episodeCamera.test.mjs
+NODE=/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node
+
+Root-only integration and eventual live verification. Save button availability is intentionally outside this camera correction.

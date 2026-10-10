@@ -1265,3 +1265,8 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 ## Fixed axial specimen calibration retains substantial error
 
 [Actual result](../artifacts/hbe-v5-axial-calibration-result-v1/RESULT.md): one authorized fit, two original DEVELOPMENT members, 60 total correlated rows, no native call or held-out read. The fixed scale is 0.715361571139082 (μ715.3616Pa). Compression/tension normalized RMSE0.3722/2.8421; no empirical tolerance or physical pass. Independent saved-only arithmetic agrees without reopening the archive. Exact terminal, publication and access records are retained; fixed-fit confirmations and unopened torque prediction remain pending.
+
+
+## Whole-episode camera bounds repair
+
+[Camera correction](../artifacts/episode-camera-fit-v1/RESULT.md) responds to an actual clipped-probe screenshot. Five focused and77 viewer controls pass plus build; independent source review agrees. Full validated episode bounds are fitted once, preserving orbit during scrubbing. No App/neighboring edits or backend changes. Live repair check remains next.
