@@ -6,6 +6,37 @@ human instructions below. Its [source receipt](../manifests/real_observation_sup
 binds the preserved original text; that historical copy is not rewritten.
 This is a compact execution record, not a replacement specification.
 
+## Cross-patient experiment priority, October 10
+
+The latest human attachment (`b0f2b621-b926-4bd6-aa8d-d9ee2b43c8c0/Pasted text.txt`)
+prioritizes one complete cross-patient, limited-information experiment over further
+small generated-task improvements. Finish current slices, then qualify acquired
+patient anatomy, define one instrument-aware task, compare complete decisions and
+iterate on measured failures. Keep the original supergoal, integration-first path,
+patient roles, unsuccessful results and incremental history. Additional architecture
+sweeps and the torsion CSV format repair are deferred; poor tissue-force fidelity
+does not block explicitly geometric planning research.
+
+Perception and decision learning remain separate. Supplied target annotations must
+be explicit task inputs; missing critical anatomy stays unknown. Search and the
+actor receive the same permitted world. Private evaluation annotations must not
+change support, access, proposals, legality or stopping. Freeze assumptions and
+rewards during optimization; separate TRAIN, SELECT and frozen transfer results,
+and account separately for training and deployment compute. Simulator actions on
+real anatomy remain simulated, not recorded surgery or clinical outcomes.
+
+The immediate candidate is ReMIND preoperative MRI with source tumor and ventricular
+annotations, preserving existing component roles. The [official source](https://www.cancerimagingarchive.net/collection/remind/)
+identifies manual whole-tumor annotations and automatic Brainlab cerebrum/ventricle
+segmentations created during preoperative planning. A whole-tumor annotation is
+not automatically the surgeon's resection target; the first task must declare its
+supplied target and score agreement with source ventricular estimates rather than
+claim independent manual truth. Exact geometry, coverage and source references
+remain to be checked. Qualified pretrained perception is permitted by the latest
+steering; old blanket synthetic-model exclusions are not a scientific justification
+for indefinite delay. They must be replaced only where an exact intended-use
+contract is needed, without silently admitting unknown model lineage.
+
 ## Active human steering, October 8
 
 The user explicitly superseded the earlier real-data-only training restriction:
