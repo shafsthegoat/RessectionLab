@@ -1,0 +1,73 @@
+Patient planning post-seal annotation adapter — HOLD for one integration repair
+
+Reviewed source: src/resectionlab/patient_planning_evaluation.py SHA256
+1d8dd05ee04e446c950a9cbf3892e6de7a6aa7e3cc0892936d2fef5a596f0e8e.
+Producer draft: build/cross-patient-planning-v1/stage/resectionlab/patient_planning_preflight.py
+SHA256 8869aea5fad77b9d1020a2f2efd24fb3a15c70a199d257343218417687431774.
+Seven root-authored controls were read, not rerun. One additional generated
+interoperability probe completed in 0.4961 s / 74,727,424 B peak self RSS.
+All three source snapshots were unchanged; no blocked access attempts occurred.
+
+Required repair: preserve and verify the authoritative replay history separately.
+The producer seals plan.history from a planning clone, with each outcome_scope
+set to permitted_nominal_model. It replays the exact public actions into a fresh
+authoritative task, whose corresponding scope is separate_evaluator_reference.
+Producer _history_identity intentionally removes only that key to establish
+equivalence, while evaluate_native_spatial_episode binds committed_history_hash
+to the exact authoritative history. The new evaluator instead compares this
+audit hash with semantic_digest(plan.history), so compatible authentic output is
+rejected. Existing tests use authoritative history for both and miss the seam.
+
+The additional probe reuses the existing small generated native fixture, its
+actual geometry audit and the producer's exact extracted _history_identity AST.
+It retains the audit, seals the equivalent nominal history and reproduces
+accepted_complete_native_geometry_required with zero private-loader calls.
+Evidence is schema-probe.json and schema-probe-console.txt. This is not a patient
+or model execution, and it does not run the Torch-dependent producer.
+
+Narrow remedy: producer rows retain replayed_history as the exact history that
+was audited. Consumer verifies committed_history_hash against replayed_history,
+requires the sealed nominal and replay histories to be identical except for the
+one explicitly permitted outcome_scope distinction, and uses the authenticated
+replay poses for scoring. Preserve the original plan seal and native audit hash;
+do not silently replace or reinterpret either. A positive producer-shaped control
+plus changed replay-pose/history negative should pass/fail before private loading.
+
+Other reviewed properties:
+- Expected SHA binds the saved complete bundle. All SEARCH/IL/RL records, public
+  source/model/initial observation/context, seals, completion, audit acceptance
+  and contiguous axial microsteps are checked before the sole private callback.
+  No planner/model/reference-dependent action, objective, crop or hard constraint
+  is constructed here. The file is checked again immediately after loading.
+- sweeps_from_native_history validates every insertion microstep and collapses
+  only the contiguous unchanged-axis union; reverse withdrawal covers that same
+  envelope. Both shaft and active tip capsules are scored. Streaming evaluates
+  the full supplied reference grid and unions duplicate contacts per action and
+  strategy. It does not intersect with nominal support and hide annotations there.
+- Positive labels outside explicit coverage are refused. A no-hit sweep with
+  unknown in-grid cells or outside-reference-FOV reach stays unknown. STOP-only
+  plans have no swept contact. Cell-volume surrogates are not continuous overlap.
+- The adapter reports annotation encounters, not removed tissue, injury,
+  ventricular-label accuracy, biological absence or clinical probabilities.
+  Source automatic labels remain derived source annotations. The streaming
+  primitive's generic vessel-related null fields confer no vascular evidence.
+
+Caller boundaries remain real and are not independently established here:
+- The callback is trusted to authenticate annotation source bytes/meaning and
+  return the qualified same-patient mask, coverage and RAS grid. A matching person,
+  source SHA string and qualified_common_RAS_mm_frame token do not themselves
+  perform registration or source QC. Different reference grids require upstream
+  checked common coordinates; no transform is estimated by this adapter.
+- A trusted exact bundle digest must come from the source-bound producer/runner.
+  These saved boolean audit records are verified for binding, not rerun geometry.
+  This layer is not a hostile in-process callback sandbox or file-access barrier.
+- Bundle reads and mask copies have no independent hard allocation/wall guard;
+  the three 30-second streaming budgets are cooperative, per method. The existing
+  owned-worker resource supervisor and upstream dimensional admission must cover
+  loading, copying, scoring and failure receipts before any actual execution.
+
+No source files were edited. All review/probe evidence is ignored under build/.
+Actual patient, label, raw image, model, checkpoint, native solver, network and
+large experiment processing remain outside this review. The demonstrated schema
+repair is the only source-promotion blocker found in this proportional pass;
+patient/reference qualification remains a separate execution prerequisite.

@@ -1,0 +1,17 @@
+{
+  "consumer": "refused",
+  "elapsed_seconds": 0.49608766683377326,
+  "forbidden_access_attempts": [],
+  "peak_self_rss_bytes": 74727424,
+  "private_load_calls": 0,
+  "producer_normalized_history_matches": true,
+  "raw_planning_history_differs_from_audited_committed_history": true,
+  "reason": "accepted_complete_native_geometry_required",
+  "source_sha256": {
+    "build/cross-patient-planning-v1/stage/resectionlab/patient_planning_preflight.py": "8869aea5fad77b9d1020a2f2efd24fb3a15c70a199d257343218417687431774",
+    "src/resectionlab/patient_planning_evaluation.py": "1d8dd05ee04e446c950a9cbf3892e6de7a6aa7e3cc0892936d2fef5a596f0e8e",
+    "tests/test_patient_planning_evaluation.py": "43732c8bb3a119e5ec8da068f749ecb8bef0546221d96f1f15a36c1445d20747"
+  },
+  "source_unchanged": true,
+  "status": "CONFIRMED_PRODUCER_CONSUMER_MISMATCH"
+}

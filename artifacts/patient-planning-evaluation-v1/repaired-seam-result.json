@@ -1,0 +1,42 @@
+{
+  "cases": [
+    {
+      "case": "two_motions",
+      "changed_replay_refused_before_load": true,
+      "original_committed_history_hash": "sha256:9180d8d21044b8253f23052b9073acb00b4b0ab0b3320c6f7195cd31a4206e40",
+      "original_plan_seal": "sha256:9385426843605910223d434e976a99b70e65e171f5de78914a8b1a75f6558e31",
+      "positive": "PASS",
+      "private_load_calls_positive": 1,
+      "private_load_calls_tamper": 0
+    },
+    {
+      "case": "STOP_only",
+      "changed_replay_refused_before_load": true,
+      "original_committed_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "original_plan_seal": "sha256:74366a44e45979914e052d7b76118a2e205b13751d798e4e9e5a41e133c872f6",
+      "positive": "PASS",
+      "private_load_calls_positive": 1,
+      "private_load_calls_tamper": 0
+    },
+    {
+      "case": "aspiration_then_STOP",
+      "changed_replay_refused_before_load": true,
+      "original_committed_history_hash": "sha256:8e25e72137d3a1407b2a2aaf27845f978a9f7c59b0b549b7d2daa1e6993189f2",
+      "original_plan_seal": "sha256:9fb432ba26daa03848fa2ea8cab23a5a06e27648d892234ac191c417968efea1",
+      "positive": "PASS",
+      "private_load_calls_positive": 1,
+      "private_load_calls_tamper": 0
+    }
+  ],
+  "elapsed_seconds": 0.5283878329209983,
+  "forbidden_access_attempts": [],
+  "peak_self_rss_bytes": 70041600,
+  "scope": "Exact producer sealing/replay function only; generated trace/context admission stubs; no Torch orchestration or patient admission.",
+  "source_sha256": {
+    "build/cross-patient-planning-v1/stage/resectionlab/patient_planning_preflight.py": "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04",
+    "src/resectionlab/patient_planning_evaluation.py": "7df507ffce9ac6a1200dd8014a654a962720a7d5aa93d9f8d5288a2e96d97db4",
+    "tests/test_patient_planning_evaluation.py": "d4d228c0b10100de08aedeef1d62d166e9b2a28fd9a05e849edcbad11f99c259"
+  },
+  "sources_unchanged": true,
+  "status": "PASS_GENERATED_PRODUCER_CONSUMER_SEAM"
+}
