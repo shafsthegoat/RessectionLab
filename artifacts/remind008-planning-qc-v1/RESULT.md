@@ -9,3 +9,14 @@ The important negative is semantic:6,394 of 18,509whole-tumor positives (34.545%
 294,560 of 320,127ventricular positives (92.013%) occupy public support zeros. This supplies anatomical cues, but only 2.108% of all  support zeros are ventricular positives.309 tumor and ventricular positives overlap. These are automatic source-reference relationships, not neurological harm labels. Withheld ventricular arrays remain excluded from public task preparation. Patient model training has not yet run.
 
 Patient images, masks, overlays and detailed source headers stay local outside Git. All previous cohorts and roles are preserved.
+
+## Reusable remaining-TRAIN preparation
+
+The executed first-case geometry and sample checks are now consolidated into
+`resectionlab.remind_planning_qc` and `scripts/prepare_remind_planning.py`. Exact
+case/header bindings preserve the original TRAIN roles and source objects. The
+canonical imaging environment passes all nine generated controls in 0.010 seconds;
+the CLI loads successfully and independent source review passes. An initial pytest
+invocation could not run because pytest is absent in that environment; the tests
+use standard-library unittest and ran directly without changing dependencies.
+This source integration performs no further patient reads or planning admission.

@@ -1,0 +1,27 @@
+{
+  "decision": "PASS_REUSABLE_SOURCE_CONSOLIDATION_FOR_ROOT_INTEGRATION",
+  "findings": [
+    "Independent AST comparison confirms23 geometry/source/sample/grid/image helpers structurally unchanged from executed008 snapshots.",
+    "Generic exact-case entry joins all object paths, sizes, SHA/MD5 and series UUIDs against hash-bound parent, verifies source series identity/count, and checks immutable cohort SHA and TRAIN family role.",
+    "Hash-bound completed header projection must match case source objects and series identity; SEG frame mismatch or explicit SOP references outside selected MR refuse before decoder access.",
+    "Crop preserves public support extent, native MR samples and both affines, source-domain masks, no interpolation or automatic annotation admission. Resource estimate is declared as an estimate and retains the existing2GiB ceiling; root supervision remains required.",
+    "Public target/support and target/ventricular-reference conflict reports retain source arrays unchanged and record source SOP-link presence per SEG."
+  ],
+  "generated_tests": {
+    "passed": 9,
+    "patient_files_opened": 0,
+    "seconds": 0.013
+  },
+  "limits": [
+    "Staged tests load the module from exact source bytes. Normal CLI package import and installed phase execution are not demonstrated until root integrates the files.",
+    "This source review does not assert actual geometry, shape, resource use or intended-use eligibility for010/020/025. Each next root run begins with its exact case and saved header projection; rejected cases remain in the denominator.",
+    "No new clinical or segmentation accuracy claim, exact acquisition timestamp assumption or role change."
+  ],
+  "pins": {
+    "build/remind-planning-qc-independent-v1/reusable-generated-tests.txt": "915c15912b8e3142b4a95cffe56ec74a84448f5c41b462cfc045d44de272bf7f",
+    "build/remind-planning-qc-v1/promotion-code-v1/scripts/prepare_remind_planning.py": "c117c5b5671e54c9b0e5670def8b4073bee8b8e9f5e0c99115e1cc3a14674216",
+    "build/remind-planning-qc-v1/promotion-code-v1/src/resectionlab/remind_planning_qc.py": "77d91566a48d2b47c3ba59d5a7d05b51a0709022ad225cbe4d9410773c6312b1",
+    "build/remind-planning-qc-v1/promotion-code-v1/tests/test_remind_planning_qc.py": "e53a1549a32d83e923bea3edf8fbcb5b0e825d4493afbcb5828c12a6aa8e6c95"
+  },
+  "scope": "Source and nine generated controls only. No original patient payload or saved008 array reopen; no actual phase replay."
+}
