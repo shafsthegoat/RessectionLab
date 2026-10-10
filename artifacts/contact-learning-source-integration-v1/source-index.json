@@ -1,0 +1,102 @@
+{
+  "version": "public-contact-learning-promotion-v1",
+  "files": [
+    {
+      "proposal": "learning-stage/resectionlab/contact_checkpoint.py",
+      "destination": "src/resectionlab/contact_checkpoint.py",
+      "sha256": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_costs.py",
+      "destination": "src/resectionlab/contact_costs.py",
+      "sha256": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_family_episode.py",
+      "destination": "src/resectionlab/contact_family_episode.py",
+      "sha256": "01722c9e71d7e31fd3b5aef2b0e3ae1c7353240d2605a339d471b4b3d7b8fa31",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_learning.py",
+      "destination": "src/resectionlab/contact_learning.py",
+      "sha256": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_learning_contract.py",
+      "destination": "src/resectionlab/contact_learning_contract.py",
+      "sha256": "2d8eea67cc2280a62959d9e676960cca4243d0a07fa152d56481f1edca7b9827",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_learning_pilot.py",
+      "destination": "src/resectionlab/contact_learning_pilot.py",
+      "sha256": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/development_episode.py",
+      "destination": "src/resectionlab/development_episode.py",
+      "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+      "base_sha256": "de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162"
+    },
+    {
+      "proposal": "learning-stage/tests/test_contact_learning.py",
+      "destination": "tests/test_contact_learning.py",
+      "sha256": "cdd4bd692336ce5fcf03d27fb3d41992c6b2a921633b64cd6b81e3b86ed3abc0",
+      "base_sha256": null
+    }
+  ],
+  "protocol_status": "source_preparation_only_no_execution_release",
+  "checks": {
+    "exit_code": 0,
+    "wall_seconds": 3.8820337920915335,
+    "threads": 1,
+    "interop_threads": 1,
+    "peak_rss_bytes": 344064000,
+    "native_transitions": 0,
+    "geometry_previews": 0,
+    "optimizer_steps": 0,
+    "teacher_searches": 0,
+    "evaluation_episodes": 0,
+    "checkpoint_scope": "new_zero_update_scratch_codec_controls_only; no trained/historical checkpoint or patient file",
+    "passed": 28,
+    "failed": 0,
+    "log_sha256": "0f0b163192c609f741f7eec1c00b28b02208dac7ba65f43924c1987162f0c72c",
+    "source_sha256": {
+      "learning-stage/resectionlab/contact_checkpoint.py": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+      "learning-stage/resectionlab/contact_costs.py": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+      "learning-stage/resectionlab/contact_family_episode.py": "a1f9350c7d2a0dbf18744c12bade10e0f5fb502e9e99847234d996c597ee199d",
+      "learning-stage/resectionlab/contact_learning.py": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+      "learning-stage/resectionlab/contact_learning_contract.py": "2d8eea67cc2280a62959d9e676960cca4243d0a07fa152d56481f1edca7b9827",
+      "learning-stage/resectionlab/contact_learning_pilot.py": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+      "learning-stage/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+      "learning-stage/tests/test_contact_learning.py": "cdd4bd692336ce5fcf03d27fb3d41992c6b2a921633b64cd6b81e3b86ed3abc0"
+    }
+  },
+  "old_forward_stage": "frozen_unchanged_independent_GO",
+  "exporter_schema": "resectionlab.shared-native-contact-learning-episode.v3",
+  "desktop_admission": "not_implemented_current_v2_fixed_fixture_refuses_family",
+  "native_rollout_training_and_exporter_status": "source_only_unexecuted",
+  "dependencies": {
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/goal_mode_episode_adapter.py": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+    "src/resectionlab/public_contact_family.py": "f4582060d0fb17bbe1ffeecc65a39d5bd1fc2b912752d6e316f62b92cd8a2bd3",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "pending_controls": "successful optimizer update and native collector/teacher/family export/legacy compatibility reserved for separately declared canonical smoke; no pilot execution",
+  "patch_status": "FROZEN_FINAL; 28 author and11 independent controls preceded only3-line reviewed SEARCH optimizer_updates normalization; separately released canonical smoke will exercise it",
+  "patch_sha256": "ce9a49fd4f94adc9e079448529a6e1357e9541be0191e8e74c62c67b13e21e04",
+  "post_suite_source_delta": {
+    "file": "learning-stage/resectionlab/contact_family_episode.py",
+    "previous_sha256": "a1f9350c7d2a0dbf18744c12bade10e0f5fb502e9e99847234d996c597ee199d",
+    "new_sha256": "01722c9e71d7e31fd3b5aef2b0e3ae1c7353240d2605a339d471b4b3d7b8fa31",
+    "reason": "SEARCH does not emit optimizer_updates; refuse nonzero then normalize explicit0 for every v3 selector",
+    "independent_source_review": "greiner_four_control_supervisor accepted no issue; no extra suite"
+  }
+}

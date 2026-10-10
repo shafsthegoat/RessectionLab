@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "wall_seconds": 3.8820337920915335,
+  "threads": 1,
+  "interop_threads": 1,
+  "peak_rss_bytes": 344064000,
+  "native_transitions": 0,
+  "geometry_previews": 0,
+  "optimizer_steps": 0,
+  "teacher_searches": 0,
+  "evaluation_episodes": 0,
+  "checkpoint_scope": "new_zero_update_scratch_codec_controls_only; no trained/historical checkpoint or patient file",
+  "passed": 28,
+  "failed": 0,
+  "log_sha256": "0f0b163192c609f741f7eec1c00b28b02208dac7ba65f43924c1987162f0c72c",
+  "source_sha256": {
+    "learning-stage/resectionlab/contact_checkpoint.py": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+    "learning-stage/resectionlab/contact_costs.py": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+    "learning-stage/resectionlab/contact_family_episode.py": "a1f9350c7d2a0dbf18744c12bade10e0f5fb502e9e99847234d996c597ee199d",
+    "learning-stage/resectionlab/contact_learning.py": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+    "learning-stage/resectionlab/contact_learning_contract.py": "2d8eea67cc2280a62959d9e676960cca4243d0a07fa152d56481f1edca7b9827",
+    "learning-stage/resectionlab/contact_learning_pilot.py": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+    "learning-stage/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "learning-stage/tests/test_contact_learning.py": "cdd4bd692336ce5fcf03d27fb3d41992c6b2a921633b64cd6b81e3b86ed3abc0"
+  }
+}

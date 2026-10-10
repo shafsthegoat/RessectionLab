@@ -1,0 +1,89 @@
+Decision: GO for the repaired learning-stage source design only.
+Final bounded controls are prepared but NOT RUN during root's native/replay quiet
+window. This is not a training, teacher, held-out, native or desktop execution release.
+
+Exact reviewed candidate
+build/goal-conditioned-policy-v1/learning-promotion.json
+  e42ed6dee270c12b2adfd5b64961be719ff4c31067f61485af20709383368cc4
+build/goal-conditioned-policy-v1/learning-promotion.patch
+  d90ce2e27367b73cad8a3f74f344f66223259789052c048c172591be47a56cfb
+The patch passes git apply --check against the current repository. Root's three
+pre-existing desktop WIP files remain unchanged by this review; no tracked writes.
+
+Eight promotion files, SHA-256:
+contact_checkpoint.py face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027
+contact_costs.py 2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f
+contact_family_episode.py a1f9350c7d2a0dbf18744c12bade10e0f5fb502e9e99847234d996c597ee199d
+contact_learning.py 964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48
+contact_learning_contract.py 2d8eea67cc2280a62959d9e676960cca4243d0a07fa152d56481f1edca7b9827
+contact_learning_pilot.py 996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e
+development_episode.py 8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e
+test_contact_learning.py cdd4bd692336ce5fcf03d27fb3d41992c6b2a921633b64cd6b81e3b86ed3abc0
+The three previously reviewed/promoted forward-policy/adapter files are unchanged.
+
+Findings repaired by author
+1. Checkpoint open previously could block on a FIFO before fstat. O_NONBLOCK now
+precedes the existing bounded-regular-file check, with a tiny FIFO negative control.
+2. Partial/final lineage previously omitted the frozen session identity check,
+allowing an accidental IL-to-RL session relabel before checkpoint emission.
+ContactLearningSession.assert_intact now covers identity, weights and count through
+update 32; both lineage helpers call it. require keeps strict <32 loss/update cap.
+These repairs are source-verified. There is no remaining source blocker found.
+
+Reviewed behavior
+- Canonical TRAIN role/source/goal/grid/crop/frame and captured decision context
+are checked before learning. One immutable protocol and shared scratch seed/hash
+govern both arms. SELECT/MEASUREMENT_EVAL cannot enter loss through TRAIN binding.
+- Four-sample imitation and four-complete-episode policy-gradient losses bind the
+exact observation/action/context and unchanged policy. RL sums score terms within
+episodes and averages episodes, avoiding length-normalization bias. STOP reward,
+trajectory step order, goal context and behavior weights are checked. Update permits
+bind loss tensor version/value, parameter object identities, weights and update;
+fixed Adam ownership/settings/state are checked and stale permits consumed.
+- Owned _checked_trace/_collect_rl supplies trajectory authenticity using the same
+SurfaceContactTask and complete native sealing/history/replay equality. No hidden
+reference enters the actor, public search, proposal inventory or these losses.
+- Fixed teacher slots and cap failures are preserved without fabricated labels or
+replacements. Both exact final checkpoints precede the single SELECT and held-out
+passes. Partial checkpoints do not open measurement. No tuning/selection is performed.
+- Bounded uncompressed JSON/NPY checkpoints verify external bytes, architecture,
+tensor inventory/header/shape/dtype/length, finite values and parameter identity.
+No pickle/torch.load. New initial/partial metadata differs from final admission.
+- v3 calls the existing shared physical exporter with an exactly source-matching
+CaseData, then checks full public-contact history equality. The legacy default
+display/diagnostic path is preserved. Public goals/objective/role/context and final
+checkpoint file/model/architecture provenance are explicit; no fake tumor/normal
+reward or private scoring is added. SEARCH/STOP refuse learned checkpoint metadata.
+- InitialObservationBinding hashes eight raw public crop channels and coverage
+before policy normalization. Base values are float32; goal/contact values are bool.
+Extra channels inherit mandatory structural coverage; availability does not turn
+uncovered cells into observed absence. No full-native-coverage claim is made.
+- The cost meter wraps existing implementations; inclusive call timings and
+cumulative process peak RSS are labeled. Hard parent wall/RSS/output supervision
+and separately released bounded native integration remain necessary before a pilot.
+
+Evidence limits
+This is a consistency boundary inside an owned Python process. A caller-created
+DTO/reward is not independently native-certified merely by possessing a context.
+VerifiedContactCheckpoint binds decoded bytes and internally consistent declared
+lineage; it is not signed proof that 32 updates occurred. The owned collector/run
+receipts provide that provenance. Author explicitly agrees with these limits.
+
+The author previously recorded 26 controls passing in 3.313119791 s, one thread,
+343670784 B peak RSS; those preceded the final runtime/FIFO/lineage/v3 additions.
+The promotion index honestly marks the exact final controls pending. This reviewer
+ran no Python, imports, tests, native transitions, search, optimizer updates,
+teachers, evaluation episodes, patient reads or trained checkpoint loads.
+
+Prepared independent controls
+test_independent.py and run_review.py add 11 tensor/metadata cases: exact RL
+episode-sum math, trajectory goal/step/STOP boundaries, same-byte parameter-object
+replacement, resealed nonfinite tensor rejection, RNG/initial-weight preservation,
+pre-work release/runtime refusal, and partial-lineage method/policy identity.
+After explicit root quiet release only:
+  .venv/bin/python -B build/goal-conditioned-learning-independent-v1/run_review.py
+The harness pins all candidate/dependency sources before/after, fixes Torch/BLAS
+threads to one, has a 25-second alarm, and refuses native previews/transitions,
+teacher search and Adam.step. Final testing must retain its exact log/receipt.
+
+No claim of learning success, speedup, physical validity or patient transfer.

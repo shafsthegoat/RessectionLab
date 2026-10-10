@@ -1,6 +1,7 @@
 """Source-only controls. Task construction, preview, and actions are forbidden."""
 from collections import Counter
 import json
+import subprocess
 import sys
 
 import numpy as np
@@ -14,6 +15,7 @@ from resectionlab.native_spatial_task import NativeSpatialTask
 
 @pytest.fixture(autouse=True)
 def no_execution(monkeypatch):
+    loaded_before = set(sys.modules)
     def forbidden(*args, **kwargs):
         raise AssertionError('Structural controls must not execute or preview a task')
     for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
@@ -22,8 +24,18 @@ def no_execution(monkeypatch):
             if hasattr(owner, name):
                 monkeypatch.setattr(owner, name, forbidden)
     yield
-    assert 'torch' not in sys.modules
-    assert 'nibabel' not in sys.modules
+    # Other suites may already have loaded optional dependencies. This fixture
+    # guards imports caused by this test, independent of collection order.
+    assert not ({'torch', 'nibabel'} & (set(sys.modules) - loaded_before))
+
+
+def test_clean_import_has_no_model_or_image_loader_dependency():
+    code = (
+        "import sys; from resectionlab import public_contact_family; "
+        "assert 'torch' not in sys.modules; assert 'nibabel' not in sys.modules"
+    )
+    subprocess.run([sys.executable, '-B', '-c', code], check=True,
+                   capture_output=True, text=True, timeout=10)
 
 
 @pytest.fixture(scope='module')

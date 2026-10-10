@@ -155,7 +155,7 @@ def execute_development_episode(*, selector="scripted", cancelled=None):
     return _execute_sealed_development_plan(task, selector, plan, seal, accounting, rejected)
 
 
-def _execute_sealed_development_plan(task, selector, plan, seal, accounting, rejected):
+def _execute_sealed_development_plan(task, selector, plan, seal, accounting, rejected=None, *, display_case=None):
     """Common native replay/frame export after a source-bound nominal plan seals.
 
     Callers must establish selector-specific planning provenance before entry.
@@ -163,6 +163,14 @@ def _execute_sealed_development_plan(task, selector, plan, seal, accounting, rej
     """
     if semantic_digest(plan) != seal:
         raise RuntimeError("Development strategy changed before execution")
+    if display_case is not None:
+        if (type(display_case) is not CaseData
+                or array_digest(display_case.mri) != array_digest(task.case.structural_intensity)
+                or array_digest(display_case.affine) != array_digest(task.case.affine_ras_mm)
+                or array_digest(display_case.brain_mask) != array_digest(task.case.observed_support)
+                or "generated_nominal_target" not in display_case.compartments
+                or array_digest(display_case.compartments["generated_nominal_target"]) != array_digest(task.case.nominal_target > 0)):
+            raise ValueError("Caller display case differs from the same permitted native source")
     initial = task._engine.state_hash
     for action in plan["actions"]:
         task.step(action)
@@ -176,7 +184,7 @@ def _execute_sealed_development_plan(task, selector, plan, seal, accounting, rej
     audit = task.independent_geometry_check().to_dict()
     if not audit["feasible"]:
         raise RuntimeError("Generated episode failed independent native geometry validation")
-    display = public_display_case(task)
+    display = public_display_case(task) if display_case is None else display_case
     frames = replay_frames(task, history)
     source_binding = {"display_case_hash": display.semantic_hash, "native_source_hash": task.case.source_hash,
         "structural_intensity_hash": array_digest(display.mri), "affine_hash": array_digest(display.affine),
@@ -202,10 +210,11 @@ def _execute_sealed_development_plan(task, selector, plan, seal, accounting, rej
         "planning": {**accounting, "strategySeal": seal, "strategy": thaw_json(plan),
                      "sealedBeforeReferenceScoring": True,
                      "learnedPolicyExecuted": selector == "RL256_ASPIRATION_TRANSFER"},
-        "attemptDiagnostics": [{"status": "rejected", "interactionMode": "probe", "reason": rejected.reason,
+        "attemptDiagnostics": [] if rejected is None else [{"status": "rejected", "interactionMode": "probe", "reason": rejected.reason,
             "toolId": TOOLS[1].tool_id, "tipRasMm": [6., 6., 2.],
             "stateBefore": initial, "stateAfter": initial, "removedIndicesNative": []}],
-        "sequentialEffect": {"preOpeningProbeFeasible": False, "preOpeningProbeReason": rejected.reason,
+        "sequentialEffect": {**({"preOpeningProbeFeasible": False, "preOpeningProbeReason": rejected.reason}
+                                  if rejected is not None else {}),
             "executedProbeCount": sum(row["interaction_mode"] == "probe" for row in history),
             "explanation": "Aspiration changes the shared cavity. Only then can the same probe reach and tangentially contact deeper retained surfaces."},
         "hashEncoding": "core.array_digest: sha256(UTF8 sorted Python JSON default separators of {dtype:'|b1',shape:[X,Y,Z]} followed by C-order boolean bytes)",

@@ -1,0 +1,74 @@
+Fixed first generated contact learning pilot — prospective, not executed
+
+Question: can a small policy amortize useful contact choices on unfamiliar public
+generated layouts in the same operation that native replay and the desktop inspect?
+Nothing requires imitation or RL to beat returned bounded SEARCH or immediate STOP.
+
+Sources: the canonical 24-layout family, 12 TRAIN / 4 SELECT / 8 MEASUREMENT_EVAL,
+two prospectively fixed goals (surface and deep) per layout: 24 / 8 / 16 episodes.
+All goals/derivatives of a layout retain one role. Recipes, source/support hashes,
+goal grid/objective/crop/frame identities and model context bind the declaration.
+No outcome-conditioned replacement or held-out execution before final freeze.
+
+Public input: actual generated structural intensity, coverage/availability, support,
+cavity, tool geometry, certified candidate inventory, committed probe contact and
+the public goal. No private reference, hidden property, withheld annotation or reward
+enters deployment observation. RL rewards enter training losses after shared-task
+execution; teachers see the same public task available to matched online SEARCH.
+
+Architecture: promoted goal/mode eight-channel ray actor, explicit STOP/aspirate/
+probe modes, mode-grouped candidate critic; encoder channels 8/16, hidden width32,
+five ray samples, 10 mm reference. Mean/max pooling within each mode remains lossy.
+Both learning arms use the same architecture and seed20261009 scratch parameters;
+old aspiration checkpoints cannot initialize this version.
+
+Fixed arms:
+  STOP: no offline work; shared immediate STOP execution and replay.
+  SEARCH: no offline work; <=256 transitions, beam96, <=4 s public search/episode.
+  IL: <=24 TRAIN teacher searches under that SEARCH budget; 32 updates x4 samples.
+  RL: 32 updates x4 TRAIN episodes; <=256 collection transitions, no search teacher.
+
+Adam: lr0.001, betas0.9/0.999, eps1e-8, no weight decay/amsgrad/maximize/foreach/fused.
+RL: gamma1, entropy0.01, value0.5, gradient norm clip5. Score terms sum per episode
+then average across four episodes. IL samples fixed-seed random state batches; RL
+uses a fixed-seed shuffled TRAIN order round-robin, sampling actions with seed+1.
+Both use CPU float32, one Torch and inter-op thread. One attempt; no sweep/hybrid.
+
+Teacher stage <=120 s, each learning arm <=60 s, online method episode <=12 s,
+process-tree memory <=1 GiB via the owned parent. Stage cooperative limits are also
+checked in task work. A hard parent total/stage deadline must be declared before run;
+these software caps do not promise that the endpoint will finish. Preserve partial
+weights, updates and failed/capped slots; do not extend limits after seeing results.
+
+An exhausted teacher call/time cap supplies no label; preserve the unresolved slot
+and returned action history without manufacturing STOP labels or substituting a
+different layout. Completed bounded/pruned teachers are not global-optimality labels.
+Neither arm may train on SELECT or MEASUREMENT_EVAL.
+
+Freeze and verified-load both final32-update checkpoints before one SELECT pass
+and one MEASUREMENT_EVAL pass. SELECT performs no checkpoint or hyperparameter choice.
+No held-out work if either arm is incomplete. Online method order rotates cyclically
+over STOP/SEARCH/IL/RL by fixed goal index. Actor inference cannot update weights.
+
+Preserve every source/context/architecture/parameter/checkpoint hash, action history,
+full native seal/replay, per-update loss/gradient and realized budget. Report per-goal
+and paired per-layout retained-and-contacted, untouched, destroyed, removed volume,
+action effort, STOP, modeled return, replay failure and limit outcomes together.
+With one seed and eight held-out layouts, use descriptive paired results; do not
+claim robust significance. SEARCH-relative differences refer to its returned result
+unless its tree was actually exhausted. Negative results are retained unchanged.
+
+Accounting: show all offline teachers, failed slots, training collection/forwards/
+updates, initial/final checkpoint I/O, selection, and online source construction,
+inventory/certification, proposals/clones, search, actor forwards, execution, sealing,
+replay and serialization. Inclusive nested timings are not additive; use complete
+wall and label cumulative RSS honestly. Report realized hard-limit exits and total
+run cost. Two forwards alone does not establish a speed or amortization result.
+Compute break-even only from positive measured like-for-like online savings, adding
+teacher + training + SELECT costs to offline expense, in stated hardware/time units.
+
+Export: distinct generated-family v3 schema through the same authoritative native
+exporter. Current desktop v2 fixed13 near/costly is not family admission. Its later
+transfer result, if separately authorized, remains separate from held-out family.
+Real-patient transfer requires separate prospective admission/source/QC/role controls
+and measurements. This generated experiment makes no clinical validity claim.

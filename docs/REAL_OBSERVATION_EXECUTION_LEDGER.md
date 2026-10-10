@@ -1175,3 +1175,13 @@ respectively. Original resource and numerical limits were unchanged. Twelve-row
 mesh/timestep comparison remains pending; physical validation is not implied.
 The native chain is 12 calls / 2,394.444 seconds / 3,524,119,165 bytes; independent
 replay is additional and historical missing N8 timing remains explicitly missing.
+
+### October 10: shared contact learning source integrated
+
+The [canonical learning slice](../artifacts/contact-learning-source-integration-v1/RESULT.md)
+adds actual TRAIN-bound losses, checkpoint codec, fixed IL/RL pilot and shared v3
+exporter. It preserves the generated family roles and old exporter defaults.
+Root combined regression passes 96 checks in 5.30 seconds; author/independent
+controls pass 28/11. Both checkpoint findings and the combined-suite import-fixture
+failure are repaired and retained. No new training or held-out episode occurred
+in this source milestone; the next step is a separate actual TRAIN smoke.

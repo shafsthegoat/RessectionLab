@@ -1,0 +1,725 @@
+...................................................E.E.E.E.E.E.E.E.E.E.E [ 64%]
+.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.........              [100%]
+==================================== ERRORS ====================================
+__________ ERROR at teardown of test_split_is_layout_bound_and_exact ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cac62d0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+___ ERROR at teardown of test_geometry_and_source_are_not_transformed_copies ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb1f7d0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-00] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb41970>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-01] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb407d0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-02] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10fefbf20>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-03] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb41cd0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-04] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb40ef0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-05] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb413a0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-06] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb41a00>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-07] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb42d20>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-08] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ff1d130>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-09] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb42de0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-10] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb43470>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-11] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb40320>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-12] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb43b60>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-13] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb41490>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-14] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c7c1a90>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-15] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10fef9c10>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-16] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb412e0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-17] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb42420>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-18] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cae96a0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-19] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba6300>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-20] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c6124b0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-21] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb40dd0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-22] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb42de0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____ ERROR at teardown of test_generated_source_and_goal_contract[pcf-23] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c98ad20>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_ ERROR at teardown of test_topology_check_removes_translation_rotation_and_reflection _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba4e60>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_ ERROR at teardown of test_metadata_mutation_does_not_relabel_canonical_roles _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba5400>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+___ ERROR at teardown of test_all_held_out_tasks_refuse_before_source_build ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cb40350>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+__________ ERROR at teardown of test_unknown_identity_refused[pcf-24] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba68a0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+__________ ERROR at teardown of test_unknown_identity_refused[TRAIN] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba7620>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_____________ ERROR at teardown of test_unknown_identity_refused[] _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba5fa0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+____________ ERROR at teardown of test_unknown_identity_refused[0] _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba66f0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+___________ ERROR at teardown of test_unknown_identity_refused[True] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cba75f0>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+___ ERROR at teardown of test_invalid_goal_refused_without_task_construction ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cbd4740>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+_ ERROR at teardown of test_manifest_round_trip_is_stable_and_no_executable_claim _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cbd5190>
+
+    @pytest.fixture(autouse=True)
+    def no_execution(monkeypatch):
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Structural controls must not execute or preview a task')
+        for owner, names in ((NativeSpatialTask, ('__init__', 'step', 'planning_step')),
+                (NativeResectionEngine, ('__init__', 'preview_stroke', 'execute_stroke'))):
+            for name in names:
+                if hasattr(owner, name):
+                    monkeypatch.setattr(owner, name, forbidden)
+        yield
+>       assert 'torch' not in sys.modules
+E       AssertionError: assert 'torch' not in {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...}
+E        +  where {'sys': <module 'sys' (built-in)>, 'builtins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules
+
+tests/test_public_contact_family_structural.py:25: AssertionError
+=========================== short test summary info ============================
+ERROR tests/test_public_contact_family_structural.py::test_split_is_layout_bound_and_exact
+ERROR tests/test_public_contact_family_structural.py::test_geometry_and_source_are_not_transformed_copies
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-00]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-01]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-02]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-03]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-04]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-05]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-06]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-07]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-08]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-09]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-10]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-11]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-12]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-13]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-14]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-15]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-16]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-17]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-18]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-19]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-20]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-21]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-22]
+ERROR tests/test_public_contact_family_structural.py::test_generated_source_and_goal_contract[pcf-23]
+ERROR tests/test_public_contact_family_structural.py::test_topology_check_removes_translation_rotation_and_reflection
+ERROR tests/test_public_contact_family_structural.py::test_metadata_mutation_does_not_relabel_canonical_roles
+ERROR tests/test_public_contact_family_structural.py::test_all_held_out_tasks_refuse_before_source_build
+ERROR tests/test_public_contact_family_structural.py::test_unknown_identity_refused[pcf-24]
+ERROR tests/test_public_contact_family_structural.py::test_unknown_identity_refused[TRAIN]
+ERROR tests/test_public_contact_family_structural.py::test_unknown_identity_refused[]
+ERROR tests/test_public_contact_family_structural.py::test_unknown_identity_refused[0]
+ERROR tests/test_public_contact_family_structural.py::test_unknown_identity_refused[True]
+ERROR tests/test_public_contact_family_structural.py::test_invalid_goal_refused_without_task_construction
+ERROR tests/test_public_contact_family_structural.py::test_manifest_round_trip_is_stable_and_no_executable_claim
+95 passed, 36 errors in 5.20s

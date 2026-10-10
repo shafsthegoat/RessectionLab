@@ -1,0 +1,57 @@
+Final tiny source/tensor controls after explicit root quiet release
+
+Author completed 28 controls first (2.94 s pytest / 3.882033792 s parent,
+344064000 B peak RSS, Torch/inter-op1). Independent controls then ran serially:
+  .venv/bin/python -B build/goal-conditioned-learning-independent-v1/run_review.py
+  stdout/stderr: controls.log
+  structured receipt: controls.json
+Result: 11 passed in 1.84 s pytest / 2.551489875 s parent, 340525056 B peak RSS,
+Torch/inter-op1, exit0. All eight candidate source/test files and six canonical
+dependencies matched the declared SHA-256 values both before and after.
+
+Native transitions, geometry previews, optimizer steps, teacher search, evaluation
+episodes and patient reads: zero. Native preview/transition, search and Adam.step
+were replaced by refusal sentinels; forbidden-call count was zero. Only freshly
+initialized tiny models, loss arithmetic, declared public generated source arrays
+and newly encoded zero-update checkpoint bytes were used. No trained checkpoint,
+parameter update, rollout, teacher or held-out execution occurred.
+
+Independent checks cover exact mixed one/two-step RL episode-sum math, spliced
+goals, step order, early/nonzero STOP, parameter-object replacement despite equal
+bytes, resealed NaN tensor data, roundtrip RNG and scratch-weight preservation,
+pre-work release/runtime refusal and checkpoint-boundary session identity. The
+author's added FIFO and lineage relabel controls passed in its final28 run.
+No test failure or candidate repair occurred in the independent11 run.
+
+The source-only GO in SOURCE-REVIEW.txt is corroborated for these exact tested
+sources. It remains bounded by the same owned-Python/provenance limitations.
+Legacy exporter compatibility was inspected in the actual shared helper diff:
+without display_case the old public_display_case call is unchanged; a provided
+old rejected-probe object retains the old diagnostic values. The new family path
+adds a source-equal display and omits an inapplicable fixed-fixture diagnostic.
+Actual native TRAIN smoke and legacy exporter runtime compatibility remain root's
+separately released step; these software controls do not substitute for them.
+
+Post-control integration correction
+The desktop consumer requires explicit optimizer_updates. The existing SEARCH
+planner omits that key. After the28+11 runs, the author added exactly three lines
+to contact_family_episode.export_family_strategy: reject a reported nonzero online
+optimizer count, then copy accounting with integer optimizer_updates=0. Reviewed
+exporter SHA is now 01722c9e71d7e31fd3b5aef2b0e3ae1c7353240d2605a339d471b4b3d7b8fa31.
+This normalization is source-reviewed and introduces no scientific/role gate. The
+28+11 results precede only that correction; root's actual SEARCH smoke will exercise
+it. No broad suite was repeated. Final promotion index/patch must bind this exporter
+and retain this precise tested-versus-source-reviewed distinction.
+
+Final package verified after normalization:
+learning-promotion.json 0f3ab7f2962d091ef23685d95844bd23bd83df2f964a524dc4068cc763979597
+learning-promotion.patch ce9a49fd4f94adc9e079448529a6e1357e9541be0191e8e74c62c67b13e21e04
+The earlier reviewed patch passed git apply --check before root promotion. Checking
+the final patch returned already-present/path-context errors because root had just
+applied it; the eight canonical source/test SHA-256 values instead matched the
+reviewed candidate exactly, including exporter01722c9e. This is an already-applied
+check, not a fresh patch-application pass. The final index retains the original
+28-control exact pins and explicitly declares the three-line post-suite change.
+
+Decision: GO for source promotion with the stated bounded evidence. No learning,
+native, teacher, held-out or desktop execution is authorized by this report.
