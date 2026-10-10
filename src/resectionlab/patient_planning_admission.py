@@ -42,6 +42,8 @@ PROTOCOL_FIELDS = frozenset({"version", "scope", "subject", "role", "evidence_do
     "clinical_claim", "split_changes", "runtime_release_sha256", "learning_protocol_hash"})
 SELECT_SUBJECTS = ("ReMIND-013", "ReMIND-037")
 SELECT_INITIALIZATION = "frozen_TRAIN_checkpoint_reload"
+UNION_SELECT_SUBJECT = "ReMIND-013"
+UNION_SELECT_EXECUTION = "frozen_SELECT013_union_obstruction_inference_v1"
 CHECKPOINT_LINEAGE_FIELDS = frozenset({"version", "checkpoint_sha256", "method",
     "training_release_sha256", "learning_protocol_hash", "initial_parameter_hash",
     "parameter_hash", "architecture_hash", "completed_updates", "training_context_hashes",
@@ -102,6 +104,37 @@ inference loader; a digest-only lineage cannot authenticate that objective.
     if learning_protocol_hash is not None:
         _need(_same_hash(lineage["learning_protocol_hash"], learning_protocol_hash), "checkpoint_learning_protocol_mismatch")
     return lineage
+
+
+
+def validate_union_select013_inference(protocol, *, checkpoint_lineage,
+        learning_protocol_hash, proposal_config, max_steps, search, public_target_context_variant):
+    """Reconstruct the exact TRAIN objective and bind its frozen endpoint.
+
+    External checkpoint bytes and completed TRAIN receipts are authenticated by
+    the existing bounded loader and owning runner, not this metadata validator.
+    This admits the predefined IL64 or scratch RL8 endpoints, never SELECT fitting.
+    """
+    from .patient_planning_cohort_spec import (validate_union_obstruction_learning,
+        BALANCED_TEACHER_CE, CACHED_TEACHERS, RECOLLECT_TEACHERS)
+    trained = validate_union_obstruction_learning(protocol,
+        learning_protocol_hash=learning_protocol_hash, proposal_config=proposal_config,
+        max_steps=max_steps)
+    lineage = validate_select_checkpoint_lineage(checkpoint_lineage,
+        learning_protocol_hash=learning_protocol_hash)
+    execution = trained["cohort_execution"]
+    il = (lineage["method"] == "IL" and trained["updates_per_method"] == 64
+          and execution.get("il_teacher_weighting") == BALANCED_TEACHER_CE
+          and execution["teacher_observations"] == CACHED_TEACHERS)
+    rl = (lineage["method"] == "RL" and trained["updates_per_method"] == 8
+          and execution.get("il_teacher_weighting") is None
+          and execution["teacher_observations"] == RECOLLECT_TEACHERS)
+    _need((il or rl) and lineage["completed_updates"] == trained["updates_per_method"]
+          and semantic_digest(search) == semantic_digest(execution["search"])
+          and public_target_context_variant == trained["public_target_context_variant"]
+          == lineage["public_target_context_variant"],
+          "SELECT013_requires_frozen_union_IL64_or_scratch_RL8_exact_condition")
+    return trained
 
 
 def _public_observation_binding(observation):
@@ -212,10 +245,15 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         "exact_public_QC_fields_required")
     checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
     occupancy_learning = isinstance(protocol, Mapping) and protocol.get("occupancy_learning_protocol") is not None
+    occupancy_inference = isinstance(protocol, Mapping) and protocol.get("occupancy_inference_protocol") is not None
+    _need(not occupancy_inference or (derived_occupancy and not partial_domain
+              and checkpoint_reload and not occupancy_learning),
+          "union_inference_requires_original_full_coverage_frozen_SELECT_condition")
     _need(not occupancy_learning or (derived_occupancy and not partial_domain),
           "union_learning_requires_original_full_coverage_condition")
     plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
         | ({"occupancy_learning_protocol"} if occupancy_learning else set())
+        | ({"occupancy_inference_protocol"} if occupancy_inference else set())
         | ({"occupancy_condition"} if derived_occupancy else set()),
         "exact_preflight_protocol_fields_required")
     domain = source["evidence_domain"]
@@ -242,14 +280,28 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         semantics = ("derived_simulated_S_union_T_occupancy_assumption", semantics[1])
         expected_condition = PARTIAL_DOMAIN_UNION_OCCUPANCY if partial_domain else SUPPLIED_TUMOR_UNION_OCCUPANCY
         expected_subjects = PARTIAL_DOMAIN_TRAIN_SUBJECTS if partial_domain else ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025")
-        _need(domain == "acquired_patient" and member["role"] == "TRAIN"
-              and source["subject"] in expected_subjects
-              and not checkpoint_reload and plan["occupancy_condition"] == expected_condition
-              and (occupancy_learning or (
-                  plan["initialization"] == "public_world_search_only"
+        if occupancy_inference:
+            _need(domain == "acquired_patient" and member["role"] == "SELECT"
+                  and source["subject"] == UNION_SELECT_SUBJECT
+                  and plan["occupancy_condition"] == SUPPLIED_TUMOR_UNION_OCCUPANCY
                   and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
-                  and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0)),
-              "derived_occupancy_requires_fixed_TRAIN_search_only_or_explicit_learning")
+                  and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] > 0
+                  and case.proposal_mode == "nominal_cavity_v1",
+                  "derived_inference_requires_SELECT013_zero_updates_positive_forward_budget")
+            validate_union_select013_inference(plan["occupancy_inference_protocol"],
+                checkpoint_lineage=plan["checkpoint_lineage"],
+                learning_protocol_hash=plan["learning_protocol_hash"], proposal_config=case.proposal_config,
+                max_steps=plan["max_steps"], search=plan["search"],
+                public_target_context_variant=case.public_target_context_variant)
+        else:
+            _need(domain == "acquired_patient" and member["role"] == "TRAIN"
+                  and source["subject"] in expected_subjects
+                  and not checkpoint_reload and plan["occupancy_condition"] == expected_condition
+                  and (occupancy_learning or (
+                      plan["initialization"] == "public_world_search_only"
+                      and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
+                      and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0)),
+                  "derived_occupancy_requires_fixed_TRAIN_search_only_or_explicit_learning")
         if occupancy_learning:
             from .patient_planning_cohort_spec import validate_union_obstruction_learning
             learning = validate_union_obstruction_learning(plan["occupancy_learning_protocol"],
@@ -338,7 +390,7 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
           and plan["private_reference_used"] is False and plan["clinical_claim"] is False
           and plan["split_changes"] is False, "exact_nonclinical_role_and_budget_contract_required")
     for key in ("max_native_previews", "max_policy_forwards", "worker_seconds", "memory_bytes"):
-        _need(type(plan[key]) is int and (plan[key] == 0 if derived_occupancy and not occupancy_learning and key == "max_policy_forwards"
+        _need(type(plan[key]) is int and (plan[key] == 0 if derived_occupancy and not occupancy_learning and not occupancy_inference and key == "max_policy_forwards"
               else plan[key] > 0), "positive_integer_runtime_budgets_required")
     search = _fields(plan["search"], {"max_calls", "beam_width", "seconds"}, "exact_search_budget_required")
     _need(all(type(search[k]) is int and search[k] > 0 for k in search), "positive_integer_search_budgets_required")
@@ -349,9 +401,12 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
         **({"occupancy_condition": plan["occupancy_condition"],
             "occupancy_derivation": case._occupancy_derivation,
-            "execution_kind": "fixed_four_TRAIN_union_obstruction_learning_v1" if occupancy_learning else "search_only_no_policy",
+            "execution_kind": (UNION_SELECT_EXECUTION if occupancy_inference else
+                "fixed_four_TRAIN_union_obstruction_learning_v1" if occupancy_learning else "search_only_no_policy"),
             "derived_occupancy_anatomically_validated": False,
-            "policy_comparison_permitted": occupancy_learning,
+            "policy_comparison_permitted": occupancy_learning or occupancy_inference,
+            **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
+                if occupancy_inference else {}),
             **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {})}
            if derived_occupancy else {}),
         **({"source_and_simulated_domains": case._domain_record,

@@ -14,7 +14,8 @@ import torch
 from .core import freeze_json, semantic_digest, thaw_json
 from .native_proposals import SUPPLIED_GOAL_REGION
 from .patient_planning_admission import (PatientPlanningContext, COHORT_SHA256,
-    SELECT_SUBJECTS, SELECT_INITIALIZATION, validate_select_checkpoint_lineage)
+    SELECT_SUBJECTS, SELECT_INITIALIZATION, validate_select_checkpoint_lineage,
+    UNION_SELECT_SUBJECT, UNION_SELECT_EXECUTION)
 from .patient_planning_cohort_io import load_cohort_checkpoint
 from . import patient_planning_preflight as preflight
 from .spatial_policy import SpatialPolicy, SpatialTransition, parameter_hash
@@ -35,6 +36,10 @@ def require_select_context(context):
             or record.get('initialization') != SELECT_INITIALIZATION
             or record['private_reference_in_task'] is not False):
         raise ValueError('Only fixed SELECT checkpoint inference with zero gradients is admitted')
+    if record.get('occupancy_condition') is not None and (
+            record['subject'] != UNION_SELECT_SUBJECT
+            or record.get('execution_kind') != UNION_SELECT_EXECUTION):
+        raise ValueError('Derived occupancy inference is restricted to the admitted SELECT013 condition')
     validate_select_checkpoint_lineage(record['checkpoint_lineage'],
         learning_protocol_hash=record['learning_protocol_hash'])
     return record
@@ -89,8 +94,9 @@ class FrozenSelectCheckpoint:
                 or base.case.proposal_mode != 'nominal_cavity_v1'
                 or base.case.proposal_config.fingerprint != execution['proposal_rule_hash']
                 or base.case.target_semantics != SUPPLIED_GOAL_REGION
-                or context.record()['budgets']['search'] != thaw_json(execution['search'])):
-            raise ValueError('SELECT task horizon, proposals or search differ from frozen TRAIN condition')
+                or context.record()['budgets']['search'] != thaw_json(execution['search'])
+                or context.record().get('occupancy_condition') != execution.get('occupancy_condition')):
+            raise ValueError('SELECT task horizon, proposals, occupancy or search differ from frozen TRAIN condition')
         return self
 
 
@@ -174,14 +180,65 @@ def collect_select_search(base, context, checkpoint, *, actions, accounting, out
 
 The checkpoint/context fixes the comparison world and task condition only.
 SEARCH actions are never attributed to that checkpoint or used as gradients.
-The owned caller runs the unchanged observed_beam_search and supplies its return.
+The owned caller supplies unchanged observed_beam_search or the native task's
+observed_greedy_search return. Their distinct completion/cost records stay intact;
+this replay does not imply equal search budgets or global optimality.
 """
     accounting = freeze_json(accounting); actions = tuple(actions)
-    if (accounting.get('call_cap_reached') is not False or accounting.get('time_cap_reached') is not False
-            or not actions or any(type(action) is not str for action in actions)):
+    if not actions or any(type(action) is not str for action in actions):
+        raise ValueError('Complete SELECT SEARCH actions required')
+    if accounting.get('method') == 'observed_greedy':
+        _require_native_greedy_completion(base, actions, accounting)
+    elif (accounting.get('call_cap_reached') is not False or accounting.get('time_cap_reached') is not False):
         raise ValueError('Complete uncapped SELECT SEARCH return required')
     return _collect_select(base, context, checkpoint, actions=actions,
         search_accounting=accounting, output=output, guard=guard)
+
+
+
+def _require_native_greedy_completion(base, actions, accounting):
+    """Validate the native scorer's own complete record, without fabricating caps."""
+    decisions = accounting.get('decisions', ())
+    if (accounting.get('complete') is not True
+            or accounting.get('objective_source') != 'permitted_nominal_target_and_frozen_geometric_costs'
+            or type(accounting.get('initial_steps')) is not int or accounting['initial_steps'] != 0
+            or type(accounting.get('max_steps')) is not int or accounting['max_steps'] != base.max_steps
+            or type(accounting.get('model_transition_calls')) is not int
+            or accounting['model_transition_calls'] != len(actions)
+            or not 1 <= len(actions) <= base.max_steps or len(decisions) != len(actions)
+            or ('STOP' in actions and (actions[-1] != 'STOP' or actions.count('STOP') != 1))
+            or ('STOP' not in actions and len(actions) != base.max_steps)
+            or accounting.get('native_replay_required') is not True
+            or accounting.get('global_optimality_proven') is not False):
+        raise ValueError('Native greedy SELECT search must have completed STOP or horizon')
+    for key in ('planning_seconds', 'time_budget_seconds', 'estimated_incremental_return'):
+        value = accounting.get(key)
+        if type(value) not in (int, float) or not math.isfinite(value):
+            raise ValueError('Finite native greedy accounting required')
+    if not 0 <= accounting['planning_seconds'] <= accounting['time_budget_seconds'] or accounting['time_budget_seconds'] <= 0:
+        raise ValueError('Native greedy time limit did not complete')
+    scored = 0; total = 0.
+    for step, (action, decision) in enumerate(zip(actions, decisions)):
+        scores = decision.get('scores', ())
+        count = decision.get('legal_nonstop_actions')
+        if (type(count) is not int or count < 0 or type(decision.get('step')) is not int
+                or decision['step'] != step or decision.get('selected_action_id') != action
+                or type(decision.get('scored_nonstop_actions')) is not int
+                or decision['scored_nonstop_actions'] != count
+                or decision.get('all_current_legal_actions_scored') is not True or len(scores) != count+1
+                or not scores or scores[0].get('action_id') != 'STOP' or scores[0].get('reward') != 0.):
+            raise ValueError('Every native greedy decision must score its complete legal inventory')
+        ids = [row.get('action_id') for row in scores]
+        if (any(type(identifier) is not str for identifier in ids) or len(set(ids)) != len(ids)
+                or any(type(row.get('reward')) not in (int, float) or not math.isfinite(row['reward']) for row in scores)
+                or max(scores, key=lambda row: row['reward'])['action_id'] != action):
+            raise ValueError('Native greedy action must be the stable immediate winner with STOP zero')
+        scored += count
+        total += next(row['reward'] for row in scores if row['action_id'] == action)
+    if (type(accounting.get('evaluated_nonstop_actions')) is not int
+            or accounting['evaluated_nonstop_actions'] != scored
+            or accounting['estimated_incremental_return'] != total):
+        raise ValueError('Native greedy completed counts or return differ')
 
 
 def _collect_select(base, context, checkpoint, *, output, guard, actions=None, search_accounting=None):
@@ -206,6 +263,12 @@ def _collect_select(base, context, checkpoint, *, output, guard, actions=None, s
         else:
             if len(rows) >= len(actions): raise ValueError('Incomplete SELECT SEARCH plan')
             action = actions[len(rows)]
+        if search_accounting is not None and search_accounting.get('method') == 'observed_greedy':
+            scored = search_accounting['decisions'][len(rows)]
+            legal_ids = [a for a, legal in zip(observation.action_ids, observation.action_mask) if legal]
+            if (scored.get('source_state_hash') != worker._engine.state_hash
+                    or [row['action_id'] for row in scored['scores']] != legal_ids):
+                raise ValueError('Native greedy scores differ from this SELECT state or legal inventory')
         checkpoint.require(context)
         decision = {'step': len(rows), 'observation_hash': observation.fingerprint,
             'action_ids': list(observation.action_ids), 'action_mask': observation.action_mask.tolist(),
@@ -218,6 +281,10 @@ def _collect_select(base, context, checkpoint, *, output, guard, actions=None, s
                 'committed': bool(getattr(error, 'committed', False)),
                 'committed_info': getattr(error, 'info', None), 'retained_metrics': worker.metrics()})
             raise
+        if search_accounting is not None and search_accounting.get('method') == 'observed_greedy':
+            selected_reward = next(row['reward'] for row in scored['scores'] if row['action_id'] == action)
+            if outcome.reward != selected_reward:
+                raise ValueError('Native greedy selected reward differs from exact public replay')
         rows.append(SpatialTransition(observation, action, outcome.reward, outcome.terminated))
         decisions.append({**decision, 'reward': outcome.reward, 'terminated': outcome.terminated})
         preflight._write(output/('returned-%02d.json' % (len(rows)-1)), decisions[-1])

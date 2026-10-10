@@ -1,0 +1,21 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 8.158976416,
+  "peak_child_rss_bytes": 268140544,
+  "threads": 1,
+  "timeout_seconds": 30,
+  "source_before": {
+    "build/obstruction-opening-select013-v1/stage/resectionlab/patient_planning_admission.py": "1f2438e32385859d42362ed987f73021c5dfa2bf303c45037162ae9919dd21fd",
+    "build/obstruction-opening-select013-v1/stage/resectionlab/patient_select_inference.py": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6",
+    "build/obstruction-opening-select013-v1/stage/resectionlab/public_patient_factory.py": "5e847d88978b449c25168c8caa13beb47ff7a98d7a5465220d4cdd9f3f5aa42a",
+    "build/obstruction-opening-select013-v1/stage/tests/test_obstruction_opening_select013.py": "2467486ed051fa0615d4e650a55c13ac000955e9717bc2e933dd2fb806b3e0ee"
+  },
+  "source_after": {
+    "build/obstruction-opening-select013-v1/stage/resectionlab/patient_planning_admission.py": "1f2438e32385859d42362ed987f73021c5dfa2bf303c45037162ae9919dd21fd",
+    "build/obstruction-opening-select013-v1/stage/resectionlab/patient_select_inference.py": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6",
+    "build/obstruction-opening-select013-v1/stage/resectionlab/public_patient_factory.py": "5e847d88978b449c25168c8caa13beb47ff7a98d7a5465220d4cdd9f3f5aa42a",
+    "build/obstruction-opening-select013-v1/stage/tests/test_obstruction_opening_select013.py": "2467486ed051fa0615d4e650a55c13ac000955e9717bc2e933dd2fb806b3e0ee"
+  },
+  "source_unchanged": true,
+  "scope": "generated admission, native replay and fabricated checkpoint format/forward controls only; no optimizer, acquired arrays/checkpoints or actual SELECT/EVAL execution"
+}

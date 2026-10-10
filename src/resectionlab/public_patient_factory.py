@@ -80,7 +80,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         *, public_manifest_path, public_manifest_sha256, cohort_bytes,
         learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None,
         expected_role="TRAIN", checkpoint_lineage=None, occupancy_condition="raw_cerebrum_baseline",
-        occupancy_learning_protocol=None):
+        occupancy_learning_protocol=None, occupancy_inference_protocol=None):
     """Build one public source and admission inputs; caller owns supervised use.
 
     expected_protocol may be None for a first construction; then a learning
@@ -99,10 +99,16 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         raise ValueError("Unknown explicit occupancy condition")
     derived_occupancy = occupancy_condition in (SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY)
     occupancy_learning = occupancy_learning_protocol is not None
+    occupancy_inference = occupancy_inference_protocol is not None
+    if occupancy_inference and (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
+            or expected_role != "SELECT" or checkpoint_lineage is None or occupancy_learning
+            or type(limits.get("max_optimizer_updates")) is not int or limits["max_optimizer_updates"] != 0
+            or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] <= 0):
+        raise ValueError("Union inference requires fixed SELECT013 frozen weights and zero updates")
     if occupancy_learning and (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
             or expected_role != "TRAIN" or checkpoint_lineage is not None):
         raise ValueError("Union learning is restricted to the original full-coverage TRAIN condition")
-    if derived_occupancy and not occupancy_learning and (expected_role != "TRAIN" or checkpoint_lineage is not None
+    if derived_occupancy and not occupancy_learning and not occupancy_inference and (expected_role != "TRAIN" or checkpoint_lineage is not None
             or type(limits.get("max_optimizer_updates")) is not int or limits["max_optimizer_updates"] != 0
             or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] != 0
             or public_target_context_variant is None):
@@ -124,6 +130,12 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
                 or limits["max_optimizer_updates"] < 2*occupancy_learning_protocol["updates_per_method"]
                 or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] <= 0):
             raise ValueError("Union learning requires the existing public context and positive declared learning budgets")
+    if occupancy_inference:
+        from resectionlab.patient_planning_admission import validate_union_select013_inference
+        occupancy_inference_protocol = validate_union_select013_inference(occupancy_inference_protocol,
+            checkpoint_lineage=checkpoint_lineage, learning_protocol_hash=learning_protocol_hash,
+            proposal_config=proposal_config, max_steps=limits.get("max_steps"), search=limits.get("search"),
+            public_target_context_variant=public_target_context_variant)
     if expected_role == "TRAIN":
         if checkpoint_lineage is not None:
             raise ValueError("TRAIN factory does not accept SELECT checkpoint lineage")
@@ -141,6 +153,10 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes,
         expected_role=expected_role, partial_domain=partial_domain)
     subject = manifest["patient_id"]
+    if occupancy_inference:
+        from resectionlab.patient_planning_admission import UNION_SELECT_SUBJECT
+        if subject != UNION_SELECT_SUBJECT:
+            raise ValueError("This explicit frozen union transfer admits SELECT013 only; 037 held and EVAL closed")
     arrays = {}
     input_keys = PARTIAL_DOMAIN_ARRAY_KEYS if partial_domain else ARRAY_KEYS
     for key in input_keys:
@@ -269,13 +285,14 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     protocol = {"version": VERSION, "scope": "patient_native_planning_experiment",
         "subject": subject, "role": expected_role, "evidence_domain": "acquired_patient",
         "public_source_binding_hash": semantic_digest(binding), "qc_receipt_hash": semantic_digest(qc),
-        **limits, "initialization": ("public_world_search_only" if derived_occupancy and not occupancy_learning else
+        **limits, "initialization": ("public_world_search_only" if derived_occupancy and not occupancy_learning and not occupancy_inference else
             "fresh_seeded_shared_initialization" if expected_role == "TRAIN" else "frozen_TRAIN_checkpoint_reload"), "private_reference_used": False,
         "clinical_claim": False, "split_changes": False, "runtime_release_sha256": original_release_sha256,
         "learning_protocol_hash": learning_protocol_hash,
         **({} if expected_role == "TRAIN" else {"checkpoint_lineage": checkpoint_lineage}),
         **({"occupancy_condition": occupancy_condition} if derived_occupancy else {}),
-        **({"occupancy_learning_protocol": thaw_json(occupancy_learning_protocol)} if occupancy_learning else {})}
+        **({"occupancy_learning_protocol": thaw_json(occupancy_learning_protocol)} if occupancy_learning else {}),
+        **({"occupancy_inference_protocol": thaw_json(occupancy_inference_protocol)} if occupancy_inference else {})}
     if derived_occupancy:
         write(output / "derived-occupancy-assumption.json", {"condition": occupancy_condition,
             "derivation": thaw_json(source._occupancy_derivation),
@@ -284,7 +301,9 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             **({"source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {}),
             "target_domain_hash": array_digest(domain), "access_derived_from": "raw S and unchanged T",
             "public_access_rule": derived, "source_QC_validates_derived_material": False,
-            "policy_comparison_permitted": occupancy_learning,
+            "policy_comparison_permitted": occupancy_learning or occupancy_inference,
+            **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
+                if occupancy_inference else {}),
             **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {}),
             "normalization_coupling": "support_percentile_1_99 uses this condition occupancy; compare recorded bounds across arms",
             "intensity_normalization": thaw_json(source._normalization_record)})

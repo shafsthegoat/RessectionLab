@@ -1,0 +1,41 @@
+{
+  "scope": "SELECT013-only frozen IL64/RL8 union-obstruction inference; no optimizer authority",
+  "baseline_head": "a86a530",
+  "files": [
+    {
+      "source": "build/obstruction-opening-select013-v1/stage/resectionlab/patient_planning_admission.py",
+      "target": "src/resectionlab/patient_planning_admission.py",
+      "sha256": "1f2438e32385859d42362ed987f73021c5dfa2bf303c45037162ae9919dd21fd",
+      "before_sha256": "d48e1b138653c6b38c81f33d91541849c532ea78a0b7db0a7132f03e7a05a8df"
+    },
+    {
+      "source": "build/obstruction-opening-select013-v1/stage/resectionlab/patient_select_inference.py",
+      "target": "src/resectionlab/patient_select_inference.py",
+      "sha256": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6",
+      "before_sha256": "63a2e7a9a4133b2b5492c7c49623efcd87d84ce15936ebf7916484fe25dc1770"
+    },
+    {
+      "source": "build/obstruction-opening-select013-v1/stage/resectionlab/public_patient_factory.py",
+      "target": "src/resectionlab/public_patient_factory.py",
+      "sha256": "5e847d88978b449c25168c8caa13beb47ff7a98d7a5465220d4cdd9f3f5aa42a",
+      "before_sha256": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f"
+    },
+    {
+      "source": "build/obstruction-opening-select013-v1/stage/tests/test_obstruction_opening_select013.py",
+      "target": "tests/test_obstruction_opening_select013.py",
+      "sha256": "2467486ed051fa0615d4e650a55c13ac000955e9717bc2e933dd2fb806b3e0ee",
+      "before_sha256": null
+    }
+  ],
+  "patch_sha256": "244e120ae64ab1bd3ac331b7ffd6b2c2de3c73d20f50f0a6e64eb24eb387e75c",
+  "validation": {
+    "scope": "generated controls only; no acquired inputs, checkpoint payloads or optimizers",
+    "tests": 128,
+    "passed": 128,
+    "pytest_seconds": 7.22,
+    "receipt_path": "build/obstruction-opening-select013-v1/controls-01.json",
+    "receipt_sha256": "76e564a88c54016b34a68ea72f371aeee324f17934a4600075c3870e21a7ab19",
+    "log_path": "build/obstruction-opening-select013-v1/controls-01.log",
+    "log_sha256": "5fc9f2b5f228819c87fd9167b058d5f89d90580f021fade6abb7e6dea6ac4bbc"
+  }
+}
