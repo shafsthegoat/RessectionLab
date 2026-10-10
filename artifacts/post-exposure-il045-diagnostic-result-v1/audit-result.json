@@ -1,0 +1,69 @@
+{
+  "checks": 102,
+  "committed_actions": 24,
+  "elapsed_seconds": 0.01262333383783698,
+  "failed_action_id": "nominal-cavity-515f3e2e2cafed0b0422a966",
+  "final_target_removed_cells": 51,
+  "final_target_removed_mm3": 48.637450444683644,
+  "first_failed_action_index": 21,
+  "geometry_accepted": false,
+  "interpretation": "Identical-axis rotation classification defect isolated; full route remains independently rejected in this retained attempt. No corrected route replay by this audit.",
+  "native_previews": 2184,
+  "normal_removed_mm3": 0.0,
+  "owned_elapsed_seconds": 38.369395958958194,
+  "owned_peak_rss_bytes": 533315584,
+  "owner_generated_isolation": {
+    "acos_angle_radians": 2.580956827951785e-08,
+    "action_id": "nominal-cavity-515f3e2e2cafed0b0422a966",
+    "action_index_zero_based": 21,
+    "axis_exact_equal": true,
+    "end_access_failure": null,
+    "independent_motion": {
+      "checker_version": "independent-cell-capsule-v1",
+      "collision_position_mm": null,
+      "conservative": true,
+      "failures": [
+        "continuous_rotating_access_window_check_unsupported"
+      ],
+      "feasible": false,
+      "unknowns": []
+    },
+    "model_forwards": 0,
+    "native_replays": 0,
+    "normalized_axis": [
+      -0.5174147942087322,
+      0.854647792855664,
+      0.04311706043873262
+    ],
+    "patient_array_opens": 0,
+    "scope": "Isolates access rotation classification only; empty synthetic scene does not certify original tissue/domain route.",
+    "self_dot": 0.9999999999999997,
+    "source_access_sha256": "84282eae36f3fbbf25c94fbc777b79c3ed8e34fcdcfa48d3a86258318b46a697",
+    "source_metrics_sha256": "9f06407a4bdeb46c979fc6544c4ebb26f6c5129e5e1d4a9c9267dcf172e2164c",
+    "stable_atan2_angle_radians": 0.0,
+    "start_access_failure": null,
+    "status": "saved_pose_generated_empty_scene_isolation"
+  },
+  "peak_rss_bytes": 27574272,
+  "physical_validation_pass": null,
+  "prefix_removed_cells_before_failure": 46,
+  "scalar_axial_residual_mm": 6.286500016609089e-16,
+  "scalar_endpoint_access": [
+    {
+      "conservative_footprint_radius_mm": 4.400000591403389,
+      "depth_mm": -1.249000902703301e-15,
+      "endpoint": "entry",
+      "margin_mm": 1.5999994085966112
+    },
+    {
+      "conservative_footprint_radius_mm": 4.400000591403389,
+      "depth_mm": 4.394533144717633,
+      "endpoint": "tip",
+      "margin_mm": 1.5999994085966112
+    }
+  ],
+  "scope": "saved JSON and source only; no acquired array, checkpoint, geometry replay, model or optimizer execution; original failed result/receipt untouched",
+  "status": "PASS_saved_diagnostic_consistency_not_route_acceptance",
+  "total_reward": 47.508437886941074,
+  "training_admitted": false
+}

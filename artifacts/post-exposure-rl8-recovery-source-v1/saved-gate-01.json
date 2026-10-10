@@ -1,0 +1,40 @@
+{
+  "elapsed_seconds": 0.031043709,
+  "numerical_modules_loaded": [],
+  "original_accepted_routes": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018"
+  ],
+  "original_status": "failed_or_unresolved",
+  "original_updates": {
+    "IL": 64,
+    "RL": 0
+  },
+  "recovery_accepted": true,
+  "recovery_actions": 24,
+  "recovery_refs": {
+    "receipt": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json",
+      "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+    },
+    "release": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/root-release.json",
+      "sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797"
+    },
+    "replay": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/native-replay.json",
+      "sha256": "529405a10f37c12f9ee4138fd0ef0d0824d7c3fba6f877802890971cc4bae862"
+    },
+    "result": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/result.json",
+      "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+    },
+    "source_index": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/source-index.json",
+      "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+    }
+  },
+  "scope": "saved JSON and bounded raw checkpoint SHA only; no checkpoint decode, patient arrays, numerical imports, native or model calls",
+  "status": "passed_saved_metadata_gate"
+}

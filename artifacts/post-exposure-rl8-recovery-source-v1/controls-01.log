@@ -1,0 +1,15 @@
+test_actual_file_digest_and_checkpoint_bytes_are_enforced (__main__.RecoveryGate) ... ok
+test_checker_binding_enforced (__main__.RecoveryGate) ... ok
+test_clean_parent_required (__main__.RecoveryGate) ... ok
+test_exact_generated_gate_accepts_failed_original_only_with_separate_recovery (__main__.RecoveryGate) ... ok
+test_geometry_and_replayed_history_authenticate_even_if_result_says_accepted (__main__.RecoveryGate) ... ok
+test_old_accepted_three_routes_still_required (__main__.RecoveryGate) ... ok
+test_original_failure_cannot_be_rewritten_as_clean_or_update63 (__main__.RecoveryGate) ... ok
+test_placeholder_and_old_diagnostic_refuse_before_original_reads (__main__.RecoveryGate) ... ok
+test_recovery_failure_partial_updates_or_changed_identity_refused (__main__.RecoveryGate) ... ok
+test_worker_supervisor_and_protocol_generators_unchanged (__main__.RecoveryGate) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.077s
+
+OK

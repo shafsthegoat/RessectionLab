@@ -1,0 +1,42 @@
+{
+  "checkpoint_loads": 0,
+  "checkpoint_sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c",
+  "committed_actions": 24,
+  "elapsed_seconds": 36.15639645792544,
+  "first_failing_action_indices_zero_based": [
+    21
+  ],
+  "full_history_equal": true,
+  "independent_accepted": false,
+  "independent_geometry": {
+    "action_count": 22,
+    "checker_version": "independent-native-sequence-v2",
+    "claimed_source_tissue_volume_mm3": 43.86907295010681,
+    "complete_tool_checked": false,
+    "contained_source_tissue_volume_mm3": 43.86907295010681,
+    "failures": [
+      "native_post_exposure_access_failure"
+    ],
+    "feasible": false,
+    "first_failed_action": "nominal-cavity-515f3e2e2cafed0b0422a966",
+    "first_unsupported_position_mm": null,
+    "first_unsupported_source_voxel": null,
+    "frontier_checked": false,
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "source_case_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+    "source_voxel_volume_mm3": 0.9536754989153655,
+    "unsupported_source_tissue_volume_mm3": 0.0
+  },
+  "interpretation": "Completed fixed-action diagnostic only; accepted=false remains an invalid/unaccepted geometric route. No training or route change.",
+  "native_previews": 2184,
+  "native_replay_sha256": "0c9a052ce87ba50b03784fb978dcf41cd1575e8e3087619db874ffc781a98df2",
+  "optimizer_updates": 0,
+  "policy_forwards": 0,
+  "release_sha256": "fcf09a5b90fffb4f6ca91632097b7979f384c76211f50dd64db3f38c2bd8aad6",
+  "saved_plan_sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84",
+  "source_visits": 1,
+  "status": "complete_saved_plan_diagnostic",
+  "subject": "ReMIND-045",
+  "teacher_search_calls": 0,
+  "training_admitted": false
+}

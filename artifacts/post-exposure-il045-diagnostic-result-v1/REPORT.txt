@@ -1,0 +1,28 @@
+Independent saved-result audit: IL045 fixed-plan diagnostic
+
+PASS for saved diagnostic consistency; route remains independently REJECTED in this attempt. This is not acceptance of the original IL64 run, calibration, or physical/clinical validation. The original failed package at artifacts/post-exposure-il64-result-v1 was not modified.
+
+The stdlib-only audit passed 102 checks in 0.0126 seconds with 27,574,272 bytes observed process peak RSS. It read saved JSON and executed-source bytes only: no acquired arrays, checkpoint bytes, geometry replay, model, optimizer, native solver, or measured responses. Its first pass stopped because the successful worker's empty log was rejected by a generic positive-size guard; the original script and explicit harness correction are preserved. No scientific input changed.
+
+The root-owned diagnostic exited zero in 38.369395959 seconds, peaked at 533,315,584 bytes sampled process-group RSS, recorded 2,184 native previews, and cleanly reaped the child with no remaining owned PIDs or cleanup errors. One source visit and all 24 saved actions completed. Forwards, optimizer updates, checkpoint loads and teacher-search calls were each zero. All caps passed; output size was exactly 1,674,299 bytes. Sampled RSS can miss transient peaks.
+
+The saved plan seal was independently recomputed. Original and newly committed histories match in every physical field after removing only the existing outcome_scope label. The negative certificate contains the identical complete metrics, and its first failure is action index 21 (22nd action), nominal-cavity-515f3e2e2cafed0b0422a966, with native_post_exposure_access_failure. The checker had accounted for 46 removed cells before that action. All 24 committed actions remove 51 distinct supplied-target cells (48.6374504447 mm3), outside-target removal is zero, and scalar rewards sum to 47.5084378869. These are committed simulator outcomes, not an accepted independent route; zero outside-target removal does not establish zero tool contact or safety.
+
+Independent scalar inspection of action 21 gives entry depth -1.249e-15 mm (inside the existing 1e-9 tolerance), tip depth 4.3945331447 mm, and conservative aperture footprint 4.4000005914 mm inside the unchanged 6 mm aperture: margin 1.5999994086 mm. Its displacement is axial to 6.29e-16 mm, and recorded approach-plus-reverse path length matches the saved physical start. No mask collision or native geometry was recomputed here.
+
+The owner's separate empty generated-scene isolation is exactly bound to the saved metrics and access metadata. Equal normalized axes have self-dot 0.9999999999999997: the checker's acos(dot) invents 2.58095682795e-8 radians, exceeding its 1e-10 unsupported-rotation threshold; atan2(norm(cross),dot) returns zero. Both endpoint access checks pass in the isolation. This establishes an angle-classification defect without certifying the actual tissue/domain route.
+
+Source review GO was separately sent for evaluation.py dbfac0b3d8acd3f8461581c96a5ae9421ed341a03559d3ab8ba0589e8a0d028a and test source 83239ccacd20eeee6c5448ce6b2b396a73e9f2006a44187a709bc860d112f62a. The two changed angle expressions use independent atan2 arithmetic; thresholds, aperture, collision, unknown-domain and reward rules stay unchanged. Saved owner controls passed 64 tests in 1.04 seconds, including true tiny rotations, antipodal axes, collisions and aperture/image refusal. This auditor inspected that evidence without rerunning it. A separate corrected-checker replay must establish any eventual route acceptance; no receipts are rewritten.
+
+Exact principal bindings:
+result.json 2a6654ccc3855c180c2724cc9eb24d5720d3120a5a61bfd84e9ef416ba7304cc
+receipt.json 7602b33872a012b24e2c8cec10ef1f5a5bd6b53fd6c7e979678aaef6f7d499e7
+root-release.json fcf09a5b90fffb4f6ca91632097b7979f384c76211f50dd64db3f38c2bd8aad6
+source-index.json c0caa5837ec1eb35c02e57952f0ec86322290f0496c32176675f8c78eea43685
+executed source commit 582d9427cd173cc72041e76bba200b85d4f41b0a
+full native-replay.json (not copied) 0c9a052ce87ba50b03784fb978dcf41cd1575e8e3087619db874ffc781a98df2
+full committed-replay-metrics.json (not copied) 9f06407a4bdeb46c979fc6544c4ebb26f6c5129e5e1d4a9c9267dcf172e2164c
+saved original plan (not copied) 7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84
+checkpoint identity only (not opened/copied) c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c
+
+The compact package includes exact three executed driver sources, release/index, result, parent receipt/declaration, zero-byte worker log, two compact public derivation/binding records, isolation evidence, independent audit script/result/input hashes and this report. Full coordinate traces, arrays, weights and source-closure duplication are excluded. Reproduce the saved-only audit from the original repository workspace with .venv/bin/python -B build/post-exposure-il045-diagnostic-result-v1/audit_saved.py; no scientific process is invoked.

@@ -1,0 +1,37 @@
+{
+  "caps": {
+    "log_bytes": 2097152,
+    "native_previews": 6000,
+    "output_bytes": 33554432,
+    "parent_seconds": 150,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01.supervision/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-IL045-evaluation-diagnostic-v1/initial_inventory_worker.py",
+    "--declaration",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-IL045-evaluation-diagnostic-v1/root-release.json",
+    "--declaration-sha256",
+    "fcf09a5b90fffb4f6ca91632097b7979f384c76211f50dd64db3f38c2bd8aad6"
+  ],
+  "condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "head": "582d9427cd173cc72041e76bba200b85d4f41b0a",
+  "parent_pid": 89094,
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "release_sha256": "fcf09a5b90fffb4f6ca91632097b7979f384c76211f50dd64db3f38c2bd8aad6",
+  "source_index": {
+    "path": "build/post-exposure-IL045-evaluation-diagnostic-v1/source-index.json",
+    "sha256": "c0caa5837ec1eb35c02e57952f0ec86322290f0496c32176675f8c78eea43685"
+  },
+  "training_admitted": false
+}

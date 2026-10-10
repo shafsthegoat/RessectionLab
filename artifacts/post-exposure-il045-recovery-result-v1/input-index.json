@@ -1,0 +1,96 @@
+{
+  "excluded_checkpoint_binding_not_opened": {
+    "path": "build/post-exposure-learning-v1/IL64/attempt-01/IL-final.psckpt",
+    "sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c"
+  },
+  "files": {
+    "artifacts/post-exposure-il64-result-v1/files/ReMIND-002-independent-geometry.json": {
+      "bytes": 2494,
+      "sha256": "8c0bdca48491153826756f61e1faaa4ff0907418f61a35a8ab05932e7a6b44be"
+    },
+    "artifacts/post-exposure-il64-result-v1/files/ReMIND-015-independent-geometry.json": {
+      "bytes": 2626,
+      "sha256": "de50ee908f15910282c452c47662bdef545d48bcf1b2f31cf3072af8e0dbc438"
+    },
+    "artifacts/post-exposure-il64-result-v1/files/ReMIND-018-independent-geometry.json": {
+      "bytes": 2494,
+      "sha256": "af23dc1a5a482d33bb001b2cde993079e06dce68697f98f5ead8ff32b72a783a"
+    },
+    "artifacts/post-exposure-il64-result-v1/route-summary.json": {
+      "bytes": 27067,
+      "sha256": "50d468cd478763727231cc922cfbf6fa5bf786bc35351001f32a710c5d32fde7"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/native-replay.json": {
+      "bytes": 855948,
+      "sha256": "0c9a052ce87ba50b03784fb978dcf41cd1575e8e3087619db874ffc781a98df2"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/result.json": {
+      "bytes": 1983,
+      "sha256": "2a6654ccc3855c180c2724cc9eb24d5720d3120a5a61bfd84e9ef416ba7304cc"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/declaration.json": {
+      "bytes": 1752,
+      "sha256": "c78d443acbff6fc931a4f5ed9098b834cd8ada0eb4ae490fa0cea54e2a1a6a69"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json": {
+      "bytes": 1227,
+      "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/committed-replay-metrics.json": {
+      "bytes": 778853,
+      "sha256": "9f06407a4bdeb46c979fc6544c4ebb26f6c5129e5e1d4a9c9267dcf172e2164c"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/native-replay.json": {
+      "bytes": 856630,
+      "sha256": "529405a10f37c12f9ee4138fd0ef0d0824d7c3fba6f877802890971cc4bae862"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/result.json": {
+      "bytes": 2698,
+      "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/batch_contract.py": {
+      "bytes": 2919,
+      "sha256": "29174ec9af059d2bfd6d9d76030bd1067ed2099ded9e4cbcb1e2ef58d0d3895d"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/initial_inventory_worker.py": {
+      "bytes": 7023,
+      "sha256": "1526ad7ca82d0952393a0db5592517c4efe930abdf7981fe00ef2e9468804efc"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/root-release.json": {
+      "bytes": 3769,
+      "sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/run_owned.py": {
+      "bytes": 8995,
+      "sha256": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/source-index.json": {
+      "bytes": 16563,
+      "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json": {
+      "bytes": 1637,
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json": {
+      "bytes": 832875,
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/result.json": {
+      "bytes": 9786,
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    },
+    "build/post-exposure-learning-v1/IL64/source-index.json": {
+      "bytes": 13888,
+      "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+    }
+  },
+  "full_native_replay_not_copied": {
+    "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/native-replay.json",
+    "sha256": "529405a10f37c12f9ee4138fd0ef0d0824d7c3fba6f877802890971cc4bae862"
+  }
+}

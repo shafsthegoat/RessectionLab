@@ -1,0 +1,64 @@
+{
+  "caps": {
+    "log_bytes": 2097152,
+    "native_previews": 6000,
+    "output_bytes": 33554432,
+    "parent_seconds": 150,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "execution_released": true,
+  "expected_head": "582d9427cd173cc72041e76bba200b85d4f41b0a",
+  "inputs": {
+    "checkpoint": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/IL-final.psckpt",
+      "sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c"
+    },
+    "configuration": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/configuration.json",
+      "sha256": "55f11d31f34f5f44d697d25f010b1a6acd1a462533cf4ecf1010c36e8af1713b"
+    },
+    "failed_receipt": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json",
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "failed_result": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/result.json",
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    },
+    "original_release": {
+      "path": "build/post-exposure-learning-v1/IL64/root-release.json",
+      "sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b"
+    },
+    "original_source_index": {
+      "path": "build/post-exposure-learning-v1/IL64/source-index.json",
+      "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+    },
+    "plan": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json",
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    }
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+  "permitted_source_delta": [
+    {
+      "current_sha256": "733bc569a696715fcd143d8d235a0480dea9b26684664afc94c75d0473498d36",
+      "original_sha256": "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04",
+      "path": "src/resectionlab/patient_planning_preflight.py",
+      "reason": "committed logging-only persistence of negative independent certificate before raising; no checker/physics/outcome change"
+    }
+  ],
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "source_index": {
+    "path": "build/post-exposure-IL045-evaluation-diagnostic-v1/source-index.json",
+    "sha256": "c0caa5837ec1eb35c02e57952f0ec86322290f0496c32176675f8c78eea43685"
+  },
+  "subject": "ReMIND-045",
+  "version": "saved-IL045-evaluation-diagnostic-v1"
+}

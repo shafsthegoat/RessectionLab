@@ -1,0 +1,93 @@
+{
+  "045_retained_contact_upper_bound_mm3": 153.54175532537386,
+  "045_teacher_minus_IL_return": 0.6735250339238519,
+  "checks": 122,
+  "elapsed_seconds": 0.019261416979134083,
+  "four_TRAIN_outcomes": [
+    {
+      "certificate_origin": "original_run",
+      "independent_accepted": true,
+      "motion_count": 0,
+      "outside_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "same_removed_cell_union_as_teacher": true,
+      "steps": 1,
+      "subject": "ReMIND-002",
+      "target_removed_mm3": 0.0,
+      "teacher_motion_count": 0,
+      "teacher_public_return": 0.0,
+      "teacher_target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    {
+      "certificate_origin": "original_run",
+      "independent_accepted": true,
+      "motion_count": 13,
+      "outside_target_removed_mm3": 0.0,
+      "public_return": 54.86621503580145,
+      "removed_cells": 58,
+      "same_removed_cell_union_as_teacher": true,
+      "steps": 14,
+      "subject": "ReMIND-015",
+      "target_removed_mm3": 55.31311034856145,
+      "teacher_motion_count": 13,
+      "teacher_public_return": 54.866215035801446,
+      "teacher_target_removed_mm3": 55.31311034856145,
+      "terminal_reason": "STOP"
+    },
+    {
+      "certificate_origin": "original_run",
+      "independent_accepted": true,
+      "motion_count": 0,
+      "outside_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "removed_cells": 0,
+      "same_removed_cell_union_as_teacher": true,
+      "steps": 1,
+      "subject": "ReMIND-018",
+      "target_removed_mm3": 0.0,
+      "teacher_motion_count": 0,
+      "teacher_public_return": 0.0,
+      "teacher_target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    {
+      "certificate_origin": "corrected_evaluation_recovery",
+      "independent_accepted": true,
+      "motion_count": 24,
+      "outside_target_removed_mm3": 0.0,
+      "public_return": 47.508437886941074,
+      "removed_cells": 51,
+      "same_removed_cell_union_as_teacher": true,
+      "steps": 24,
+      "subject": "ReMIND-045",
+      "target_removed_mm3": 48.637450444683644,
+      "teacher_motion_count": 12,
+      "teacher_public_return": 48.181962920864926,
+      "teacher_target_removed_mm3": 48.637450444683644,
+      "terminal_reason": "HORIZON"
+    }
+  ],
+  "native_previews": 2184,
+  "new_training_or_clinical_authority": false,
+  "original_IL_attempt_status": "failed_or_unresolved",
+  "original_plan_and_full_metrics_unchanged": true,
+  "owned_peak_rss_bytes": 524615680,
+  "owned_seconds": 38.405891791917384,
+  "peak_rss_bytes": 29032448,
+  "physical_validation_pass": null,
+  "recovery_geometric_acceptance": true,
+  "scope": "saved JSON/source only; no acquired arrays, checkpoint bytes, geometry replay or model call",
+  "source_delta": {
+    "src/resectionlab/evaluation.py": [
+      "cc8fc347b56efb2466c02d749eb307342c4931de0187b5ede2c0fbbb6975f193",
+      "dbfac0b3d8acd3f8461581c96a5ae9421ed341a03559d3ab8ba0589e8a0d028a"
+    ],
+    "src/resectionlab/patient_planning_preflight.py": [
+      "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04",
+      "733bc569a696715fcd143d8d235a0480dea9b26684664afc94c75d0473498d36"
+    ]
+  },
+  "status": "PASS_saved_accepted_recovery"
+}

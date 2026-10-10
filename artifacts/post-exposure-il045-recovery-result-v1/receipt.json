@@ -1,0 +1,38 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "log_bytes": 2097152,
+    "native_previews": 6000,
+    "output_bytes": 33554432,
+    "parent_seconds": 150,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 38.405891791917384,
+  "exit_code": 0,
+  "output_bytes": 1675696,
+  "planned_subjects": [
+    "ReMIND-045"
+  ],
+  "release_sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797",
+  "remaining_owned_pids": [],
+  "result_sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce",
+  "result_status": "complete_saved_plan_diagnostic",
+  "sampled_peak_rss_bytes": 524615680,
+  "samples": 183,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/post-exposure-IL045-evaluation-recovery-v1/source-index.json",
+    "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2153,
+  "training_admitted": false,
+  "worker_pid": 89446,
+  "worker_termination_confirmed": true
+}

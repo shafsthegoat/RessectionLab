@@ -1,0 +1,93 @@
+{
+  "checkpoint_bytes_not_opened_by_audit": true,
+  "excluded_bulk_bindings": {
+    "checkpoint": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/IL-final.psckpt",
+      "sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c"
+    },
+    "full_committed_metrics": {
+      "bytes": 778853,
+      "path": "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/committed-replay-metrics.json",
+      "sha256": "9f06407a4bdeb46c979fc6544c4ebb26f6c5129e5e1d4a9c9267dcf172e2164c"
+    },
+    "full_native_replay": {
+      "bytes": 855948,
+      "path": "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/native-replay.json",
+      "sha256": "0c9a052ce87ba50b03784fb978dcf41cd1575e8e3087619db874ffc781a98df2"
+    },
+    "original_plan": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json",
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    }
+  },
+  "files": {
+    "build/independent-identical-axis-repair-v1/saved-pose-isolation.json": {
+      "bytes": 1125,
+      "sha256": "2855bca3e6b33ecf5eae5532038b801b0e935781e2b420e2ce1e9eda710fd88d"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01.supervision/declaration.json": {
+      "bytes": 1760,
+      "sha256": "493e0d561317a2fd5c590a918f2a75044ad0dea51ca19bead7ba43f454fd7f1b"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01.supervision/receipt.json": {
+      "bytes": 1229,
+      "sha256": "7602b33872a012b24e2c8cec10ef1f5a5bd6b53fd6c7e979678aaef6f7d499e7"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01.supervision/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/committed-replay-metrics.json": {
+      "bytes": 778853,
+      "sha256": "9f06407a4bdeb46c979fc6544c4ebb26f6c5129e5e1d4a9c9267dcf172e2164c"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/native-replay.json": {
+      "bytes": 855948,
+      "sha256": "0c9a052ce87ba50b03784fb978dcf41cd1575e8e3087619db874ffc781a98df2"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/result.json": {
+      "bytes": 1983,
+      "sha256": "2a6654ccc3855c180c2724cc9eb24d5720d3120a5a61bfd84e9ef416ba7304cc"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "sha256": "6a2bbb20ee2ac1c926a2a9ef34cd41f694764470b869f963f55aa9ea5bb9d25e"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/attempt-01/source/public-task-derivation.json": {
+      "bytes": 4158,
+      "sha256": "84282eae36f3fbbf25c94fbc777b79c3ed8e34fcdcfa48d3a86258318b46a697"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/batch_contract.py": {
+      "bytes": 2919,
+      "sha256": "29174ec9af059d2bfd6d9d76030bd1067ed2099ded9e4cbcb1e2ef58d0d3895d"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/initial_inventory_worker.py": {
+      "bytes": 6191,
+      "sha256": "065602a0144b06d6c6be92055d4d82f49cee53adc294e6c81892c3d33ba6fc88"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/root-release.json": {
+      "bytes": 2823,
+      "sha256": "fcf09a5b90fffb4f6ca91632097b7979f384c76211f50dd64db3f38c2bd8aad6"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/run_owned.py": {
+      "bytes": 8995,
+      "sha256": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff"
+    },
+    "build/post-exposure-IL045-evaluation-diagnostic-v1/source-index.json": {
+      "bytes": 15843,
+      "sha256": "c0caa5837ec1eb35c02e57952f0ec86322290f0496c32176675f8c78eea43685"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json": {
+      "bytes": 1637,
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json": {
+      "bytes": 832875,
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/result.json": {
+      "bytes": 9786,
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    }
+  }
+}

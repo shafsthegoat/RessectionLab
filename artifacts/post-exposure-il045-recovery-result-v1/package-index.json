@@ -1,0 +1,91 @@
+{
+  "bytes": 89517,
+  "contains_acquired_arrays": false,
+  "contains_weights": false,
+  "file_count": 20,
+  "files": {
+    "REPORT.txt": {
+      "bytes": 4546,
+      "sha256": "b5b17c11230222d43657c2e1ec8d61816bd2a90be14472d0b747084b69104427"
+    },
+    "RL-GATE-SOURCE-REVIEW.txt": {
+      "bytes": 1933,
+      "sha256": "4f7e5bf0106fc044116e63c00fbf1f41469180fe506ec0e5840d0da08ec9e22e"
+    },
+    "accepted-certificate-summary.json": {
+      "bytes": 2633,
+      "sha256": "45d3cbfa0bbf34471ca12cbc3c5bfb361b416ba5259d443151ce2bcbf2df5258"
+    },
+    "audit-initial-failure.log": {
+      "bytes": 530,
+      "sha256": "405af879c6f938ba2d872ba7343aa9b73485c26d8e1730c0aca62a128f9f5c62"
+    },
+    "audit-result.json": {
+      "bytes": 3245,
+      "sha256": "773ac77548bb18b853490b2f642c0d8e401cbb32f6719c6fc44a7b161b6cc356"
+    },
+    "audit.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit.stdout.log": {
+      "bytes": 3245,
+      "sha256": "63c3bd26794cdffaadada41a4df7e59317b69f376596f26f3bb753f83129c8c5"
+    },
+    "audit_initial.py": {
+      "bytes": 10952,
+      "sha256": "9de05ccec58a911e42fbb73b2b49adacfd69c5e45b1451db320eaaabadd9135e"
+    },
+    "audit_saved.py": {
+      "bytes": 10973,
+      "sha256": "6e634719636a828d1795ac3b17ecaac5c1dbb3f270ed5f51e3e2bf34f63d1eb2"
+    },
+    "batch_contract.py": {
+      "bytes": 2919,
+      "sha256": "29174ec9af059d2bfd6d9d76030bd1067ed2099ded9e4cbcb1e2ef58d0d3895d"
+    },
+    "declaration.json": {
+      "bytes": 1752,
+      "sha256": "c78d443acbff6fc931a4f5ed9098b834cd8ada0eb4ae490fa0cea54e2a1a6a69"
+    },
+    "four-TRAIN-outcomes.json": {
+      "bytes": 1968,
+      "sha256": "8b7334f9975dde70677403a2215e5a962b2ac0f6a4d9d87d9362bdc6bdafaa5c"
+    },
+    "initial_inventory_worker.py": {
+      "bytes": 7023,
+      "sha256": "1526ad7ca82d0952393a0db5592517c4efe930abdf7981fe00ef2e9468804efc"
+    },
+    "input-index.json": {
+      "bytes": 4546,
+      "sha256": "6249ae4583f07ad8bd79cb59bcfc831304619e7eb8083a14b02abb45e6f71987"
+    },
+    "receipt.json": {
+      "bytes": 1227,
+      "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+    },
+    "result.json": {
+      "bytes": 2698,
+      "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+    },
+    "root-release.json": {
+      "bytes": 3769,
+      "sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797"
+    },
+    "run_owned.py": {
+      "bytes": 8995,
+      "sha256": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff"
+    },
+    "source-index.json": {
+      "bytes": 16563,
+      "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "fixed_route_accepted": true,
+  "original_IL_attempt_remains_failed": true,
+  "schema": "compact-accepted-reevaluation-package-v1"
+}

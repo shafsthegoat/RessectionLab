@@ -1,0 +1,13 @@
+Fresh scratch RL8 after independent correction of the frozen IL045 evaluation.
+
+Original IL64 result and parent remain failed_or_unresolved. The exact 64-update checkpoint, three originally accepted routes and separately accepted unchanged 045 route are all required. Recovery pins are fixed in pilot_contract.py. No IL checkpoint initializes RL. Worker and supervisor bytes, scientific protocol, original teachers, seed and budgets are unchanged.
+
+10 generated metadata tests passed; saved actual gate passed without numerical imports or checkpoint decoding. No patient or model execution has occurred here. Historical v1 remains untouched. The pending placeholder is deliberately not an executable release.
+
+After root gives the final committed HEAD, metadata-only freeze:
+python3 build/post-exposure-learning-rl8-recovery-v1/freeze-runtime.py --head FINAL_HEAD --method RL --il045-recovery-receipt-sha256 c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e
+
+Root changes only release-template.json status to released_one_attempt and saves a new root-release.json, then invokes:
+.venv/bin/python build/post-exposure-learning-rl8-recovery-v1/run_owned.py --release build/post-exposure-learning-rl8-recovery-v1/RL8/root-release.json --release-sha256 ACTUAL_RELEASE_SHA256
+
+RL limits remain: 8 updates, 32 episodes, 44 source visits, 768 loss forwards maximum, 1661 total policy forwards maximum, 385440 native previews maximum, 3540 worker seconds / 3600 parent seconds / 3 GiB, one thread. No search, private reference, SELECT or EVAL. All four complete reloaded greedy routes are required; no performance threshold.

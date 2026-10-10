@@ -1,0 +1,41 @@
+{
+  "files": {
+    "HANDOFF.txt": {
+      "bytes": 1631,
+      "sha256": "1f5273b5fc5c3db56ae746d4f1a0e48dea369132af4db149446cbb538d4b8806"
+    },
+    "cohort_worker.py": {
+      "bytes": 22806,
+      "sha256": "554d4820e2301d39230442971697802d96c17ef03702fee532936e91e598b1b0"
+    },
+    "controls-01.json": {
+      "bytes": 1088,
+      "sha256": "58543ba8d9adc3704bb699d5e59c25565819117dc956d5b58503a2c95a7c1613"
+    },
+    "controls-01.log": {
+      "bytes": 976,
+      "sha256": "d0eb966cd420cee06c81cdc56f8f33c5d30fd5c29c164b63dd95553d8943119a"
+    },
+    "freeze-runtime.py": {
+      "bytes": 8608,
+      "sha256": "ae9aa2d17b3d16fb9bf9ff535172e9281f070341fa638579091d137cb31ba786"
+    },
+    "pilot_contract.py": {
+      "bytes": 31957,
+      "sha256": "7f823d74b4da466056b195f943de184202d0766a2ad8822abd87a70232a2e65c"
+    },
+    "run_owned.py": {
+      "bytes": 13169,
+      "sha256": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806"
+    },
+    "saved-gate-01.json": {
+      "bytes": 1517,
+      "sha256": "b2e91553d90734404359478fec3df0e9f389e6e3c1812066c838f8a535f5f7ab"
+    },
+    "tests/test_recovery_gate.py": {
+      "bytes": 12298,
+      "sha256": "c7b1a5323df4eef56588dee6986337d349137e875e7129d906d37897d64ee900"
+    }
+  },
+  "scope": "RL8 recovery admission source; not an executed training result"
+}

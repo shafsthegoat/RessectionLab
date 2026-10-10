@@ -1,0 +1,17 @@
+{
+  "elapsed_seconds": 0.19662866699999998,
+  "exit_code": 0,
+  "hard_timeout_seconds": 30,
+  "log_sha256": "d0eb966cd420cee06c81cdc56f8f33c5d30fd5c29c164b63dd95553d8943119a",
+  "scope": "generated metadata fixtures only; no numerical imports, patient data, checkpoint decoding, native or model calls",
+  "source_files": {
+    "build/post-exposure-learning-rl8-recovery-v1/cohort_worker.py": "554d4820e2301d39230442971697802d96c17ef03702fee532936e91e598b1b0",
+    "build/post-exposure-learning-rl8-recovery-v1/freeze-runtime.py": "ae9aa2d17b3d16fb9bf9ff535172e9281f070341fa638579091d137cb31ba786",
+    "build/post-exposure-learning-rl8-recovery-v1/pilot_contract.py": "7f823d74b4da466056b195f943de184202d0766a2ad8822abd87a70232a2e65c",
+    "build/post-exposure-learning-rl8-recovery-v1/run_owned.py": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806",
+    "build/post-exposure-learning-rl8-recovery-v1/tests/test_recovery_gate.py": "c7b1a5323df4eef56588dee6986337d349137e875e7129d906d37897d64ee900"
+  },
+  "source_unchanged": true,
+  "status": "passed",
+  "threads": 1
+}
