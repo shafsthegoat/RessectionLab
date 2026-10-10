@@ -1,0 +1,44 @@
+First fixed unseen-patient comparison is non-discriminating: all six arms STOP
+October 10, 2026
+
+ReMIND-013 was held out from training. Both existing searches and all four
+predeclared checkpoint endpoints (IL8, RL8, balanced IL8, balanced IL64) select
+STOP, public return zero, target removal zero and outside-target removal zero.
+All six complete plans have native replay and independent geometry checks.
+The same source, hypothetical access, action set, reward and initial observation
+are used. No checkpoint was selected or trained using this outcome.
+
+The deeper beam completes all 24 layers, scoring 345 prefixes (all negative),
+with no time/call cap. Its planning alone takes 69.862 s. The inexpensive native
+greedy search scores all 20 legal initial movements and also STOPs. Planning
+plus full replay takes 70.245 s for beam, 0.391 s for cheap greedy, and 0.487 to
+0.607 s for the four policies. Each arm additionally constructs its public task
+in 0.370 to 0.377 s. Checkpoint reload, shared preparation, offline training and
+process startup are separate. These are one-process exploratory timings, not
+a repeated latency benchmark. No learned speed advantage over cheap greedy or
+useful held-out planning improvement is established.
+
+This is one executable case out of the original two planned SELECT cases.
+037 remains held for a source-encoded support-mask artifact, with no replacement
+or payload access. On013, 33,681 of35,260 supplied target voxels (95.52%) lie
+outside automatic support. The full target denominator is unchanged; the test
+is only the disclosed partial-target condition. Source qualification is not
+anatomical accuracy or clinical validity. Final EVAL data remain closed.
+
+Four authenticated frozen checkpoint loads; zero gradient/optimizer attempts,
+zero SELECT updates, four actor forwards, 22,489 native previews. Owned parent
+elapsed78.720 s, sampled peak1,337,982,976 B, clean exit/no remaining processes.
+CPU arm64, float32, one thread/inter-op thread, deterministic algorithms enabled.
+Independent saved-only audit verifies all six replay and lineage chains and85
+source bindings. Models and patient arrays were not reopened for the audit.
+
+The prior64 result establishes fit of five TRAIN teacher states only. The
+current all-STOP comparison cannot test transfer of useful multi-step behavior.
+Next priorities are richer acquired TRAIN tasks, diagnosing support/task
+semantics, and reducing repeated imitation reconstruction cost with exact tensor
+parity. Keep the existing geometric baseline and all negative results. No reward
+or mask will be altered after this SELECT result to manufacture a win.
+
+Executed HEAD cce31814052946d996a10280d564d2214fb9805e.
+Result SHA256 5d9234d5e9d46b742d5bb7b4c09d438f28d2f44b9f175c08471472f2554cfd54.
+Release SHA256 ef12882262c8db38ad4913edc3c5e1083eda86a1ddc18fd3d06d08e94d6cecb0.

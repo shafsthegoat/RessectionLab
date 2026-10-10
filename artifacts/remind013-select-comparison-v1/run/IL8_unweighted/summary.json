@@ -1,0 +1,17 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "checkpoint_author": "IL8_unweighted",
+  "comparison_reference_checkpoint": "IL8_unweighted",
+  "context_hash": "sha256:403740e0528b857832ff2cfa58383e95dc04712aaeee035aa4bab36465e04d72",
+  "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+  "outside_meaning": "outside supplied target, not verified normal tissue",
+  "outside_supplied_target_removed_mm3": 0.0,
+  "plan_seal": "sha256:83822ac731933287a76415f44903bce3b3d8f0edfdd9dce8fff80de7047975c4",
+  "public_return": 0.0,
+  "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+  "status": "complete_replayed",
+  "steps": 1,
+  "target_removed_mm3": 0.0
+}

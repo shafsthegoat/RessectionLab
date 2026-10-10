@@ -1,0 +1,19 @@
+{
+  "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+  "checkpoint_sha256": "85470cafa0829d22cb0f2a6a02f80cbbbbc5addd183a1e9e585a93c0ead056da",
+  "completed_updates": 64,
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "learning_protocol_hash": "sha256:4661fbea9a10af9919a83307b789eb1b5e798cb38089848377c10287a46824bb",
+  "method": "IL",
+  "optimizer_updates_on_SELECT": 0,
+  "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+  "public_target_context_variant": "full-supplied-public-target-context-v1",
+  "training_context_hashes": {
+    "ReMIND:008": "sha256:974a4fe24b87f331d0da9b7dbd6f4c33fd1d6a8a85c66346ec93f826fdcd1659",
+    "ReMIND:010": "sha256:72289f94c4d1eb9cff899893204b7668778ccc8a64c842ecccb90b4ebea8f6d0",
+    "ReMIND:020": "sha256:58f997c62361e96854b7f36d6d1425dd424bc22c585c5e5b2e1f6fc04ae1ab37",
+    "ReMIND:025": "sha256:21a14b9656ef82d56153d9e83acea04e6062e19a361aeb02c35618c001fac8cd"
+  },
+  "training_release_sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22",
+  "version": "frozen-TRAIN-checkpoint-lineage-v1"
+}

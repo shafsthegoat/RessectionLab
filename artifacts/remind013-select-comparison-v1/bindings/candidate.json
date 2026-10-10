@@ -1,0 +1,186 @@
+{
+  "status": "candidate_not_released",
+  "expected_head": "8701ae713f8d2635e71f420b8b3827333a4ac96d",
+  "output": "build/remind013-select-comparison-v1/attempt-01",
+  "source_index": {
+    "path": "build/remind013-select-comparison-v1/source-index-candidate.json",
+    "sha256": "9cf87105ebf5900d05163929428b60f0489d6365fff5f6b918c5541b7c485661"
+  },
+  "public_index": {
+    "path": "build/remind-select-public-preparation-v1/public-select-index-v2.json",
+    "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+  },
+  "arms": [
+    "observed_beam",
+    "observed_greedy",
+    "IL8_unweighted",
+    "RL8",
+    "IL8_balanced",
+    "IL64_balanced"
+  ],
+  "endpoints": {
+    "IL8_unweighted": {
+      "release": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+        "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+      },
+      "result": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json",
+        "sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb"
+      },
+      "parent": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/receipt.json",
+        "sha256": "e1f18ca5dae011057f0c945690d71e9ba909041f7aa495e5ce4493e57f805fa2"
+      },
+      "worker_final": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/worker-final.json",
+        "sha256": "72812b80868be512711653f0bc1512765940e1de27e4630e9b9518258229f5b9"
+      },
+      "status": "terminal_bound",
+      "contexts": {
+        "ReMIND-008": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-008-context.json",
+          "sha256": "4d160a3eb839d94354e38c2417694e4eb2fcc79346e50b10ba1b43d321d6ae30"
+        },
+        "ReMIND-010": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-010-context.json",
+          "sha256": "f3d87cefda59a09531bab3cc5be18978df275ff6f8fc13cef34125a680b90e2d"
+        },
+        "ReMIND-020": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-020-context.json",
+          "sha256": "d572a8013c381640544f7adf47a2ebe4096f0a9a97f89559034a1af3d25463a3"
+        },
+        "ReMIND-025": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-025-context.json",
+          "sha256": "6a0026ae1ccf728aac9fb080fab2874eea83c39599464bfa1b64d4ba0f1df89c"
+        }
+      },
+      "checkpoint": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/IL-final.psckpt",
+        "sha256": "d7d2519d655fda6d1519f079f0030631a15c3bd3fe31e8c5ba1c08361b5bbcde"
+      }
+    },
+    "RL8": {
+      "release": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+        "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+      },
+      "result": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json",
+        "sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb"
+      },
+      "parent": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/receipt.json",
+        "sha256": "e1f18ca5dae011057f0c945690d71e9ba909041f7aa495e5ce4493e57f805fa2"
+      },
+      "worker_final": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/worker-final.json",
+        "sha256": "72812b80868be512711653f0bc1512765940e1de27e4630e9b9518258229f5b9"
+      },
+      "status": "terminal_bound",
+      "contexts": {
+        "ReMIND-008": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-008-context.json",
+          "sha256": "4d160a3eb839d94354e38c2417694e4eb2fcc79346e50b10ba1b43d321d6ae30"
+        },
+        "ReMIND-010": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-010-context.json",
+          "sha256": "f3d87cefda59a09531bab3cc5be18978df275ff6f8fc13cef34125a680b90e2d"
+        },
+        "ReMIND-020": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-020-context.json",
+          "sha256": "d572a8013c381640544f7adf47a2ebe4096f0a9a97f89559034a1af3d25463a3"
+        },
+        "ReMIND-025": {
+          "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/ReMIND-025-context.json",
+          "sha256": "6a0026ae1ccf728aac9fb080fab2874eea83c39599464bfa1b64d4ba0f1df89c"
+        }
+      },
+      "checkpoint": {
+        "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL-final.psckpt",
+        "sha256": "f2a605f96b199c3bd1f71eac8f3844f1b68ad02fba35f18407322f1a39a68841"
+      }
+    },
+    "IL8_balanced": {
+      "release": {
+        "path": "build/balanced-teacher-il-v1/root-release.json",
+        "sha256": "63acce8556bda8a23552e8007b6851e11d80a022c4920ca3838104df6117e8f3"
+      },
+      "result": {
+        "path": "build/balanced-teacher-il-v1/attempt-01/result.json",
+        "sha256": "e183018bc21400cc87b377b7cc7ee87eb0a8943ea09b88ff9b40b10cc10bebd3"
+      },
+      "parent": {
+        "path": "build/balanced-teacher-il-v1/attempt-01.supervision/receipt.json",
+        "sha256": "ecf5b97efda838f7c1eafbefe727322fcdbd7b48a69ef14b8f78c1392455567d"
+      },
+      "worker_final": {
+        "path": "build/balanced-teacher-il-v1/attempt-01.supervision/worker-final.json",
+        "sha256": "357297934e38a032537179a52c56dc5b476919cb8028606f1ac252eb09944a01"
+      },
+      "status": "terminal_bound",
+      "contexts": {
+        "ReMIND-008": {
+          "path": "build/balanced-teacher-il-v1/attempt-01/ReMIND-008-context.json",
+          "sha256": "d16193a63c6b1d117fa312e454ecc97d6fe3f8b049779c73993aa46662d73db3"
+        },
+        "ReMIND-010": {
+          "path": "build/balanced-teacher-il-v1/attempt-01/ReMIND-010-context.json",
+          "sha256": "985c544df21ac773ce15e576c95ac9a7bdcb0b58ac004371d21decf24153a7f4"
+        },
+        "ReMIND-020": {
+          "path": "build/balanced-teacher-il-v1/attempt-01/ReMIND-020-context.json",
+          "sha256": "2a6d5d14039cb1a9daf23a760a25de6f968c1bb094e815e225ea5e3e9ea15337"
+        },
+        "ReMIND-025": {
+          "path": "build/balanced-teacher-il-v1/attempt-01/ReMIND-025-context.json",
+          "sha256": "50e3757aa7c3b0f71e96a37e2a7031bc53f97a9254b9115de3a3afba4b4ac8ca"
+        }
+      },
+      "checkpoint": {
+        "path": "build/balanced-teacher-il-v1/attempt-01/IL-final.psckpt",
+        "sha256": "12122ba1b01823557adb753a24bf45d3227054845c942354e2ec1e788dfc6a3b"
+      }
+    },
+    "IL64_balanced": {
+      "status": "pending_terminal_TRAIN_evidence",
+      "expected_paths": {
+        "release": "build/balanced-teacher-il64-v1/root-release.json",
+        "result": "build/balanced-teacher-il64-v1/attempt-01/result.json",
+        "parent": "build/balanced-teacher-il64-v1/attempt-01.supervision/receipt.json",
+        "worker_final": "build/balanced-teacher-il64-v1/attempt-01.supervision/worker-final.json"
+      },
+      "expected_checkpoint": "build/balanced-teacher-il64-v1/attempt-01/IL-final.psckpt",
+      "meaning": "predetermined endpoint; never skip or substitute based on SELECT results"
+    }
+  },
+  "limits": {
+    "max_steps": 24,
+    "max_optimizer_updates": 0,
+    "max_native_previews": 750000,
+    "max_policy_forwards": 96,
+    "worker_seconds": 900,
+    "memory_bytes": 3221225472,
+    "threads": 1,
+    "search": {
+      "max_calls": 5640,
+      "beam_width": 2,
+      "seconds": 300
+    }
+  },
+  "parent_seconds": 960,
+  "greedy_seconds": 60,
+  "attempts": 1,
+  "automatic_retry": false,
+  "selection_rule": "All four fixed TRAIN endpoints and both existing planners; no SELECT-result-dependent choice",
+  "planned_SELECT_denominator": 2,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "EVAL_closed": true,
+  "claim": "annotation-conditioned nominal planning only; no physical surgery or clinical claim",
+  "blockers": [
+    "IL64 must be clean terminal and every final descriptor bound",
+    "root must serialize and release exact final source/HEAD; no patient execution during preparation"
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "arms": {
+    "IL64_balanced": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "IL64_balanced",
+      "comparison_reference_checkpoint": "IL64_balanced",
+      "context_hash": "sha256:bd07049b9042fd5bf2961a08b9e0a6eb6fe16408d9d9b5e6cef9f6376b8719b3",
+      "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:3d34ccaa632ae2dbe0eb82e7cffd1e971b79f96eb10f069b03a4b8e64fb84401",
+      "public_return": 0.0,
+      "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "IL8_balanced": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "IL8_balanced",
+      "comparison_reference_checkpoint": "IL8_balanced",
+      "context_hash": "sha256:730a3723177f70fcf1e7d2ca623b264da8ee10e2cf3367ebc79c51d7955f89cd",
+      "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:d2d7646d4f74d80ef7a92bf741bc5142f43f3708c04643efba324c29e0758fe7",
+      "public_return": 0.0,
+      "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "IL8_unweighted": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "IL8_unweighted",
+      "comparison_reference_checkpoint": "IL8_unweighted",
+      "context_hash": "sha256:403740e0528b857832ff2cfa58383e95dc04712aaeee035aa4bab36465e04d72",
+      "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:83822ac731933287a76415f44903bce3b3d8f0edfdd9dce8fff80de7047975c4",
+      "public_return": 0.0,
+      "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "RL8": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "RL8",
+      "comparison_reference_checkpoint": "RL8",
+      "context_hash": "sha256:6c12e87b7a817455f97884363bfe9dcfd224ae97819088c89efa5c23dff96a65",
+      "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:a531c4412d8f3b5ccdbd4285005758d472f879bda31b49656fe1a2c60a92128b",
+      "public_return": 0.0,
+      "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "observed_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "comparison_reference_checkpoint": "IL8_unweighted",
+      "context_hash": "sha256:403740e0528b857832ff2cfa58383e95dc04712aaeee035aa4bab36465e04d72",
+      "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:5d780b20d4120f6c783028f95a5cfbff665264d1636155e4664597dff866954e",
+      "public_return": 0.0,
+      "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "observed_greedy": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "comparison_reference_checkpoint": "IL8_unweighted",
+      "context_hash": "sha256:403740e0528b857832ff2cfa58383e95dc04712aaeee035aa4bab36465e04d72",
+      "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:5d780b20d4120f6c783028f95a5cfbff665264d1636155e4664597dff866954e",
+      "public_return": 0.0,
+      "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "automatic_retry": false,
+  "canonical_result_status": "complete_public_SELECT013_comparison",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 960,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 900,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 78.72016212507151,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 514671,
+  "planned_SELECT_denominator": 2,
+  "private_reference_execution": false,
+  "release_sha256": "ef12882262c8db38ad4913edc3c5e1083eda86a1ddc18fd3d06d08e94d6cecb0",
+  "result_sha256": "5d9234d5e9d46b742d5bb7b4c09d438f28d2f44b9f175c08471472f2554cfd54",
+  "sampled_peak_rss_bytes": 1337982976,
+  "samples": 376,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/remind013-select-comparison-v1/source-index.json",
+    "sha256": "df0b23b35ffb56d2bd46ec3acca23dee467769de20d9d6d59a0afa4e2296e80c"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 13406,
+  "worker_final_sha256": "806160c0212cfa331df65309dfad39be293a9aadf366e96688acab195b356da5",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

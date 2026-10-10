@@ -1,0 +1,435 @@
+{
+  "files": [
+    {
+      "bytes": 1447,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/attempt-00.json",
+      "sha256": "29b56b8d36220a3e7d2485ba91f2d114b40d7fe1ff4dade0757d017765c7d96d"
+    },
+    {
+      "bytes": 1620,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/comparison-world.json",
+      "sha256": "4d4ab7cfa95ab1307104e4266069c1b7cdec3a9fd37ab153a79f6c7f1c576f94"
+    },
+    {
+      "bytes": 19708,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/complete-trace.json",
+      "sha256": "d9a58a31955f6732fccd79051251acb7a21f93a1332cb82c8a05ad1d467e2cfd"
+    },
+    {
+      "bytes": 2960,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/context.json",
+      "sha256": "0bc23d6c97385c3bc6594cf4e4578733386c5d2240d96cb23ef8b7dbf580dbbd"
+    },
+    {
+      "bytes": 1876,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/frames.json",
+      "sha256": "c64f7c0b65ba4fb23f9c5d1e16cc4d5985523bda483b65ef9b743bf3d5e9abc6"
+    },
+    {
+      "bytes": 19046,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/native-replay.json",
+      "sha256": "ebfb5946c427773a106819c0e730ea75b3d80d2ab62e59c695544bcb51d6af57"
+    },
+    {
+      "bytes": 1065,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/plan.json",
+      "sha256": "c4a9adc60b740b68349dc9201961f729a11b5e125bf8ce95905f745d65d94872"
+    },
+    {
+      "bytes": 26,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/replay-attempt-00.json",
+      "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e"
+    },
+    {
+      "bytes": 1486,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/returned-00.json",
+      "sha256": "23e7dd0ff70d8d0d7d0c19e99facca9c59a76bf54646fb89bb6d71db2e2e96e5"
+    },
+    {
+      "bytes": 2090,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/select-replay.json",
+      "sha256": "9566e8cfa4df09ac6543dc1351f7b92176e00e12a2fa37a6764b8f777fc2be4a"
+    },
+    {
+      "bytes": 7815,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/source/admitted-public-bindings.json",
+      "sha256": "efabf600d4fe3c272f70ad2ec38f5348b82aeccc0154c2bef75dfbff30dcbd24"
+    },
+    {
+      "bytes": 1126,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/source/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    {
+      "bytes": 725,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced/summary.json",
+      "sha256": "68e1d50d4174692040ee7d7bcb7291d7bf0c2d48accbf44c1f305c13222bef06"
+    },
+    {
+      "bytes": 1206,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL64_balanced-lineage.json",
+      "sha256": "f78c3057d371fc5aa8ba82df81f6b7503f02f9701626d224c0a0f87963621c72"
+    },
+    {
+      "bytes": 1447,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/attempt-00.json",
+      "sha256": "826fbd6dc431c06179588b8fa02b23dd745175bc809518ac24f59bcd606bae5d"
+    },
+    {
+      "bytes": 1620,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/comparison-world.json",
+      "sha256": "4d4ab7cfa95ab1307104e4266069c1b7cdec3a9fd37ab153a79f6c7f1c576f94"
+    },
+    {
+      "bytes": 19707,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/complete-trace.json",
+      "sha256": "a91137a05f648f3d6100c68957c9d2c4b61893b5ddf93382786f439f6a0569cd"
+    },
+    {
+      "bytes": 2959,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/context.json",
+      "sha256": "d955817de017aea9aaf2d370642ba59382bc630e8e952397193e3261efc6d817"
+    },
+    {
+      "bytes": 1876,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/frames.json",
+      "sha256": "8d249df5f8bca3b8fc7ece9dfe50bb310221567f24b2991a47c89efeb78691e6"
+    },
+    {
+      "bytes": 19046,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/native-replay.json",
+      "sha256": "9cef0971032a6393b7e7492ee442ac030066248213138e4e9211d30e881146a0"
+    },
+    {
+      "bytes": 1064,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/plan.json",
+      "sha256": "6cc2f69fc68c1809e447422275e82e4599e5d606e928ae7cabfc9df44da76fa0"
+    },
+    {
+      "bytes": 26,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/replay-attempt-00.json",
+      "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e"
+    },
+    {
+      "bytes": 1486,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/returned-00.json",
+      "sha256": "1b6ad751343f1f48d20d4fbd16911684aa416a613a1b003ae7f6f2805b72d1cd"
+    },
+    {
+      "bytes": 2089,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/select-replay.json",
+      "sha256": "78886bde2cc7ad2bf2fe1bf93f0b54c64c21b71ceb5c2d90b4956bc89d45af2e"
+    },
+    {
+      "bytes": 7814,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/source/admitted-public-bindings.json",
+      "sha256": "fa198599d23682e12be61ed5cefd0938bdf675d2f889f82df929e14153072a65"
+    },
+    {
+      "bytes": 1126,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/source/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    {
+      "bytes": 723,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced/summary.json",
+      "sha256": "e143cca016caaa0e584feaa7faf6478418d4fe99aac1619ac87e674537834d16"
+    },
+    {
+      "bytes": 1205,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_balanced-lineage.json",
+      "sha256": "f3d0c6bf8eb28bbb9f2ee2a5a86e908c333e275b98e2ffeb919cf448abf762e1"
+    },
+    {
+      "bytes": 1447,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/attempt-00.json",
+      "sha256": "dd6b946b1d3086e5d08a94355f3e9c791fc3711368ac5cba702d18bc42cd0f16"
+    },
+    {
+      "bytes": 1620,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/comparison-world.json",
+      "sha256": "4d4ab7cfa95ab1307104e4266069c1b7cdec3a9fd37ab153a79f6c7f1c576f94"
+    },
+    {
+      "bytes": 19707,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/complete-trace.json",
+      "sha256": "b3ae5cc41f6f951a6245b10e80ca113df85bc4d5b1a0823c95f05caf5bdbf429"
+    },
+    {
+      "bytes": 2959,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/context.json",
+      "sha256": "15acd78f97ae206e4edf12da72249b0d5125c09d7412969e04b3a13b79d4c4a4"
+    },
+    {
+      "bytes": 1876,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/frames.json",
+      "sha256": "a8de51b3f23eb9d8dd84d5326e9ed7051737359c0d1f33d504e909258918e063"
+    },
+    {
+      "bytes": 19046,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/native-replay.json",
+      "sha256": "84d46464a98348aec92e654f7b46be30f51c346051a28470b09ff963e0422621"
+    },
+    {
+      "bytes": 1064,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/plan.json",
+      "sha256": "1c601a6197e6f532987bb389c06d8371ffc9b81f96fb7926da402dd5c60af541"
+    },
+    {
+      "bytes": 26,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/replay-attempt-00.json",
+      "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e"
+    },
+    {
+      "bytes": 1486,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/returned-00.json",
+      "sha256": "cd224b277d18c04b3013b1130c2efe723f8cce9eba540d43d1cd9b31cddec0d7"
+    },
+    {
+      "bytes": 2089,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/select-replay.json",
+      "sha256": "45207aa30618329ca36a5eb0570c07f93d898ad88806c726face5f37e376d209"
+    },
+    {
+      "bytes": 7814,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/source/admitted-public-bindings.json",
+      "sha256": "4c572b1089ce5d2d2d79fe35847e0b1675bcd1c10fadb1eaba853998b83569e9"
+    },
+    {
+      "bytes": 1126,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/source/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    {
+      "bytes": 727,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted/summary.json",
+      "sha256": "98518554ea1127ce8ca724701053fe1b929bd2e5b99c3a9f1c1c9e354c3abd66"
+    },
+    {
+      "bytes": 1205,
+      "path": "build/remind013-select-comparison-v1/attempt-01/IL8_unweighted-lineage.json",
+      "sha256": "105e40e6ddb9745cc55e4249d6128e2e5c81a23470f54889cc940863a4d198e9"
+    },
+    {
+      "bytes": 1447,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/attempt-00.json",
+      "sha256": "cbddd9f204e6df030522aac8563fb1595d532e74eb6d1125cc6688c2a61b1c3e"
+    },
+    {
+      "bytes": 1620,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/comparison-world.json",
+      "sha256": "4d4ab7cfa95ab1307104e4266069c1b7cdec3a9fd37ab153a79f6c7f1c576f94"
+    },
+    {
+      "bytes": 19707,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/complete-trace.json",
+      "sha256": "b5249fe76ecf16fbe1ecb0d1cb5f6178b3e926399b1ebca5b170896061d30a72"
+    },
+    {
+      "bytes": 2959,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/context.json",
+      "sha256": "975ed409825fa1e81f0441a17a259d14b0b847f85be0827499e89d8403704efb"
+    },
+    {
+      "bytes": 1876,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/frames.json",
+      "sha256": "dc8066cecdfb11a6f97dd5542654de01bc052998fd470f54d1a3139b541f8a4c"
+    },
+    {
+      "bytes": 19046,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/native-replay.json",
+      "sha256": "2a1c72ca634bd30670ace1b747645a9b589cb5ba582518cf7d99864dd4c8e4d9"
+    },
+    {
+      "bytes": 1064,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/plan.json",
+      "sha256": "afd8b2c31f1995235322382f783874f0169f149e0b95578aeb9f4fa132dc7d7d"
+    },
+    {
+      "bytes": 26,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/replay-attempt-00.json",
+      "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e"
+    },
+    {
+      "bytes": 1486,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/returned-00.json",
+      "sha256": "e736826c357df7c3836ff4da8d8e9a04688a50841f62511ff9be2d72dc96b944"
+    },
+    {
+      "bytes": 2089,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/select-replay.json",
+      "sha256": "b4b2f6cf6d527dedf3cedb7268d966c9cbedde110ca95879f9fead6d520396ee"
+    },
+    {
+      "bytes": 7814,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/source/admitted-public-bindings.json",
+      "sha256": "e496a9862f26aa4cbac4a3f6318340a0d9d9edf6bf4de297d3762683186d6b56"
+    },
+    {
+      "bytes": 1126,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/source/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    {
+      "bytes": 705,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8/summary.json",
+      "sha256": "69a433cb79d3ae78388a5f3953dcb228f8fb9b04fe8a189d3b353b0a9fea83da"
+    },
+    {
+      "bytes": 1205,
+      "path": "build/remind013-select-comparison-v1/attempt-01/RL8-lineage.json",
+      "sha256": "7a1eab00265baf35e2799db0000bdaae196c8910f0061c5133f4a5dfc5905e8e"
+    },
+    {
+      "bytes": 8444,
+      "path": "build/remind013-select-comparison-v1/attempt-01/costs.json",
+      "sha256": "e4d4c76ca3a7abbd5ee95e78022c683e616b2f27821eb57a760329cdc207b607"
+    },
+    {
+      "bytes": 1378,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/attempt-00.json",
+      "sha256": "f53cb46b49aede0dbf86ce5616b662a79f9f76a4e6ef8e88e75d8aeaee026a0b"
+    },
+    {
+      "bytes": 1620,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/comparison-world.json",
+      "sha256": "4d4ab7cfa95ab1307104e4266069c1b7cdec3a9fd37ab153a79f6c7f1c576f94"
+    },
+    {
+      "bytes": 19663,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/complete-trace.json",
+      "sha256": "9a3f9183f1976d16d3fc4fa2ea22f5af5452aeeadc6cc0cf147ec681631e580e"
+    },
+    {
+      "bytes": 2959,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/context.json",
+      "sha256": "15acd78f97ae206e4edf12da72249b0d5125c09d7412969e04b3a13b79d4c4a4"
+    },
+    {
+      "bytes": 1876,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/frames.json",
+      "sha256": "a90b8a4c949504d643afa59456f7fc8c11e3759524621ae85eea32c58356a7d1"
+    },
+    {
+      "bytes": 19046,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/native-replay.json",
+      "sha256": "b662654ec320bd59d2be33d314e700419d2d7a421acf3e5aa23cc46d2449e273"
+    },
+    {
+      "bytes": 926,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/plan.json",
+      "sha256": "bb50598753e8281b08198c4a4ee1def37ede9f0fa31467723d0df191eac4d4d4"
+    },
+    {
+      "bytes": 26,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/replay-attempt-00.json",
+      "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e"
+    },
+    {
+      "bytes": 1417,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/returned-00.json",
+      "sha256": "2054be9c302350ad2a8d1565ab8311a7ad43d14c055f5f05844fe2458fbf9849"
+    },
+    {
+      "bytes": 120490,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/search-return.json",
+      "sha256": "ca5dca55703449df82d8ff474986cdfe98a2ca1fa1fb03c1ee0d21f800405319"
+    },
+    {
+      "bytes": 2022,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/select-replay.json",
+      "sha256": "618bf984250216db9102a8b3c250cd641a56927c3b2b7eba3bd8197ee7387ec5"
+    },
+    {
+      "bytes": 7814,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/source/admitted-public-bindings.json",
+      "sha256": "4c572b1089ce5d2d2d79fe35847e0b1675bcd1c10fadb1eaba853998b83569e9"
+    },
+    {
+      "bytes": 1126,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/source/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    {
+      "bytes": 715,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_beam/summary.json",
+      "sha256": "e638e12063528adb78dcbd68a7c2f60c5930ba330db83cbaeb48713620c6cb0c"
+    },
+    {
+      "bytes": 1378,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/attempt-00.json",
+      "sha256": "f53cb46b49aede0dbf86ce5616b662a79f9f76a4e6ef8e88e75d8aeaee026a0b"
+    },
+    {
+      "bytes": 1620,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/comparison-world.json",
+      "sha256": "4d4ab7cfa95ab1307104e4266069c1b7cdec3a9fd37ab153a79f6c7f1c576f94"
+    },
+    {
+      "bytes": 19663,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/complete-trace.json",
+      "sha256": "9a3f9183f1976d16d3fc4fa2ea22f5af5452aeeadc6cc0cf147ec681631e580e"
+    },
+    {
+      "bytes": 2959,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/context.json",
+      "sha256": "15acd78f97ae206e4edf12da72249b0d5125c09d7412969e04b3a13b79d4c4a4"
+    },
+    {
+      "bytes": 1876,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/frames.json",
+      "sha256": "a90b8a4c949504d643afa59456f7fc8c11e3759524621ae85eea32c58356a7d1"
+    },
+    {
+      "bytes": 19046,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/native-replay.json",
+      "sha256": "329500f3c16a52c1c1607cc4a77042ea6957f573b2781da4f46f3594a6e448fc"
+    },
+    {
+      "bytes": 926,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/plan.json",
+      "sha256": "bb50598753e8281b08198c4a4ee1def37ede9f0fa31467723d0df191eac4d4d4"
+    },
+    {
+      "bytes": 26,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/replay-attempt-00.json",
+      "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e"
+    },
+    {
+      "bytes": 1417,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/returned-00.json",
+      "sha256": "2054be9c302350ad2a8d1565ab8311a7ad43d14c055f5f05844fe2458fbf9849"
+    },
+    {
+      "bytes": 8442,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/search-return.json",
+      "sha256": "f6ee64af34450f5552000b3076e29434e8b94c2e3cdeb3f2e5f890bded5f87f9"
+    },
+    {
+      "bytes": 2022,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/select-replay.json",
+      "sha256": "618bf984250216db9102a8b3c250cd641a56927c3b2b7eba3bd8197ee7387ec5"
+    },
+    {
+      "bytes": 7814,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/source/admitted-public-bindings.json",
+      "sha256": "4c572b1089ce5d2d2d79fe35847e0b1675bcd1c10fadb1eaba853998b83569e9"
+    },
+    {
+      "bytes": 1126,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/source/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    {
+      "bytes": 715,
+      "path": "build/remind013-select-comparison-v1/attempt-01/observed_greedy/summary.json",
+      "sha256": "e638e12063528adb78dcbd68a7c2f60c5930ba330db83cbaeb48713620c6cb0c"
+    },
+    {
+      "bytes": 7373,
+      "path": "build/remind013-select-comparison-v1/attempt-01/result.json",
+      "sha256": "5d9234d5e9d46b742d5bb7b4c09d438f28d2f44b9f175c08471472f2554cfd54"
+    }
+  ],
+  "scope": "saved JSON only; no arrays or weights"
+}

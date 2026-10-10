@@ -1,0 +1,583 @@
+{
+  "checkpoint_lineage": {
+    "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+    "checkpoint_sha256": "d7d2519d655fda6d1519f079f0030631a15c3bd3fe31e8c5ba1c08361b5bbcde",
+    "completed_updates": 8,
+    "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+    "learning_protocol_hash": "sha256:713594a9b671ef4d13945ea6cce09d1ffcc0eb3c228442d3adbc74ddab91029b",
+    "method": "IL",
+    "optimizer_updates_on_SELECT": 0,
+    "parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "training_context_hashes": {
+      "ReMIND:008": "sha256:d9e2c8eafb1c0b3d91218a22ae84161897ed43e61cbcc68c6fd6d4f990d4530e",
+      "ReMIND:010": "sha256:f4af0f4521cf6a7ca710758f0f7ee2518245820c61a9c62156f0959dc2e5c488",
+      "ReMIND:020": "sha256:53697aaa2364ad0af3a000786c43e8996fcb93b56c3cd9cd7a94b7badb9d76f9",
+      "ReMIND:025": "sha256:ac4986bb3f1f52e75093f1f9703edc23efbd7294eeb6e890598b8d4bbc65da8f"
+    },
+    "training_release_sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db",
+    "version": "frozen-TRAIN-checkpoint-lineage-v1"
+  },
+  "checkpoint_lineage_scope": "executed_greedy_policy",
+  "context_hash": "sha256:403740e0528b857832ff2cfa58383e95dc04712aaeee035aa4bab36465e04d72",
+  "decisions": [
+    {
+      "action_id": "STOP",
+      "action_ids": [
+        "STOP",
+        "nominal-cavity-4c58cd662f559f82d3aa91da",
+        "nominal-cavity-b7df8a0bd9eab140c7ea7c83",
+        "nominal-cavity-3fa35356188ebdd4482bd9de",
+        "nominal-cavity-2ba015a45984bc956320b140",
+        "nominal-cavity-d88133a15e1cdb94962af7ba",
+        "nominal-cavity-9f6757eb3b30f70c126491cc",
+        "nominal-cavity-3d1daa5765b9c47d718d6145",
+        "nominal-cavity-cd6b9163f31e06cd489d54c0",
+        "nominal-cavity-e6a16703973b55d11c383ab8",
+        "nominal-cavity-dd643d27ef250d4e8f182afa",
+        "nominal-cavity-3dfc7f35e1671808ba1ec841",
+        "nominal-cavity-9246304c5ffedca4d55ecdbb",
+        "nominal-cavity-8be5a6035b1e53732c011d53",
+        "nominal-cavity-fe480f398c3134f9238c09ac",
+        "nominal-cavity-a994f9e50f0bb04a385850fb",
+        "nominal-cavity-ee83beb1375b5779fedc31cb",
+        "nominal-cavity-47c8ec76d36caf23152467fb",
+        "nominal-cavity-090409d5498c8252804934b3",
+        "nominal-cavity-c2ae209c0b61c274b3bf66ab",
+        "nominal-cavity-c41a6d4fa043ac64ad25021e"
+      ],
+      "action_mask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "behavior_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "observation_hash": "sha256:19bda0762f5276d1299d06e8fa2877c7659176b1d1dbb2e41968c425a43393c1",
+      "reward": 0.0,
+      "step": 0,
+      "terminated": true
+    }
+  ],
+  "method": "IL",
+  "metrics": {
+    "assumptions": [
+      "rigid_fully_contained_native_cell_removal",
+      "hypothetical_intracranial_aperture",
+      "no_deformation_or_force_model",
+      "geometric_objective_does_not_optimize_function_or_partial_contact"
+    ],
+    "clinical_deficit_probability": null,
+    "clinical_probability_reason": "no_validated_clinical_outcome_model",
+    "crop": {
+      "basis": "scan_frame_and_declared_access_only",
+      "native_geometry_resampled": false,
+      "origin_voxels": [
+        0,
+        57,
+        49
+      ],
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    },
+    "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+    "decision_model_hash": "sha256:ea54d60c83d959c8742212b0e9ed721f55de2b1f05a84f0777fa4d28856ee5f1",
+    "function_unassessed_removed_volume_mm3": 0.0,
+    "functional_evidence_available": {
+      "language": false,
+      "motor": false
+    },
+    "history": [
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "insertion_distance_mm": 0.0,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    "intensity_normalization": {
+      "clip": [
+        0.0,
+        1.0
+      ],
+      "crop_used_for_statistics": false,
+      "lower": 143.0,
+      "method": "support_percentile_1_99",
+      "percentile_method": "linear",
+      "percentiles": [
+        1.0,
+        99.0
+      ],
+      "raw_source_preserved": true,
+      "reference_labels_used": false,
+      "source_image_hash": "sha256:71c0509ebdf715b72b01f44f70711a1a82d4142deeb423085fb6ff81855c6959",
+      "statistics_scope": "entire_permitted_support",
+      "statistics_voxels": 745523,
+      "support_hash": "sha256:c95fd29f02bcbe2ce1b5a41a5c5f5a38ffce303700a9990004c326cbf81d0732",
+      "upper": 342.0
+    },
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "native_grid_reconciliation": {
+      "corner_domain": "full_source_cell_extent_minus_half_to_shape_minus_half",
+      "derived_affine_hash": "sha256:625e1a9f7a460d795039d514791cb03391449db7e9bc0c0b2245c764bd64964a",
+      "derived_affine_ras_mm": [
+        [
+          1.0,
+          4.897e-12,
+          -1.0873523253007476e-27,
+          -59.37899999964706
+        ],
+        [
+          4.897e-12,
+          -1.0,
+          2.2204458347983412e-16,
+          74.1110000003084
+        ],
+        [
+          0.0,
+          -2.220446049250313e-16,
+          -0.9999999034194179,
+          64.72169634731898
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "derived_spacing_mm": [
+        1.0,
+        1.0,
+        0.9999999034194179
+      ],
+      "handedness_preserved": true,
+      "maximum_allowed_corner_displacement_mm": 1e-06,
+      "maximum_allowed_gram_error": 1e-08,
+      "maximum_corner_displacement_mm": 0.0,
+      "method": "orthogonal_roundoff_1e-6mm",
+      "native_and_actor_physical_grid": "derived_affine_ras_mm",
+      "origin_preserved": true,
+      "original_affine_hash": "sha256:625e1a9f7a460d795039d514791cb03391449db7e9bc0c0b2245c764bd64964a",
+      "original_affine_ras_mm": [
+        [
+          1.0,
+          4.897e-12,
+          -1.0873523253007476e-27,
+          -59.37899999964706
+        ],
+        [
+          4.897e-12,
+          -1.0,
+          2.2204458347983412e-16,
+          74.1110000003084
+        ],
+        [
+          0.0,
+          -2.220446049250313e-16,
+          -0.9999999034194179,
+          64.72169634731898
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "original_spacing_mm": [
+        1.0,
+        1.0,
+        0.9999999034194179
+      ],
+      "proposal_and_crop_indices_basis": "original_source_affine",
+      "resampled": false,
+      "shape": [
+        127,
+        150,
+        113
+      ],
+      "source_axis_gram_max_error": 0.0,
+      "source_image_hash": "sha256:71c0509ebdf715b72b01f44f70711a1a82d4142deeb423085fb6ff81855c6959",
+      "support_hash": "sha256:c95fd29f02bcbe2ce1b5a41a5c5f5a38ffce303700a9990004c326cbf81d0732"
+    },
+    "normal_removed_mm3": 0.0,
+    "observation_track": "annotation_assisted",
+    "partial_contact_weight": 0.0,
+    "planning_estimator_only": true,
+    "proposal_mode": "nominal_cavity_v1",
+    "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+    "reference_hash": "sha256:e6f9c6a18dcbbbccb38a16bf0d34687f626b375128906b76fa061cea78b6e1b6",
+    "reference_target_outside_observed_support_mm3": 33680.99674706942,
+    "simulated_removed_volume_mm3": 0.0,
+    "source_hash": "sha256:751a11c679b5f9ea1e0de96f7c509a0fb574287ea9eb4af196e6f767c3825918",
+    "steps": 1,
+    "supplied_goal_region": {
+      "condition": "PARTIAL_TARGET_PROGRESS",
+      "fraction_denominator": "entire_unchanged_supplied_region",
+      "fraction_of_full_region_removed": 0.0,
+      "full_region_membership_mm3": 35259.99659456868,
+      "full_region_positive_voxels": 35260,
+      "occupancy_modified": false,
+      "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+      "simulated_supported_goal_removed_mm3": 0.0,
+      "supported_region_membership_mm3": 1578.9998474992608,
+      "target_modified": false,
+      "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+      "unsupported_region_membership_mm3": 33680.99674706942,
+      "unsupported_region_positive_voxels": 33681,
+      "unsupported_region_removable": false
+    },
+    "support_provenance": {
+      "explicit_planning_grid": {
+        "derived_grid": {
+          "max_normalized_Gram_error": 0.0,
+          "polar_corner_difference_mm": 0.0,
+          "polar_transform_applied": false,
+          "spacing_mm": [
+            1.0,
+            1.0,
+            0.9999999034194179
+          ]
+        },
+        "image_interpolation": "none",
+        "maximum_bound_mm": 0.001,
+        "maximum_crop_world_difference_mm": 1.0943192890273016e-13,
+        "original_MR_affine_overwritten": false,
+        "source_MR_grid": {
+          "max_normalized_Gram_error": 9.262135999962074e-16,
+          "polar_corner_difference_mm": 1.0943192890273016e-13,
+          "polar_transform_applied": false,
+          "spacing_mm": [
+            1.0,
+            1.0,
+            0.9999999034194179
+          ]
+        },
+        "source_MR_samples_preserved": true,
+        "subset_converter_fit_difference_mm": 7.135570960825629e-06
+      },
+      "occupancy_unchanged": true,
+      "public_access_rule": {
+        "access_index": [
+          1.5,
+          89.0,
+          83.0
+        ],
+        "access_side": "negative_source_axis0",
+        "annotation_domain_hash": "sha256:bcbe8cfb40a5961a23188eae5ce0bf2e0f6b094a119377debaaeb5de46346bc6",
+        "annotation_domain_meaning": "outside source annotation domain remains unknown anatomy",
+        "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
+        "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
+        "private_reference_used": false,
+        "public_target_positive_voxels": 35260,
+        "radius_mm": 6.0,
+        "route_search": false,
+        "rule": "fixed_source_axis0_target_centroid_side_of_support_extent",
+        "source_voxel_entry_offset": 0.5,
+        "support_extent_axis0": [
+          0,
+          125
+        ],
+        "target_centroid_source_voxels": [
+          31.850709018718096,
+          88.7027509926262,
+          83.27802041973908
+        ],
+        "task_condition": "PARTIAL_TARGET_PROGRESS",
+        "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation",
+        "transverse_rounding": "numpy_rint_ties_to_even",
+        "unsupported_target_positive_voxels": 33681
+      },
+      "public_label_resampling": {
+        "cerebrum": {
+          "placement": {
+            "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+            "outside_source_domain": "unknown",
+            "resampled_positive_volume_mm3": 745522.9279969546,
+            "resampled_positive_voxels": 745523,
+            "resampled_source_domain_voxels": 2152650,
+            "resampling_can_omit_subvoxel_labels": true,
+            "source_grid_unchanged": true,
+            "source_index_to_target_index": [
+              [
+                0.3333333,
+                -2.999999682653337e-20,
+                1.4929962617670055e-17,
+                -1.3330171003514337
+              ],
+              [
+                2.999999682653337e-20,
+                0.3333333,
+                -1.0835519624773568e-16,
+                -0.3333587996980344
+              ],
+              [
+                -6.661338070881507e-36,
+                -7.401486805525599e-17,
+                0.33333336559939153,
+                -0.33333961419074853
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "source_positive_centres_outside_target_grid": 1469,
+            "source_positive_volume_mm3": 745029.1104155204,
+            "source_positive_voxels": 20115790,
+            "target_index_to_source_index": [
+              [
+                3.00000030000003,
+                2.7000002697460803e-19,
+                -1.3436966398926002e-16,
+                3.999051700959484
+              ],
+              [
+                -2.7000002697460803e-19,
+                3.00000030000003,
+                9.751967693520406e-16,
+                1.0000764991017557
+              ],
+              [
+                0.0,
+                6.661338146301545e-16,
+                2.999999709605505,
+                1.0000187457722518
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          "saved_volume_summary": {
+            "saved_domain_voxels": 2152650,
+            "saved_positive_volume_mm3": 745522.9279969546,
+            "saved_positive_voxels": 745523,
+            "source_positive_centres_cropped_from_bound_execution": 1469,
+            "source_positive_voxels_from_bound_execution": 20115790,
+            "volume_change_percent": 0.06628164920412516
+          },
+          "source_native_affine_ras_mm": [
+            [
+              0.3333333,
+              1.6323331401000031e-12,
+              1.4929962616776988e-17,
+              -60.71201710000012
+            ],
+            [
+              1.6323331401000031e-12,
+              -0.3333333,
+              1.8237006457225694e-16,
+              74.4443587999999
+            ],
+            [
+              0.0,
+              0.0,
+              -0.333333333405861,
+              65.0550359293156
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_native_shape": [
+            384,
+            453,
+            339
+          ]
+        },
+        "whole_tumor": {
+          "placement": {
+            "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+            "outside_source_domain": "unknown",
+            "resampled_positive_volume_mm3": 35259.99659456868,
+            "resampled_positive_voxels": 35260,
+            "resampled_source_domain_voxels": 118638,
+            "resampling_can_omit_subvoxel_labels": true,
+            "source_grid_unchanged": true,
+            "source_index_to_target_index": [
+              [
+                1.0,
+                -8.999999956727773e-20,
+                1.61349666003676e-17,
+                15.000314999441379
+              ],
+              [
+                8.999999956727773e-20,
+                1.0,
+                8.513378269510264e-16,
+                41.999977100381834
+              ],
+              [
+                -1.998401632019741e-35,
+                -2.220446263702306e-16,
+                1.0000000958963808,
+                62.99999985125462
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "source_positive_centres_outside_target_grid": 0,
+            "source_positive_volume_mm3": 35259.999975874736,
+            "source_positive_voxels": 35260,
+            "target_index_to_source_index": [
+              [
+                1.0,
+                8.999999956727773e-20,
+                -1.613496505308285e-17,
+                -15.000314999441379
+              ],
+              [
+                -8.999999956727773e-20,
+                1.0,
+                -8.513377453108179e-16,
+                -41.99997710038178
+              ],
+              [
+                0.0,
+                2.220446050769566e-16,
+                0.9999999041036285,
+                -62.99999380978324
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          "saved_volume_summary": {
+            "saved_domain_voxels": 118638,
+            "saved_positive_volume_mm3": 35259.99659456868,
+            "saved_positive_voxels": 35260,
+            "source_positive_centres_cropped_from_bound_execution": 0,
+            "source_positive_voxels_from_bound_execution": 35260,
+            "volume_change_percent": -9.589637151030672e-06
+          },
+          "source_native_affine_ras_mm": [
+            [
+              1.0,
+              4.89699991e-12,
+              1.6134966603449248e-17,
+              -44.378685000000004
+            ],
+            [
+              4.89699991e-12,
+              -1.0,
+              -6.292932221778414e-16,
+              32.11102290000004
+            ],
+            [
+              0.0,
+              0.0,
+              -0.9999999993157894,
+              1.7217025806410176
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_native_shape": [
+            39,
+            78,
+            39
+          ]
+        }
+      },
+      "public_manifest_sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+      "public_source_bindings": {
+        "acquisition_source_binding_sha256": "b7dbf348afdf6ee570b8a6ad64a48b34b7f2a2a1d75fd5ee3c890e2fea26970f",
+        "case_manifest_sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65",
+        "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+        "conversion_receipt_sha256": "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9",
+        "converter_source_sha256": "db146b0610b0b2aaf8c9d3cc08478920b2746f4b5065937a43a320054700f9a8",
+        "header_snapshot_sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948",
+        "pilot_sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f",
+        "saved_array_review_sha256": "7fef62b0f28e1688731abfe50298472ef280d98819407a9e2960cabe18abe7e4"
+      },
+      "source_MR_crop_affine_ras_mm": [
+        [
+          1.0,
+          4.897e-12,
+          -9.2621351054322e-16,
+          -59.37899999964706
+        ],
+        [
+          4.897e-12,
+          -1.0,
+          2.5755444836590516e-16,
+          74.1110000003084
+        ],
+        [
+          0.0,
+          0.0,
+          -0.9999999034194179,
+          64.72169634731898
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "supplied_support_file_sha256": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070",
+      "supplied_target_file_sha256": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e",
+      "target_domain_file_sha256": "0237ec55f72db66a345ffcef3c5b83778017a40283f50b3ad61f55cf14140242",
+      "target_domain_hash": "sha256:bcbe8cfb40a5961a23188eae5ce0bf2e0f6b094a119377debaaeb5de46346bc6",
+      "target_unchanged": true
+    },
+    "target_removed_mm3": 0.0,
+    "task_version": "native-spatial-observed-openings-v1",
+    "terminated": true,
+    "total_reward": 0.0,
+    "unknowns": [
+      "motor_evidence_unavailable",
+      "language_evidence_unavailable",
+      "vascular_coverage_unassessed"
+    ]
+  },
+  "optimizer_updates_on_SELECT": 0,
+  "trace_seal": "sha256:a58f71c5deabc697e37504e971e3ea46326f1aa41e160a8ce47d389b9c0ae36b"
+}

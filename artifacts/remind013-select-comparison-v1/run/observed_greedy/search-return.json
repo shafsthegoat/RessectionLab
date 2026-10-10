@@ -1,0 +1,209 @@
+{
+  "accounting": {
+    "call_cap_reached": false,
+    "call_cap_scope": "no branching transition budget in this method; native-preview and wall guards apply",
+    "existing_accounting": {
+      "complete": true,
+      "decisions": [
+        {
+          "all_current_legal_actions_scored": true,
+          "legal_nonstop_actions": 20,
+          "scored_nonstop_actions": 20,
+          "scores": [
+            {
+              "action_id": "STOP",
+              "complete_tool_path_length_mm": 0.0,
+              "insertion_distance_mm": 0.0,
+              "normal_removed_mm3": 0.0,
+              "reward": 0.0,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-4c58cd662f559f82d3aa91da",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23099998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-b7df8a0bd9eab140c7ea7c83",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 5.999999420516508,
+              "reward": -1.2309998841033014,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-3fa35356188ebdd4482bd9de",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23299998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-2ba015a45984bc956320b140",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23299998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-d88133a15e1cdb94962af7ba",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23099998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-9f6757eb3b30f70c126491cc",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 4.9999995170970895,
+              "reward": -1.0309999034194177,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-3d1daa5765b9c47d718d6145",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23099998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-cd6b9163f31e06cd489d54c0",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 5.999999420516508,
+              "reward": -1.2309998841033014,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-e6a16703973b55d11c383ab8",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23299998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-dd643d27ef250d4e8f182afa",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23299998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-3dfc7f35e1671808ba1ec841",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23099998068388358,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-9246304c5ffedca4d55ecdbb",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 4.9999995170970895,
+              "reward": -1.0309999034194177,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-8be5a6035b1e53732c011d53",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 1.9999998068388358,
+              "reward": -0.4329999613677672,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-fe480f398c3134f9238c09ac",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 1.9999998068388358,
+              "reward": -0.4329999613677672,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-a994f9e50f0bb04a385850fb",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 1.9999998068388358,
+              "reward": -0.4329999613677672,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-ee83beb1375b5779fedc31cb",
+              "complete_tool_path_length_mm": 3.0,
+              "insertion_distance_mm": 1.5,
+              "normal_removed_mm3": 1.9999998068388358,
+              "reward": -0.4329999613677672,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-47c8ec76d36caf23152467fb",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 2.999999710258254,
+              "reward": -0.6309999420516508,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-090409d5498c8252804934b3",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 2.999999710258254,
+              "reward": -0.6309999420516508,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-c2ae209c0b61c274b3bf66ab",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 1.9999998068388358,
+              "reward": -0.4309999613677672,
+              "target_removed_mm3": 0.0
+            },
+            {
+              "action_id": "nominal-cavity-c41a6d4fa043ac64ad25021e",
+              "complete_tool_path_length_mm": 1.0,
+              "insertion_distance_mm": 0.5,
+              "normal_removed_mm3": 0.9999999034194179,
+              "reward": -0.23099998068388358,
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selected_action_id": "STOP",
+          "source_state_hash": "sha256:95ee9fd87720b422ff9bb6f0ec65a8abcc3760aacf7606d0f4b62b9c5d5f7b5b",
+          "step": 0
+        }
+      ],
+      "estimated_incremental_return": 0.0,
+      "evaluated_nonstop_actions": 20,
+      "global_optimality_proven": false,
+      "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+      "initial_steps": 0,
+      "max_steps": 24,
+      "method": "observed_greedy",
+      "model_transition_calls": 1,
+      "native_replay_required": true,
+      "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+      "planning_seconds": 0.0077715830411762,
+      "time_budget_seconds": 60,
+      "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+    },
+    "method": "observed_greedy",
+    "time_cap_reached": false
+  },
+  "actions": [
+    "STOP"
+  ],
+  "behavior_parameter_hash": null,
+  "checkpoint_lineage_scope": "comparison_reference_only_not_action_author"
+}
