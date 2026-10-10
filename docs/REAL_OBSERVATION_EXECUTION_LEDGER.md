@@ -1326,3 +1326,7 @@ Acquisition continued independently: the [03:55UTC receipt](../artifacts/acquisi
 ## Case4 saved-output decode release, October 10
 
 The [exact decoder release](../artifacts/case4-decode-release-v1/RESULT.md) pins the independently accepted one-patch forward and preserves its separate display-only status. Three canonical generated/metadata controls pass; the prospective worker-main audit-key bug was caught and fixed before execution. One bounded decode now follows through the existing inverse-geometry/coverage implementation, without another network forward. Unknown coverage, inferior mask omission and unreviewed anatomy remain explicit.
+
+## Case4 display host deferral before any child, October 10
+
+The [first decode preflight](../artifacts/case4-decode-preflight-deferral-v1/RESULT.md) deferred before spawning a worker. All seven samples had normal kernel pressure and 72% available memory, with no blocking project compute. The unchanged any-adjacent-rise rule triggered on a 65,536B swap-used increase even though total swap use fell 88,604,672B across the window. No patient decode, model forward or display output occurred; source release and successful saved forward remain preserved. This is a host-policy deferral, not image/model failure. No threshold was relaxed and no automatic retry was launched. A separate metadata-only stability observation will inform the next deliberate resource slot.

@@ -1,0 +1,3 @@
+# Case4 decode preflight deferral
+
+The one proposed Case4 DEVELOPMENT display decode stopped before child launch under the frozen 30-second host preflight. No state/coverage output or model call occurred. Seven samples remained at normal kernel pressure and 72% available memory with no blocking project compute; exact Tracto acquisition continued. A 65,536-byte adjacent swap-used rise triggered the contract’s any-rise guard, despite an 88,604,672-byte net decline over the window. This is a prospective host-policy deferral, not evidence of decode failure or clinical/model performance. No retry or cap change was made. The exact receipt, controller source, and independent audit are indexed here; patient inputs/logits/weights are absent.

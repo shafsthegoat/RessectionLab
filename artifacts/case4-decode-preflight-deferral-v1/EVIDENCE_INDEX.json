@@ -1,0 +1,48 @@
+{
+  "excluded_payloads": [
+    "Case4 input and logits arrays",
+    "model weights",
+    "decoded state and coverage (none created)",
+    "source patient images and labels"
+  ],
+  "payload_count": 7,
+  "payload_total_bytes": 62415,
+  "payloads": [
+    {
+      "path": "RESULT.md",
+      "sha256": "a141fa93f07d7b3b1c1660c6cc0228c7826c7167451a9145c46be4a2e903f7f0",
+      "size_bytes": 745
+    },
+    {
+      "path": "independent/actual-deferral-audit.md",
+      "sha256": "384c03cdeab61860f5ba3b5e111398a81caff0a13b3b5417d6ff71ee8aa71c4e",
+      "size_bytes": 2051
+    },
+    {
+      "path": "independent/prospective-review.md",
+      "sha256": "b17e763e27a2ca089374de06a0b497dffcb7180fb4fe1d9e01483dd9cd800c5c",
+      "size_bytes": 4166
+    },
+    {
+      "path": "receipts/pair-contract.json",
+      "sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+      "size_bytes": 4544
+    },
+    {
+      "path": "receipts/preflight-deferred.json",
+      "sha256": "0b9402e16c2d2c7aff1e317dc58044cee5c12d2bf35e4ec1b6fa8e8e6c860a0b",
+      "size_bytes": 20189
+    },
+    {
+      "path": "sources/monitor_primitives.py",
+      "sha256": "5857ace4165951897c1d950dcb915df878ac9242b49795e9a69ee74296c2f2b2",
+      "size_bytes": 4079
+    },
+    {
+      "path": "sources/supervise_pair.py",
+      "sha256": "aafd212764fe014cbe6889b2568320151a4c152d000cd74cda32e1d4ee7fc490",
+      "size_bytes": 26641
+    }
+  ],
+  "schema": "case4-decode-preflight-deferral-index-v1"
+}
