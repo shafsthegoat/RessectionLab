@@ -1,0 +1,49 @@
+{
+  "ReMIND-008": {
+    "actions": [
+      "STOP"
+    ],
+    "context_hash": "sha256:9f16a6ca767cda6b8f3b6a6feae08bfc00b86bb61d722d3d13221b377c718e45",
+    "plan_seal": "sha256:54aa2f306da48ff0a4d3249e5541f77fcdd1fad16b745eca004ffaeb8fc891f3",
+    "readout_binding_hash": "sha256:5efaeb40fe883d9e7867608be2401ae9bd7b88597862e626202ff5009fd814cd",
+    "steps": 1,
+    "stop_steps": 1,
+    "trace_seal": "sha256:4239764fd84c7953608316dd97907b780aa46ad987c4d799e5373d13c79cc5b6"
+  },
+  "ReMIND-010": {
+    "actions": [
+      "STOP"
+    ],
+    "context_hash": "sha256:ddd349a0a6be0f740f8105e5a42df0752c60fed23d27e0e25adff529659799e1",
+    "plan_seal": "sha256:a71802ac41cda00c46317e56ac755b55bc48f5c0664bc2cf880f183cbb4bb742",
+    "readout_binding_hash": "sha256:3b4137a695a3374da0c571e7b08afe7c3fcae863b63391ddece77c5d672b8cf9",
+    "steps": 1,
+    "stop_steps": 1,
+    "trace_seal": "sha256:27cbb4179616227a20919ec12e411c540d92ba6e04d06593c1daa6d1cd9b9076"
+  },
+  "ReMIND-020": {
+    "actions": [
+      "STOP"
+    ],
+    "context_hash": "sha256:b8cff4fda8b056db1456c1450ec7d0cda916204504aab2c3ce40352068bfde6d",
+    "plan_seal": "sha256:ed2166ae9d1f03a37eb11f7efb505477a039d7620c2d8c16fd3c735153703d8c",
+    "readout_binding_hash": "sha256:2092c8d41b59a51d85b1e429d0c502b9c3033825145012b3769afc4568525efb",
+    "steps": 1,
+    "stop_steps": 1,
+    "trace_seal": "sha256:373bd577058b8fe2345de502aaa8705ed50862eee3c6d77e2f81ba62abdc2067"
+  },
+  "ReMIND-025": {
+    "actions": [
+      "nominal-cavity-5619d55e2ea79350449322c1",
+      "nominal-cavity-096b4307a0bac4b22f6f6649",
+      "nominal-cavity-846c9a82267ad217d6b1d517",
+      "STOP"
+    ],
+    "context_hash": "sha256:19bfecd57432c5e1c7a7bec0c995596ccb92c0724db8a854e7301f0c9657a1ee",
+    "plan_seal": "sha256:bbc6ef086ca20842b968b662679979390d41c2b18634dc0c73c0eb1991dc3082",
+    "readout_binding_hash": "sha256:d95787f8dc46d59d82652ede45e8ba2abb97b75036a12e3388ed66a32e37dbf8",
+    "steps": 4,
+    "stop_steps": 1,
+    "trace_seal": "sha256:d4b7755771c3bcfd1096f8fb3e183c8cbe41732988b1ccb21eb564e7251f215f"
+  }
+}

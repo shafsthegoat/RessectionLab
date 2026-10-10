@@ -1,0 +1,216 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 960,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 900,
+    "worker_log_bytes": 8388608
+  },
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "completion_scope": "fixed own endpoint,exact teacher replay,one checkpoint reload,7 teacher logits and4 complete actual learned TRAIN histories; negative or different valid routes accepted",
+  "execution_limits": {
+    "loss_forward_cap": 448,
+    "native_preview_cap": 70080,
+    "parent_seconds": 960,
+    "policy_forward_cap": 551,
+    "source_visits": 8,
+    "teacher_cache_payload_bytes": 67108864,
+    "teacher_trace_reuses": 256,
+    "updates": 64,
+    "worker_seconds": 900
+  },
+  "head": "b5110ed5523cd164da050cdec537c0fb85fcbf5a",
+  "inputs": {
+    "initial_release": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+      "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+    },
+    "initial_result": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json",
+      "sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb"
+    },
+    "parent": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02.supervision/receipt.json",
+      "sha256": "54cef3f9163a1ebfb8d90752d930410e359747b8052051cdae320eb266320a99"
+    },
+    "plan_ReMIND-008": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-01/plan.json",
+      "sha256": "7cb388c8436db10555ea844e8c625a857cb8e1608bfd1d36d440ca0e01f50304"
+    },
+    "plan_ReMIND-010": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-03/plan.json",
+      "sha256": "45942cb56b20e1bb78f5da48609f7e8a19b1d413f6f148c5ce84f795a45ffbfd"
+    },
+    "plan_ReMIND-020": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-05/plan.json",
+      "sha256": "496fa90c28f4fec2e48fd5efdde8c855ebeee9fa82858deee9b5776c2a7273d8"
+    },
+    "plan_ReMIND-025": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-07/plan.json",
+      "sha256": "fa73149b4c2f3afea4a37041ccf83a82e8f67a6415e0c20cf6b5b62d3977f978"
+    },
+    "release": {
+      "path": "build/paired-obstruction-opening-search-v2/root-release.json",
+      "sha256": "16053b9b7f146b8a5d858496c5225f00f0270c39e1a6f605e968991c3c80434d"
+    },
+    "replay_ReMIND-008": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-01/replay.json",
+      "sha256": "9fc9a9d41434b403504a31823769112df681cab0a2dbcb7dc74bca2affbd18e8"
+    },
+    "replay_ReMIND-010": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-03/replay.json",
+      "sha256": "8849c6119c28508499c5544ee64da969ef1cbfcd2fe7a1ac597015c78cd2c223"
+    },
+    "replay_ReMIND-020": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-05/replay.json",
+      "sha256": "c55710b1cb4c2023418aa5c2fb6562e111633895a09351b4a3d46a76481a0500"
+    },
+    "replay_ReMIND-025": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/arm-07/replay.json",
+      "sha256": "41e04e7b3dd565e6f50461b6ef203bce510cc0b9d562dad76f178c3eb5c1d776"
+    },
+    "result": {
+      "path": "build/paired-obstruction-opening-search-v2/attempt-02/result.json",
+      "sha256": "f9f690056ab5b263f7306f9ec6807fa3dc7629f0290b5077ae9c80d57b777d50"
+    },
+    "source_index": {
+      "path": "build/paired-obstruction-opening-search-v2/source-index.json",
+      "sha256": "688c320d979eaa919a1cd04d3fd57afd1480429a99d5aa1d7d0dde8761b639ce"
+    }
+  },
+  "learning_protocol_hash": "sha256:39ca238c0f511406d047f7b9d926fe1d7c36085471a802e7825ddfc62b77729f",
+  "method": "IL",
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/obstruction-opening-learning-v1/IL64/attempt-01",
+  "preview_bound_scope": "conservative canonical sizing, not measured cost or runtime feasibility",
+  "release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/obstruction-opening-learning-v1/IL64/root-release.json",
+  "release_sha256": "61b94272a3614444bae4aa13c51140f40679a01208f4fb0c964d6e1a6af1efaf",
+  "source_files": {
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/obstruction-opening-learning-v1/cohort_worker.py": "f77f0549c77c0826a58f97c3bc21c73ea491cfa3e94ae39a1d30b72c57130c82",
+    "build/obstruction-opening-learning-v1/freeze-runtime.py": "1f750be640a1e21e1ded4d0a23d731961d850ad9f49d6af186d385c4a67a406a",
+    "build/obstruction-opening-learning-v1/pilot_contract.py": "b413e52d301928289ac9bc629d5ee2ad8be4c296490aa47a2432faa545843f37",
+    "build/obstruction-opening-learning-v1/run_owned.py": "323165db06d3773c2b903d5f744321327a8125c6e08ef1b37821e694ee819b5f",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "src/resectionlab/brain_extraction.py": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+    "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+    "src/resectionlab/contact_family_desktop_bridge.py": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22",
+    "src/resectionlab/contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
+    "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+    "src/resectionlab/contact_learning_contract.py": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+    "src/resectionlab/contact_train_refit_release.py": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "src/resectionlab/data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+    "src/resectionlab/desktop_bridge.py": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/evaluation.py": "a5a47ab1d62583f5a0c05db80cc5dafb40a06d30a4542287c18b2d6d840a49e0",
+    "src/resectionlab/fixed_rl256_loader.py": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+    "src/resectionlab/imaging.py": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/learning.py": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12",
+    "src/resectionlab/legacy_aspiration_projection.py": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+    "src/resectionlab/legacy_transfer_episode.py": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd",
+    "src/resectionlab/legacy_transfer_supervisor.py": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+    "src/resectionlab/legacy_transfer_worker.py": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+    "src/resectionlab/native_axis_accounting.py": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+    "src/resectionlab/native_axis_policy_schema.py": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+    "src/resectionlab/native_axis_refinement.py": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e",
+    "src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+    "src/resectionlab/native_functional_evaluation.py": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+    "src/resectionlab/native_proposals.py": "45a1dea3b85f919413c34eed7d84ab53817799918346714927d03bf2b6f9c359",
+    "src/resectionlab/native_refinement.py": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+    "src/resectionlab/native_resection.py": "98012e94329e21eea06d97701adb80f6315baa55c1b8b582fe64ec520de307cd",
+    "src/resectionlab/native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "src/resectionlab/native_simulation.py": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+    "src/resectionlab/native_spatial_evaluation.py": "e5ea456cd3997148b1ff48359b66a63a27826c14da2fd33cd6e64e2045ff9820",
+    "src/resectionlab/native_spatial_task.py": "e2e30f8e1fd6ef5f37b922d21c200e19422ea1c96982de7956c343e05256efec",
+    "src/resectionlab/observed_landmark_replay.py": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd",
+    "src/resectionlab/observed_search.py": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd",
+    "src/resectionlab/patient_planning_accumulation.py": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b",
+    "src/resectionlab/patient_planning_admission.py": "d48e1b138653c6b38c81f33d91541849c532ea78a0b7db0a7132f03e7a05a8df",
+    "src/resectionlab/patient_planning_cohort_io.py": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24",
+    "src/resectionlab/patient_planning_cohort_sequential.py": "ab14952445f5203f5b3695f86664a7d46a15cf8779a6ac188fce484a49bc185c",
+    "src/resectionlab/patient_planning_cohort_spec.py": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+    "src/resectionlab/patient_planning_cohort_visits.py": "c145fc9427a4ba271b74840d9c164ad4571553f2c446ad12ac98ffd61ed24e6f",
+    "src/resectionlab/patient_planning_learning.py": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+    "src/resectionlab/patient_planning_preflight.py": "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04",
+    "src/resectionlab/patient_teacher_trace_cache.py": "4a23d2962c951223afa13ace81fe3fe6f5d897e311907c5bc92869774a5cb940",
+    "src/resectionlab/planning.py": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+    "src/resectionlab/planning_budget.py": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/population_learning.py": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/procedural_learning.py": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6",
+    "src/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "src/resectionlab/public_patient_factory.py": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/public_target_context.py": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15",
+    "src/resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "src/resectionlab/selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/shared_episode.py": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+    "src/resectionlab/shared_transfer_comparison.py": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835",
+    "src/resectionlab/shared_vascular_evaluation.py": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0",
+    "src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "src/resectionlab/spatial_observations.py": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f",
+    "src/resectionlab/spatial_policy.py": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "src/resectionlab/surface_contact_episode.py": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+    "src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed",
+    "src/resectionlab/workspace_bundle.py": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a",
+    "src/resectionlab/workspace_diagnostic.py": "f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8",
+    "src/resectionlab/workspace_imaging.py": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "source_index": {
+    "path": "build/obstruction-opening-learning-v1/IL64/source-index.json",
+    "sha256": "a179f860bbfbe1f394fb257c673111c3fb91915c578b0282d4f85435ac9416d6"
+  },
+  "version": "owned-matched-union-obstruction-learning-v1"
+}

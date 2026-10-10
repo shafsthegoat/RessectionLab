@@ -1,0 +1,80 @@
+{
+  "status": "complete_fixed_endpoint",
+  "method": "IL",
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "matched_methods": null,
+  "seven_generalized_teacher_states": true,
+  "checkpoint_reloaded": true,
+  "TRAIN_greedy": {
+    "ReMIND-008": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+      "plan_seal": "sha256:7ff7b7f2cac3f061b80f18d24a6418634cdd899acad42120f6212273dee0d32c",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-010": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+      "plan_seal": "sha256:b9f1d8a6b2621ce0fe7bc734c76989e46d5d57659fe16613d4c69bf3f7f3e13e",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-020": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+      "plan_seal": "sha256:24d366f02d0e7840c88685064ab5785ef5dc84d6626074b29a3e9ffb32888eb1",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-025": {
+      "actions": [
+        "nominal-cavity-65eb7285418ab897be073b2e",
+        "nominal-cavity-42924e01b8d9d65b56ae2d9e",
+        "nominal-cavity-72fdd43e8c1c9935b44e3fef",
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+      "plan_seal": "sha256:72d4a8797f698caa46c892624fc47a6c3d09719b23914ee65dfd1d997794f900",
+      "public_return": 2.7583290722311435,
+      "steps": 4,
+      "target_removed_mm3": 2.861024385655677
+    }
+  },
+  "teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.007641615266605228,
+    "balanced_mean_CE": 0.16861772750566603,
+    "motion_count": 3,
+    "motion_mean_NLL": 0.32959383974472684,
+    "teacher_action_accuracy": 0.8571428571428571,
+    "unweighted_mean_CE": 0.14562114004294305
+  },
+  "training_dynamics_sha256": "b6f29787c42b35ca96ea934036295acc97471d123f8c5ccec424c8348ea5a9c0",
+  "heldout_or_clinical_claim": false
+}

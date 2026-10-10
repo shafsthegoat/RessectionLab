@@ -1,0 +1,27 @@
+{
+  "plan": {
+    "actions": [
+      "STOP"
+    ],
+    "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+    "context_hash": "sha256:9f16a6ca767cda6b8f3b6a6feae08bfc00b86bb61d722d3d13221b377c718e45",
+    "decision_model_hash": "sha256:5183ef1961fb8c7f23479507b1253d12c98c83f4a6ec60a65d51eb4f7cb293ca",
+    "history": [
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "insertion_distance_mm": 0.0,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    "initial_observation_hash": "sha256:4dcb655d761d377befdac6ccfc91908cd430762499a03efff6a007c74282330e",
+    "learning_updates": 64,
+    "max_steps": 24,
+    "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+    "source_hash": "sha256:edef8a766db0dee64f29557394f5641b78f56ad9e4a4b97e5302f85c389a233e",
+    "terminal_reason": "STOP"
+  },
+  "plan_seal": "sha256:7ff7b7f2cac3f061b80f18d24a6418634cdd899acad42120f6212273dee0d32c"
+}

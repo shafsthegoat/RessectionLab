@@ -1,0 +1,2380 @@
+{
+  "complete_wall_seconds": 158.16084166592918,
+  "completed_patient_visits": [
+    {
+      "phase": "offline.fixed_teacher_replay.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "offline.fixed_teacher_replay.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "offline.fixed_teacher_replay.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "offline.fixed_teacher_replay.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    },
+    {
+      "phase": "deployment.reloaded_TRAIN_greedy_replay.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "deployment.reloaded_TRAIN_greedy_replay.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "deployment.reloaded_TRAIN_greedy_replay.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "deployment.reloaded_TRAIN_greedy_replay.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    }
+  ],
+  "costs": {
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-008": {
+      "complete_wall_seconds": 3.1235425830818713,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 1.508382330648601,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 120,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.04282437404617667,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.3270892498549074,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0017257919535040855,
+      "task_clone_returned": 1
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 3.353383833076805,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.524309208150953,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 120
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-010": {
+      "complete_wall_seconds": 2.221661833114922,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 1.1556624160148203,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 120,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.036467500030994415,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.2644599580671638,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0022021671757102013,
+      "task_clone_returned": 1
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 2.447823707945645,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.528003833256662,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 120
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-020": {
+      "complete_wall_seconds": 0.9990561660379171,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.43458779295906425,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 120,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.0306644169613719,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.21933937491849065,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.001596792135387659,
+      "task_clone_returned": 1
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 0.7736099590547383,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.4366180000361055,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 120
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-025": {
+      "complete_wall_seconds": 8.868090374860913,
+      "inventory_build_or_terminal_empty_calls": 9,
+      "inventory_request_calls": 21,
+      "inventory_request_inclusive_seconds": 3.8964589985553175,
+      "inventory_request_returned": 21,
+      "native_preview_entries": 778,
+      "native_transition_calls": 8,
+      "native_transition_inclusive_seconds": 3.322021041996777,
+      "native_transition_returned": 8,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4579394166357815,
+      "policy_forward_returned": 4,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0016588750295341015,
+      "task_clone_returned": 1
+    },
+    "deployment.reloaded_TRAIN_greedy_replay.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.8374691670760512,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.5371675838250667,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 114
+    },
+    "offline.IL.checkpoint_save_reload": {
+      "complete_wall_seconds": 0.03258812497369945,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-01.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.42932920902967453,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.23712199996225536,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-01.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2602920418139547,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11080649984069169,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-01.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25341795897111297,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10581116704270244,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-01.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9541296251118183,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42765137390233576,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-01.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0019532919395715,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-02.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26198749989271164,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11384174996055663,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-02.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2496437500230968,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10426191613078117,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-02.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2501993749756366,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10389354079961777,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-02.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9457252079155296,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41671116673387587,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-02.shared_optimizer_step": {
+      "complete_wall_seconds": 0.001677375053986907,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-03.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.24970008386299014,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10363666689954698,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-03.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25365049997344613,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10446720803156495,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-03.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25245899986475706,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1057921249885112,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-03.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9504725830629468,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42299520689994097,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-03.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0018434168305248022,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-04.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2610906658228487,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10536408284679055,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-04.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2527488749474287,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10526483389548957,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-04.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.254433749942109,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10670904186554253,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-04.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9556204581167549,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4244153732433915,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-04.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0019158751238137484,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-05.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2541183331049979,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10526295797899365,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-05.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25111966603435576,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10353262489661574,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-05.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.252169624902308,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10419879108667374,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-05.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9569127499125898,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4279145421460271,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-05.shared_optimizer_step": {
+      "complete_wall_seconds": 0.002057833131402731,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-06.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2550299579743296,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10515054198913276,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-06.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2502862080000341,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10354537493549287,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-06.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25184633303433657,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10392737505026162,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-06.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9400673329364508,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4136450835503638,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-06.shared_optimizer_step": {
+      "complete_wall_seconds": 0.002156625036150217,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-07.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25580158294178545,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10360845900140703,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-07.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25657829199917614,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10676054190844297,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-07.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.252745124977082,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10503212502226233,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-07.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9563927080016583,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4214220433495939,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-07.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0023143747821450233,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-08.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25479583302512765,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10435174987651408,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-08.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25250554201193154,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10415995912626386,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-08.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26308858301490545,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10525129199959338,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-08.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9588512079790235,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4240270412992686,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-08.shared_optimizer_step": {
+      "complete_wall_seconds": 0.002509790938347578,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-09.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25130483298562467,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10365487495437264,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-09.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25339258392341435,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10387629200704396,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-09.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25101749994792044,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10352858295664191,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-09.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9424687919672579,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4149189570453018,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-09.shared_optimizer_step": {
+      "complete_wall_seconds": 0.002624250017106533,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-10.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25520029105246067,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10527870804071426,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-10.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.256403167033568,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10657941596582532,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-10.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25577362487092614,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10467916703782976,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-10.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9480372909456491,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4176624580286443,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-10.shared_optimizer_step": {
+      "complete_wall_seconds": 0.002780208131298423,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-11.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25146625004708767,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10322354082018137,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-11.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25553195807151496,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1042411660309881,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-11.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2528385838959366,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10360695910640061,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-11.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9530469998717308,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41647937544621527,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-11.shared_optimizer_step": {
+      "complete_wall_seconds": 0.002862457884475589,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-12.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2583402080927044,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10530120809562504,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-12.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25192433316260576,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10327570792287588,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-12.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2552862500306219,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10414654086343944,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-12.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9549377500079572,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4191750008612871,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-12.shared_optimizer_step": {
+      "complete_wall_seconds": 0.003073250176385045,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-13.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2543392921797931,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1042868341319263,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-13.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2555265419650823,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10431450000032783,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-13.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2637885420117527,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10475566703826189,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-13.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9658059999346733,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4278268739581108,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-13.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0032130000181496143,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-14.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25620645890012383,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10397191601805389,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-14.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25339808291755617,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10359662491828203,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-14.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.255560333840549,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10403045802377164,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-14.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9595051249489188,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4205788739491254,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-14.shared_optimizer_step": {
+      "complete_wall_seconds": 0.003295790869742632,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-15.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25690562510862947,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10436833300627768,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-15.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26056070905178785,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10549854184500873,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-15.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2647243330720812,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10978062497451901,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-15.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9634011250454932,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4221826237626374,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-15.shared_optimizer_step": {
+      "complete_wall_seconds": 0.003466834081336856,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-16.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.257445374969393,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10479658306576312,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-16.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25949404179118574,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1069752078037709,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-16.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26114687509834766,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10731224995106459,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-16.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9701131251640618,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4260592518839985,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-16.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0036047089379280806,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-17.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2594943749718368,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10634191706776619,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-17.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2606220419984311,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1045950420666486,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-17.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25676766713149846,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10409033298492432,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-17.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9539835420437157,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4171542087569833,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-17.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0038011251017451286,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-18.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2582432911731303,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10499408305622637,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-18.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2584025419782847,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10380245884880424,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-18.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26201187493279576,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10534104215912521,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-18.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9679204160347581,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4251577090471983,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-18.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0037759998813271523,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-19.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25939583382569253,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10510483384132385,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-19.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2620349160861224,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10490783303976059,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-19.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26074729091487825,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10485220793634653,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-19.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9611291249748319,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42079645907506347,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-19.shared_optimizer_step": {
+      "complete_wall_seconds": 0.004002499859780073,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-20.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2583125000819564,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10397237492725253,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-20.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2559542499948293,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10380316595546901,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-20.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25848029204644263,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10395020805299282,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-20.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9512819170486182,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4146169580053538,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-20.shared_optimizer_step": {
+      "complete_wall_seconds": 0.004189250059425831,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-21.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.25707229203544557,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10347074992023408,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-21.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25846766703762114,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10384433413855731,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-21.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25683633307926357,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1033162500243634,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-21.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9581309170462191,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4178834578488022,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-21.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0043563328217715025,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-22.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26226858305744827,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10613120812922716,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-22.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2580083750654012,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10383129096589983,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-22.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2596777908038348,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10405074991285801,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-22.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9542322498746216,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4152085827663541,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-22.shared_optimizer_step": {
+      "complete_wall_seconds": 0.004453666042536497,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-23.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2636020830832422,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10361770796589553,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-23.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2684220829978585,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10729470918886364,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-23.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26458700001239777,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10822275001555681,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-23.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.972875792067498,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4223915410693735,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-23.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0047561670653522015,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-24.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2645107919815928,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10557862487621605,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-24.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26545795798301697,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10796641698107123,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-24.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2787785839755088,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11614216701127589,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-24.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9760652089025825,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4226301258895546,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-24.shared_optimizer_step": {
+      "complete_wall_seconds": 0.004711417015641928,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-25.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26293479185551405,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10597491706721485,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-25.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2643937920220196,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10632229200564325,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-25.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27536108414642513,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11209916695952415,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-25.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9694356669206172,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4182644169777632,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-25.shared_optimizer_step": {
+      "complete_wall_seconds": 0.004864374874159694,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-26.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26573533308692276,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10559679195284843,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-26.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26493600010871887,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10541262500919402,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-26.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2678928750101477,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10501304198987782,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-26.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9768870410043746,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4223553738556802,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-26.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0050740831065922976,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-27.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2611285839229822,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1053170410450548,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-27.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2621112088672817,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10469391685910523,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-27.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.25932499999180436,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1036742920987308,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-27.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.4273507080506533,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.6283754569012672,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-27.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0056123752146959305,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-28.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2755417919252068,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11033600009977818,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-28.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2617242911364883,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10479995794594288,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-28.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2653317500371486,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10586008313111961,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-28.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9641714170575142,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41580758383497596,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-28.shared_optimizer_step": {
+      "complete_wall_seconds": 0.005346124991774559,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-29.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2718607080169022,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10553779103793204,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-29.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2639789169188589,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10403862502425909,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-29.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26220566616393626,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10368495807051659,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-29.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9721896671690047,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42390479194000363,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-29.shared_optimizer_step": {
+      "complete_wall_seconds": 0.005738541949540377,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-30.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26985287480056286,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10466537508182228,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-30.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2752024170476943,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10923966695554554,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-30.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26653625001199543,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10600766679272056,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-30.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9733365001156926,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4184525003656745,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-30.shared_optimizer_step": {
+      "complete_wall_seconds": 0.00561858294531703,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-31.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2614936660975218,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1041405419819057,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-31.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2639523330144584,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10428145807236433,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-31.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2610327920410782,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10359137505292892,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-31.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9669194158632308,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41546658403240144,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-31.shared_optimizer_step": {
+      "complete_wall_seconds": 0.006898583145812154,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-32.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2644011250231415,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10449058283120394,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-32.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2832397499587387,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10501091694459319,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-32.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.28819225006736815,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11612191703170538,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-32.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.981764208059758,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4248832499142736,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-32.shared_optimizer_step": {
+      "complete_wall_seconds": 0.005870125023648143,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-33.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26814075000584126,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10611549997702241,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-33.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26537579111754894,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10515558393672109,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-33.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26522729196585715,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10610441584140062,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-33.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9773663750384003,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4205561652779579,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-33.shared_optimizer_step": {
+      "complete_wall_seconds": 0.005906667094677687,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-34.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2725801249034703,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10805862490087748,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-34.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26632929081097245,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1054584588855505,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-34.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27011616597883403,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10720329079777002,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-34.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9777357908897102,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4192884168587625,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-34.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0060453328769654036,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-35.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26676458306610584,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10618324996903539,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-35.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26660841703414917,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10503770899958909,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-35.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2638123750220984,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10407250002026558,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-35.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.3039844159502536,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.5846699168905616,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-35.shared_optimizer_step": {
+      "complete_wall_seconds": 0.006529083009809256,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-36.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2723694168962538,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10610162513330579,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-36.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2691167921293527,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10408912505954504,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-36.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2706282918807119,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10540091595612466,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-36.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0529998331330717,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42475649900734425,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-36.shared_optimizer_step": {
+      "complete_wall_seconds": 0.00679612485691905,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-37.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27763929194770753,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1083152499049902,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-37.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2758616670034826,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10632500005885959,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-37.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26852720882743597,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10588120901957154,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-37.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.019898209022358,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.44308895990252495,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-37.shared_optimizer_step": {
+      "complete_wall_seconds": 0.007483375025913119,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-38.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.284981207922101,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11130037507973611,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-38.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2697422909550369,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10649783303961158,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-38.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27104004099965096,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10502858296968043,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-38.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9822667920961976,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4222322921268642,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-38.shared_optimizer_step": {
+      "complete_wall_seconds": 0.006690791109576821,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-39.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.26541841705329716,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10417870804667473,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-39.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27028933400288224,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1052575830835849,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-39.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.26647179177962244,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10418566688895226,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-39.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9816364170983434,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4187719589099288,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-39.shared_optimizer_step": {
+      "complete_wall_seconds": 0.006827415898442268,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-40.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27050883299671113,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10590416705235839,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-40.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2693740411195904,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10422266600653529,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-40.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27042562514543533,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1060527500230819,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-40.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9896664170082659,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4246959160082042,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-40.shared_optimizer_step": {
+      "complete_wall_seconds": 0.006936999969184399,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-41.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2669474999420345,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10421254206448793,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-41.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27120516705326736,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10627637500874698,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-41.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.266935708001256,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10450716596096754,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-41.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9767706671264023,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41810395917855203,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-41.shared_optimizer_step": {
+      "complete_wall_seconds": 0.0071042911149561405,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-42.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2690773329231888,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10480416682548821,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-42.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.26772312517277896,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10405933298170567,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-42.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2699509998783469,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10547854099422693,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-42.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9882041248492897,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41853449889458716,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-42.shared_optimizer_step": {
+      "complete_wall_seconds": 0.007209874922409654,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-43.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27039874996989965,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10521783400326967,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-43.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27000300004146993,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10432533291168511,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-43.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2668590839020908,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10419024992734194,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-43.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.326475416077301,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.5937009181361645,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-43.shared_optimizer_step": {
+      "complete_wall_seconds": 0.007623290875926614,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-44.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.28253966686315835,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10809166682884097,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-44.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27036245889030397,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10459158290177584,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-44.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2851315410807729,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10751762497238815,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-44.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.00115783396177,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4290022917557508,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-44.shared_optimizer_step": {
+      "complete_wall_seconds": 0.007608500076457858,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-45.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27112195803783834,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10514212492853403,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-45.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27304337499663234,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10565479192882776,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-45.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2707308328244835,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10446054092608392,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-45.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.022955542197451,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4422167909797281,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-45.shared_optimizer_step": {
+      "complete_wall_seconds": 0.007711792131885886,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-46.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2785392908845097,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10502837505191565,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-46.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2689346249680966,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1041933330707252,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-46.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2721787500195205,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10460816603153944,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-46.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9879099160898477,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4211842513177544,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-46.shared_optimizer_step": {
+      "complete_wall_seconds": 0.007835417054593563,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-47.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.274315666873008,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10509445914067328,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-47.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2767611250746995,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10625304095447063,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-47.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27300616702996194,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10591287491843104,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-47.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9877267088741064,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42042166693136096,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-47.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008151916088536382,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-48.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2961012499872595,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.12056512502022088,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-48.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2712230421602726,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10465416684746742,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-48.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27202516701072454,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.104148417012766,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-48.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9817912501748651,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4173052511177957,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-48.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008112417068332434,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-49.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2724626250565052,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1058789580129087,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-49.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2755799579899758,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10495887487195432,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-49.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27339691715314984,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10539974994026124,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-49.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9898817921057343,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4190266258083284,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-49.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008156999945640564,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-50.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27363087492994964,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10508016590029001,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-50.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27206316590309143,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10513558308593929,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-50.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2737322920002043,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1046951247844845,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-50.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.998180374968797,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42280491697601974,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-50.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008394749835133553,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-51.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2726393749471754,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10468587512150407,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-51.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2767420830205083,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10693824989721179,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-51.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27706783288158476,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1062141670845449,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-51.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0007051250431687,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4251490000169724,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-51.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008461332879960537,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-52.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2750514999497682,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10465850005857646,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-52.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2712055838201195,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10397329088300467,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-52.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27347399992868304,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10449850000441074,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-52.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9909786661155522,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41770133515819907,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-52.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008800167124718428,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-53.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2721617079805583,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10470395791344345,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-53.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2743080828804523,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10461970907635987,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-53.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2734012498985976,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10556862503290176,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-53.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9984392079059035,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42215400002896786,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-53.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008836457971483469,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-54.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2753559579141438,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10494950017891824,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-54.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2723382499534637,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10439083306118846,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-54.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2743121669627726,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10445979190990329,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-54.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9903940418735147,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4183436252642423,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-54.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008950541028752923,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-55.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2807740841526538,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10888012498617172,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-55.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.28859491692855954,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10521966707892716,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-55.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.28709666710346937,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.11398324999026954,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-55.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0073072090744972,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4258733340539038,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-55.shared_optimizer_step": {
+      "complete_wall_seconds": 0.008958667051047087,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-56.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2827697910834104,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10702895792201161,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-56.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27920266706496477,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1075761669781059,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-56.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.28378874994814396,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10892100003547966,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-56.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0178397078998387,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.43757991679012775,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-56.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009521499974653125,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-57.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27467354107648134,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10509466705843806,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-57.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2766548339277506,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10495945787988603,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-57.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2776684579439461,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10620191600173712,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-57.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0059805419296026,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4237575000151992,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-57.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009314832976087928,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-58.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2791166251990944,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10684941685758531,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-58.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.27622995781712234,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10517562506720424,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-58.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2762094580102712,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10476516606286168,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-58.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9939339999109507,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4184992911759764,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-58.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009470583871006966,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-59.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27382549992762506,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10411499999463558,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-59.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2780102079268545,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10460670804604888,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-59.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2753485841676593,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10477974987588823,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-59.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9998102500103414,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42092412477359176,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-59.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009777083992958069,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-60.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.28270466602407396,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10774674988351762,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-60.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2759939159732312,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10488016717135906,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-60.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27956779208034277,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1052044581156224,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-60.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.9990481669083238,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.41951841581612825,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-60.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009710084181278944,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-61.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2756376250181347,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10425075003877282,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-61.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2835995419882238,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10682374984025955,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-61.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2796208339277655,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10569029208272696,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-61.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0041479591745883,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42144187493249774,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-61.shared_optimizer_step": {
+      "complete_wall_seconds": 0.00999629101715982,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-62.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.286558415973559,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10815612506121397,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-62.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.278393667191267,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10500204213894904,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-62.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.28296362492255867,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10635262518189847,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-62.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0061863330192864,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4199582503642887,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-62.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009995916858315468,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-63.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.2775631670374423,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10507441591471434,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-63.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2791041668970138,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10530154081061482,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-63.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2765160829294473,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10410175006836653,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-63.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0019927080720663,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.42047954234294593,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-63.shared_optimizer_step": {
+      "complete_wall_seconds": 0.01044533308595419,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-64.cached_loss_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.28449208405800164,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10611283313483,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-64.cached_loss_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.2790807078126818,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10501899989321828,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-64.cached_loss_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.2810734580270946,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10561600001528859,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-64.cached_loss_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.0020811669528484,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4212920821737498,
+      "policy_forward_returned": 4
+    },
+    "offline.IL.update-64.shared_optimizer_step": {
+      "complete_wall_seconds": 0.011360041098669171,
+      "native_preview_entries": 0
+    },
+    "offline.common_initialization": {
+      "complete_wall_seconds": 0.007125750184059143,
+      "native_preview_entries": 0
+    },
+    "offline.endpoint_cached_teacher_readout.ReMIND-008": {
+      "complete_wall_seconds": 0.1347214998677373,
+      "native_preview_entries": 0
+    },
+    "offline.endpoint_cached_teacher_readout.ReMIND-010": {
+      "complete_wall_seconds": 0.12855204101651907,
+      "native_preview_entries": 0
+    },
+    "offline.endpoint_cached_teacher_readout.ReMIND-020": {
+      "complete_wall_seconds": 0.12767299986444414,
+      "native_preview_entries": 0
+    },
+    "offline.endpoint_cached_teacher_readout.ReMIND-025": {
+      "complete_wall_seconds": 0.5111958750057966,
+      "native_preview_entries": 0
+    },
+    "offline.endpoint_teacher_logits.ReMIND-008": {
+      "complete_wall_seconds": 0.11001699999906123,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10984370787627995,
+      "policy_forward_returned": 1
+    },
+    "offline.endpoint_teacher_logits.ReMIND-010": {
+      "complete_wall_seconds": 0.10612916713580489,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10604595812037587,
+      "policy_forward_returned": 1
+    },
+    "offline.endpoint_teacher_logits.ReMIND-020": {
+      "complete_wall_seconds": 0.10525524988770485,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10517879179678857,
+      "policy_forward_returned": 1
+    },
+    "offline.endpoint_teacher_logits.ReMIND-025": {
+      "complete_wall_seconds": 0.4218149990774691,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 4,
+      "policy_forward_inclusive_seconds": 0.4215211668051779,
+      "policy_forward_returned": 4
+    },
+    "offline.fixed_teacher_replay.ReMIND-008": {
+      "complete_wall_seconds": 2.543644125107676,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 1.4201567897107452,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 120,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.03853970789350569,
+      "native_transition_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.001430833013728261,
+      "task_clone_returned": 1
+    },
+    "offline.fixed_teacher_replay.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 3.212790457997471,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.449941416271031,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 120
+    },
+    "offline.fixed_teacher_replay.ReMIND-010": {
+      "complete_wall_seconds": 1.7602013750001788,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 1.09623924898915,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 120,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.03320145793259144,
+      "native_transition_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0020830000285059214,
+      "task_clone_returned": 1
+    },
+    "offline.fixed_teacher_replay.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 1.97960204211995,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.1042159581556916,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 120
+    },
+    "offline.fixed_teacher_replay.ReMIND-020": {
+      "complete_wall_seconds": 0.6413873750716448,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.4102191259153187,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 120,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.028938625007867813,
+      "native_transition_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0015532500110566616,
+      "task_clone_returned": 1
+    },
+    "offline.fixed_teacher_replay.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 1.1060338751412928,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.8058525831438601,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 120
+    },
+    "offline.fixed_teacher_replay.ReMIND-025": {
+      "complete_wall_seconds": 4.3115065831225365,
+      "inventory_build_or_terminal_empty_calls": 9,
+      "inventory_request_calls": 21,
+      "inventory_request_inclusive_seconds": 3.532639584504068,
+      "inventory_request_returned": 21,
+      "native_preview_entries": 778,
+      "native_transition_calls": 8,
+      "native_transition_inclusive_seconds": 3.155513334320858,
+      "native_transition_returned": 8,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0015750420279800892,
+      "task_clone_returned": 1
+    },
+    "offline.fixed_teacher_replay.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.7872305829077959,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.53879579086788,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 114
+    }
+  },
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 158.16029591602273,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 70080,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 3224,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 714,
+          "raised": 0,
+          "rejected": 2510,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 44,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 2466
+          },
+          "returned": 3224,
+          "returned_microsteps": 16870,
+          "seconds": 14.558082949602976,
+          "started": 3224
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 3224,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "resource_authority": "owned parent hard wall, sampled process-tree RSS and final output caps",
+  "scope": "actual offline/deployment costs; nested inclusive scopes must not be summed; methods do not have equal compute",
+  "total_policy_forward_calls": 462
+}

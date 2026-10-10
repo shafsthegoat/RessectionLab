@@ -1,22 +1,26 @@
 # Project status
 
-**Current priority, October 10:** complete a cross-patient, limited-information
-planning experiment on qualified acquired anatomy. Preserve the negative learned
-results below; additional generated-task architecture sweeps and mechanics format
-work are deferred. The controlled eight-update run is complete: both learners now stop on all four
-TRAIN cases, avoiding harmful continuation but losing the one useful teacher action.
-Balanced teacher loss alone at eight updates still STOPs. At the predetermined
-64-update endpoint, the same model now reproduces all four TRAIN search routes,
-including the useful motion followed by STOP. This is fit of five teacher states;
-the completed SELECT013 test ties all six arms at STOP. Useful held-out movement
-remains untested; richer TRAIN tasks and source-support semantics are next.
-ReMIND preoperative MRI uses a supplied tumor region and automatic tissue support;
-source ventricular estimates remain separate from deployment inputs. Those automatic
-Brainlab estimates are not manual ground truth or evidence of neurological injury.
-Existing patient roles remain fixed. No held-out patient or clinical benefit has been demonstrated.
+**Current priority, October 10:** test cross-patient planning with fixed learned
+models and matched search on qualified acquired anatomy. The improved action
+space now supports a complete three-cut TRAIN route: cached balanced IL64 matches
+search's physical outcome, despite choosing an equivalent action order. This is
+only three target cells, not useful-scale resection or demonstrated transfer.
+Scratch RL8 has also finished; its saved-result audit is underway. The next
+inference comparison will preserve the exact tissue assumption, public inputs,
+tools and reward across methods, with zero held-out model updates.
+
+The four recovered TRAIN cases exposed a separate initialization problem: an
+S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
+padding prevents any exterior free-space seed. A separately labeled post-exposure
+condition is being tested; the original failed conditions remain preserved.
+Automatic support and supplied tumor labels remain annotation-assisted inputs,
+not verified physical occupancy or neurological injury evidence. Existing patient
+roles remain fixed. No held-out patient or clinical benefit has been demonstrated.
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Imitation learns the improved complete TRAIN route:** [the fixed IL64 result](artifacts/obstruction-opening-learning-il64-v1/README.md) matches search on all four cases. On025 it swaps two equally rewarded cuts, then takes the same third cut and STOP: identical three removed cells, score+2.758329, target2.861024mm³ and zero outside-target removal. Six-of-seven teacher top-1 agreement is therefore not an outcome failure. All64 updates,462 forwards,3224 previews and complete replays pass independent saved audit. Training/replay takes161.918s at1.980GB sampled peak. Useful transfer remains untested; fixed-model SELECT inference is next.
 
 - **The new-case blockage is an explicit starting-state problem:** [664 saved-motion measurements](artifacts/remind-aperture-mask-diagnostic-v1/RESULT.txt) find proximal unknown coverage at all166 initial shafts and existing target material at every015/018/045 shaft. The S-column access plane does not match full S∨T occupancy, and the boundary flood has no free seed. The1.817s/361.9MB run and independent audit complete. No tissue is erased or access admitted; next is a separately labeled occupancy-aware exposure and external-workspace condition.
 

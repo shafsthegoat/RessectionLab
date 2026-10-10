@@ -1,0 +1,254 @@
+{
+  "RL_updates_in_this_run": 0,
+  "SELECT_EVAL_executed": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "audit_sha256": "b7ad176a75040bd071f697eea890b8819f343a354b5c9f1e973b8631a6d3ac28",
+  "checkpoint": {
+    "bytes": 137636,
+    "completed_updates": 64,
+    "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+    "learning_protocol_hash": "sha256:39ca238c0f511406d047f7b9d926fe1d7c36085471a802e7825ddfc62b77729f",
+    "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+    "path": "IL-final.psckpt",
+    "reload_record": "result/checkpoint-reload.json",
+    "scope": "metadata only; checkpoint payload remains in ignored local output and is deliberately omitted",
+    "sha256": "e1a41c08bd348dfb438eb2290865a91d18e6fd127b44065592360c138969d685",
+    "source_path": "build/obstruction-opening-learning-v1/IL64/attempt-01/IL-final.psckpt",
+    "source_result_sha256": "b30dc1f8867b3c016ad9f88d2ded4265787e0c0e4ffc771c0fa28ef31a6bc518"
+  },
+  "counts": {
+    "RL_updates": 0,
+    "cache_reuses": 256,
+    "checkpoint_reloads": 1,
+    "greedy_forwards": 7,
+    "loss_forwards": 448,
+    "native_previews": 3224,
+    "policy_forwards": 462,
+    "shared_IL_updates": 64,
+    "source_visits": 8,
+    "teacher_readout_forwards": 7,
+    "teacher_states": 7
+  },
+  "dynamics": {
+    "endpoint_CE_is_after_update64": true,
+    "final_gradient_norm": 0.9162418246269226,
+    "final_pre_update_loss": 0.1759536647608675,
+    "first_gradient_norm": 2.905991554260254,
+    "first_pre_update_loss": 3.23934468626976,
+    "trajectory_path": "result/training-dynamics.json",
+    "trajectory_sha256": "b6f29787c42b35ca96ea934036295acc97471d123f8c5ccec424c8348ea5a9c0",
+    "updates": 64,
+    "updates_exceeding_clip_threshold": 2
+  },
+  "endpoint_teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.007641615266605228,
+    "balanced_mean_CE": 0.16861772750566603,
+    "motion_count": 3,
+    "motion_mean_NLL": 0.32959383974472684,
+    "teacher_action_accuracy": 0.8571428571428571,
+    "unweighted_mean_CE": 0.14562114004294305
+  },
+  "greedy_routes": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:7ff7b7f2cac3f061b80f18d24a6418634cdd899acad42120f6212273dee0d32c",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "teacher_comparison": {
+        "outside_mm3_difference": 0.0,
+        "return_difference": 0.0,
+        "same_action_sequence": true,
+        "same_ordered_physical_history": true,
+        "same_removed_cell_set": true,
+        "same_unordered_motions": true,
+        "target_mm3_difference": 0.0,
+        "teacher_removed_cells": []
+      },
+      "terminal": "STOP"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:b9f1d8a6b2621ce0fe7bc734c76989e46d5d57659fe16613d4c69bf3f7f3e13e",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "teacher_comparison": {
+        "outside_mm3_difference": 0.0,
+        "return_difference": 0.0,
+        "same_action_sequence": true,
+        "same_ordered_physical_history": true,
+        "same_removed_cell_set": true,
+        "same_unordered_motions": true,
+        "target_mm3_difference": 0.0,
+        "teacher_removed_cells": []
+      },
+      "terminal": "STOP"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "complete_tool_path_mm": 0.0,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:24d366f02d0e7840c88685064ab5785ef5dc84d6626074b29a3e9ffb32888eb1",
+      "public_return": 0.0,
+      "removed_cells": [],
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "teacher_comparison": {
+        "outside_mm3_difference": 0.0,
+        "return_difference": 0.0,
+        "same_action_sequence": true,
+        "same_ordered_physical_history": true,
+        "same_removed_cell_set": true,
+        "same_unordered_motions": true,
+        "target_mm3_difference": 0.0,
+        "teacher_removed_cells": []
+      },
+      "terminal": "STOP"
+    },
+    {
+      "actions": [
+        "nominal-cavity-65eb7285418ab897be073b2e",
+        "nominal-cavity-42924e01b8d9d65b56ae2d9e",
+        "nominal-cavity-72fdd43e8c1c9935b44e3fef",
+        "STOP"
+      ],
+      "complete_tool_path_mm": 12.695313424533506,
+      "outside_supplied_goal_mm3": 0.0,
+      "physical_history_hash": "sha256:0b45a15a63e2149d2f9490b70d5d2fd006d81d08259b102c4b48026ccd9108cd",
+      "plan_seal": "sha256:72d4a8797f698caa46c892624fc47a6c3d09719b23914ee65dfd1d997794f900",
+      "public_return": 2.7583290722311435,
+      "removed_cells": [
+        [
+          119,
+          45,
+          71
+        ],
+        [
+          121,
+          42,
+          71
+        ],
+        [
+          121,
+          44,
+          72
+        ]
+      ],
+      "steps": 4,
+      "subject": "ReMIND-025",
+      "target_fraction": 3.6691861745064946e-05,
+      "target_mm3": 2.861024385655677,
+      "target_source_cells": 3,
+      "teacher_comparison": {
+        "outside_mm3_difference": 0.0,
+        "return_difference": 0.0,
+        "same_action_sequence": false,
+        "same_ordered_physical_history": false,
+        "same_removed_cell_set": true,
+        "same_unordered_motions": true,
+        "target_mm3_difference": 0.0,
+        "teacher_removed_cells": [
+          [
+            119,
+            45,
+            71
+          ],
+          [
+            121,
+            42,
+            71
+          ],
+          [
+            121,
+            44,
+            72
+          ]
+        ]
+      },
+      "terminal": "STOP"
+    }
+  ],
+  "independent_audit": {
+    "checks": 5932,
+    "input_count": 473,
+    "limitations": [
+      "Saved JSON/history/seal audit; no checkpoint tensors, source arrays, model or native replay executed.",
+      "Parameter/update/reload identities are recorded evidence, not independent tensor recomputation. Training per-label NLL is unavailable; group normalization and sum of reported contributions verified.",
+      "Teacher top1 agreement and complete route outcome are distinct; alternate routes compared by exact removed cells and recorded motion geometry.",
+      "Fixed posthoc TRAIN endpoint under unvalidated S union T material assumption; no heldout/clinical or equal-compute claim."
+    ],
+    "metadata_files": 20,
+    "source_files": 85
+  },
+  "interpretation": "Training-set fit on the amended action/occupancy model; no held-out, anatomical/material, clinical, or equal-compute claim",
+  "omissions": [
+    "checkpoint payload",
+    "patient arrays/images",
+    "per-update gradient-contribution JSON bulk",
+    "redundant state inventories and repeated source QC"
+  ],
+  "omitted_evidence_bindings": "audit/input-hashes.json plus all64 before/after parameters and update receipt SHAs in result/training-dynamics.json",
+  "release_sha256": "61b94272a3614444bae4aa13c51140f40679a01208f4fb0c964d6e1a6af1efaf",
+  "result_sha256": "b30dc1f8867b3c016ad9f88d2ded4265787e0c0e4ffc771c0fa28ef31a6bc518",
+  "runtime": {
+    "caps": {
+      "attempts": 1,
+      "automatic_retry": false,
+      "hard_total_wall_seconds": 960,
+      "output_bytes": 134217728,
+      "output_sample_interval_seconds": 1.0,
+      "sample_interval_seconds": 0.2,
+      "sampled_owned_tree_rss_bytes": 3221225472,
+      "supervision_bytes": 16777216,
+      "threads": 1,
+      "worker_deadline_seconds": 900,
+      "worker_log_bytes": 8388608
+    },
+    "cleanup_errors": [],
+    "final_owned_pids": [],
+    "owned_output_bytes": 1616573,
+    "parent_seconds": 161.91794291697443,
+    "sampled_peak_rss_bytes": 1980448768,
+    "worker_seconds": 158.16084166592918
+  },
+  "scope": "fixed-four TRAIN imitation endpoint under explicit S OR T occupancy assumption",
+  "source_head": "b5110ed5523cd164da050cdec537c0fb85fcbf5a",
+  "status": "complete_matched_TRAIN_endpoint",
+  "teacher_top1": {
+    "correct": 6,
+    "route_outcome_equivalence_checked_separately": true,
+    "total": 7
+  },
+  "version": "obstruction-opening-learning-il64-v1"
+}
