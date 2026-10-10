@@ -15,7 +15,7 @@ from .core import freeze_json, semantic_digest, thaw_json
 from .native_proposals import SUPPLIED_GOAL_REGION
 from .patient_planning_admission import (PatientPlanningContext, COHORT_SHA256,
     SELECT_SUBJECTS, SELECT_INITIALIZATION, validate_select_checkpoint_lineage,
-    UNION_SELECT_SUBJECT, UNION_SELECT_EXECUTION, POST_EXPOSURE_SELECT_EXECUTION)
+    UNION_SELECT_SUBJECT, UNION_SELECT_EXECUTION, POST_EXPOSURE_SELECT_EXECUTION, PARTIAL_DOMAIN_SELECT_INPUT_KIND)
 from .patient_planning_cohort_io import load_cohort_checkpoint
 from . import patient_planning_preflight as preflight
 from .spatial_policy import SpatialPolicy, SpatialTransition, parameter_hash
@@ -41,7 +41,11 @@ def require_select_context(context):
             or record.get('execution_kind') not in (UNION_SELECT_EXECUTION, POST_EXPOSURE_SELECT_EXECUTION)):
         raise ValueError('Derived occupancy inference is restricted to the admitted SELECT013 condition')
     post = record.get('execution_kind') == POST_EXPOSURE_SELECT_EXECUTION
-    if post and (record.get('post_exposure') is None or record.get('source_domain_fully_covered') is not True
+    partial = (record.get('source_domain_fully_covered') is False
+               and record.get('source_domain_input_kind') == PARTIAL_DOMAIN_SELECT_INPUT_KIND
+               and isinstance(record.get('source_and_simulated_domains'), Mapping))
+    if post and (record.get('post_exposure') is None
+                 or not (record.get('source_domain_fully_covered') is True or partial)
                  or record.get('occupancy_inference_protocol') is None):
         raise ValueError('Post-exposure SELECT requires bound source coverage and complete TRAIN protocol')
     validate_select_checkpoint_lineage(record['checkpoint_lineage'],

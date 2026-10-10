@@ -1,0 +1,30 @@
+Explicit acquired source-domain coverage for frozen SELECT013 inference
+
+The optional five-array factory now retains the supplied support-coverage mask
+Ds and unknown regions when constructing the post-exposure SELECT013 task. It
+binds the acquired image, support, full supplied target, target-annotation domain
+and Ds by file hash and semantic mask hash. Assumed simulated material remains
+S union T and its interaction domain Ds union T; neither is validated anatomy.
+No missing source cell becomes observed background. Full target denominators
+remain visible, including target labels outside the support annotation.
+
+Only explicit partial_domain_inputs=True selects this path. The full TRAIN
+protocol, frozen checkpoint lineage and zero SELECT optimizer updates remain
+required; 037 stays held and EVAL067 closed. Default four-array behavior is
+byte-identical in the supplied historical comparison. This source change does
+not itself qualify new patient data or admit a new model result.
+
+Independent source review found no blocker in the exact promotion index
+281684e0cecda36e7a27ab1da07a4d5980bf55ec609ad64d0864b4b0919f972b.
+Canonical verification: 208 tests and nine subtests passed in the first suite,
+including all 17 new controls. One historical parity test failed before loading
+its old module because root supplied a nonexistent extra directory in the
+baseline path. The failed log is retained. Correcting only that environment
+path and rerunning the one failed test passed; production/test source did not
+change. Thus all 209 selected cases plus nine subtests are covered across the
+two attempts, with zero skips. No patient/model experiment ran in these tests.
+
+The acquired expanded crop is separately constructed and reviewed. The original
+EMPTY_FIXED_K attempt remains preserved. A new matched frozen-model comparison
+will use its exact independently checked manifest; no useful transfer or
+physical/clinical validity is claimed from integration controls.

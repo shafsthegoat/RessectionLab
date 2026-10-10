@@ -1,0 +1,37 @@
+{
+  "actual_manifest": "owned separately by acquisition; no pin invented",
+  "files": [
+    {
+      "base_sha256": "fa5dbd25b707f345e3043bff488b62da48f12f96297365309165a908eb17258b",
+      "bytes": 28614,
+      "destination": "src/resectionlab/public_patient_factory.py",
+      "sha256": "aa4c0a07ecb4988934bb3911927d7ce724037fec63aecad7c50f8a8f2d7a7dc5",
+      "staged": "build/post-exposure-select013-partial-domain-v1/stage/resectionlab/public_patient_factory.py"
+    },
+    {
+      "base_sha256": "96f43268f0b850e0b82ad6f3ad3e5d5a1bb20627887e7235b44904d7706726db",
+      "bytes": 36367,
+      "destination": "src/resectionlab/patient_planning_admission.py",
+      "sha256": "3a6f7ec9772d68934f668d8aab918969f0918c5958eb1acb1e0ff9dccc284553",
+      "staged": "build/post-exposure-select013-partial-domain-v1/stage/resectionlab/patient_planning_admission.py"
+    },
+    {
+      "base_sha256": "f7ca9fb8221e7c4db915ad5d109fdcdf2cb6912acf9be271fee725e6dcb7386a",
+      "bytes": 22988,
+      "destination": "src/resectionlab/patient_select_inference.py",
+      "sha256": "e3ae1f495edcd7e5cd36d42f6548f7a091bfe2a76b042329af5d4c8adc0af406",
+      "staged": "build/post-exposure-select013-partial-domain-v1/stage/resectionlab/patient_select_inference.py"
+    },
+    {
+      "base_sha256": null,
+      "bytes": 7058,
+      "destination": "tests/test_post_exposure_select013_partial_domain.py",
+      "sha256": "dd6ac44ac06c1cc1502cac3477e6ba78dc4d97ffe47268338f74ffeb0bdfd0e9",
+      "staged": "build/post-exposure-select013-partial-domain-v1/stage/tests/test_post_exposure_select013_partial_domain.py"
+    }
+  ],
+  "handoff_sha256": "f606496dc94354cce235d276b39f7a7fe88e1f418c909fd287b68fba99a42c06",
+  "patch_sha256": "1bcce2b5bcce0ec2ae7534d4ab8d9be32d9d53c1a273cd3f3d5ae9efbd7ae8ba",
+  "status": "source_only_unexecuted",
+  "tests": "source-written/unrun"
+}

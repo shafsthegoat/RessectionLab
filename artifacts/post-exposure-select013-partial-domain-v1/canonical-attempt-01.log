@@ -1,0 +1,40 @@
+........................................................................ [ 34%]
+............................................................... [ 64%]
+.................................F...................................... [ 99%]
+..                                                                       [100%]
+=================================== FAILURES ===================================
+___ test_historical_default_source_protocol_observation_and_inventory_parity ___
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1086/test_historical_default_source0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x114f8f770>
+
+    def test_historical_default_source_protocol_observation_and_inventory_parity(tmp_path, monkeypatch):
+        baseline = os.environ.get("PAIRED_OCCUPANCY_BASELINE_DIR")
+        if baseline is None: pytest.skip("historical source control is run with its pinned baseline directory")
+        inputs, _ = fixture(tmp_path)
+        modules = []
+        for filename in ("native_spatial_task", "public_patient_factory"):
+            name = "resectionlab._occupancy_baseline_" + filename
+            spec = importlib.util.spec_from_file_location(name, Path(baseline) / (filename + ".py"))
+            module = importlib.util.module_from_spec(spec); monkeypatch.setitem(sys.modules, name, module)
+>           spec.loader.exec_module(module); modules.append(module)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_paired_train_occupancy.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x114f65490>
+path = '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/paired-train-occupancy-v1/baseline/resectionlab/native_spatial_task.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/paired-train-occupancy-v1/baseline/resectionlab/native_spatial_task.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_paired_train_occupancy.py::test_historical_default_source_protocol_observation_and_inventory_parity
+1 failed, 208 passed, 9 subtests passed in 10.95s

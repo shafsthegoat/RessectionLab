@@ -1,0 +1,49 @@
+SOURCE ONLY — EXPLICIT FIVE-ARRAY SELECT013 POST-EXPOSURE INPUT
+
+Three small source deltas: public_patient_factory.py,
+patient_planning_admission.py, patient_select_inference.py. No engine, exposure,
+opening, world/reward, model, checkpoint codec or optimizer change.
+
+New caller option partial_domain_inputs=True is admitted only with the existing
+post-exposure SELECT013 full TRAIN protocol, frozen checkpoint lineage and
+zero-update budget. The default remains False; the existing four-array branch
+retains its qualified all-known-Ds derivation and exact record shape. Original
+failed attempt and its EMPTY_FIXED_K result remain untouched.
+
+The new manifest uses remind-fixed-SELECT-partial-domain-public-inputs-v1,
+role SELECT/subject013, public_only=true/training_admitted=false, the existing
+partial source_domain_condition, and exactly image/S/T/Dt/Ds. Its full-coverage
+flag must be false. The existing TRAIN input path verifies each array file's
+hash/size/shape/dtype, binary Ds, support positives within Ds, and the exact
+known-positive/known-zero/unknown full-target partition. It keeps actual Ds and
+simulated interaction domain Ds union T. No unknown source cells become known
+zeros; full target membership and separate target-annotation domain remain.
+
+Partial SELECT gets a truthful frozen-inference QC scope, file+binary domain
+bindings and source_domain_input_kind=supplied_partial_source_domain_file_v1.
+Its context says source_domain_fully_covered=false. The existing SELECT loader
+accepts this explicitly admitted kind and still checks own-person source/task,
+complete TRAIN protocol, architecture, h24/proposals/search and immutable weights.
+No TRAIN/SELECT patient-hash equality, gradient authority or EVAL access is added.
+The previous full-known branch and existing TRAIN partial-domain records stay
+unchanged when the new option is absent.
+
+Acquisition owns the actual expanded real-MRI crop manifest and its saved
+overlap/source-positive preservation/frame qualification. The planned shape is
+131x154x117 with full T35260 and restored69 S voxels, from the completed diagnostic;
+this source patch neither constructs nor selects that crop. It pins the supplied
+manifest wholesale, including expanded_preparation_provenance. No arbitrary
+padding, opening fallback, access optimization or private source is performed.
+Actual manifest/array pins are not invented in this stage.
+
+17 new generated cases are source-written and UNRUN: exact IL64/RL8 SELECT-Ds
+construction/admission, unknown-domain and zero-gradient preservation, eight
+role/schema/input/opt-in refusals before payload loading, six rebound-domain/QC
+refusals before inventory, and explicit-baseline four-array parity. Existing
+SELECT and TRAIN regression suites should run alongside them after root grants
+the compute slot. Historical parity uses PARTIAL_SELECT_BASELINE_DIR pointing
+to this stage's baseline/resectionlab; only that case skips if unset.
+
+No tests/imports/model/native/patient-array execution or canonical edits occurred.
+Source syntax alone was parsed. Root owns review/promotion and any later new
+one-attempt SELECT release with the qualified manifest;037 held/067 EVAL closed.

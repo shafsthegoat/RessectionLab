@@ -25,6 +25,8 @@ QC_SCOPE = "public_T1_cerebrum_tumor_native_geometry_coverage_and_intended_use"
 PARTIAL_DOMAIN_TRAIN_SUBJECTS = ("ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045")
 PARTIAL_DOMAIN_UNION_OCCUPANCY = "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain"
 PARTIAL_DOMAIN_QC_SCOPE = "public_T1_cerebrum_tumor_preserved_source_domains_search_only"
+PARTIAL_DOMAIN_SELECT_QC_SCOPE = "public_T1_cerebrum_tumor_preserved_source_domains_frozen_SELECT_inference"
+PARTIAL_DOMAIN_SELECT_INPUT_KIND = "supplied_partial_source_domain_file_v1"
 PARTIAL_DOMAIN_SOURCE_FIELDS = frozenset({"support_domain_source_sha256", "support_domain_binary_hash", "source_and_simulated_domains"})
 SOURCE_FIELDS = frozenset({"version", "evidence_domain", "subject", "patient_group",
     "cohort_sha256", "t1_source_sha256", "support_source_sha256", "target_source_sha256",
@@ -292,7 +294,9 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     post_start = case.post_exposure
     post_inference = (post_start is not None and isinstance(protocol, Mapping)
                       and protocol.get("occupancy_inference_protocol") is not None)
-    partial_domain = explicit_domain and not post_inference
+    partial_domain = explicit_domain and (not post_inference or
+        case.support_provenance.get("partial_source_domain_preserved") is True)
+    derived_full_domain = post_inference and not partial_domain
     _need(post_start is None or explicit_domain, "post_exposure_requires_explicit_source_domain")
     _need(not partial_domain or derived_occupancy, "partial_domain_requires_explicit_S_union_T_assumption")
     source = _fields(source_binding, SOURCE_FIELDS | ({"occupancy_derivation",
@@ -418,7 +422,7 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
                   and np.array_equal(case._native_config.interaction_domain, case.support_domain | (case.nominal_target > 0))
                   and not np.any(case.occupancy_source_support & ~case.support_domain),
                   "unchanged_source_Ds_full_T_and_explicit_simulated_D_required")
-        if post_inference:
+        if derived_full_domain:
             derivation = source["support_domain_derivation"]
             expected = {"version": "qualified_full_support_domain_v1", "rule": "all_true_from_bound_full_source_coverage",
                 "public_manifest_sha256": case.support_provenance.get("public_manifest_sha256"),
@@ -458,7 +462,7 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     source_hash = semantic_digest(source)
     _need(qc["public_source_binding_hash"] == plan["public_source_binding_hash"] == source_hash
           and plan["qc_receipt_hash"] == semantic_digest(qc), "source_QC_protocol_join_required")
-    _need(qc["status"] == "pass" and qc["scope"] == (PARTIAL_DOMAIN_QC_SCOPE if partial_domain else QC_SCOPE)
+    _need(qc["status"] == "pass" and qc["scope"] == ((PARTIAL_DOMAIN_SELECT_QC_SCOPE if post_inference else PARTIAL_DOMAIN_QC_SCOPE) if partial_domain else QC_SCOPE)
           and all(qc[key] is True for key in ("source_linkage_checked", "frame_geometry_checked",
               "coverage_checked", "annotation_meaning_checked", "public_support_assumption",
               "hypothetical_access_assumption"))
@@ -507,6 +511,7 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
            if derived_occupancy else {}),
         **({"source_and_simulated_domains": case._domain_record,
             "source_domain_fully_covered": not partial_domain} if explicit_domain else {}),
+        **({"source_domain_input_kind": PARTIAL_DOMAIN_SELECT_INPUT_KIND} if post_inference and partial_domain else {}),
         **({"occupancy_inference_protocol": plan["occupancy_inference_protocol"]} if post_inference else {}),
         **({"post_exposure": post_start.record} if post_start is not None else {}),
         **({} if case.public_target_context_variant is None else {

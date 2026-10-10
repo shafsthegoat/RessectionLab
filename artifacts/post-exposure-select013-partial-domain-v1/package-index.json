@@ -1,0 +1,41 @@
+{
+  "status": "canonical_controls_passed_with_preserved_historical_path_failure",
+  "files": [
+    {
+      "source": "build/post-exposure-select013-partial-domain-v1/HANDOFF.txt",
+      "packaged": "HANDOFF.txt",
+      "bytes": 3183,
+      "sha256": "f606496dc94354cce235d276b39f7a7fe88e1f418c909fd287b68fba99a42c06"
+    },
+    {
+      "source": "build/post-exposure-select013-partial-domain-v1/promotion-index.json",
+      "packaged": "promotion-index.json",
+      "bytes": 1857,
+      "sha256": "281684e0cecda36e7a27ab1da07a4d5980bf55ec609ad64d0864b4b0919f972b"
+    },
+    {
+      "source": "build/post-exposure-select013-partial-domain-v1/canonical-attempt-01.log",
+      "packaged": "canonical-attempt-01.log",
+      "bytes": 2644,
+      "sha256": "35ad39705f2ad0e296f71840a9e6dc45c0dd6d06b8e05219df2c3797d6388a38"
+    },
+    {
+      "source": "build/post-exposure-select013-partial-domain-v1/canonical-attempt-01.xml",
+      "packaged": "canonical-attempt-01.xml",
+      "bytes": 33127,
+      "sha256": "30d7f03f53eac374daa122d71a2de46b0c870a6c655983dcb0b5fa28431e6980"
+    },
+    {
+      "source": "build/post-exposure-select013-partial-domain-v1/canonical-attempt-02-targeted.log",
+      "packaged": "canonical-attempt-02-targeted.log",
+      "bytes": 98,
+      "sha256": "f574bf83729b682055fea4742e2eec06cd32be9f8694d8319d5361875228ed00"
+    },
+    {
+      "source": "build/post-exposure-select013-partial-domain-v1/canonical-attempt-02-targeted.xml",
+      "packaged": "canonical-attempt-02-targeted.xml",
+      "bytes": 413,
+      "sha256": "6859dc070a7ce92cbcaa69905dd43d2d70d95cff2632c8c4a7abce3338d3244c"
+    }
+  ]
+}
