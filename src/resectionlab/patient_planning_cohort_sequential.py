@@ -1,7 +1,7 @@
 """Prospective sequential four-TRAIN runner; an owned hard supervisor is required.
 
-One live patient source and one complete trace at a time; one action autograd
-graph at a time. Reconstruct/replay costs are measured, not hidden. No SELECT or
+One live patient source; default one complete trace, or explicitly cached IL
+teachers; one action autograd graph at a time. Replay costs are measured. No SELECT or
 EVAL factory, private labels, patient adaptation or launch entry point exists.
 """
 from contextlib import contextmanager
@@ -20,7 +20,7 @@ from .patient_planning_accumulation import PatientGradientAccumulator
 from .patient_planning_learning import PatientTrainSession, common_patient_policies
 from .patient_planning_cohort_io import OutputBudget, _save_checkpoint
 from .patient_planning_cohort_spec import (VERSION, TRAIN, CLOSED,
-    validate_limits, validate_factories, preview_budget_sizing)
+    CACHED_TEACHERS, validate_limits, validate_factories, preview_budget_sizing)
 from . import patient_planning_preflight as preflight
 from . import public_patient_factory as public_factory
 from .planning_budget import PlanningBudget
@@ -59,7 +59,8 @@ class _SequentialVisits:
 
 Weak-reference closure is a bounded local ownership check, not a measured RSS
 claim. Native search may hold several states of this same one source. Complete
-trace observations are released when the callback returns. Errors stop the run.
+trace observations are normally released on return. The declared IL cache may
+retain their independent byte-backed crops; the source check is unchanged.
 """
     def __init__(self, factories, protocol, limits, sink, costs, guard):
         self.factories, self.protocol, self.limits = factories, protocol, limits
@@ -113,6 +114,10 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
         max_native_previews=limits['max_native_previews'], seconds=limits['worker_seconds'])
     costs = preflight._CallCosts(budget, limits['max_policy_forwards'])
     started = time.perf_counter(); models = {}; sessions = {}; teachers = {}
+    teacher_cache = None; cache_record = None; cache_reuses = 0
+    if protocol['cohort_execution']['teacher_observations'] == CACHED_TEACHERS:
+        from .patient_teacher_trace_cache import PatientTeacherTraceCache
+        teacher_cache = PatientTeacherTraceCache(protocol)
     result = {'version': VERSION, 'status': 'started', 'TRAIN_subjects': list(TRAIN),
         'closed_roles': CLOSED, 'SELECT_EVAL_opened': False, 'private_reference_reads': 0,
         'optimizer_updates': {'IL': 0, 'RL': 0}, 'checkpoints': {}, 'TRAIN_greedy': {},
@@ -127,10 +132,13 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
             actions=actions, output=dest, guard=guard)
         sealed = preflight._seal_and_replay(base, context, trace,
             method=method, policy=policy, updates=updates, output=dest, guard=guard)
+        if teacher_cache is not None and method == 'SEARCH':
+            teacher_cache.add_replayed(trace, sealed)
         return trace, sealed['plan_seal']
     sink.write(root/'configuration.json', {'learning_protocol': protocol, 'limits': limits,
         'preview_budget_sizing': preview_budget_sizing(protocol),
-        'memory_plan': 'one_patient_source_one_complete_trace_one_action_graph',
+        'memory_plan': ('one_patient_source_cached_IL_crop_traces_one_action_graph'
+            if teacher_cache is not None else 'one_patient_source_one_complete_trace_one_action_graph'),
         'runtime_feasibility_established': False, 'SELECT_EVAL_execution_admitted': False})
     try:
         with budget, costs, _bounded_writes(sink):
@@ -166,6 +174,9 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
                         'failure_type': type(error).__name__, 'message': str(error)}
                     raise
             sink.write(root/'teacher-readiness.json', teachers)
+            if teacher_cache is not None:
+                cache_record = teacher_cache.record()
+                sink.write(root/'teacher-cache.json', cache_record)
             if not any(t['positive_nonstop'] for t in teachers.values()):
                 result['status'] = 'unresolved_no_positive_teacher_signal'
                 raise InterruptedError('All four teachers lack positive non-STOP signal; no training')
@@ -188,6 +199,16 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
                     with PatientGradientAccumulator(session, teacher_pins=pins if method == 'IL' else None) as accumulation:
                         for subject in TRAIN:
                             visit_dir = directory(method, f'update-{update+1:02d}', subject)
+                            if method == 'IL' and teacher_cache is not None:
+                                with costs.scope(f'offline.IL.update-{update+1:02d}.cached_action_backward.'+subject):
+                                    trace = teacher_cache.trace_for_il(session, subject)
+                                    details = accumulation.add_trace(trace, guard=guard)
+                                    del trace
+                                cache_reuses += 1
+                                sink.write(visit_dir/'gradient-contribution.json', {
+                                    'plan_seal': teachers[subject]['plan_seal'],
+                                    'observation_storage': CACHED_TEACHERS, **details})
+                                continue
                             def contribute(base, context):
                                 trace, seal = collect_replay(base, context, visit_dir,
                                     method='IL_TEACHER_RECOLLECTION' if method == 'IL' else 'RL_COLLECTION',
@@ -207,6 +228,8 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
                 with costs.scope('offline.'+method+'.checkpoint_save'):
                     result['checkpoints'][method] = _save_checkpoint(policy, method=method, contexts=contexts,
                         protocol=protocol, updates=session.updates, initial_hash=initial, output=sink, limits=limits)
+                if method == 'IL':
+                    teacher_cache = None  # RL always collects and replays current-policy episodes.
             sink.write(root/'checkpoint-freeze.json', {'selection': 'fixed_endpoint_no_heldout_selection',
                 'learning_protocol_hash': semantic_digest(protocol), 'checkpoints': result['checkpoints']})
             for method, policy in models.items():
@@ -243,6 +266,9 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
             'cost_scope': 'offline and deployment separate; nested instrumentation inclusive, do not sum',
             'memory_scope': 'source lifetime checked; actual peak tree RSS requires owned supervisor',
             'resource_authority': 'owned parent hard wall/tree RSS/output receipt required'}
+        if cache_record is not None:
+            details['teacher_cache'] = {**cache_record, 'IL_trace_reuses': cache_reuses,
+                'initial_replays_remain_counted': True, 'recollection_fallback': False}
         try: sink.write(root/'costs.json', details)
         except BaseException as error:
             cost_error = error; result['cost_record_omitted'] = True

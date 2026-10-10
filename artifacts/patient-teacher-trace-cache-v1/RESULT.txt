@@ -1,0 +1,23 @@
+Reuse verified imitation traces without changing learning arithmetic
+October 10, 2026
+
+An explicit optional protocol mode retains immutable image crops from complete,
+verified TRAIN teacher traces. Initial native and independent geometry replay
+still occur; full patient source arrays are released. Each reuse checks the
+trace/context bindings. The unchanged per-action accumulator performs the same
+forward/backward, weighting, clipping and Adam update in the same order.
+Default protocols and numerical records remain unchanged. RL always collects
+fresh current-policy trajectories; cached teacher data are never called fresh RL.
+
+The cache requires an explicit byte allowance and refuses oversized/incomplete
+or altered traces. Its payload count is separate from actual process RSS.
+For the existing five observations, crops occupy about37.6MiB plus metadata.
+The next fixed64 parity benchmark could reduce patient source reconstruction
+visits from268 to8; actual patient speedup and memory remain unmeasured.
+
+Independent source review passed. Isolated generated controls passed18 tests
+in1.42s. Canonical integration passed151 tests in8.06s, including two-update
+exact gradients/Adam/parameter hashes for both losses, actual generated native
+replay followed by source-array release, immutable crop lifetime, tamper/cap
+refusals and fresh-RL scheduling. Only the test module's stale Unrun label was
+adjusted on promotion. This is an execution optimization, not model accuracy.

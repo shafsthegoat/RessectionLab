@@ -12,12 +12,15 @@ from .public_target_context import VERSION as TARGET_CONTEXT
 VERSION = 'fixed-four-TRAIN-sequential-cohort-v2'
 ACCUMULATION = 'complete-trace-actionwise-shared-gradient-v1'
 BALANCED_TEACHER_CE = 'balanced_STOP_motion_CE_v1'
+RECOLLECT_TEACHERS = 'recollect_complete_pinned_plan_each_IL_update'
+CACHED_TEACHERS = 'cache_complete_replayed_TRAIN_teacher_traces_v1'
 TRAIN = ('ReMIND-008', 'ReMIND-010', 'ReMIND-020', 'ReMIND-025')
 CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
 
 
 def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
-        retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None):
+        retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None,
+        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None):
     from .patient_planning_learning import PREFLIGHT_PROTOCOL
     # The sole longer endpoint is a fixed balanced-teacher optimization contrast.
     # Existing 1..8 protocols retain their exact records and bounds.
@@ -28,6 +31,13 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
         raise ValueError('Explicit horizon in 1..24 required')
     if il_teacher_weighting is not None and il_teacher_weighting != BALANCED_TEACHER_CE:
         raise ValueError('Unknown explicit IL teacher weighting')
+    if teacher_observations not in (RECOLLECT_TEACHERS, CACHED_TEACHERS):
+        raise ValueError('Unknown explicit teacher observation storage mode')
+    if ((teacher_observations == RECOLLECT_TEACHERS and teacher_cache_payload_bytes is not None)
+            or (teacher_observations == CACHED_TEACHERS and
+                (type(teacher_cache_payload_bytes) is not int
+                 or not 1 <= teacher_cache_payload_bytes <= 256*1024**2))):
+        raise ValueError('Cached teachers require an explicit bounded payload allowance')
     if (type(proposal_config) is not NominalCavityProposalConfig
             or proposal_config.max_candidates not in (96, 120)
             or proposal_config.intermediate_opening_mm != 1.
@@ -55,11 +65,13 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
             'proposal_rule_hash': proposal_config.fingerprint,
             'accumulation': ACCUMULATION,
             'patient_order': list(TRAIN), 'live_source_patients': 1,
-            'teacher_observations': 'recollect_complete_pinned_plan_each_IL_update',
+            'teacher_observations': teacher_observations,
             'task_condition': 'PARTIAL_TARGET_PROGRESS',
             'heldout_execution': False})
     if il_teacher_weighting is not None:
         record['cohort_execution']['il_teacher_weighting'] = il_teacher_weighting
+    if teacher_observations == CACHED_TEACHERS:
+        record['cohort_execution']['teacher_cache_payload_bytes'] = teacher_cache_payload_bytes
     return freeze_json(record)
 
 
@@ -71,7 +83,9 @@ def validate_sequential_protocol(protocol):
     expected = sequential_learning_protocol(updates=protocol.get('updates_per_method'),
         max_steps=execution.get('max_steps'), search=execution.get('search', {}), proposal_config=config,
         retention_mode=execution.get('retention_mode'),
-        il_teacher_weighting=execution.get('il_teacher_weighting'))
+        il_teacher_weighting=execution.get('il_teacher_weighting'),
+        teacher_observations=execution.get('teacher_observations'),
+        teacher_cache_payload_bytes=execution.get('teacher_cache_payload_bytes'))
     if semantic_digest(expected) != semantic_digest(protocol):
         raise ValueError('Sequential objective, scheduling or task options changed')
     return expected
@@ -84,6 +98,8 @@ Each visit includes one construction inventory. A complete collection, native
 replay and independent replay check each receive a horizon allowance. IL now
 recollects/replays its teacher every update, in addition to the original RL work.
 Search receives one root inventory plus a child inventory allowance per call.
+The opt-in cache retains this conservative recollection envelope; actual cache
+fill, reuse, native and forward costs are counted separately by the runner.
 This does not prove runtime/RSS feasibility and is not a measured cost.
 """
     protocol = validate_sequential_protocol(protocol)

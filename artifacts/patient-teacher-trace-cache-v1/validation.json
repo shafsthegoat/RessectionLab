@@ -1,0 +1,21 @@
+{
+  "root_test_docstring_change": "Unrun generated controls \u2192 Generated controls; assertions unchanged",
+  "scope": "generated regression controls; no patient speed benchmark yet",
+  "seconds": 8.06,
+  "source_hashes": {
+    "src/resectionlab/patient_planning_cohort_sequential.py": "ab14952445f5203f5b3695f86664a7d46a15cf8779a6ac188fce484a49bc185c",
+    "src/resectionlab/patient_planning_cohort_spec.py": "43991f4d7bc4ed30fbdb22e7996de2345762f0e68dedd4e32fc4f3b53eba4f7d",
+    "src/resectionlab/patient_teacher_trace_cache.py": "4a23d2962c951223afa13ace81fe3fe6f5d897e311907c5bc92869774a5cb940",
+    "tests/test_patient_teacher_trace_cache.py": "0e2b371022f7b41107a76c3844723ce044395c8fb3ad67b51ed2cd6d4d0eb346"
+  },
+  "status": "pass",
+  "suite": [
+    "test_patient_teacher_trace_cache",
+    "test_patient_balanced_teacher_64",
+    "test_patient_balanced_teacher_loss",
+    "test_patient_cohort_sequential",
+    "test_patient_planning_admission",
+    "test_patient_select_inference"
+  ],
+  "tests": 151
+}
