@@ -1,0 +1,129 @@
+{
+  "accounting": {
+    "actor_forward_calls": 0,
+    "beam_pruned_prefixes": 0,
+    "beam_width": 4,
+    "call_cap_reached": false,
+    "completed_layers": 2,
+    "eager_transition_calls": 15,
+    "estimated_incremental_return": 1.1,
+    "evaluated_transition_prefixes": 15,
+    "expanded_nodes": 5,
+    "final_policy_state_hash": null,
+    "guidance": "none",
+    "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+    "implicit_stop_prefix_count": 16,
+    "initial_policy_state_hash": null,
+    "layers": [
+      {
+        "completed": true,
+        "depth": 1,
+        "expanded_nodes": 1,
+        "model_transition_calls": 4,
+        "negative_prefixes_evaluated": 4,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 4
+      },
+      {
+        "completed": true,
+        "depth": 2,
+        "expanded_nodes": 4,
+        "model_transition_calls": 11,
+        "negative_prefixes_evaluated": 7,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 0
+      }
+    ],
+    "lazy_planning_transition_calls": 0,
+    "max_calls": 24,
+    "model_transition_calls": 15,
+    "negative_prefixes_evaluated": 11,
+    "negative_prefixes_pruned_by_beam": 0,
+    "negative_prefixes_retained": 4,
+    "objective_source": "observed_scan_estimator_only",
+    "observation_requests": 5,
+    "peak_next_layer_states": 4,
+    "planning_seconds": 0.12054470903240144,
+    "policy_state_check_seconds": 0.0,
+    "policy_state_checks": 0,
+    "root_legal_nonstop_actions": 4,
+    "stop_baseline_return": 0.0,
+    "time_cap_reached": false,
+    "transition_mode": "eager"
+  },
+  "complete_tool_path_mm": 10.0,
+  "counterfactual_claim_limit": "Saved results support width2 pruning as the cause of this smoke STOP: width4 retained all four root prefixes and found1.100 using15calls. No general search/learning performance, patient, private-outcome or clinical claim. Prior width2 and RL records remain unchanged.",
+  "file_count": 8,
+  "files": {
+    "attempt.json": {
+      "bytes": 1568,
+      "sha256": "d3f85742d5f843cabd88cf200c046d502cd68f63c809732fb6cf7730b7231e01"
+    },
+    "saved-comparison.json": {
+      "bytes": 866,
+      "sha256": "05040272ce46634c28a989304839ba6b88cb37d457ce9e278ca632b9ec70e661"
+    },
+    "search.json": {
+      "bytes": 33796,
+      "sha256": "9dacd1fc99d9f96a86306ed5a9bd6df7fb6249260db10a1b37d4ce80da3e5ffb"
+    },
+    "source-snapshot/reviewed-supervisor-wrapper.py": {
+      "bytes": 6310,
+      "sha256": "02b7b5ca7b0a93fa4bae55694a342d48dfbe8fab024b42cfdbaec3096616bdb8"
+    },
+    "source-snapshot/run.py": {
+      "bytes": 9695,
+      "sha256": "04cc89d9e84788c6298c0cdc38cb08d49c24c8eadf751826fb00c40422c604a6"
+    },
+    "supervisor-progress.json": {
+      "bytes": 237,
+      "sha256": "2dc9adb9b206e54c2ad521f4ba505fa3356c0884205a154b89c8f84e398f374b"
+    },
+    "supervisor.json": {
+      "bytes": 669,
+      "sha256": "ee53faaa8cb8b85831ea1da5545cfb5fd26063a114f583084a0906df3095a347"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "history_digest_state_chain_microstep_unions_and_return_arithmetic_verified": true,
+  "microsteps": 22,
+  "new_audit_checkpoint_loads": 0,
+  "new_audit_model_forwards": 0,
+  "new_audit_simulator_runs": 0,
+  "outcome": {
+    "clinical_deficit_probability": null,
+    "normal_removed_mm3": 4.0,
+    "simulated_removed_volume_mm3": 6.0,
+    "target_removed_mm3": 2.0,
+    "total_reward": 1.1
+  },
+  "replay_scope": "Reviewed worker source requires exact shared-task replay and independent geometry pass before completion. This audit checks saved records only and performs no new replay.",
+  "resources": {
+    "automatic_retry": false,
+    "cleanup_errors": [],
+    "declaration_sha256": "04cc89d9e84788c6298c0cdc38cb08d49c24c8eadf751826fb00c40422c604a6",
+    "measurement_timeout_seconds": 2,
+    "returncode": 0,
+    "rss_samples": 7,
+    "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+    "sampled_peak_rss_bytes": 235945984,
+    "sampling_interval_seconds": 0.2,
+    "sampling_limit": "transient peaks between samples can be missed",
+    "seconds": 1.4439585409127176,
+    "status": "complete",
+    "termination_grace_seconds": 2,
+    "termination_reason": null,
+    "timed_out": false,
+    "unresolved_worker_pid": null,
+    "worker_termination_confirmed": true
+  },
+  "runner_sha256": "04cc89d9e84788c6298c0cdc38cb08d49c24c8eadf751826fb00c40422c604a6",
+  "same_source_environment_observation_and_initial_engine_state": true,
+  "status": "PASS_saved_only",
+  "total_bytes": 53141
+}

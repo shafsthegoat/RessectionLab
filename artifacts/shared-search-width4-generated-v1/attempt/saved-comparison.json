@@ -1,0 +1,30 @@
+{
+  "clinical_validation": null,
+  "new_policy_forward_calls": 0,
+  "new_training_updates": 0,
+  "privileged_complete_tree_reference_return": 1.1,
+  "privileged_reference_is_not_matched_limited_input_search": true,
+  "saved_rl256_modeled_return": 1.0979999999999999,
+  "scope": "saved_generated_software_comparison_only",
+  "status": "complete",
+  "v3_comparison_sha256": "07d61374b4b97271e1f5c6f5e6eab395725afdcef953acdd2799c5a178e917c8",
+  "width2": {
+    "action_ids": [
+      "STOP"
+    ],
+    "beam_width": 2,
+    "model_transition_calls": 9,
+    "modeled_return": 0.0
+  },
+  "width4": {
+    "action_ids": [
+      "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+      "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+    ],
+    "beam_width": 4,
+    "call_cap_reached": false,
+    "model_transition_calls": 15,
+    "modeled_return": 1.1,
+    "time_cap_reached": false
+  }
+}
