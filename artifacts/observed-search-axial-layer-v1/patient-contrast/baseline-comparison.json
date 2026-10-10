@@ -1,0 +1,30 @@
+{
+  "same_stop_decision": true,
+  "baseline_actions": [
+    "STOP"
+  ],
+  "new_actions": [
+    "STOP"
+  ],
+  "baseline_transition_calls": 1401,
+  "new_transition_calls": 1279,
+  "baseline_search_seconds": 172.3967594159767,
+  "new_search_seconds": 158.12942037498578,
+  "comparison_scope": "only retention ranking changes; horizon24, source, arrays, frame, access, tools, reward, cap120, candidate rule, beam2 and all work budgets fixed",
+  "baseline_retention_policy": "return_plus_opening_depth_volume_v1",
+  "new_retention_policy": "return_plus_axial_layer_volume_v1",
+  "source_bound_action_ids_expected_equal": true,
+  "initial_inventory_model_source_observation_exact": true,
+  "search_completeness": {
+    "complete": true,
+    "cause": "requested_horizon_reached",
+    "requested_max_horizon": 24,
+    "completed_layers": 24,
+    "global_unreachability_inferred": false,
+    "stop_meaning": "best evaluated finite-beam incumbent only; capped or unproven completion is unresolved"
+  },
+  "ranking_comparison": "raw depth/volume baseline versus signed native axial layer/volume; no reward or candidate changes",
+  "candidate_cap": 120,
+  "omitted_candidate_legality_unknown": true,
+  "same_sampling_budgets_not_a_runtime_speed_claim": true
+}

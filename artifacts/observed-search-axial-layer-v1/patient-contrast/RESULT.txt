@@ -1,0 +1,28 @@
+Matched axial-layer ranking: numerical correction, no useful-route improvement
+Executed canonicalc78c83df0798f55eec023ab693199b716a3ba193, October10,2026.
+
+Only retained-frontier ranking changes from rawdepth/volume to signed native
+layer/volume. Same24-step task,cap120,13axes,tools,public scan/support/target,access,
+reward,beam2,300s/5640transition/8000preview budgets; global context remains OFF.
+Exact initial inventory/source/model/observation identities match the completed
+horizon24-v2 baseline. No model, training, private reference or replay occurs.
+
+Both methods recommend STOP. New opening first reaches target at step9 instead of
+step10. At step23 both have0.902513mm3 recorded target removal and deepest removed
+cell center4.8241mm. Outside-target removal increases42.160249→45.512440mm3 (+7.95%),
+and cumulative return worsens-8.801605→-9.285949. The best-return lane and top-terminal
+summaries remain unchanged. Terminal opening-depth history remains unavailable;
+these are retained-step23 values, not every evaluated candidate's target metrics.
+
+New search:24 complete layers,1279 transitions,5254 previews,47 inventories with
+zero omissions. All1279 cumulative prefix returns are negative; incremental
+returns can be positive.163.335s owned /158.129s search vs177.428/172.397 previously.
+Peak2,135,162,880B; no cap or cleanup issue. Fewer transitions and different explored
+paths mean this one observed timing contrast is not a general speed benchmark.
+
+Independent saved-JSON audit passes. Numerical tie semantics now behave as intended,
+but widening more aggressively did not improve this patient's selected route or
+recorded utility. Keep this variant available; retain established rawdepth-volume
+setting for the next fixed-four TRAIN pilot. One patient's negative search is not
+a basis for excluding other frozen patients or declaring the cohort unlearnable.
+No physical, clinical, cross-patient or RL superiority evidence is established.

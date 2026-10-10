@@ -1,0 +1,43 @@
+{
+  "admission_forward_ceiling": 1,
+  "candidate_cap": 120,
+  "completion": "No caps; complete consecutive layers and explicit empty retained frontier required. Finite-beam frontier exhaustion is accepted without claiming global unreachability.",
+  "diagnostic_scope": "One matched retention-ranking contrast; no model, training, private reference, replay or cohort benchmark",
+  "endpoint_rule": "numpy_rint nearest source-axis voxelcount, minimum1; actual physicaladvance reported, may exceed requested1mm",
+  "expected_head": "c78c83df0798f55eec023ab693199b716a3ba193",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/axial-layer-search-v1/input-index.json",
+    "sha256": "a39f48001309049fe3baec305e3074c08862e66d4c903cb4c4a49fc2699a0a27"
+  },
+  "limits": {
+    "beam_width": 2,
+    "horizon": 24,
+    "memory_bytes": 3221225472,
+    "native_previews": 8000,
+    "optimizer_updates": 0,
+    "parent_seconds": 400,
+    "policy_forwards": 0,
+    "search_seconds": 300,
+    "search_transition_calls": 5640,
+    "threads": 1,
+    "worker_seconds": 360
+  },
+  "output": "build/cross-patient-planning-v1/ReMIND-008-axial-layer-search-v1",
+  "owned_execution_forward_limit": 0,
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "requested_opening_lookahead_mm": 1.0,
+  "retention_policy": "return_plus_axial_layer_volume_v1",
+  "scope": "Only retained-frontier ranking changes. Same horizon24, cap120, intermediate1mm, footprintTrue, columns, tools/reward/public arrays, beam2 and all work budgets; global target context off.",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/axial-layer-search-v1/source-index.json",
+    "sha256": "87e1a2e39967c06c0de04039216bd3e765f76c6a27db4ba0faa9c6800e8b153d"
+  },
+  "status": "released_one_attempt",
+  "tie_break_limit": "Signed native axial layer then cumulative actor-covered removal volume; return/path break remaining ties; raw projected depth remains diagnostic.",
+  "tool_footprint_opening": true,
+  "version": "axial-layer-ReMIND-008-search-release-v1"
+}

@@ -1,0 +1,32 @@
+{
+  "exact_initial_inventory": {
+    "equal": true,
+    "actual_canonical_sha256": "adb64a1af3355622e08c947fba68cdf41be7105cf9ca01ddedce9295b05ada36",
+    "expected_canonical_sha256": "adb64a1af3355622e08c947fba68cdf41be7105cf9ca01ddedce9295b05ada36",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "same_horizon24": {
+    "equal": true
+  },
+  "global_context_off": {
+    "equal": true
+  },
+  "same_source_hash": {
+    "equal": true,
+    "actual": "sha256:f4210fcede92c1d1f21d69daf6008d87238b06876480a21a4e7e616c3e754e84",
+    "previous": "sha256:f4210fcede92c1d1f21d69daf6008d87238b06876480a21a4e7e616c3e754e84"
+  },
+  "decision_model_hash": {
+    "equal": true,
+    "actual": "sha256:631dbe0a8ccc75904fd83bf56f2fc776b782b29fb29a25fdf15b470672805c78",
+    "previous": "sha256:631dbe0a8ccc75904fd83bf56f2fc776b782b29fb29a25fdf15b470672805c78",
+    "requirement": "exact initial task/model/observation identity at the same horizon24"
+  },
+  "initial_observation_hash": {
+    "equal": true,
+    "actual": "sha256:2061bfef768831b46d150371a2c06ea8cf52add7573433b5f31747b0b9e4cb89",
+    "previous": "sha256:2061bfef768831b46d150371a2c06ea8cf52add7573433b5f31747b0b9e4cb89",
+    "requirement": "exact initial task/model/observation identity at the same horizon24"
+  }
+}
