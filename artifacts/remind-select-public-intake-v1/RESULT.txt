@@ -1,0 +1,20 @@
+Two SELECT patients acquired; image qualification remains separate
+
+All372 official public objects for ReMIND-013/037 completed,61,657,062 bytes,
+zero unresolved. Each acquired object passed source single-part MD5 and local
+SHA256 checks using verified TLS. Only preoperative ceT1, supplied manual whole-
+tumor and automatic cerebrum series are included. Patient roles/splits unchanged.
+No ventricular/private/EVAL object was requested. The exact source listing,
+transport code, completed receipts and case/source bindings are retained.
+
+This result verifies bytes only. Header geometry, frame/annotation linkage,
+coverage and anatomical meaning have not been admitted by acquisition. Both
+cases remain byte_verified_unreviewed until their intended-use checks pass.
+An independent metadata audit reconciles all372 files and all23 selected
+source/metadata files. It relies on terminal fixity rather than reopening payloads.
+
+selection.json names original paths and their hashes; all copies beneath this
+artifact preserve those relative paths. Patient DICOM payloads, attempt journals
+and decoded arrays stay in ignored local storage. Reproduction prerequisites and
+the preserved zero-byte S3 folder-marker preparation refusal are documented in
+build/remind-select-public-bindings-v1/REPRODUCE.txt below this artifact.

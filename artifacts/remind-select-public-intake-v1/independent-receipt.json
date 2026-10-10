@@ -1,0 +1,51 @@
+{
+  "schema": "remind-select-public-metadata-verification-v1",
+  "created_utc": "2026-10-10T08:08:37.830848+00:00",
+  "status": "PASS",
+  "selection": {
+    "path": "build/remind-select-public-bindings-v1/selection.json",
+    "bytes": 5322,
+    "sha256": "743fabcdd36927547623e685920439994ba8250ea793fa3753f1aa26c68cc42e"
+  },
+  "selection_files": 23,
+  "selection_bytes": 1264142,
+  "verified_objects": 372,
+  "verified_bytes": 61657062,
+  "unresolved_objects": 0,
+  "source_listings": 6,
+  "empty_prefix_markers_excluded": 6,
+  "single_part_MD5_objects": 372,
+  "local_SHA256_receipts": 372,
+  "actual_attempts": 372,
+  "actual_http_requests": 372,
+  "all_payload_attempts_offset_zero": true,
+  "patients": [
+    {
+      "patient_id": "ReMIND-013",
+      "role": "SELECT",
+      "files": 194,
+      "bytes": 33046694,
+      "public_series": 3
+    },
+    {
+      "patient_id": "ReMIND-037",
+      "role": "SELECT",
+      "files": 178,
+      "bytes": 28610368,
+      "public_series": 3
+    }
+  ],
+  "role_and_pilot_hashes_match": true,
+  "private_ventricles_and_EVAL067_excluded": true,
+  "all_payloads_unreviewed": true,
+  "header_pixel_array_or_QC_reads_in_this_verification": 0,
+  "basis": "Fresh hashes of metadata/source only; XML-to-manifest-to-completion-to-flat/nested joins. Payload fixity is the original checksum-verified terminal receipt, not a fresh payload rehash.",
+  "canonical_payload_or_source_edits": false,
+  "artifact_copy_files_observed": 0,
+  "artifact_copy_complete_at_verification": false,
+  "verification_source": {
+    "path": "build/remind-select-public-bindings-v1/verify-selection.py",
+    "bytes": 7922,
+    "sha256": "9cac030238314b665e14a78abef0f3ee5a423739d9de5c3a82dca5ad80064c70"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "remind-select-public-intake-artifact-selection-v1",
+  "status": "completed_byte_verified_unreviewed",
+  "files": [
+    {
+      "source_path": "build/remind-select-public-bindings-v1/prepare-source.py",
+      "bytes": 8884,
+      "sha256": "bab3342441db945de7e1735e200d6c19335eb7ae8fa9e329cfc332c32b0864cf"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/run-intake.py",
+      "bytes": 11030,
+      "sha256": "819ab7c806c113236d5b8a3e8e9fc8c5158132a68718a5fa1f9e82541fc3e6e6"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/bind-cases.py",
+      "bytes": 7375,
+      "sha256": "b1fd921f54ce5b39c85e483f205045a4997ad1059389d0a85b5d7296b46d8d5e"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/REPRODUCE.txt",
+      "bytes": 3472,
+      "sha256": "b36be773b6c1383656673e78188f2e6378887d7cfc2e2c4584fd935eb2da93f6"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/source-summary.json",
+      "bytes": 4560,
+      "sha256": "c0d5c5659e79c51a0bfecdc6955985e8e201cab128f537410fbf2e9dcc07d38c"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/completion-summary.json",
+      "bytes": 3375,
+      "sha256": "5063d1d374188e398cd07bf73666ab91105c7718ae54a64de5fe9f2e98602f3f"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/ReMIND-013-case.json",
+      "bytes": 92193,
+      "sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/ReMIND-013-source-binding.json",
+      "bytes": 99124,
+      "sha256": "b7dbf348afdf6ee570b8a6ad64a48b34b7f2a2a1d75fd5ee3c890e2fea26970f"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/ReMIND-037-case.json",
+      "bytes": 84982,
+      "sha256": "89ebb69cdd8d104eb726e402b2c09da9a4c3799a6bef97f7a646903562120fd9"
+    },
+    {
+      "source_path": "build/remind-select-public-bindings-v1/ReMIND-037-source-binding.json",
+      "bytes": 91321,
+      "sha256": "a5c7a071a5f50ac62d7bdec7053d3c91d01c35ffd5483d5c7da01313a2314105"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/declaration.json",
+      "bytes": 1936,
+      "sha256": "4618ccc76d9b28e382fa9205392aadf0bac88b20cc5fe4da9e10afcbbbf66a43"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/completion.json",
+      "bytes": 323279,
+      "sha256": "9a016fb886582eeb044aede9e953a19bacf41a1a6e7deaa3635fc954c4de56d0"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/exact-object-manifest.json",
+      "bytes": 383365,
+      "sha256": "b3f2da842bcb7d519cbfca6179ab59562aaecd44d5ce9c73bf40363a735306f9"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/runs/20261010T075543795093Z-841c0f4c/started.json",
+      "bytes": 594,
+      "sha256": "d614a54232b24d8d88acc8206ceff0b4bf8d125b7fa3ee08d27156c8f09be777"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/acquire_public_case.py",
+      "bytes": 11170,
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/acquire_btc_case.py",
+      "bytes": 27807,
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/real_intake_io.py",
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/listing-30b3b7f5-a542-4fb2-9744-f7e91359d9bb.xml",
+      "bytes": 787,
+      "sha256": "129981a66d64f2c28d73779047254df81c45a1db7b30246bea6b597b8d2642a9"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/listing-6aecb7da-0b67-4765-9811-213b3c983b22.xml",
+      "bytes": 785,
+      "sha256": "1da7ed5214924a14d8e17b7a855201838511a0611cd1dd8eabfcbfb732131b5d"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/listing-71000b63-56e3-42c3-977a-4389fb87046a.xml",
+      "bytes": 785,
+      "sha256": "a71b1d54d28588808178cb4576e386d82b8cf1ff2c0d5e78e67d55382a993454"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/listing-79cb63bb-6c98-4d94-bd4b-c8f736e71ed8.xml",
+      "bytes": 53313,
+      "sha256": "4d1297597135d130f45c221c835a56fdf218a590d6f66e0d861844f2ddacdc8f"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/listing-88911f75-9082-427c-8cd6-9784aecf46c0.xml",
+      "bytes": 787,
+      "sha256": "550ec85cd8e2585b80214203f55f008a1262ad113e2a93c0c3b35cb3614dbd2e"
+    },
+    {
+      "source_path": "data/acquisition/remind-select-public-v1/source/listing-d5fd818e-ba97-4115-8dfb-eca2aa919b89.xml",
+      "bytes": 48913,
+      "sha256": "74a2f7e93ce9380434faaa775a31dfc29085892e4b418f027cf8578236b31ee7"
+    }
+  ],
+  "file_count": 23,
+  "total_artifact_bytes": 1264142,
+  "payloads_included": false,
+  "private_or_eval_series_included": false,
+  "existing_canonical_role_and_pilot_unchanged": true,
+  "source_path_restoration_required": true,
+  "fresh_checkout_self_contained": false
+}
