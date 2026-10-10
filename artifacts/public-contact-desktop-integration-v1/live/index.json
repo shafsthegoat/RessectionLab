@@ -1,0 +1,116 @@
+{
+  "schema": "public-contact-live-mac-evidence-v1",
+  "source_commit": "220a8f0bc6e632377c46b2162cab5cc359a814b7",
+  "files": [
+    {
+      "path": "release.json",
+      "source_path": "build/public-contact-live-root-v1/release.json",
+      "bytes": 425,
+      "sha256": "24379cebf6e19835e0b5e2eded991dc8575dbb996c72f7909574ba6bd07a3fba"
+    },
+    {
+      "path": "scope.txt",
+      "source_path": "build/public-contact-live-root-v1/scope.txt",
+      "bytes": 450,
+      "sha256": "7a2e4c24294616ad3d3e5afa0adec7859e462d8631a88a6403d9311ac75a6b43"
+    },
+    {
+      "path": "run_live_mac.py",
+      "source_path": "build/public-contact-live-root-v1/run_live_mac.py",
+      "bytes": 1991,
+      "sha256": "b8296a9eaa3d18561d4ec21ec3e7c1fa6c244a602b8c80c8ea4f8eb3faabbcf4"
+    },
+    {
+      "path": "live-renderer-index.json",
+      "source_path": "build/public-contact-live-root-v1/live-renderer-index.json",
+      "bytes": 1067,
+      "sha256": "fc33f2d170e50e35295d1d5cc8d69ee9ced8bdcf222a9b26da742e8ce6dd4fa5"
+    },
+    {
+      "path": "near-final.txt",
+      "source_path": "build/public-contact-live-root-v1/near-final.txt",
+      "bytes": 11093,
+      "sha256": "3491a4ee45d89ff16af2e241d6e8f01384aeb2133fde385455841eec25eadfb3"
+    },
+    {
+      "path": "near-final.png",
+      "source_path": "build/public-contact-live-root-v1/near-final.png",
+      "bytes": 628464,
+      "sha256": "6f308e4ba8cb78bae271ba2aec304d8fe78cb46b77874ec122032757019fb6cb"
+    },
+    {
+      "path": "costly-stop.txt",
+      "source_path": "build/public-contact-live-root-v1/costly-stop.txt",
+      "bytes": 10825,
+      "sha256": "9066f522335cd08328d2d9972fca497f1f6b74e0a33fd48177172b9d77e0c263"
+    },
+    {
+      "path": "costly-stop.png",
+      "source_path": "build/public-contact-live-root-v1/costly-stop.png",
+      "bytes": 612242,
+      "sha256": "04a337c16f635ceca0cf6a83c69e445e6092e152657055a21b09a63edddb321e"
+    },
+    {
+      "path": "actor-reopened.txt",
+      "source_path": "build/public-contact-live-root-v1/actor-reopened.txt",
+      "bytes": 13068,
+      "sha256": "f8bcd4321e4103bf00fe92acd69ececed21eca12c149411dafd4595f27751b4c"
+    },
+    {
+      "path": "save-refusal.txt",
+      "source_path": "build/public-contact-live-root-v1/save-refusal.txt",
+      "bytes": 440,
+      "sha256": "8756cde08f931a344d384721f14c2095ceb484268274b65be6425a7b0719779e"
+    },
+    {
+      "path": "session/owner.json",
+      "source_path": "build/public-contact-live-root-v1/live-mac/owner.json",
+      "bytes": 68,
+      "sha256": "bd61d262347905e896ecbcdd2e21371d82c5a36ded9b8b7cc183f809672ddcfb"
+    },
+    {
+      "path": "session/terminal.json",
+      "source_path": "build/public-contact-live-root-v1/live-mac/terminal.json",
+      "bytes": 218,
+      "sha256": "ea1462bf3a12e2e1f4a60a05867fb2119ec8704270e3f9543e4f372c22ae04a4"
+    },
+    {
+      "path": "session/electron.log",
+      "source_path": "build/public-contact-live-root-v1/live-mac/electron.log",
+      "bytes": 54,
+      "sha256": "41060036aa903a6bc10ca74794cbe004d14ffd2f957cefe4f8eba874dd0ffe75"
+    },
+    {
+      "path": "desktop-independent-report.txt",
+      "source_path": "build/public-contact-desktop-independent-v1/REPORT.txt",
+      "bytes": 6799,
+      "sha256": "26845c1981bc09879b7be1d5a2e67b18116cf448b32754939021abf1746c496f"
+    },
+    {
+      "path": "desktop-independent-index.json",
+      "source_path": "build/public-contact-desktop-independent-v1/review-index.json",
+      "bytes": 6296,
+      "sha256": "50c6f48a8cfb1a49170519037ced485dff065b2982c0adb5a4641b69a473882d"
+    }
+  ],
+  "native_app_session": {
+    "elapsed_seconds": 105.18978429189883,
+    "sampled_peak_tree_rss_bytes": 874725376,
+    "samples": 199,
+    "reason": null,
+    "exit_code": 0,
+    "worker_reaped": true,
+    "transient_peaks_and_gpu_memory_measured": false
+  },
+  "root_observed_requests": {
+    "near_SEARCH": 1,
+    "costly_SEARCH": 1,
+    "transient_save": 1,
+    "saved_actor_reopen": 1
+  },
+  "actor_forwards": 0,
+  "training_updates": 0,
+  "patient_reads": 0,
+  "actual_contact_envelopes_saved": false,
+  "scope": "Actual native UI, screenshots and AX snapshots; source and saved-fixture semantic validation separately recorded. No per-search latency or physical-validity claim."
+}

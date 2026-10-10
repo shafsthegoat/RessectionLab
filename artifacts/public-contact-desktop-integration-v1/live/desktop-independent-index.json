@@ -1,0 +1,160 @@
+{
+  "status": "GO_exact_frozen_candidate",
+  "scope": "Source and saved generated fixtures only; no live UI, model, native, patient, private reference or network execution.",
+  "candidate_index": {
+    "path": "build/public-contact-desktop-v1/source-index.json",
+    "bytes": 10187,
+    "sha256": "bf1c52ff57b6c4e6b9b02acff6c84fcb3f993eb92c5c161d65fd57f1d12a1895"
+  },
+  "canonical_source_files_verified": 25,
+  "canonical_working_app_sha256": "617047e45697607300b9c3a2e324100899709950500dad72024d168253017202",
+  "evidence": [
+    {
+      "path": "build/public-contact-desktop-independent-v1/REPORT.txt",
+      "bytes": 6799,
+      "sha256": "26845c1981bc09879b7be1d5a2e67b18116cf448b32754939021abf1746c496f"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/baseline-episode-data.ts",
+      "bytes": 13489,
+      "sha256": "7dea032e675963bf21360ea86ae79f8b48c036d6c771e242cd7676dedc3eca43"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/case-transfer-probe-original.json",
+      "bytes": 117,
+      "sha256": "fc3c75b8f1542ce27213fe1adc115de55321fd860258a5d9a45e3ab5cb9baa68"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/case-transfer-probe.json",
+      "bytes": 110,
+      "sha256": "800fcb4e2195152e0755f51c90f10399d405c75713f1a9e2fee89e25746cbf3f"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/check-promotion.cjs",
+      "bytes": 2020,
+      "sha256": "f4a136644e6269b6d5d88f17e100b4aeec37eca12fd52b30a050413d93eaa03d"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/check-v1-parity-prior.mjs",
+      "bytes": 2163,
+      "sha256": "7e56a8a763b9d20645bea6fbd727811772fa91a2e9cb68133441ba64838ee48e"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/check-v1-parity.mjs",
+      "bytes": 2945,
+      "sha256": "53fb5744805fbb13b31bde06024e50285fc4381273377dc63ebd9214ced77335"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/freeze-review.cjs",
+      "bytes": 2060,
+      "sha256": "7d26c1b9fcc936fab16fd2b84c3ba7ab279dab44874e074c18fb898452d07edc"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/generated-controls.txt",
+      "bytes": 4933,
+      "sha256": "94e5a05b579e2272883cf45d61d46bf0047956d871ccef9e433d4cefbb2d038c"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/macro-contact-probe-original.json",
+      "bytes": 551,
+      "sha256": "465cba8719fc61645b87383d7ae5bdc92e9ce61baeaae91b75724ec0b1068f2c"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/macro-contact-probe.json",
+      "bytes": 137,
+      "sha256": "db63213d6b677a29a61a5d107fab254f68e4f7c437aad60cc24469ef071877a2"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/probe-case-transfer.cjs",
+      "bytes": 906,
+      "sha256": "eddd055670e279b4e07137906883e3fa4809d9ae185b97ffa1b6eb9e26c394a5"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/probe-macro-contact.mjs",
+      "bytes": 1123,
+      "sha256": "5a8cb0f9b51e1b5fafa6c6a9d07c449e9bc69f8de4b3019a6b6c1a3eadc2fa9a"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/promotion-first-attempt.json",
+      "bytes": 311,
+      "sha256": "ae1095fc13af91e4526ad22f31c78632c757661e8e8c34d3a9b63f45a6066716"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/promotion-patch-check.json",
+      "bytes": 373,
+      "sha256": "457311d48ac1d48678bae13a1dc84d47c43828ba1e670aaf7e0fd373c5040e0d"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/promotion-precheck.json",
+      "bytes": 300,
+      "sha256": "14f35eb0605e21e0acbed3cd43315c7f777e3e55cb1d906cbf344791bc7e4572"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/saved-bridge-controls.txt",
+      "bytes": 894,
+      "sha256": "0e604b137ff3214745c3310896cfc235f4f416cf443a0efe8e272e7de8640d3c"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/snapshot-after.json",
+      "bytes": 32901,
+      "sha256": "38bf68a5c1b6c344b45ff8bcc207485efa401c61ee9831194b3a8f5c083bc073"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/snapshot-before.json",
+      "bytes": 32901,
+      "sha256": "38bf68a5c1b6c344b45ff8bcc207485efa401c61ee9831194b3a8f5c083bc073"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/snapshot.cjs",
+      "bytes": 1606,
+      "sha256": "30392130874a1e87b4c15daafad3ad442298f6677820edfff942b4c6266f1cf5"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/test-independent.mjs",
+      "bytes": 4846,
+      "sha256": "b74960634b6c081a638f417ab0a21059ee177251c9de5527ddc8b1b4a6dd6c24"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/v1-parity-console.txt",
+      "bytes": 28,
+      "sha256": "be58970717716c618560e5b5aa2eedfcdeaebca6dd40cc68d7896dd19a90b5f0"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/v1-parity-post-promotion.json",
+      "bytes": 1948,
+      "sha256": "4b37200f2b39d57d5450bc4ddd63e65bd9981b7fc482424dd954e5429c4c48f6"
+    },
+    {
+      "path": "build/public-contact-desktop-independent-v1/v1-parity.json",
+      "bytes": 2253,
+      "sha256": "5714e252c3e8cd8eb113bbf02e4b17e83e7d5b7aa2e3437eaf9ca903a6994b95"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "build/public-contact-desktop-v1/source-index.json",
+      "bytes": 10187,
+      "sha256": "bf1c52ff57b6c4e6b9b02acff6c84fcb3f993eb92c5c161d65fd57f1d12a1895"
+    },
+    {
+      "path": "build/public-contact-desktop-v1/source.patch",
+      "bytes": 258872,
+      "sha256": "66dba11cf2d4874b7e6539870d387c0a4cd4b0789d7085a46b86112dd178a8e0"
+    },
+    {
+      "path": "build/public-contact-desktop-v1/App.worktree.patch",
+      "bytes": 13181,
+      "sha256": "c16fa9b905021341e188eaa5770c8309896686390141bc97c6fa6186cc56e0b9"
+    },
+    {
+      "path": "build/public-contact-desktop-v1/App.clean-HEAD.patch",
+      "bytes": 13077,
+      "sha256": "d4bcc17e5a6ebfb01f355943595facf0839e965d9d190745e4df60cc45b8be5a"
+    },
+    {
+      "path": "build/public-contact-desktop-v1/HANDOFF.txt",
+      "bytes": 3505,
+      "sha256": "dd25cbf9f092504e84fc4f543e9f0a10bd8e4e8f0762e8869ae4f272370dbafc"
+    }
+  ]
+}

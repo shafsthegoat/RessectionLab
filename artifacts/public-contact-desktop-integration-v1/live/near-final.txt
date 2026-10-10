@@ -1,0 +1,233 @@
+Window: "RessectionLab", App: Electron.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading Synthetic access fixture, Value: 1
+						17 text Synthetic access fixture
+					18 text Geometry demonstration · no patient data
+					19 container Imaging workspace
+						20 heading Imaging workspace 1, Value: 2
+							21 text Imaging workspace 1
+						22 container
+							23 text Inspect scan
+							24 pop up button Description: Inspect scan, Value: Primary planning image
+								25 (selected) Primary planning image
+						26 container
+							27 text Additional image modality
+							28 pop up button Description: Additional image modality, Value: T2
+								29 (selected) T2
+						30 container
+							31 text Optional aligned labels
+							32 pop up button Description: Annotation provenance, Value: No annotation
+								33 (selected) No annotation
+						34 button Add image for inspection
+						35 text Save preserves attached images and their view settings. Sources keep separate native frames; saving does not establish registration or planning suitability.
+					36 container
+						37 heading Displayed image 01, Value: 2
+							38 text Displayed image 01
+						39 text Generated analytic signal 13 × 13 × 12 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					40 container
+						41 heading Fixture background annotations 01, Value: 2
+							42 text Fixture background annotations 01
+						43 text These fixture annotations are unused by the contact reward. The public goal has its own marker.
+						44 button Center on annotations, Help: Move the linked MRI slices to the source annotation center.
+						45 checkbox Generated Nominal Target 0.04 mL · generated target, Value: 1
+						46 text Generated Nominal Target
+						47 text 0.04  mL · generated target Overlay opacity 32 %
+						48 slider Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					49 container
+						50 heading Functional evidence, Value: 2
+							51 text Functional evidence
+						52 text Motor network Unassessed Language network Unassessed Missing evidence remains unknown. Population priors require registration and review.
+					53 pop up button Inspect evidence
+					54 text Local processing · source preserved Workspace
+					55 container Current case: generated-sequential-v1
+						56 text generated-sequential-v1
+					57 heading Anatomy, in context, Value: 2
+						58 text Anatomy, in context
+					59 container Camera framing
+						60 toggle button Focus anatomy, Value: 0
+						61 toggle button Fit instruments, Value: 1
+					62 container
+						63 text GENERATED · public retained-contact · frame  12 / 12  · no patient admission
+						64 button Source view
+					65 container Linked patient imaging workspace
+						66 toolbar Imaging layout and 3D controls
+							67 container View layout
+								68 toggle button 3D focus, Value: 1
+								69 toggle button Signal review, Value: 0
+							70 toggle button Signal plane off, Help: Show or hide the source analytic signal plane in 3D; linked analytic signal views remain visible, Value: 0
+								71 text Signal
+								72 text  plane 
+								73 text off
+							74 pop up button Description: analytic signal plane shown in 3D, Value: Axial
+								75 (selected) Axial
+							76 button Description: Fit 3D view, Help: Fit anatomy and the selected 3D camera preset
+								77 text ↺ 
+								78 text Fit 3D
+						79 container
+							80 text 3D Spatial workspace RAS · mm
+							81 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								82 container
+									83 text Modeled residual annotations · step 12/12 Mint mesh: modeled removal · source  analytic signal  unchanged ◇ Public goal ·  retained contacted  · declared location, not anatomy
+								84 container 3-D patient coordinates: R is right, A anterior, S superior
+									85 text R A S
+									86 text Patient axes
+								87 container
+									88 text Drag to rotate  ·  Scroll to zoom Double-click to link cursor
+						89 container
+							90 text Axial 3.0 mm
+							91 toggle button Description: Expand Axial analytic signal, Value: 0
+							92 container Axial source analytic signal, neurological convention, slice position 3.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								93 container Declared public goal
+									94 text ◇
+								95 text L
+								96 text R
+								97 text A
+								98 text P
+								99 text 10
+								100 text  mm
+								101 text GENERATED ANALYTIC SIGNAL
+						102 container
+							103 text Coronal 6.0 mm
+							104 toggle button Description: Expand Coronal analytic signal, Value: 0
+							105 container Coronal source analytic signal, neurological convention, slice position 6.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								106 container Declared public goal
+									107 text ◇
+								108 text L
+								109 text R
+								110 text S
+								111 text I
+								112 text 10
+								113 text  mm
+								114 text GENERATED ANALYTIC SIGNAL
+						115 container
+							116 text Sagittal 6.0 mm
+							117 toggle button Description: Expand Sagittal analytic signal, Value: 0
+							118 container Sagittal source analytic signal, neurological convention, slice position 6.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								119 container Declared public goal
+									120 text ◇
+								121 text P
+								122 text A
+								123 text S
+								124 text I
+								125 text 10
+								126 text  mm
+								127 text GENERATED ANALYTIC SIGNAL
+						128 text Linked views
+						129 text RAS
+						130 text 6.0 / 6.0 / 3.0  mm
+						131 container
+							132 text Contrast
+							133 slider Description: Source analytic signal window width, Value: 1, Secondary Actions: Increment, Decrement
+						134 text Neurological convention
+					135 text Linked physical coordinates · RAS+ mm Complete rendered instrument envelopes
+					136 tab group Planning workflows
+						137 tab (settable, integer) Routes, Value: 0
+						138 tab (selected) Episode, Value: 1
+						139 tab (settable, integer) Refine, Value: 0
+					140 container Episode
+						141 text Generated task
+						142 pop up button Generated task, Value: Public retained-contact goal
+							143 (selected) Public retained-contact goal
+						144 container Public retained-contact task
+							145 text GENERATED PUBLIC GOAL
+							146 heading Retain & touch, Value: 2
+								147 text Retain & touch
+							148 text Open a path, then touch the declared cell with the geometric probe while leaving that cell intact. This models contact only; it does not measure force or identify anatomy.
+							149 text Public goal
+							150 pop up button Public goal, Value: Near goal · native cell 6, 6, 3
+								151 (selected) Near goal · native cell 6, 6, 3
+							152 text Selection method
+							153 pop up button Selection method, Value: Existing bounded search
+								154 (selected) Existing bounded search
+							155 button Execute public-contact task
+							156 text At most two actions. Contact with a retained goal earns 1; all removal and motion incur cost. STOP is allowed. No learned policy or training runs. The nominal-target annotation is fixture background and earns no reward here.
+							157 container
+								158 text Generated public contact · native replay checked near  goal ·  SEARCH  ·  2  actions ·  13  recorded frames
+							159 text This contact episode is temporary and cannot yet be saved in a workspace. Vessel annotation evaluation and actor comparisons are unavailable for this task.
+							160 button Focus public goal
+							161 button (disabled) Show replay
+							162 button Source view
+							163 container
+								164 text Public goal RAS+ mm:  6.0, 6.0, 3.0 . The marker is a declared task location, not an anatomical label.
+							165 container
+								166 text Showing modeled step 12  /  12
+								167 slider Showing modeled step 12 / 12, Value: 12, Details: Showing checked step 12 of 12, Secondary Actions: Increment, Decrement
+							168 button Previous frame
+							169 button (disabled) Next frame
+							170 text Probe · geometric contact / withdrawal
+							171 text Tip RAS+ mm:  6.00, 6.00, 1.50  ·  development-probe
+							172 definition list
+								173 container Goal at this recorded frame
+									174 text Goal at this recorded frame
+								175 text Retained and contacted
+								176 container All tissue removed at frame
+									177 text All tissue removed at frame
+								178 container
+									179 text 1.00  mm³
+							180 heading Complete episode outcome, Value: 3
+								181 text Complete episode outcome
+							182 definition list
+								183 container Modeled return
+									184 text Modeled return
+								185 text 0.708
+								186 container Total removal
+									187 text Total removal
+								188 container
+									189 text 1.00  mm³
+								190 container Round-trip tool path
+									191 text Round-trip tool path
+								192 container
+									193 text 2.00  mm
+								194 container Effort and removal cost
+									195 text Effort and removal cost
+								196 text 0.292
+								197 container Termination
+									198 text Termination
+								199 text Two-action limit
+							200 heading Recorded actions, Value: 3
+								201 text Recorded actions
+							202 content list
+								203 button 1. Aspirate 1 cells removed · reward -0.231
+									204 text 1
+									205 text . 
+									206 text Aspirate
+									207 container
+										208 text 1  cells removed · reward  -0.231
+								209 button 2. Probe 0 cells removed · reward 0.939
+									210 text 2
+									211 text . 
+									212 text Probe
+									213 container
+										214 text 0  cells removed · reward  0.939
+							215 disclosure triangle Task definition & evidence
+								216 text Task definition & evidence
+					217 text Research use only
+					218 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					219 text Generated public-contact task · exact replay and public objective checked · temporary, not saved
+					220 text RAS 6.0 / 6.0 / 3.0 mm
+	221 close button
+	222 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	223 minimize button
+224 menu bar
+	225 Electron
+	226 File
+	227 Edit
+	228 View
+	229 Window
+
+The focused UI element is 167 slider Showing modeled step 12 / 12, Value: 12, Details: Showing checked step 12 of 12, Secondary Actions: Increment, Decrement

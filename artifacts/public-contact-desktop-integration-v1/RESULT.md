@@ -22,3 +22,18 @@ Two reproduced issues are preserved and repaired: macro contact/replay disagreem
 and a transfer descriptor hidden in case metadata. Source-map hashes preserve
 all 25 files plus the separate working/index App patches; original neighboring
 work remains unstaged. Live Mac execution is the next check for this source slice.
+
+## Actual Mac check
+
+At source `220a8f0`, root executed near SEARCH once and costly SEARCH once using
+the exact staged renderer bundle. Near search shows aspiration then probe,
+13 frames, final retained contact, +0.708 return, 1 mm³ removal and 2 mm full tool
+path. Costly search shows STOP, two frames and zero removal/motion/return.
+Transient Save refuses without a file dialog; ordinary reopen restores the saved
+actor's aspiration workflow at frame 71/71 and imported-authorship qualification.
+No actor inference or training was requested. The app exited normally after
+105.190 seconds at 874,725,376 bytes sampled process-tree peak. This is whole-session
+cost, not search latency. [Actual screenshots and observations](live/index.json)
+are retained unchanged; live contact envelopes were transient, so saved-fixture
+semantic controls remain distinct from live UI evidence. Final independent
+source review and corrected old/new v1 provenance are included.

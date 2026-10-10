@@ -1143,3 +1143,11 @@ pcf-06 and SELECT pcf-00 replays STOP exactly: 90 previews and six STOP transiti
 across sealing/execution/verification, 0.957 seconds total. No learned family
 result, teacher search, optimizer update or patient access occurred. Actual
 TRAIN-only loss/update/checkpoint wiring is the next dependency.
+
+Root live Mac checking at `220a8f0` now passes: one near SEARCH (aspirate→probe,
+13 frames, retained contact, +0.708, 1 mm³ removed, 2 mm path), one costly SEARCH
+(STOP, two frames, zero removal/motion/return), transient Save refusal and saved
+actor reopen at frame 71/71. Exact staged renderer was used with source WIP
+preserved. The app exited normally in 105.190 seconds at 874,725,376 bytes sampled
+tree peak. Unmodified screenshots/AX snapshots and final independent review are
+in the same artifact; no live contact-envelope persistence is claimed.
