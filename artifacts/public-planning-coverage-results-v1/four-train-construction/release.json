@@ -1,0 +1,30 @@
+{
+  "automatic_retry": false,
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "failed_cases_replaced": false,
+  "horizon": 6,
+  "limits": {
+    "memory_bytes": 3221225472,
+    "native_previews": 512,
+    "parent_seconds": 120,
+    "threads": 1,
+    "worker_seconds": 110
+  },
+  "operational_model_search_learning_transition_calls": 0,
+  "output": "build/remind-planning-qc-v1/cohort-construction-run-v1",
+  "proposal_config": "canonical default; no override",
+  "public_index": {
+    "path": "build/remind-planning-qc-v1/public-cohort-v1/public-manifest-index.json",
+    "sha256": "11b5c1ae8f9b2c03695e7eb0768d2cc340db68631f3ddb50ba365910fe0187f7"
+  },
+  "schema": "four-TRAIN-public-construction-v1",
+  "scope": "four_TRAIN_default_initial_inventory_only",
+  "source_index": {
+    "path": "build/remind-planning-qc-v1/cohort-construction-v1/source-index.json",
+    "sha256": "9395572f672e3be9b96440cef7fac2309cb34c4838c947d92dbf98d1665100cc"
+  },
+  "task_condition": "PARTIAL_TARGET_PROGRESS"
+}

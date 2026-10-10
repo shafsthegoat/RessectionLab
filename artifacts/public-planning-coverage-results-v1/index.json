@@ -1,0 +1,115 @@
+{
+  "scope": "compact saved-only public planning evidence; no arrays or weights",
+  "files": {
+    "REPORT.txt": {
+      "sha256": "7ae09bd7f05f8ae4eaef7a2592396e2f1e1f8f781dd413336fb29d82e8a301ba",
+      "bytes": 6737
+    },
+    "copied-originals.json": {
+      "sha256": "e6e3746ef1bfc2d8d661fe7dacfa6d48c07f939ca2b8680e59a45a963b05532a",
+      "bytes": 5428
+    },
+    "external-records.json": {
+      "sha256": "6100bd4c08d084812f22af1eb4402d3d13f46d4ba51a7ee69dae1910107934d3",
+      "bytes": 8107
+    },
+    "four-train-construction/coverage-summary.json": {
+      "sha256": "a8005d4f472175cbc0b511931e441a8d40dd9a49e37821d59107b74d23a1a8cf",
+      "bytes": 5998
+    },
+    "four-train-construction/parent-receipt.json": {
+      "sha256": "3ed48b7838ca97e79c2265a45a94017457f4101ad694cdf15020aa0148a8c725",
+      "bytes": 1285
+    },
+    "four-train-construction/release.json": {
+      "sha256": "8d9d4544cda07f35cb2f5f422b33422665e5bd49b9ec2fded6c5aad0e61b5a37",
+      "bytes": 1119
+    },
+    "four-train-construction/result.json": {
+      "sha256": "1787d7e9d6315fb959f8577b72ec71abcf76458a193c68a776bc6e4791da11fa",
+      "bytes": 25164
+    },
+    "four-train-construction/source/construction_worker.py": {
+      "sha256": "995cddce215ad065b4af6e32ba281269d56b2df4e4c059428174d080e089645b",
+      "bytes": 12796
+    },
+    "four-train-construction/source/run_owned.py": {
+      "sha256": "604c2e56ad06e76015c82b36c35e6c41c21948628547d6692202ebb0810aab80",
+      "bytes": 8118
+    },
+    "four-train-construction/source-index.json": {
+      "sha256": "9395572f672e3be9b96440cef7fac2309cb34c4838c947d92dbf98d1665100cc",
+      "bytes": 14409
+    },
+    "intermediate-opening/input-index.json": {
+      "sha256": "f8cb6051cc1ddb380a9bec7a6e343ff1e56d270f544f22109a760a46321d8f9f",
+      "bytes": 1510
+    },
+    "intermediate-opening/parent-receipt.json": {
+      "sha256": "de312cf40a866bd9941767c519c8a7cc8a399de51ad7cad458c530b9606c0eb9",
+      "bytes": 886
+    },
+    "intermediate-opening/release.json": {
+      "sha256": "7f04a6d31b164df9c81116fcadb554c09ac413643371aa44a1cc2a0f0d0cd059",
+      "bytes": 1759
+    },
+    "intermediate-opening/result.json": {
+      "sha256": "90f37a4a1864c738e9b17d65a9f73cd5418b1da401d27ec4628b9004266bfe2c",
+      "bytes": 3793
+    },
+    "intermediate-opening/saved-result-summary.json": {
+      "sha256": "c70cfa90d3f0d9573fe25cd44b77c1f934ab2911b3671a78e3714cbacdce672c",
+      "bytes": 5130
+    },
+    "intermediate-opening/source/run_search_owned.py": {
+      "sha256": "c605a97b0dad64a056284025ab7e03346f592fa3eafd3309a48f4b2117a47bb3",
+      "bytes": 7286
+    },
+    "intermediate-opening/source/search_worker.py": {
+      "sha256": "13f800e0b6d0b08629c1cdd6a3c7807f6769f4bbc5d0f5ee9357df8785016f47",
+      "bytes": 13783
+    },
+    "intermediate-opening/source-index.json": {
+      "sha256": "77e4755b52c8a8a86be1ad3f9b2aa4cc7d3e2ff2f76dfd50a8b80477702d8d9b",
+      "bytes": 4256
+    },
+    "saved-arithmetic-checks.json": {
+      "sha256": "4e8f4d811acd1ac2ccc3aabd4538cfd0ecd0f2cb1afbff9e1a1fa4c772f50048",
+      "bytes": 1211
+    },
+    "two-lane-v1-failed/input-index.json": {
+      "sha256": "1bd017ddf1a53b494e8791a3b74be8165d74c82511ec8a36196c440bb233380f",
+      "bytes": 2224
+    },
+    "two-lane-v1-failed/later-generated-serialization-control.json": {
+      "sha256": "628852699dcfdb486ea6a0d5688d53eff46b29bc3e337e05f5dfbe4fa423a1aa",
+      "bytes": 436
+    },
+    "two-lane-v1-failed/parent-receipt.json": {
+      "sha256": "5770e42f67805d67dfdb20d2149ac31b96e39cac53b456ed6b723f7bb83ee9cc",
+      "bytes": 883
+    },
+    "two-lane-v1-failed/release.json": {
+      "sha256": "61648570d29c16e5625796ba5131e1292da9ff4ef13e20248ae935f34a5f394f",
+      "bytes": 1853
+    },
+    "two-lane-v1-failed/result.json": {
+      "sha256": "a5bce1c350b6c3c0f546ba31afe08b508ff8741d66dad317ee0d36590fd73e5e",
+      "bytes": 2275
+    },
+    "two-lane-v1-failed/source/run_owned.py": {
+      "sha256": "638ecc8a473c0fe81b153834ba277c48f41cbebba4de4e38ac62b4564dbf060e",
+      "bytes": 7413
+    },
+    "two-lane-v1-failed/source/search_worker.py": {
+      "sha256": "491806c56d5368cce67273d0af254b9e4c87e2db22b6a1a66aeacd33897379c8",
+      "bytes": 14960
+    },
+    "two-lane-v1-failed/source-index.json": {
+      "sha256": "6313b8a78a801b6ef067d6784d457c291e27d504f4c573943cf9587f3cd69684",
+      "bytes": 4253
+    }
+  },
+  "file_count_excluding_index": 27,
+  "bytes_excluding_index": 163072
+}

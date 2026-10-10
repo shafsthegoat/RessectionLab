@@ -1,0 +1,87 @@
+{
+  "bulk_arrays_histories_or_weights_included": false,
+  "files": [
+    {
+      "bytes": 4220,
+      "original_path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2/result.json",
+      "path": "result.json",
+      "sha256": "996d8a293b1429a5549578c75aae36e55b4ed5a936f50bee445a6cbddc1600dd"
+    },
+    {
+      "bytes": 1178,
+      "original_path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2/identity-checks.json",
+      "path": "identity-checks.json",
+      "sha256": "24b99464f6636c99751d476fb4ea6c88bf03304afb1ddd21a69887881250738f"
+    },
+    {
+      "bytes": 18521,
+      "original_path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2/search-prefixes.json",
+      "path": "search-prefixes.json",
+      "sha256": "392c712f1ccb65f419b6fbbcfeed583dee450896f8336ff772c5c9d168484619"
+    },
+    {
+      "bytes": 886,
+      "original_path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2.supervision/receipt.json",
+      "path": "owned-parent-receipt.json",
+      "sha256": "4562193f98bd869c904333d3df13db1c9059e6785f28eac596620f418bbcecab"
+    },
+    {
+      "bytes": 4804,
+      "original_path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2.supervision/declaration.json",
+      "path": "owned-parent-declaration.json",
+      "sha256": "10dce5f14c29fab17a50d52b8121195da808b68f8c8029513fa630e7d85a407d"
+    },
+    {
+      "bytes": 4386,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/source-index.json",
+      "path": "source-index.json",
+      "sha256": "68cd5c14ed51422eb1366657ebd810de796ec7938f6bda20118ac48e98fc15ab"
+    },
+    {
+      "bytes": 2707,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/input-index.json",
+      "path": "input-index.json",
+      "sha256": "501dee732bc9ed30308d3f94b63caf123fc05ca9a6d412503341a70305c104ce"
+    },
+    {
+      "bytes": 17919,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/search_worker.py",
+      "path": "source/search_worker.py",
+      "sha256": "f9a708471df876cddc3aaa2a7de035c502416f467dac2eb2e17bb2d91901b703"
+    },
+    {
+      "bytes": 7413,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/run_owned.py",
+      "path": "source/run_owned.py",
+      "sha256": "b7262e73b1dba4c3924fe0e665e81d5748d02a456771dfb7c2f9e277f99d5b0f"
+    },
+    {
+      "bytes": 6887,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/worker-v2.patch",
+      "path": "source/worker-v2.patch",
+      "sha256": "1d44dcdb3b64a67bcbd6411eb6e93167aca647edfad88647e9312aa1bbbea709"
+    },
+    {
+      "bytes": 2122,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/release.json",
+      "path": "release.json",
+      "sha256": "90e0e83ec022ffc818c05c6bcaa1c67d54f670c58ce78ffc04639cc3c20589bb"
+    },
+    {
+      "bytes": 436,
+      "original_path": "build/cross-patient-planning-v1/two-lane-retention-v2/serialization-control.json",
+      "path": "serialization-control.json",
+      "sha256": "628852699dcfdb486ea6a0d5688d53eff46b29bc3e337e05f5dfbe4fa423a1aa"
+    },
+    {
+      "bytes": 4081,
+      "original_path": null,
+      "path": "RESULT.txt",
+      "sha256": "63b19d02f1da0b9bf1a78836739c6ef04374e2119e9e0d43a3f0f17e945d6fd0"
+    }
+  ],
+  "prior_artifacts_not_duplicated": "public-planning-coverage-results-v1 retains the intermediate-only run and failed retentionv1; runtime source closure points to existing canonical/ignored dependencies",
+  "scope": "compact saved-only result package; no new computation",
+  "total_bytes": 75560,
+  "version": "two-lane-retention-result-v1"
+}

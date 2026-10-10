@@ -1,0 +1,101 @@
+--- build/cross-patient-planning-v1/two-lane-retention-v1/search_worker.py
++++ build/cross-patient-planning-v1/two-lane-retention-v2/search_worker.py
+@@ -20,6 +20,32 @@
+         return {key: comparison_accounting(item) for key, item in value.items() if key not in excluded}
+     if isinstance(value, list): return [comparison_accounting(item) for item in value]
+     return value
++
++
++def inventory_identity(actual, expected):
++    """Compare exact canonical JSON values, allowing only tuple/list encoding."""
++    canonical = lambda value: json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
++    actual_text, expected_text = canonical(actual), canonical(expected)
++    actual, expected = json.loads(actual_text), json.loads(expected_text)
++    paths = []
++    def compare(a, b, path):
++        if type(a) is not type(b):
++            paths.append(path)
++        elif isinstance(a, dict):
++            for key in sorted(set(a) | set(b)):
++                if key not in a or key not in b: paths.append(path+"."+key)
++                else: compare(a[key], b[key], path+"."+key)
++        elif isinstance(a, list):
++            if len(a) != len(b): paths.append(path+".length")
++            for i, (left, right) in enumerate(zip(a, b)): compare(left, right, path+"["+str(i)+"]")
++        elif a != b:
++            paths.append(path)
++    compare(actual, expected, "inventory")
++    return {"equal": actual_text == expected_text,
++        "actual_canonical_sha256": hashlib.sha256(actual_text.encode()).hexdigest(),
++        "expected_canonical_sha256": hashlib.sha256(expected_text.encode()).hexdigest(),
++        "mismatch_field_paths": paths,
++        "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"}
+ 
+ 
+ def main():
+@@ -58,6 +84,19 @@
+         context_record = read("context"); bindings = read("bindings")
+         prior_release = read("original_release"); baseline = read("original_search")
+         prior_contrast = read("prior_contrast_result"); prior_parent = read("prior_contrast_parent")
++        failed = read("serialization_failure_result"); failed_parent = read("serialization_failure_parent")
++        if (failed["status"] != "failed_or_unresolved" or failed["search_invocations"] != 0
++                or failed["optimizer_updates"] != 0 or failed["policy_forward_calls"] != 0
++                or not failed_parent["worker_termination_confirmed"]
++                or failed_parent["cleanup_errors"] or failed_parent["final_owned_pids"]):
++            raise ValueError("Prior serialization failure is not the expected clean pre-search attempt")
++        result["prior_failed_serialization_attempt"] = {
++            "status": failed["status"], "search_invocations": 0,
++            "worker_wall_seconds": failed["worker_wall_seconds"],
++            "owned_wall_seconds": failed_parent["elapsed_seconds"],
++            "sampled_peak_rss_bytes": failed_parent["sampled_peak_rss_bytes"],
++            "native_previews": failed["native_budget"]["native_preview_entries"],
++            "costs_remain_separate_from_this_attempt": True}
+         if (prior_contrast["status"] != "complete_intermediate_opening_search_contrast"
+                 or prior_parent["status"] != "complete" or prior_parent["exit_code"] != 0
+                 or prior_parent["cleanup_errors"] or prior_parent["final_owned_pids"]):
+@@ -145,12 +184,20 @@
+                 raise ValueError("Changed source admission or baseline reward")
+             inventory = task.candidate_inventory()
+             prior_contrast = read("prior_contrast_result")
+-            if (source.source_hash != prior_contrast["source_hash"]
+-                    or task.decision_model_hash != prior_contrast["decision_model_hash"]
+-                    or initial_hash != prior_contrast["initial_observation_hash"]
+-                    or inventory != read("prior_contrast_inventory")):
+-                raise ValueError("Retention contrast changed the exact intermediate-opening task or inventory")
+             write("initial-inventory.json", inventory)
++            identity_checks = {}
++            for name, actual in (("source_hash", source.source_hash),
++                    ("decision_model_hash", task.decision_model_hash),
++                    ("initial_observation_hash", initial_hash)):
++                expected = prior_contrast[name]
++                identity_checks[name] = {"equal": actual == expected, "actual": actual, "expected": expected,
++                    "mismatch_field_paths": [] if actual == expected else [name]}
++            identity_checks["canonical_json_inventory"] = inventory_identity(inventory, read("prior_contrast_inventory"))
++            write("identity-checks.json", identity_checks)
++            mismatches = {key: row["mismatch_field_paths"] for key, row in identity_checks.items() if not row["equal"]}
++            if mismatches:
++                result["identity_mismatches"] = mismatches
++                raise ValueError("Retention contrast identity mismatch: "+json.dumps(mismatches, sort_keys=True))
+             old_inventory = read("original_inventory")
+             def physical(row):
+                 return {key: row[key] for key in ("tool_id", "family", "voxel", "entry_mm", "tip_mm", "feasible", "reason", "endpoint_center_in_actor_crop")}
+--- build/cross-patient-planning-v1/two-lane-retention-v1/run_owned.py
++++ build/cross-patient-planning-v1/two-lane-retention-v2/run_owned.py
+@@ -29,7 +29,7 @@
+         if sha(ROOT / relative) != expected: raise ValueError("Bound source changed: "+relative)
+     public = release["public_manifest"]
+     if sha(ROOT/public["path"]) != public["sha256"]: raise ValueError("Public manifest changed")
+-    if (release["output"] != "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v1"
++    if (release["output"] != "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2"
+             or type(release["profile"]) is not bool):
+         raise ValueError("One fixed output and explicit profiling choice required")
+     expected_limits = {"memory_bytes": 3221225472, "native_previews": 2000,
+@@ -45,7 +45,7 @@
+     caps = {"hard_total_wall_seconds": 120., "worker_deadline_seconds": 110.,
+         "sampled_owned_tree_rss_bytes": 3221225472, "threads": 1,
+         "sample_interval_seconds": .2, "attempts": 1, "automatic_retry": False}
+-    _receipt(supervision/"declaration.json", {"version": "owned-ReMIND-008-two-lane-retention-search-v1",
++    _receipt(supervision/"declaration.json", {"version": "owned-ReMIND-008-two-lane-retention-search-v2",
+         "head": head, "release_path": str(args.release.resolve()), "release_sha256": args.release_sha256,
+         "source_index": release["source_index"], "source_files": index["source_files"],
+         "caps": caps, "scope": "two_lane_retention_search_zero_learning_or_inference",

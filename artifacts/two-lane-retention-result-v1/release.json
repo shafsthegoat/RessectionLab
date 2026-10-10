@@ -1,0 +1,42 @@
+{
+  "admission_forward_ceiling": 1,
+  "diagnostic_scope": "one retention contrast; public newlyremoved actor-covered cell depth only; final true reward/STOP unchanged; no learned comparison or cohortbenchmark",
+  "endpoint_rule": "numpy_rint nearest source-axis voxelcount, minimum1; actual physicaladvance reported, may exceed requested1mm",
+  "expected_head": "efd96a90917cca8bf02cbcbe9492d25a85c44af7",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/two-lane-retention-v2/input-index.json",
+    "sha256": "501dee732bc9ed30308d3f94b63caf123fc05ca9a6d412503341a70305c104ce"
+  },
+  "limits": {
+    "beam_width": 2,
+    "horizon": 6,
+    "memory_bytes": 3221225472,
+    "native_previews": 2000,
+    "optimizer_updates": 0,
+    "parent_seconds": 120,
+    "policy_forwards": 0,
+    "search_seconds": 60,
+    "search_transition_calls": 858,
+    "threads": 1,
+    "worker_seconds": 110
+  },
+  "original_status_preserved": "failed_or_unresolved",
+  "output": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2",
+  "owned_execution_forward_limit": 0,
+  "prior_failed_attempt": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v1",
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "repair_scope": "same scientific task/retention/options/caps; canonical JSON inventory equality; save fourcheck results and mismatchpaths beforeguard",
+  "requested_opening_lookahead_mm": 1.0,
+  "retention_policy": "return_plus_opening_depth_v1",
+  "scope": "only beam retention mode changes; same intermediate source/model/initialobservation/inventory/reward/tools/horizon/beam; no model/update/replay/private reference",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/two-lane-retention-v2/source-index.json",
+    "sha256": "68cd5c14ed51422eb1366657ebd810de796ec7938f6bda20118ac48e98fc15ab"
+  },
+  "status": "released_one_attempt",
+  "version": "two-lane-retention-ReMIND-008-serialization-repair-release-v2"
+}

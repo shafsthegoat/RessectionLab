@@ -1,0 +1,34 @@
+{
+  "scope": "saved JSON and source bytes only; no image, array, model, native execution, new search, optimizer or held-out reads",
+  "checks": [
+    {
+      "run": "intermediate-opening",
+      "result_bound_by_parent": true,
+      "worker_source_pins_match": true,
+      "parent_status": "complete",
+      "exit_code": 0,
+      "worker_terminated": true
+    },
+    {
+      "run": "four-train-construction",
+      "result_bound_by_parent": true,
+      "worker_source_pins_match": true,
+      "parent_status": "complete",
+      "exit_code": 0,
+      "worker_terminated": true
+    },
+    {
+      "run": "two-lane-v1-failed",
+      "result_bound_by_parent": true,
+      "worker_source_pins_match": true,
+      "parent_status": "failed",
+      "exit_code": 1,
+      "worker_terminated": true
+    }
+  ],
+  "four_train_preview_sum": 264,
+  "all_four_constructor_rows_preserved": true,
+  "intermediate_summary_source_hashes_verified": true,
+  "two_lane_failure_preserved_before_search": true,
+  "two_lane_tuple_list_diagnosis": "Generated fixture confirms serialization equality defect; actual v1 generic guard lacks saved per-field checks/live inventory, so exact failed predicate remains incompletely localized."
+}

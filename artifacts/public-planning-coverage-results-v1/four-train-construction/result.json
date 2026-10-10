@@ -1,0 +1,733 @@
+{
+  "status": "construction_batch_complete",
+  "scope": "four_frozen_TRAIN_public_source_task_initial_inventory_only",
+  "cases": [
+    {
+      "patient_id": "ReMIND-008",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 248299520,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.00028449995443224907,
+          "rss_bytes": 248299520
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.04185616597533226,
+          "rss_bytes": 249511936,
+          "bytes": 83081128
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.050632124999538064,
+          "rss_bytes": 249511936,
+          "bytes": 20770378
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.059882374946027994,
+          "rss_bytes": 249511936,
+          "bytes": 20770378
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.07076204102486372,
+          "rss_bytes": 249511936,
+          "bytes": 20770378
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.23780612484551966,
+          "rss_bytes": 561512448,
+          "native_shape": [
+            251,
+            331,
+            250
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.8206656659021974,
+          "rss_bytes": 1146503168,
+          "source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.8752693748101592,
+          "rss_bytes": 1001193472
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 2.3995368748437613,
+          "rss_bytes": 1258700800
+        }
+      ],
+      "source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64",
+      "context_hash": "sha256:5fa553911a24436e7ef636a41ee26b830e3e11a5c0a9ebe5822a64dcccb33640",
+      "families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 20,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 20,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 24,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24
+          }
+        },
+        "distal_nominal": {
+          "emitted": 18,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+          }
+        }
+      },
+      "emitted_count": 68,
+      "accepted_count": 20,
+      "proposal_dispositions": {
+        "PROPOSED_UNCERTIFIED": 68,
+        "DUPLICATE_GEOMETRY": 10
+      },
+      "endpoint_centers_in_actor_crop": 56,
+      "target_denominator": 18509,
+      "target_depth_range_mm": [
+        3.8085001043957445,
+        39.35450067191445
+      ],
+      "accepted_envelope": {
+        "proposal_count": 20,
+        "distal_active_tip_axial_upper_bound_mm": 2.4617000740071124,
+        "active_sweep_aabb_ras_mm": [
+          [
+            55.349271545698855,
+            -31.966254652694456,
+            35.81345008136048
+          ],
+          [
+            63.51465777867562,
+            -25.514407492221952,
+            41.71699545074137
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 18509,
+        "target_centers_outside_aabb": 18509,
+        "endpoint_depth_range_mm": [
+          0.2539000642441453,
+          0.7617000740071125
+        ]
+      },
+      "emitted_envelope": {
+        "proposal_count": 68,
+        "distal_active_tip_axial_upper_bound_mm": 41.05450066578969,
+        "active_sweep_aabb_ras_mm": [
+          [
+            16.756506047685566,
+            -31.966254652931383,
+            35.80012716413185
+          ],
+          [
+            63.51465777868893,
+            -25.467992119682723,
+            42.216496278832544
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 14305,
+        "endpoint_depth_range_mm": [
+          0.2539000642441453,
+          39.354500665789686
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:e53b76e8a0dcca8089dac4bac3b12f86670ccfe2114129e6cdb55a58a3b4eb22",
+      "array_outputs_written": false,
+      "elapsed_seconds": 2.417849874822423,
+      "rss_after_cleanup_bytes": 1267597312,
+      "cumulative_process_peak_rss_bytes": 1267597312,
+      "phase_sampled_peak_rss_bytes": 1258700800,
+      "native_preview_entries": 68,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    },
+    {
+      "patient_id": "ReMIND-010",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 1267597312,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.00033374992199242115,
+          "rss_bytes": 1267597312
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.027296958025544882,
+          "rss_bytes": 1267236864,
+          "bytes": 42614768
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.038224166026338935,
+          "rss_bytes": 1267220480,
+          "bytes": 10653788
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.046257666079327464,
+          "rss_bytes": 1267220480,
+          "bytes": 10653788
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.05127404094673693,
+          "rss_bytes": 1267220480,
+          "bytes": 10653788
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.11305908299982548,
+          "rss_bytes": 1299267584,
+          "native_shape": [
+            270,
+            362,
+            109
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.3827472080010921,
+          "rss_bytes": 1324974080,
+          "source_hash": "sha256:c01d22fb968f566766a9a1a8f8a1d14a4ea125411cae9a6153639200cd50ee6b"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.41111391596496105,
+          "rss_bytes": 1250361344
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 1.3657413329929113,
+          "rss_bytes": 1278509056
+        }
+      ],
+      "source_hash": "sha256:c01d22fb968f566766a9a1a8f8a1d14a4ea125411cae9a6153639200cd50ee6b",
+      "context_hash": "sha256:b5c00a48e784574ad00bbbf78cc6a917c6c9db106163fc854711af4c44d7ae38",
+      "families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 11,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 11,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 18,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+          }
+        },
+        "distal_nominal": {
+          "emitted": 18,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+          }
+        }
+      },
+      "emitted_count": 62,
+      "accepted_count": 11,
+      "proposal_dispositions": {
+        "PROPOSED_UNCERTIFIED": 62,
+        "NO_REMAINING_NOMINAL_TARGET": 16
+      },
+      "endpoint_centers_in_actor_crop": 26,
+      "target_denominator": 15209,
+      "target_depth_range_mm": [
+        47.58317910635651,
+        71.02316881392132
+      ],
+      "accepted_envelope": {
+        "proposal_count": 11,
+        "distal_active_tip_axial_upper_bound_mm": 2.403199691226958,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -72.38433322026644,
+            69.08114090412863,
+            -0.4615298850806602
+          ],
+          [
+            -64.28303639213316,
+            73.73951299713302,
+            8.06601740318855
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 15209,
+        "target_centers_outside_aabb": 15209,
+        "endpoint_depth_range_mm": [
+          0.2343998970756583,
+          1.1719994853782565
+        ]
+      },
+      "emitted_envelope": {
+        "proposal_count": 62,
+        "distal_active_tip_axial_upper_bound_mm": 68.03517087240836,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -72.41276995409982,
+            67.8780831506832,
+            -0.4615298850806602
+          ],
+          [
+            1.3223808121972211,
+            74.12605100240376,
+            10.931202692198593
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 572,
+        "target_centers_outside_aabb": 10978,
+        "endpoint_depth_range_mm": [
+          0.2343998970756583,
+          66.33517087240836
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:1b48d32f74723db2e793725946c0b5c0a39873430457738f75882ba463c6ad6a",
+      "array_outputs_written": false,
+      "elapsed_seconds": 1.3814194579608738,
+      "rss_after_cleanup_bytes": 1278509056,
+      "cumulative_process_peak_rss_bytes": 1342013440,
+      "phase_sampled_peak_rss_bytes": 1324974080,
+      "native_preview_entries": 62,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    },
+    {
+      "patient_id": "ReMIND-020",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 1278509056,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.0004441249184310436,
+          "rss_bytes": 1278509056
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.010776208015158772,
+          "rss_bytes": 1278509056,
+          "bytes": 11098712
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.012961999978870153,
+          "rss_bytes": 1278509056,
+          "bytes": 2774774
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.014838875038549304,
+          "rss_bytes": 1278509056,
+          "bytes": 2774774
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.01674270792864263,
+          "rss_bytes": 1278509056,
+          "bytes": 2774774
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.035862165968865156,
+          "rss_bytes": 1296613376,
+          "native_shape": [
+            133,
+            183,
+            114
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.10652462509460747,
+          "rss_bytes": 1316126720,
+          "source_hash": "sha256:acd7ca7a6cc2a8c076fac7c1db55a1813e1a6170a10e50a96b82e127581d7dfc"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.11445933301001787,
+          "rss_bytes": 1296662528
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 0.4085373328998685,
+          "rss_bytes": 1327726592
+        }
+      ],
+      "source_hash": "sha256:acd7ca7a6cc2a8c076fac7c1db55a1813e1a6170a10e50a96b82e127581d7dfc",
+      "context_hash": "sha256:2aced53afb810f7eaad214de28512749b0c911cb6dd99e79cfb02ee2e95d9987",
+      "families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 14,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 14,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 12
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 20,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20
+          }
+        },
+        "distal_nominal": {
+          "emitted": 14,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 14
+          }
+        }
+      },
+      "emitted_count": 60,
+      "accepted_count": 14,
+      "proposal_dispositions": {
+        "PROPOSED_UNCERTIFIED": 60,
+        "DUPLICATE_GEOMETRY": 6,
+        "NO_REMAINING_NOMINAL_TARGET": 12
+      },
+      "endpoint_centers_in_actor_crop": 60,
+      "target_denominator": 49821,
+      "target_depth_range_mm": [
+        10.253906777413016,
+        53.22265898752482
+      ],
+      "accepted_envelope": {
+        "proposal_count": 14,
+        "distal_active_tip_axial_upper_bound_mm": 2.4648438253447216,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -66.65625171907146,
+            110.97268360414058,
+            10.869059444097006
+          ],
+          [
+            -56.90717950358398,
+            118.81452399489513,
+            19.99677074427096
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 49821,
+        "target_centers_outside_aabb": 49821,
+        "endpoint_depth_range_mm": [
+          0.48828127511490166,
+          1.4648438253447214
+        ]
+      },
+      "emitted_envelope": {
+        "proposal_count": 60,
+        "distal_active_tip_axial_upper_bound_mm": 14.883594428102475,
+        "active_sweep_aabb_ras_mm": [
+          [
+            -66.94936391788926,
+            103.73658982557689,
+            10.869059444097
+          ],
+          [
+            -45.83958398966991,
+            120.85695402195894,
+            21.43133840560355
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 44539,
+        "target_centers_outside_aabb": 49163,
+        "endpoint_depth_range_mm": [
+          0.48828127511490166,
+          13.183594428102476
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:1500f3ded2afd902d6b9b025f2b38e77daa4cbb0900bcc63ce0d9d3f66982f1d",
+      "array_outputs_written": false,
+      "elapsed_seconds": 0.42548808292485774,
+      "rss_after_cleanup_bytes": 1327726592,
+      "cumulative_process_peak_rss_bytes": 1342013440,
+      "phase_sampled_peak_rss_bytes": 1327726592,
+      "native_preview_entries": 60,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    },
+    {
+      "patient_id": "ReMIND-025",
+      "role": "TRAIN",
+      "status": "constructed_initial_inventory_only",
+      "rss_before_bytes": 1327726592,
+      "phase_marks": [
+        {
+          "phase": "before_public_array_loading",
+          "seconds": 0.0004858339671045542,
+          "rss_bytes": 1327726592
+        },
+        {
+          "phase": "public_array_loaded:image",
+          "seconds": 0.010504167061299086,
+          "rss_bytes": 1327726592,
+          "bytes": 9620284
+        },
+        {
+          "phase": "public_array_loaded:supplied_support",
+          "seconds": 0.012394584016874433,
+          "rss_bytes": 1327726592,
+          "bytes": 2405167
+        },
+        {
+          "phase": "public_array_loaded:supplied_whole_tumor",
+          "seconds": 0.015358916949480772,
+          "rss_bytes": 1327726592,
+          "bytes": 2405167
+        },
+        {
+          "phase": "public_array_loaded:whole_tumor_domain",
+          "seconds": 0.018157459096983075,
+          "rss_bytes": 1327726592,
+          "bytes": 2405167
+        },
+        {
+          "phase": "before_native_case_constructor",
+          "seconds": 0.032269209157675505,
+          "rss_bytes": 1334951936,
+          "native_shape": [
+            133,
+            169,
+            107
+          ],
+          "actor_crop": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "phase": "native_case_constructed",
+          "seconds": 0.10152150015346706,
+          "rss_bytes": 1373552640,
+          "source_hash": "sha256:d76af9db74f795be110b375ea2a977bf57f772828c4b7396fe2463c3014f9f6d"
+        },
+        {
+          "phase": "before_admitted_task_initial_inventory",
+          "seconds": 0.10863333404995501,
+          "rss_bytes": 1356693504
+        },
+        {
+          "phase": "case_inventory_retained",
+          "seconds": 0.5495845421683043,
+          "rss_bytes": 1363410944
+        }
+      ],
+      "source_hash": "sha256:d76af9db74f795be110b375ea2a977bf57f772828c4b7396fe2463c3014f9f6d",
+      "context_hash": "sha256:591884685d827a4f184ebfd0a8a1c098eb9aa509cf2b96a6a640488ebe70dc71",
+      "families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 10,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 10,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 22,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 22
+          }
+        },
+        "distal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+          }
+        }
+      },
+      "emitted_count": 74,
+      "accepted_count": 10,
+      "proposal_dispositions": {
+        "PROPOSED_UNCERTIFIED": 74,
+        "DUPLICATE_GEOMETRY": 4
+      },
+      "endpoint_centers_in_actor_crop": 74,
+      "target_denominator": 81762,
+      "target_depth_range_mm": [
+        -1.464843856676984,
+        54.19922269704742
+      ],
+      "accepted_envelope": {
+        "proposal_count": 10,
+        "distal_active_tip_axial_upper_bound_mm": 4.417968998912881,
+        "active_sweep_aabb_ras_mm": [
+          [
+            55.39013548641191,
+            51.30980995508746,
+            0.624508716361845
+          ],
+          [
+            65.47433168607654,
+            58.88936845797975,
+            8.695363369600354
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 80103,
+        "target_centers_outside_aabb": 81698,
+        "endpoint_depth_range_mm": [
+          0.4882812855589552,
+          3.417968998912881
+        ]
+      },
+      "emitted_envelope": {
+        "proposal_count": 74,
+        "distal_active_tip_axial_upper_bound_mm": 53.94609755481148,
+        "active_sweep_aabb_ras_mm": [
+          [
+            5.836745666530436,
+            50.52512211359138,
+            -0.6071421667459134
+          ],
+          [
+            65.50763669850042,
+            59.87644121958193,
+            9.40647378724639
+          ]
+        ],
+        "target_centers_beyond_axial_bound": 1,
+        "target_centers_outside_aabb": 77398,
+        "endpoint_depth_range_mm": [
+          0.4882812855589552,
+          52.24609755481148
+        ]
+      },
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "initial_observation_hash": "sha256:1491620ea4dd2adf6e9c6502b2a3acfba193f2993368cc21261b7b4b81e2796f",
+      "array_outputs_written": false,
+      "elapsed_seconds": 0.5656847089994699,
+      "rss_after_cleanup_bytes": 1363410944,
+      "cumulative_process_peak_rss_bytes": 1373552640,
+      "phase_sampled_peak_rss_bytes": 1373552640,
+      "native_preview_entries": 74,
+      "cleanup": "source/task/context/observation/inventory references released; gc collected before next case"
+    }
+  ],
+  "model_calls": 0,
+  "optimizer_calls": 0,
+  "checkpoint_loads": 0,
+  "search_calls": 0,
+  "transition_calls": 0,
+  "blocked_file_or_external_calls": 0,
+  "public_array_loads": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-mr/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-mr/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-mr/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-mr/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-mr/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-mr/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-mr/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-mr/whole_tumor_source_grid_domain.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/MR_native_crop.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/cerebrum_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/whole_tumor_source_label.npy",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/whole_tumor_source_grid_domain.npy"
+  ],
+  "source_arrays_written": 0,
+  "failed_cases_replaced": false,
+  "all_four_cases_retained": true,
+  "elapsed_seconds": 6.5940390839241445,
+  "cumulative_process_peak_rss_bytes": 1373552640,
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "complete_history_awaiting_independent_audit",
+    "failure": null,
+    "limits": {
+      "native_preview_entries": 512,
+      "planning_execution_seconds": 110.0
+    },
+    "native_preview_entries": 264,
+    "observed_admissions_before_accounting_failure": 264,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 4.79291604179889,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": true,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 264,
+          "returned": 264,
+          "raised": 0,
+          "seconds": 1.3187115008477122,
+          "feasible": 55,
+          "rejected": 209,
+          "returned_microsteps": 1422,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 209
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "budget_history_scope": "construction ledger only; zero transitions or episodes",
+  "default_proposal_config": true,
+  "methods_executed": [],
+  "clinical_claim": false
+}

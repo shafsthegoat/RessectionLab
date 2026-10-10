@@ -1,0 +1,44 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 120.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "threads": 1,
+    "worker_deadline_seconds": 110.0
+  },
+  "case_statuses": [
+    {
+      "patient_id": "ReMIND-008",
+      "status": "constructed_initial_inventory_only"
+    },
+    {
+      "patient_id": "ReMIND-010",
+      "status": "constructed_initial_inventory_only"
+    },
+    {
+      "patient_id": "ReMIND-020",
+      "status": "constructed_initial_inventory_only"
+    },
+    {
+      "patient_id": "ReMIND-025",
+      "status": "constructed_initial_inventory_only"
+    }
+  ],
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 7.0854154580738395,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "result_read_error": null,
+  "result_sha256": "1787d7e9d6315fb959f8577b72ec71abcf76458a193c68a776bc6e4791da11fa",
+  "sampled_peak_rss_bytes": 1382563840,
+  "samples": 34,
+  "sampling_limit": "transient peaks or detached descendants between samples may be missed",
+  "status": "complete",
+  "stop_reason": null,
+  "worker_process_scope": "owned process group plus discovered descendants via FastDarwinSampler",
+  "worker_termination_confirmed": true
+}

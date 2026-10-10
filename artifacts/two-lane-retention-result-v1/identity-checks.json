@@ -1,0 +1,27 @@
+{
+  "source_hash": {
+    "equal": true,
+    "actual": "sha256:88fbe3034a7581d69566eb5e2613502c9c4f38885df3cb34701e640d2e56a0ce",
+    "expected": "sha256:88fbe3034a7581d69566eb5e2613502c9c4f38885df3cb34701e640d2e56a0ce",
+    "mismatch_field_paths": []
+  },
+  "decision_model_hash": {
+    "equal": true,
+    "actual": "sha256:5d18e565410faad845b03fe3032d851da7548cad742e4c3e52154736affadbb5",
+    "expected": "sha256:5d18e565410faad845b03fe3032d851da7548cad742e4c3e52154736affadbb5",
+    "mismatch_field_paths": []
+  },
+  "initial_observation_hash": {
+    "equal": true,
+    "actual": "sha256:dcfbe9519550927eff29ab54a28c3e0547a143f140a38dff5a14adc53ee6a9fd",
+    "expected": "sha256:dcfbe9519550927eff29ab54a28c3e0547a143f140a38dff5a14adc53ee6a9fd",
+    "mismatch_field_paths": []
+  },
+  "canonical_json_inventory": {
+    "equal": true,
+    "actual_canonical_sha256": "2d1c4b94d5d12c8ea3b58331c6fca4a05c0a223590755d94468c3d7dc913204a",
+    "expected_canonical_sha256": "2d1c4b94d5d12c8ea3b58331c6fca4a05c0a223590755d94468c3d7dc913204a",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "four-train-construction/parent-receipt.json": {
+    "bytes": 1285,
+    "sha256": "3ed48b7838ca97e79c2265a45a94017457f4101ad694cdf15020aa0148a8c725",
+    "source": "build/remind-planning-qc-v1/cohort-construction-run-v1.supervision/receipt.json"
+  },
+  "four-train-construction/release.json": {
+    "bytes": 1119,
+    "sha256": "8d9d4544cda07f35cb2f5f422b33422665e5bd49b9ec2fded6c5aad0e61b5a37",
+    "source": "build/remind-planning-qc-v1/cohort-construction-v1/declaration.json"
+  },
+  "four-train-construction/result.json": {
+    "bytes": 25164,
+    "sha256": "1787d7e9d6315fb959f8577b72ec71abcf76458a193c68a776bc6e4791da11fa",
+    "source": "build/remind-planning-qc-v1/cohort-construction-run-v1/result.json"
+  },
+  "four-train-construction/source-index.json": {
+    "bytes": 14409,
+    "sha256": "9395572f672e3be9b96440cef7fac2309cb34c4838c947d92dbf98d1665100cc",
+    "source": "build/remind-planning-qc-v1/cohort-construction-v1/source-index.json"
+  },
+  "four-train-construction/source/construction_worker.py": {
+    "bytes": 12796,
+    "sha256": "995cddce215ad065b4af6e32ba281269d56b2df4e4c059428174d080e089645b",
+    "source": "build/remind-planning-qc-v1/cohort-construction-v1/construction_worker.py"
+  },
+  "four-train-construction/source/run_owned.py": {
+    "bytes": 8118,
+    "sha256": "604c2e56ad06e76015c82b36c35e6c41c21948628547d6692202ebb0810aab80",
+    "source": "build/remind-planning-qc-v1/cohort-construction-v1/run_owned.py"
+  },
+  "intermediate-opening/input-index.json": {
+    "bytes": 1510,
+    "sha256": "f8cb6051cc1ddb380a9bec7a6e343ff1e56d270f544f22109a760a46321d8f9f",
+    "source": "build/cross-patient-planning-v1/intermediate-opening-v1/runtime-input-index.json"
+  },
+  "intermediate-opening/parent-receipt.json": {
+    "bytes": 886,
+    "sha256": "de312cf40a866bd9941767c519c8a7cc8a399de51ad7cad458c530b9606c0eb9",
+    "source": "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1.supervision/receipt.json"
+  },
+  "intermediate-opening/release.json": {
+    "bytes": 1759,
+    "sha256": "7f04a6d31b164df9c81116fcadb554c09ac413643371aa44a1cc2a0f0d0cd059",
+    "source": "build/cross-patient-planning-v1/intermediate-opening-v1/run-release.json"
+  },
+  "intermediate-opening/result.json": {
+    "bytes": 3793,
+    "sha256": "90f37a4a1864c738e9b17d65a9f73cd5418b1da401d27ec4628b9004266bfe2c",
+    "source": "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1/result.json"
+  },
+  "intermediate-opening/saved-result-summary.json": {
+    "bytes": 5130,
+    "sha256": "c70cfa90d3f0d9573fe25cd44b77c1f934ab2911b3671a78e3714cbacdce672c",
+    "source": "build/cross-patient-planning-v1/intermediate-opening-v1/saved-result-summary.json"
+  },
+  "intermediate-opening/source-index.json": {
+    "bytes": 4256,
+    "sha256": "77e4755b52c8a8a86be1ad3f9b2aa4cc7d3e2ff2f76dfd50a8b80477702d8d9b",
+    "source": "build/cross-patient-planning-v1/intermediate-opening-v1/runtime-source-index.json"
+  },
+  "intermediate-opening/source/run_search_owned.py": {
+    "bytes": 7286,
+    "sha256": "c605a97b0dad64a056284025ab7e03346f592fa3eafd3309a48f4b2117a47bb3",
+    "source": "build/cross-patient-planning-v1/intermediate-opening-v1/run_search_owned.py"
+  },
+  "intermediate-opening/source/search_worker.py": {
+    "bytes": 13783,
+    "sha256": "13f800e0b6d0b08629c1cdd6a3c7807f6769f4bbc5d0f5ee9357df8785016f47",
+    "source": "build/cross-patient-planning-v1/intermediate-opening-v1/search_worker.py"
+  },
+  "two-lane-v1-failed/input-index.json": {
+    "bytes": 2224,
+    "sha256": "1bd017ddf1a53b494e8791a3b74be8165d74c82511ec8a36196c440bb233380f",
+    "source": "build/cross-patient-planning-v1/two-lane-retention-v1/input-index.json"
+  },
+  "two-lane-v1-failed/later-generated-serialization-control.json": {
+    "bytes": 436,
+    "sha256": "628852699dcfdb486ea6a0d5688d53eff46b29bc3e337e05f5dfbe4fa423a1aa",
+    "source": "build/cross-patient-planning-v1/two-lane-retention-v2/serialization-control.json"
+  },
+  "two-lane-v1-failed/parent-receipt.json": {
+    "bytes": 883,
+    "sha256": "5770e42f67805d67dfdb20d2149ac31b96e39cac53b456ed6b723f7bb83ee9cc",
+    "source": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v1.supervision/receipt.json"
+  },
+  "two-lane-v1-failed/release.json": {
+    "bytes": 1853,
+    "sha256": "61648570d29c16e5625796ba5131e1292da9ff4ef13e20248ae935f34a5f394f",
+    "source": "build/cross-patient-planning-v1/two-lane-retention-v1/release.json"
+  },
+  "two-lane-v1-failed/result.json": {
+    "bytes": 2275,
+    "sha256": "a5bce1c350b6c3c0f546ba31afe08b508ff8741d66dad317ee0d36590fd73e5e",
+    "source": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v1/result.json"
+  },
+  "two-lane-v1-failed/source-index.json": {
+    "bytes": 4253,
+    "sha256": "6313b8a78a801b6ef067d6784d457c291e27d504f4c573943cf9587f3cd69684",
+    "source": "build/cross-patient-planning-v1/two-lane-retention-v1/source-index.json"
+  },
+  "two-lane-v1-failed/source/run_owned.py": {
+    "bytes": 7413,
+    "sha256": "638ecc8a473c0fe81b153834ba277c48f41cbebba4de4e38ac62b4564dbf060e",
+    "source": "build/cross-patient-planning-v1/two-lane-retention-v1/run_owned.py"
+  },
+  "two-lane-v1-failed/source/search_worker.py": {
+    "bytes": 14960,
+    "sha256": "491806c56d5368cce67273d0af254b9e4c87e2db22b6a1a66aeacd33897379c8",
+    "source": "build/cross-patient-planning-v1/two-lane-retention-v1/search_worker.py"
+  }
+}

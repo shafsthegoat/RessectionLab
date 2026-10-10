@@ -1,0 +1,214 @@
+{
+  "scope": "arithmetic over saved public constructor metadata only; no arrays or engine calls",
+  "rows": [
+    {
+      "patient_id": "ReMIND-008",
+      "role": "TRAIN",
+      "emitted": 68,
+      "legal": 20,
+      "endpoint_centers_inside_crop": 56,
+      "ray_sample_coverage_counts": {
+        "none": 0,
+        "partial": 12,
+        "full": 56
+      },
+      "public_target_cells": 18509,
+      "public_target_outside_estimated_support_cells": 6394,
+      "target_depth_range_mm": [
+        3.8085001043957445,
+        39.35450067191445
+      ],
+      "accepted_tip_upper_depth_mm": 2.4617000740071124,
+      "target_centers_beyond_accepted_depth": 18509,
+      "target_centers_outside_emitted_aabb": 14305,
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "source_axis0_spacing_mm": 0.5078000077796097,
+      "actor_axis0_center_span_mm": 31.991400490115407,
+      "initial_families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 20,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 20,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 24,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24
+          }
+        },
+        "distal_nominal": {
+          "emitted": 18,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+          }
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-010",
+      "role": "TRAIN",
+      "emitted": 62,
+      "legal": 11,
+      "endpoint_centers_inside_crop": 26,
+      "ray_sample_coverage_counts": {
+        "none": 0,
+        "partial": 36,
+        "full": 26
+      },
+      "public_target_cells": 15209,
+      "public_target_outside_estimated_support_cells": 6988,
+      "target_depth_range_mm": [
+        47.58317910635651,
+        71.02316881392132
+      ],
+      "accepted_tip_upper_depth_mm": 2.403199691226958,
+      "target_centers_beyond_accepted_depth": 15209,
+      "target_centers_outside_emitted_aabb": 10978,
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "source_axis0_spacing_mm": 0.46879979415129563,
+      "actor_axis0_center_span_mm": 29.534387031531626,
+      "initial_families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 11,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 11,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 18,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+          }
+        },
+        "distal_nominal": {
+          "emitted": 18,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+          }
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-020",
+      "role": "TRAIN",
+      "emitted": 60,
+      "legal": 14,
+      "endpoint_centers_inside_crop": 60,
+      "ray_sample_coverage_counts": {
+        "none": 0,
+        "partial": 0,
+        "full": 60
+      },
+      "public_target_cells": 49821,
+      "public_target_outside_estimated_support_cells": 40373,
+      "target_depth_range_mm": [
+        10.253906777413016,
+        53.22265898752482
+      ],
+      "accepted_tip_upper_depth_mm": 2.4648438253447216,
+      "target_centers_beyond_accepted_depth": 49821,
+      "target_centers_outside_emitted_aabb": 49163,
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "source_axis0_spacing_mm": 0.9765625502298129,
+      "actor_axis0_center_span_mm": 61.52344066447821,
+      "initial_families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 14,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 14,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 12
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 20,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20
+          }
+        },
+        "distal_nominal": {
+          "emitted": 14,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 14
+          }
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-025",
+      "role": "TRAIN",
+      "emitted": 74,
+      "legal": 10,
+      "endpoint_centers_inside_crop": 74,
+      "ray_sample_coverage_counts": {
+        "none": 0,
+        "partial": 0,
+        "full": 74
+      },
+      "public_target_cells": 81762,
+      "public_target_outside_estimated_support_cells": 34358,
+      "target_depth_range_mm": [
+        -1.464843856676984,
+        54.19922269704742
+      ],
+      "accepted_tip_upper_depth_mm": 4.417968998912881,
+      "target_centers_beyond_accepted_depth": 80103,
+      "target_centers_outside_emitted_aabb": 77398,
+      "actor_crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "source_axis0_spacing_mm": 0.9765625711179717,
+      "actor_axis0_center_span_mm": 61.52344198043222,
+      "initial_families": {
+        "exposed_opening": {
+          "emitted": 26,
+          "accepted": 10,
+          "reasons": {
+            "NATIVE_CONNECTED_STROKE": 10,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16
+          }
+        },
+        "proximal_nominal": {
+          "emitted": 22,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 22
+          }
+        },
+        "distal_nominal": {
+          "emitted": 26,
+          "accepted": 0,
+          "reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+          }
+        }
+      }
+    }
+  ],
+  "limitation": "No exact target-in-actor-crop fraction was saved. Candidate endpoint/ray coverage and bounding envelopes are not target visibility, path reachability or safety."
+}

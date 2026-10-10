@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "control_groups": 5,
+  "scope": "generated native inventory JSON tuple/list roundtrip plus exact value/key/order/type negatives; no patient/model/search/optimizer",
+  "plain_python_inventory_equality": false,
+  "canonical_inventory_equality": true,
+  "first_tuple_anchor_path": "inventory.ledger[78].opening_anchor_voxel",
+  "elapsed_seconds": 0.03802883392199874,
+  "peak_rss_bytes": 66633728,
+  "threads": 1
+}

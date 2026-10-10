@@ -1,0 +1,100 @@
+ReMIND public planning: intermediate-opening negative, four TRAIN constructors,
+and the first two-lane attempt (saved evidence only)
+
+The intermediate-opening change increased initial legal choices from 20 to 29,
+but the six-step width-two beam still returned STOP. All four frozen TRAIN cases
+constructed successfully; their initial coverage exposes access, observation and
+supplied-support limitations. The first two-lane attempt failed its equality
+check before search. These are separate results, with each cost retained.
+
+INTERMEDIATE OPENING
+Same ReMIND-008 public arrays, access, tools, reward and horizon; the only intended
+candidate change was a requested 1 mm intermediate opening, represented by two
+native cells (actual 1.0156000156 mm). Original candidates remained first and
+identical. Nine added candidates were legal; their entry-to-tip depths were
+1.2695-1.7773 mm. SEARCH made 271 transitions versus the earlier 211, completed
+six layers, and used 1,012 native preview entries including reconstruction and
+inventory. No policy, checkpoint, optimizer, replay or private evaluation ran.
+
+The final incumbent remained zero-reward STOP. The saved retained-prefix progress
+scalars exactly match the preceding search: zero target removal throughout,
+maximum recorded insertion distance no more than 0.7617000720 mm, and final
+outside-supplied-target removal 3.2232606246 mm3 for each retained prefix. This
+supports a narrow diagnosis that larger legal openings were pruned by the cheap
+true-return beam. It does not establish that any discarded branch reaches target,
+is beneficial, or is safe. Search was bounded, not optimal. The reported beam
+runtime was 33.0397 s; worker 38.1141 s; supervised parent 38.6001 s.
+
+FOUR FROZEN TRAIN CASES
+Order and roles remain 008,010,020,025, all TRAIN. Default proposal configuration;
+264 initial preview entries, zero transitions/search/model/optimizer calls. No
+case was replaced. Constructor success is software/initial-inventory success,
+not a useful learning-task or anatomy/clinical admission claim.
+
+Case  Emitted/legal  Endpoints in crop  Target depth mm  Accepted tip upper mm
+008       68/20          56/68            3.81..39.35          2.462
+010       62/11          26/62           47.58..71.02          2.403
+020       60/14          60/60           10.25..53.22          2.465
+025       74/10          74/74           -1.46..54.20          4.418
+
+All accepted candidates are exposed openings. Every proximal/distal supplied-
+target proposal was rejected by the unchanged remaining-tissue shaft check.
+All target centers exceed the initial accepted axial bound in 008/010/020;
+80,103 of 81,762 do in 025. Bounds describe the current inventory only, not future
+reachability. Ray samples fully/partly inside the actor crop are respectively
+56/12,26/36,60/0,74/0. The search uses full public geometry while actor imagery is
+64 cubed, so their effective inputs are unequal despite common permitted sources.
+
+010's source-axis spacing is 0.4687997942 mm: the 64-cell crop has only 29.5343870
+mm between extreme cell centers along that axis, while its target starts 47.58 mm
+from fixed access. This is a representation/task mismatch, not an optimizer
+failure. Exact target-in-actor-crop fractions were not saved; endpoint/ray coverage
+must not be called target visibility. Supplied-target cells outside estimated
+support are 6,394/18,509, 6,988/15,209, 40,373/49,821 and 34,358/81,762 respectively.
+These are disagreements with automatic support, not proof of absent or normal
+anatomy. The public whole-tumor annotation is a supplied region, not a resection
+prescription; support zeros are simulation assumptions, not certified empty space.
+No private ventricular reference or SELECT/held-out data informed these summaries.
+
+FAILED TWO-LANE V1
+Status failed_or_unresolved; ValueError: "Retention contrast changed the exact
+intermediate-opening task or inventory". It stopped after 92 previews (29 feasible,
+63 shaft rejections), before any search, replay, forward or update. Worker 4.8484 s;
+parent 5.2403 s. This supplies no two-lane scientific outcome and is not STOP.
+The initial diagnosis is a tuple/list mismatch after inventory JSON serialization.
+A later generated control confirms that equality defect and strict canonical-JSON
+repair, but v1 saved neither the compared live inventory nor separate per-field
+checks. Its exact failed comparison remains incompletely localized in the actual
+run. Preserve v1 unchanged; any repaired actual attempt is separate evidence.
+
+COSTS AND SCOPE
+                         Parent seconds   Sampled owned peak bytes   Preview entries
+Intermediate opening       38.600145             2,039,021,568              1,012
+Four TRAIN constructors      7.085415             1,382,563,840                264
+Two-lane v1 failure          5.240350             1,680,326,656                 92
+Together                    50.925910             (do not add peaks)        1,368
+Each parent confirms child termination, no remaining owned PIDs and no cleanup
+errors. All used one-thread, one-attempt, 120 s/3 GiB outer caps. RSS is sampled;
+transient peaks can be missed. Earlier QC/conversion, baseline planning/training,
+replay continuation and private evaluations remain additional historical costs.
+No new population training, generalization, clinical efficacy or safety evidence
+is produced. Four-case learning waits for useful public task/observation coverage;
+failures remain in the denominator. The approved two-lane 008 contrast is a
+separate retention-only diagnosis, not a remedy established by this package.
+
+REPRODUCTION AND CONTENTS
+Exact result/parent receipts and original worker+supervisor bytes are included
+per run. source-index.json pins their runtime dependencies; release.json binds
+original paths, HEAD, limits and output. Restore those source paths/dependencies
+and authorized local public inputs to reproduce. Scripts intentionally refuse
+changed pins, completed output directories and unreleased conditions. Their
+historical releases are evidence, not authorization for a new patient run.
+
+External-records.json hashes original inventories, per-case coverage/context/
+derivation and search-prefix JSON, avoiding large duplicated records. They remain
+at the recorded local paths. No patient arrays, DICOM, weights, bulk replay or
+private references are included. copied-originals.json maps every exact copied
+file to its source. saved-arithmetic-checks.json records receipt/result/source
+hash checks and saved-count identities only. These checks used no simulator or
+new patient/model access. The original primary 008 SEARCH/IL/RL negative and its
+one-update-per-method limitation remain in the preceding committed evidence.

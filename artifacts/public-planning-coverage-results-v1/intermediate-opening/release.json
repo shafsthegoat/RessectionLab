@@ -1,0 +1,39 @@
+{
+  "admission_forward_ceiling": 1,
+  "diagnostic_scope": "missing action coverage contrast only; no success assumed; not a learned comparison or cohort benchmark",
+  "endpoint_rule": "numpy_rint nearest source-axis voxelcount, minimum1; actual physicaladvance reported, may exceed requested1mm",
+  "expected_head": "57720a49054b3c978454aeebdfcaedb0ee557ebb",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/intermediate-opening-v1/runtime-input-index.json",
+    "sha256": "f8cb6051cc1ddb380a9bec7a6e343ff1e56d270f544f22109a760a46321d8f9f"
+  },
+  "limits": {
+    "beam_width": 2,
+    "horizon": 6,
+    "memory_bytes": 3221225472,
+    "native_previews": 2000,
+    "optimizer_updates": 0,
+    "parent_seconds": 120,
+    "policy_forwards": 0,
+    "search_seconds": 60,
+    "search_transition_calls": 858,
+    "threads": 1,
+    "worker_seconds": 110
+  },
+  "original_status_preserved": "failed_or_unresolved",
+  "output": "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1",
+  "owned_execution_forward_limit": 0,
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "requested_opening_lookahead_mm": 1.0,
+  "scope": "only added intermediate source-cell endpoints; same underlying public world/reward/tools/horizon/beam; no model/update/replay/private reference",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/intermediate-opening-v1/runtime-source-index.json",
+    "sha256": "77e4755b52c8a8a86be1ad3f9b2aa4cc7d3e2ff2f76dfd50a8b80477702d8d9b"
+  },
+  "status": "released_one_attempt",
+  "version": "intermediate-opening-ReMIND-008-search-release-v1"
+}

@@ -1,0 +1,132 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "baseline_transitions": 211,
+  "initial_inventory_by_family": {
+    "distal_nominal": {
+      "emitted": 18,
+      "legal": 0,
+      "legal_entry_to_tip_depth_mm": null
+    },
+    "exposed_opening": {
+      "emitted": 26,
+      "legal": 20,
+      "legal_entry_to_tip_depth_mm": [
+        0.25390006424414263,
+        0.761700074007109
+      ]
+    },
+    "intermediate_opening": {
+      "emitted": 24,
+      "legal": 9,
+      "legal_entry_to_tip_depth_mm": [
+        1.2695000798033675,
+        1.7773000875538547
+      ]
+    },
+    "proximal_nominal": {
+      "emitted": 24,
+      "legal": 0,
+      "legal_entry_to_tip_depth_mm": null
+    }
+  },
+  "interpretation": "Deeper legal endpoints exist but unchanged true-return beam retention keeps cheaper shallow openings; useful target-reaching plan not demonstrated.",
+  "new_transitions": 271,
+  "retained_family_inference": "No intermediate endpoint can occur in the retained paths because minimumpositive native-axis depth plus fixedadvance exceeds allretained entry-to-tip maxima. Nominaltarget endpoints remain deeper. This is geometry-bound inference; per-node family labels were not recorded.",
+  "retained_progress": [
+    [
+      {
+        "estimated_incremental_return": -0.13365214011668475,
+        "max_insertion_distance_mm": 0.2539000642441427,
+        "outside_supplied_target_removed_mm3": 0.5157216999409824,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "estimated_incremental_return": -0.15943822511379213,
+        "max_insertion_distance_mm": 0.2539000642732536,
+        "outside_supplied_target_removed_mm3": 0.644652124926228,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    [
+      {
+        "estimated_incremental_return": -0.24253379525087337,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 0.9025129748967191,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "estimated_incremental_return": -0.2673042802334277,
+        "max_insertion_distance_mm": 0.2539000642732536,
+        "outside_supplied_target_removed_mm3": 1.0314433998819648,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    [
+      {
+        "estimated_incremental_return": -0.37618593536761635,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 1.4182346748377015,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "estimated_incremental_return": -0.37618593536761635,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 1.4182346748377015,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    [
+      {
+        "estimated_incremental_return": -0.5356241604833627,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 2.0628867997639295,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "estimated_incremental_return": -0.5356241604833627,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 2.0628867997639295,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    [
+      {
+        "estimated_incremental_return": -0.6692763006021182,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 2.578608499704912,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "estimated_incremental_return": -0.6692763006021182,
+        "max_insertion_distance_mm": 0.7617000715206407,
+        "outside_supplied_target_removed_mm3": 2.578608499704912,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    [
+      {
+        "estimated_incremental_return": -0.8297301257313531,
+        "max_insertion_distance_mm": 0.7617000719946371,
+        "outside_supplied_target_removed_mm3": 3.2232606246311404,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "estimated_incremental_return": -0.8297301257313531,
+        "max_insertion_distance_mm": 0.7617000719946371,
+        "outside_supplied_target_removed_mm3": 3.2232606246311404,
+        "target_removed_mm3": 0.0
+      }
+    ]
+  ],
+  "retained_progress_scalars_exactly_equal_baseline": true,
+  "scope": "saved-only intermediate endpoint result summary; no runtime replay",
+  "source_files": {
+    "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1.supervision/receipt.json": "de312cf40a866bd9941767c519c8a7cc8a399de51ad7cad458c530b9606c0eb9",
+    "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1/initial-inventory.json": "54005ebf05a4adbc7aaafb066e97f7cf8303fd6e9680025e8119eed9da2433bc",
+    "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1/result.json": "90f37a4a1864c738e9b17d65a9f73cd5418b1da401d27ec4628b9004266bfe2c",
+    "build/cross-patient-planning-v1/ReMIND-008-intermediate-opening-search-v1/search-prefixes.json": "eed901af0164f90d3111e84497a89e47ddf75e87f77f29d105cf6debdc85a1cf",
+    "build/cross-patient-planning-v1/ReMIND-008-search-prefix-diagnostic-v1/search-prefixes.json": "432427d5df78cd41f4175de60ed17c85116867c8c9fa52ebdd8159b8a85ce946"
+  }
+}
