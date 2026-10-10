@@ -24,7 +24,8 @@ from .core import array_digest, immutable_array, semantic_digest, freeze_json, t
 from .geometry import AccessWindow, ToolGeometry
 from .native_resection import NativeResectionConfig, NativeResectionEngine
 from .native_proposals import (NominalCavityProposalConfig, PreparedNominalCavityProposer,
-    NOMINAL_CAVITY_PROPOSAL_VERSION, NOMINAL_CAVITY_FAMILIES)
+    NOMINAL_CAVITY_PROPOSAL_VERSION, NOMINAL_CAVITY_FAMILIES,
+    TARGET_WITHIN_SUPPORT, SUPPLIED_GOAL_REGION)
 from .simulation import InvalidActionError, RewardSpec
 from .spatial_observations import (ObservedChannel, ObservedProcedureState,
     SpatialAction, SpatialInputs, build_spatial_observation)
@@ -195,8 +196,10 @@ class NativeSpatialCase:
     native_grid_reconciliation: str = "none"
     proposal_mode: str = "fixed_lattice"
     proposal_config: NominalCavityProposalConfig | None = None
+    target_semantics: str = TARGET_WITHIN_SUPPORT
     _nominal_proposer: PreparedNominalCavityProposer | None = field(init=False, repr=False, default=None)
     _normalization_record: Mapping = field(init=False, repr=False)
+    _supplied_goal_extent: Mapping = field(init=False, repr=False, default_factory=dict)
     _native_affine_ras_mm: np.ndarray = field(init=False, repr=False)
     _grid_record: Mapping = field(init=False, repr=False)
     _native_config: NativeResectionConfig = field(init=False, repr=False)
@@ -223,7 +226,13 @@ class NativeSpatialCase:
         nominal = None if self.nominal_target is None else _fraction(self.nominal_target, image.shape, "nominal_target")
         if not support.any():
             raise ValueError("Explicit tissue support is essential; full-head signal is not a brain envelope")
-        if nominal is not None and np.any((nominal > 0) & ~support):
+        if self.target_semantics not in {TARGET_WITHIN_SUPPORT, SUPPLIED_GOAL_REGION}:
+            raise ValueError("Unknown explicit target semantics")
+        if self.target_semantics == SUPPLIED_GOAL_REGION:
+            if (self.track != "annotation_assisted" or self.target_source_kind != "supplied_annotation"
+                    or nominal is None or not np.any(nominal)):
+                raise ValueError("Supplied goal region requires explicit annotation-assisted public target")
+        elif nominal is not None and np.any((nominal > 0) & ~support):
             raise ValueError("Permitted target estimates conflict with supplied tissue support")
         if self.proposal_mode == "nominal_cavity_v1":
             if nominal is None:
@@ -282,6 +291,21 @@ class NativeSpatialCase:
                 "reference_labels_used": False, "crop_used_for_statistics": False,
                 "raw_source_preserved": True}
         object.__setattr__(self, "_normalization_record", freeze_json(normalization))
+        if self.target_semantics == SUPPLIED_GOAL_REGION:
+            voxel_mm3 = abs(float(np.linalg.det(native_affine[:3, :3])))
+            full = float(nominal.sum(dtype=np.float64)) * voxel_mm3
+            unsupported = float(nominal[~support].sum(dtype=np.float64)) * voxel_mm3
+            object.__setattr__(self, "_supplied_goal_extent", freeze_json({
+                "condition": "PARTIAL_TARGET_PROGRESS", "target_semantics": self.target_semantics,
+                "full_region_positive_voxels": int(np.count_nonzero(nominal)),
+                "unsupported_region_positive_voxels": int(np.count_nonzero((nominal > 0) & ~support)),
+                "full_region_membership_mm3": full,
+                "unsupported_region_membership_mm3": unsupported,
+                "supported_region_membership_mm3": full-unsupported,
+                "fraction_denominator": "entire_unchanged_supplied_region",
+                "occupancy_modified": False, "target_modified": False,
+                "unsupported_region_removable": False,
+                "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth"}))
         for name, value in (("structural_intensity", image), ("observed_support", support),
                             ("reference_target", target), ("affine_ras_mm", immutable_array(affine, np.float64)),
                             ("tools", tools), ("nominal_target", nominal), ("crop_shape", crop_shape)):
@@ -333,6 +357,7 @@ class NativeSpatialCase:
         source_hash = semantic_digest({"version": NATIVE_SPATIAL_VERSION,
             "scan": array_digest(image), "support": array_digest(support), "affine": array_digest(self.affine_ras_mm),
             "nominal_target": None if nominal is None else array_digest(nominal),
+            **({"target_semantics": self.target_semantics} if self.target_semantics != TARGET_WITHIN_SUPPORT else {}),
             "access": _access_record(self.access), "tools": [asdict(tool) for tool in tools],
             "track": self.track, "crop_origin": self._crop_origin, "crop_shape": self._crop_shape,
             "proposal_scope": scope, "candidate_voxels": voxels,
@@ -357,9 +382,11 @@ class NativeSpatialCase:
         if self.proposal_mode == "nominal_cavity_v1":
             provenance = {"source_hash": self._source_hash, "nominal_target_hash": array_digest(nominal),
                 "source_kind": self.target_source_kind, "derivation": self.target_derivation,
-                "source_image_hash": array_digest(image), "original_frame_hash": array_digest(self.affine_ras_mm)}
+                "source_image_hash": array_digest(image), "original_frame_hash": array_digest(self.affine_ras_mm),
+                **({"target_semantics": self.target_semantics} if self.target_semantics != TARGET_WITHIN_SUPPORT else {})}
             proposer = PreparedNominalCavityProposer(config, nominal, nominal_provenance=provenance,
-                config=self.proposal_config, index_affine=self.affine_ras_mm, index_frame_record=self._grid_record)
+                config=self.proposal_config, index_affine=self.affine_ras_mm, index_frame_record=self._grid_record,
+                target_semantics=self.target_semantics)
             object.__setattr__(self, "_nominal_proposer", proposer)
             object.__setattr__(self, "_identity", self._identity_record())
         # Enforce the same observed-frame contract as the policy boundary now.
@@ -381,7 +408,8 @@ class NativeSpatialCase:
         return (arrays, None if self.nominal_target is None else _array_identity(self.nominal_target),
             semantic_digest({"access": _access_record(self.access), "tools": [asdict(t) for t in self.tools]}),
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
-            self.target_derivation, self.crop_shape, self._crop_origin, self._crop_shape,
+            self.target_derivation, self.target_semantics, semantic_digest(self._supplied_goal_extent),
+            self.crop_shape, self._crop_origin, self._crop_shape,
             self._candidate_voxels, self._candidate_scope, semantic_digest(self.support_provenance),
             self.intensity_normalization, semantic_digest(self._normalization_record),
             self.native_grid_reconciliation, semantic_digest(self._grid_record),
@@ -877,7 +905,14 @@ class NativeSpatialTask:
         removed, contact = self._engine.removed_mask, self._engine.contact_mask
         removed_volume = int(removed.sum()) * voxel
         target_volume = float(self.case.reference_target[removed].sum(dtype=np.float64)) * voxel
-        return {"task_version": NATIVE_SPATIAL_VERSION, "source_hash": self._source_hash,
+        supplied = {}
+        if self.case.target_semantics == SUPPLIED_GOAL_REGION:
+            goal_removed = float(self.case.nominal_target[removed].sum(dtype=np.float64)) * voxel
+            extent = thaw_json(self.case._supplied_goal_extent)
+            supplied = {"supplied_goal_region": {**extent,
+                "simulated_supported_goal_removed_mm3": goal_removed,
+                "fraction_of_full_region_removed": goal_removed / extent["full_region_membership_mm3"]}}
+        return {"task_version": NATIVE_SPATIAL_VERSION, "source_hash": self._source_hash, **supplied,
             "reference_hash": self._reference_hash, "decision_model_hash": self.decision_model_hash,
             "steps": self._steps, "terminated": self._terminated, "total_reward": self._total_reward,
             "target_removed_mm3": target_volume,

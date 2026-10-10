@@ -1,0 +1,67 @@
+Supplied goal region outside original support — scoped source GO
+
+Frozen promotion index:
+build/cross-patient-planning-v1/supplied-region-v1/promotion-index.json
+SHA256 47772680f54672da95b3ff449f740b9bc7a5e2d0f97be2e3a02ed8d5b5ee71cf
+Patch SHA256 cf5dbd31b0f7c676992691a8e45790db0dba6f6358cc2575de0aafeb3aa1b83f
+NativeSpatialCase source: 973b60e6519f49734d3d71e30562ea03b0fedded3051b0ee2669df3bc865a5c0
+native_proposals source: bb2c1e133d5fbf0d92107351a55fb6adf2c55b9a8cc38180a66c01e5321b33d1
+Generated test source: 1bd3cf334ceebcd3c82271fccf7e9a0b2e737dfc5789cb3169c3582ed0fa455d
+
+The explicit supplied_goal_region_may_exceed_estimated_support opt-in preserves
+the original observed-support and supplied-target arrays. It neither unions the
+target into support nor clips the target to support. Native configuration still
+receives the original support and zero engine target labels. Native removal
+still filters touched cells through that support and current remaining_mask;
+commit still requires every removed cell to have been remaining tissue. Reward
+still sums target membership only at the committed removed indices. This change
+does not let an unsupported positive target cell become removed or earn reward.
+
+The nominal/cavity proposer continues to start from engine.remaining_mask before
+examining nominal target membership. Thus proximal/distal nominal endpoints are
+remaining original-support cells. Unsupported-only target columns emit no nominal
+ray; exposed-support opening proposals remain possible and carry their ordinary
+costs. No proposal generation or physical geometry equations are changed.
+
+The new conditional metrics retain full and unsupported positive counts and
+membership volumes. Progress is supported removed nominal membership divided by
+the entire unchanged supplied region, including unsupported positives. The full
+sum is strictly positive under opt-in admission, so the denominator is defined.
+Existing independent episode accounting likewise uses the full reference target
+sum. The actual public patient factory must retain its existing nominal/reference
+equality condition; the generic NativeSpatialCase still separately represents
+nominal and reference fields for other experiments.
+
+Default compatibility is preserved at source level: target_semantics is appended
+after all prior dataclass init fields; the default still refuses nominal positives
+outside support. The new source-hash/provenance key is included only for the
+nondefault mode, and default metrics gain no new supplied-region object. Existing
+source/reference/decision/proposal identities therefore retain their original
+recipes under default construction. Explicit opt-in changes identity even when
+the target happens to fit support. The internal frozen-object identity now also
+guards the mode and extent record. No historical identity runtime was rerun here.
+
+Opt-in requires annotation_assisted mode, an explicit nonempty nominal target and
+supplied_annotation target provenance. Direct proposer use requires the same
+semantics value in its supplied annotation provenance. Unknown mode values and
+derived/synthetic target substitutions are refused by the new branch. No role,
+QC, actual source linkage, anatomical coverage or model admission is granted.
+
+Interpretation remains PARTIAL_TARGET_PROGRESS. The result does not establish
+that the original support is anatomically complete, that unsupported target cells
+are safely accessible, or that a full clinical resection occurred. The added
+outside-goal wording correctly distinguishes outside the supplied task region
+from normal-anatomy truth. Existing generic normal_removed_mm3 field names are
+retained for compatibility; their conditional task interpretation must remain
+visible in result summaries. Private ventricular labels are not introduced into
+the actor, support, objective or proposal machinery by this patch.
+
+The six staged generated controls were inspected and cover strict/default
+identity, retained arrays and full denominator, changed opt-in identities,
+support-only native removal/reward, unsupported-only zero target reward/no nominal
+ray, and provenance/mode refusals. Root will run these after promotion. This
+review deliberately ran no duplicate runtime, patient/annotation read, model,
+native solver, search or training. Root-reported patient QC counts are motivation,
+not independently remeasured in this source review. No additional source fix is
+needed for the frozen candidate; actual preflight still needs root's source/QC
+and execution authorization.

@@ -1,0 +1,27 @@
+{
+  "condition": "unchanged_support_unchanged_full_goal_region_partial_supported_progress_no_union_no_clipping",
+  "files": [
+    {
+      "destination": "src/resectionlab/native_spatial_task.py",
+      "previous_sha256": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+      "source": "build/cross-patient-planning-v1/supplied-region-v1/stage/resectionlab/native_spatial_task.py",
+      "source_sha256": "973b60e6519f49734d3d71e30562ea03b0fedded3051b0ee2669df3bc865a5c0"
+    },
+    {
+      "destination": "src/resectionlab/native_proposals.py",
+      "previous_sha256": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+      "source": "build/cross-patient-planning-v1/supplied-region-v1/stage/resectionlab/native_proposals.py",
+      "source_sha256": "bb2c1e133d5fbf0d92107351a55fb6adf2c55b9a8cc38180a66c01e5321b33d1"
+    },
+    {
+      "destination": "tests/test_supplied_goal_region.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/supplied-region-v1/stage/tests/test_supplied_goal_region.py",
+      "source_sha256": "1bd3cf334ceebcd3c82271fccf7e9a0b2e737dfc5789cb3169c3582ed0fa455d"
+    }
+  ],
+  "patch_sha256": "cf5dbd31b0f7c676992691a8e45790db0dba6f6358cc2575de0aafeb3aa1b83f",
+  "status": "source_only_tests_pending",
+  "validation": "3AST parses only; six generated controls unexecuted; no model/native/patient work",
+  "version": "supplied-goal-region-partial-progress-v1"
+}

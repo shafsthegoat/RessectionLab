@@ -21,6 +21,8 @@ from .core import array_digest, immutable_array, freeze_json, thaw_json, semanti
 
 
 AXIS_PROPOSAL_VERSION = "experimental-residual-axis-columns-v1"
+TARGET_WITHIN_SUPPORT = "target_within_estimated_support"
+SUPPLIED_GOAL_REGION = "supplied_goal_region_may_exceed_estimated_support"
 DEFAULT_COLUMN_OFFSETS = ((0, 0), (-2, 0), (2, 0), (0, -2), (0, 2),
                           (-2, -2), (-2, 2), (2, -2), (2, 2),
                           (-3, 0), (3, 0), (0, -3), (0, 3))
@@ -429,7 +431,8 @@ class PreparedNominalCavityProposer:
     """
     def __init__(self, native_config: NativeResectionConfig, nominal_target: np.ndarray, *,
                  nominal_provenance: Mapping, config: NominalCavityProposalConfig | None = None,
-                 index_affine=None, index_frame_record: Mapping | None = None):
+                 index_affine=None, index_frame_record: Mapping | None = None,
+                 target_semantics: str = TARGET_WITHIN_SUPPORT):
         if not isinstance(native_config, NativeResectionConfig):
             raise TypeError("A validated native configuration is required")
         if NATIVE_RESECTION_VERSION != _HISTORY_ENGINE_VERSION:
@@ -438,10 +441,13 @@ class PreparedNominalCavityProposer:
             raise ValueError("Native source changed before proposal preparation")
         if np.any(native_config.target_labels):
             raise ValueError("Nominal/cavity proposals require zero engine target labels")
+        if target_semantics not in {TARGET_WITHIN_SUPPORT, SUPPLIED_GOAL_REGION}:
+            raise ValueError("Unknown explicit target semantics")
         nominal = np.asarray(nominal_target)
         if (nominal.shape != native_config.tissue_mask.shape or nominal.dtype.kind not in "biuf"
                 or not np.isfinite(nominal).all() or np.any(nominal < 0) or np.any(nominal > 1)
-                or np.any((nominal > 0) & ~native_config.tissue_mask)):
+                or (target_semantics == TARGET_WITHIN_SUPPORT
+                    and np.any((nominal > 0) & ~native_config.tissue_mask))):
             raise ValueError("Permitted nominal target must be a finite source-aligned membership grid inside observed support")
         if not isinstance(nominal_provenance, Mapping):
             raise ValueError("Explicit nominal source/derivation provenance is required")
@@ -452,6 +458,10 @@ class PreparedNominalCavityProposer:
                 or provenance.get("source_kind") not in {"supplied_annotation", "derived_from_scan"}
                 or not isinstance(provenance.get("derivation"), str) or not provenance["derivation"].strip()):
             raise ValueError("Nominal provenance must bind the exact permitted target and source")
+        if target_semantics == SUPPLIED_GOAL_REGION and (
+                provenance.get("target_semantics") != SUPPLIED_GOAL_REGION
+                or provenance.get("source_kind") != "supplied_annotation"):
+            raise ValueError("Supplied goal-region semantics require explicit public annotation provenance")
         rule = NominalCavityProposalConfig() if config is None else config
         if not isinstance(rule, NominalCavityProposalConfig):
             raise TypeError("A typed nominal/cavity rule is required")
