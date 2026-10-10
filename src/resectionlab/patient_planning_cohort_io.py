@@ -193,5 +193,3 @@ No observation, task factory, forward, optimizer, pickle or torch.load is used.
         raise ValueError('Decoded parameter identity differs from checkpoint')
     model.eval()
     return model,freeze_json(metadata)
-
-
