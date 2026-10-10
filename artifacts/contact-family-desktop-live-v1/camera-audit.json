@@ -1,0 +1,70 @@
+{
+  "cameraAttempt": {
+    "actionModes": [
+      "aspirate",
+      "probe"
+    ],
+    "actions": [
+      "NATIVE-SPATIAL:8665e3c2d0b9f15057036ff8",
+      "NATIVE-SPATIAL:2a6585f500954c1ad9fa90bb"
+    ],
+    "actorForwardCalls": 0,
+    "attemptId": "71711c7a0fcf4d27bfa63cd79785a509",
+    "caseHash": "sha256:42dbcfce823f48fc13c5729aa26e73bec982c9fed5ae5dedc0dcbf16abb42c0b",
+    "checkpointFileSha256": null,
+    "cleanupErrors": [],
+    "elapsedSeconds": 2.9518829581793398,
+    "episodeId": "sha256:1cd5ffc84137c431e1334b418c7bc90ce2dfe72a9039bd79215a970052aaf437",
+    "fileRecords": {
+      "attempt.json": {
+        "bytes": 273,
+        "sha256": "4307d1651deb9e56a549a3b3eaf7a9cfa04606621d2b7dbe98ddbc33f74de93a"
+      },
+      "completion.json": {
+        "bytes": 204,
+        "sha256": "b4b8b9181b3895f730a7ba0cd16ba67acfbd3e67af9544564f4b511ee69b04b1"
+      },
+      "progress.json": {
+        "bytes": 140,
+        "sha256": "afcd70b25d97c4dbcf028bc45903662f7df5ec21b75361743dafa4805b2d8bcf"
+      },
+      "result.json": {
+        "bytes": 124393,
+        "sha256": "639990a4eba05daafb6a0c900b8f563212a9efb2b1690fa14cc01b42f03ea301"
+      },
+      "supervision.json": {
+        "bytes": 354,
+        "sha256": "eb2a5d573f7b114d619b77b94c911dfe4a5337f20c862244785bf5eed6f0dd93"
+      },
+      "worker.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "goalContactedAndRetained": true,
+    "initialObservationHash": "sha256:461bb163203c3ffd50678b8ddd2eba72ea73bc5adcb8168c46bcf31f8ed97539",
+    "initialStateId": "sha256:ed214fa846740e5a99e085e95710bbcf094623b7014ea208586fb353175ac943",
+    "modelTransitionCalls": 20,
+    "newOptimizerUpdates": 0,
+    "parameterHash": null,
+    "removedVolumeMm3": 1.0,
+    "sampledPeakRssBytes": 254754816,
+    "samples": 14,
+    "selector": "SEARCH",
+    "sourceHash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+    "strategySeal": "sha256:415e374e6d290fb33dc7ad0ffe679dec7215e6f894816b45fb0355889a874db1",
+    "totalReward": 0.7040000000000001,
+    "trainingLineageHash": null,
+    "workerTerminationConfirmed": true
+  },
+  "checkpointBodiesRead": false,
+  "modelForwardsRunByAudit": 0,
+  "nativeTransitionsRunByAudit": 0,
+  "originalSearchAttemptId": "06d5dfa679d347e0b719ec34f9e0ef08",
+  "purpose": "separate UI camera regression, not another planned method comparison or timing replicate",
+  "samePublicInitialStateStrategyActionsAndOutcome": true,
+  "schema": "generated-contact-family-camera-fit-saved-audit-v1",
+  "screenshotEvidencePath": "build/episode-camera-fit-v1/live-probe-final.png",
+  "screenshotPixelsInspectedByThisAudit": false,
+  "uiActionsRunByAudit": 0
+}

@@ -1,0 +1,184 @@
+{
+  "attempts": [
+    {
+      "actionModes": [
+        "aspirate",
+        "probe"
+      ],
+      "actions": [
+        "NATIVE-SPATIAL:8665e3c2d0b9f15057036ff8",
+        "NATIVE-SPATIAL:2a6585f500954c1ad9fa90bb"
+      ],
+      "actorForwardCalls": 0,
+      "attemptId": "06d5dfa679d347e0b719ec34f9e0ef08",
+      "caseHash": "sha256:42dbcfce823f48fc13c5729aa26e73bec982c9fed5ae5dedc0dcbf16abb42c0b",
+      "checkpointFileSha256": null,
+      "cleanupErrors": [],
+      "elapsedSeconds": 2.944541708100587,
+      "episodeId": "sha256:a4dff0e6357d41bb026b6078d7b330fb907a0672e4a6153cf4908808e4afcb52",
+      "fileRecords": {
+        "attempt.json": {
+          "bytes": 273,
+          "sha256": "4307d1651deb9e56a549a3b3eaf7a9cfa04606621d2b7dbe98ddbc33f74de93a"
+        },
+        "completion.json": {
+          "bytes": 204,
+          "sha256": "e6f9742bb63293ed8df871553b119dfac499fc7212e867cc1090359e9b3f998b"
+        },
+        "progress.json": {
+          "bytes": 140,
+          "sha256": "a4006647275fc9187b01e218d481d5406437259a5d7ffeb30a229fe038e4b96b"
+        },
+        "result.json": {
+          "bytes": 124391,
+          "sha256": "bbc635efc78c3ad5f538b4b6e0c14e0eff6ac474103b836f0ac7dcdd7d7ff4f0"
+        },
+        "supervision.json": {
+          "bytes": 353,
+          "sha256": "02a4c4d264d9bacc04312295f21fba13455bdbf1cad806963ba9725420f5575b"
+        },
+        "worker.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "goalContactedAndRetained": true,
+      "initialObservationHash": "sha256:461bb163203c3ffd50678b8ddd2eba72ea73bc5adcb8168c46bcf31f8ed97539",
+      "initialStateId": "sha256:ed214fa846740e5a99e085e95710bbcf094623b7014ea208586fb353175ac943",
+      "modelTransitionCalls": 20,
+      "newOptimizerUpdates": 0,
+      "parameterHash": null,
+      "removedVolumeMm3": 1.0,
+      "sampledPeakRssBytes": 254689280,
+      "samples": 14,
+      "selector": "SEARCH",
+      "sourceHash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+      "strategySeal": "sha256:415e374e6d290fb33dc7ad0ffe679dec7215e6f894816b45fb0355889a874db1",
+      "totalReward": 0.7040000000000001,
+      "trainingLineageHash": null,
+      "workerTerminationConfirmed": true
+    },
+    {
+      "actionModes": [
+        "stop"
+      ],
+      "actions": [
+        "STOP"
+      ],
+      "actorForwardCalls": 1,
+      "attemptId": "88183e132b694b11baccef591fa7d7e8",
+      "caseHash": "sha256:42dbcfce823f48fc13c5729aa26e73bec982c9fed5ae5dedc0dcbf16abb42c0b",
+      "checkpointFileSha256": "5295add15d4504db9148a307deaaf503ee8fadbf070a03ffd0968ce7e06ae719",
+      "cleanupErrors": [],
+      "elapsedSeconds": 5.247821375029162,
+      "episodeId": "sha256:5751e71de6f418ff1d937d393ce03d3f079320b6047b87e5e424e957455b07c6",
+      "fileRecords": {
+        "attempt.json": {
+          "bytes": 269,
+          "sha256": "b0a271492d33fdea82209f5765e2ff7e382765ffcd578de65b4a1dc0d1e384d8"
+        },
+        "completion.json": {
+          "bytes": 204,
+          "sha256": "0a7d9d77e191e3d617d5791854a8e6def8fdb5f9963ca8f555984246fe59c8b4"
+        },
+        "progress.json": {
+          "bytes": 138,
+          "sha256": "729368b3b053d11a8370424f5dd68c9e3e1e2fc41bcf8707936ad846bca5cc6d"
+        },
+        "result.json": {
+          "bytes": 78953,
+          "sha256": "2c90fd11b15b2b41a6f734ff770e4d886bccdf644fe7d17c5baa45cbb269b8df"
+        },
+        "supervision.json": {
+          "bytes": 353,
+          "sha256": "f591f9bc00476c14a5a4cc75c18b4f192a2592f4ff470d5247a3405d9b56aa73"
+        },
+        "worker.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "goalContactedAndRetained": false,
+      "initialObservationHash": "sha256:461bb163203c3ffd50678b8ddd2eba72ea73bc5adcb8168c46bcf31f8ed97539",
+      "initialStateId": "sha256:ed214fa846740e5a99e085e95710bbcf094623b7014ea208586fb353175ac943",
+      "modelTransitionCalls": 1,
+      "newOptimizerUpdates": 0,
+      "parameterHash": "sha256:4dcbb6fb39976f80d635c571c5f4679b0831daab310a9c2d2529a499613015f7",
+      "removedVolumeMm3": 0.0,
+      "sampledPeakRssBytes": 287965184,
+      "samples": 25,
+      "selector": "IL",
+      "sourceHash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+      "strategySeal": "sha256:c65eb734b036a29d33e5fa17003322a3d12b78fdd14dfc9f2ee84d2eac4d15dd",
+      "totalReward": 0.0,
+      "trainingLineageHash": "sha256:a6b45dc8d7d6d266472041a2ad3d3bb197f42af91363cfdfd9b813339594c42b",
+      "workerTerminationConfirmed": true
+    },
+    {
+      "actionModes": [
+        "stop"
+      ],
+      "actions": [
+        "STOP"
+      ],
+      "actorForwardCalls": 1,
+      "attemptId": "3474935409744af38e889ac3eb47d131",
+      "caseHash": "sha256:42dbcfce823f48fc13c5729aa26e73bec982c9fed5ae5dedc0dcbf16abb42c0b",
+      "checkpointFileSha256": "adc27f7bfb3498fb13953d853d4b0e41a0b927f66c3dd93cccd51b60c52424ce",
+      "cleanupErrors": [],
+      "elapsedSeconds": 5.255843417020515,
+      "episodeId": "sha256:a74d58adb57cc5413f141f41f2bd98001bb1002e0950cc88e7f3591d7c5dd017",
+      "fileRecords": {
+        "attempt.json": {
+          "bytes": 269,
+          "sha256": "858cd55a9ac108d5149f05d3766afef4dd9de95c36f777815466c6c2c8297229"
+        },
+        "completion.json": {
+          "bytes": 204,
+          "sha256": "a3f72798fd2ba19f0182b33c39dc821625a2c69aee580c7242e9f6c57626331b"
+        },
+        "progress.json": {
+          "bytes": 139,
+          "sha256": "60b0542e22fcf1eb18375359345aedaebf9446c584ce63db66566f9b2c08d28d"
+        },
+        "result.json": {
+          "bytes": 78953,
+          "sha256": "255412083c34f01bc4b3908fbab4718600489315fe874fd9ca4817ab338c1a44"
+        },
+        "supervision.json": {
+          "bytes": 353,
+          "sha256": "39699b3ec3daa0c130405b610981fe08de89a422db4704b0ac11296bb1d08d32"
+        },
+        "worker.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "goalContactedAndRetained": false,
+      "initialObservationHash": "sha256:461bb163203c3ffd50678b8ddd2eba72ea73bc5adcb8168c46bcf31f8ed97539",
+      "initialStateId": "sha256:ed214fa846740e5a99e085e95710bbcf094623b7014ea208586fb353175ac943",
+      "modelTransitionCalls": 1,
+      "newOptimizerUpdates": 0,
+      "parameterHash": "sha256:d220d73c9aed40f1385bcc06839b48a5046e17efd5d229ddd1b295fbea64b53a",
+      "removedVolumeMm3": 0.0,
+      "sampledPeakRssBytes": 288718848,
+      "samples": 25,
+      "selector": "RL",
+      "sourceHash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+      "strategySeal": "sha256:c65eb734b036a29d33e5fa17003322a3d12b78fdd14dfc9f2ee84d2eac4d15dd",
+      "totalReward": 0.0,
+      "trainingLineageHash": "sha256:e8b8b257922da1133dffbea50d8b3d777fcd654038196bcbf4b2db67ce930f50",
+      "workerTerminationConfirmed": true
+    }
+  ],
+  "checkpointBodiesRead": false,
+  "finalFreezeSha256": "49fadaae1a891b0c29c9d4076e13505811ae24d0c62beb4cc62cfa763a794625",
+  "modelForwardsRunByAudit": 0,
+  "nativeTransitionsRunByAudit": 0,
+  "pilotResultSha256": "d57a6590c2ecc058429576d9dd0e0714278dbac5fec5029ee22ef7844ce213c1",
+  "releaseManifestSha256": "4bc4a93f453fb4064c3291b55c60481de554adfe706ab7db24a3a023f5e20dae",
+  "samePublicInitialStateAndObservation": true,
+  "schema": "generated-contact-family-desktop-live-saved-audit-v1",
+  "scope": "three completed desktop attempts, saved metadata and result only",
+  "uiActionsRunByAudit": 0
+}

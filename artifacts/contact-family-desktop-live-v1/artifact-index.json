@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "bytes": 3138,
+      "path": "REPORT.md",
+      "sha256": "d82ff2649537401650f98c514ac13af8485ccb3c4c99eb88d84579bf80077adf"
+    },
+    {
+      "bytes": 7619,
+      "path": "audit.json",
+      "sha256": "ced19b6caa2b45e78a54ce62ec17a633200b9e9919d5e5740c6a40cc0c5043b0"
+    },
+    {
+      "bytes": 2741,
+      "path": "camera-audit.json",
+      "sha256": "bd12b8ba39b52fd10cc9b1643aca6dd0876031b9194791b00cf61e78a8f623e7"
+    },
+    {
+      "bytes": 11229,
+      "path": "audit_saved.py",
+      "sha256": "18a6e53e2be4dd727681ae8210664a08e56381b00e49cb0fd1686b3d1fea52e6"
+    },
+    {
+      "bytes": 2128,
+      "path": "audit_camera_saved.py",
+      "sha256": "76c10cfca7b901cccd56ec1c2966351fc3147693c424b7151302b6c499f3e8c2"
+    }
+  ],
+  "schema": "generated-contact-family-desktop-live-audit-index-v1",
+  "scope": "three planned live UI attempts plus separate camera regression; saved-only, no bulk copies"
+}

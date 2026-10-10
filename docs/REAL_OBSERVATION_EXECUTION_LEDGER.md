@@ -1280,3 +1280,10 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 ## Case4 diagnostic source handoff integrated
 
 [Result](../artifacts/scan-diagnostic-runner-integration-v1/RESULT.md): four source/type/doc/test files; ten canonical generated controls pass0.313s. Independent review found and repaired geometry/source substitution and origin-label defects before promotion. Patient forward release remains unset; supervised preparation and actual model output follow separately. No patient/weight/forward test access or planning admission.
+
+
+## Contact-family live Mac execution and camera regression
+
+[Live result](../artifacts/contact-family-desktop-live-v1/RESULT.md): samepcf10surfaceTRAIN SEARCH29frames aspiration→probe+.704; IL/RL final32 actualinferenceSTOP0, zero updates. Independent savedresultreview passes3methodattempts plus separate4thcameraSEARCH. Held-outchoices visiblylocked; temporarySave refuses; correctedwholeprobevisibleatfinalframewithoutmanualFit. Both rootElectron sessions exit0. This is generatedinteractivevalidation, not a newbenchmark.
+
+Acquisition03:33:57UTC:6552verifiedfiles228983622779B, +337/+11.93GB. Originalworker92434andlocklive, failuresunchanged, capacityadequate; no recovery/QC.
