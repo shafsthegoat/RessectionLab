@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_v5_n12_v2_admission.py",
+    "tests/test_hbe_v5_ordinal9_continuation.py"
+  ],
+  "returncode": 0,
+  "wall_seconds": 0.4617783750873059,
+  "native_calls": 0,
+  "bulk_predecessor_stream_reads": 0
+}

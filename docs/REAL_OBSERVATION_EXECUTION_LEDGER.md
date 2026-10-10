@@ -949,3 +949,20 @@ crosscheck. No protected responses, fitted tables, patient records, solver calls
 or fitting occurred. The external dependency is a verified protocol/export
 manifest; no outreach occurred. Physical validation remains open, and this
 negative source search does not prove that unpublished metadata do not exist.
+
+
+### October 9: ordinal-9 continuation source and portable controls integrated
+
+The [two-source continuation](../artifacts/hbe-v5-ordinal9-continuation-source-v1/RESULT.md)
+is promoted unchanged from independent review. It authenticates ordinal 8's exact
+v2 sidecar and charges the 1.1413705407176167-second preparation surcharge and
+1,048,576-byte reserve once, then persists ordinal 9's own bound supplemental
+ledger. Original solver sources, numerical thresholds, predecessor hashes and
+aggregate/per-row limits are unchanged. Immediate pre-launch source/release
+checks and final sidecar inventory/cap negatives pass.
+
+Root canonical validation passes 11 tests and 25 subtests in 0.29 seconds.
+Portable compact fixtures avoid making ignored output a clean-checkout dependency;
+a named local historical-path test retains the real source/Git check where present.
+No solver or bulk predecessor stream was read. Exact release, read-only no-cache
+feasibility and live host admission remain before native execution.
