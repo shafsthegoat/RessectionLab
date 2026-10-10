@@ -1,0 +1,710 @@
+{
+  "EVAL_closed": true,
+  "arms": {
+    "IL64": {
+      "certificate_outcomes": null,
+      "complete_accepted_route": false,
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "saved_status": "not_started"
+    },
+    "RL8": {
+      "certificate_outcomes": null,
+      "complete_accepted_route": false,
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "saved_status": "not_started"
+    },
+    "observed_beam": {
+      "certificate_outcomes": null,
+      "complete_accepted_route": false,
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "saved_status": "not_started"
+    },
+    "observed_greedy": {
+      "certificate_outcomes": null,
+      "complete_accepted_route": false,
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "saved_status": "not_started"
+    }
+  },
+  "audit_peak_rss_bytes": 28229632,
+  "audit_seconds": 0.034896708093583584,
+  "checkpoint_loads": 2,
+  "checks": 1744,
+  "complete_comparison": false,
+  "costs": {
+    "native_budget": {
+      "blocked_preview_attempts": 0,
+      "cache_hits": null,
+      "counting_reliable": true,
+      "elapsed_seconds": 0.06716262502595782,
+      "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+      "failure": "arm_raised_ValueError",
+      "history_complete_caller_attestation": null,
+      "independent_audit": "outside_this_guard_not_verified",
+      "limits": {
+        "native_preview_entries": 750000,
+        "planning_execution_seconds": 900.0
+      },
+      "native_preview_entries": 0,
+      "native_preview_profile": {
+        "phases": {},
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "observed_admissions_before_accounting_failure": 0,
+      "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+      "requests": {},
+      "score": null,
+      "status": "failed",
+      "time_overshoot_seconds": 0.0,
+      "version": "native-planning-budget-v1",
+      "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+    },
+    "phases": {
+      "checkpoint_reload.IL64": {
+        "complete_wall_seconds": 0.008506041951477528,
+        "native_preview_entries": 0
+      },
+      "checkpoint_reload.RL8": {
+        "complete_wall_seconds": 0.002901083091273904,
+        "native_preview_entries": 0
+      },
+      "observed_greedy.public_construction": {
+        "complete_wall_seconds": 0.05399250006303191,
+        "native_preview_entries": 0
+      }
+    },
+    "policy_forwards": 0,
+    "timing_scope": "inclusive phases; do not sum nested work"
+  },
+  "decision": "PASS_RETAINED_INCOMPLETE_ATTEMPT_EVIDENCE",
+  "evidence_files": {
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": {
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": {
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json": {
+      "bytes": 1227,
+      "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/native-replay.json": {
+      "bytes": 856630,
+      "sha256": "529405a10f37c12f9ee4138fd0ef0d0824d7c3fba6f877802890971cc4bae862"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/result.json": {
+      "bytes": 2698,
+      "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/root-release.json": {
+      "bytes": 3769,
+      "sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/source-index.json": {
+      "bytes": 16563,
+      "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01.supervision/receipt.json": {
+      "bytes": 1918,
+      "sha256": "2f82d0bd59de8bd9709023f0ca701a5d57e00b169f8baee418bdf4e68342131b"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01.supervision/worker-final.json": {
+      "bytes": 779,
+      "sha256": "d0cdeb18c81603eda7f55056d2ff6b3ae607cccf2ef92db9e4d4ae7b4374e5bb"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-002-context.json": {
+      "bytes": 7178,
+      "sha256": "46342d63bf8ca33b35e650f7ea96b6a7530718ca7a9605f56f59acdc9b071edd"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-015-context.json": {
+      "bytes": 7088,
+      "sha256": "a445eb8f442faa776c4b5be0e273764c3139eec51856d74176f5e5593ee665a8"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-018-context.json": {
+      "bytes": 7176,
+      "sha256": "03b8ffbfb997cfdedb0ccaf557f60df57d6b837e8ba48e8f44237f610f0d6fde"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-045-context.json": {
+      "bytes": 7167,
+      "sha256": "2b4d8947a43a78edb6d6e3ed8bfe6c05c90b54c6de81f98f07a50a7cf91973a3"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/result.json": {
+      "bytes": 8297,
+      "sha256": "b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/root-release.json": {
+      "bytes": 9213,
+      "sha256": "4da18b8bd21e6a54308d0b58b3d234c49c7351b56040e448ac7107a28a773e3e"
+    },
+    "build/post-exposure-learning-rl8-recovery-v1/RL8/source-index.json": {
+      "bytes": 17265,
+      "sha256": "636f4b75ae95afa2a54c024882ca3b808246a6938db1fa1c5dd2a33443405589"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json": {
+      "bytes": 1637,
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01.supervision/worker-final.json": {
+      "bytes": 685,
+      "sha256": "226d5a0e0efd2eafecd7301ff09bb7e302aa2a9a0bccbf818c00916cd98ff4fa"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/IL/update-64/update.json": {
+      "bytes": 1854,
+      "sha256": "1bda364b5b5410ee5bdb956ab097b1a366c1f8ec9091de7eab33533ddb3499f4"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-002-context.json": {
+      "bytes": 7179,
+      "sha256": "c9deade0dce17907a7d079b4065feb1c4fafa0a4f1a05299634f5f30e559c027"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-015-context.json": {
+      "bytes": 7089,
+      "sha256": "8f27652878c637034c4725c8a753ae0844800692cdbaeba5b8dfab148a137410"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-018-context.json": {
+      "bytes": 7177,
+      "sha256": "28d6084b58fa90fc6c38aefccbd240b6e95806fb7d7fd4358c8651f496a4b3e0"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "c967fed33bc10336e1470145090e1ab2173cac6135e25b4ec164dcc995f64427"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-002/native-replay.json": {
+      "bytes": 25622,
+      "sha256": "4611a32b328cd07d8c642e4246711a5255bd9b86435aaa290493c68316806d42"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-002/plan.json": {
+      "bytes": 1065,
+      "sha256": "1614f9d2206038c3bda4f85eb0906c31464715b305d11a03827d61b00396d09b"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-015/native-replay.json": {
+      "bytes": 471096,
+      "sha256": "fc1f64be0a38aa2c3c192595d8b0cf5bf4a0464aaa3898f74a6f9b5421e92bf4"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-015/plan.json": {
+      "bytes": 447176,
+      "sha256": "66dadfe3b434996fb03284757b6b76d32baf310d7154f122172e79008402bb58"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-018/native-replay.json": {
+      "bytes": 25643,
+      "sha256": "f4a61aa5ca95158d0deef861d11a7a892e728eb011d68cb9609f0a1f05bf0404"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-018/plan.json": {
+      "bytes": 1065,
+      "sha256": "9c1b11d559158387dc0e92760973e825f437526274677b85ed83f6d24aca2000"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json": {
+      "bytes": 832875,
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/checkpoint-reload.json": {
+      "bytes": 238,
+      "sha256": "d4441ca39c88921651639fd3bfb2896c1e04b7a3e5e693e3357cf5db6079865a"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/configuration.json": {
+      "bytes": 4264,
+      "sha256": "55f11d31f34f5f44d697d25f010b1a6acd1a462533cf4ecf1010c36e8af1713b"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/result.json": {
+      "bytes": 9786,
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/training-dynamics.json": {
+      "bytes": 51785,
+      "sha256": "6d3a58f1e44c433e287418cd165b891108320436d93f056a9913700be04a86cd"
+    },
+    "build/post-exposure-learning-v1/IL64/root-release.json": {
+      "bytes": 9080,
+      "sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b"
+    },
+    "build/post-exposure-learning-v1/IL64/source-index.json": {
+      "bytes": 13888,
+      "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01.supervision/receipt.json": {
+      "bytes": 1958,
+      "sha256": "cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01.supervision/worker-final.json": {
+      "bytes": 765,
+      "sha256": "5deb8c3a133953880aeba956068e8bd7c5e8944d3b9c2c117c81ef1d723fb41e"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01/IL64-lineage.json": {
+      "bytes": 1206,
+      "sha256": "e1fe8425d052af596f3a830645e306c47b85f135264e39f81a45f632c3ae3172"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01/RL8-lineage.json": {
+      "bytes": 1205,
+      "sha256": "5c93670f0e4203166bad5c7d8282c1f0d0bb18bb32886d51657f6db3621f5799"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01/costs.json": {
+      "bytes": 1858,
+      "sha256": "119fb28569203f383d1b559d7dcee800881343e59012b950edfd317cbc253ff3"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01/result.json": {
+      "bytes": 2984,
+      "sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812"
+    },
+    "build/post-exposure-select013-comparison-v1/comparison_contract.py": {
+      "bytes": 32861,
+      "sha256": "e00d3fefcd4f1ca5eb71d237011d385e490443dd2a1c457c1a82f2af57b55dc8"
+    },
+    "build/post-exposure-select013-comparison-v1/freeze-runtime.py": {
+      "bytes": 10075,
+      "sha256": "0ba5a1785f927c71534ec0d9837abf76c22886c56dd75e2d167c16eb1d475e54"
+    },
+    "build/post-exposure-select013-comparison-v1/root-release.json": {
+      "bytes": 5883,
+      "sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+    },
+    "build/post-exposure-select013-comparison-v1/run_owned.py": {
+      "bytes": 12069,
+      "sha256": "8e41ef61c8ec624f32c2c0a408e8c838383246bc50521d76c1ea7ac8e719ea8f"
+    },
+    "build/post-exposure-select013-comparison-v1/select_worker.py": {
+      "bytes": 16171,
+      "sha256": "7a124b47ab14aa9037627a49e2a39181950be4fda0cef11a07a321f79b0de0f1"
+    },
+    "build/post-exposure-select013-comparison-v1/source-index.json": {
+      "bytes": 16530,
+      "sha256": "1882d4b16eac077a0ec7fbe25bf126db27e7e029b962937c91ba771c7a7245c4"
+    },
+    "build/remind-select-public-preparation-v1/public-select-index-v2.json": {
+      "bytes": 1565,
+      "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+    },
+    "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-013-public-inputs-v1.json": {
+      "bytes": 14172,
+      "sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8"
+    },
+    "manifests/experiments/remind-component-cohort-v1.json": {
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    "src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "src/resectionlab/anatomy.py": {
+      "bytes": 13915,
+      "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37"
+    },
+    "src/resectionlab/brain_extraction.py": {
+      "bytes": 23276,
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900"
+    },
+    "src/resectionlab/cohort.py": {
+      "bytes": 14491,
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874"
+    },
+    "src/resectionlab/contact_checkpoint.py": {
+      "bytes": 15134,
+      "sha256": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40"
+    },
+    "src/resectionlab/contact_family_desktop_bridge.py": {
+      "bytes": 15882,
+      "sha256": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22"
+    },
+    "src/resectionlab/contact_family_desktop_release.py": {
+      "bytes": 10805,
+      "sha256": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b"
+    },
+    "src/resectionlab/contact_learning.py": {
+      "bytes": 12709,
+      "sha256": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b"
+    },
+    "src/resectionlab/contact_learning_contract.py": {
+      "bytes": 15537,
+      "sha256": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19"
+    },
+    "src/resectionlab/contact_train_refit_release.py": {
+      "bytes": 8494,
+      "sha256": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee"
+    },
+    "src/resectionlab/core.py": {
+      "bytes": 30914,
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "src/resectionlab/data_policy.py": {
+      "bytes": 7928,
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208"
+    },
+    "src/resectionlab/desktop_bridge.py": {
+      "bytes": 121702,
+      "sha256": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3"
+    },
+    "src/resectionlab/development_episode.py": {
+      "bytes": 14114,
+      "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e"
+    },
+    "src/resectionlab/evaluation.py": {
+      "bytes": 69899,
+      "sha256": "dbfac0b3d8acd3f8461581c96a5ae9421ed341a03559d3ab8ba0589e8a0d028a"
+    },
+    "src/resectionlab/fixed_rl256_loader.py": {
+      "bytes": 5154,
+      "sha256": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638"
+    },
+    "src/resectionlab/functional_events.py": {
+      "bytes": 23198,
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa"
+    },
+    "src/resectionlab/functional_evidence.py": {
+      "bytes": 11698,
+      "sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426"
+    },
+    "src/resectionlab/geometry.py": {
+      "bytes": 31204,
+      "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+    },
+    "src/resectionlab/goal_mode_spatial_policy.py": {
+      "bytes": 8789,
+      "sha256": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a"
+    },
+    "src/resectionlab/goal_relation_spatial_policy.py": {
+      "bytes": 8601,
+      "sha256": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd"
+    },
+    "src/resectionlab/imaging.py": {
+      "bytes": 42272,
+      "sha256": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa"
+    },
+    "src/resectionlab/independent_geometry_batch.py": {
+      "bytes": 9799,
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+    },
+    "src/resectionlab/learning.py": {
+      "bytes": 51360,
+      "sha256": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12"
+    },
+    "src/resectionlab/legacy_aspiration_projection.py": {
+      "bytes": 17510,
+      "sha256": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c"
+    },
+    "src/resectionlab/legacy_transfer_episode.py": {
+      "bytes": 19495,
+      "sha256": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd"
+    },
+    "src/resectionlab/legacy_transfer_supervisor.py": {
+      "bytes": 10427,
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    },
+    "src/resectionlab/legacy_transfer_worker.py": {
+      "bytes": 4685,
+      "sha256": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01"
+    },
+    "src/resectionlab/native_axis_accounting.py": {
+      "bytes": 32191,
+      "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8"
+    },
+    "src/resectionlab/native_axis_policy_schema.py": {
+      "bytes": 4443,
+      "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe"
+    },
+    "src/resectionlab/native_axis_refinement.py": {
+      "bytes": 17552,
+      "sha256": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e"
+    },
+    "src/resectionlab/native_axis_simulation.py": {
+      "bytes": 24485,
+      "sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf"
+    },
+    "src/resectionlab/native_functional_evaluation.py": {
+      "bytes": 12986,
+      "sha256": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13"
+    },
+    "src/resectionlab/native_proposals.py": {
+      "bytes": 61525,
+      "sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59"
+    },
+    "src/resectionlab/native_refinement.py": {
+      "bytes": 34315,
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4"
+    },
+    "src/resectionlab/native_resection.py": {
+      "bytes": 47035,
+      "sha256": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d"
+    },
+    "src/resectionlab/native_routes.py": {
+      "bytes": 8680,
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea"
+    },
+    "src/resectionlab/native_simulation.py": {
+      "bytes": 34916,
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749"
+    },
+    "src/resectionlab/native_spatial_evaluation.py": {
+      "bytes": 9953,
+      "sha256": "bed5957cecc2a18127eb3bbaa7854c4a26406cb222d2debf23244fbbe003084b"
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "bytes": 86060,
+      "sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32"
+    },
+    "src/resectionlab/observed_landmark_replay.py": {
+      "bytes": 11508,
+      "sha256": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd"
+    },
+    "src/resectionlab/observed_search.py": {
+      "bytes": 34378,
+      "sha256": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd"
+    },
+    "src/resectionlab/patient_planning_accumulation.py": {
+      "bytes": 13599,
+      "sha256": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b"
+    },
+    "src/resectionlab/patient_planning_admission.py": {
+      "bytes": 35852,
+      "sha256": "96f43268f0b850e0b82ad6f3ad3e5d5a1bb20627887e7235b44904d7706726db"
+    },
+    "src/resectionlab/patient_planning_cohort_io.py": {
+      "bytes": 12519,
+      "sha256": "98c0f52c2f108125692a70761f31b645cd6a41c86715786ab0913d4f7f9f59e3"
+    },
+    "src/resectionlab/patient_planning_cohort_sequential.py": {
+      "bytes": 18901,
+      "sha256": "ab14952445f5203f5b3695f86664a7d46a15cf8779a6ac188fce484a49bc185c"
+    },
+    "src/resectionlab/patient_planning_cohort_spec.py": {
+      "bytes": 14268,
+      "sha256": "37b2f9d49df322fb27eb4c4090a32126b50255d8d29c8e9a36dfa536eebe5b10"
+    },
+    "src/resectionlab/patient_planning_learning.py": {
+      "bytes": 19249,
+      "sha256": "0185544a4484a0c1c2b7e49fa3adda75fc31abb636d8956e65dfb4643e4c29f0"
+    },
+    "src/resectionlab/patient_planning_preflight.py": {
+      "bytes": 17496,
+      "sha256": "733bc569a696715fcd143d8d235a0480dea9b26684664afc94c75d0473498d36"
+    },
+    "src/resectionlab/patient_select_inference.py": {
+      "bytes": 22680,
+      "sha256": "f7ca9fb8221e7c4db915ad5d109fdcdf2cb6912acf9be271fee725e6dcb7386a"
+    },
+    "src/resectionlab/patient_teacher_trace_cache.py": {
+      "bytes": 8426,
+      "sha256": "0f37645a2af82f8f5122b701855b59ab3af832fc4ea3cc34cfcebcab0883ad45"
+    },
+    "src/resectionlab/planning.py": {
+      "bytes": 31212,
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24"
+    },
+    "src/resectionlab/planning_budget.py": {
+      "bytes": 11579,
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c"
+    },
+    "src/resectionlab/policy_inputs.py": {
+      "bytes": 3294,
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47"
+    },
+    "src/resectionlab/population_learning.py": {
+      "bytes": 25672,
+      "sha256": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c"
+    },
+    "src/resectionlab/post_exposure.py": {
+      "bytes": 9110,
+      "sha256": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e"
+    },
+    "src/resectionlab/prior_proposals.py": {
+      "bytes": 27458,
+      "sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f"
+    },
+    "src/resectionlab/procedural_learning.py": {
+      "bytes": 40198,
+      "sha256": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6"
+    },
+    "src/resectionlab/public_contact_family.py": {
+      "bytes": 11219,
+      "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800"
+    },
+    "src/resectionlab/public_patient_factory.py": {
+      "bytes": 27795,
+      "sha256": "fa5dbd25b707f345e3043bff488b62da48f12f96297365309165a908eb17258b"
+    },
+    "src/resectionlab/public_surface_contact.py": {
+      "bytes": 16277,
+      "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0"
+    },
+    "src/resectionlab/public_target_context.py": {
+      "bytes": 16294,
+      "sha256": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15"
+    },
+    "src/resectionlab/route_native_diagnostics.py": {
+      "bytes": 3685,
+      "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf"
+    },
+    "src/resectionlab/selection_contract.py": {
+      "bytes": 1927,
+      "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72"
+    },
+    "src/resectionlab/sequential_spatial_observation.py": {
+      "bytes": 3742,
+      "sha256": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3"
+    },
+    "src/resectionlab/shared_episode.py": {
+      "bytes": 12206,
+      "sha256": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d"
+    },
+    "src/resectionlab/shared_transfer_comparison.py": {
+      "bytes": 4840,
+      "sha256": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835"
+    },
+    "src/resectionlab/shared_vascular_evaluation.py": {
+      "bytes": 21512,
+      "sha256": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0"
+    },
+    "src/resectionlab/simulation.py": {
+      "bytes": 47076,
+      "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253"
+    },
+    "src/resectionlab/spatial_observations.py": {
+      "bytes": 25806,
+      "sha256": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f"
+    },
+    "src/resectionlab/spatial_policy.py": {
+      "bytes": 25459,
+      "sha256": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4"
+    },
+    "src/resectionlab/spatial_policy_diagnostics.py": {
+      "bytes": 20387,
+      "sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493"
+    },
+    "src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "src/resectionlab/surface_contact_episode.py": {
+      "bytes": 6579,
+      "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e"
+    },
+    "src/resectionlab/vascular_contact_streaming.py": {
+      "bytes": 14041,
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+    },
+    "src/resectionlab/workspace_bundle.py": {
+      "bytes": 18934,
+      "sha256": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a"
+    },
+    "src/resectionlab/workspace_diagnostic.py": {
+      "bytes": 7547,
+      "sha256": "f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8"
+    },
+    "src/resectionlab/workspace_imaging.py": {
+      "bytes": 9842,
+      "sha256": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501"
+    },
+    "src/resectionlab/worlds.py": {
+      "bytes": 20428,
+      "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    }
+  },
+  "failure": {
+    "committed": false,
+    "message": "POST_EXPOSURE_EMPTY_FIXED_K",
+    "type": "ValueError"
+  },
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "limits": "Partial evidence only; no full comparison or accepted capped-prefix claim. No geometry/model replay.",
+  "loaded_checkpoint_lineages": {
+    "IL64": {
+      "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+      "checkpoint_sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c",
+      "completed_updates": 64,
+      "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+      "method": "IL",
+      "optimizer_updates_on_SELECT": 0,
+      "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+      "public_target_context_variant": "full-supplied-public-target-context-v1",
+      "training_context_hashes": {
+        "ReMIND:002": "sha256:9b0707b791111a23b735cd8d8707a9c35c073ba5e683331cb29f22050b6c9b08",
+        "ReMIND:015": "sha256:ed93f8375ec37828be6f8dfeff24d417618db65ab2ee4a106786389a41e82257",
+        "ReMIND:018": "sha256:ceddd29d57eb84ee0e74c2816ce9a2680e0f7541b013defbd59f8c531cc3447f",
+        "ReMIND:045": "sha256:1c660e1b81b5465a6fb8987c163154a94f88b403595247fe3866ae6a7280cdd1"
+      },
+      "training_release_sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b",
+      "version": "frozen-TRAIN-checkpoint-lineage-v1"
+    },
+    "RL8": {
+      "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+      "checkpoint_sha256": "87181c166a8c7255e11bcc57d362ec60edd822617786d2c5a729006a5037c34d",
+      "completed_updates": 8,
+      "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "learning_protocol_hash": "sha256:887cb4ee1895ce9cabdd1686f4f55308f9c5d934159df9546a6c5b6f57318c0d",
+      "method": "RL",
+      "optimizer_updates_on_SELECT": 0,
+      "parameter_hash": "sha256:39a44a88a19c634e938878e8029dcafc04a7669f1b7fa69422ab57d502015b4d",
+      "public_target_context_variant": "full-supplied-public-target-context-v1",
+      "training_context_hashes": {
+        "ReMIND:002": "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+        "ReMIND:015": "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+        "ReMIND:018": "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+        "ReMIND:045": "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+      },
+      "training_release_sha256": "4da18b8bd21e6a54308d0b58b3d234c49c7351b56040e448ac7107a28a773e3e",
+      "version": "frozen-TRAIN-checkpoint-lineage-v1"
+    }
+  },
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 0.06716262502595782,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_ValueError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 0,
+    "native_preview_profile": {
+      "phases": {},
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 0,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_previews": 0,
+  "no_model_or_patient_array_imports": true,
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 3.727428958984092,
+    "final_owned_pids": [],
+    "output_bytes": 9598,
+    "sampled_peak_rss_bytes": 371245056
+  },
+  "parent_status": "failed_or_unresolved",
+  "planned_SELECT_denominator": 2,
+  "policy_forwards": 0,
+  "release_sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048",
+  "scope": "saved_JSON_and_source_only"
+}

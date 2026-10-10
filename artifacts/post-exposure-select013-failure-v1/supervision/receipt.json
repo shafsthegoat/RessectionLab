@@ -1,0 +1,60 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "arms": {
+    "IL64": {
+      "status": "not_started"
+    },
+    "RL8": {
+      "status": "not_started"
+    },
+    "observed_beam": {
+      "status": "not_started"
+    },
+    "observed_greedy": {
+      "status": "not_started"
+    }
+  },
+  "automatic_retry": false,
+  "canonical_result_status": "failed_or_unresolved",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 960,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 900,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 3.727428958984092,
+  "exit_code": 1,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 9598,
+  "planned_SELECT_denominator": 2,
+  "private_reference_execution": false,
+  "release_sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048",
+  "result_sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812",
+  "sampled_peak_rss_bytes": 371245056,
+  "samples": 17,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/post-exposure-select013-comparison-v1/source-index.json",
+    "sha256": "1882d4b16eac077a0ec7fbe25bf126db27e7e029b962937c91ba771c7a7245c4"
+  },
+  "status": "failed_or_unresolved",
+  "stop_reason": "final_guard:ValueError:Incomplete public SELECT comparison",
+  "supervision_bytes_before_receipt": 15039,
+  "worker_final_sha256": "5deb8c3a133953880aeba956068e8bd7c5e8944d3b9c2c117c81ef1d723fb41e",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

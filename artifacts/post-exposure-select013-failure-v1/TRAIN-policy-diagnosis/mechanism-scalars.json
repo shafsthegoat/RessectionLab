@@ -1,0 +1,634 @@
+{
+  "gradients": [
+    {
+      "actor_loss": 393.9398840069771,
+      "critic_head_squared_norm_fraction": 0.7671258177831024,
+      "preclip_norm": 45.8524284362793,
+      "update": 1,
+      "value_MSE": 163.90027264604802
+    },
+    {
+      "actor_loss": 458.62366473674774,
+      "critic_head_squared_norm_fraction": 0.6216832825000994,
+      "preclip_norm": 60.65874099731445,
+      "update": 2,
+      "value_MSE": 190.9748431342605
+    },
+    {
+      "actor_loss": 676.0412808656693,
+      "critic_head_squared_norm_fraction": 0.4252613823162775,
+      "preclip_norm": 84.62275695800781,
+      "update": 3,
+      "value_MSE": 297.0868458777311
+    },
+    {
+      "actor_loss": 393.2822611220181,
+      "critic_head_squared_norm_fraction": 0.6519862636359172,
+      "preclip_norm": 40.55875778198242,
+      "update": 4,
+      "value_MSE": 178.2856241806976
+    },
+    {
+      "actor_loss": 428.2996027469635,
+      "critic_head_squared_norm_fraction": 0.46601971022536165,
+      "preclip_norm": 60.696746826171875,
+      "update": 5,
+      "value_MSE": 221.65237378025037
+    },
+    {
+      "actor_loss": 773.1836813483387,
+      "critic_head_squared_norm_fraction": 0.5541441871076026,
+      "preclip_norm": 97.94317626953125,
+      "update": 6,
+      "value_MSE": 379.5798262202293
+    },
+    {
+      "actor_loss": 722.2750171422958,
+      "critic_head_squared_norm_fraction": 0.49190011894713087,
+      "preclip_norm": 105.93878936767578,
+      "update": 7,
+      "value_MSE": 305.8176189489487
+    },
+    {
+      "actor_loss": 550.5530100464821,
+      "critic_head_squared_norm_fraction": 0.5162602802933647,
+      "preclip_norm": 96.23979187011719,
+      "update": 8,
+      "value_MSE": 237.27571494777996
+    }
+  ],
+  "interpretation": "Saved scalar evidence only. Positive advantage is not a guarantee of improved action rank; module norms do not identify shared-encoder causality.",
+  "positive_cut_negative_advantage_rows": [
+    {
+      "detached_advantage": -0.33269214630126953,
+      "return_to_go": 0.8853926842901236,
+      "reward": 0.8853926842901236,
+      "step": 21,
+      "subject": "ReMIND-045",
+      "update": 6,
+      "value": 1.2180848121643066
+    },
+    {
+      "detached_advantage": -0.6031820178031921,
+      "return_to_go": 0.9192977538345078,
+      "reward": 0.9192977538345078,
+      "step": 23,
+      "subject": "ReMIND-015",
+      "update": 7,
+      "value": 1.522479772567749
+    },
+    {
+      "detached_advantage": -0.25534331798553467,
+      "return_to_go": 1.8074892576690156,
+      "reward": 0.8887446288345078,
+      "step": 15,
+      "subject": "ReMIND-015",
+      "update": 8,
+      "value": 2.0628325939178467
+    },
+    {
+      "detached_advantage": -1.1440603733062744,
+      "return_to_go": 0.9187446288345078,
+      "reward": 0.9187446288345078,
+      "step": 16,
+      "subject": "ReMIND-015",
+      "update": 8,
+      "value": 2.062804937362671
+    },
+    {
+      "detached_advantage": -1.1381406784057617,
+      "return_to_go": 0.9153926842901237,
+      "reward": 0.9153926842901237,
+      "step": 23,
+      "subject": "ReMIND-045",
+      "update": 8,
+      "value": 2.0535333156585693
+    }
+  ],
+  "sampled_by_subject": [
+    {
+      "STOP_actor_score_term": [
+        -6.140622138977051,
+        0.0
+      ],
+      "STOP_advantages": [
+        -1.5011993646621704,
+        -0.35285672545433044
+      ],
+      "STOP_count": 8,
+      "endpoint": {
+        "certificate_outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 311.59057846614303,
+          "cumulative_contacted_tissue_upper_bound_mm3": 124.93132531651243,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 104.90416629630815,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 16,
+          "normal_removed_mm3": 20.02715902020429,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 20.027159020204284,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 23149.488478878036,
+          "total_reward": -4.827022382507001
+        },
+        "saved_plan_return": -4.827022382507001,
+        "terminal_reason": "STOP"
+      },
+      "episode_returns": [
+        0.0,
+        -1.2407976661899958,
+        -4.479985503850069,
+        -4.838477077423678,
+        -4.523515672575107,
+        -2.2878515869521476,
+        -1.5013246943770828,
+        -4.79918176710361
+      ],
+      "forced_STOP_count": 2,
+      "positive_cut_advantages": null,
+      "positive_cut_count": 0,
+      "root_values": [
+        0.39193809032440186,
+        0.4848535358905792,
+        0.6083020567893982,
+        0.7679857015609741,
+        0.9472470283508301,
+        1.1797254085540771,
+        1.4840214252471924,
+        1.8888888359069824
+      ],
+      "subject": "ReMIND-002"
+    },
+    {
+      "STOP_actor_score_term": [
+        -8.496219635009766,
+        0.0
+      ],
+      "STOP_advantages": [
+        -2.062981367111206,
+        -0.3228641152381897
+      ],
+      "STOP_count": 7,
+      "endpoint": {
+        "certificate_outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 92.92187547999993,
+          "cumulative_contacted_tissue_upper_bound_mm3": 158.3099365148483,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 135.42175292234012,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 24,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 24,
+          "reference_target_fraction_removed": 0.0030987734021949657,
+          "simulated_removed_volume_mm3": 22.888183592508188,
+          "target_removed_mm3": 22.888183592508195,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 7386.207580165663,
+          "total_reward": 22.075261717028184
+        },
+        "saved_plan_return": 22.075261717028184,
+        "terminal_reason": "HORIZON"
+      },
+      "episode_returns": [
+        41.136573044238354,
+        35.63978652119129,
+        47.687069821199906,
+        12.165623925008603,
+        50.41135058270343,
+        54.29153066064146,
+        52.25385234037245,
+        41.11150273175834
+      ],
+      "forced_STOP_count": 1,
+      "positive_cut_advantages": [
+        -1.1440603733062744,
+        53.04155349731445
+      ],
+      "positive_cut_count": 140,
+      "root_values": [
+        0.34070199728012085,
+        0.4650401175022125,
+        0.6023741364479065,
+        0.7813049554824829,
+        0.9897462129592896,
+        1.2499768733978271,
+        1.5918259620666504,
+        2.03139328956604
+      ],
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP_actor_score_term": [
+        -1.997955083847046,
+        0.0
+      ],
+      "STOP_advantages": [
+        -0.9257488250732422,
+        -0.20749297738075256
+      ],
+      "STOP_count": 8,
+      "endpoint": {
+        "certificate_outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 386.1860175193089,
+          "cumulative_contacted_tissue_upper_bound_mm3": 100.13584015700718,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 83.92337079825364,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 15,
+          "normal_removed_mm3": 16.212469358753545,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 16.212469358753545,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 1189.2323111979806,
+          "total_reward": -4.108679889270019
+        },
+        "saved_plan_return": -4.108679889270019,
+        "terminal_reason": "STOP"
+      },
+      "episode_returns": [
+        -3.914429853660521,
+        -2.735870258932052,
+        -2.3718368773028677,
+        -3.7072730489851944,
+        -2.513182199855539,
+        -3.9719173660958447,
+        -3.937540803353786,
+        -3.94567986076642
+      ],
+      "forced_STOP_count": 4,
+      "positive_cut_advantages": null,
+      "positive_cut_count": 0,
+      "root_values": [
+        0.33688023686408997,
+        0.4367527663707733,
+        0.5612758994102478,
+        0.7297069430351257,
+        0.9242416024208069,
+        1.1683435440063477,
+        1.4825371503829956,
+        1.8946306705474854
+      ],
+      "subject": "ReMIND-018"
+    },
+    {
+      "STOP_actor_score_term": [
+        -4.9861650466918945,
+        0.0
+      ],
+      "STOP_advantages": [
+        -1.5783298015594482,
+        -0.3755781054496765
+      ],
+      "STOP_count": 7,
+      "endpoint": {
+        "certificate_outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 183.90630605838413,
+          "cumulative_contacted_tissue_upper_bound_mm3": 163.0785103145275,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 134.46824534706653,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 24,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 30,
+          "reference_target_fraction_removed": 0.0011857238844314457,
+          "simulated_removed_volume_mm3": 28.610264967460964,
+          "target_removed_mm3": 28.61026496746097,
+          "tool_changes": 3,
+          "total_reference_target_mm3": 24128.943798057662,
+          "total_reward": 27.61635866140258
+        },
+        "saved_plan_return": 27.61635866140258,
+        "terminal_reason": "HORIZON"
+      },
+      "episode_returns": [
+        26.89293631547641,
+        30.529260178479,
+        39.919269836085476,
+        44.54321295987278,
+        15.895586593809762,
+        47.472522271244124,
+        37.02372772364243,
+        40.78107502374399
+      ],
+      "forced_STOP_count": 1,
+      "positive_cut_advantages": [
+        -1.1381406784057617,
+        46.22850799560547
+      ],
+      "positive_cut_count": 151,
+      "root_values": [
+        0.3882004916667938,
+        0.48978206515312195,
+        0.6269935369491577,
+        0.7923116087913513,
+        0.9893808364868164,
+        1.2440152168273926,
+        1.5831217765808105,
+        2.0308103561401367
+      ],
+      "subject": "ReMIND-045"
+    }
+  ],
+  "teacher_rows": [
+    {
+      "conditional_teacher_vs_uniform_ratio": null,
+      "exact_motion_rank1": 0,
+      "method": "IL64",
+      "motion_states": 0,
+      "movement_counts": [],
+      "movement_ranks": [],
+      "subject": "ReMIND-002",
+      "teacher_STOP": {
+        "legal_actions": 22,
+        "step": 0,
+        "stop_probability": 0.999737560749054,
+        "teacher_rank": 1,
+        "value": 0.5587670207023621
+      },
+      "teacher_STOP_forced": false,
+      "teacher_value_range": [
+        0.5587670207023621,
+        0.5587670207023621
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": [
+        1.0533313862979412,
+        1.1696501970291138
+      ],
+      "exact_motion_rank1": 3,
+      "method": "IL64",
+      "motion_states": 13,
+      "movement_counts": [
+        39,
+        36,
+        33,
+        30,
+        27,
+        24,
+        20,
+        16,
+        12,
+        8,
+        6,
+        4,
+        2
+      ],
+      "movement_ranks": [
+        14,
+        4,
+        16,
+        1,
+        2,
+        10,
+        2,
+        7,
+        5,
+        4,
+        2,
+        1,
+        1
+      ],
+      "subject": "ReMIND-015",
+      "teacher_STOP": {
+        "legal_actions": 1,
+        "step": 13,
+        "stop_probability": 1.0,
+        "teacher_rank": 1,
+        "value": 0.46009498834609985
+      },
+      "teacher_STOP_forced": true,
+      "teacher_value_range": [
+        0.46009498834609985,
+        1.2504593133926392
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": null,
+      "exact_motion_rank1": 0,
+      "method": "IL64",
+      "motion_states": 0,
+      "movement_counts": [],
+      "movement_ranks": [],
+      "subject": "ReMIND-018",
+      "teacher_STOP": {
+        "legal_actions": 18,
+        "step": 0,
+        "stop_probability": 0.9985180497169495,
+        "teacher_rank": 1,
+        "value": 0.8049591779708862
+      },
+      "teacher_STOP_forced": false,
+      "teacher_value_range": [
+        0.8049591779708862,
+        0.8049591779708862
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": [
+        0.5662727355957031,
+        2.1505086421966553
+      ],
+      "exact_motion_rank1": 4,
+      "method": "IL64",
+      "motion_states": 12,
+      "movement_counts": [
+        41,
+        37,
+        34,
+        25,
+        21,
+        18,
+        9,
+        9,
+        5,
+        3,
+        4,
+        2
+      ],
+      "movement_ranks": [
+        3,
+        18,
+        14,
+        1,
+        11,
+        3,
+        4,
+        1,
+        3,
+        1,
+        1,
+        2
+      ],
+      "subject": "ReMIND-045",
+      "teacher_STOP": {
+        "legal_actions": 1,
+        "step": 12,
+        "stop_probability": 1.0,
+        "teacher_rank": 1,
+        "value": 0.35702335834503174
+      },
+      "teacher_STOP_forced": true,
+      "teacher_value_range": [
+        0.35702335834503174,
+        0.652321994304657
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": null,
+      "exact_motion_rank1": 0,
+      "method": "RL8",
+      "motion_states": 0,
+      "movement_counts": [],
+      "movement_ranks": [],
+      "subject": "ReMIND-002",
+      "teacher_STOP": {
+        "legal_actions": 22,
+        "step": 0,
+        "stop_probability": 0.003954848274588585,
+        "teacher_rank": 22,
+        "value": 2.4293770790100098
+      },
+      "teacher_STOP_forced": false,
+      "teacher_value_range": [
+        2.4293770790100098,
+        2.4293770790100098
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": [
+        0.9765325672924519,
+        0.9921218156814575
+      ],
+      "exact_motion_rank1": 0,
+      "method": "RL8",
+      "motion_states": 13,
+      "movement_counts": [
+        39,
+        36,
+        33,
+        30,
+        27,
+        24,
+        20,
+        16,
+        12,
+        8,
+        6,
+        4,
+        2
+      ],
+      "movement_ranks": [
+        34,
+        27,
+        29,
+        24,
+        24,
+        21,
+        17,
+        11,
+        12,
+        5,
+        5,
+        3,
+        2
+      ],
+      "subject": "ReMIND-015",
+      "teacher_STOP": {
+        "legal_actions": 1,
+        "step": 13,
+        "stop_probability": 1.0,
+        "teacher_rank": 1,
+        "value": 0.9963191747665405
+      },
+      "teacher_STOP_forced": true,
+      "teacher_value_range": [
+        0.9963191747665405,
+        2.659013271331787
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": null,
+      "exact_motion_rank1": 0,
+      "method": "RL8",
+      "motion_states": 0,
+      "movement_counts": [],
+      "movement_ranks": [],
+      "subject": "ReMIND-018",
+      "teacher_STOP": {
+        "legal_actions": 18,
+        "step": 0,
+        "stop_probability": 0.0062024216167628765,
+        "teacher_rank": 18,
+        "value": 2.4351589679718018
+      },
+      "teacher_STOP_forced": false,
+      "teacher_value_range": [
+        2.4351589679718018,
+        2.4351589679718018
+      ]
+    },
+    {
+      "conditional_teacher_vs_uniform_ratio": [
+        0.9803960286080837,
+        0.992363691329956
+      ],
+      "exact_motion_rank1": 0,
+      "method": "RL8",
+      "motion_states": 12,
+      "movement_counts": [
+        41,
+        37,
+        34,
+        25,
+        21,
+        18,
+        9,
+        9,
+        5,
+        3,
+        4,
+        2
+      ],
+      "movement_ranks": [
+        34,
+        32,
+        31,
+        25,
+        12,
+        10,
+        5,
+        9,
+        5,
+        2,
+        4,
+        2
+      ],
+      "subject": "ReMIND-045",
+      "teacher_STOP": {
+        "legal_actions": 1,
+        "step": 12,
+        "stop_probability": 1.0,
+        "teacher_rank": 1,
+        "value": 1.0888828039169312
+      },
+      "teacher_STOP_forced": true,
+      "teacher_value_range": [
+        1.0888828039169312,
+        2.6603329181671143
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "scope": "diagnosis_of_failed_FIXED_SELECT013_start_not_a_new_route",
+  "manifest_sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+  "inputs": {
+    "supplied_support": {
+      "bytes": 2152778,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-select-public-preparation-v1/actual-public-qc-v1/ReMIND-013-crop-mr/cerebrum_source_label.npy",
+      "sha256": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070"
+    },
+    "supplied_whole_tumor": {
+      "bytes": 2152778,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-select-public-preparation-v1/actual-public-qc-v1/ReMIND-013-crop-mr/whole_tumor_source_label.npy",
+      "sha256": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e"
+    }
+  },
+  "shape": [
+    127,
+    150,
+    113
+  ],
+  "spacing_mm": [
+    1.0,
+    1.0,
+    0.9999999034194179
+  ],
+  "support_extent_axis0": [
+    0,
+    125
+  ],
+  "target_centroid_source_voxels": [
+    31.850709018718096,
+    88.7027509926262,
+    83.27802041973908
+  ],
+  "transverse": [
+    89,
+    83
+  ],
+  "inward_axis0_sign": 1,
+  "disc_occupied_axis0_extent": [
+    0,
+    125
+  ],
+  "outer_face_source_index": -0.5,
+  "outer_face_at_image_boundary": true,
+  "proximal_slab_indices": [],
+  "proximal_slab_count": 0,
+  "inside_disc_whole_cell_count": 89,
+  "seed_cells": 0,
+  "source_support_cells_in_boundary_disc": 1,
+  "supplied_target_cells_in_boundary_disc": 0,
+  "min_absolute_distal_face_distance_mm": 1.0,
+  "existing_source_crop_positive_loss": 1469,
+  "full_supplied_target_voxels": 35260,
+  "native_previews": 0,
+  "policy_forwards": 0,
+  "optimizer_updates": 0,
+  "simulated_material_changes": 0,
+  "conclusion": "The fixed outer face has no preceding cell slab inside this cropped planning grid. Whole-cell aperture footprint exists. Do not fabricate known free space or change the original failed result.",
+  "elapsed_seconds": 0.02473112498410046,
+  "process_peak_RSS_bytes": 64110592
+}

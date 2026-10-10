@@ -1,0 +1,82 @@
+{
+  "EVAL_opened": false,
+  "anatomical_accuracy_claim": false,
+  "arm_order": [
+    "observed_greedy",
+    "IL64",
+    "RL8",
+    "observed_beam"
+  ],
+  "arms": {
+    "IL64": {
+      "status": "not_started"
+    },
+    "RL8": {
+      "status": "not_started"
+    },
+    "observed_beam": {
+      "status": "not_started"
+    },
+    "observed_greedy": {
+      "status": "not_started"
+    }
+  },
+  "checkpoint_loads": 2,
+  "comparison_condition": "same explicit post-exposure S-union-T world and public inputs across all four arms",
+  "derived_material_assumption": true,
+  "equal_training_or_planning_budget_claim": false,
+  "failure": {
+    "committed": false,
+    "message": "POST_EXPOSURE_EMPTY_FIXED_K",
+    "type": "ValueError"
+  },
+  "full_supplied_target_voxels": 35260,
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 0.06716262502595782,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_ValueError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 0,
+    "native_preview_profile": {
+      "phases": {},
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 0,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "optimizer_attempts": 0,
+  "optimizer_updates_on_SELECT": 0,
+  "physical_surgery_claim": false,
+  "planned_SELECT_denominator": 2,
+  "planner_scope": "observed_greedy and observed_beam generate simulated plans from the permitted source-derived estimated world; not observed surgical demonstrations",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "private_reference_reads": 0,
+  "raw_support_unsupported_target_voxels": 33681,
+  "role": "SELECT",
+  "status": "failed_or_unresolved",
+  "subject": "ReMIND-013",
+  "task_condition": "PARTIAL_TARGET_PROGRESS",
+  "total_policy_forward_calls": 0,
+  "wall_seconds": 0.08883108291774988
+}

@@ -1,7 +1,7 @@
 # Project status
 
-**Current priority, October 10:** test the fixed models on a new patient before
-choosing the next optimization. The matched scratch RL run completed eight updates
+**Current priority, October 10:** improve the measured action-ranking failure while
+repairing a separately diagnosed new-patient starting-condition blocker. The matched scratch RL run completed eight updates
 and 32 episodes, but is worse than greedy search and accepted imitation on all four
 TRAIN cases. It removes 24/30 target cells on 015/045 versus search's 58/51, and
 removes 20.027/16.212 mm³ outside the supplied target on 002/018 without target gain.
@@ -10,9 +10,10 @@ present: 16 positive episodes and 291 positive cuts, all with positive continuat
 return. This failure is not explained by absent reward exposure; the precise cause
 still needs testing. All 64 imitation updates remain preserved, including the
 separately accepted unchanged045 route after the numerical checker correction.
-No learned advantage or useful transfer is established. The next fixed SELECT013
-comparison uses the same declared post-exposure task; 037 remains held and EVAL067
-closed. Earlier SELECT all-STOP outcomes remain historical results from the earlier
+No learned advantage or useful transfer is established. The fixed SELECT013
+attempt now refuses construction: its outer opening plane meets the crop boundary,
+leaving no in-grid free-space seed. All four arms are unstarted, so no transfer
+outcome exists. 037 remains held and EVAL067 closed. Earlier SELECT all-STOP outcomes remain historical results from the earlier
 starting condition, not predictions of this new comparison.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
@@ -28,6 +29,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Transfer exposed a crop/start-rule blocker before inference:** [the preserved failure and diagnosis](artifacts/post-exposure-select013-failure-v1/RESULT.txt) confirm zero forwards/previews/updates and no planning outcome. The fixed outer union face lies on the image boundary, with no required proximal seed slab. The original failure passes 1,744 independent checks; the source masks remain unchanged. In parallel, saved TRAIN logits show RL STOP ranked last on both nonproductive roots and zero-of-25 top-ranked teacher motions. Next: examine existing scan coverage and test the one public motion-ranking learning contrast; no additional sweep or claimed transfer gain.
 
 - **The fixed new-patient comparison is ready:** [the SELECT integration](artifacts/post-exposure-select013-integration-v1/RESULT.txt) passes 150 focused canonical controls and nine subtests, including both checkpoint reloads and generated complete replay. Greedy, IL64, scratch RL8 and beam share the declared post-exposure task, with zero SELECT updates. Source-derived support coverage stays distinct from assumed material; 037 remains held and EVAL067 closed. Actual transfer results are pending.
 

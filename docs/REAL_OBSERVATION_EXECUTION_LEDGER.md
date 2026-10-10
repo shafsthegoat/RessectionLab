@@ -41,9 +41,11 @@ The latest [complete four-TRAIN result](../artifacts/post-exposure-rl8-result-v1
 finds scratch RL8 worse than greedy search and accepted IL64 on every case, despite
 16 positive training episodes. All eight updates, 32 episodes and four saved
 geometry certificates pass independent arithmetic/identity audit (10,874 checks).
-The fixed post-exposure SELECT013 comparison comes next, with zero updates, four
-methods, 037 held and EVAL067 closed. Select one model change from these failures
-rather than launching a sweep. Missing functional/vascular evidence and unvalidated
+The [fixed post-exposure SELECT013 attempt](../artifacts/post-exposure-select013-failure-v1/RESULT.txt)
+now fails task construction at a crop-boundary opening with no proximal seed; all
+four arms are unstarted and no planning result exists. 037 remains held and EVAL067
+closed. Inspect real source coverage independently of the one proposed TRAIN
+motion-ranking contrast; neither failure authorizes invented free space or a sweep. Missing functional/vascular evidence and unvalidated
 material assumptions prevent clinical or physical-fidelity claims.
 
 ## Active human steering, October 8

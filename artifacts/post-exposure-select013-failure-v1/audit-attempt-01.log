@@ -1,0 +1,184 @@
+{
+  "decision": "PASS_RETAINED_INCOMPLETE_ATTEMPT_EVIDENCE",
+  "complete_comparison": false,
+  "parent_status": "failed_or_unresolved",
+  "failure": {
+    "committed": false,
+    "message": "POST_EXPOSURE_EMPTY_FIXED_K",
+    "type": "ValueError"
+  },
+  "arms": {
+    "observed_greedy": {
+      "saved_status": "not_started",
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "complete_accepted_route": false,
+      "certificate_outcomes": null
+    },
+    "IL64": {
+      "saved_status": "not_started",
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "complete_accepted_route": false,
+      "certificate_outcomes": null
+    },
+    "RL8": {
+      "saved_status": "not_started",
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "complete_accepted_route": false,
+      "certificate_outcomes": null
+    },
+    "observed_beam": {
+      "saved_status": "not_started",
+      "result_row": {
+        "status": "not_started"
+      },
+      "saved_certificate_accepted": null,
+      "complete_accepted_route": false,
+      "certificate_outcomes": null
+    }
+  },
+  "planned_SELECT_denominator": 2,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "EVAL_closed": true,
+  "loaded_checkpoint_lineages": {
+    "IL64": {
+      "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+      "checkpoint_sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c",
+      "completed_updates": 64,
+      "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+      "method": "IL",
+      "optimizer_updates_on_SELECT": 0,
+      "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+      "public_target_context_variant": "full-supplied-public-target-context-v1",
+      "training_context_hashes": {
+        "ReMIND:002": "sha256:9b0707b791111a23b735cd8d8707a9c35c073ba5e683331cb29f22050b6c9b08",
+        "ReMIND:015": "sha256:ed93f8375ec37828be6f8dfeff24d417618db65ab2ee4a106786389a41e82257",
+        "ReMIND:018": "sha256:ceddd29d57eb84ee0e74c2816ce9a2680e0f7541b013defbd59f8c531cc3447f",
+        "ReMIND:045": "sha256:1c660e1b81b5465a6fb8987c163154a94f88b403595247fe3866ae6a7280cdd1"
+      },
+      "training_release_sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b",
+      "version": "frozen-TRAIN-checkpoint-lineage-v1"
+    },
+    "RL8": {
+      "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+      "checkpoint_sha256": "87181c166a8c7255e11bcc57d362ec60edd822617786d2c5a729006a5037c34d",
+      "completed_updates": 8,
+      "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "learning_protocol_hash": "sha256:887cb4ee1895ce9cabdd1686f4f55308f9c5d934159df9546a6c5b6f57318c0d",
+      "method": "RL",
+      "optimizer_updates_on_SELECT": 0,
+      "parameter_hash": "sha256:39a44a88a19c634e938878e8029dcafc04a7669f1b7fa69422ab57d502015b4d",
+      "public_target_context_variant": "full-supplied-public-target-context-v1",
+      "training_context_hashes": {
+        "ReMIND:002": "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+        "ReMIND:015": "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+        "ReMIND:018": "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+        "ReMIND:045": "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+      },
+      "training_release_sha256": "4da18b8bd21e6a54308d0b58b3d234c49c7351b56040e448ac7107a28a773e3e",
+      "version": "frozen-TRAIN-checkpoint-lineage-v1"
+    }
+  },
+  "checkpoint_loads": 2,
+  "policy_forwards": 0,
+  "native_previews": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 0.06716262502595782,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_ValueError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 0,
+    "native_preview_profile": {
+      "phases": {},
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 0,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "costs": {
+    "native_budget": {
+      "blocked_preview_attempts": 0,
+      "cache_hits": null,
+      "counting_reliable": true,
+      "elapsed_seconds": 0.06716262502595782,
+      "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+      "failure": "arm_raised_ValueError",
+      "history_complete_caller_attestation": null,
+      "independent_audit": "outside_this_guard_not_verified",
+      "limits": {
+        "native_preview_entries": 750000,
+        "planning_execution_seconds": 900.0
+      },
+      "native_preview_entries": 0,
+      "native_preview_profile": {
+        "phases": {},
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "observed_admissions_before_accounting_failure": 0,
+      "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+      "requests": {},
+      "score": null,
+      "status": "failed",
+      "time_overshoot_seconds": 0.0,
+      "version": "native-planning-budget-v1",
+      "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+    },
+    "phases": {
+      "checkpoint_reload.IL64": {
+        "complete_wall_seconds": 0.008506041951477528,
+        "native_preview_entries": 0
+      },
+      "checkpoint_reload.RL8": {
+        "complete_wall_seconds": 0.002901083091273904,
+        "native_preview_entries": 0
+      },
+      "observed_greedy.public_construction": {
+        "complete_wall_seconds": 0.05399250006303191,
+        "native_preview_entries": 0
+      }
+    },
+    "policy_forwards": 0,
+    "timing_scope": "inclusive phases; do not sum nested work"
+  },
+  "parent": {
+    "elapsed_seconds": 3.727428958984092,
+    "sampled_peak_rss_bytes": 371245056,
+    "output_bytes": 9598,
+    "cleanup_errors": [],
+    "final_owned_pids": []
+  },
+  "limits": "Partial evidence only; no full comparison or accepted capped-prefix claim. No geometry/model replay.",
+  "audit_seconds": 0.034896708093583584,
+  "audit_peak_rss_bytes": 28229632,
+  "checks": 1744,
+  "scope": "saved_JSON_and_source_only",
+  "no_model_or_patient_array_imports": true,
+  "release_sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+}

@@ -1,0 +1,46 @@
+{
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 0.06716262502595782,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_ValueError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 0,
+    "native_preview_profile": {
+      "phases": {},
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 0,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "phases": {
+    "checkpoint_reload.IL64": {
+      "complete_wall_seconds": 0.008506041951477528,
+      "native_preview_entries": 0
+    },
+    "checkpoint_reload.RL8": {
+      "complete_wall_seconds": 0.002901083091273904,
+      "native_preview_entries": 0
+    },
+    "observed_greedy.public_construction": {
+      "complete_wall_seconds": 0.05399250006303191,
+      "native_preview_entries": 0
+    }
+  },
+  "policy_forwards": 0,
+  "timing_scope": "inclusive phases; do not sum nested work"
+}

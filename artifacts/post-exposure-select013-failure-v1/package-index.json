@@ -1,0 +1,128 @@
+{
+  "status": "preserved_failed_transfer_attempt_and_independent_diagnosis",
+  "files": [
+    {
+      "source": "build/post-exposure-select013-independent-v1/audit_saved.py",
+      "packaged": "audit_saved.py",
+      "bytes": 35710,
+      "sha256": "6530e190b4dc29566ca11a9ebe9f8d277411b41465dac7fa0f0e132334d47aa5"
+    },
+    {
+      "source": "build/post-exposure-select013-independent-v1/audit-result.json",
+      "packaged": "audit-result.json",
+      "bytes": 30724,
+      "sha256": "9db42db3f96b9850a501078d264c6042e7ced4fed9a77fab49d661d77b728e95"
+    },
+    {
+      "source": "build/post-exposure-select013-independent-v1/audit-attempt-01.log",
+      "packaged": "audit-attempt-01.log",
+      "bytes": 7916,
+      "sha256": "3820cc83b7471a9b96e3bc916a4f1399ad2378f208cece92837ca30d65b41ce8"
+    },
+    {
+      "source": "build/post-exposure-select013-independent-v1/REPORT.txt",
+      "packaged": "REPORT.txt",
+      "bytes": 4850,
+      "sha256": "104dc0e9e49038918f8f337fea9c9fc000852cf87165ecad510103d2ddfd23e7"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01/result.json",
+      "packaged": "attempt/result.json",
+      "bytes": 2984,
+      "sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01/costs.json",
+      "packaged": "attempt/costs.json",
+      "bytes": 1858,
+      "sha256": "119fb28569203f383d1b559d7dcee800881343e59012b950edfd317cbc253ff3"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01/IL64-lineage.json",
+      "packaged": "attempt/IL64-lineage.json",
+      "bytes": 1206,
+      "sha256": "e1fe8425d052af596f3a830645e306c47b85f135264e39f81a45f632c3ae3172"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01/RL8-lineage.json",
+      "packaged": "attempt/RL8-lineage.json",
+      "bytes": 1205,
+      "sha256": "5c93670f0e4203166bad5c7d8282c1f0d0bb18bb32886d51657f6db3621f5799"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01/IL64-training-evidence.json",
+      "packaged": "attempt/IL64-training-evidence.json",
+      "bytes": 1769,
+      "sha256": "4498c265413086959877c3ecfc3c2a458f7dbfeab12b82cc3dc12334c73c35c6"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01/RL8-training-evidence.json",
+      "packaged": "attempt/RL8-training-evidence.json",
+      "bytes": 576,
+      "sha256": "5d367211750b436104ab86a54a0e194db2b94fc5fdc23be76c03dd3167511b10"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01.supervision/receipt.json",
+      "packaged": "supervision/receipt.json",
+      "bytes": 1958,
+      "sha256": "cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01.supervision/worker-final.json",
+      "packaged": "supervision/worker-final.json",
+      "bytes": 765,
+      "sha256": "5deb8c3a133953880aeba956068e8bd7c5e8944d3b9c2c117c81ef1d723fb41e"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/attempt-01.supervision/worker.log",
+      "packaged": "supervision/worker.log",
+      "bytes": 1591,
+      "sha256": "387ec1b034842fe8866386eda59207c2b5dcde645d1a0f8aa64699d25a8ef529"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/root-release.json",
+      "packaged": "root-release.json",
+      "bytes": 5883,
+      "sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/source-index.json",
+      "packaged": "source-index.json",
+      "bytes": 16530,
+      "sha256": "1882d4b16eac077a0ec7fbe25bf126db27e7e029b962937c91ba771c7a7245c4"
+    },
+    {
+      "source": "build/select013-empty-seed-diagnostic-v1/diagnose.py",
+      "packaged": "geometry-diagnosis/diagnose.py",
+      "bytes": 4544,
+      "sha256": "30d384a7fada73725a1ba3bbff2e1398a57d7bed5a10231f66a3edffe98e2711"
+    },
+    {
+      "source": "build/select013-empty-seed-diagnostic-v1/result.json",
+      "packaged": "geometry-diagnosis/result.json",
+      "bytes": 2155,
+      "sha256": "e50085f9f9ecd4aeac258bc83701c9f4e695cd36a981b247b3f59bed791c4c4f"
+    },
+    {
+      "source": "build/post-exposure-rl8-diagnosis-v1/derive_mechanism.py",
+      "packaged": "TRAIN-policy-diagnosis/derive_mechanism.py",
+      "bytes": 3655,
+      "sha256": "d0a8c7499ae12886d94b8c2eb668403b89373d564b28810bda9b1b9fecf2724c"
+    },
+    {
+      "source": "build/post-exposure-rl8-diagnosis-v1/mechanism-scalars.json",
+      "packaged": "TRAIN-policy-diagnosis/mechanism-scalars.json",
+      "bytes": 16489,
+      "sha256": "0d8f9ecb2a8bee11b3b443dfc25c6fc1a0d5918b0ab6762cffd9e6b573806a7a"
+    },
+    {
+      "source": "build/post-exposure-rl8-diagnosis-v1/mechanism-inputs.json",
+      "packaged": "TRAIN-policy-diagnosis/mechanism-inputs.json",
+      "bytes": 5548,
+      "sha256": "94107e6ce32269f7177e272794a7b20072487c227e21651daf1c8b6e0be729fe"
+    }
+  ],
+  "patient_arrays_and_weights_included": false,
+  "planned_SELECT_denominator": 2,
+  "completed_SELECT_planning_cases": 0
+}

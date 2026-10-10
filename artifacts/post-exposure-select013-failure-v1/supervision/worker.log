@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-select013-comparison-v1/select_worker.py", line 223, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-select013-comparison-v1/select_worker.py", line 211, in main
+    result=execute(release,args.release_sha256,output,progress)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-select013-comparison-v1/select_worker.py", line 90, in execute
+    source,binding,qc,protocol=prepare_public_source(source_dir,release,release_sha,None,progress,
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/public_patient_factory.py", line 243, in prepare_public_source
+    access, post_start = prepare_post_exposure(support=support, target=target,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/post_exposure.py", line 139, in prepare_post_exposure
+    raise ValueError("POST_EXPOSURE_EMPTY_FIXED_K")
+ValueError: POST_EXPOSURE_EMPTY_FIXED_K

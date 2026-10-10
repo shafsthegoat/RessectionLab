@@ -1,0 +1,34 @@
+Independent saved-result audit: SELECT013 post-exposure attempt-01
+
+PASS for preservation and consistency of the failed attempt, not for a completed comparison. The first audit execution passed 1,744 checks in 0.034897 s with 28,229,632 B process peak RSS. Source and saved JSON identities were rechecked. No patient arrays, checkpoint payloads, model calls, optimization, preview or geometry replay occurred during this audit.
+
+The actual construction error was ValueError: POST_EXPOSURE_EMPTY_FIXED_K at post_exposure.py:139, called from public_patient_factory.py before task creation. The parent's later Incomplete public SELECT comparison is a completion guard, not the original scientific cause. No model-ranking or checkpoint-lineage failure is shown.
+
+All four declared arms remain not_started: observed_greedy, IL64, RL8, observed_beam. There are no accepted plans, STOP outcomes, public returns, removal measurements or geometry certificates for this attempt. All four arm slots are retained. SELECT013 was attempted but produced no planning result; SELECT037 remains held in the planned two-case denominator, and EVAL067 remains closed. Zero native previews, policy forwards, optimizer attempts, optimizer updates, gradient attempts and private-reference reads were recorded.
+
+Both predetermined checkpoints were authenticated before public task construction. Their saved lineage records match the exact upstream results and releases:
+  IL64 checkpoint c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c
+  RL8 checkpoint 87181c166a8c7255e11bcc57d362ec60edd822617786d2c5a729006a5037c34d
+The original IL attempt remains failed with its separately accepted exact 045 recovery; this SELECT failure changes neither TRAIN result. No checkpoint bytes were opened by the auditor.
+
+The owned child exited 1 and was cleanly reaped: 3.727428959 s parent wall, 371,245,056 B sampled peak RSS, 9,598 B output, 17 resource samples, no surviving owned PIDs or cleanup errors. Worker lifecycle was 3.129196334 s. Recorded scoped costs were 0.008506042 s IL reload, 0.002901083 s RL reload and 0.053992500 s failed public construction; these exclude imports/guards and do not replace full owned runtime. History-complete attestation is null, correctly preserving incomplete execution.
+
+Source interpretation, without reading or recomputing geometry
+  O is the full immutable S union T. The fixed side, transverse location and 6 mm disc select the outermost occupied full-cell face. K then requires an in-grid proximal face-adjacent Ds-covered O-empty cell with its whole transverse footprint strictly inside the disc. An empty K refuses this declared post-exposure start; it does not demonstrate global inaccessibility, absence of a possible plan or failure of learned transfer.
+  Fully covered Ds does not itself supply a proximal in-grid cell or certify physical air. Conditional on an available proximal slab and at least one fitting transverse whole cell, the outermost-O construction should make that slab O-empty across the disc. Distinguishing an image-boundary absence, footprint exclusion or numerical face classification requires the separate bounded public-geometry diagnosis; this audit does not select among them.
+  K is the seed of declared connected source-zero free space. E is only a wholly proximal unknown-workspace collision exception and cannot substitute for K or be flooded as observed free space. Moving the aperture, extending the image, changing the seed rule or exempting occupied/unknown material would change the experiment and must not be described as an unchanged retry. No such change was made here.
+  Full target 35,260 and raw unsupported target 33,681 are pinned input-contract counts, not measurements of a successfully constructed SELECT world in this attempt. No surgical, anatomical, safety or material-validation outcome follows.
+
+Exact identities
+  HEAD 0027f0204ecc5dfb7b8f0960cd05f0b35484b727
+  Release e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048
+  Source index 1882d4b16eac077a0ec7fbe25bf126db27e7e029b962937c91ba771c7a7245c4
+  Receipt cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc
+  Worker final 5deb8c3a133953880aeba956068e8bd7c5e8944d3b9c2c117c81ef1d723fb41e
+  Result c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812
+
+Independent files in this directory
+  audit_saved.py SHA256 6530e190b4dc29566ca11a9ebe9f8d277411b41465dac7fa0f0e132334d47aa5
+  audit-result.json SHA256 9db42db3f96b9850a501078d264c6042e7ced4fed9a77fab49d661d77b728e95
+  audit-attempt-01.log SHA256 3820cc83b7471a9b96e3bc916a4f1399ad2378f208cece92837ca30d65b41ce8
+The audit result contains the exact input/source hash inventory. The completed-comparison branch remains prospective and was not exercised by this failed attempt. No experiment receipt or source was rewritten.
