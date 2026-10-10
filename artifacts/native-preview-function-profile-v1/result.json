@@ -1,0 +1,84 @@
+{
+  "blocked_external_calls": 0,
+  "checkpoint_loads": 0,
+  "committed_actions": 13,
+  "construction_seconds": 1.7216314170509577,
+  "elapsed_seconds": 39.43299391702749,
+  "failure": {
+    "message": "exact_full_history",
+    "type": "ValueError"
+  },
+  "greedy_calls": 1,
+  "model_calls": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 39.43285591597669,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_ValueError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 6000,
+      "planning_execution_seconds": 120.0
+    },
+    "native_preview_entries": 2275,
+    "native_preview_profile": {
+      "phases": {
+        "execution": {
+          "feasible": 167,
+          "raised": 0,
+          "rejected": 925,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 925
+          },
+          "returned": 1092,
+          "returned_microsteps": 20660,
+          "seconds": 15.755998275941238,
+          "started": 1092
+        },
+        "planning": {
+          "feasible": 167,
+          "raised": 0,
+          "rejected": 925,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 925
+          },
+          "returned": 1092,
+          "returned_microsteps": 20660,
+          "seconds": 18.70321209798567,
+          "started": 1092
+        },
+        "unclassified": {
+          "feasible": 41,
+          "raised": 0,
+          "rejected": 50,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 50
+          },
+          "returned": 91,
+          "returned_microsteps": 1566,
+          "seconds": 1.227404537377879,
+          "started": 91
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 2275,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_previews": 2275,
+  "optimizer_calls": 0,
+  "release_sha256": "5a4212cf619c75ad7037e73dada9c46e114eb935eb08840fa4d07d4344252691",
+  "source_visits": 1,
+  "status": "failed_or_unresolved",
+  "subject": "ReMIND-045"
+}

@@ -1,0 +1,40 @@
+{
+  "activation": "none; no canonical source edits or experiment performed",
+  "boundaries": {
+    "lifetime": "one fresh cache after task construction, scoped only around one greedy call; restore native query before authoritative execution and independent audit; release retained cache after writing stats",
+    "max_entries": 16384,
+    "max_retained_array_bytes": 33554432,
+    "payload_note": "entry keys/bookkeeping are outside array-payload cap; existing owned RSS/wall/output limits still apply",
+    "threads": 1,
+    "workers": 1
+  },
+  "implementation": {
+    "path": "src/resectionlab/experimental_capsule_cache.py",
+    "sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869"
+  },
+  "key": "existing exact float64 start/end/radius bits plus validated immutable frame/source namespace; no rounding; no cavity/feasibility/integrity caching",
+  "missing": [
+    "TRAIN045 query reuse/hit rate",
+    "current per-query guard overhead",
+    "cache memory including Python objects",
+    "full replay parity with post-exposure condition under cache",
+    "uninstrumented end-to-end benefit",
+    "any RL throughput benefit"
+  ],
+  "next_evidence_if_scheduled": "Reuse the existing owned one-case runner, same accepted TRAIN045 world and complete actions/accounting/history. Record cache construction, hit/miss/eviction/bypass and query/compute time, payload/entries, greedy wall and process RSS separately; restore before full authoritative replay and current independent audit. First check existing generated cache/post-exposure semantics against then-current code. No timing gain is claimed from the present profile.",
+  "not_intercepted": "geometry._check_envelope direct coverage calls (2.602034839 s) and its direct distance calls (2.840041546 s); do not add these inclusive times to totals",
+  "optimization": "Reuse existing exact capsule-cover LRU for one native greedy window",
+  "reason": "45,354 native preview capsule queries consumed 10.020807126 cumulative seconds. Exact pure geometry reuse avoids recomputing arbitrary oblique segment/cell covers without changing arithmetic or relying on axis alignment.",
+  "status": "source_only_proposal_not_executed",
+  "unchanged_checks": [
+    "hard and access envelope",
+    "unknown source domain and post-exposure physical segment",
+    "remaining occupancy and prior-cavity shaft clearance",
+    "full eight-corner active-tip containment",
+    "connectivity/frontier",
+    "preview budget",
+    "state/certificate validation",
+    "reward and complete plan replay"
+  ],
+  "why_before_arithmetic_change": "Existing source and synthetic adversaries already cover exact keys, immutable result tampering, eviction/empty arrays, restoration and prior-cavity rejection. Algebra changes would require new boundary-roundoff equivalence proof; this profile does not establish an axis-aligned query share."
+}

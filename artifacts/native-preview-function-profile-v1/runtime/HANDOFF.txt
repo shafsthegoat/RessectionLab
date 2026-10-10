@@ -1,0 +1,41 @@
+STAGED ONLY. No imports, tests, patient reads or execution have been performed.
+
+One accepted TRAIN045 native greedy window. The supervisor is byte-identical to
+build/post-exposure-IL045-evaluation-recovery-v1/run_owned.py, SHA256
+3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff.
+This worker uses current canonical code directly; no source/package overlay.
+
+After the complete new-patient comparison and SELECT, root's metadata-only freeze:
+.venv/bin/python -I -B build/native-preview-function-profile-v1/freeze-runtime.py --head <next-exact-committed-HEAD>
+
+This reuses the reviewed SELECT AST closure and its bound canonical path list,
+rehashing current committed source including the corrected independent evaluator.
+It binds the four local executing sources plus itself, owned helpers and exact
+INPUTS/public-index/045-manifest/cohort. It writes the existing source-index format
+{head, files:{path:sha}} and execution_released:false template, exclusively.
+No source/index/release has been frozen or helper executed in this preparation.
+
+Root's later command, after that ordinary binding/release:
+.venv/bin/python -I -B build/native-preview-function-profile-v1/run_owned.py --release build/native-preview-function-profile-v1/root-release.json --release-sha256 <exact-root-release-SHA256>
+
+Same existing one-worker supervisor:120s worker/150s parent,3GiB sampled RSS,
+6000 native previews,32MiB output, one thread, no retry/model/optimizer/checkpoint.
+Existing60s greedy deadline remains; cProfile overhead may cause explicit failure.
+The historical broader qualification limits are retained only to reconstruct
+the same context. These tighter owned execution caps govern this measurement.
+
+Only task.observed_greedy_search(seconds=60) is profiled. Construction, complete
+authoritative replay and independent geometry audit are timed separately.
+Full old actions/scores/history/outcomes must match:12 motions+STOP,51 target
+cells,zero non-target,48.181962920864926 reward. No failed IL045 route is used.
+
+native-functions.json contains top100 self/cumulative functions and up to20
+callers each, call counts, cumulative/self times and truncation indicators.
+Inspect check_motion / capsule_voxel_indices / _segment_cell_distances /
+contained_capsule_cells / connectivity / certificate-hash paths without summing
+nested cumulative times. No .prof pickle or numerical arrays are saved.
+
+Missing evidence: function-level attribution within native previews, C-extension
+internal/allocator/cache behavior, and representative on-policy RL-path cost.
+The17.66% reduction in committed-mask copy traffic did not improve measured
+greedy time. This profile is attribution only, not an unprofiled speed benchmark.

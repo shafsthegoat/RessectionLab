@@ -1,0 +1,97 @@
+{
+  "status": "completed_profile_window_with_preserved_post_window_guard_failure",
+  "files": [
+    {
+      "source": "build/native-preview-function-profile-independent-v1/audit-result.json",
+      "packaged": "audit-result.json",
+      "sha256": "c551606afd323b7aaccec8e4a7043380d20f4eb9a7135fde4fd920d31170cc09",
+      "bytes": 27221
+    },
+    {
+      "source": "build/native-preview-function-profile-independent-v1/audit_saved.py",
+      "packaged": "audit_saved.py",
+      "sha256": "415769b42a84b117e6bf05b479bb7fbd192b535ca7e5a6cc113d2b5b8fd39e36",
+      "bytes": 10578
+    },
+    {
+      "source": "build/native-preview-function-profile-independent-v1/optimization-proposal.json",
+      "packaged": "optimization-proposal.json",
+      "sha256": "aa2d491a181843bd6da0a39dd5f9c6b3eebca77634e5f2a17b365cf854763773",
+      "bytes": 2885
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/attempt-01/result.json",
+      "packaged": "result.json",
+      "sha256": "0fc15a9ee576ccf9ac86a2d0cb1400c0d48a12af4317fd200e12d76c78c22ee7",
+      "bytes": 2937
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/attempt-01/native-functions.json",
+      "packaged": "native-functions.json",
+      "sha256": "8ec3f05dbd3e3546773fda38bbcd4f747c3d654761ff6bcd3e483e47afce8193",
+      "bytes": 272395
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/attempt-01/greedy-plan.json",
+      "packaged": "greedy-plan.json",
+      "sha256": "250ae1498f27ff94811d41702ab98d82bf3084707b6c20bd81bd16e5d17128b7",
+      "bytes": 81191
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/attempt-01.supervision/receipt.json",
+      "packaged": "terminal-receipt.json",
+      "sha256": "365ed52c200977dd7b2388f45995cf4e25c75ea220820c9e2e63675ece96ea1c",
+      "bytes": 1259
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/initial_inventory_worker.py",
+      "packaged": "runtime/initial_inventory_worker.py",
+      "sha256": "b88a9caf2a289aa0b75ad38592db62a6d54dd801a2f1ef20266238a65b91e356",
+      "bytes": 8807
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/profile_window.py",
+      "packaged": "runtime/profile_window.py",
+      "sha256": "4ab7d20f8761d86073f207c2b964646388e510d6f36f79b4e17d0ebb3a2bda13",
+      "bytes": 2544
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/batch_contract.py",
+      "packaged": "runtime/batch_contract.py",
+      "sha256": "fcd86a389118ae4e5954b469328072cf5151d8115012fd304fc7c8e019fe253f",
+      "bytes": 4515
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/run_owned.py",
+      "packaged": "runtime/run_owned.py",
+      "sha256": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff",
+      "bytes": 8995
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/freeze-runtime.py",
+      "packaged": "runtime/freeze-runtime.py",
+      "sha256": "b2330d2d049663d234f6ca412474c6ab497ee582eb2a0d3f0225137f9aace7ef",
+      "bytes": 8059
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/source-index.json",
+      "packaged": "runtime/source-index.json",
+      "sha256": "c2a3d7e04e603329507bd243848c815e800a485ba425d06f1d50020c51b7ca02",
+      "bytes": 23490
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/root-release.json",
+      "packaged": "runtime/root-release.json",
+      "sha256": "5a4212cf619c75ad7037e73dada9c46e114eb935eb08840fa4d07d4344252691",
+      "bytes": 1929
+    },
+    {
+      "source": "build/native-preview-function-profile-v1/HANDOFF.txt",
+      "packaged": "runtime/HANDOFF.txt",
+      "sha256": "df618b67ac4eaf2cd346a8485fcefdb86afdd02d79115accf0ce39d703406e70",
+      "bytes": 2719
+    }
+  ],
+  "patient_arrays_or_weights_included": false,
+  "new_independent_geometry_audit_completed": false
+}

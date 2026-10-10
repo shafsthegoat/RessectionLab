@@ -1,0 +1,26 @@
+Native preview bottleneck, TRAIN045: October 10
+
+The20.559860-second cProfile window completed the same greedy12 movements+STOP,
+with exact scores and dispositions. A later parent attempt failed at its history
+comparison: live history contains tuples whereas prior JSON has lists. Saved
+complete episode metrics are exactly equal to the original accepted route. An
+independent saved-only audit passes98 checks and reproduces that container-type
+mismatch. Original exit1,41.8595s/533.6MB parent receipt stays failed; the new
+independent geometric audit was not reached. This is usable timing attribution
+from a completed function window, not a newly accepted complete experiment.
+
+Native preview_stroke cumulative time18.695027s accounts for90.93% of the measured
+window. capsule_voxel_indices totals12.622842s/51,906calls; its native-preview
+caller path accounts for10.020807s/45,354calls. The other2.602035s arises from
+geometry envelope checks. Nested _segment_cell_distances is11.121570s cumulative
+and7.554225s self over52,389calls; those cumulative times must not be added.
+cProfile overhead means this is not an unprofiled runtime comparison.
+
+A single proposed optimization reuses the existing ExactCapsuleCoverCache; no
+new geometry engine or approximate collision rule is needed. Bound32MiB payload
+and16,384entries, with exact geometry/float64 keys and immutable outputs; use
+it only around the same greedy window and restore before authoritative replay
+and independent checking. Its addressable caller path is48.74% of profiled wall,
+not expected savings. Hit rate, key overhead, cache memory and net speed remain
+unmeasured. A paired unprofiled baseline/cached run is being prepared separately.
+No model quality, learned speed advantage or physical-validation claim follows.

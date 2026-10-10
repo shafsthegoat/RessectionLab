@@ -1,0 +1,47 @@
+{
+  "caps": {
+    "log_bytes": 2097152,
+    "native_previews": 6000,
+    "output_bytes": 33554432,
+    "parent_seconds": 150,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "execution_released": true,
+  "expected_head": "290bdccfe3350b89343876f899b4c3798bc40b38",
+  "inputs": {
+    "audit": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/independent-episode.json",
+      "sha256": "a18c03193e4968bf2f2caa44257117c51107091ee0bdfe18083b7f5edd1b0db9"
+    },
+    "case": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/construction-result.json",
+      "sha256": "0a3b97bc77ea10452b56aa45e0105b289030c74f3b4f7ce38c6e8242655b40ce"
+    },
+    "metrics": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/episode-metrics.json",
+      "sha256": "fa67b7ee6862222d480d60a570161e7990082e854e0327814191a629a48f6e21"
+    },
+    "original_release": {
+      "path": "build/remind-post-exposure-feasibility-v1/root-release.json",
+      "sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a"
+    },
+    "plan": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/greedy-plan.json",
+      "sha256": "da7b49d6fde2c97c9f6911f42475afb7a4cc946e8c894e8267cc4a82679c58c1"
+    }
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "source_index": {
+    "path": "build/native-preview-function-profile-v1/source-index.json",
+    "sha256": "c2a3d7e04e603329507bd243848c815e800a485ba425d06f1d50020c51b7ca02"
+  },
+  "subject": "ReMIND-045",
+  "version": "native-function-profile-v1"
+}

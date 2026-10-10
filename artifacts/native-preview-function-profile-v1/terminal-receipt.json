@@ -1,0 +1,38 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "log_bytes": 2097152,
+    "native_previews": 6000,
+    "output_bytes": 33554432,
+    "parent_seconds": 150,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 41.85952199995518,
+  "exit_code": 1,
+  "output_bytes": 816577,
+  "planned_subjects": [
+    "ReMIND-045"
+  ],
+  "release_sha256": "5a4212cf619c75ad7037e73dada9c46e114eb935eb08840fa4d07d4344252691",
+  "remaining_owned_pids": [],
+  "result_sha256": "0fc15a9ee576ccf9ac86a2d0cb1400c0d48a12af4317fd200e12d76c78c22ee7",
+  "result_status": "failed_or_unresolved",
+  "sampled_peak_rss_bytes": 533561344,
+  "samples": 200,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/native-preview-function-profile-v1/source-index.json",
+    "sha256": "c2a3d7e04e603329507bd243848c815e800a485ba425d06f1d50020c51b7ca02"
+  },
+  "status": "failed_or_unresolved",
+  "stop_reason": "terminal_guard:ValueError:complete_profile",
+  "supervision_bytes_before_receipt": 3024,
+  "training_admitted": false,
+  "worker_pid": 91578,
+  "worker_termination_confirmed": true
+}
