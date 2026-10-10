@@ -1,0 +1,71 @@
+{
+  "native_guard_seconds": {
+    "contract": "PlanningBudget accepts finite positive real seconds",
+    "type": "float",
+    "value": 360.0
+  },
+  "parent_release_limits": {
+    "beam_width": 2,
+    "horizon": 24,
+    "memory_bytes": 3221225472,
+    "native_previews": 8000,
+    "optimizer_updates": 0,
+    "parent_seconds": 400,
+    "policy_forwards": 0,
+    "search_seconds": 300,
+    "search_transition_calls": 5640,
+    "threads": 1,
+    "worker_seconds": 360
+  },
+  "prior_failed_attempt": "ReMIND-008-horizon24-search-v1 preserved; status failed;0preview/search/model",
+  "protocol": {
+    "max_native_previews": {
+      "type": "int",
+      "value": 8000
+    },
+    "max_optimizer_updates": {
+      "type": "int",
+      "value": 0
+    },
+    "max_policy_forwards": {
+      "type": "int",
+      "value": 1
+    },
+    "max_steps": {
+      "type": "int",
+      "value": 24
+    },
+    "memory_bytes": {
+      "type": "int",
+      "value": 3221225472
+    },
+    "threads": {
+      "type": "int",
+      "value": 1
+    },
+    "worker_seconds": {
+      "type": "int",
+      "value": 360
+    }
+  },
+  "scope": "stdlib AST/JSON type check only; no project import/model/native/patient array execution",
+  "search": {
+    "beam_width": {
+      "type": "int",
+      "value": 2
+    },
+    "max_calls": {
+      "type": "int",
+      "value": 5640
+    },
+    "seconds": {
+      "type": "int",
+      "value": 300
+    }
+  },
+  "timer_seconds": {
+    "contract": "setitimer accepts floating seconds",
+    "type": "float",
+    "value": 360.0
+  }
+}

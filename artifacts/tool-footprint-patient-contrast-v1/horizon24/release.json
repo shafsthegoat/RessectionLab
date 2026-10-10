@@ -1,0 +1,43 @@
+{
+  "admission_forward_ceiling": 1,
+  "candidate_cap": 120,
+  "completion": "No caps; complete consecutive layers and explicit empty retained frontier required. Earlier exhausted finite beam is accepted, requested max24 remains explicit. Neither STOP nor exhaustion proves global unreachability.",
+  "diagnostic_scope": "One horizon contrast with larger explicit work budget; no model, training, private reference, replay or cohort benchmark",
+  "endpoint_rule": "numpy_rint nearest source-axis voxelcount, minimum1; actual physicaladvance reported, may exceed requested1mm",
+  "expected_head": "4f1d3463503736c8b9e532fe758bcf0c9e7a741e",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/horizon24-search-v2/input-index.json",
+    "sha256": "7ed9e4cffb430ce20328c0674ee404290f4ce2352eacdc2caade44d342fada21"
+  },
+  "limits": {
+    "beam_width": 2,
+    "horizon": 24,
+    "memory_bytes": 3221225472,
+    "native_previews": 8000,
+    "optimizer_updates": 0,
+    "parent_seconds": 400,
+    "policy_forwards": 0,
+    "search_seconds": 300,
+    "search_transition_calls": 5640,
+    "threads": 1,
+    "worker_seconds": 360
+  },
+  "output": "build/cross-patient-planning-v1/ReMIND-008-horizon24-search-v2",
+  "owned_execution_forward_limit": 0,
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "requested_opening_lookahead_mm": 1.0,
+  "retention_policy": "return_plus_opening_depth_volume_v1",
+  "scope": "Only max horizon6 to24 and explicit work budgets change. Same cap120,13columns, intermediate1mm, footprintTrue, widening retention, tools/reward/public arrays, beam2; global target context off.",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/horizon24-search-v2/source-index.json",
+    "sha256": "71520755e64088e3c8d6522409a15f3dd82a2e367a02cac8760683f0e2bb817b"
+  },
+  "status": "released_one_attempt",
+  "tie_break_limit": "Same source-bound physical action IDs expected; model/observation binds changed horizon. No new path ranking or tolerance.",
+  "tool_footprint_opening": true,
+  "version": "horizon24-ReMIND-008-search-release-v2"
+}

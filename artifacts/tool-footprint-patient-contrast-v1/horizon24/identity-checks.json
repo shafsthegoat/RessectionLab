@@ -1,0 +1,32 @@
+{
+  "exact_inventory_except_declared_horizon": {
+    "equal": true,
+    "actual_canonical_sha256": "4731bb241b6add0fefef3ee9f7ff5ea0fb3952c06059091b91e6a551815d3023",
+    "expected_canonical_sha256": "4731bb241b6add0fefef3ee9f7ff5ea0fb3952c06059091b91e6a551815d3023",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "declared_horizon_change": {
+    "equal": true
+  },
+  "global_context_off": {
+    "equal": true
+  },
+  "same_source_hash": {
+    "equal": true,
+    "actual": "sha256:f4210fcede92c1d1f21d69daf6008d87238b06876480a21a4e7e616c3e754e84",
+    "previous": "sha256:f4210fcede92c1d1f21d69daf6008d87238b06876480a21a4e7e616c3e754e84"
+  },
+  "decision_model_hash": {
+    "equal": true,
+    "actual": "sha256:631dbe0a8ccc75904fd83bf56f2fc776b782b29fb29a25fdf15b470672805c78",
+    "previous": "sha256:411094c7b9af2d34ff67654f1f9921da40093f03cd496aeabc06dc19de8f8d55",
+    "requirement": "horizon binds task/model and observed remaining steps; physical candidates unchanged"
+  },
+  "initial_observation_hash": {
+    "equal": true,
+    "actual": "sha256:2061bfef768831b46d150371a2c06ea8cf52add7573433b5f31747b0b9e4cb89",
+    "previous": "sha256:362d8a2f7ea835aa1ecf43c05039a66de67ad9c2c3015fc160f5321160cbc927",
+    "requirement": "horizon binds task/model and observed remaining steps; physical candidates unchanged"
+  }
+}

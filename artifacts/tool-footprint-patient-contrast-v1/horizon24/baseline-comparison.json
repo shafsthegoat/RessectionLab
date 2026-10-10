@@ -1,0 +1,28 @@
+{
+  "same_stop_decision": true,
+  "baseline_actions": [
+    "STOP"
+  ],
+  "new_actions": [
+    "STOP"
+  ],
+  "baseline_transition_calls": 416,
+  "new_transition_calls": 1401,
+  "baseline_search_seconds": 52.10950525011867,
+  "new_search_seconds": 172.3967594159767,
+  "comparison_scope": "only horizon6 to24 and explicit work budgets change; source, arrays, frame, access, tools, reward, cap120, candidate rule, beam2 and widening retention fixed",
+  "source_bound_action_ids_expected_equal": true,
+  "initial_physical_inventory_exact_except_horizon_fields": true,
+  "search_completeness": {
+    "complete": true,
+    "cause": "requested_horizon_reached",
+    "requested_max_horizon": 24,
+    "completed_layers": 24,
+    "global_unreachability_inferred": false,
+    "stop_meaning": "best evaluated finite-beam incumbent only; capped or unproven completion is unresolved"
+  },
+  "depth_comparison": "exact float order; no tolerance",
+  "candidate_cap": 120,
+  "omitted_candidate_legality_unknown": true,
+  "same_sampling_budgets_not_a_runtime_speed_claim": true
+}
