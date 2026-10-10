@@ -1,0 +1,777 @@
+{
+  "schema": "fixed-aperture-saved-mask-diagnostic-summary-v1",
+  "analysis_scope": "saved JSON only; no mask reload, geometry, preview, model or source modification",
+  "source_result": {
+    "path": "build/remind-aperture-mask-diagnostic-v1/attempt-01/result.json",
+    "sha256": "c26cb2d0531133a19b7c64a3cfbb9cba10efaf07e7a760175bc2c609fce1dbf4",
+    "bytes": 37954
+  },
+  "supervisor_receipt": {
+    "path": "build/remind-aperture-mask-diagnostic-v1/attempt-01.supervision/receipt.json",
+    "sha256": "6b5f77e6b39d418cad6a73cd2f0fd6f95ad4d6ad9a0c2770509e38b4e3258d8e",
+    "bytes": 1351
+  },
+  "root_release": {
+    "path": "build/remind-aperture-mask-diagnostic-v1/root-release.json",
+    "sha256": "e0444da5a30d9ada66f2663dc4b910407accd19777a99cf27260830cfbde42ac",
+    "bytes": 963
+  },
+  "source_index": {
+    "path": "build/remind-aperture-mask-diagnostic-v1/source-index.json",
+    "sha256": "8e8bf6e82926dffb10b8b803afbcb2bc9938f14e3e8b09b4287a6105e984f9bc",
+    "bytes": 5128
+  },
+  "planned_cases": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "saved_motions": 166,
+  "measured_geometric_queries": 664,
+  "measured_mask_loads": 12,
+  "analysis_mask_loads": 0,
+  "native_previews": 0,
+  "transitions": 0,
+  "search_calls": 0,
+  "models": 0,
+  "training_admitted": false,
+  "supervision": {
+    "elapsed_seconds": 1.8174203750677407,
+    "sampled_peak_rss_bytes": 361889792,
+    "exit_code": 0,
+    "remaining_owned_pids": [],
+    "worker_termination_confirmed": true,
+    "sampling_limit": "transient peaks or descendants between samples may be missed"
+  },
+  "count_semantics": "Motion counts mean at least one intersected cell; raw S/T and tool-part/depth categories may overlap. Do not add them as a unique volume or removed-cell denominator.",
+  "depth_semantics": "Entire affine cell signed interval relative to fixed modeled aperture, not anatomical intracranial/extracranial status. Touching is grouped with straddling at1e-8mm; inherited capsule contact tolerance1e-9mm.",
+  "domain_semantics": "S supplied automatic cerebrum; T full supplied manual whole tumor; Ds observed support coverage; modeled O=S|T,D=Ds|T,U=~D. Neither Ds-known zero nor T-derived occupancy is validated physical anatomy.",
+  "K_semantics": "Hypothetical source-covered O-zero cells with distal face touching fixed aperture plane and whole projected footprint inside6mm disc. No seeding, clearance or access admission occurred.",
+  "findings": {
+    "all_initial_shaft_motions_hit_proximal_U": true,
+    "any_U_hit_straddling_or_inward_across_all_parts": false,
+    "current_exterior_seed_count_and_connected_free_count_zero_all_cases": true,
+    "K_seeding_alone_cannot_resolve_shaft_U_or_known_material_collisions": true,
+    "moving_aperture_to_union_boundary_alone_not_shown_sufficient": true,
+    "outside_image_tool_geometry": "unassessed",
+    "current_fixed_condition_legal_motion_claim": false
+  },
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "role": "TRAIN",
+      "saved_motions": 52,
+      "saved_result": {
+        "path": "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-002-diagnostic.json",
+        "sha256": "04358e643b4f4af1a4ec83af01332812182c418adec371ca7c4fba4a77b438a7",
+        "bytes": 1061708
+      },
+      "aperture": {
+        "centre_mm": [
+          17.82992873846692,
+          166.85021606515804,
+          1.7599730157441016
+        ],
+        "normal_inward": [
+          -0.9937432173150389,
+          -0.09829577676777577,
+          0.05303167270579958
+        ],
+        "radius_mm": 6.0
+      },
+      "initial_shaft_motions_without_raw_S_or_full_T_contact": 12,
+      "motions_with_intersections": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 40,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 40,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 28,
+              "straddling_or_touching_aperture": 48,
+              "wholly_inward": 50
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 40,
+              "straddling_or_touching_aperture": 48,
+              "wholly_inward": 52
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 27,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 27
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 28,
+              "straddling_or_touching_aperture": 48,
+              "wholly_inward": 52
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 52
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        }
+      },
+      "global_source_positive_and_unknown_cells": {
+        "raw_S": {
+          "count": 988741,
+          "by_full_cell_depth": {
+            "wholly_proximal": 153571,
+            "straddling_or_touching_aperture": 18824,
+            "wholly_inward": 816346
+          }
+        },
+        "full_T": {
+          "count": 24274,
+          "by_full_cell_depth": {
+            "wholly_proximal": 0,
+            "straddling_or_touching_aperture": 0,
+            "wholly_inward": 24274
+          }
+        },
+        "derived_U": {
+          "count": 413036,
+          "by_full_cell_depth": {
+            "wholly_proximal": 119204,
+            "straddling_or_touching_aperture": 4812,
+            "wholly_inward": 289020
+          }
+        }
+      },
+      "initial_exposure": {
+        "boundary_cell_count": 123666,
+        "boundary_U_count": 123666,
+        "boundary_known_zero_seed_count": 0,
+        "actual_initial_connected_free_count": 0,
+        "known_source_zero_component_count": 231,
+        "geometric_disc_face_candidates": 93,
+        "candidate_connected_components": [
+          {
+            "component_id": 1,
+            "source_known_zero_cells": 1550811
+          }
+        ],
+        "candidate_face_adjacent_material_cells": 53,
+        "candidate_face_adjacent_raw_S_cells": 53,
+        "candidate_face_adjacent_full_T_cells": 0,
+        "not_an_admitted_cavity": true,
+        "source_zero_is_physical_air": false
+      },
+      "hypothetical_K_count": 80,
+      "hypothetical_K_indices_sha256": "5bda14a08a359bbc699056c3ec087366e4a24fdcf77f3f46fbe6ee8225ac87ef",
+      "native_affine_hash": "sha256:67d60d2865b873240c0b4274a2c97710b1fcdc8bdf17bc162ac0ef0e23ebfe66",
+      "source_affine_hash": "sha256:9eb455b5e2824d47ffece89fdc4d45b92bdc9503f5e95f12f1b7ca011a3f767f",
+      "all_original_conditions_retained_as_failed": true
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "role": "TRAIN",
+      "saved_motions": 52,
+      "saved_result": {
+        "path": "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-015-diagnostic.json",
+        "sha256": "702e9f78a2557778ae37ac08cb66e929d4414501c6b8801bb61b5652c5ca0f9f",
+        "bytes": 1191708
+      },
+      "aperture": {
+        "centre_mm": [
+          -53.404718749153474,
+          -12.469562499768145,
+          11.58070004125976
+        ],
+        "normal_inward": [
+          1.0,
+          4.897e-12,
+          0.0
+        ],
+        "radius_mm": 6.0
+      },
+      "initial_shaft_motions_without_raw_S_or_full_T_contact": 0,
+      "motions_with_intersections": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 50,
+              "wholly_inward": 52
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 52,
+              "wholly_inward": 38
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 26,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 26,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 43,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 41,
+              "wholly_inward": 33
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 43,
+              "wholly_inward": 30
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 50,
+              "wholly_inward": 52
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 52,
+              "wholly_inward": 52
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 26,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 26,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        }
+      },
+      "global_source_positive_and_unknown_cells": {
+        "raw_S": {
+          "count": 896879,
+          "by_full_cell_depth": {
+            "wholly_proximal": 814,
+            "straddling_or_touching_aperture": 2232,
+            "wholly_inward": 893833
+          }
+        },
+        "full_T": {
+          "count": 7745,
+          "by_full_cell_depth": {
+            "wholly_proximal": 613,
+            "straddling_or_touching_aperture": 581,
+            "wholly_inward": 6551
+          }
+        },
+        "derived_U": {
+          "count": 174084,
+          "by_full_cell_depth": {
+            "wholly_proximal": 23756,
+            "straddling_or_touching_aperture": 1728,
+            "wholly_inward": 148600
+          }
+        }
+      },
+      "initial_exposure": {
+        "boundary_cell_count": 116896,
+        "boundary_U_count": 116896,
+        "boundary_known_zero_seed_count": 0,
+        "actual_initial_connected_free_count": 0,
+        "known_source_zero_component_count": 229,
+        "geometric_disc_face_candidates": 93,
+        "candidate_connected_components": [
+          {
+            "component_id": 1,
+            "source_known_zero_cells": 1646557
+          }
+        ],
+        "candidate_face_adjacent_material_cells": 24,
+        "candidate_face_adjacent_raw_S_cells": 2,
+        "candidate_face_adjacent_full_T_cells": 23,
+        "not_an_admitted_cavity": true,
+        "source_zero_is_physical_air": false
+      },
+      "hypothetical_K_count": 13,
+      "hypothetical_K_indices_sha256": "2205081a1bf85d8a7a0a3ee51df79e720d1c9da4e5d7493ecf3fc8eb4d2a1e38",
+      "native_affine_hash": "sha256:8fe5a89da8428f0410683c79be5b751f726eba80ddf6d91ee1af1abe7e0220fb",
+      "source_affine_hash": "sha256:92eec4649c75701175e007c8fa90e50207a296cae5a406fe0993009f7e4ffe86",
+      "all_original_conditions_retained_as_failed": true
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "role": "TRAIN",
+      "saved_motions": 10,
+      "saved_result": {
+        "path": "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-018-diagnostic.json",
+        "sha256": "b5c4f42c521ab29fdc4b96af5f675a6f84a85c02426669f7637dddef94e239a6",
+        "bytes": 250659
+      },
+      "aperture": {
+        "centre_mm": [
+          -33.16474987185926,
+          16.02802245391372,
+          33.61724372521439
+        ],
+        "normal_inward": [
+          0.9999987757578223,
+          -0.0004127613662210905,
+          -0.0015093412176356124
+        ],
+        "radius_mm": 6.0
+      },
+      "initial_shaft_motions_without_raw_S_or_full_T_contact": 0,
+      "motions_with_intersections": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 10,
+              "wholly_inward": 10
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 10,
+              "wholly_inward": 9
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 7,
+              "wholly_inward": 2
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 7,
+              "wholly_inward": 2
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 10,
+              "wholly_inward": 10
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 10,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 10,
+              "straddling_or_touching_aperture": 10,
+              "wholly_inward": 10
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        }
+      },
+      "global_source_positive_and_unknown_cells": {
+        "raw_S": {
+          "count": 909356,
+          "by_full_cell_depth": {
+            "wholly_proximal": 107003,
+            "straddling_or_touching_aperture": 16318,
+            "wholly_inward": 786035
+          }
+        },
+        "full_T": {
+          "count": 1247,
+          "by_full_cell_depth": {
+            "wholly_proximal": 729,
+            "straddling_or_touching_aperture": 181,
+            "wholly_inward": 337
+          }
+        },
+        "derived_U": {
+          "count": 146736,
+          "by_full_cell_depth": {
+            "wholly_proximal": 54688,
+            "straddling_or_touching_aperture": 1348,
+            "wholly_inward": 90700
+          }
+        }
+      },
+      "initial_exposure": {
+        "boundary_cell_count": 112992,
+        "boundary_U_count": 112992,
+        "boundary_known_zero_seed_count": 0,
+        "actual_initial_connected_free_count": 0,
+        "known_source_zero_component_count": 164,
+        "geometric_disc_face_candidates": 93,
+        "candidate_connected_components": [
+          {
+            "component_id": 1,
+            "source_known_zero_cells": 1542744
+          }
+        ],
+        "candidate_face_adjacent_material_cells": 24,
+        "candidate_face_adjacent_raw_S_cells": 24,
+        "candidate_face_adjacent_full_T_cells": 0,
+        "not_an_admitted_cavity": true,
+        "source_zero_is_physical_air": false
+      },
+      "hypothetical_K_count": 30,
+      "hypothetical_K_indices_sha256": "d38ce65ed42adfde9930684f544418ff4db150ef35bfc9d08b3667f1271d1bde",
+      "native_affine_hash": "sha256:c3851a112d462af90c8e4e65adc55238a76a6a558dce271d469551fc6e432047",
+      "source_affine_hash": "sha256:85dafc000c00b04deb84ab30da521cffd296290426b2a008bbe5ae8f688e6c4b",
+      "all_original_conditions_retained_as_failed": true
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "role": "TRAIN",
+      "saved_motions": 52,
+      "saved_result": {
+        "path": "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-045-diagnostic.json",
+        "sha256": "f5f0f112554cd3773741fa0a2faa8a08a266502b2bef080d9320295771668992",
+        "bytes": 1154115
+      },
+      "aperture": {
+        "centre_mm": [
+          88.28351433123333,
+          -98.26502333033793,
+          13.126626352325147
+        ],
+        "normal_inward": [
+          -0.5174147942087319,
+          0.8546477928556642,
+          0.04311706043873266
+        ],
+        "radius_mm": 6.0
+      },
+      "initial_shaft_motions_without_raw_S_or_full_T_contact": 0,
+      "motions_with_intersections": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 12,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 12,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 46,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 8,
+              "straddling_or_touching_aperture": 46,
+              "wholly_inward": 16
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 52,
+              "wholly_inward": 52
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_with_any_hit": 35,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 14,
+              "straddling_or_touching_aperture": 30,
+              "wholly_inward": 26
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 39,
+              "wholly_inward": 26
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_with_any_hit": 51,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 8,
+              "straddling_or_touching_aperture": 46,
+              "wholly_inward": 42
+            }
+          },
+          "full_T": {
+            "motions_with_any_hit": 52,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 52,
+              "straddling_or_touching_aperture": 52,
+              "wholly_inward": 52
+            }
+          },
+          "derived_U": {
+            "motions_with_any_hit": 0,
+            "motions_with_hit_by_full_cell_depth": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            }
+          }
+        }
+      },
+      "global_source_positive_and_unknown_cells": {
+        "raw_S": {
+          "count": 823052,
+          "by_full_cell_depth": {
+            "wholly_proximal": 23462,
+            "straddling_or_touching_aperture": 8542,
+            "wholly_inward": 791048
+          }
+        },
+        "full_T": {
+          "count": 25301,
+          "by_full_cell_depth": {
+            "wholly_proximal": 3000,
+            "straddling_or_touching_aperture": 1534,
+            "wholly_inward": 20767
+          }
+        },
+        "derived_U": {
+          "count": 601021,
+          "by_full_cell_depth": {
+            "wholly_proximal": 132774,
+            "straddling_or_touching_aperture": 6705,
+            "wholly_inward": 461542
+          }
+        }
+      },
+      "initial_exposure": {
+        "boundary_cell_count": 121804,
+        "boundary_U_count": 121804,
+        "boundary_known_zero_seed_count": 0,
+        "actual_initial_connected_free_count": 0,
+        "known_source_zero_component_count": 877,
+        "geometric_disc_face_candidates": 93,
+        "candidate_connected_components": [],
+        "candidate_face_adjacent_material_cells": 0,
+        "candidate_face_adjacent_raw_S_cells": 0,
+        "candidate_face_adjacent_full_T_cells": 0,
+        "not_an_admitted_cavity": true,
+        "source_zero_is_physical_air": false
+      },
+      "hypothetical_K_count": 0,
+      "hypothetical_K_indices_sha256": "91a533ae729d96bb18b3a84f52ab2bca8801eae7bab0a6a6762167cf6acf3daa",
+      "native_affine_hash": "sha256:ae8581580db4d2de5e859d1c4f6c21ab175cea2af4f72d07d9da65cf9065b24e",
+      "source_affine_hash": "sha256:15fb9f4496fd044a7c023d9b07cf2b1fc258fea72775d0f91edeb295d53b1475",
+      "all_original_conditions_retained_as_failed": true
+    }
+  ]
+}

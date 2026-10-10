@@ -1,0 +1,748 @@
+{
+  "status": "PASS_saved_only",
+  "checks": 47522,
+  "seconds": 0.044424458872526884,
+  "peak_rss_bytes": 29360128,
+  "receipt": {
+    "automatic_retry": false,
+    "caps": {
+      "attempts": 1,
+      "automatic_retry": false,
+      "log_bytes": 4194304,
+      "max_geometric_queries": 664,
+      "output_bytes": 16777216,
+      "parent_seconds": 120,
+      "sampled_rss_bytes": 1610612736,
+      "supervision_bytes": 8388608,
+      "target_seconds": 60,
+      "threads": 1,
+      "worker_seconds": 110
+    },
+    "cleanup_actions": [],
+    "cleanup_errors": [],
+    "elapsed_seconds": 1.8174203750677407,
+    "exit_code": 0,
+    "output_bytes": 3696144,
+    "planned_subjects": [
+      "ReMIND-002",
+      "ReMIND-015",
+      "ReMIND-018",
+      "ReMIND-045"
+    ],
+    "release_sha256": "e0444da5a30d9ada66f2663dc4b910407accd19777a99cf27260830cfbde42ac",
+    "remaining_owned_pids": [],
+    "result_sha256": "c26cb2d0531133a19b7c64a3cfbb9cba10efaf07e7a760175bc2c609fce1dbf4",
+    "result_status": "saved_mask_diagnostic_complete",
+    "sampled_peak_rss_bytes": 361889792,
+    "samples": 8,
+    "sampling_limit": "transient peaks or descendants between samples may be missed",
+    "source_index": {
+      "path": "build/remind-aperture-mask-diagnostic-v1/source-index.json",
+      "sha256": "8e8bf6e82926dffb10b8b803afbcb2bc9938f14e3e8b09b4287a6105e984f9bc"
+    },
+    "status": "complete",
+    "stop_reason": null,
+    "supervision_bytes_before_receipt": 2137,
+    "training_admitted": false,
+    "worker_pid": 84115,
+    "worker_termination_confirmed": true
+  },
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "motions": 52,
+      "raw_S": 988741,
+      "full_T": 24274,
+      "S_intersection_T": 1705,
+      "derived_U": 413036,
+      "initial_connected_free": 0,
+      "K": 80,
+      "K_component_sizes": [
+        1550811
+      ],
+      "K_face_adjacent_S": 53,
+      "K_face_adjacent_T": 0,
+      "query_stats_overlapping_not_union": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_positive": 40,
+            "count_sum_across_queries": 1322,
+            "bins_sum": {
+              "wholly_proximal": 1322,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -9.765623338515697,
+              -0.976562333851553
+            ]
+          },
+          "full_T": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          },
+          "derived_U": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 2392,
+            "bins_sum": {
+              "wholly_proximal": 2392,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -34.179681684805004,
+              -32.22655701710178
+            ]
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 1284,
+            "bins_sum": {
+              "wholly_proximal": 646,
+              "straddling_or_touching_aperture": 426,
+              "wholly_inward": 212
+            },
+            "range": [
+              -5.85937400310943,
+              1.9531246677031548
+            ]
+          },
+          "full_T": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          },
+          "derived_U": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 6096,
+            "bins_sum": {
+              "wholly_proximal": 1480,
+              "straddling_or_touching_aperture": 676,
+              "wholly_inward": 3940
+            },
+            "range": [
+              -9.765623338515697,
+              7.812498670812578
+            ]
+          },
+          "full_T": {
+            "motions_positive": 27,
+            "count_sum_across_queries": 17064,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 17064
+            },
+            "range": [
+              4.8828116692578485,
+              34.179681684805
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 2392,
+            "bins_sum": {
+              "wholly_proximal": 2392,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -34.179681684805004,
+              -32.22655701710178
+            ]
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 4200,
+            "bins_sum": {
+              "wholly_proximal": 646,
+              "straddling_or_touching_aperture": 426,
+              "wholly_inward": 3128
+            },
+            "range": [
+              -5.85937400310943,
+              6.835936336961019
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 12793,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 12793
+            },
+            "range": [
+              4.8828116692578485,
+              35.156244018656565
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          }
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "motions": 52,
+      "raw_S": 896879,
+      "full_T": 7745,
+      "S_intersection_T": 5987,
+      "derived_U": 174084,
+      "initial_connected_free": 0,
+      "K": 13,
+      "K_component_sizes": [
+        1646557
+      ],
+      "K_face_adjacent_S": 2,
+      "K_face_adjacent_T": 23,
+      "query_stats_overlapping_not_union": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 1646,
+            "bins_sum": {
+              "wholly_proximal": 1646,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -2.9296875000000075,
+              -0.9765625
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 1196,
+            "bins_sum": {
+              "wholly_proximal": 1196,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -5.859375000000007,
+              -4.8828125
+            ]
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 1066,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 834,
+              "wholly_inward": 232
+            },
+            "range": [
+              -0.9765625000000073,
+              1.953125
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 2784,
+            "bins_sum": {
+              "wholly_proximal": 1500,
+              "straddling_or_touching_aperture": 1126,
+              "wholly_inward": 158
+            },
+            "range": [
+              -2.9296875000000075,
+              1.953125
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 26,
+            "count_sum_across_queries": 234,
+            "bins_sum": {
+              "wholly_proximal": 234,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -5.859375000000007,
+              -4.8828125
+            ]
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_positive": 43,
+            "count_sum_across_queries": 9449,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 802,
+              "wholly_inward": 8647
+            },
+            "range": [
+              -0.9765625000000073,
+              21.484375
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 13820,
+            "bins_sum": {
+              "wholly_proximal": 2181,
+              "straddling_or_touching_aperture": 1157,
+              "wholly_inward": 10482
+            },
+            "range": [
+              -2.9296875000000075,
+              21.484375
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 1196,
+            "bins_sum": {
+              "wholly_proximal": 1196,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -5.859375000000007,
+              -4.8828125
+            ]
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 8289,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 834,
+              "wholly_inward": 7455
+            },
+            "range": [
+              -0.9765625000000073,
+              24.414062499999996
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 10928,
+            "bins_sum": {
+              "wholly_proximal": 1500,
+              "straddling_or_touching_aperture": 1126,
+              "wholly_inward": 8302
+            },
+            "range": [
+              -2.9296875000000075,
+              22.460937499999996
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 26,
+            "count_sum_across_queries": 234,
+            "bins_sum": {
+              "wholly_proximal": 234,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -5.859375000000007,
+              -4.8828125
+            ]
+          }
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "motions": 10,
+      "raw_S": 909356,
+      "full_T": 1247,
+      "S_intersection_T": 997,
+      "derived_U": 146736,
+      "initial_connected_free": 0,
+      "K": 30,
+      "K_component_sizes": [
+        1542744
+      ],
+      "K_face_adjacent_S": 24,
+      "K_face_adjacent_T": 0,
+      "query_stats_overlapping_not_union": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 1370,
+            "bins_sum": {
+              "wholly_proximal": 1370,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -19.531254441187127,
+              -0.9765627220593502
+            ]
+          },
+          "full_T": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 406,
+            "bins_sum": {
+              "wholly_proximal": 406,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -7.812501776474852,
+              -0.9765627220593505
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 460,
+            "bins_sum": {
+              "wholly_proximal": 460,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -26.367193495602624,
+              -24.414068051483902
+            ]
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 641,
+            "bins_sum": {
+              "wholly_proximal": 346,
+              "straddling_or_touching_aperture": 253,
+              "wholly_inward": 42
+            },
+            "range": [
+              -5.859376332356141,
+              1.9531254441187136
+            ]
+          },
+          "full_T": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 488,
+            "bins_sum": {
+              "wholly_proximal": 269,
+              "straddling_or_touching_aperture": 185,
+              "wholly_inward": 34
+            },
+            "range": [
+              -5.859376332356138,
+              1.9531254441187136
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 1570,
+            "bins_sum": {
+              "wholly_proximal": 1418,
+              "straddling_or_touching_aperture": 128,
+              "wholly_inward": 24
+            },
+            "range": [
+              -19.531254441187127,
+              2.929688166178069
+            ]
+          },
+          "full_T": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 579,
+            "bins_sum": {
+              "wholly_proximal": 447,
+              "straddling_or_touching_aperture": 102,
+              "wholly_inward": 30
+            },
+            "range": [
+              -7.812501776474852,
+              2.929688166178069
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 460,
+            "bins_sum": {
+              "wholly_proximal": 460,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -26.367193495602624,
+              -24.414068051483902
+            ]
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 842,
+            "bins_sum": {
+              "wholly_proximal": 346,
+              "straddling_or_touching_aperture": 253,
+              "wholly_inward": 243
+            },
+            "range": [
+              -5.859376332356141,
+              5.859376332356138
+            ]
+          },
+          "full_T": {
+            "motions_positive": 10,
+            "count_sum_across_queries": 608,
+            "bins_sum": {
+              "wholly_proximal": 269,
+              "straddling_or_touching_aperture": 185,
+              "wholly_inward": 154
+            },
+            "range": [
+              -5.859376332356138,
+              5.859376332356138
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          }
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "motions": 52,
+      "raw_S": 823052,
+      "full_T": 25301,
+      "S_intersection_T": 5416,
+      "derived_U": 601021,
+      "initial_connected_free": 0,
+      "K": 0,
+      "K_component_sizes": [],
+      "K_face_adjacent_S": 0,
+      "K_face_adjacent_T": 0,
+      "query_stats_overlapping_not_union": {
+        "initial_shaft": {
+          "raw_S": {
+            "motions_positive": 12,
+            "count_sum_across_queries": 42,
+            "bins_sum": {
+              "wholly_proximal": 42,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -8.789066289435226,
+              -0.9765629210482946
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 7302,
+            "bins_sum": {
+              "wholly_proximal": 7302,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -8.78906628943524,
+              -0.9765629210482879
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 4792,
+            "bins_sum": {
+              "wholly_proximal": 4792,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -19.531258420967244,
+              -14.648443815725393
+            ]
+          }
+        },
+        "initial_tip": {
+          "raw_S": {
+            "motions_positive": 46,
+            "count_sum_across_queries": 696,
+            "bins_sum": {
+              "wholly_proximal": 24,
+              "straddling_or_touching_aperture": 622,
+              "wholly_inward": 50
+            },
+            "range": [
+              -1.9531258420966964,
+              1.9531258420967785
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 4966,
+            "bins_sum": {
+              "wholly_proximal": 3146,
+              "straddling_or_touching_aperture": 1560,
+              "wholly_inward": 260
+            },
+            "range": [
+              -5.8593775262901495,
+              1.953125842096787
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          }
+        },
+        "swept_shaft": {
+          "raw_S": {
+            "motions_positive": 35,
+            "count_sum_across_queries": 6695,
+            "bins_sum": {
+              "wholly_proximal": 62,
+              "straddling_or_touching_aperture": 502,
+              "wholly_inward": 6131
+            },
+            "range": [
+              -8.789066289435226,
+              31.25001347354763
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 25280,
+            "bins_sum": {
+              "wholly_proximal": 7822,
+              "straddling_or_touching_aperture": 1313,
+              "wholly_inward": 16145
+            },
+            "range": [
+              -8.78906628943524,
+              31.25001347354763
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 4792,
+            "bins_sum": {
+              "wholly_proximal": 4792,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": [
+              -19.531258420967244,
+              -14.648443815725393
+            ]
+          }
+        },
+        "swept_tip": {
+          "raw_S": {
+            "motions_positive": 51,
+            "count_sum_across_queries": 5832,
+            "bins_sum": {
+              "wholly_proximal": 24,
+              "straddling_or_touching_aperture": 622,
+              "wholly_inward": 5186
+            },
+            "range": [
+              -1.9531258420966964,
+              34.17970223669272
+            ]
+          },
+          "full_T": {
+            "motions_positive": 52,
+            "count_sum_across_queries": 16505,
+            "bins_sum": {
+              "wholly_proximal": 3146,
+              "straddling_or_touching_aperture": 1560,
+              "wholly_inward": 11799
+            },
+            "range": [
+              -5.85937752629015,
+              33.203139315644364
+            ]
+          },
+          "derived_U": {
+            "motions_positive": 0,
+            "count_sum_across_queries": 0,
+            "bins_sum": {
+              "wholly_proximal": 0,
+              "straddling_or_touching_aperture": 0,
+              "wholly_inward": 0
+            },
+            "range": null
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Saved text arithmetic only; no masks, scientific imports, geometry queries, native replay or model. Query counts overlap and are not removal. Witness depth classifications checked; complete cell memberships not independently regenerated."
+}

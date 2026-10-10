@@ -1,0 +1,42 @@
+{
+  "closure_scope": "Exact local source imports and saved metadata; no admission/task/model module is imported by worker",
+  "files": {
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/remind-aperture-mask-diagnostic-v1/batch_contract.py": "d7a49a7936b1bce02b489f91ef0cf73216106efd7dbe9fdd2c1f25ab9d09b184",
+    "build/remind-aperture-mask-diagnostic-v1/diagnostic_core.py": "b896bb2e73e587b989695474e71081d52f459fe84c609d836a7497e8d24575d5",
+    "build/remind-aperture-mask-diagnostic-v1/generated-controls-01.log": "ec9157eb9e23ac8ce2ecc81cd13de753f8a2adceae538b3e75217875718f3f5a",
+    "build/remind-aperture-mask-diagnostic-v1/input-index.json": "231feecea956571ffad7d6083e05549ff5a1eae1438474666030589773950176",
+    "build/remind-aperture-mask-diagnostic-v1/mask_worker.py": "57f59583fa172477c3234fc7cd6fae5938b069ccbf6be090f3b55a017458c85d",
+    "build/remind-aperture-mask-diagnostic-v1/prepare_candidate.py": "5204a5ea3dcc7fbc4f27edc5c9f73a7a81ac044b0c9fadc7c323daeaf395f36f",
+    "build/remind-aperture-mask-diagnostic-v1/run_owned.py": "e5961f0f9287ad93a90b1397f5874667eaccb17802da4c2a99cb653b9f8be8db",
+    "build/remind-aperture-mask-diagnostic-v1/tests/conftest.py": "cd41c0a3b9121335895839c88da28e0e1142a58e9c095d2a5bbbf19bd2838abf",
+    "build/remind-aperture-mask-diagnostic-v1/tests/test_generated.py": "fe66fa2edd0881c72a40f4ff82098893074abf2f1dd84f19f8a16ed9419de023",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/admitted-public-bindings.json": "9195ae001821f9ae018437dace2050821a03b939e8b1b0d1d954f7db1b6dc5b3",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/initial-inventory.json": "c989ad51f6c9cfadcb98fc89cc516d3ea94d6a5a58d336c6be5192f8c114be06",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/public-task-derivation.json": "db1cabdc555a4cbaa5d7cc0ddc5f8637c57109043a8b0a58cebfb8669f34e049",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/admitted-public-bindings.json": "64d695e4c970e35268cdc2627bb4d07e1a507481d52054ed5811d78fe74f4eb3",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/initial-inventory.json": "3b2b5e148ef2f72d6d7bd2a9f3bf653810a32f9d0b1831f8f17931985fac1c8a",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/public-task-derivation.json": "7a9d0b426365b2d853022f6af410a1dadb82773fe332a606657975c0a5488475",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/admitted-public-bindings.json": "153c69ab6ebb33fec762daa119dc15ecc2c244ea038e36d8883f67e138f2f096",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/initial-inventory.json": "72c549c25e7ba7cd7882078bc94637b00d626aa512790444f12aee35f2c26f96",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/public-task-derivation.json": "a204ae01c3e8b8829aff5076ad1b1ab7632178b35c9233eee5c50936de08f16f",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/admitted-public-bindings.json": "a6b737f9ebe4c826a4732cec4deba61603aa9cf7fd33ed6e5298de2a14f4a6b2",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/initial-inventory.json": "ee3c671498221ca4079a6471f52983384e93d85381bccb1e0c128d93212f1bb3",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/public-task-derivation.json": "58c2631420db2eea986263f9794f3659e068e170c30142eb41579d3020d21728",
+    "build/remind-partial-domain-public-preparation-v1/attempt-01/result.json": "3da8a30111f1305ee53d2f011c5099d4b36e1f0ac12e17dca1af2e6ed334c2f1",
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753",
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81",
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df",
+    "manifests/experiments/remind-component-cohort-v1.json": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/legacy_transfer_supervisor.py": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+  },
+  "runtime_versions": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  }
+}

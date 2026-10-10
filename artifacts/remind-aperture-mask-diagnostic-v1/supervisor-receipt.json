@@ -1,0 +1,44 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "log_bytes": 4194304,
+    "max_geometric_queries": 664,
+    "output_bytes": 16777216,
+    "parent_seconds": 120,
+    "sampled_rss_bytes": 1610612736,
+    "supervision_bytes": 8388608,
+    "target_seconds": 60,
+    "threads": 1,
+    "worker_seconds": 110
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 1.8174203750677407,
+  "exit_code": 0,
+  "output_bytes": 3696144,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "e0444da5a30d9ada66f2663dc4b910407accd19777a99cf27260830cfbde42ac",
+  "remaining_owned_pids": [],
+  "result_sha256": "c26cb2d0531133a19b7c64a3cfbb9cba10efaf07e7a760175bc2c609fce1dbf4",
+  "result_status": "saved_mask_diagnostic_complete",
+  "sampled_peak_rss_bytes": 361889792,
+  "samples": 8,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/remind-aperture-mask-diagnostic-v1/source-index.json",
+    "sha256": "8e8bf6e82926dffb10b8b803afbcb2bc9938f14e3e8b09b4287a6105e984f9bc"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2137,
+  "training_admitted": false,
+  "worker_pid": 84115,
+  "worker_termination_confirmed": true
+}

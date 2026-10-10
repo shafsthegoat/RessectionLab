@@ -1,0 +1,12 @@
+The four recovered TRAIN cases expose two simulated start-state conflicts.
+
+All166 initial shafts cross unknown coverage behind the fixed aperture; all
+015/018/045 shafts also start in supplied target material. The aperture was
+chosen from one support-mask column before union occupancy was formed.
+The image-boundary flood also has no known free seed in any case.
+
+The read-only664-query measurement completes in1.817s at361.9MB sampled peak.
+Independent saved-output checks pass. No geometry is altered, tissue removed,
+patient admitted or model trained. REPORT.txt separates the two required next
+assumptions: an occupancy-aware full-tool start and explicit modeled external
+workspace. Neither makes missing evidence into observed clearance.

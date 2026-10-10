@@ -1,0 +1,162 @@
+{
+  "build/remind-aperture-mask-diagnostic-v1/root-release.json": {
+    "sha256": "e0444da5a30d9ada66f2663dc4b910407accd19777a99cf27260830cfbde42ac",
+    "bytes": 963
+  },
+  "build/remind-aperture-mask-diagnostic-v1/attempt-01.supervision/receipt.json": {
+    "sha256": "6b5f77e6b39d418cad6a73cd2f0fd6f95ad4d6ad9a0c2770509e38b4e3258d8e",
+    "bytes": 1351
+  },
+  "build/remind-aperture-mask-diagnostic-v1/attempt-01/result.json": {
+    "sha256": "c26cb2d0531133a19b7c64a3cfbb9cba10efaf07e7a760175bc2c609fce1dbf4",
+    "bytes": 37954
+  },
+  "build/remind-aperture-mask-diagnostic-v1/input-index.json": {
+    "sha256": "231feecea956571ffad7d6083e05549ff5a1eae1438474666030589773950176",
+    "bytes": 9559
+  },
+  "build/remind-aperture-mask-diagnostic-v1/source-index.json": {
+    "sha256": "8e8bf6e82926dffb10b8b803afbcb2bc9938f14e3e8b09b4287a6105e984f9bc",
+    "bytes": 5128
+  },
+  "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": {
+    "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "bytes": 9482
+  },
+  "build/goal-conditioned-policy-v1/run_contact_owned.py": {
+    "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "bytes": 8730
+  },
+  "build/remind-aperture-mask-diagnostic-v1/batch_contract.py": {
+    "sha256": "d7a49a7936b1bce02b489f91ef0cf73216106efd7dbe9fdd2c1f25ab9d09b184",
+    "bytes": 4332
+  },
+  "build/remind-aperture-mask-diagnostic-v1/diagnostic_core.py": {
+    "sha256": "b896bb2e73e587b989695474e71081d52f459fe84c609d836a7497e8d24575d5",
+    "bytes": 7839
+  },
+  "build/remind-aperture-mask-diagnostic-v1/generated-controls-01.log": {
+    "sha256": "ec9157eb9e23ac8ce2ecc81cd13de753f8a2adceae538b3e75217875718f3f5a",
+    "bytes": 99
+  },
+  "build/remind-aperture-mask-diagnostic-v1/mask_worker.py": {
+    "sha256": "57f59583fa172477c3234fc7cd6fae5938b069ccbf6be090f3b55a017458c85d",
+    "bytes": 6939
+  },
+  "build/remind-aperture-mask-diagnostic-v1/prepare_candidate.py": {
+    "sha256": "5204a5ea3dcc7fbc4f27edc5c9f73a7a81ac044b0c9fadc7c323daeaf395f36f",
+    "bytes": 2844
+  },
+  "build/remind-aperture-mask-diagnostic-v1/run_owned.py": {
+    "sha256": "e5961f0f9287ad93a90b1397f5874667eaccb17802da4c2a99cb653b9f8be8db",
+    "bytes": 8967
+  },
+  "build/remind-aperture-mask-diagnostic-v1/tests/conftest.py": {
+    "sha256": "cd41c0a3b9121335895839c88da28e0e1142a58e9c095d2a5bbbf19bd2838abf",
+    "bytes": 162
+  },
+  "build/remind-aperture-mask-diagnostic-v1/tests/test_generated.py": {
+    "sha256": "fe66fa2edd0881c72a40f4ff82098893074abf2f1dd84f19f8a16ed9419de023",
+    "bytes": 4936
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/admitted-public-bindings.json": {
+    "sha256": "9195ae001821f9ae018437dace2050821a03b939e8b1b0d1d954f7db1b6dc5b3",
+    "bytes": 11729
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/initial-inventory.json": {
+    "sha256": "c989ad51f6c9cfadcb98fc89cc516d3ea94d6a5a58d336c6be5192f8c114be06",
+    "bytes": 118653
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/public-task-derivation.json": {
+    "sha256": "db1cabdc555a4cbaa5d7cc0ddc5f8637c57109043a8b0a58cebfb8669f34e049",
+    "bytes": 1129
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/admitted-public-bindings.json": {
+    "sha256": "64d695e4c970e35268cdc2627bb4d07e1a507481d52054ed5811d78fe74f4eb3",
+    "bytes": 11659
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/initial-inventory.json": {
+    "sha256": "3b2b5e148ef2f72d6d7bd2a9f3bf653810a32f9d0b1831f8f17931985fac1c8a",
+    "bytes": 118615
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/public-task-derivation.json": {
+    "sha256": "7a9d0b426365b2d853022f6af410a1dadb82773fe332a606657975c0a5488475",
+    "bytes": 1126
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/admitted-public-bindings.json": {
+    "sha256": "153c69ab6ebb33fec762daa119dc15ecc2c244ea038e36d8883f67e138f2f096",
+    "bytes": 11732
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/initial-inventory.json": {
+    "sha256": "72c549c25e7ba7cd7882078bc94637b00d626aa512790444f12aee35f2c26f96",
+    "bytes": 71302
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/public-task-derivation.json": {
+    "sha256": "a204ae01c3e8b8829aff5076ad1b1ab7632178b35c9233eee5c50936de08f16f",
+    "bytes": 1124
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/admitted-public-bindings.json": {
+    "sha256": "a6b737f9ebe4c826a4732cec4deba61603aa9cf7fd33ed6e5298de2a14f4a6b2",
+    "bytes": 11714
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/initial-inventory.json": {
+    "sha256": "ee3c671498221ca4079a6471f52983384e93d85381bccb1e0c128d93212f1bb3",
+    "bytes": 118449
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/public-task-derivation.json": {
+    "sha256": "58c2631420db2eea986263f9794f3659e068e170c30142eb41579d3020d21728",
+    "bytes": 1129
+  },
+  "build/remind-partial-domain-public-preparation-v1/attempt-01/result.json": {
+    "sha256": "3da8a30111f1305ee53d2f011c5099d4b36e1f0ac12e17dca1af2e6ed334c2f1",
+    "bytes": 49695
+  },
+  "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json": {
+    "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753",
+    "bytes": 14487
+  },
+  "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json": {
+    "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81",
+    "bytes": 14334
+  },
+  "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json": {
+    "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+    "bytes": 14443
+  },
+  "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json": {
+    "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df",
+    "bytes": 14417
+  },
+  "manifests/experiments/remind-component-cohort-v1.json": {
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "bytes": 70925
+  },
+  "src/resectionlab/__init__.py": {
+    "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "bytes": 99
+  },
+  "src/resectionlab/geometry.py": {
+    "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "bytes": 31204
+  },
+  "src/resectionlab/legacy_transfer_supervisor.py": {
+    "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+    "bytes": 10427
+  },
+  "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-002-diagnostic.json": {
+    "sha256": "04358e643b4f4af1a4ec83af01332812182c418adec371ca7c4fba4a77b438a7",
+    "bytes": 1061708
+  },
+  "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-015-diagnostic.json": {
+    "sha256": "702e9f78a2557778ae37ac08cb66e929d4414501c6b8801bb61b5652c5ca0f9f",
+    "bytes": 1191708
+  },
+  "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-018-diagnostic.json": {
+    "sha256": "b5c4f42c521ab29fdc4b96af5f675a6f84a85c02426669f7637dddef94e239a6",
+    "bytes": 250659
+  },
+  "build/remind-aperture-mask-diagnostic-v1/attempt-01/ReMIND-045-diagnostic.json": {
+    "sha256": "f5f0f112554cd3773741fa0a2faa8a08a266502b2bef080d9320295771668992",
+    "bytes": 1154115
+  }
+}

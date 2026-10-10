@@ -1,0 +1,66 @@
+PASS: independent saved-only aperture diagnostic audit
+
+Exact result: c26cb2d0531133a19b7c64a3cfbb9cba10efaf07e7a760175bc2c609fce1dbf4
+Root release: e0444da5a30d9ada66f2663dc4b910407accd19777a99cf27260830cfbde42ac
+Source index: 8e8bf6e82926dffb10b8b803afbcb2bc9938f14e3e8b09b4287a6105e984f9bc
+
+The four fixed TRAIN cases, 166 original motions and 664 initial/swept shaft/tip
+queries reconcile with the saved inventories. Twelve reported public S/T/Ds mask
+loads and zero native previews, transitions, search/model calls or source writes
+remain explicit. The owned receipt records exit 0, 1.817420375 seconds,
+361,889,792 bytes peak sampled RSS, 3,696,144 output bytes, and clean reaping with
+no errors, fallback actions or remaining owned PIDs. All declared resource caps
+passed. Sampling is not a guarantee about transient peaks.
+
+Saved query counts with positive intersections (not unique-cell unions):
+Case       Motions  Initial shaft U  Initial shaft S  Initial shaft T  K
+002           52          52               40                0        80
+015           52          52                0               52        13
+018           10          10               10               10        30
+045           52          52               12               52         0
+
+All U contacts in every saved capsule query are wholly proximal to the declared
+aperture plane under the existing full-cell 1e-8 mm classification tolerance.
+No U contact is reported straddling/touching the plane or wholly inward. Across
+the initial shaft queries the U cell depth extents are approximately:
+002 [-34.17968,-32.22656], 015 [-5.859375,-4.882813],
+018 [-26.36719,-24.41407], 045 [-19.53126,-14.64844] mm.
+015 also has proximal U in 26 initial/swept tip queries; other tip queries have
+no U. These are depths relative to the declared plane, not intracranial anatomy.
+
+Initial shaft S/T contacts are also wholly proximal. In particular all motions
+at 015/018/045 begin with shaft contact against supplied target material. This
+exposes a mismatch between an S-derived access plane and the assumed S-union-T
+occupancy. It does not establish which changed access is feasible. Every current
+shaft also encounters within-grid U: moving the plane to an occupancy boundary
+would not by itself establish clearance, and an unknown-only exemption would
+not establish clearance of occupied S/T. Neither change was made or tested.
+
+K contains only source-known zero cells, proximal with distal faces touching
+the unchanged fixed disc plane and full footprints strictly inside its radius.
+The 80/13/30 candidates at 002/015/018 touch known-zero components containing
+1,550,811 / 1,646,557 / 1,542,744 cells; 045 has no K candidate. All four grids'
+boundary cells are U, and all four current initial connected-free counts are
+zero. K and component sizes are hypothetical measurements, not admitted cavity,
+physical air, safe corridors, removal, or evidence that a route becomes legal.
+
+Full T denominators remain 24,274 / 7,745 / 1,247 / 25,301; S-intersection-T
+counts from the bound source metadata are 1,705 / 5,987 / 997 / 5,416. Therefore
+S and T contacts must not be added as disjoint material. Initial/swept capsule
+queries and different motions also overlap. Their totals are not strategy
+unions, executed removal, injury or clinical utility. Outside-image geometry
+is explicitly unassessed here. The earlier 166 UNKNOWN_DOMAIN refusals remain
+preserved; this measurement grants no new planning admission.
+
+Independent checks: exact saved source/input/output byte bindings before/after;
+4-case/166-motion/664-query joins; every full-cell partition sum; all retained
+witness classifications recomputed from saved affine/normal/index arithmetic;
+global T/U/domain and S/T overlap arithmetic; intersection upper bounds;
+hypothetical-K flags and component bounds; resource/call counters and cleanup.
+47,522 recorded checks plus one audit-memory check passed. Audit took
+0.044424459 seconds and 29,360,128 bytes observed RSS. Input hashes are retained
+in input-hashes.json; arithmetic and compact per-part counts in audit-result.json.
+No masks, MRI, private arrays, scientific libraries, geometry replay, native
+solver or model were opened/executed. Complete contact memberships and component
+labels were not independently regenerated; their saved counts/hash identities
+were checked. No scientific threshold or executing source was changed.

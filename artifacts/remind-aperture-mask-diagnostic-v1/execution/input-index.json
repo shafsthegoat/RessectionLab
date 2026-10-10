@@ -1,0 +1,173 @@
+{
+  "scope": "exact twelve saved public S,T,Ds masks and166 existing fixed-aperture motions; no MRI/private data",
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "manifest": {
+        "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json",
+        "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753"
+      },
+      "inventory": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/initial-inventory.json",
+        "sha256": "c989ad51f6c9cfadcb98fc89cc516d3ea94d6a5a58d336c6be5192f8c114be06"
+      },
+      "derivation": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/public-task-derivation.json",
+        "sha256": "db1cabdc555a4cbaa5d7cc0ddc5f8637c57109043a8b0a58cebfb8669f34e049"
+      },
+      "bindings": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-002/admitted-public-bindings.json",
+        "sha256": "9195ae001821f9ae018437dace2050821a03b939e8b1b0d1d954f7db1b6dc5b3"
+      },
+      "masks": {
+        "supplied_support": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/cerebrum_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2976074,
+          "sha256": "89b1b2d4549a631fe259a4b989c2a0cadf37c7f51360b72912b24c0eef91f993"
+        },
+        "supplied_whole_tumor": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/whole_tumor_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2976074,
+          "sha256": "2d5ba405749efbf1baef312e2f4db22ec78f4617812d6a2b353dbc63b960e207"
+        },
+        "supplied_support_domain": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/cerebrum_source_grid_domain.npy",
+          "dtype": "uint8",
+          "bytes": 2976074,
+          "sha256": "fe99e59ed1145d2d9b65ac915f50248cea3c16837cc3a6fa84ce0ba121592ae8"
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "manifest": {
+        "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json",
+        "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81"
+      },
+      "inventory": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/initial-inventory.json",
+        "sha256": "3b2b5e148ef2f72d6d7bd2a9f3bf653810a32f9d0b1831f8f17931985fac1c8a"
+      },
+      "derivation": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/public-task-derivation.json",
+        "sha256": "7a9d0b426365b2d853022f6af410a1dadb82773fe332a606657975c0a5488475"
+      },
+      "bindings": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-015/admitted-public-bindings.json",
+        "sha256": "64d695e4c970e35268cdc2627bb4d07e1a507481d52054ed5811d78fe74f4eb3"
+      },
+      "masks": {
+        "supplied_support": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/cerebrum_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2720328,
+          "sha256": "782bf8870c1e0736d7030e0e8c6f1bb559f48851487d2dede5a17e3eb850a57d"
+        },
+        "supplied_whole_tumor": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/whole_tumor_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2720328,
+          "sha256": "be73b00bbd91cb06f8328a096eda73915fb9e884643c1d9f1da56c2303369dd0"
+        },
+        "supplied_support_domain": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/cerebrum_source_grid_domain.npy",
+          "dtype": "uint8",
+          "bytes": 2720328,
+          "sha256": "fb3757b851bc034d47ca9514d57ef7b74d6d0ca1fcabc2bdd3c207b54397a8e7"
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "manifest": {
+        "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json",
+        "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed"
+      },
+      "inventory": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/initial-inventory.json",
+        "sha256": "72c549c25e7ba7cd7882078bc94637b00d626aa512790444f12aee35f2c26f96"
+      },
+      "derivation": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/public-task-derivation.json",
+        "sha256": "a204ae01c3e8b8829aff5076ad1b1ab7632178b35c9233eee5c50936de08f16f"
+      },
+      "bindings": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-018/admitted-public-bindings.json",
+        "sha256": "153c69ab6ebb33fec762daa119dc15ecc2c244ea038e36d8883f67e138f2f096"
+      },
+      "masks": {
+        "supplied_support": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/cerebrum_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2599688,
+          "sha256": "5840ece333b799a9a4f2bf8eebc099e5cd5e16f04b0927c2cf4b97f3c2ff78c8"
+        },
+        "supplied_whole_tumor": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/whole_tumor_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2599688,
+          "sha256": "88cc540fa4eb8447a5d71902b4871553f198a161d28dd571499e6000b9605a5c"
+        },
+        "supplied_support_domain": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/cerebrum_source_grid_domain.npy",
+          "dtype": "uint8",
+          "bytes": 2599688,
+          "sha256": "679b5ff57a56a33661e09933582d526fa8c991b7f6e2d860240014a62de3bf4b"
+        }
+      }
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "manifest": {
+        "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json",
+        "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df"
+      },
+      "inventory": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/initial-inventory.json",
+        "sha256": "ee3c671498221ca4079a6471f52983384e93d85381bccb1e0c128d93212f1bb3"
+      },
+      "derivation": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/public-task-derivation.json",
+        "sha256": "58c2631420db2eea986263f9794f3659e068e170c30142eb41579d3020d21728"
+      },
+      "bindings": {
+        "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/ReMIND-045/admitted-public-bindings.json",
+        "sha256": "a6b737f9ebe4c826a4732cec4deba61603aa9cf7fd33ed6e5298de2a14f4a6b2"
+      },
+      "masks": {
+        "supplied_support": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/cerebrum_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2905580,
+          "sha256": "d3908e4ee9dbc2d88f270c0ac4ac2d0a80bac4575f0e859e2f264f909954c6df"
+        },
+        "supplied_whole_tumor": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/whole_tumor_source_label.npy",
+          "dtype": "uint8",
+          "bytes": 2905580,
+          "sha256": "7b774e4ffd3596ba5669dfac7e4a9f80cb90c499a67c85ff918f9984655cef42"
+        },
+        "supplied_support_domain": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/cerebrum_source_grid_domain.npy",
+          "dtype": "uint8",
+          "bytes": 2905580,
+          "sha256": "db586c452ea6d6a17f1e62acfec69c74c111a2a378dd9a85fec6848b8539b702"
+        }
+      }
+    }
+  ],
+  "original_result": {
+    "path": "build/remind-partial-domain-public-preparation-v1/attempt-01/result.json",
+    "sha256": "3da8a30111f1305ee53d2f011c5099d4b36e1f0ac12e17dca1af2e6ed334c2f1"
+  },
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "saved_motion_count": 166,
+  "mask_count": 12
+}

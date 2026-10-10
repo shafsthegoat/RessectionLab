@@ -1,0 +1,50 @@
+{
+  "scope": "saved-output summary only; no patient mask reload or geometry execution",
+  "source_proof": {
+    "path": "src/resectionlab/public_patient_factory.py",
+    "sha256": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f",
+    "bytes": 22585
+  },
+  "source_lines_at_review": {
+    "fixed_raw_S_column_access": [
+      167,
+      182
+    ],
+    "later_union_occupancy": [
+      201,
+      204
+    ]
+  },
+  "exact_inputs": [
+    {
+      "path": "build/remind-aperture-mask-diagnostic-v1/source-index.json",
+      "sha256": "8e8bf6e82926dffb10b8b803afbcb2bc9938f14e3e8b09b4287a6105e984f9bc",
+      "bytes": 5128
+    },
+    {
+      "path": "build/remind-aperture-mask-diagnostic-v1/input-index.json",
+      "sha256": "231feecea956571ffad7d6083e05549ff5a1eae1438474666030589773950176",
+      "bytes": 9559
+    },
+    {
+      "path": "build/remind-aperture-mask-diagnostic-v1/root-release.json",
+      "sha256": "e0444da5a30d9ada66f2663dc4b910407accd19777a99cf27260830cfbde42ac",
+      "bytes": 963
+    }
+  ],
+  "independent_review": [
+    {
+      "path": "build/remind-aperture-mask-independent-v1/REPORT.txt",
+      "sha256": "52a2eec00d6b951eb85712224c00002a3d7772c940eeaa185056651e627a2bb0",
+      "bytes": 4414
+    },
+    {
+      "path": "build/remind-aperture-mask-independent-v1/audit-result.json",
+      "sha256": "db78332b161700ca2ee554ad74257692c3ac625565ddf398d13c14b6e9a2f9af",
+      "bytes": 21719
+    }
+  ],
+  "originals_preserved": true,
+  "canonical_edits": false,
+  "reproduction": "Run summarize_saved_json.py from this repository with the original saved JSON paths restored; source hashes are bound in summary.json. It requires no mask/MRI/geometry access. The script is an aggregation, not an independent geometry validation."
+}
