@@ -103,6 +103,8 @@ class NativeResectionConfig:
     hard_exclusion: np.ndarray | None = None
     max_tip_step_mm: float = 0.25
     max_microsteps: int = 4096
+    # Optional public simulation domain. Its complement is unavailable, not air.
+    interaction_domain: np.ndarray | None = None
     _fingerprint: str = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -121,6 +123,11 @@ class NativeResectionConfig:
         hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
         if hard.shape != tissue.shape:
             raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
         # Reuse geometry's physical-frame validation without installing tissue as
         # a hard exclusion: the distal active region is allowed declared contact.
         scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
@@ -147,6 +154,9 @@ class NativeResectionConfig:
             "version": NATIVE_RESECTION_VERSION, "case_id": self.case_id,
             "source_hash": self.source_hash, "tissue_support_provenance": self.tissue_support_provenance,
             "arrays": {name: _hash_array(getattr(self, name)) for name in ("tissue_mask", "target_labels", "affine", "hard_exclusion")},
+            **({"interaction_domain": _hash_array(self.interaction_domain),
+                "unknown_domain_rule": "within_grid_no_tool_encounter_or_free_space; exterior_extent_unassessed"}
+               if self.interaction_domain is not None else {}),
             "access": asdict(self.access), "tools": [asdict(tool) for tool in self.tools],
             "max_tip_step_mm": self.max_tip_step_mm, "max_microsteps": self.max_microsteps,
             "partial_cell_policy": "record_contact_keep_occupied_credit_no_removal",
@@ -293,19 +303,23 @@ def _connected_surface_cells(candidates: np.ndarray, connected_free: np.ndarray)
 
 
 def _extend_connected_free(new_cells: np.ndarray, remaining: np.ndarray,
-                            connected_free: np.ndarray) -> None:
+                            connected_free: np.ndarray,
+                            interaction_domain: np.ndarray | None = None) -> None:
     """Open only actually connected empty cells, including a newly opened pocket."""
     queue = [tuple(int(v) for v in index) for index in new_cells]
     shape = np.array(remaining.shape)
     while queue:
         cell = queue.pop()
+        if interaction_domain is not None and not interaction_domain[cell]:
+            raise ValueError("Unknown domain cannot become connected free space")
         if connected_free[cell]:
             continue
         connected_free[cell] = True
         for neighbor in np.array(cell) + _NEIGHBORS:
             if np.all((neighbor >= 0) & (neighbor < shape)):
                 index = tuple(int(v) for v in neighbor)
-                if not remaining[index] and not connected_free[index]:
+                if (not remaining[index] and not connected_free[index]
+                        and (interaction_domain is None or interaction_domain[index])):
                     queue.append(index)
 
 
@@ -331,10 +345,14 @@ class NativeResectionEngine:
         self.config = config
         self._tools = {tool.tool_id: tool for tool in config.tools}
         self._scene = GeometryScene(config.hard_exclusion, config.affine)
+        self._domain_scene = (None if config.interaction_domain is None else
+            GeometryScene(~config.interaction_domain, config.affine))
         self._cell_scene = GeometryScene(np.zeros(config.tissue_mask.shape, bool), config.affine)
         # Enclosed anatomical voids are not new access entrances. They join free
         # space only if a verified removal opens a face-connected route to them.
-        self._initial_connected_free = _frozen(~binary_fill_holes(config.tissue_mask), bool)
+        blocked = (config.tissue_mask if config.interaction_domain is None else
+                   config.tissue_mask | ~config.interaction_domain)
+        self._initial_connected_free = _frozen(~binary_fill_holes(blocked), bool)
         self.reset()
 
     @property
@@ -485,6 +503,13 @@ class NativeResectionEngine:
         if not geometry.feasible:
             failure = geometry.failures[0]
             return finish(False, "HARD_GEOMETRY:" + failure.reason, np.asarray(failure.position_mm))
+        if self._domain_scene is not None:
+            domain_geometry = check_motion(tool, ToolPose(entry, axis), ToolPose(tip, axis),
+                                           self._domain_scene, self.config.access)
+            unknowns = tuple(sorted(set(unknowns) | set(domain_geometry.unknowns)))
+            if not domain_geometry.feasible:
+                failure = domain_geometry.failures[0]
+                return finish(False, "UNKNOWN_DOMAIN:" + failure.reason, np.asarray(failure.position_mm))
         remaining = self.remaining_mask.copy()
         connected_free = self.connected_free_mask.copy()
         previous = np.asarray(entry)
@@ -555,7 +580,7 @@ class NativeResectionEngine:
                 eligible = _connected_surface_cells(fully_inside, connected_free)
             if len(eligible):
                 remaining[tuple(eligible.T)] = False
-                _extend_connected_free(eligible, remaining, connected_free)
+                _extend_connected_free(eligible, remaining, connected_free, self.config.interaction_domain)
             contacts.append(_frozen(touched, np.int64))
             removed.append(eligible)
             records.append(NativeMicrostep(tuple(previous), tuple(current), tuple(active_start), tuple(active_end),
@@ -590,7 +615,7 @@ class NativeResectionEngine:
             return self._commit_immutable_preview(result, indices)
         self.remaining_mask[tuple(indices.T)] = False
         self.removed_mask[tuple(indices.T)] = True
-        _extend_connected_free(indices, self.remaining_mask, self.connected_free_mask)
+        _extend_connected_free(indices, self.remaining_mask, self.connected_free_mask, self.config.interaction_domain)
         self.contact_mask[tuple(result.contact_indices_native.T)] = True
         if result.interaction_mode == "probe":
             contacted = result.contact_indices_native
@@ -619,7 +644,7 @@ class NativeResectionEngine:
         if len(indices):
             masks["remaining_mask"][tuple(indices.T)] = False
             masks["removed_mask"][tuple(indices.T)] = True
-            _extend_connected_free(indices, masks["remaining_mask"], masks["connected_free_mask"])
+            _extend_connected_free(indices, masks["remaining_mask"], masks["connected_free_mask"], self.config.interaction_domain)
         if len(result.contact_indices_native):
             masks["contact_mask"][tuple(result.contact_indices_native.T)] = True
             if result.interaction_mode == "probe":

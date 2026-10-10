@@ -1,0 +1,192 @@
+{
+  "schema": "optional-public-source-domain-preparation-v1",
+  "status": "source_candidate_no_patient_or_training_release",
+  "baseline_head": "7947d23529a38d4cb8e8348fbba142c23467a6c3",
+  "runtime": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "candidate_fixed_TRAIN_only": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "canonical_files_unchanged": true,
+  "pairs": [
+    {
+      "canonical": {
+        "path": "src/resectionlab/evaluation.py",
+        "bytes": 64077,
+        "sha256": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010"
+      },
+      "baseline": {
+        "path": "build/remind-unknown-domain-preparation-v1/baseline/resectionlab/evaluation.py",
+        "bytes": 64077,
+        "sha256": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010"
+      },
+      "staged": {
+        "path": "build/remind-unknown-domain-preparation-v1/stage/resectionlab/evaluation.py",
+        "bytes": 65126,
+        "sha256": "a5a47ab1d62583f5a0c05db80cc5dafb40a06d30a4542287c18b2d6d840a49e0"
+      }
+    },
+    {
+      "canonical": {
+        "path": "src/resectionlab/native_proposals.py",
+        "bytes": 48008,
+        "sha256": "6fbaf0bc23c666c8f64042ab070ceaac7954726c3f213d570270676d43b62b0e"
+      },
+      "baseline": {
+        "path": "build/remind-unknown-domain-preparation-v1/baseline/resectionlab/native_proposals.py",
+        "bytes": 48008,
+        "sha256": "6fbaf0bc23c666c8f64042ab070ceaac7954726c3f213d570270676d43b62b0e"
+      },
+      "staged": {
+        "path": "build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_proposals.py",
+        "bytes": 48248,
+        "sha256": "6c8b0cb430a3c2dacdba535564dec1654a13c02f4e97cfc768987fc08af0172e"
+      }
+    },
+    {
+      "canonical": {
+        "path": "src/resectionlab/native_resection.py",
+        "bytes": 40821,
+        "sha256": "0a531933eeea43862fe4122c8cca7fc192c0d44a32ea263363fc7a495c072f16"
+      },
+      "baseline": {
+        "path": "build/remind-unknown-domain-preparation-v1/baseline/resectionlab/native_resection.py",
+        "bytes": 40821,
+        "sha256": "0a531933eeea43862fe4122c8cca7fc192c0d44a32ea263363fc7a495c072f16"
+      },
+      "staged": {
+        "path": "build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_resection.py",
+        "bytes": 42795,
+        "sha256": "98012e94329e21eea06d97701adb80f6315baa55c1b8b582fe64ec520de307cd"
+      }
+    },
+    {
+      "canonical": {
+        "path": "src/resectionlab/native_spatial_evaluation.py",
+        "bytes": 9818,
+        "sha256": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa"
+      },
+      "baseline": {
+        "path": "build/remind-unknown-domain-preparation-v1/baseline/resectionlab/native_spatial_evaluation.py",
+        "bytes": 9818,
+        "sha256": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa"
+      },
+      "staged": {
+        "path": "build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_spatial_evaluation.py",
+        "bytes": 9878,
+        "sha256": "e5ea456cd3997148b1ff48359b66a63a27826c14da2fd33cd6e64e2045ff9820"
+      }
+    },
+    {
+      "canonical": {
+        "path": "src/resectionlab/native_spatial_task.py",
+        "bytes": 76904,
+        "sha256": "744e295a4ea437395cc3eb82f3ad75c9e3336a5f5504b83a7c5c40b8bcf8ec00"
+      },
+      "baseline": {
+        "path": "build/remind-unknown-domain-preparation-v1/baseline/resectionlab/native_spatial_task.py",
+        "bytes": 76904,
+        "sha256": "744e295a4ea437395cc3eb82f3ad75c9e3336a5f5504b83a7c5c40b8bcf8ec00"
+      },
+      "staged": {
+        "path": "build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_spatial_task.py",
+        "bytes": 81228,
+        "sha256": "bab368b3d0e6deb771d8756dd52f717009a3bbed21d2341c7e0de500f373d28d"
+      }
+    },
+    {
+      "canonical": {
+        "path": "src/resectionlab/public_target_context.py",
+        "bytes": 14732,
+        "sha256": "8037a645c4a3fa57caec538e58a6d7fc024477a25af509b9fa1e57d12c5a1503"
+      },
+      "baseline": {
+        "path": "build/remind-unknown-domain-preparation-v1/baseline/resectionlab/public_target_context.py",
+        "bytes": 14732,
+        "sha256": "8037a645c4a3fa57caec538e58a6d7fc024477a25af509b9fa1e57d12c5a1503"
+      },
+      "staged": {
+        "path": "build/remind-unknown-domain-preparation-v1/stage/resectionlab/public_target_context.py",
+        "bytes": 16294,
+        "sha256": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/tests/conftest.py",
+      "bytes": 226,
+      "sha256": "5d2b04852ccc4a9044f99af99a37dd1d9344f061dea35ec8c49248e2ee38602a"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/tests/test_unknown_domains.py",
+      "bytes": 10896,
+      "sha256": "d2aab088933106a838d223d1f60b3f994068d794d8b255f1ed61f3fef8daea99"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/test_unknown_domains.initial.py",
+      "bytes": 10415,
+      "sha256": "986ec78960954529ae52a67d361a362757bc2f3f060736de2bdadaa3a44c392e"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/parity_probe.py",
+      "bytes": 2690,
+      "sha256": "b80058151cdcf2aaf4ea7a98ff62d54bbe4a2d2cabad94f1d3ee4a02c6fe2f5e"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/run_regressions.py",
+      "bytes": 657,
+      "sha256": "f7bc43fb025a5cd42219cce5a48bd5b202a0b28c28addb1c3b26140616d92ea9"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/generated-test-01.log",
+      "bytes": 156,
+      "sha256": "43915ac9148d04eeb97782b9d24a90ec8e398f8bdb432deb2f19cb44d9adefea"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/generated-test-02.log",
+      "bytes": 4093,
+      "sha256": "f6c38e055beda49a2b988521b7c7e19b67bc1d4a6c91e438ca30a159919834b5"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/generated-test-03.log",
+      "bytes": 99,
+      "sha256": "74f4c581a60b7063bf5305991b25c5e931e6f2cb29612bc3baa6a498c0caa1c7"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/regression-test.log",
+      "bytes": 99,
+      "sha256": "c4c2e58ec98890e7cb71ae350a3253dbdb0b02e5a127965c8b5457fe46ea013c"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/parity-baseline.json",
+      "bytes": 5585,
+      "sha256": "9ade67556bda26068b992fcc0f004f75a3df2f113fd02bdff0dafcfd87e970ba"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/parity-stage.json",
+      "bytes": 5585,
+      "sha256": "9ade67556bda26068b992fcc0f004f75a3df2f113fd02bdff0dafcfd87e970ba"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/source.diff",
+      "bytes": 30153,
+      "sha256": "cb8b4866ba9453b2369c6f007b5635c710e128be88215ebcc86595b30321c2d9"
+    },
+    {
+      "path": "build/remind-unknown-domain-preparation-v1/HANDOFF.txt",
+      "bytes": 5146,
+      "sha256": "19426771f54f5677aff5b32cf95be2afc35e14f4245a61d77bb1b2b37a552d68"
+    }
+  ],
+  "tests": {
+    "new_generated": 16,
+    "existing_generated": 29,
+    "default_parity_bytes_equal": true
+  },
+  "patient_access": false,
+  "factory_admission_changed": false,
+  "execution_released": false
+}

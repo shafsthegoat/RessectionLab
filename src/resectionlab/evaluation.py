@@ -798,7 +798,8 @@ def independent_native_removal_check(case: Any, config: Any,
 
 def _extend_independent_free_space(remaining: np.ndarray, connected: np.ndarray,
                                    newly_removed: set[tuple[int, int, int]], *,
-                                   full_flood_threshold: int = 4096) -> None:
+                                   full_flood_threshold: int = 4096,
+                                   interaction_domain: np.ndarray | None = None) -> None:
     """Update the established exterior component after certified connected cuts.
 
     Only a removed cell and a previously sealed air cavity it opens can newly join
@@ -815,6 +816,8 @@ def _extend_independent_free_space(remaining: np.ndarray, connected: np.ndarray,
         return
     queue = deque(sorted(newly_removed))
     for key in newly_removed:
+        if interaction_domain is not None and not interaction_domain[key]:
+            raise ValueError("Unknown domain cannot become connected free space")
         if remaining[key]:
             raise ValueError("Connected-free update precedes committed removal")
         connected[key] = True
@@ -823,8 +826,9 @@ def _extend_independent_free_space(remaining: np.ndarray, connected: np.ndarray,
         key = queue.popleft()
         expanded += 1
         if expanded > full_flood_threshold:
+            free_mask = ~remaining if interaction_domain is None else ~remaining & interaction_domain
             connected[:] = binary_propagation(connected, structure=generate_binary_structure(3, 1),
-                                               mask=~remaining)
+                                               mask=free_mask)
             return
         for axis in range(3):
             for direction in (-1, 1):
@@ -834,7 +838,8 @@ def _extend_independent_free_space(remaining: np.ndarray, connected: np.ndarray,
                 neighbor = list(key)
                 neighbor[axis] = coordinate
                 neighbor = tuple(neighbor)
-                if not remaining[neighbor] and not connected[neighbor]:
+                if (not remaining[neighbor] and not connected[neighbor]
+                        and (interaction_domain is None or interaction_domain[neighbor])):
                     connected[neighbor] = True
                     queue.append(neighbor)
 
@@ -843,6 +848,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      history: Sequence[Mapping[str, Any]], *,
                                      tissue_mask: np.ndarray, access: Any,
                                      hard_exclusion: np.ndarray | None = None,
+                                     interaction_domain: np.ndarray | None = None,
                                      geometry_frame: str = "RAS+",
                                      cancelled: Callable[[], bool] | None = None,
                                      distance_backend: str = "scalar",
@@ -890,6 +896,12 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     hard = np.zeros_like(original) if hard_exclusion is None else np.asarray(hard_exclusion)
     if hard.shape != original.shape or hard.dtype != np.bool_:
         raise ValueError("Native hard exclusions must be boolean and source-aligned")
+    if interaction_domain is not None:
+        interaction_domain = np.asarray(interaction_domain)
+        if (interaction_domain.shape != original.shape or interaction_domain.dtype != np.bool_
+                or np.any(original & ~interaction_domain)):
+            raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+        hard = hard | ~interaction_domain
     remaining = original.copy()
     if geometry_frame not in {"RAS+", "LPS+"} or case.frame not in {"RAS+", "LPS+"}:
         raise ValueError("Independent native geometry needs an explicit RAS+ or LPS+ frame")
@@ -918,7 +930,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         border[tuple(selector)] = True
         selector[axis] = -1
         border[tuple(selector)] = True
-    free = binary_propagation(border & ~remaining, structure=connectivity, mask=~remaining)
+    free_mask = ~remaining if interaction_domain is None else ~remaining & interaction_domain
+    free = binary_propagation(border & free_mask, structure=connectivity, mask=free_mask)
     declared: set[tuple[int, int, int]] = set()
     accepted: set[tuple[int, int, int]] = set()
     volume = float(abs(np.linalg.det(matrix[:3, :3])))
@@ -1088,7 +1101,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                 remaining[tuple(removed.T)] = False
             accepted.update(keys)
             macro_removed.update(keys)
-            _extend_independent_free_space(remaining, free, keys)
+            _extend_independent_free_space(remaining, free, keys, interaction_domain=interaction_domain)
             previous = tip_end
         if mode == "probe":
             if not probe_contacts:

@@ -1,0 +1,60 @@
+.......F.......F                                                         [100%]
+=================================== FAILURES ===================================
+__________ test_domain_masks_and_full_target_are_immutable_and_bound ___________
+
+    def test_domain_masks_and_full_target_are_immutable_and_bound():
+        source=case()
+        for values in (source.support_domain,source._interaction_domain,source.occupancy_source_support,source.nominal_target):
+            with pytest.raises(ValueError): values.setflags(write=True)
+        shifted=source.support_domain.copy(); shifted[0,0,1]=False
+        other=replace(source,support_domain=shifted)
+        assert source.source_hash!=other.source_hash
+        np.testing.assert_array_equal(source.nominal_target,other.nominal_target)
+        np.testing.assert_array_equal(source.occupancy_source_support,other.occupancy_source_support)
+        object.__setattr__(source,'support_domain',shifted)
+>       with pytest.raises(RuntimeError): source.assert_intact()
+                                          ^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-unknown-domain-preparation-v1/tests/test_unknown_domains.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_spatial_task.py:528: in assert_intact
+    if (self._identity_record() != self._identity or (hasattr(self, "_native_identity")
+        ^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_spatial_task.py:513: in _identity_record
+    *((_array_identity(self.support_domain), _array_identity(self._interaction_domain), semantic_digest(self._domain_record))
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([[[False, False,  True,  True,  True,  True,  True],
+        [ True,  True,  True,  True,  True,  True,  True],
+...        [ True,  True,  True,  True,  True,  True,  True],
+        [ True,  True,  True,  True,  True,  True,  True]]])
+
+    def _array_identity(array):
+        root = array
+        while isinstance(root, np.ndarray) and root.base is not None:
+            root = root.base
+        if array.flags.writeable or not isinstance(root, bytes):
+>           raise ValueError("Native spatial source arrays require immutable owned bytes")
+E           ValueError: Native spatial source arrays require immutable owned bytes
+
+build/remind-unknown-domain-preparation-v1/stage/resectionlab/native_spatial_task.py:79: ValueError
+_ test_independent_history_rejects_a_previously_legal_path_crossing_new_unknown _
+
+    def test_independent_history_rejects_a_previously_legal_path_crossing_new_unknown():
+        task=make_native_opening_task()
+        task.step(action(task,OPENING_TOOLS[0].tool_id,(4,4,1)))
+        ds=np.ones(task.case.observed_support.shape,bool);ds[4,4,0]=False
+        source=SimpleNamespace(mri=task.case.structural_intensity,affine=task.case._native_affine_ras_mm,
+            frame='RAS+',semantic_hash=task.case.source_hash)
+        result=independent_check_native_history(source,task.case.tools,task.metrics()['history'],
+            tissue_mask=task.case.observed_support,access=task.case.access,interaction_domain=ds)
+>       assert not result.feasible and 'native_full_tool_hard_constraint_failure' in result.failure_reasons
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NativeRemovalAudit' object has no attribute 'failure_reasons'
+
+build/remind-unknown-domain-preparation-v1/tests/test_unknown_domains.py:192: AttributeError
+=========================== short test summary info ============================
+FAILED build/remind-unknown-domain-preparation-v1/tests/test_unknown_domains.py::test_domain_masks_and_full_target_are_immutable_and_bound
+FAILED build/remind-unknown-domain-preparation-v1/tests/test_unknown_domains.py::test_independent_history_rejects_a_previously_legal_path_crossing_new_unknown
+2 failed, 14 passed in 0.88s

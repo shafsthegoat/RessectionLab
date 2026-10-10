@@ -47,6 +47,12 @@ class PublicTargetContext:
             'source_affine_ras_mm','source_shape','crop_origin','crop_shape','crop_affine_hash','local_target_hash','local_support_hash',
             'local_domain_hash','available','domain_coverage_fraction','mass_mm3','centroid_ras_mm',
             'bbox_axis_min_mm','bbox_axis_max_mm','crop_mass_fraction','unsupported_mass_fraction','mass_scope'}
+        partial_support = 'support_domain_hash' in record
+        domain_keys = {'support_domain_hash','local_support_domain_hash','interaction_domain_hash','local_interaction_domain_hash'}
+        if partial_support:
+            keys |= domain_keys
+            if any(not _hash(record.get(k)) for k in domain_keys):
+                raise ValueError('Exact source and simulated domain bindings required')
         if (set(record)!=keys or record['version']!=VERSION or not _hash(record['source_hash'])
                 or record['track']!='annotation_assisted' or type(record['available']) is not bool
                 or record['source_kind']!=('supplied_annotation' if record['available'] else 'unavailable')
@@ -106,7 +112,11 @@ class PublicTargetContext:
                 or bool(observation.channel_available[2])!=s['available']
                 or array_digest(observation.image_channels[2])!=s['local_target_hash']
                 or array_digest(observation.coverage[2])!=s['local_domain_hash']
-                or not observation.channel_available[1] or not observation.coverage[1].all()
+                or not observation.channel_available[1]
+                or ('support_domain_hash' not in s and not observation.coverage[1].all())
+                or ('support_domain_hash' in s and (
+                    array_digest(observation.coverage[1])!=s['local_support_domain_hash']
+                    or array_digest(observation.coverage[3])!=s['local_interaction_domain_hash']))
                 or array_digest(observation.image_channels[1])!=s['local_support_hash']
                 or array_digest(observation.image_channels[3])!=self.local_cavity_hash):
             raise ValueError('Public target context differs from observation source/crop/cavity')
@@ -143,7 +153,7 @@ class PreparedPublicTarget:
 
 def prepare_public_target(*,nominal_target,target_domain,observed_support,affine_ras_mm,
         crop_origin,crop_shape,source_hash,track='annotation_assisted',
-        source_kind='supplied_annotation',derivation='explicit supplied task region'):
+        source_kind='supplied_annotation',derivation='explicit supplied task region',support_domain=None):
     """No task/reference/reward API: only explicitly permitted source arrays.
 
 None target/domain denotes unavailable evidence. An available all-zero covered
@@ -156,6 +166,10 @@ declared supplied domain; this pure observation helper cannot certify acquisitio
             or any(n<1 for n in support.shape) or not _hash(source_hash)
             or track!='annotation_assisted' or not isinstance(derivation,str) or not 0<len(derivation)<=2048):
         raise ValueError('Bounded supplied public source and derivation required')
+    if support_domain is not None:
+        support_domain=np.asarray(support_domain)
+        if support_domain.dtype!=bool or support_domain.shape!=support.shape or not support_domain.any():
+            raise ValueError('Source support domain must be an explicit aligned boolean mask')
     affine=np.asarray(affine_ras_mm,dtype=np.float64)
     if affine.shape!=(4,4) or not np.isfinite(affine).all() or not np.array_equal(affine[3],[0,0,0,1]):
         raise ValueError('Public target requires a finite physical source frame')
@@ -195,13 +209,21 @@ declared supplied domain; this pure observation helper cannot certify acquisitio
         'target_hash':array_digest(values),'domain_hash':array_digest(domain),'support_hash':array_digest(support),
         'source_affine_ras_mm':affine.tolist(),'source_shape':list(support.shape),'crop_origin':list(origin),'crop_shape':list(shape),
         'crop_affine_hash':array_digest(crop_affine),'local_target_hash':array_digest(values[region]),
-        'local_support_hash':array_digest(support[region].astype(np.float32)),
+        'local_support_hash':array_digest((support[region] if support_domain is None else
+            support[region] & support_domain[region]).astype(np.float32)),
         'local_domain_hash':array_digest(domain[region]),'available':available,
         'domain_coverage_fraction':float(np.count_nonzero(domain))/domain.size,'mass_mm3':total*voxel,
         'centroid_ras_mm':centroid,'bbox_axis_min_mm':lo,'bbox_axis_max_mm':hi,
         'crop_mass_fraction':float(values[region].sum(dtype=np.float64))/total if total else 0.,
         'unsupported_mass_fraction':float(values[~support].sum(dtype=np.float64))/total if total else 0.,
         'mass_scope':'covered_supplied_target_membership_no_support_clipping'}
+    if support_domain is not None:
+        # This is assumed occupancy coverage, not an extension of observed Ds.
+        interaction_domain = support_domain | support
+        record.update(support_domain_hash=array_digest(support_domain),
+            local_support_domain_hash=array_digest(support_domain[region]),
+            interaction_domain_hash=array_digest(interaction_domain),
+            local_interaction_domain_hash=array_digest(interaction_domain[region]))
     return PreparedPublicTarget(record,values,_PREPARED)
 
 

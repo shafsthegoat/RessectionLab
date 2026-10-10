@@ -83,6 +83,7 @@ def _array_identity(array):
 def _native_identity(config):
     return (id(config), tuple(_array_identity(getattr(config, key)) for key in
             ("tissue_mask", "target_labels", "affine", "hard_exclusion")),
+        *((_array_identity(config.interaction_domain),) if config.interaction_domain is not None else ()),
         semantic_digest({"access": _access_record(config.access), "tools": [asdict(t) for t in config.tools],
             "source_hash": config.source_hash, "case_id": config.case_id, "step": config.max_tip_step_mm,
             "max_microsteps": config.max_microsteps, "support": config.tissue_support_provenance,
@@ -206,6 +207,10 @@ class NativeSpatialCase:
     # Only the explicit S union T assumption supplies this unchanged source S.
     # This is retained separately from simulated occupancy, never relabeled QC.
     occupancy_source_support: np.ndarray | None = None
+    # Observed source coverage Ds stays distinct from assumed occupancy S OR T.
+    support_domain: np.ndarray | None = None
+    _interaction_domain: np.ndarray | None = field(init=False, repr=False, default=None)
+    _domain_record: Mapping = field(init=False, repr=False, default_factory=dict)
     _occupancy_derivation: Mapping = field(init=False, repr=False, default_factory=dict)
     _public_target_source: object | None = field(init=False,repr=False,default=None)
     _nominal_proposer: PreparedNominalCavityProposer | None = field(init=False, repr=False, default=None)
@@ -271,6 +276,31 @@ class NativeSpatialCase:
                 "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
                 "anatomical_or_material_validation": False,
                 "outside_union": "unchanged simulation zeros; not certified empty anatomy"}))
+        if self.support_domain is not None:
+            source_domain = _binary(self.support_domain, image.shape, "support_domain")
+            raw_support = support if self.occupancy_source_support is None else self.occupancy_source_support
+            if not source_domain.any() or np.any(raw_support & ~source_domain):
+                raise ValueError("Source support positives require observed support coverage")
+            assumed_target = (np.zeros(image.shape, bool) if self.occupancy_source_support is None else nominal > 0)
+            interaction_domain = immutable_array(source_domain | assumed_target, bool)
+            object.__setattr__(self, "support_domain", source_domain)
+            object.__setattr__(self, "_interaction_domain", interaction_domain)
+            object.__setattr__(self, "_domain_record", freeze_json({
+                "version": "separate-source-and-simulated-domain-v1",
+                "source_support_domain_hash": array_digest(source_domain),
+                "interaction_domain_hash": array_digest(interaction_domain),
+                "interaction_domain_rule": "Ds OR (T > 0)" if self.occupancy_source_support is not None else "Ds",
+                "source_support_known_voxels": int(source_domain.sum()),
+                "source_support_unknown_voxels": int((~source_domain).sum()),
+                "target_in_unknown_support_voxels": 0 if nominal is None else int(((nominal > 0) & ~source_domain).sum()),
+                "assumed_material_beyond_source_domain_voxels": int((assumed_target & ~source_domain).sum()),
+                "unavailable_interaction_voxels": int((~interaction_domain).sum()),
+                "source_domain_extended": False,
+                "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+                "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+                "unknown_interaction_rule": "no full-tool encounter, removal, connected-free seed or flood propagation",
+                "external_tool_extent": "unchanged outside-image unassessed flag; declared aperture/workspace assumption only",
+                "anatomical_or_material_validation": False}))
         if self.proposal_mode == "nominal_cavity_v1":
             if nominal is None:
                 raise ValueError("ESSENTIAL_EVIDENCE_MISSING: nominal/cavity proposals need explicit permitted target evidence")
@@ -357,6 +387,9 @@ class NativeSpatialCase:
                 "target_modified": False,
                 "unsupported_region_removable": False,
                 "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth"}))
+        if self.support_domain is not None and self._supplied_goal_extent:
+            object.__setattr__(self, "_supplied_goal_extent", freeze_json({
+                **self._supplied_goal_extent, "source_and_simulated_domains": self._domain_record}))
         for name, value in (("structural_intensity", image), ("observed_support", support),
                             ("reference_target", target), ("affine_ras_mm", immutable_array(affine, np.float64)),
                             ("tools", tools), ("nominal_target", nominal), ("crop_shape", crop_shape)):
@@ -410,6 +443,7 @@ class NativeSpatialCase:
             "nominal_target": None if nominal is None else array_digest(nominal),
             **({"occupancy_derivation": self._occupancy_derivation}
                if self.occupancy_source_support is not None else {}),
+            **({"source_and_simulated_domains": self._domain_record} if self.support_domain is not None else {}),
             **({'public_target_context_variant':self.public_target_context_variant,
                 'public_target_domain':array_digest(self.public_target_domain)}
                if self.public_target_context_variant is not None else {}),
@@ -432,7 +466,8 @@ class NativeSpatialCase:
         config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self._native_affine_ras_mm,
             self.access, tools, self.source_hash,
             self.support_derivation + "; hypothetical aperture; cortical access unverified",
-            case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self._native_affine_ras_mm[:3, :3], axis=0).min()) / 2))
+            case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self._native_affine_ras_mm[:3, :3], axis=0).min()) / 2),
+            interaction_domain=self._interaction_domain)
         object.__setattr__(self, "_native_config", config)
         object.__setattr__(self, "_native_identity", _native_identity(config))
         if self.proposal_mode == "nominal_cavity_v1":
@@ -450,7 +485,8 @@ class NativeSpatialCase:
             prepared=prepare_public_target(nominal_target=nominal,target_domain=self.public_target_domain,
                 observed_support=support,affine_ras_mm=native_affine,crop_origin=self._crop_origin,
                 crop_shape=self._crop_shape,source_hash=self._source_hash,track=self.track,
-                source_kind=self.target_source_kind,derivation=self.target_derivation)
+                source_kind=self.target_source_kind,derivation=self.target_derivation,
+                support_domain=self.support_domain)
             object.__setattr__(self,'_public_target_source',prepared)
             object.__setattr__(self,'_identity',self._identity_record())
         # Enforce the same observed-frame contract as the policy boundary now.
@@ -474,6 +510,8 @@ class NativeSpatialCase:
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
             *((_array_identity(self.occupancy_source_support), semantic_digest(self._occupancy_derivation))
               if self.occupancy_source_support is not None else ()),
+            *((_array_identity(self.support_domain), _array_identity(self._interaction_domain), semantic_digest(self._domain_record))
+              if self.support_domain is not None else ()),
             *((self.public_target_context_variant,_array_identity(self.public_target_domain),
                 None if self._public_target_source is None else self._public_target_source.fingerprint)
               if self.public_target_context_variant is not None else ()),
@@ -492,6 +530,11 @@ class NativeSpatialCase:
             raise RuntimeError("Native spatial source content or interpretation was replaced")
 
     def spatial_inputs(self, cavity):
+        if self._interaction_domain is not None:
+            values = np.asarray(cavity)
+            if (values.dtype != np.bool_ or values.shape != self.observed_support.shape
+                    or np.any(values & ~self._interaction_domain)):
+                raise ValueError("Observed cavity cannot include unavailable interaction cells")
         region = tuple(slice(origin, origin + size) for origin, size in zip(self._crop_origin, self._crop_shape))
         affine = np.array(self._native_affine_ras_mm, copy=True)
         affine[:3, 3] += affine[:3, :3] @ self._crop_origin
@@ -509,9 +552,13 @@ class NativeSpatialCase:
                 source_kind="synthetic_scan" if self.track == "synthetic_scan" else "observed_scan",
                 derivation=intensity_derivation),
             "nominal_tissue": ObservedChannel(self.observed_support[region], source_kind=self.support_source_kind,
-                derivation=self.support_derivation,
+                coverage=None if self.support_domain is None else self.support_domain[region],
+                derivation=(self.support_derivation if self.support_domain is None else
+                    self.support_derivation[:1300] + "; source knownness=Ds remains unchanged; simulated occupancy/domain assumption="
+                    + self._domain_record["interaction_domain_rule"] + "; public domain record=" + semantic_digest(self._domain_record)),
                 derived_from=("structural_intensity",) if self.support_source_kind == "derived_from_scan" else ()),
             "observed_cavity": ObservedChannel(np.asarray(cavity)[region], source_kind="observed_procedure_state",
+                coverage=None if self._interaction_domain is None else self._interaction_domain[region],
                 derivation="committed fully contained connected native cells")}
         if self.nominal_target is not None:
             channels["nominal_target"] = ObservedChannel(self.nominal_target[region], source_kind=self.target_source_kind,
@@ -1009,6 +1056,7 @@ class NativeSpatialTask:
             "proposal_mode": self.case.proposal_mode,
             "proposal_rule_hash": None if self.case.proposal_config is None else self.case.proposal_config.fingerprint,
             "support_provenance": thaw_json(self.case.support_provenance),
+            **({"source_and_simulated_domains": thaw_json(self.case._domain_record)} if self.case.support_domain is not None else {}),
             "intensity_normalization": thaw_json(self.case._normalization_record),
             "native_grid_reconciliation": thaw_json(self.case._grid_record),
             "crop": {"origin_voxels": self.case._crop_origin, "shape": self.case._crop_shape,
@@ -1024,7 +1072,7 @@ class NativeSpatialTask:
                                  frame="RAS+", semantic_hash=self._source_hash)
         return independent_check_native_history(source, self.case.tools, self._history,
             tissue_mask=self.case.observed_support, access=self.case.access, geometry_frame="RAS+",
-            tool_modes=self.tool_modes)
+            tool_modes=self.tool_modes, interaction_domain=self.case._interaction_domain)
 
 
 def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None):

@@ -73,6 +73,7 @@ def evaluate_native_spatial_episode(task, *, minimum_target_cells=1, metrics=Non
     audit = independent_check_native_history(
         source, case.tools, history, tissue_mask=case.observed_support, access=case.access,
         hard_exclusion=task._config.hard_exclusion, geometry_frame='RAS+', cancelled=cancelled,
+        interaction_domain=task._config.interaction_domain,
         distance_backend=distance_backend, distance_batch_size=distance_batch_size,
     )
     result = {

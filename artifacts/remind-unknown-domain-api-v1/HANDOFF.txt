@@ -1,0 +1,73 @@
+Optional public source-domain API; preparation only
+
+Six staged production files are in stage/resectionlab/, with exact unchanged
+canonical input copies in baseline/resectionlab/. Root alone promotes these.
+New generated tests are tests/test_unknown_domains.py; conftest.py selects the
+staged modules locally and is not a production change. No factory, admission,
+cohort, role, patient manifest, model, training or acquisition change is included.
+Intended next qualification remains the fixed TRAIN002/015/018/045, not admission.
+
+Semantics:
+S is the retained automatic source cerebrum label, T is the entire unchanged
+qualified placed whole-tumor region, Ds is source support coverage. The existing
+explicit material assumption is O=S OR (T>0). The optional simulated interaction
+domain is D=Ds OR (T>0); U=NOT D is unavailable within the supplied image grid.
+Ds is never extended. Target-positive cells outside Ds remain unknown support in
+actor evidence and counts but may be removable material only under the declared
+T-derived simulation assumption. Observed nominal-tissue coverage stays Ds;
+committed-cavity coverage is D; full target/domain/context remain unchanged.
+Known S=0 is an annotation zero, not proof of physical empty anatomy. The policy
+and public planner use the same declared source/occupancy/domain assumptions.
+
+U cannot seed or propagate exterior/cavity free space, expose a new frontier,
+be cut, or be crossed by the complete tool's swept capsule envelopes. Unknown
+encounters refuse without state change. The original geometric refusal retains
+precedence; only an additional U collision is labeled UNKNOWN_DOMAIN. Existing
+out-of-image shaft extent remains explicitly unassessed, and the original distal
+tip-bound guard remains. No external air corridor or extracranial validity was
+introduced. Fixed access may still be unusable; retain that failure rather than
+opening or filling U.
+
+The optional domain is hash-bound/frozen through native config, source identity,
+proposal cavity verification, planner clones, policy coverage, global target
+context and both independent history/evaluation entry points. Public target
+context adds optional coverage hashes only; feature width and statistic meaning
+stay unchanged. Its support-dependent statistics refer to declared O, while its
+local support payload is Ds-masked. Default None keeps previous source/model/
+observation/inventory/history/metric/evaluation records exactly unchanged.
+
+Proofs: 16 generated controls pass (generated-test-03.log,0.88s), including a
+shaft-only U hit outside the active tip sweep, an unknown tunnel, both independent
+flood paths, source knownness with T beyond Ds, immutable/full target, actual tiny
+generated task-to-global-context-to-committed-sequence-to-independent evaluation,
+and preserved outside-image flag/tip refusal. Existing native-resection and
+native-spatial-evaluation suites:29 pass(regression-test.log,0.78s). Two historical
+no-domain conditions (generated and union+global context) match byte-for-byte in
+parity-baseline.json and parity-stage.json; SHA256 is
+9ade67556bda26068b992fcc0f004f75a3df2f113fd02bdff0dafcfd87e970ba.
+No model forwards/updates or patient file/array reads occurred. Earlier negative
+logs are retained: selected acquisition Python lacked pytest; the first test run
+had two test-assertion issues (wrong exception class and audit field name), with
+14 controls already passing. Final tests correct those assertions without hiding
+the negative logs. Initial test source is test_unknown_domains.initial.py.
+
+Reproduce from repository root using existing .venv Python:
+.venv/bin/python -I -B -X pycache_prefix=build/remind-unknown-domain-preparation-v1/recheck-cache -m pytest -q -p no:cacheprovider build/remind-unknown-domain-preparation-v1/tests
+.venv/bin/python -I -B build/remind-unknown-domain-preparation-v1/run_regressions.py
+.venv/bin/python -I -B build/remind-unknown-domain-preparation-v1/parity_probe.py baseline
+.venv/bin/python -I -B build/remind-unknown-domain-preparation-v1/parity_probe.py stage
+The two parity JSON outputs must be identical; do not mistake generated evidence
+for patient access or anatomy qualification.
+
+Remaining actual use boundary: current factory still permits only original four
+TRAIN, has four arrays without Ds, requires full coverage and hardcodes that QC
+claim. Admission still requires full coverage and union is search-only with no
+policy/optimizer budget. This patch does not relax those guards. A separately
+bound domain-aware public manifest/intended-use qualification must retain Ds,
+full T, raw S and the existing crop/visual records; then fixed access and complete
+native tool feasibility can be tested before any broader learning declaration.
+No repeat acquisition or repeat crop is needed. The retained 20-cell NN difference
+in002 and its1,010 target cells beyond Ds remain source facts, not repaired labels.
+The opening-depth/volume retention proxy currently requires actor support coverage
+Ds, so it excludes assumed T beyond Ds even though the simulation can remove it;
+full-target reward and committed overlap remain intact. No proxy was redefined.
