@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-select013-expanded-comparison-v1/select_worker.py", line 225, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-select013-expanded-comparison-v1/select_worker.py", line 213, in main
+    result=execute(release,args.release_sha256,output,progress)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-select013-expanded-comparison-v1/select_worker.py", line 173, in execute
+    raise ValueError('Search unresolved; complete four-arm history is not attested')
+ValueError: Search unresolved; complete four-arm history is not attested

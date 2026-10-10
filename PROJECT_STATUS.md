@@ -1,22 +1,24 @@
 # Project status
 
-**Current priority, October 10:** complete the fixed-model new-patient comparison
-before another learning sweep. The public motion-ranking contrast completed all
-64 updates and four full TRAIN routes, but regressed relative to original
-imitation: 53/42 target cells on 015/045 versus 58/51, with both routes reaching
-the 24-movement horizon. STOP on 002/018 was preserved. The independent saved audit
-passes 9,752 checks; lower training loss did not produce better complete decisions.
-The earlier scratch RL failure, original imitation attempt and separate accepted
-045 checker recovery remain preserved. No learned advantage or useful transfer
-is established.
+**Current priority, October 10:** address measured action-selection failure and
+search cost before further model training. The repaired SELECT013 transfer
+attempt now constructs and independently replays three complete routes, but
+shows no useful target progress: greedy STOP removes nothing; original imitation
+removes about 2 mm³ outside the supplied target before STOP; scratch RL removes
+about 27 mm³ outside target across 24 movements. Neither learned policy removes
+target tissue. Beam search reaches its 300-second cap after four complete layers
+and remains unresolved; the whole four-arm comparison is therefore incomplete.
+The independent saved audit passes 2,586 checks. 037 remains held in denominator
+two and EVAL067 stays closed. This does not establish population transfer or
+clinical harm/safety, and does not prove that no useful path exists.
 
-The fixed SELECT013 comparison previously failed before inference because its
-opening plane met the crop boundary and had no in-grid free-space seed. A separate
-real-source expansion now preserves every original MRI/label overlap and all
-35,260 target cells while restoring omitted support coverage. Saved source/frame qualification and explicit partial-domain inference
-integration are complete; the separately released matched comparison is next. The original four unstarted arms remain failed; no changed-condition
-transfer result exists yet. 037 remains held and EVAL067 closed. Earlier SELECT
-all-STOP outcomes belong to an earlier starting condition.
+The earlier public motion-ranking IL64 contrast also regressed: 53/42 target
+cells on TRAIN015/045 versus original imitation's 58/51, with appropriate STOP
+on 002/018 retained. All results and original failed attempts remain preserved.
+Next, measure the existing exact geometry cache on a matched TRAIN route to
+address expensive search inventories, and use a bounded frozen TRAIN gradient
+diagnostic to distinguish conflicting action-learning signals. Neither requires
+an open-ended training sweep or changing evaluation patients.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
@@ -31,6 +33,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **The repaired transfer test gives a negative learned result and a capped search:** [the saved independent audit](artifacts/post-exposure-select013-expanded-result-v1/REPORT.txt) accepts greedy STOP and both complete learned routes separately: all remove zero target, while IL/RL remove about 2/27 mm³ outside the supplied target. Beam evaluates 246 negative prefixes before its 300 s cap; its partial STOP is not accepted as an outcome. Owned runtime is 384.795 s at 1.548 GB sampled peak, with 26 forwards, 35,217 previews and no SELECT updates. Inventory work occupies 293.555 s of the beam phase. The preparation blocker is fixed; useful transfer and the fourth complete baseline remain unresolved.
 
 - **Existing scan coverage repairs the new-case preparation:** [expanded SELECT013 preparation](artifacts/select013-expanded-public-preparation-v1/RESULT.txt) preserves every original MRI/label overlap and all 35,260 target cells, restores 69 support cells, and leaves 176,294 grid cells explicitly unknown. Conversion plus saved review completes in 2.091 s at 1.190 GB sampled peak; independent metadata checks and three-view gross alignment review pass within their stated limits. The same physical opening and patient split are preserved. No full-tool clearance or useful transfer is inferred from the restored seed; the frozen comparison is next.
 

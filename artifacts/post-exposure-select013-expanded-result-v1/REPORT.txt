@@ -1,0 +1,30 @@
+PASS saved-evidence audit; the four-arm experiment remains FAILED / UNRESOLVED.
+
+The three completed arms have exact trace/plan/history seals and accepted independent full-tool geometry certificates. Beam reached its local 300-second cap, has no accepted plan or replay, and its incumbent STOP must not be reported as a completed outcome. Owned exit1 was clean: 384.795001917 s, sampled peak1,548,222,464 B, output3,815,079 B, no remaining owned PIDs or cleanup errors. The final-guard error correctly preserves incomplete comparison status.
+
+Actual completed outcomes (volumes in mm3):
+  observed_greedy: STOP, 0 motions, target0, outside target0, return0.
+  original IL64: 1 motion then STOP, target0, outside target1.999999807, return-0.436999961.
+  original scratch RL8: 24 motions/HORIZON, target0, outside target26.999997392, return-6.388999479.
+  observed_beam: UNRESOLVED; no accepted route/outcome.
+
+The complete IL/RL path lengths are7.000000020/179.000000480 mm with0/3 tool changes. Their retained contacted-tissue upper bounds are22.999997779/130.999987348 mm3, distinct from removed volume. Geometry acceptance does not establish anatomical safety. Normal-tissue, vascular/function, external-workspace and outside-image evidence remain unassessed; clinical deficit probability remains null. Outside supplied target is not independently verified normal anatomy.
+
+All four initial source, decision-model, observation, post-exposure/domain records and legal action inventories are identical. The initial inventory has37 legal nonSTOP actions plus STOP. Greedy independently selects the stable immediate winner from all38 saved scores; every motion score is negative (best -0.234399981), while STOP is0. Thus the crop-edge initialization obstacle has been resolved in this condition, but the completed learned policies do not show useful geometric target transfer on this SELECT case.
+
+Beam evaluated246 negative transition prefixes, completed4 layers, and interrupted the fifth after10 transitions;37+72+66+61+10=246. The retained opening lane reaches4.5 mm removed-cell depth by layer2 and keeps that depth through layer4 while outside-target removal rises from6 to22 mm3. Those retained prefixes have zero target removal. The partial fifth layer is not advanced. This is limited beam/time evidence, not proof that every reachable action sequence fails or that a complete24-step baseline would STOP. The cap was time, not the5640-transition ceiling.
+
+Costs:26 policy forwards (2 IL,24 RL),35,217 previews,2 checkpoint reloads, zero SELECT optimizer/gradient attempts or updates. The planning budget correctly records failure=arm_raised_ValueError and no complete-history attestation for the whole comparison. Per-arm construction / planning-and-replay inclusive seconds:
+  greedy1.487118041 /1.405077167;
+  IL1.424585375 /4.315991250;
+  RL1.431131666 /69.009743625;
+  beam1.512979166 /300.086641000 (capped selection only; no accepted collection/replay).
+Greedy selection alone is0.012949209 s with0 new previews after its inventory; this is not its total method cost. Beam inventory timers account for293.554574491 s within its300.086641000 s inclusive phase; the cumulative preview timer is339.897152242 s across the run. These nested times must not be summed. Preview accounting records8,908 feasible and26,309 shaft-blocked returns, no raised previews. This identifies expensive inventory/native evaluation plus lack of retained target progress as current bottlenecks; it does not establish that more compute or policy updates would solve them.
+
+Full placed T=35,260 cells /35,259.996594569 mm3 is unchanged. Source support knownness Ds=2,184,064 cells and unknown176,294 remain explicit; no domain filling or target clipping occurs. Simulated material S OR T and interaction domain Ds OR T are separate assumptions, not corrected anatomy. Actual K89 and initial connected-free1,404,481 cells are bound identically across all arms; initialization performs no removal/reward. Declared exterior unknown exception E has18,018 cells, remains unobserved, and grants no clinical clearance.
+
+Original IL failed-attempt status plus accepted exact045 recovery and the terminal scratch RL8 checkpoint/protocol lineages are retained, with identical original initialization; the ranking contrast is excluded. Original013 EMPTY_FIXED_K failure and3.727428959 s cost remain separately bound. SELECT denominator stays2:013 attempted,037 held unchanged; EVAL067 and private references remain closed. One SELECT case and an incomplete fourth arm support no population or clinical conclusion.
+
+Audit first execution passed2,586 checks over173 JSON/source files in0.059888708 s, peak32,473,088 B. It independently checks saved arithmetic, identities, masks on recorded actions, sealed full histories, source/metadata stability, lineage and cap semantics. It does not open array/weight/image/DICOM payloads, recompute geometry, reload a model or execute native code. The prepared auditor was narrowly adapted before execution to evaluate the three complete arms despite the whole-attempt failure and retain the canonical partial-domain versus material-condition names. No audit failure or experiment rerun occurred.
+
+Exact execution pins: HEADd081d145d6ae145eac1ae0394d0e979ee60558ca; release1cabbdf803598f03e04d878e99c0385616a79fb4982c1c0e060bd1e1ec7a98e4; index345c6aa3a07ea322b9c2d41f955f11a69f8950db91c26c7478139d85f8bbd797; result1aaedaf178bc4921f3e5ebe7dd058a5853ceb0a66db72f78ea9169edbc9e8dde; parentb82152d6ee1998b027a5628e9fb9ccf25092e55f5b78273ee58204d7ae98f4e8; workerfinalec1f060ec612d072ea2942a5b54c1a414f84dd618691f352cccc3117e9fea732.

@@ -1,0 +1,33 @@
+{
+  "files": {
+    "REPORT.txt": {
+      "bytes": 5646,
+      "sha256": "2436ab4b377fa5103adb62110c6f96d319e424fe32e0c72b764d701fce7401c1"
+    },
+    "audit-attempt-01.log": {
+      "bytes": 46751,
+      "sha256": "80cbcd55ef08bb455c484ae4c650f9c2a6987d90ba1e4c02d6011503d4218fe6"
+    },
+    "audit-result-01.json": {
+      "bytes": 78535,
+      "sha256": "44e89096e98dfff164ee13d24b591de1c6d904877a40042f960f136ccf6fbc41"
+    },
+    "audit_saved.py": {
+      "bytes": 39480,
+      "sha256": "4fd126699b4b0a64f043482ff6fc573eac720e54a227a2571c530461577341d4"
+    },
+    "compact-result.json": {
+      "bytes": 16758,
+      "sha256": "809b3581c9936f1c58f5efab98c0cdd6dcdf67b22c176cb87e2432027a2c9875"
+    },
+    "input-index.json": {
+      "bytes": 30377,
+      "sha256": "5966cc7dfbf4aeb1cc1a20c3a667e76d900ea51527af563ebc8b354027a5116d"
+    },
+    "preterminal-audit_saved.py": {
+      "bytes": 38207,
+      "sha256": "3dd268e6f99e3263ed804dc6d3019367b7632b4bce4fb1205c806720ee1df0e1"
+    }
+  },
+  "scope": "saved metadata only; no binary arrays/checkpoints, no rerun"
+}

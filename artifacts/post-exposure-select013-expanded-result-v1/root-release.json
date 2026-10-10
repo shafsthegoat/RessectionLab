@@ -1,0 +1,275 @@
+{
+  "EVAL_closed": true,
+  "arms": [
+    "observed_greedy",
+    "IL64",
+    "RL8",
+    "observed_beam"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "claim": "explicit simulated post-exposure S union T world; no anatomical or clinical validation",
+  "cost_scope": "per-method observed inference/search costs plus separately reported upstream TRAIN cost; no equal-cost claim",
+  "endpoints": {
+    "IL64": {
+      "checkpoint": {
+        "path": "build/post-exposure-learning-v1/IL64/attempt-01/IL-final.psckpt",
+        "sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c"
+      },
+      "contexts": {
+        "ReMIND-002": {
+          "path": "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-002-context.json",
+          "sha256": "c9deade0dce17907a7d079b4065feb1c4fafa0a4f1a05299634f5f30e559c027"
+        },
+        "ReMIND-015": {
+          "path": "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-015-context.json",
+          "sha256": "8f27652878c637034c4725c8a753ae0844800692cdbaeba5b8dfab148a137410"
+        },
+        "ReMIND-018": {
+          "path": "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-018-context.json",
+          "sha256": "28d6084b58fa90fc6c38aefccbd240b6e95806fb7d7fd4358c8651f496a4b3e0"
+        },
+        "ReMIND-045": {
+          "path": "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-045-context.json",
+          "sha256": "c967fed33bc10336e1470145090e1ab2173cac6135e25b4ec164dcc995f64427"
+        }
+      },
+      "parent": {
+        "path": "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json",
+        "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+      },
+      "recovery_receipt": {
+        "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json",
+        "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+      },
+      "release": {
+        "path": "build/post-exposure-learning-v1/IL64/root-release.json",
+        "sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b"
+      },
+      "result": {
+        "path": "build/post-exposure-learning-v1/IL64/attempt-01/result.json",
+        "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+      },
+      "status": "original_failed_plus_accepted_replay",
+      "worker_final": {
+        "path": "build/post-exposure-learning-v1/IL64/attempt-01.supervision/worker-final.json",
+        "sha256": "226d5a0e0efd2eafecd7301ff09bb7e302aa2a9a0bccbf818c00916cd98ff4fa"
+      }
+    },
+    "RL8": {
+      "checkpoint": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/RL-final.psckpt",
+        "sha256": "87181c166a8c7255e11bcc57d362ec60edd822617786d2c5a729006a5037c34d"
+      },
+      "contexts": {
+        "ReMIND-002": {
+          "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-002-context.json",
+          "sha256": "46342d63bf8ca33b35e650f7ea96b6a7530718ca7a9605f56f59acdc9b071edd"
+        },
+        "ReMIND-015": {
+          "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-015-context.json",
+          "sha256": "a445eb8f442faa776c4b5be0e273764c3139eec51856d74176f5e5593ee665a8"
+        },
+        "ReMIND-018": {
+          "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-018-context.json",
+          "sha256": "03b8ffbfb997cfdedb0ccaf557f60df57d6b837e8ba48e8f44237f610f0d6fde"
+        },
+        "ReMIND-045": {
+          "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/ReMIND-045-context.json",
+          "sha256": "2b4d8947a43a78edb6d6e3ed8bfe6c05c90b54c6de81f98f07a50a7cf91973a3"
+        }
+      },
+      "parent": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01.supervision/receipt.json",
+        "sha256": "2f82d0bd59de8bd9709023f0ca701a5d57e00b169f8baee418bdf4e68342131b"
+      },
+      "release": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/root-release.json",
+        "sha256": "4da18b8bd21e6a54308d0b58b3d234c49c7351b56040e448ac7107a28a773e3e"
+      },
+      "result": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/result.json",
+        "sha256": "b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8"
+      },
+      "status": "terminal_bound",
+      "worker_final": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01.supervision/worker-final.json",
+        "sha256": "d0cdeb18c81603eda7f55056d2ff6b3ae607cccf2ef92db9e4d4ae7b4374e5bb"
+      }
+    }
+  },
+  "expected_head": "d081d145d6ae145eac1ae0394d0e979ee60558ca",
+  "greedy_seconds": 60,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "limits": {
+    "max_native_previews": 750000,
+    "max_optimizer_updates": 0,
+    "max_policy_forwards": 48,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "output": "build/post-exposure-select013-expanded-comparison-v1/attempt-01",
+  "parent_seconds": 960,
+  "partial_domain_inputs": true,
+  "planned_SELECT_denominator": 2,
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "public_index": {
+    "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/public-select-index.json",
+    "sha256": "a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389"
+  },
+  "public_preparation": {
+    "expanded_preparation_provenance": {
+      "diagnostic_result_sha256": "531e60692158457077d1a11b951bb5b217b8333abd269968a651eca474828445",
+      "expanded_crop_start_MR": [
+        61,
+        70,
+        23
+      ],
+      "fixed_opening_from_bound_diagnostic": {
+        "known_zero_component_cells": null,
+        "known_zero_component_status": "not_measured; seed diagnostic only",
+        "old_outer_face_full_MR": 62.5,
+        "restored_outer_face_full_MR": 62.5,
+        "seed_cells": 89,
+        "seed_failure_remains": false,
+        "side": 1,
+        "transverse_full_MR": [
+          161,
+          108
+        ]
+      },
+      "native_MR_samples_retained": true,
+      "new_access_or_route_admitted": false,
+      "old_conversion_sha256": "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9",
+      "old_crop_start_MR": [
+        63,
+        72,
+        25
+      ],
+      "old_manifest_sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+      "old_overlap_file_sha256": {
+        "image": "5415f0e09f5888565fd49bf20314234e681ee6d55991f6bdd80524e49c6c6632",
+        "supplied_support": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070",
+        "supplied_whole_tumor": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e",
+        "whole_tumor_domain": "0237ec55f72db66a345ffcef3c5b83778017a40283f50b3ad61f55cf14140242"
+      },
+      "old_sources_or_failed_attempt_modified": false,
+      "old_support_placed_voxels": 745523,
+      "original_full_target_voxels": 35260,
+      "preentry_point_bounds_from_bound_diagnostic": [
+        {
+          "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+          "distal_point_full_MR_axis0": 61.49999999,
+          "distal_point_inside_acquired_MRI_axis0": true,
+          "distal_point_inside_outer_crop_axis0": true,
+          "p0_transverse_full_MR_bound": [
+            [
+              153.99999999,
+              100.99999931393586
+            ],
+            [
+              168.00000001,
+              115.00000068606414
+            ]
+          ],
+          "tool_id": "generic_suction",
+          "whole_tool_in_image_certified": false
+        },
+        {
+          "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+          "distal_point_full_MR_axis0": 60.79999999,
+          "distal_point_inside_acquired_MRI_axis0": true,
+          "distal_point_inside_outer_crop_axis0": true,
+          "p0_transverse_full_MR_bound": [
+            [
+              153.29999999,
+              100.29999924632945
+            ],
+            [
+              168.70000001,
+              115.70000075367055
+            ]
+          ],
+          "tool_id": "generic_aspirator",
+          "whole_tool_in_image_certified": false
+        }
+      ],
+      "restored_support_placed_voxels": 69
+    },
+    "manifest": {
+      "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/ReMIND-013-public-inputs.json",
+      "sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e"
+    },
+    "original_failed_attempt": {
+      "bindings": {
+        "parent": {
+          "path": "build/post-exposure-select013-comparison-v1/attempt-01.supervision/receipt.json",
+          "sha256": "cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc"
+        },
+        "release": {
+          "path": "build/post-exposure-select013-comparison-v1/root-release.json",
+          "sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+        },
+        "result": {
+          "path": "build/post-exposure-select013-comparison-v1/attempt-01/result.json",
+          "sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812"
+        }
+      },
+      "checkpoint_loads": 2,
+      "failure": {
+        "committed": false,
+        "message": "POST_EXPOSURE_EMPTY_FIXED_K",
+        "type": "ValueError"
+      },
+      "native_previews": 0,
+      "parent_seconds": 3.727428958984092,
+      "policy_forwards": 0,
+      "sampled_peak_rss_bytes": 371245056
+    },
+    "partial_domain_inputs": true,
+    "source_bindings": {
+      "case_sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65",
+      "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "conversion": {
+        "bytes": 19409,
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-crop-mr-domains/conversion-result.json",
+        "sha256": "bf9174ee066f2ce744a4b3ace1ae048954733981c8126e461c15a75d7c89a057"
+      },
+      "headers_sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948",
+      "root_visual_review": {
+        "bytes": 1539,
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-expanded-public-preparation-v1/root-visual-review.json",
+        "sha256": "1471e4e32b4fa09d7565664f279489d4b60a8eab149471e82475ee6539a58a86"
+      },
+      "saved_array_review_sha256": "6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d",
+      "saved_review": {
+        "bytes": 8118,
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-saved-domain-review/saved-domain-review.json",
+        "sha256": "6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d"
+      }
+    },
+    "source_domain_counts": {
+      "support_domain": 2184064,
+      "target_in_known_support_positive": 1579,
+      "target_in_known_support_zero": 33681,
+      "target_in_unknown_support_domain": 0
+    },
+    "source_domain_fully_covered": false
+  },
+  "selection_rule": "two predetermined frozen matched TRAIN endpoints and existing greedy/beam public planners",
+  "source_index": {
+    "path": "build/post-exposure-select013-expanded-comparison-v1/source-index.json",
+    "sha256": "345c6aa3a07ea322b9c2d41f955f11a69f8950db91c26c7478139d85f8bbd797"
+  },
+  "status": "released_one_attempt"
+}

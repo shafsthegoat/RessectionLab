@@ -1543,3 +1543,32 @@ The source-domain seed89 is neither measured F0 nor full-tool clearance. The
 existing four-arm runner adapted to these exact inputs passes nine generated
 controls and independent source review; actual separately released comparison
 is still required to establish complete planning outcomes.
+
+### October 10: expanded SELECT013 transfer attempted; no learned benefit
+
+The frozen original imitation and scratch RL checkpoints, greedy search and beam
+receive identical new source/model/observation/inventory records. The source
+expansion restores K89 and an initial connected-free component of 1,404,481 cells,
+with no initialization removal or reward. Thirty-seven initial motions are legal;
+all immediate motion scores are negative. Greedy STOP is the best immediate
+action. IL takes one movement then STOP, removes 0 target/1.999999807 mm³ outside
+target, return -0.436999961. RL runs24 movements to HORIZON, removes0 target/
+26.999997392 mm³ outside target, return -6.388999479. These three complete
+histories have accepted saved full-tool certificates, not clinical validation.
+
+Beam is unresolved:246 negative prefixes, four complete layers and a partial
+fifth, with a300.0866-second time cap rather than its transition ceiling. Its
+incumbent STOP has no accepted replay. Retained opening depth plateaus at4.5 mm
+after layer2 while outside-target removal increases; this limited beam does not
+prove global unreachability. The whole comparison and owned exit1 remain failed/
+unresolved, with clean reaping. Parent384.795 s/1,548,222,464 B sampled peak;
+26 forwards/35,217 previews/zero gradients or updates. Independent saved audit
+passes2,586 checks. Full T, unknown Ds, held037 in denominator2 and closed067
+remain unchanged. [Exact evidence](../artifacts/post-exposure-select013-expanded-result-v1/REPORT.txt).
+
+Beam inventory evaluation consumes293.555 s within its300.087 s phase. Next
+measure the already reviewed exact capsule cache on a fixed TRAIN route with
+unchanged complete outcomes, then consider its relevance to capped search. The
+fixed TRAIN gradient diagnostic remains source-only; no new model sweep follows
+from the SELECT failure. All original failed preparation and training attempts
+remain visible.

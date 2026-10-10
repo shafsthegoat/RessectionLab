@@ -1,0 +1,388 @@
+{
+  "arms": {
+    "IL64": {
+      "certificate_outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 7.000000020000016,
+        "cumulative_contacted_tissue_upper_bound_mm3": 24.99999758548545,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 22.999997778646613,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 1.9999998068388358,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 1.9999998068388358,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": -0.4369999613877672
+      },
+      "checkpoint_author": "IL64",
+      "full_target_fraction": 0.0,
+      "full_target_mm3": 35259.99659456868,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 1.9999998068388358,
+      "public_return": -0.4369999613877672,
+      "steps": 2,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP",
+      "unknowns": [
+        "declared_external_workspace_unassessed",
+        "language_evidence_unavailable",
+        "motor_evidence_unavailable",
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed",
+        "vascular_coverage_unassessed"
+      ]
+    },
+    "RL8": {
+      "certificate_outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 179.0000004800001,
+        "cumulative_contacted_tissue_upper_bound_mm3": 157.99998474026802,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 130.99998734794374,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 24,
+        "normal_removed_mm3": 26.99999739232429,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 26.999997392324282,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 3,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": -6.388999478944857
+      },
+      "checkpoint_author": "RL8",
+      "full_target_fraction": 0.0,
+      "full_target_mm3": 35259.99659456868,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 26.999997392324282,
+      "public_return": -6.388999478944857,
+      "steps": 24,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "HORIZON",
+      "unknowns": [
+        "declared_external_workspace_unassessed",
+        "language_evidence_unavailable",
+        "motor_evidence_unavailable",
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed",
+        "vascular_coverage_unassessed"
+      ]
+    },
+    "observed_beam": {
+      "accepted_plan": false,
+      "accounting": {
+        "call_cap_reached": false,
+        "completed_layers": 4,
+        "model_transition_calls": 246,
+        "negative_prefixes_evaluated": 246,
+        "planning_seconds": 300.08660249994136,
+        "time_cap_reached": true
+      },
+      "executed_outcome": null,
+      "interpretation": "Saved capped search proposal only; partial actions including any STOP are not an accepted/executed plan",
+      "partial_actions": [
+        "STOP"
+      ],
+      "reason": "Observed search exceeded its declared episode time",
+      "status": "search_unresolved"
+    },
+    "observed_greedy": {
+      "certificate_outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "checkpoint_author": null,
+      "full_target_fraction": 0.0,
+      "full_target_mm3": 35259.99659456868,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP",
+      "unknowns": [
+        "language_evidence_unavailable",
+        "motor_evidence_unavailable",
+        "vascular_coverage_unassessed"
+      ]
+    }
+  },
+  "audit_peak_rss_bytes": 32473088,
+  "audit_seconds": 0.05988870793953538,
+  "automatic_retry": false,
+  "checkpoint_loads": 2,
+  "checks": 2586,
+  "complete_comparison": false,
+  "cost_phases": {
+    "IL64.planning_and_replay": {
+      "complete_wall_seconds": 4.315991250099614,
+      "inventory_build_or_terminal_empty_calls": 5,
+      "inventory_request_calls": 12,
+      "inventory_request_inclusive_seconds": 3.3291210008319467,
+      "inventory_request_returned": 12,
+      "native_preview_entries": 351,
+      "native_transition_calls": 4,
+      "native_transition_inclusive_seconds": 2.290509165963158,
+      "native_transition_returned": 4,
+      "policy_forward_calls": 2,
+      "policy_forward_inclusive_seconds": 0.4111525418702513,
+      "policy_forward_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012713330797851086,
+      "task_clone_returned": 1
+    },
+    "IL64.public_construction": {
+      "complete_wall_seconds": 1.4245853750035167,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.112507708137855,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    },
+    "RL8.planning_and_replay": {
+      "complete_wall_seconds": 69.00974362506531,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 122,
+      "inventory_request_inclusive_seconds": 56.24495732574724,
+      "inventory_request_returned": 122,
+      "native_preview_entries": 5499,
+      "native_transition_calls": 48,
+      "native_transition_inclusive_seconds": 56.22146183764562,
+      "native_transition_returned": 48,
+      "policy_forward_calls": 24,
+      "policy_forward_inclusive_seconds": 2.5592770436778665,
+      "policy_forward_returned": 24,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012951248791068792,
+      "task_clone_returned": 1
+    },
+    "RL8.public_construction": {
+      "complete_wall_seconds": 1.431131666060537,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.110844540875405,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    },
+    "checkpoint_reload.IL64": {
+      "complete_wall_seconds": 0.012307749828323722,
+      "native_preview_entries": 0
+    },
+    "checkpoint_reload.RL8": {
+      "complete_wall_seconds": 0.0029303748160600662,
+      "native_preview_entries": 0
+    },
+    "observed_beam.planning_and_replay": {
+      "complete_wall_seconds": 300.0866410001181,
+      "inventory_build_or_terminal_empty_calls": 246,
+      "inventory_request_calls": 500,
+      "inventory_request_inclusive_seconds": 293.5545744909905,
+      "inventory_request_returned": 500,
+      "native_preview_entries": 28782,
+      "native_transition_calls": 246,
+      "native_transition_inclusive_seconds": 298.964466501493,
+      "native_transition_returned": 246,
+      "task_clone_calls": 247,
+      "task_clone_inclusive_seconds": 0.8562751992139965,
+      "task_clone_returned": 247
+    },
+    "observed_beam.public_construction": {
+      "complete_wall_seconds": 1.5129791658837348,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.157637792173773,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    },
+    "observed_greedy.planning_and_replay": {
+      "complete_wall_seconds": 1.4050771670881659,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 9,
+      "inventory_request_inclusive_seconds": 1.1459743329323828,
+      "inventory_request_returned": 9,
+      "native_preview_entries": 117,
+      "native_transition_calls": 3,
+      "native_transition_inclusive_seconds": 0.03407145896926522,
+      "native_transition_returned": 3,
+      "task_clone_calls": 2,
+      "task_clone_inclusive_seconds": 0.002727749990299344,
+      "task_clone_returned": 2
+    },
+    "observed_greedy.public_construction": {
+      "complete_wall_seconds": 1.4871180409099907,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.1333266671281308,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    }
+  },
+  "cost_scope": "Selector-only time excludes construction, collection and replay. Each planning_and_replay phase includes selection plus native/independent replay; inventory/transition/forward timers are nested and must not be added.",
+  "decision": "PASS_RETAINED_THREE_COMPLETE_ARMS_AND_UNRESOLVED_BEAM",
+  "excluded_weight_payload_pins_not_opened": {},
+  "executed_SELECT_cases": 1,
+  "full_supplied_target_voxels": 35260,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "information_scope": "same permitted arrays, physical task, initial inventory and public-target context; actor features and planner computation differ, so no identical-representation claim",
+  "initial_legal_nonstop_actions": 37,
+  "limits": "Saved receipts and reviewed source; no independent syscall trace, tensor reload, array reread or geometric recomputation. Explicit post-exposure S-union-T world, preserved full target and declared workspace; no clinical/material validation, success threshold or equal-cost claim. Source-zero is not proven air, outside-image extent and between-insertion transfers remain unassessed.",
+  "native_previews": 35217,
+  "no_model_or_patient_array_imports": true,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "optimizer_updates_on_SELECT": 0,
+  "original_failure": {
+    "bindings": {
+      "parent": {
+        "path": "build/post-exposure-select013-comparison-v1/attempt-01.supervision/receipt.json",
+        "sha256": "cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc"
+      },
+      "release": {
+        "path": "build/post-exposure-select013-comparison-v1/root-release.json",
+        "sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+      },
+      "result": {
+        "path": "build/post-exposure-select013-comparison-v1/attempt-01/result.json",
+        "sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812"
+      }
+    },
+    "checkpoint_loads": 2,
+    "failure": {
+      "committed": false,
+      "message": "POST_EXPOSURE_EMPTY_FIXED_K",
+      "type": "ValueError"
+    },
+    "native_previews": 0,
+    "parent_seconds": 3.727428958984092,
+    "policy_forwards": 0,
+    "sampled_peak_rss_bytes": 371245056
+  },
+  "parent_exit_code": 1,
+  "parent_status": "failed_or_unresolved",
+  "planned_SELECT_cases": 2,
+  "planned_SELECT_denominator": 2,
+  "policy_forwards": 26,
+  "raw_unsupported_target_voxels": 33681,
+  "release_sha256": "1cabbdf803598f03e04d878e99c0385616a79fb4982c1c0e060bd1e1ec7a98e4",
+  "sampled_peak_rss_bytes": 1548222464,
+  "scope": "saved_JSON_and_source_only",
+  "selector_costs": {
+    "observed_beam": {
+      "planning_seconds": 300.08660249994136,
+      "scope": "capped selector only; no accepted collection/native replay"
+    },
+    "observed_greedy": {
+      "native_previews": 0,
+      "scope": "selection only; construction, trace collection and independent replay charged separately",
+      "wall_seconds": 0.01294920896179974
+    }
+  },
+  "source_domains": {
+    "anatomical_or_material_validation": false,
+    "assumed_material_beyond_source_domain_voxels": 0,
+    "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+    "interaction_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+    "interaction_domain_rule": "Ds OR (T > 0)",
+    "post_exposure_condition_hash": "sha256:646c6a447e81a78fb116dc75504ad1e0c7fe03f5eb2c4982452055fbe8a48dd4",
+    "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+    "source_domain_extended": false,
+    "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+    "source_support_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+    "source_support_known_voxels": 2184064,
+    "source_support_unknown_voxels": 176294,
+    "target_in_unknown_support_voxels": 0,
+    "unavailable_interaction_voxels": 176294,
+    "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+    "version": "separate-source-and-simulated-domain-v1"
+  },
+  "source_preparation_manifest": {
+    "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/ReMIND-013-public-inputs.json",
+    "sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e"
+  },
+  "training_evidence": {
+    "IL64": {
+      "additional_training_or_policy_forwards_in_recovery": 0,
+      "fixed_endpoint_four_replays_accepted": true,
+      "original_attempt_status": "failed_or_unresolved",
+      "original_parent": {
+        "path": "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json",
+        "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+      },
+      "original_parent_peak_rss_bytes": 1548288000,
+      "original_parent_seconds": 727.7922132080421,
+      "original_result": {
+        "path": "build/post-exposure-learning-v1/IL64/attempt-01/result.json",
+        "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+      },
+      "separate_recovery": {
+        "receipt": {
+          "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json",
+          "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+        },
+        "release": {
+          "path": "build/post-exposure-IL045-evaluation-recovery-v1/root-release.json",
+          "sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797"
+        },
+        "replay": {
+          "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/native-replay.json",
+          "sha256": "529405a10f37c12f9ee4138fd0ef0d0824d7c3fba6f877802890971cc4bae862"
+        },
+        "result": {
+          "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/result.json",
+          "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+        },
+        "source_index": {
+          "path": "build/post-exposure-IL045-evaluation-recovery-v1/source-index.json",
+          "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+        }
+      },
+      "separate_recovery_parent_seconds": 38.405891791917384,
+      "separate_recovery_peak_rss_bytes": 524615680
+    },
+    "RL8": {
+      "fixed_endpoint_four_replays_accepted": true,
+      "original_attempt_status": "complete",
+      "original_parent": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01.supervision/receipt.json",
+        "sha256": "2f82d0bd59de8bd9709023f0ca701a5d57e00b169f8baee418bdf4e68342131b"
+      },
+      "original_result": {
+        "path": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/result.json",
+        "sha256": "b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8"
+      },
+      "parent_peak_rss_bytes": 1620983808,
+      "parent_seconds": 3333.7225595831405
+    }
+  },
+  "unresolved_arms": [
+    "observed_beam"
+  ],
+  "wall_seconds": 384.795001917053,
+  "world_identities": {
+    "decision_model_hash": "sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3",
+    "initial_observation_hash": "sha256:28903dbdb6e1b364b04063cb40653b57928f6ede89edf70c227ca1f8bf45d047",
+    "proposal_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+    "source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda"
+  }
+}

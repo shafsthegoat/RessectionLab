@@ -1,0 +1,149 @@
+{
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 380.8368484159,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_ValueError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 35217,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 8908,
+          "raised": 0,
+          "rejected": 26309,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26309
+          },
+          "returned": 35217,
+          "returned_microsteps": 632743,
+          "seconds": 339.89715224248357,
+          "started": 35217
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 35217,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "phases": {
+    "IL64.planning_and_replay": {
+      "complete_wall_seconds": 4.315991250099614,
+      "inventory_build_or_terminal_empty_calls": 5,
+      "inventory_request_calls": 12,
+      "inventory_request_inclusive_seconds": 3.3291210008319467,
+      "inventory_request_returned": 12,
+      "native_preview_entries": 351,
+      "native_transition_calls": 4,
+      "native_transition_inclusive_seconds": 2.290509165963158,
+      "native_transition_returned": 4,
+      "policy_forward_calls": 2,
+      "policy_forward_inclusive_seconds": 0.4111525418702513,
+      "policy_forward_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012713330797851086,
+      "task_clone_returned": 1
+    },
+    "IL64.public_construction": {
+      "complete_wall_seconds": 1.4245853750035167,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.112507708137855,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    },
+    "RL8.planning_and_replay": {
+      "complete_wall_seconds": 69.00974362506531,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 122,
+      "inventory_request_inclusive_seconds": 56.24495732574724,
+      "inventory_request_returned": 122,
+      "native_preview_entries": 5499,
+      "native_transition_calls": 48,
+      "native_transition_inclusive_seconds": 56.22146183764562,
+      "native_transition_returned": 48,
+      "policy_forward_calls": 24,
+      "policy_forward_inclusive_seconds": 2.5592770436778665,
+      "policy_forward_returned": 24,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012951248791068792,
+      "task_clone_returned": 1
+    },
+    "RL8.public_construction": {
+      "complete_wall_seconds": 1.431131666060537,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.110844540875405,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    },
+    "checkpoint_reload.IL64": {
+      "complete_wall_seconds": 0.012307749828323722,
+      "native_preview_entries": 0
+    },
+    "checkpoint_reload.RL8": {
+      "complete_wall_seconds": 0.0029303748160600662,
+      "native_preview_entries": 0
+    },
+    "observed_beam.planning_and_replay": {
+      "complete_wall_seconds": 300.0866410001181,
+      "inventory_build_or_terminal_empty_calls": 246,
+      "inventory_request_calls": 500,
+      "inventory_request_inclusive_seconds": 293.5545744909905,
+      "inventory_request_returned": 500,
+      "native_preview_entries": 28782,
+      "native_transition_calls": 246,
+      "native_transition_inclusive_seconds": 298.964466501493,
+      "native_transition_returned": 246,
+      "task_clone_calls": 247,
+      "task_clone_inclusive_seconds": 0.8562751992139965,
+      "task_clone_returned": 247
+    },
+    "observed_beam.public_construction": {
+      "complete_wall_seconds": 1.5129791658837348,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.157637792173773,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    },
+    "observed_greedy.planning_and_replay": {
+      "complete_wall_seconds": 1.4050771670881659,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 9,
+      "inventory_request_inclusive_seconds": 1.1459743329323828,
+      "inventory_request_returned": 9,
+      "native_preview_entries": 117,
+      "native_transition_calls": 3,
+      "native_transition_inclusive_seconds": 0.03407145896926522,
+      "native_transition_returned": 3,
+      "task_clone_calls": 2,
+      "task_clone_inclusive_seconds": 0.002727749990299344,
+      "task_clone_returned": 2
+    },
+    "observed_greedy.public_construction": {
+      "complete_wall_seconds": 1.4871180409099907,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.1333266671281308,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    }
+  },
+  "policy_forwards": 26,
+  "timing_scope": "inclusive phases; do not sum nested work"
+}
