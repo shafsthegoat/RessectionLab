@@ -1,0 +1,23 @@
+{
+  "loss": {
+    "kind": "public_contact_search_action_imitation_v1",
+    "loss": 0.7172731757164001,
+    "loss_forward_calls": 4,
+    "supervised_actions": 4
+  },
+  "update": {
+    "version": "generated-public-contact-learning-v1",
+    "optimizer_steps": 1,
+    "cumulative_updates": 1,
+    "gradient_norm_before_clip": 1.1578489542007446,
+    "module_gradient_norms_before_clip": {
+      "encoder": 0.27454638481140137,
+      "actor": 0.9152922034263611,
+      "stop": 0.6538186073303223,
+      "critic": 0.0
+    },
+    "initial_parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+    "updated_parameter_hash": "sha256:b931858d5294dbbeb4632a27bac37e101bf35ec23e2af94fb50fb6fb0e822afd",
+    "parameters_changed": true
+  }
+}

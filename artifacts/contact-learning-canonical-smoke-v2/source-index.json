@@ -1,0 +1,79 @@
+{
+  "files": [
+    {
+      "path": "result.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/result.json",
+      "bytes": 14810,
+      "sha256": "0c19963eae09724b74dbecfce13a6de931e83ca6c15cc4d92f73a7c61c5e31bf"
+    },
+    {
+      "path": "one-update-receipt.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/one-update-receipt.json",
+      "bytes": 766,
+      "sha256": "89cfade8eb8db55140280f6448e285e206c60f42cae6fe418ee1f0ce2a69aa74"
+    },
+    {
+      "path": "teacher-strategy.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/teacher-strategy.json",
+      "bytes": 6314,
+      "sha256": "e7fd08b858fbae48bf61f0ddb1d3ea46e2e31cfb1ea48d38f0cabe4e7ea51edf"
+    },
+    {
+      "path": "smoke-declaration.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/smoke-declaration.json",
+      "bytes": 613,
+      "sha256": "903e16505c523b5a6ebdc53581b375db9d8704d3c1829f4cbd66d1517c80e926"
+    },
+    {
+      "path": "experiment-freeze.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/experiment-freeze.json",
+      "bytes": 95050,
+      "sha256": "f6d782ab8dbb53814f42ae86166b4b5463adcb1fba5d0891266e0720a0c742c4"
+    },
+    {
+      "path": "supervisor-receipt.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2.supervision/receipt.json",
+      "bytes": 1113,
+      "sha256": "579c65531c7f1574a8a514f45b8038155b87f466d5c63bc2da9b215833cee887"
+    },
+    {
+      "path": "supervisor-declaration.json",
+      "source_path": "build/goal-conditioned-policy-v1/canonical-smoke-v2.supervision/declaration.json",
+      "bytes": 2962,
+      "sha256": "d0c5d7707b374a4dc1e5eb8304abf46e4bdddf7eea3763a19404854df0c37909"
+    },
+    {
+      "path": "runtime-index.json",
+      "source_path": "build/goal-conditioned-policy-v1/candidate-v2-runtime-index.json",
+      "bytes": 4235,
+      "sha256": "1736607e72e2418d65464c4b32023e86f903838a1be897763557094e7e1cfeab"
+    }
+  ],
+  "excluded_local_outputs": [
+    {
+      "path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/STOP-v3-episode.json",
+      "bytes": 35636,
+      "sha256": "80ee3f7ecc75a8b96e60891ad88b5e7edccc2fb1cc623abe945a313a7bfb9c4f",
+      "included_in_git": false
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/SEARCH-v3-episode.json",
+      "bytes": 38881,
+      "sha256": "a734703f7900bc3cef2605f65a1c19912fbafe20befeb8f0d40144f226caa127",
+      "included_in_git": false
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/smoke-partial.gmckpt",
+      "bytes": 166036,
+      "sha256": "cf775d04fb408e01ca7794f91487f8ec2e0a2f1f5627eeb4691eef02982242d8",
+      "included_in_git": false
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/canonical-smoke-v2/learned-partial-strategy-not-publishable.json",
+      "bytes": 5118,
+      "sha256": "6b25bff713604085825f3f59a9b28dafdba77552709307e7bb7140a3b565737a",
+      "included_in_git": false
+    }
+  ],
+  "patient_data_included": false
+}

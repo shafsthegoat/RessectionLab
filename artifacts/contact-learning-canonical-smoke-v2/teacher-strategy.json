@@ -1,0 +1,150 @@
+{
+  "strategy": {
+    "decision_model_hash": "sha256:14c84fcaf17c89de6b46a7cfdec3efa56f27522491842e8e5892e2ef9fa65228",
+    "source_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+    "actions": [
+      "STOP"
+    ],
+    "history": [
+      {
+        "action_id": "STOP",
+        "reward": 0.0,
+        "goal_potential_before": 0,
+        "goal_potential_after": 0,
+        "public_objective_hash": "sha256:60c0b889ff9bcadf9eedf28d6956beeb4656405d5f52891bb44387d95eae480a",
+        "removal_cost_volume_mm3": 0.0,
+        "insertion_distance_mm": 0.0,
+        "complete_tool_path_length_mm": 0.0,
+        "tool_change_count": 0,
+        "effort_and_removal_cost": 0.0,
+        "outcome_scope": "public_geometric_retained_surface_contact",
+        "clinical_deficit_probability": null,
+        "interaction_mode": "stop",
+        "source_state_hash": "sha256:40452431c67f92926c3cd2c0fed1285792194850fc12252b3b17f36b789065bf",
+        "result_state_hash": "sha256:40452431c67f92926c3cd2c0fed1285792194850fc12252b3b17f36b789065bf",
+        "probe_contact_indices_native": [],
+        "removed_indices_native": [],
+        "contact_indices_native": [],
+        "microsteps": []
+      }
+    ],
+    "observation_contract": "public-goal-sequential-spatial-observation-v2",
+    "max_steps": 2
+  },
+  "strategySeal": "sha256:88e107db1655cac006ac7898e99476bac2cce0410268d0ebadc7d78f42a08b92",
+  "geometryAudit": {
+    "feasible": true,
+    "failures": [],
+    "first_failed_action": null,
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 0.0,
+    "contained_source_tissue_volume_mm3": 0.0,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+    "source_voxel_volume_mm3": 1.0,
+    "action_count": 0,
+    "checker_version": "independent-native-sequence-v2",
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": true,
+    "frontier_checked": true
+  },
+  "replayFrames": [
+    {
+      "frameIndex": 0,
+      "actionIndex": -1,
+      "phase": "initial",
+      "toolId": null,
+      "mode": null,
+      "tipRasMm": null,
+      "axis": null,
+      "cavityHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+      "remainingHash": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+      "contactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+      "probeContactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+      "removedIndicesNative": [],
+      "contactIndicesNative": [],
+      "probeContactIndicesNative": [],
+      "stateBefore": "sha256:591bf598d7072ef8bb1860eb9e46ab4f5da0c80b9a8b061505fc4a952d602ba3",
+      "stateAfter": "sha256:591bf598d7072ef8bb1860eb9e46ab4f5da0c80b9a8b061505fc4a952d602ba3"
+    },
+    {
+      "frameIndex": 1,
+      "actionIndex": 0,
+      "phase": "stop",
+      "toolId": null,
+      "mode": "stop",
+      "tipRasMm": null,
+      "axis": null,
+      "cavityHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+      "remainingHash": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+      "contactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+      "probeContactHash": "sha256:ac8c0273d3109056d7288a489b5a03786f2455b1294bfa08cd47127ddb2e4b43",
+      "removedIndicesNative": [],
+      "contactIndicesNative": [],
+      "probeContactIndicesNative": [],
+      "stateBefore": "sha256:591bf598d7072ef8bb1860eb9e46ab4f5da0c80b9a8b061505fc4a952d602ba3",
+      "stateAfter": "sha256:d6d6d06adf740f8282f153a2759cc29adfed3bcaf1523b028a5031a3f7cf258a"
+    }
+  ],
+  "metrics": {
+    "task_version": "public-retained-surface-contact-objective-v1",
+    "source_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+    "decision_model_hash": "sha256:14c84fcaf17c89de6b46a7cfdec3efa56f27522491842e8e5892e2ef9fa65228",
+    "steps": 1,
+    "terminated": true,
+    "total_reward": 0.0,
+    "planning_estimator_only": false,
+    "history": [
+      {
+        "action_id": "STOP",
+        "reward": 0.0,
+        "goal_potential_before": 0,
+        "goal_potential_after": 0,
+        "public_objective_hash": "sha256:60c0b889ff9bcadf9eedf28d6956beeb4656405d5f52891bb44387d95eae480a",
+        "removal_cost_volume_mm3": 0.0,
+        "insertion_distance_mm": 0.0,
+        "complete_tool_path_length_mm": 0.0,
+        "tool_change_count": 0,
+        "effort_and_removal_cost": 0.0,
+        "outcome_scope": "public_geometric_retained_surface_contact",
+        "clinical_deficit_probability": null,
+        "interaction_mode": "stop",
+        "source_state_hash": "sha256:40452431c67f92926c3cd2c0fed1285792194850fc12252b3b17f36b789065bf",
+        "result_state_hash": "sha256:40452431c67f92926c3cd2c0fed1285792194850fc12252b3b17f36b789065bf",
+        "probe_contact_indices_native": [],
+        "removed_indices_native": [],
+        "contact_indices_native": [],
+        "microsteps": []
+      }
+    ],
+    "observation_track": "synthetic_scan",
+    "objective": {
+      "version": "public-retained-surface-contact-objective-v1",
+      "source_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+      "native_index": [
+        7,
+        6,
+        5
+      ],
+      "completion_value": 1.0,
+      "costs": {
+        "target_per_mm3": 0.0,
+        "normal_per_mm3": 0.2,
+        "motor_per_mm3": 0.0,
+        "language_per_mm3": 0.0,
+        "action_cost": 0.03,
+        "motion_per_mm": 0.001,
+        "tool_change_cost": 0.03,
+        "graph_edge_cost": 0.0
+      },
+      "meaning": "committed_probe_contact_AND_currently_retained_cell",
+      "clinical_or_sensor_claim": false
+    },
+    "goal_retained": true,
+    "goal_contacted_and_retained": false,
+    "removed_volume_mm3": 0.0,
+    "outcome_scope": "public_geometric_goal_no_private_target_scoring",
+    "clinical_validation": false
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "version": "public-contact-canonical-learning-smoke-v1",
+  "scope": "one_TRAIN_software_integration_only_not_pilot_performance_or_heldout",
+  "layout": "pcf-06",
+  "goal": "surface",
+  "role": "TRAIN",
+  "teacher": {
+    "max_calls": 256,
+    "beam_width": 96,
+    "seconds": 4.0
+  },
+  "successful_updates": 1,
+  "learning_method": "IL",
+  "pilot_endpoint_unchanged": 32,
+  "checkpoint_kind": "partial",
+  "learned_desktop_publication": false,
+  "v3_exports": [
+    "STOP",
+    "SEARCH"
+  ],
+  "legacy_default_compare": true,
+  "patient_reads": 0,
+  "held_out_execution": false,
+  "automatic_retry": false
+}

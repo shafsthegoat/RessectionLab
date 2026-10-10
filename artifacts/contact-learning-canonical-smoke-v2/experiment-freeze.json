@@ -1,0 +1,3039 @@
+{
+  "version": "generated-public-contact-learning-v1",
+  "protocol": {
+    "version": "generated-public-contact-learning-v1",
+    "seed": 20261009,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "updates": 32,
+    "batch_size": 4,
+    "teacher_tasks": 24,
+    "rl_rollout_transition_cap": 256,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0,
+    "amsgrad": false,
+    "maximize": false,
+    "foreach": false,
+    "fused": false,
+    "gamma": 1.0,
+    "entropy_weight": 0.01,
+    "value_weight": 0.5,
+    "max_gradient_norm": 5.0,
+    "architecture_config": {
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "ray_samples": 5,
+      "physical_reference_mm": 10.0,
+      "critic_candidate_context": true
+    },
+    "search": {
+      "max_calls": 256,
+      "beam_width": 96,
+      "seconds": 4.0
+    },
+    "teacher_seconds": 120.0,
+    "method_seconds": 60.0,
+    "online_seconds": 12.0,
+    "memory_bytes": 1073741824,
+    "online_method_order": "fixed_cyclic_rotation_by_goal_index",
+    "threads": 1,
+    "interop_threads": 1,
+    "device": "cpu",
+    "dtype": "float32",
+    "attempts": 1,
+    "select_passes": 1,
+    "measurement_passes": 1,
+    "checkpoint_selection": "fixed_final_update_no_selection",
+    "real_patient_count": 0,
+    "transition_lineage": "same_native_generated_public_contact",
+    "unresolved_teachers": "preserve_slot_without_label_no_replacement",
+    "hybrid_arm": false
+  },
+  "family_manifest": {
+    "version": "generated-public-contact-family-v2",
+    "split_version": "fixed-stratified-geometry-split-v1",
+    "proposal_mode": "fixed_lattice_access_centerline_v1",
+    "source_candidate_version": "fixed_lattice_access_centerline_v1",
+    "layouts": [
+      {
+        "recipe": {
+          "layout_id": "pcf-00",
+          "center_xy": [
+            5,
+            5
+          ],
+          "front_depths": [
+            2,
+            2,
+            2,
+            2,
+            3
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:d723aed3f587a6700fcad601b3281b74005ca7d0f9668e49176813daace88c3d",
+        "role": "SELECT"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-01",
+          "center_xy": [
+            6,
+            5
+          ],
+          "front_depths": [
+            2,
+            2,
+            3,
+            2,
+            3
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:d0713b0417b9fe980a91ade8aebafafff59c04893a0d383d1799285a8261ba07",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-02",
+          "center_xy": [
+            7,
+            5
+          ],
+          "front_depths": [
+            2,
+            2,
+            4,
+            2,
+            3
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:c5a0142e31e92e1bcb351df25bd07f1c819057591425f3e1993ddb596cf4d8b5",
+        "role": "SELECT"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-03",
+          "center_xy": [
+            8,
+            5
+          ],
+          "front_depths": [
+            3,
+            2,
+            2,
+            3,
+            4
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:ff273dd5b79d14f4277b10c5d7de978e5bc51b6fbd1777c700787d09381c1304",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-04",
+          "center_xy": [
+            9,
+            5
+          ],
+          "front_depths": [
+            3,
+            2,
+            3,
+            3,
+            4
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:94e564a9cb2001578f61f694b7a2b027c9d7e1df6e4fd9cac6f4cee040b000f7",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-05",
+          "center_xy": [
+            5,
+            6
+          ],
+          "front_depths": [
+            3,
+            2,
+            4,
+            3,
+            4
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:c4be8f917ebde873b12360e4dda1053754ba9fe590a6c2fbf7f6378ba73306dc",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-06",
+          "center_xy": [
+            6,
+            6
+          ],
+          "front_depths": [
+            4,
+            2,
+            2,
+            4,
+            2
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:500c1619dc10d913de334286f1731c1502b1b62760634b32046205cc07a02b42",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-07",
+          "center_xy": [
+            7,
+            6
+          ],
+          "front_depths": [
+            4,
+            2,
+            3,
+            4,
+            2
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:94c9305776f193c9ef98fd8d152651baa253e8b0281455cfff4b2d7e4624b2ae",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-08",
+          "center_xy": [
+            8,
+            6
+          ],
+          "front_depths": [
+            4,
+            2,
+            4,
+            4,
+            2
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:15a17f4c3d1e28d8a43100c2db824997eb5c9cf57cb799b678616e3e2d3e6df2",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-09",
+          "center_xy": [
+            9,
+            6
+          ],
+          "front_depths": [
+            2,
+            3,
+            2,
+            2,
+            3
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:3a8eb997823874cb19166e678590fbe2ddd58ec75c4bce73de712ce4fb7ddad5",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-10",
+          "center_xy": [
+            5,
+            7
+          ],
+          "front_depths": [
+            2,
+            3,
+            3,
+            2,
+            3
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:40fb8e46bf75198799f5af6cd00e1f2c87de72bd30596b00440b2ddd90b235bb",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-11",
+          "center_xy": [
+            6,
+            7
+          ],
+          "front_depths": [
+            2,
+            3,
+            4,
+            2,
+            3
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:13741c85837154904e67db09157f5e5bd0d590a4facdccabe9d1b4936ae1ff9f",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-12",
+          "center_xy": [
+            7,
+            7
+          ],
+          "front_depths": [
+            3,
+            3,
+            2,
+            3,
+            4
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:18e8f07e3077c9eaa025a3e7233e807184dc3b25ccb17f5061666f5b8a6b14f3",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-13",
+          "center_xy": [
+            8,
+            7
+          ],
+          "front_depths": [
+            3,
+            3,
+            3,
+            3,
+            4
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:22582e130eb0d79ec0773010bdc57ddf4b179554a5e8252abb0ae068eec2b67f",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-14",
+          "center_xy": [
+            9,
+            7
+          ],
+          "front_depths": [
+            3,
+            3,
+            4,
+            3,
+            4
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:8aa05c438b10ae217df2fc84375d8a97ae000d8247b78b75d533f029880d141d",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-15",
+          "center_xy": [
+            5,
+            8
+          ],
+          "front_depths": [
+            4,
+            3,
+            2,
+            4,
+            2
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:c89bc92394ddb1949f4544e97a8e8b742dc0aa150a22965f003f3bd1c4968330",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-16",
+          "center_xy": [
+            6,
+            8
+          ],
+          "front_depths": [
+            4,
+            3,
+            3,
+            4,
+            2
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:2ba1e0d3c90e40002f9e7f031bf05c88aea10ca582195ed1d2ce5e0da2ea4012",
+        "role": "SELECT"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-17",
+          "center_xy": [
+            7,
+            8
+          ],
+          "front_depths": [
+            4,
+            3,
+            4,
+            4,
+            2
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:16d091288dd4eff29cdc411a24cb875b7025e54d06abe2140eedc818fd7049d1",
+        "role": "MEASUREMENT_EVAL"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-18",
+          "center_xy": [
+            8,
+            8
+          ],
+          "front_depths": [
+            2,
+            4,
+            2,
+            2,
+            3
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:5e0abe07992486e6ba201eb944c695229f093177ff659cb298c2f193b02efc91",
+        "role": "SELECT"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-19",
+          "center_xy": [
+            9,
+            8
+          ],
+          "front_depths": [
+            2,
+            4,
+            3,
+            2,
+            3
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:adaae2eecfa5bfe90744a77b2011239789a348c5a954bbcd037650a4808eb086",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-20",
+          "center_xy": [
+            5,
+            9
+          ],
+          "front_depths": [
+            2,
+            4,
+            4,
+            2,
+            3
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:282e51c341a68dfccfa4972cca51ca3255e2a46c3427e7bb045e9c2520d873ae",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-21",
+          "center_xy": [
+            6,
+            9
+          ],
+          "front_depths": [
+            3,
+            4,
+            2,
+            3,
+            4
+          ],
+          "access_x_offset": -0.25,
+          "access_radius_mm": 1.5,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:e44ab70452f0894b8651a5c15471a7c249cdc046082bd8ee2975339c025963d9",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-22",
+          "center_xy": [
+            7,
+            9
+          ],
+          "front_depths": [
+            3,
+            4,
+            3,
+            3,
+            4
+          ],
+          "access_x_offset": 0.0,
+          "access_radius_mm": 2.0,
+          "surface_goal_x_offset": 1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:76756f06bb7243802d6fd211a1ec3accf0e58c3b60d99cfe92aeb8d026d349da",
+        "role": "TRAIN"
+      },
+      {
+        "recipe": {
+          "layout_id": "pcf-23",
+          "center_xy": [
+            8,
+            9
+          ],
+          "front_depths": [
+            3,
+            4,
+            4,
+            3,
+            4
+          ],
+          "access_x_offset": 0.25,
+          "access_radius_mm": 2.6,
+          "surface_goal_x_offset": -1,
+          "shape": [
+            15,
+            15,
+            14
+          ],
+          "affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "occupied_y_offsets": [
+            -2,
+            2
+          ],
+          "occupied_final_depth": 10,
+          "access_z_mm": 1.5,
+          "normal_inward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "deep_goal_z": 7,
+          "goal_ids": [
+            "surface",
+            "deep"
+          ]
+        },
+        "recipe_hash": "sha256:232ca5d081933c62debd003e1cd6aabf5d56a53deb9062fd4acb260c7882f4da",
+        "role": "TRAIN"
+      }
+    ],
+    "tools": [
+      {
+        "tool_id": "development-aspirator",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.35,
+        "working_length_mm": 12.0,
+        "max_access_angle_deg": 30.0,
+        "tip_length_mm": 1.5,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      {
+        "tool_id": "development-probe",
+        "tip_radius_mm": 0.5,
+        "shaft_radius_mm": 0.2,
+        "working_length_mm": 12.0,
+        "max_access_angle_deg": 30.0,
+        "tip_length_mm": 0.4,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      }
+    ],
+    "role_counts": {
+      "TRAIN": 12,
+      "SELECT": 4,
+      "MEASUREMENT_EVAL": 8
+    },
+    "split_unit": "whole_layout_including_both_goals_and_all_state_descendants",
+    "scope": "generated_software_task_no_real_patient_inference",
+    "task_factory_roles": [
+      "TRAIN",
+      "SELECT"
+    ],
+    "training_admission": false,
+    "held_out_execution_admitted": false,
+    "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+    "objective_version": "public-retained-surface-contact-objective-v1",
+    "source_bindings": [
+      {
+        "layout_id": "pcf-00",
+        "role": "SELECT",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:d723aed3f587a6700fcad601b3281b74005ca7d0f9668e49176813daace88c3d",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              6,
+              5,
+              3
+            ],
+            "objective_hash": "sha256:fc118908c162f566dc3cf7b58f61b53546c8f4e50cc5f030d5442a72b3ba5e7d",
+            "goal_grid_hash": "sha256:5cd7c66c5fd0a32754bbfc687517491a6c4ff20e8a1bdfd856f84108cf9673ec"
+          },
+          "deep": {
+            "native_index": [
+              5,
+              5,
+              7
+            ],
+            "objective_hash": "sha256:fa90904035912315c094ddd8da6ec34968155ba80de35110f7546b0b4010df6a",
+            "goal_grid_hash": "sha256:e829e7f713067342b1881f9be30efbda8703da497746b459b3f8764b2ac4731d"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:8f0c2b63f140a733c3cd9a67a81a96da8c66fe09cab1a1c076236e07276674ec",
+        "support_hash": "sha256:3c7265ffd9ed98d481f11bedabe1713977fa61dd5fd9ff8bdb07813820275348",
+        "topology_hash": "sha256:10f750c42b72b030dc8bd97265075838499626cd40dc994b296d6f5e3784cb81",
+        "structural_intensity_hash": "sha256:7c803dab0c09686f70223a866af0a43d8bec98937187d246993b71bd6d156ea4",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 220,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-01",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:d0713b0417b9fe980a91ade8aebafafff59c04893a0d383d1799285a8261ba07",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              5,
+              5,
+              3
+            ],
+            "objective_hash": "sha256:b5081b129fd3b9fb5f7355c676eb84396e5a76755e072ab5f030b18ac6791600",
+            "goal_grid_hash": "sha256:d1a3a06ab3b0823a2e9647c08c42ebf3f6c17949d3a311764987714750f83b64"
+          },
+          "deep": {
+            "native_index": [
+              6,
+              5,
+              7
+            ],
+            "objective_hash": "sha256:e9970e57bda5da8cf4634791aed871fa288b612859f2027f6e1b5698254ffc0b",
+            "goal_grid_hash": "sha256:623000f2091fa0651cefcf16980556abd5603f38d840f3d489763eba82bacf39"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:a7f40e588ca8707153ee6c03389ab3843e623505e69b1d6d01d89369f55f434b",
+        "support_hash": "sha256:f6153118b0e00709c076e31c62fd715fef250815f67baaa37c0dd6d83cdd76ed",
+        "topology_hash": "sha256:02325adceb980e30b3f4659893b48aea7b4ac3f8fffe5c175db00847b665987c",
+        "structural_intensity_hash": "sha256:245916bf5d5c9733f024307141ba33c8a07a949656106e541d68939c6b07b600",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 215,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-02",
+        "role": "SELECT",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:c5a0142e31e92e1bcb351df25bd07f1c819057591425f3e1993ddb596cf4d8b5",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              8,
+              5,
+              3
+            ],
+            "objective_hash": "sha256:f32bc1c547e1ea86cc96dfe81c2829d8f85c645e09d24011db2f051798ae938c",
+            "goal_grid_hash": "sha256:d7dc40b35c35996125bdd109006777a1ac9fd1f0cfe2c38e0f40d0d0a4e7bafa"
+          },
+          "deep": {
+            "native_index": [
+              7,
+              5,
+              7
+            ],
+            "objective_hash": "sha256:b4ae1e96a391f11718ce661bd891e1e5e004dfb629f65d1b8757e8d9a90fa999",
+            "goal_grid_hash": "sha256:889f416d26953dea9c3c4dc6310f2ce81f49e5145c98ec24364f2223cebe1fb6"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:34558af510354957e756be1be897a6467033e646aee0113a08e723b7d6630043",
+        "support_hash": "sha256:c872439f2b29e0f66c5e8d5b3d5cb7c93e40f318d24bbd94b5473061af59ac95",
+        "topology_hash": "sha256:020db09940db1034f90e7c13465eb252a1b101cb342182efec7e21d14633234f",
+        "structural_intensity_hash": "sha256:09fa5191df610609d6b4a523d81220437abbd7baf865124efb80c0cd6e22ab3c",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 210,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-03",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:ff273dd5b79d14f4277b10c5d7de978e5bc51b6fbd1777c700787d09381c1304",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              7,
+              5,
+              3
+            ],
+            "objective_hash": "sha256:65c1d28c5da36c2efc67dee310ee1fadcfb0199c28a5c16d68b89a9b807e62de",
+            "goal_grid_hash": "sha256:0c59c262082731093753fe2580fa54aaf75d8bc81990fd1ffc7600bf3b77f47c"
+          },
+          "deep": {
+            "native_index": [
+              8,
+              5,
+              7
+            ],
+            "objective_hash": "sha256:01731c87acb395d8f3d6514e31c905bc7f68059b494d056edc6f1d5d5fd13a7e",
+            "goal_grid_hash": "sha256:09ae3e4b1bd066a5fe7542e9681d638a794763e6030cb41b7a85262adbcf05b0"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:e307b6c8a9be76c3d8b6da225293ae1614e5ac8f558d9036fe341db4a2aa5dc6",
+        "support_hash": "sha256:87a217fd464e05177e43b09fc47531fd67d0080ebd04d36fb5bd0d7f38d03e2e",
+        "topology_hash": "sha256:07cf307c6b8dc9ea0eb65d10c7c135c1580b6ca08a28a7ffc056a3ed5a1b057b",
+        "structural_intensity_hash": "sha256:93970a2959e3c1acef67f8fe40253327bc78e2a3104280361f89f93a0a883128",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 205,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-04",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:94e564a9cb2001578f61f694b7a2b027c9d7e1df6e4fd9cac6f4cee040b000f7",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              10,
+              5,
+              4
+            ],
+            "objective_hash": "sha256:d3f216784384bd378f2026d06563d1f896c3b1a772af8143b992b90dac0ead60",
+            "goal_grid_hash": "sha256:c9f366b4ef72632cfd22c3284563a5e0d10b4823a5bd4937425797e98269368a"
+          },
+          "deep": {
+            "native_index": [
+              9,
+              5,
+              7
+            ],
+            "objective_hash": "sha256:4ce358394a237b01127a1dd329fe636923ca78d022a15a461d344d327cb87225",
+            "goal_grid_hash": "sha256:4051beb13044e269aefe649e0751ac12e5358aee5f0943d25f904a7ec4a35824"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:1b5e50be02f07770ca7ffe24f9ca71b25b5bd91857baeb34e8a68a8c5868d15f",
+        "support_hash": "sha256:c38438f35f8a940e2d9a2f554f3a9f3a6f33d3494f6a6ce82b665166ecceff88",
+        "topology_hash": "sha256:0100bab43a6d4b387b5595c19d37df64f4347821cca66e417f712899be10aeaa",
+        "structural_intensity_hash": "sha256:348c458b5a9c7839490ffaf98f6ba6f78e58831ceb90a74a31e65fb2bf9e3d21",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 200,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-05",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:c4be8f917ebde873b12360e4dda1053754ba9fe590a6c2fbf7f6378ba73306dc",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              4,
+              6,
+              3
+            ],
+            "objective_hash": "sha256:75951e379dba1f427448adc5cba2457c43aca0698ec28bad35039f98bb5fd207",
+            "goal_grid_hash": "sha256:0d300b7a55ae0031ef858eaa19c91230331dfe664932b3f9dfd5ffd12c7bdc1a"
+          },
+          "deep": {
+            "native_index": [
+              5,
+              6,
+              7
+            ],
+            "objective_hash": "sha256:881dc1b69ab3baf0ba5441b4fc4ecb48da01ae248e0aabb97452055fd105a150",
+            "goal_grid_hash": "sha256:b39c7478004cc02e273a2951efbd610df669e39190ccca58597623d8b64ab6db"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:37254d8cd6e6a0463c281ef8eb9fb44bec156a3e3761fd444906e44852afcd23",
+        "support_hash": "sha256:efd4663aec727eb8bef0245900a146b9460ef88c7f02a24de0a9f0e976881ce0",
+        "topology_hash": "sha256:0130e273fe4006c7223f533cc18e356b3adf1df4906074c82510eab3ed910672",
+        "structural_intensity_hash": "sha256:5a1e63432c904ec0f1925015c7526620ab76e10529715b1173aa03525a2ef7c4",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 195,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-06",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:500c1619dc10d913de334286f1731c1502b1b62760634b32046205cc07a02b42",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              7,
+              6,
+              5
+            ],
+            "objective_hash": "sha256:60c0b889ff9bcadf9eedf28d6956beeb4656405d5f52891bb44387d95eae480a",
+            "goal_grid_hash": "sha256:9227c51ae371dc1c98b4232ec692a8d6f16ba6aba0b4895fa0a8891d0fe44ec1"
+          },
+          "deep": {
+            "native_index": [
+              6,
+              6,
+              7
+            ],
+            "objective_hash": "sha256:86af532f4b2165546ba266784ae034da1ca29bcdf2dca799ecd4936235491d8d",
+            "goal_grid_hash": "sha256:08ea82a082e62bc292528f23133008a4b218a47807da5f71e4f78945c2966f20"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+        "support_hash": "sha256:2e996ebd95f1a28dd64a4ebde2d4de4bb24fbad948f9f7b64dbc205a616f5e56",
+        "topology_hash": "sha256:0334923d1dc40d8fba1e8e24ad87ffbf09632a97e63711bf242687ba556ffb03",
+        "structural_intensity_hash": "sha256:8b585b4e6047b6eb6137853b3fecb9d1b6ce89ca738ec088407bbc45707a6ce2",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 205,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-07",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:94c9305776f193c9ef98fd8d152651baa253e8b0281455cfff4b2d7e4624b2ae",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              6,
+              6,
+              3
+            ],
+            "objective_hash": "sha256:c77371a71797028e2b198a2f4ca6278d5b5810ab345f20f9ac60d5c94656497e",
+            "goal_grid_hash": "sha256:3d4f0a3c69d3fe02ba8cb083e8f9ef66b93c9945d60fe08dffa17742b693e990"
+          },
+          "deep": {
+            "native_index": [
+              7,
+              6,
+              7
+            ],
+            "objective_hash": "sha256:5da335a458c8c3ecbc4886bed7b69bb056782b8c3f6051b666a75ec87ca49bda",
+            "goal_grid_hash": "sha256:d15e15181fd6f8ac2d492a3eeb05475bb873dea571fe30c96546d9d4f10f5811"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:99e3b09d4dc496bb89a660850db88477f08800fb3d4ddf318709c40c733ea8a2",
+        "support_hash": "sha256:075f404fb2c40637fb92cec718f9f56502e6c2822a399f7f84874c8653b97ed1",
+        "topology_hash": "sha256:1acc1aa2b03747ed17b8dbc63eaea463c92198788fb0b157209113921649abcf",
+        "structural_intensity_hash": "sha256:1ba4c919b4b3188ffe13c0393e043ec22594efd2678da079622ffc48a0ad4bcd",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 200,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-08",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:15a17f4c3d1e28d8a43100c2db824997eb5c9cf57cb799b678616e3e2d3e6df2",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              9,
+              6,
+              5
+            ],
+            "objective_hash": "sha256:bd727912a610d39a2f5a9d482a1da7ef38ee4124c3fb925f549d54e0ebb34efd",
+            "goal_grid_hash": "sha256:30e7f6885063a76f970573f1556f94d4fc22ef1b7ad128655e8b8b86f27d6d98"
+          },
+          "deep": {
+            "native_index": [
+              8,
+              6,
+              7
+            ],
+            "objective_hash": "sha256:6b0d9c52b77a35cf2f15b0dcdb6e8f2166c4b590714ba39e4f22ee5b44a1a487",
+            "goal_grid_hash": "sha256:4673711702220b79a362e1d3bafd2c3ff2c83aa9d8c92583bc92c2172534179e"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:50d495c423ae5dd4f411f0193ff9fdb76490604ba9c89ebb3703a261a4ca2d90",
+        "support_hash": "sha256:0f621a7bf4ce5555d7f7730904a45ebc474c1fbe87184eb682c07789c25c7b76",
+        "topology_hash": "sha256:062f6a00f70b91bf90c3d8db5de1d9129799e525ffa9983adec2079666cf3099",
+        "structural_intensity_hash": "sha256:331ed0bbe15f75913d6929771f27539e0c62800c8f8d3b8bd2b9945f6033ee5e",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 195,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-09",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:3a8eb997823874cb19166e678590fbe2ddd58ec75c4bce73de712ce4fb7ddad5",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              8,
+              6,
+              4
+            ],
+            "objective_hash": "sha256:5e48e4f492d02e0de0e1fd2d0066739d64a7dcc929d07c13b0381529d39ab202",
+            "goal_grid_hash": "sha256:878839f4dcca6914299a8bd1fe404d5540b8016e5754e19a2a604b2072e758e9"
+          },
+          "deep": {
+            "native_index": [
+              9,
+              6,
+              7
+            ],
+            "objective_hash": "sha256:696be3306546b2e0cb5e0c4f390b55e64882aa5ad29798b2e2c3a12c11d6ec2d",
+            "goal_grid_hash": "sha256:9f6a887078d9ed1f1ba9944bfecb0cc683cdd17e3657913af041bb2c66e79a99"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:6870aebb9dbabe89c8c788ba998d8cbe8ca3853be72e3bd090c9977560987843",
+        "support_hash": "sha256:c1ac1d8797c6854a5e9355b6ee7fd1caf0a5c04efe9856ae5e407212a7adbbf6",
+        "topology_hash": "sha256:01e612688476be4acd732b3c0c6f435d484c1a119ec89109619eb3f4754b8de4",
+        "structural_intensity_hash": "sha256:aa3fe133d4b4959199457ac38d8f11cf075139b90a68678283a552e1466cd38f",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 215,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-10",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:40fb8e46bf75198799f5af6cd00e1f2c87de72bd30596b00440b2ddd90b235bb",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              6,
+              7,
+              3
+            ],
+            "objective_hash": "sha256:381f3f9d96bacb8d6776b009f2645d3407c8d66d46e995e0a30cd39a53d2cea3",
+            "goal_grid_hash": "sha256:0918f159c8fd52a2667a63363114f41254f8a0a1cbf52e534aaae9ff551c6a39"
+          },
+          "deep": {
+            "native_index": [
+              5,
+              7,
+              7
+            ],
+            "objective_hash": "sha256:16394afff6d86bca15f35b6534b59612707b852d5d81112786f4791d5221f993",
+            "goal_grid_hash": "sha256:4ec369a533e37d61774a837cfb4e205c6325003f52305c5715a11ed510465fc9"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+        "support_hash": "sha256:d07409a1d9e2f6e6725333cd8a3b24c2e4bef91bb6cf7426b6c6aac55cfff427",
+        "topology_hash": "sha256:1a01bfdaa14c176e7a40dae821bfee85c19a6ed1b79e83149ff42e7b1f8e7720",
+        "structural_intensity_hash": "sha256:126a1541ee42502ff2bf6fd5663885138ebeeea8db63073abdc754e83a05b6de",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 210,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-11",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:13741c85837154904e67db09157f5e5bd0d590a4facdccabe9d1b4936ae1ff9f",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              5,
+              7,
+              4
+            ],
+            "objective_hash": "sha256:ba1c52ba4fad6fb3c46ede43b7f2cb9db36cda6e4aeb3c2e8ec479a0f5c0e63c",
+            "goal_grid_hash": "sha256:f97604de59ad3844447d6eed31a788af2327e6b0c4def4e343f76df4973ecf04"
+          },
+          "deep": {
+            "native_index": [
+              6,
+              7,
+              7
+            ],
+            "objective_hash": "sha256:0cd9cba7c8b59e591bc9e105408d48e5162884bbde632e9da32c1c5005e5f93d",
+            "goal_grid_hash": "sha256:1fa9da1e71feee164b2677db69e491f7f2157c098bc72ebf7a4562f9040f22bc"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:8b9ce49fb5f8e390dce66aa3aebadc50b0ce917f5a8c78adf2739c8f0e5b9920",
+        "support_hash": "sha256:a36108b984fb5826dd57ec9ac5fe7eaa48a5da659d7308b5043b4cca634242a2",
+        "topology_hash": "sha256:042f2700a8d6fbf5242e353455038d6bea979c08dc6eba27f2ab4d2b09e59f24",
+        "structural_intensity_hash": "sha256:307110946eb6eb5e958e15cc5fa1ba398ce6bca7776b825b63f514222f46e83d",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 205,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-12",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:18e8f07e3077c9eaa025a3e7233e807184dc3b25ccb17f5061666f5b8a6b14f3",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              8,
+              7,
+              4
+            ],
+            "objective_hash": "sha256:3bdeac662057224749e2be3bf88ff750aca368eaea45e1ef12ea115284cbb99b",
+            "goal_grid_hash": "sha256:b461a70d924c537a87a73e0d3324f79e0b318702538a2475550f4bef2f8090dc"
+          },
+          "deep": {
+            "native_index": [
+              7,
+              7,
+              7
+            ],
+            "objective_hash": "sha256:1e84376c547d9fea738b8495dc512e79cc115730c869d4818328b0d8c8e96b0c",
+            "goal_grid_hash": "sha256:b5831d7740214f94341e537ec763197f058a4746da90241c8e9975e3303f887c"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:6a4fe30fe2faa0955ff80b0421e172aa7b8e4ff342b122a638445924875244a0",
+        "support_hash": "sha256:9b718afb60d3a7cf8af33186d2ce0db8c4089ed28b772c38d3b41e3433ad50ec",
+        "topology_hash": "sha256:03ea1e38eff50d13bc38d14f5fa39cc241bb5b684937a38dc9965515769041e6",
+        "structural_intensity_hash": "sha256:e10623fa8c99afab4417d065a7e6134bba45eb968b6ddc83e417be07aecacaa6",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 200,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-13",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:22582e130eb0d79ec0773010bdc57ddf4b179554a5e8252abb0ae068eec2b67f",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              7,
+              7,
+              4
+            ],
+            "objective_hash": "sha256:826915f0012b3c17b12c2e6644086671b9271dbb423c2142c8bbb41b2373146f",
+            "goal_grid_hash": "sha256:0657b18880b21400ce64241eedffcacfb638bc86f072536f1eb903f4453cddbe"
+          },
+          "deep": {
+            "native_index": [
+              8,
+              7,
+              7
+            ],
+            "objective_hash": "sha256:b11de0132d24766cd210359031f6a667e8d185fc8a949bdfecb191144181c5a7",
+            "goal_grid_hash": "sha256:89b89f4fe4df13a3f33ca871c7c6443cbf18c8433595fbda1b506dc260c5bc28"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:6ddc236aef158b61569ab1891ada5f4b65ba3f52ec1630b2da5df3024d9eb13e",
+        "support_hash": "sha256:fc5a08b955c06f1d9d7544215ef8fb69e5d90f035e7a92b5bab129e5b8e44e3a",
+        "topology_hash": "sha256:12c23429533d7c58490ecb36ca998947ea4c8e9bb3a26927bcfcd4daaec02047",
+        "structural_intensity_hash": "sha256:0a598c0e5e96e56af68631fd7653366519ab94b4ed25bfbce484c558afd7503a",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 195,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-14",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:8aa05c438b10ae217df2fc84375d8a97ae000d8247b78b75d533f029880d141d",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              10,
+              7,
+              4
+            ],
+            "objective_hash": "sha256:7442ead6417474064646b86aea7b2965b026209e963ad46e7159f9c5de4e99ac",
+            "goal_grid_hash": "sha256:c99b6df500eda1f86ff57c380a5cc65f6a2586f9170f9767a80e6b393cf628f7"
+          },
+          "deep": {
+            "native_index": [
+              9,
+              7,
+              7
+            ],
+            "objective_hash": "sha256:3d3ef91e7c6f70fae3bcc2aa39959dbcd8568d965c2cfe8292699d417e6f0ddf",
+            "goal_grid_hash": "sha256:cd528d0848842916f707ac2a8807ce66c866b1373afb1d3f3f3d17f4b90ac261"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:265e4c3236258906ff5617304d178fb893f18e5c941f9a336654b5e193f63dd1",
+        "support_hash": "sha256:fd27b34def7076863d16f64faa00bbfb65b572166106e58878daf7f9e67968f5",
+        "topology_hash": "sha256:41bf13018411f971b09acab3a78abb90edd5f0a980df45827905bb3e973c8a24",
+        "structural_intensity_hash": "sha256:98ad77edd9422a0ffa2dddc48c797b53f9235d42ac5dad637612699dbc3b8e36",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 190,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-15",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:c89bc92394ddb1949f4544e97a8e8b742dc0aa150a22965f003f3bd1c4968330",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              4,
+              8,
+              4
+            ],
+            "objective_hash": "sha256:b4e9f424858b4b152553a4702968f549502475c3f29dbbc644a64afc0af109a6",
+            "goal_grid_hash": "sha256:71aedad17ab36862092c9165343c56d7c25ccbcc271cd8d17281f0741f1d9cdd"
+          },
+          "deep": {
+            "native_index": [
+              5,
+              8,
+              7
+            ],
+            "objective_hash": "sha256:a95443d99b762ad34ecbd31c21c246d7163ac94e5bab1057859bdfd57948aba3",
+            "goal_grid_hash": "sha256:99494f8059b98f18574c2a6dbbdf4ceb420171434b9de9849e194d70d297a7bc"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:c66fd604ca33925f226f45bb019ef306da8f6b4390b46e23c8e28553d9eca0ae",
+        "support_hash": "sha256:ebbf551b370483caaefd43945eacb51a7eeffc70aa245fdc9d3f8d5fa8048c7b",
+        "topology_hash": "sha256:00cb9f848180141f5aa76dac64f603dae5f3880bd88aee5541f53d02851bb9eb",
+        "structural_intensity_hash": "sha256:a5b208b8c2a2344560bc60d4ca7ce34cf3d199eb215b94eac0bddaa3ae341dbe",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 200,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-16",
+        "role": "SELECT",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:2ba1e0d3c90e40002f9e7f031bf05c88aea10ca582195ed1d2ce5e0da2ea4012",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              7,
+              8,
+              5
+            ],
+            "objective_hash": "sha256:ac0dfbd586815853abbe338623258d96475d8a7f88f27fe3a279ff91b34f3a2a",
+            "goal_grid_hash": "sha256:d1b5e679c71232ad2199892bc7351b60f0d3e8301850de8231fbc3ff1b649a4b"
+          },
+          "deep": {
+            "native_index": [
+              6,
+              8,
+              7
+            ],
+            "objective_hash": "sha256:ac38782b5c5a139cb364ec86647aa3115cbd997d249e2d3e7870a2d0085380d3",
+            "goal_grid_hash": "sha256:9a7257e64d6ff2e8dc1f556a84a2a42b6bd2957264eefd035e7e7e8894b06295"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:0b055cf57f46df856eff9da734e53745c100aab680a5e4b6f7c20ebba67bbc24",
+        "support_hash": "sha256:3bd5555ab26242c0f3f8678969fc635f85dcfcc4523fee96801627ffabef50ad",
+        "topology_hash": "sha256:0202458208a4e02b4cb01f948f17f60157e512183aa0bb92850ce96adca11cd6",
+        "structural_intensity_hash": "sha256:b9fbda84cf83c0da968607106eb4b36ecc1951019f55830211c5058c54072672",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 195,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-17",
+        "role": "MEASUREMENT_EVAL",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:16d091288dd4eff29cdc411a24cb875b7025e54d06abe2140eedc818fd7049d1",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              6,
+              8,
+              4
+            ],
+            "objective_hash": "sha256:3010c8bd936dbfdb4d88da2c490daca4a453c00db04edbc1a9c990d0ee2da6ad",
+            "goal_grid_hash": "sha256:d99e869ce06733829533fe24b062c7a1bcb23284d86ee03cdb984e0961902634"
+          },
+          "deep": {
+            "native_index": [
+              7,
+              8,
+              7
+            ],
+            "objective_hash": "sha256:c92a0d10f8859c318d73d05e0cba59b39f1641a5819491b249068f1aca92c32d",
+            "goal_grid_hash": "sha256:c030601b7cb09429e0fe034d8bc31567b4103ff6829c8ef44de8f0e7ad5106c7"
+          }
+        },
+        "task_execution_available": false,
+        "training_admission": false,
+        "source_hash": "sha256:1cadf5aff26663a9e16183af3118e493998a950c1aacee5086f74fa0d5f514e1",
+        "support_hash": "sha256:73ba4e7b4b3cf92cf37b77618eabdc059c5787a12fdcdaf99f7237c3f35652b4",
+        "topology_hash": "sha256:01f1cc6944d6fae741f522192b7498c08ee0d9c129e17689006c1a44723ea339",
+        "structural_intensity_hash": "sha256:727cd50c5849e6bb50e347cb38154cf2d3f786abbc0d6f0798eb3a2ea0222d97",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 190,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-18",
+        "role": "SELECT",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:5e0abe07992486e6ba201eb944c695229f093177ff659cb298c2f193b02efc91",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              9,
+              8,
+              3
+            ],
+            "objective_hash": "sha256:acd0a8a30dcd96d2ebcf7d92c97c86865a3358f66b39bcceca8365b8b313e7e4",
+            "goal_grid_hash": "sha256:8aa539af6c5572e5e3a34d4bf804bbd17fcee4630e6c47e523f5ec039a2a01f5"
+          },
+          "deep": {
+            "native_index": [
+              8,
+              8,
+              7
+            ],
+            "objective_hash": "sha256:6aca5ee7f226c53290ebad7f7d8f59e28ebf6e165563cfb4b1d9da1f290731d3",
+            "goal_grid_hash": "sha256:a0de780776c6eda4a7dfcc419f494594e76df9794a28f3cae9cb359a37012342"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:c2657a93bed00f8a69d8ee48f8c2ed4862e97976a5d3295c24cc2de06a23ee4f",
+        "support_hash": "sha256:0bc75f8aab132b5093e057ad676adb278ba12bf72627868965693d90236f58ef",
+        "topology_hash": "sha256:06596a41cb009bed60e5b9ea0e4cd360d38e129576447e770abd5f9c168df9cd",
+        "structural_intensity_hash": "sha256:a9bd6681fb24df41f8b1bae8e574b9462aaf0c63e40c5d2db77c229cae3b4bfa",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 210,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-19",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:adaae2eecfa5bfe90744a77b2011239789a348c5a954bbcd037650a4808eb086",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              8,
+              8,
+              5
+            ],
+            "objective_hash": "sha256:85ee790a095eb5bbe3b0b40a3d44a748159a0436d5c4e0532ae8412cea244eac",
+            "goal_grid_hash": "sha256:73d1e8cb9773542bf116d151cfc722f1022cf9c9cd2808871d760a15ef22589b"
+          },
+          "deep": {
+            "native_index": [
+              9,
+              8,
+              7
+            ],
+            "objective_hash": "sha256:83689e398faf0903f8bd4974418a7dd9818aed46fe21089bff91f62046a55d21",
+            "goal_grid_hash": "sha256:e2c79ab72fc3d4c7a243c0f8d8aa0b9ae5a9ed40e84fc1b3eec547d7632c9e07"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:eef79a00e15e861ea28c2b06b39532f02a000378facc51757c13de12fe41ad5c",
+        "support_hash": "sha256:7b581faafb55bc02ddae06079bdf627524b521341557d59aeac0fc53abd511c3",
+        "topology_hash": "sha256:035d7a9e0dcefdbcc33fda9eabf0964bf0d4419231c57f2202c89a50823283e3",
+        "structural_intensity_hash": "sha256:821191ba987cfa76e864b5fb6e3f5305486f7bb72eb190e9fba02060809252fd",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 205,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-20",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:282e51c341a68dfccfa4972cca51ca3255e2a46c3427e7bb045e9c2520d873ae",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              6,
+              9,
+              3
+            ],
+            "objective_hash": "sha256:f310e8225a638bac031379dfd3db971a2fa433fa8a6fe249e61761f1df904490",
+            "goal_grid_hash": "sha256:78f0d5c96a86b601b289abaa890f53da4523acc702e6ba305cd9873fb068e780"
+          },
+          "deep": {
+            "native_index": [
+              5,
+              9,
+              7
+            ],
+            "objective_hash": "sha256:d1df93e92e86909eff801e66f03021be7567115a917cb13b67f00d08388ca77a",
+            "goal_grid_hash": "sha256:325eefe05e713d3ee96585b8cbe711c939727ea9eb58db00aa7a4c6feaef2295"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:de7ede2e982d29a693f53db4e032289de4cfde511fe6b633ecafbaed572e49a9",
+        "support_hash": "sha256:903e3cd2b202140a1741b55912ca8a4c61291185eedf7024404ca8dc7fe30e55",
+        "topology_hash": "sha256:02b7ef58fa907dd2bede2483b6fa864b92d54d0d4b29fed0354aa204f98ec934",
+        "structural_intensity_hash": "sha256:9382f207b068c7559ef6068512a96a29bb7fc598efb67a7406c6d2222b85b371",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 200,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-21",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:e44ab70452f0894b8651a5c15471a7c249cdc046082bd8ee2975339c025963d9",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              5,
+              9,
+              5
+            ],
+            "objective_hash": "sha256:13f315075dea271804b370e1ec55446bb96e26d5fb8b0064a36ddc3fd352b49f",
+            "goal_grid_hash": "sha256:64cd4f2e66eedf9671d1571498e806e4b6f90b453b4f266df4dc8c9720f4b2df"
+          },
+          "deep": {
+            "native_index": [
+              6,
+              9,
+              7
+            ],
+            "objective_hash": "sha256:b22773b4f9a0b25ad4ff47ff7e6e101a28623a98c8551f52c0db8939f31cc515",
+            "goal_grid_hash": "sha256:8306772c5da5edc72697f4f5c208c033e66bc11db7caf5e8e30d42a428a893f0"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:0cdf79d399b21577f30c5cdb8487bba2276fc67951d40970bb47dbb5916e5bfe",
+        "support_hash": "sha256:d7af7ee0eccf4b05665b1be0fcc96d44c0220d9f5e2783bd55afbb3e1a741279",
+        "topology_hash": "sha256:0dd77ba54b2827dcfbcbb86e5fec5c02e83311b297619ee082d753d94c3ce246",
+        "structural_intensity_hash": "sha256:687767fb7640fc15c2ba9c5e98311d6ae7075a6f21182636a7af60e3a08c1d4b",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 195,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-22",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:76756f06bb7243802d6fd211a1ec3accf0e58c3b60d99cfe92aeb8d026d349da",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              8,
+              9,
+              4
+            ],
+            "objective_hash": "sha256:006dbba6a1a39332936ee892bc84c1a980a759dc99082d417834f51428ee6662",
+            "goal_grid_hash": "sha256:ac2829847805badd9c730e05bbe1bf13293f086810202d9ce1cd8e95b8459c76"
+          },
+          "deep": {
+            "native_index": [
+              7,
+              9,
+              7
+            ],
+            "objective_hash": "sha256:6f51069ea92f1762f2dfe9a4d4d5392ebb927b3b80e9ccf27db69978552f30e2",
+            "goal_grid_hash": "sha256:3e6b25d3c1bad1e2be3523ee046c656ec69bea4720a602a7fdaec516c5342827"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:5a1de995366c9ee3497493b0c2da02ce9d3823f86751bc9e199dc7f6eec59eda",
+        "support_hash": "sha256:8c8cc8239a3b61a01946b9a23932d2faa0fd82c6a79e9838b081b161e4012c31",
+        "topology_hash": "sha256:123624d181c7366d263e67ad2e4a5029e5efdd5f304eba0b68b289ae9750df99",
+        "structural_intensity_hash": "sha256:686e944e2a5625fe3b07419456027412b75cb835f591721001d81778050d5173",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 190,
+        "candidate_descriptor_count": 30,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      },
+      {
+        "layout_id": "pcf-23",
+        "role": "TRAIN",
+        "proposal_mode": "fixed_lattice_access_centerline_v1",
+        "source_candidate_version": "fixed_lattice_access_centerline_v1",
+        "recipe_hash": "sha256:232ca5d081933c62debd003e1cd6aabf5d56a53deb9062fd4acb260c7882f4da",
+        "family_hash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+        "goals": {
+          "surface": {
+            "native_index": [
+              7,
+              9,
+              5
+            ],
+            "objective_hash": "sha256:21644f6e2ec3b4f5ce56efac64a193c690aef4dbbf4665c792f92b169774cbf7",
+            "goal_grid_hash": "sha256:5aab133a21dc5c48b6add907870956fc753698083ff08a291f8553fd2a4cc500"
+          },
+          "deep": {
+            "native_index": [
+              8,
+              9,
+              7
+            ],
+            "objective_hash": "sha256:651544a5b300ed4cb7ac3db9f5e859b56d53c2eae3ca4e7794c6a649d5881178",
+            "goal_grid_hash": "sha256:6fe844db23fe0f8f61e3b44e01b6b56c09f97786e3065f1d4e9e17914b079a03"
+          }
+        },
+        "task_execution_available": true,
+        "training_admission": false,
+        "source_hash": "sha256:5436436500d060d16c3e0836b6b790ef947e6b6d991a2651dc400aacec104b22",
+        "support_hash": "sha256:771c87169b35316cd1eec49b9d0dbad1c6fc086305f03788251924e3c85a0be9",
+        "topology_hash": "sha256:0c16041b4164bca874b94a5679b69422b293550bc922d067794fb109ca5dccad",
+        "structural_intensity_hash": "sha256:d8570e7c9f5707eeec889d3ffb1d09ea11a5acfab54e5a133bc57b6731cd46f0",
+        "nominal_target_hash": "sha256:b0945f611b3faf5b8e9bb29c9fe3de3e2200195736b7c658cbc8a82efd71dd69",
+        "affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "crop_origin_native": [
+          0,
+          0,
+          0
+        ],
+        "crop_shape": [
+          15,
+          15,
+          14
+        ],
+        "crop_affine_hash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+        "support_cell_count": 185,
+        "candidate_descriptor_count": 40,
+        "candidate_scope": "fixed_access_grid_3columns_8depths_within_actor_crop; plus_exact_access_centerline_at_existing_depths_v1",
+        "decision_model_hash": null,
+        "execution_binding_status": "not_materialized_source_only",
+        "actions_executed": 0,
+        "geometry_previews": 0
+      }
+    ],
+    "held_out_task_executions": 0,
+    "training_performed": false
+  },
+  "architecture_hash": "sha256:7651a3d1923f7330d3e23d4ddd050e9393a2b37ef54ff5d38a1ff1d9bb5adbd5"
+}

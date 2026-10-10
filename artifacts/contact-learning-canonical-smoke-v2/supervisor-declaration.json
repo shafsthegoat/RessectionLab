@@ -1,0 +1,40 @@
+{
+  "caps": {
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 45.0,
+    "learning_method_seconds": null,
+    "online_method_episode_seconds": null,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "stage_limit_enforcement": "cooperative task checks; parent hard total wall and sampled owned-tree RSS",
+    "teacher_stage_seconds": 4.0,
+    "threads": 1
+  },
+  "darwin_sampler_sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+  "head": "c00463717e7947bc025ea50c2a5906afe2a673c5",
+  "mode": "smoke",
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/canonical-smoke-v2",
+  "released_experiment_hash": null,
+  "scope": "separate_smoke_not_pilot",
+  "source_bindings": {
+    "src/resectionlab/contact_checkpoint.py": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+    "src/resectionlab/contact_costs.py": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+    "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+    "src/resectionlab/contact_learning.py": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+    "src/resectionlab/contact_learning_contract.py": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a",
+    "src/resectionlab/contact_learning_pilot.py": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/goal_mode_episode_adapter.py": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+    "src/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "tests/test_contact_learning.py": "82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200"
+  },
+  "source_index_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/candidate-v2-runtime-index.json",
+  "source_index_sha256": "1736607e72e2418d65464c4b32023e86f903838a1be897763557094e7e1cfeab",
+  "supervisor_sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+  "version": "owned-contact-learning-attempt-v1",
+  "worker_sha256": "99bb30c1daaa8b1a5ed1bc948afd922bc0c8c2598da058cd63540937f661bd92"
+}

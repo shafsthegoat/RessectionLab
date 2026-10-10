@@ -1,0 +1,79 @@
+{
+  "version": "public-contact-family-v2-runtime-index-v1",
+  "files": [
+    {
+      "proposal": "learning-stage/resectionlab/contact_checkpoint.py",
+      "destination": "src/resectionlab/contact_checkpoint.py",
+      "sha256": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_costs.py",
+      "destination": "src/resectionlab/contact_costs.py",
+      "sha256": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+      "base_sha256": null
+    },
+    {
+      "proposal": "candidate-v2-stage/resectionlab/contact_family_episode.py",
+      "destination": "src/resectionlab/contact_family_episode.py",
+      "sha256": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+      "base_sha256": "01722c9e71d7e31fd3b5aef2b0e3ae1c7353240d2605a339d471b4b3d7b8fa31"
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_learning.py",
+      "destination": "src/resectionlab/contact_learning.py",
+      "sha256": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+      "base_sha256": null
+    },
+    {
+      "proposal": "candidate-v2-stage/resectionlab/contact_learning_contract.py",
+      "destination": "src/resectionlab/contact_learning_contract.py",
+      "sha256": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a",
+      "base_sha256": "2d8eea67cc2280a62959d9e676960cca4243d0a07fa152d56481f1edca7b9827"
+    },
+    {
+      "proposal": "learning-stage/resectionlab/contact_learning_pilot.py",
+      "destination": "src/resectionlab/contact_learning_pilot.py",
+      "sha256": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+      "base_sha256": null
+    },
+    {
+      "proposal": "learning-stage/resectionlab/development_episode.py",
+      "destination": "src/resectionlab/development_episode.py",
+      "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+      "base_sha256": "de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162"
+    },
+    {
+      "proposal": "candidate-v2-stage/tests/test_contact_learning.py",
+      "destination": "tests/test_contact_learning.py",
+      "sha256": "82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200",
+      "base_sha256": "cdd4bd692336ce5fcf03d27fb3d41992c6b2a921633b64cd6b81e3b86ed3abc0"
+    }
+  ],
+  "dependencies": {
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/goal_mode_episode_adapter.py": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+    "src/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "family_version": "generated-public-contact-family-v2",
+  "source_candidate_version": "fixed_lattice_access_centerline_v1",
+  "candidate_proposals": {
+    "src/resectionlab/native_spatial_task.py": {
+      "proposal": "build/public-contact-family-centerline-v1/stage/resectionlab/native_spatial_task.py",
+      "sha256": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea"
+    },
+    "src/resectionlab/public_contact_family.py": {
+      "proposal": "build/public-contact-family-centerline-v1/stage/resectionlab/public_contact_family.py",
+      "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800"
+    }
+  },
+  "prior_learning_promotion_index_sha256": "0f3ab7f2962d091ef23685d95844bd23bd83df2f964a524dc4068cc763979597",
+  "consumer_promotion_index_sha256": "fad802fb1e45c3e3753c8d148edcbc81da2c80beba456d086202a644bdb3966f",
+  "model_architecture_change": false,
+  "protocol_change": false,
+  "status": "final_source_frozen_pending_root_promotion_and_smoke_release",
+  "family_promotion_index_sha256": "f1ba1ca710962f08b9d512aaa20a44f4a600e47e79f8095234a17e3f143df54f"
+}
