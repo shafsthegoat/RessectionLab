@@ -1,0 +1,96 @@
+{
+  "all_saved_artifact_hashes_verified": true,
+  "all_source_domain_voxels_world_checked": true,
+  "audit_script_sha256": "6d09fcd2e27fbb1cfbadd3205586273583e483890e57c317841e124a29d91ba9",
+  "conversion_receipt_sha256": "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9",
+  "header_snapshot_sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948",
+  "image_range": [
+    0.0,
+    1654.0
+  ],
+  "label_summaries": {
+    "cerebrum": {
+      "saved_domain_voxels": 2152650,
+      "saved_positive_volume_mm3": 745522.9279969546,
+      "saved_positive_voxels": 745523,
+      "source_positive_centres_cropped_from_bound_execution": 1469,
+      "source_positive_voxels_from_bound_execution": 20115790,
+      "volume_change_percent": 0.06628164920412516
+    },
+    "whole_tumor": {
+      "saved_domain_voxels": 118638,
+      "saved_positive_volume_mm3": 35259.99659456868,
+      "saved_positive_voxels": 35260,
+      "source_positive_centres_cropped_from_bound_execution": 0,
+      "source_positive_voxels_from_bound_execution": 35260,
+      "volume_change_percent": -9.589637151030672e-06
+    }
+  },
+  "limits": [
+    "Only an annotation-assisted geometric research condition; no anatomical or clinical accuracy pass.",
+    "Full supplied target remains the denominator; unchanged support excludes some target positives.",
+    "Automatic support zeros are uncertain, informative public estimates, not confirmed empty anatomy; no filling.",
+    "Source whole tumor is not a prescribed resection target. Missing vessels and function remain unknown.",
+    "Exact acquired/annotation availability timestamps are unverified. SELECT permits zero optimizer updates.",
+    "NN sampling may omit thin labels; source positive crop losses and volume changes remain explicit."
+  ],
+  "original_source_reopened": false,
+  "patient_id": "ReMIND-013",
+  "private_reference_loaded": false,
+  "public_support_domain_fully_covered": true,
+  "role": "SELECT",
+  "saved_counts": {
+    "support": 745523,
+    "target": 35260,
+    "target_domain": 118638,
+    "target_outside_support": 33681
+  },
+  "shape_xyz": [
+    127,
+    150,
+    113
+  ],
+  "source_MR_sample_equality": "bound conversion worker independently compared decoded samples to original bytes; this saved audit checks finite saved samples only",
+  "source_geometry_refit_from_saved_headers": {
+    "cerebrum": {
+      "centred_OLS_affine_max_difference_mm": 2.1316282072803006e-13,
+      "plane_residual_mm": 2.570902027265751e-06
+    },
+    "structural_t1ce": {
+      "centred_OLS_affine_max_difference_mm": 8.668621376273222e-13,
+      "plane_residual_mm": 0.00028771688494089176
+    },
+    "whole_tumor": {
+      "centred_OLS_affine_max_difference_mm": 3.552713678800501e-14,
+      "plane_residual_mm": 1.114844572217847e-08
+    }
+  },
+  "status": "saved_public_geometry_domains_samples_checked_anatomy_unreviewed",
+  "visual_review": {
+    "expert_anatomy_review": false,
+    "observation": "Target visibly lies predominantly in the automatic support exclusion. Shared-frame geometry is consistent; clinical cause versus source annotation error remains uncertain.",
+    "views": [
+      {
+        "available_to_actor": false,
+        "axis": 0,
+        "file": "public-qc-axis0-index34.png",
+        "index": 34,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 1,
+        "file": "public-qc-axis1-index80.png",
+        "index": 80,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 2,
+        "file": "public-qc-axis2-index82.png",
+        "index": 82,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      }
+    ]
+  }
+}

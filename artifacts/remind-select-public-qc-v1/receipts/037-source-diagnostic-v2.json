@@ -1,0 +1,211 @@
+{
+  "MRI_loaded": false,
+  "anatomy_pass": false,
+  "bits_per_frame_mod8": 7,
+  "conclusion": "Saved NN crop is exactly selected source bits; source-native label views separate encoded pattern from display/MRI overlay. Cause and anatomical validity remain unreviewed.",
+  "decoder_mode": "full-stack index=None; selected native planes compared against raw bit oracle",
+  "elapsed_seconds": 0.06689283414743841,
+  "encoded_source_views": [
+    {
+      "axis": 0,
+      "file": "encoded-source-axis0-index76.png",
+      "positive_is_white": true,
+      "sha256": "c882d553c08eb5cda97ba999477b6d4819361804273f5777394fd3e2ce44ff90",
+      "source_index": 76
+    },
+    {
+      "axis": 1,
+      "file": "encoded-source-axis1-index220.png",
+      "positive_is_white": true,
+      "sha256": "1379dc817146064567c433ac264837ff16c1e171181055c21f216fb5a6f2a549",
+      "source_index": 220
+    },
+    {
+      "axis": 2,
+      "file": "encoded-source-axis2-index151.png",
+      "positive_is_white": true,
+      "sha256": "ec62550935958ceb825fb6b47db9aeb6ea2e40041178861d51152eec59fa9828",
+      "source_index": 151
+    }
+  ],
+  "executing_source_sha256": "923e689ee168063ab3aac472650048b5f0abc8a1a4e8fe6156ed64e0774fc62f",
+  "expected_contiguous_bit_bytes": 8673612,
+  "frame_padding_policy": "continuous DICOM bitstream, no per-frame byte padding assumed",
+  "peak_rss_bytes": 167919616,
+  "pixel_data_bytes": 8673612,
+  "prior_failed_selected_index_attempt": "exact037-seg-diagnostic-v1/result.json",
+  "private_reference_loaded": false,
+  "samples_per_frame": 204687,
+  "saved_crop_all_raw_samples_equal": true,
+  "saved_crop_voxels_checked_against_original_bit_addresses": 2513280,
+  "selected_adjacent_frame_disagreement": [
+    {
+      "difference_fraction_of_union": 1.0,
+      "frames": [
+        0,
+        1
+      ]
+    },
+    {
+      "difference_fraction_of_union": 1.0,
+      "frames": [
+        1,
+        2
+      ]
+    },
+    {
+      "difference_fraction_of_union": 0.19397691467295786,
+      "frames": [
+        149,
+        150
+      ]
+    },
+    {
+      "difference_fraction_of_union": 0.1979732718311639,
+      "frames": [
+        150,
+        151
+      ]
+    },
+    {
+      "difference_fraction_of_union": 0.029336437718277066,
+      "frames": [
+        151,
+        152
+      ]
+    },
+    {
+      "difference_fraction_of_union": 0.029014055430350783,
+      "frames": [
+        152,
+        153
+      ]
+    },
+    {
+      "difference_fraction_of_union": 0.031925108017282766,
+      "frames": [
+        168,
+        169
+      ]
+    },
+    {
+      "difference_fraction_of_union": 0.22921651871864146,
+      "frames": [
+        169,
+        170
+      ]
+    },
+    {
+      "difference_fraction_of_union": 1.0,
+      "frames": [
+        336,
+        337
+      ]
+    },
+    {
+      "difference_fraction_of_union": null,
+      "frames": [
+        337,
+        338
+      ]
+    }
+  ],
+  "selected_native_planes": [
+    {
+      "frame_index": 0,
+      "positive_voxels": 0,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "00164e21cdb740682e13f547c3cc995b343dcfd2aec331af0be6e56708f274a0"
+    },
+    {
+      "frame_index": 1,
+      "positive_voxels": 21,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "8cc51e9d097b2f72f266ad985557d7551d765a1c6bc6dd7a48558c65ad592004"
+    },
+    {
+      "frame_index": 2,
+      "positive_voxels": 52,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "02bf969c8d32c960e96266696c2a86feb87262072ce43d91d904ff62da54107d"
+    },
+    {
+      "frame_index": 149,
+      "positive_voxels": 114002,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "9cbe335ba45cb7a6eb03136122570d206c27bb29a0712c60c1f96d98ec7feaa7"
+    },
+    {
+      "frame_index": 150,
+      "positive_voxels": 114124,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "0e79a48deb20399e5b41563265c27dbb6bce5367d84d186deefdd24c09425859"
+    },
+    {
+      "frame_index": 151,
+      "positive_voxels": 114027,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "469d03fdcde509063e2be44852ada713cb37b08ce6d00ebdaabcd743e14c5db0"
+    },
+    {
+      "frame_index": 152,
+      "positive_voxels": 114501,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "f483983ccdcbc6bcfb7ae3412365613de2338d3ef2b23b6c6ee86c3451a19cab"
+    },
+    {
+      "frame_index": 153,
+      "positive_voxels": 114634,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "10bb5418cdf66214c5e623dca3583f713376ba77ac31fff7a8c6d4ce3171a5d6"
+    },
+    {
+      "frame_index": 168,
+      "positive_voxels": 114876,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "70dc2d463232e5231edee713ce26041b008bf43059711ff0f89a35a1077afdec"
+    },
+    {
+      "frame_index": 169,
+      "positive_voxels": 114696,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "f574622cb5533aababd260ac8165f72a7d897e4a5e1e82744198cb9e91dfc978"
+    },
+    {
+      "frame_index": 170,
+      "positive_voxels": 114709,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "f9fa8143eef001e9004edd3667db3379e1c5ee2a2484ea48bdaa781566ea1da1"
+    },
+    {
+      "frame_index": 336,
+      "positive_voxels": 36,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "1a95aa6f6fece4834d0a6b76592b1975c84d2dbb7e87c60dc35ae39d91a69a4f"
+    },
+    {
+      "frame_index": 337,
+      "positive_voxels": 0,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "00164e21cdb740682e13f547c3cc995b343dcfd2aec331af0be6e56708f274a0"
+    },
+    {
+      "frame_index": 338,
+      "positive_voxels": 0,
+      "raw_and_pydicom_equal": true,
+      "raw_plane_sha256": "00164e21cdb740682e13f547c3cc995b343dcfd2aec331af0be6e56708f274a0"
+    }
+  ],
+  "shape_xyz": [
+    399,
+    513,
+    339
+  ],
+  "source_algorithm_name": "BrainLab",
+  "source_algorithm_type": "AUTOMATIC",
+  "source_bytes_read": 8741376,
+  "source_frame_order_matches_saved": true,
+  "source_sha256": "f8ad2b9d4900b8d9e568ce09d63d9949bb3b838a039a5d17111e14a175414aee",
+  "source_transfer_syntax": "1.2.840.10008.1.2.1",
+  "status": "encoded_source_pattern_diagnostic_complete_anatomy_unreviewed"
+}

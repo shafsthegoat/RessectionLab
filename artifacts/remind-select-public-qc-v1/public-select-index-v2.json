@@ -1,0 +1,38 @@
+{
+  "schema": "remind-public-SELECT-qualified-input-index-v2",
+  "status": "qualification_metadata_not_execution_release",
+  "supersedes_for_admission_sha256": "3d85ed4672090f9b67868c847ac6ddf960cd2fa828ebbee44b269a7420d44716",
+  "qualification_status_sha256": "f31630ee8813156d877e0161898893ee7d2cdc7e9c1736a1878e901b94f8e7cd",
+  "role": "SELECT",
+  "max_optimizer_updates": 0,
+  "planned_case_denominator": 2,
+  "cases": [
+    {
+      "patient_id": "ReMIND-013",
+      "patient_group": "ReMIND:013",
+      "role": "SELECT",
+      "status": "PUBLIC_PARTIAL_TARGET_CONDITION_QUALIFIED",
+      "path": "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-013-public-inputs-v1.json",
+      "sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+      "supported_target_positive_voxels": 1579,
+      "full_target_denominator_voxels": 35260,
+      "anatomical_accuracy_pass": false
+    },
+    {
+      "patient_id": "ReMIND-037",
+      "patient_group": "ReMIND:037",
+      "role": "SELECT",
+      "status": "HOLD_ENCODED_SOURCE_SUPPORT_ARTIFACT",
+      "path": null,
+      "sha256": null,
+      "quarantined_conversion_manifest_sha256": "6824c835de54860ed06190e0f5887bbbf679ed8e20e5b483738038347137e202",
+      "source_diagnostic_result_sha256": "e09b995abb60679a7c672e944e579c2d5c023fbfcce539127859ea1ddc35dccd",
+      "kept_in_planned_denominator": true,
+      "replacement": null,
+      "anatomical_accuracy_pass": false
+    }
+  ],
+  "private_reference_loaded": false,
+  "split_changes": false,
+  "actual_policy_runs": 0
+}

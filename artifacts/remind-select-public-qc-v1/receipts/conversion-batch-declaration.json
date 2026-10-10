@@ -1,0 +1,30 @@
+{
+  "caps": {
+    "automatic_retry": false,
+    "output_bytes_per_case": 268435456,
+    "sampled_rss_bytes": 3221225472,
+    "seconds_per_case": 300,
+    "threads": 1
+  },
+  "cases": [
+    [
+      "ReMIND-013",
+      "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65"
+    ],
+    [
+      "ReMIND-037",
+      "89ebb69cdd8d104eb726e402b2c09da9a4c3799a6bef97f7a646903562120fd9"
+    ]
+  ],
+  "internal_crop_cap": "existing110s/2GiB checkpoints retained",
+  "parent_sha256": "d7c0cc60198c84226dbf01a02c6bd3cd3134ccc23ec3f45895502f65bed65270",
+  "policy_or_training": false,
+  "public_only": true,
+  "runtime": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+  "scope": "public source qualification, anatomy unreviewed",
+  "source_sha256": {
+    "scripts/convert_remind_development.py": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6",
+    "scripts/prepare_remind_planning.py": "155e32f3c4605407fe4c3e65de5c0445bae7918002daf803d2dde470fe350b35",
+    "src/resectionlab/remind_planning_qc.py": "db146b0610b0b2aaf8c9d3cc08478920b2746f4b5065937a43a320054700f9a8"
+  }
+}

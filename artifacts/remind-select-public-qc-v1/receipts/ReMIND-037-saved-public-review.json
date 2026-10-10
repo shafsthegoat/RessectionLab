@@ -1,0 +1,96 @@
+{
+  "all_saved_artifact_hashes_verified": true,
+  "all_source_domain_voxels_world_checked": true,
+  "audit_script_sha256": "6d09fcd2e27fbb1cfbadd3205586273583e483890e57c317841e124a29d91ba9",
+  "conversion_receipt_sha256": "e3671d0089279f786225f63180159ae656f37d086aa159c5f622808a3198d41f",
+  "header_snapshot_sha256": "09134a011da1b074b7ab536ba434bb8e2afd2980a544f51883d794d8f3661d0c",
+  "image_range": [
+    0.0,
+    2130.0
+  ],
+  "label_summaries": {
+    "cerebrum": {
+      "saved_domain_voxels": 2513280,
+      "saved_positive_volume_mm3": 923370.8516944898,
+      "saved_positive_voxels": 895178,
+      "source_positive_centres_cropped_from_bound_execution": 180086,
+      "source_positive_voxels_from_bound_execution": 24329210,
+      "volume_change_percent": -0.6552166263859793
+    },
+    "whole_tumor": {
+      "saved_domain_voxels": 76798,
+      "saved_positive_volume_mm3": 29278.96086068703,
+      "saved_positive_voxels": 28385,
+      "source_positive_centres_cropped_from_bound_execution": 0,
+      "source_positive_voxels_from_bound_execution": 28385,
+      "volume_change_percent": -1.1886866047028377e-06
+    }
+  },
+  "limits": [
+    "Only an annotation-assisted geometric research condition; no anatomical or clinical accuracy pass.",
+    "Full supplied target remains the denominator; unchanged support excludes some target positives.",
+    "Automatic support zeros are uncertain, informative public estimates, not confirmed empty anatomy; no filling.",
+    "Source whole tumor is not a prescribed resection target. Missing vessels and function remain unknown.",
+    "Exact acquired/annotation availability timestamps are unverified. SELECT permits zero optimizer updates.",
+    "NN sampling may omit thin labels; source positive crop losses and volume changes remain explicit."
+  ],
+  "original_source_reopened": false,
+  "patient_id": "ReMIND-037",
+  "private_reference_loaded": false,
+  "public_support_domain_fully_covered": true,
+  "role": "SELECT",
+  "saved_counts": {
+    "support": 895178,
+    "target": 28385,
+    "target_domain": 76798,
+    "target_outside_support": 11050
+  },
+  "shape_xyz": [
+    132,
+    170,
+    112
+  ],
+  "source_MR_sample_equality": "bound conversion worker independently compared decoded samples to original bytes; this saved audit checks finite saved samples only",
+  "source_geometry_refit_from_saved_headers": {
+    "cerebrum": {
+      "centred_OLS_affine_max_difference_mm": 1.4210854715202004e-13,
+      "plane_residual_mm": 2.5588018507383337e-06
+    },
+    "structural_t1ce": {
+      "centred_OLS_affine_max_difference_mm": 7.105427357601002e-13,
+      "plane_residual_mm": 4.439023769009509e-05
+    },
+    "whole_tumor": {
+      "centred_OLS_affine_max_difference_mm": 4.973799150320701e-14,
+      "plane_residual_mm": 1.6288588256089584e-08
+    }
+  },
+  "status": "saved_public_geometry_domains_samples_checked_anatomy_unreviewed",
+  "visual_review": {
+    "expert_anatomy_review": false,
+    "observation": "Automatic support boundary appears striped on two orthogonal views. Header/grid and saved-sampling checks pass; annotation quality and the cause of this pattern remain uncertain.",
+    "views": [
+      {
+        "available_to_actor": false,
+        "axis": 0,
+        "file": "public-qc-axis0-index24.png",
+        "index": 24,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 1,
+        "file": "public-qc-axis1-index73.png",
+        "index": 73,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 2,
+        "file": "public-qc-axis2-index50.png",
+        "index": 50,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      }
+    ]
+  }
+}

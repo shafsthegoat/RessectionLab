@@ -1,0 +1,50 @@
+{
+  "schema": "public-SELECT-qualification-status-v2",
+  "supersedes_status_only": "qualification-status-v1.json",
+  "public_manifest_index_sha256": "3d85ed4672090f9b67868c847ac6ddf960cd2fa828ebbee44b269a7420d44716",
+  "conversion_supervisor_receipt_sha256": "e25ba6b5f45609e1cf9a6371f314c5ba32e613cbc96c72a31a8cdb23c1848e79",
+  "anatomical_accuracy_pass": false,
+  "private_reference_loaded": false,
+  "cases": [
+    {
+      "patient_id": "ReMIND-013",
+      "patient_group": "ReMIND:013",
+      "role": "SELECT",
+      "status": "PUBLIC_PARTIAL_TARGET_CONDITION_QUALIFIED",
+      "public_manifest_path": "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-013-public-inputs-v1.json",
+      "public_manifest_sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+      "saved_array_review_sha256": "7fef62b0f28e1688731abfe50298472ef280d98819407a9e2960cabe18abe7e4",
+      "qualification_scope": "Geometry, exact saved arrays and source-domain coverage; source automatic support and full manual target remain disclosed uncertain inputs. Native construction and zero-update inference remain separate bounded work.",
+      "target_positive_voxels": 35260,
+      "target_positive_outside_support": 33681,
+      "target_positive_inside_support": 1579,
+      "source_target_positive_centres_cropped": 0,
+      "annotation_limitation": "Automatic support excludes 95.52 percent of supplied target. Preserve both arrays and the full target denominator; source-mask clinical accuracy and the cause of this exclusion remain uncertain."
+    },
+    {
+      "patient_id": "ReMIND-037",
+      "patient_group": "ReMIND:037",
+      "role": "SELECT",
+      "status": "HOLD_ENCODED_SOURCE_SUPPORT_ARTIFACT",
+      "public_manifest_path": "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-037-public-inputs-v1.json",
+      "public_manifest_sha256": "6824c835de54860ed06190e0f5887bbbf679ed8e20e5b483738038347137e202",
+      "public_manifest_use": "Saved conversion evidence only; not admitted for patient planning or policy input.",
+      "saved_array_review_sha256": "96acffddbd04f9a2bc812616ec15cb15f7a2e27e8a79d9919e403dd2d6a8e1a5",
+      "source_diagnostic_result_sha256": "e09b995abb60679a7c672e944e579c2d5c023fbfcce539127859ea1ddc35dccd",
+      "source_diagnostic_raw_checkpoint_sha256": "4449d71b3017277aa92c50125f824b1d55d82f330bf43f2fb00313a2ddb26d76",
+      "source_diagnostic_supervisor_sha256": "6e9635d90b7826928c79f3c503457633b3405aa0c46b71935f8e411a7a50faff",
+      "saved_crop_voxels_equal_explicit_original_bit_addresses": 2513280,
+      "selected_native_planes_equal_full_stack_decoder": 14,
+      "finding": "Strong striping exists in encoded native source-label planes before resampling. The saved NN crop exactly retains selected original bits. Upstream annotation or encoding cause remains unknown; no source repair is justified.",
+      "separate_decoder_negative": "The preserved v1 selected-index decoder failure does not affect the full-stack decoding used for the conversion and v2 comparison.",
+      "target_positive_voxels": 28385,
+      "target_positive_outside_support": 11050,
+      "source_target_positive_centres_cropped": 0
+    }
+  ],
+  "planned_SELECT_denominator": 2,
+  "held_cases_retained_in_denominator": 1,
+  "failed_or_held_cases_replaced": false,
+  "SELECT_optimizer_updates": 0,
+  "actual_patient_policy_calls": 0
+}

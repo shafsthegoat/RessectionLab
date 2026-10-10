@@ -1,0 +1,162 @@
+{
+  "schema": "remind-public-SELECT-compact-evidence-index-v1",
+  "scope": "Exact two public SELECT source triples; metadata/source snapshots only; no policy calls or optimizer updates",
+  "files": [
+    {
+      "path": "STATUS.txt",
+      "bytes": 2237,
+      "sha256": "c73dd5663e565d68b185caceeec7f906748d3acb4dbba4d47624d5425235beac"
+    },
+    {
+      "path": "public-inputs/ReMIND-013-public-inputs-v1.json",
+      "bytes": 14172,
+      "sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8"
+    },
+    {
+      "path": "public-select-index-v2.json",
+      "bytes": 1565,
+      "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+    },
+    {
+      "path": "qualification-status-v2.json",
+      "bytes": 3410,
+      "sha256": "f31630ee8813156d877e0161898893ee7d2cdc7e9c1736a1878e901b94f8e7cd"
+    },
+    {
+      "path": "receipts/037-raw-bit-checkpoint-v2.json",
+      "bytes": 459,
+      "sha256": "4449d71b3017277aa92c50125f824b1d55d82f330bf43f2fb00313a2ddb26d76"
+    },
+    {
+      "path": "receipts/037-source-diagnostic-declaration-v2.json",
+      "bytes": 285,
+      "sha256": "969c960e62cce1d844ada7c0441acd62448f15e041f0664735126d2539bd7f90"
+    },
+    {
+      "path": "receipts/037-source-diagnostic-supervisor-v2.json",
+      "bytes": 274,
+      "sha256": "6e9635d90b7826928c79f3c503457633b3405aa0c46b71935f8e411a7a50faff"
+    },
+    {
+      "path": "receipts/037-source-diagnostic-v2.json",
+      "bytes": 6130,
+      "sha256": "e09b995abb60679a7c672e944e579c2d5c023fbfcce539127859ea1ddc35dccd"
+    },
+    {
+      "path": "receipts/037-source-negative-declaration-v1.json",
+      "bytes": 285,
+      "sha256": "36c2fc71ff3c7271cec4391b9e0b63f6b36e7bd4f1ca615ed339d893726defa4"
+    },
+    {
+      "path": "receipts/037-source-negative-supervisor-v1.json",
+      "bytes": 272,
+      "sha256": "9d7f01f8938a9342c372240a455d062e7f0159b0a8a614092742fce2eba7dfdb"
+    },
+    {
+      "path": "receipts/037-source-negative-v1.json",
+      "bytes": 481,
+      "sha256": "fe6324fe3566983860a30a6c981aa7e4614d7e90e3406639ff2e6397d4a62d08"
+    },
+    {
+      "path": "receipts/ReMIND-013-conversion-result.json",
+      "bytes": 18283,
+      "sha256": "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9"
+    },
+    {
+      "path": "receipts/ReMIND-013-saved-public-review.json",
+      "bytes": 3929,
+      "sha256": "7fef62b0f28e1688731abfe50298472ef280d98819407a9e2960cabe18abe7e4"
+    },
+    {
+      "path": "receipts/ReMIND-037-conversion-result.json",
+      "bytes": 18419,
+      "sha256": "e3671d0089279f786225f63180159ae656f37d086aa159c5f622808a3198d41f"
+    },
+    {
+      "path": "receipts/ReMIND-037-saved-public-review.json",
+      "bytes": 3938,
+      "sha256": "96acffddbd04f9a2bc812616ec15cb15f7a2e27e8a79d9919e403dd2d6a8e1a5"
+    },
+    {
+      "path": "receipts/conversion-batch-declaration.json",
+      "bytes": 1180,
+      "sha256": "a0daeae19c2e62d0b459f18d648f93b592b01ce0cd97547eae310af7963f6269"
+    },
+    {
+      "path": "receipts/conversion-batch-receipt.json",
+      "bytes": 8186,
+      "sha256": "e25ba6b5f45609e1cf9a6371f314c5ba32e613cbc96c72a31a8cdb23c1848e79"
+    },
+    {
+      "path": "receipts/saved-support-pattern-v1.json",
+      "bytes": 29312,
+      "sha256": "db95ee3ebf2e073c6b6ad46c8eb076fede6e1b737843097e3212bf5bf920b2c8"
+    },
+    {
+      "path": "source/audit_saved_public.py",
+      "bytes": 13076,
+      "sha256": "6d09fcd2e27fbb1cfbadd3205586273583e483890e57c317841e124a29d91ba9"
+    },
+    {
+      "path": "source/convert_remind_development.py",
+      "bytes": 11404,
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "path": "source/diagnose_exact037_seg.py",
+      "bytes": 8871,
+      "sha256": "da4c9ae5c40640ea1f9e7eaf48d11529f47110cd248b49a5f7f4dcccc702996e"
+    },
+    {
+      "path": "source/diagnose_exact037_seg_v2.py",
+      "bytes": 9670,
+      "sha256": "923e689ee168063ab3aac472650048b5f0abc8a1a4e8fe6156ed64e0774fc62f"
+    },
+    {
+      "path": "source/diagnose_saved_support.py",
+      "bytes": 3963,
+      "sha256": "090626c420176a5b9c6cfb612aa0772abbb6a12a2d148b911bd27a562d2b9e3a"
+    },
+    {
+      "path": "source/prepare_remind_planning.py",
+      "bytes": 1273,
+      "sha256": "155e32f3c4605407fe4c3e65de5c0445bae7918002daf803d2dde470fe350b35"
+    },
+    {
+      "path": "source/remind_planning_qc.py",
+      "bytes": 41900,
+      "sha256": "db146b0610b0b2aaf8c9d3cc08478920b2746f4b5065937a43a320054700f9a8"
+    },
+    {
+      "path": "source/run_exact037_seg_owned.py",
+      "bytes": 3397,
+      "sha256": "da366bc1e0aa8343b9025c1d245818c362bb1e949408d2323085693470c969c7"
+    },
+    {
+      "path": "source/run_exact037_seg_owned_v2.py",
+      "bytes": 3400,
+      "sha256": "128bfaa368d03685c7d9a4398e6d701e90101043d7f5783e4697182953bf9392"
+    },
+    {
+      "path": "source/run_public_qc_owned.py",
+      "bytes": 7402,
+      "sha256": "d7c0cc60198c84226dbf01a02c6bd3cd3134ccc23ec3f45895502f65bed65270"
+    }
+  ],
+  "indexed_file_count": 28,
+  "indexed_bytes": 217173,
+  "excluded": [
+    "DICOM source payloads",
+    "patient NPY/NIfTI arrays",
+    "PNG/image evidence",
+    "full DICOM header inventories",
+    "large acquisition metadata",
+    "runnable ReMIND-037 manifest"
+  ],
+  "notes": [
+    "Source scripts are executed-source evidence snapshots; original paths and declared dependencies are retained.",
+    "ReMIND-037 intended use remains held; its original conversion index is superseded for admission by public-select-index-v2.json.",
+    "ReMIND-013 qualification covers disclosed partial-target geometry/domain condition only; anatomical accuracy and clinical suitability are not established."
+  ],
+  "data_reads_for_packaging": "Only copied metadata and source files were read."
+}
