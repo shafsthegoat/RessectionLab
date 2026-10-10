@@ -18,6 +18,8 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
+- **The next preparation test can identify actual shaft obstructions:** [opt-in native diagnostics](artifacts/native-obstruction-diagnostics-v1/RESULT.txt) capture the existing first rejected sweep with immutable, bounded evidence and unchanged default behavior. A generated empty-array hashing failure was caught and fixed; all90 selected canonical controls ultimately pass. The fifteen-branch025 opening test is being prepared; no new learned benefit is claimed.
+
 - **Additional TRAIN data exposed a recoverable preparation error:** [four-case crop review](artifacts/remind-train-crop-coverage-v1/RESULT.txt) traces002/045 missing target regions to our conservative crop, with acquired MRI coverage verified from saved geometry. The explicit replacement phase preserves native samples and unknown support domains;21 canonical tests pass. Old results and all four patients remain visible, without training admission. Actual recrop/domain-aware qualification are next.
 
 - **The occupancy experiment worsens the only positive route:** [all eight paired TRAIN runs](artifacts/paired-train-occupancy-search-v1/RESULT.txt) complete in25.626s. Raw results reproduce the old plans; all S∪T arms STOP. The exact useful025 suction geometry becomes shaft-blocked when additional tumor cells are occupied. Union010 also has two capped, untested proposals. Independent audit passes2,151 checks plus176 geometric joins. This locates a tool-access/preparation bottleneck; union is not validated anatomy, and greedy STOP does not prove no beneficial sequence. Next: exhaustive one-preparation/fixed-ray witness before retraining.

@@ -23,7 +23,7 @@ from typing import Any, Iterable
 import numpy as np
 from scipy.ndimage import binary_fill_holes
 
-from .core import array_digest
+from .core import array_digest, freeze_json, semantic_digest
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
@@ -31,6 +31,7 @@ from .geometry import (
 )
 
 NATIVE_RESECTION_VERSION = "contained-native-cell-connected-suction-v2"
+MAX_OBSTRUCTION_DIAGNOSTIC_CELLS = 4096
 _NEIGHBORS = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]])
 _EMPTY = _immutable(np.empty((0, 3), dtype=np.int64))
 _STATE_MASKS = ("remaining_mask", "removed_mask", "contact_mask", "probe_contact_mask", "connected_free_mask")
@@ -210,6 +211,17 @@ class NativeStrokeResult:
     geometry_unknowns: tuple[str, ...] = ()
     native_footprint: str = "fully_contained_connected_cells_v1"
     interaction_mode: str = "aspirate"
+
+    @property
+    def obstruction_diagnostic(self):
+        """Optional first-shaft-failure evidence; never executed removal credit.
+
+        A sidecar rather than a dataclass field preserves every existing result
+        serialization and certificate. Its immutable JSON fingerprint binds the
+        exact requested ray/state and bounded cells; it is not a full-corridor
+        clearance proof or an authorization to execute a rejected stroke.
+        """
+        return getattr(self, "_obstruction_diagnostic", None)
 
     @property
     def removed_volume_mm3(self) -> float:
@@ -398,13 +410,22 @@ class NativeResectionEngine:
         return result
 
     def preview_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None,
-                       interaction_mode: str = "aspirate") -> NativeStrokeResult:
+                       interaction_mode: str = "aspirate", obstruction_diagnostics: bool = False,
+                       obstruction_cell_limit: int = MAX_OBSTRUCTION_DIAGNOSTIC_CELLS) -> NativeStrokeResult:
         """Certify aspiration or a non-removing tangential exposed-tip probe.
 
         Probe contact is geometric occupancy only, with no sensor, force or
         deformation model. A 1e-8 mm numerical tangency tolerance permits no
         material penetration; all remaining contacted cells must be exposed.
+        Optional obstruction evidence copies only the already computed first
+        blocked set. Truncation is explicit; subsequent blockers are unknown.
         """
+        if type(obstruction_diagnostics) is not bool:
+            raise TypeError("obstruction_diagnostics must be an explicit bool")
+        if (type(obstruction_cell_limit) is not int
+                or not 1 <= obstruction_cell_limit <= MAX_OBSTRUCTION_DIAGNOSTIC_CELLS
+                or (not obstruction_diagnostics and obstruction_cell_limit != MAX_OBSTRUCTION_DIAGNOSTIC_CELLS)):
+            raise ValueError("Explicit obstruction diagnostics require a bounded positive cell limit")
         if self._immutable_state:
             self.committed_mask_digests()
         if interaction_mode not in {"aspirate", "probe"}:
@@ -434,7 +455,8 @@ class NativeResectionEngine:
         probe_contacts: list[np.ndarray] = []
         unknowns: tuple[str, ...] = ()
 
-        def finish(feasible: bool, reason: str, failure_tip: np.ndarray | None = None) -> NativeStrokeResult:
+        def finish(feasible: bool, reason: str, failure_tip: np.ndarray | None = None,
+                   *, obstruction=None) -> NativeStrokeResult:
             result = NativeStrokeResult(
                 feasible, reason, tool_id, tuple(tip), tuple(axis), tuple(entry),
                 _unique(removed) if feasible else _EMPTY, _unique(contacts) if feasible else _EMPTY,
@@ -443,6 +465,8 @@ class NativeResectionEngine:
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
                 interaction_mode=interaction_mode,
             )
+            if obstruction is not None:
+                object.__setattr__(result, "_obstruction_diagnostic", obstruction)
             if feasible:
                 # Bound retained proposal certificates; committed histories are
                 # ordinary JSON and must be independently replayed when loaded.
@@ -481,7 +505,39 @@ class NativeResectionEngine:
             shaft = capsule_voxel_indices(self._cell_scene, shaft_start, shaft_end, tool.shaft_radius_mm)
             blocked = shaft[remaining[tuple(shaft.T)]]
             if len(blocked):
-                return finish(False, "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE", current)
+                diagnostic = None
+                if obstruction_diagnostics:
+                    evidence = {
+                        "version": "native-first-shaft-obstruction-v1",
+                        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+                        "source_hash": self.config.source_hash, "source_state_hash": source_state_hash,
+                        "decision_model_hash": self.config.fingerprint, "tool": asdict(tool),
+                        "interaction_mode": interaction_mode,
+                        "requested_tip_mm": tuple(float(v) for v in tip),
+                        "entry_mm": tuple(float(v) for v in entry), "axis_unit": tuple(float(v) for v in axis),
+                        "failure_tip_mm": tuple(float(v) for v in current),
+                        "failure_tip_meaning": "endpoint of first rejected microstep, not exact first-contact time",
+                        "previous_tip_mm": tuple(float(v) for v in previous),
+                        "shaft_sweep_start_mm": tuple(float(v) for v in shaft_start),
+                        "shaft_sweep_end_mm": tuple(float(v) for v in shaft_end),
+                        "failure_interval_index": step, "planned_microsteps": number + 1,
+                        "native_affine_hash": array_digest(self.config.affine),
+                        "source_shape": tuple(int(v) for v in self.config.tissue_mask.shape),
+                        "blocked_cell_count": len(blocked), "blocked_indices_hash": array_digest(blocked),
+                        "blocked_indices_native": blocked[:obstruction_cell_limit].tolist(),
+                        "retained_cell_count": min(len(blocked), obstruction_cell_limit),
+                        "cell_limit": obstruction_cell_limit, "complete_first_failure_set": len(blocked) <= obstruction_cell_limit,
+                        "truncated": len(blocked) > obstruction_cell_limit,
+                        "prior_temporary_removed_count": sum(len(indices) for indices in removed),
+                        "prior_temporary_removals_hash": semantic_digest([_hash_array(indices) for indices in removed]),
+                        "prior_temporary_removal_hash_scope": "ordered completed microstep native shape/dtype/bytes SHA256 digests; cells are disjoint by native remaining-mask updates",
+                        "prior_temporary_removals_committed": False,
+                        "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
+                        "scope": "all remaining cells in first rejected shaft sweep, not minimal blockers; subsequent corridor unknown; re-preview after preparation",
+                    }
+                    diagnostic = freeze_json({**evidence, "fingerprint": semantic_digest(evidence)})
+                return finish(False, "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE", current,
+                              obstruction=diagnostic)
             if interaction_mode == "probe":
                 # Unlike aspiration the active region may not enter occupied
                 # source-cell interiors, even though contact is recorded.

@@ -1,0 +1,30 @@
+{
+  "version": "native-obstruction-diagnostics-source-v1",
+  "base_HEAD": "1a05e2a765d9baa4c549e23e8ae7ea859c22efb7",
+  "files": [
+    {
+      "staged_path": "build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py",
+      "target_path": "src/resectionlab/native_resection.py",
+      "sha256": "0a531933eeea43862fe4122c8cca7fc192c0d44a32ea263363fc7a495c072f16",
+      "before_sha256": "c359546356e4d27ad82cd1d9ebd98dd21dcfbdb5401080c57dd45bfefd0c6d98"
+    },
+    {
+      "staged_path": "build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py",
+      "target_path": "tests/test_native_obstruction_diagnostics.py",
+      "sha256": "aa2e2764b1ed5fa14a49aef45f2166cc5ccee2000cb8fe5cec214194decca511",
+      "before_sha256": null
+    }
+  ],
+  "patch_sha256": "9077468ada7d384c8ec9740beef3495176bf624abb20a2d05d8d35106b3bbb02",
+  "controls": {
+    "result": "66 passed in0.93s",
+    "receipt_path": "build/native-obstruction-diagnostics-v1/controls-02.json",
+    "receipt_sha256": "8a3b70b9d2b9e1d455bc5d095910d30bcdb489551a16e552a7b65359c1808f95",
+    "prior_failure_preserved": "controls-01.json/log and history/",
+    "patient_model_optimizer_calls": 0
+  },
+  "baseline_source": {
+    "path": "build/native-obstruction-diagnostics-v1/baseline-native-resection.py",
+    "sha256": "c359546356e4d27ad82cd1d9ebd98dd21dcfbdb5401080c57dd45bfefd0c6d98"
+  }
+}

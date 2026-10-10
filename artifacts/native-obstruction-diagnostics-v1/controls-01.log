@@ -1,0 +1,197 @@
+FFFFF.F...........................................................       [100%]
+=================================== FAILURES ===================================
+______ test_exact_blockers_use_only_prior_completed_microstep_cavity[0.5] ______
+
+step = 0.5
+
+    @pytest.mark.parametrize("step", [.5, .25, .1])
+    def test_exact_blockers_use_only_prior_completed_microstep_cavity(step):
+        engine, tool_id, entry, tip = single_cell(step=step)
+        before, state = engine.remaining_mask.copy(), engine.state_hash
+>       result = engine.preview_stroke(tool_id, tip, entry_mm=entry, obstruction_diagnostics=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py:532: in preview_stroke
+    "prior_temporary_removals_hash": semantic_digest([array_digest(indices) for indices in removed]),
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_____ test_exact_blockers_use_only_prior_completed_microstep_cavity[0.25] ______
+
+step = 0.25
+
+    @pytest.mark.parametrize("step", [.5, .25, .1])
+    def test_exact_blockers_use_only_prior_completed_microstep_cavity(step):
+        engine, tool_id, entry, tip = single_cell(step=step)
+        before, state = engine.remaining_mask.copy(), engine.state_hash
+>       result = engine.preview_stroke(tool_id, tip, entry_mm=entry, obstruction_diagnostics=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py:532: in preview_stroke
+    "prior_temporary_removals_hash": semantic_digest([array_digest(indices) for indices in removed]),
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+______ test_exact_blockers_use_only_prior_completed_microstep_cavity[0.1] ______
+
+step = 0.1
+
+    @pytest.mark.parametrize("step", [.5, .25, .1])
+    def test_exact_blockers_use_only_prior_completed_microstep_cavity(step):
+        engine, tool_id, entry, tip = single_cell(step=step)
+        before, state = engine.remaining_mask.copy(), engine.state_hash
+>       result = engine.preview_stroke(tool_id, tip, entry_mm=entry, obstruction_diagnostics=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py:532: in preview_stroke
+    "prior_temporary_removals_hash": semantic_digest([array_digest(indices) for indices in removed]),
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+__ test_diagnostic_does_not_change_result_geometry_or_commit_identity[False] ___
+
+immutable = False
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ab751c0>
+
+    @pytest.mark.parametrize("immutable", [False, True])
+    def test_diagnostic_does_not_change_result_geometry_or_commit_identity(immutable, monkeypatch):
+        a, b = opening(immutable=immutable), opening(immutable=immutable)
+        queried = []
+        original = native.capsule_voxel_indices
+        def counted(scene, start, end, radius):
+            queried.append((tuple(start), tuple(end), radius))
+            return original(scene, start, end, radius)
+        monkeypatch.setattr(native, "capsule_voxel_indices", counted)
+        first = a.preview_stroke("cutter", [4, 4, 5], entry_mm=[4, 4, .5])
+        old_queries = list(queried); queried.clear()
+>       second = b.preview_stroke("cutter", [4, 4, 5], entry_mm=[4, 4, .5], obstruction_diagnostics=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py:532: in preview_stroke
+    "prior_temporary_removals_hash": semantic_digest([array_digest(indices) for indices in removed]),
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+___ test_diagnostic_does_not_change_result_geometry_or_commit_identity[True] ___
+
+immutable = True
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b6078c0>
+
+    @pytest.mark.parametrize("immutable", [False, True])
+    def test_diagnostic_does_not_change_result_geometry_or_commit_identity(immutable, monkeypatch):
+        a, b = opening(immutable=immutable), opening(immutable=immutable)
+        queried = []
+        original = native.capsule_voxel_indices
+        def counted(scene, start, end, radius):
+            queried.append((tuple(start), tuple(end), radius))
+            return original(scene, start, end, radius)
+        monkeypatch.setattr(native, "capsule_voxel_indices", counted)
+        first = a.preview_stroke("cutter", [4, 4, 5], entry_mm=[4, 4, .5])
+        old_queries = list(queried); queried.clear()
+>       second = b.preview_stroke("cutter", [4, 4, 5], entry_mm=[4, 4, .5], obstruction_diagnostics=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py:532: in preview_stroke
+    "prior_temporary_removals_hash": semantic_digest([array_digest(indices) for indices in removed]),
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_____ test_binding_follows_reflected_anisotropic_frame_and_exact_tool_ray ______
+
+    def test_binding_follows_reflected_anisotropic_frame_and_exact_tool_ray():
+        affine = np.diag([.8, 1.2, -1., 1.]); affine[:3, 3] = [10, -8, 20]
+        engine, tool, entry, tip = single_cell(step=.25, affine=affine)
+>       result = engine.preview_stroke(tool, tip, entry_mm=entry, obstruction_diagnostics=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/native-obstruction-diagnostics-v1/stage/resectionlab/native_resection.py:532: in preview_stroke
+    "prior_temporary_removals_hash": semantic_digest([array_digest(indices) for indices in removed]),
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+=========================== short test summary info ============================
+FAILED build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py::test_exact_blockers_use_only_prior_completed_microstep_cavity[0.5]
+FAILED build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py::test_exact_blockers_use_only_prior_completed_microstep_cavity[0.25]
+FAILED build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py::test_exact_blockers_use_only_prior_completed_microstep_cavity[0.1]
+FAILED build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py::test_diagnostic_does_not_change_result_geometry_or_commit_identity[False]
+FAILED build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py::test_diagnostic_does_not_change_result_geometry_or_commit_identity[True]
+FAILED build/native-obstruction-diagnostics-v1/stage/tests/test_native_obstruction_diagnostics.py::test_binding_follows_reflected_anisotropic_frame_and_exact_tool_ray
+6 failed, 60 passed in 1.08s

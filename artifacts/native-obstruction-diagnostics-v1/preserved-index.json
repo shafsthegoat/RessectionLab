@@ -1,0 +1,47 @@
+{
+  "files": [
+    {
+      "source": "build/native-obstruction-diagnostics-v1/source-index.json",
+      "preserved": "source-index.json",
+      "sha256": "6641f2bc0af2e2b3831b4489ba709c33977b0fd6227ca303cfa3e49b56795742",
+      "bytes": 1408
+    },
+    {
+      "source": "build/native-obstruction-diagnostics-v1/controls-01.json",
+      "preserved": "controls-01.json",
+      "sha256": "f4c56da5655e1017f381d03b1774847c13558f91ee1ea20a6c5bbefd52d8d8d8",
+      "bytes": 722
+    },
+    {
+      "source": "build/native-obstruction-diagnostics-v1/controls-01.log",
+      "preserved": "controls-01.log",
+      "sha256": "aaac3bae75ff342224eb56e129d2f5c10f9173fdc112f05c331ce369af873e5a",
+      "bytes": 11865
+    },
+    {
+      "source": "build/native-obstruction-diagnostics-v1/controls-02.json",
+      "preserved": "controls-02.json",
+      "sha256": "8a3b70b9d2b9e1d455bc5d095910d30bcdb489551a16e552a7b65359c1808f95",
+      "bytes": 731
+    },
+    {
+      "source": "build/native-obstruction-diagnostics-v1/controls-02.log",
+      "preserved": "controls-02.log",
+      "sha256": "dc91c018959fc273067b011c0f05fea20797c395df6104a5389b7a9d2ed46c49",
+      "bytes": 99
+    },
+    {
+      "source": "build/native-obstruction-diagnostics-v1/canonical-tests.txt",
+      "preserved": "canonical-tests.txt",
+      "sha256": "5b67dcfcc1fcd9ff4e8c48725861cff0f400839143aa0e7c302f84f21a9e70c0",
+      "bytes": 190
+    },
+    {
+      "source": "build/native-obstruction-diagnostics-v1/historical-pair-control.txt",
+      "preserved": "historical-pair-control.txt",
+      "sha256": "8989a153a4f265bdf8bf8abfcbf7ce96cf91c69ee66d543244ebf0fc2c9d041d",
+      "bytes": 98
+    }
+  ],
+  "generated_controls_only": true
+}

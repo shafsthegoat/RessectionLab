@@ -1,0 +1,7 @@
+Actual first-failure shaft blockers are now available for the fixed-ray preparation experiment.
+
+The optional native preview diagnostic captures the already-computed blocked cells at the first rejected microstep before endpoint cut credit, together with exact world/state/tool/ray/frame identity. It retains at most4096 immutable cell coordinates, full-set count/hash and explicit truncation. The failure tip is the rejected interval endpoint, not exact physical contact time. Temporary preview cuts never count as committed removal. No new geometry query, policy feature, reward, observation, default history or certificate field is introduced.
+
+Initial generated controls exposed an empty-array hashing failure confined to the optional sidecar:60 passed,6 failed. The local repair uses the existing native empty-safe shape/dtype/bytes hash; no global hash change. Repeating those controls gives66 passed in0.93s. Canonical validation gives89 passed and1 optional historical test skipped in1.33s; that one test was then explicitly run with its pinned baseline and passed in0.21s. All90 selected cases were therefore exercised successfully, including exact historical result/history/certificate/state parity and zero extra geometry calls.
+
+No patient or model result follows from these generated checks. Next: all15 legal opening actions in union025, each followed by a fresh check of the fixed target ray, with full costs, unchanged STOP comparator and independent replay.
