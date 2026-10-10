@@ -1,0 +1,84 @@
+--- a/tests/test_capsule_cache_review.py
++++ b/tests/test_capsule_cache_review.py
+@@ -1,14 +1,15 @@
+ """Independent synthetic adversaries for exact coverage-only caching."""
+ from concurrent.futures import ThreadPoolExecutor
+ from dataclasses import replace
++from types import MappingProxyType
+ import json
+ import warnings
+ 
+ import numpy as np
+ import pytest
+ 
+-from resectionlab import geometry, native_resection
+-from resectionlab.core import CaseData, SourceRef
++from resectionlab import critical_evidence, geometry, native_resection
++from resectionlab.core import CaseData, SourceRef, array_digest, freeze_json
+ from resectionlab.evaluation import independent_check_native_history
+ from resectionlab.experimental_capsule_cache import ExactCapsuleCoverCache, inject_native_capsule_cache
+ from resectionlab.geometry import AccessWindow, GeometryScene, ToolGeometry, _immutable
+@@ -19,15 +20,36 @@
+     tissue = np.ones((7, 7, 8), bool)
+     labels = np.zeros(tissue.shape, np.int16)
+     labels[:, :, 2:7] = 1
+-    case = CaseData("capsule-cache-review", tissue.astype(float), {"target": labels > 0}, np.eye(4),
+-                    (SourceRef("analytic", "synthetic:cache-review", provenance="simulated"),), brain_mask=tissue)
+     blocked = np.zeros(tissue.shape, bool)
+     if hard:
+         blocked[3, 3, 5] = True
++    case = CaseData("capsule-cache-review", tissue.astype(float),
++        {"target": labels > 0, "generated_hard_exclusion": blocked}, np.eye(4),
++        (SourceRef("analytic", "synthetic:cache-review", provenance="simulated"),), brain_mask=tissue,
++        metadata={"software_control_only": True, "human_review_performed": False})
+     config = NativeResectionConfig(tissue, labels, case.affine, AccessWindow((3, 3, -.5), (0, 0, 1), 5),
+         tuple(replace(tool) for tool in NATIVE_GENERIC_TOOLS), case.semantic_hash, "explicit synthetic support",
+         hard_exclusion=blocked)
+     return case, config, GeometryScene(np.zeros(tissue.shape, bool), config.affine)
++
++
++def generated_constraints(case):
++    """Typed resolver fixture only; no acquired evidence or human review claimed.
++
++    Keep the actual canonical mask-equality guard and independent geometry audit.
++    The generated mask is immutable and part of the generated case identity.
++    """
++    assert case.metadata["software_control_only"] is True
++    assert case.metadata["human_review_performed"] is False and not case.critical_evidence
++    mask = case.compartments["generated_hard_exclusion"]
++    return critical_evidence.CriticalConstraints(
++        MappingProxyType({"motor": None, "language": None, "vessels": mask}),
++        MappingProxyType({"motor": None, "language": None, "vessels": case.brain_mask}),
++        freeze_json({"schema": "critical-constraints-v1", "records": {
++            "generated-resolver-control": {"structure": "vessels", "exclusion_reason": None,
++                "mask_hash": array_digest(mask), "generated_case_hash": case.semantic_hash,
++                "scope": "generated_resolver_injection_only", "human_review_performed": False,
++                "real_registry_admission": False}}}), case.mri.shape)
+ 
+ 
+ def test_exact_float64_bits_separate_ulp_radius_endpoint_and_order():
+@@ -237,8 +259,11 @@
+ 
+ 
+ @pytest.mark.parametrize("hard", [False, True])
+-def test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly(hard):
++def test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly(hard, monkeypatch):
+     case, config, _ = fixture(hard=hard)
++    monkeypatch.setattr(critical_evidence, "resolve_critical_evidence", generated_constraints)
++    np.testing.assert_array_equal(case.compartments["generated_hard_exclusion"], config.hard_exclusion)
++    assert int(np.count_nonzero(config.hard_exclusion)) == int(hard)
+ 
+     def rollout(engine):
+         records = []
+@@ -270,6 +295,11 @@
+         assert cache.stats()["hits"] > 0
+     np.testing.assert_array_equal(cached.removed_mask, baseline.removed_mask)
+     np.testing.assert_array_equal(cached.contact_mask, baseline.contact_mask)
++    changed_hard = config.hard_exclusion.copy()
++    changed_hard[0, 0, 0] = ~changed_hard[0, 0, 0]
++    with pytest.raises(ValueError, match="Explicit hard exclusion differs from source-bound case evidence"):
++        independent_check_native_history(case, config.tools, baseline.history,
++            tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=changed_hard)
+     for engine in (baseline, cached):
+         audit = independent_check_native_history(case, config.tools, engine.history,
+             tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=config.hard_exclusion)

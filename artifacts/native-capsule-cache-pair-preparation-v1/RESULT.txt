@@ -1,0 +1,30 @@
+An exact geometry cache for a matched TRAIN045 timing pair
+
+The completed SELECT comparison spends293.555 of300.087 beam-phase seconds in
+creating candidate inventories. A previously profiled TRAIN greedy window also
+identifies repeated capsule-to-voxel cover calculation as expensive. This next
+contrast reuses ExactCapsuleCoverCache with exact geometry keys and immutable
+cover sets; dynamic cavity/hard checks still run. No approximation, reward,
+model, source anatomy or action change is made.
+
+One baseline-first then cached TRAIN045 pair uses fresh source/task instances,
+32MiB payload/16,384 cache entries, one thread,120s worker/150s parent,3GiB RSS
+and6,000 previews total. Cache injection ends before authoritative replay and
+independent audit. All complete actions, non-time accounting and full normalized
+metrics must match the accepted original route. Key/bookkeeping bytes are not
+measured separately; same-process allocator/order effects are explicit. A single
+pair cannot establish sustained RL or beam throughput.
+
+Independent source review found no blocker. Three generated glue controls pass.
+Existing cache controls initially pass44/46: two final independent-history checks
+fail because an old generated fixture supplies a hard mask outside the generated
+case identity and resolved-evidence registry. Cache/uncached histories already
+match. The fixture-only repair binds its mask to the simulated case and uses the
+existing typed generated-resolver test pattern, without fabricating observed or
+human-reviewed evidence. Actual canonical mask equality and independent geometry
+remain active; both exclusion cases explicitly reject a changed supplied mask.
+Production evaluator and cache source are unchanged. The full relevant suite
+now passes49 tests in0.93s. Original failed logs and exact test patch are retained.
+
+No patient timing run has executed at this commit; the separately frozen pair
+will establish whether the existing cache is worth integrating.

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="46" time="0.700" timestamp="2026-10-10T11:00:46.145037-04:00" hostname="Sayems-MacBook-Pro-8.local"><testcase classname="tests.test_capsule_cache" name="test_cold_warm_and_same_cavity_clone_reset_results_exact_and_independently_checked" time="0.321" /><testcase classname="tests.test_capsule_cache" name="test_zero_oversize_and_forced_eviction_preserve_results[limits0]" time="0.002" /><testcase classname="tests.test_capsule_cache" name="test_zero_oversize_and_forced_eviction_preserve_results[limits1]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_zero_oversize_and_forced_eviction_preserve_results[limits2]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_zero_oversize_and_forced_eviction_preserve_results[limits3]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_empty_results_still_bounded_by_entry_cap_and_arrays_cannot_mutate" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_oblique_mirrored_and_tangent_queries_equal_reference[0.0-1]" time="0.002" /><testcase classname="tests.test_capsule_cache" name="test_oblique_mirrored_and_tangent_queries_equal_reference[0.413-1]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_oblique_mirrored_and_tangent_queries_equal_reference[0.413--1]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_source_affine_radius_and_mode_namespaces_never_alias" time="0.002" /><testcase classname="tests.test_capsule_cache" name="test_context_restores_on_exception_rejects_nesting_and_foreign_patch" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_instance_coordinate_method_replacement_cannot_bypass_scene_frame_guard[world_to_voxel]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_instance_coordinate_method_replacement_cannot_bypass_scene_frame_guard[voxel_to_world]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_changed_frozen_source_is_rejected_before_and_after_preparation" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_input_conversion_cannot_change_source_after_guards_before_warm_hit[source]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_input_conversion_cannot_change_source_after_guards_before_warm_hit[scene]" time="0.001" /><testcase classname="tests.test_capsule_cache" name="test_warm_cache_preserves_short_tip_prior_cavity_shaft_rejection[0.5]" time="0.003" /><testcase classname="tests.test_capsule_cache" name="test_warm_cache_preserves_short_tip_prior_cavity_shaft_rejection[0.25]" time="0.003" /><testcase classname="tests.test_capsule_cache" name="test_warm_cache_preserves_short_tip_prior_cavity_shaft_rejection[0.1]" time="0.003" /><testcase classname="tests.test_capsule_cache" name="test_hard_barrier_still_runs_uncached_full_tool_check" time="0.002" /><testcase classname="tests.test_capsule_cache_review" name="test_exact_float64_bits_separate_ulp_radius_endpoint_and_order" time="0.007" /><testcase classname="tests.test_capsule_cache_review" name="test_output_readonly_and_forced_descriptor_tampering_fail_closed" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_scene_derived_geometry_changes_reject_even_on_cache_hit[affine]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_scene_derived_geometry_changes_reject_even_on_cache_hit[_inverse]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_scene_derived_geometry_changes_reject_even_on_cache_hit[_cell_radius_mm]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_scene_derived_geometry_changes_reject_even_on_cache_hit[_orthogonal_spacing]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_source_content_replacement_and_same_shape_variants_are_distinct" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_version_namespace_changes_and_old_cache_rejects" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_direct_geometry_helper_replacement_invalidates_warm_cache[_segment_cell_distances]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_direct_geometry_helper_replacement_invalidates_warm_cache[point_segment_distances]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_input_conversion_mutation_is_validated_before_warm_lookup[source]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_input_conversion_mutation_is_validated_before_warm_lookup[scene_mode]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_zero_or_undersized_budget_never_retains_payload[limits0]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_zero_or_undersized_budget_never_retains_payload[limits1]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_zero_or_undersized_budget_never_retains_payload[limits2]" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_empty_arrays_remain_entry_bounded_and_lru_eviction_recomputes" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_payload_budget_evicts_lru_and_oversized_bypass_retains_existing_entries" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_reentrant_array_conversion_refuses_and_next_query_recovers" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_invalid_query_restores_active_guard_and_never_caches_exception" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_thread_crossing_nested_injection_and_body_failure_restore_patch" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_foreign_patch_before_or_during_scope_never_silently_survives" time="0.001" /><testcase classname="tests.test_capsule_cache_review" name="test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly[False]" time="0.038"><failure message="ValueError: Explicit hard exclusion differs from source-bound case evidence">hard = False
+
+    @pytest.mark.parametrize("hard", [False, True])
+    def test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly(hard):
+        case, config, _ = fixture(hard=hard)
+    
+        def rollout(engine):
+            records = []
+            for tip in ((3, 3, 6), (3, 3, 6), (4, 3, 6)):
+                result = engine.execute_stroke("native-fine-aspiration", tip)
+                # Rejected preview diagnostics are not executed removal history.
+                diagnostics = {"failure_tip_mm": result.failure_tip_mm,
+                    "candidate_removed_indices": result.removed_indices_native.tolist(),
+                    "candidate_contact_indices": result.contact_indices_native.tolist(),
+                    "candidate_microsteps": [step.to_dict() for step in result.microsteps],
+                    "source_state_hash": result.source_state_hash,
+                    "executed_history": result.to_history_record() if result.feasible else None}
+                records.append((result.feasible, result.reason, diagnostics))
+            return json.dumps(records, sort_keys=True), json.dumps(engine.history, sort_keys=True)
+    
+        baseline = NativeResectionEngine(config)
+        expected = rollout(baseline)
+        cached = NativeResectionEngine(config)
+        cache = ExactCapsuleCoverCache(config)
+        with inject_native_capsule_cache(cache):
+            assert rollout(cached) == expected
+            cached.reset()
+            assert rollout(cached) == expected
+        if hard:
+            # Complete hard-constraint checking rejects these strokes before any
+            # active/shaft cover queries, even with an injected cache available.
+            assert cache.stats()["calls"] == 0
+        else:
+            assert cache.stats()["hits"] &gt; 0
+        np.testing.assert_array_equal(cached.removed_mask, baseline.removed_mask)
+        np.testing.assert_array_equal(cached.contact_mask, baseline.contact_mask)
+        for engine in (baseline, cached):
+&gt;           audit = independent_check_native_history(case, config.tools, engine.history,
+                tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=config.hard_exclusion)
+
+tests/test_capsule_cache_review.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/evaluation.py:889: in independent_check_native_history
+    hard_exclusion, _ = canonical_hard_exclusion(case, hard_exclusion)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = CaseData(case_id='capsule-cache-review', mri=array([[[1., 1., 1., 1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1., 1....dence=mappingproxy({}), prior_proposals=mappingproxy({}), functional_evidence=None, critical_evidence=mappingproxy({}))
+supplied = _ImmutableArray([[[False, False, False, False, False, False, False,
+                   False],
+                  [Fals...               False],
+                  [False, False, False, False, False, False, False,
+                   False]]])
+
+    def canonical_hard_exclusion(case: Any, supplied: np.ndarray | None = None):
+        constraints = resolve_critical_evidence(case)
+        if any(constraints.masks[name] is not None for name in ("motor", "language")):
+            raise ValueError("UNSUPPORTED_NATIVE_CRITICAL_FUNCTION: native consumers do not yet evaluate these functional annotations")
+        expected = constraints.hard_exclusion
+        if supplied is not None and (expected is None or np.asarray(supplied).dtype != np.bool_
+                                     or not np.array_equal(supplied, expected)):
+&gt;           raise ValueError("Explicit hard exclusion differs from source-bound case evidence")
+E           ValueError: Explicit hard exclusion differs from source-bound case evidence
+
+src/resectionlab/critical_evidence.py:500: ValueError</failure></testcase><testcase classname="tests.test_capsule_cache_review" name="test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly[True]" time="0.005"><failure message="ValueError: Explicit hard exclusion differs from source-bound case evidence">hard = True
+
+    @pytest.mark.parametrize("hard", [False, True])
+    def test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly(hard):
+        case, config, _ = fixture(hard=hard)
+    
+        def rollout(engine):
+            records = []
+            for tip in ((3, 3, 6), (3, 3, 6), (4, 3, 6)):
+                result = engine.execute_stroke("native-fine-aspiration", tip)
+                # Rejected preview diagnostics are not executed removal history.
+                diagnostics = {"failure_tip_mm": result.failure_tip_mm,
+                    "candidate_removed_indices": result.removed_indices_native.tolist(),
+                    "candidate_contact_indices": result.contact_indices_native.tolist(),
+                    "candidate_microsteps": [step.to_dict() for step in result.microsteps],
+                    "source_state_hash": result.source_state_hash,
+                    "executed_history": result.to_history_record() if result.feasible else None}
+                records.append((result.feasible, result.reason, diagnostics))
+            return json.dumps(records, sort_keys=True), json.dumps(engine.history, sort_keys=True)
+    
+        baseline = NativeResectionEngine(config)
+        expected = rollout(baseline)
+        cached = NativeResectionEngine(config)
+        cache = ExactCapsuleCoverCache(config)
+        with inject_native_capsule_cache(cache):
+            assert rollout(cached) == expected
+            cached.reset()
+            assert rollout(cached) == expected
+        if hard:
+            # Complete hard-constraint checking rejects these strokes before any
+            # active/shaft cover queries, even with an injected cache available.
+            assert cache.stats()["calls"] == 0
+        else:
+            assert cache.stats()["hits"] &gt; 0
+        np.testing.assert_array_equal(cached.removed_mask, baseline.removed_mask)
+        np.testing.assert_array_equal(cached.contact_mask, baseline.contact_mask)
+        for engine in (baseline, cached):
+&gt;           audit = independent_check_native_history(case, config.tools, engine.history,
+                tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=config.hard_exclusion)
+
+tests/test_capsule_cache_review.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/evaluation.py:889: in independent_check_native_history
+    hard_exclusion, _ = canonical_hard_exclusion(case, hard_exclusion)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = CaseData(case_id='capsule-cache-review', mri=array([[[1., 1., 1., 1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1., 1....dence=mappingproxy({}), prior_proposals=mappingproxy({}), functional_evidence=None, critical_evidence=mappingproxy({}))
+supplied = _ImmutableArray([[[False, False, False, False, False, False, False,
+                   False],
+                  [Fals...               False],
+                  [False, False, False, False, False, False, False,
+                   False]]])
+
+    def canonical_hard_exclusion(case: Any, supplied: np.ndarray | None = None):
+        constraints = resolve_critical_evidence(case)
+        if any(constraints.masks[name] is not None for name in ("motor", "language")):
+            raise ValueError("UNSUPPORTED_NATIVE_CRITICAL_FUNCTION: native consumers do not yet evaluate these functional annotations")
+        expected = constraints.hard_exclusion
+        if supplied is not None and (expected is None or np.asarray(supplied).dtype != np.bool_
+                                     or not np.array_equal(supplied, expected)):
+&gt;           raise ValueError("Explicit hard exclusion differs from source-bound case evidence")
+E           ValueError: Explicit hard exclusion differs from source-bound case evidence
+
+src/resectionlab/critical_evidence.py:500: ValueError</failure></testcase><testcase classname="tests.test_capsule_cache_review" name="test_cache_cannot_borrow_future_cut_for_short_tip_shaft_clearance[0.5]" time="0.003" /><testcase classname="tests.test_capsule_cache_review" name="test_cache_cannot_borrow_future_cut_for_short_tip_shaft_clearance[0.25]" time="0.003" /><testcase classname="tests.test_capsule_cache_review" name="test_cache_cannot_borrow_future_cut_for_short_tip_shaft_clearance[0.1]" time="0.002" /></testsuite></testsuites>

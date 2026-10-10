@@ -1,0 +1,89 @@
+{
+  "status": "49_controls_passed_patient_pair_not_run",
+  "files": [
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/PREPARATION.json",
+      "packaged": "PREPARATION.json",
+      "bytes": 3321,
+      "sha256": "8ebd38fdce7b727eb644e54f3d0619f77dd42e7a3ff1899fb85632a8165d4c0c"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/HANDOFF.txt",
+      "packaged": "HANDOFF.txt",
+      "bytes": 2106,
+      "sha256": "108a2357e60ef6bb6ddfa153a0b71a0469d6ae9746dc7f46a2d41fb5ae6fcb07"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/batch_contract.py",
+      "packaged": "batch_contract.py",
+      "bytes": 6121,
+      "sha256": "15e26b879a36c184adda3888efc626496f7a9c35faf4537cc1c85d48b7f8dd47"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/freeze-runtime.py",
+      "packaged": "freeze-runtime.py",
+      "bytes": 8193,
+      "sha256": "8d3976b224a3fd7846fe7235072c24492b228ef0d1d4ec61c2c18d5d0b0de138"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/initial_inventory_worker.py",
+      "packaged": "initial_inventory_worker.py",
+      "bytes": 14171,
+      "sha256": "0183e1a5be4485c669c501c19cc6e9544e59376b82d147365dee997c6e78e9db"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/run_owned.py",
+      "packaged": "run_owned.py",
+      "bytes": 9868,
+      "sha256": "daf7be9647e1ccd47825d827fe90de44926bd99f738ea844ec34988129a8b35f"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/test_pair_glue.py",
+      "packaged": "test_pair_glue.py",
+      "bytes": 8218,
+      "sha256": "65369b5a83124ce4808599136d83fe17610ae8440252896742faf666c178647d"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/fixture-repair.patch",
+      "packaged": "fixture-repair.patch",
+      "bytes": 4680,
+      "sha256": "16b5e514bd75de9903e88c6e9290cebb1ba6e25cacaa1d2ed56f76f6b7a9700c"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/glue-attempt-01.log",
+      "packaged": "glue-attempt-01.log",
+      "bytes": 98,
+      "sha256": "db7f09414dbfd608dbdbc9dc30246e56e6598dc0e7fbf509c46c3bdd43c83e32"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/glue-attempt-01.xml",
+      "packaged": "glue-attempt-01.xml",
+      "bytes": 781,
+      "sha256": "fdeb9f1d9146f3989a7dd14b2fae7e3fd3ca2a9bae57bdc056a518d37e2b7f67"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/cache-controls-attempt-01.log",
+      "packaged": "cache-controls-attempt-01.log",
+      "bytes": 8572,
+      "sha256": "14f2ce23fac86ea9f2e3ee49dfe960d8efd62ba6b6610d2548a612f773c92136"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/cache-controls-attempt-01.xml",
+      "packaged": "cache-controls-attempt-01.xml",
+      "bytes": 15007,
+      "sha256": "79e54e1a138c1b742f21330406227027b1cdec5463354b20079fe7b6b36aa6ea"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/cache-controls-attempt-02.log",
+      "packaged": "cache-controls-attempt-02.log",
+      "bytes": 99,
+      "sha256": "46fc212054bd61106788cf9ff71a53c99b1d45e79c616ae8a88cbdf2431e3f6c"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/cache-controls-attempt-02.xml",
+      "packaged": "cache-controls-attempt-02.xml",
+      "bytes": 7399,
+      "sha256": "1faab6d0640036340b3801dd9705e62777dad20f2e46154d547ed6a990b867f4"
+    }
+  ]
+}

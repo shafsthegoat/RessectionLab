@@ -1,0 +1,142 @@
+.........................................FF...                           [100%]
+=================================== FAILURES ===================================
+_ test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly[False] _
+
+hard = False
+
+    @pytest.mark.parametrize("hard", [False, True])
+    def test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly(hard):
+        case, config, _ = fixture(hard=hard)
+    
+        def rollout(engine):
+            records = []
+            for tip in ((3, 3, 6), (3, 3, 6), (4, 3, 6)):
+                result = engine.execute_stroke("native-fine-aspiration", tip)
+                # Rejected preview diagnostics are not executed removal history.
+                diagnostics = {"failure_tip_mm": result.failure_tip_mm,
+                    "candidate_removed_indices": result.removed_indices_native.tolist(),
+                    "candidate_contact_indices": result.contact_indices_native.tolist(),
+                    "candidate_microsteps": [step.to_dict() for step in result.microsteps],
+                    "source_state_hash": result.source_state_hash,
+                    "executed_history": result.to_history_record() if result.feasible else None}
+                records.append((result.feasible, result.reason, diagnostics))
+            return json.dumps(records, sort_keys=True), json.dumps(engine.history, sort_keys=True)
+    
+        baseline = NativeResectionEngine(config)
+        expected = rollout(baseline)
+        cached = NativeResectionEngine(config)
+        cache = ExactCapsuleCoverCache(config)
+        with inject_native_capsule_cache(cache):
+            assert rollout(cached) == expected
+            cached.reset()
+            assert rollout(cached) == expected
+        if hard:
+            # Complete hard-constraint checking rejects these strokes before any
+            # active/shaft cover queries, even with an injected cache available.
+            assert cache.stats()["calls"] == 0
+        else:
+            assert cache.stats()["hits"] > 0
+        np.testing.assert_array_equal(cached.removed_mask, baseline.removed_mask)
+        np.testing.assert_array_equal(cached.contact_mask, baseline.contact_mask)
+        for engine in (baseline, cached):
+>           audit = independent_check_native_history(case, config.tools, engine.history,
+                tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=config.hard_exclusion)
+
+tests/test_capsule_cache_review.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/evaluation.py:889: in independent_check_native_history
+    hard_exclusion, _ = canonical_hard_exclusion(case, hard_exclusion)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = CaseData(case_id='capsule-cache-review', mri=array([[[1., 1., 1., 1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1., 1....dence=mappingproxy({}), prior_proposals=mappingproxy({}), functional_evidence=None, critical_evidence=mappingproxy({}))
+supplied = _ImmutableArray([[[False, False, False, False, False, False, False,
+                   False],
+                  [Fals...               False],
+                  [False, False, False, False, False, False, False,
+                   False]]])
+
+    def canonical_hard_exclusion(case: Any, supplied: np.ndarray | None = None):
+        constraints = resolve_critical_evidence(case)
+        if any(constraints.masks[name] is not None for name in ("motor", "language")):
+            raise ValueError("UNSUPPORTED_NATIVE_CRITICAL_FUNCTION: native consumers do not yet evaluate these functional annotations")
+        expected = constraints.hard_exclusion
+        if supplied is not None and (expected is None or np.asarray(supplied).dtype != np.bool_
+                                     or not np.array_equal(supplied, expected)):
+>           raise ValueError("Explicit hard exclusion differs from source-bound case evidence")
+E           ValueError: Explicit hard exclusion differs from source-bound case evidence
+
+src/resectionlab/critical_evidence.py:500: ValueError
+_ test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly[True] _
+
+hard = True
+
+    @pytest.mark.parametrize("hard", [False, True])
+    def test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly(hard):
+        case, config, _ = fixture(hard=hard)
+    
+        def rollout(engine):
+            records = []
+            for tip in ((3, 3, 6), (3, 3, 6), (4, 3, 6)):
+                result = engine.execute_stroke("native-fine-aspiration", tip)
+                # Rejected preview diagnostics are not executed removal history.
+                diagnostics = {"failure_tip_mm": result.failure_tip_mm,
+                    "candidate_removed_indices": result.removed_indices_native.tolist(),
+                    "candidate_contact_indices": result.contact_indices_native.tolist(),
+                    "candidate_microsteps": [step.to_dict() for step in result.microsteps],
+                    "source_state_hash": result.source_state_hash,
+                    "executed_history": result.to_history_record() if result.feasible else None}
+                records.append((result.feasible, result.reason, diagnostics))
+            return json.dumps(records, sort_keys=True), json.dumps(engine.history, sort_keys=True)
+    
+        baseline = NativeResectionEngine(config)
+        expected = rollout(baseline)
+        cached = NativeResectionEngine(config)
+        cache = ExactCapsuleCoverCache(config)
+        with inject_native_capsule_cache(cache):
+            assert rollout(cached) == expected
+            cached.reset()
+            assert rollout(cached) == expected
+        if hard:
+            # Complete hard-constraint checking rejects these strokes before any
+            # active/shaft cover queries, even with an injected cache available.
+            assert cache.stats()["calls"] == 0
+        else:
+            assert cache.stats()["hits"] > 0
+        np.testing.assert_array_equal(cached.removed_mask, baseline.removed_mask)
+        np.testing.assert_array_equal(cached.contact_mask, baseline.contact_mask)
+        for engine in (baseline, cached):
+>           audit = independent_check_native_history(case, config.tools, engine.history,
+                tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=config.hard_exclusion)
+
+tests/test_capsule_cache_review.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/evaluation.py:889: in independent_check_native_history
+    hard_exclusion, _ = canonical_hard_exclusion(case, hard_exclusion)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = CaseData(case_id='capsule-cache-review', mri=array([[[1., 1., 1., 1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1., 1....dence=mappingproxy({}), prior_proposals=mappingproxy({}), functional_evidence=None, critical_evidence=mappingproxy({}))
+supplied = _ImmutableArray([[[False, False, False, False, False, False, False,
+                   False],
+                  [Fals...               False],
+                  [False, False, False, False, False, False, False,
+                   False]]])
+
+    def canonical_hard_exclusion(case: Any, supplied: np.ndarray | None = None):
+        constraints = resolve_critical_evidence(case)
+        if any(constraints.masks[name] is not None for name in ("motor", "language")):
+            raise ValueError("UNSUPPORTED_NATIVE_CRITICAL_FUNCTION: native consumers do not yet evaluate these functional annotations")
+        expected = constraints.hard_exclusion
+        if supplied is not None and (expected is None or np.asarray(supplied).dtype != np.bool_
+                                     or not np.array_equal(supplied, expected)):
+>           raise ValueError("Explicit hard exclusion differs from source-bound case evidence")
+E           ValueError: Explicit hard exclusion differs from source-bound case evidence
+
+src/resectionlab/critical_evidence.py:500: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_capsule_cache_review.py::test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly[False]
+FAILED tests/test_capsule_cache_review.py::test_cached_and_uncached_acceptance_rejection_and_histories_match_exactly[True]
+2 failed, 44 passed in 0.70s

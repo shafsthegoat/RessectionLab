@@ -1,0 +1,14 @@
+SOURCE ONLY — no freeze or execution performed.
+
+One existing owned worker runs baseline then cached TRAIN045, constructing and releasing a fresh source/task per arm. Existing ExactCapsuleCoverCache is unchanged, exact-bit keyed, 32 MiB array payload/16,384 entries, injected only around cached greedy. Restore and drop it before full authoritative replay and current canonical independent audit. Every full action, non-time planning-accounting field, complete normalized metrics and independent outcome must equal the same accepted 12-motion + STOP history. Both arms retain failure receipts.
+
+Total bounds remain 120 s worker / 150 s parent / 6,000 previews / 3 GiB sampled RSS / 32 MiB output / one thread. Historical route was 36.44 s total (17.15 s greedy, 0.27 s independent audit), 2,275 previews; a pair estimates 72.88 s and 4,550 previews without assuming cache acceleration. If the pair exceeds the unchanged cap, retain failure.
+
+All four Python files AST-parse only; no scientific/generated execution. The full new sequential glue has not been executed. Existing cache generated controls and a bounded complete two-arm generated flow remain the useful controls before patient scheduling. No profiler is enabled; no array files written.
+
+Root freezes after ranking training at the then-current committed source, never an old evaluator overlay:
+.venv/bin/python -I -B build/native-capsule-cache-train045-pair-v1/freeze-runtime.py --head <then-current-committed-HEAD>
+
+The freezer writes exclusive source-index.json and false release-template.json. Root alone later creates the release and invokes the existing run_owned.py --release <root-release> --release-sha256 <exact-sha>.
+
+Report per-arm greedy/construction/cache-construction/replay/audit times, cache hit/miss/eviction/bypass/payload/entry counters, and parent sampled RSS intervals. Key/bookkeeping bytes are unmeasured by the existing cache; recorded null. ru_maxrss is cumulative and the two fresh tasks share a process allocator. This single fixed-order pair is preliminary and cannot establish sustained speedup or RL throughput.
