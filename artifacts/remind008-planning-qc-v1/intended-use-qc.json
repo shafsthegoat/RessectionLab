@@ -1,0 +1,114 @@
+{
+  "decision": "SAVED_GEOMETRY_AND_CONVERSION_PASS_WITH_EXPLICIT_INTENDED_USE_LIMITS",
+  "evidence": {
+    "audit_saved_crop.py": "3b50b0e63e78e6bb5de45cbc149b8c2cd2081c86768aefec80e8e19b85143e08",
+    "audit_saved_headers.py": "2b3b96b62086772b60dbf07f7586516894dc5986cd88f9fe55a48f2699eb85f9",
+    "crop-generated-tests.txt": "6e59f85dfda89d069fe30c20df2d119dd8e791285ab8a7236db194013f712709",
+    "crop-source-review.json": "4090d7f61b5615e43d218bd2bcfec3e9c6e89ab6d47eba304ef5bc86257b03cb",
+    "generated-tests.txt": "dad8a9c65b7f48beddcbcc0fb8a00e1edbcd39ecc029ee2b76c133ded7db90f6",
+    "saved-crop-array-audit.json": "4a1058e6d61c85b2b882f87adf2858ea00d0bf334b5b657cac44ea8ca72be90d",
+    "saved-header-audit.json": "6d50ebfd7ba3de8988354ba233a0f2cf9b6dfbb82c720662221eaa749545f913",
+    "source-review.json": "b0dcfa51ed852498dc7d89ef58b8ddc4c285f00e6fdb29125a83e1b79431ecc5"
+  },
+  "image_review": {
+    "finding": "Across these three selected planes there is no obvious gross translation, axis flip or scale mismatch between MRI and projected source masks. Red source tumor intersects public support boundaries/zero regions; blue automatic ventricular regions overlap visible internal fluid-like regions. This limited visual check does not establish segmentation accuracy, whole-volume anatomical coverage or clinical registration.",
+    "images": [
+      {
+        "path": "build/remind-planning-qc-v1/ReMIND-008-crop-v1/evaluation-only-axis0-index204.png",
+        "sha256": "8d405464f194b501dca3a106f26fd5dfc783ab32155924a6c2508cd71d2d7d25"
+      },
+      {
+        "path": "build/remind-planning-qc-v1/ReMIND-008-crop-v1/evaluation-only-axis1-index218.png",
+        "sha256": "2ed2b601bb90732bbe4b1a0f0e9351570cc706ba874c2effb8952f58b621bd05"
+      },
+      {
+        "path": "build/remind-planning-qc-v1/ReMIND-008-crop-v1/evaluation-only-axis2-index121.png",
+        "sha256": "9f31c0d25eb1ed2dbb73248f3f2f4faa935b1ce90165fa4da7e49e699eaa8366"
+      }
+    ],
+    "selection": "Tumor source-grid center, evaluation-only; not actor observations."
+  },
+  "material_findings": {
+    "native_sampling": {
+      "MR_start": [
+        126,
+        125,
+        55
+      ],
+      "downsampling": false,
+      "maximum_MR_to_public_grid_corner_difference_mm": 0.00010749917866711526,
+      "maximum_subset_fit_difference_mm": 0.00011237584100867831,
+      "shape": [
+        251,
+        331,
+        250
+      ],
+      "voxels": 20770250
+    },
+    "public_support_ventricular_cue": {
+      "consequence": "Declare original support as informative public input. It is not a ventricular-hidden condition: 92.013% of source ventricular positives occupy public zeros. Any zero is nonspecific: only 2.108% of public zeros are source ventricular positives. Enclosed/open connectivity was not measured; no support modifications were made.",
+      "public_cerebrum_zero_voxels": 13971217,
+      "tumor_fraction_in_public_cerebrum_zero": 0.3454535631314496,
+      "tumor_in_cerebrum_one": 12115,
+      "tumor_in_cerebrum_zero": 6394,
+      "tumor_ventricle_intersection": 309,
+      "ventricle_fraction_in_public_cerebrum_zero": 0.9201348214927201,
+      "ventricle_fraction_of_all_public_cerebrum_zeros": 0.02108334585312074,
+      "ventricle_in_cerebrum_one": 25567,
+      "ventricle_in_cerebrum_zero": 294560
+    },
+    "reference_conflict": {
+      "consequence": "Treat overlapping source annotations explicitly. Full tumor removal and zero intersection with every ventricular-reference voxel are mutually incompatible if both are hard constraints.",
+      "fraction_of_tumor": 0.016694581014641524,
+      "tumor_ventricle_shared_positive_voxels": 309
+    },
+    "target_support": {
+      "bbox_max": [
+        239,
+        246,
+        148
+      ],
+      "bbox_min": [
+        169,
+        190,
+        97
+      ],
+      "consequence": "A simulator allowing removal only at support-positive voxels cannot reach all source whole-tumor positives. Preserve this denominator and failure, or define a narrower task explicitly; do not silently clip targets or fill support using private labels.",
+      "fraction_outside": 0.3454535631314496,
+      "occupied_cell_RAS_max_mm": [
+        54.26800830227276,
+        -20.313233002513574,
+        48.75283055179959
+      ],
+      "occupied_cell_RAS_min_mm": [
+        18.19352946754833,
+        -49.29940185991044,
+        22.755989042884202
+      ],
+      "positive_in_support": 12115,
+      "positive_voxels": 6394,
+      "total_target_voxels": 18509,
+      "volume_mm3": 824.3811373556604
+    }
+  },
+  "patient_id": "ReMIND-008",
+  "retained_uncertainties": [
+    "Prior resection-cavity annotation exists but its payload is excluded; public support zeros are not proven empty or safely traversable tissue.",
+    "Target and ventricle labels retain finite source-grid domains; padded zeros outside those domains remain unknown. Cerebrum positives touch the crop boundary; the cropped support is not complete head or instrument-access geometry.",
+    "All SEG objects lack explicit source SOP references. Shared frame/source description and submillimeter numerical correspondence support this geometry check; no new registration is claimed.",
+    "Source documentation places these annotations preoperatively during planning; exact acquisition times and expert review of automatic masks are unknown.",
+    "Vessels, functional anatomy, patient-specific mechanics and clinical outcomes are not established."
+  ],
+  "review_scope": "Saved source-bound JSON, native crop and label/domain arrays streamed by x-plane, and three local orthogonal overlays. No source DICOM reopens, source pixel redecodes or full-volume allocations.",
+  "role": "TRAIN",
+  "roles_or_annotations_modified": false,
+  "root_run": {
+    "objects": 253,
+    "output_artifact_bytes": 187202269,
+    "peak_group_RSS_bytes": 1045741568,
+    "reaped": true,
+    "returned_source_bytes": 135002220,
+    "supervised_seconds": 1.6876112909521908
+  },
+  "suitable_scope": "A geometric planning pilot against explicitly declared source annotations, with automatic Brainlab cerebrum supplied as public estimated support. Whole-tumor annotation can be designated as a research task target explicitly; it is not a source surgical prescription. Automatic ventricles can be a source-reference overlap endpoint, not independent manual truth or injury."
+}

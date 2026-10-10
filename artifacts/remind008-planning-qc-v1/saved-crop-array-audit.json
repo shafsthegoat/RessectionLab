@@ -1,0 +1,222 @@
+{
+  "MR_values": {
+    "maximum": 9181.0,
+    "minimum": 0.0,
+    "sum_float64": 38466047994.0
+  },
+  "array_validation": "C-order native arrays streamed one251st-volume x-plane at a time; all finite MRI samples and all binary labels/domain bytes checked. Expected rectangular annotation domains verified exactly.",
+  "artifacts_independently_hashed": {
+    "MR_native_crop.npy": {
+      "bytes": 83081128,
+      "sha256": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123"
+    },
+    "cerebrum_source_label.npy": {
+      "bytes": 20770378,
+      "sha256": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b"
+    },
+    "evaluation-only-axis0-index204.png": {
+      "bytes": 95065,
+      "sha256": "8d405464f194b501dca3a106f26fd5dfc783ab32155924a6c2508cd71d2d7d25"
+    },
+    "evaluation-only-axis1-index218.png": {
+      "bytes": 73778,
+      "sha256": "2ed2b601bb90732bbe4b1a0f0e9351570cc706ba874c2effb8952f58b621bd05"
+    },
+    "evaluation-only-axis2-index121.png": {
+      "bytes": 100408,
+      "sha256": "9f31c0d25eb1ed2dbb73248f3f2f4faa935b1ce90165fa4da7e49e699eaa8366"
+    },
+    "ventricles_source_grid_domain.npy": {
+      "bytes": 20770378,
+      "sha256": "a3b792f86ca8f7e02d9ee9854dba5ff06b716590aca620ee0ed53e7a414070f0"
+    },
+    "ventricles_source_label.npy": {
+      "bytes": 20770378,
+      "sha256": "86903fb7970e16918ba4e78587fc96382d85ec2a9ada9269e62c091c539bbb71"
+    },
+    "whole_tumor_source_grid_domain.npy": {
+      "bytes": 20770378,
+      "sha256": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+    },
+    "whole_tumor_source_label.npy": {
+      "bytes": 20770378,
+      "sha256": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e"
+    }
+  },
+  "clinical_accuracy_claim": false,
+  "decision": "PASS_SAVED_CONVERSION_AND_DOMAIN_INTEGRITY",
+  "domain_positive_voxels": {
+    "ventricles_domain": 5183568,
+    "whole_tumor_domain": 226632
+  },
+  "full_array_allocations": 0,
+  "image_review": "pending local orthogonal image inspection",
+  "known_limit": "Public automatic support zeros strongly overlap automatic ventricular annotation. Supplied support is informative public input; this is not a hidden-anatomy condition. Zero overlap does not distinguish enclosed voids from open background/sulci. Whole tumor is annotation, not prescription; source-grid exterior remains unknown.",
+  "mask_relationship": {
+    "public_cerebrum_zero_voxels": 13971217,
+    "tumor_fraction_in_public_cerebrum_zero": 0.3454535631314496,
+    "tumor_in_cerebrum_one": 12115,
+    "tumor_in_cerebrum_zero": 6394,
+    "tumor_ventricle_intersection": 309,
+    "ventricle_fraction_in_public_cerebrum_zero": 0.9201348214927201,
+    "ventricle_fraction_of_all_public_cerebrum_zeros": 0.02108334585312074,
+    "ventricle_in_cerebrum_one": 25567,
+    "ventricle_in_cerebrum_zero": 294560
+  },
+  "mask_statistics": {
+    "cerebrum": {
+      "bbox_max": [
+        250,
+        330,
+        249
+      ],
+      "bbox_min": [
+        0,
+        0,
+        0
+      ],
+      "centroid_RAS_mm": [
+        -3.8378842275332516,
+        -13.716863151621935,
+        43.27485466839051
+      ],
+      "centroid_crop_xyz": [
+        125.0629221831987,
+        176.56728008232935,
+        107.38455262682209
+      ],
+      "crop_boundary_positive_voxels": 368,
+      "positive_voxels": 6799033,
+      "volume_mm3": 876602.2141787093
+    },
+    "ventricles": {
+      "bbox_max": [
+        194,
+        286,
+        240
+      ],
+      "bbox_min": [
+        53,
+        71,
+        72
+      ],
+      "centroid_RAS_mm": [
+        -2.4389085885919997,
+        -8.723882852306339,
+        39.045444431629264
+      ],
+      "centroid_crop_xyz": [
+        127.80089152117753,
+        166.72735195719198,
+        115.84024465290338
+      ],
+      "crop_boundary_positive_voxels": 0,
+      "positive_voxels": 320127,
+      "volume_mm3": 41274.110159251715
+    },
+    "whole_tumor": {
+      "bbox_max": [
+        239,
+        246,
+        149
+      ],
+      "bbox_min": [
+        169,
+        190,
+        94
+      ],
+      "centroid_RAS_mm": [
+        35.64420070781969,
+        -28.796986072120696,
+        38.872692353752385
+      ],
+      "centroid_crop_xyz": [
+        202.8438057161381,
+        206.16764817115998,
+        116.2542006591388
+      ],
+      "crop_boundary_positive_voxels": 0,
+      "positive_voxels": 18509,
+      "volume_mm3": 2386.3732360519107
+    }
+  },
+  "original_source_reopens": 0,
+  "patient_id": "ReMIND-008",
+  "role": "TRAIN",
+  "root_run": {
+    "argv": [
+      "build/idc-acquisition-venv/bin/python",
+      "-I",
+      "-B",
+      "build/remind-planning-qc-v1/convert_crop.py",
+      "--case",
+      "build/real-cohort-eligibility-v1/ReMIND-008-case.json",
+      "--headers",
+      "build/remind-planning-qc-v1/ReMIND-008-headers-v1/result.json",
+      "--output",
+      "build/remind-planning-qc-v1/ReMIND-008-crop-v1"
+    ],
+    "elapsed_seconds": 1.6876112909521908,
+    "exit_code": 0,
+    "limit_reason": null,
+    "memory_limit_bytes": 2147483648,
+    "output_limit_bytes": 268435456,
+    "sampled_owned_process_group_peak_rss_bytes": 1045741568,
+    "wall_limit_seconds": 120,
+    "worker_reaped": true
+  },
+  "saved_inputs": [
+    {
+      "bytes": 19806,
+      "path": "build/remind-planning-qc-v1/ReMIND-008-crop-v1/conversion-result.json",
+      "sha256": "f3c9bc45a30baea2587cf7de8584311e965840a3bcb3163c0534ac9b8ad2ff89"
+    },
+    {
+      "bytes": 634,
+      "path": "build/remind-planning-qc-v1/crop-supervisor.json",
+      "sha256": "c0dec919c0ea0686e61fde02fdaee325c022a586a0db5f942c3a00003df83759"
+    },
+    {
+      "bytes": 466033,
+      "path": "build/remind-planning-qc-v1/ReMIND-008-headers-v1/result.json",
+      "sha256": "ed1a346e2ca03ee114a841f17b9dfb0f07bd33e9e51949dafc6dd73ac4a69cff"
+    },
+    {
+      "bytes": 5232,
+      "path": "build/remind-planning-qc-independent-v1/saved-header-audit.json",
+      "sha256": "6d50ebfd7ba3de8988354ba233a0f2cf9b6dfbb82c720662221eaa749545f913"
+    }
+  ],
+  "shape_xyz": [
+    251,
+    331,
+    250
+  ],
+  "source_bytes": 135002220,
+  "source_objects": 253,
+  "tumor_positive_outside_public_support": {
+    "bbox_max": [
+      239,
+      246,
+      148
+    ],
+    "bbox_min": [
+      169,
+      190,
+      97
+    ],
+    "occupied_cell_RAS_max_mm": [
+      54.26800830227276,
+      -20.313233002513574,
+      48.75283055179959
+    ],
+    "occupied_cell_RAS_min_mm": [
+      18.19352946754833,
+      -49.29940185991044,
+      22.755989042884202
+    ],
+    "positive_voxels": 6394,
+    "volume_mm3": 824.3811373556604
+  },
+  "voxel_volume_mm3": 0.1289304249852456
+}

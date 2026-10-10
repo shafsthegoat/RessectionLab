@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "build/idc-acquisition-venv/bin/python",
+    "-I",
+    "-B",
+    "build/remind-planning-qc-v1/run_case_v2.py",
+    "--case",
+    "build/real-cohort-eligibility-v1/ReMIND-008-case.json",
+    "--case-sha256",
+    "38e82cb2e4211ab7af254ca99588b9adbf35249d186313fcf6b54bca49554061",
+    "--output",
+    "build/remind-planning-qc-v1/ReMIND-008-headers-v1",
+    "--phase",
+    "headers"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.7155056248884648,
+  "sampled_owned_process_group_peak_rss_bytes": 259571712,
+  "limit_reason": null,
+  "worker_reaped": true,
+  "wall_limit_seconds": 90,
+  "memory_limit_bytes": 536870912,
+  "prelaunch_environment_failure": "initial parent psutil import unavailable; no child launched; replaced with ps process-group sampling"
+}

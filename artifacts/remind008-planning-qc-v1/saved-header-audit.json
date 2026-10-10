@@ -1,0 +1,179 @@
+{
+  "anatomy_or_planner_admission": false,
+  "decision": "PASS_SAVED_HEADER_GEOMETRY_FOR_NATIVE_PUBLIC_CEREBRUM_EXTENT_CROP",
+  "independent_stdlib_geometry": {
+    "cerebrum": {
+      "affine_max_abs_difference": 9.947598300641403e-14,
+      "crop_integer_offset": [
+        0,
+        0,
+        0
+      ],
+      "full_grid_contained_in_public_cerebrum_extent": true,
+      "independent_plane_residual_mm": 6.2158878142017185e-06,
+      "integer_embedding_max_cell_corner_error_mm": 0.00010749917867753045,
+      "mr_integer_offset": [
+        126,
+        125,
+        55
+      ],
+      "shape_xyz": [
+        251,
+        331,
+        250
+      ]
+    },
+    "structural_t1ce": {
+      "affine_max_abs_difference": 5.400124791776761e-13,
+      "independent_plane_residual_mm": 0.0006977572022475128,
+      "shape_xyz": [
+        512,
+        512,
+        364
+      ]
+    },
+    "ventricles": {
+      "affine_max_abs_difference": 2.842170943040401e-14,
+      "crop_integer_offset": [
+        53,
+        71,
+        72
+      ],
+      "full_grid_contained_in_public_cerebrum_extent": true,
+      "independent_plane_residual_mm": 2.7312942246557456e-06,
+      "integer_embedding_max_cell_corner_error_mm": 7.788503680711193e-05,
+      "mr_integer_offset": [
+        179,
+        196,
+        127
+      ],
+      "shape_xyz": [
+        142,
+        216,
+        169
+      ]
+    },
+    "whole_tumor": {
+      "affine_max_abs_difference": 3.552713678800501e-14,
+      "crop_integer_offset": [
+        169,
+        190,
+        94
+      ],
+      "full_grid_contained_in_public_cerebrum_extent": true,
+      "independent_plane_residual_mm": 2.0080387572717713e-06,
+      "integer_embedding_max_cell_corner_error_mm": 6.809012350796555e-05,
+      "mr_integer_offset": [
+        295,
+        315,
+        149
+      ],
+      "shape_xyz": [
+        71,
+        57,
+        56
+      ]
+    }
+  },
+  "inputs": {
+    "case": {
+      "bytes": 171547,
+      "path": "build/real-cohort-eligibility-v1/ReMIND-008-case.json",
+      "sha256": "38e82cb2e4211ab7af254ca99588b9adbf35249d186313fcf6b54bca49554061"
+    },
+    "core": {
+      "bytes": 11404,
+      "path": "scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    "headers": {
+      "bytes": 466033,
+      "path": "build/remind-planning-qc-v1/ReMIND-008-headers-v1/result.json",
+      "sha256": "ed1a346e2ca03ee114a841f17b9dfb0f07bd33e9e51949dafc6dd73ac4a69cff"
+    },
+    "runner": {
+      "bytes": 14822,
+      "path": "build/remind-planning-qc-v1/run_case_v2.py",
+      "sha256": "b3ecece3ed1f23a65bb76f1713390de1a163c724356f40daa2630147dea9f8c4"
+    },
+    "supervisor": {
+      "bytes": 774,
+      "path": "build/remind-planning-qc-v1/headers-supervisor.json",
+      "sha256": "0840c84105b4063c8ca1a8c79e021012230bb1d8ffe14ed7203128e40eec8e5a"
+    }
+  },
+  "limitations": [
+    "Header grid containment is not positive-mask coverage or anatomical correctness.",
+    "All three SEG objects lack explicit source SOP references; shared frame and source description support correspondence, not a new registration.",
+    "Acquisition timestamp fields are absent; raw deidentified series/content dates do not establish exact clinical timing.",
+    "Whole tumor is manual annotation, not an explicit surgical resection prescription. Cerebrum and ventricles are automatic Brainlab annotations.",
+    "Prior cavity annotation exists but is excluded; intact normal support is not established.",
+    "Native mask QC must quantify ventricular label overlap with public cerebrum zeros and interior voids, retain the original public support, and declare that potential topology disclosure. No masks were altered or filled."
+  ],
+  "patient_id": "ReMIND-008",
+  "pixels_decoded": 0,
+  "public_extent_crop": {
+    "affine_xyz_to_ras_mm": [
+      [
+        0.5077995197448915,
+        -0.0006029566242650823,
+        0.00031964249946785436,
+        -67.27264728394194
+      ],
+      [
+        -0.0006027992566980225,
+        -0.5077994772639639,
+        -0.0002459969669182383,
+        76.04573949373399
+      ],
+      [
+        0.0003249488546264069,
+        0.0002495105694610817,
+        -0.49999941166902834,
+        96.88231954090975
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "cell_bounds_ras_mm": {
+      "maximum": [
+        60.01118469408274,
+        76.30006363047778,
+        97.29618217803507
+      ],
+      "minimum": [
+        -67.72598402938372,
+        -91.99436519905503,
+        -27.86782090022487
+      ]
+    },
+    "derived_from": "public automatic Brainlab cerebrum SEG rectangular extent; not private tumor or ventricle bounds",
+    "downsampling": false,
+    "full_mr_voxel_count": 95420416,
+    "mr_start_xyz": [
+      126,
+      125,
+      55
+    ],
+    "shape_xyz": [
+      251,
+      331,
+      250
+    ],
+    "voxel_count": 20770250
+  },
+  "role": "TRAIN",
+  "root_run": {
+    "elapsed_seconds": 0.7155056248884648,
+    "sampled_group_peak_rss_bytes": 259571712,
+    "source_bytes": 195025118,
+    "worker_reaped": true,
+    "worker_reported_peak_rss_bytes": 274956288
+  },
+  "source_object_metadata_matches_case": true,
+  "source_objects_reopened": 0
+}
