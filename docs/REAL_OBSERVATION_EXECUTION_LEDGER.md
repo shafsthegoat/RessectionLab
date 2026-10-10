@@ -843,3 +843,28 @@ attempt per selected object. It holds original/predecessor/recovery locks, refus
 changed evidence or occupied journals and never truncates a partial for ignored
 Range. Source, filesystem, checksum and TLS refusals remain closed. The ongoing
 original queue was neither signaled nor restarted.
+
+
+### October 9: ordinal-8 tension specimen finally executes within unchanged limits
+
+The [N12/S60 tension result](../artifacts/hbe-v5-tension-n12-nocache-v2-result-v1/RESULT.md)
+completed exactly once at source HEAD `0ece80d179e28f183b379ba2298961d0a2fd2c18`.
+Root initial availability was 64%/normal; wrapper initial, post-validation and
+immediate-native samples were all 63%/normal. Native FEBio ran 10.568 s at a
+118.80 MB sampled group peak; separate readout ran 3.080 s at 198.36 MB. Both
+exited zero and children were reaped. Full no-cache coverage was 14 preflight and
+28 completed eligible opens, preserving the original failed compression receipt
+and its distinct saved-output supplement.
+
+Independent read-only stream replay exactly reproduced 61 frames and all
+numerical criteria (largest normalized criterion ratio 0.0008950; minimum sampled
+Jacobian 0.886877). This does not establish measured force agreement or positivity
+everywhere in the continuum. The sidecar includes nine total native calls,
+2,113.422 s charged cumulative time and 2,873,709,647 bytes including supplemental
+accounting, within the existing study caps. Original rows, numerical settings,
+limits and failures are unchanged. No measured-response or patient data were read.
+
+Ordinal 9 remains unreleased. The old chain verifies the native receipt but does
+not authenticate the new v2 policy sidecar/envelope or its wrapper-time/sidecar-byte
+charges; a narrow source-bound admission adapter is being prepared before the
+next native step. Native twelve-row comparison and physical validation remain open.

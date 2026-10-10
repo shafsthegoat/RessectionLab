@@ -1,0 +1,123 @@
+{
+  "all_output_bindings_rehashed": true,
+  "endpoint_force_N": 0.0268888092477082,
+  "endpoint_load_m": 0.0007360099999999,
+  "extension_bindings_before_after_match": true,
+  "final_candidate_bindings": {
+    "inner": {
+      "path": "build/hbe-v5-tension-n12-s60-nocache-v2-final-candidate/inner-release.json",
+      "sha256": "7f41865a1bfef4a785b4be262832af6d92d79472abd808a905773dc7ddc181d8"
+    },
+    "outer": {
+      "path": "build/hbe-v5-tension-n12-s60-nocache-v2-final-candidate/outer-envelope.json",
+      "sha256": "2fc24ff3c33923ba33e16ae0842ceb97c1d89b6ede74b2b0e733b0127f74feb7"
+    }
+  },
+  "frame_count": 61,
+  "full_energy_work_passed": true,
+  "hinted_completed_bytes": 5603243510,
+  "hinted_completed_file_opens": 28,
+  "hinted_preflight_file_opens": 14,
+  "independent_exact_readout_replay": true,
+  "max_criterion_ratio": 0.0008950206000586313,
+  "measured_response_accessed": false,
+  "minimum_sampled_J": 0.8868771896276505,
+  "native_calls": 1,
+  "native_output_observed_by_supervisor": true,
+  "native_receipt_sha256": "67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e",
+  "no_retry": true,
+  "ordinal": 8,
+  "output_bindings": {
+    "console.txt": {
+      "bytes": 170948,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/console.txt",
+      "sha256": "12e785c3dd428614df71ec895b540bc3f6d204e9d40d52dd38d26c8033749edf"
+    },
+    "elements.log": {
+      "bytes": 18500496,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/elements.log",
+      "sha256": "8135edd3433f72af091cb6c5852f3064463bb33c2d47fb530742037d44353eb9"
+    },
+    "nodes.log": {
+      "bytes": 29311268,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/nodes.log",
+      "sha256": "f9b36a2a2c0dff716a926bae0f11acf34f31a91422bfff96a8e2ab914c2dc597"
+    },
+    "readout-console.txt": {
+      "bytes": 0,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/readout-console.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readout-work-order.json": {
+      "bytes": 7331,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/readout-work-order.json",
+      "sha256": "82fdd5fe1aa20a46975ea076a09b8731dde1901937847c7a656c5907007994a3"
+    },
+    "readout.json": {
+      "bytes": 535343,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/readout.json",
+      "sha256": "699d70d887ed4e17cc554cf18c8f1bd3e86e4adc00f1b981b2ea2e848dd42db8"
+    },
+    "solver.log": {
+      "bytes": 574612,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/solver.log",
+      "sha256": "114c321aa01d96e245242ba7588f41e70cfd3b4bc6324bb23952946a74f7c6d7"
+    },
+    "specimen.feb": {
+      "bytes": 759040,
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/08-tension-N12-S60-reference/attempt-01/specimen.feb",
+      "sha256": "6dbf980c8d60309f62d4d6e8e395d881b4bacfd1be73796eedfad6112f9505a9"
+    }
+  },
+  "owned_stage_cleanup_verified": true,
+  "patient_data_accessed": false,
+  "physical_validation_pass": null,
+  "pre_native_host_percent": 63,
+  "preflight_host_percent": 63,
+  "prelaunch_independent_review_binding": {
+    "path": "build/hbe-v5-tension-n12-s60-nocache-v2-final-independent-v1/REPORT.md",
+    "sha256": "aeb5117dc0a9b1f95db6e871054d88c4de3351e9e6e0c73086a52813f4bd1ac1"
+  },
+  "readout_calls": 1,
+  "readout_sha256": "699d70d887ed4e17cc554cf18c8f1bd3e86e4adc00f1b981b2ea2e848dd42db8",
+  "released_inner_sha256": "7f41865a1bfef4a785b4be262832af6d92d79472abd808a905773dc7ddc181d8",
+  "released_outer_sha256": "2fc24ff3c33923ba33e16ae0842ceb97c1d89b6ede74b2b0e733b0127f74feb7",
+  "representation": "full_native_fixture",
+  "resource_charge": {
+    "aggregate_combined_output_bytes": 2873709647,
+    "aggregate_combined_wall_seconds": 2113.4217505031265,
+    "aggregate_native_calls": 9,
+    "aggregate_native_wall_seconds": 1878.492276210105,
+    "aggregate_output_bytes": 2873152255,
+    "aggregate_prep_wall_seconds": 52.732792710186914,
+    "aggregate_readout_wall_seconds": 175.9130352907814,
+    "aggregate_supplement_prep_wall_seconds": 3.4362154591362923,
+    "aggregate_supplement_replay_calls": 1,
+    "aggregate_supplement_replay_wall_seconds": 2.8474308329168707
+  },
+  "root_initial_host_available_percent": 64,
+  "root_initial_host_binding": {
+    "path": "build/hbe-v5-nocache-v2-root-execution-01/initial-host.json",
+    "sha256": "714a3396542840474b5c1c0d35b9b45509d3ee99dd2bb7c90402f2df5bdbb76e"
+  },
+  "root_initial_host_pressure_mask": 1,
+  "run_id": "tension:N12:S60:reference",
+  "schema": "hbe-v5-n12-v2-independent-saved-result-metadata-v1",
+  "scope": "Numerical specimen software evidence only; raw arrays stay local.",
+  "sidecar_receipt_sha256": "dae900fcedd2dc61f1398a00e40be40b9fa355146c20599c6f01fc5a29b45eb8",
+  "solver_states_passed": 60,
+  "source_bindings_before_after_match": true,
+  "source_commit": "0ece80d179e28f183b379ba2298961d0a2fd2c18",
+  "stage_sampled_peak_rss_bytes": {
+    "native": 118800384,
+    "readout": 198361088
+  },
+  "stage_seconds": {
+    "launcher_inclusive_prep_with_reserve": 10.3559902489651,
+    "native": 10.56767166685313,
+    "native_receipt_prep": 9.214619708247483,
+    "readout": 3.08014695905149
+  },
+  "status": "independent_saved_numerical_software_pass",
+  "steps": 60
+}

@@ -1,0 +1,42 @@
+{
+  "extension_source_bindings": {
+    "launchers/hbe_v5_nocache_hash_v1.py": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+    "launchers/hbe_v5_nocache_host_v1.py": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+    "launchers/hbe_v5_nocache_v2.py": "4271cb49de70a63de5bf8369628208d8b90907434deb6324a16a7b36c314790f"
+  },
+  "inner_release": {
+    "path": "build/hbe-v5-tension-n12-s60-nocache-v2-final-candidate/inner-release.json",
+    "sha256": "7f41865a1bfef4a785b4be262832af6d92d79472abd808a905773dc7ddc181d8"
+  },
+  "policy": {
+    "expected_completed_hint_bytes": 5603243510,
+    "expected_completed_hint_opens": 28,
+    "expected_preflight_hint_bytes": 2801621755,
+    "expected_preflight_hint_opens": 14,
+    "extension_after_old_execute_wall_seconds": 45,
+    "extension_before_old_execute_wall_seconds": 45,
+    "extension_self_peak_rss_bytes": 3221225472,
+    "finalization_prep_reserve_seconds": 1,
+    "initial_available_percent_floor": 54,
+    "io_policy": "darwin_F_NOCACHE_48_read_only_predecessor_hash_v2_initial54",
+    "minimum_hint_bytes": 16777216,
+    "normal_kernel_pressure_mask": 1,
+    "owned_stage_cleanup_seconds": 3,
+    "pre_native_available_percent_floor": 45,
+    "predecessor_ordinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "sidecar_output_cap_bytes": 1048576
+  },
+  "schema": "hbe-v5-nocache-launch-envelope-v2",
+  "sidecar_directory": "outputs/mechanics/hbe-v5-nocache-policy-v2/08-tension-N12-S60-reference/attempt-01",
+  "source_commit": "0ece80d179e28f183b379ba2298961d0a2fd2c18",
+  "status": "root_released_one_native_call_with_declared_io_policy_v2"
+}
