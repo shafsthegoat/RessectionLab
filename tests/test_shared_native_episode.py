@@ -102,6 +102,9 @@ def test_probe_changes_observed_contact_and_state_but_not_cavity_and_stale_ids_f
     with pytest.raises(InvalidActionError):
         task.step(probe)
     clone = task.clone()
+    with pytest.raises(ValueError):
+        clone._engine.probe_contact_mask[:] = False
+    clone._engine.probe_contact_mask = clone._engine.probe_contact_mask.copy()
     clone._engine.probe_contact_mask[:] = False
     with pytest.raises(RuntimeError):
         clone.observation()

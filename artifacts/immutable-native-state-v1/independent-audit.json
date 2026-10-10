@@ -1,0 +1,63 @@
+{
+  "verdict": "PASS source and saved generated evidence; no replay",
+  "source_hashes_checked": 126,
+  "source_mismatches": {},
+  "exact_source_model_and_16_branch_signatures": true,
+  "counts_each": {
+    "native_previews": 24,
+    "commits": 16
+  },
+  "focused_tests": {
+    "original": {
+      "passed": 21,
+      "failed": 2
+    },
+    "corrected": {
+      "passed": 23,
+      "failed": 0,
+      "seconds": 1.886
+    }
+  },
+  "voxels": 20770250,
+  "timings": {
+    "unchanged_guards": {
+      "baseline": 0.38093537488020957,
+      "stage": 0.0018512080423533916
+    },
+    "branch_commits": {
+      "baseline": 2.0002268329262733,
+      "stage": 0.5082595830317587
+    }
+  },
+  "peak_self_rss_bytes": {
+    "baseline": 1145094144,
+    "stage": 1231454208,
+    "increase": 86360064,
+    "increase_percent": 7.541743572133752
+  },
+  "aggregate_seconds": 6.392927082953975,
+  "limitations": [
+    "16 independent branches repeat the same one-step six-cell generated transition, not a16-step sequence",
+    "large array cardinality only; no patient runtime extrapolation",
+    "single sequential baseline/stage benchmark; cache/order variability not estimated",
+    "memory increased; sampled parent memory cap is not kernel enforcement",
+    "review ran only stdlib saved metadata/hash arithmetic, no model/task/geometry/replay"
+  ],
+  "input_sha256": {
+    "build/immutable-native-state-v1/generated-benchmark-v1/declaration.json": "51bced9f88212ed9fc3e307e0aa75e677dc9dba59627e27125088832e948b71e",
+    "build/immutable-native-state-v1/generated-benchmark-v1/receipt.json": "477a6c1e4e59b9e47f1636833d0fbafba7b0433c836e911741bd47a0a928f1ef",
+    "build/immutable-native-state-v1/generated-benchmark-v1/comparison.json": "b8a89f0fe620ccde509fb2bdd8256c41c77baffd4818abe9055fe244917222e9",
+    "build/immutable-native-state-v1/generated-benchmark-v1/baseline.json": "b1f87e4d5415033b1a614483364c5498e5a2e1b48588f3d4a95d9d02d30fe3b8",
+    "build/immutable-native-state-v1/generated-benchmark-v1/stage.json": "ab0f02a98201b39749920f04b64da9239f2067f5c881f61dee07c23ab4c600a1",
+    "build/immutable-native-state-v1/generated_benchmark.py": "8938844251e44b315b905bb03acca6ecece929ff86e10f03bb9a4a5382197921",
+    "build/immutable-native-state-v1/run_generated_benchmark_owned.py": "6a10f4702368a7de422f015f1a309b300ca95ab1121bcbfaf9b0f7ccf082059b",
+    "build/immutable-native-state-v1/focused-tests-v1.log": "39061ca187c55f003542bddd72d02e15cd4ab7f2fb2603fe30bf734daafab677",
+    "build/immutable-native-state-v1/focused-tests-v1.xml": "4f08c82f2f9acc1c75039013f6d63bb832df49bf3ea5291a1f408486020870e6",
+    "build/immutable-native-state-v1/focused-tests-v2.log": "f626b98d2ff8ee158c5fdcd3961634013c79632b19d8a65c6293c80ed5003249",
+    "build/immutable-native-state-v1/focused-tests-v2.xml": "27f62f2b6dfc8dc98689bcbd586f7040bfb656c4a28d027a18d50e5991ae952b",
+    "build/immutable-native-state-v1/test_immutable_native_state.failed-v1.py": "cab83736fa118a32307f9bbc6dccfed657c2a3abe92d9534bb3f592870b11fb5",
+    "build/immutable-native-state-v1/stage/tests/test_immutable_native_state.py": "69247d038aaab2d08b649be7780cb36ef3a016c51f729afb3bd1c46dc4efbb47",
+    "build/immutable-native-state-v1/stage/resectionlab/native_resection.py": "c359546356e4d27ad82cd1d9ebd98dd21dcfbdb5401080c57dd45bfefd0c6d98",
+    "build/immutable-native-state-v1/stage/resectionlab/native_spatial_task.py": "eccd576682ae392eb0883243dfee4ca9bc77874716840153ce9d7b3d90e3ac62"
+  }
+}

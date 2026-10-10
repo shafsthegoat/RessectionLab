@@ -23,6 +23,8 @@ from typing import Any, Iterable
 import numpy as np
 from scipy.ndimage import binary_fill_holes
 
+from .core import array_digest
+
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
     check_motion, point_segment_distances, _immutable, _segment_cell_distances,
@@ -31,6 +33,32 @@ from .geometry import (
 NATIVE_RESECTION_VERSION = "contained-native-cell-connected-suction-v2"
 _NEIGHBORS = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]])
 _EMPTY = _immutable(np.empty((0, 3), dtype=np.int64))
+_STATE_MASKS = ("remaining_mask", "removed_mask", "contact_mask", "probe_contact_mask", "connected_free_mask")
+
+
+def _snapshot_identity(array):
+    root = array
+    while isinstance(root, np.ndarray) and root.base is not None:
+        root = root.base
+    if not isinstance(array, np.ndarray) or array.flags.writeable or not isinstance(root, bytes):
+        raise RuntimeError("Committed native masks require immutable owned bytes")
+    return (id(array), id(root), array.shape, array.strides, array.dtype.str)
+
+
+@dataclass(frozen=True)
+class _CommittedMaskSnapshot:
+    array: np.ndarray = field(repr=False)
+    identity: tuple
+    digest: str
+
+    @classmethod
+    def capture(cls, value):
+        array = _frozen(value, bool)
+        return cls(array, _snapshot_identity(array), array_digest(array))
+
+    def verify(self, actual):
+        if actual is not self.array or _snapshot_identity(actual) != self.identity:
+            raise RuntimeError("Committed native mask content or interpretation was replaced")
 
 # These are explicit alternative research configurations, not silently changed
 # versions of the older .8-mm-tip / 1.2-mm-shaft coarse simulation instruments.
@@ -279,7 +307,15 @@ class NativeResectionEngine:
     Instances belong to one worker; concurrent search branches use ``clone``.
     """
 
-    def __init__(self, config: NativeResectionConfig):
+    def __setattr__(self, name, value):
+        if name in {"_immutable_state", "_committed_snapshots"} and hasattr(self, name):
+            raise AttributeError("Native state storage mode and snapshot binding are internally owned")
+        object.__setattr__(self, name, value)
+
+    def __init__(self, config: NativeResectionConfig, *, immutable_state: bool = False):
+        if type(immutable_state) is not bool:
+            raise TypeError("immutable_state must be an explicit bool")
+        self._immutable_state = immutable_state
         self.config = config
         self._tools = {tool.tool_id: tool for tool in config.tools}
         self._scene = GeometryScene(config.hard_exclusion, config.affine)
@@ -298,6 +334,19 @@ class NativeResectionEngine:
         return self.config.fingerprint
 
     def reset(self) -> None:
+        if self._immutable_state:
+            # Allocate/capture privately. A failed reset must not discard a
+            # live committed state or leave writable arrays with stale seals.
+            snapshots = tuple(_CommittedMaskSnapshot.capture(
+                self.config.tissue_mask if name == "remaining_mask" else
+                self._initial_connected_free if name == "connected_free_mask" else
+                np.zeros(self.config.tissue_mask.shape, bool)) for name in _STATE_MASKS)
+            history, records, digests = [], {}, {}
+            state_hash = "sha256:" + sha256((self.config.fingerprint + ":initial").encode()).hexdigest()
+            self._install_snapshots(snapshots)
+            self.history, self.revision, self._state_hash = history, 0, state_hash
+            self._preview_records, self._preview_digests = records, digests
+            return
         self.remaining_mask = self.config.tissue_mask.copy()
         self.removed_mask = np.zeros(self.config.tissue_mask.shape, bool)
         self.contact_mask = np.zeros(self.config.tissue_mask.shape, bool)
@@ -309,13 +358,40 @@ class NativeResectionEngine:
         self._preview_records: dict[int, NativeStrokeResult] = {}
         self._preview_digests: dict[int, str] = {}
 
+    def _install_snapshots(self, snapshots):
+        for name, snapshot in zip(_STATE_MASKS, snapshots):
+            setattr(self, name, snapshot.array)
+        object.__setattr__(self, "_committed_snapshots", snapshots)
+
+    def committed_snapshot_identity(self):
+        """Bind cache interpretation as well as mask storage at a task seal."""
+        self.committed_mask_digests()
+        return (id(self._committed_snapshots), tuple((id(snapshot), snapshot.identity, snapshot.digest)
+                for snapshot in self._committed_snapshots))
+
+    def committed_mask_digests(self):
+        """Exact old digest bytes, reusable only for verified immutable masks."""
+        if self._immutable_state is not True:
+            raise RuntimeError("Immutable native state mode changed")
+        snapshots = self._committed_snapshots
+        if type(snapshots) is not tuple or len(snapshots) != len(_STATE_MASKS):
+            raise RuntimeError("Committed native snapshot collection changed")
+        for name, snapshot in zip(_STATE_MASKS, snapshots):
+            if type(snapshot) is not _CommittedMaskSnapshot:
+                raise RuntimeError("Committed native snapshot type changed")
+            snapshot.verify(getattr(self, name))
+        return {name: snapshot.digest for name, snapshot in zip(_STATE_MASKS, snapshots)}
+
     def clone(self) -> NativeResectionEngine:
+        if self._immutable_state:
+            self.committed_mask_digests()
         result = copy.copy(self)
-        result.remaining_mask = self.remaining_mask.copy()
-        result.removed_mask = self.removed_mask.copy()
-        result.contact_mask = self.contact_mask.copy()
-        result.probe_contact_mask = self.probe_contact_mask.copy()
-        result.connected_free_mask = self.connected_free_mask.copy()
+        if not self._immutable_state:
+            result.remaining_mask = self.remaining_mask.copy()
+            result.removed_mask = self.removed_mask.copy()
+            result.contact_mask = self.contact_mask.copy()
+            result.probe_contact_mask = self.probe_contact_mask.copy()
+            result.connected_free_mask = self.connected_free_mask.copy()
         result.history = copy.deepcopy(self.history)
         result._preview_records = self._preview_records.copy()
         result._preview_digests = self._preview_digests.copy()
@@ -329,6 +405,8 @@ class NativeResectionEngine:
         deformation model. A 1e-8 mm numerical tangency tolerance permits no
         material penetration; all remaining contacted cells must be exposed.
         """
+        if self._immutable_state:
+            self.committed_mask_digests()
         if interaction_mode not in {"aspirate", "probe"}:
             raise ValueError("Unsupported native instrument interaction")
         if tool_id not in self._tools:
@@ -436,6 +514,8 @@ class NativeResectionEngine:
         return finish(True, "NATIVE_CONNECTED_STROKE")
 
     def commit_preview(self, result: NativeStrokeResult) -> NativeStrokeResult:
+        if self._immutable_state:
+            self.committed_mask_digests()
         if (not result.feasible or self._preview_records.get(id(result)) is not result
                 or result.source_state_hash != self.state_hash
                 or result.decision_model_hash != self.config.fingerprint):
@@ -450,6 +530,8 @@ class NativeResectionEngine:
             raise ValueError("Preview contains already removed tissue")
         if result.interaction_mode == "probe" and len(indices):
             raise ValueError("A probe certificate cannot remove tissue")
+        if self._immutable_state:
+            return self._commit_immutable_preview(result, indices)
         self.remaining_mask[tuple(indices.T)] = False
         self.removed_mask[tuple(indices.T)] = True
         _extend_connected_free(indices, self.remaining_mask, self.connected_free_mask)
@@ -463,6 +545,39 @@ class NativeResectionEngine:
         # The ancestry includes the full certified history/contact record, not
         # only its cavity: different exposures cannot share a state identity.
         self._state_hash = "sha256:" + sha256((self.state_hash + ":committed:" + self._preview_digests[id(result)]).encode()).hexdigest()
+        self._preview_records.clear()
+        self._preview_digests.clear()
+        return result
+
+    def _commit_immutable_preview(self, result, indices):
+        """Prepare changed storage privately; keep geometry and ancestry exact."""
+        changed = set()
+        if len(indices):
+            changed.update(("remaining_mask", "removed_mask", "connected_free_mask"))
+        if len(result.contact_indices_native):
+            changed.add("contact_mask")
+            if result.interaction_mode == "probe":
+                changed.add("probe_contact_mask")
+        masks = {name: getattr(self, name).copy() if name in changed else getattr(self, name)
+                 for name in _STATE_MASKS}
+        if len(indices):
+            masks["remaining_mask"][tuple(indices.T)] = False
+            masks["removed_mask"][tuple(indices.T)] = True
+            _extend_connected_free(indices, masks["remaining_mask"], masks["connected_free_mask"])
+        if len(result.contact_indices_native):
+            masks["contact_mask"][tuple(result.contact_indices_native.T)] = True
+            if result.interaction_mode == "probe":
+                contacted = result.contact_indices_native
+                occupied = contacted[masks["remaining_mask"][tuple(contacted.T)]]
+                masks["probe_contact_mask"][tuple(occupied.T)] = True
+        snapshots = tuple(_CommittedMaskSnapshot.capture(masks[name]) if name in changed else old
+                          for name, old in zip(_STATE_MASKS, self._committed_snapshots))
+        history = [*self.history, result.to_history_record()]
+        state_hash = "sha256:" + sha256((self.state_hash + ":committed:" + self._preview_digests[id(result)]).encode()).hexdigest()
+        self._install_snapshots(snapshots)
+        self.history = history
+        self.revision += 1
+        self._state_hash = state_hash
         self._preview_records.clear()
         self._preview_digests.clear()
         return result

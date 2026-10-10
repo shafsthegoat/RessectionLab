@@ -1,0 +1,28 @@
+{
+  "arms": [
+    {
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 4.298153917072341,
+      "exit_code": 0,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "sampled_peak_rss_bytes": 1123500032,
+      "variant": "baseline"
+    },
+    {
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 2.0946447500027716,
+      "exit_code": 0,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "sampled_peak_rss_bytes": 1231454208,
+      "variant": "stage"
+    }
+  ],
+  "automatic_retry": false,
+  "elapsed_seconds": 6.392927082953975,
+  "memory_limit": "sampled, not kernel hard",
+  "stop_reason": null
+}

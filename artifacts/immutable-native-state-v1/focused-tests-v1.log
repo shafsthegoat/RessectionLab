@@ -1,0 +1,64 @@
+....F.............F....                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_mixed_probe_exact_contact_and_snapshot_reuse _______________
+
+variants = (namespace(task=<module '_immutable_test_baseline.native_spatial_task' from '/Users/sayemkamal/.codex/.chatgpt-project....codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/development_episode.py'>))
+
+    def test_mixed_probe_exact_contact_and_snapshot_reuse(variants):
+>       a,b=[v.development.make_development_task() for v in variants]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/immutable-native-state-v1/stage/tests/test_immutable_native_state.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/development_episode.py:40: in make_development_task
+    return NativeSpatialTask(case, max_steps=6, tool_modes=MODES, cancelled=cancelled)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/immutable-native-state-v1/baseline/resectionlab/native_spatial_task.py:522: in __init__
+    self.reset()
+build/immutable-native-state-v1/baseline/resectionlab/native_spatial_task.py:573: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+build/immutable-native-state-v1/baseline/resectionlab/native_spatial_task.py:674: in observation
+    return SequentialSpatialObservation(base, ("stop", *(result.interaction_mode for result in inventory.values())),
+<string>:6: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SequentialSpatialObservation(base=SpatialObservation(image_channels=_FrozenArray([[[[0., 0., 0., ..., 0., 0., 0.],
+   ...False, ..., False, False, False],
+        [False, False, False, ..., False, False, False]]],
+      shape=(13, 13, 12)))
+
+    def __post_init__(self) -> None:
+        if type(self.base) is not SpatialObservation:
+>           raise TypeError("Mixed-action observation requires the exact permitted spatial DTO")
+E           TypeError: Mixed-action observation requires the exact permitted spatial DTO
+
+src/resectionlab/sequential_spatial_observation.py:32: TypeError
+_ test_failed_certificates_and_prepublication_allocation_leave_state_unchanged[altered] _
+
+variants = (namespace(task=<module '_immutable_test_baseline.native_spatial_task' from '/Users/sayemkamal/.codex/.chatgpt-project....codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/development_episode.py'>))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d5e9f10>
+failure = 'altered'
+
+    @pytest.mark.parametrize('failure',['foreign','stale','altered','allocation'])
+    def test_failed_certificates_and_prepublication_allocation_leave_state_unchanged(variants,monkeypatch,failure):
+        v=variants[1];task=v.task.make_native_opening_task().planning_clone();engine=task._engine
+        identifier=action(task,task.case.tools[0].tool_id,(4,4,1));certificate=task._inventory[identifier]
+        if failure=='foreign':certificate=replace(certificate)
+        elif failure=='altered':object.__setattr__(certificate,'reason','forged')
+        elif failure=='stale':
+            engine.commit_preview(certificate)
+        else:
+            def fail(value):raise MemoryError('generated freeze allocation fault')
+            monkeypatch.setattr(v.engine._CommittedMaskSnapshot,'capture',staticmethod(fail))
+        masks=[getattr(engine,n) for n in MASKS];history=copy.deepcopy(engine.history);state=engine.state_hash;revision=engine.revision
+>       with pytest.raises((ValueError,MemoryError)):engine.commit_preview(certificate)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, MemoryError)
+
+build/immutable-native-state-v1/stage/tests/test_immutable_native_state.py:147: Failed
+=========================== short test summary info ============================
+FAILED build/immutable-native-state-v1/stage/tests/test_immutable_native_state.py::test_mixed_probe_exact_contact_and_snapshot_reuse
+FAILED build/immutable-native-state-v1/stage/tests/test_immutable_native_state.py::test_failed_certificates_and_prepublication_allocation_leave_state_unchanged[altered]
+2 failed, 21 passed in 1.62s

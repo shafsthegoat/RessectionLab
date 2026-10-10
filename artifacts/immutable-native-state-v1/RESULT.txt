@@ -1,0 +1,28 @@
+Immutable native state: exact branch reuse, October 10, 2026
+
+NativeSpatialTask now uses bytes-backed committed masks with cached exact digests.
+Clones share those immutable masks; authenticated commits prepare and publish only
+changed masks. Standalone NativeResectionEngine stays mutable by default. Source,
+world, state and observation identities remain unchanged. Geometry, connectivity,
+full-tool certificates, history and state-boundary checks are preserved. Mutable
+mask replacement and altered cache/history/contract state fail closed.
+
+Canonical integration: 221 passed, 16 historical-source tests skipped in 10.59s.
+Portable controls cover immutable aliases, replacement, clone isolation, stale and
+foreign certificates, history/scalar tampering, failed allocation/reset atomicity,
+and exact digest reuse. Earlier comparative controls: 23 passed in 1.89s. The
+initial harness attempt (21 passed, two failed) is retained in focused-tests-v1.log;
+it used a mismatched imported DTO and attempted to tamper with an unbound reason.
+Those harness corrections did not change the optimized source.
+
+Generated benchmark: 251 x 331 x 250 source cardinality, a six-cell 1-mm fixture,
+16 separate one-step clone/commit branches (not a 16-step trajectory). Exact source,
+model and all committed state/history/step signatures agree. Branch work falls
+from 2.00023 to 0.50826 seconds; 16 unchanged guards from 0.38094 to 0.001851 seconds.
+Hash input falls from 6.646 to 1.329 GB. Peak memory rises from 1,145,094,144 to
+1,231,454,208 bytes (+7.54%). Each arm performs 24 previews and 16 commits. Owned
+parent exits cleanly after 6.393 seconds. Independent saved-evidence audit passes.
+
+This is generated software-performance evidence. No patient speed, model accuracy,
+physical validity, clinical benefit or task reachability follows from it. Patient
+horizon-24 diagnosis is next; no RL training was performed here.

@@ -518,7 +518,7 @@ class NativeSpatialTask:
         self._config = case._native_config
         self._contract = self._contract_record()
         self.decision_model_hash = semantic_digest(self._contract)
-        self._engine = NativeResectionEngine(self._config)
+        self._engine = NativeResectionEngine(self._config, immutable_state=True)
         self.reset()
 
     def _contract_record(self):
@@ -532,20 +532,23 @@ class NativeSpatialTask:
             "target_model": self.case.target_derivation or "unavailable_no_search_objective"}
 
     def _state_record(self):
-        return {**({"probe_contact": array_digest(self._engine.probe_contact_mask)}
+        masks = self._engine.committed_mask_digests()
+        return {**({"probe_contact": masks["probe_contact_mask"]}
                    if self.tool_modes is not None else {}),
-            "removed": array_digest(self._engine.removed_mask), "remaining": array_digest(self._engine.remaining_mask),
-            "contact": array_digest(self._engine.contact_mask), "connected_free": array_digest(self._engine.connected_free_mask),
+            "removed": masks["removed_mask"], "remaining": masks["remaining_mask"],
+            "contact": masks["contact_mask"], "connected_free": masks["connected_free_mask"],
             "engine_history": self._engine.history, "engine_state": self._engine.state_hash,
             "history": self._history, "steps": self._steps, "current_tool": self._current_tool,
             "terminated": self._terminated, "total_reward": self._total_reward, "planning": self._planning}
 
     def _seal(self):
         self._state_seal = semantic_digest(self._state_record())
+        self._state_storage_identity = self._engine.committed_snapshot_identity()
 
     def _assert_frozen(self):
         if (self._contract_record() != self._contract or self.case.reference_hash != self._reference_hash
                 or self._config is not self.case._native_config or self._engine.config is not self._config
+                or self._engine.committed_snapshot_identity() != self._state_storage_identity
                 or semantic_digest(self._state_record()) != self._state_seal):
             raise RuntimeError("Native source, objective or committed procedure state changed outside a transition")
 

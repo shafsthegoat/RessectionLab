@@ -11,8 +11,12 @@ def test_lazy_entry_refuses_every_aspiration_mask_corruption_before_commit(name)
     task = make_native_opening_task().planning_clone()
     before_revision = task._engine.revision
     mask = getattr(task._engine, name)
+    with pytest.raises(ValueError):
+        mask[0, 0, 0] = not mask[0, 0, 0]
+    mask = mask.copy()
+    setattr(task._engine, name, mask)
     mask[0, 0, 0] = not mask[0, 0, 0]
-    with pytest.raises(RuntimeError, match="outside a transition"):
+    with pytest.raises(RuntimeError, match="replaced"):
         task.advance_planning("STOP")
     assert task._engine.revision == before_revision
     assert task._steps == 0 and task._history == []

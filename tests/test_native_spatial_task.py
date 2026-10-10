@@ -201,6 +201,9 @@ def test_source_and_committed_state_tampering_fail_closed(change):
     elif change == "config":
         object.__setattr__(task._config, "target_labels", task._config.target_labels.copy())
     elif change == "cavity":
+        with pytest.raises(ValueError):
+            task._engine.removed_mask[0, 0, 0] = True
+        task._engine.removed_mask = task._engine.removed_mask.copy()
         task._engine.removed_mask[0, 0, 0] = True
     else:
         task.reward_spec = replace(task.reward_spec, target_per_mm3=9.)

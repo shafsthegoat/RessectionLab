@@ -144,6 +144,9 @@ def test_proposer_never_accepts_engine_labels_or_misbound_nominal_evidence():
     with pytest.raises(ValueError,match="exact permitted target"):
         PreparedNominalCavityProposer(task._config,task.case.nominal_target,
             nominal_provenance={**provider._provenance,"nominal_target_hash":"sha256:"+"f"*64})
+    with pytest.raises(ValueError):
+        task._engine.remaining_mask[4,4,1]=False
+    task._engine.remaining_mask=task._engine.remaining_mask.copy()
     task._engine.remaining_mask[4,4,1]=False
     with pytest.raises(RuntimeError,match="legitimate committed history"):
         provider.propose(task._engine)

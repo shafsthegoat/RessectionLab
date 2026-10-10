@@ -1,0 +1,11 @@
+{
+  "baseline_result_sha256": "b1f87e4d5415033b1a614483364c5498e5a2e1b48588f3d4a95d9d02d30fe3b8",
+  "exact_parity": {
+    "committed_signatures": true,
+    "model_hash": true,
+    "source_hash": true
+  },
+  "pass": true,
+  "scope": "generated source cardinality only; no patient runtime/memory extrapolation",
+  "stage_result_sha256": "ab0f02a98201b39749920f04b64da9239f2067f5c881f61dee07c23ab4c600a1"
+}
