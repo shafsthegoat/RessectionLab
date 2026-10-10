@@ -1,0 +1,124 @@
+{
+  "status": "complete_footprint_cap120_search_contrast",
+  "scope": "same_public_world_cap120_widening_six_step_beam",
+  "optimizer_updates": 0,
+  "optimizer_construction_attempts": 0,
+  "policy_forward_calls": 0,
+  "policy_constructions": 0,
+  "checkpoint_loads": 0,
+  "private_array_reads": 0,
+  "search_invocations": 1,
+  "native_replay_calls": 0,
+  "original_attempt_unchanged": true,
+  "saved_baseline_cost": {
+    "search_seconds": 39.38999058306217,
+    "model_transition_calls": 268,
+    "native_previews": 1056,
+    "owned_wall_seconds": 45.889852040912956,
+    "sampled_peak_rss_bytes": 1662484480,
+    "costs_remain_separate_from_this_attempt": true
+  },
+  "actions": [
+    "STOP"
+  ],
+  "source_hash": "sha256:f4210fcede92c1d1f21d69daf6008d87238b06876480a21a4e7e616c3e754e84",
+  "decision_model_hash": "sha256:411094c7b9af2d34ff67654f1f9921da40093f03cd496aeabc06dc19de8f8d55",
+  "initial_observation_hash": "sha256:362d8a2f7ea835aa1ecf43c05039a66de67ad9c2c3015fc160f5321160cbc927",
+  "original_release_sha256": "9772dc73f15abab98fcf784a152552214a3c682df76c1405b78bbdb307ae3b69",
+  "input_index_sha256": "2699d3c87c34463ecf6023f897270255b8afff80a068983e343e75684362b384",
+  "baseline_comparison": {
+    "same_stop_decision": true,
+    "baseline_actions": [
+      "STOP"
+    ],
+    "new_actions": [
+      "STOP"
+    ],
+    "baseline_transition_calls": 268,
+    "new_transition_calls": 416,
+    "baseline_search_seconds": 39.38999058306217,
+    "new_search_seconds": 52.10950525011867,
+    "comparison_scope": "only candidate cap96 to120 changes; identical declared slots, original physical candidate prefix, arrays, frame, access, tools, reward, horizon, beam and widening retention",
+    "source_bound_action_ids_expected_equal": false,
+    "tie_break_limit": "cap binds new source/action IDs and can change exact return/volume ties",
+    "original_physical_candidates_first_and_preserved": true,
+    "depth_comparison": "exact float order; no tolerance",
+    "candidate_cap": 120,
+    "omitted_candidate_legality_unknown": true,
+    "same_sampling_budgets_not_a_runtime_speed_claim": true
+  },
+  "baseline_source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64",
+  "retention_policy": "return_plus_opening_depth_volume_v1",
+  "same_public_world_original_candidates_preserved": true,
+  "tool_footprint_opening": true,
+  "candidate_cap": 120,
+  "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+  "observed_inventory_states": 11,
+  "initial_added_family_dispositions": {
+    "declared": 26,
+    "emitted": 16,
+    "feasible": 16,
+    "cap_omitted": 0,
+    "dispositions": {
+      "DUPLICATE_GEOMETRY": 10,
+      "NATIVE_CONNECTED_STROKE": 16
+    }
+  },
+  "actual_opening_advance_mm": [
+    1.0156000155592193
+  ],
+  "initial_extra_candidate_dispositions": {
+    "DUPLICATE_GEOMETRY": 2,
+    "PROPOSED_UNCERTIFIED": 24
+  },
+  "model_transition_calls": 416,
+  "completed_layers": 6,
+  "search_seconds": 52.10950525011867,
+  "policy_guidance": false,
+  "cost_scope": "new cap120 search plus public reconstruction and initial inventory; saved widening96 baseline costs remain separate",
+  "limitation": "cap120 may admit any family beyond the old96 prefix, not only footprint; source-bound IDs may alter exact ties; volume is not shaft clearance; emitted rays still require full native certification; full-world search and64-cubed actor features have unequal effective inputs",
+  "private_evaluation_performed": false,
+  "diagnostic_only_not_new_training_or_benchmark": true,
+  "worker_wall_seconds": 57.827541209058836,
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "complete_history_awaiting_independent_audit",
+    "failure": null,
+    "limits": {
+      "native_preview_entries": 2000,
+      "planning_execution_seconds": 110.0
+    },
+    "native_preview_entries": 1222,
+    "observed_admissions_before_accounting_failure": 1222,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 55.7022912921384,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": true,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 1222,
+          "returned": 1222,
+          "raised": 0,
+          "seconds": 8.629089088644832,
+          "feasible": 416,
+          "rejected": 806,
+          "returned_microsteps": 7897,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 806
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  }
+}

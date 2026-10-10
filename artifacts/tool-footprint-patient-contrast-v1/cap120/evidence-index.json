@@ -1,0 +1,58 @@
+{
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/result.json": {
+    "copy": "result.json",
+    "sha256": "e72f35bf864305d915190a5bc29c1cb96e090e28c5eefc077c2241e517386b6b"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/retained-progress.json": {
+    "copy": "retained-progress.json",
+    "sha256": "cd8330caa3991c5b3386cb40881978ffe9db5a3a5a67c131802fc1f9f8f44e70"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/identity-checks.json": {
+    "copy": "identity-checks.json",
+    "sha256": "a84f4544908c79cb2900265e072d93bf9aa62d2e0e53bb4df618affc6ae8a274"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/search-prefixes.json": {
+    "copy": "search-prefixes.json",
+    "sha256": "67059c44623f91ea7d42ba7076c963079ed6377b8a0ddd3b6afeb3bcec2a3f7e"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/baseline-comparison.json": {
+    "copy": "baseline-comparison.json",
+    "sha256": "ba6b98bf41293fe51baed1badc575860c43cf8f60db200e5136a341507e17f1d"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1.supervision/receipt.json": {
+    "copy": "receipt.json",
+    "sha256": "adc74614d84cac7036989cce96f1aa5a93148dd1070bb8155e3d1d578d76356b"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1.supervision/declaration.json": {
+    "copy": "declaration.json",
+    "sha256": "20b307780c3cc5dddd8e2341a33990b22d1a36708b252882ddf7071ecb3b0997"
+  },
+  "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/release.json": {
+    "copy": "release.json",
+    "sha256": "9a7e07f02717a3b98fe7f608a2f14dc9befe7aaa62626c6007c339d71e897288"
+  },
+  "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/source-index.json": {
+    "copy": "source-index.json",
+    "sha256": "a1972f0e82956ecbc875dff91facb6b571b5864e4f56073d65c6028a6ace513b"
+  },
+  "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/input-index.json": {
+    "copy": "input-index.json",
+    "sha256": "2699d3c87c34463ecf6023f897270255b8afff80a068983e343e75684362b384"
+  },
+  "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/search_worker.py": {
+    "copy": "search_worker.py",
+    "sha256": "73ec65b3bc7f3d2f14f417c80460b289196a1ad240a51129dc2e3484d4d07847"
+  },
+  "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/run_owned.py": {
+    "copy": "run_owned.py",
+    "sha256": "4edc9f106554a982d4e4a6529845e0c7966e48ea71f7f3d82294ec53cdbe1aff"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/observed-inventories.json": {
+    "copy": null,
+    "sha256": "12d5cd18c12d8b67214e8da86539fe857c9361d5eac2b3d8afbf2d7f0bf90e6b"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/initial-inventory.json": {
+    "copy": null,
+    "sha256": "6b7b10d14fa2d5f0bdb4e526d24decb47538d5d9524741fd10acdb6387f78157"
+  }
+}

@@ -1,0 +1,574 @@
+{
+  "new": [
+    {
+      "depth": 1,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f"
+          ],
+          "estimated_incremental_return": -0.05629388512547917,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.1289304249852456,
+          "max_insertion_distance_mm": 0.2539000642150246,
+          "progress_status": "available",
+          "legal_nonstop_actions": 44,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000719946351,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.1289304249852456,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-56e5b4a7de45a1c4eb47f3d7"
+          ],
+          "estimated_incremental_return": -2.1212118849225976,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 10.443364423804892,
+          "max_insertion_distance_mm": 1.2695000808096106,
+          "progress_status": "available",
+          "legal_nonstop_actions": 41,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.285100096886503,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 10.443364423804892,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 2,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f",
+            "nominal-cavity-4f22815d47d0723d674f9402"
+          ],
+          "estimated_incremental_return": -0.11258777025294171,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.2578608499704912,
+          "max_insertion_distance_mm": 0.25390006520670866,
+          "progress_status": "available",
+          "legal_nonstop_actions": 44,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000729863213,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.2578608499704912,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-56e5b4a7de45a1c4eb47f3d7",
+            "nominal-cavity-3fd6ad84bc93df716daa0f91"
+          ],
+          "estimated_incremental_return": -2.288926425105544,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 10.959086123745875,
+          "max_insertion_distance_mm": 2.2851000973750573,
+          "progress_status": "available",
+          "legal_nonstop_actions": 39,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.7929001051546685,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 10.959086123745875,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 3,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f",
+            "nominal-cavity-4f22815d47d0723d674f9402",
+            "nominal-cavity-d35c67def1d0c7547ebf9eb3"
+          ],
+          "estimated_incremental_return": -0.16888165538250408,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.3867912749557368,
+          "max_insertion_distance_mm": 0.2539000662566218,
+          "progress_status": "available",
+          "legal_nonstop_actions": 44,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000729863213,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.3867912749557368,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-56e5b4a7de45a1c4eb47f3d7",
+            "nominal-cavity-3fd6ad84bc93df716daa0f91",
+            "nominal-cavity-bdf77727d8781a4b64baf307"
+          ],
+          "estimated_incremental_return": -3.8222878701124516,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 18.308120347904875,
+          "max_insertion_distance_mm": 2.2851000973750573,
+          "progress_status": "available",
+          "legal_nonstop_actions": 25,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.7929001051546685,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 18.308120347904875,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 4,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f",
+            "nominal-cavity-4f22815d47d0723d674f9402",
+            "nominal-cavity-d35c67def1d0c7547ebf9eb3",
+            "nominal-cavity-823fda567d1b3f904b68e8d5"
+          ],
+          "estimated_incremental_return": -0.22517554051212466,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.5157216999409824,
+          "max_insertion_distance_mm": 0.25390006628572565,
+          "progress_status": "available",
+          "legal_nonstop_actions": 44,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000729863213,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.5157216999409824,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-56e5b4a7de45a1c4eb47f3d7",
+            "nominal-cavity-3fd6ad84bc93df716daa0f91",
+            "nominal-cavity-bdf77727d8781a4b64baf307",
+            "nominal-cavity-f3af24be39390e6b4896ed53"
+          ],
+          "estimated_incremental_return": -3.913659755315727,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 18.43705077289012,
+          "max_insertion_distance_mm": 2.7929001031130722,
+          "progress_status": "available",
+          "legal_nonstop_actions": 24,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 3.3007001108926812,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 18.43705077289012,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 5,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f",
+            "nominal-cavity-4f22815d47d0723d674f9402",
+            "nominal-cavity-d35c67def1d0c7547ebf9eb3",
+            "nominal-cavity-823fda567d1b3f904b68e8d5",
+            "nominal-cavity-e88c7de6daed617d835c2e0d"
+          ],
+          "estimated_incremental_return": -0.28248502565730443,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.644652124926228,
+          "max_insertion_distance_mm": 0.761700074065338,
+          "progress_status": "available",
+          "legal_nonstop_actions": 44,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000735622211,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.644652124926228,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-56e5b4a7de45a1c4eb47f3d7",
+            "nominal-cavity-3fd6ad84bc93df716daa0f91",
+            "nominal-cavity-bdf77727d8781a4b64baf307",
+            "nominal-cavity-f3af24be39390e6b4896ed53",
+            "nominal-cavity-9fb77bebb48b357ce0083f8a"
+          ],
+          "estimated_incremental_return": -5.291289090324897,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 25.012502447137646,
+          "max_insertion_distance_mm": 2.7929001031130722,
+          "progress_status": "available",
+          "legal_nonstop_actions": 22,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 3.3007001108926812,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 25.012502447137646,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 6,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f",
+            "nominal-cavity-4f22815d47d0723d674f9402",
+            "nominal-cavity-d35c67def1d0c7547ebf9eb3",
+            "nominal-cavity-823fda567d1b3f904b68e8d5",
+            "nominal-cavity-e88c7de6daed617d835c2e0d",
+            "nominal-cavity-1783d73d5e8e5e30ee29e0e5"
+          ],
+          "estimated_incremental_return": -0.34081011081804347,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.7735825499114737,
+          "max_insertion_distance_mm": 1.2695000818449433,
+          "progress_status": "available",
+          "legal_nonstop_actions": null,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "terminal_not_observed",
+          "selection": "best_terminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": null,
+          "retention_reason": null,
+          "cumulative_actor_covered_removed_volume_mm3": null,
+          "removal_depth_status": "not_recorded_for_this_terminal_prefix"
+        },
+        {
+          "actions": [
+            "nominal-cavity-1bcdb64b2d1c77c14907565f",
+            "nominal-cavity-4f22815d47d0723d674f9402",
+            "nominal-cavity-d35c67def1d0c7547ebf9eb3",
+            "nominal-cavity-823fda567d1b3f904b68e8d5",
+            "nominal-cavity-e88c7de6daed617d835c2e0d",
+            "nominal-cavity-642a48acd47abe9dd3f3a6fe"
+          ],
+          "estimated_incremental_return": -0.3408101108189915,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.7735825499114737,
+          "max_insertion_distance_mm": 1.269500082318954,
+          "progress_status": "available",
+          "legal_nonstop_actions": null,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "terminal_not_observed",
+          "selection": "best_terminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": null,
+          "retention_reason": null,
+          "cumulative_actor_covered_removed_volume_mm3": null,
+          "removal_depth_status": "not_recorded_for_this_terminal_prefix"
+        }
+      ]
+    }
+  ],
+  "saved_widening96_baseline": [
+    {
+      "depth": 1,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f"
+          ],
+          "estimated_incremental_return": -0.05629388512956237,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.1289304249852456,
+          "max_insertion_distance_mm": 0.2539000662566218,
+          "progress_status": "available",
+          "legal_nonstop_actions": 33,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.2539000657535068,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.1289304249852456,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-46b9ab2558635aabaa5598d9"
+          ],
+          "estimated_incremental_return": -2.1212118849225976,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 10.443364423804892,
+          "max_insertion_distance_mm": 1.2695000808096106,
+          "progress_status": "available",
+          "legal_nonstop_actions": 24,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.285100096886503,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 10.443364423804892,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 2,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f",
+            "nominal-cavity-e176c23041c203fd88d19ee0"
+          ],
+          "estimated_incremental_return": -0.13938945527173308,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.3867912749557368,
+          "max_insertion_distance_mm": 0.7617000740362342,
+          "progress_status": "available",
+          "legal_nonstop_actions": 33,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000740216722,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.3867912749557368,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-46b9ab2558635aabaa5598d9",
+            "nominal-cavity-c6344ae75c025830476843c2"
+          ],
+          "estimated_incremental_return": -2.288926425105544,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 10.959086123745875,
+          "max_insertion_distance_mm": 2.2851000973750573,
+          "progress_status": "available",
+          "legal_nonstop_actions": 23,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.7929001051546685,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 10.959086123745875,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 3,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f",
+            "nominal-cavity-e176c23041c203fd88d19ee0",
+            "nominal-cavity-58e6de172a4a5e66962f18e2"
+          ],
+          "estimated_incremental_return": -0.247255510393323,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 0.7735825499114736,
+          "max_insertion_distance_mm": 0.7617000740362342,
+          "progress_status": "available",
+          "legal_nonstop_actions": 34,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 0.7617000740216722,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 0.7735825499114736,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-46b9ab2558635aabaa5598d9",
+            "nominal-cavity-c6344ae75c025830476843c2",
+            "nominal-cavity-23d36c2cd8b6a3f98f5b14fb"
+          ],
+          "estimated_incremental_return": -3.8222878701124516,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 18.308120347904875,
+          "max_insertion_distance_mm": 2.2851000973750573,
+          "progress_status": "available",
+          "legal_nonstop_actions": 12,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.7929001051546685,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 18.308120347904875,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 4,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f",
+            "nominal-cavity-e176c23041c203fd88d19ee0",
+            "nominal-cavity-58e6de172a4a5e66962f18e2",
+            "nominal-cavity-936514f290e54e917eb6d9f6"
+          ],
+          "estimated_incremental_return": -0.3561371655324846,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 1.1603738248672104,
+          "max_insertion_distance_mm": 0.7617000740362342,
+          "progress_status": "available",
+          "legal_nonstop_actions": 32,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 1.2695000817867217,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 1.1603738248672104,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-46b9ab2558635aabaa5598d9",
+            "nominal-cavity-c6344ae75c025830476843c2",
+            "nominal-cavity-23d36c2cd8b6a3f98f5b14fb",
+            "nominal-cavity-c7204e8f3c2527b8064b9f37"
+          ],
+          "estimated_incremental_return": -5.169917205121622,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 24.8835720221524,
+          "max_insertion_distance_mm": 2.2851000973750573,
+          "progress_status": "available",
+          "legal_nonstop_actions": 7,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 2.7929001051546685,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 24.8835720221524,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 5,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f",
+            "nominal-cavity-e176c23041c203fd88d19ee0",
+            "nominal-cavity-58e6de172a4a5e66962f18e2",
+            "nominal-cavity-936514f290e54e917eb6d9f6",
+            "nominal-cavity-2e61340038ef76d4e106c584"
+          ],
+          "estimated_incremental_return": -0.46603442068726364,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 1.5471650998229471,
+          "max_insertion_distance_mm": 1.2695000818158395,
+          "progress_status": "available",
+          "legal_nonstop_actions": 31,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 1.77730008959545,
+          "retention_reason": "best_return",
+          "cumulative_actor_covered_removed_volume_mm3": 1.5471650998229471,
+          "removal_depth_status": "recorded"
+        },
+        {
+          "actions": [
+            "nominal-cavity-46b9ab2558635aabaa5598d9",
+            "nominal-cavity-c6344ae75c025830476843c2",
+            "nominal-cavity-23d36c2cd8b6a3f98f5b14fb",
+            "nominal-cavity-c7204e8f3c2527b8064b9f37",
+            "nominal-cavity-a71e66cc42adf1b2aa8d98e9"
+          ],
+          "estimated_incremental_return": -5.364433430313152,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 25.528224147078628,
+          "max_insertion_distance_mm": 2.7929001031421903,
+          "progress_status": "available",
+          "legal_nonstop_actions": 6,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "observed_during_normal_expansion",
+          "selection": "retained_nonterminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": 3.3007001109218,
+          "retention_reason": "opening",
+          "cumulative_actor_covered_removed_volume_mm3": 25.528224147078628,
+          "removal_depth_status": "recorded"
+        }
+      ]
+    },
+    {
+      "depth": 6,
+      "completed": true,
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f",
+            "nominal-cavity-e176c23041c203fd88d19ee0",
+            "nominal-cavity-58e6de172a4a5e66962f18e2",
+            "nominal-cavity-936514f290e54e917eb6d9f6",
+            "nominal-cavity-2e61340038ef76d4e106c584",
+            "nominal-cavity-ae577fc18b2dbdcf26a7da49"
+          ],
+          "estimated_incremental_return": -0.5996865608039483,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 2.0628867997639295,
+          "max_insertion_distance_mm": 1.2695000818158395,
+          "progress_status": "available",
+          "legal_nonstop_actions": null,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "terminal_not_observed",
+          "selection": "best_terminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": null,
+          "retention_reason": null,
+          "cumulative_actor_covered_removed_volume_mm3": null,
+          "removal_depth_status": "not_recorded_for_this_terminal_prefix"
+        },
+        {
+          "actions": [
+            "nominal-cavity-02dfa3e4e0a89e399ab0c94f",
+            "nominal-cavity-e176c23041c203fd88d19ee0",
+            "nominal-cavity-58e6de172a4a5e66962f18e2",
+            "nominal-cavity-936514f290e54e917eb6d9f6",
+            "nominal-cavity-2e61340038ef76d4e106c584",
+            "nominal-cavity-0d312c567ec15d5e4a582815"
+          ],
+          "estimated_incremental_return": -0.5996865608059609,
+          "target_removed_mm3": 0.0,
+          "outside_supplied_target_removed_mm3": 2.0628867997639295,
+          "max_insertion_distance_mm": 1.2695000818158395,
+          "progress_status": "available",
+          "legal_nonstop_actions": null,
+          "legal_target_family_actions": null,
+          "successor_inventory_status": "terminal_not_observed",
+          "selection": "best_terminal_prefixes",
+          "deepest_newly_removed_actor_covered_cell_center_mm": null,
+          "retention_reason": null,
+          "cumulative_actor_covered_removed_volume_mm3": null,
+          "removal_depth_status": "not_recorded_for_this_terminal_prefix"
+        }
+      ]
+    }
+  ],
+  "volume_meaning": "cumulative actual positive-depth actor-covered removed-cell volume; may include shallow/off-axis clearing, not measured shaft clearance",
+  "depth_comparison": "exact float order; volume breaks equal depth only",
+  "depth_meaning": "deepest newly removed public actor-covered cell center from the access plane, cumulative along retained prefix; not tip insertion or a fully cleared corridor",
+  "missing_terminal_depth": "null is unavailable, not zero; no new replay or geometry to fill it"
+}

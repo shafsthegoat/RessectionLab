@@ -1,0 +1,47 @@
+{
+  "same_ordered_slot_geometry": {
+    "equal": true,
+    "actual_canonical_sha256": "5cebdf7bb4ff72aaf33aa49585a4ff7c439132985225a6b84e6262cc1cf16882",
+    "expected_canonical_sha256": "5cebdf7bb4ff72aaf33aa49585a4ff7c439132985225a6b84e6262cc1cf16882",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "old_noncapped_dispositions": {
+    "equal": true,
+    "actual_canonical_sha256": "9fb330af4f8c06614f7de49d26231f5436637c336797205ec827bce2bc2b362a",
+    "expected_canonical_sha256": "9fb330af4f8c06614f7de49d26231f5436637c336797205ec827bce2bc2b362a",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "old_emitted_prefix": {
+    "equal": true,
+    "actual_canonical_sha256": "b1838c918a4f15c1c0ca91ae99abc59b7a94abcffda3f28f1f817cfe572c0be8",
+    "expected_canonical_sha256": "b1838c918a4f15c1c0ca91ae99abc59b7a94abcffda3f28f1f817cfe572c0be8",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "only_cap_omissions_newly_previewed": {
+    "equal": true
+  },
+  "declared_cap_change": {
+    "equal": true
+  },
+  "source_hash": {
+    "equal": true,
+    "actual": "sha256:f4210fcede92c1d1f21d69daf6008d87238b06876480a21a4e7e616c3e754e84",
+    "previous": "sha256:b6d08778041818a2d3f19c01edc0fd64ad42ae2528da2a0c73aabd9106bddd50",
+    "requirement": "cap binds a distinct source/model/action-inventory observation identity"
+  },
+  "decision_model_hash": {
+    "equal": true,
+    "actual": "sha256:411094c7b9af2d34ff67654f1f9921da40093f03cd496aeabc06dc19de8f8d55",
+    "previous": "sha256:58968126b0166634c60bf5cd384c5f1bc213ae350d55a735793a93f3f1093761",
+    "requirement": "cap binds a distinct source/model/action-inventory observation identity"
+  },
+  "initial_observation_hash": {
+    "equal": true,
+    "actual": "sha256:362d8a2f7ea835aa1ecf43c05039a66de67ad9c2c3015fc160f5321160cbc927",
+    "previous": "sha256:aeb6b2d5c27deeca7769b9099322b057f2c48c96994b0e92e757cf14919aab3c",
+    "requirement": "cap binds a distinct source/model/action-inventory observation identity"
+  }
+}

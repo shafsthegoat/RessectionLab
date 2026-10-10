@@ -1,0 +1,633 @@
+[
+  {
+    "state_hash": "sha256:97f14115435ea674f6dfb26c5342eacefafcd3efec9083f972db54f845af2dce",
+    "steps": 0,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 20,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 20,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 9,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 9,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 16,
+        "feasible": 16,
+        "cap_omitted": 0,
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 10,
+          "NATIVE_CONNECTED_STROKE": 16
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:e1b9acc5cc8e484942dcf1db5312baacdbd653f9070bc5315562d7e818582de5",
+    "steps": 1,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 20,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 20,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 8,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 8,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 16,
+        "feasible": 16,
+        "cap_omitted": 0,
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 10,
+          "NATIVE_CONNECTED_STROKE": 16
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:012a5a64286b31dfd6f4620d1d03a8673f151f46a76d6d84a0ca17bddff41e63",
+    "steps": 1,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 13,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 13,
+          "NATIVE_CONNECTED_STROKE": 13
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 9,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15,
+          "DUPLICATE_GEOMETRY": 2,
+          "NATIVE_CONNECTED_STROKE": 9
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 22,
+        "feasible": 19,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3,
+          "NATIVE_CONNECTED_STROKE": 19,
+          "DUPLICATE_GEOMETRY": 4
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:e4345e07d4f4768c6177fc37dabdeb33cbac51b9f2a3055ecdae940c8d8c8160",
+    "steps": 2,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 20,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 20,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 8,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 8,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 16,
+        "feasible": 16,
+        "cap_omitted": 0,
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 10,
+          "NATIVE_CONNECTED_STROKE": 16
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:0d7216e4e5ef160ca498303c68e311a072c17b63dc8c0718e451b06ca1d4cdf9",
+    "steps": 2,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 12,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 14,
+          "NATIVE_CONNECTED_STROKE": 12
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 9,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15,
+          "DUPLICATE_GEOMETRY": 2,
+          "NATIVE_CONNECTED_STROKE": 9
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 22,
+        "feasible": 18,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4,
+          "NATIVE_CONNECTED_STROKE": 18,
+          "DUPLICATE_GEOMETRY": 4
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:4de8342548185160002068245da6f806bed1ce73e829461dce21581e359eb9e8",
+    "steps": 3,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 20,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 20,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 8,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 8,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 16,
+        "feasible": 16,
+        "cap_omitted": 0,
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 10,
+          "NATIVE_CONNECTED_STROKE": 16
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:84c84c2cef812a9a8e92eb10cb3f0a59b1baa46ce24b4d2cb76dcf4fe53d040e",
+    "steps": 3,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 6,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20,
+          "NATIVE_CONNECTED_STROKE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 4,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20,
+          "DUPLICATE_GEOMETRY": 2,
+          "NATIVE_CONNECTED_STROKE": 4
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 22,
+        "feasible": 15,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 7,
+          "NATIVE_CONNECTED_STROKE": 15,
+          "DUPLICATE_GEOMETRY": 4
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:ed621fc30d9027f259231a61781bc129269f05ae6c008be33946ff67c97b3410",
+    "steps": 4,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 20,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 20,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 8,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 8,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 16,
+        "feasible": 16,
+        "cap_omitted": 0,
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 10,
+          "NATIVE_CONNECTED_STROKE": 16
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:45ee8465edceadf4e4e37d7e4a5a2abdbd8fbcd1ae3a9b5037853004f8a30c24",
+    "steps": 4,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 6,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20,
+          "NATIVE_CONNECTED_STROKE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 4,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 20,
+          "DUPLICATE_GEOMETRY": 2,
+          "NATIVE_CONNECTED_STROKE": 4
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 22,
+        "feasible": 14,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 8,
+          "NATIVE_CONNECTED_STROKE": 14,
+          "DUPLICATE_GEOMETRY": 4
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:b1a0ea4d175990a62d1867486b8fbc3058dce2cfd42f1e138d6629c6e59d2508",
+    "steps": 5,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 20,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 20,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 8,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 8,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 16,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 16,
+        "feasible": 16,
+        "cap_omitted": 0,
+        "dispositions": {
+          "DUPLICATE_GEOMETRY": 10,
+          "NATIVE_CONNECTED_STROKE": 16
+        }
+      }
+    }
+  },
+  {
+    "state_hash": "sha256:13e84c299007d992202cee2dfa9e163508d055d24b8f0ecd97e2674ebdf44f0e",
+    "steps": 5,
+    "family_counts": {
+      "exposed_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 4,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 22,
+          "NATIVE_CONNECTED_STROKE": 4
+        }
+      },
+      "proximal_nominal": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24,
+          "DUPLICATE_GEOMETRY": 2
+        }
+      },
+      "distal_nominal": {
+        "declared": 26,
+        "emitted": 18,
+        "feasible": 0,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18,
+          "DUPLICATE_GEOMETRY": 8
+        }
+      },
+      "intermediate_opening": {
+        "declared": 26,
+        "emitted": 24,
+        "feasible": 1,
+        "cap_omitted": 0,
+        "dispositions": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 23,
+          "DUPLICATE_GEOMETRY": 2,
+          "NATIVE_CONNECTED_STROKE": 1
+        }
+      },
+      "tool_footprint_opening": {
+        "declared": 26,
+        "emitted": 26,
+        "feasible": 17,
+        "cap_omitted": 0,
+        "dispositions": {
+          "NATIVE_CONNECTED_STROKE": 17,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 9
+        }
+      }
+    }
+  }
+]

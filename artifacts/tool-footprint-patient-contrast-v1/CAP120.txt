@@ -1,0 +1,47 @@
+Footprint candidate-budget contrast — October 10, 2026
+
+Increasing only the explicit candidate cap from 96 to 120 removes all cap
+omissions in the 11 states visited by the same six-step widening search. Each
+state emits 108–118 candidates; this is not completeness over all possible
+actions or future states. All 12 initially omitted footprint actions now certify
+feasible. The previous 96 physical candidates remain in order with identical
+dispositions. New source-bound IDs can still alter exact ties.
+
+There is a directly identifiable planning effect. The opening branch is
+physically unchanged through step 3. At step 4, footprint suction in column 8
+([2,2], endpoint [241,208,118]) is now retained and reaches removed-cell-center
+depth 3.300700111 mm. That exact slot was omitted by the old cap in the matching
+step-3 state. The same depth is reached one step earlier than before.
+
+Useful target access remains unestablished. Recorded retained/best-terminal
+target removal is zero, all 416 evaluated returns are negative and STOP with
+return 0 still wins. At step 5, opening-branch outside-supplied-target volume is
+25.012502 rather than 25.528224 mm3. Best six-step return improves from -0.599687
+to -0.340810, with outside volume 0.773583 rather than 2.062887 mm3, but neither
+negative candidate beats stopping. These changes are not clinical harm estimates.
+
+The run completes six layers using 416 transitions, 1,222 native previews,
+52.109505 search seconds and 58.428742 owned seconds. Sampled peak RSS is
+1,897,136,128 bytes. There are no caps, cleanup errors or surviving owned
+processes. Independent saved-only review reproduces inventory/count totals,
+initial matching and the previously omitted selected action. No model, optimizer,
+private evaluation, held-out patient or authoritative replay is used.
+
+With observed cap omission resolved, the next bounded diagnostic extends the
+same task to 24 steps. Full width-two expansion can visit 47 inventories and
+offer up to 5,640 candidates; its preview, transition and wall budgets must be
+declared separately. Exact performance parity is required before interpreting
+the proposed immutable-state implementation in that run. STOP remains valid;
+finite-beam failure is not proof of global unreachability.
+
+This experiment uses real acquired anatomy and simulator-generated actions.
+Depth describes retained actor-covered removed cell centers, not a continuous
+cleared corridor or all-prefix maximum. Terminal depth is unavailable. Source
+support and target uncertainty, missing vascular/function evidence and unresolved
+mechanical validation remain unchanged.
+
+Executed HEAD fdf2ae3da8cd045c9f126772d6a65b4a6a529c0b.
+Release SHA 9a7e07f02717a3b98fe7f608a2f14dc9befe7aaa62626c6007c339d71e897288.
+Result SHA e72f35bf864305d915190a5bc29c1cb96e090e28c5eefc077c2241e517386b6b.
+Drivers and compact evidence are in cap120/. Full ledgers remain at the indexed
+local paths; patient arrays and weights are not committed.

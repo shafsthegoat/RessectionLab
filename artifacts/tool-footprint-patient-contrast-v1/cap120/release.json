@@ -1,0 +1,42 @@
+{
+  "admission_forward_ceiling": 1,
+  "candidate_cap": 120,
+  "diagnostic_scope": "One candidate-cap contrast using the identical widening retention and search budget; no model, training, replay, private reference or cohort benchmark",
+  "endpoint_rule": "numpy_rint nearest source-axis voxelcount, minimum1; actual physicaladvance reported, may exceed requested1mm",
+  "expected_head": "fdf2ae3da8cd045c9f126772d6a65b4a6a529c0b",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/input-index.json",
+    "sha256": "2699d3c87c34463ecf6023f897270255b8afff80a068983e343e75684362b384"
+  },
+  "limits": {
+    "beam_width": 2,
+    "horizon": 6,
+    "memory_bytes": 3221225472,
+    "native_previews": 2000,
+    "optimizer_updates": 0,
+    "parent_seconds": 120,
+    "policy_forwards": 0,
+    "search_seconds": 60,
+    "search_transition_calls": 858,
+    "threads": 1,
+    "worker_seconds": 110
+  },
+  "output": "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1",
+  "owned_execution_forward_limit": 0,
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "requested_opening_lookahead_mm": 1.0,
+  "retention_policy": "return_plus_opening_depth_volume_v1",
+  "scope": "Only candidate cap96 to120 changes; original13columns, intermediate1mm, footprintTrue, depth-volume retention, tools/reward/public arrays, horizon6,beam2,858transitions,60ssearch fixed. Existing physical rows/dispositions are checked; source/action IDs necessarily change and may alter exact ties.",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/footprint-cap120-contrast-v1/source-index.json",
+    "sha256": "a1972f0e82956ecbc875dff91facb6b571b5864e4f56073d65c6028a6ace513b"
+  },
+  "status": "released_one_attempt",
+  "tie_break_limit": "Cap changes source-bound action IDs; exact return/volume path ties may change even among identical physical candidates. This is disclosed, not a scoring change.",
+  "tool_footprint_opening": true,
+  "version": "footprint-cap120-ReMIND-008-search-release-v1"
+}

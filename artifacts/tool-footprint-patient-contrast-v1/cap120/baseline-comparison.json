@@ -1,0 +1,21 @@
+{
+  "same_stop_decision": true,
+  "baseline_actions": [
+    "STOP"
+  ],
+  "new_actions": [
+    "STOP"
+  ],
+  "baseline_transition_calls": 268,
+  "new_transition_calls": 416,
+  "baseline_search_seconds": 39.38999058306217,
+  "new_search_seconds": 52.10950525011867,
+  "comparison_scope": "only candidate cap96 to120 changes; identical declared slots, original physical candidate prefix, arrays, frame, access, tools, reward, horizon, beam and widening retention",
+  "source_bound_action_ids_expected_equal": false,
+  "tie_break_limit": "cap binds new source/action IDs and can change exact return/volume ties",
+  "original_physical_candidates_first_and_preserved": true,
+  "depth_comparison": "exact float order; no tolerance",
+  "candidate_cap": 120,
+  "omitted_candidate_legality_unknown": true,
+  "same_sampling_budgets_not_a_runtime_speed_claim": true
+}
