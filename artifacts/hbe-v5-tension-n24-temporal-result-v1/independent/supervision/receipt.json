@@ -1,0 +1,44 @@
+{
+  "audit_source_sha256": "e909b8dd57d9369b889256f38ba25dc27913965611fb1562957a7fe79e2d8a85",
+  "independent_saved_replay_only": true,
+  "official_native_calls_attempted": 0,
+  "original_native_receipt_sha256": "c108581d6afa8cd7edd41341deb76cf9ef40780ed0ff183235c6fe1f5d457b9c",
+  "original_sidecar_sha256": "a227e7146174c3e1586b16173cd3a314498346691225b33980669a1b77347d12",
+  "owned_child_cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 16777216,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal11-native-independent-v1/audit.py",
+      "--worker",
+      "--result",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal11-native-independent-v1/supervision/CHILD_RESULT.json",
+      "--native-sha",
+      "c108581d6afa8cd7edd41341deb76cf9ef40780ed0ff183235c6fe1f5d457b9c",
+      "--sidecar-sha",
+      "a227e7146174c3e1586b16173cd3a314498346691225b33980669a1b77347d12",
+      "--audit-sha",
+      "e909b8dd57d9369b889256f38ba25dc27913965611fb1562957a7fe79e2d8a85"
+    ],
+    "elapsed_seconds": 25.032615292118862,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 9699,
+    "peak_sampled_process_group_rss_bytes": 324190208,
+    "pid": 40798,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 600
+  },
+  "schema": "hbe-v5-ordinal11-independent-supervision-v1",
+  "status": "passed_independent_saved_replay"
+}

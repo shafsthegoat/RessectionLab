@@ -1165,3 +1165,13 @@ reaches 5,160 verified files / 183,816,049,664 bytes, up 401 files / 13,291,784,
 bytes. Original worker/lock remain live, no terminal receipt exists, failures are
 unchanged and capacity is sufficient. Recovery remains unlaunched; payload QC is
 still deferred and no planning/training admission follows from verified bytes.
+
+### October 10: all twelve numerical rows completed
+
+The [final N24:S120 row](../artifacts/hbe-v5-tension-n24-temporal-result-v1/RESULT.md)
+passes one native solve, official readout and independent complete-stream replay.
+The 121-frame result matches exactly; costs are 128.873/24.129/25.033 seconds,
+respectively. Original resource and numerical limits were unchanged. Twelve-row
+mesh/timestep comparison remains pending; physical validation is not implied.
+The native chain is 12 calls / 2,394.444 seconds / 3,524,119,165 bytes; independent
+replay is additional and historical missing N8 timing remains explicitly missing.

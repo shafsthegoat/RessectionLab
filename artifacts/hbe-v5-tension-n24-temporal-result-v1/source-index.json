@@ -1,0 +1,106 @@
+{
+  "schema": "hbe-v5-n24-temporal-result-evidence-v1",
+  "source_commit": "47fa6d225cfe6fa150aa2c76f8b355f60e03a616",
+  "files": [
+    {
+      "path": "native/receipt.json",
+      "source_path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/receipt.json",
+      "bytes": 14405,
+      "sha256": "c108581d6afa8cd7edd41341deb76cf9ef40780ed0ff183235c6fe1f5d457b9c"
+    },
+    {
+      "path": "native/readout-work-order.json",
+      "source_path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout-work-order.json",
+      "bytes": 12227,
+      "sha256": "fa3f2016870ab37b18c53ebd2b0e05805e955cc11068c9a9edbaa70090862809"
+    },
+    {
+      "path": "continuation/receipt.json",
+      "source_path": "outputs/mechanics/hbe-v5-later-continuation-v1/11-tension-N24-S120-reference/attempt-01/receipt.json",
+      "bytes": 47819,
+      "sha256": "a227e7146174c3e1586b16173cd3a314498346691225b33980669a1b77347d12"
+    },
+    {
+      "path": "release/INDEPENDENT_REVIEW.md",
+      "source_path": "build/hbe-v5-ordinal11-derivation-independent-v1/REPORT.md",
+      "bytes": 3318,
+      "sha256": "2d3057cc89ca3a8525284928565d394370e14e87c21d9e210e3763955cd38a83"
+    },
+    {
+      "path": "independent/RESULT_METADATA.json",
+      "source_path": "build/hbe-v5-ordinal11-native-independent-v1/RESULT_METADATA.json",
+      "bytes": 3297,
+      "sha256": "191d9fe406cfb5439bbfef4d86753ebcbe1ffd6ca522df2da3e5ce8c5d59c89d"
+    },
+    {
+      "path": "independent/REPORT.md",
+      "source_path": "build/hbe-v5-ordinal11-native-independent-v1/REPORT.md",
+      "bytes": 4929,
+      "sha256": "d13f95a317df537f4760d79bfda043a3538474e7a1e1dddc1b765826cfbea1de"
+    },
+    {
+      "path": "independent/PARENT_STATUS.json",
+      "source_path": "build/hbe-v5-ordinal11-native-independent-v1/PARENT_STATUS.json",
+      "bytes": 16458,
+      "sha256": "74705e92096fb2c53baa1c48278e1c3bb593a659b725bb34ceaf32ada0bfb630"
+    },
+    {
+      "path": "independent/audit.py",
+      "source_path": "build/hbe-v5-ordinal11-native-independent-v1/audit.py",
+      "bytes": 21777,
+      "sha256": "e909b8dd57d9369b889256f38ba25dc27913965611fb1562957a7fe79e2d8a85"
+    },
+    {
+      "path": "independent/supervision/receipt.json",
+      "source_path": "build/hbe-v5-ordinal11-native-independent-v1/supervision/receipt.json",
+      "bytes": 1908,
+      "sha256": "93aeb0102b1fab3f7291f62c37bcd8956621d4d02ebfa7f3361b0b0cd4b7e37d"
+    },
+    {
+      "path": "independent/supervision/CHILD_RESULT.json",
+      "source_path": "build/hbe-v5-ordinal11-native-independent-v1/supervision/CHILD_RESULT.json",
+      "bytes": 8008,
+      "sha256": "09129e2414be10135b71d51d45958691e2f7403c04ac7986df64cab18616aaea"
+    },
+    {
+      "path": "release/derive_pending.py",
+      "source_path": "build/hbe-v5-ordinal11-pending-release-v1/derive_pending.py",
+      "bytes": 10528,
+      "sha256": "77e0a2c6be8f782486d13e779de541011e1da3e09e629c639336c808c9847e5d"
+    },
+    {
+      "path": "release/DERIVATION.json",
+      "source_path": "build/hbe-v5-ordinal11-pending-release-v1/DERIVATION.json",
+      "bytes": 13372,
+      "sha256": "702c238a2014b2c3afa3ae058357f06532247bdaa404afe1cc6aa12cfa4b03b2"
+    },
+    {
+      "path": "release/inner-release.json",
+      "source_path": "build/hbe-v5-ordinal11-pending-release-v1/inner-release.json",
+      "bytes": 19745,
+      "sha256": "7f1211088385245676ece1c880860afe69d29654c809cf8a4c95c1a3adcb2711"
+    },
+    {
+      "path": "release/outer-envelope.json",
+      "source_path": "build/hbe-v5-ordinal11-pending-release-v1/outer-envelope.json",
+      "bytes": 3422,
+      "sha256": "2fd42ed10c9e7d300cb6ce1d69e307107e9dfa400f374921dd74dc709169f10a"
+    },
+    {
+      "path": "release/root-admission.json",
+      "source_path": "build/hbe-v5-ordinal11-pending-release-v1/root-admission.json",
+      "bytes": 955,
+      "sha256": "fc364a23e02092c40fc416c2d3fc481e6f5b9e202ff5e1235dccf5b095052921"
+    },
+    {
+      "path": "release/root-launcher.log",
+      "source_path": "build/hbe-v5-ordinal11-pending-release-v1/root-launcher.log",
+      "bytes": 198,
+      "sha256": "f23e525fd3d20b4e72bd267c64e2dd3ab3b6334a8211133eaacbc4df307d838d"
+    }
+  ],
+  "total_bytes": 182366,
+  "native_streams_included": false,
+  "patient_data_included": false,
+  "physical_validation_pass": null
+}

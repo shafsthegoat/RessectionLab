@@ -1,0 +1,173 @@
+{
+  "audit_source_sha256": "e909b8dd57d9369b889256f38ba25dc27913965611fb1562957a7fe79e2d8a85",
+  "exact_readout_equality": true,
+  "final_force_N": 0.026643305968138957,
+  "final_load_m": 0.0007360099999999,
+  "frame_count": 121,
+  "largest_criterion_ratio": 0.00021959650537492563,
+  "minimum_sampled_J": 0.8784873002112713,
+  "numerical_passed": true,
+  "postguards_passed": true,
+  "preflight": {
+    "aggregate": {
+      "aggregate_combined_output_bytes": 3524119165,
+      "aggregate_combined_wall_seconds": 2394.4440010867547,
+      "aggregate_native_calls": 12,
+      "aggregate_native_wall_seconds": 2083.633109751856,
+      "aggregate_output_bytes": 3523561773,
+      "aggregate_prep_wall_seconds": 87.38920575124212,
+      "aggregate_readout_wall_seconds": 217.1380392916035,
+      "aggregate_supplement_prep_wall_seconds": 3.4362154591362923,
+      "aggregate_supplement_replay_calls": 1,
+      "aggregate_supplement_replay_wall_seconds": 2.8474308329168707
+    },
+    "charged_row_output_bytes": 390699744,
+    "extension_source_hashes": {
+      "launchers/hbe_v5_later_ancestry_v1.py": "6fd7bbe65690907d31f166b262582470733b1d01cc024123c3843f19a97110e0",
+      "launchers/hbe_v5_later_continuation_core_v1.py": "bfb780356194b9e86f72e118b955d2da18fcf0d3643e34f40a5839e9b478d792",
+      "launchers/hbe_v5_later_continuation_runtime_v1.py": "0feb94a00ad10f511ee99dd68dfb5c9094572c06eae67f3d53818ae0c19c984a",
+      "launchers/hbe_v5_later_ledger_math_v1.py": "2d85072008bb2ebc5f2c4b9bc7b174c1756e6bc2b75bfdbb3daf89ea28ba558c",
+      "launchers/hbe_v5_nocache_hash_v1.py": "96c71d0d9b8d896b713aef7305e3e86d5b12b9d2dca5fcc55515f6b2eb9cf3fc",
+      "launchers/hbe_v5_nocache_host_v1.py": "2ff8f3e4d30ed0a8976fb01da99403ff5b2b2ffd6e750791fe7a954946d0a00f",
+      "launchers/hbe_v5_ordinal11_continuation_v1.py": "88f30adb404868ab8189b4a54bf80199f13e8b8d67c115d40c7690e1f4cb47ab",
+      "launchers/hbe_v5_ordinal9_continuation_v1.py": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4",
+      "scripts/mechanics_hbe_v5_n12_v2_admission.py": "20d2aab7cfe22001c255c88f4b3ffd9023eb6ba134bdd08a0aab9c05b3d52295"
+    },
+    "frozen_source_hashes": {
+      "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+      "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+      "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+      "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+      "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+      "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+      "scripts/mechanics_hbe_v5_frame.py": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+      "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+      "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+      "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+      "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+      "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+      "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+      "scripts/mechanics_hbe_v5_stream.py": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+      "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    },
+    "host_available_percent": [
+      79,
+      79,
+      79
+    ],
+    "native_closed_output_bytes": 389651168,
+    "native_output_file_count": 8,
+    "native_receipt_sha256": "c108581d6afa8cd7edd41341deb76cf9ef40780ed0ff183235c6fe1f5d457b9c",
+    "native_stage": {
+      "active_output_cap_bytes": 805306368,
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "elapsed_seconds": 128.87279891688377,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 388564457,
+      "peak_sampled_process_group_rss_bytes": 495583232,
+      "pid": 39576,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "status": "completed_within_caps",
+      "wall_cap_seconds": 600
+    },
+    "output_stat_guards": {
+      "console.txt": [
+        16777232,
+        10043071,
+        313263,
+        1791599527565983336
+      ],
+      "elements.log": [
+        16777232,
+        10043075,
+        148391233,
+        1791599527563463665
+      ],
+      "nodes.log": [
+        16777232,
+        10043074,
+        236550875,
+        1791599527523496634
+      ],
+      "readout-console.txt": [
+        16777232,
+        10043757,
+        0,
+        1791599527782766106
+      ],
+      "readout-work-order.json": [
+        16777232,
+        10043755,
+        12227,
+        1791599527781786979
+      ],
+      "readout.json": [
+        16777232,
+        10043837,
+        1066783,
+        1791599551785468269
+      ],
+      "solver.log": [
+        16777232,
+        10043076,
+        838223,
+        1791599527565985045
+      ],
+      "specimen.feb": [
+        16777232,
+        10043067,
+        2464159,
+        1791599398552947731
+      ]
+    },
+    "readout_sha256": "20d64b4952aee288c3fa43597e019f1456a7e31b1ea9189a9f43a51d8500b3e1",
+    "readout_stage": {
+      "active_output_cap_bytes": 805306368,
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.mechanics_hbe_v5_remaining_one_shot",
+        "--readout-worker",
+        "--work-order",
+        "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout-work-order.json"
+      ],
+      "elapsed_seconds": 24.129254084080458,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 389645646,
+      "peak_sampled_process_group_rss_bytes": 307331072,
+      "pid": 40419,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "status": "completed_within_caps",
+      "wall_cap_seconds": 600
+    },
+    "sidecar_sha256": "a227e7146174c3e1586b16173cd3a314498346691225b33980669a1b77347d12",
+    "sidecar_status": "passed_numerical_software_only_with_cumulative_ledger_v1",
+    "source_commit": "47fa6d225cfe6fa150aa2c76f8b355f60e03a616"
+  },
+  "provenance": {
+    "generated_fixture_only": null,
+    "native_output_observed": null,
+    "output_origin": "unverified_saved_stream",
+    "reconstruction_provenance": "reflected_native_half_not_native_full"
+  },
+  "readout_sha256": "20d64b4952aee288c3fa43597e019f1456a7e31b1ea9189a9f43a51d8500b3e1",
+  "representation": "reconstructed_full",
+  "schema": "hbe-v5-ordinal11-independent-saved-replay-v1",
+  "steps": 120
+}

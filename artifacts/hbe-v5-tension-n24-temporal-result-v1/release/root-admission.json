@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T02:29:52.475245+00:00",
+  "source_commit": "47fa6d225cfe6fa150aa2c76f8b355f60e03a616",
+  "release_hashes": {
+    "inner-release.json": "7f1211088385245676ece1c880860afe69d29654c809cf8a4c95c1a3adcb2711",
+    "outer-envelope.json": "2fd42ed10c9e7d300cb6ce1d69e307107e9dfa400f374921dd74dc709169f10a",
+    "DERIVATION.json": "702c238a2014b2c3afa3ae058357f06532247bdaa404afe1cc6aa12cfa4b03b2"
+  },
+  "host": {
+    "kernel_pressure_mask": 1,
+    "available_percent": 79,
+    "swap_used_bytes": 10146217984,
+    "swap_total_bytes": 11811160064,
+    "host_read_seconds": 2.6208115741610527e-05
+  },
+  "free_bytes": 442261544960,
+  "review_path": "build/hbe-v5-ordinal11-derivation-independent-v1/REPORT.md",
+  "review_sha256": "2d3057cc89ca3a8525284928565d394370e14e87c21d9e210e3763955cd38a83",
+  "authorization": "one native ordinal11 attempt and official numerical readout only; no physical claim; HEAD frozen until independent replay"
+}
