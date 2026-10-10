@@ -10,7 +10,8 @@ import math
 import torch
 from torch import nn
 
-from .patient_planning_learning import PatientTrainSession, PatientTrainingTrace, _index
+from .patient_planning_learning import (PatientTrainSession, PatientTrainingTrace,
+    _index, patient_imitation_group_weights)
 from .spatial_policy import parameter_hash
 
 
@@ -25,15 +26,25 @@ class PatientGradientAccumulator:
         self.order = tuple(c.fingerprint for c in session.contexts)
         self.before = parameter_hash(session.policy)
         self.teacher_pins = None
+        self.balanced = (session.method == 'IL' and session.protocol.get('cohort_execution', {}).get('il_teacher_weighting') is not None)
         if session.method == 'IL':
+            fields = {'steps', 'trace_seal'} | ({'stop_steps'} if self.balanced else set())
             if (type(teacher_pins) is not dict or set(teacher_pins) != set(self.order)
-                    or any(type(v) is not dict or set(v) != {'steps', 'trace_seal'}
+                    or any(type(v) is not dict or set(v) != fields
                            or type(v['steps']) is not int or not 1 <= v['steps'] <= c.max_steps
                            or not isinstance(v['trace_seal'], str)
                            for c in session.contexts for k,v in [(c.fingerprint, teacher_pins[c.fingerprint])])):
                 raise ValueError('Pinned complete teacher count and seal for every TRAIN context required')
             self.teacher_pins = {k: dict(v) for k,v in teacher_pins.items()}
             self.action_count = sum(v['steps'] for v in self.teacher_pins.values())
+            if self.balanced:
+                if any(type(v['stop_steps']) is not int or not 0 <= v['stop_steps'] <= v['steps']
+                       for v in self.teacher_pins.values()):
+                    raise ValueError('Exact pinned STOP count required for each complete teacher')
+                stops = sum(v['stop_steps'] for v in self.teacher_pins.values())
+                self.group_counts = {'STOP': stops, 'motion': self.action_count-stops}
+                self.group_weights = patient_imitation_group_weights(session.protocol,
+                    stop_count=stops, motion_count=self.action_count-stops)
         elif teacher_pins is not None:
             raise ValueError('RL must collect fresh on-policy episodes, not teacher pins')
         self.rows = []; self.finished = False; self.failed = False
@@ -84,6 +95,8 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                 pin = self.teacher_pins[trace.context.fingerprint]
                 if count != pin['steps'] or seal != pin['trace_seal']:
                     raise ValueError('Reconstructed complete teacher differs from its frozen plan')
+                if self.balanced and sum(row.action_id == 'STOP' for row in trace.transitions) != pin['stop_steps']:
+                    raise ValueError('Reconstructed complete teacher STOP count differs from its pin')
                 targets = [None]*count
             else:
                 if trace.behavior_parameter_hash != self.before:
@@ -99,7 +112,8 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                 logits, value = self.session.policy(row.observation)
                 index = _index(row.observation, row.action_id)
                 if self.session.method == 'IL':
-                    term = -logits.log_softmax(-1)[index]/self.action_count
+                    term = (-logits.log_softmax(-1)[index]*self.group_weights['STOP' if row.action_id=='STOP' else 'motion']
+                            if self.balanced else -logits.log_softmax(-1)[index]/self.action_count)
                 else:
                     distribution = torch.distributions.Categorical(logits=logits)
                     actor = -(self.session.protocol['gamma']**step)*distribution.log_prob(
@@ -163,7 +177,9 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                 'patient_adaptation': False, 'loss': self.loss,
                 'loss_forward_calls': sum(r['steps'] for r in self.rows),
                 'actor_loss': self.actor, 'value_loss': self.value, 'entropy': self.entropy,
-                'IL_reduction': 'mean_all_teacher_actions',
+                'IL_reduction': 'balanced_STOP_motion_CE_v1' if self.balanced else 'mean_all_teacher_actions',
+                **({'teacher_group_counts': self.group_counts,
+                    'teacher_group_weights': self.group_weights} if self.balanced else {}),
                 'RL_reduction': 'mean_episodes_of_actor_sum_and_value_entropy_step_means',
                 'accumulation': 'one_action_graph_at_a_time_one_clip_one_Adam_step',
                 'numerical_equivalence': 'same_objective_floating_point_order_may_differ'}

@@ -206,20 +206,51 @@ class PatientImitationSample:
         return self.trace.transitions[self.step]
 
 
+def patient_imitation_group_weights(protocol, *, stop_count, motion_count):
+    """Declared label groups only; no action IDs beyond reserved STOP or rewards.
+
+The opt-in objective is .5*mean(STOP CE)+.5*mean(motion CE). Both
+groups must exist before loss/gradient work. No logits or inference masks change.
+"""
+    from .patient_planning_cohort_spec import BALANCED_TEACHER_CE
+    if (type(stop_count) is not int or type(motion_count) is not int
+            or stop_count < 0 or motion_count < 0 or stop_count+motion_count == 0):
+        raise ValueError('Exact nonnegative teacher group counts required')
+    variant = protocol.get('cohort_execution', {}).get('il_teacher_weighting')
+    if variant is None:
+        return {'STOP': 1./(stop_count+motion_count), 'motion': 1./(stop_count+motion_count)}
+    if variant != BALANCED_TEACHER_CE or stop_count == 0 or motion_count == 0:
+        raise ValueError('Balanced teacher CE requires both STOP and motion groups')
+    return {'STOP': .5/stop_count, 'motion': .5/motion_count}
+
+
 def patient_imitation_loss(session, samples):
     if type(session) is not PatientTrainSession:
         raise TypeError("Exact patient learning session required")
     session.require("IL"); samples = tuple(samples)
     if not samples: raise ValueError("Empty patient imitation batch")
+    balanced = session.protocol.get('cohort_execution', {}).get('il_teacher_weighting') is not None
+    if balanced:
+        labels = []
+        for sample in samples:
+            if type(sample) is not PatientImitationSample: raise TypeError("Trace-bound teacher sample required")
+            session.require_trace(sample.trace)
+            labels.append(sample.transition().action_id == 'STOP')
+        stop_count = sum(labels); motion_count = len(labels)-stop_count
+        weights = patient_imitation_group_weights(session.protocol, stop_count=stop_count, motion_count=motion_count)
     terms = []; traces = []
     for sample in samples:
         if type(sample) is not PatientImitationSample: raise TypeError("Trace-bound teacher sample required")
         session.require_trace(sample.trace); row = sample.transition(); traces.append(sample.trace)
         logits, _ = session.policy(row.observation)
         terms.append(-logits.log_softmax(-1)[_index(row.observation, row.action_id)])
-    loss = torch.stack(terms).mean(); session.register(loss, traces)
-    return loss, {"objective": "unchanged_mean_action_categorical_CE", "loss": float(loss.detach()),
+    loss = (torch.stack([term*weights['STOP' if stop else 'motion'] for term,stop in zip(terms,labels)]).sum()
+            if balanced else torch.stack(terms).mean())
+    session.register(loss, traces)
+    return loss, {"objective": "balanced_STOP_motion_CE_v1" if balanced else "unchanged_mean_action_categorical_CE", "loss": float(loss.detach()),
         "loss_forward_calls": len(terms), "teacher_actions": len(terms),
+        **({'teacher_group_counts': {'STOP': stop_count, 'motion': motion_count},
+            'teacher_group_weights': weights} if balanced else {}),
         "sample_bindings": [{"patient_group": s.trace.context.patient_group,
                              "trace_seal": s.trace.seal_hash, "step": s.step} for s in samples]}
 

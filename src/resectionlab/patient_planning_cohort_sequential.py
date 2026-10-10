@@ -177,7 +177,9 @@ def run_train_cohort_sequential(public_visit_factories, *, learning_protocol, li
                 sessions = {m: PatientTrainSession(contexts, m, p,
                     initial_parameter_hash=initial, protocol=protocol) for m,p in models.items()}
             pins = {teachers[s]['context_hash']: {'steps': teachers[s]['labels'],
-                'trace_seal': teachers[s]['trace_seal']} for s in TRAIN}
+                'trace_seal': teachers[s]['trace_seal'],
+                **({'stop_steps': sum(a=='STOP' for a in teachers[s]['actions'])}
+                   if protocol['cohort_execution'].get('il_teacher_weighting') is not None else {})} for s in TRAIN}
             generator = torch.Generator(device='cpu').manual_seed(protocol['seed']+1)
             for method in ('IL', 'RL'):
                 policy, session = models[method], sessions[method]

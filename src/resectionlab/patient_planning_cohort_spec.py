@@ -11,17 +11,20 @@ from .public_target_context import VERSION as TARGET_CONTEXT
 
 VERSION = 'fixed-four-TRAIN-sequential-cohort-v2'
 ACCUMULATION = 'complete-trace-actionwise-shared-gradient-v1'
+BALANCED_TEACHER_CE = 'balanced_STOP_motion_CE_v1'
 TRAIN = ('ReMIND-008', 'ReMIND-010', 'ReMIND-020', 'ReMIND-025')
 CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
 
 
 def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
-        retention_mode='return_plus_opening_depth_v1'):
+        retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None):
     from .patient_planning_learning import PREFLIGHT_PROTOCOL
     if type(updates) is not int or not 1 <= updates <= 8:
         raise ValueError('Explicit 1..8 shared updates per method required')
     if type(max_steps) is not int or not 1 <= max_steps <= 24:
         raise ValueError('Explicit horizon in 1..24 required')
+    if il_teacher_weighting is not None and il_teacher_weighting != BALANCED_TEACHER_CE:
+        raise ValueError('Unknown explicit IL teacher weighting')
     if (type(proposal_config) is not NominalCavityProposalConfig
             or proposal_config.max_candidates not in (96, 120)
             or proposal_config.intermediate_opening_mm != 1.
@@ -52,6 +55,8 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
             'teacher_observations': 'recollect_complete_pinned_plan_each_IL_update',
             'task_condition': 'PARTIAL_TARGET_PROGRESS',
             'heldout_execution': False})
+    if il_teacher_weighting is not None:
+        record['cohort_execution']['il_teacher_weighting'] = il_teacher_weighting
     return freeze_json(record)
 
 
@@ -62,7 +67,8 @@ def validate_sequential_protocol(protocol):
     config = NominalCavityProposalConfig(**thaw_json(execution.get('proposal_config', {})))
     expected = sequential_learning_protocol(updates=protocol.get('updates_per_method'),
         max_steps=execution.get('max_steps'), search=execution.get('search', {}), proposal_config=config,
-        retention_mode=execution.get('retention_mode'))
+        retention_mode=execution.get('retention_mode'),
+        il_teacher_weighting=execution.get('il_teacher_weighting'))
     if semantic_digest(expected) != semantic_digest(protocol):
         raise ValueError('Sequential objective, scheduling or task options changed')
     return expected

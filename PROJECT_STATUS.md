@@ -15,6 +15,8 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
+- **The targeted loss change is integrated and tested:** [optional balanced teacher learning](artifacts/balanced-teacher-loss-v1/RESULT.txt) keeps all examples but splits IL loss equally between movement and STOP groups. The model, rewards and inference masks remain unchanged. Canonical checks pass 96 tests and nine subtests, including exact default identity, gradient arithmetic, sequential parity and checkpoint reload. Its fixed eight-update patient comparison is next; no benefit is claimed from source tests.
+
 - **Exact-state readout identifies the next model change:** [25 frozen-policy readouts](artifacts/five-state-policy-diagnostic-v1/RESULT.txt) confirm the useful025 movement falls from first among motions after one update to tenth for IL and last for RL after eight. Its target input is present. Existing cheap greedy search reproduces all four longer-search plans exactly (129 candidate scores, five selected commits), with complete native replay. The 19.553-second diagnostic passes independent scalar audit. Next: test balanced teacher loss at the same eight-update endpoint; no model/clinical gain is claimed yet.
 
 - **Both fixed SELECT public cases are downloaded:** [byte-verified intake](artifacts/remind-select-public-intake-v1/RESULT.txt) completes 372/372 objects, 61,657,062 bytes, using verified TLS and checksums. Only MRI, supplied whole-tumor and automatic cerebrum are included. Independent metadata reconciliation passes; no private/EVAL inputs or patient-role changes. The data remain unreviewed pending separate geometry and intended-use qualification.

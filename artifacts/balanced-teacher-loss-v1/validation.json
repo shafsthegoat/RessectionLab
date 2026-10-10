@@ -1,0 +1,21 @@
+{
+  "staged": {
+    "passed": 46,
+    "seconds": 3.27
+  },
+  "canonical": {
+    "passed": 96,
+    "subtests_passed": 9,
+    "seconds": 7.5,
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src:tests .venv/bin/python -m pytest -q tests/test_patient_balanced_teacher_loss.py tests/test_patient_cohort_sequential.py tests/test_patient_planning_learning.py tests/test_patient_planning_admission.py tests/test_patient_select_inference.py tests/test_public_patient_factory.py tests/test_patient_planning_preflight.py"
+  },
+  "independent_review": "source GO; no execution by reviewer",
+  "patient_training_performed": false,
+  "sources": {
+    "src/resectionlab/patient_planning_learning.py": "4eb8e40adffe2b70e37b9dec9d09f7ddb27ab1f558669f336165cc06658e6434",
+    "src/resectionlab/patient_planning_accumulation.py": "edb48ae1655b5c905a6bb4aecece4f010ff6e348265f7dc7f45d91f36baa42f9",
+    "src/resectionlab/patient_planning_cohort_spec.py": "50677fe1a39d259e09d773842395d69b4307269484644347edffbf955befa50a",
+    "src/resectionlab/patient_planning_cohort_sequential.py": "409bbeebc66d947e1045d3292bed930ae3b18cb06d740ea413a2564fb9120e30",
+    "tests/test_patient_balanced_teacher_loss.py": "ef3513f57b0e7dbc4f2de831d3410bee9258ac7fea70c354ed9acea639a8e47a"
+  }
+}

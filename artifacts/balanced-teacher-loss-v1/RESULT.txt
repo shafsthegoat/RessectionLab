@@ -1,0 +1,26 @@
+Opt-in balanced teacher objective is integrated; patient benefit untested
+
+The existing architecture and inference rules are unchanged. An explicit protocol
+option changes only IL cross-entropy: half the mean movement-label loss plus
+half the mean STOP-label loss. With the fixed four-patient teachers this assigns
+weight0.5 to the useful movement and0.125 to each of four STOPs. All examples remain.
+No rewards, action masks or STOP thresholds change. RL retains its original loss.
+
+Both label groups are required before a balanced update. Complete teacher trace
+pins bind group counts and are checked before each trace's forward/backward work.
+The sequential accumulator still uses one action graph at a time and one shared
+clipped Adam step. The existing unweighted protocol digest, initialization and
+loss branches are preserved. Balanced checkpoints require their distinct protocol.
+
+Independent source review passes. Staged tests:46 passed in3.27s. Canonical affected
+regression:96 passed and9 subtests in7.50s. Controls check exact default protocol
+identity, initial-weight parity, analytic masked gradients, absent/mismatched label
+groups, full-batch versus sequential numerical parity and checkpoint reload/refusal.
+These are generated software controls, not patient-model performance.
+
+The next single experiment holds the actual four TRAIN cases, exact five teacher
+states, fresh initial parameters, optimizer, clipping and eight-update endpoint
+fixed. It reuses completed teachers rather than repeating beam search, makes no RL
+updates, and reports all four complete greedy replays plus group losses, movement
+ranks and STOP margins. Old teacher generation costs remain separate and disclosed.
+Any improvement would establish TRAIN sensitivity only, not held-out superiority.
