@@ -2,6 +2,8 @@
 
 Current integrated results, October 9:
 
+- **Aspiration-only transfer interface:** the [reviewed adapter](artifacts/legacy-aspiration-projection-integration-v2/RESULT.md) now gives the legacy actor and search the same STOP/aspiration inventory on the fixed generated desktop task, retaining scan fields and rejecting prior probe history or changed policy bindings. Root canonical checks pass 20; 17 independent controls pass. This adds no model updates or trained-transfer result. Actual checkpoint loading, a distinct desktop selector and imported-authorship handling are next.
+
 - **Critical-structure consumption:** [three generated API controls](artifacts/generated-critical-consumer-controls-v1/ROOT_REVIEW.md) now verify that both route APIs reject unchanged proposed geometry under resolved vessel exclusions and refuse stale bindings. Only the resolver result is injected; real-source admission, clinical accuracy, critical-layer rendering and learned support remain unproved. No planner rewrite was needed.
 
 - **Replay-linked vascular evaluation:** the [generated encounter integration](artifacts/integrated-episode-vascular-v1/RESULT.md) now evaluates the exact sealed shaft/tip paths shown in the Mac replay. Scripted, reopened and SEARCH workflows passed live inspection; 69 backend and 333 desktop checks pass, with both worktree and exact staged builds. Positive annotation contact, unknown coverage and STOP stay distinct; the report changes no planning inputs or tissue state. Independent review caught and repaired a callback geometry-mutation bug, retaining the negative result. This establishes generated software accounting only.

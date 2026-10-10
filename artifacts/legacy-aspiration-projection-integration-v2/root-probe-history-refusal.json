@@ -1,0 +1,13 @@
+{
+  "accepted_after_probe": false,
+  "refusal": "A probe-exposed native history cannot enter the aspiration-only view",
+  "candidate_sha256": "99b273942e72cfe60dc93aff4c80a20538f18093d9b664ec6ab1f961aea7ab52",
+  "scope": "generated_software_candidate_negative",
+  "observed_probe_contact_cells": 5,
+  "executed_modes": [
+    "aspirate",
+    "probe"
+  ],
+  "optimizer_updates": 0,
+  "checkpoint_loads": 0
+}

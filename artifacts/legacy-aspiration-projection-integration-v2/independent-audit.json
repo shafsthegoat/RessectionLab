@@ -1,0 +1,31 @@
+{
+  "schema": "independent-generated-aspiration-projection-review-v2",
+  "source_before": {
+    "build/shared-legacy-aspiration-desktop-v2/resectionlab/legacy_aspiration_projection.py": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+    "build/shared-legacy-aspiration-desktop-v2/tests/test_legacy_aspiration_projection.py": "0d2863e129800fecbd4c80f0c2f5136679a8020bcb7d32b7403c26c304cfb452"
+  },
+  "source_after": {
+    "build/shared-legacy-aspiration-desktop-v2/resectionlab/legacy_aspiration_projection.py": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+    "build/shared-legacy-aspiration-desktop-v2/tests/test_legacy_aspiration_projection.py": "0d2863e129800fecbd4c80f0c2f5136679a8020bcb7d32b7403c26c304cfb452"
+  },
+  "source_unchanged": true,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/shared-legacy-aspiration-projection-review-v2/absent-source-cache-007a7e386e964bd8b61f87fca0d5c1e1",
+    "-m",
+    "pytest",
+    "-q",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/shared-legacy-aspiration-projection-review-v2/test_independent.py"
+  ],
+  "fresh_pycache_prefix_absent_before_and_after": true,
+  "timeout_seconds": 20,
+  "exit_code": 0,
+  "checkpoint_bytes_loaded": 0,
+  "actor_forward_calls": 0,
+  "training_calls": 0,
+  "scope": "generated_projection_search_and_identity_mutation_guards_only",
+  "initial_control_correction": "First run had sixteen passes and one test setup error: architecture_hash has no setter. Preserved first-control evidence; changed test to mutate actual config used by architecture_hash. Candidate unchanged.",
+  "final_source_execution": "Existing writer bytecode found. Repeated unchanged seventeen controls with fresh nonexistent pycache_prefix and -B to exclude existing caches; prior passing result retained as warm-control evidence."
+}

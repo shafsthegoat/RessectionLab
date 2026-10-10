@@ -1,0 +1,80 @@
+Independent exact-source review: aspiration projection candidate v2
+
+Decision: GO for reusable generated projection/search and bound-identity mechanics.
+This closes the v1 mutable binding HOLD. It does not admit a checkpoint, authorize
+actor inference, certify desktop integration, or validate transfer performance.
+
+Exact candidate:
+  build/shared-legacy-aspiration-desktop-v2/resectionlab/legacy_aspiration_projection.py
+  SHA256 69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c
+Author tests:
+  build/shared-legacy-aspiration-desktop-v2/tests/test_legacy_aspiration_projection.py
+  SHA256 0d2863e129800fecbd4c80f0c2f5136679a8020bcb7d32b7403c26c304cfb452
+Both hashes matched before and after independent controls. Original v1 source and
+HOLD evidence remain unchanged in their separate directories.
+
+Independent controls: 17 passed in 2.51 s, one process, numeric threads=1,
+20-second outer timeout. No checkpoint bytes were opened or loaded, no actor
+forward/act ran, no fitting/training/patient reads. The autouse fixture makes
+Torch load and SpatialPolicy forward/act fail if reached. Tiny newly initialized
+untrained actors were constructed only to test metadata/parameter mutation guards.
+Synthetic checkpoint metadata tests the trained-status branch and is not evidence
+of authentic checkpoint ownership or a successful safe load.
+
+Evidence covered:
+- A real generated probe contact refuses direct projection. A separate isolated
+  history guard refuses a recorded probe even with a zero contact mask; current
+  native geometry requires contact for a real probe.
+- An external native alias cannot commit a probe and then expose a projected view.
+- clone, planning_clone and fresh keep the restriction; explicit probe IDs refuse
+  through step and advance_planning before native state changes.
+- Real eager and lazy observed search execute through wrapped branches, commit
+  only aspiration/STOP, and have zero actor forwards (at most three model calls).
+- An unchanged bound actor passes. Source/model/tool-set changes, wrapper checkpoint
+  tag, base architecture/config, base parameters, wrapper identity and base
+  checkpoint tag changes all refuse before base actor execution.
+- Original checkpoint digest and original validation-receipt digest remain in the
+  projection receipt; wrapper identity binds a distinct projection receipt hash.
+
+Source delta assessment:
+The immutable receipt now checks live expected source/model/tool IDs, original base
+architecture and parameter hashes, wrapper checkpoint tag, trained base tag and
+whole wrapper identity. Existing parameter and projection receipt checks remain.
+The projection still retains exact native action IDs/order/geometry/masks and all
+observed image/state fields, omitting probe rows without relabeling them. Paired
+export states checkpoint_training_domain_matches_target=false, explicit nominal
+planning reward source, and equal restricted actor/search action availability.
+
+Scope boundaries:
+The wrapper accepts a byte-validated SpatialPolicy abstraction; it is not the
+specific RL256 loader or authority to trust caller-written checkpoint tags. A
+future backend-owned loader must pin exact checkpoint bytes, size, architecture,
+parameter hash, original receipt/ancestry and restricted target/projection before
+inference. Parameter tags and content hashes alone do not establish learned
+provenance for an imported bundle. No hostile-Python sandbox is claimed.
+
+Next minimal desktop slice:
+Use one fixed backend selector for the pinned aspiration-only transfer actor, keep
+its checkpoint path and loading authority out of renderer inputs, and execute on
+the unchanged generated NativeSpatialTask through this wrapper. Seal original
+checkpoint receipt, projection receipt, full native inventory hashes and original
+action/history IDs before any private vascular scoring. Extend explicit selector
+checks rather than impersonating scripted/SEARCH or rewriting action IDs.
+For same-process backend-owned runs, learned authorship can be verified by that
+actual loader/run. On save/close/reopen, independently replay and check all native
+geometry/actions/history against the fixed generated source; imported learned
+authorship remains unverified unless a separately authorized pinned actor run is
+validated again. The existing session-local HMAC is not authentication of imported
+files. Do not rerun weights implicitly on open or weaken geometry checks to restore
+replay. Display the qualification separately from geometry acceptance, and keep
+private scalar scoring separate from the policy observation and strategy seal.
+
+Test development note:
+The first run had sixteen passes and one setup error because architecture_hash is
+a read-only property. That output/audit is preserved as first-control-*. The test
+was corrected to mutate the actual config from which architecture_hash is derived;
+no candidate source changed. The final complete suite passed.
+
+Exact execution note: final controls used -B and a fresh nonexistent -X
+pycache_prefix, excluding existing writer bytecode. The prefix remained absent.
+The earlier passing warm-cache run remains preserved as warm-control-* evidence.

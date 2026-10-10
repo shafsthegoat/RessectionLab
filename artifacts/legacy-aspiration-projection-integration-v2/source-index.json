@@ -1,0 +1,22 @@
+{
+  "schema": "legacy-aspiration-projection-integration-v2",
+  "production_source_sha256": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+  "source_files": {
+    "src/resectionlab/legacy_aspiration_projection.py": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+    "tests/test_legacy_aspiration_projection.py": "e9a975e55a61dca3a5cf07a9b58128d05da6f86dd677d3eaa5ec386248d5768a"
+  },
+  "evidence_files": {
+    "AUTHOR_REPORT.md": "40cadef7277759f92dc10a75295c7e6e4ee15a6b68ecb28e4fb0ecf9a4d749c7",
+    "INDEPENDENT_REVIEW.txt": "65650f2296d196f0d6fa64058f3d495aba477c9a084ed6ea13c63b8437973442",
+    "RESULT.md": "b53005b5e1345029ab0eb07993a624f48d6c10b0f7c5e4b3aac8481f2157e8a0",
+    "independent-audit.json": "e8ec0f0147fab87279c0743ccc3c2df2567783316ef3dd494f9ac37b926d7963",
+    "independent-initial-test-setup-failure.txt": "94918aed5734f07d89ceb75c6e162daeb37dae80c4524a1742b779952046f03e",
+    "root-execution.json": "1a7dba11f7cd485cae1d46a7934f8e23351e56fdf48d34ca8e96a58bdc0e4290",
+    "root-probe-history-refusal.json": "648a83f01104a67f943836a807d74838b1ce45d896d848c816d189a3ddeaa7ce",
+    "root-tests.txt": "a776b985d93a27d05ef3deb94a9359ed056a44792faa23342cd14c70f149a12d",
+    "test_independent.py": "6448bc380db17e3e734c859d77cb3676cee2d125c0504ba798cb0401924cc204"
+  },
+  "actual_checkpoint_loads": 0,
+  "training_updates": 0,
+  "clinical_validation": false
+}

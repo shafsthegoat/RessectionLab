@@ -914,3 +914,20 @@ These are consumer integration controls. Actual positive real registry
 admission/route alteration, critical mask/domain rendering and learned planning
 remain separate unmet requirements. No patient payload, model inference or
 training was used, and production planning code was unchanged.
+
+
+### October 9: shared aspiration-only transfer adapter enters canonical source
+
+The [integration evidence](../artifacts/legacy-aspiration-projection-integration-v2/RESULT.md)
+records 20 passing root canonical tests and 17 independent controls. Both actor
+and search see the same STOP/aspiration projection with native action IDs, all
+permitted scan/state channels and explicit full-inventory traces. A probe-exposed
+history, external probe mutation or drift in the frozen actor/source/model/tool
+binding refuses. Production source matches the reviewed candidate exactly.
+
+Root tests used tiny untrained actors only, with zero checkpoints or updates.
+The repaired probe-history refusal and initial independent test setup error are
+preserved. This prepares generated transfer from the older RL256 task to the
+larger desktop fixture; it does not show that transfer worked. Backend-owned
+checkpoint admission, live learned selection and honest reopened provenance
+remain the next integration slice. No patient or physical validation follows.
