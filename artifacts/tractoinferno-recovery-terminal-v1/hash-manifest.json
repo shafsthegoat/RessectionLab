@@ -1,0 +1,40 @@
+{
+  "schema": "tractoinferno-recovery-terminal-package-v1",
+  "files": [
+    {
+      "path": "RESULT.txt",
+      "bytes": 3066,
+      "sha256": "dc27acecd4c257a61abaa1a2dc3bcdff7d01630991af262df61662134ae287c4"
+    },
+    {
+      "path": "full-scope-summary.json",
+      "bytes": 3067,
+      "sha256": "ac8d0410f7dd3b793b2c16663abe26ce4a193d54e0673bb740e7ebabbe553fd8"
+    },
+    {
+      "path": "next-queue-audit.json",
+      "bytes": 4355,
+      "sha256": "b6d32b4f0ee1e87f07a7044abf1e3696282e98c3086f74b3a290cc0ef14f6208"
+    },
+    {
+      "path": "recovered-object-proof-index.json",
+      "bytes": 42791,
+      "sha256": "f8e97ffd29bf3904aff1c5d973e2979382273416340c82b89167ce1c26acd955"
+    },
+    {
+      "path": "recovery-completion.json",
+      "bytes": 39872,
+      "sha256": "cee9704d7a6f67cb85aedd7ffceb37358b63b1e19a38aa94e701013fcb1f8e1f"
+    },
+    {
+      "path": "status.json",
+      "bytes": 1741,
+      "sha256": "48a3d4b7dbac64e95001358f33da06af73a464178b80f5d42f7c068b755853e6"
+    }
+  ],
+  "current_full_scope_files": 7622,
+  "current_full_scope_bytes": 273788367039,
+  "current_unresolved_files": 0,
+  "payloads_included": 0,
+  "all_payloads_unreviewed": true
+}

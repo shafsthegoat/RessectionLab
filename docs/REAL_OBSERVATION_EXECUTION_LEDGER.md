@@ -1382,3 +1382,16 @@ STOP and second-step probe examples. No new trajectory, patient, held-out or
 clinical result follows. A paired STOP-head objective diagnostic is proposed only;
 no new training is launched by that proposal. See
 [complete evidence](../artifacts/public-goal-relation-fit-v1/REPORT.txt).
+
+## October 10, 2026 — Full Tracto intake completes after exact recovery
+
+The original queue and its single reviewed 54-object recovery now cover the exact
+7,622-file frozen scope, totaling 273,788,367,039 bytes. Recovery completed at
+04:44:53 UTC with zero new failures; its owned process exited 0, and all queue
+locks are free. Metadata reconciliation verified source/version/range/TLS/fixity
+receipts, final regular-file sizes and unchanged atomic-publication stat tuples.
+No payload was rehashed or anatomically reviewed in this reconciliation. The 92
+old selected attempts and all historical failure labels remain unchanged; an
+original-only monitor must not treat these as current unresolved files. No
+other declared eligible transfer remains pending. See the
+[composite result](../artifacts/tractoinferno-recovery-terminal-v1/RESULT.txt).

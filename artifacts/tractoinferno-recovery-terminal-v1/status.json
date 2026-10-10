@@ -1,0 +1,61 @@
+{
+  "recorded_utc": "2026-10-10T04:51:47.383172+00:00",
+  "root_owned_session_id": 19191,
+  "pid": 61558,
+  "pgid": 61558,
+  "process_probe": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "started_receipt": {
+    "path": "data/acquisition/tractoinferno-recovery-v1/runs/20261010T043710319129Z-513f59bf/started.json",
+    "sha256": "5e9f4b66b3e0c9341850a5b426d5b9bd3fe80cedded0b93d542416324f90b4c3"
+  },
+  "locks": [
+    {
+      "path": "data/acquisition/tractoinferno-train-v1/queue.lock",
+      "held": false
+    },
+    {
+      "path": "data/acquisition/tractoinferno-recovery-v1/queue.lock",
+      "held": false
+    },
+    {
+      "path": "data/acquisition/remind-train-originals-v1/queue.lock",
+      "held": false
+    },
+    {
+      "path": "data/acquisition/nfbs-originals-v1/queue.lock",
+      "held": false
+    },
+    {
+      "path": "data/acquisition/remind-train-seg-v1/queue.lock",
+      "held": false
+    },
+    {
+      "path": "data/acquisition/menichetti-mechanics-v1/queue.lock",
+      "held": false
+    }
+  ],
+  "terminal": {
+    "path": "data/acquisition/tractoinferno-recovery-v1/runs/20261010T043710319129Z-513f59bf/completion.json",
+    "sha256": "cee9704d7a6f67cb85aedd7ffceb37358b63b1e19a38aa94e701013fcb1f8e1f",
+    "status": "all_selected_bytes_verified",
+    "finished_utc": "2026-10-10T04:44:53.497479+00:00",
+    "files": 54
+  },
+  "fatal": null,
+  "result_records": 54,
+  "verified_files": 54,
+  "verified_bytes": 8824129973,
+  "current_failure_status_counts": {},
+  "failures": [],
+  "payload_intents": 54,
+  "free_bytes": 357202644992,
+  "network_requests_by_monitor": 0,
+  "payload_bytes_read": 0,
+  "signals_or_restarts": 0,
+  "training_admitted": false,
+  "all_payloads_unreviewed": true
+}

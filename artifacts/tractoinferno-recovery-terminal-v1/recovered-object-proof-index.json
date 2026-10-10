@@ -1,0 +1,979 @@
+{
+  "schema": "tractoinferno-recovery-object-receipt-index-v1",
+  "objects": [
+    {
+      "path": "derivatives/trainset/sub-1104/dti/sub-1104__ad.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 3414605,
+      "bytes": 4990162,
+      "source_md5": "9e60cad2940bf5637ae7fcc7eed0c803",
+      "sha256": "1f360947173dc616fdeb560d3a5e9f224cdf4d1f86956feca5726d20e82f8258",
+      "publication_stat": {
+        "ctime_ns": 1791607030966138187,
+        "dev": 16777232,
+        "ino": 9835916,
+        "mtime_ns": 1791607030952739273,
+        "size": 4990162
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/02da92bd4eb431f48816601c7d0ec71f547c5aaf584f045191661231f1665211/result.json",
+      "result_receipt_sha256": "6dabeaf224c49380e457042b5b9bb9aa8aab2d0ba92fa0a6ae2d28698e7c389c"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/dwi/sub-1109__dwi.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 59768832,
+      "bytes": 682060403,
+      "source_md5": "9ce1ac58395e425fb9daab3d1c92b6b3",
+      "sha256": "cc7ebdad0027783d8b699be1e9e0b0491fe5874ca96990c545a19a358ae6d83e",
+      "publication_stat": {
+        "ctime_ns": 1791607102726293104,
+        "dev": 16777232,
+        "ino": 9839247,
+        "mtime_ns": 1791607101988659802,
+        "size": 682060403
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/result.json",
+      "result_receipt_sha256": "b20ab57df9b0da154e8aea25931101252619b9668078382b2f507baa85385157"
+    },
+    {
+      "path": "derivatives/trainset/sub-1107/sh/sub-1107__dwi_sh.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 46399234,
+      "bytes": 183203574,
+      "source_md5": "fbcda4b3450db3a7515defbc1a36fadc",
+      "sha256": "e04a72191b0be930c80fcccccfa82125032a721eeffa69497d7266855d1d497e",
+      "publication_stat": {
+        "ctime_ns": 1791607119242769768,
+        "dev": 16777232,
+        "ino": 9838793,
+        "mtime_ns": 1791607119021878818,
+        "size": 183203574
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/05a27e682115ab5066bbb29ac4f16853222b00b75eaf483d73021e1498f2fce3/result.json",
+      "result_receipt_sha256": "21c027f97aeec9f705c168de56058113cfc1e59a5536da6398d0feb2467f99f9"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__POPT_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 2611868,
+      "bytes": 6978552,
+      "source_md5": "51af899f51b0bee874b389e4f6b11f6e",
+      "sha256": "c792a899b9446237ced20622c7072993d26a05dab097327c2d80466740cb6d44",
+      "publication_stat": {
+        "ctime_ns": 1791607120344851133,
+        "dev": 16777232,
+        "ino": 9842003,
+        "mtime_ns": 1791607120326213646,
+        "size": 6978552
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/138ffeb5213da9ade7c373c2e028073a967936990ddae825ed30ec7c27c48e0a/result.json",
+      "result_receipt_sha256": "8cbd6bfbb86f98187b84057fd33c0d4b3f5434d440d7e92f2651521a08ea2d5b"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__AF_L.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 34898632,
+      "source_md5": "a0c53bac63e7cf75d29552247a756a75",
+      "sha256": "88f9c5043bde7fd17b723815717cf9c04e1bba0bc578b9f4516cabd53a532b83",
+      "publication_stat": {
+        "ctime_ns": 1791607123963114972,
+        "dev": 16777232,
+        "ino": 10102204,
+        "mtime_ns": 1791607123917873118,
+        "size": 34898632
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/result.json",
+      "result_receipt_sha256": "418f63555c5de10fe81158e41a75b72bcb96b7f29568ca2c63b0e11783e294df"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__MCP.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 2280002,
+      "bytes": 7114216,
+      "source_md5": "bf1eecbeb3f2c8fdd89ca866323c5c2a",
+      "sha256": "6e524a281e7ba64962aeadfcf50c734728411c5361ee53c0cdb478b3fb00e5ca",
+      "publication_stat": {
+        "ctime_ns": 1791607124740910766,
+        "dev": 16777232,
+        "ino": 9841902,
+        "mtime_ns": 1791607124718556590,
+        "size": 7114216
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/1f9ed7328578679841c22cae6ac5f67cdcc7c971af5f9f3a64a16379d26be3f6/result.json",
+      "result_receipt_sha256": "9194ce19a0fdee751857f8df50cfe97f8322a3222ecec6cbd1eb95bea174281c"
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/sh/sub-1105__dwi_sh.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 76205296,
+      "bytes": 151265886,
+      "source_md5": "349febf42495d8ba466300d3d891657a",
+      "sha256": "8a49644c538d25c45d6ac4544d1c8f980b8e30bd6815717a328df82f8ff6048d",
+      "publication_stat": {
+        "ctime_ns": 1791607130455280893,
+        "dev": 16777232,
+        "ino": 9837223,
+        "mtime_ns": 1791607130261960025,
+        "size": 151265886
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/237504c2bf2bcf13848789245c130cfd180fa016f8256c4cc9a7a4d67322b281/result.json",
+      "result_receipt_sha256": "9274e2052eb66900104a0bd8a81e58e768369ae899a2a6937aa335d4efefd941"
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/dwi/sub-1101__dwi.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 642777088,
+      "bytes": 799464290,
+      "source_md5": "491e1d8512199339d3366e1a780a7c7e",
+      "sha256": "8a8470e1c082ad1f0490b8f9827c0953524c37552b9e6dcf3cee6c756b77e738",
+      "publication_stat": {
+        "ctime_ns": 1791607144035595645,
+        "dev": 16777232,
+        "ino": 9832781,
+        "mtime_ns": 1791607143175399149,
+        "size": 799464290
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/result.json",
+      "result_receipt_sha256": "92021d8c19137dd9edfb8524aa55dfa1a3c6953c5e8602ab784ab7cc42a72edd"
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/dwi/sub-1104__dwi.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 58123872,
+      "bytes": 669242707,
+      "source_md5": "c602f46a01bd497160eab95c0f593909",
+      "sha256": "9dc6f727c7bf63d3a1fdb51d30981b2daf9a15fa5531c5115d978431e928ce47",
+      "publication_stat": {
+        "ctime_ns": 1791607190810331488,
+        "dev": 16777232,
+        "ino": 9836023,
+        "mtime_ns": 1791607190061656494,
+        "size": 669242707
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/29c9c2dd99956696cf450150275b1cce9819ae9cdad30eca9c54bf7d8903272e/result.json",
+      "result_receipt_sha256": "268f47742638c232eb9fe03f125f6300e1f4731880d65d8699e599e73b539fb8"
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/tractography/sub-1102__OR_ML_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 5032514,
+      "bytes": 9646148,
+      "source_md5": "3607b98ccb0297d19242563386dddc87",
+      "sha256": "c1408fdb7dc834b861a68d3fc90ce723705e0988d5d3ed4b220fb7e3cd521566",
+      "publication_stat": {
+        "ctime_ns": 1791607192358226110,
+        "dev": 16777232,
+        "ino": 9835687,
+        "mtime_ns": 1791607192341861095,
+        "size": 9646148
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/2e6d9bd0811d5bf567e8ff4037908759e38d981012b0f0b641873b8141049873/result.json",
+      "result_receipt_sha256": "fdf6fa21db59a0a0abbc6c57afba86a59405b03e8cf6ed1503ce00ec7bf8fd70"
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/sh/sub-1101__dwi_sh.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 178913132,
+      "source_md5": "97ae778143397738ee9cb926cee0a11c",
+      "sha256": "f9e89ad3fe45e4d9cd672f9fe234208b5ad2bb9fff0842c5f379b970c4fbb582",
+      "publication_stat": {
+        "ctime_ns": 1791607205948368379,
+        "dev": 16777232,
+        "ino": 9833683,
+        "mtime_ns": 1791607205749550728,
+        "size": 178913132
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/result.json",
+      "result_receipt_sha256": "221f6cbf3e85b600ec8ee8a5cf96b57cfb3ab0cc4af377a889e3656887b388a7"
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/tractography/sub-1105__OR_ML_L.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 3335162,
+      "bytes": 5786364,
+      "source_md5": "246148acf517f52c1ff37439ed6f0947",
+      "sha256": "2b3fd960855f177b3a286599e4b17353feee28a51b42ee24fdfb44c5ae5ab571",
+      "publication_stat": {
+        "ctime_ns": 1791607206691680341,
+        "dev": 16777232,
+        "ino": 9837558,
+        "mtime_ns": 1791607206682384451,
+        "size": 5786364
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/4673aca9a96feef9f4a3878775b1abd1ce5d15046928f4bb80df23b9768b17f0/result.json",
+      "result_receipt_sha256": "fc286f1d266c5e74c3b34a39eb12bf301bf59cb7086611626fadc9479175ac01"
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/tractography/sub-1101__PYT_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 28909589,
+      "bytes": 31972480,
+      "source_md5": "0dafc23b4aee603a10c0a92752acebdf",
+      "sha256": "f1c80c155f4e4d87d2ace6c31bfe78a296a882b7818d0a8a52924c4e45eb069b",
+      "publication_stat": {
+        "ctime_ns": 1791607207268118216,
+        "dev": 16777232,
+        "ino": 9834713,
+        "mtime_ns": 1791607207228066643,
+        "size": 31972480
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/48626fcb840252f8d22e3ecc0dc01be00d62242e05fa87aed3e9cea8245ae94a/result.json",
+      "result_receipt_sha256": "1ac21eceaef278665254d67f1fc3c799ee816ae0d6f34e0f54a32912141173dc"
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/fodf/sub-1105__fodf.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 16022313,
+      "bytes": 244120371,
+      "source_md5": "75d46f97fd54b868902ade51d81b7302",
+      "sha256": "222ef8046bb42c4a9aa19bc42e2a6fb2fa49edd170c4ac6945a2a290ca83a925",
+      "publication_stat": {
+        "ctime_ns": 1791607224502410731,
+        "dev": 16777232,
+        "ino": 9837127,
+        "mtime_ns": 1791607224218244109,
+        "size": 244120371
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/491f052e86b2bdc36cc4315ce266e750d6de8f2837b95fae9bdcbe959085076b/result.json",
+      "result_receipt_sha256": "26531ce7048f3e4f287e9be899efbf808490aeda777e801255132903c8435abf"
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/sh/sub-1081__dwi_sh.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 91226112,
+      "bytes": 161796224,
+      "source_md5": "aa1d845a93163fea4a71f79d7cb69a25",
+      "sha256": "26f5ef1fb8dfe9aceeb80a134f8de3aebd2a796e6283aeb296c97d5fcd756586",
+      "publication_stat": {
+        "ctime_ns": 1791607230127871325,
+        "dev": 16777232,
+        "ino": 9821270,
+        "mtime_ns": 1791607229941406664,
+        "size": 161796224
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/result.json",
+      "result_receipt_sha256": "482e142789d0be2cb6188ec7cd726025fc4b9924f50fbd7ea7f0c7ec3a51496b"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_2.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 22256570,
+      "bytes": 135872268,
+      "source_md5": "7b038f10ea6a9f15f59b081715bfc6cf",
+      "sha256": "81b7db03a295ba5116e5f018ff002eaf2230dca759eca28b413caa2bbbaebb24",
+      "publication_stat": {
+        "ctime_ns": 1791607238826574614,
+        "dev": 16777232,
+        "ino": 9841276,
+        "mtime_ns": 1791607238669689880,
+        "size": 135872268
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/result.json",
+      "result_receipt_sha256": "74f8636cb43e8871624ab501b83ac4fd4ae06abf80021bd5265b4fa4220bf2e5"
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__PYT_L.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 13522674,
+      "bytes": 25055856,
+      "source_md5": "5010c811f79e4a9fb5403ace5a43592f",
+      "sha256": "593f42ada6cc2b8d5c0c751a967de57e1671ee17ef7fc7b14e3dfec661619eef",
+      "publication_stat": {
+        "ctime_ns": 1791607240214923320,
+        "dev": 16777232,
+        "ino": 9836776,
+        "mtime_ns": 1791607240181933622,
+        "size": 25055856
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/5ceb1639224df86f518e62692f291b207ffedadca4b59a4f4779d7aea1e5b086/result.json",
+      "result_receipt_sha256": "c6003205a8e9a24999393f813fc7af05c8632edd7dc9076d4340a58bc4555e61"
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/fodf/sub-1102__peaks.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 24594756,
+      "bytes": 47844639,
+      "source_md5": "98a0f0d1c4e180a039b9e864c1deaaf4",
+      "sha256": "9403d34a69ff0832f8a1bf4ad75d6a1798057659b4db1abcd90dc8c2abd44fb6",
+      "publication_stat": {
+        "ctime_ns": 1791607243103235946,
+        "dev": 16777232,
+        "ino": 9835081,
+        "mtime_ns": 1791607243045416099,
+        "size": 47844639
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/64d3edf5e334c60ff9e2b4d1a70d84aa947357fbd97adbc8d2bc89e7b014f64d/result.json",
+      "result_receipt_sha256": "2372f1e9ffeba25524bcd4ba01684e5fa58e11904e9f71739dcb0c3e8ab0135f"
+    },
+    {
+      "path": "derivatives/trainset/sub-1110/fodf/sub-1110__peaks.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 43044052,
+      "bytes": 43401592,
+      "source_md5": "5ed6b66e9ee53ca083392d152f83b5bc",
+      "sha256": "0e423b53f4756862d961f8b8eef24e1aa7863bb48e6942167e62b3cefcd2e4e1",
+      "publication_stat": {
+        "ctime_ns": 1791607243625800708,
+        "dev": 16777232,
+        "ino": 9842409,
+        "mtime_ns": 1791607243575783699,
+        "size": 43401592
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/6943d85e08c91f42e1d40274844d812473ddbf6831590eac91a7d0a2041d4771/result.json",
+      "result_receipt_sha256": "454adb20d6e8ade37158a55f1d01df126ff77bb50ee8a62d3a3b9353ec02dd51"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__PYT_L.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 1792577,
+      "bytes": 31386088,
+      "source_md5": "8f5be01d40ccb92a83f02214c10343f2",
+      "sha256": "377c4146b35a8dc355091bf8dc39fedc09a5647307589911f48cc39bf5774c66",
+      "publication_stat": {
+        "ctime_ns": 1791607245958397831,
+        "dev": 16777232,
+        "ino": 9842007,
+        "mtime_ns": 1791607245918343633,
+        "size": 31386088
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/6d25376c29c2b15663230ec23e6335ed5bb7d510b25425ddb9bf32f41d808c24/result.json",
+      "result_receipt_sha256": "6cac97af7d91568d11af51f74859956ff962ef1a75beec4dbfc170dbee4e0984"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_1.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 2854465,
+      "bytes": 67985024,
+      "source_md5": "75d7035c49a26c6b78d9a125f67f06bb",
+      "sha256": "62282248651e93d80f2681a9284cda5553bee843fa9e84fda77bbb013472b4a9",
+      "publication_stat": {
+        "ctime_ns": 1791607250645074084,
+        "dev": 16777232,
+        "ino": 9841091,
+        "mtime_ns": 1791607250564160140,
+        "size": 67985024
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/result.json",
+      "result_receipt_sha256": "1673868976384c9359508bbd71e3b8436759185f7cc258ec693e639b47b39b2f"
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/tractography/sub-1082__CC_Fr_1.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 19390822,
+      "bytes": 28161852,
+      "source_md5": "18ba49859636d98aea87cc4a0d130e80",
+      "sha256": "1e3dcd050efa69b6c3a13a2cd66ace01577cc45d72e12ed83733c9a271c4f399",
+      "publication_stat": {
+        "ctime_ns": 1791607251589891212,
+        "dev": 16777232,
+        "ino": 9822845,
+        "mtime_ns": 1791607251556996265,
+        "size": 28161852
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/6f50fb99ca8dc69cfc60e46171eab613730ea801aefe16bbf1f4860f009ef734/result.json",
+      "result_receipt_sha256": "7e62e3ff9eee9842cf6f88ad0bdd758357fa098042d2242826e0c429b097755d"
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__SLF_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 7003713,
+      "bytes": 17209668,
+      "source_md5": "702bfea1cc21d2e6097a54111fdc05ce",
+      "sha256": "b48a750d75f7aab8f7be3bfca5117301ac60b472c8851b559c7b1d1f79119fd2",
+      "publication_stat": {
+        "ctime_ns": 1791607252505104330,
+        "dev": 16777232,
+        "ino": 9822358,
+        "mtime_ns": 1791607252484319788,
+        "size": 17209668
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/6fe46aea9d8addfd92fe993d78899b66fd33f37bf9d362b5e9d23cd7e6afde0e/result.json",
+      "result_receipt_sha256": "5aba5d89107b0f25961750a9b0b95b5b7e3c29a1aa6f2025e92b86cc7a42c5b5"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Pa.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 27451949,
+      "bytes": 81599404,
+      "source_md5": "6a1ddd26f4d0d70080fb79b96584c73c",
+      "sha256": "385d218d95c9126b0700553891310fcf3f3e9e9bea246e1126d9ba58bc6ad67c",
+      "publication_stat": {
+        "ctime_ns": 1791607256209829855,
+        "dev": 16777232,
+        "ino": 9841289,
+        "mtime_ns": 1791607256115440955,
+        "size": 81599404
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/result.json",
+      "result_receipt_sha256": "58bbf161d508280c4c17ca86c6807e8b88dd0c9bd51e2d86995e719bedcbe7fd"
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__FPT_L.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 15901872,
+      "bytes": 16223124,
+      "source_md5": "c9b458b1606281c9e130ce7029ba0587",
+      "sha256": "90b89cf7dbcc5e2b1fdf2b2ece9dad38847751786a71746a637f1261707dfd07",
+      "publication_stat": {
+        "ctime_ns": 1791607256670842747,
+        "dev": 16777232,
+        "ino": 9836460,
+        "mtime_ns": 1791607256651607340,
+        "size": 16223124
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/76962a3113f22e6113dc50788a70e85eb142826bc147fe54148d129805b113fa/result.json",
+      "result_receipt_sha256": "f31ffbf7d6cb047d175335c77a659334e2b8205dd5faaa01f1380fec7cbb20a2"
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/fodf/sub-1101__peaks.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 2097152,
+      "bytes": 47263427,
+      "source_md5": "ead494186c3b13743705869aa813fc38",
+      "sha256": "f8f9d4af9138c10b7eb1d3756632aabf282b861e4c4a214f52e5aba0e5729f28",
+      "publication_stat": {
+        "ctime_ns": 1791607259913946919,
+        "dev": 16777232,
+        "ino": 9833620,
+        "mtime_ns": 1791607259857118786,
+        "size": 47263427
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/result.json",
+      "result_receipt_sha256": "aeb50f86d608ae505615e05a84efd16799f9e86eae313c4b871e2581a3820479"
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/tractography/sub-1105__CC_Pr_Po.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 43093569,
+      "bytes": 46279800,
+      "source_md5": "d410cd5aee494c159c809971a5438fe3",
+      "sha256": "1950d05eb0d0623ddbd13829e807775b63fed7d151fa9b8ddd5d2ae921774e26",
+      "publication_stat": {
+        "ctime_ns": 1791607260576442270,
+        "dev": 16777232,
+        "ino": 9837397,
+        "mtime_ns": 1791607260519723804,
+        "size": 46279800
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/7f6698ff18799f0e8815ac52195f89bc80de964e28374880d136a1185bd807fe/result.json",
+      "result_receipt_sha256": "206c8698235ec66f053635031b0f26c40f45f37d5640e133f73e1cde2bd804f8"
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/dwi/sub-1082__dwi.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 20755769,
+      "bytes": 361662331,
+      "source_md5": "9f60465f0172ad3b3cb57486d793966d",
+      "sha256": "ce8f635aaffd65220abd8870744e2dc7b291f712f11afe3ffaab7a636cfb89e8",
+      "publication_stat": {
+        "ctime_ns": 1791607284605211602,
+        "dev": 16777232,
+        "ino": 9822524,
+        "mtime_ns": 1791607284191251951,
+        "size": 361662331
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/8139a32f93d8c8e91d6424cd36131d4bf98d57f531c018a60dc54d7be26e3d56/result.json",
+      "result_receipt_sha256": "b4dd52557a5f3713dac68e0459790ebde023f9f3ac527610af270627aef1a09e"
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/sh/sub-1102__dwi_sh.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 17812626,
+      "bytes": 180496680,
+      "source_md5": "0c517a1711cc2e370bd89d9b95de5ddf",
+      "sha256": "e1eb7525d93c85146ec16fcee549e96411665cabe29ad43b637288f220cb8441",
+      "publication_stat": {
+        "ctime_ns": 1791607297163180510,
+        "dev": 16777232,
+        "ino": 9835229,
+        "mtime_ns": 1791607296966904540,
+        "size": 180496680
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/8e676b1033dd3028978baf2ffb985851ff45a4d4fb5c66c110adc58633e2b6a8/result.json",
+      "result_receipt_sha256": "128a2a007c197bf4b93b109eb6dfaf5e8284572ce46c7850c09340afc5f6f134"
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_1.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 32505856,
+      "bytes": 42234220,
+      "source_md5": "8d8ba0f6e43daf7a1e0699455888d591",
+      "sha256": "5372343f34a63ac381b2c4ada9ea9e863edbeec9dc93d2f3caed68e27419a009",
+      "publication_stat": {
+        "ctime_ns": 1791607298540563818,
+        "dev": 16777232,
+        "ino": 9821301,
+        "mtime_ns": 1791607298484779484,
+        "size": 42234220
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/result.json",
+      "result_receipt_sha256": "0e8da5e99842d98ecec412fccfc30d7217bbb6162a120184524407a92e3e3fea"
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__PYT_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 15544897,
+      "bytes": 22455732,
+      "source_md5": "62469a2224a31d74d08ab0a9170befbc",
+      "sha256": "614e407d9f5d6cc48be6dd19c8b57f8ee99246983f31128096b45d77c43726d6",
+      "publication_stat": {
+        "ctime_ns": 1791607299534593117,
+        "dev": 16777232,
+        "ino": 9822317,
+        "mtime_ns": 1791607299495017088,
+        "size": 22455732
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/96fc76be02bdc4caf8cfd116763f2b642bcaf496da602c1d11f47a948ff78b16/result.json",
+      "result_receipt_sha256": "dc1970df1dfe464e7199fed5758ce67af0f7a7973642779456131ec1f441b725"
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/sh/sub-1104__dwi_sh.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 129737990,
+      "bytes": 149804009,
+      "source_md5": "f45bda97d6b0f87dc08e2548701ddcb9",
+      "sha256": "872d194f73d82d7aa0e94573ae78dd1a2c03e14c448559a87d9a52310b4c4022",
+      "publication_stat": {
+        "ctime_ns": 1791607301356350050,
+        "dev": 16777232,
+        "ino": 9836240,
+        "mtime_ns": 1791607301163227141,
+        "size": 149804009
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/ac9035a61e6fcba5140dcf28ac1d2506dba162bb9dd9d0a0d9029953f76460f7/result.json",
+      "result_receipt_sha256": "64ff6c3d63cfedabefbd6a571bef6fbf4993c02ae86e6b55609636d4d64bb147"
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/dwi/sub-1102__dwi.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 44790123,
+      "bytes": 807042220,
+      "source_md5": "72dabc134dc868ed5e47c0784a2b8738",
+      "sha256": "2fbe0a862d8023717b34b6f479b36b05945d9165132f517a5899db6d88633645",
+      "publication_stat": {
+        "ctime_ns": 1791607358100944393,
+        "dev": 16777232,
+        "ino": 9834926,
+        "mtime_ns": 1791607357169134300,
+        "size": 807042220
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/adb56477752789f94c217775b718c6e6ce0b2cf8ab6b894653cc0efe991b5030/result.json",
+      "result_receipt_sha256": "b26fcd0aae1cb6182ed5b0a10d3efc9ed775cb3c7c933e1395bae60492049b30"
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__CC_Oc.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 34954238,
+      "bytes": 58712916,
+      "source_md5": "da9d575de62494efc62764674e1a28af",
+      "sha256": "d75a1eb0f1e68ca7f1fb52f6b075509fdb6a1e16a2db579b093d8d9a408dfae5",
+      "publication_stat": {
+        "ctime_ns": 1791607361235783456,
+        "dev": 16777232,
+        "ino": 9836349,
+        "mtime_ns": 1791607361136516069,
+        "size": 58712916
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/aee8e266702ac3f4abb6fd5f3fbeb415a3cd82e978ec48e6b09752c14ce08f70/result.json",
+      "result_receipt_sha256": "ec965e87377d04dc929edea1628fa05483095355a0d5483c23dd8856658ef62f"
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/dwi/sub-1105__dwi.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 413880782,
+      "bytes": 675406240,
+      "source_md5": "46b424d0d2a071c1e7bd97207be35d2c",
+      "sha256": "eff26ba525e352190ea135df3f4b82962623b6112f2fbc484dea78ad6c7c5112",
+      "publication_stat": {
+        "ctime_ns": 1791607379876896831,
+        "dev": 16777232,
+        "ino": 9837004,
+        "mtime_ns": 1791607379056065612,
+        "size": 675406240
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/b26a1a213f4e3d84f4cf088590b3df3f7150309e83211793a9c828168144d633/result.json",
+      "result_receipt_sha256": "826314467a8b515d120a21d446474c0e932a8b0a2544a39460f1d3b89a3861a1"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__PYT_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 18669195,
+      "bytes": 29802892,
+      "source_md5": "9b30909ce81cd4e132823cc47f668a95",
+      "sha256": "e3056ea051fdae409835b8019d201a936feea1a1a689f95ae2f9d04876d6669d",
+      "publication_stat": {
+        "ctime_ns": 1791607382007690576,
+        "dev": 16777232,
+        "ino": 9842048,
+        "mtime_ns": 1791607381950599692,
+        "size": 29802892
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/b3dd1972d93367e91b8cc59720d2820d4c0fd3aeb54eca55d44e20aaf1b9919b/result.json",
+      "result_receipt_sha256": "5575a3b5390366affd497ddae88876aedc610ec7c7b319cd2771c19817900f8f"
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/tractography/sub-1105__CC_Fr_2.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 40271076,
+      "bytes": 41740416,
+      "source_md5": "bb0155417f69c1d273dcb9a8751e6002",
+      "sha256": "f96c5da0193d639323dc0a2ae584e5de8e9ec29935e9669fc68000554d953b51",
+      "publication_stat": {
+        "ctime_ns": 1791607382581049768,
+        "dev": 16777232,
+        "ino": 9837255,
+        "mtime_ns": 1791607382505786441,
+        "size": 41740416
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/ba45cc5cd872420e480479780f4436dac42515b805dfd55ce4b58bdb54652944/result.json",
+      "result_receipt_sha256": "1a63e5b9c959d32a1b0d20744461f81d0cbe4b092780e6e4ba9e02feee21073f"
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/sh/sub-1082__dwi_sh.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 75031631,
+      "bytes": 164927319,
+      "source_md5": "4accc98e4a82b2a01c3956e5ef5ad33a",
+      "sha256": "8ed47bc4e3e210854fa28cfd2c6c68a6df1e164d28aace6d14f31f11880cd707",
+      "publication_stat": {
+        "ctime_ns": 1791607389317318237,
+        "dev": 16777232,
+        "ino": 9822796,
+        "mtime_ns": 1791607389098998343,
+        "size": 164927319
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/be86c7a1c27a4bc13397b40b3b2ee603969f95d4e84fab9ff7e2ca66ea81c73c/result.json",
+      "result_receipt_sha256": "7be12aa0928dde926e58b377b53fbce5ec00b6219364f500ec66ddf13d477c58"
+    },
+    {
+      "path": "derivatives/trainset/sub-1110/fodf/sub-1110__fodf.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 198967427,
+      "bytes": 251893695,
+      "source_md5": "faeb3da45fb844aa65b16e73b3eed35b",
+      "sha256": "dc73001bba98f5969b84e390c817c4a616147efc2ed2eba21e5569dc918b87b4",
+      "publication_stat": {
+        "ctime_ns": 1791607394141883816,
+        "dev": 16777232,
+        "ino": 9842311,
+        "mtime_ns": 1791607393826070296,
+        "size": 251893695
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/c577e9943f48977edfff9cf73b87b24c974e5fd8307c8a4982eb93eb6d1d449f/result.json",
+      "result_receipt_sha256": "c4b865fb2e178f5a3d79e810151613b02f8999bf1a6662b6cc4c8ca6768a02d9"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/fodf/sub-1109__fodf.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 113246208,
+      "bytes": 246514315,
+      "source_md5": "0ce21123868bf9247c9ce6450c08d91f",
+      "sha256": "fb041ed86d16e775d352792de7b4c16ecce7d2112add381ef8df607049a28cbe",
+      "publication_stat": {
+        "ctime_ns": 1791607404683722000,
+        "dev": 16777232,
+        "ino": 9839259,
+        "mtime_ns": 1791607404383513865,
+        "size": 246514315
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/result.json",
+      "result_receipt_sha256": "32bc36ec43d59f605fd433339a373381bb71b96251a9d3eb31d9b5b58a2823c1"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/mask/sub-1109__mask_csf.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 144752,
+      "source_md5": "f6636ef15bddb46730712852fca31a2c",
+      "sha256": "b7333049b1a13fc3c341017441266ca7aa4c3440f2cca3e16d257e72425949b8",
+      "publication_stat": {
+        "ctime_ns": 1791607405380252305,
+        "dev": 16777232,
+        "ino": 10104552,
+        "mtime_ns": 1791607405379696885,
+        "size": 144752
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/result.json",
+      "result_receipt_sha256": "12cf9d6dbcfba9e573c9c4a972b35a8876f24afc715c7c6517f418ced178d07c"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__SLF_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 8007233,
+      "bytes": 14022976,
+      "source_md5": "b48a565784b7fddf3447012f9221c98a",
+      "sha256": "789a694d04ca6f28078dd548cf7c90fb37680d70ed19c0d423690af105a5c186",
+      "publication_stat": {
+        "ctime_ns": 1791607406116862684,
+        "dev": 16777232,
+        "ino": 9842077,
+        "mtime_ns": 1791607406090861069,
+        "size": 14022976
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/cf298ee10b7ee227a88a74ab4b806d4633a4407aba599b3f54f42f5389d542c2/result.json",
+      "result_receipt_sha256": "1669e8badb8bb1944e299e506a61c4948c7ecb3a9e469be6bafd74225a0ca9f8"
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/fodf/sub-1102__fodf.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 47845622,
+      "bytes": 291401858,
+      "source_md5": "85e41273db6068c891ba689ba93958dd",
+      "sha256": "3453a539c8222abc9f40ab6bec03ba7a964fad29522def10c4e7ff706d528605",
+      "publication_stat": {
+        "ctime_ns": 1791607423708008590,
+        "dev": 16777232,
+        "ino": 9835008,
+        "mtime_ns": 1791607423349145311,
+        "size": 291401858
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/d012e8415e967c0aa3592bbafb2d4295b810d0b43c31085b5ef709c1dc996376/result.json",
+      "result_receipt_sha256": "5a4db2cff521e0f4e5b91669ab662adbb6b0b0c364bd2aba50bc9eaed7614277"
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Oc.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 46275964,
+      "source_md5": "29b133f4cb11089987d3d63ae5824d22",
+      "sha256": "e00b26980651f2f40425f7eb241ab24325eebf928c779f8042c5f22e42ea784d",
+      "publication_stat": {
+        "ctime_ns": 1791607427788418370,
+        "dev": 16777232,
+        "ino": 10104632,
+        "mtime_ns": 1791607427720431171,
+        "size": 46275964
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/result.json",
+      "result_receipt_sha256": "8f13c0f8a5da67c85c05d19403854df89f0c68a3080820ca63a6dae8759f4520"
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__MCP.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 1705537,
+      "bytes": 11741808,
+      "source_md5": "f176ec2972ae74132d8f2676b6deb426",
+      "sha256": "edf0cd45dc54c20bd240168727f282c236a7aa12aa0a7d057313426427c1aab7",
+      "publication_stat": {
+        "ctime_ns": 1791607429075852388,
+        "dev": 16777232,
+        "ino": 9836591,
+        "mtime_ns": 1791607429054709386,
+        "size": 11741808
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/d4d58a0c33ec47aa9117610deaa052d6fa4f372b17e7f50c7e6ba1c2b84bc45b/result.json",
+      "result_receipt_sha256": "fa5afa87ff76b6814a382fe7d04f80faac981a9265052603087c6d1af0b2330c"
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_2.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 44826944,
+      "source_md5": "ae533205a910219d3a6a2cfad2201cfd",
+      "sha256": "3d965ac86a4a2852fe3afd15fbe3653578317d0c254996852aba0b403a8ffed8",
+      "publication_stat": {
+        "ctime_ns": 1791607433301425164,
+        "dev": 16777232,
+        "ino": 10104678,
+        "mtime_ns": 1791607433247590049,
+        "size": 44826944
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/result.json",
+      "result_receipt_sha256": "8969b485fdb06c8d74af67b1fbecc2a05a2405e06044a4f86b395afd98718f2d"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__ILF_R.trk",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 9677377,
+      "bytes": 13648164,
+      "source_md5": "93fddd1a7ae50534d6768e2a357539ab",
+      "sha256": "c42a96a3706bae24a5222471851a1b476ff0a56f6cdb55510559bd683306be40",
+      "publication_stat": {
+        "ctime_ns": 1791607433897898036,
+        "dev": 16777232,
+        "ino": 9841876,
+        "mtime_ns": 1791607433873238263,
+        "size": 13648164
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/e5aba2efe4d36b7767e72f1c5c5a434cdd0841d8c8162e9869e681601c4fc558/result.json",
+      "result_receipt_sha256": "0e0f1651655f69f9c75d03140825b33d02d54347c282ec4c04d5b437ea9f6405"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/sh/sub-1109__dwi_sh.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 23772867,
+      "bytes": 152713278,
+      "source_md5": "7f4728ad4f56e7b2f3780195a9da05bb",
+      "sha256": "6db0a4bca30aedea1e4a81eb8e78f5f8b9667dca5a3bb399a9a1be0864aab923",
+      "publication_stat": {
+        "ctime_ns": 1791607443321195839,
+        "dev": 16777232,
+        "ino": 9840457,
+        "mtime_ns": 1791607443131876870,
+        "size": 152713278
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/result.json",
+      "result_receipt_sha256": "107378f5494febf30ee98e2afe94867eef3b5aabcc20d8e24725b2ef58aaea7f"
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/fodf/sub-1101__fodf.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 269484032,
+      "bytes": 288708230,
+      "source_md5": "0120742d286e350e5c468fb85229a2a5",
+      "sha256": "5818765ace37614e7a820bcbd062bcea1dad765823819d8fe5a2f204682bf24b",
+      "publication_stat": {
+        "ctime_ns": 1791607445650434777,
+        "dev": 16777232,
+        "ino": 9832810,
+        "mtime_ns": 1791607445288174061,
+        "size": 288708230
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/result.json",
+      "result_receipt_sha256": "7639bf95d8a8ec9206478f509a4c3b959cc16fd792d35d18e872a46791c67958"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/fodf/sub-1109__peaks.nii.gz",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 7340032,
+      "bytes": 40095557,
+      "source_md5": "43c4337860623ff3dc9621fdd1d6c349",
+      "sha256": "86b508cffa8f0dec5001b90df6811abe6c34e0038b91b59d3aca9dba95bf6def",
+      "publication_stat": {
+        "ctime_ns": 1791607448553856326,
+        "dev": 16777232,
+        "ino": 9840130,
+        "mtime_ns": 1791607448500798716,
+        "size": 40095557
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/result.json",
+      "result_receipt_sha256": "3e7f58e71e227ab9d846093be0e916fb01825befb89c970edd714ef98a8ccca0"
+    },
+    {
+      "path": "derivatives/trainset/sub-1107/dwi/sub-1107__dwi.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 565949582,
+      "bytes": 818213848,
+      "source_md5": "516b812f36c933a3fa49ce32a56b3532",
+      "sha256": "dfd3ed84fd0807759c367f9a5263cbcf2d9a4248a5ceee5c153ea335f673dea4",
+      "publication_stat": {
+        "ctime_ns": 1791607467642040217,
+        "dev": 16777232,
+        "ino": 9838654,
+        "mtime_ns": 1791607466635242883,
+        "size": 818213848
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/f1b14147e6eeb359f7ac108b63ed1ed36dbbaf16fa8527d9b6ff8629b087c4c1/result.json",
+      "result_receipt_sha256": "d5b687a2a799725ae6cc5a50dc45702cf53e7b1e7d8756bec51bbb9dbac7c68c"
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/fodf/sub-1082__fodf.nii.gz",
+      "original_attempts": 1,
+      "new_attempts": 1,
+      "resume_offset": 2775423,
+      "bytes": 265565314,
+      "source_md5": "3328f988c1941cc7d73a6164451d1605",
+      "sha256": "79c82f99073800ca3f083313940ca23664644f0f99aa27aa995c9023e66ad529",
+      "publication_stat": {
+        "ctime_ns": 1791607489211651416,
+        "dev": 16777232,
+        "ino": 9822528,
+        "mtime_ns": 1791607488887856765,
+        "size": 265565314
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/f7fd15563fdffd6bf27fe6fd0a257962149eb524c3949f9e0ced488b901fab9f/result.json",
+      "result_receipt_sha256": "15ce4f84454b1699e0f96f1702a0d76d835640089c734a8d741e1f9cb370b8cb"
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/tractography/sub-1101__AF_R.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 9085284,
+      "source_md5": "90c1afb1e51e6387810416cc41e17d94",
+      "sha256": "4f413d6fa3cafb270988cc14a55c20f5a54a5cb87a7b0f7f6fde724dcb932528",
+      "publication_stat": {
+        "ctime_ns": 1791607490547384516,
+        "dev": 16777232,
+        "ino": 10104975,
+        "mtime_ns": 1791607490525712844,
+        "size": 9085284
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/result.json",
+      "result_receipt_sha256": "8d4e96cd933c672c410971095d2b2584b745b2c319d1a88af3e57bd3d51a0bfd"
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__AF_R.trk",
+      "original_attempts": 3,
+      "new_attempts": 1,
+      "resume_offset": 0,
+      "bytes": 35257128,
+      "source_md5": "2bf4019244cfc0e920c450625726b608",
+      "sha256": "d9867c38ca2d037a37e26b3e3b6e1416de975d3d63842ae2d082007dc8e66ce0",
+      "publication_stat": {
+        "ctime_ns": 1791607493440029293,
+        "dev": 16777232,
+        "ino": 10105003,
+        "mtime_ns": 1791607493371603924,
+        "size": 35257128
+      },
+      "result_receipt": "data/acquisition/tractoinferno-recovery-v1/attempts/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/result.json",
+      "result_receipt_sha256": "119826bc4114240b39a8a8b7c6c17f64c8d129449faf9598387d8358f3e0a0b5"
+    }
+  ],
+  "new_network_requests_by_audit": 0,
+  "payload_bytes_read": 0
+}

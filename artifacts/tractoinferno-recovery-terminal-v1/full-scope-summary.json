@@ -1,0 +1,65 @@
+{
+  "schema": "tractoinferno-full-published-train-byte-completion-v1",
+  "checked_utc": "2026-10-10T04:52:52.441380+00:00",
+  "status": "all_scope_bytes_verified_across_original_and_recovery",
+  "full_scope_files": 7622,
+  "verified_files": 7622,
+  "verified_bytes": 273788367039,
+  "published_TRAIN_people": 198,
+  "unresolved_current_files": 0,
+  "pending_queue_files": 0,
+  "remaining_partial_files": 0,
+  "original_completion": {
+    "path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/completion.json",
+    "sha256": "7def45d81709a16316445cf18f64f60fc7ebdb9fd3b96fdd8eafa333ddcb33fe",
+    "finished_utc": "2026-10-10T04:29:27.349070+00:00",
+    "verified_files": 7568,
+    "verified_bytes": 264964237066,
+    "preserved_unresolved_historical_files": 54
+  },
+  "recovery_completion": {
+    "path": "data/acquisition/tractoinferno-recovery-v1/runs/20261010T043710319129Z-513f59bf/completion.json",
+    "sha256": "cee9704d7a6f67cb85aedd7ffceb37358b63b1e19a38aa94e701013fcb1f8e1f",
+    "finished_utc": "2026-10-10T04:44:53.497479+00:00",
+    "verified_files": 54,
+    "verified_bytes": 8824129973,
+    "root_owned_session_id": 19191,
+    "root_confirmed_exit_code": 0
+  },
+  "recovery_attempt_accounting": {
+    "head_requests": 54,
+    "payload_requests": 54,
+    "preserved_original_attempts": 92,
+    "new_attempts": 54,
+    "actual_resume_offsets": 3351836181
+  },
+  "historical_original_outcome_counts_preserved": {
+    "transport_exhausted": 15,
+    "integrity_or_scope_refusal_BrokenPipe": 39,
+    "transport_deferred": 52
+  },
+  "new_recovery_failures": 0,
+  "exact_source_manifest": {
+    "path": "data/acquisition/tractoinferno-train-v1/source/train-exact-object-manifest.json",
+    "sha256": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846"
+  },
+  "cohort_sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+  "scope_sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053",
+  "released_declaration_sha256": "a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231",
+  "reviewed_runner_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+  "all_original_selected_history_hashes_counts_preserved": true,
+  "all_final_regular_file_sizes_match": true,
+  "recovery_publication_stats_unchanged": true,
+  "HEAD_GET_range_TLS_source_version_contracts_reconciled": true,
+  "payloads_independently_rehashed_in_this_audit": false,
+  "payload_bytes_opened_in_this_audit": 0,
+  "new_network_requests_in_this_audit": 0,
+  "signals_or_restarts": 0,
+  "free_bytes": 353957437440,
+  "all_payloads_unreviewed": true,
+  "anatomy_qc": "not_run",
+  "training_admitted": false,
+  "roles_changed": false,
+  "decoded_array_bytes": 0,
+  "next_continuity_step": "No eligible declared transfer remains in this scope; do not rerun either original or recovery. Keep historical failure records. Other previously inspected BTC/ReMIND/NFBS/Menichetti/IXI and 890-file queues were complete; no new launch-ready nonoverlapping scope has been established."
+}

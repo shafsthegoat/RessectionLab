@@ -1,0 +1,92 @@
+{
+  "schema": "post-tractoinferno-completion-ready-queue-check-v1",
+  "checked_utc": "2026-10-10T04:53:27.517944+00:00",
+  "other_recorded_completed_queues": [
+    {
+      "scope": "btc-pat16-pat20-diffusion-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/btc-pat16-pat20-diffusion-v1/completion.json",
+      "sha256": "e62a963c502ceb0e374945f4228ef91dc26f3fcf5b9933c976fc008476ed64b1"
+    },
+    {
+      "scope": "btc-train-diffusion-extension-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/btc-train-diffusion-extension-v1/completion.json",
+      "sha256": "e4151bc5632806af5ae8624ab0cc97ef4f7a384c95d35180fdfcb6be8bd8581f"
+    },
+    {
+      "scope": "btc-train-restfmri-intake-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/btc-train-restfmri-intake-v1/completion.json",
+      "sha256": "5c0c1dc1600a92541674f80867670be72201887f5f41f7dbe12bc88f7a2d131f"
+    },
+    {
+      "scope": "greiner-13946193-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/greiner-13946193-v1/completion.json",
+      "sha256": "bbbb568411483f82e159a170ee82fd6632bb0f3fb05a0d8174e563b7e20d1e02"
+    },
+    {
+      "scope": "greiner-13960486-schema-v1",
+      "recorded_status": "byte_verified_schema_review_only",
+      "receipt": "data/acquisition/greiner-13960486-schema-v1/receipt.json",
+      "sha256": "e9dfdbd4ac50f6664792ea3ed7a5d9ecb0d803740e4674db2f3bbd9b7faf8471"
+    },
+    {
+      "scope": "ixi-t1-mra-vessel-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/ixi-t1-mra-vessel-v1/completion.json",
+      "sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8"
+    },
+    {
+      "scope": "menichetti-mechanics-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/menichetti-mechanics-v1/completion.json",
+      "sha256": "c8a219659c5ab68419ab448ac3431c2690de01e681a0d5c1f5b8dba6c796afc0"
+    },
+    {
+      "scope": "nfbs-originals-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/nfbs-originals-v1/completion.json",
+      "sha256": "51649f192d24ca1f7a71b2e309fba8b18f3d30d47e1220efda6c73b586d760e3"
+    },
+    {
+      "scope": "remind-train-originals-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/remind-train-originals-v1/completion.json",
+      "sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d"
+    },
+    {
+      "scope": "remind-train-seg-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/remind-train-seg-v1/completion.json",
+      "sha256": "2b3a5605be4d9f8376e92dc5cdae318077153f8352a8a699d78c8a906a9abd4f"
+    },
+    {
+      "scope": "remind001-extension-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/remind001-extension-v1/completion.json",
+      "sha256": "a171ae0a5ded6adc27e904ea044b765d4dc7ae86e4009712d2c27d14db015af4"
+    },
+    {
+      "scope": "remind001-ultrasound-v1",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/remind001-ultrasound-v1/completion.json",
+      "sha256": "70715dd6fff50f2ab1a65df24c8679a704e08d5aee88d55209c979c3bafdb7a4"
+    },
+    {
+      "scope": "Lausanne_RESECT_890",
+      "recorded_status": "all_bytes_verified",
+      "receipt": "data/acquisition/continuous-source-v1/runs/20261009T045908903716Z-77a8fc86/finished.json",
+      "sha256": "03f7fba8b481d9c62db94e2225d683c6a1ac2dd1b7c3cefbefe22afd746e0609",
+      "verified_files": 890,
+      "unresolved": 0
+    }
+  ],
+  "new_ready_declared_nonoverlapping_transfer": null,
+  "current_scope": "Tracto original + reviewed recovery now covers all 7,622 objects; neither should be relaunched.",
+  "next_actual_acquisition_dependency": "No further already-released byte queue remains. A subsequent source needs exact accessible object/fixity and role scope. The existing UCSF-PDGM v5 package1065 availability route is a bounded metadata recheck candidate, not a ready transfer; latest preserved probe says files unavailable and no new provider request was made. Keep UPenn/UTSW reserved roles unchanged.",
+  "no_new_provider_probe": true,
+  "no_payload_read": true,
+  "no_role_or_admission_change": true
+}
