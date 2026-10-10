@@ -1,0 +1,95 @@
+{
+  "version": "cerebrum-label-versus-assumed-occupancy-TRAIN-v1",
+  "status": "source_preparation_only_not_executed",
+  "question": "Does interpreting the automatic cerebrum object as all removable material suppress supplied-target progress, compared with an explicit simulated occupancy assumption that also includes the supplied tumor?",
+  "source_evidence": [
+    {
+      "url": "https://doi.org/10.1038/s41597-024-03295-z",
+      "section": "Segmentation data; Data export",
+      "finding": "ReMIND distinguishes automatic Brainlab Elements Object Manipulation cerebrum from manual whole tumor and prescribed tumor target. Enhancing tumor includes any necrotic core. Software version and per-case object generation order are not given.",
+      "scope": "exact dataset methods, not physical occupancy validation"
+    },
+    {
+      "url": "https://data2bids.greydongilmore.com/static/brainlab_iplan_stereotaxy_v3.0.pdf",
+      "document": "Brainlab iPlan Stereotaxy 3.0 Software User Guide, Revision 1.4, copyright 2014",
+      "printed_page": 174,
+      "section": "13.4 Creating Objects Using Automatic Segmentation / Outlining Tumors",
+      "root_verified_PDF_sha256": "8170e1f3af0e8497370ecd529fc64a46fcd1c68e8b0522cd96f103e985353a01",
+      "root_verified_PDF_bytes": 14770732,
+      "paraphrase": "Automatic structures exclude a previously outlined tumor region; the PDF spells the verb substract.",
+      "finding": "The atlas objects include cerebrum, gray and white matter. The guide recommends outlining tumor first; without that outline the tumor is ignored during segmentation. Outline errors propagate to automatic objects.",
+      "scope": "manufacturer-authored historical workflow evidence; hosted mirror; not proof that ReMIND Elements used this exact version or procedure"
+    }
+  ],
+  "inputs": {
+    "index_path": "build/remind-planning-qc-v1/public-cohort-v1/public-manifest-index.json",
+    "index_sha256": "11b5c1ae8f9b2c03695e7eb0768d2cc340db68631f3ddb50ba365910fe0187f7",
+    "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "subjects_in_fixed_order": ["ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025"],
+    "role": "TRAIN",
+    "permitted_arrays": ["image", "supplied_support", "supplied_whole_tumor", "whole_tumor_domain"],
+    "read_original_DICOM": false,
+    "read_SELECT": false,
+    "read_EVAL": false,
+    "read_private_labels": false,
+    "replacement_cases": false
+  },
+  "notation": {
+    "S": "unchanged automatic cerebrum label on qualified planning grid",
+    "T": "unchanged full supplied whole-tumor positive region",
+    "D": "unchanged supplied tumor source-domain mask",
+    "required": "T is contained in D; public support source domain covers the existing crop; all original file and cohort bindings remain valid",
+    "baseline_upper_bound": "For any removal R subset S, |R intersect T| / |T| <= |S intersect T| / |T|; this ignores additional tool and access restrictions"
+  },
+  "conditions": [
+    {
+      "id": "raw_cerebrum_baseline",
+      "simulated_occupancy": "S",
+      "derived_occupancy": false,
+      "original_baseline_preserved": true
+    },
+    {
+      "id": "cerebrum_plus_supplied_tumor_assumption",
+      "simulated_occupancy": "S union T",
+      "derived_occupancy": true,
+      "assumption": "Every positive supplied-tumor voxel is treated as occupied removable material for this rigid-cell research world, including any unseparated necrotic component. This is not measured material composition, viable tumor, surgical indication, or corrected anatomy.",
+      "added_region": "T minus S",
+      "forbidden_operations": ["hole filling", "dilation", "target clipping", "domain expansion", "mask registration adjustment", "occupancy inferred from bright MRI signal"],
+      "outside_union": "Unchanged zeros retain baseline simulation interpretation, not certified air, CSF or safe corridor. Anatomy outside source domains/crop remains unknown.",
+      "proof_not_claimed": "physical correctness or feasibility of complete target removal"
+    }
+  ],
+  "pairing": {
+    "raw_MRI": "same exact samples and source/grid provenance",
+    "target": "same T and D with full original |T| denominator in both conditions",
+    "access": "derive once from raw S and T with existing fixed axis0 rule; freeze the same world-space aperture/axis/radius for both arms, rather than rerunning access selection on the union",
+    "tools_and_geometry": "unchanged canonical generic tools, shaft clearance, contained-cell removal, temporal ordering and grid reconciliation",
+    "task": "same reward, max_steps 24, proposal cap120, depth-volume proposal family and public global target context variant as existing TRAIN condition",
+    "models": "none in this diagnostic; no checkpoint loads, learning, gradients or optimizer calls",
+    "observation_caveat": "Existing support-percentile MRI normalization depends on occupancy. Record any A/B normalization change; no neural-policy comparison is permitted until normalization is explicitly shared or the coupled change is declared. Raw MRI remains unchanged.",
+    "identity": "separate immutable source/model/context hashes per condition; exact baseline hashes must reconstruct; derived provenance binds both original masks, operation and added-cell digest"
+  },
+  "proposed_bounded_run_after_source_review": {
+    "sequence": "For each fixed TRAIN case, construct A then B sequentially, record complete initial inventories, run existing observed_greedy_search with identical limits, and replay each completed returned sequence under its own exact world. Release each arm before the next.",
+    "arms": 8,
+    "worker_seconds": 600,
+    "parent_seconds": 660,
+    "search_seconds_per_arm": 45,
+    "threads": 1,
+    "sampled_memory_bytes": 3221225472,
+    "output_bytes": 67108864,
+    "native_preview_cap_aggregate": 100000,
+    "max_steps_per_arm": 24,
+    "max_complete_rollout_and_replay_commits_aggregate": 384,
+    "outputs": "compact metadata/inventories/decision and replay ledgers only; no duplicate arrays or images",
+    "failure_policy": "Retain all eight planned rows including source/access/cap failures; global resource refusal terminates remaining work with explicit not-run rows; capped searches remain unresolved, never accepted as complete STOP; no automatic retry or SELECT-driven condition choice.",
+    "metrics": ["full target denominator", "S, T, S intersect T and T minus S counts", "occupancy upper bound", "initial feasible/nonfeasible inventory and reasons", "feasible first-action target/cost scores", "STOP versus non-STOP", "full-target progress", "outside-supplied-target removal", "maximum reached depth", "replay integrity", "elapsed/read/preview/commit/output/peak-memory accounting"]
+  },
+  "minimal_implementation_gaps_before_run": [
+    "Add one explicit TRAIN-only occupancy-condition seam to the reusable public factory; do not relabel a union file as the supplied automatic annotation or claim its source QC certified physical occupancy.",
+    "Bind original S/T/D and derived occupancy separately, retain source-label counts, and make the derived flag honest in task extent/provenance. NativeSpatialCase currently emits occupancy_modified=false unconditionally in the supplied-goal record; a union must not inherit that claim.",
+    "Freeze baseline access across the pair and verify full T/D/source MRI unchanged. Existing admission can only be reused if bindings distinguish acquired annotations from the simulated occupancy assumption; no truth-valued source/QC fields may be forged.",
+    "Focused generated controls: exact unchanged baseline identity; union adds exactly T minus S and is idempotent; unchanged T/D/full denominator; unknown domains not expanded; fixed access/tools/geometry; SELECT and EVAL refusal; forged derived provenance refusal. No controls have been run for this recipe."
+  ],
+  "interpretation": "A change from STOP to progress supports sensitivity to the occupancy interpretation under these fixed tools and access; it does not validate S union T anatomically. Continued STOP leaves action/access/reward and algorithm limitations unresolved. Historical raw TRAIN and zero-shot SELECT results remain the original baseline; new TRAIN findings do not authorize retrospective SELECT retuning."
+}

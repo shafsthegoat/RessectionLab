@@ -1,0 +1,41 @@
+Cerebrum annotation is not established total physical tissue occupancy
+October 10, 2026
+
+A source-meaning issue constrains the current geometric environment. ReMIND
+provides an automatic cerebrum object and a separate manual whole-tumor object.
+Its methods identify Brainlab Elements/Object Manipulation, but no exact version
+or per-case object generation order. Whole tumor differs from the intended
+resection target; enhancing-lesion annotation includes any necrotic core.
+Source: https://doi.org/10.1038/s41597-024-03295-z (Segmentation data; Data export).
+
+A manufacturer-authored historical guide documents a plausible reason for their
+non-overlap. Brainlab iPlan Stereotaxy3.0, Software User Guide Rev1.4 (2014),
+printed page174, section13.4, describes atlas segmentation that excludes an
+outlined tumor region; tumor is also ignored if not outlined first. This is
+workflow evidence, not proof of the exact ReMIND version, procedure or accuracy.
+Source mirror: https://data2bids.greydongilmore.com/static/brainlab_iplan_stereotaxy_v3.0.pdf#page=174
+Root independently retrieved14,770,732bytes over verifiedTLS and read printed174
+(PDF index173). SHA256 8170e1f3af0e8497370ecd529fc64a46fcd1c68e8b0522cd96f103e985353a01.
+The full copyrighted manual remains outside Git; only paraphrases/pin retained.
+
+In the unchanged world, removal is a subset of cerebrum support S. The fraction
+of the full supplied target T removed therefore cannot exceed |S intersect T|/|T|,
+even before access/tool restrictions. Existing TRAIN tasks exclude34.55%,45.95%,
+81.04%,42.02% of their targets from simulated occupancy. OnSELECT013 this ceiling
+is4.48%. This is an environment assumption, not evidence that those source tumor
+regions are empty, impossible to remove clinically, or wrongly registered.
+
+The original partial-target baseline remains intact. The next source-prepared
+TRAIN-only sensitivity contrast compares S against explicit assumed simulated
+occupancy S union T, with original masks/full target/domain retained and baseline
+access fixed. Union assumes all labeled tumor, including unseparated necrotic
+components, behaves as occupied removable cells. It is not corrected anatomy,
+measured tissue composition, neurological safety or physically validated surgery.
+No filling, dilation, clipping or inferred intensity-based anatomy is proposed.
+
+Existing support-dependent MRI normalization is a coupling: the first contrast
+is search-only and records this effect. Any later neural comparison needs shared
+normalization or explicit coupling disclosure. Derived occupancy must have its
+own provenance and truthful extent flag. The staged paired recipe specifies
+this prospective contrast; no union construction or patient experiment has run.
+SELECT/EVAL are excluded and existing SELECT outcomes are not retuned.
