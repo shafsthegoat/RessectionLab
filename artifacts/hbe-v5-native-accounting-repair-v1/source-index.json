@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "path": "RESULT.txt",
+      "source_path": "build/hbe-v5-native-accounting-repair-v1/RESULT.txt",
+      "bytes": 4741,
+      "sha256": "0b4534f2615aae276fa3fc6b5dd84a9d0a0ecf840109568e10ed100103eb3254"
+    },
+    {
+      "path": "source.patch",
+      "source_path": "build/hbe-v5-native-accounting-repair-v1/source.patch",
+      "bytes": 5926,
+      "sha256": "c8db14dfd48c14ca88b0a855d1cc0d457c4efc1e088e32955fcb1542d61b330a"
+    },
+    {
+      "path": "actual-ledger-differences.json",
+      "source_path": "build/hbe-v5-native-accounting-repair-v1/actual-ledger-differences.json",
+      "bytes": 16371,
+      "sha256": "1cb6f1fcaeac099daf9babb2b76b331a5936a0e1a45857ac669784a8b188b2f8"
+    },
+    {
+      "path": "root-canonical-tests.log",
+      "source_path": "build/hbe-v5-native-accounting-repair-v1/root-canonical-tests.log",
+      "bytes": 179,
+      "sha256": "cc63fb8881834686a879de8add9403321315a9a6c49e0de167bbe1ae455546f1"
+    },
+    {
+      "path": "negative/receipt.json",
+      "source_path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-01/receipt.json",
+      "bytes": 2657,
+      "sha256": "5709e79d7da58e789454cda7481ae362870b4a898cecb5c2849cf63215477530"
+    },
+    {
+      "path": "negative/worker.log",
+      "source_path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-01/readout-console.txt",
+      "bytes": 1540,
+      "sha256": "549a93096b18f64352c825801dab54865f283c2dc9d8a9815da6073c49b8876d"
+    },
+    {
+      "path": "negative/input-manifest.json",
+      "source_path": "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest.json",
+      "bytes": 35937,
+      "sha256": "ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449"
+    },
+    {
+      "path": "independent/REPORT.txt",
+      "source_path": "build/hbe-v5-native-accounting-repair-independent-v1/REPORT.txt",
+      "bytes": 3133,
+      "sha256": "b79bbf73b159bf0a7fc278ade749775ccf442cb2cdaa71c2c161b5a9c9ef3975"
+    },
+    {
+      "path": "independent/verification.json",
+      "source_path": "build/hbe-v5-native-accounting-repair-independent-v1/verification.json",
+      "bytes": 2196,
+      "sha256": "d75e58f803064e033b9f725e397a961232d10e16f6aa5717a6529d6b9bdba073"
+    }
+  ],
+  "raw_arrays_included": false,
+  "physical_validation_pass": null
+}

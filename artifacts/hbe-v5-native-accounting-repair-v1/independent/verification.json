@@ -1,0 +1,53 @@
+{
+  "decision": "GO_narrow_accounting_repair",
+  "source_and_preserved_evidence": {
+    "scripts/mechanics_hbe_v5_native_comparison.py": "31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e",
+    "scripts/mechanics_hbe_v5_comparison.py": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9",
+    "build/hbe-v5-native-accounting-repair-v1/baseline-native-comparison.py": "a00d3f0eb81033acce815905d6f275c8892d5dbf7b2f31d99b78556738d82631",
+    "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest.json": "ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449",
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-01/receipt.json": "5709e79d7da58e789454cda7481ae362870b4a898cecb5c2849cf63215477530",
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-01/readout-console.txt": "549a93096b18f64352c825801dab54865f283c2dc9d8a9815da6073c49b8876d"
+  },
+  "only_one_if_added_in_extension_charge": true,
+  "all_other_ast_identical": true,
+  "rows": [
+    {
+      "ordinal": 8,
+      "run_id": "tension:N12:S60:reference",
+      "all_numeric_fields_exact": true,
+      "complete_charged_previous_exact": true,
+      "marker": null
+    },
+    {
+      "ordinal": 9,
+      "run_id": "tension:N16:S60:reference",
+      "all_numeric_fields_exact": true,
+      "complete_charged_previous_exact": true,
+      "marker": {
+        "prep_wall_seconds": 1.1413705407176167,
+        "output_bytes": 1048576,
+        "source_ordinal8_native_receipt_sha256": "67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e",
+        "source_ordinal8_v2_sidecar_sha256": "dae900fcedd2dc61f1398a00e40be40b9fa355146c20599c6f01fc5a29b45eb8"
+      }
+    },
+    {
+      "ordinal": 10,
+      "run_id": "tension:N24:S60:reference",
+      "all_numeric_fields_exact": true,
+      "complete_charged_previous_exact": true,
+      "marker": null
+    },
+    {
+      "ordinal": 11,
+      "run_id": "tension:N24:S120:reference",
+      "all_numeric_fields_exact": true,
+      "complete_charged_previous_exact": true,
+      "marker": null
+    }
+  ],
+  "test_reruns": 0,
+  "full_chain_calls": 0,
+  "comparator_calls": 0,
+  "solver_calls": 0,
+  "readout_or_array_reads": 0
+}

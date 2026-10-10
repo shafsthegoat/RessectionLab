@@ -1,0 +1,77 @@
+Narrow native-comparator accounting repair — ignored proposal
+
+Cause of the actual attempt01 refusal
+The comparison stopped at extension_prior_surcharge_once because the ordinal9
+saved charged_previous dictionary includes its authenticated v2_surcharge_applied
+provenance marker. The comparator reconstructed the numerical ledger but omitted
+this marker, then correctly used exact whole-dictionary equality. This is a
+metadata-shape bug in the comparator, not a numeric discrepancy or resource-cap
+violation. The first attempt's failure and absence of comparison.json remain
+preserved under build/hbe-v5-native-twelve-row-comparison-v1/attempt-01.
+
+All four actual sidecar/native/envelope triples were inspected as small metadata,
+using the unchanged actual-input-manifest.json SHA256
+ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449.
+No separate readouts, decks, mesh, native logs, measurement or patient payload
+were opened. actual-ledger-differences.json records the exact old/computed ledgers:
+ordinal8 has no mismatch; ordinal9 differs only by this marker key; ordinal10
+and ordinal11 have no mismatch. No floating-point tolerance is needed or added.
+
+Ordinal9's expected marker is exactly:
+- prep_wall_seconds: 1.1413705407176167
+- output_bytes: 1048576
+- source_ordinal8_native_receipt_sha256:
+  67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e
+- source_ordinal8_v2_sidecar_sha256:
+  dae900fcedd2dc61f1398a00e40be40b9fa355146c20599c6f01fc5a29b45eb8
+The original scripts/mechanics_hbe_v5_n12_v2_admission.py
+_arithmetic_surcharge explicitly creates this marker; the existing later ancestry
+verifier also expects it for ordinal9. Later-row ledgers deliberately omit it.
+
+Minimal proposed change
+Ten production lines reconstruct the marker only for ordinal9, using the already
+authenticated cumulative ordinal8 surcharge, prior native receipt hash at index8,
+and the comparator's existing fixed v2 sidecar hash. The run ID and nine-entry
+ancestry shape are checked. Exact charged_previous equality is left intact, so
+missing/extra marker fields, changed identities and numeric changes still refuse.
+Other ordinals retain their plain-ledger contract. No field is deleted or ignored.
+All existing time, output, cleanup, source and aggregate checks are unchanged.
+
+Candidate script SHA256:
+31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e
+Original script SHA256:
+a00d3f0eb81033acce815905d6f275c8892d5dbf7b2f31d99b78556738d82631
+Shared numerical comparison remains unchanged at:
+895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9
+Patch SHA256:
+c8db14dfd48c14ca88b0a855d1cc0d457c4efc1e088e32955fcb1542d61b330a
+
+Focused validation
+- Five small-metadata tests passed in0.009s; after pinning the original source
+  copy explicitly, the same five passed in0.010s. This retains a repeatable
+  original-failure reproduction after root integration. The original code fails
+  only ordinal9, and repaired code returns exact retained aggregate dictionaries
+  for all four actual rows without mutating inputs.
+- The metadata controls alter each marker identity/value, remove/add marker
+  fields, change a numeric ledger field by1e-12, mislabel ordinal9 and add the
+  marker to later rows. All refuse. They AST-load only the exact pure accounting
+  functions and constants; no project imports, raw-chain verifier or comparison.
+- Thirty-five selected staged canonical tests passed in3.09s, including the new
+  actual ordinal9 metadata/tamper regressions and generated full-entry/late-input
+  controls. Synthetic orchestration now includes ordinal and the real marker
+  shape, closing the fixture omission that allowed the integration bug through.
+  Actual raw/Git admission seams remain replaced by generated test seams; no
+  actual full-chain read, saved replay, native solve or comparison ran.
+- git apply --check passed. AST comparison confirms every other native-comparator
+  top-level function/constant is unchanged; the shared numerical file is untouched.
+
+Integration boundary
+Root alone applies the source/tests patch. The original actual manifest still
+binds the old comparator source and must not be overwritten or reused pretending
+that its source binding matches the repaired worker. Any future root-authorized
+comparison needs a separately named successor manifest that changes only this
+one comparison_source_bindings hash, plus reviewed successor execution bindings.
+All receipt/readout/review/policy identities and the original failed attempt stay
+unchanged. No successor manifest, release or comparison attempt was created here.
+This repair does not establish twelve-row numerical qualification or physical
+validation. Measured responses and patient evidence remain sealed.

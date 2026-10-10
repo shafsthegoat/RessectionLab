@@ -1197,3 +1197,14 @@ A bounded continuous-center preview is queued with unchanged tools/constraints;
 no substitute case, recipe/split change, held-out execution or pilot occurred.
 This failure corrects the earlier assumption that structural and STOP-factory
 checks established a meaningful learning inventory.
+
+### October 10: actual twelve-row comparison reveals provenance mismatch
+
+The first comparison attempt stops in 5.909 seconds at ordinal 9 accounting,
+not at a numerical criterion. Its valid historical v2 surcharge marker was
+missing from the reconstructed expected ledger; all numeric values match.
+The [ten-line correction](../artifacts/hbe-v5-native-accounting-repair-v1/RESULT.txt)
+reconstructs that exact marker and retains strict equality, source guards and
+unchanged numerical math. All four actual sidecars pass; root canonical tests
+pass 83 in 5.22 seconds. Original failed receipt/log/manifest remain preserved.
+The successor comparison must bind the repaired source hash explicitly.

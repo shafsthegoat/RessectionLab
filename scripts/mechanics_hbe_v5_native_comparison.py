@@ -260,6 +260,16 @@ def extension_charge(sidecar, envelope, native, *, descriptor, native_sha, close
         _need(previous[key] == native[field], 'extension_original_predecessor_accounting')
     previous['prep_seconds']+=prior_surcharge_seconds; previous['combined_wall_seconds']+=prior_surcharge_seconds
     previous['output_bytes']+=prior_surcharge_bytes; previous['combined_output_bytes']+=prior_surcharge_bytes
+    if native.get('ordinal') == 9:
+        # The original ordinal-9 launcher retained this authenticated provenance
+        # marker alongside its charged ledger. Later launchers use plain ledgers.
+        _need(native.get('run_id') == remaining.ORDER[9] and len(previous['sha256']) == 9,
+              'ordinal9_surcharge_ancestry')
+        previous['v2_surcharge_applied'] = {
+            'prep_wall_seconds': prior_surcharge_seconds,
+            'output_bytes': prior_surcharge_bytes,
+            'source_ordinal8_native_receipt_sha256': previous['sha256'][8],
+            'source_ordinal8_v2_sidecar_sha256': V2_SIDECAR_SHA}
     if 'charged_previous' in sidecar:
         _need(sidecar['charged_previous'] == previous, 'extension_prior_surcharge_once')
     else:

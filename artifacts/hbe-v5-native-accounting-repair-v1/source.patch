@@ -1,0 +1,92 @@
+--- a/scripts/mechanics_hbe_v5_native_comparison.py
++++ b/scripts/mechanics_hbe_v5_native_comparison.py
+@@ -260,6 +260,16 @@
+         _need(previous[key] == native[field], 'extension_original_predecessor_accounting')
+     previous['prep_seconds']+=prior_surcharge_seconds; previous['combined_wall_seconds']+=prior_surcharge_seconds
+     previous['output_bytes']+=prior_surcharge_bytes; previous['combined_output_bytes']+=prior_surcharge_bytes
++    if native.get('ordinal') == 9:
++        # The original ordinal-9 launcher retained this authenticated provenance
++        # marker alongside its charged ledger. Later launchers use plain ledgers.
++        _need(native.get('run_id') == remaining.ORDER[9] and len(previous['sha256']) == 9,
++              'ordinal9_surcharge_ancestry')
++        previous['v2_surcharge_applied'] = {
++            'prep_wall_seconds': prior_surcharge_seconds,
++            'output_bytes': prior_surcharge_bytes,
++            'source_ordinal8_native_receipt_sha256': previous['sha256'][8],
++            'source_ordinal8_v2_sidecar_sha256': V2_SIDECAR_SHA}
+     if 'charged_previous' in sidecar:
+         _need(sidecar['charged_previous'] == previous, 'extension_prior_surcharge_once')
+     else:
+--- a/tests/test_mechanics_hbe_v5_native_comparison.py
++++ b/tests/test_mechanics_hbe_v5_native_comparison.py
+@@ -53,7 +53,7 @@
+         output_origin='unverified_saved_stream',native_output_observed=None,generated_fixture_only=None,
+         primitive_bindings=primitives,reconstruction_provenance='reflected_native_half_not_native_full'
+             if row['representation']=='reconstructed_full' else 'full_native')
+-    receipt={'run_id':run_id,'status':'passed_numerical_software_only','release_sha256':release_sha,
++    receipt={'run_id':run_id,'ordinal':index,'status':'passed_numerical_software_only','release_sha256':release_sha,
+              'native_calls_attempted':1,'no_retry':True,'source_commit':commit,'adapted_deck_sha256':adapted,
+              'old_source_deck_sha256':src['sha256'],'native_mesh_sha256':mesh['sha256'],
+              'saved_numerical_readout':{'readout_sha256':readout_sha},'output_bindings':records,
+@@ -230,8 +230,49 @@
+     assert result['incremental_prep_seconds']==pytest.approx(1.1413705407176167)
+     side['charged_previous']['prep_seconds']+=2.
+     with pytest.raises(ValueError):n.extension_charge(side,envelope,native,**kwargs)
++
++
++def ordinal9_extension_fixture():
++    # Exact compact historical metadata; no readout/log/deck bytes.
++    folder=ROOT/'artifacts/hbe-v5-tension-n16-continuation-result-v1'
++    side=json.loads((folder/'continuation/receipt.json').read_text())
++    envelope=json.loads((folder/'release/outer-envelope.json').read_text())
++    raw=(folder/'native/receipt.json').read_bytes();native=json.loads(raw)
++    side8,envelope8,native8,kwargs8=extension_fixture()
++    delta=n.extension_charge(side8,envelope8,native8,**kwargs8)
++    return side,envelope,native,{
++        'descriptor':{'schema':side['schema'],'status':side['status'],
++            'envelope':{'sha256':hashlib.sha256((folder/'release/outer-envelope.json').read_bytes()).hexdigest()}},
++        'native_sha':hashlib.sha256(raw).hexdigest(),
++        'closed_native_bytes':len(raw)+sum(x['bytes'] for x in native['output_bindings'].values()),
++        'prior_surcharge_seconds':delta['incremental_prep_seconds'],
++        'prior_surcharge_bytes':delta['incremental_output_bytes']}
++
++
++def test_actual_ordinal9_provenance_marker_retains_strict_ledger_equality():
++    side,envelope,native,kwargs=ordinal9_extension_fixture();before=deepcopy(side)
++    result=n.extension_charge(side,envelope,native,**kwargs)
++    assert side==before
++    assert result['charged_aggregate']==side['extension_resource_charge']['aggregate_with_extension']
++    assert result['incremental_output_bytes']==1048576
+ 
+ 
++@pytest.mark.parametrize('change',['missing','extra','prep','output','native_hash','sidecar_hash','ledger','wrong_ordinal'])
++def test_ordinal9_marker_and_numeric_tamper_refuse(change):
++    side,envelope,native,kwargs=ordinal9_extension_fixture()
++    marker=side['charged_previous']['v2_surcharge_applied']
++    if change=='missing':del side['charged_previous']['v2_surcharge_applied']
++    elif change=='extra':marker['unrecognized']='extra'
++    elif change=='prep':marker['prep_wall_seconds']+=1e-12
++    elif change=='output':marker['output_bytes']+=1
++    elif change=='native_hash':marker['source_ordinal8_native_receipt_sha256']='0'*64
++    elif change=='sidecar_hash':marker['source_ordinal8_v2_sidecar_sha256']='0'*64
++    elif change=='ledger':side['charged_previous']['prep_seconds']+=1e-12
++    else:native['ordinal']=10
++    with pytest.raises(ValueError,match='extension_prior_surcharge_once'):
++        n.extension_charge(side,envelope,native,**kwargs)
++
++
+ def test_sidecar_reservation_is_separate_from_native_row_cap_and_charged_to_aggregate():
+     side,envelope,native,kwargs=extension_fixture()
+     closed=native['caps']['active_output_bytes']-512*1024
+@@ -316,6 +357,11 @@
+         side['old_validation_identity']['previous']=deepcopy(prev)
+         for key in ('prep_seconds','combined_wall_seconds'):prev[key]+=cumulative_time
+         for key in ('output_bytes','combined_output_bytes'):prev[key]+=cumulative_bytes
++        if i==9:
++            prev['v2_surcharge_applied']={
++                'prep_wall_seconds':cumulative_time,'output_bytes':cumulative_bytes,
++                'source_ordinal8_native_receipt_sha256':native['prior_receipt_sha256'][8],
++                'source_ordinal8_v2_sidecar_sha256':n.V2_SIDECAR_SHA}
+         if i>8:side['charged_previous']=prev
+         closed=(tmp_path/manifest['native_receipts'][i]['path']).stat().st_size+sum(x['bytes'] for x in native['output_bindings'].values())
+         charge=side['extension_resource_charge'];charge.update(launcher_inclusive_prep_seconds_with_finalization_reserve=2.5,

@@ -1,0 +1,46 @@
+GO — narrow historical-accounting repair; no numerical or physical qualification.
+
+The canonical native comparator is exactly the reviewed candidate:
+31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e.
+Canonical tests match6de86be88e21b9e8617cc1e9888bdb214c628899a68fc38f5d1ab9f2ea6645a0;
+patchc8db14dfd48c14ca88b0a855d1cc0d457c4efc1e088e32955fcb1542d61b330a.
+
+Independent source/metadata corroboration confirms:
+- The only production delta from baselinea00d3f0e… is one ten-line if block in
+  extension_charge. Removing that new block makes its AST identical to baseline;
+  every other top-level AST remains identical.
+- The original v2 admission _arithmetic_surcharge and later ancestry verifier
+  explicitly retain v2_surcharge_applied for ordinal9. This repair reconstructs
+  that same marker from already authenticated ordinal8 surcharge/receipt ancestry
+  and the existing fixed v2 sidecar SHA. It checks the ordinal9 run ID and nine
+  predecessors. It does not copy an unchecked marker from the sidecar.
+- All four saved sidecar ledgers have exactly equal numeric fields. Only ordinal9
+  needs the provenance marker:1.1413705407176167 s,1048576 B, native receipt
+  67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e,
+  v2 sidecar dae900fcedd2dc61f1398a00e40be40b9fa355146c20599c6f01fc5a29b45eb8.
+  Independent metadata reconstruction yields exact complete charged_previous
+  equality for ordinals9–11; ordinal8 correctly has no prior extension surcharge.
+- Whole-dictionary equality remains in place. No numeric tolerance, field deletion,
+  ignored marker, changed cap, changed aggregate equation or mathematical threshold
+  was introduced. The shared numerical comparator remains byte-identical SHA
+  895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9.
+
+Preservation independently verified before/after:
+Original input manifest ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449.
+Failed attempt01 receipt5709e79d7da58e789454cda7481ae362870b4a898cecb5c2849cf63215477530.
+Failure console549a93096b18f64352c825801dab54865f283c2dc9d8a9815da6073c49b8876d.
+No comparison.json exists in that failed attempt. Its extension_prior_surcharge_once
+failure remains preserved. A successor manifest must bind only the new comparator
+source hash and retain every original receipt/readout/review/policy binding.
+
+Reviewed existing validation: root83 canonical tests passed5.22s; author5 pure
+actual-metadata controls and35 focused controls passed. Their source covers exact
+marker/numeric/identity tamper and preserves original failure reproduction. I did
+not rerun those suites or launch a new test campaign. My independent check used
+stdlib AST/source hashes and small receipt/sidecar JSON only, no project imports,
+full-chain call, comparator, stream replay, solver, numerical arrays, measured
+responses or patient payload. verification.json SHA
+d75e58f803064e033b9f725e397a961232d10e16f6aa5717a6529d6b9bdba073.
+
+No remaining blocker found for this exact repair. Root owns any separately bound
+successor comparison; this report does not claim the twelve-row screen has passed.

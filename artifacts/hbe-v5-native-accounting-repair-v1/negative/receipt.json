@@ -1,0 +1,69 @@
+{
+  "bindings": {
+    "actual-input-manifest.json": "ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449",
+    "compare_worker.py": "94e2e93cb439cf4602f95fa475c430f77f14428c37e2f4f07ae03d5953e2dacf"
+  },
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 1,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "error": "",
+  "error_type": "AssertionError",
+  "host_after": {
+    "available_percent": 75,
+    "host_read_seconds": 1.9916100427508354e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 11811160064,
+    "swap_used_bytes": 10020388864
+  },
+  "host_before": {
+    "available_percent": 79,
+    "host_read_seconds": 2.8250040486454964e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 11811160064,
+    "swap_used_bytes": 10020388864
+  },
+  "native_calls": 0,
+  "output_cap_bytes": 16777216,
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 16777216,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-I",
+      "-B",
+      "-X",
+      "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-twelve-row-comparison-v1/attempt-01/unused-worker-pycache",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-manifest-preparation-v1/compare_worker.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--manifest",
+      "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest.json",
+      "--manifest-sha256",
+      "ae9f8da5914b39e4f20f4f8b64f50cf9e6890250ac0e80cd9647580e07894449",
+      "--output-directory",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-twelve-row-comparison-v1/attempt-01",
+      "--execute"
+    ],
+    "elapsed_seconds": 5.908623166847974,
+    "exit_code": 1,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 3747,
+    "peak_sampled_process_group_rss_bytes": 231473152,
+    "pid": 41316,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "failed_or_incomplete",
+    "wall_cap_seconds": 600
+  },
+  "rss_cap_bytes": 3221225472,
+  "saved_stream_replays": 0,
+  "schema": "hbe-v5-root-saved-comparison-supervision-v1",
+  "source_commit": "478b9e1da92d34b685539cfda2a870b6d600c64a",
+  "status": "failed_comparison_attempt",
+  "threads": 1,
+  "wall_cap_seconds": 600
+}
