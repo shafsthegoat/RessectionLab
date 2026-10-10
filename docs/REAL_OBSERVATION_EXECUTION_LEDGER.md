@@ -966,3 +966,22 @@ Portable compact fixtures avoid making ignored output a clean-checkout dependenc
 a named local historical-path test retains the real source/Git check where present.
 No solver or bulk predecessor stream was read. Exact release, read-only no-cache
 feasibility and live host admission remain before native execution.
+
+### October 10: N16 tension completes once and independent replay agrees
+
+The [ordinal-9 result](../artifacts/hbe-v5-tension-n16-continuation-result-v1/RESULT.md)
+records one 10.512-second native solve and a 4.379-second official readout.
+Independent saved-stream replay took 4.373 seconds and matched the complete
+readout exactly: 61 frames, 60 steps, all frozen numerical criteria passing.
+The native receipt is `d2476c6355a4c23421c829eff4b9a5db1899b4013b73bacf7e2701eda0def144`;
+its continuation sidecar is `656dbcdc6edb69a516c68f0e5ff81ab22c2afe4732c7ad74f89efd595435f8eb`.
+Ten native rows are complete, with two still unrun. Physical validation remains
+null; the calculated reaction is a simulated specimen response.
+
+Initial template topology refusal and first feasibility import refusal are
+preserved alongside the corrected, passing 6.177-second feasibility attempt.
+The independent replay child passed and wrote its result before the enclosing
+audit command failed on a final bookkeeping import. The stale `started`
+supervisor status is preserved and explained, rather than silently corrected.
+No solver or saved-stream replay was retried. Original receipts and thresholds
+remain unchanged; row 10 requires separate continuation admission.

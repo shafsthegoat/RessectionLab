@@ -1,0 +1,32 @@
+{
+  "independent_saved_replay_only": true,
+  "native_receipt_sha256": "d2476c6355a4c23421c829eff4b9a5db1899b4013b73bacf7e2701eda0def144",
+  "official_native_calls_attempted": 0,
+  "original_readout_sha256": "2c854b9e5a10c2fd24851009810996a5334d59d24b7262a99af892c308b3f576",
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 16777216,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "-c",
+      "import hashlib,json,pathlib,sys\nfrom scripts import mechanics_hbe_v5_stream as stream\nroot=pathlib.Path(sys.argv[1]);order=json.loads(pathlib.Path(sys.argv[2]).read_text()); saved=json.loads(pathlib.Path(sys.argv[3]).read_text());result=stream.read_bound_run(root,order[\"run_id\"],order[\"bindings\"],order[\"adapter_receipt\"]); assert result==saved, \"saved stream replay differs from retained readout\"; assert result[\"frame_count\"]==61 and result[\"steps\"]==60 and result[\"representation\"]==\"reconstructed_full\" and result[\"numerical_passed\"] is True; metadata={\"schema\":\"hbe-v5-ordinal9-independent-saved-replay-v1\",\"exact_readout_equality\":True,\"readout_sha256\":hashlib.sha256(pathlib.Path(sys.argv[3]).read_bytes()).hexdigest(),\"frame_count\":result[\"frame_count\"],\"steps\":result[\"steps\"],\"representation\":result[\"representation\"],\"numerical_passed\":result[\"numerical_passed\"],\"minimum_sampled_J\":result[\"minimum_sampled_J\"],\"largest_criterion_ratio\":max(result[\"criteria_max_ratio\"].values()),\"final_force_N\":result[\"applied_force_N\"][-1],\"final_load_m\":result[\"load_coordinate_full_m\"][-1],\"provenance\":{k:result[\"provenance\"].get(k) for k in (\"output_origin\",\"generated_fixture_only\",\"native_output_observed\",\"reconstruction_provenance\")}};pathlib.Path(sys.argv[4]).write_text(json.dumps(metadata,sort_keys=True,indent=2)+\"\\n\")",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/readout-work-order.json",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/readout.json",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal9-native-independent-v1/REPLAY_RESULT.json"
+    ],
+    "elapsed_seconds": 4.37291929195635,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 3742,
+    "peak_sampled_process_group_rss_bytes": 201703424,
+    "pid": 30194,
+    "sampled_process_group_rss_cap_bytes": 3221225472,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 60
+  },
+  "schema": "hbe-v5-ordinal9-independent-saved-replay-supervision-v1",
+  "source_commit": "e804aa88446d609b7e135973a1159f463b767cf2",
+  "status": "started"
+}

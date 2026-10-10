@@ -1,0 +1,215 @@
+{
+  "schema": "hbe-v5-n16-result-evidence-v1",
+  "source_commit": "e804aa88446d609b7e135973a1159f463b767cf2",
+  "files": [
+    {
+      "path": "native/readout-work-order.json",
+      "source_path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/readout-work-order.json",
+      "bytes": 7369,
+      "sha256": "0857550d83f8382cfc6032a8349ffcf6d639423117c1bb73d9e90d8b18fbf073"
+    },
+    {
+      "path": "native/receipt.json",
+      "source_path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/receipt.json",
+      "bytes": 14247,
+      "sha256": "d2476c6355a4c23421c829eff4b9a5db1899b4013b73bacf7e2701eda0def144"
+    },
+    {
+      "path": "continuation/receipt.json",
+      "source_path": "outputs/mechanics/hbe-v5-ordinal9-continuation-v1/09-tension-N16-S60-reference/attempt-01/receipt.json",
+      "bytes": 36910,
+      "sha256": "656dbcdc6edb69a516c68f0e5ff81ab22c2afe4732c7ad74f89efd595435f8eb"
+    },
+    {
+      "path": "independent/REPLAY_RESULT.json",
+      "source_path": "build/hbe-v5-ordinal9-native-independent-v1/REPLAY_RESULT.json",
+      "bytes": 680,
+      "sha256": "776ae75ad4696a2dd96afea9b013a6374e49349e2a48ad9bc33b18fd5e6d8288"
+    },
+    {
+      "path": "independent/REPORT.md",
+      "source_path": "build/hbe-v5-ordinal9-native-independent-v1/REPORT.md",
+      "bytes": 3793,
+      "sha256": "acdc8f3d0c931006fbc3886f8f0affad4086bbf9a6c1d265200501502939cb74"
+    },
+    {
+      "path": "independent/RESULT_METADATA.json",
+      "source_path": "build/hbe-v5-ordinal9-native-independent-v1/RESULT_METADATA.json",
+      "bytes": 3258,
+      "sha256": "b661c8bdd74016c427ba9ce58f46b56d1f6cb4ed14efef8db562c68e130fc8c4"
+    },
+    {
+      "path": "independent/readout-console.txt",
+      "source_path": "build/hbe-v5-ordinal9-native-independent-v1/readout-console.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "independent/receipt.json",
+      "source_path": "build/hbe-v5-ordinal9-native-independent-v1/receipt.json",
+      "bytes": 3124,
+      "sha256": "d321fe15f5659a7c67e9b7592c80a4ae901492743d0993dd5e0fdf98215df844"
+    },
+    {
+      "path": "release/ROOT_DERIVATION.json",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-final-release-v1/ROOT_DERIVATION.json",
+      "bytes": 828,
+      "sha256": "00a16e7d92ddae8db3613ddb865af058fa3d020a341cfeb673b11ca3554b368d"
+    },
+    {
+      "path": "release/inner-release.json",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-final-release-v1/inner-release.json",
+      "bytes": 14374,
+      "sha256": "f0a3ff4c9fc4a19eada8448d0837274adff0efaa33b60b2bf903bf78463745b6"
+    },
+    {
+      "path": "release/outer-envelope.json",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-final-release-v1/outer-envelope.json",
+      "bytes": 1827,
+      "sha256": "47d9d12a810fc03c43bf4715e2e6e04fe3c0c2e7b935a2cd464616a56a55fe7b"
+    },
+    {
+      "path": "release/root-host-before-native.json",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-final-release-v1/root-host-before-native.json",
+      "bytes": 172,
+      "sha256": "83d2a8f5b90f77511729c529dc89415aba9bca47efdaa21be4989b6f2a115000"
+    },
+    {
+      "path": "release/root-launch-console.txt",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-final-release-v1/root-launch-console.txt",
+      "bytes": 188,
+      "sha256": "91fbe94c567240d7336c4d0efd11c6fac262ae379e889b1b8eeb735f463f4b94"
+    },
+    {
+      "path": "negative-template/ROOT_OBSERVED_FAILURE.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v1/template-initial-failure/ROOT_OBSERVED_FAILURE.json",
+      "bytes": 709,
+      "sha256": "99c179a74ce10653ff11c9a03562a1f4307bff7478197d6d9829811f2f1cd230"
+    },
+    {
+      "path": "negative-template/derive_templates_initial.py",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v1/template-initial-failure/derive_templates_initial.py",
+      "bytes": 7977,
+      "sha256": "4cddacfe6ae1138929462572a4869ec4444cea9969a6b5e444ff909f087cd324"
+    },
+    {
+      "path": "negative-probe/hint-audit.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v1/attempt-01/hint-audit.json",
+      "bytes": 3385,
+      "sha256": "ba2b59ef8fd37f51508124e5ce48f8abb707604c442861b806bf4817e16bdb9a"
+    },
+    {
+      "path": "negative-probe/readout-console.txt",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v1/attempt-01/readout-console.txt",
+      "bytes": 2303,
+      "sha256": "96f4d6c0c7e2555f5e7736634174136ecc9178fa5db6607945ba0a687f82f98c"
+    },
+    {
+      "path": "negative-probe/receipt.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v1/attempt-01/receipt.json",
+      "bytes": 12769,
+      "sha256": "54f2ffb5e128a372bfa7c62cc6e1a3db4fcc5af2c93ac3c8382d10b5575a98f8"
+    },
+    {
+      "path": "negative-probe/probe.py",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v1/probe.py",
+      "bytes": 24904,
+      "sha256": "225782441b27c8f6db530d49ac24fb0bf4a565d6aac6ac5e778ea382bfcd3822"
+    },
+    {
+      "path": "passed-probe/continuation-ledger.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/continuation-ledger.json",
+      "bytes": 3682,
+      "sha256": "7d07d4d3ca37a199e9c6940a424002b1c1a5aedcf0deb8fdbcd5a485925a3a4a"
+    },
+    {
+      "path": "passed-probe/hint-audit.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/hint-audit.json",
+      "bytes": 3385,
+      "sha256": "ba2b59ef8fd37f51508124e5ce48f8abb707604c442861b806bf4817e16bdb9a"
+    },
+    {
+      "path": "passed-probe/host-time-series.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/host-time-series.json",
+      "bytes": 5634,
+      "sha256": "062b21225c52db6fdc80fbae63e05e5c34c61ce9ae39b11ae20621cf2b2b474d"
+    },
+    {
+      "path": "passed-probe/readout-console.txt",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/readout-console.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "passed-probe/receipt.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/receipt.json",
+      "bytes": 12827,
+      "sha256": "331910a72407747c09eaf13a3a94730548ee456291b864d5c4c6544ea0b767aa"
+    },
+    {
+      "path": "passed-probe/validation-identity.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/validation-identity.json",
+      "bytes": 9375,
+      "sha256": "19d9b8b235671cfbfe7930dbfdceb461051e9f64bf21a84752d40abdda324be2"
+    },
+    {
+      "path": "passed-probe/worker-result.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/worker-result.json",
+      "bytes": 2051,
+      "sha256": "fbf48cc0ce42d29dfc712d58eb0d6b0d653b9d4c74c383ca1e2248ccc23a3e4a"
+    },
+    {
+      "path": "passed-probe/worker-samples.json",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/attempt-01/worker-samples.json",
+      "bytes": 7678,
+      "sha256": "d19ab6fdeb403c7b248ad2dd363b9de5e4cf96c948ff15a862e3fc59bfc1a5d6"
+    },
+    {
+      "path": "passed-probe/probe.py",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-v2/probe.py",
+      "bytes": 25212,
+      "sha256": "65f2e7a2aa57190cbb8515d633c0723341ea7524b4c8b93926c695b8d9c46304"
+    },
+    {
+      "path": "prelaunch-review/ACTUAL_NEGATIVE_ATTEMPT_01.md",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-independent-v1/ACTUAL_NEGATIVE_ATTEMPT_01.md",
+      "bytes": 2402,
+      "sha256": "d1e9118820d10b0835062979896b4aa4ce6aeded01ac2be22f06f5dbbcbcaeec"
+    },
+    {
+      "path": "prelaunch-review/PREFLIGHT_REVIEW.md",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-independent-v1/PREFLIGHT_REVIEW.md",
+      "bytes": 2766,
+      "sha256": "4a083e59fb5cb69aee6394c4eed163ba1c675b1af7d1508f591c12afa1b5aec5"
+    },
+    {
+      "path": "prelaunch-review/V2_PRELAUNCH_REVIEW.md",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-independent-v1/V2_PRELAUNCH_REVIEW.md",
+      "bytes": 2022,
+      "sha256": "ccab219c36f596525c5b3575c1bba9d17be4f5e4da11450b264d2eee487863e0"
+    },
+    {
+      "path": "prelaunch-review/V2_SAVED_RESULT_AND_NATIVE_RELEASE_REVIEW.md",
+      "source_path": "build/hbe-v5-ordinal9-feasibility-independent-v1/V2_SAVED_RESULT_AND_NATIVE_RELEASE_REVIEW.md",
+      "bytes": 3936,
+      "sha256": "fd1ebb753dcccaa3cbc2a475011b9514de6b740439df2c7c0b065c1b8988e4e8"
+    },
+    {
+      "path": "corrected-template/TEMPLATE_METADATA.json",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-release-prep/TEMPLATE_METADATA.json",
+      "bytes": 6660,
+      "sha256": "0359cb9ddd8d6894d601dd554ead5cc3da2c99387cda2b9343b94bbe60caf261"
+    },
+    {
+      "path": "corrected-template/derive_templates.py",
+      "source_path": "build/hbe-v5-tension-n16-s60-continuation-release-prep/derive_templates.py",
+      "bytes": 8094,
+      "sha256": "5d8cd8a3bb9fedc8db006b704c44c33b8e384f0b323d29dbc1153c23dc5e4bd5"
+    }
+  ],
+  "total_bytes": 234541,
+  "native_streams_included": false,
+  "physical_validation_pass": null,
+  "patient_data_included": false,
+  "note": "Exact compact copies; original bulk output remains local. One native solve and one independent saved replay; three preparation/bookkeeping negatives preserved."
+}

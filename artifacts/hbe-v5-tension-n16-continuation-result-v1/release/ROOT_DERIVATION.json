@@ -1,0 +1,18 @@
+{
+  "source_commit": "e804aa88446d609b7e135973a1159f463b767cf2",
+  "ordinal": 9,
+  "run_id": "tension:N16:S60:reference",
+  "inner_sha256": "f0a3ff4c9fc4a19eada8448d0837274adff0efaa33b60b2bf903bf78463745b6",
+  "outer_sha256": "47d9d12a810fc03c43bf4715e2e6e04fe3c0c2e7b935a2cd464616a56a55fe7b",
+  "template_inner_sha256": "85973cab60f1db9196895ec7d1287ddf44cd9c59e5176834677846b5044e99b4",
+  "template_outer_sha256": "4bc4e1f7cf502ed1dd3a674c5c8f6d795177b6ab5130ac9edf663c827309f8ee",
+  "feasibility_receipt_sha256": "331910a72407747c09eaf13a3a94730548ee456291b864d5c4c6544ea0b767aa",
+  "mutations_from_reviewed_templates": [
+    "inner status",
+    "outer status",
+    "outer inner-release path and sha256"
+  ],
+  "native_calls_authorized": 1,
+  "native_called_by_this_derivation": false,
+  "physical_validation_claim": false
+}

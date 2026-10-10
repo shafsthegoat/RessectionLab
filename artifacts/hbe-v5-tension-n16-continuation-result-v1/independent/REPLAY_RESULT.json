@@ -1,0 +1,19 @@
+{
+  "exact_readout_equality": true,
+  "final_force_N": 0.026764009297289098,
+  "final_load_m": 0.0007360099999999,
+  "frame_count": 61,
+  "largest_criterion_ratio": 0.0011041910434665884,
+  "minimum_sampled_J": 0.8855858291897051,
+  "numerical_passed": true,
+  "provenance": {
+    "generated_fixture_only": null,
+    "native_output_observed": null,
+    "output_origin": "unverified_saved_stream",
+    "reconstruction_provenance": "reflected_native_half_not_native_full"
+  },
+  "readout_sha256": "2c854b9e5a10c2fd24851009810996a5334d59d24b7262a99af892c308b3f576",
+  "representation": "reconstructed_full",
+  "schema": "hbe-v5-ordinal9-independent-saved-replay-v1",
+  "steps": 60
+}

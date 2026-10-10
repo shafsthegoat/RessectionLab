@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal9-feasibility-v1/probe.py", line 478, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal9-feasibility-v1/probe.py", line 473, in main
+    return worker(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal9-feasibility-v1/probe.py", line 266, in worker
+    result = compare.run_worker_arm("hinted", commit, diagnostic, hint,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-n12-nocache-comparison-v1/compare.py", line 121, in run_worker_arm
+    return diagnostic.worker_terminal(source_commit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-ordinal9-feasibility-v1/probe.py", line 240, in row9_terminal
+    context = remaining.validate_release(release, root=ROOT)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-n12-nocache-comparison-v1/compare.py", line 69, in captured_validation
+    checked = original_validation(*args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_remaining_one_shot.py", line 561, in validate_release
+    audit_imports(root=root)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_remaining_one_shot.py", line 149, in audit_imports
+    raise ValueError('Unbound executing scripts import: ' + name)
+ValueError: Unbound executing scripts import: scripts.mechanics_hbe_v5_n12_v2_admission

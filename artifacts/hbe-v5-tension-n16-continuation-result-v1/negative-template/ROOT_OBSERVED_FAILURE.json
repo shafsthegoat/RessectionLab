@@ -1,0 +1,15 @@
+{
+  "kind": "root_transcribed_tool_result_not_raw_log",
+  "source_commit": "e804aa88446d609b7e135973a1159f463b767cf2",
+  "helper_sha256": "4cddacfe6ae1138929462572a4869ec4444cea9969a6b5e444ff909f087cd324",
+  "returncode": 1,
+  "call": "sources.validate_topology_bc(json.loads(mesh), old, native_domain=\"full_native\")",
+  "exception": "ValueError: Mesh representation or boundary inventory differs",
+  "failure_line": 99,
+  "inner_template_created": false,
+  "outer_template_created": false,
+  "native_calls": 0,
+  "full_predecessor_reads": 0,
+  "pycache_prefix_remained_absent": true,
+  "subsequent_archival_copy_skipped": "Helper had already changed when root tried to copy it; author retains original."
+}

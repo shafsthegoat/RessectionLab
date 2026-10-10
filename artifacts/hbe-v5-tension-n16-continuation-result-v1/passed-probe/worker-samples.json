@@ -1,0 +1,71 @@
+[
+  {
+    "direct_kernel_host": {
+      "available_percent": 64,
+      "host_read_seconds": 2.187490463256836e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 9663676416,
+      "swap_used_bytes": 8954904576
+    },
+    "elapsed_seconds": 0.010862542083486915,
+    "label": "worker_before_import",
+    "memory_pressure": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 64%\n"
+    },
+    "memory_pressure_q_free_percent": 64,
+    "process_rss_bytes": 32555008,
+    "vm_stat": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     7960.\nPages active:                                 318340.\nPages inactive:                               308242.\nPages speculative:                             10890.\nPages throttled:                                   0.\nPages wired down:                             178801.\nPages purgeable:                                4859.\n\"Translation faults\":                     8278893361.\nPages copy-on-write:                       257167853.\nPages zero filled:                       10708762378.\nPages reactivated:                        1732153140.\nPages purged:                              117015290.\nFile-backed pages:                            157001.\nAnonymous pages:                              480471.\nPages stored in compressor:                  1133677.\nPages occupied by compressor:                 168529.\nDecompressions:                           1421897280.\nCompressions:                             1698936904.\nPageins:                                   964100054.\nPageouts:                                    3715001.\nSwapins:                                    12591756.\nSwapouts:                                   19564966.\nPages tagged:                                 134863.\nPages tagged resident:                         94495.\nPages tagged compressed:                       40368.\nPages tag-storage:                             32768.\nPages tag-storage holding tags:                 4941.\nPages tag-storage free:                          151.\nPages tag-storage non-tag pageable:            27588.\nPages tag-storage non-tag wired:                  88.\nBytes of compressed tags:                    6611136.\nTagged compressions:                        67886601.\nTagged decompressions:                      65382737.\n"
+    }
+  },
+  {
+    "direct_kernel_host": {
+      "available_percent": 64,
+      "host_read_seconds": 1.9415980204939842e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 9663676416,
+      "swap_used_bytes": 8954904576
+    },
+    "elapsed_seconds": 0.015562207903712988,
+    "label": "before_validate_release",
+    "memory_pressure": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 64%\n"
+    },
+    "memory_pressure_q_free_percent": 64,
+    "process_rss_bytes": 32571392,
+    "vm_stat": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     7862.\nPages active:                                 318342.\nPages inactive:                               308241.\nPages speculative:                             10891.\nPages throttled:                                   0.\nPages wired down:                             178801.\nPages purgeable:                                4859.\n\"Translation faults\":                     8278894778.\nPages copy-on-write:                       257168216.\nPages zero filled:                       10708762522.\nPages reactivated:                        1732153140.\nPages purged:                              117015290.\nFile-backed pages:                            157002.\nAnonymous pages:                              480472.\nPages stored in compressor:                  1133677.\nPages occupied by compressor:                 168529.\nDecompressions:                           1421897280.\nCompressions:                             1698936904.\nPageins:                                   964100057.\nPageouts:                                    3715001.\nSwapins:                                    12591756.\nSwapouts:                                   19564966.\nPages tagged:                                 134863.\nPages tagged resident:                         94495.\nPages tagged compressed:                       40368.\nPages tag-storage:                             32768.\nPages tag-storage holding tags:                 4941.\nPages tag-storage free:                          151.\nPages tag-storage non-tag pageable:            27588.\nPages tag-storage non-tag wired:                  88.\nBytes of compressed tags:                    6611136.\nTagged compressions:                        67886601.\nTagged decompressions:                      65382737.\n"
+    }
+  },
+  {
+    "direct_kernel_host": {
+      "available_percent": 64,
+      "host_read_seconds": 2.4084001779556274e-05,
+      "kernel_pressure_mask": 1,
+      "swap_total_bytes": 9663676416,
+      "swap_used_bytes": 8954904576
+    },
+    "elapsed_seconds": 5.10221325000748,
+    "label": "after_validate_release",
+    "memory_pressure": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 64%\n"
+    },
+    "memory_pressure_q_free_percent": 64,
+    "process_rss_bytes": 146489344,
+    "vm_stat": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     5171.\nPages active:                                 319105.\nPages inactive:                               314125.\nPages speculative:                              6574.\nPages throttled:                                   0.\nPages wired down:                             179040.\nPages purgeable:                                4861.\n\"Translation faults\":                     8279144259.\nPages copy-on-write:                       257197193.\nPages zero filled:                       10708851201.\nPages reactivated:                        1732153307.\nPages purged:                              117015308.\nFile-backed pages:                            154645.\nAnonymous pages:                              485159.\nPages stored in compressor:                  1133654.\nPages occupied by compressor:                 168523.\nDecompressions:                           1421897303.\nCompressions:                             1698936904.\nPageins:                                   964107843.\nPageouts:                                    3715022.\nSwapins:                                    12591760.\nSwapouts:                                   19564966.\nPages tagged:                                 134894.\nPages tagged resident:                         94526.\nPages tagged compressed:                       40368.\nPages tag-storage:                             32768.\nPages tag-storage holding tags:                 4941.\nPages tag-storage free:                          157.\nPages tag-storage non-tag pageable:            27582.\nPages tag-storage non-tag wired:                  88.\nBytes of compressed tags:                    6611136.\nTagged compressions:                        67886601.\nTagged decompressions:                      65382737.\n"
+    }
+  }
+]
