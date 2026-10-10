@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checks": [
+    "six_exact_sources_parse_and_patch_pin",
+    "runtime_dependency_closure_exact",
+    "only57_frozen_TRAIN_metadata_inputs_no_prior_checkpoints",
+    "40_fixed_states_eight_STOP_1360_forwards_distinct_experiment",
+    "coupled_desktop_source_closure_exact",
+    "owned_caps_lease_cleanup_fixed_worker_inventory_present"
+  ],
+  "count": 6,
+  "wall_seconds": 0.02759754192084074,
+  "model_imports": 0,
+  "model_forwards": 0,
+  "native_transitions": 0,
+  "optimizer_updates": 0,
+  "checkpoint_loads": 0,
+  "source_index_sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+  "promotion_index_sha256": "20ea93bf4a1d1763e42ab5057086f65fc5ad5a3be94b718fbfc826776a09409f",
+  "control_source_sha256": "3faf207f1e04704138fbae42306d5b52a6db9c9b4ad4dbdf9f1a5ad2fb84c8d0"
+}

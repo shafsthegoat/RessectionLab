@@ -26,7 +26,7 @@ SELECTORS = ("STOP", "SEARCH", "IL", "RL")
 MAX_CONTROLLER_BYTES = 128 * 1024
 # This binds the reviewed controller bytes. Its own closure checks the worker,
 # published-release verifier, and canonical task/model source before release.
-SUPERVISOR_SHA256 = "933c8e8df128691a77a0b346c1d0037fbc39038e1b99c7313b470212956b606f"
+SUPERVISOR_SHA256 = "4ab53f23a49ac61340ec5738e8240500a0eb67118177c8b5c2d8d5056b1e06f8"
 
 
 def _root() -> Path:

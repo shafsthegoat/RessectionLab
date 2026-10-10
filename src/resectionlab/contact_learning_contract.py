@@ -35,6 +35,51 @@ PROTOCOL = freeze_json({'version': VERSION, 'seed': 20261009,
     'unresolved_teachers': 'preserve_slot_without_label_no_replacement',
     'hybrid_arm': False})
 
+FULL_TEACHER_VERSION = 'generated-public-contact-full-teacher-refit-v1'
+FULL_TEACHER_PROTOCOL = freeze_json({**thaw_json(PROTOCOL), 'version': FULL_TEACHER_VERSION,
+    'methods': ['IL'], 'batch_size': 40, 'select_passes': 0, 'measurement_passes': 0,
+    'new_teacher_searches': 0, 'sample_schedule': 'same_complete_ordered_40_teacher_states_each_update',
+    'imitation_objective': 'unchanged_mean_action_categorical_cross_entropy',
+    'initialization': 'same_fresh_scratch_seed_not_a_pilot_checkpoint',
+    'loss_forward_calls': 1280, 'fixed_before_after_TRAIN_forwards': 80,
+    'method_seconds': 180., 'scope': 'extra_compute_TRAIN_optimization_diagnosis_no_comparison_claim'})
+
+
+def _validated_teacher_states(manifest, states):
+    """Bind the complete previously sealed corpus, not arbitrary repeated40 samples.
+
+    Original teacher seals/bindings identify provenance. The owned collector must
+    still reconstruct and verify them; this metadata is not a native certificate.
+    """
+    rows = freeze_json(states)
+    fields = {'layout_id', 'goal_id', 'step', 'observation_hash', 'action_id',
+              'original_binding_hash', 'strategy_seal'}
+    train = {(row['layout_id'], goal) for row in manifest['source_bindings']
+             if row['role'] == 'TRAIN' for goal in GOAL_IDS}
+    if (len(rows) != 40 or any(set(row) != fields for row in rows)
+            or any((row['layout_id'], row['goal_id']) not in train for row in rows)
+            or any(type(row['step']) is not int or row['step'] not in (0, 1) for row in rows)
+            or any(not all(_hash(row[key]) for key in ('observation_hash', 'original_binding_hash', 'strategy_seal'))
+                   or not isinstance(row['action_id'], str) or not row['action_id'] for row in rows)
+            or len({(row['layout_id'], row['goal_id'], row['step']) for row in rows}) != 40
+            or {(row['layout_id'], row['goal_id']) for row in rows if row['step'] == 0} != train
+            or sum(row['step'] == 0 for row in rows) != 24
+            or sum(row['action_id'] == 'STOP' for row in rows) != 8
+            or any(row['action_id'] == 'STOP' and row['step'] != 0 for row in rows)):
+        raise ValueError('Full-teacher refit requires the exact40-state TRAIN corpus, including eight STOP labels')
+    for key in train:
+        group = [row for row in rows if (row['layout_id'], row['goal_id']) == key]
+        if (len({row['original_binding_hash'] for row in group}) != 1
+                or len({row['strategy_seal'] for row in group}) != 1
+                or (len(group) == 1) != (group[0]['action_id'] == 'STOP')):
+            raise ValueError('Teacher corpus splices or truncates a complete strategy')
+    ordered_tasks = [(row['layout_id'], goal) for row in manifest['source_bindings']
+                     if row['role'] == 'TRAIN' for goal in GOAL_IDS]
+    positions = [(ordered_tasks.index((row['layout_id'], row['goal_id'])), row['step']) for row in rows]
+    if positions != sorted(positions):
+        raise ValueError('Teacher states must retain canonical teacher/action order')
+    return rows
+
 
 def _hash(value):
     return isinstance(value, str) and HASH.fullmatch(value) is not None
@@ -53,6 +98,7 @@ def policy_architecture_hash():
 class ContactExperiment:
     """Full source-only manifest frozen before the first teacher or rollout."""
     manifest: Mapping
+    teacher_states: tuple[Mapping, ...] | None = None
     _identity: str = field(init=False, repr=False)
     _architecture_hash: str = field(init=False, repr=False)
 
@@ -62,12 +108,22 @@ class ContactExperiment:
         if semantic_digest(candidate) != semantic_digest(family_manifest()):
             raise ValueError('Experiment must bind the exact canonical generated family manifest')
         object.__setattr__(self, 'manifest', candidate)
+        if self.teacher_states is not None:
+            object.__setattr__(self, 'teacher_states', _validated_teacher_states(candidate, self.teacher_states))
         object.__setattr__(self, '_architecture_hash', policy_architecture_hash())
         object.__setattr__(self, '_identity', semantic_digest(self.record()))
 
     def record(self):
-        return {'version': VERSION, 'protocol': PROTOCOL, 'family_manifest': self.manifest,
-                'architecture_hash': self._architecture_hash}
+        record = {'version': VERSION, 'protocol': PROTOCOL, 'family_manifest': self.manifest,
+                  'architecture_hash': self._architecture_hash}
+        if self.teacher_states is not None:
+            record.update(version=FULL_TEACHER_VERSION, protocol=FULL_TEACHER_PROTOCOL,
+                          teacher_states=self.teacher_states)
+        return record
+
+    @property
+    def protocol(self):
+        return PROTOCOL if self.teacher_states is None else FULL_TEACHER_PROTOCOL
 
     def assert_intact(self):
         if (self.manifest['family_hash'] != family_digest()
@@ -97,6 +153,11 @@ class ContactExperiment:
 
 def freeze_contact_experiment():
     return ContactExperiment(family_manifest())
+
+
+def freeze_full_teacher_refit(teacher_states):
+    """Explicit opt-in; default pilot records and checkpoint identities stay exact."""
+    return ContactExperiment(family_manifest(), teacher_states=teacher_states)
 
 
 @dataclass(frozen=True)
@@ -201,11 +262,11 @@ def common_initial_policies(experiment):
     experiment.assert_intact()
     # Preserve caller RNG; both methods start from the same new architecture.
     policies = {}
-    for method in ('IL', 'RL'):
+    for method in experiment.protocol['methods']:
         with torch.random.fork_rng(devices=[]):
             torch.manual_seed(PROTOCOL['seed'])
             policies[method] = GoalModeSpatialPolicy(policy_config())
-    if parameter_hash(policies['IL']) != parameter_hash(policies['RL']):
+    if len({parameter_hash(policy) for policy in policies.values()}) != 1:
         raise RuntimeError('Common scratch initialization differed')
     return policies
 

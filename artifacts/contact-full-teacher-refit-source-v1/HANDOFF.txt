@@ -1,0 +1,43 @@
+Opt-in full-teacher TRAIN refit, frozen source candidate
+
+Promotion index: 20ea93bf4a1d1763e42ab5057086f65fc5ad5a3be94b718fbfc826776a09409f
+Runtime source index: 3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff
+Owned run recipe: ef37d69ed338d3d20f46662c9a5cded4bf69831ddfddc25129bbd254b7e78a49
+New experiment: sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f
+Default experiment remains sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894.
+
+Root owns promotion, canonical tests and any subsequent explicit run release.
+No tracked files changed by this agent. New model/native/training run not executed.
+Six stdlib packaging/closure controls passed in 0.0276 seconds. Five canonical
+behavioral tests are staged, not yet executed by this agent. Their scope is
+contract/default-identity checks, new checkpoint refusal under the old experiment,
+leaf-tensor CE/gradient equality and metadata-only desktop controller admission.
+
+The six promotion files are the learning contract, loss/update implementation,
+checkpoint lineage handling, desktop supervisor (only three source SHA values),
+family desktop bridge (only its supervisor SHA), and one new five-test file.
+Outer desktop_bridge imports the family bridge directly and has no contact-family
+hash to refresh. Published release manifest and checkpoint pins are untouched.
+Original saved runtime indexes retain their historical expected bytes.
+
+The fit uses fresh original scratch initialization, unchanged architecture/mean
+CE/masks/Adam and 32 fixed updates over all 40 teacher states each time. Eight STOP
+labels remain. The additional compute is 1280 loss forwards versus 128 originally,
+plus 80 fixed before/after readout forwards. One new final checkpoint reload;
+no original checkpoint load. Exact 24 TRAIN tasks and 40 saved teacher transitions
+are reconstructed with observation, binding, native history, seal and geometry
+audits. The input allowlist contains only the 24 original teachers, 32 IL update
+receipts and original prospective experiment declaration. No SELECT/MEASUREMENT
+outcome, episode or observation read. No search, patient or predicted native action.
+
+Readouts report all 40, root 24, second-step 16, STOP 8, movement 32 and aspiration
+root 16 groups, with complete logits/masks, teacher/movement rankings and STOP
+probabilities/margins. The run retains regressions; fixed final endpoint only.
+Improved TRAIN CE alone cannot establish end-to-end usefulness or generalization.
+A separate future greedy TRAIN replay would need root release; it is not included.
+
+Owned bounds: 180 seconds, 1 GiB sampled owned process tree, 2048 geometry previews,
+one thread, one attempt, no retry or overwrite. Reuses the existing sampler,
+identity-matched cleanup and parent lease. Fixed output directory is
+build/goal-conditioned-policy-v1/full-teacher-refit-run-v1. The recipe expects
+root's promoted commit; it deliberately refuses pre-promotion source bytes.

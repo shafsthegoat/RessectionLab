@@ -1,0 +1,43 @@
+{
+  "candidate_patch_sha256": "a3ca3cfa7bb4b4b40740d82bd391efabcc7dd5ae1c5997d5186ce150c90ba18f",
+  "candidate_promotion_index_sha256": "20ea93bf4a1d1763e42ab5057086f65fc5ad5a3be94b718fbfc826776a09409f",
+  "candidate_recipe_sha256": "ef37d69ed338d3d20f46662c9a5cded4bf69831ddfddc25129bbd254b7e78a49",
+  "candidate_source_index_sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+  "controls": {
+    "checkpoint_reads": 0,
+    "checks": [
+      "exact_candidate_base_runtime_patch_and_recipe_pins",
+      "exact_saved_TRAIN40_corpus_all8_STOP_no_checkpoint_or_online_input",
+      "canonical_metadata_validator_accepts40_refuses6_label_order_role_mutations",
+      "old_record_exact_new_record_distinct_1280plus80_protocol_and_same_architecture",
+      "actual_IL_forward_label_logsoftmax_and_mean_expression_unchanged",
+      "desktop_and_supervisor_changes_only_expected_source_hash_closure"
+    ],
+    "control_groups": 6,
+    "elapsed_seconds": 0.033975791884586215,
+    "imports": "stdlib only",
+    "model_constructions": 0,
+    "model_forwards": 0,
+    "native_tasks": 0,
+    "optimizer_steps": 0,
+    "promotion_index_sha256": "20ea93bf4a1d1763e42ab5057086f65fc5ad5a3be94b718fbfc826776a09409f",
+    "recipe_sha256": "ef37d69ed338d3d20f46662c9a5cded4bf69831ddfddc25129bbd254b7e78a49",
+    "refit_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+    "role": "TRAIN saved metadata only plus prospective manifest identity",
+    "source_index_sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+    "status": "PASS"
+  },
+  "findings": [],
+  "limits": [
+    "No model construction, checkpoint payload read, forward, optimizer update, native task, search, patient input, or held-out task execution.",
+    "1280 loss forwards plus 80 fixed readout forwards is a larger budget than the original 128 loss forwards; results cannot isolate minibatch variance at matched compute.",
+    "The prior measurement cohort is exposed and must not supply tuning evidence or be described as untouched for a successor.",
+    "Hard process termination may prevent best-effort partial checkpoint emission; supervised receipt remains authoritative."
+  ],
+  "review_harness_corrections": [
+    "First local check used source.patch rather than actual promotion.patch; corrected reviewer path only.",
+    "Second local check directly compared immutable tuple containers to serialized JSON lists; corrected reviewer comparison to thawed JSON. Canonical semantic hash check retained."
+  ],
+  "scope": "Source/prospective protocol and saved TRAIN metadata only. Canonical test execution and actual fit remain root-owned.",
+  "status": "GO_SOURCE_ONLY"
+}

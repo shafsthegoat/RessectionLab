@@ -1,0 +1,49 @@
+{
+  "closure_note": "Three core hashes refreshed in supervisor; its hash refreshed in family desktop bridge. Outer desktop_bridge imports this module directly and has no contact-family hash to refresh.",
+  "default_architecture_hash": "sha256:7651a3d1923f7330d3e23d4ddd050e9393a2b37ef54ff5d38a1ff1d9bb5adbd5",
+  "default_experiment_hash": "sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894",
+  "files": [
+    {
+      "destination": "src/resectionlab/contact_checkpoint.py",
+      "previous_sha256": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+      "source": "build/goal-conditioned-policy-v1/full-teacher-refit-v1/stage/src/resectionlab/contact_checkpoint.py",
+      "source_sha256": "f696facdacfb92f19a0816abfecd506eeb16b6426adb67f53a7c5f158b9e3877"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_desktop_bridge.py",
+      "previous_sha256": "a9f78cc38fd383583473362f0839367c5d3445b7a976e556ca2b9a34034843e1",
+      "source": "build/goal-conditioned-policy-v1/full-teacher-refit-v1/stage/src/resectionlab/contact_family_desktop_bridge.py",
+      "source_sha256": "d187ed35ac3b66166b5356539a9826eeb76f60068a6bd0d7eb26f315cda2ff1d"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_supervisor.py",
+      "previous_sha256": "933c8e8df128691a77a0b346c1d0037fbc39038e1b99c7313b470212956b606f",
+      "source": "build/goal-conditioned-policy-v1/full-teacher-refit-v1/stage/src/resectionlab/contact_family_supervisor.py",
+      "source_sha256": "4ab53f23a49ac61340ec5738e8240500a0eb67118177c8b5c2d8d5056b1e06f8"
+    },
+    {
+      "destination": "src/resectionlab/contact_learning.py",
+      "previous_sha256": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+      "source": "build/goal-conditioned-policy-v1/full-teacher-refit-v1/stage/src/resectionlab/contact_learning.py",
+      "source_sha256": "9f969bc9773bbaacdb2cb79e2c071c5412ad74c2793b8b536274afc9ce143368"
+    },
+    {
+      "destination": "src/resectionlab/contact_learning_contract.py",
+      "previous_sha256": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a",
+      "source": "build/goal-conditioned-policy-v1/full-teacher-refit-v1/stage/src/resectionlab/contact_learning_contract.py",
+      "source_sha256": "f592b6308e3ef382261a4fc505fac5e0b0a9780a8682bfefa1c1a8efe1ad911f"
+    },
+    {
+      "destination": "tests/test_contact_full_teacher_refit.py",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/full-teacher-refit-v1/stage/tests/test_contact_full_teacher_refit.py",
+      "source_sha256": "2d9b4dcc9c4bbfb6f7232452b777b1932af1d5c90039019b81723d043e5f3811"
+    }
+  ],
+  "patch_sha256": "a3ca3cfa7bb4b4b40740d82bd391efabcc7dd5ae1c5997d5186ce150c90ba18f",
+  "refit_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "source_index_sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+  "tests_status": "staged_unexecuted",
+  "unchanged_default_initial_parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+  "version": "opt-in-full40-refit-promotion-v1"
+}

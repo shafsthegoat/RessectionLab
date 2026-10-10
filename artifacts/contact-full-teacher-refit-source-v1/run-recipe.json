@@ -1,0 +1,30 @@
+{
+  "caps": {
+    "attempts": 1,
+    "geometry_previews": 2048,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "threads": 1,
+    "wall_seconds": 180
+  },
+  "command": ".venv/bin/python build/goal-conditioned-policy-v1/full-teacher-refit-v1/run_full_teacher_owned.py --expected-head <PROMOTED_COMMIT> --source-index build/goal-conditioned-policy-v1/full-teacher-refit-v1/source-index.json --source-index-sha256 3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+  "controls_command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -m pytest -q tests/test_contact_full_teacher_refit.py tests/test_contact_learning.py tests/test_contact_family_catalog.py tests/test_contact_family_controller.py tests/test_contact_family_release.py",
+  "counts": {
+    "checkpoint_loads": 1,
+    "loss_forwards": 1280,
+    "native_teacher_steps": 40,
+    "prior_checkpoint_loads": 0,
+    "readout_forwards": 80,
+    "search_calls": 0,
+    "states": 40,
+    "tasks": 24,
+    "updates": 32
+  },
+  "input_index_sha256": "9193c805bc8bfa045d666caef635db846eea7bc602321ec529b0ab6d1ddafae0",
+  "output": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1",
+  "promotion_index_sha256": "20ea93bf4a1d1763e42ab5057086f65fc5ad5a3be94b718fbfc826776a09409f",
+  "refit_experiment_hash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "root_fills_expected_head_after_promotion": true,
+  "scope": "TRAIN_only_extra_compute_fixed_endpoint_no_selection_no_greedy_rollout",
+  "source_index_sha256": "3bd47a8d388ac5748cb12e75f33132e9014b4c98e82199ac5c7ff44dc322e4ff",
+  "status": "PROPOSED_NOT_RELEASED_NOT_EXECUTED"
+}

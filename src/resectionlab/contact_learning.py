@@ -21,7 +21,7 @@ class ContactLearningSession:
     updates: int = 0
 
     def __post_init__(self):
-        if (type(self.experiment) is not ContactExperiment or self.method not in ('IL', 'RL')
+        if (type(self.experiment) is not ContactExperiment or self.method not in self.experiment.protocol['methods']
                 or type(self.policy) is not GoalModeSpatialPolicy or self.updates != 0
                 or self.policy.architecture_hash != self.experiment.record()['architecture_hash']
                 or parameter_hash(self.policy) != self.initial_parameter_hash
@@ -43,12 +43,12 @@ class ContactLearningSession:
         if (current != self._session_identity
                 or self.updates != self._completed_updates
                 or parameter_hash(self.policy) != self._expected_parameter_hash
-                or not 0 <= self.updates <= PROTOCOL['updates']):
+                or not 0 <= self.updates <= self.experiment.protocol['updates']):
             raise ValueError('Session/architecture/method changed or invalid update count')
 
     def require(self, method):
         self.assert_intact()
-        if method != self.method or self.updates >= PROTOCOL['updates']:
+        if method != self.method or self.updates >= self.experiment.protocol['updates']:
             raise ValueError('Session method differs or fixed update cap exhausted')
 
     def require_samples(self, samples):
@@ -80,9 +80,17 @@ def _session(session, method):
 
 def contact_imitation_loss(session, samples):
     policy = _session(session, 'IL'); samples = tuple(samples)
-    if len(samples) != PROTOCOL['batch_size']:
-        raise ValueError('The fixed IL pilot requires four TRAIN state samples per update')
+    if len(samples) != session.experiment.protocol['batch_size']:
+        raise ValueError('IL samples differ from the explicitly frozen experiment batch size')
     session.require_samples(samples)
+    if session.experiment.teacher_states is not None:
+        expected = tuple((row['layout_id'], row['goal_id'], row['step'], row['observation_hash'], row['action_id'])
+                         for row in session.experiment.teacher_states)
+        actual = tuple((sample.binding.layout_id, sample.binding.goal_id,
+                        sample.observation.base.base.state_features[0], sample.observation.fingerprint, sample.action_id)
+                       for sample in samples)
+        if actual != expected:
+            raise ValueError('Full-teacher IL must use every frozen state/action exactly once in declared order')
     terms = []
     for sample in samples:
         logits, _ = policy(sample.observation, context=sample.binding.context)
@@ -90,13 +98,15 @@ def contact_imitation_loss(session, samples):
     loss = torch.stack(terms).mean()
     if not torch.isfinite(loss): raise FloatingPointError('Nonfinite admitted IL loss')
     session.register_loss(loss, samples)
-    return loss, {'kind': 'public_contact_search_action_imitation_v1', 'loss': float(loss.detach()),
+    return loss, {'kind': 'public_contact_search_action_imitation_v1' if session.experiment.teacher_states is None
+                  else 'public_contact_full_teacher_action_imitation_v1', 'loss': float(loss.detach()),
                   'loss_forward_calls': len(samples), 'supervised_actions': len(samples)}
 
 
 def contact_reinforce_loss(session, episodes, *, behavior_parameter_hash):
     policy = _session(session, 'RL'); episodes = tuple(tuple(ep) for ep in episodes)
-    if len(episodes) != PROTOCOL['batch_size'] or behavior_parameter_hash != parameter_hash(policy):
+    protocol = session.experiment.protocol
+    if len(episodes) != protocol['batch_size'] or behavior_parameter_hash != parameter_hash(policy):
         raise ValueError('Four complete on-policy TRAIN episodes under unchanged weights required')
     actor_terms, values, entropies, returns, samples = [], [], [], [], []
     for episode in episodes:
@@ -120,7 +130,7 @@ def contact_reinforce_loss(session, episodes, *, behavior_parameter_hash):
         session.require_samples(t.sample for t in episode)
         targets = []; total = 0.
         for t in reversed(episode):
-            total = float(t.reward) + PROTOCOL['gamma'] * total; targets.append(total)
+            total = float(t.reward) + protocol['gamma'] * total; targets.append(total)
         targets.reverse(); returns.append(targets[0])
         actor, value_terms, entropy = [], [], []
         for step, (transition, target) in enumerate(zip(episode, targets)):
@@ -128,13 +138,13 @@ def contact_reinforce_loss(session, episodes, *, behavior_parameter_hash):
             logits, value = policy(sample.observation, context=sample.binding.context)
             distribution = torch.distributions.Categorical(logits=logits)
             index = sample.validate()
-            actor.append(-(PROTOCOL['gamma'] ** step) * distribution.log_prob(logits.new_tensor(index, dtype=torch.long))
+            actor.append(-(protocol['gamma'] ** step) * distribution.log_prob(logits.new_tensor(index, dtype=torch.long))
                          * (value.new_tensor(target)-value.detach()))
             value_terms.append((value-target).square()); entropy.append(distribution.entropy())
         actor_terms.append(torch.stack(actor).sum())
         values.append(torch.stack(value_terms).mean()); entropies.append(torch.stack(entropy).mean())
     actor = torch.stack(actor_terms).mean(); value = torch.stack(values).mean(); entropy = torch.stack(entropies).mean()
-    loss = actor + PROTOCOL['value_weight']*value - PROTOCOL['entropy_weight']*entropy
+    loss = actor + protocol['value_weight']*value - protocol['entropy_weight']*entropy
     if not torch.isfinite(loss): raise FloatingPointError('Nonfinite admitted policy-gradient loss')
     session.register_loss(loss, samples)
     return loss, {'kind': 'public_contact_on_policy_reinforce_v1', 'loss': float(loss.detach()),
@@ -155,6 +165,7 @@ def _optimizer_state_identity(optimizer, policy):
 
 def contact_gradient_step(session, optimizer, loss):
     policy = _session(session, session.method if type(session) is ContactLearningSession else '')
+    protocol = session.experiment.protocol
     permit = session._permits.pop(id(loss), None)
     if permit is None or permit[0] is not loss: raise ValueError('Loss is foreign, stale or already consumed')
     _, binding, samples = permit
@@ -167,8 +178,8 @@ def contact_gradient_step(session, optimizer, loss):
     members = [id(p) for group in optimizer.param_groups for p in group['params']]
     if (type(optimizer) is not torch.optim.Adam or len(members) != len(set(members))
             or set(members) != {id(p) for p in policy.parameters()}
-            or any(group['lr'] != PROTOCOL['learning_rate'] or tuple(group['betas']) != tuple(PROTOCOL['betas'])
-                or any(group[key] != PROTOCOL[key] for key in ('eps', 'weight_decay', 'amsgrad', 'maximize', 'foreach', 'fused'))
+            or any(group['lr'] != protocol['learning_rate'] or tuple(group['betas']) != tuple(protocol['betas'])
+                or any(group[key] != protocol[key] for key in ('eps', 'weight_decay', 'amsgrad', 'maximize', 'foreach', 'fused'))
                 for group in optimizer.param_groups)):
         raise ValueError('Fixed Adam optimizer must own exactly the admitted policy')
     if (session._optimizer_identity is None and optimizer.state) or (session._optimizer_identity is not None
@@ -179,14 +190,14 @@ def contact_gradient_step(session, optimizer, loss):
     norms = {name: float(torch.stack([p.grad.square().sum() for p in getattr(policy, name).parameters()
              if p.grad is not None]).sum().sqrt()) if any(p.grad is not None for p in getattr(policy, name).parameters()) else 0.
              for name in ('encoder', 'actor', 'stop', 'critic')}
-    total = float(nn.utils.clip_grad_norm_(policy.parameters(), PROTOCOL['max_gradient_norm'], error_if_nonfinite=True))
+    total = float(nn.utils.clip_grad_norm_(policy.parameters(), protocol['max_gradient_norm'], error_if_nonfinite=True))
     optimizer.step(); session.updates += 1
     session._completed_updates = session.updates
     session._expected_parameter_hash = parameter_hash(policy)
     session._optimizer_identity = _optimizer_state_identity(optimizer, policy)
     session._permits.clear()  # Every loss made under the previous weights is stale.
     for sample in samples: session._used_bindings[sample.binding.fingerprint] = sample.binding.record()
-    return {'version': VERSION, 'optimizer_steps': 1, 'cumulative_updates': session.updates,
+    return {'version': session.experiment.record()['version'], 'optimizer_steps': 1, 'cumulative_updates': session.updates,
         'gradient_norm_before_clip': total, 'module_gradient_norms_before_clip': norms,
         'initial_parameter_hash': before, 'updated_parameter_hash': parameter_hash(policy),
         'parameters_changed': before != parameter_hash(policy)}

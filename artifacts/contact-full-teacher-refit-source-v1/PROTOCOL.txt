@@ -1,0 +1,60 @@
+Proposal: one fixed full-teacher IL fit, not a new benchmark
+
+TRAIN evidence motivating this change: the original actor is near-uniform and
+never chooses STOP. After the first IL pilot, fixed40-state CE changes only
+1.861780 -> 1.822646; movement32 CE is unchanged (2.053795 -> 2.054069), while
+STOP8 improves (1.093719 -> .896954). Conditional movement ranks improve from
+1/32 to 22/32, including teacher probe 16/16. This may reflect simple state/mode
+cues and is not proof of goal-specific geometric reasoning. STOP remains above
+the best movement by .071-.103 on probe states and .256-.287 on aspiration
+states. RL instead assigns mean STOP probability .9999908. The two failure
+patterns are different. This proposal tests IL fit only, not RL superiority.
+
+One explicit opt-in experiment, generated-public-contact-full-teacher-refit-v1,
+binds the complete ordered 40-state corpus and its original teacher bindings,
+seals, actions and observation fingerprints. Its default counterpart preserves
+the exact original pilot record, protocol, experiment hash, initialization,
+architecture and checkpoint identity. The original final files remain intact.
+
+Use fresh scratch initialization with the original architecture/seed/Adam and
+unchanged mean categorical cross-entropy. Make 32 optimizer updates; every update
+uses all 40 states exactly once in original teacher/action order. Retain the
+eight genuine STOP labels as well as 16 aspiration and 16 probe labels. No manual
+STOP penalty, STOP masking, class reweighting, new action head, learning-rate
+search, extra teacher or alternate layout. Loss and update must remain bound to
+this new experiment; a refit checkpoint cannot load as the original pilot.
+
+This costs 1,280 loss forwards versus 128 previously, plus 40 before and 40 after
+readout forwards. This is an additional-compute optimization diagnostic, not a
+matched-compute improvement claim. Fixed endpoint only, no checkpoint selection.
+Read the same 24 TRAIN teacher files and 32 prior IL receipts used by the released
+diagnostic. Reconstruct 24 tasks and exactly 40 saved teacher steps, matching
+every original observation fingerprint, native history, binding and seal.
+All source recipes, roles and objectives stay fixed. No SELECT/MEASUREMENT
+task, observation, result or episode reads; prospective family metadata alone
+may be checked to recreate the exact experiment identity. No patient reads.
+
+Before and after the 32 updates, read all 40 states in eval/no_grad mode, without
+executing any predicted action. Save complete legal masks/logits, STOP/teacher
+probabilities, STOP-minus-best-movement margins, exact teacher rank among legal
+movement candidates, greedy action/mode and CE. Summarize fixed all 40, root24,
+second16, STOP8, movement32, and the 16 aspiration-root states. Report whether
+STOP8 remain correct and whether positive-demo roots prefer movement; preserve
+regressions and zero-improvement outcomes. Do not infer usefulness from CE alone.
+
+Proposed fit attempt: 180 seconds hard worker wall, 1 GiB sampled owned process
+tree, one thread, 2,048 geometry previews, one attempt. Reuse the existing owned
+monitor and parent lease. Preserve every update/readout plus partial checkpoint
+on a cap, with no retry, budget increase or alternate state. Save final 32 only
+under the new experiment lineage. These are prospective bounds, not a released
+run. The focused controls are staged and unexecuted, awaiting root release.
+No new model forward, native transition or optimizer update has been run.
+
+A separate optional follow-up may execute the refit's fixed final greedy policy
+on all 24 TRAIN goals through the shared adapter/replay, with at most 48 actor
+forwards and 48 planning steps (plus explicitly counted authoritative replay),
+45 seconds, 1 GiB, 2,048 previews, one attempt. Root must release this separately.
+It cannot change the endpoint or become a selection pass. This is a TRAIN
+usefulness check, not held-out evaluation. Existing exposed measurement results
+are not an untouched test set for a tuned successor. No generalization or
+clinical claim follows from either phase.

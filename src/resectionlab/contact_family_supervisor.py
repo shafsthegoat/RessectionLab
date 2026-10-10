@@ -55,10 +55,10 @@ SOURCE_FILES = frozenset({
 SOURCE_SHA256 = {
     "local:contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
     "local:contact_family_worker.py": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
-    "src/resectionlab/contact_checkpoint.py": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+    "src/resectionlab/contact_checkpoint.py": "f696facdacfb92f19a0816abfecd506eeb16b6426adb67f53a7c5f158b9e3877",
     "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
-    "src/resectionlab/contact_learning.py": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
-    "src/resectionlab/contact_learning_contract.py": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a",
+    "src/resectionlab/contact_learning.py": "9f969bc9773bbaacdb2cb79e2c071c5412ad74c2793b8b536274afc9ce143368",
+    "src/resectionlab/contact_learning_contract.py": "f592b6308e3ef382261a4fc505fac5e0b0a9780a8682bfefa1c1a8efe1ad911f",
     "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
     "src/resectionlab/data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
     "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",

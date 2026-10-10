@@ -55,7 +55,7 @@ class VerifiedContactCheckpoint(Mapping):
 def initial_lineage(experiment):
     if type(experiment) is not ContactExperiment: raise TypeError('Frozen contact experiment required')
     return {'kind': 'initial', 'method': 'COMMON_INITIALIZATION', 'experiment_hash': experiment.fingerprint,
-        'family_hash': experiment.manifest['family_hash'], 'learning_contract_version': VERSION,
+        'family_hash': experiment.manifest['family_hash'], 'learning_contract_version': experiment.record()['version'],
         'optimizer_updates': 0, 'initial_parameter_hash': expected_initial_parameter_hash(),
         'parameter_hash': expected_initial_parameter_hash(), 'training_bindings': [],
         'training_status': 'not_started', 'real_patient_count': 0}
@@ -64,14 +64,14 @@ def initial_lineage(experiment):
 def final_lineage(session):
     if type(session) is not ContactLearningSession: raise TypeError('Exact learning session required')
     session.assert_intact()
-    if (session.updates != PROTOCOL['updates']
+    if (session.updates != session.experiment.protocol['updates']
             or session.updates != session._completed_updates
             or parameter_hash(session.policy) != session._expected_parameter_hash
             or not session._used_bindings):
         raise ValueError('Final checkpoint requires exactly the fixed completed admitted updates')
     session.experiment.assert_intact()
     return {'kind': 'final', 'method': session.method, 'experiment_hash': session.experiment.fingerprint,
-        'family_hash': session.experiment.manifest['family_hash'], 'learning_contract_version': VERSION,
+        'family_hash': session.experiment.manifest['family_hash'], 'learning_contract_version': session.experiment.record()['version'],
         'optimizer_updates': session.updates, 'initial_parameter_hash': session.initial_parameter_hash,
         'parameter_hash': parameter_hash(session.policy),
         'training_bindings': list(session._used_bindings.values()),
@@ -82,11 +82,11 @@ def partial_lineage(session):
     if type(session) is not ContactLearningSession: raise TypeError('Exact learning session required')
     session.assert_intact()
     if (session.updates != session._completed_updates
-            or not 0 <= session.updates <= PROTOCOL['updates']
+            or not 0 <= session.updates <= session.experiment.protocol['updates']
             or parameter_hash(session.policy) != session._expected_parameter_hash):
         raise ValueError('Partial checkpoint requires the actual unchanged admitted session state')
     return {'kind': 'partial', 'method': session.method, 'experiment_hash': session.experiment.fingerprint,
-        'family_hash': session.experiment.manifest['family_hash'], 'learning_contract_version': VERSION,
+        'family_hash': session.experiment.manifest['family_hash'], 'learning_contract_version': session.experiment.record()['version'],
         'optimizer_updates': session.updates, 'initial_parameter_hash': session.initial_parameter_hash,
         'parameter_hash': parameter_hash(session.policy), 'training_bindings': list(session._used_bindings.values()),
         'training_status': 'incomplete_at_fixed_cap', 'real_patient_count': 0}
@@ -101,7 +101,7 @@ def _validate_lineage(lineage, experiment, *, kind):
     if (set(lineage) != expected_keys or lineage['kind'] != kind or kind not in ('initial', 'partial', 'final')
             or lineage['experiment_hash'] != experiment.fingerprint
             or lineage['family_hash'] != experiment.manifest['family_hash']
-            or lineage['learning_contract_version'] != VERSION or type(lineage['real_patient_count']) is not int
+            or lineage['learning_contract_version'] != experiment.record()['version'] or type(lineage['real_patient_count']) is not int
             or lineage['real_patient_count'] != 0 or type(lineage['optimizer_updates']) is not int
             or lineage['initial_parameter_hash'] != expected_initial_parameter_hash()):
         raise ValueError('Checkpoint training lineage differs from frozen generated experiment')
@@ -110,11 +110,11 @@ def _validate_lineage(lineage, experiment, *, kind):
             raise ValueError('Initial checkpoint is not the common scratch initialization')
     else:
         if kind == 'partial':
-            if (lineage['method'] not in ('IL', 'RL') or not 0 <= lineage['optimizer_updates'] <= PROTOCOL['updates']
+            if (lineage['method'] not in experiment.protocol['methods'] or not 0 <= lineage['optimizer_updates'] <= experiment.protocol['updates']
                     or lineage['training_status'] != 'incomplete_at_fixed_cap'
                     or (lineage['optimizer_updates'] > 0 and not lineage['training_bindings'])):
                 raise ValueError('Partial checkpoint lacks admitted completed-update lineage')
-        elif (lineage['method'] not in ('IL', 'RL') or lineage['optimizer_updates'] != PROTOCOL['updates']
+        elif (lineage['method'] not in experiment.protocol['methods'] or lineage['optimizer_updates'] != experiment.protocol['updates']
                 or lineage['training_status'] != 'completed_fixed_endpoint' or not lineage['training_bindings']):
             raise ValueError('Final checkpoint is incomplete or has no TRAIN lineage')
         from .contact_learning_contract import ContactTrainBinding

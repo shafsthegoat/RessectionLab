@@ -1287,3 +1287,8 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 [Live result](../artifacts/contact-family-desktop-live-v1/RESULT.md): samepcf10surfaceTRAIN SEARCH29frames aspiration→probe+.704; IL/RL final32 actualinferenceSTOP0, zero updates. Independent savedresultreview passes3methodattempts plus separate4thcameraSEARCH. Held-outchoices visiblylocked; temporarySave refuses; correctedwholeprobevisibleatfinalframewithoutmanualFit. Both rootElectron sessions exit0. This is generatedinteractivevalidation, not a newbenchmark.
 
 Acquisition03:33:57UTC:6552verifiedfiles228983622779B, +337/+11.93GB. Originalworker92434andlocklive, failuresunchanged, capacityadequate; no recovery/QC.
+
+
+## Full-teacher imitation optimization source
+
+[Source integration](../artifacts/contact-full-teacher-refit-source-v1/RESULT.md) preserves the default pilot while adding one explicitly identified TRAIN-only fit: all 40 original states at each of 32 updates, including eight STOP labels. No architecture, reward, loss or optimizer change. Forty-six canonical controls pass in 5.99 seconds; independent source review passes. Additional compute is declared (1,280 loss forwards plus 80 readouts). The actual bounded attempt follows separately.
