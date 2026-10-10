@@ -1,13 +1,12 @@
 # Project status
 
-**Current priority, October 10:** test cross-patient planning with fixed learned
-models and matched search on qualified acquired anatomy. The improved action
-space now supports a complete three-cut TRAIN route: cached balanced IL64 matches
-search's physical outcome, despite choosing an equivalent action order. This is
-only three target cells, not useful-scale resection or demonstrated transfer.
-Scratch RL8 has also finished and passed its saved-result audit, but all four
-final policies STOP. The next inference comparison will preserve the exact tissue assumption, public inputs,
-tools and reward across methods, with zero held-out model updates.
+**Current priority, October 10:** establish useful complete tool routes on the
+fixed recovered TRAIN cases before further training. The matched SELECT013
+comparison is complete: imitation, scratch RL, greedy search and beam search all
+STOP with zero progress. Beam explores24 layers/519 negative prefixes; no useful
+transfer or learned advantage is demonstrated. On the original TRAIN cases,
+cached balanced IL64 reproduces search's three-target-cell route; scratch RL8
+misses it. This tiny fit remains far from useful-scale planning.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
@@ -19,6 +18,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **The complete transfer comparison remains negative:** [SELECT013 on the matched union world](artifacts/obstruction-opening-select013-comparison-v1/README.md) gives four complete STOP plans: greedy, IL64, RL8 and beam. Beam finishes24 layers and519 negative prefixes, with no target removal in its retained progress and deepest opening about3.5mm. Planning/replay takes0.566s for greedy,0.861s for IL,0.667s for RL and219.983s for beam, excluding separate construction and upstream training costs. The owned228.130s/1.270GB run passes726 independent saved checks. There is no useful learned advantage;037 stays held and EVAL closed. The next environment check is the fixed four-case post-exposure condition, not another architecture sweep.
 
 - **The new-patient comparison uses exactly the trained tissue assumption:** [fixed SELECT013 inference](artifacts/obstruction-opening-select013-inference-v1/RESULT.md) admits the completed IL64/RL8 checkpoints with zero updates and rejects occupancy mismatches. Native greedy and beam searches retain separate cost accounting and complete replay. All128 canonical controls pass; the actual transfer run is next.037 remains held and EVAL closed.
 

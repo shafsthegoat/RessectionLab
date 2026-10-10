@@ -1,0 +1,130 @@
+{
+  "EVAL_closed": true,
+  "arms": [
+    "observed_greedy",
+    "IL64",
+    "RL8",
+    "observed_beam"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "claim": "explicit simulated S union T annotation-conditioned research world; no anatomical or clinical validation",
+  "cost_scope": "per-method observed inference/search costs plus separately reported upstream TRAIN cost; no equal-cost claim",
+  "endpoints": {
+    "IL64": {
+      "checkpoint": {
+        "path": "build/obstruction-opening-learning-v1/IL64/attempt-01/IL-final.psckpt",
+        "sha256": "e1a41c08bd348dfb438eb2290865a91d18e6fd127b44065592360c138969d685"
+      },
+      "contexts": {
+        "ReMIND-008": {
+          "path": "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-008-context.json",
+          "sha256": "17fd88ae7ce86edc64caf4d4cfda744294d4865ae768d2e65e6833a844335e97"
+        },
+        "ReMIND-010": {
+          "path": "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-010-context.json",
+          "sha256": "c6dd8e45dbc785e7b94e120ce4d037e3dd4b844af9322a8caf021359480a2def"
+        },
+        "ReMIND-020": {
+          "path": "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-020-context.json",
+          "sha256": "7fbdf214a3fe3a38f2cc73c016bcb4387c8be1ec0fca22e571a5862e03bde470"
+        },
+        "ReMIND-025": {
+          "path": "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-025-context.json",
+          "sha256": "06d7dd3953d7fae994f7a6c8bb981948710649249e2cef9cb9898f673588c3e6"
+        }
+      },
+      "parent": {
+        "path": "build/obstruction-opening-learning-v1/IL64/attempt-01.supervision/receipt.json",
+        "sha256": "ca9a8d8e3c78e8c99b294d5cef11addf47b63d6785159f7bf92e023ac519503a"
+      },
+      "release": {
+        "path": "build/obstruction-opening-learning-v1/IL64/root-release.json",
+        "sha256": "61b94272a3614444bae4aa13c51140f40679a01208f4fb0c964d6e1a6af1efaf"
+      },
+      "result": {
+        "path": "build/obstruction-opening-learning-v1/IL64/attempt-01/result.json",
+        "sha256": "b30dc1f8867b3c016ad9f88d2ded4265787e0c0e4ffc771c0fa28ef31a6bc518"
+      },
+      "status": "terminal_bound",
+      "worker_final": {
+        "path": "build/obstruction-opening-learning-v1/IL64/attempt-01.supervision/worker-final.json",
+        "sha256": "7d6bad647cf864935561b1e456c91fa1c50a1c97b455b88fed53ac0946f22cc4"
+      }
+    },
+    "RL8": {
+      "checkpoint": {
+        "path": "build/obstruction-opening-learning-v1/RL8/attempt-01/RL-final.psckpt",
+        "sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475"
+      },
+      "contexts": {
+        "ReMIND-008": {
+          "path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-008-context.json",
+          "sha256": "a742ad1191da7d3f44a42f9afd668ea85ca5f7f9d31a1be264d6625237be29cf"
+        },
+        "ReMIND-010": {
+          "path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-010-context.json",
+          "sha256": "8245d90f5fd755ff0539c5f6249acacebfef055e739c7f3248d229663acb8839"
+        },
+        "ReMIND-020": {
+          "path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-020-context.json",
+          "sha256": "f5c553f46e81b321731ed01f30523d6a528b8f3092c98fb65ce3451d7ff86dc6"
+        },
+        "ReMIND-025": {
+          "path": "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-025-context.json",
+          "sha256": "7895b3be4e6b34d3b243f3aec1071cdc4de0fb472ee4a3c0be19f9aeabb0fa99"
+        }
+      },
+      "parent": {
+        "path": "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/receipt.json",
+        "sha256": "4793146872f8dc71b80339fac76ee011a7bb9fbd72f1e567000556a08b658c1c"
+      },
+      "release": {
+        "path": "build/obstruction-opening-learning-v1/RL8/root-release.json",
+        "sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6"
+      },
+      "result": {
+        "path": "build/obstruction-opening-learning-v1/RL8/attempt-01/result.json",
+        "sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897"
+      },
+      "status": "terminal_bound",
+      "worker_final": {
+        "path": "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/worker-final.json",
+        "sha256": "f8311187a1a9c546629adb34d4859e27b0f38abdd60bda9b472ad5a421d70ff7"
+      }
+    }
+  },
+  "expected_head": "40137febbe771652f1cd18703d6f060150a8ceda",
+  "greedy_seconds": 60,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "limits": {
+    "max_native_previews": 750000,
+    "max_optimizer_updates": 0,
+    "max_policy_forwards": 48,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+  "output": "build/obstruction-opening-select013-comparison-v1/attempt-01",
+  "parent_seconds": 960,
+  "planned_SELECT_denominator": 2,
+  "public_index": {
+    "path": "build/remind-select-public-preparation-v1/public-select-index-v2.json",
+    "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+  },
+  "selection_rule": "two predetermined frozen matched TRAIN endpoints and existing greedy/beam public planners",
+  "source_index": {
+    "path": "build/obstruction-opening-select013-comparison-v1/source-index.json",
+    "sha256": "1f0369d2475d9934c1a0dddbc1fc839c5a5f4c7eb1e5a9da099b9c3257b03424"
+  },
+  "status": "pending_root_release"
+}

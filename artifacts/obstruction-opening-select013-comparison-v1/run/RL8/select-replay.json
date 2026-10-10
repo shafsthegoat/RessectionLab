@@ -1,0 +1,37 @@
+{
+  "EVAL_opened": false,
+  "behavior_parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+  "checkpoint_lineage": {
+    "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+    "checkpoint_sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475",
+    "completed_updates": 8,
+    "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+    "learning_protocol_hash": "sha256:aead19b14ed7b8005dfa163379bfebccae45b9a2a64f25856702b46d302824e0",
+    "method": "RL",
+    "optimizer_updates_on_SELECT": 0,
+    "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "training_context_hashes": {
+      "ReMIND:008": "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+      "ReMIND:010": "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+      "ReMIND:020": "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+      "ReMIND:025": "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+    },
+    "training_release_sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6",
+    "version": "frozen-TRAIN-checkpoint-lineage-v1"
+  },
+  "checkpoint_lineage_scope": "executed_greedy_policy",
+  "clinical_claim": false,
+  "context_hash": "sha256:acb5f9e19f622ef3ab978ca09445e6c316c918d3cbe576dba609f4f5d7e43ee7",
+  "learning_updates_scope": "plan count is upstream TRAIN updates; no SELECT updates",
+  "method": "RL",
+  "optimizer_updates_on_SELECT": 0,
+  "patient_adaptation": false,
+  "plan_seal": "sha256:a0c5516c7139eb5e23dc08d0e6204a8805d5f6e84761a6361a3d99c38c89fbce",
+  "private_reference_reads": 0,
+  "role": "SELECT",
+  "status": "complete",
+  "subject": "ReMIND-013",
+  "trace_seal": "sha256:7985b93ccb9e6a71e87b3c4e7a5ff74fe94956214a53c9ef2dbc8e28b496076a",
+  "version": "checkpoint-reloaded-SELECT-native-replay-v1"
+}

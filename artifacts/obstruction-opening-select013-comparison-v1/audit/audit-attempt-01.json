@@ -1,0 +1,949 @@
+{
+  "arms": {
+    "IL64": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "IL64",
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    "RL8": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "RL8",
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    "observed_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    "observed_greedy": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    }
+  },
+  "audit_seconds": 0.013390625000000003,
+  "automatic_retry": false,
+  "checkpoint_loads": 2,
+  "checks": 726,
+  "complete_comparison": true,
+  "cost_phases": {
+    "IL64.planning_and_replay": {
+      "complete_wall_seconds": 0.8608345410320908,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 7,
+      "inventory_request_inclusive_seconds": 0.35230974899604917,
+      "inventory_request_returned": 7,
+      "native_preview_entries": 119,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.02903529116883874,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.2884751248639077,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0015527079813182354,
+      "task_clone_returned": 1
+    },
+    "IL64.public_construction": {
+      "complete_wall_seconds": 0.5718563750851899,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.34785225009545684,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    },
+    "RL8.planning_and_replay": {
+      "complete_wall_seconds": 0.6667962081264704,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 7,
+      "inventory_request_inclusive_seconds": 0.34709333325736225,
+      "inventory_request_returned": 7,
+      "native_preview_entries": 119,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.028513207798823714,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10443112486973405,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0015261669177561998,
+      "task_clone_returned": 1
+    },
+    "RL8.public_construction": {
+      "complete_wall_seconds": 0.5664325000252575,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.3421048342715949,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    },
+    "checkpoint_reload.IL64": {
+      "complete_wall_seconds": 0.012336541898548603,
+      "native_preview_entries": 0
+    },
+    "checkpoint_reload.RL8": {
+      "complete_wall_seconds": 0.0023466250859200954,
+      "native_preview_entries": 0
+    },
+    "observed_beam.planning_and_replay": {
+      "complete_wall_seconds": 219.98277479107492,
+      "inventory_build_or_terminal_empty_calls": 522,
+      "inventory_request_calls": 1092,
+      "inventory_request_inclusive_seconds": 203.64584091911092,
+      "inventory_request_returned": 1092,
+      "native_preview_entries": 60457,
+      "native_transition_calls": 521,
+      "native_transition_inclusive_seconds": 214.14813833823428,
+      "native_transition_returned": 521,
+      "task_clone_calls": 521,
+      "task_clone_inclusive_seconds": 4.12942578131333,
+      "task_clone_returned": 521
+    },
+    "observed_beam.public_construction": {
+      "complete_wall_seconds": 0.5728924579452723,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.3517726669088006,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    },
+    "observed_greedy.planning_and_replay": {
+      "complete_wall_seconds": 0.565584999974817,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 9,
+      "inventory_request_inclusive_seconds": 0.3463076229672879,
+      "inventory_request_returned": 9,
+      "native_preview_entries": 119,
+      "native_transition_calls": 3,
+      "native_transition_inclusive_seconds": 0.0284277917817235,
+      "native_transition_returned": 3,
+      "task_clone_calls": 2,
+      "task_clone_inclusive_seconds": 0.0030784173868596554,
+      "task_clone_returned": 2
+    },
+    "observed_greedy.public_construction": {
+      "complete_wall_seconds": 0.5882804580032825,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.34546958305872977,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    }
+  },
+  "decision": "PASS_SAVED_UNION_OBSTRUCTION_SELECT013_COMPARISON",
+  "evidence_files": {
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": {
+      "bytes": 9482,
+      "kind": "source_only",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": {
+      "bytes": 8730,
+      "kind": "source_only",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01.supervision/receipt.json": {
+      "bytes": 1906,
+      "sha256": "ca9a8d8e3c78e8c99b294d5cef11addf47b63d6785159f7bf92e023ac519503a"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01.supervision/worker-final.json": {
+      "bytes": 780,
+      "sha256": "7d6bad647cf864935561b1e456c91fa1c50a1c97b455b88fed53ac0946f22cc4"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-008-context.json": {
+      "bytes": 2941,
+      "sha256": "17fd88ae7ce86edc64caf4d4cfda744294d4865ae768d2e65e6833a844335e97"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-010-context.json": {
+      "bytes": 2941,
+      "sha256": "c6dd8e45dbc785e7b94e120ce4d037e3dd4b844af9322a8caf021359480a2def"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-020-context.json": {
+      "bytes": 2942,
+      "sha256": "7fbdf214a3fe3a38f2cc73c016bcb4387c8be1ec0fca22e571a5862e03bde470"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01/ReMIND-025-context.json": {
+      "bytes": 2941,
+      "sha256": "06d7dd3953d7fae994f7a6c8bb981948710649249e2cef9cb9898f673588c3e6"
+    },
+    "build/obstruction-opening-learning-v1/IL64/attempt-01/result.json": {
+      "bytes": 7622,
+      "sha256": "b30dc1f8867b3c016ad9f88d2ded4265787e0c0e4ffc771c0fa28ef31a6bc518"
+    },
+    "build/obstruction-opening-learning-v1/IL64/root-release.json": {
+      "bytes": 8079,
+      "sha256": "61b94272a3614444bae4aa13c51140f40679a01208f4fb0c964d6e1a6af1efaf"
+    },
+    "build/obstruction-opening-learning-v1/IL64/source-index.json": {
+      "bytes": 13145,
+      "sha256": "a179f860bbfbe1f394fb257c673111c3fb91915c578b0282d4f85435ac9416d6"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/receipt.json": {
+      "bytes": 1908,
+      "sha256": "4793146872f8dc71b80339fac76ee011a7bb9fbd72f1e567000556a08b658c1c"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01.supervision/worker-final.json": {
+      "bytes": 779,
+      "sha256": "f8311187a1a9c546629adb34d4859e27b0f38abdd60bda9b472ad5a421d70ff7"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-008-context.json": {
+      "bytes": 2940,
+      "sha256": "a742ad1191da7d3f44a42f9afd668ea85ca5f7f9d31a1be264d6625237be29cf"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-010-context.json": {
+      "bytes": 2940,
+      "sha256": "8245d90f5fd755ff0539c5f6249acacebfef055e739c7f3248d229663acb8839"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-020-context.json": {
+      "bytes": 2941,
+      "sha256": "f5c553f46e81b321731ed01f30523d6a528b8f3092c98fb65ce3451d7ff86dc6"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01/ReMIND-025-context.json": {
+      "bytes": 2940,
+      "sha256": "7895b3be4e6b34d3b243f3aec1071cdc4de0fb472ee4a3c0be19f9aeabb0fa99"
+    },
+    "build/obstruction-opening-learning-v1/RL8/attempt-01/result.json": {
+      "bytes": 3851,
+      "sha256": "60631a2fb4cebda2d6b29475156e487a8b51b4bd1c5cc1d6ca89dd2511e29897"
+    },
+    "build/obstruction-opening-learning-v1/RL8/root-release.json": {
+      "bytes": 8170,
+      "sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6"
+    },
+    "build/obstruction-opening-learning-v1/RL8/source-index.json": {
+      "bytes": 13440,
+      "sha256": "713ea019d83210aeca780f76fd63153e2443071b9bc78c68473203bc23824785"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01.supervision/receipt.json": {
+      "bytes": 145564,
+      "sha256": "27f92b3d566ee88b0d2fd5bc0a9a508bb224a40e310e3f34c39246f219ecffef"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01.supervision/worker-final.json": {
+      "bytes": 783,
+      "sha256": "5bc093ba51fed0b390778aecd495e2feeb3ccbdc42228e06278f503989a4ea0b"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64-lineage.json": {
+      "bytes": 1206,
+      "sha256": "daa022477df649be7bd7347a3eed496c9968de2113f240e5830e62062abcff67"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/comparison-world.json": {
+      "bytes": 1916,
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/complete-trace.json": {
+      "bytes": 21505,
+      "sha256": "079bfa78f6ea7e87257e82b9de718e6a7a60b5317b437f8db047bd77a9093c2f"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/context.json": {
+      "bytes": 4268,
+      "sha256": "7541282b1c53de562f5d18c65c1b28cfa568a6c44b1aa22fd9ef0c47cd01cca4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/native-replay.json": {
+      "bytes": 20584,
+      "sha256": "9e1072f085cce889fe146309593a3b6a80c6cb39fe6c74925059802afdba0ef4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/plan.json": {
+      "bytes": 1065,
+      "sha256": "945714b4f14fdf2cdf20cb55172729391ffcbf00117876c96edbd60e43600d1b"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/select-replay.json": {
+      "bytes": 2090,
+      "sha256": "9f14a8966ca9b375b50c9feef8f71c71947ed43da1793306148210bec5db29f2"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/source/public-task-derivation.json": {
+      "bytes": 1126,
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/summary.json": {
+      "bytes": 738,
+      "sha256": "f0d56fc783477b579a4753cb1567acfc29124da6ba915275bf3b43d1441d0f4a"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8-lineage.json": {
+      "bytes": 1205,
+      "sha256": "e1b1561856779e1947d19ae0b1ea10d6bd916253ca7b755e0f9a5a5c33b0854f"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/comparison-world.json": {
+      "bytes": 1916,
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/complete-trace.json": {
+      "bytes": 21504,
+      "sha256": "3322afa013b57b60c4058f7f938be3556cef3546ebfd3330a3115fbecfeb1cca"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/context.json": {
+      "bytes": 4267,
+      "sha256": "40d4a77cf8d1bcc48561671fee7c1d9ae13e6c951d494dcb5ab694a2b07a3e8f"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/native-replay.json": {
+      "bytes": 20584,
+      "sha256": "47100ab003b0fa60f598e51d998c9eabba15076007f7ecdfe5cf1a4dff98c8d4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/plan.json": {
+      "bytes": 1064,
+      "sha256": "82470547e843049b3132037f7486c898d99faf02671b83c2bd50ed3913505b5c"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/select-replay.json": {
+      "bytes": 2089,
+      "sha256": "962a3f288c1b285344abcabe29be4577ead58aff795fb4a8783e2ac63ad251d4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/source/public-task-derivation.json": {
+      "bytes": 1126,
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/summary.json": {
+      "bytes": 736,
+      "sha256": "0994c40e2aebbf032f7f30bfa51309e641ac0c1d7132100294dc28a2541a48d3"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/costs.json": {
+      "bytes": 6091,
+      "sha256": "9321ee49832740d226f15de992c4763a642a178edd744b4e1e5e7d7b04d5c060"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/comparison-world.json": {
+      "bytes": 1916,
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/complete-trace.json": {
+      "bytes": 21461,
+      "sha256": "3232ea9c048fd8cd05f0fb4a0dc859199f4cad3952ae2da7288a58ef4584a0fe"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/context.json": {
+      "bytes": 4268,
+      "sha256": "7541282b1c53de562f5d18c65c1b28cfa568a6c44b1aa22fd9ef0c47cd01cca4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/native-replay.json": {
+      "bytes": 20583,
+      "sha256": "fe443f68380ec3f9a0836e839339f4e1174e8ebaa97a7f0faa9732e909f9e693"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/plan.json": {
+      "bytes": 926,
+      "sha256": "0cd277f247d4367c59107e43f7bc888f7689570e01817f75cace4765f491c309"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/search-return.json": {
+      "bytes": 120570,
+      "sha256": "fbbb1852e8e29050eccff09dabfc56e9adeb7d93606a3ffa2467ff80b7f29687"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/select-replay.json": {
+      "bytes": 2023,
+      "sha256": "475cb0f86ac685236c70af9dd82cb747067491163ccbc2d41b6698fb687cd153"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/selection.json": {
+      "bytes": 120627,
+      "sha256": "8952837f06938e04cf26ee290d107bbe9464815e8f31d416d2877599878990ef"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/source/public-task-derivation.json": {
+      "bytes": 1126,
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/summary.json": {
+      "bytes": 121138,
+      "sha256": "e6cb82c698d1a16738af0d29ea1f664b99f67d490c018aef9ea6fd8e24091ab3"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/comparison-world.json": {
+      "bytes": 1916,
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/complete-trace.json": {
+      "bytes": 21461,
+      "sha256": "3232ea9c048fd8cd05f0fb4a0dc859199f4cad3952ae2da7288a58ef4584a0fe"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/context.json": {
+      "bytes": 4268,
+      "sha256": "7541282b1c53de562f5d18c65c1b28cfa568a6c44b1aa22fd9ef0c47cd01cca4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/native-replay.json": {
+      "bytes": 20583,
+      "sha256": "f972c4d2f7ece9c72445a1d6b54bd5fc48d9324782c472363fe340b5a882dc83"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/plan.json": {
+      "bytes": 926,
+      "sha256": "0cd277f247d4367c59107e43f7bc888f7689570e01817f75cace4765f491c309"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/search-return.json": {
+      "bytes": 9095,
+      "sha256": "2a1a11dec53744aece3f7f5d316fc460eb76b55ed5e5eeecde73dcac8a55f3ca"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/select-replay.json": {
+      "bytes": 2023,
+      "sha256": "475cb0f86ac685236c70af9dd82cb747067491163ccbc2d41b6698fb687cd153"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/selection.json": {
+      "bytes": 9150,
+      "sha256": "c71d35d2e8d8456584709b7164067b15cde2efece74f40572829daa2b56409bd"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/source/public-task-derivation.json": {
+      "bytes": 1126,
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/summary.json": {
+      "bytes": 9663,
+      "sha256": "bddc2395ec8f7331e5cd84298719732039fc919868886e359eeb73711c92d4fb"
+    },
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/result.json": {
+      "bytes": 146695,
+      "sha256": "597d6ad3816d87a071551ac594bdc513c573aaf790bb5023f68794d70b48824b"
+    },
+    "build/obstruction-opening-select013-comparison-v1/comparison_contract.py": {
+      "bytes": 13849,
+      "kind": "source_only",
+      "sha256": "40aa835f8cbe6f47d917cf19e4c578ad9c7b1e1b157086a4936f0bacc25c4797"
+    },
+    "build/obstruction-opening-select013-comparison-v1/freeze-runtime.py": {
+      "bytes": 8597,
+      "kind": "source_only",
+      "sha256": "6f6b0568b885619ea475f6b13823609cb07c8c992b4c30ddf31cef2c83d1403e"
+    },
+    "build/obstruction-opening-select013-comparison-v1/root-release.json": {
+      "bytes": 5562,
+      "sha256": "94fe3dd987ec34db2e35d428adb50974185038a709233d303b094540146af24e"
+    },
+    "build/obstruction-opening-select013-comparison-v1/run_owned.py": {
+      "bytes": 12077,
+      "kind": "source_only",
+      "sha256": "1129e9f2f92177e9985b3f782c622c01357cb5bfd65cd38334ef5ef6865c00b4"
+    },
+    "build/obstruction-opening-select013-comparison-v1/select_worker.py": {
+      "bytes": 15492,
+      "kind": "source_only",
+      "sha256": "e61b298a62379bac05886f476d7ebb8ee2b6ee2d544d1f690e1030f25662a98c"
+    },
+    "build/obstruction-opening-select013-comparison-v1/source-index.json": {
+      "bytes": 13497,
+      "sha256": "1f0369d2475d9934c1a0dddbc1fc839c5a5f4c7eb1e5a9da099b9c3257b03424"
+    },
+    "build/remind-select-public-preparation-v1/public-select-index-v2.json": {
+      "bytes": 1565,
+      "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+    },
+    "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-013-public-inputs-v1.json": {
+      "bytes": 14172,
+      "sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8"
+    },
+    "manifests/experiments/remind-component-cohort-v1.json": {
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    "src/resectionlab/__init__.py": {
+      "bytes": 99,
+      "kind": "source_only",
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "src/resectionlab/anatomy.py": {
+      "bytes": 13915,
+      "kind": "source_only",
+      "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37"
+    },
+    "src/resectionlab/brain_extraction.py": {
+      "bytes": 23276,
+      "kind": "source_only",
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900"
+    },
+    "src/resectionlab/cohort.py": {
+      "bytes": 14491,
+      "kind": "source_only",
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874"
+    },
+    "src/resectionlab/contact_checkpoint.py": {
+      "bytes": 15134,
+      "kind": "source_only",
+      "sha256": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40"
+    },
+    "src/resectionlab/contact_family_desktop_bridge.py": {
+      "bytes": 15882,
+      "kind": "source_only",
+      "sha256": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22"
+    },
+    "src/resectionlab/contact_family_desktop_release.py": {
+      "bytes": 10805,
+      "kind": "source_only",
+      "sha256": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b"
+    },
+    "src/resectionlab/contact_learning.py": {
+      "bytes": 12709,
+      "kind": "source_only",
+      "sha256": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b"
+    },
+    "src/resectionlab/contact_learning_contract.py": {
+      "bytes": 15537,
+      "kind": "source_only",
+      "sha256": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19"
+    },
+    "src/resectionlab/contact_train_refit_release.py": {
+      "bytes": 8494,
+      "kind": "source_only",
+      "sha256": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee"
+    },
+    "src/resectionlab/core.py": {
+      "bytes": 30914,
+      "kind": "source_only",
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    "src/resectionlab/critical_evidence.py": {
+      "bytes": 29592,
+      "kind": "source_only",
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99"
+    },
+    "src/resectionlab/data_policy.py": {
+      "bytes": 7928,
+      "kind": "source_only",
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208"
+    },
+    "src/resectionlab/desktop_bridge.py": {
+      "bytes": 121702,
+      "kind": "source_only",
+      "sha256": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3"
+    },
+    "src/resectionlab/development_episode.py": {
+      "bytes": 14114,
+      "kind": "source_only",
+      "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e"
+    },
+    "src/resectionlab/evaluation.py": {
+      "bytes": 65126,
+      "kind": "source_only",
+      "sha256": "a5a47ab1d62583f5a0c05db80cc5dafb40a06d30a4542287c18b2d6d840a49e0"
+    },
+    "src/resectionlab/fixed_rl256_loader.py": {
+      "bytes": 5154,
+      "kind": "source_only",
+      "sha256": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638"
+    },
+    "src/resectionlab/functional_events.py": {
+      "bytes": 23198,
+      "kind": "source_only",
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa"
+    },
+    "src/resectionlab/functional_evidence.py": {
+      "bytes": 11698,
+      "kind": "source_only",
+      "sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426"
+    },
+    "src/resectionlab/geometry.py": {
+      "bytes": 31204,
+      "kind": "source_only",
+      "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+    },
+    "src/resectionlab/goal_mode_spatial_policy.py": {
+      "bytes": 8789,
+      "kind": "source_only",
+      "sha256": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a"
+    },
+    "src/resectionlab/goal_relation_spatial_policy.py": {
+      "bytes": 8601,
+      "kind": "source_only",
+      "sha256": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd"
+    },
+    "src/resectionlab/imaging.py": {
+      "bytes": 42272,
+      "kind": "source_only",
+      "sha256": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa"
+    },
+    "src/resectionlab/independent_geometry_batch.py": {
+      "bytes": 9799,
+      "kind": "source_only",
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+    },
+    "src/resectionlab/learning.py": {
+      "bytes": 51360,
+      "kind": "source_only",
+      "sha256": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12"
+    },
+    "src/resectionlab/legacy_aspiration_projection.py": {
+      "bytes": 17510,
+      "kind": "source_only",
+      "sha256": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c"
+    },
+    "src/resectionlab/legacy_transfer_episode.py": {
+      "bytes": 19495,
+      "kind": "source_only",
+      "sha256": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd"
+    },
+    "src/resectionlab/legacy_transfer_supervisor.py": {
+      "bytes": 10427,
+      "kind": "source_only",
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    },
+    "src/resectionlab/legacy_transfer_worker.py": {
+      "bytes": 4685,
+      "kind": "source_only",
+      "sha256": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01"
+    },
+    "src/resectionlab/native_axis_accounting.py": {
+      "bytes": 32191,
+      "kind": "source_only",
+      "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8"
+    },
+    "src/resectionlab/native_axis_policy_schema.py": {
+      "bytes": 4443,
+      "kind": "source_only",
+      "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe"
+    },
+    "src/resectionlab/native_axis_refinement.py": {
+      "bytes": 17552,
+      "kind": "source_only",
+      "sha256": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e"
+    },
+    "src/resectionlab/native_axis_simulation.py": {
+      "bytes": 24485,
+      "kind": "source_only",
+      "sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf"
+    },
+    "src/resectionlab/native_functional_evaluation.py": {
+      "bytes": 12986,
+      "kind": "source_only",
+      "sha256": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13"
+    },
+    "src/resectionlab/native_proposals.py": {
+      "bytes": 61165,
+      "kind": "source_only",
+      "sha256": "45a1dea3b85f919413c34eed7d84ab53817799918346714927d03bf2b6f9c359"
+    },
+    "src/resectionlab/native_refinement.py": {
+      "bytes": 34315,
+      "kind": "source_only",
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4"
+    },
+    "src/resectionlab/native_resection.py": {
+      "bytes": 42795,
+      "kind": "source_only",
+      "sha256": "98012e94329e21eea06d97701adb80f6315baa55c1b8b582fe64ec520de307cd"
+    },
+    "src/resectionlab/native_routes.py": {
+      "bytes": 8680,
+      "kind": "source_only",
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea"
+    },
+    "src/resectionlab/native_simulation.py": {
+      "bytes": 34916,
+      "kind": "source_only",
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749"
+    },
+    "src/resectionlab/native_spatial_evaluation.py": {
+      "bytes": 9878,
+      "kind": "source_only",
+      "sha256": "e5ea456cd3997148b1ff48359b66a63a27826c14da2fd33cd6e64e2045ff9820"
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "bytes": 83927,
+      "kind": "source_only",
+      "sha256": "e2e30f8e1fd6ef5f37b922d21c200e19422ea1c96982de7956c343e05256efec"
+    },
+    "src/resectionlab/observed_landmark_replay.py": {
+      "bytes": 11508,
+      "kind": "source_only",
+      "sha256": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd"
+    },
+    "src/resectionlab/observed_search.py": {
+      "bytes": 34378,
+      "kind": "source_only",
+      "sha256": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd"
+    },
+    "src/resectionlab/patient_planning_accumulation.py": {
+      "bytes": 13599,
+      "kind": "source_only",
+      "sha256": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b"
+    },
+    "src/resectionlab/patient_planning_admission.py": {
+      "bytes": 27876,
+      "kind": "source_only",
+      "sha256": "1f2438e32385859d42362ed987f73021c5dfa2bf303c45037162ae9919dd21fd"
+    },
+    "src/resectionlab/patient_planning_cohort_io.py": {
+      "bytes": 12090,
+      "kind": "source_only",
+      "sha256": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24"
+    },
+    "src/resectionlab/patient_planning_cohort_sequential.py": {
+      "bytes": 18901,
+      "kind": "source_only",
+      "sha256": "ab14952445f5203f5b3695f86664a7d46a15cf8779a6ac188fce484a49bc185c"
+    },
+    "src/resectionlab/patient_planning_cohort_spec.py": {
+      "bytes": 11248,
+      "kind": "source_only",
+      "sha256": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194"
+    },
+    "src/resectionlab/patient_planning_learning.py": {
+      "bytes": 18692,
+      "kind": "source_only",
+      "sha256": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93"
+    },
+    "src/resectionlab/patient_planning_preflight.py": {
+      "bytes": 17247,
+      "kind": "source_only",
+      "sha256": "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04"
+    },
+    "src/resectionlab/patient_select_inference.py": {
+      "bytes": 21374,
+      "kind": "source_only",
+      "sha256": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6"
+    },
+    "src/resectionlab/patient_teacher_trace_cache.py": {
+      "bytes": 7941,
+      "kind": "source_only",
+      "sha256": "4a23d2962c951223afa13ace81fe3fe6f5d897e311907c5bc92869774a5cb940"
+    },
+    "src/resectionlab/planning.py": {
+      "bytes": 31212,
+      "kind": "source_only",
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24"
+    },
+    "src/resectionlab/planning_budget.py": {
+      "bytes": 11579,
+      "kind": "source_only",
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c"
+    },
+    "src/resectionlab/policy_inputs.py": {
+      "bytes": 3294,
+      "kind": "source_only",
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47"
+    },
+    "src/resectionlab/population_learning.py": {
+      "bytes": 25672,
+      "kind": "source_only",
+      "sha256": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c"
+    },
+    "src/resectionlab/prior_proposals.py": {
+      "bytes": 27458,
+      "kind": "source_only",
+      "sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f"
+    },
+    "src/resectionlab/procedural_learning.py": {
+      "bytes": 40198,
+      "kind": "source_only",
+      "sha256": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6"
+    },
+    "src/resectionlab/public_contact_family.py": {
+      "bytes": 11219,
+      "kind": "source_only",
+      "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800"
+    },
+    "src/resectionlab/public_patient_factory.py": {
+      "bytes": 24300,
+      "kind": "source_only",
+      "sha256": "5e847d88978b449c25168c8caa13beb47ff7a98d7a5465220d4cdd9f3f5aa42a"
+    },
+    "src/resectionlab/public_surface_contact.py": {
+      "bytes": 16277,
+      "kind": "source_only",
+      "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0"
+    },
+    "src/resectionlab/public_target_context.py": {
+      "bytes": 16294,
+      "kind": "source_only",
+      "sha256": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15"
+    },
+    "src/resectionlab/route_native_diagnostics.py": {
+      "bytes": 3685,
+      "kind": "source_only",
+      "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf"
+    },
+    "src/resectionlab/selection_contract.py": {
+      "bytes": 1927,
+      "kind": "source_only",
+      "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72"
+    },
+    "src/resectionlab/sequential_spatial_observation.py": {
+      "bytes": 3742,
+      "kind": "source_only",
+      "sha256": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3"
+    },
+    "src/resectionlab/shared_episode.py": {
+      "bytes": 12206,
+      "kind": "source_only",
+      "sha256": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d"
+    },
+    "src/resectionlab/shared_transfer_comparison.py": {
+      "bytes": 4840,
+      "kind": "source_only",
+      "sha256": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835"
+    },
+    "src/resectionlab/shared_vascular_evaluation.py": {
+      "bytes": 21512,
+      "kind": "source_only",
+      "sha256": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0"
+    },
+    "src/resectionlab/simulation.py": {
+      "bytes": 47076,
+      "kind": "source_only",
+      "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253"
+    },
+    "src/resectionlab/spatial_observations.py": {
+      "bytes": 25806,
+      "kind": "source_only",
+      "sha256": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f"
+    },
+    "src/resectionlab/spatial_policy.py": {
+      "bytes": 25459,
+      "kind": "source_only",
+      "sha256": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4"
+    },
+    "src/resectionlab/spatial_policy_diagnostics.py": {
+      "bytes": 20387,
+      "kind": "source_only",
+      "sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493"
+    },
+    "src/resectionlab/structural_evidence.py": {
+      "bytes": 13719,
+      "kind": "source_only",
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "src/resectionlab/surface_contact_episode.py": {
+      "bytes": 6579,
+      "kind": "source_only",
+      "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e"
+    },
+    "src/resectionlab/vascular_contact_streaming.py": {
+      "bytes": 14041,
+      "kind": "source_only",
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed"
+    },
+    "src/resectionlab/workspace_bundle.py": {
+      "bytes": 18934,
+      "kind": "source_only",
+      "sha256": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a"
+    },
+    "src/resectionlab/workspace_diagnostic.py": {
+      "bytes": 7547,
+      "kind": "source_only",
+      "sha256": "f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8"
+    },
+    "src/resectionlab/workspace_imaging.py": {
+      "bytes": 9842,
+      "kind": "source_only",
+      "sha256": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501"
+    },
+    "src/resectionlab/worlds.py": {
+      "bytes": 20428,
+      "kind": "source_only",
+      "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    }
+  },
+  "executed_SELECT_cases": 1,
+  "full_supplied_target_voxels": 35260,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "information_scope": "same permitted arrays, physical task, initial inventory and public-target context; actor features and planner computation differ, so no identical-representation claim",
+  "limits": "Saved receipts and reviewed source; no independent syscall trace, tensor reload, array reread or geometric recomputation. Explicit unvalidated S-union-T geometric world; no clinical/material validation, success threshold or equal-cost claim.",
+  "native_previews": 61290,
+  "no_model_or_patient_array_imports": true,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+  "optimizer_updates_on_SELECT": 0,
+  "parent_exit_code": 0,
+  "parent_status": "complete",
+  "planned_SELECT_cases": 2,
+  "planned_SELECT_denominator": 2,
+  "policy_forwards": 2,
+  "raw_unsupported_target_voxels": 33681,
+  "release_sha256": "94fe3dd987ec34db2e35d428adb50974185038a709233d303b094540146af24e",
+  "sampled_peak_rss_bytes": 1270431744,
+  "scope": "saved_JSON_and_source_only",
+  "selector_costs": {
+    "observed_beam": {
+      "native_previews": 60338,
+      "scope": "selection only; construction, trace collection and independent replay charged separately",
+      "wall_seconds": 219.38832983421162
+    },
+    "observed_greedy": {
+      "native_previews": 0,
+      "scope": "selection only; construction, trace collection and independent replay charged separately",
+      "wall_seconds": 0.008358624996617436
+    }
+  },
+  "unresolved_arms": [],
+  "wall_seconds": 228.13031133404002,
+  "world": {
+    "action_ids": [
+      "STOP",
+      "nominal-cavity-8a829ddedc5d8c55cde29602",
+      "nominal-cavity-56a92bb2706b566ede500cd5",
+      "nominal-cavity-a1f34bb94cd18ac5a8ddafde",
+      "nominal-cavity-655b237718610c39640fae12",
+      "nominal-cavity-4377c01294da33a8765283aa",
+      "nominal-cavity-2a4c70bbfad87069c3715a48",
+      "nominal-cavity-1df235cf4cb991e5eefc1ed8",
+      "nominal-cavity-1c0362750299e7cbca23dd3c",
+      "nominal-cavity-ae24395204f14156a6c192fe",
+      "nominal-cavity-0fc11aec0c04ffb4755bdd4e",
+      "nominal-cavity-a532069838f57563ee73b329",
+      "nominal-cavity-f9641e37b58bc2c30cbdbe6a",
+      "nominal-cavity-74ed584e7630ee0c6098a8c4",
+      "nominal-cavity-9708efbb13adbcaec79a6eb2",
+      "nominal-cavity-3b00ff0e2c8198ae6199f5be",
+      "nominal-cavity-bd3eb897cece47e4c587bcfd",
+      "nominal-cavity-e5a71a81597cafa4a82c1355",
+      "nominal-cavity-cb48185681187991f00f2c50",
+      "nominal-cavity-c2cccfd33152c24996d2bad7",
+      "nominal-cavity-93c90488f106de9c9f3fd0ea",
+      "nominal-cavity-892b9c468476f88f47dd3843",
+      "nominal-cavity-0d992b7cea03101c98d2816a",
+      "nominal-cavity-35f350bf1f20a5b64d36d384",
+      "nominal-cavity-3931bda95ed008ad12ea8119"
+    ],
+    "action_mask": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "decision_model_hash": "sha256:c41339674285a6068e1a6dd6e8dac0958baafa7e2e1eced11349db543cb6dae1",
+    "initial_observation_hash": "sha256:5656b73c89973470cd38cbf20a44e402df9b6863e2fa4a558a80de6eb3e10377",
+    "max_steps": 24,
+    "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+    "proposal_hash": "sha256:fd662062d44a86e45d04fc982685723d07dc7538289433924e60029e108635a0",
+    "source_hash": "sha256:2e32e0acf8b73e1e2eb0defe470f13764cb469bda53212347dc891f1021e4183"
+  }
+}

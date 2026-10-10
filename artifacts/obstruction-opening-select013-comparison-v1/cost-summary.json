@@ -1,0 +1,49 @@
+{
+  "arms": [
+    {
+      "arm": "observed_greedy",
+      "planning_collection_and_replay_previews": 119,
+      "planning_collection_and_replay_seconds": 0.565584999974817,
+      "policy_forwards": 0,
+      "public_construction_previews": 119,
+      "public_construction_seconds": 0.5882804580032825,
+      "selector_previews": 0,
+      "selector_seconds": 0.008358624996617436
+    },
+    {
+      "arm": "IL64",
+      "planning_collection_and_replay_previews": 119,
+      "planning_collection_and_replay_seconds": 0.8608345410320908,
+      "policy_forwards": 1,
+      "public_construction_previews": 119,
+      "public_construction_seconds": 0.5718563750851899
+    },
+    {
+      "arm": "RL8",
+      "planning_collection_and_replay_previews": 119,
+      "planning_collection_and_replay_seconds": 0.6667962081264704,
+      "policy_forwards": 1,
+      "public_construction_previews": 119,
+      "public_construction_seconds": 0.5664325000252575
+    },
+    {
+      "arm": "observed_beam",
+      "planning_collection_and_replay_previews": 60457,
+      "planning_collection_and_replay_seconds": 219.98277479107492,
+      "policy_forwards": 0,
+      "public_construction_previews": 119,
+      "public_construction_seconds": 0.5728924579452723,
+      "selector_previews": 60338,
+      "selector_seconds": 219.38832983421162
+    }
+  ],
+  "checkpoint_reload_seconds": {
+    "IL64": 0.012336541898548603,
+    "RL8": 0.0023466250859200954
+  },
+  "native_previews": 61290,
+  "parent_seconds": 228.13031133404002,
+  "sampled_peak_rss_bytes": 1270431744,
+  "scope": "Selector time/previews are subsets of planning+collection+replay; do not add them again. Upstream TRAIN cost is separate; no equal-compute claim.",
+  "total_policy_forwards": 2
+}

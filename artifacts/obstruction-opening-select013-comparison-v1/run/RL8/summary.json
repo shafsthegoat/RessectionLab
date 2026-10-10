@@ -1,0 +1,18 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "checkpoint_author": "RL8",
+  "comparison_reference_checkpoint": "RL8",
+  "context_hash": "sha256:acb5f9e19f622ef3ab978ca09445e6c316c918d3cbe576dba609f4f5d7e43ee7",
+  "decision_model_hash": "sha256:c41339674285a6068e1a6dd6e8dac0958baafa7e2e1eced11349db543cb6dae1",
+  "outside_meaning": "outside supplied target, not verified normal tissue",
+  "outside_supplied_target_removed_mm3": 0.0,
+  "plan_seal": "sha256:a0c5516c7139eb5e23dc08d0e6204a8805d5f6e84761a6361a3d99c38c89fbce",
+  "public_return": 0.0,
+  "selector_accounting": null,
+  "source_hash": "sha256:2e32e0acf8b73e1e2eb0defe470f13764cb469bda53212347dc891f1021e4183",
+  "status": "complete_replayed",
+  "steps": 1,
+  "target_removed_mm3": 0.0
+}

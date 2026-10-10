@@ -1,0 +1,436 @@
+{
+  "destination": "artifacts/obstruction-opening-select013-comparison-v1",
+  "file_count": 61,
+  "files": [
+    {
+      "bytes": 3623,
+      "kind": "derived_from_packaged_evidence",
+      "path": "README.md",
+      "sha256": "27c6d67e64eb8046650be326a8fab2c63ae95a758ba3d6825c6dc9b3f273183d",
+      "source_path": null
+    },
+    {
+      "bytes": 39006,
+      "kind": "exact_copy",
+      "path": "audit/audit-attempt-01.json",
+      "sha256": "cb077fefbe30d609b8a3fe3d6ab46ae55973c8c0019229bc6fef94ae02c8ef9f",
+      "source_path": "build/obstruction-opening-select013-independent-v1/audit-attempt-01.json"
+    },
+    {
+      "bytes": 27767,
+      "kind": "exact_copy",
+      "path": "audit/audit_saved.py",
+      "sha256": "05f6dec29c7d567be93590ccbfa5cee4f92d87fab74512de448a7f9a1be90964",
+      "source_path": "build/obstruction-opening-select013-independent-v1/audit_saved.py"
+    },
+    {
+      "bytes": 10330,
+      "kind": "derived_from_packaged_evidence",
+      "path": "beam-progress-summary.json",
+      "sha256": "c2009d509f3050c0cadd4c8271b2f3dd02f74c1f435049c1a2efbb977e326e08",
+      "source_path": null
+    },
+    {
+      "bytes": 1732,
+      "kind": "derived_from_packaged_evidence",
+      "path": "cost-summary.json",
+      "sha256": "61ea505c01a7f781b9e6ad6dc7c93de6fbfa11daad7af42ea92be08ad9459dc0",
+      "source_path": null
+    },
+    {
+      "bytes": 1787,
+      "kind": "exact_copy",
+      "path": "generated-control/controls-01.json",
+      "sha256": "869a4ccc8ddd2cc85f6edca3673ffb078193aa8a085cae4a5306fc7ceecec312",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/controls-01.json"
+    },
+    {
+      "bytes": 98,
+      "kind": "exact_copy",
+      "path": "generated-control/controls-01.log",
+      "sha256": "b4eb7be9000651a3e89c6a77e8b346d05d1d706d620aa6f8193e574a39b3ced1",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/controls-01.log"
+    },
+    {
+      "bytes": 5562,
+      "kind": "exact_copy",
+      "path": "provenance/release-template.json",
+      "sha256": "e87e8da078f943830bc1b78473a48fd96592f26021b84d64147c233e2805f0e8",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/release-template.json"
+    },
+    {
+      "bytes": 5562,
+      "kind": "exact_copy",
+      "path": "provenance/root-release.json",
+      "sha256": "94fe3dd987ec34db2e35d428adb50974185038a709233d303b094540146af24e",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/root-release.json"
+    },
+    {
+      "bytes": 13497,
+      "kind": "exact_copy",
+      "path": "provenance/source-index.json",
+      "sha256": "1f0369d2475d9934c1a0dddbc1fc839c5a5f4c7eb1e5a9da099b9c3257b03424",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/source-index.json"
+    },
+    {
+      "bytes": 1206,
+      "kind": "exact_copy",
+      "path": "run/IL64-lineage.json",
+      "sha256": "daa022477df649be7bd7347a3eed496c9968de2113f240e5830e62062abcff67",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64-lineage.json"
+    },
+    {
+      "bytes": 1916,
+      "kind": "exact_copy",
+      "path": "run/IL64/comparison-world.json",
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/comparison-world.json"
+    },
+    {
+      "bytes": 21505,
+      "kind": "exact_copy",
+      "path": "run/IL64/complete-trace.json",
+      "sha256": "079bfa78f6ea7e87257e82b9de718e6a7a60b5317b437f8db047bd77a9093c2f",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/complete-trace.json"
+    },
+    {
+      "bytes": 4268,
+      "kind": "exact_copy",
+      "path": "run/IL64/context.json",
+      "sha256": "7541282b1c53de562f5d18c65c1b28cfa568a6c44b1aa22fd9ef0c47cd01cca4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/context.json"
+    },
+    {
+      "bytes": 20584,
+      "kind": "exact_copy",
+      "path": "run/IL64/native-replay.json",
+      "sha256": "9e1072f085cce889fe146309593a3b6a80c6cb39fe6c74925059802afdba0ef4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/native-replay.json"
+    },
+    {
+      "bytes": 1065,
+      "kind": "exact_copy",
+      "path": "run/IL64/plan.json",
+      "sha256": "945714b4f14fdf2cdf20cb55172729391ffcbf00117876c96edbd60e43600d1b",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/plan.json"
+    },
+    {
+      "bytes": 1126,
+      "kind": "exact_copy",
+      "path": "run/IL64/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 2090,
+      "kind": "exact_copy",
+      "path": "run/IL64/select-replay.json",
+      "sha256": "9f14a8966ca9b375b50c9feef8f71c71947ed43da1793306148210bec5db29f2",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/select-replay.json"
+    },
+    {
+      "bytes": 738,
+      "kind": "exact_copy",
+      "path": "run/IL64/summary.json",
+      "sha256": "f0d56fc783477b579a4753cb1567acfc29124da6ba915275bf3b43d1441d0f4a",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/IL64/summary.json"
+    },
+    {
+      "bytes": 1205,
+      "kind": "exact_copy",
+      "path": "run/RL8-lineage.json",
+      "sha256": "e1b1561856779e1947d19ae0b1ea10d6bd916253ca7b755e0f9a5a5c33b0854f",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8-lineage.json"
+    },
+    {
+      "bytes": 1916,
+      "kind": "exact_copy",
+      "path": "run/RL8/comparison-world.json",
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/comparison-world.json"
+    },
+    {
+      "bytes": 21504,
+      "kind": "exact_copy",
+      "path": "run/RL8/complete-trace.json",
+      "sha256": "3322afa013b57b60c4058f7f938be3556cef3546ebfd3330a3115fbecfeb1cca",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/complete-trace.json"
+    },
+    {
+      "bytes": 4267,
+      "kind": "exact_copy",
+      "path": "run/RL8/context.json",
+      "sha256": "40d4a77cf8d1bcc48561671fee7c1d9ae13e6c951d494dcb5ab694a2b07a3e8f",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/context.json"
+    },
+    {
+      "bytes": 20584,
+      "kind": "exact_copy",
+      "path": "run/RL8/native-replay.json",
+      "sha256": "47100ab003b0fa60f598e51d998c9eabba15076007f7ecdfe5cf1a4dff98c8d4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/native-replay.json"
+    },
+    {
+      "bytes": 1064,
+      "kind": "exact_copy",
+      "path": "run/RL8/plan.json",
+      "sha256": "82470547e843049b3132037f7486c898d99faf02671b83c2bd50ed3913505b5c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/plan.json"
+    },
+    {
+      "bytes": 1126,
+      "kind": "exact_copy",
+      "path": "run/RL8/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 2089,
+      "kind": "exact_copy",
+      "path": "run/RL8/select-replay.json",
+      "sha256": "962a3f288c1b285344abcabe29be4577ead58aff795fb4a8783e2ac63ad251d4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/select-replay.json"
+    },
+    {
+      "bytes": 736,
+      "kind": "exact_copy",
+      "path": "run/RL8/summary.json",
+      "sha256": "0994c40e2aebbf032f7f30bfa51309e641ac0c1d7132100294dc28a2541a48d3",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/RL8/summary.json"
+    },
+    {
+      "bytes": 6091,
+      "kind": "exact_copy",
+      "path": "run/costs.json",
+      "sha256": "9321ee49832740d226f15de992c4763a642a178edd744b4e1e5e7d7b04d5c060",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/costs.json"
+    },
+    {
+      "bytes": 1916,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/comparison-world.json",
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/comparison-world.json"
+    },
+    {
+      "bytes": 21461,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/complete-trace.json",
+      "sha256": "3232ea9c048fd8cd05f0fb4a0dc859199f4cad3952ae2da7288a58ef4584a0fe",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/complete-trace.json"
+    },
+    {
+      "bytes": 4268,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/context.json",
+      "sha256": "7541282b1c53de562f5d18c65c1b28cfa568a6c44b1aa22fd9ef0c47cd01cca4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/context.json"
+    },
+    {
+      "bytes": 20583,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/native-replay.json",
+      "sha256": "fe443f68380ec3f9a0836e839339f4e1174e8ebaa97a7f0faa9732e909f9e693",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/native-replay.json"
+    },
+    {
+      "bytes": 926,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/plan.json",
+      "sha256": "0cd277f247d4367c59107e43f7bc888f7689570e01817f75cace4765f491c309",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/plan.json"
+    },
+    {
+      "bytes": 1126,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 120570,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/search-return.json",
+      "sha256": "fbbb1852e8e29050eccff09dabfc56e9adeb7d93606a3ffa2467ff80b7f29687",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/search-return.json"
+    },
+    {
+      "bytes": 2023,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/select-replay.json",
+      "sha256": "475cb0f86ac685236c70af9dd82cb747067491163ccbc2d41b6698fb687cd153",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/select-replay.json"
+    },
+    {
+      "bytes": 120627,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/selection.json",
+      "sha256": "8952837f06938e04cf26ee290d107bbe9464815e8f31d416d2877599878990ef",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/selection.json"
+    },
+    {
+      "bytes": 121138,
+      "kind": "exact_copy",
+      "path": "run/observed_beam/summary.json",
+      "sha256": "e6cb82c698d1a16738af0d29ea1f664b99f67d490c018aef9ea6fd8e24091ab3",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/summary.json"
+    },
+    {
+      "bytes": 1916,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/comparison-world.json",
+      "sha256": "cbcacaa92fd90f19ad17b44e9be8e038032dceb76a4ad37329840622a8cf6748",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/comparison-world.json"
+    },
+    {
+      "bytes": 21461,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/complete-trace.json",
+      "sha256": "3232ea9c048fd8cd05f0fb4a0dc859199f4cad3952ae2da7288a58ef4584a0fe",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/complete-trace.json"
+    },
+    {
+      "bytes": 4268,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/context.json",
+      "sha256": "7541282b1c53de562f5d18c65c1b28cfa568a6c44b1aa22fd9ef0c47cd01cca4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/context.json"
+    },
+    {
+      "bytes": 20583,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/native-replay.json",
+      "sha256": "f972c4d2f7ece9c72445a1d6b54bd5fc48d9324782c472363fe340b5a882dc83",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/native-replay.json"
+    },
+    {
+      "bytes": 926,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/plan.json",
+      "sha256": "0cd277f247d4367c59107e43f7bc888f7689570e01817f75cace4765f491c309",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/plan.json"
+    },
+    {
+      "bytes": 1126,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/public-task-derivation.json",
+      "sha256": "52f1ae9c56db720e07993924936b8331eccf1b0735e0f5637467c04634853c3c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 9095,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/search-return.json",
+      "sha256": "2a1a11dec53744aece3f7f5d316fc460eb76b55ed5e5eeecde73dcac8a55f3ca",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/search-return.json"
+    },
+    {
+      "bytes": 2023,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/select-replay.json",
+      "sha256": "475cb0f86ac685236c70af9dd82cb747067491163ccbc2d41b6698fb687cd153",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/select-replay.json"
+    },
+    {
+      "bytes": 9150,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/selection.json",
+      "sha256": "c71d35d2e8d8456584709b7164067b15cde2efece74f40572829daa2b56409bd",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/selection.json"
+    },
+    {
+      "bytes": 9663,
+      "kind": "exact_copy",
+      "path": "run/observed_greedy/summary.json",
+      "sha256": "bddc2395ec8f7331e5cd84298719732039fc919868886e359eeb73711c92d4fb",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/summary.json"
+    },
+    {
+      "bytes": 146695,
+      "kind": "exact_copy",
+      "path": "run/result.json",
+      "sha256": "597d6ad3816d87a071551ac594bdc513c573aaf790bb5023f68794d70b48824b",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01/result.json"
+    },
+    {
+      "bytes": 13518,
+      "kind": "exact_copy",
+      "path": "source/assemble.py",
+      "sha256": "f38dc2c609ed33b4d3fe14258d183ea41c1c4f6487b262161073eeab450ca08d",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/compact-result/assemble.py"
+    },
+    {
+      "bytes": 13849,
+      "kind": "exact_copy",
+      "path": "source/comparison_contract.py",
+      "sha256": "40aa835f8cbe6f47d917cf19e4c578ad9c7b1e1b157086a4936f0bacc25c4797",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/comparison_contract.py"
+    },
+    {
+      "bytes": 8597,
+      "kind": "exact_copy",
+      "path": "source/freeze-runtime.py",
+      "sha256": "6f6b0568b885619ea475f6b13823609cb07c8c992b4c30ddf31cef2c83d1403e",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/freeze-runtime.py"
+    },
+    {
+      "bytes": 1781,
+      "kind": "exact_copy",
+      "path": "source/run-controls.py",
+      "sha256": "ff61593ef0011be218f58c9cdecfabff50560aa62fb3e472b61e7cfd3f194b8c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/run-controls.py"
+    },
+    {
+      "bytes": 12077,
+      "kind": "exact_copy",
+      "path": "source/run_owned.py",
+      "sha256": "1129e9f2f92177e9985b3f782c622c01357cb5bfd65cd38334ef5ef6865c00b4",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/run_owned.py"
+    },
+    {
+      "bytes": 15492,
+      "kind": "exact_copy",
+      "path": "source/select_worker.py",
+      "sha256": "e61b298a62379bac05886f476d7ebb8ee2b6ee2d544d1f690e1030f25662a98c",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/select_worker.py"
+    },
+    {
+      "bytes": 6876,
+      "kind": "exact_copy",
+      "path": "source/test_worker_flow.py",
+      "sha256": "c9b0132d3a095327b496f1aa1b3952561792fb27c49ffcc3cd6bc5923f603e36",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/test_worker_flow.py"
+    },
+    {
+      "bytes": 6807,
+      "kind": "derived_from_packaged_evidence",
+      "path": "summary.json",
+      "sha256": "ef8af73b77f043c41cc851788fd34bb502e2aa0bc8de5177480a6a6ea43af255",
+      "source_path": null
+    },
+    {
+      "bytes": 12051,
+      "kind": "exact_copy",
+      "path": "supervision/declaration.json",
+      "sha256": "38018d7d3b806b227d4d4052ea35329110858fabef6644009a995c5c829e52bc",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01.supervision/declaration.json"
+    },
+    {
+      "bytes": 145564,
+      "kind": "exact_copy",
+      "path": "supervision/receipt.json",
+      "sha256": "27f92b3d566ee88b0d2fd5bc0a9a508bb224a40e310e3f34c39246f219ecffef",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01.supervision/receipt.json"
+    },
+    {
+      "bytes": 783,
+      "kind": "exact_copy",
+      "path": "supervision/worker-final.json",
+      "sha256": "5bc093ba51fed0b390778aecd495e2feeb3ccbdc42228e06278f503989a4ea0b",
+      "source_path": "build/obstruction-opening-select013-comparison-v1/attempt-01.supervision/worker-final.json"
+    }
+  ],
+  "payloads_excluded": true,
+  "total_bytes": 1102983,
+  "version": "compact-result-manifest-v1"
+}

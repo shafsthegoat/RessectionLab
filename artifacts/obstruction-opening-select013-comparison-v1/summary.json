@@ -1,0 +1,153 @@
+{
+  "EVAL_opened": false,
+  "arms": {
+    "IL64": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "IL64",
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    "RL8": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": "RL8",
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    "observed_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    },
+    "observed_greedy": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "full_target_fraction": 0.0,
+      "independent_geometry_accepted": true,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP"
+    }
+  },
+  "audit": {
+    "checks": 726,
+    "decision": "PASS_SAVED_UNION_OBSTRUCTION_SELECT013_COMPARISON",
+    "information_scope": "same permitted arrays, physical task, initial inventory and public-target context; actor features and planner computation differ, so no identical-representation claim",
+    "input_bindings": 150,
+    "limitations": "Saved receipts and reviewed source; no independent syscall trace, tensor reload, array reread or geometric recomputation. Explicit unvalidated S-union-T geometric world; no clinical/material validation, success threshold or equal-cost claim.",
+    "sha256": "cb077fefbe30d609b8a3fe3d6ab46ae55973c8c0019229bc6fef94ae02c8ef9f"
+  },
+  "beam_progress": {
+    "all_evaluated_transition_prefixes_negative": true,
+    "completed_layers": 24,
+    "max_opening_depth_mm": 3.500000000000003,
+    "max_retained_insertion_mm": 3.5,
+    "max_retained_outside_target_mm3": 53.99999478464853,
+    "max_retained_target_mm3": 0.0,
+    "model_transition_calls": 519,
+    "retained_progress_rows": 48,
+    "scope": "Recorded bounded beam exploration, not exhaustive reachability or global optimality proof",
+    "selected_plan": [
+      "STOP"
+    ],
+    "selected_plan_return": 0.0,
+    "source_path": "run/observed_beam/search-return.json",
+    "source_sha256": "fbbb1852e8e29050eccff09dabfc56e9adeb7d93606a3ffa2467ff80b7f29687"
+  },
+  "checkpoint_lineages": {
+    "IL64": {
+      "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+      "checkpoint_sha256": "e1a41c08bd348dfb438eb2290865a91d18e6fd127b44065592360c138969d685",
+      "completed_updates": 64,
+      "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "learning_protocol_hash": "sha256:39ca238c0f511406d047f7b9d926fe1d7c36085471a802e7825ddfc62b77729f",
+      "method": "IL",
+      "optimizer_updates_on_SELECT": 0,
+      "parameter_hash": "sha256:186ba8997e17c06b8149d9d55205cd4afe9d1abf3c7f1c3e642dd68943cb7c87",
+      "public_target_context_variant": "full-supplied-public-target-context-v1",
+      "training_context_hashes": {
+        "ReMIND:008": "sha256:9f16a6ca767cda6b8f3b6a6feae08bfc00b86bb61d722d3d13221b377c718e45",
+        "ReMIND:010": "sha256:ddd349a0a6be0f740f8105e5a42df0752c60fed23d27e0e25adff529659799e1",
+        "ReMIND:020": "sha256:b8cff4fda8b056db1456c1450ec7d0cda916204504aab2c3ce40352068bfde6d",
+        "ReMIND:025": "sha256:19bfecd57432c5e1c7a7bec0c995596ccb92c0724db8a854e7301f0c9657a1ee"
+      },
+      "training_release_sha256": "61b94272a3614444bae4aa13c51140f40679a01208f4fb0c964d6e1a6af1efaf",
+      "version": "frozen-TRAIN-checkpoint-lineage-v1"
+    },
+    "RL8": {
+      "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+      "checkpoint_sha256": "05a7154bf558eaac14209c6cd2bc677fe8c4e7149b9b7e129b9326a4208df475",
+      "completed_updates": 8,
+      "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "learning_protocol_hash": "sha256:aead19b14ed7b8005dfa163379bfebccae45b9a2a64f25856702b46d302824e0",
+      "method": "RL",
+      "optimizer_updates_on_SELECT": 0,
+      "parameter_hash": "sha256:6e6238a895646639bd93e4298fec6f09094689632b0aabddc8fbd8e1054060d1",
+      "public_target_context_variant": "full-supplied-public-target-context-v1",
+      "training_context_hashes": {
+        "ReMIND:008": "sha256:44fd9c218afacbe1ff02d378edf50be12eccc132467f7f6b7ebaf6a2e948f03c",
+        "ReMIND:010": "sha256:e876ec7b7950d78971ec9ca55fe4a3dad9c387abed8459febb05f62fba424619",
+        "ReMIND:020": "sha256:662e7bf4caba9461648b1429de41564b69dde0271e5c1c98147109b5941840bb",
+        "ReMIND:025": "sha256:49c69344aa18dd9fe9a97cee8eaec85a254ebfb6111fcef18d1877c61bfba899"
+      },
+      "training_release_sha256": "276106b7a23caede8a010acb99eeed968b7abbb7f4631b9b91aec33e746b17d6",
+      "version": "frozen-TRAIN-checkpoint-lineage-v1"
+    }
+  },
+  "checkpoint_loads": 2,
+  "claim_limits": "One executed SELECT case of two planned. No clinical/material validation, global-optimality/reachability impossibility, generalization or equal-compute claim.",
+  "clean_termination": true,
+  "conclusion": "No target-removal benefit demonstrated on executed SELECT013: all4 arms completed STOP with zero return/removal.",
+  "executed_SELECT_cases": 1,
+  "full_supplied_target_voxels": 35260,
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "native_previews": 61290,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 846705,
+  "parent_seconds": 228.13031133404002,
+  "payloads_excluded": [
+    "checkpoint weights",
+    "patient arrays/images",
+    "repeated state inventories and frames"
+  ],
+  "planned_SELECT_cases": 2,
+  "policy_forwards": 2,
+  "raw_unsupported_target_voxels": 33681,
+  "release_sha256": "94fe3dd987ec34db2e35d428adb50974185038a709233d303b094540146af24e",
+  "result_sha256": "597d6ad3816d87a071551ac594bdc513c573aaf790bb5023f68794d70b48824b",
+  "sampled_peak_rss_bytes": 1270431744,
+  "simulated_unsupported_target_voxels_after_explicit_union": 0,
+  "source_head": "40137febbe771652f1cd18703d6f060150a8ceda",
+  "status": "complete_union_obstruction_SELECT013_comparison",
+  "version": "obstruction-opening-select013-comparison-v1"
+}

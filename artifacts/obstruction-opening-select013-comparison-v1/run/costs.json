@@ -1,0 +1,150 @@
+{
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 224.5353964162059,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 61290,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 7199,
+          "raised": 0,
+          "rejected": 54091,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 469,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 53622
+          },
+          "returned": 61290,
+          "returned_microsteps": 304955,
+          "seconds": 151.0441303839907,
+          "started": 61290
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 61290,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "phases": {
+    "IL64.planning_and_replay": {
+      "complete_wall_seconds": 0.8608345410320908,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 7,
+      "inventory_request_inclusive_seconds": 0.35230974899604917,
+      "inventory_request_returned": 7,
+      "native_preview_entries": 119,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.02903529116883874,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.2884751248639077,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0015527079813182354,
+      "task_clone_returned": 1
+    },
+    "IL64.public_construction": {
+      "complete_wall_seconds": 0.5718563750851899,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.34785225009545684,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    },
+    "RL8.planning_and_replay": {
+      "complete_wall_seconds": 0.6667962081264704,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 7,
+      "inventory_request_inclusive_seconds": 0.34709333325736225,
+      "inventory_request_returned": 7,
+      "native_preview_entries": 119,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.028513207798823714,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.10443112486973405,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0015261669177561998,
+      "task_clone_returned": 1
+    },
+    "RL8.public_construction": {
+      "complete_wall_seconds": 0.5664325000252575,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.3421048342715949,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    },
+    "checkpoint_reload.IL64": {
+      "complete_wall_seconds": 0.012336541898548603,
+      "native_preview_entries": 0
+    },
+    "checkpoint_reload.RL8": {
+      "complete_wall_seconds": 0.0023466250859200954,
+      "native_preview_entries": 0
+    },
+    "observed_beam.planning_and_replay": {
+      "complete_wall_seconds": 219.98277479107492,
+      "inventory_build_or_terminal_empty_calls": 522,
+      "inventory_request_calls": 1092,
+      "inventory_request_inclusive_seconds": 203.64584091911092,
+      "inventory_request_returned": 1092,
+      "native_preview_entries": 60457,
+      "native_transition_calls": 521,
+      "native_transition_inclusive_seconds": 214.14813833823428,
+      "native_transition_returned": 521,
+      "task_clone_calls": 521,
+      "task_clone_inclusive_seconds": 4.12942578131333,
+      "task_clone_returned": 521
+    },
+    "observed_beam.public_construction": {
+      "complete_wall_seconds": 0.5728924579452723,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.3517726669088006,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    },
+    "observed_greedy.planning_and_replay": {
+      "complete_wall_seconds": 0.565584999974817,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 9,
+      "inventory_request_inclusive_seconds": 0.3463076229672879,
+      "inventory_request_returned": 9,
+      "native_preview_entries": 119,
+      "native_transition_calls": 3,
+      "native_transition_inclusive_seconds": 0.0284277917817235,
+      "native_transition_returned": 3,
+      "task_clone_calls": 2,
+      "task_clone_inclusive_seconds": 0.0030784173868596554,
+      "task_clone_returned": 2
+    },
+    "observed_greedy.public_construction": {
+      "complete_wall_seconds": 0.5882804580032825,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.34546958305872977,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 119
+    }
+  },
+  "policy_forwards": 2,
+  "timing_scope": "inclusive phases; do not sum nested work"
+}

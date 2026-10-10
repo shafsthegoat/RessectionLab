@@ -1,0 +1,2591 @@
+{
+  "accounting": {
+    "actor_forward_calls": 0,
+    "beam_pruned_prefixes": 464,
+    "beam_width": 2,
+    "call_cap_reached": false,
+    "completed_layers": 24,
+    "eager_transition_calls": 519,
+    "estimated_incremental_return": 0.0,
+    "evaluated_transition_prefixes": 519,
+    "expanded_nodes": 47,
+    "final_policy_state_hash": null,
+    "guidance": "none",
+    "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+    "implicit_stop_prefix_count": 520,
+    "initial_policy_state_hash": null,
+    "layers": [
+      {
+        "completed": true,
+        "depth": 1,
+        "expanded_nodes": 1,
+        "model_transition_calls": 24,
+        "negative_prefixes_evaluated": 24,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 22,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a"
+            ],
+            "estimated_incremental_return": -0.23099998068388358,
+            "opening_depth_mm": 0.4999999999999986,
+            "opening_removed_volume_mm3": 0.9999999034194179,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-93c90488f106de9c9f3fd0ea"
+            ],
+            "estimated_incremental_return": -0.23099998068388358,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 0.9999999034194179,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a"
+              ],
+              "estimated_incremental_return": -0.23099998068388358,
+              "legal_nonstop_actions": 23,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 0.9999999034194179,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-93c90488f106de9c9f3fd0ea"
+              ],
+              "estimated_incremental_return": -0.23099998068388358,
+              "legal_nonstop_actions": 22,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 0.9999999034194179,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 2,
+        "expanded_nodes": 2,
+        "model_transition_calls": 45,
+        "negative_prefixes_evaluated": 45,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 43,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338"
+            ],
+            "estimated_incremental_return": -0.46199996136776716,
+            "opening_depth_mm": 0.5,
+            "opening_removed_volume_mm3": 1.9999998068388358,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5"
+            ],
+            "estimated_incremental_return": -1.8939998261549522,
+            "opening_depth_mm": 2.4999999999999973,
+            "opening_removed_volume_mm3": 8.99999913077476,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338"
+              ],
+              "estimated_incremental_return": -0.46199996136776716,
+              "legal_nonstop_actions": 22,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 1.9999998068388358,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5"
+              ],
+              "estimated_incremental_return": -1.8939998261549522,
+              "legal_nonstop_actions": 22,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 8.99999913077476,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 3,
+        "expanded_nodes": 2,
+        "model_transition_calls": 44,
+        "negative_prefixes_evaluated": 44,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 42,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2"
+            ],
+            "estimated_incremental_return": -0.6929999420516507,
+            "opening_depth_mm": 0.500000000000003,
+            "opening_removed_volume_mm3": 2.999999710258254,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf"
+            ],
+            "estimated_incremental_return": -2.3269997875227193,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 10.999998937613597,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2"
+              ],
+              "estimated_incremental_return": -0.6929999420516507,
+              "legal_nonstop_actions": 21,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 2.999999710258254,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf"
+              ],
+              "estimated_incremental_return": -2.3269997875227193,
+              "legal_nonstop_actions": 20,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 10.999998937613597,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 4,
+        "expanded_nodes": 2,
+        "model_transition_calls": 41,
+        "negative_prefixes_evaluated": 41,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 39,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3"
+            ],
+            "estimated_incremental_return": -0.9239999227355343,
+            "opening_depth_mm": 0.500000000000003,
+            "opening_removed_volume_mm3": 3.9999996136776717,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b"
+            ],
+            "estimated_incremental_return": -3.5579996716260207,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 16.999998358130107,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3"
+              ],
+              "estimated_incremental_return": -0.9239999227355343,
+              "legal_nonstop_actions": 20,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 3.9999996136776717,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b"
+              ],
+              "estimated_incremental_return": -3.5579996716260207,
+              "legal_nonstop_actions": 19,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 16.999998358130107,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 5,
+        "expanded_nodes": 2,
+        "model_transition_calls": 39,
+        "negative_prefixes_evaluated": 39,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 37,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf"
+            ],
+            "estimated_incremental_return": -1.1549999034194178,
+            "opening_depth_mm": 0.500000000000003,
+            "opening_removed_volume_mm3": 4.9999995170970895,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c"
+            ],
+            "estimated_incremental_return": -5.590999478464857,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 26.999997392324286,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf"
+              ],
+              "estimated_incremental_return": -1.1549999034194178,
+              "legal_nonstop_actions": 19,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 4.9999995170970895,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c"
+              ],
+              "estimated_incremental_return": -5.590999478464857,
+              "legal_nonstop_actions": 12,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 26.999997392324286,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 6,
+        "expanded_nodes": 2,
+        "model_transition_calls": 31,
+        "negative_prefixes_evaluated": 31,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 29,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c"
+            ],
+            "estimated_incremental_return": -1.3859998841033014,
+            "opening_depth_mm": 0.500000000000003,
+            "opening_removed_volume_mm3": 5.999999420516508,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe"
+            ],
+            "estimated_incremental_return": -6.621999381884275,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 31.999996909421377,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c"
+              ],
+              "estimated_incremental_return": -1.3859998841033014,
+              "legal_nonstop_actions": 18,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 5.999999420516508,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe"
+              ],
+              "estimated_incremental_return": -6.621999381884275,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 31.999996909421377,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 7,
+        "expanded_nodes": 2,
+        "model_transition_calls": 25,
+        "negative_prefixes_evaluated": 25,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 23,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073"
+            ],
+            "estimated_incremental_return": -1.616999864787185,
+            "opening_depth_mm": 0.500000000000003,
+            "opening_removed_volume_mm3": 6.999999323935926,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7"
+            ],
+            "estimated_incremental_return": -7.052999343252043,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 33.99999671626021,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073"
+              ],
+              "estimated_incremental_return": -1.616999864787185,
+              "legal_nonstop_actions": 17,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 0.5,
+              "outside_supplied_target_removed_mm3": 6.999999323935926,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7"
+              ],
+              "estimated_incremental_return": -7.052999343252043,
+              "legal_nonstop_actions": 5,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 33.99999671626021,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 8,
+        "expanded_nodes": 2,
+        "model_transition_calls": 22,
+        "negative_prefixes_evaluated": 22,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 20,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b"
+            ],
+            "estimated_incremental_return": -1.8499998454710687,
+            "opening_depth_mm": 1.5,
+            "opening_removed_volume_mm3": 7.999999227355344,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157"
+            ],
+            "estimated_incremental_return": -7.48399930461981,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 35.99999652309905,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b"
+              ],
+              "estimated_incremental_return": -1.8499998454710687,
+              "legal_nonstop_actions": 16,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 7.999999227355344,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157"
+              ],
+              "estimated_incremental_return": -7.48399930461981,
+              "legal_nonstop_actions": 5,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 35.99999652309905,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 9,
+        "expanded_nodes": 2,
+        "model_transition_calls": 21,
+        "negative_prefixes_evaluated": 21,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 19,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a"
+            ],
+            "estimated_incremental_return": -2.082999826154952,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 8.999999130774762,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82"
+            ],
+            "estimated_incremental_return": -7.7449992853036935,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 36.999996426518464,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a"
+              ],
+              "estimated_incremental_return": -2.082999826154952,
+              "legal_nonstop_actions": 14,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 8.999999130774762,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82"
+              ],
+              "estimated_incremental_return": -7.7449992853036935,
+              "legal_nonstop_actions": 6,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 36.999996426518464,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 10,
+        "expanded_nodes": 2,
+        "model_transition_calls": 20,
+        "negative_prefixes_evaluated": 20,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 18,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae"
+            ],
+            "estimated_incremental_return": -2.3159998068388354,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 9.99999903419418,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915"
+            ],
+            "estimated_incremental_return": -7.975999265987577,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 37.99999632993788,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae"
+              ],
+              "estimated_incremental_return": -2.3159998068388354,
+              "legal_nonstop_actions": 12,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 9.99999903419418,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915"
+              ],
+              "estimated_incremental_return": -7.975999265987577,
+              "legal_nonstop_actions": 8,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 37.99999632993788,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 11,
+        "expanded_nodes": 2,
+        "model_transition_calls": 20,
+        "negative_prefixes_evaluated": 20,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 18,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff"
+            ],
+            "estimated_incremental_return": -2.548999787522719,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 10.999998937613599,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456"
+            ],
+            "estimated_incremental_return": -8.20699924667146,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 38.999996233357294,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff"
+              ],
+              "estimated_incremental_return": -2.548999787522719,
+              "legal_nonstop_actions": 11,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 10.999998937613599,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456"
+              ],
+              "estimated_incremental_return": -8.20699924667146,
+              "legal_nonstop_actions": 9,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 38.999996233357294,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 12,
+        "expanded_nodes": 2,
+        "model_transition_calls": 20,
+        "negative_prefixes_evaluated": 20,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 18,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7"
+            ],
+            "estimated_incremental_return": -2.781999768206602,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 11.999998841033017,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87"
+            ],
+            "estimated_incremental_return": -9.069999169406994,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 42.99999584703497,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7"
+              ],
+              "estimated_incremental_return": -2.781999768206602,
+              "legal_nonstop_actions": 10,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 11.999998841033017,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87"
+              ],
+              "estimated_incremental_return": -9.069999169406994,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 42.99999584703497,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 13,
+        "expanded_nodes": 2,
+        "model_transition_calls": 17,
+        "negative_prefixes_evaluated": 17,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 15,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1"
+            ],
+            "estimated_incremental_return": -3.0149997488904856,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 12.999998744452435,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff"
+            ],
+            "estimated_incremental_return": -9.332999150090878,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 43.99999575045438,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1"
+              ],
+              "estimated_incremental_return": -3.0149997488904856,
+              "legal_nonstop_actions": 9,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 12.999998744452435,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff"
+              ],
+              "estimated_incremental_return": -9.332999150090878,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 43.99999575045438,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 14,
+        "expanded_nodes": 2,
+        "model_transition_calls": 16,
+        "negative_prefixes_evaluated": 16,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 14,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e"
+            ],
+            "estimated_incremental_return": -3.247999729574369,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 13.999998647871854,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22"
+            ],
+            "estimated_incremental_return": -9.565999130774761,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 44.999995653873796,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e"
+              ],
+              "estimated_incremental_return": -3.247999729574369,
+              "legal_nonstop_actions": 8,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 13.999998647871854,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22"
+              ],
+              "estimated_incremental_return": -9.565999130774761,
+              "legal_nonstop_actions": 8,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 44.999995653873796,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 15,
+        "expanded_nodes": 2,
+        "model_transition_calls": 16,
+        "negative_prefixes_evaluated": 16,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 14,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488"
+            ],
+            "estimated_incremental_return": -3.4809997102582524,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 14.999998551291272,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a"
+            ],
+            "estimated_incremental_return": -9.802999111458645,
+            "opening_depth_mm": 3.4999999999999973,
+            "opening_removed_volume_mm3": 45.99999555729321,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488"
+              ],
+              "estimated_incremental_return": -3.4809997102582524,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 14.999998551291272,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a"
+              ],
+              "estimated_incremental_return": -9.802999111458645,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 45.99999555729321,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 16,
+        "expanded_nodes": 2,
+        "model_transition_calls": 14,
+        "negative_prefixes_evaluated": 14,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 12,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1"
+            ],
+            "estimated_incremental_return": -3.741999690942136,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 15.99999845471069,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee"
+            ],
+            "estimated_incremental_return": -10.035999092142529,
+            "opening_depth_mm": 3.4999999999999973,
+            "opening_removed_volume_mm3": 46.999995460712626,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1"
+              ],
+              "estimated_incremental_return": -3.741999690942136,
+              "legal_nonstop_actions": 6,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 15.99999845471069,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee"
+              ],
+              "estimated_incremental_return": -10.035999092142529,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 46.999995460712626,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 17,
+        "expanded_nodes": 2,
+        "model_transition_calls": 13,
+        "negative_prefixes_evaluated": 13,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 11,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51"
+            ],
+            "estimated_incremental_return": -4.172999652309903,
+            "opening_depth_mm": 1.500000000000003,
+            "opening_removed_volume_mm3": 17.999998261549525,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5"
+            ],
+            "estimated_incremental_return": -10.268999072826412,
+            "opening_depth_mm": 3.4999999999999973,
+            "opening_removed_volume_mm3": 47.99999536413204,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51"
+              ],
+              "estimated_incremental_return": -4.172999652309903,
+              "legal_nonstop_actions": 9,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 1.5,
+              "outside_supplied_target_removed_mm3": 17.999998261549525,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5"
+              ],
+              "estimated_incremental_return": -10.268999072826412,
+              "legal_nonstop_actions": 8,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 47.99999536413204,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 18,
+        "expanded_nodes": 2,
+        "model_transition_calls": 17,
+        "negative_prefixes_evaluated": 17,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 15,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51",
+              "nominal-cavity-2efed09bfcce6ddee8ddc093"
+            ],
+            "estimated_incremental_return": -4.437999632993787,
+            "opening_depth_mm": 2.4999999999999973,
+            "opening_removed_volume_mm3": 18.999998164968943,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5",
+              "nominal-cavity-3bdb405b70f75b11abc7c3c8"
+            ],
+            "estimated_incremental_return": -10.501999053510296,
+            "opening_depth_mm": 3.4999999999999973,
+            "opening_removed_volume_mm3": 48.999995267551455,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093"
+              ],
+              "estimated_incremental_return": -4.437999632993787,
+              "legal_nonstop_actions": 8,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 18.999998164968943,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5",
+                "nominal-cavity-3bdb405b70f75b11abc7c3c8"
+              ],
+              "estimated_incremental_return": -10.501999053510296,
+              "legal_nonstop_actions": 8,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 48.999995267551455,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 19,
+        "expanded_nodes": 2,
+        "model_transition_calls": 16,
+        "negative_prefixes_evaluated": 16,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 14,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51",
+              "nominal-cavity-2efed09bfcce6ddee8ddc093",
+              "nominal-cavity-5db9e0c790f0580f762f9d61"
+            ],
+            "estimated_incremental_return": -4.67299961367767,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 19.99999806838836,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5",
+              "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+              "nominal-cavity-b2435b8bc7ba07ee475da86e"
+            ],
+            "estimated_incremental_return": -10.73899903419418,
+            "opening_depth_mm": 3.500000000000003,
+            "opening_removed_volume_mm3": 49.99999517097087,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61"
+              ],
+              "estimated_incremental_return": -4.67299961367767,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 19.99999806838836,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5",
+                "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+                "nominal-cavity-b2435b8bc7ba07ee475da86e"
+              ],
+              "estimated_incremental_return": -10.73899903419418,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 49.99999517097087,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 20,
+        "expanded_nodes": 2,
+        "model_transition_calls": 14,
+        "negative_prefixes_evaluated": 14,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 12,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51",
+              "nominal-cavity-2efed09bfcce6ddee8ddc093",
+              "nominal-cavity-5db9e0c790f0580f762f9d61",
+              "nominal-cavity-67ab38aaad57e04766f2861f"
+            ],
+            "estimated_incremental_return": -4.9359995943615536,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 20.99999797180778,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5",
+              "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+              "nominal-cavity-b2435b8bc7ba07ee475da86e",
+              "nominal-cavity-197cce5350cc83f039faa73a"
+            ],
+            "estimated_incremental_return": -10.971999014878064,
+            "opening_depth_mm": 3.500000000000003,
+            "opening_removed_volume_mm3": 50.999995074390284,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61",
+                "nominal-cavity-67ab38aaad57e04766f2861f"
+              ],
+              "estimated_incremental_return": -4.9359995943615536,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 20.99999797180778,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5",
+                "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+                "nominal-cavity-b2435b8bc7ba07ee475da86e",
+                "nominal-cavity-197cce5350cc83f039faa73a"
+              ],
+              "estimated_incremental_return": -10.971999014878064,
+              "legal_nonstop_actions": 6,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 50.999995074390284,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 21,
+        "expanded_nodes": 2,
+        "model_transition_calls": 13,
+        "negative_prefixes_evaluated": 13,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 11,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51",
+              "nominal-cavity-2efed09bfcce6ddee8ddc093",
+              "nominal-cavity-5db9e0c790f0580f762f9d61",
+              "nominal-cavity-67ab38aaad57e04766f2861f",
+              "nominal-cavity-d2b0360883664063f953880f"
+            ],
+            "estimated_incremental_return": -5.198999575045437,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 21.999997875227198,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5",
+              "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+              "nominal-cavity-b2435b8bc7ba07ee475da86e",
+              "nominal-cavity-197cce5350cc83f039faa73a",
+              "nominal-cavity-2731ba72581381ae6f325aa0"
+            ],
+            "estimated_incremental_return": -11.206998995561946,
+            "opening_depth_mm": 3.500000000000003,
+            "opening_removed_volume_mm3": 51.9999949778097,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61",
+                "nominal-cavity-67ab38aaad57e04766f2861f",
+                "nominal-cavity-d2b0360883664063f953880f"
+              ],
+              "estimated_incremental_return": -5.198999575045437,
+              "legal_nonstop_actions": 6,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 21.999997875227198,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5",
+                "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+                "nominal-cavity-b2435b8bc7ba07ee475da86e",
+                "nominal-cavity-197cce5350cc83f039faa73a",
+                "nominal-cavity-2731ba72581381ae6f325aa0"
+              ],
+              "estimated_incremental_return": -11.206998995561946,
+              "legal_nonstop_actions": 5,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 51.9999949778097,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 22,
+        "expanded_nodes": 2,
+        "model_transition_calls": 11,
+        "negative_prefixes_evaluated": 11,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 9,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51",
+              "nominal-cavity-2efed09bfcce6ddee8ddc093",
+              "nominal-cavity-5db9e0c790f0580f762f9d61",
+              "nominal-cavity-67ab38aaad57e04766f2861f",
+              "nominal-cavity-d2b0360883664063f953880f",
+              "nominal-cavity-5e815758f37ed3790fa17665"
+            ],
+            "estimated_incremental_return": -5.659999536413204,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 23.999997682066034,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5",
+              "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+              "nominal-cavity-b2435b8bc7ba07ee475da86e",
+              "nominal-cavity-197cce5350cc83f039faa73a",
+              "nominal-cavity-2731ba72581381ae6f325aa0",
+              "nominal-cavity-0ab0fa25d50835909be2b064"
+            ],
+            "estimated_incremental_return": -11.441998976245829,
+            "opening_depth_mm": 3.500000000000003,
+            "opening_removed_volume_mm3": 52.999994881229114,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61",
+                "nominal-cavity-67ab38aaad57e04766f2861f",
+                "nominal-cavity-d2b0360883664063f953880f",
+                "nominal-cavity-5e815758f37ed3790fa17665"
+              ],
+              "estimated_incremental_return": -5.659999536413204,
+              "legal_nonstop_actions": 7,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 23.999997682066034,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5",
+                "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+                "nominal-cavity-b2435b8bc7ba07ee475da86e",
+                "nominal-cavity-197cce5350cc83f039faa73a",
+                "nominal-cavity-2731ba72581381ae6f325aa0",
+                "nominal-cavity-0ab0fa25d50835909be2b064"
+              ],
+              "estimated_incremental_return": -11.441998976245829,
+              "legal_nonstop_actions": 4,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 52.999994881229114,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 23,
+        "expanded_nodes": 2,
+        "model_transition_calls": 11,
+        "negative_prefixes_evaluated": 11,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 9,
+        "negative_prefixes_retained": 2,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-13533d60054f3836a067c338",
+              "nominal-cavity-4a4919292d84fd0a154acde2",
+              "nominal-cavity-325456339ba64b22d2b1ede3",
+              "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+              "nominal-cavity-49950490ee87a1e452d15c1c",
+              "nominal-cavity-95e955282c5087ab8dfb5073",
+              "nominal-cavity-143f1010acc385953903869b",
+              "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+              "nominal-cavity-1731afe4fb6478b66839c3ae",
+              "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+              "nominal-cavity-442a80cd7e82e063b1988ad7",
+              "nominal-cavity-473b3abf3344703e4fea78c1",
+              "nominal-cavity-1760c5448ca2d0bc192dad6e",
+              "nominal-cavity-d966347556e93064ede1f488",
+              "nominal-cavity-a683cbe3af448ee1df515fd1",
+              "nominal-cavity-8da42638693495b8f5d54a51",
+              "nominal-cavity-2efed09bfcce6ddee8ddc093",
+              "nominal-cavity-5db9e0c790f0580f762f9d61",
+              "nominal-cavity-67ab38aaad57e04766f2861f",
+              "nominal-cavity-d2b0360883664063f953880f",
+              "nominal-cavity-5e815758f37ed3790fa17665",
+              "nominal-cavity-94c88fd987127b601bae9b18"
+            ],
+            "estimated_incremental_return": -5.9249995170970875,
+            "opening_depth_mm": 2.500000000000003,
+            "opening_removed_volume_mm3": 24.999997585485453,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-0d992b7cea03101c98d2816a",
+              "nominal-cavity-3455313a191ecbaa3246cfa5",
+              "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+              "nominal-cavity-2ed893879994766d65e5893b",
+              "nominal-cavity-843814182ecdd922400c5e4c",
+              "nominal-cavity-933ac4b5e87b9a4e62896abe",
+              "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+              "nominal-cavity-4e37a4bf257292abd1eee157",
+              "nominal-cavity-13cd95006d9583c963ac9b82",
+              "nominal-cavity-c3c032be53d67c4228850915",
+              "nominal-cavity-6a26eed443ec1d2003c31456",
+              "nominal-cavity-9ce929c175c05e8e6a69af87",
+              "nominal-cavity-e110867209309cc39e80e5ff",
+              "nominal-cavity-0c249780359f476b35ca0c22",
+              "nominal-cavity-c38943fc3ee18381b361cc6a",
+              "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+              "nominal-cavity-91751ab672a8bbf294c79fe5",
+              "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+              "nominal-cavity-b2435b8bc7ba07ee475da86e",
+              "nominal-cavity-197cce5350cc83f039faa73a",
+              "nominal-cavity-2731ba72581381ae6f325aa0",
+              "nominal-cavity-0ab0fa25d50835909be2b064",
+              "nominal-cavity-fb651ee9470bbaea7738c36f"
+            ],
+            "estimated_incremental_return": -11.676998956929712,
+            "opening_depth_mm": 3.500000000000003,
+            "opening_removed_volume_mm3": 53.99999478464853,
+            "reason": "opening"
+          }
+        ],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [],
+          "retained_nonterminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61",
+                "nominal-cavity-67ab38aaad57e04766f2861f",
+                "nominal-cavity-d2b0360883664063f953880f",
+                "nominal-cavity-5e815758f37ed3790fa17665",
+                "nominal-cavity-94c88fd987127b601bae9b18"
+              ],
+              "estimated_incremental_return": -5.9249995170970875,
+              "legal_nonstop_actions": 6,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 24.999997585485453,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-3455313a191ecbaa3246cfa5",
+                "nominal-cavity-b9e55f316dfc6c6a51dbbfbf",
+                "nominal-cavity-2ed893879994766d65e5893b",
+                "nominal-cavity-843814182ecdd922400c5e4c",
+                "nominal-cavity-933ac4b5e87b9a4e62896abe",
+                "nominal-cavity-ab57e6e784a7c4a4afc660f7",
+                "nominal-cavity-4e37a4bf257292abd1eee157",
+                "nominal-cavity-13cd95006d9583c963ac9b82",
+                "nominal-cavity-c3c032be53d67c4228850915",
+                "nominal-cavity-6a26eed443ec1d2003c31456",
+                "nominal-cavity-9ce929c175c05e8e6a69af87",
+                "nominal-cavity-e110867209309cc39e80e5ff",
+                "nominal-cavity-0c249780359f476b35ca0c22",
+                "nominal-cavity-c38943fc3ee18381b361cc6a",
+                "nominal-cavity-cfd7d9bf80a6a225a8555cee",
+                "nominal-cavity-91751ab672a8bbf294c79fe5",
+                "nominal-cavity-3bdb405b70f75b11abc7c3c8",
+                "nominal-cavity-b2435b8bc7ba07ee475da86e",
+                "nominal-cavity-197cce5350cc83f039faa73a",
+                "nominal-cavity-2731ba72581381ae6f325aa0",
+                "nominal-cavity-0ab0fa25d50835909be2b064",
+                "nominal-cavity-fb651ee9470bbaea7738c36f"
+              ],
+              "estimated_incremental_return": -11.676998956929712,
+              "legal_nonstop_actions": 3,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 3.5,
+              "outside_supplied_target_removed_mm3": 53.99999478464853,
+              "progress_status": "available",
+              "successor_inventory_status": "observed_during_normal_expansion",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "selection_status": "completed_layer"
+        }
+      },
+      {
+        "completed": true,
+        "depth": 24,
+        "expanded_nodes": 2,
+        "model_transition_calls": 9,
+        "negative_prefixes_evaluated": 9,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 0,
+        "opening_depth_retention": [],
+        "retained_prefix_diagnostics": {
+          "best_terminal_prefixes": [
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61",
+                "nominal-cavity-67ab38aaad57e04766f2861f",
+                "nominal-cavity-d2b0360883664063f953880f",
+                "nominal-cavity-5e815758f37ed3790fa17665",
+                "nominal-cavity-94c88fd987127b601bae9b18",
+                "nominal-cavity-842a2bea1b6343bde7e1080f"
+              ],
+              "estimated_incremental_return": -6.385999478464854,
+              "legal_nonstop_actions": null,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 26.99999739232429,
+              "progress_status": "available",
+              "successor_inventory_status": "terminal_not_observed",
+              "target_removed_mm3": 0.0
+            },
+            {
+              "actions": [
+                "nominal-cavity-0d992b7cea03101c98d2816a",
+                "nominal-cavity-13533d60054f3836a067c338",
+                "nominal-cavity-4a4919292d84fd0a154acde2",
+                "nominal-cavity-325456339ba64b22d2b1ede3",
+                "nominal-cavity-0f7fd66fa0b13de3de2bebaf",
+                "nominal-cavity-49950490ee87a1e452d15c1c",
+                "nominal-cavity-95e955282c5087ab8dfb5073",
+                "nominal-cavity-143f1010acc385953903869b",
+                "nominal-cavity-3dc32e0a2635e8eeb3aee45a",
+                "nominal-cavity-1731afe4fb6478b66839c3ae",
+                "nominal-cavity-0b4359a51ab5cf2a4ae3b6ff",
+                "nominal-cavity-442a80cd7e82e063b1988ad7",
+                "nominal-cavity-473b3abf3344703e4fea78c1",
+                "nominal-cavity-1760c5448ca2d0bc192dad6e",
+                "nominal-cavity-d966347556e93064ede1f488",
+                "nominal-cavity-a683cbe3af448ee1df515fd1",
+                "nominal-cavity-8da42638693495b8f5d54a51",
+                "nominal-cavity-2efed09bfcce6ddee8ddc093",
+                "nominal-cavity-5db9e0c790f0580f762f9d61",
+                "nominal-cavity-67ab38aaad57e04766f2861f",
+                "nominal-cavity-d2b0360883664063f953880f",
+                "nominal-cavity-5e815758f37ed3790fa17665",
+                "nominal-cavity-94c88fd987127b601bae9b18",
+                "nominal-cavity-cca9fdb203b1f990dfdb0fa0"
+              ],
+              "estimated_incremental_return": -6.385999478464854,
+              "legal_nonstop_actions": null,
+              "legal_target_family_actions": null,
+              "max_insertion_distance_mm": 2.5,
+              "outside_supplied_target_removed_mm3": 26.99999739232429,
+              "progress_status": "available",
+              "successor_inventory_status": "terminal_not_observed",
+              "target_removed_mm3": 0.0
+            }
+          ],
+          "retained_nonterminal_prefixes": [],
+          "selection_status": "completed_layer"
+        }
+      }
+    ],
+    "lazy_planning_transition_calls": 0,
+    "max_calls": 5640,
+    "model_transition_calls": 519,
+    "negative_prefixes_evaluated": 519,
+    "negative_prefixes_pruned_by_beam": 464,
+    "negative_prefixes_retained": 46,
+    "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+    "observation_requests": 47,
+    "opening_depth_retention": {
+      "costs": "progress_arithmetic_and_retention_included_in_wall_and_parent_RSS",
+      "depth_comparison": "exact_float_order_no_tolerance; volume_only_breaks_equal_depth",
+      "extra_observations_or_previews": 0,
+      "memory": "at_most_beam_width_plus_one_retained_child_states_plus_current_child",
+      "missing_progress": "null; malformed_or_non_nominal_record_refused",
+      "ranking": "best_return_then_distinct_max_depth_tied_by_actual_removed_volume_then_return_and_path",
+      "scope": "newly_removed_actor_covered_cell_centres_from_public_aperture_plane",
+      "terminal_objective_changed": false,
+      "version": "return_plus_opening_depth_volume_v1",
+      "volume_scope": "cumulative_unique_newly_committed_positive_depth_actor_support_and_cavity_covered_native_cells_mm3",
+      "volume_warning": "deliberately_aggressive_retention_proxy_not_clearance_safety_or_target_utility"
+    },
+    "peak_next_layer_states": 4,
+    "planning_seconds": 219.38797445804812,
+    "policy_state_check_seconds": 0.0,
+    "policy_state_checks": 0,
+    "retained_prefix_diagnostics": {
+      "distance_semantics": "maximum recorded entry-to-tip insertion distance; not cumulative path length",
+      "extra_observations_or_previews": 0,
+      "family_count_status": "unavailable_in_shared_observation; null_is_not_zero",
+      "outside_removal_semantics": "outside_supplied_target; not verified normal tissue",
+      "schema": "observed-search-retained-prefixes-v1",
+      "scope": "public_nominal_incremental_progress_from_this_search_root",
+      "terminal_selection": "best at most beam_width by the existing return/path ordering",
+      "wall_accounting": "diagnostic bookkeeping included in existing wall budget"
+    },
+    "root_legal_nonstop_actions": 24,
+    "stop_baseline_return": 0.0,
+    "time_cap_reached": false,
+    "transition_mode": "eager"
+  },
+  "actions": [
+    "STOP"
+  ],
+  "behavior_parameter_hash": null,
+  "checkpoint_lineage_scope": "comparison_reference_only_not_action_author"
+}

@@ -1,0 +1,18 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "checkpoint_author": "IL64",
+  "comparison_reference_checkpoint": "IL64",
+  "context_hash": "sha256:4fb929b2be154dd4668e38891d1930dfd15176feb18b22dad51b1899aecea9a3",
+  "decision_model_hash": "sha256:c41339674285a6068e1a6dd6e8dac0958baafa7e2e1eced11349db543cb6dae1",
+  "outside_meaning": "outside supplied target, not verified normal tissue",
+  "outside_supplied_target_removed_mm3": 0.0,
+  "plan_seal": "sha256:72fb24e0acfd9d26728e4af54159a7a2d285f3d3c333fa414f15663de97e35b3",
+  "public_return": 0.0,
+  "selector_accounting": null,
+  "source_hash": "sha256:2e32e0acf8b73e1e2eb0defe470f13764cb469bda53212347dc891f1021e4183",
+  "status": "complete_replayed",
+  "steps": 1,
+  "target_removed_mm3": 0.0
+}
