@@ -1,0 +1,58 @@
+{
+  "STOP_decisions": 30,
+  "STOP_negative_advantage": 30,
+  "STOP_positive_advantage": 0,
+  "accepted_complete_endpoints": 4,
+  "arithmetic_or_identity_issues": [],
+  "available_episodes": 32,
+  "checkpoint": {
+    "bytes": 137635,
+    "parameter_hash": "sha256:39a44a88a19c634e938878e8029dcafc04a7669f1b7fa69422ab57d502015b4d",
+    "path": "RL-final.psckpt",
+    "sha256": "87181c166a8c7255e11bcc57d362ec60edd822617786d2c5a729006a5037c34d"
+  },
+  "decisions": 468,
+  "endpoint_denominator": 4,
+  "episode_denominator": 32,
+  "episode_returns": {
+    "negative": 15,
+    "positive": 16,
+    "zero": 1
+  },
+  "forced_STOP_decisions": 8,
+  "initial_parameter_pin_available": true,
+  "interpretation_limits": [
+    "Sampling entropy differs from greedy STOP.",
+    "Negative full-continuation credit on a positive cut is not itself a bug.",
+    "Module norms cannot attribute shared-encoder interference.",
+    "No optimization, clinical, convergence or generalization claim is selected by this projection."
+  ],
+  "missing_files": [],
+  "optimizer_updates": {
+    "IL": 0,
+    "RL": 8
+  },
+  "parent_cleanup_errors": [],
+  "parent_elapsed_seconds": 3333.7225595831405,
+  "parent_exit_code": 0,
+  "parent_status": "complete",
+  "parent_stop_reason": null,
+  "positive_cut_RTG_signs": {
+    "negative": 0,
+    "positive": 291,
+    "zero": 0
+  },
+  "positive_cut_advantage_signs": {
+    "negative": 5,
+    "positive": 286,
+    "zero": 0
+  },
+  "positive_immediate_cuts": 291,
+  "result_available": true,
+  "result_failure": null,
+  "result_status": "complete_matched_TRAIN_endpoint",
+  "sampled_peak_rss_bytes": 1620983808,
+  "scope": "Saved scalar JSON only; no patient arrays, checkpoint payloads, model calls, replay or optimizer.",
+  "status": "terminal_saved_diagnostic_projection",
+  "teacher_readout_denominator": 29
+}

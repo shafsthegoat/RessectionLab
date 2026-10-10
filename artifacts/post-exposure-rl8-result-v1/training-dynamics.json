@@ -1,0 +1,149 @@
+{
+  "scope": "pre-update diagnostics only; every fixed update runs, no intermediate endpoint or loss stopping rule",
+  "updates": [
+    {
+      "after_parameter_hash": "sha256:e5ee683f00025c95337242c2cbc3a5bc4fa72f0782761957da82cc2f5223fd02",
+      "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "clip_threshold": 5.0,
+      "completed_updates": 1,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 45.8524284362793,
+      "loss_change_from_previous": null,
+      "loss_forward_calls": 47,
+      "module_gradient_norms_before_clip": {
+        "actor": 19.071674346923828,
+        "critic": 40.160179138183594,
+        "encoder": 5.072916507720947,
+        "stop": 10.007156372070312
+      },
+      "pre_update_loss": 475.86260411833064,
+      "update_record_sha256": "e08ce69aa0c88c7f378a58d95c76236107497e64f036379621cbb9b7ad7c324d"
+    },
+    {
+      "after_parameter_hash": "sha256:61065d3517ec0a91930274b1010513bbeb7f771b722c29b7e759d6faaeea1354",
+      "before_parameter_hash": "sha256:e5ee683f00025c95337242c2cbc3a5bc4fa72f0782761957da82cc2f5223fd02",
+      "clip_threshold": 5.0,
+      "completed_updates": 2,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 60.65874099731445,
+      "loss_change_from_previous": 78.2201120784448,
+      "loss_forward_calls": 50,
+      "module_gradient_norms_before_clip": {
+        "actor": 33.855430603027344,
+        "critic": 47.82753372192383,
+        "encoder": 9.500521659851074,
+        "stop": 12.472457885742188
+      },
+      "pre_update_loss": 554.0827161967754,
+      "update_record_sha256": "d550b534a1661a3bc979a81095d2b6e55b6857042a95bb8fa08beda39a8a2eed"
+    },
+    {
+      "after_parameter_hash": "sha256:25d51da2ba37f92408cea89de0f6ef9a6041c176c0b45e3b30aec55fce3ebd6e",
+      "before_parameter_hash": "sha256:61065d3517ec0a91930274b1010513bbeb7f771b722c29b7e759d6faaeea1354",
+      "clip_threshold": 5.0,
+      "completed_updates": 3,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 84.62275695800781,
+      "loss_change_from_previous": 270.4754723906517,
+      "loss_forward_calls": 67,
+      "module_gradient_norms_before_clip": {
+        "actor": 58.563201904296875,
+        "critic": 55.18424987792969,
+        "encoder": 17.588626861572266,
+        "stop": 19.408950805664062
+      },
+      "pre_update_loss": 824.5581885874271,
+      "update_record_sha256": "aedb710c840be9443f16df228738a5b31f5fad6a95dd01e82f70cad10aa4bb42"
+    },
+    {
+      "after_parameter_hash": "sha256:58d45ad909a9732bda3d20448bb8364ebf8500156923676e3f618107fe8a24c5",
+      "before_parameter_hash": "sha256:25d51da2ba37f92408cea89de0f6ef9a6041c176c0b45e3b30aec55fce3ebd6e",
+      "clip_threshold": 5.0,
+      "completed_updates": 4,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 40.55875778198242,
+      "loss_change_from_previous": -342.1583330905996,
+      "loss_forward_calls": 54,
+      "module_gradient_norms_before_clip": {
+        "actor": 13.262273788452148,
+        "critic": 32.74943923950195,
+        "encoder": 16.15182113647461,
+        "stop": 11.649828910827637
+      },
+      "pre_update_loss": 482.3998554968275,
+      "update_record_sha256": "f57ed58dc1956be9bf406e89b41016f18d92e6b45c5f8e7681d602a353295ded"
+    },
+    {
+      "after_parameter_hash": "sha256:ad47e1a4989514663128acdc7b7764fdded952367a7f9ad3ea6e14fd2ec6572b",
+      "before_parameter_hash": "sha256:58d45ad909a9732bda3d20448bb8364ebf8500156923676e3f618107fe8a24c5",
+      "clip_threshold": 5.0,
+      "completed_updates": 5,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 60.696746826171875,
+      "loss_change_from_previous": 56.69937734073028,
+      "loss_forward_calls": 53,
+      "module_gradient_norms_before_clip": {
+        "actor": 29.410612106323242,
+        "critic": 41.435020446777344,
+        "encoder": 31.284149169921875,
+        "stop": 11.115439414978027
+      },
+      "pre_update_loss": 539.0992328375578,
+      "update_record_sha256": "8ba0841ff7bb66f5f81ed6111d33903c96f622085beac980c9e101f6db05a0c3"
+    },
+    {
+      "after_parameter_hash": "sha256:e498c4967e0a165b1587c141105badafba472deb12ce5298b4ff96a4785edaf5",
+      "before_parameter_hash": "sha256:ad47e1a4989514663128acdc7b7764fdded952367a7f9ad3ea6e14fd2ec6572b",
+      "clip_threshold": 5.0,
+      "completed_updates": 6,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 97.94317626953125,
+      "loss_change_from_previous": 423.84991417836864,
+      "loss_forward_calls": 64,
+      "module_gradient_norms_before_clip": {
+        "actor": 18.840843200683594,
+        "critic": 72.90974426269531,
+        "encoder": 60.110618591308594,
+        "stop": 17.57195281982422
+      },
+      "pre_update_loss": 962.9491470159264,
+      "update_record_sha256": "f85a971c2de2930c33c4e6090316e89802fcb60ab544fdc460240c8022607f5c"
+    },
+    {
+      "after_parameter_hash": "sha256:49a585c08f04242ef6d42d70ae6afd220e0d1ed7ce9fcd709a283bc016544b91",
+      "before_parameter_hash": "sha256:e498c4967e0a165b1587c141105badafba472deb12ce5298b4ff96a4785edaf5",
+      "clip_threshold": 5.0,
+      "completed_updates": 7,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 105.93878936767578,
+      "loss_change_from_previous": -87.79150105000008,
+      "loss_forward_calls": 64,
+      "module_gradient_norms_before_clip": {
+        "actor": 25.44815444946289,
+        "critic": 74.30079650878906,
+        "encoder": 69.68797302246094,
+        "stop": 14.085341453552246
+      },
+      "pre_update_loss": 875.1576459659263,
+      "update_record_sha256": "29a8d2ad47d4d354fbf19e04f61b5e9cc369a019958f24bf39af8bafecc914fc"
+    },
+    {
+      "after_parameter_hash": "sha256:39a44a88a19c634e938878e8029dcafc04a7669f1b7fa69422ab57d502015b4d",
+      "before_parameter_hash": "sha256:49a585c08f04242ef6d42d70ae6afd220e0d1ed7ce9fcd709a283bc016544b91",
+      "clip_threshold": 5.0,
+      "completed_updates": 8,
+      "gradient_exceeds_clip_threshold": true,
+      "gradient_norm_before_clip": 96.23979187011719,
+      "loss_change_from_previous": -205.99007580662146,
+      "loss_forward_calls": 69,
+      "module_gradient_norms_before_clip": {
+        "actor": 17.342077255249023,
+        "critic": 69.14949798583984,
+        "encoder": 64.34919738769531,
+        "stop": 6.235208511352539
+      },
+      "pre_update_loss": 669.1675701593049,
+      "update_record_sha256": "a4b006f8139d17d6453fd88e3ef1b74a7d255b97ce8fa650688af307919afa66"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+Independent saved-result audit: completed post-exposure scratch RL8
+
+PASS for saved metadata and arithmetic consistency; no favorable-performance criterion was used. The first and only audit execution passed 10,874 checks in 0.442371 s, with 32,063,488 B process peak RSS. All 333 opened source/JSON evidence files were rechecked unchanged. No patient arrays, checkpoint payloads, model calls, optimization or native/independent geometry replay occurred. Saved native/independent certificates were authenticated and joined, not recomputed.
+
+Exact terminal bindings
+  HEAD e9a6ce8045a7c819c409d894573fdc5cef1980cd
+  Release 4da18b8bd21e6a54308d0b58b3d234c49c7351b56040e448ac7107a28a773e3e
+  Source index 636f4b75ae95afa2a54c024882ca3b808246a6938db1fa1c5dd2a33443405589
+  Receipt 2f82d0bd59de8bd9709023f0ca701a5d57e00b169f8baee418bdf4e68342131b
+  Result b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8
+  RL checkpoint declared SHA 87181c166a8c7255e11bcc57d362ec60edd822617786d2c5a729006a5037c34d (137,635 B; payload not opened)
+  Final parameter hash sha256:39a44a88a19c634e938878e8029dcafc04a7669f1b7fa69422ab57d502015b4d
+
+All four final TRAIN routes completed and their saved full-tool certificates accepted. RL8 has lower return than both SEARCH and accepted IL64 on every case:
+
+Case  RL decisions/end  RL target mm3  RL outside-T mm3  RL return   SEARCH return  IL64 return
+002   17 / STOP           0.000000      20.027159        -4.827022    0.000000       0.000000
+015   24 / HORIZON       22.888184       0.000000        22.075262   54.866215      54.866215
+018   16 / STOP           0.000000      16.212469        -4.108680    0.000000       0.000000
+045   24 / HORIZON       28.610265       0.000000        27.616359   48.181963      47.508438
+
+015/045 remove 24/30 supplied-target source cells, versus SEARCH's 58/51. The full target denominators remain 23,149.488479 / 7,386.207580 / 1,189.232311 / 24,128.943798 mm3 in case order. Same source, decision world and initial observation hashes join RL teachers and final endpoints to the fixed public SEARCH world. Fresh initialization matches IL by the saved parameter hash. Original IL64 remains failed_or_unresolved; its 045 outcome is accepted only through the separately pinned corrected-checker recovery, not a rewritten original receipt.
+
+Training and arithmetic
+  Eight parameter-linked shared updates, each with all four ordered TRAIN contributions: 32 complete episodes, 468 decisions. Episode returns were 16 positive, 15 negative, one zero; every 015/045 sampled episode was positive. There were 291 positive-immediate-reward motions. None had negative full-continuation return-to-go; five had negative detached advantage. Thus this run did receive positive reward exposure. These facts do not establish convergence or diagnose which parameter interaction caused the worse greedy endpoint.
+  Independently checked saved discounted return-to-go (gamma 1), float32 target conversion, detached advantage, actor score, value square, entropy bounds, per-episode normalization, contribution sums, update/dynamics joins and final saved reload metadata. Arithmetic tolerances distinguish exact seals/IDs from float32-derived scalar comparisons; no experiment thresholds were changed.
+  All eight preclip gradient norms exceeded the declared cap 5: 45.8524, 60.6587, 84.6228, 40.5588, 60.6967, 97.9432, 105.9388, 96.2398. Module norms do not isolate actor/value contributions within the shared encoder. Loss values across different sampled episodes are not a fixed-data learning curve.
+  All 29 frozen teacher readouts have independently reconstructed softmax, cross-entropy, rank and greedy action. Accuracy is 2/29; STOP mean NLL 2.653907, motion mean NLL 2.583541, balanced mean CE 2.618724. This is TRAIN teacher agreement, not transfer evidence.
+
+Resources and costs
+  Owned parent complete, exit 0, no cleanup errors or surviving owned PIDs: 3,333.722560 s; 1,620,983,808 B sampled peak RSS; 100,896,478 B output. Within declared 3,600 s / 3 GiB / 128 MiB caps.
+  44 completed source visits; 110,464 native previews. Exactly 1,046 forwards = 468 on-policy collection + 468 loss + 29 endpoint teacher readout + 81 final greedy. Eight optimizer updates, one authenticated checkpoint reload, zero teacher-cache reuses, zero new search/private/SELECT/EVAL use.
+  Recorded reconstruction, collection/replay and optimizer/readout phases remain available. Backward time is nested in collection/replay; teacher-logit time is nested in recollection/readout; independent geometry time is nested in route evaluation. Do not sum these nested scopes or equate policy forward time with full deployment time. Methods have unequal training exposure and compute.
+
+Scientific limits
+  This is a fitted four-TRAIN comparison in the explicitly declared post-exposure S-union-T simulation. Original support-knownness Ds, full T, exterior-workspace assumptions and inward/straddling unknown-domain checks remain. Search can score the full permitted world; actor inputs are a 64-cube plus lossy public summaries. No identical information bandwidth, population generalization, operative-history or anatomical/clinical validation is established.
+  Zero outside-T removal in 015/045 does not mean zero contact or injury. Retained-contact upper bounds are about 135.422 and 134.468 mm3 respectively; 002/018 also retain contact. Clinical deficit, motor and language outcomes remain null. Route acceptance certifies the saved simulator geometry/history checks, not surgical safety or utility.
+
+Compact independent evidence
+  audit_saved.py SHA256 1304496d0fe837f772ea9b05057693e432315777f476cb7adc06b446e4bcd492
+  audit-result.json SHA256 5d3bf728344ada02f4eba2f1710c91893b340d73c2bde4bf9bbad8b0b18d915f
+  input-index.json SHA256 b1e24a43731ba373fce2055784bfa81ce1e981177e6224cce6a80bd7ece827c8
+  episodes.json SHA256 b574da229fee0c807914ceea2f5d82abc2859d07bf32aa77042e06ab1b968075
+  update-summaries.json SHA256 f9e831232e11f4bd4cfb34e5e927b8a21f1fc6b57fa17f6cc16a14e4860086b1
+  teacher-readouts.json SHA256 f8d38de7976d1cc98fde433756ed2fb775499cdfdc27bedfa42a6454884597f8
+  audit-attempt-01.log SHA256 7fb0334e9e455f155d73436b80d5f5b3387496ef0039aba501dd1b9853e71bf7
+
+Reproduce only after terminal authorization: .venv/bin/python -B build/post-exposure-rl8-independent-v1/audit_saved.py --receipt-sha256 2f82d0bd59de8bd9709023f0ca701a5d57e00b169f8baee418bdf4e68342131b --result-sha256 b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8
+The original audit outputs are exclusive-write evidence; preserve them before choosing a new output location for any authorized repetition. No repetition is needed for this result.

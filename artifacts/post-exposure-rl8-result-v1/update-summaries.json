@@ -1,0 +1,314 @@
+[
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 393.9398840069771,
+    "after_parameter_hash": "sha256:e5ee683f00025c95337242c2cbc3a5bc4fa72f0782761957da82cc2f5223fd02",
+    "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+    "completed_updates": 1,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.7417239926101864,
+    "gradient_norm_before_clip": 45.8524284362793,
+    "loss": 475.86260411833064,
+    "loss_forward_calls": 47,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 19.071674346923828,
+      "critic": 40.160179138183594,
+      "encoder": 5.072916507720947,
+      "stop": 10.007156372070312
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:5a4c751f01d13ee0f3b9b0b6fb7a07670618c01b1b5adedf07aeb380bc9e0ade",
+      "sha256:6c46a02bf1df24e8c8c548f1c467254088b7c53e17bfe5126c2a145092c84c13",
+      "sha256:f882d8833354e61808cf9f4020a90d4729fdc08b0b42e5c82bf6033a162a6e31",
+      "sha256:66c642d539752942c740cd65297f012693bd394aa90313f717f18176073aa646"
+    ],
+    "value_loss": 163.90027264604802,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 458.62366473674774,
+    "after_parameter_hash": "sha256:61065d3517ec0a91930274b1010513bbeb7f771b722c29b7e759d6faaeea1354",
+    "before_parameter_hash": "sha256:e5ee683f00025c95337242c2cbc3a5bc4fa72f0782761957da82cc2f5223fd02",
+    "completed_updates": 2,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.8365049336040227,
+    "gradient_norm_before_clip": 60.65874099731445,
+    "loss": 554.0827161967754,
+    "loss_forward_calls": 50,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 33.855430603027344,
+      "critic": 47.82753372192383,
+      "encoder": 9.500521659851074,
+      "stop": 12.472457885742188
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:bc1eee64bd2f76193b5d70c9500ab825e19f42178a267bae0165c12a83db09f5",
+      "sha256:e087e2ee4d2d4d6a4bc8ae6c6879239b97e99d5deeeb4113bf6071d296458026",
+      "sha256:00a870ebe0d482b4ae9aafc2b9d77b3bc2af836ce2884c72d27e691801ec9a85",
+      "sha256:ce4fc7415e88559c394648f3ea8b3968907e430476d1649c264c2647ea7b6e2a"
+    ],
+    "value_loss": 190.9748431342605,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 676.0412808656693,
+    "after_parameter_hash": "sha256:25d51da2ba37f92408cea89de0f6ef9a6041c176c0b45e3b30aec55fce3ebd6e",
+    "before_parameter_hash": "sha256:61065d3517ec0a91930274b1010513bbeb7f771b722c29b7e759d6faaeea1354",
+    "completed_updates": 3,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.652526669523545,
+    "gradient_norm_before_clip": 84.62275695800781,
+    "loss": 824.5581885874271,
+    "loss_forward_calls": 67,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 58.563201904296875,
+      "critic": 55.18424987792969,
+      "encoder": 17.588626861572266,
+      "stop": 19.408950805664062
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:c4781dadf6a6bb168d9972bb62d0141e5b014fb0004c1ec93bab240bc296d351",
+      "sha256:22a1edec10ddfcde04033e47addf89d375a532aa53d99d624801b46866eb7229",
+      "sha256:827cf69d728639ceb8671e015533203e5ced5977eee6ea4e01bdc77485b4e4d7",
+      "sha256:e50448686e86d5b7b03daf42d13d337dc5cc0670b469386f838365cc2776f8dd"
+    ],
+    "value_loss": 297.0868458777311,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 393.2822611220181,
+    "after_parameter_hash": "sha256:58d45ad909a9732bda3d20448bb8364ebf8500156923676e3f618107fe8a24c5",
+    "before_parameter_hash": "sha256:25d51da2ba37f92408cea89de0f6ef9a6041c176c0b45e3b30aec55fce3ebd6e",
+    "completed_updates": 4,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.5215962180069513,
+    "gradient_norm_before_clip": 40.55875778198242,
+    "loss": 482.3998554968275,
+    "loss_forward_calls": 54,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 13.262273788452148,
+      "critic": 32.74943923950195,
+      "encoder": 16.15182113647461,
+      "stop": 11.649828910827637
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:f9e48573518806dc9766a341588b996c6ba81c5fc75f63a4f87e9200230d5be4",
+      "sha256:852a7c72709ef1afb6c722bf669f71450d693e630f7830c4e88bf0f75e6f1efd",
+      "sha256:4510509fbaf854fe25bea9a9ed5fe28b5cdabec850b4f3b97c4ef243909d6977",
+      "sha256:56bee9263ccfc86e08458a26653fb7de5ff1ff7d1dfc0bd82e8c939704d85ea2"
+    ],
+    "value_loss": 178.2856241806976,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 428.2996027469635,
+    "after_parameter_hash": "sha256:ad47e1a4989514663128acdc7b7764fdded952367a7f9ad3ea6e14fd2ec6572b",
+    "before_parameter_hash": "sha256:58d45ad909a9732bda3d20448bb8364ebf8500156923676e3f618107fe8a24c5",
+    "completed_updates": 5,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.655689108835927,
+    "gradient_norm_before_clip": 60.696746826171875,
+    "loss": 539.0992328375578,
+    "loss_forward_calls": 53,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 29.410612106323242,
+      "critic": 41.435020446777344,
+      "encoder": 31.284149169921875,
+      "stop": 11.115439414978027
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:657af0fe4c440aa0d7172fc0e938a33aa57065a7d9aba0a077d88f29ee95eff7",
+      "sha256:55caf5fab79000cd9fcc14ce111a2c6ee2c3b8e433b4e03570610b42355d1be2",
+      "sha256:be251cbaf4724e7c9a5267dd6f8f13725e8c78a6a4d7ab34d5073dcd6d47c113",
+      "sha256:061b7b2f9b1bb62827a105b22d896d9bbed11780c844b280351fd3250bcaf9d7"
+    ],
+    "value_loss": 221.65237378025037,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 773.1836813483387,
+    "after_parameter_hash": "sha256:e498c4967e0a165b1587c141105badafba472deb12ce5298b4ff96a4785edaf5",
+    "before_parameter_hash": "sha256:ad47e1a4989514663128acdc7b7764fdded952367a7f9ad3ea6e14fd2ec6572b",
+    "completed_updates": 6,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.4431997074871976,
+    "gradient_norm_before_clip": 97.94317626953125,
+    "loss": 962.9491470159264,
+    "loss_forward_calls": 64,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 18.840843200683594,
+      "critic": 72.90974426269531,
+      "encoder": 60.110618591308594,
+      "stop": 17.57195281982422
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:7a824a24b83c11d5244f777a92939a57dbe4e314b36b12cc73262a29c9a48eb5",
+      "sha256:e2949a8264e8b445b4e3ddd1886f1a8a6b5cda020e9e1ac1581e363a28d1ab2e",
+      "sha256:9e846dc331563239c31e6b81dca59512b50e7ed05fbd7dca0332c0adbc647288",
+      "sha256:d2550e4d90341a634102d3c707b07bc05dde57017310f4822cd5d10a2fb8f46a"
+    ],
+    "value_loss": 379.5798262202293,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 722.2750171422958,
+    "after_parameter_hash": "sha256:49a585c08f04242ef6d42d70ae6afd220e0d1ed7ce9fcd709a283bc016544b91",
+    "before_parameter_hash": "sha256:e498c4967e0a165b1587c141105badafba472deb12ce5298b4ff96a4785edaf5",
+    "completed_updates": 7,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.6171931666342205,
+    "gradient_norm_before_clip": 105.93878936767578,
+    "loss": 875.1576459659263,
+    "loss_forward_calls": 64,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 25.44815444946289,
+      "critic": 74.30079650878906,
+      "encoder": 69.68797302246094,
+      "stop": 14.085341453552246
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:b7a655b91d20761f5da475e1d696ffcea9670dab1c85f61aac5f0b1b7a7159b5",
+      "sha256:ea02966b27e42eeb4e4395d65fa7beee3d3347b4ae458560e98b4eea4dba40bc",
+      "sha256:8a6b10aeeb1ab46b8ce7d44e9a8bc48bae977821b670323c92313821dc1e0e16",
+      "sha256:209e5414d7fcc9350ae3ff8a07204e1561672099514cb5939829946fbf9c113f"
+    ],
+    "value_loss": 305.8176189489487,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  {
+    "IL_reduction": "mean_all_teacher_actions",
+    "RL_reduction": "mean_episodes_of_actor_sum_and_value_entropy_step_means",
+    "accumulation": "one_action_graph_at_a_time_one_clip_one_Adam_step",
+    "actor_loss": 550.5530100464821,
+    "after_parameter_hash": "sha256:39a44a88a19c634e938878e8029dcafc04a7669f1b7fa69422ab57d502015b4d",
+    "before_parameter_hash": "sha256:49a585c08f04242ef6d42d70ae6afd220e0d1ed7ce9fcd709a283bc016544b91",
+    "completed_updates": 8,
+    "context_hashes": [
+      "sha256:4f3f8f1acd9a19708d5b89f57d3dd571d9479184479da393f39efc6cdfe9b3fa",
+      "sha256:4cc530869a7009b7db4818179e20bcf0a773fd831036860bb3ed55731173f37d",
+      "sha256:08f3b3747800551dde78e64db28160333e523556ae806bd2a7d4ba61995f8d67",
+      "sha256:2acf46026bafa0b913afc35816207a5066c2e5eba3057bee0f659c954b6368c4"
+    ],
+    "entropy": 2.3291507840156553,
+    "gradient_norm_before_clip": 96.23979187011719,
+    "loss": 669.1675701593049,
+    "loss_forward_calls": 69,
+    "method": "RL",
+    "module_gradient_norms_before_clip": {
+      "actor": 17.342077255249023,
+      "critic": 69.14949798583984,
+      "encoder": 64.34919738769531,
+      "stop": 6.235208511352539
+    },
+    "numerical_equivalence": "same_objective_floating_point_order_may_differ",
+    "optimizer_updates": 1,
+    "parameters_changed": true,
+    "patient_adaptation": false,
+    "population_training": true,
+    "trace_seals": [
+      "sha256:0cb881112cd205681251d0b1174f6b3d514df074d8dcc080c494194d155e1b6f",
+      "sha256:fea818ef49cab3f49139a54e0b27d1622aa1adea685c113345aa15bebf66690e",
+      "sha256:8df80d9fa170bbeef38babaf3ae8922143a93b73cae20861e846375b53cc5f6a",
+      "sha256:0fefe3e15ac758fd325a34b34c89e72b2f619c65840d1a0d9ded382d244cfb66"
+    ],
+    "value_loss": 237.27571494777996,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  }
+]

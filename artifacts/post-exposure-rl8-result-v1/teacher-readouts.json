@@ -1,0 +1,553 @@
+[
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:a3fe250d66db7d7d04ae81931828aa34fb5a8cccc6697e81e54f142c70b3ef06",
+    "scores": {
+      "best_movement_minus_STOP": 2.4994735717773438,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "nominal-cavity-93ab3520493cb9ae90f2ac30",
+      "stop_probability": 0.003954848274588585,
+      "teacher_CE": 5.53281307220459,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.003954848274588585,
+      "teacher_rank": 22,
+      "value": 2.4293770790100098
+    },
+    "step": 0,
+    "subject": "ReMIND-002",
+    "teacher_action": "STOP"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:99bedb2f37c12c84ad4fb51111a81bda8c10aed9af6ca97d282ed2fc5bfa8c44",
+    "scores": {
+      "best_movement_minus_STOP": 2.4017257690429688,
+      "conditional_teacher_movement_probability": 0.025039296597242355,
+      "greedy_action": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "stop_probability": 0.002360220765694976,
+      "teacher_CE": 3.6896719932556152,
+      "teacher_minus_STOP": 2.359328269958496,
+      "teacher_movement_rank": 34,
+      "teacher_probability": 0.024980196729302406,
+      "teacher_rank": 34,
+      "value": 2.6169989109039307
+    },
+    "step": 0,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-81c114a0600538d67baf4414"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:2f4dc91f5a29df91301c7707453ed52575ea7df4ac3167b361364aca20a80a86",
+    "scores": {
+      "best_movement_minus_STOP": 2.3995091915130615,
+      "conditional_teacher_movement_probability": 0.027414491400122643,
+      "greedy_action": "nominal-cavity-dd3d60d6f5368efb1620ed46",
+      "stop_probability": 0.0025529128033667803,
+      "teacher_CE": 3.5992398262023926,
+      "teacher_minus_STOP": 2.3712806701660156,
+      "teacher_movement_rank": 27,
+      "teacher_probability": 0.02734450437128544,
+      "teacher_rank": 27,
+      "value": 2.6565167903900146
+    },
+    "step": 1,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-f4acd820cbfb0ed0423e8ce1"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:38ec2ffa4e35849b7a748b11484e37e67fc43e40d758a0c56462da9326f9575f",
+    "scores": {
+      "best_movement_minus_STOP": 2.401968002319336,
+      "conditional_teacher_movement_probability": 0.029815003275871277,
+      "greedy_action": "nominal-cavity-ab9d7667095b5ebf3a4bc5b8",
+      "stop_probability": 0.0027777194045484066,
+      "teacher_CE": 3.5155253410339355,
+      "teacher_minus_STOP": 2.3705997467041016,
+      "teacher_movement_rank": 29,
+      "teacher_probability": 0.02973218262195587,
+      "teacher_rank": 29,
+      "value": 2.656341791152954
+    },
+    "step": 2,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-a5152cdc336beea2377717f9"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:650b05250d3a140756e03057d5a52b72e46a7221cdd053c9d3ab1dfd7d342f6a",
+    "scores": {
+      "best_movement_minus_STOP": 2.4046826362609863,
+      "conditional_teacher_movement_probability": 0.032870084047317505,
+      "greedy_action": "nominal-cavity-3f703d8b7e7d55509678b8aa",
+      "stop_probability": 0.003047055099159479,
+      "teacher_CE": 3.4182441234588623,
+      "teacher_minus_STOP": 2.375335693359375,
+      "teacher_movement_rank": 24,
+      "teacher_probability": 0.03276992589235306,
+      "teacher_rank": 24,
+      "value": 2.656384229660034
+    },
+    "step": 3,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-1cbd3c4a581f4b88810331ab"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:baec617f896772b2ffaae8dd201d253d790cda39364a89acbd9adbc3218c59ae",
+    "scores": {
+      "best_movement_minus_STOP": 2.407106399536133,
+      "conditional_teacher_movement_probability": 0.03642519190907478,
+      "greedy_action": "nominal-cavity-24f19be0d5cbbf4394d9a516",
+      "stop_probability": 0.003375915577635169,
+      "teacher_CE": 3.3158762454986572,
+      "teacher_minus_STOP": 2.3752124309539795,
+      "teacher_movement_rank": 24,
+      "teacher_probability": 0.036302223801612854,
+      "teacher_rank": 24,
+      "value": 2.659013271331787
+    },
+    "step": 4,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-fde756f16b8890d097dfa2b2"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:4e9e3950ab8efa7572d0907dd50a706b7970ac7941b4a67d69db980ece0be90e",
+    "scores": {
+      "best_movement_minus_STOP": 2.409818649291992,
+      "conditional_teacher_movement_probability": 0.041064031422138214,
+      "greedy_action": "nominal-cavity-04c8b9731e85a587d49c27c4",
+      "stop_probability": 0.0037859617732465267,
+      "teacher_CE": 3.196415901184082,
+      "teacher_minus_STOP": 2.3800392150878906,
+      "teacher_movement_rank": 21,
+      "teacher_probability": 0.0409085638821125,
+      "teacher_rank": 21,
+      "value": 2.6589856147766113
+    },
+    "step": 5,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-0bff70bcda7abbbf6f4ba2b5"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:fc6202d5be830c186350c002e1268b9ef587447021aaf9bef97ea0fac4767076",
+    "scores": {
+      "best_movement_minus_STOP": 2.4125332832336426,
+      "conditional_teacher_movement_probability": 0.04931719973683357,
+      "greedy_action": "nominal-cavity-c063f6eb898f13e29f0b0469",
+      "stop_probability": 0.00453072739765048,
+      "teacher_CE": 3.0140233039855957,
+      "teacher_minus_STOP": 2.3828492164611816,
+      "teacher_movement_rank": 17,
+      "teacher_probability": 0.04909375309944153,
+      "teacher_rank": 17,
+      "value": 2.657564401626587
+    },
+    "step": 6,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-9191b5ecb52d9653e6653b46"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:52820cf3aed0e4425f98cb80e72b8a93307a7847dfc7b4420a75a6db8663d33e",
+    "scores": {
+      "best_movement_minus_STOP": 2.4152472019195557,
+      "conditional_teacher_movement_probability": 0.06193678826093674,
+      "greedy_action": "nominal-cavity-5f172471af1a34026ed5223c",
+      "stop_probability": 0.005647487472742796,
+      "teacher_CE": 2.787304401397705,
+      "teacher_minus_STOP": 2.389240026473999,
+      "teacher_movement_rank": 11,
+      "teacher_probability": 0.06158699840307236,
+      "teacher_rank": 11,
+      "value": 2.65578031539917
+    },
+    "step": 7,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-18a27c9bdaedc0c78c8b1eb5"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:519932f96463350c0cd807583d6a784b3ac4325310e3ecbd5828e08226c6efc1",
+    "scores": {
+      "best_movement_minus_STOP": 2.409815549850464,
+      "conditional_teacher_movement_probability": 0.08207283169031143,
+      "greedy_action": "nominal-cavity-ee3512ba08f6fbe6a4e38344",
+      "stop_probability": 0.007513248361647129,
+      "teacher_CE": 2.507689952850342,
+      "teacher_minus_STOP": 2.3833975791931152,
+      "teacher_movement_rank": 12,
+      "teacher_probability": 0.08145619183778763,
+      "teacher_rank": 12,
+      "value": 2.658508539199829
+    },
+    "step": 8,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-6b6ca940447e253f73e6a608"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:918a89d0b9f58d01cf17fd33af6d48e1ff39edb9f5b0722462c6745c30cd7dd8",
+    "scores": {
+      "best_movement_minus_STOP": 2.4120116233825684,
+      "conditional_teacher_movement_probability": 0.12401522696018219,
+      "greedy_action": "nominal-cavity-ee6da51b65724268ee8ef54d",
+      "stop_probability": 0.011208746582269669,
+      "teacher_CE": 2.0986227989196777,
+      "teacher_minus_STOP": 2.3924379348754883,
+      "teacher_movement_rank": 5,
+      "teacher_probability": 0.12262517958879471,
+      "teacher_rank": 5,
+      "value": 2.6574525833129883
+    },
+    "step": 9,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-75d906bf1966eab441bd14fb"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:429c5108d9b1c4918077c89879d4d9fdc008f60947650403e2267515061ddab0",
+    "scores": {
+      "best_movement_minus_STOP": 2.4145216941833496,
+      "conditional_teacher_movement_probability": 0.16477710008621216,
+      "greedy_action": "nominal-cavity-4445073e884ab78409643560",
+      "stop_probability": 0.014859762042760849,
+      "teacher_CE": 1.8181328773498535,
+      "teacher_minus_STOP": 2.390965461730957,
+      "teacher_movement_rank": 5,
+      "teacher_probability": 0.1623285561800003,
+      "teacher_rank": 5,
+      "value": 2.653010368347168
+    },
+    "step": 10,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-3e0208b4da8b3619067435cd"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:3ad39e9702d980569ece43c8815b26859a7ffbd547f2ea7a7224134e12eff079",
+    "scores": {
+      "best_movement_minus_STOP": 2.4172682762145996,
+      "conditional_teacher_movement_probability": 0.24796493351459503,
+      "greedy_action": "nominal-cavity-eca1a1850b89b4880916df85",
+      "stop_probability": 0.022053835913538933,
+      "teacher_CE": 1.4167685508728027,
+      "teacher_minus_STOP": 2.3975000381469727,
+      "teacher_movement_rank": 3,
+      "teacher_probability": 0.24249635636806488,
+      "teacher_rank": 3,
+      "value": 2.6503000259399414
+    },
+    "step": 11,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-db13ac7f68ddec6654723169"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:80710401a93370f8aec8159189a66d79444a600cb5fe382d4cdd5a02c4a0b7d1",
+    "scores": {
+      "best_movement_minus_STOP": 2.417179584503174,
+      "conditional_teacher_movement_probability": 0.4946879744529724,
+      "greedy_action": "nominal-cavity-bb5b3d175691f63b0881cedc",
+      "stop_probability": 0.043117210268974304,
+      "teacher_CE": 0.7479023933410645,
+      "teacher_minus_STOP": 2.395930767059326,
+      "teacher_movement_rank": 2,
+      "teacher_probability": 0.4733584225177765,
+      "teacher_rank": 2,
+      "value": 2.658217430114746
+    },
+    "step": 12,
+    "subject": "ReMIND-015",
+    "teacher_action": "nominal-cavity-07f21f9720487f7217110137"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:bf1f87a48671ee89dea55913c2948d63c20686be2f5d63ab82c63ad19b6c598a",
+    "scores": {
+      "best_movement_minus_STOP": null,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "stop_probability": 1.0,
+      "teacher_CE": -0.0,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 1.0,
+      "teacher_rank": 1,
+      "value": 0.9963191747665405
+    },
+    "step": 13,
+    "subject": "ReMIND-015",
+    "teacher_action": "STOP"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:5312ee05f0bb91a936083652e38fd8ba9b384421ba200588dd94b0e241e05685",
+    "scores": {
+      "best_movement_minus_STOP": 2.264622211456299,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "nominal-cavity-bad6052ff99594d4b228e09b",
+      "stop_probability": 0.0062024216167628765,
+      "teacher_CE": 5.082815170288086,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.0062024216167628765,
+      "teacher_rank": 18,
+      "value": 2.4351589679718018
+    },
+    "step": 0,
+    "subject": "ReMIND-018",
+    "teacher_action": "STOP"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:f1b76f48f457bc2dbe05aec280f28de06f428d1a2225c4515799a9872ae0edba",
+    "scores": {
+      "best_movement_minus_STOP": 2.607573986053467,
+      "conditional_teacher_movement_probability": 0.02391209825873375,
+      "greedy_action": "nominal-cavity-4abaef414240c23d71930b55",
+      "stop_probability": 0.0018405778100714087,
+      "teacher_CE": 3.735212802886963,
+      "teacher_minus_STOP": 2.56246280670166,
+      "teacher_movement_rank": 34,
+      "teacher_probability": 0.02386808954179287,
+      "teacher_rank": 34,
+      "value": 2.626894235610962
+    },
+    "step": 0,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-2e7122d692aec111fb6a1628"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:4f9ae26779202a8e3ed056028eec959c71c120aa6e3d081438e84eb3b6a54a7f",
+    "scores": {
+      "best_movement_minus_STOP": 2.606785297393799,
+      "conditional_teacher_movement_probability": 0.026634659618139267,
+      "greedy_action": "nominal-cavity-2ad71776129911339599a523",
+      "stop_probability": 0.002029269468039274,
+      "teacher_CE": 3.627573251724243,
+      "teacher_minus_STOP": 2.5725059509277344,
+      "teacher_movement_rank": 32,
+      "teacher_probability": 0.02658061310648918,
+      "teacher_rank": 32,
+      "value": 2.660198926925659
+    },
+    "step": 1,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-7a69f4a8cd7e8ea71e4af5c2"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:cfe8cc8c9a80d47b477980737067ff612ac6780d45c98a1048bd0e384e279fe7",
+    "scores": {
+      "best_movement_minus_STOP": 2.6094894409179688,
+      "conditional_teacher_movement_probability": 0.028930583968758583,
+      "greedy_action": "nominal-cavity-4ecd09c68325ae68b38e8ce0",
+      "stop_probability": 0.0022028249222785234,
+      "teacher_CE": 3.5450611114501953,
+      "teacher_minus_STOP": 2.572953462600708,
+      "teacher_movement_rank": 31,
+      "teacher_probability": 0.028866857290267944,
+      "teacher_rank": 31,
+      "value": 2.6603329181671143
+    },
+    "step": 2,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-08ddba04f5981a8ffabfe1ee"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:cbcc03c929e1937b83b9a783ce30d215df85557f73321d3df8dd4ab293bdde06",
+    "scores": {
+      "best_movement_minus_STOP": 2.6121959686279297,
+      "conditional_teacher_movement_probability": 0.03931044414639473,
+      "greedy_action": "nominal-cavity-154410b408958b74af9c0380",
+      "stop_probability": 0.002980524441227317,
+      "teacher_CE": 3.2392499446868896,
+      "teacher_minus_STOP": 2.5764060020446777,
+      "teacher_movement_rank": 25,
+      "teacher_probability": 0.039193276315927505,
+      "teacher_rank": 25,
+      "value": 2.6586811542510986
+    },
+    "step": 3,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-7bdf67f47de6e5ca7ba7d91e"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:94d2f37bd176481f1ee7d2de0cb61b1c22eee8c93632deefc42fb05735a009ba",
+    "scores": {
+      "best_movement_minus_STOP": 2.6148998737335205,
+      "conditional_teacher_movement_probability": 0.047227635979652405,
+      "greedy_action": "nominal-cavity-5076437dfea2e10a88f6b167",
+      "stop_probability": 0.003534408286213875,
+      "teacher_CE": 3.056316614151001,
+      "teacher_minus_STOP": 2.588892698287964,
+      "teacher_movement_rank": 12,
+      "teacher_probability": 0.04706071317195892,
+      "teacher_rank": 12,
+      "value": 2.6469058990478516
+    },
+    "step": 4,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-6c207425fb1c81db3aaf6bde"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:3034f53857463c84b4b61e1f4e59f8a1bfd723b23548b6c806bd7e1f4818e6f1",
+    "scores": {
+      "best_movement_minus_STOP": 2.6153979301452637,
+      "conditional_teacher_movement_probability": 0.05507881939411163,
+      "greedy_action": "nominal-cavity-ca20037df632dc72ba61a408",
+      "stop_probability": 0.004117509350180626,
+      "teacher_CE": 2.90311598777771,
+      "teacher_minus_STOP": 2.589390754699707,
+      "teacher_movement_rank": 10,
+      "teacher_probability": 0.05485203117132187,
+      "teacher_rank": 10,
+      "value": 2.6477861404418945
+    },
+    "step": 5,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-bca3719c38b5f61afd8f0b51"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:413493c93811d3c73f7267f7432201c94faa28bb501efb84e0a4d7e096e288b4",
+    "scores": {
+      "best_movement_minus_STOP": 2.6128203868865967,
+      "conditional_teacher_movement_probability": 0.11017308384180069,
+      "greedy_action": "nominal-cavity-20af92368e407c4e99647741",
+      "stop_probability": 0.008193639107048512,
+      "teacher_CE": 2.213930130004883,
+      "teacher_minus_STOP": 2.5904669761657715,
+      "teacher_movement_rank": 5,
+      "teacher_probability": 0.1092703640460968,
+      "teacher_rank": 5,
+      "value": 2.6405985355377197
+    },
+    "step": 6,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-5adbe8af9ad1faf0cb454802"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:0b74e0aee0eec6929a29f9342a0082cfe0ac0aeb0d1fcbfb007d2c6477f0d910",
+    "scores": {
+      "best_movement_minus_STOP": 2.615520477294922,
+      "conditional_teacher_movement_probability": 0.10969442129135132,
+      "greedy_action": "nominal-cavity-90c28a3228a248245b9fee17",
+      "stop_probability": 0.008176020346581936,
+      "teacher_CE": 2.218266487121582,
+      "teacher_minus_STOP": 2.5882835388183594,
+      "teacher_movement_rank": 9,
+      "teacher_probability": 0.10879755765199661,
+      "teacher_rank": 9,
+      "value": 2.6557633876800537
+    },
+    "step": 7,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-c521d0546ad10479e3c347e3"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:cbc4b2d5ea7451bab94b589fa28d8bfccf6a6489abae03f8f963d1b1322f6d5c",
+    "scores": {
+      "best_movement_minus_STOP": 2.6179661750793457,
+      "conditional_teacher_movement_probability": 0.19791223108768463,
+      "greedy_action": "nominal-cavity-5e26f3258ed5d0d7e6b8578d",
+      "stop_probability": 0.014594179578125477,
+      "teacher_CE": 1.6346334218978882,
+      "teacher_minus_STOP": 2.592499256134033,
+      "teacher_movement_rank": 5,
+      "teacher_probability": 0.19502384960651398,
+      "teacher_rank": 5,
+      "value": 2.6281521320343018
+    },
+    "step": 8,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-ca216ec681ac4651f10d5c61"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:335a8e0fec9206b52eee0969f625d6517fb344324cd4b6936369fd1f26eb2131",
+    "scores": {
+      "best_movement_minus_STOP": 2.6199231147766113,
+      "conditional_teacher_movement_probability": 0.33078789710998535,
+      "greedy_action": "nominal-cavity-d57684c8891ee953422423a5",
+      "stop_probability": 0.02406478486955166,
+      "teacher_CE": 1.1306370496749878,
+      "teacher_minus_STOP": 2.5963687896728516,
+      "teacher_movement_rank": 2,
+      "teacher_probability": 0.32282754778862,
+      "teacher_rank": 2,
+      "value": 2.615219831466675
+    },
+    "step": 9,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-d57e3e6d61827150ad7f6c34"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:1da33c3a2a3891f7240d7cf45cbb480e8a2a1dd85de1d458acf8db5922edfbd4",
+    "scores": {
+      "best_movement_minus_STOP": 2.62502121925354,
+      "conditional_teacher_movement_probability": 0.24670128524303436,
+      "greedy_action": "nominal-cavity-c594e6a311f0b08776c29a0f",
+      "stop_probability": 0.018033983185887337,
+      "teacher_CE": 1.4177756309509277,
+      "teacher_minus_STOP": 2.597721576690674,
+      "teacher_movement_rank": 4,
+      "teacher_probability": 0.24225227534770966,
+      "teacher_rank": 4,
+      "value": 2.6547772884368896
+    },
+    "step": 10,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-88bc1008c2bd9995dae66f1b"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:6ce86b87593ddac604a0d0b1f6ee6329f91a8d8ca3d3138e81d8a9a7a50d802f",
+    "scores": {
+      "best_movement_minus_STOP": 2.6253604888916016,
+      "conditional_teacher_movement_probability": 0.49394190311431885,
+      "greedy_action": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+      "stop_probability": 0.03535009175539017,
+      "teacher_CE": 0.7413274645805359,
+      "teacher_minus_STOP": 2.6011266708374023,
+      "teacher_movement_rank": 2,
+      "teacher_probability": 0.47648099064826965,
+      "teacher_rank": 2,
+      "value": 2.611284017562866
+    },
+    "step": 11,
+    "subject": "ReMIND-045",
+    "teacher_action": "nominal-cavity-3532d3d0aba51e03e0899454"
+  },
+  {
+    "endpoint": "RL8",
+    "observation_hash": "sha256:bfb83876cf7daf568f636322ac416622af0f37422eefe333ad3e5c5af584e83d",
+    "scores": {
+      "best_movement_minus_STOP": null,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "stop_probability": 1.0,
+      "teacher_CE": -0.0,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 1.0,
+      "teacher_rank": 1,
+      "value": 1.0888828039169312
+    },
+    "step": 12,
+    "subject": "ReMIND-045",
+    "teacher_action": "STOP"
+  }
+]

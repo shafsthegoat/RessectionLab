@@ -1,0 +1,105 @@
+{
+  "status": "completed_audited_negative_TRAIN_result",
+  "source_head": "e9a6ce8045a7c819c409d894573fdc5cef1980cd",
+  "files": [
+    {
+      "source": "build/post-exposure-rl8-independent-v1/REPORT.txt",
+      "packaged": "REPORT.txt",
+      "bytes": 6690,
+      "sha256": "a1d5a4893d13d16c75603e0bc317bc82f665fd07ea08583d3e7bbe996be1671e"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/audit_saved.py",
+      "packaged": "audit_saved.py",
+      "bytes": 23469,
+      "sha256": "1304496d0fe837f772ea9b05057693e432315777f476cb7adc06b446e4bcd492"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/audit-result.json",
+      "packaged": "audit-result.json",
+      "bytes": 80294,
+      "sha256": "5d3bf728344ada02f4eba2f1710c91893b340d73c2bde4bf9bbad8b0b18d915f"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/input-index.json",
+      "packaged": "audit-input-index.json",
+      "bytes": 65013,
+      "sha256": "b1e24a43731ba373fce2055784bfa81ce1e981177e6224cce6a80bd7ece827c8"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/audit-attempt-01.log",
+      "packaged": "audit-attempt-01.log",
+      "bytes": 2183,
+      "sha256": "7fb0334e9e455f155d73436b80d5f5b3387496ef0039aba501dd1b9853e71bf7"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/episodes.json",
+      "packaged": "episode-summaries.json",
+      "bytes": 78065,
+      "sha256": "b574da229fee0c807914ceea2f5d82abc2859d07bf32aa77042e06ab1b968075"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/update-summaries.json",
+      "packaged": "update-summaries.json",
+      "bytes": 14769,
+      "sha256": "f9e831232e11f4bd4cfb34e5e927b8a21f1fc6b57fa17f6cc16a14e4860086b1"
+    },
+    {
+      "source": "build/post-exposure-rl8-independent-v1/teacher-readouts.json",
+      "packaged": "teacher-readouts.json",
+      "bytes": 20791,
+      "sha256": "f8d38de7976d1cc98fde433756ed2fb775499cdfdc27bedfa42a6454884597f8"
+    },
+    {
+      "source": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/result.json",
+      "packaged": "terminal-result.json",
+      "bytes": 8297,
+      "sha256": "b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8"
+    },
+    {
+      "source": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01.supervision/receipt.json",
+      "packaged": "terminal-receipt.json",
+      "bytes": 1918,
+      "sha256": "2f82d0bd59de8bd9709023f0ca701a5d57e00b169f8baee418bdf4e68342131b"
+    },
+    {
+      "source": "build/post-exposure-learning-rl8-recovery-v1/RL8/attempt-01/training-dynamics.json",
+      "packaged": "training-dynamics.json",
+      "bytes": 6628,
+      "sha256": "304876d9b7f5c364cbe0876253ab5cd5eb1a1937394912490b8f13667c8661e9"
+    },
+    {
+      "source": "build/post-exposure-endpoint-summary-v2/summarize.py",
+      "packaged": "summarize.py",
+      "bytes": 15866,
+      "sha256": "9fe23604bcd8e36bb0fa53739b2d2f609f0bfdc98a1fbb0a22e8e1785a55f11b"
+    },
+    {
+      "source": "build/post-exposure-endpoint-summary-v2/summary-v2.json",
+      "packaged": "three-method-summary.json",
+      "bytes": 229767,
+      "sha256": "e02cbc8560dec9fdb23827e4fc8380d261e9e04366e7981adbb4a4604a9629bf"
+    },
+    {
+      "source": "build/post-exposure-rl8-diagnosis-v1/derive_terminal.py",
+      "packaged": "derive_terminal.py",
+      "bytes": 14822,
+      "sha256": "f3ade640244d388db0505fa5f9a707ef7a9b79ab76140d156c0a08607519e0e4"
+    },
+    {
+      "source": "build/post-exposure-rl8-diagnosis-v1/projection-01/summary.json",
+      "packaged": "diagnosis-summary.json",
+      "bytes": 1822,
+      "sha256": "bce877208c26f0633da6494bd628967012c7f0bdc6ff4d8bab321df4eaa53b93"
+    },
+    {
+      "source": "build/post-exposure-rl8-diagnosis-v1/projection-01/input-index.json",
+      "packaged": "diagnosis-input-index.json",
+      "bytes": 14180,
+      "sha256": "6c6a985d5523bcd991d389f4bb3ecbdaa5432bd2db01dceeb3c0e6236cf93540"
+    }
+  ],
+  "arrays_and_weights_included": false,
+  "summary_correction": "The first metadata projection copied only SEARCH geometry unknowns. The corrected projection includes the existing source-level motor/language/vascular unknowns and per-action unknowns for every method. A comparison confirms no other result changed; both original local projections remain preserved. No science rerun occurred.",
+  "next": "Fixed four-arm zero-update SELECT013 transfer; 037 held; EVAL067 closed."
+}

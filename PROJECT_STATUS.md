@@ -1,19 +1,19 @@
 # Project status
 
-**Current priority, October 10:** finish matched scratch RL, then test transfer
-under the same declared post-exposure condition. All 64 imitation updates
-completed. TRAIN015 reproduces search's 58-cell route outcome; 002/018 stop.
-TRAIN045 removes the same 51 cells as search in 24 rather than 12 movements,
-with a lower return. Its exact saved route now passes independent evaluation
-after correcting a false rotation caused by numerical roundoff. The original
-failed attempt and the separate diagnostic/recovery costs remain preserved;
-neither model weights nor actions changed during the correction. These remain
-TRAIN fits, with no demonstrated advantage over search. The earlier matched SELECT013
-comparison is complete: imitation, scratch RL, greedy search and beam search all
-STOP with zero progress. Beam explores24 layers/519 negative prefixes; no useful
-transfer or learned advantage is demonstrated. On the original TRAIN cases,
-cached balanced IL64 reproduces search's three-target-cell route; scratch RL8
-misses it. This tiny fit remains far from useful-scale planning.
+**Current priority, October 10:** test the fixed models on a new patient before
+choosing the next optimization. The matched scratch RL run completed eight updates
+and 32 episodes, but is worse than greedy search and accepted imitation on all four
+TRAIN cases. It removes 24/30 target cells on 015/045 versus search's 58/51, and
+removes 20.027/16.212 mm³ outside the supplied target on 002/018 without target gain.
+Independent saved-result audit passes 10,874 checks. Positive training exposure was
+present: 16 positive episodes and 291 positive cuts, all with positive continuation
+return. This failure is not explained by absent reward exposure; the precise cause
+still needs testing. All 64 imitation updates remain preserved, including the
+separately accepted unchanged045 route after the numerical checker correction.
+No learned advantage or useful transfer is established. The next fixed SELECT013
+comparison uses the same declared post-exposure task; 037 remains held and EVAL067
+closed. Earlier SELECT all-STOP outcomes remain historical results from the earlier
+starting condition, not predictions of this new comparison.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
@@ -28,6 +28,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Complete scratch RL underperforms every baseline case:** [the audited four-patient result](artifacts/post-exposure-rl8-result-v1/REPORT.txt) retains all 32 episodes, eight updates, four accepted full-tool replays and failures against search. Runtime is 3,333.723 s with 1.621 GB sampled peak and 110,464 native previews; deployment and training costs are separate. Every discretionary sampled STOP had negative detached advantage, but that observation does not isolate a critic or optimization bug. Teacher agreement is 2/29. The next step is fixed-model SELECT transfer, followed by one failure-driven training contrast. These are simulated geometric outcomes with missing motor/language/vascular evidence, not physical or clinical validation.
 
 - **The saved fourth route now passes without retraining:** [the original rejection diagnostic](artifacts/post-exposure-il045-diagnostic-result-v1/REPORT.txt) identifies an invented rotation for exactly equal oblique axes. [The narrow numerical correction](artifacts/independent-identical-axis-repair-v1/RESULT.txt) preserves access/collision thresholds and passes 87 canonical controls. [A separate 38.406-second, 524.6 MB replay](artifacts/post-exposure-il045-recovery-result-v1/REPORT.txt) accepts all 24 original actions and independently verifies 51 target cells, zero outside-target removal, return 47.50844 and seven tool switches. The model and its route are unchanged. This corrects evaluation; it does not improve policy efficiency or establish physical validity.
 

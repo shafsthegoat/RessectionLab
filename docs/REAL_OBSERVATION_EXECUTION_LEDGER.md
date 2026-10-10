@@ -37,6 +37,15 @@ steering; old blanket synthetic-model exclusions are not a scientific justificat
 for indefinite delay. They must be replaced only where an exact intended-use
 contract is needed, without silently admitting unknown model lineage.
 
+The latest [complete four-TRAIN result](../artifacts/post-exposure-rl8-result-v1/REPORT.txt)
+finds scratch RL8 worse than greedy search and accepted IL64 on every case, despite
+16 positive training episodes. All eight updates, 32 episodes and four saved
+geometry certificates pass independent arithmetic/identity audit (10,874 checks).
+The fixed post-exposure SELECT013 comparison comes next, with zero updates, four
+methods, 037 held and EVAL067 closed. Select one model change from these failures
+rather than launching a sweep. Missing functional/vascular evidence and unvalidated
+material assumptions prevent clinical or physical-fidelity claims.
+
 ## Active human steering, October 8
 
 The user explicitly superseded the earlier real-data-only training restriction:
