@@ -1,0 +1,49 @@
+{
+  "scope": "metadata_only_fresh_host_readiness_not_decode_or_model_attempt",
+  "samples": [
+    {
+      "elapsed_seconds": 0.005662624957039952,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 73
+    },
+    {
+      "elapsed_seconds": 5.027231249958277,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 73
+    },
+    {
+      "elapsed_seconds": 10.047849874943495,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 73
+    },
+    {
+      "elapsed_seconds": 15.067955791950226,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 73
+    },
+    {
+      "elapsed_seconds": 20.086040625115857,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 72
+    },
+    {
+      "elapsed_seconds": 25.091907042078674,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 73
+    },
+    {
+      "elapsed_seconds": 30.118149583926424,
+      "swap_used_bytes_from_display": 8847685058.56,
+      "available_percent": 73
+    }
+  ],
+  "adjacent_increases_bytes": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "note": "sysctl printed values are rounded; exact existing preflight remains mandatory"
+}

@@ -1,0 +1,159 @@
+{
+  "excluded_payloads": [
+    "Case4 input and logits arrays",
+    "decoded state/coverage NIfTI arrays",
+    "source patient images and labels",
+    "checkpoint and weights",
+    "bulk generated output"
+  ],
+  "payload_count": 29,
+  "payload_total_bytes": 278641,
+  "payloads": [
+    {
+      "path": "RESULT.md",
+      "sha256": "eea4a450f6fd5e77262cb801c39dd04cac2676a6a44aef57f2affbbbc67c3342",
+      "size_bytes": 2504
+    },
+    {
+      "path": "SOURCE_PINS.json",
+      "sha256": "20f9f95885cfcfe9ced008ee5e93104f3251b8bcb571f274e9e2db94e756970b",
+      "size_bytes": 2735
+    },
+    {
+      "path": "independent/actual-audit.md",
+      "sha256": "b8fcad49c4323d9b259a4d2fd4b1eb233718d88975ff49ae702f089de4517363",
+      "size_bytes": 4431
+    },
+    {
+      "path": "independent/first-deferral-audit.md",
+      "sha256": "384c03cdeab61860f5ba3b5e111398a81caff0a13b3b5417d6ff71ee8aa71c4e",
+      "size_bytes": 2051
+    },
+    {
+      "path": "independent/prospective-review.md",
+      "sha256": "b17e763e27a2ca089374de06a0b497dffcb7180fb4fe1d9e01483dd9cd800c5c",
+      "size_bytes": 4166
+    },
+    {
+      "path": "independent/saved-array-audit.json",
+      "sha256": "1bfe1b0b5f5726faf6e7ba7a05a7c7dbb31936e377f2197057bde0b66c38ee9a",
+      "size_bytes": 1798
+    },
+    {
+      "path": "lineage/canonical-tests.txt",
+      "sha256": "4c92cf5591de2524d5595c7ac042e8a9ffda0708791c5298e6c3c28b60dc4a75",
+      "size_bytes": 1381
+    },
+    {
+      "path": "lineage/first-preflight-deferral.json",
+      "sha256": "0b9402e16c2d2c7aff1e317dc58044cee5c12d2bf35e4ec1b6fa8e8e6c860a0b",
+      "size_bytes": 20189
+    },
+    {
+      "path": "lineage/host-stability-readiness.json",
+      "sha256": "ba4c8972e781dfc11d7cb44b99ce2b9cce19af5abb7a5873b80faa224533b1c5",
+      "size_bytes": 1268
+    },
+    {
+      "path": "lineage/second-readiness-slot.json",
+      "sha256": "8d0bc3768634587bd4e3814d5943732f4297e87a765bd29ecb5e031365ed3dac",
+      "size_bytes": 607
+    },
+    {
+      "path": "receipts/display-layer.json",
+      "sha256": "d5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4",
+      "size_bytes": 2036
+    },
+    {
+      "path": "receipts/finalization.json",
+      "sha256": "cbce087729d22f11218e61f0deba29361862f016ff465c17de83b7203428016b",
+      "size_bytes": 556
+    },
+    {
+      "path": "receipts/host-preflight.json",
+      "sha256": "282763442e41fa718d06ce64e69f62e93196b730c851ff5920e9cc9b539f343c",
+      "size_bytes": 19052
+    },
+    {
+      "path": "receipts/launch-binding.json",
+      "sha256": "3be06f4c2ad532e354804035a55cfb91211d6063b57f92e0593ce19736947bd7",
+      "size_bytes": 498
+    },
+    {
+      "path": "receipts/pair-contract.json",
+      "sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+      "size_bytes": 4544
+    },
+    {
+      "path": "receipts/result.json",
+      "sha256": "b43aeba492f0acccedb1ce024b6dc411bed138a4c7970fcd9f202fd97946e27c",
+      "size_bytes": 984
+    },
+    {
+      "path": "receipts/supervision.json",
+      "sha256": "aa6459f6b433734aa007a90fec30c3616f507160e1e350cb2dba23c389b80b4a",
+      "size_bytes": 74452
+    },
+    {
+      "path": "receipts/worker-phase.log",
+      "sha256": "e4e58d33fdbf54f375aa0dcdc79ce06bf3a8159611caf7a7ed7f9f90ee656892",
+      "size_bytes": 1038
+    },
+    {
+      "path": "sources/acquisition-allowlist.json",
+      "sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+      "size_bytes": 1416
+    },
+    {
+      "path": "sources/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "size_bytes": 9482
+    },
+    {
+      "path": "sources/launch_gate.py",
+      "sha256": "38eb73529c20761775cb0791693acda704ee6552c9a13b0faeacc7050076af3f",
+      "size_bytes": 914
+    },
+    {
+      "path": "sources/monitor_primitives.py",
+      "sha256": "5857ace4165951897c1d950dcb915df878ac9242b49795e9a69ee74296c2f2b2",
+      "size_bytes": 4079
+    },
+    {
+      "path": "sources/pair_worker.py",
+      "sha256": "e119b3fd01d64f64bcbd0327f39be21ba8ddf8220c42926cc462ac04bff164cd",
+      "size_bytes": 5806
+    },
+    {
+      "path": "sources/runtime-requirements-lock.txt",
+      "sha256": "f78bda5e88157d0974a81b53c08f79895841db4e48934aeb4058b08f31c5fde1",
+      "size_bytes": 8514
+    },
+    {
+      "path": "sources/safe_finalize.py",
+      "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+      "size_bytes": 13744
+    },
+    {
+      "path": "sources/scan_diagnostic_runner.py",
+      "sha256": "bd4edab15b0fed8aaa68f21ffc64f0f0c2113f18747d84bfe4fb78487bb9db72",
+      "size_bytes": 28533
+    },
+    {
+      "path": "sources/scan_preprocess_bridge.py",
+      "sha256": "54642e83a421f46626395d609109cbb052820dc56011b3f7d744689534ea6fce",
+      "size_bytes": 17653
+    },
+    {
+      "path": "sources/slow_inventory.py",
+      "sha256": "53d8fab0f80934689965873f5dd945b6d458b618e8daaf5de840751bdbcff90e",
+      "size_bytes": 17569
+    },
+    {
+      "path": "sources/supervise_pair.py",
+      "sha256": "aafd212764fe014cbe6889b2568320151a4c152d000cd74cda32e1d4ee7fc490",
+      "size_bytes": 26641
+    }
+  ],
+  "schema": "case4-display-decode-result-index-v1"
+}

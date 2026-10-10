@@ -1,0 +1,11 @@
+{
+  "scope": "root_scheduled_new_readiness_slot_after_preserved_no_child_deferral",
+  "original_deferral": "artifacts/case4-decode-preflight-deferral-v1/receipts/preflight-deferred.json",
+  "host_stability_sha256": "ba4c8972e781dfc11d7cb44b99ce2b9cce19af5abb7a5873b80faa224533b1c5",
+  "unchanged_decode_contract_sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+  "previous_decode_worker_calls": 0,
+  "maximum_new_worker_calls": 1,
+  "new_model_calls": 0,
+  "thresholds_changed": false,
+  "note": "Exact original preflight still required; no retry loop or replacement outputs."
+}

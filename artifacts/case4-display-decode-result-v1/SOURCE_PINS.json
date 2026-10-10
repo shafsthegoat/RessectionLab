@@ -1,0 +1,40 @@
+{
+  "accepted_forward_sha256": {
+    "contract": "1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15",
+    "input_npy": "d95383a2c60690f7c4ccbc7f73b37a210b9f6cefef93bf9d3516cc7430ec3f3f",
+    "input_receipt": "63269eec6d8772272d06c44b147c149a76f1ecf0b41ee0c88b05bb8463e751a0",
+    "logits": "703ff1aeb040c2bbeb640af4b98189a52778b770523a4750b4c19fa24f362a40",
+    "result": "00f898eef8fc3e4bfdceba3184eb3d66049ca87a90d404ab117823d21300e107",
+    "supervision": "cf668f3aa5d4cbee1ab6ada68dde27694539d3783e67cafe54361e0b83daba9e"
+  },
+  "acquisition_allowlist_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+  "contract_sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+  "decode_source_sha256": {
+    "diagnostic_runner": "bd4edab15b0fed8aaa68f21ffc64f0f0c2113f18747d84bfe4fb78487bb9db72",
+    "package_init": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "preprocess_bridge": "54642e83a421f46626395d609109cbb052820dc56011b3f7d744689534ea6fce",
+    "scan_adapter": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2",
+    "support_contract": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a"
+  },
+  "display_coverage_sha256": "5d797cfad8c4802f5201651f9dd2e2809486279fedc29112e2407e03facd4d67",
+  "display_descriptor_sha256": "d5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4",
+  "display_state_sha256": "3fdade1fd9e26cc885d54aa2e68e010f8010adc991cd1987efb1910ab7b42e2b",
+  "geometry_sha256": "1b372a9accbf1cf9060cd15b36e16d969a553725b1caf3927fbd87576ff018bb",
+  "git_head_at_packaging": "9317235da1b7a7fe1210bafc1e741614d211ba70",
+  "independent_forward_audit": {
+    "path": "build/scan-target-estimator-independent/case4-forward-v1-actual-audit.md",
+    "sha256": "4c65eb13a1a6005f4174e0ab73af61769e3aa8fb9de64fe595581cbdd722cb73"
+  },
+  "runner_source_sha256": {
+    "darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "launch_gate.py": "38eb73529c20761775cb0791693acda704ee6552c9a13b0faeacc7050076af3f",
+    "monitor_primitives.py": "5857ace4165951897c1d950dcb915df878ac9242b49795e9a69ee74296c2f2b2",
+    "pair_worker.py": "e119b3fd01d64f64bcbd0327f39be21ba8ddf8220c42926cc462ac04bff164cd",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "53d8fab0f80934689965873f5dd945b6d458b618e8daaf5de840751bdbcff90e",
+    "supervise_pair.py": "aafd212764fe014cbe6889b2568320151a4c152d000cd74cda32e1d4ee7fc490"
+  },
+  "runtime_lock_sha256": "f78bda5e88157d0974a81b53c08f79895841db4e48934aeb4058b08f31c5fde1",
+  "schema": "case4-display-decode-source-pins-v1",
+  "ui_admission": false
+}

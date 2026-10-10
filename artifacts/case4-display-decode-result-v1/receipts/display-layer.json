@@ -1,0 +1,73 @@
+{
+  "affine_ras_mm": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -1.0,
+      0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "anatomical_qc": "unreviewed_inferior_mask_omission",
+  "clinical_evidence": false,
+  "evaluation_eligible": false,
+  "excluded_positive_voxels": 0,
+  "forward_receipt_sha256": "00f898eef8fc3e4bfdceba3184eb3d66049ca87a90d404ab117823d21300e107",
+  "geometry_sha256": "1b372a9accbf1cf9060cd15b36e16d969a553725b1caf3927fbd87576ff018bb",
+  "input_receipt_sha256": "63269eec6d8772272d06c44b147c149a76f1ecf0b41ee0c88b05bb8463e751a0",
+  "model_output_verified": true,
+  "output_origin": "model_generated_from_observed_case4_preoperative_scans",
+  "outputs": {
+    "coverage": {
+      "dtype": "uint8",
+      "path": "coverage.nii.gz",
+      "sha256": "5d797cfad8c4802f5201651f9dd2e2809486279fedc29112e2407e03facd4d67"
+    },
+    "state": {
+      "dtype": "int8",
+      "path": "state.nii.gz",
+      "sha256": "3fdade1fd9e26cc885d54aa2e68e010f8010adc991cd1987efb1910ab7b42e2b"
+    }
+  },
+  "planning_eligible": false,
+  "predicted_voxels": 1116094,
+  "same_grid_only": true,
+  "schema": "case4_unreviewed_diagnostic_display_layer_v1",
+  "scope": "display_only_atlas_native_grid",
+  "shape_xyz": [
+    240,
+    240,
+    155
+  ],
+  "source_sha256": {
+    "dataset": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "flair": "046a8b7aa9620bdf0aeb2b0e40632b4c10ff58cff1ed83a458bd7b05cd86f993",
+    "plans": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+    "support_map": "4932902a641aac5d884fbfec543b8da9cdefa9437407e488c1ebef6b9ca700f2",
+    "t1c": "608516aa3c55e8450e777d892dfa5fb5db5824046f85085a25b884e0fcf9d953"
+  },
+  "state_semantics": {
+    "-1": "unknown",
+    "0": "candidate_negative_where_output_covered",
+    "1": "candidate_positive_where_output_covered"
+  },
+  "training_overlap_status": "unknown",
+  "unknown_voxels": 7811906
+}

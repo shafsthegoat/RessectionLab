@@ -1,0 +1,84 @@
+{
+  "affine_ras_mm": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -1.0,
+      0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "arrays": {
+    "coverage": {
+      "dtype": "uint8",
+      "file_size_bytes": 127423,
+      "qform_code": 0,
+      "sform_code": 2,
+      "sha256": "5d797cfad8c4802f5201651f9dd2e2809486279fedc29112e2407e03facd4d67",
+      "shape": [
+        240,
+        240,
+        155
+      ],
+      "spatial_units": "mm",
+      "unique_values": [
+        0,
+        1
+      ]
+    },
+    "state": {
+      "dtype": "int8",
+      "file_size_bytes": 127483,
+      "qform_code": 0,
+      "sform_code": 2,
+      "sha256": "3fdade1fd9e26cc885d54aa2e68e010f8010adc991cd1987efb1910ab7b42e2b",
+      "shape": [
+        240,
+        240,
+        155
+      ],
+      "spatial_units": "mm",
+      "unique_values": [
+        -1,
+        0,
+        1
+      ]
+    }
+  },
+  "candidate_negative_voxels": 1113469,
+  "candidate_positive_voxels": 2625,
+  "contract_sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+  "covered_voxels": 1116094,
+  "display_layer_sha256": "d5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4",
+  "elapsed_seconds": 0.10717154201120138,
+  "hard_address_space_limit_enforced": false,
+  "observed_rss_cap_bytes": 536870912,
+  "peak_auditor_rss_bytes": 116228096,
+  "result_and_descriptor_counts_match": true,
+  "scope": "saved Case4 display state/coverage NIfTI and metadata only; no source patient scan/label, checkpoint, logits, model or decode opened",
+  "shape_xyz": [
+    240,
+    240,
+    155
+  ],
+  "state_coverage_exact_equivalence": true,
+  "unknown_voxels": 7811906,
+  "wall_alarm_seconds": 60
+}

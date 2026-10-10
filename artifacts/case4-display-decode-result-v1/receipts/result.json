@@ -1,0 +1,19 @@
+{
+  "anatomical_qc": "unreviewed_inferior_mask_omission",
+  "arm": "case4",
+  "clinical_evidence": false,
+  "contract_sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+  "coverage_sha256": "5d797cfad8c4802f5201651f9dd2e2809486279fedc29112e2407e03facd4d67",
+  "display_layer_sha256": "d5d2ec1e8d2f99ec1842d4f4d1509986158075fea6cbb56d62718f1a2f8a18b4",
+  "evaluation_admitted": false,
+  "forward_release_sha256": "1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15",
+  "forward_result_sha256": "00f898eef8fc3e4bfdceba3184eb3d66049ca87a90d404ab117823d21300e107",
+  "model_inference_performed_in_this_step": false,
+  "planning_admitted": false,
+  "predicted_voxels": 1116094,
+  "schema": "case4-development-display-decode-v1",
+  "scope": "one_unreviewed_case4_diagnostic_layer_no_planning",
+  "state_sha256": "3fdade1fd9e26cc885d54aa2e68e010f8010adc991cd1987efb1910ab7b42e2b",
+  "training_overlap_status": "unknown",
+  "unknown_voxels": 7811906
+}
