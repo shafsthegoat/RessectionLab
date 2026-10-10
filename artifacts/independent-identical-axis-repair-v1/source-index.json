@@ -1,0 +1,15 @@
+{
+  "head": "102853021a71ccb344002ad7ecdcb1f3ddd3794e",
+  "canonical_baseline_sha256": "cc8fc347b56efb2466c02d749eb307342c4931de0187b5ede2c0fbbb6975f193",
+  "files": {
+    "stage/resectionlab/evaluation.py": "dbfac0b3d8acd3f8461581c96a5ae9421ed341a03559d3ab8ba0589e8a0d028a",
+    "tests/test_independent_axis_angle.py": "83239ccacd20eeee6c5448ce6b2b396a73e9f2006a44187a709bc860d112f62a",
+    "run_controls.py": "3d37dfb7f46ea4ea02a41054588ebb720c98f6a745be56c1a5794f8977161a04",
+    "controls-attempt-01.log": "b2fd921099d0111b5abf5ffcb67f9e3d49e027fff270f9ab569a04c1593ebda6",
+    "controls-attempt-01.json": "52589815832edfecf78bf61d0281baff7b8fcff0a0f9d6e851cebe5d48e6315f",
+    "saved-pose-isolation.json": "2855bca3e6b33ecf5eae5532038b801b0e935781e2b420e2ce1e9eda710fd88d",
+    "evaluation.patch": "cd175e33f032dd003d51b99355ddbdcf48873fb43227eeda58738c37fa46fe25"
+  },
+  "test_passes": 64,
+  "scope": "independent orientation numerics only; existing angular/access/collision thresholds unchanged; no acquired replay"
+}

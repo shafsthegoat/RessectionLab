@@ -1,0 +1,32 @@
+{
+  "status": "saved_pose_generated_empty_scene_isolation",
+  "source_metrics_sha256": "9f06407a4bdeb46c979fc6544c4ebb26f6c5129e5e1d4a9c9267dcf172e2164c",
+  "source_access_sha256": "84282eae36f3fbbf25c94fbc777b79c3ed8e34fcdcfa48d3a86258318b46a697",
+  "action_index_zero_based": 21,
+  "action_id": "nominal-cavity-515f3e2e2cafed0b0422a966",
+  "axis_exact_equal": true,
+  "normalized_axis": [
+    -0.5174147942087322,
+    0.854647792855664,
+    0.04311706043873262
+  ],
+  "self_dot": 0.9999999999999997,
+  "acos_angle_radians": 2.580956827951785e-08,
+  "stable_atan2_angle_radians": 0.0,
+  "start_access_failure": null,
+  "end_access_failure": null,
+  "independent_motion": {
+    "feasible": false,
+    "failures": [
+      "continuous_rotating_access_window_check_unsupported"
+    ],
+    "collision_position_mm": null,
+    "checker_version": "independent-cell-capsule-v1",
+    "conservative": true,
+    "unknowns": []
+  },
+  "patient_array_opens": 0,
+  "native_replays": 0,
+  "model_forwards": 0,
+  "scope": "Isolates access rotation classification only; empty synthetic scene does not certify original tissue/domain route."
+}

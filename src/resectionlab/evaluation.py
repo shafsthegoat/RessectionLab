@@ -523,8 +523,7 @@ def independent_check_pose(tool: Any, pose: Any, scene: Any,
 
 
 def _interpolate_axis(start: np.ndarray, end: np.ndarray, t: float) -> np.ndarray:
-    cosine = float(np.clip(start @ end, -1.0, 1.0))
-    angle = math.acos(cosine)
+    angle = math.atan2(float(np.linalg.norm(np.cross(start, end))), float(start @ end))
     if angle < 1e-12:
         return start.copy()
     if math.pi - angle < 1e-7:
@@ -556,7 +555,10 @@ def independent_check_motion(tool: Any, start: Any, end: Any, scene: Any,
         if not checked.feasible:
             return checked
         endpoint_unknowns.update(checked.unknowns)
-    angle = math.acos(float(np.clip(a0 @ a1, -1.0, 1.0)))
+    # atan2 resolves identical and tiny distinct axes without acos amplifying
+    # self-dot roundoff into an invented rotation. This is independently
+    # implemented here; the existing angular thresholds remain unchanged.
+    angle = math.atan2(float(np.linalg.norm(np.cross(a0, a1))), float(a0 @ a1))
     if math.pi - angle < 1e-7:
         return IndependentGeometryResult(False, ("ambiguous_antipodal_rotation",))
     if access is not None and angle > 1e-10:

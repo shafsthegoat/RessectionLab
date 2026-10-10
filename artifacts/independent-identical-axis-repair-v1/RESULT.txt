@@ -1,0 +1,26 @@
+An unchanged oblique tool direction was falsely classified as rotation.
+
+The separate saved-action diagnostic found TRAIN045's first rejection at action
+22, with native_post_exposure_access_failure. Isolating its exact saved poses in
+an empty generated scene reproduced continuous_rotating_access_window_check_unsupported.
+Both endpoint access checks passed. The identical normalized axes have a self-dot
+of 0.9999999999999997; acos manufactured an angle of 2.580956827951785e-08 radians.
+Independent atan2(norm(cross), dot) correctly returns zero for those axes.
+
+The correction changes only independent motion/interpolation angle arithmetic.
+It preserves the existing thresholds, aperture, collision, bounds, tissue model,
+reward, actions and model weights. It does not reuse the producer's implementation.
+The 14 new generated controls cover identical oblique axes, genuine tiny rotation,
+antipodal refusal, nonzero tiny interpolation, aperture margins, collisions and
+image bounds. The staged suite passed 64 tests; canonical geometry, post-exposure,
+episode accounting and replay suites passed 87 tests in 2.76 seconds.
+
+The original IL64 attempt and its rejection remain unchanged. Generated controls
+do not certify the acquired route. The same saved 24-action route must be checked
+again under a separately recorded corrected evaluation, without retraining.
+
+source-index.json records the staged evidence and exact baseline/candidate hashes.
+The candidate is integrated in src/resectionlab/evaluation.py and its portable
+test in tests/test_independent_axis_angle.py; evaluation.patch reconstructs the
+two-expression change from the recorded baseline. These are numerical geometric
+controls, not physical measurements or clinical validation.

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "build/independent-identical-axis-repair-v1/run_controls.py",
+    "-q",
+    "build/independent-identical-axis-repair-v1/tests/test_independent_axis_angle.py",
+    "tests/test_worlds_evaluation.py",
+    "tests/test_native_spatial_evaluation.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.169991415925324,
+  "threads": 1,
+  "timeout_seconds": 30,
+  "scope": "generated geometry tests only; no patient replay/model"
+}
