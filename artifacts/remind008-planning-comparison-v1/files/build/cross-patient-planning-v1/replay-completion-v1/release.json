@@ -1,0 +1,31 @@
+{
+  "expected_head": "26d6a66d077687d24d47f778bae96cad04a22796",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/replay-completion-v1/input-index.json",
+    "sha256": "a5fb8411ef69f4dff4e87fa96f98115eab5fdd5fcf08a295ce5578ee6cb490e2"
+  },
+  "limits": {
+    "memory_bytes": 3221225472,
+    "native_previews": 512,
+    "optimizer_updates": 0,
+    "parent_seconds": 60,
+    "policy_forwards": 0,
+    "search_calls": 0,
+    "threads": 1,
+    "worker_seconds": 50
+  },
+  "original_status_preserved": "failed_or_unresolved",
+  "output": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1",
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "scope": "restart_only_original_sealed_RL_plan; reuse_original_SEARCH_IL_complete_replays; no private load",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/replay-completion-v1/source-index.json",
+    "sha256": "9a51deedc20d8b32ba81ffa8cb4cefa29702a2cd370c3febb18050c351c62d61"
+  },
+  "status": "released_one_attempt",
+  "version": "saved-ReMIND-008-RL-replay-completion-release-v1"
+}

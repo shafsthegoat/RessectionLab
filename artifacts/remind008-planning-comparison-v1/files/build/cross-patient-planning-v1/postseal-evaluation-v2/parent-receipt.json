@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/cross-patient-planning-v1/postseal-evaluation-v2/evaluate.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/cross-patient-planning-v1/postseal-evaluation-v2/release.json",
+    "2a304465094e286b350d78835b382be131c18c2c959cacbc831a8a30744bd149"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.730011000065133,
+  "sampled_peak_group_rss_bytes": 359497728,
+  "stop_reason": null,
+  "child_reaped": true,
+  "limits": {
+    "seconds": 120,
+    "rss_bytes": 1073741824
+  }
+}

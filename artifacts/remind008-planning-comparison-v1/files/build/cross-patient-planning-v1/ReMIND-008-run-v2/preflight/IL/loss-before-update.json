@@ -1,0 +1,13 @@
+{
+  "objective": "unchanged_mean_action_categorical_CE",
+  "loss": 3.1630051136016846,
+  "loss_forward_calls": 1,
+  "teacher_actions": 1,
+  "sample_bindings": [
+    {
+      "patient_group": "ReMIND:008",
+      "trace_seal": "sha256:08c257917ffed3ec193f64b6e331944dddccdd9fa5c228ce74be1705e530cb0d",
+      "step": 0
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "files": {
+    "IL_native": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/IL/greedy/native-replay.json",
+      "sha256": "8c78c34207753eeecb6107d1e7d7cec78884da18a1c82edc6f79ca9ed2f5fb85"
+    },
+    "IL_plan": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/IL/greedy/plan.json",
+      "sha256": "44004cdf2392caf293c3c3bde740dc4641a1c39532e393304a0229f929b3661d"
+    },
+    "RL_plan": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/RL/greedy/plan.json",
+      "sha256": "60785c43255f7359833f4be55080be3407b778bc7eea6aeb113757c7f4540e39"
+    },
+    "RL_trace": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/RL/greedy/complete-trace.json",
+      "sha256": "d760369fc9b2c606cd762bba7b546835e8ee7d114b31642a1de035a2a6a10c13"
+    },
+    "SEARCH_native": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/SEARCH/native-replay.json",
+      "sha256": "345fef999288690e67b61667d8904c2b2afd7c9e9151f1d1791152cb38f5d746"
+    },
+    "SEARCH_plan": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/SEARCH/plan.json",
+      "sha256": "0296c357ae7df702d32d5ebb1e78b52a722843fec40ec5746cba10d05fbd963a"
+    },
+    "bindings": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/admitted-public-bindings.json",
+      "sha256": "54475a75b5718c129ec2081b14829e9aa52dd8c70c5090524c23af2af371376e"
+    },
+    "context": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/context.json",
+      "sha256": "7a299b233e7b0c1359390ef1cf10199baa96ffd11fc0173c2292c357123a3a2e"
+    },
+    "original_parent": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2.supervision/receipt.json",
+      "sha256": "cd8d78461bd8716def0afc595b3c2ed8edbf9f795423db3a1100534e5c74d4ba"
+    },
+    "original_preflight": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/result.json",
+      "sha256": "ee391727149522ef642cceb3b03d0a13f5122f0fe1ec424d9ca55de99dd799aa"
+    },
+    "original_release": {
+      "path": "build/cross-patient-planning-v1/actual-preflight-v2/release.json",
+      "sha256": "9772dc73f15abab98fcf784a152552214a3c682df76c1405b78bbdb307ae3b69"
+    },
+    "original_result": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/result.json",
+      "sha256": "19f2da3e78d423359215eec7a0eac6d4140eb658a5688528cf5d613e2768efe7"
+    }
+  },
+  "version": "saved_ReMIND-008_v2_replay_completion_inputs_v1"
+}

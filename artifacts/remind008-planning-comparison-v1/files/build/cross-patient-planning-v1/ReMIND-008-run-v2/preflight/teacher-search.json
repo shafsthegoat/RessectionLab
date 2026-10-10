@@ -1,0 +1,99 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "accounting": {
+    "model_transition_calls": 211,
+    "planning_seconds": 31.852584833977744,
+    "completed_layers": 6,
+    "call_cap_reached": false,
+    "time_cap_reached": false,
+    "beam_width": 2,
+    "max_calls": 858,
+    "estimated_incremental_return": 0.0,
+    "stop_baseline_return": 0.0,
+    "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+    "implicit_stop_prefix_count": 212,
+    "evaluated_transition_prefixes": 211,
+    "objective_source": "supplied_public_whole_tumor_and_frozen_geometric_costs",
+    "root_legal_nonstop_actions": 20,
+    "expanded_nodes": 11,
+    "transition_mode": "lazy_planning",
+    "eager_transition_calls": 0,
+    "lazy_planning_transition_calls": 211,
+    "observation_requests": 11,
+    "actor_forward_calls": 0,
+    "guidance": "none",
+    "negative_prefixes_evaluated": 211,
+    "negative_prefixes_retained": 10,
+    "negative_prefixes_pruned_by_beam": 165,
+    "beam_pruned_prefixes": 165,
+    "peak_next_layer_states": 3,
+    "layers": [
+      {
+        "depth": 1,
+        "completed": true,
+        "expanded_nodes": 1,
+        "model_transition_calls": 20,
+        "negative_prefixes_evaluated": 20,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 18,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 2,
+        "completed": true,
+        "expanded_nodes": 2,
+        "model_transition_calls": 40,
+        "negative_prefixes_evaluated": 40,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 38,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 3,
+        "completed": true,
+        "expanded_nodes": 2,
+        "model_transition_calls": 39,
+        "negative_prefixes_evaluated": 39,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 37,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 4,
+        "completed": true,
+        "expanded_nodes": 2,
+        "model_transition_calls": 38,
+        "negative_prefixes_evaluated": 38,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 36,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 5,
+        "completed": true,
+        "expanded_nodes": 2,
+        "model_transition_calls": 38,
+        "negative_prefixes_evaluated": 38,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 36,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 6,
+        "completed": true,
+        "expanded_nodes": 2,
+        "model_transition_calls": 36,
+        "negative_prefixes_evaluated": 36,
+        "negative_prefixes_retained": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_pending_at_cap": 0
+      }
+    ],
+    "policy_state_checks": 0,
+    "policy_state_check_seconds": 0.0,
+    "initial_policy_state_hash": null,
+    "final_policy_state_hash": null
+  }
+}

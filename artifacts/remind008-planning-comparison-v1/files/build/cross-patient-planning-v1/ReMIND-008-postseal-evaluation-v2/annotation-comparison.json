@@ -1,0 +1,436 @@
+{
+  "version": "sealed-patient-annotation-encounters-v1",
+  "status": "complete",
+  "sealed_file_sha256": "0b357172c762bc30124a651051972bc95aac7e218256751052baa70316ed6a8f",
+  "patient_group": "ReMIND:008",
+  "label_name": "BrainLab source ventricles",
+  "source_kind": "source_automatic_annotation",
+  "reference_source_sha256": "193ff34c4ce399d34fc1aac1c1aa5d5fe43786e8255b5bbaeea05e924b2b9730",
+  "reference_mask_hash": "sha256:ec58321f393a41393699106e7b90c2e088149f3b7aebf3399bd162f061404628",
+  "reference_coverage_hash": "sha256:bda8bcbe53f81d9bb1ce1567d281ba08b6a22fec8e39e3aad67312124cb5259f",
+  "reference_grid_hash": "9d3db4e793bf36fd1d3f1b183c3e6b76eb9e6acf7f115ce2a6684d37a021c2aa",
+  "private_load_calls": 1,
+  "planning_after_reference_load": false,
+  "scope": "full_tool_geometric_annotation_encounters_not_injury_or_removal",
+  "clinical_injury_probability": null,
+  "annotation_accuracy_established": false,
+  "file_access_isolation": false,
+  "methods": [
+    {
+      "method": "SEARCH",
+      "plan_seal": "sha256:95101bdf3c9937b103fe2f690edbffe693c7b41c7febe4d83256dce7a124d8ca",
+      "contacts": {
+        "schema": "tiled-vascular-contact-v1",
+        "status": "complete_tiled_contact_evaluation",
+        "patient_admission": false,
+        "strategy_replay_or_admission_performed": false,
+        "reference_grid_identity": "9d3db4e793bf36fd1d3f1b183c3e6b76eb9e6acf7f115ce2a6684d37a021c2aa",
+        "capsules_identity": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "grid_shape": [
+          251,
+          331,
+          250
+        ],
+        "grid_voxels": 20770250,
+        "capsule_count": 0,
+        "action_count": 0,
+        "work": {
+          "tile_capsule_pairs": 0,
+          "cell_capsule_pairs": 0,
+          "tiles_scanned": 0,
+          "tiles_pruned": 0,
+          "tiles_evaluated": 0,
+          "reference_sample_calls": 0,
+          "reference_sampled_cells": 0,
+          "maximum_tile_cells": 0,
+          "maximum_geometry_batch": 0,
+          "maximum_coarse_geometry_batch": 0,
+          "maximum_cell_geometry_batch": 0,
+          "maximum_action_masks": 0
+        },
+        "budget": {
+          "tile_edge": 16,
+          "coarse_batch": 256,
+          "max_tile_capsule_pairs": 2000000,
+          "max_cell_capsule_pairs": 4000000,
+          "max_sampled_cells": 2000000,
+          "wall_seconds": 30.0
+        },
+        "contact_tolerance_squared_mm2": 1e-10,
+        "tile_pruning_padding_mm": 1.6808179859876036e-07,
+        "per_action": {},
+        "removed_overlap": {
+          "status": "not_evaluated_by_contact_kernel",
+          "outcomes": null,
+          "existing_congruence_requirement_unchanged": true
+        },
+        "reference_scope": "Supplied annotation domain only; absent labels do not certify absence of biological vessels.",
+        "geometry_scope": "Discrete reference-cell contacts; volume is a cell-volume surrogate, not continuous injury.",
+        "budget_scope": "Cooperative checkpoints and fixed tile arrays; no hard wall/RSS containment.",
+        "elapsed_seconds": 0.00025875004939734936,
+        "shaft": {
+          "touched_reference_cells": 0,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 0,
+          "outside_reference_fov": false,
+          "annotated_positive_encounter": false,
+          "annotation_coverage_complete_for_sweep": true,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 0.0,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        },
+        "tip": {
+          "touched_reference_cells": 0,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 0,
+          "outside_reference_fov": false,
+          "annotated_positive_encounter": false,
+          "annotation_coverage_complete_for_sweep": true,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 0.0,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        },
+        "whole_tool": {
+          "touched_reference_cells": 0,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 0,
+          "outside_reference_fov": false,
+          "annotated_positive_encounter": false,
+          "annotation_coverage_complete_for_sweep": true,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 0.0,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        }
+      }
+    },
+    {
+      "method": "IL",
+      "plan_seal": "sha256:7d4fd2eae8fa39dc8a80ac3c6e5b6460b8e4f064644892dac0dc93780c3d3e69",
+      "contacts": {
+        "schema": "tiled-vascular-contact-v1",
+        "status": "complete_tiled_contact_evaluation",
+        "patient_admission": false,
+        "strategy_replay_or_admission_performed": false,
+        "reference_grid_identity": "9d3db4e793bf36fd1d3f1b183c3e6b76eb9e6acf7f115ce2a6684d37a021c2aa",
+        "capsules_identity": "c4e0d97257ee9be310242996029f0fc6604b6e6e079fe2298633c346e1667ab5",
+        "grid_shape": [
+          251,
+          331,
+          250
+        ],
+        "grid_voxels": 20770250,
+        "capsule_count": 12,
+        "action_count": 6,
+        "work": {
+          "tile_capsule_pairs": 64512,
+          "cell_capsule_pairs": 61952,
+          "tiles_scanned": 5376,
+          "tiles_pruned": 5372,
+          "tiles_evaluated": 4,
+          "reference_sample_calls": 4,
+          "reference_sampled_cells": 573,
+          "maximum_tile_cells": 2816,
+          "maximum_geometry_batch": 256,
+          "maximum_coarse_geometry_batch": 256,
+          "maximum_cell_geometry_batch": 256,
+          "maximum_action_masks": 6
+        },
+        "budget": {
+          "tile_edge": 16,
+          "coarse_batch": 256,
+          "max_tile_capsule_pairs": 2000000,
+          "max_cell_capsule_pairs": 4000000,
+          "max_sampled_cells": 2000000,
+          "wall_seconds": 30.0
+        },
+        "contact_tolerance_squared_mm2": 1e-10,
+        "tile_pruning_padding_mm": 2.2517270198001146e-07,
+        "per_action": {
+          "0": {
+            "touched_reference_cells": 176,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 176,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 22.691754797403224,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "1": {
+            "touched_reference_cells": 176,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 176,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 22.691754797403224,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "2": {
+            "touched_reference_cells": 139,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 139,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 17.92132907294914,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "3": {
+            "touched_reference_cells": 139,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 139,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 17.92132907294914,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "4": {
+            "touched_reference_cells": 213,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 213,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 27.462180521857313,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "5": {
+            "touched_reference_cells": 176,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 176,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 22.691754797403224,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          }
+        },
+        "removed_overlap": {
+          "status": "not_evaluated_by_contact_kernel",
+          "outcomes": null,
+          "existing_congruence_requirement_unchanged": true
+        },
+        "reference_scope": "Supplied annotation domain only; absent labels do not certify absence of biological vessels.",
+        "geometry_scope": "Discrete reference-cell contacts; volume is a cell-volume surrogate, not continuous injury.",
+        "budget_scope": "Cooperative checkpoints and fixed tile arrays; no hard wall/RSS containment.",
+        "elapsed_seconds": 0.12473037512972951,
+        "shaft": {
+          "touched_reference_cells": 213,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 213,
+          "outside_reference_fov": true,
+          "annotated_positive_encounter": null,
+          "annotation_coverage_complete_for_sweep": false,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 27.462180521857313,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        },
+        "tip": {
+          "touched_reference_cells": 543,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 543,
+          "outside_reference_fov": true,
+          "annotated_positive_encounter": null,
+          "annotation_coverage_complete_for_sweep": false,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 70.00922076698836,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        },
+        "whole_tool": {
+          "touched_reference_cells": 573,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 573,
+          "outside_reference_fov": true,
+          "annotated_positive_encounter": null,
+          "annotation_coverage_complete_for_sweep": false,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 73.87713351654573,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        }
+      }
+    },
+    {
+      "method": "RL",
+      "plan_seal": "sha256:b18ac55c444095b8d203edd000640c9d5e432608b6adc6a53078d7a4888b978a",
+      "contacts": {
+        "schema": "tiled-vascular-contact-v1",
+        "status": "complete_tiled_contact_evaluation",
+        "patient_admission": false,
+        "strategy_replay_or_admission_performed": false,
+        "reference_grid_identity": "9d3db4e793bf36fd1d3f1b183c3e6b76eb9e6acf7f115ce2a6684d37a021c2aa",
+        "capsules_identity": "51ce7fdc4a81801ba27379604627d6e0c321e5836f133728e04a6f3bbd3e1b15",
+        "grid_shape": [
+          251,
+          331,
+          250
+        ],
+        "grid_voxels": 20770250,
+        "capsule_count": 12,
+        "action_count": 6,
+        "work": {
+          "tile_capsule_pairs": 64512,
+          "cell_capsule_pairs": 61952,
+          "tiles_scanned": 5376,
+          "tiles_pruned": 5372,
+          "tiles_evaluated": 4,
+          "reference_sample_calls": 4,
+          "reference_sampled_cells": 569,
+          "maximum_tile_cells": 2816,
+          "maximum_geometry_batch": 256,
+          "maximum_coarse_geometry_batch": 256,
+          "maximum_cell_geometry_batch": 256,
+          "maximum_action_masks": 6
+        },
+        "budget": {
+          "tile_edge": 16,
+          "coarse_batch": 256,
+          "max_tile_capsule_pairs": 2000000,
+          "max_cell_capsule_pairs": 4000000,
+          "max_sampled_cells": 2000000,
+          "wall_seconds": 30.0
+        },
+        "contact_tolerance_squared_mm2": 1e-10,
+        "tile_pruning_padding_mm": 2.2517270198001146e-07,
+        "per_action": {
+          "0": {
+            "touched_reference_cells": 139,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 139,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 17.92132907294914,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "1": {
+            "touched_reference_cells": 176,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 176,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 22.691754797403224,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "2": {
+            "touched_reference_cells": 176,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 176,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 22.691754797403224,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "3": {
+            "touched_reference_cells": 139,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 139,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 17.92132907294914,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "4": {
+            "touched_reference_cells": 213,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 213,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 27.462180521857313,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          },
+          "5": {
+            "touched_reference_cells": 176,
+            "positive_reference_cells": 0,
+            "unknown_reference_cells": 176,
+            "outside_reference_fov": true,
+            "annotated_positive_encounter": null,
+            "annotation_coverage_complete_for_sweep": false,
+            "positive_cell_volume_upper_bound_mm3": 0.0,
+            "unknown_in_grid_cell_volume_mm3": 22.691754797403224,
+            "biological_vessel_free": null,
+            "clinical_injury_probability": null
+          }
+        },
+        "removed_overlap": {
+          "status": "not_evaluated_by_contact_kernel",
+          "outcomes": null,
+          "existing_congruence_requirement_unchanged": true
+        },
+        "reference_scope": "Supplied annotation domain only; absent labels do not certify absence of biological vessels.",
+        "geometry_scope": "Discrete reference-cell contacts; volume is a cell-volume surrogate, not continuous injury.",
+        "budget_scope": "Cooperative checkpoints and fixed tile arrays; no hard wall/RSS containment.",
+        "elapsed_seconds": 0.12518716603517532,
+        "shaft": {
+          "touched_reference_cells": 238,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 238,
+          "outside_reference_fov": true,
+          "annotated_positive_encounter": null,
+          "annotation_coverage_complete_for_sweep": false,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 30.68544114648845,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        },
+        "tip": {
+          "touched_reference_cells": 520,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 520,
+          "outside_reference_fov": true,
+          "annotated_positive_encounter": null,
+          "annotation_coverage_complete_for_sweep": false,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 67.04382099232771,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        },
+        "whole_tool": {
+          "touched_reference_cells": 569,
+          "positive_reference_cells": 0,
+          "unknown_reference_cells": 569,
+          "outside_reference_fov": true,
+          "annotated_positive_encounter": null,
+          "annotation_coverage_complete_for_sweep": false,
+          "positive_cell_volume_upper_bound_mm3": 0.0,
+          "unknown_in_grid_cell_volume_mm3": 73.36141181660474,
+          "biological_vessel_free": null,
+          "clinical_injury_probability": null
+        }
+      }
+    }
+  ]
+}

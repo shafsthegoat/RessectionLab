@@ -1,0 +1,134 @@
+{
+  "status": "failed_or_unresolved",
+  "scope": "one_TRAIN_supplied_region_scale_preflight",
+  "release_sha256": "9772dc73f15abab98fcf784a152552214a3c682df76c1405b78bbdb307ae3b69",
+  "private_array_reads": 0,
+  "profile_enabled": true,
+  "events": [
+    {
+      "phase": "before_public_imports",
+      "elapsed_seconds": 2.88328155875206e-05
+    },
+    {
+      "phase": "before_public_array_loading",
+      "elapsed_seconds": 2.0643441658467054
+    },
+    {
+      "phase": "public_array_loaded:image",
+      "elapsed_seconds": 2.1067398749291897,
+      "bytes": 83081128
+    },
+    {
+      "phase": "public_array_loaded:supplied_support",
+      "elapsed_seconds": 2.120937082916498,
+      "bytes": 20770378
+    },
+    {
+      "phase": "public_array_loaded:supplied_whole_tumor",
+      "elapsed_seconds": 2.1346969578880817,
+      "bytes": 20770378
+    },
+    {
+      "phase": "public_array_loaded:whole_tumor_domain",
+      "elapsed_seconds": 2.149996707914397,
+      "bytes": 20770378
+    },
+    {
+      "phase": "before_native_case_constructor",
+      "elapsed_seconds": 2.3171569160185754,
+      "native_shape": [
+        251,
+        331,
+        250
+      ],
+      "actor_crop": [
+        64,
+        64,
+        64
+      ]
+    },
+    {
+      "phase": "native_case_constructed",
+      "elapsed_seconds": 2.892419457901269,
+      "source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64"
+    },
+    {
+      "phase": "phase_start:public_preparation",
+      "elapsed_seconds": 4.680973415961489
+    },
+    {
+      "phase": "before_native_task_constructor_and_initial_inventory",
+      "elapsed_seconds": 4.681307332823053
+    },
+    {
+      "phase": "public_task_and_inventory_ready",
+      "elapsed_seconds": 6.2386367500294,
+      "legal_nonstop_actions": 20
+    },
+    {
+      "phase": "phase_complete:public_preparation",
+      "elapsed_seconds": 6.37275645788759
+    },
+    {
+      "phase": "phase_start:offline_teacher_search",
+      "elapsed_seconds": 6.37306374986656
+    },
+    {
+      "phase": "phase_complete:offline_teacher_search",
+      "elapsed_seconds": 38.226737540913746
+    },
+    {
+      "phase": "phase_start:offline_teacher_trace_replay",
+      "elapsed_seconds": 38.22730795782991
+    },
+    {
+      "phase": "phase_complete:offline_teacher_trace_replay",
+      "elapsed_seconds": 40.83145070797764
+    },
+    {
+      "phase": "phase_start:offline_IL_update",
+      "elapsed_seconds": 40.8319108330179
+    },
+    {
+      "phase": "phase_complete:offline_IL_update",
+      "elapsed_seconds": 41.37592062493786
+    },
+    {
+      "phase": "phase_start:deployment_IL_greedy_and_replay",
+      "elapsed_seconds": 41.37631958303973
+    },
+    {
+      "phase": "phase_complete:deployment_IL_greedy_and_replay",
+      "elapsed_seconds": 57.0072388749104
+    },
+    {
+      "phase": "phase_start:offline_RL_collection",
+      "elapsed_seconds": 57.0078839159105
+    },
+    {
+      "phase": "phase_complete:offline_RL_collection",
+      "elapsed_seconds": 59.70998279098421
+    },
+    {
+      "phase": "phase_start:offline_RL_update",
+      "elapsed_seconds": 59.71038349997252
+    },
+    {
+      "phase": "phase_complete:offline_RL_update",
+      "elapsed_seconds": 60.041562707861885
+    },
+    {
+      "phase": "phase_start:deployment_RL_greedy_and_replay",
+      "elapsed_seconds": 60.041897165821865
+    }
+  ],
+  "public_preparation_native_preview_calls": 0,
+  "public_source_preparation_seconds": 0.8843718748539686,
+  "failure": {
+    "type": "CommittedTransitionInterrupted",
+    "message": "Native axis transition committed; next inventory preparation interrupted"
+  },
+  "last_phase": "phase_start:deployment_RL_greedy_and_replay",
+  "complete_profiled_wall_seconds": 69.42809362499975,
+  "profile_scope": "includes imports, public loader, native inventory, training and replay; not an unprofiled timing benchmark"
+}

@@ -1,0 +1,27 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 60.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "threads": 1,
+    "worker_deadline_seconds": 50.0
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 11.375336250057444,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "profile_sha256": null,
+  "result_read_error": null,
+  "result_sha256": "a6de692ea7eb4f56158fd36c23f39a47574facd649dbf67abbbc1a29782cf4dd",
+  "sampled_peak_rss_bytes": 1297514496,
+  "samples": 54,
+  "sampling_limit": "transient peaks or detached descendants between samples may be missed",
+  "status": "complete",
+  "stop_reason": null,
+  "worker_process_scope": "owned process group plus discovered descendants via FastDarwinSampler",
+  "worker_termination_confirmed": true
+}

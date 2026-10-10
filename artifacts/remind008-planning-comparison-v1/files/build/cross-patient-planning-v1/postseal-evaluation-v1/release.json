@@ -1,0 +1,75 @@
+{
+  "output": "build/cross-patient-planning-v1/ReMIND-008-postseal-evaluation-v1",
+  "bundle": {
+    "path": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1/sealed-complete-plans.json",
+    "sha256": "0b357172c762bc30124a651051972bc95aac7e218256751052baa70316ed6a8f"
+  },
+  "parent_receipt": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1.supervision/receipt.json",
+  "child_result": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1/result.json",
+  "required_completed_files": [
+    {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1/sealed-complete-plans.json",
+      "sha256": "0b357172c762bc30124a651051972bc95aac7e218256751052baa70316ed6a8f"
+    },
+    {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1/result.json",
+      "sha256": "a6de692ea7eb4f56158fd36c23f39a47574facd649dbf67abbbc1a29782cf4dd"
+    },
+    {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-replay-completion-v1.supervision/receipt.json",
+      "sha256": "9c273262ed968c742171868c12aa8ac89fbe1e630990be6d34a0e1adba8b6ae1"
+    },
+    {
+      "path": "src/resectionlab/patient_planning_evaluation.py",
+      "sha256": "7df507ffce9ac6a1200dd8014a654a962720a7d5aa93d9f8d5288a2e96d97db4"
+    },
+    {
+      "path": "build/cross-patient-planning-v1/postseal-evaluation-v1/evaluate.py",
+      "sha256": "20e41128c4a84a2d0c9bcc2c4e68628cf127c84878f94f6285eb7878299f173c"
+    }
+  ],
+  "reference": {
+    "patient_group": "ReMIND:008",
+    "public_source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64",
+    "frame_correspondence": "qualified_common_RAS_mm_frame",
+    "source_kind": "source_automatic_annotation",
+    "label_name": "BrainLab source ventricles",
+    "source_sha256": "193ff34c4ce399d34fc1aac1c1aa5d5fe43786e8255b5bbaeea05e924b2b9730",
+    "affine_ras_mm": [
+      [
+        0.5077995460268,
+        -0.0006029567334039999,
+        0.00031966646286164964,
+        -67.27264414662629
+      ],
+      [
+        -0.000602797060772,
+        -0.5077995764948,
+        -0.00024605857126659,
+        76.04573734852269
+      ],
+      [
+        0.000324948689738,
+        0.0002495104940286,
+        -0.49999985310981065,
+        96.88242078608342
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "mask": {
+      "path": "build/remind-planning-qc-v1/ReMIND-008-crop-v1/ventricles_source_label.npy",
+      "sha256": "86903fb7970e16918ba4e78587fc96382d85ec2a9ada9269e62c091c539bbb71"
+    },
+    "coverage": {
+      "path": "build/remind-planning-qc-v1/ReMIND-008-crop-v1/ventricles_source_grid_domain.npy",
+      "sha256": "a3b792f86ca8f7e02d9ee9854dba5ff06b716590aca620ee0ed53e7a414070f0"
+    }
+  },
+  "scope": "postseal_train_annotation_encounters_only_not_clinical_validation",
+  "source_patient_split": "TRAIN"
+}

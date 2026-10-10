@@ -1,0 +1,16 @@
+{
+  "objective": "unchanged_complete_episode_REINFORCE",
+  "loss": -1.2216111421585083,
+  "actor_loss": -1.2720361948013306,
+  "value_loss": 0.16173318028450012,
+  "entropy": 3.0441508293151855,
+  "complete_episodes": 1,
+  "returns": [
+    0.0
+  ],
+  "actor_reduction": "mean_episodes_sum_score_terms",
+  "loss_forward_calls": 1,
+  "trace_seals": [
+    "sha256:7b7ed060293b97f15f624b4c1e5371c67ce4a2cd7fbdc09a7a263a24506806d7"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "status": "complete_saved_plan_replay_comparison",
+  "scope": "saved_RL_plan_replay_completion_only",
+  "optimizer_updates": 0,
+  "optimizer_construction_attempts": 0,
+  "policy_forward_calls": 0,
+  "policy_constructions": 0,
+  "search_calls": 0,
+  "checkpoint_loads": 0,
+  "private_array_reads": 0,
+  "replay_transition_calls": 6,
+  "replay_restart_from_initial_state": true,
+  "original_attempt_status_preserved": "failed_or_unresolved",
+  "plan_seals": {
+    "SEARCH": "sha256:95101bdf3c9937b103fe2f690edbffe693c7b41c7febe4d83256dce7a124d8ca",
+    "IL": "sha256:7d4fd2eae8fa39dc8a80ac3c6e5b6460b8e4f064644892dac0dc93780c3d3e69",
+    "RL": "sha256:b18ac55c444095b8d203edd000640c9d5e432608b6adc6a53078d7a4888b978a"
+  },
+  "sealed_bundle_sha256": "0b357172c762bc30124a651051972bc95aac7e218256751052baa70316ed6a8f",
+  "reused_native_receipts": {
+    "SEARCH": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/SEARCH/native-replay.json",
+      "sha256": "345fef999288690e67b61667d8904c2b2afd7c9e9151f1d1791152cb38f5d746"
+    },
+    "IL": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/IL/greedy/native-replay.json",
+      "sha256": "8c78c34207753eeecb6107d1e7d7cec78884da18a1c82edc6f79ca9ed2f5fb85"
+    }
+  },
+  "original_costs": {
+    "owned_wall_seconds": 69.93320900015533,
+    "sampled_peak_rss_bytes": 1915027456,
+    "optimizer_updates": 2,
+    "policy_forward_calls": 15,
+    "native_budget": {
+      "version": "native-planning-budget-v1",
+      "status": "failed",
+      "failure": "native_preview_entry_limit",
+      "limits": {
+        "native_preview_entries": 2048,
+        "planning_execution_seconds": 120.0
+      },
+      "native_preview_entries": 2048,
+      "observed_admissions_before_accounting_failure": 2048,
+      "counting_reliable": true,
+      "blocked_preview_attempts": 1,
+      "elapsed_seconds": 64.62589020794258,
+      "time_overshoot_seconds": 0.0,
+      "history_complete_caller_attestation": null,
+      "score": null,
+      "independent_audit": "outside_this_guard_not_verified",
+      "requests": {},
+      "cache_hits": null,
+      "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+      "native_preview_profile": {
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "phases": {
+          "unclassified": {
+            "started": 2048,
+            "returned": 2048,
+            "raised": 0,
+            "seconds": 18.850547363748774,
+            "feasible": 537,
+            "rejected": 1511,
+            "returned_microsteps": 12611,
+            "rejection_reasons": {
+              "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1511
+            }
+          }
+        },
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+      "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+    }
+  },
+  "additional_cost_scope": "restarted_RL_native_replay_and_audit; original failed replay cost is retained",
+  "private_evaluation_performed": false,
+  "additional_worker_wall_seconds": 10.871930917026475,
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "complete_history_awaiting_independent_audit",
+    "failure": null,
+    "limits": {
+      "native_preview_entries": 512,
+      "planning_execution_seconds": 50.0
+    },
+    "native_preview_entries": 408,
+    "observed_admissions_before_accounting_failure": 408,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 9.05537479184568,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": true,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 408,
+          "returned": 408,
+          "raised": 0,
+          "seconds": 3.0827217055484653,
+          "feasible": 101,
+          "rejected": 307,
+          "returned_microsteps": 2511,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 307
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "version": "qualified-patient-learning-preflight-v1",
+  "method": "RL",
+  "optimizer_updates": 1,
+  "before_parameter_hash": "sha256:47101c68a31949bc0cd862996a99e4f5c3f72097d482f8cf1ddde9d8fd2615d5",
+  "after_parameter_hash": "sha256:bd3504484f03012411cadbd09c383be7f43da964ecbddb91f0aa3f69a6e2c9a5",
+  "parameters_changed": true,
+  "gradient_norm_before_clip": 3.031902313232422,
+  "module_gradient_norms_before_clip": {
+    "encoder": 0.4502989649772644,
+    "actor": 1.827614188194275,
+    "stop": 0.5174945592880249,
+    "critic": 2.3198485374450684
+  },
+  "context_hashes": [
+    "sha256:58594587982a3ce504e09b80e96ca376d185d747576c9697bd28090afe934b78"
+  ],
+  "trace_seals": [
+    "sha256:7b7ed060293b97f15f624b4c1e5371c67ce4a2cd7fbdc09a7a263a24506806d7"
+  ],
+  "completed_updates": 1,
+  "population_training": false,
+  "patient_adaptation": false
+}

@@ -1,0 +1,47 @@
+{
+  "baseline_public_source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64",
+  "expected_head": "0a6ba3c251bc2f8918890e6b84400f2e7437a5df",
+  "limits": {
+    "max_native_previews": 2048,
+    "max_optimizer_updates": 2,
+    "max_policy_forwards": 40,
+    "max_steps": 6,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 858,
+      "seconds": 60
+    },
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "output": "build/cross-patient-planning-v1/ReMIND-008-run-v2",
+  "profile": true,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "research_task_admission": {
+    "clinical_or_anatomical_accuracy_claim": false,
+    "hypothetical_access_assumption_accepted": true,
+    "native_image_and_supplied_support_domain_fully_covered": true,
+    "public_geometry_and_source_linkage_checked": true,
+    "source_target_and_support_unchanged": true,
+    "supplied_region_partial_progress_accepted": true
+  },
+  "search_cap_derivation": {
+    "beam_width": 2,
+    "candidate_slots": 78,
+    "formula": "78*(1+2*(6-1))",
+    "horizon": 6,
+    "maximum_expanded_nodes": 11,
+    "scope": "full_fixed_beam_pass_transition_ceiling; preview/time/total caps remain independent and may terminate"
+  },
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/actual-preflight-v2/source-index.json",
+    "sha256": "8988c28825d175ce269a0cc805266c32c0a3437fe2177cef9568de5b945635a2"
+  },
+  "status": "released_one_attempt",
+  "version": "ReMIND-008-public-preflight-release-v2",
+  "comparison_limit": "TRAIN scale/interface only; unequal effective actor/search representation. Expanded search budget addresses prior unresolved cap; no fair end-to-end speedup claim."
+}
