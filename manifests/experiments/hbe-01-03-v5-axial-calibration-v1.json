@@ -1,0 +1,209 @@
+{
+  "authorized_held_out_members": [],
+  "calibration_role": "retrospective_development_goodness_of_fit_only",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "cleanup_seconds": 10,
+    "fit_calls": 1,
+    "held_out_member_reads": 0,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "new_output_bytes": 16777216,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 70,
+    "worker_seconds": 60
+  },
+  "csv_schemas": {
+    "compression": {
+      "coordinate_column": 0,
+      "coordinate_unit": "m",
+      "delimiter": ",",
+      "header": [
+        "displacement",
+        "force"
+      ],
+      "response_column": 1,
+      "response_unit": "N"
+    },
+    "tension": {
+      "coordinate_column": 0,
+      "coordinate_unit": "m",
+      "delimiter": ",",
+      "header": [
+        "displacement",
+        "force"
+      ],
+      "response_column": 1,
+      "response_unit": "N"
+    }
+  },
+  "evidence": {
+    "comparison": {
+      "path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json",
+      "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+    },
+    "comparison_receipt": {
+      "path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/receipt.json",
+      "sha256": "441626ffb3226a6683319b55e3c4e04912bc72805c2408effb39cfe5e8da3577"
+    },
+    "independent_audit": {
+      "path": "build/hbe-v5-native-verdict-independent-v1/audit-result.json",
+      "sha256": "97d9eaec96f65e9fa9fea49ec624bba2908e6dceae6a59a8357cb4b6fd8e6f2d"
+    },
+    "independent_report": {
+      "path": "build/hbe-v5-native-verdict-independent-v1/REPORT.txt",
+      "sha256": "372929bff40fc5546320ff0aed11054ebd44ddac2a656decdb0369037d137bac"
+    },
+    "independent_summary": {
+      "path": "build/hbe-v5-native-verdict-independent-v1/result-summary.json",
+      "sha256": "89ab6572891e2739d83ced2a6ee845e9b3eae1c0f9063b7d10fc4acb7edb86f1"
+    },
+    "manifest": {
+      "path": "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json",
+      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
+    },
+    "protocol": {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "roles": {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    "v3_access_ledger": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/access.jsonl",
+      "sha256": "d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288"
+    },
+    "v3_failure_review": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/failure-audit/verification.json",
+      "sha256": "7931db57fb5332df48a6b18fdcee540d1eefdd9107c2214ac233d5039f9cbc39"
+    },
+    "v3_publication": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/publication-check.json",
+      "sha256": "f97dcb6534bafd6f4f203c9c90b18ffd6fb1797694939472848a7e70d9f18f2c"
+    },
+    "v3_result": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/result.json",
+      "sha256": "595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c"
+    },
+    "v3_state": {
+      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/state.json",
+      "sha256": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd"
+    },
+    "v4": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
+      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+    },
+    "v5": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
+      "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+    }
+  },
+  "fit_calls": 1,
+  "geometry": {
+    "axis_origin_m": [
+      0,
+      0,
+      0
+    ],
+    "axis_unit_vector": [
+      0,
+      0,
+      1
+    ],
+    "height_m": 0.00489159,
+    "height_provenance": "creator_test_inferred",
+    "measurement_uncertainty": null,
+    "radius_m": 0.004,
+    "specimen": "HBE_01_03"
+  },
+  "inherited_source_bindings": {
+    "launchers/hbe_v5_ordinal9_continuation_v1.py": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+    "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_halfheight_global.py": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0",
+    "scripts/mechanics_hbe_halfheight_global_n36.py": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d",
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1",
+    "scripts/mechanics_hbe_halfheight_mesh.py": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_halfheight_spatial.py": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
+    "scripts/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_v5_comparison.py": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9",
+    "scripts/mechanics_hbe_v5_frame.py": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+    "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+    "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_native_comparison.py": "31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+    "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+    "scripts/mechanics_hbe_v5_stream.py": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "material": {
+    "K_over_mu": 49.666666666666664,
+    "c1_over_mu": 2,
+    "c2_through_c6": 0,
+    "energy": "mu/2*(Ibar1-3)+K/4*(J^2-1-2*ln(J))",
+    "febio_type": "Ogden",
+    "fitted_parameters": [
+      "positive_mu_scale_only"
+    ],
+    "initial_poisson_ratio_assumption": 0.49,
+    "m1": 2,
+    "m2_through_m6": 2,
+    "pressure_model": 1,
+    "reference_mu_Pa": 1000.0,
+    "sweeps": false
+  },
+  "native_calls": 0,
+  "permitted_members": [
+    "HBE_01/HBE_01_03/compression_c3.csv",
+    "HBE_01/HBE_01_03/tension_c3.csv"
+  ],
+  "physical_validation_pass": null,
+  "references": {
+    "compression": {
+      "coordinate_sha256": "881665105d646fbc47a116b0e6bcad7d4ad79f26d43b386c8f297e3b4624fa2e",
+      "member": {
+        "bytes": 1222,
+        "crc32": "c7b7a162",
+        "path": "HBE_01/HBE_01_03/compression_c3.csv",
+        "sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43"
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/readout.json",
+        "sha256": "14ca49981b0bf68df1a2a1d75489b9e8966c017635d3c4ba20a794e64a8eb18b"
+      },
+      "run_id": "compression:N36:S120:reference"
+    },
+    "tension": {
+      "coordinate_sha256": "a1690a5cff8fb75fc619984074ba53dbb044f3ea6894f72f698cb36b1edc0731",
+      "member": {
+        "bytes": 1170,
+        "crc32": "03927483",
+        "path": "HBE_01/HBE_01_03/tension_c3.csv",
+        "sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8"
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout.json",
+        "sha256": "20d64b4952aee288c3fa43597e019f1456a7e31b1ea9189a9f43a51d8500b3e1"
+      },
+      "run_id": "tension:N24:S120:reference"
+    }
+  },
+  "schema": "hbe-v5-axial-fit-declaration-v1",
+  "torsion_requires_separate_fixed_fit_continuation": true
+}

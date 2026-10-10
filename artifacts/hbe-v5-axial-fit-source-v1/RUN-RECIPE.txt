@@ -1,0 +1,68 @@
+Fit-only successor; preparation is not a release
+
+1. Review and promote the four stage files in source-index.json. Existing v3/v5,
+reader, estimator, supervisor and role files are unchanged. The release template
+binds 33 project source files and 323 actual numerical runtime files. Parent and
+worker use -I -S -B and distinct absent cache prefixes: no site hooks or existing
+project/third-party pyc is admitted. The ordinary platform standard library and
+OS remain trusted runtime dependencies, not an adversarial sandbox.
+
+2. Independent source review writes a small JSON receipt with exactly these
+decision fields (additional explanatory fields are permitted):
+  schema: hbe-v5-axial-fit-source-review-v1
+  decision: GO
+  release_candidate_sha256: SHA256 of core.canonical(false-release.json)
+This exact candidate digest includes the declaration, source pins and runtime
+closure. A caller-supplied GO label for another file/candidate does not pass.
+
+3. Root creates a separate release from false-release.json, changing only
+execution_released to true, source_commit to the promoted exact Git commit and
+independent_source_review to that review JSON's relative path/SHA binding.
+All executing source blobs must match that commit; unrelated later HEAD commits
+are allowed. No source archive is required or created. Keep the false template.
+Save the root release under a new ignored path and record its SHA256.
+
+4. Root invokes the exact promoted runner with a fresh ABSOLUTE parent cache path:
+
+  .venv/bin/python -I -S -B -X pycache_prefix=<absolute-new-build-cache-path> \
+    scripts/mechanics_hbe_v5_axial_calibration_experiment.py \
+    --root <absolute-repository-root> \
+    --release <root-release-relative-path> --release-sha256 <exact-SHA256>
+
+With no --execute this is metadata/saved-numerical-reference preflight only;
+it does not reserve an attempt, open the original measurement archive or fit.
+The actual one-shot command appends --execute. The parent creates exclusively
+build/hbe-v5-axial-calibration-v1/attempt-01 before the owned worker can read
+responses; a failed or partial attempt consumes that directory. Never delete it
+or create another release merely to retry this study.
+
+Limits: one worker, 60 seconds from parent main entry through worker work,
+70 seconds through cleanup/final publication, sampled worker process-group RSS
+512 MiB, 16 MiB total attempt output, one numerical thread. Bootstrap/source
+verification occurs before response access. It is included in the running
+deadline; elapsed success cannot exceed the envelope. This is local sampled
+supervision, not a hard real-time or power-loss guarantee. OwnedStage supplies
+the reviewed direct-child fallback and reap; cleanup fallback use, nonzero cleanup exit and cleanup errors cannot become pass.
+
+Allowed response members: the original HBE_01_03 compression_c3.csv (1222 B)
+and tension_c3.csv (1170 B), 30 rows each. The existing reader hashes the entire
+sealed ZIP before/after selective decompression; this is fixity access to
+compressed bytes, not decoding any other member. Exactly one fit_scale call is
+permitted after both curve identities/coordinate ranges pass.
+
+Accept only terminal.json status completed_axial_calibration_pending_fitted_confirmation,
+a separate publication.json accepted=true with the exact nine preceding output
+byte hashes, and no finalization-failure.json. Recheck the publication bytes and
+full ten-file inventory; terminal status alone is never sufficient. Also require
+completed/reaped bounded supervision, exact successful worker state and the two
+attempt/completion ledger events. Exit0 alone is insufficient. Preserve fit.json,
+calibration-metrics.json, intent, ledger, worker state and parent receipt/terminal/publication. Initial v1 source and independent negative
+probes remain preserved; this v2 preparation has not consumed a measured attempt.
+Fit/metrics contain the newly authorized calibration values; treat them as such.
+No freeze_saved event, torque prediction freeze, torsion read, native call,
+patient property, physical-validation pass or policy reward is created.
+
+The next continuation, after interpreting this fixed fit, still requires its own
+reviewed two fitted axial confirmations and pre-reveal prediction freeze before
+any separately authorized held-out torque evaluation. No response-dependent
+change of material law, sign, offset, height, rows or tolerance is allowed here.

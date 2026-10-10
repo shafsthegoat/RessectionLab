@@ -1,0 +1,62 @@
+{
+  "actual_fit_calls": 0,
+  "files": {
+    "IMPLEMENTATION-RESULT.txt": {
+      "bytes": 2615,
+      "sha256": "6fa5220dce74af0dfff6597a5419f68e0ef6ca75a831f611d30399e00fe9a93c"
+    },
+    "RUN-RECIPE.txt": {
+      "bytes": 4424,
+      "sha256": "76c9e8682ab4f4ea5cebde9d66c5dae15f3fe8b251f089e73cd5b73282b0cf8b"
+    },
+    "false-release.json": {
+      "bytes": 81639,
+      "sha256": "0cc30a56af1b75e39625617b9975aa54fa00fd879a534a58f177bb695acea256"
+    },
+    "freeze_candidate.py": {
+      "bytes": 1889,
+      "sha256": "1fc29c14a4a23e0fbda50878ac94c40b74091c760b38efc3ebf422f3147428d0"
+    },
+    "generated-controls-final.txt": {
+      "bytes": 99,
+      "sha256": "4228551a758a8a42317038fcd69c7e3563cf36e12de945b7c991f715938017f2"
+    },
+    "generated-controls-initial.txt": {
+      "bytes": 99,
+      "sha256": "a1612219eeb91586c983afd6edcc5b346b2f8bd425c66df408c2fcebbcaa898b"
+    },
+    "repair.py": {
+      "bytes": 8995,
+      "sha256": "c341fdd8a6d84a5647402f125716103cf0c72bebbaef583fce4e7d624baea379"
+    },
+    "stage/manifests/experiments/hbe-01-03-v5-axial-calibration-v1.json": {
+      "bytes": 9781,
+      "sha256": "31b4c3b85e4fdab0010be28300c8e6fda2930c48659ee78792dc6f225c2cf794"
+    },
+    "stage/scripts/mechanics_hbe_v5_axial_calibration.py": {
+      "bytes": 18461,
+      "sha256": "20fa7411cb2a194e62c9fc0b4b4b1aa3f4e10f28cba4ac758c4dc190a47fd6be"
+    },
+    "stage/scripts/mechanics_hbe_v5_axial_calibration_experiment.py": {
+      "bytes": 18263,
+      "sha256": "5bceed4d7457d178ab4d2be918546bd6e0fac00e36f271fba75b6b63bf6b76fb"
+    },
+    "stage/tests/test_mechanics_hbe_v5_axial_calibration.py": {
+      "bytes": 26236,
+      "sha256": "c1ee4773d47894b5618775ed655feb4c195cbd8da4e948278d5ca745b0cbf4da"
+    },
+    "update_controls.py": {
+      "bytes": 9731,
+      "sha256": "e28c1c39c40e5c99da573e6ed90f0f7ba32119d846e56a4c9b38efa108be2663"
+    }
+  },
+  "measured_response_reads": 0,
+  "native_calls": 0,
+  "previous_candidate": {
+    "path": "build/hbe-v5-axial-calibration-successor-v1/source-index.json",
+    "sha256": "3d2847ffceec5b64a5be16f7e12a4dad989e6259efcef34deca26d634767b4ed"
+  },
+  "schema": "hbe-v5-axial-fit-candidate-index-v2",
+  "status": "prepared_not_released",
+  "tracked_edits": false
+}

@@ -1245,3 +1245,8 @@ The [same-case successor smoke](../artifacts/contact-learning-canonical-smoke-v2
 [Actual result](../artifacts/contact-learning-pilot-negative-v1/RESULT.md): both final32 checkpoints, all24 TRAIN teachers,32 SELECT and64 MEASUREMENT_EVAL method episodes complete. Independent saved-only audit verifies exact identities and accounting. SEARCH12/16 held-out tasks; IL/RL0/16, allSTOP. Eight independent generated layouts, two correlated goals each; no patient or clinical evidence. Next learning work is a TRAIN-only diagnosis, not another measurement sweep. Runtime183.464s, sampled401.6MB; no missing/capped rows. The original outputs and previous failures remain.
 
 Acquisition independently continues: 6,215 verified files /217,055,647,324B at03:14:27UTC, original worker/lock live, failures unchanged, capacity adequate. No QC or recovery run.
+
+
+## Specimen axial fit source continuation
+
+[Reviewed source](../artifacts/hbe-v5-axial-fit-source-v1/RESULT.md) integrates the single-scale fit after the accepted twelve-row numerical comparison. Root54 generated controls and independent59 controls pass. Original roles/law/two measured members unchanged; false release remains disabled. Actual calibration follows in one separately bound local attempt, with no torque, native call, patient property or clinical claim.

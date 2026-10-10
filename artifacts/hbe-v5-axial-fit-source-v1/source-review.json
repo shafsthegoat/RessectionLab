@@ -1,0 +1,22 @@
+{
+  "actual_fit_calls": 0,
+  "candidate_index_sha256": "1c8aabbfc91c287524e15de758edbccd0cedc7d1e4de7b16f89f6da925b5929a",
+  "decision": "GO",
+  "generated_controls": {
+    "author": 54,
+    "elapsed_seconds_reported_by_pytest": 0.58,
+    "independent": 5,
+    "passed": 59
+  },
+  "native_calls": 0,
+  "preserved_initial_gap_probes": 4,
+  "real_measured_reads": 0,
+  "release_candidate_sha256": "0cc30a56af1b75e39625617b9975aa54fa00fd879a534a58f177bb695acea256",
+  "report": {
+    "path": "build/hbe-v5-axial-calibration-independent-v1/REPORT.txt",
+    "sha256": "fcb7d7a75dfe0860d347b48b6ecc95108f528e213c38f9b13de49afb0d2fcb9a"
+  },
+  "schema": "hbe-v5-axial-fit-source-review-v1",
+  "scope": "Source promotion only; actual fit requires separate explicit root release. No original response access authorized by this review.",
+  "source_files_unchanged": 43
+}
