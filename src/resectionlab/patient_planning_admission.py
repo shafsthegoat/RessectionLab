@@ -44,6 +44,8 @@ SELECT_SUBJECTS = ("ReMIND-013", "ReMIND-037")
 SELECT_INITIALIZATION = "frozen_TRAIN_checkpoint_reload"
 UNION_SELECT_SUBJECT = "ReMIND-013"
 UNION_SELECT_EXECUTION = "frozen_SELECT013_union_obstruction_inference_v1"
+POST_EXPOSURE_SELECT_EXECUTION = "frozen_SELECT013_post_exposure_inference_v1"
+FULL_DOMAIN_SOURCE_FIELDS = frozenset({"support_domain_derivation", "support_domain_binary_hash", "source_and_simulated_domains"})
 CHECKPOINT_LINEAGE_FIELDS = frozenset({"version", "checkpoint_sha256", "method",
     "training_release_sha256", "learning_protocol_hash", "initial_parameter_hash",
     "parameter_hash", "architecture_hash", "completed_updates", "training_context_hashes",
@@ -71,7 +73,7 @@ def _same_hash(a, b):
     return _digest(a) == _digest(b)
 
 
-def validate_select_checkpoint_lineage(value, *, learning_protocol_hash=None):
+def validate_select_checkpoint_lineage(value, *, learning_protocol_hash=None, learning_protocol=None):
     """Validate declared lineage only; the inference loader authenticates weights.
 
 The owning runner binds the original TRAIN release/terminal receipts before
@@ -94,6 +96,16 @@ inference loader; a digest-only lineage cannot authenticate that objective.
         _need(type(lineage[key]) is str and lineage[key].startswith("sha256:"), "semantic_checkpoint_hash_required")
         _digest(lineage[key])
     groups = {"ReMIND:"+suffix for suffix in ("008", "010", "020", "025")}
+    if learning_protocol is not None:
+        from .patient_planning_cohort_spec import (POST_EXPOSURE_LEARNING_VERSION, protocol_train_subjects)
+        _need(learning_protocol.get("version") == POST_EXPOSURE_LEARNING_VERSION,
+              "explicit_new_four_post_exposure_protocol_required")
+        subjects = protocol_train_subjects(learning_protocol)
+        _need(semantic_digest(learning_protocol) == lineage["learning_protocol_hash"]
+              and (lineage["method"], lineage["completed_updates"]) in {("IL", 64), ("RL", 8)}
+              and lineage["completed_updates"] == learning_protocol["updates_per_method"],
+              "checkpoint_complete_learning_protocol_mismatch")
+        groups = {"ReMIND:"+subject.rsplit("-", 1)[1] for subject in subjects}
     _need(isinstance(lineage["training_context_hashes"], Mapping)
           and set(lineage["training_context_hashes"]) == groups, "original_four_TRAIN_context_pins_required")
     for digest in lineage["training_context_hashes"].values():
@@ -135,6 +147,45 @@ def validate_union_select013_inference(protocol, *, checkpoint_lineage,
           == lineage["public_target_context_variant"],
           "SELECT013_requires_frozen_union_IL64_or_scratch_RL8_exact_condition")
     return trained
+
+
+def validate_post_exposure_select013_inference(protocol, *, checkpoint_lineage,
+        learning_protocol_hash, proposal_config, max_steps, search, public_target_context_variant,
+        post_exposure_condition):
+    """Exact new-four frozen IL64/RL8 lineage; never grants SELECT fitting."""
+    from .patient_planning_cohort_spec import validate_post_exposure_learning
+    trained = validate_post_exposure_learning(protocol, learning_protocol_hash=learning_protocol_hash,
+        proposal_config=proposal_config, max_steps=max_steps, post_exposure_condition=post_exposure_condition)
+    lineage = validate_select_checkpoint_lineage(checkpoint_lineage,
+        learning_protocol_hash=learning_protocol_hash, learning_protocol=trained)
+    _need((lineage["method"], lineage["completed_updates"]) in {("IL", 64), ("RL", 8)}
+          and lineage["completed_updates"] == trained["updates_per_method"]
+          and semantic_digest(search) == semantic_digest(trained["cohort_execution"]["search"])
+          and public_target_context_variant == trained["public_target_context_variant"]
+          == lineage["public_target_context_variant"],
+          "SELECT013_requires_exact_post_exposure_IL64_or_RL8_endpoint")
+    return trained
+
+
+def qualified_full_support_domain(manifest, manifest_sha256):
+    """Bind an all-known Ds derivation to public coverage metadata, not a fake file."""
+    shape = manifest.get("shape_xyz")
+    _need(isinstance(shape, (list, tuple)) and len(shape) == 3
+          and all(type(n) is int and n > 0 for n in shape), "exact_full_domain_shape_required")
+    cells = shape[0]*shape[1]*shape[2]
+    _need(manifest.get("patient_id") == UNION_SELECT_SUBJECT and manifest.get("role") == "SELECT"
+          and manifest.get("public_only") is True
+          and manifest.get("public_support_domain_fully_covered") is True
+          and manifest.get("public_grid_selection", {}).get("all_output_cell_corners_inside_public_source_domain") is True
+          and manifest.get("public_label_resampling", {}).get("cerebrum", {}).get("saved_volume_summary", {}).get("saved_domain_voxels") == cells,
+          "qualified_full_source_coverage_required_before_payload")
+    _digest(manifest_sha256)
+    return {"version": "qualified_full_support_domain_v1", "rule": "all_true_from_bound_full_source_coverage",
+        "public_manifest_sha256": manifest_sha256, "shape_xyz": list(shape), "known_voxels": cells,
+        "source_support_file_sha256": manifest["input_files"]["supplied_support"]["sha256"],
+        "planning_affine_hash": array_digest(np.asarray(manifest["affine_ras_mm"], np.float64)),
+        "acquired_domain_file": False, "source_domain_extended": False,
+        "source_zero_is_physical_air": False}
 
 
 def _public_observation_binding(observation):
@@ -237,22 +288,26 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
           "original_ReMIND_cohort_bytes_required")
     cohort = json.loads(cohort_bytes)
     derived_occupancy = case.occupancy_source_support is not None
-    partial_domain = case.support_domain is not None
+    explicit_domain = case.support_domain is not None
     post_start = case.post_exposure
-    _need(post_start is None or partial_domain, "post_exposure_requires_fixed_partial_domain_condition")
+    post_inference = (post_start is not None and isinstance(protocol, Mapping)
+                      and protocol.get("occupancy_inference_protocol") is not None)
+    partial_domain = explicit_domain and not post_inference
+    _need(post_start is None or explicit_domain, "post_exposure_requires_explicit_source_domain")
     _need(not partial_domain or derived_occupancy, "partial_domain_requires_explicit_S_union_T_assumption")
     source = _fields(source_binding, SOURCE_FIELDS | ({"occupancy_derivation",
         "target_domain_source_sha256", "target_domain_binary_hash"} if derived_occupancy else set())
-        | (PARTIAL_DOMAIN_SOURCE_FIELDS if partial_domain else set())
+        | (PARTIAL_DOMAIN_SOURCE_FIELDS if partial_domain else FULL_DOMAIN_SOURCE_FIELDS if post_inference else set())
         | ({"post_exposure"} if post_start is not None else set()),
         "exact_public_source_fields_required")
     qc = _fields(qc_receipt, QC_FIELDS | ({"derived_occupancy_anatomically_validated"}
-        if derived_occupancy else set()) | ({"partial_source_domain_preserved"} if partial_domain else set()),
+        if derived_occupancy else set()) | ({"partial_source_domain_preserved"} if partial_domain else
+            {"derived_full_source_domain_preserved"} if post_inference else set()),
         "exact_public_QC_fields_required")
     checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
     occupancy_learning = isinstance(protocol, Mapping) and protocol.get("occupancy_learning_protocol") is not None
     occupancy_inference = isinstance(protocol, Mapping) and protocol.get("occupancy_inference_protocol") is not None
-    _need(not occupancy_inference or (derived_occupancy and not partial_domain
+    _need(not occupancy_inference or (derived_occupancy and (not explicit_domain or post_inference)
               and checkpoint_reload and not occupancy_learning),
           "union_inference_requires_original_full_coverage_frozen_SELECT_condition")
     _need(not occupancy_learning or (derived_occupancy and (not partial_domain or post_start is not None)),
@@ -268,8 +323,9 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         _need(post_start.record["version"] == POST_EXPOSURE_VERSION
               and semantic_digest(source["post_exposure"]) == post_start.fingerprint
               and plan["post_exposure_condition_hash"] == post_start.fingerprint
-              and (occupancy_learning or (plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0))
-              and not occupancy_inference and not checkpoint_reload,
+              and (occupancy_learning or post_inference or
+                   (plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0))
+              and (post_inference or (not occupancy_inference and not checkpoint_reload)),
               "explicit_post_exposure_search_or_learning_binding_required")
     domain = source["evidence_domain"]
     _need(domain in {"acquired_patient", "generated_interface_control"}, "explicit_evidence_domain_required")
@@ -293,21 +349,23 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
                  ("generated_support_interface_control", "generated_target_interface_control"))
     if derived_occupancy:
         semantics = ("derived_simulated_S_union_T_occupancy_assumption", semantics[1])
-        expected_condition = PARTIAL_DOMAIN_UNION_OCCUPANCY if partial_domain else SUPPLIED_TUMOR_UNION_OCCUPANCY
+        expected_condition = PARTIAL_DOMAIN_UNION_OCCUPANCY if explicit_domain else SUPPLIED_TUMOR_UNION_OCCUPANCY
         expected_subjects = PARTIAL_DOMAIN_TRAIN_SUBJECTS if partial_domain else ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025")
         if occupancy_inference:
             _need(domain == "acquired_patient" and member["role"] == "SELECT"
                   and source["subject"] == UNION_SELECT_SUBJECT
-                  and plan["occupancy_condition"] == SUPPLIED_TUMOR_UNION_OCCUPANCY
+                  and plan["occupancy_condition"] == expected_condition
                   and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
                   and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] > 0
                   and case.proposal_mode == "nominal_cavity_v1",
                   "derived_inference_requires_SELECT013_zero_updates_positive_forward_budget")
-            validate_union_select013_inference(plan["occupancy_inference_protocol"],
+            validator = validate_post_exposure_select013_inference if post_inference else validate_union_select013_inference
+            validator(plan["occupancy_inference_protocol"],
                 checkpoint_lineage=plan["checkpoint_lineage"],
                 learning_protocol_hash=plan["learning_protocol_hash"], proposal_config=case.proposal_config,
                 max_steps=plan["max_steps"], search=plan["search"],
-                public_target_context_variant=case.public_target_context_variant)
+                public_target_context_variant=case.public_target_context_variant,
+                **({"post_exposure_condition": post_start.record["version"]} if post_inference else {}))
         else:
             _need(domain == "acquired_patient" and member["role"] == "TRAIN"
                   and source["subject"] in expected_subjects
@@ -360,6 +418,23 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
                   and np.array_equal(case._native_config.interaction_domain, case.support_domain | (case.nominal_target > 0))
                   and not np.any(case.occupancy_source_support & ~case.support_domain),
                   "unchanged_source_Ds_full_T_and_explicit_simulated_D_required")
+        if post_inference:
+            derivation = source["support_domain_derivation"]
+            expected = {"version": "qualified_full_support_domain_v1", "rule": "all_true_from_bound_full_source_coverage",
+                "public_manifest_sha256": case.support_provenance.get("public_manifest_sha256"),
+                "shape_xyz": list(case.observed_support.shape), "known_voxels": int(case.support_domain.size),
+                "source_support_file_sha256": source["support_source_sha256"],
+                "planning_affine_hash": source["affine_array_hash"], "acquired_domain_file": False,
+                "source_domain_extended": False, "source_zero_is_physical_air": False}
+            _need(qc["derived_full_source_domain_preserved"] is True
+                  and qc["native_domain_fully_covered"] is True and np.all(case.support_domain)
+                  and semantic_digest(derivation) == semantic_digest(expected)
+                  and semantic_digest(derivation) == semantic_digest(case.support_provenance.get("support_domain_derivation"))
+                  and semantic_digest(source["source_and_simulated_domains"]) == semantic_digest(case._domain_record)
+                  and _same_hash(source["support_domain_binary_hash"], array_digest(case.support_domain))
+                  and _same_hash(source["support_domain_binary_hash"], case.support_provenance.get("support_domain_binary_hash"))
+                  and np.array_equal(case._native_config.interaction_domain, case.support_domain | (case.nominal_target > 0)),
+                  "qualified_full_Ds_provenance_and_unchanged_coverage_required")
     _need((source["support_semantics"], source["target_semantics"]) == semantics,
           "exact_disclosed_annotation_semantics_required")
     for field in ("t1_source_sha256", "support_source_sha256", "target_source_sha256"):
@@ -396,7 +471,8 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
               and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0,
               "checkpoint_reload_requires_fixed_SELECT_zero_gradients")
         lineage = validate_select_checkpoint_lineage(plan["checkpoint_lineage"],
-            learning_protocol_hash=plan["learning_protocol_hash"])
+            learning_protocol_hash=plan["learning_protocol_hash"],
+            **({"learning_protocol": plan["occupancy_inference_protocol"]} if post_inference else {}))
         _need(case.public_target_context_variant == lineage["public_target_context_variant"],
               "checkpoint_observation_variant_mismatch")
     _need(plan["scope"] == "patient_native_planning_experiment"
@@ -419,18 +495,19 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
         **({"occupancy_condition": plan["occupancy_condition"],
             "occupancy_derivation": case._occupancy_derivation,
-            "execution_kind": (UNION_SELECT_EXECUTION if occupancy_inference else
+            "execution_kind": ((POST_EXPOSURE_SELECT_EXECUTION if post_inference else UNION_SELECT_EXECUTION) if occupancy_inference else
                 ("fixed_four_TRAIN_post_exposure_learning_v1" if partial_domain else
                  "fixed_four_TRAIN_union_obstruction_learning_v1") if occupancy_learning else "search_only_no_policy"),
             "derived_occupancy_anatomically_validated": False,
             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
-            **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
-                if occupancy_inference else {}),
+            **({"comparison_scope": ("same_declared_post_exposure_world_SELECT013_frozen_inference_only" if post_inference
+                else "same_declared_union_world_SELECT013_frozen_inference_only")} if occupancy_inference else {}),
             **({"comparison_scope": ("same_declared_post_exposure_world_new_four_TRAIN_only" if partial_domain
                 else "same_declared_union_world_fixed_four_TRAIN_only")} if occupancy_learning else {})}
            if derived_occupancy else {}),
         **({"source_and_simulated_domains": case._domain_record,
-            "source_domain_fully_covered": False} if partial_domain else {}),
+            "source_domain_fully_covered": not partial_domain} if explicit_domain else {}),
+        **({"occupancy_inference_protocol": plan["occupancy_inference_protocol"]} if post_inference else {}),
         **({"post_exposure": post_start.record} if post_start is not None else {}),
         **({} if case.public_target_context_variant is None else {
             'public_target_context_variant':case.public_target_context_variant}),

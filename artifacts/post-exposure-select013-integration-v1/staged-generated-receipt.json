@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "failure": null,
+  "elapsed_seconds": 3.026725667063147,
+  "sampled_peak_RSS_bytes": 257622016,
+  "threads": 1,
+  "wall_cap_seconds": 45,
+  "sampled_RSS_cap_bytes": 3221225472,
+  "log_cap_bytes": 4194304,
+  "log_bytes": 99,
+  "child_reaped": true,
+  "cleanup_errors": [],
+  "source_before": {
+    "build/post-exposure-select013-v1/stage/resectionlab/public_patient_factory.py": "fa5dbd25b707f345e3043bff488b62da48f12f96297365309165a908eb17258b",
+    "build/post-exposure-select013-v1/stage/resectionlab/patient_planning_admission.py": "96f43268f0b850e0b82ad6f3ad3e5d5a1bb20627887e7235b44904d7706726db",
+    "build/post-exposure-select013-v1/stage/resectionlab/patient_select_inference.py": "f7ca9fb8221e7c4db915ad5d109fdcdf2cb6912acf9be271fee725e6dcb7386a",
+    "build/post-exposure-select013-v1/stage/tests/test_post_exposure_select013.py": "f17a76c85d62d07b5db32146f1437db6604583c36e417a7b10cbb57e9c738c80",
+    "build/post-exposure-select013-v1/baseline/patient_planning_admission.py": "b49385654bf99acd0f223dc98c6f7dc2c5681315f1cb50ef3c7ae0a6a51e1c37",
+    "build/post-exposure-select013-v1/baseline/public_patient_factory.py": "23da98ebabf858e528de350d83c40e38ab0bdfb42213c7586df8702404a34092",
+    "build/post-exposure-select013-v1/baseline/patient_select_inference.py": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6"
+  },
+  "source_after": {
+    "build/post-exposure-select013-v1/stage/resectionlab/public_patient_factory.py": "fa5dbd25b707f345e3043bff488b62da48f12f96297365309165a908eb17258b",
+    "build/post-exposure-select013-v1/stage/resectionlab/patient_planning_admission.py": "96f43268f0b850e0b82ad6f3ad3e5d5a1bb20627887e7235b44904d7706726db",
+    "build/post-exposure-select013-v1/stage/resectionlab/patient_select_inference.py": "f7ca9fb8221e7c4db915ad5d109fdcdf2cb6912acf9be271fee725e6dcb7386a",
+    "build/post-exposure-select013-v1/stage/tests/test_post_exposure_select013.py": "f17a76c85d62d07b5db32146f1437db6604583c36e417a7b10cbb57e9c738c80",
+    "build/post-exposure-select013-v1/baseline/patient_planning_admission.py": "b49385654bf99acd0f223dc98c6f7dc2c5681315f1cb50ef3c7ae0a6a51e1c37",
+    "build/post-exposure-select013-v1/baseline/public_patient_factory.py": "23da98ebabf858e528de350d83c40e38ab0bdfb42213c7586df8702404a34092",
+    "build/post-exposure-select013-v1/baseline/patient_select_inference.py": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6"
+  },
+  "source_unchanged": true,
+  "historical_baseline_explicit": true,
+  "scope": "generated arrays/native geometry and fabricated checkpoint interfaces only; no acquired payload, fitted checkpoint, optimizer or patient run"
+}

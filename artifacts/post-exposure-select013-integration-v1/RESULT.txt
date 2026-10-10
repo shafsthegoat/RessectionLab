@@ -1,0 +1,30 @@
+Frozen new-patient comparison integration, October 10
+
+The existing factory and frozen SELECT collector now accept the exact completed
+post-exposure IL64 and scratch RL8 endpoints on SELECT013. The same supplied
+target, S-union-T simulated material, tool dimensions, deterministic exposure,
+horizon24 and 120-proposal limit are preserved. All-known support coverage is
+derived from previously bound public source coverage metadata, without a fifth
+invented acquired file. The separate target annotation domain stays explicit.
+SELECT037 remains held; EVAL067 remains closed. No SELECT optimization is allowed.
+
+Focused canonical validation: 149 tests and nine subtests passed in9.85s, with
+one optional historical parity control initially skipped. Providing the saved
+baseline made that exact test pass separately:150 passed in total, no unresolved
+skips. Six runner glue controls are included (complete/capped fake four-arm
+flows and four missing-terminal-pin refusals). Generated controls do not prove
+patient transfer. A first preparation command refused a mistyped promotion-index
+hash before editing; the prematurely issued test command found no new test file
+and ran zero tests. The corrected exact-hash promotion and actual tests followed.
+
+The source-reviewed runner compares greedy, IL64, RL8, then beam; it reuses the
+existing owned supervisor. Costs distinguish source construction, selection,
+trace collection and replay; nested timers are not summed. Search cap failure
+is unresolved and preserves completed arms rather than becoming an accepted STOP.
+One thread;900s worker/960s parent;3GiB sampled memory;128MiB output;zero gradients.
+The original failed IL receipt and separately accepted unchanged045 recovery
+remain distinct. The RL endpoint is independently audited and complete.
+
+Next: freeze these committed sources and run the four fixed arms. No patient
+outcome follows from this integration alone. Missing functional/vascular inputs,
+unvalidated physical occupancy and geometric-only interaction remain limitations.

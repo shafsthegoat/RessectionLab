@@ -1,0 +1,57 @@
+Source preparation only; no runtime freeze, release or execution has occurred.
+
+Methods (fixed order): observed_greedy, IL64, scratch RL8, observed_beam.
+Historical observed_* names mean simulated planning from the permitted
+source-derived estimated world, never observed surgical demonstrations.
+SELECT013 only; SELECT037 remains held in planned denominator 2; EVAL067 closed.
+Same deterministic post-exposure S-union-T world, public target context, tools,
+reward, horizon24, historical13 transverse axes, footprint/intermediate proposals,
+no obstruction proposals, cap120. No access fallback or outcome-based choice.
+013's fully known support domain is derived from bound public metadata; its
+separate supplied-target annotation domain and raw unsupported-target counts
+remain explicit. No TRAIN/SELECT source-hash equality is required.
+
+Online bounds: one attempt, one thread, worker900s/parent960s, sampled3GiB,
+128MiB output +16MiB supervision, 750000 aggregate native-preview entries,
+48 total learned forwards, zero updates/gradient attempts. Each learned arm
+has at most24 decisions; each planner has the same task horizon/action ceiling.
+Greedy selection60s; beam width2/max5640calls/300s with unchanged depth-volume
+retention. Construction, selection, trace collection and native replay are
+charged; per-arm inclusive planning/replay phase and selector-only costs are
+separate. Do not sum nested timers or claim equal compute. Negative valid plans
+complete normally. Capped search remains unresolved with its exact prefix,
+never relabeled accepted STOP. The old SELECT result predicts no new outcome.
+
+IL64 retains the original failed attempt and its three accepted endpoint
+replays plus the independently accepted exact045 fixed-plan recovery. Original
+failed status, original727.792s and additional38.406s recovery cost are retained
+separately. No retraining or policy query occurred in recovery. Checkpoint bytes
+are only authenticated by the actual bounded loader, never by this source
+preparation or metadata freezer. Scratch RL8 must have its own clean terminal
+result/parent/worker/checkpoint chain; no terminal hash is inferred while live.
+Both endpoints share initial tensors/world, with distinct trained contexts.
+New optional ranking-loss endpoints are explicitly refused by this contract.
+
+Four runtime files: comparison_contract.py, select_worker.py, run_owned.py,
+freeze-runtime.py. run_owned.py reuses the previous supervisor, including
+SIGTERM handling, lease, owned-group cleanup, retained-child kill/wait, caps,
+source pre/post guards and exclusive output reservation. No new framework.
+test_worker_flow.py contains two fake-source/fake-checkpoint worker flows
+(complete and capped beam) plus four missing-terminal-pin refusals. These tests
+are source-written and UNRUN while RL8 is active. No acquired data is required.
+prepare_runner.py is the initial source-scaffold generator only; later reviewed
+edits are authoritative in the five files above. Do not rerun that scaffold.
+
+Pending: root's clean RL8 terminal review/result SHA; independent source review;
+root's bounded generated tests and promotion of the three previously reviewed
+SELECT production files. Current exact pins are in source-pins.json. The final
+freezer permits only those three production deltas versus the RL release HEAD;
+all other executing canonical source must match. The corrected evaluation and
+preflight checker hashes must remain those of the accepted045 recovery.
+
+After those steps, root freezes against the new committed HEAD using:
+.venv/bin/python -B build/post-exposure-select013-comparison-v1/freeze-runtime.py --head COMMITTED_HEAD --rl-result-sha256 REVIEWED_TERMINAL_RL_SHA
+This emits only source-index.json and non-executable release-template.json.
+Root prepares root-release.json with released_one_attempt status and uses:
+.venv/bin/python -B build/post-exposure-select013-comparison-v1/run_owned.py --release build/post-exposure-select013-comparison-v1/root-release.json --release-sha256 EXACT_RELEASE_SHA
+The placeholders above are documentation only; no placeholder release exists.

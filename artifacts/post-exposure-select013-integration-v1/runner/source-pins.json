@@ -1,0 +1,32 @@
+{
+  "files": {
+    "HANDOFF.txt": {
+      "bytes": 4106,
+      "sha256": "aa22f7aa95113b04232ee86f363a9601f1143144beb25d653ffdd01afc640abf"
+    },
+    "comparison_contract.py": {
+      "bytes": 32861,
+      "sha256": "e00d3fefcd4f1ca5eb71d237011d385e490443dd2a1c457c1a82f2af57b55dc8"
+    },
+    "freeze-runtime.py": {
+      "bytes": 10075,
+      "sha256": "0ba5a1785f927c71534ec0d9837abf76c22886c56dd75e2d167c16eb1d475e54"
+    },
+    "run_owned.py": {
+      "bytes": 12069,
+      "sha256": "8e41ef61c8ec624f32c2c0a408e8c838383246bc50521d76c1ea7ac8e719ea8f"
+    },
+    "select_worker.py": {
+      "bytes": 16171,
+      "sha256": "7a124b47ab14aa9037627a49e2a39181950be4fda0cef11a07a321f79b0de0f1"
+    },
+    "test_worker_flow.py": {
+      "bytes": 8542,
+      "sha256": "e55ea1a1d5d9b6dd1b7b8b7c87057d7b40456bd6563fd4233bb8d72d2bf2a511"
+    }
+  },
+  "generated_tests": "source-written, not executed",
+  "live_RL_outputs_read": false,
+  "patient_or_checkpoint_payload_reads": false,
+  "status": "source_prepared_not_runtime_frozen"
+}

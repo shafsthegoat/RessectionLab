@@ -15,7 +15,7 @@ from .core import freeze_json, semantic_digest, thaw_json
 from .native_proposals import SUPPLIED_GOAL_REGION
 from .patient_planning_admission import (PatientPlanningContext, COHORT_SHA256,
     SELECT_SUBJECTS, SELECT_INITIALIZATION, validate_select_checkpoint_lineage,
-    UNION_SELECT_SUBJECT, UNION_SELECT_EXECUTION)
+    UNION_SELECT_SUBJECT, UNION_SELECT_EXECUTION, POST_EXPOSURE_SELECT_EXECUTION)
 from .patient_planning_cohort_io import load_cohort_checkpoint
 from . import patient_planning_preflight as preflight
 from .spatial_policy import SpatialPolicy, SpatialTransition, parameter_hash
@@ -38,10 +38,15 @@ def require_select_context(context):
         raise ValueError('Only fixed SELECT checkpoint inference with zero gradients is admitted')
     if record.get('occupancy_condition') is not None and (
             record['subject'] != UNION_SELECT_SUBJECT
-            or record.get('execution_kind') != UNION_SELECT_EXECUTION):
+            or record.get('execution_kind') not in (UNION_SELECT_EXECUTION, POST_EXPOSURE_SELECT_EXECUTION)):
         raise ValueError('Derived occupancy inference is restricted to the admitted SELECT013 condition')
+    post = record.get('execution_kind') == POST_EXPOSURE_SELECT_EXECUTION
+    if post and (record.get('post_exposure') is None or record.get('source_domain_fully_covered') is not True
+                 or record.get('occupancy_inference_protocol') is None):
+        raise ValueError('Post-exposure SELECT requires bound source coverage and complete TRAIN protocol')
     validate_select_checkpoint_lineage(record['checkpoint_lineage'],
-        learning_protocol_hash=record['learning_protocol_hash'])
+        learning_protocol_hash=record['learning_protocol_hash'],
+        **({'learning_protocol':record['occupancy_inference_protocol']} if post else {}))
     return record
 
 
@@ -57,7 +62,10 @@ class FrozenSelectCheckpoint:
     def __post_init__(self):
         if self._capability is not _LOADED or type(self.policy) is not SpatialPolicy:
             raise ValueError('Only the bounded checkpoint loader may admit SELECT weights')
-        lineage = validate_select_checkpoint_lineage(self._lineage)
+        from .patient_planning_cohort_spec import POST_EXPOSURE_LEARNING_VERSION
+        lineage = validate_select_checkpoint_lineage(self._lineage,
+            **({'learning_protocol':self._protocol}
+               if self._protocol.get('version') == POST_EXPOSURE_LEARNING_VERSION else {}))
         object.__setattr__(self, '_lineage', lineage)
         object.__setattr__(self, '_protocol', freeze_json(self._protocol))
         object.__setattr__(self, '_seal', semantic_digest({'lineage': lineage, 'protocol': self._protocol}))
@@ -97,6 +105,12 @@ class FrozenSelectCheckpoint:
                 or context.record()['budgets']['search'] != thaw_json(execution['search'])
                 or context.record().get('occupancy_condition') != execution.get('occupancy_condition')):
             raise ValueError('SELECT task horizon, proposals, occupancy or search differ from frozen TRAIN condition')
+        exposure = None if execution is None else execution.get('post_exposure_condition')
+        actual = base.case.post_exposure
+        if ((None if actual is None else actual.record['version']) != exposure
+                or (exposure is not None and (context.record().get('execution_kind') != POST_EXPOSURE_SELECT_EXECUTION
+                    or semantic_digest(context.record().get('occupancy_inference_protocol')) != semantic_digest(self._protocol)))):
+            raise ValueError('SELECT post-exposure rule differs from frozen TRAIN condition')
         return self
 
 

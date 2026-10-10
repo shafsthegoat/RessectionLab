@@ -1,0 +1,99 @@
+{
+  "status": "canonical_generated_controls_passed_actual_patient_run_pending",
+  "files": [
+    {
+      "source": "build/post-exposure-select013-v1/promotion-index.json",
+      "packaged": "promotion-index.json",
+      "sha256": "c9536f4b5a1f71a6469edc763df09e28c9c3f761bf92f2ff2e324603bc47efb0",
+      "bytes": 2324
+    },
+    {
+      "source": "build/post-exposure-select013-v1/README.txt",
+      "packaged": "README.txt",
+      "sha256": "ef8ebb4187d16e515d703ca9562d5402c04268869ee402c49b26cb6ade977787",
+      "bytes": 2680
+    },
+    {
+      "source": "build/post-exposure-select013-v1/canonical-attempt-01.log",
+      "packaged": "canonical-attempt-01.log",
+      "sha256": "96a0b35fa5dc9826b6f310fb0a8ea8842d6c2f6bd2d79bd21aae6943c0b7772c",
+      "bytes": 98
+    },
+    {
+      "source": "build/post-exposure-select013-v1/canonical-attempt-02.log",
+      "packaged": "canonical-attempt-02.log",
+      "sha256": "6889cdaa7c3400caf3c1b177b5b88c7bc71a0b5bc8815ab1ad6af592318f985d",
+      "bytes": 273
+    },
+    {
+      "source": "build/post-exposure-select013-v1/canonical-attempt-02.xml",
+      "packaged": "canonical-attempt-02.xml",
+      "sha256": "2fb1784677f70eabcc45bf4c391a12c1d73d56b40f9344923936dbf18512e9af",
+      "bytes": 22351
+    },
+    {
+      "source": "build/post-exposure-select013-v1/canonical-historical-parity.log",
+      "packaged": "canonical-historical-parity.log",
+      "sha256": "212504876166ec78d6893ba7cb632e14878599d119e4df02390a6a5464c97ea0",
+      "bytes": 98
+    },
+    {
+      "source": "build/post-exposure-select013-v1/canonical-historical-parity.xml",
+      "packaged": "canonical-historical-parity.xml",
+      "sha256": "54817c2ba058eedaee9c18a40b6cb1123904ed7d5f8c6913ca9b9616e2f0722a",
+      "bytes": 403
+    },
+    {
+      "source": "build/post-exposure-select013-v1/generated-attempt-01/receipt.json",
+      "packaged": "staged-generated-receipt.json",
+      "sha256": "db7e50bbacc5359ba0ab292d411bb4dda1fda32258c62137a239b8b4b3aa2019",
+      "bytes": 2693
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/HANDOFF.txt",
+      "packaged": "runner/HANDOFF.txt",
+      "sha256": "aa22f7aa95113b04232ee86f363a9601f1143144beb25d653ffdd01afc640abf",
+      "bytes": 4106
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/comparison_contract.py",
+      "packaged": "runner/comparison_contract.py",
+      "sha256": "e00d3fefcd4f1ca5eb71d237011d385e490443dd2a1c457c1a82f2af57b55dc8",
+      "bytes": 32861
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/freeze-runtime.py",
+      "packaged": "runner/freeze-runtime.py",
+      "sha256": "0ba5a1785f927c71534ec0d9837abf76c22886c56dd75e2d167c16eb1d475e54",
+      "bytes": 10075
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/run_owned.py",
+      "packaged": "runner/run_owned.py",
+      "sha256": "8e41ef61c8ec624f32c2c0a408e8c838383246bc50521d76c1ea7ac8e719ea8f",
+      "bytes": 12069
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/select_worker.py",
+      "packaged": "runner/select_worker.py",
+      "sha256": "7a124b47ab14aa9037627a49e2a39181950be4fda0cef11a07a321f79b0de0f1",
+      "bytes": 16171
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/test_worker_flow.py",
+      "packaged": "runner/test_worker_flow.py",
+      "sha256": "e55ea1a1d5d9b6dd1b7b8b7c87057d7b40456bd6563fd4233bb8d72d2bf2a511",
+      "bytes": 8542
+    },
+    {
+      "source": "build/post-exposure-select013-comparison-v1/source-pins.json",
+      "packaged": "runner/source-pins.json",
+      "sha256": "065714c7c887b6bc4e85875778e6a281d19a8af7c4e23583e3acf2c5a35cb74d",
+      "bytes": 1031
+    }
+  ],
+  "test_count": 150,
+  "subtests": 9,
+  "unresolved_skips": 0,
+  "patient_payloads_included": false
+}

@@ -1,0 +1,49 @@
+{
+  "status": "STAGED_FOCUSED_GENERATED_TESTS_PASSED",
+  "baseline_head": "39d1c24d41f80076b4dad6fcfc213085a628002d",
+  "observed_head": "324e42e474430dcfa1fd9edf02104eee9f506652",
+  "files": [
+    {
+      "staged_path": "build/post-exposure-select013-v1/stage/resectionlab/public_patient_factory.py",
+      "canonical_path": "src/resectionlab/public_patient_factory.py",
+      "baseline_sha256": "23da98ebabf858e528de350d83c40e38ab0bdfb42213c7586df8702404a34092",
+      "sha256": "fa5dbd25b707f345e3043bff488b62da48f12f96297365309165a908eb17258b",
+      "bytes": 27795
+    },
+    {
+      "staged_path": "build/post-exposure-select013-v1/stage/resectionlab/patient_planning_admission.py",
+      "canonical_path": "src/resectionlab/patient_planning_admission.py",
+      "baseline_sha256": "b49385654bf99acd0f223dc98c6f7dc2c5681315f1cb50ef3c7ae0a6a51e1c37",
+      "sha256": "96f43268f0b850e0b82ad6f3ad3e5d5a1bb20627887e7235b44904d7706726db",
+      "bytes": 35852
+    },
+    {
+      "staged_path": "build/post-exposure-select013-v1/stage/resectionlab/patient_select_inference.py",
+      "canonical_path": "src/resectionlab/patient_select_inference.py",
+      "baseline_sha256": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6",
+      "sha256": "f7ca9fb8221e7c4db915ad5d109fdcdf2cb6912acf9be271fee725e6dcb7386a",
+      "bytes": 22680
+    },
+    {
+      "staged_path": "build/post-exposure-select013-v1/stage/tests/test_post_exposure_select013.py",
+      "canonical_path": "tests/test_post_exposure_select013.py",
+      "baseline_sha256": null,
+      "sha256": "f17a76c85d62d07b5db32146f1437db6604583c36e417a7b10cbb57e9c738c80",
+      "bytes": 15722
+    }
+  ],
+  "patch_sha256": "4679e396fd2cf58133b8855fdd910b95e21fc4374c26f325e4d99e6535fc40de",
+  "canonical_writes": false,
+  "acquired_payload_reads": false,
+  "generated_model_and_native_controls_executed": true,
+  "acquired_model_or_native_execution": false,
+  "test_evidence": {
+    "path": "build/post-exposure-select013-v1/generated-attempt-01/receipt.json",
+    "sha256": "db7e50bbacc5359ba0ab292d411bb4dda1fda32258c62137a239b8b4b3aa2019",
+    "tests_passed": 37,
+    "tests_skipped": 0,
+    "pytest_seconds": 2.29,
+    "historical_baseline_explicit": true,
+    "runner_sha256": "40fb28a1f6d0c2d0e0bf0d58ad324fc70428c06a9224d012c731071d4d3005ae"
+  }
+}

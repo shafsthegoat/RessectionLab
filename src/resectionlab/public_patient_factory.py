@@ -100,7 +100,9 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     derived_occupancy = occupancy_condition in (SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY)
     occupancy_learning = occupancy_learning_protocol is not None
     occupancy_inference = occupancy_inference_protocol is not None
-    if occupancy_inference and (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
+    post_inference = occupancy_inference and post_exposure_condition is not None
+    partial_inputs = partial_domain and not post_inference
+    if occupancy_inference and (occupancy_condition != (PARTIAL_DOMAIN_UNION_OCCUPANCY if post_inference else SUPPLIED_TUMOR_UNION_OCCUPANCY)
             or expected_role != "SELECT" or checkpoint_lineage is None or occupancy_learning
             or type(limits.get("max_optimizer_updates")) is not int or limits["max_optimizer_updates"] != 0
             or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] <= 0):
@@ -108,7 +110,8 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     if post_exposure_condition is not None:
         from resectionlab.post_exposure import VERSION as POST_EXPOSURE_VERSION
         if (post_exposure_condition != POST_EXPOSURE_VERSION or not partial_domain
-                or expected_role != "TRAIN" or checkpoint_lineage is not None or occupancy_inference):
+                or not (post_inference and expected_role == "SELECT" and checkpoint_lineage is not None
+                        or not occupancy_inference and expected_role == "TRAIN" and checkpoint_lineage is None)):
             raise ValueError("Post-exposure is a separate fixed-four partial-domain TRAIN search condition")
     if occupancy_learning and (occupancy_condition not in (SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY)
             or partial_domain and post_exposure_condition is None
@@ -140,11 +143,14 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
                 or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] <= 0):
             raise ValueError("Union learning requires the existing public context and positive declared learning budgets")
     if occupancy_inference:
-        from resectionlab.patient_planning_admission import validate_union_select013_inference
-        occupancy_inference_protocol = validate_union_select013_inference(occupancy_inference_protocol,
+        from resectionlab.patient_planning_admission import (validate_union_select013_inference,
+            validate_post_exposure_select013_inference)
+        validator = validate_post_exposure_select013_inference if post_inference else validate_union_select013_inference
+        occupancy_inference_protocol = validator(occupancy_inference_protocol,
             checkpoint_lineage=checkpoint_lineage, learning_protocol_hash=learning_protocol_hash,
             proposal_config=proposal_config, max_steps=limits.get("max_steps"), search=limits.get("search"),
-            public_target_context_variant=public_target_context_variant)
+            public_target_context_variant=public_target_context_variant,
+            **({"post_exposure_condition": post_exposure_condition} if post_inference else {}))
     if expected_role == "TRAIN":
         if checkpoint_lineage is not None:
             raise ValueError("TRAIN factory does not accept SELECT checkpoint lineage")
@@ -155,19 +161,24 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
                 or type(limits["max_optimizer_updates"]) is not int or limits["max_optimizer_updates"] != 0):
             raise ValueError("SELECT requires an explicit zero-update runtime budget")
         checkpoint_lineage = thaw_json(validate_select_checkpoint_lineage(
-            checkpoint_lineage, learning_protocol_hash=learning_protocol_hash))
+            checkpoint_lineage, learning_protocol_hash=learning_protocol_hash,
+            **({"learning_protocol": occupancy_inference_protocol} if post_inference else {})))
     else:
         raise ValueError("Only frozen TRAIN or SELECT public construction is supported")
     progress("before_public_array_loading")
     manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes,
-        expected_role=expected_role, partial_domain=partial_domain)
+        expected_role=expected_role, partial_domain=partial_inputs)
     subject = manifest["patient_id"]
     if occupancy_inference:
         from resectionlab.patient_planning_admission import UNION_SELECT_SUBJECT
         if subject != UNION_SELECT_SUBJECT:
             raise ValueError("This explicit frozen union transfer admits SELECT013 only; 037 held and EVAL closed")
+    full_domain_derivation = None
+    if post_inference:
+        from resectionlab.patient_planning_admission import qualified_full_support_domain
+        full_domain_derivation = qualified_full_support_domain(manifest, public_manifest_sha256)
     arrays = {}
-    input_keys = PARTIAL_DOMAIN_ARRAY_KEYS if partial_domain else ARRAY_KEYS
+    input_keys = PARTIAL_DOMAIN_ARRAY_KEYS if partial_inputs else ARRAY_KEYS
     for key in input_keys:
         record = manifest["input_files"][key]; path = Path(record["path"])
         if path.stat().st_size != record["bytes"] or sha(path) != record["sha256"]:
@@ -179,8 +190,8 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         progress("public_array_loaded:"+key, bytes=record["bytes"])
     image, support, target, domain = (arrays[key] for key in ARRAY_KEYS)
     positive, unsupported = check_public_labels(support, target, domain, manifest)
-    support_domain = None
-    if partial_domain:
+    support_domain = np.ones(image.shape, dtype=bool) if post_inference else None
+    if partial_inputs:
         values = arrays["supplied_support_domain"]
         if not np.isin(values, (0, 1)).all(): raise ValueError("Source support domain must be binary")
         support_domain = np.asarray(values, bool)
@@ -254,7 +265,9 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
                if derived_occupancy else {}),
             **({"support_domain_file_sha256": manifest["input_files"]["supplied_support_domain"]["sha256"],
                 "support_domain_binary_hash": array_digest(support_domain),
-                "partial_source_domain_preserved": True} if partial_domain else {}),
+                "partial_source_domain_preserved": True} if partial_inputs else {}),
+            **({"support_domain_derivation": full_domain_derivation,
+                "support_domain_binary_hash": array_digest(support_domain)} if post_inference else {}),
             **({} if subject == "ReMIND-008" else {"source_MR_crop_affine_ras_mm": manifest["source_MR_crop_affine_ras_mm"],
                 "explicit_planning_grid": manifest["reindex_policy"], "public_source_bindings": manifest["source_bindings"],
                 "public_label_resampling": manifest["public_label_resampling"]})},
@@ -290,17 +303,21 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             "target_domain_binary_hash": array_digest(np.asarray(domain, bool))} if derived_occupancy else {}),
         **({"support_domain_source_sha256": files["supplied_support_domain"]["sha256"],
             "support_domain_binary_hash": array_digest(support_domain),
-            "source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {}),
+            "source_and_simulated_domains": thaw_json(source._domain_record)} if partial_inputs else {}),
+        **({"support_domain_derivation": full_domain_derivation,
+            "support_domain_binary_hash": array_digest(support_domain),
+            "source_and_simulated_domains": thaw_json(source._domain_record)} if post_inference else {}),
         **({"post_exposure": thaw_json(post_start.record)} if post_start is not None else {})}
     qc = {"version": VERSION, "evidence_domain": "acquired_patient", "subject": subject,
         "public_source_binding_hash": semantic_digest(binding), "status": "pass",
-        "scope": PARTIAL_DOMAIN_QC_SCOPE if partial_domain else QC_SCOPE,
+        "scope": PARTIAL_DOMAIN_QC_SCOPE if partial_inputs else QC_SCOPE,
         "source_linkage_checked": True, "frame_geometry_checked": True, "coverage_checked": True,
         "annotation_meaning_checked": True, "public_support_assumption": True,
-        "native_domain_fully_covered": not partial_domain, "hypothetical_access_assumption": True,
+        "native_domain_fully_covered": not partial_inputs, "hypothetical_access_assumption": True,
         "evidence_record_sha256": manifest.get("source_bindings", {}).get("saved_array_review_sha256", original_release_sha256),
         **({"derived_occupancy_anatomically_validated": False} if derived_occupancy else {}),
-        **({"partial_source_domain_preserved": True} if partial_domain else {})}
+        **({"partial_source_domain_preserved": True} if partial_inputs else {}),
+        **({"derived_full_source_domain_preserved": True} if post_inference else {})}
     protocol = {"version": VERSION, "scope": "patient_native_planning_experiment",
         "subject": subject, "role": expected_role, "evidence_domain": "acquired_patient",
         "public_source_binding_hash": semantic_digest(binding), "qc_receipt_hash": semantic_digest(qc),
@@ -324,8 +341,8 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             **({"post_exposure": thaw_json(post_start.record)} if post_start is not None else {}),
             "public_access_rule": derived, "source_QC_validates_derived_material": False,
             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
-            **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
-                if occupancy_inference else {}),
+            **({"comparison_scope": ("same_declared_post_exposure_world_SELECT013_frozen_inference_only" if post_inference
+                else "same_declared_union_world_SELECT013_frozen_inference_only")} if occupancy_inference else {}),
             **({"comparison_scope": ("same_declared_post_exposure_world_new_four_TRAIN_only" if partial_domain
                 else "same_declared_union_world_fixed_four_TRAIN_only")} if occupancy_learning else {}),
             "normalization_coupling": "support_percentile_1_99 uses this condition occupancy; compare recorded bounds across arms",
