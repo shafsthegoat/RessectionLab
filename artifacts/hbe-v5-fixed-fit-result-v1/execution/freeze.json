@@ -1,0 +1,382 @@
+{
+  "calibration_quality": "unchanged_poor_within_specimen_fit_not_physical_validation",
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json",
+    "sha256": "083b9eac91dcc26353243fbb3c03ed4b3d9e6ddbb373337d55322d747bc8ff68"
+  },
+  "fitted_executions": {
+    "compression": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "deck": {
+        "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/compression/specimen.feb",
+        "sha256": "c92e08981efbcd7c4a994dbf4912adf45e639674ac78bc7ad43d987caad4482d"
+      },
+      "fixed_fit_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+      "primitive_bindings": {
+        "elements": {
+          "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/compression/elements.log",
+          "sha256": "83b9d64faca73100041bebbfc7f19e9ea5f3d829194972cea09525ed5d457d8d"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/compression/nodes.log",
+          "sha256": "b0962f0dbfd923f6e273815bef9e4b03b54a075e3ec1e79d3100e7f6e0963ec5"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/compression/solver.log",
+          "sha256": "96e60da40e0238552ad43d19dbf03e5bb6637c71ddc9497e9db7977aeb1a4f61"
+        }
+      },
+      "run_id": "compression:N36:S120:fitted",
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "supervision": {
+        "cleanup": {
+          "contained": true,
+          "direct_child_reaped": true,
+          "errors": [],
+          "exit_code": 0,
+          "fallback_used": false,
+          "remaining_members": []
+        },
+        "receipt": {
+          "native_calls_attempted": 1,
+          "native_stage": {
+            "active_output_cap_bytes": 1610612736,
+            "command": [
+              "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+              "-noconfig",
+              "-no_title",
+              "-i",
+              "specimen.feb",
+              "-o",
+              "solver.log"
+            ],
+            "elapsed_seconds": 946.0345840000082,
+            "exit_code": 0,
+            "kill_reason": null,
+            "peak_sampled_active_output_bytes": 1303354298,
+            "peak_sampled_process_group_rss_bytes": 2034319360,
+            "pid": 52520,
+            "sampled_process_group_rss_cap_bytes": 3221225472,
+            "status": "completed_within_caps",
+            "wall_cap_seconds": 2100
+          },
+          "phase": "compression",
+          "release": {
+            "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+            "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+          }
+        }
+      }
+    },
+    "tension": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "deck": {
+        "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/tension/specimen.feb",
+        "sha256": "096d425c2534def48620e6ab8d8f5cf9564d88b59a38f28c1993353614b83079"
+      },
+      "fixed_fit_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+      "primitive_bindings": {
+        "elements": {
+          "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/tension/elements.log",
+          "sha256": "8143ec060268cd3eda050f3fdeee2f0c8cfb18dd12979700126bd8684473fbd7"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/tension/nodes.log",
+          "sha256": "2077f8a7e2423072cc0ca0161aa22afee40d6bbd70031f0c6afd61ca7faa5b87"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/tension/solver.log",
+          "sha256": "80cfe119b6965c9d4dd603db884a1890a1bcad1df5d0eb8396f0644f2128491b"
+        }
+      },
+      "run_id": "tension:N24:S120:fitted",
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "supervision": {
+        "cleanup": {
+          "contained": true,
+          "direct_child_reaped": true,
+          "errors": [],
+          "exit_code": 0,
+          "fallback_used": false,
+          "remaining_members": []
+        },
+        "receipt": {
+          "native_calls_attempted": 1,
+          "native_stage": {
+            "active_output_cap_bytes": 536870912,
+            "command": [
+              "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+              "-noconfig",
+              "-no_title",
+              "-i",
+              "specimen.feb",
+              "-o",
+              "solver.log"
+            ],
+            "elapsed_seconds": 130.2910117499996,
+            "exit_code": 0,
+            "kill_reason": null,
+            "peak_sampled_active_output_bytes": 388860097,
+            "peak_sampled_process_group_rss_bytes": 495009792,
+            "pid": 58416,
+            "sampled_process_group_rss_cap_bytes": 3221225472,
+            "status": "completed_within_caps",
+            "wall_cap_seconds": 420
+          },
+          "phase": "tension",
+          "release": {
+            "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+            "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+          }
+        }
+      }
+    }
+  },
+  "fixed_fit": {
+    "fit": {
+      "path": "build/hbe-v5-axial-calibration-v1/attempt-01/fit.json",
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "fit_body_read_by_this_preparation": false,
+    "independent_audit": {
+      "path": "build/hbe-v5-axial-calibration-result-independent-v1/audit-result.json",
+      "sha256": "f4e4388c25c011d8bfd14e1583d30d7afb80605b1388588da1be909ba34aec5e"
+    },
+    "independent_report": {
+      "path": "build/hbe-v5-axial-calibration-result-independent-v1/REPORT.txt",
+      "sha256": "8bd605a27a3933c6bf2fd00453413c081b8ca0137e01cebf01bf97beca5927b4"
+    },
+    "publication": {
+      "path": "build/hbe-v5-axial-calibration-v1/attempt-01/publication.json",
+      "sha256": "f94c0cc4eca474878f166a60066d5f4a8afd0c08d38b32537d95bbbdce399b49"
+    },
+    "refit_permitted": false
+  },
+  "held_out_access_released": false,
+  "held_out_member_reads": 0,
+  "measured_member_reads": 0,
+  "mesher_calls": 0,
+  "mu_Pa": 715.361571139082,
+  "native_calls": 2,
+  "numerical": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/numerical.json",
+    "sha256": "c30f3356d90797cc24e9c6a613f23cc76187df58da61e0d542fe90cf277a8b8d"
+  },
+  "original_fit_ledger": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/access.jsonl",
+    "sha256": "3f55fceeaca20662d0a5541bfbfddbb4eb5fac6a945de017c0175cc67e85e412"
+  },
+  "original_torsion_bindings": [
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-v1/release.json",
+      "sha256": "edb91bdbaa542852ec65a87eba8e2676556d926d9c979ceea3cb8e460624ba6b"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/reference-numerical.json",
+      "sha256": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a"
+    },
+    {
+      "kind": "N12/elements",
+      "maximum_bytes": 268435456,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/elements.log",
+      "sha256": "0f98a63f0d975b271849163f9e0aa5422677ce99d4120a6348156def1d7c20c6"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/execution.json",
+      "sha256": "021aa15a98ef150da032280088be52d9471a82ea33d8f7196e4f6de86360b67d"
+    },
+    {
+      "kind": "N12/loading",
+      "maximum_bytes": 1048576,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/loading.json",
+      "sha256": "43dfe963dbe14dbfdaed17fbde2f72c0fd276ef1cf8a1b647b17660e52ffcf46"
+    },
+    {
+      "kind": "N12/nodes",
+      "maximum_bytes": 268435456,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/nodes.log",
+      "sha256": "07624c98658433fa7172b5ea6b3f28fd1b542feadaf34d25f5b4054f091125bf"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/readout.json",
+      "sha256": "5934d4699d747f0f852a9242a08ca3bdaac3cfcb583dc4ed92dd96cbaecc2569"
+    },
+    {
+      "kind": "N12/solver",
+      "maximum_bytes": 16777216,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/solver.log",
+      "sha256": "e0350c42689ed21dcd47bc74988131bb6d1c8c83dd0fe27d0e8dd457f78685b5"
+    },
+    {
+      "kind": "N12/deck",
+      "maximum_bytes": 16777216,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/specimen.feb",
+      "sha256": "ccd47d61bea8ee46b835241e528e5ec054a30706fd44262b6b480dfdaabb881f"
+    },
+    {
+      "kind": "N12/elements",
+      "maximum_bytes": 268435456,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/elements.log",
+      "sha256": "08199be8b92cfd5bc8cb6b8f804e1854fdebf6336efe73e05f396afb1eb6bbd2"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/execution.json",
+      "sha256": "35ffcacc32f0fc48d3293c712d834c1158a345829dcaeea2c4941a906dcd6630"
+    },
+    {
+      "kind": "N12/loading",
+      "maximum_bytes": 1048576,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/loading.json",
+      "sha256": "1cc031dce1b833c1776707748f724b51a43dd54d7b542e7939f6b55ee6f71de6"
+    },
+    {
+      "kind": "N12/nodes",
+      "maximum_bytes": 268435456,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/nodes.log",
+      "sha256": "f35785676d86f8da7c0746b6df9f2ccf9d4cfed91792d98bb345aff5a660e761"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/readout.json",
+      "sha256": "0ec663c8d3bcbc178d8712e3cb0583084086a1981f9d4f67bb52c100538c0b9f"
+    },
+    {
+      "kind": "N12/solver",
+      "maximum_bytes": 16777216,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/solver.log",
+      "sha256": "ca587a60067b7af03121b3cce268e6d327c31a252a6767035652e0dcda2ae3cc"
+    },
+    {
+      "kind": "N12/deck",
+      "maximum_bytes": 16777216,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/specimen.feb",
+      "sha256": "9f52d78d9b65bbfe3752e3a3707ee150a2ce34f2916f96d5591026686d55bbb5"
+    },
+    {
+      "kind": "N12/mesh",
+      "maximum_bytes": 16777216,
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_outputs.py",
+      "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_readout.py",
+      "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+    },
+    {
+      "kind": "metadata",
+      "maximum_bytes": 67108864,
+      "path": "outputs/validation/hbe-accelerate-6486dbc/source.tar",
+      "sha256": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34"
+    }
+  ],
+  "patient_tool_mechanics_admitted": false,
+  "physical_validation_pass": null,
+  "predictions": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/predictions.json",
+    "sha256": "403305f180f9d8ce5580c6765f5fa5070eaac8300f5b564e58fffe2cd2d96044"
+  },
+  "protocol": {
+    "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "refit_calls": 0,
+  "release": {
+    "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+    "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+  },
+  "roles": {
+    "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+    "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+  },
+  "scale": 0.715361571139082,
+  "schema": "hbe-v5-fixed-parameter-prediction-freeze-v1"
+}

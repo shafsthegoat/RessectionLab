@@ -1,0 +1,92 @@
+Independent saved-result audit: PASS
+
+The fixed-fit continuation is accepted as numerical confirmation and a frozen
+prediction artifact. Physical validation remains null. The previously observed
+poor axial calibration fit is unchanged; this result does not establish donor
+transfer, patient/tool mechanics, or fine full-native equivalence.
+
+Root release 97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d
+binds source commit d09c78d8a90bbc1d6e507499c43c0db145b9f45e. All 44 released
+project-source hashes match the reviewed/current bytes. The true release reduces
+to the exact independently reviewed false template when its three permitted
+authorization fields are normalized. No release or scientific threshold changed.
+
+The exact 25-file inventory totals 1,695,038,951 bytes against 2,147,483,648.
+Publication is accepted, terminal status is completed_fitted_confirmation_and_
+prediction_freeze, and no finalization-failure marker exists. Four owned children
+completed with exit zero, clean containment/reaping, no remaining members,
+cleanup errors or fallback. Two native calls were attempted and completed; no
+refit, mesher, measured-member or held-out calls are recorded for this phase.
+
+Stage             elapsed s / cap s       peak sampled group RSS bytes / cap
+Preparation       3.514899 / <60          437,223,424 / 3,221,225,472
+Compression       946.034584 / 2100       2,034,319,360 / 3,221,225,472
+Tension           130.291012 / 420        495,009,792 / 3,221,225,472
+Readout/freeze    205.936359 / <600       1,185,153,024 / 3,221,225,472
+
+Publication elapsed time is 1290.476203209022 s against the 3600 s lifecycle
+limit. Parent final-check time is not separately recorded as a terminal timestamp;
+the reviewed launcher checks the lifecycle again after publication and returned
+success. Sampled child resource limits do not imply continuous-time guarantees.
+
+Both branches retain the exact fixed fit
+b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a,
+mu=715.361571139082 Pa and scale=0.715361571139082. Compression N36/S120 and
+tension N24/S120 each have 121 stored states, 120 residual checks, the original
+full-specimen v5 load grid, reconstructed_full representation, and all 16 saved
+criterion ratios <=1. Their minimum sampled J values are 0.5525190653076201 and
+0.8784873002112713, respectively. Positive sampled J is not positivity everywhere.
+
+Compression's largest frame/stream criterion ratio is 0.00047915913156374124;
+tension's is 0.00021959650537492563. The full work errors/limits are respectively
+3.3158612969158324e-11 / 1.8215529803179354e-7 J and
+2.5010438719747332e-11 / 1.4753515497409435e-7 J. This audit independently rebuilt
+full work integrals, native/full work error/limit arithmetic and all saved solver
+residual limits/verdicts, using the unchanged equations and constants. The only
+floating comparison allowance was 5e-13 relative/1e-25 absolute for reproducing
+stored arithmetic; it does not alter any scientific pass threshold.
+
+Both native and reconstructed-full scale reductions pass their original limits.
+Maximum all-node component motion differences are about 1.0001e-14 m, with saved
+limits 8.2270e-9/1.13726e-8 m (compression native/full) and
+7.68005e-9/1.13601e-8 m (tension native/full). Maximum reaction ratios are
+3.935049197047804e-8 and 3.939930888459661e-8 against 1. Native/full torque ratios
+are 9.184810647271197e-10/4.4533404182260703e-7 for compression and
+8.216253024378016e-10/8.328847815277283e-7 for tension, each against 1.
+
+Independent saved-observable comparisons find maximum fitted-minus-scaled-
+reference force differences of 2.563921297493721e-15 N (compression) and
+4.709774237277031e-15 N (tension). Corresponding energy differences are
+1.6940658945086007e-21 and 2.541098841762901e-21 J; maximum saved probe component
+differences are 3.180276680024574e-15 and 5.736344288031353e-16 m. These are
+descriptive checks, not new tolerances or a substitute for the native reduction.
+
+Both original simulated torsion curves retain their 121-point coordinates and
+are multiplied exactly by the one fixed scale, with no offset, refit or new
+torsion solve. Original readout hashes are included in the freeze's source
+registry. The digest chain numerical/predictions -> freeze -> successor ledger
+-> terminal -> publication establishes the saved dependency order; file times
+corroborate it. The successor ledger links the unchanged prior calibration
+access ledger; it does not rewrite prior access or authorize a measured reveal.
+
+Audit scope and limits
+This was a stdlib-only saved-JSON audit: 0.06921729212626815 s, peak observed self
+RSS 52,264,960 bytes, 73 source/metadata files unchanged, zero forbidden access
+attempts. Fifteen compact output files including publication were read/hashed.
+Ten raw/deck/native-console files were checked by regular-file inventory and
+size only, with their published hashes linked to execution/readout bindings.
+No raw primitive, native log, deck, native console, saved fit body, measured
+member, patient data, runtime binary, model or solver was opened/run by the audit.
+
+Consequently all-node motion/reaction/torque maxima, frame gates and primitive
+fixity are authenticated producer results, not an independent primitive replay.
+Native work integral input forces are not retained separately in the compact
+JSON; its saved work/energy trace, error and unchanged limit were independently
+checked. Runtime identity/source guards and zero-access phase counts rely on
+the source-bound successful owned run, not an independent OS I/O trace. No
+additional primitive replay is needed to make the above limited saved verdict.
+
+Exact six artifact bindings and every consequential criterion/limit are in
+result-summary.json. heldout-admission-review.json accepts only the fixed
+confirmation/freeze evidence gate. A future measured-torque reader and root
+release still need their own authorization; this audit grants no such access.

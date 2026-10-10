@@ -1,0 +1,258 @@
+{
+  "aggregate_output_limit_bytes": 2147483648,
+  "branches": {
+    "compression": {
+      "criteria_max_ratio": {
+        "energy_scale_two": 1.1025283760219249e-06,
+        "force_bottom_scale_one": 2.108988232043288e-12,
+        "force_midplane_scale_one": 4.8670740887861546e-06,
+        "full_force_balance": 1.749700224529799e-09,
+        "full_force_sign_fixture": 0.0,
+        "full_free_dof_reaction": 0.00047915913156374124,
+        "full_moment_balance": 4.269787956702103e-09,
+        "full_prescribed_motion": 0.0001758227560910825,
+        "full_work_energy": 0.00018203485337753278,
+        "native_force_balance": 1.1615523422445688e-08,
+        "native_free_dof_reaction": 0.00047915913156374124,
+        "native_moment_balance": 2.1615958407288724e-09,
+        "native_prescribed_motion": 0.0001758227560910825,
+        "native_primitive_consistency": 0.00022317786392842922,
+        "native_work_energy": 0.00018203666913539824,
+        "solver_residual": 5.959747391014586e-10
+      },
+      "frame_count": 121,
+      "full_work_error_J": 3.3158612969158324e-11,
+      "full_work_limit_J": 1.8215529803179354e-07,
+      "minimum_logged_J": 0.979324390909,
+      "minimum_sampled_J": 0.5525190653076201,
+      "native_work_error_J": 1.6579471860138817e-11,
+      "native_work_limit_J": 9.107764901920428e-08,
+      "numerical_passed": true,
+      "run_id": "compression:N36:S120:fitted",
+      "saved_observable_scaling": {
+        "maximum_energy_error_J": 1.6940658945086007e-21,
+        "maximum_force_error_N": 2.563921297493721e-15,
+        "maximum_probe_component_difference_m": 3.180276680024574e-15,
+        "new_tolerance_imposed": false
+      },
+      "scale": {
+        "native": {
+          "motion": {
+            "actual": 1.0000680839006293e-14,
+            "limit": 8.22702290970002e-09,
+            "units": "m"
+          },
+          "reaction": {
+            "actual": 3.935049197047804e-08,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          },
+          "torque": {
+            "actual": 9.184810647271197e-10,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          }
+        },
+        "reconstructed_full": {
+          "motion": {
+            "actual": 1.0000680839006293e-14,
+            "limit": 1.13726e-08,
+            "units": "m"
+          },
+          "reaction": {
+            "actual": 3.935049197047804e-08,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          },
+          "torque": {
+            "actual": 4.4533404182260703e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          }
+        }
+      },
+      "step_count": 120
+    },
+    "tension": {
+      "criteria_max_ratio": {
+        "energy_scale_two": 1.0834174472011226e-06,
+        "force_bottom_scale_one": 2.187177263959696e-12,
+        "force_midplane_scale_one": 3.82932747294745e-06,
+        "full_force_balance": 2.7023111983155674e-09,
+        "full_force_sign_fixture": 0.0,
+        "full_free_dof_reaction": 4.495736859524065e-05,
+        "full_moment_balance": 1.6594002269097256e-08,
+        "full_prescribed_motion": 0.0001758227560910825,
+        "full_work_energy": 0.00016952189275931494,
+        "native_force_balance": 1.4679025227197833e-08,
+        "native_free_dof_reaction": 4.495736859524065e-05,
+        "native_moment_balance": 5.713802274857193e-09,
+        "native_prescribed_motion": 0.0001758227560910825,
+        "native_primitive_consistency": 0.00021959650537492563,
+        "native_work_energy": 0.0001695216716703262,
+        "solver_residual": 5.280981910002286e-12
+      },
+      "frame_count": 121,
+      "full_work_error_J": 2.5010438719747332e-11,
+      "full_work_limit_J": 1.4753515497409435e-07,
+      "minimum_logged_J": 1.0,
+      "minimum_sampled_J": 0.8784873002112713,
+      "native_work_error_J": 1.2505203050677783e-11,
+      "native_work_limit_J": 7.376757748706621e-08,
+      "numerical_passed": true,
+      "run_id": "tension:N24:S120:fitted",
+      "saved_observable_scaling": {
+        "maximum_energy_error_J": 2.541098841762901e-21,
+        "maximum_force_error_N": 4.709774237277031e-15,
+        "maximum_probe_component_difference_m": 5.736344288031353e-16,
+        "new_tolerance_imposed": false
+      },
+      "scale": {
+        "native": {
+          "motion": {
+            "actual": 1.0000247158137299e-14,
+            "limit": 7.68005e-09,
+            "units": "m"
+          },
+          "reaction": {
+            "actual": 3.939930888459661e-08,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          },
+          "torque": {
+            "actual": 8.216253024378016e-10,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          }
+        },
+        "reconstructed_full": {
+          "motion": {
+            "actual": 1.0000247158137299e-14,
+            "limit": 1.1360099999999e-08,
+            "units": "m"
+          },
+          "reaction": {
+            "actual": 3.939930888459661e-08,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          },
+          "torque": {
+            "actual": 8.328847815277283e-07,
+            "limit": 1.0,
+            "units": "ratio_to_declared_scale_tolerance"
+          }
+        }
+      },
+      "step_count": 120
+    }
+  },
+  "calibration_quality": "unchanged_poor_within_specimen_fit_not_physical_validation",
+  "continuation_ledger": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/continuation-ledger.json",
+    "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7"
+  },
+  "decision": "PASS",
+  "final_output_bytes": 1695038951,
+  "fine_full_native_equivalence_claim": false,
+  "fixed_fit_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "freeze": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+    "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90"
+  },
+  "frozen_torsion": {
+    "torsion_neg": {
+      "coordinate_preserved": true,
+      "exact_saved_scaled_response": true,
+      "measured_torque_read": false,
+      "points": 121,
+      "reference_readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/readout.json",
+        "sha256": "5934d4699d747f0f852a9242a08ca3bdaac3cfcb583dc4ed92dd96cbaecc2569"
+      },
+      "response_unit": "Nm"
+    },
+    "torsion_pos": {
+      "coordinate_preserved": true,
+      "exact_saved_scaled_response": true,
+      "measured_torque_read": false,
+      "points": 121,
+      "reference_readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/readout.json",
+        "sha256": "0ec663c8d3bcbc178d8712e3cb0583084086a1981f9d4f67bb52c100538c0b9f"
+      },
+      "response_unit": "Nm"
+    }
+  },
+  "held_out_member_reads": 0,
+  "lifecycle_limit_seconds": 3600,
+  "limits": "Saved JSON arithmetic/receipt audit only. No raw primitive rehash/replay; all-node motion/reaction/torque maxima and frame gates are authenticated producer results, not independently recomputed here.",
+  "measured_member_reads": 0,
+  "mu_Pa": 715.361571139082,
+  "native_calls": 2,
+  "next_measured_access_released": false,
+  "numerical": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/numerical.json",
+    "sha256": "c30f3356d90797cc24e9c6a613f23cc76187df58da61e0d542fe90cf277a8b8d"
+  },
+  "output_file_count": 25,
+  "physical_validation_pass": null,
+  "predictions": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/predictions.json",
+    "sha256": "403305f180f9d8ce5580c6765f5fa5070eaac8300f5b564e58fffe2cd2d96044"
+  },
+  "publication": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/publication.json",
+    "sha256": "ebad2f0f24e7f8efa4654dd06d976457af5ffd3aa8f1432cfd0ad00783f15ad6"
+  },
+  "publication_elapsed_seconds": 1290.476203209022,
+  "refit_calls": 0,
+  "release": {
+    "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+    "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+  },
+  "scale": 0.715361571139082,
+  "schema": "hbe-v5-fixed-fit-saved-result-summary-v1",
+  "source_commit": "d09c78d8a90bbc1d6e507499c43c0db145b9f45e",
+  "stages": {
+    "compression": {
+      "active_output_cap_bytes": 1610612736,
+      "elapsed_seconds": 946.0345840000082,
+      "peak_sampled_active_output_bytes": 1303354298,
+      "peak_sampled_process_group_rss_bytes": 2034319360,
+      "pid": 52520,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "wall_cap_seconds": 2100
+    },
+    "prepare": {
+      "active_output_cap_bytes": 16777216,
+      "elapsed_seconds": 3.514898667111993,
+      "peak_sampled_active_output_bytes": 1456,
+      "peak_sampled_process_group_rss_bytes": 437223424,
+      "pid": 52448,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "wall_cap_seconds": 59.999989124946296
+    },
+    "readout": {
+      "active_output_cap_bytes": 16777216,
+      "elapsed_seconds": 205.93635937501676,
+      "peak_sampled_active_output_bytes": 1510,
+      "peak_sampled_process_group_rss_bytes": 1185153024,
+      "pid": 59151,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "wall_cap_seconds": 599.9999841670506
+    },
+    "tension": {
+      "active_output_cap_bytes": 536870912,
+      "elapsed_seconds": 130.2910117499996,
+      "peak_sampled_active_output_bytes": 388860097,
+      "peak_sampled_process_group_rss_bytes": 495009792,
+      "pid": 58416,
+      "sampled_process_group_rss_cap_bytes": 3221225472,
+      "wall_cap_seconds": 420
+    }
+  },
+  "terminal": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/terminal.json",
+    "sha256": "990e368db06a2569c91c1eacc3cccff4a2a4b6359fdc774b7b46c94a5a6f4d18"
+  }
+}

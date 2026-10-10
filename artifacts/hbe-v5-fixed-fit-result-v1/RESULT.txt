@@ -1,0 +1,44 @@
+Fixed-fit axial confirmation and pre-reveal prediction freeze: numerical PASS
+
+The two fixed-fit native confirmations completed once with mu=715.361571139082 Pa
+and scale=0.715361571139082. Compression N36/S120 and tension N24/S120 each retain
+121 states and pass all 16 numerical criterion ratios plus the unchanged native
+and reconstructed-full motion/reaction/torque scale checks. The original v5 load
+grids, fixed fitted value and DEVELOPMENT specimen role remain unchanged.
+
+Stage             elapsed seconds      peak sampled process-group RSS bytes
+Preparation       3.514898667112        437223424
+Compression       946.034584000008      2034319360
+Tension           130.291011750000      495009792
+Readout/freeze    205.936359375017      1185153024
+
+All four children exited zero and were cleanly contained and reaped, with no
+cleanup errors or fallback. Publication elapsed 1290.476203209022 seconds against
+3600; peak child RSS stayed below 3221225472 bytes. The exact 25-file output set is
+1695038951 bytes against 2147483648. No automatic retry, refit, measured-member
+read or held-out access occurred in this phase.
+
+The two original simulated N12/S120 torsion curves are frozen before a measured
+reveal. Their 121-point coordinates are unchanged and every prediction equals
+the original simulated torque multiplied by the single fixed scale, without an
+offset. The successor ledger binds the unchanged original calibration ledger.
+
+Independent saved-JSON review passed in 0.06921729212626815 seconds at 52264960
+bytes observed self RSS, with 73 source/metadata files unchanged. It verified
+publication/digest chains, receipts, all saved criterion verdicts, work and
+residual arithmetic, saved axial response scaling and exact torsion prediction
+scaling. Raw primitives/decks/native consoles were not opened or replayed;
+their authenticated published hashes and regular-file sizes were checked.
+
+The poor axial fit remains a negative physical-fidelity result: prior normalized
+force RMSE was 0.372 in compression and 2.842 in tension. Numerical confirmation
+does not repair that gap. Physical validation remains null; no patient/tool
+mechanics, donor transfer, continuum bound or fine full-native equivalence is
+claimed. Measured torque remains sealed pending a separately reviewed reader
+and explicit root release bound to this freeze.
+
+This package contains exact compact audit/receipt/release/freeze metadata only.
+Full numerical and prediction arrays, raw native outputs, meshes and runtime
+binaries remain at their existing locations. Their exact hashes are pinned by
+source-index.json and audit/result-summary.json. The admission-review GO accepts
+only the confirmation/freeze evidence gate and grants no measured access.

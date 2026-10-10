@@ -1336,3 +1336,22 @@ The [first decode preflight](../artifacts/case4-decode-preflight-deferral-v1/RES
 The [saved diagnostic layer](../artifacts/case4-display-decode-result-v1/RESULT.md) completes one decoder call under the unchanged release after a separately documented stable host window. The original no-child preflight deferral remains preserved. The worker took 4.175 supervised seconds at 1,031,913,472B sampled peak, exited cleanly, and did not rerun the network. Independent bounded saved-array inspection verifies both coded RAS grids, checksums and every state/coverage pair. The 240×240×155 atlas contains 2,625 candidate-positive, 1,113,469 candidate-negative and 7,811,906 unknown voxels. Coverage describes where an output exists, not correctness or confidence.
 
 Inferior/cerebellar mask omission, partial support, unknown model-training overlap and unreviewed registration anatomy remain explicit. This metadata/source package does not itself admit UI loading: the importer and renderer require their own reviewed identity and unknown-state boundary. No clinical, planning, tumor-accuracy or independent evaluation claim follows. Source images, logits, decoded images and weights remain local and excluded from Git.
+
+## October 10, 2026 — fixed-fit axial confirmation and frozen torsion predictions
+
+The [fixed-fit continuation](../artifacts/hbe-v5-fixed-fit-result-v1/RESULT.txt)
+completed once under source commit d09c78d8a90bbc1d6e507499c43c0db145b9f45e.
+Compression N36/S120 took 946.034584 s and tension N24/S120 took 130.291012 s, with
+sampled peak group RSS 2034319360 and 495009792 bytes. Paired readout/freeze took
+205.936359 s; publication elapsed 1290.476203 s. All four owned children exited
+zero with clean reaping; 25 output files total 1695038951 bytes, below 2 GiB.
+
+Both 121-state fitted checks pass every frozen numerical/scale criterion. The
+fixed fit remains 715.361571139082 Pa with scale 0.715361571139082; both original
+simulated torsion curves retain 121 coordinates and are scaled exactly without
+offset/refit. Their freeze binds the original fit ledger before any torque
+reveal. Independent saved-only review passed in 0.0692 s/52264960 B with 73 source
+and metadata files unchanged; raw primitives were not replayed. No new measured
+member, held-out or refit call occurred. The substantial prior axial fit errors
+remain unchanged; physical validation is null. This is numerical confirmation
+and a prediction freeze, not patient-mechanics admission or held-out access.

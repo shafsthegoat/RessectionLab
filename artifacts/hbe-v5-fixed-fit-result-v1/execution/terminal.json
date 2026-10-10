@@ -1,0 +1,316 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "branch_output_bytes": {
+      "compression": 1610612736,
+      "tension": 536870912
+    },
+    "cleanup_reserve_seconds": 10,
+    "fit_calls": 0,
+    "held_out_member_reads": 0,
+    "measured_member_reads": 0,
+    "mesher_calls": 0,
+    "native_calls": 2,
+    "native_seconds": {
+      "compression": 2100,
+      "tension": 420
+    },
+    "new_output_bytes": 2147483648,
+    "preparation_seconds": 60,
+    "readout_seconds": 600,
+    "sampled_group_rss_bytes": 3221225472,
+    "threads": 1,
+    "total_seconds": 3600
+  },
+  "elapsed_before_terminal_seconds": 1289.8407945421059,
+  "fit_calls": 0,
+  "freeze": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+    "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90"
+  },
+  "held_out_member_reads": 0,
+  "measured_member_reads": 0,
+  "mesher_calls": 0,
+  "native_calls": 2,
+  "native_calls_accounting": "attempted",
+  "output_inventory": {
+    "compression/console.txt": {
+      "bytes": 341673,
+      "sha256": "15bf780c972a235f21b55620d329f9d2fe0d2b63164d6d97c0d62d8a9a0e9158"
+    },
+    "compression/elements.log": {
+      "bytes": 518882127,
+      "sha256": "83b9d64faca73100041bebbfc7f19e9ea5f3d829194972cea09525ed5d457d8d"
+    },
+    "compression/nodes.log": {
+      "bytes": 774950150,
+      "sha256": "b0962f0dbfd923f6e273815bef9e4b03b54a075e3ec1e79d3100e7f6e0963ec5"
+    },
+    "compression/receipt.json": {
+      "bytes": 925,
+      "sha256": "b6f97df5b6e5520a0e12e878dfd21bfe9268990d5559852b6bcabe45f62b9644"
+    },
+    "compression/solver.log": {
+      "bytes": 1504366,
+      "sha256": "96e60da40e0238552ad43d19dbf03e5bb6637c71ddc9497e9db7977aeb1a4f61"
+    },
+    "compression/specimen.feb": {
+      "bytes": 7675067,
+      "sha256": "c92e08981efbcd7c4a994dbf4912adf45e639674ac78bc7ad43d987caad4482d"
+    },
+    "continuation-ledger.json": {
+      "bytes": 455,
+      "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7"
+    },
+    "executions.json": {
+      "bytes": 5751,
+      "sha256": "1eebe792ad6f39047527ae5ed9b865a809a3dfa2ef0223f7701d711948142863"
+    },
+    "freeze.json": {
+      "bytes": 16248,
+      "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90"
+    },
+    "intent.json": {
+      "bytes": 852,
+      "sha256": "bc56cfe13e13c2caa0a166657503e3a08dfe6aecff3f7aa664036f18ca15d343"
+    },
+    "numerical.json": {
+      "bytes": 2723105,
+      "sha256": "c30f3356d90797cc24e9c6a613f23cc76187df58da61e0d542fe90cf277a8b8d"
+    },
+    "predictions.json": {
+      "bytes": 28188,
+      "sha256": "403305f180f9d8ce5580c6765f5fa5070eaac8300f5b564e58fffe2cd2d96044"
+    },
+    "prepare-stage/readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "prepare-stage/receipt.json": {
+      "bytes": 1519,
+      "sha256": "e299d9ba05efd83b10b6840b50f94051aead1baac4b65196388e1a5c0f9cf1cc"
+    },
+    "prepared.json": {
+      "bytes": 31862,
+      "sha256": "ab01f609237d4a360020c88e48ebb275788e3e73368852a6e5207c3ef46326a6"
+    },
+    "readout-stage/readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readout-stage/receipt.json": {
+      "bytes": 1520,
+      "sha256": "a2027e6d543fe41e60c29339afcbf80408f78fbb04146c951f5c03f403b756c9"
+    },
+    "tension/console.txt": {
+      "bytes": 313263,
+      "sha256": "6ca2bd081ac3f9c9b5d3bce1cc3bf4560208716e177f5dfb96fb7e0aac84a7c3"
+    },
+    "tension/elements.log": {
+      "bytes": 148691885,
+      "sha256": "8143ec060268cd3eda050f3fdeee2f0c8cfb18dd12979700126bd8684473fbd7"
+    },
+    "tension/nodes.log": {
+      "bytes": 236551640,
+      "sha256": "2077f8a7e2423072cc0ca0161aa22afee40d6bbd70031f0c6afd61ca7faa5b87"
+    },
+    "tension/receipt.json": {
+      "bytes": 917,
+      "sha256": "05c4b555b8cfa0a57ee7b95d36888b6725f4d82cccc9890f148549ae4823ba17"
+    },
+    "tension/solver.log": {
+      "bytes": 838231,
+      "sha256": "80cfe119b6965c9d4dd603db884a1890a1bcad1df5d0eb8396f0644f2128491b"
+    },
+    "tension/specimen.feb": {
+      "bytes": 2464170,
+      "sha256": "096d425c2534def48620e6ab8d8f5cf9564d88b59a38f28c1993353614b83079"
+    }
+  },
+  "physical_validation_pass": null,
+  "release": {
+    "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+    "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+  },
+  "schema": "hbe-v5-fixed-fit-terminal-v1",
+  "stages": {
+    "compression": {
+      "cleanup": {
+        "contained": true,
+        "direct_child_reaped": true,
+        "errors": [],
+        "exit_code": 0,
+        "fallback_used": false,
+        "remaining_members": []
+      },
+      "receipt": {
+        "native_calls_attempted": 1,
+        "native_stage": {
+          "active_output_cap_bytes": 1610612736,
+          "command": [
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+            "-noconfig",
+            "-no_title",
+            "-i",
+            "specimen.feb",
+            "-o",
+            "solver.log"
+          ],
+          "elapsed_seconds": 946.0345840000082,
+          "exit_code": 0,
+          "kill_reason": null,
+          "peak_sampled_active_output_bytes": 1303354298,
+          "peak_sampled_process_group_rss_bytes": 2034319360,
+          "pid": 52520,
+          "sampled_process_group_rss_cap_bytes": 3221225472,
+          "status": "completed_within_caps",
+          "wall_cap_seconds": 2100
+        },
+        "phase": "compression",
+        "release": {
+          "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+          "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+        }
+      }
+    },
+    "prepare": {
+      "cleanup": {
+        "contained": true,
+        "direct_child_reaped": true,
+        "errors": [],
+        "exit_code": 0,
+        "fallback_used": false,
+        "remaining_members": []
+      },
+      "receipt": {
+        "phase": "prepare",
+        "readout_calls_attempted": 1,
+        "readout_stage": {
+          "active_output_cap_bytes": 16777216,
+          "command": [
+            "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+            "-I",
+            "-S",
+            "-B",
+            "-X",
+            "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-fixed-fit-confirmation-v1/unused-prepare-pycache",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py",
+            "--root",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+            "--release",
+            "build/hbe-v5-fixed-fit-root-release-v1.json",
+            "--release-sha256",
+            "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d",
+            "--worker",
+            "prepare",
+            "--deadline",
+            "1299450.083911208"
+          ],
+          "elapsed_seconds": 3.514898667111993,
+          "exit_code": 0,
+          "kill_reason": null,
+          "peak_sampled_active_output_bytes": 1456,
+          "peak_sampled_process_group_rss_bytes": 437223424,
+          "pid": 52448,
+          "sampled_process_group_rss_cap_bytes": 3221225472,
+          "status": "completed_within_caps",
+          "wall_cap_seconds": 59.999989124946296
+        },
+        "release": {
+          "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+          "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+        }
+      }
+    },
+    "readout": {
+      "cleanup": {
+        "contained": true,
+        "direct_child_reaped": true,
+        "errors": [],
+        "exit_code": 0,
+        "fallback_used": false,
+        "remaining_members": []
+      },
+      "receipt": {
+        "phase": "readout",
+        "readout_calls_attempted": 1,
+        "readout_stage": {
+          "active_output_cap_bytes": 16777216,
+          "command": [
+            "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+            "-I",
+            "-S",
+            "-B",
+            "-X",
+            "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-fixed-fit-confirmation-v1/unused-readout-pycache",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py",
+            "--root",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+            "--release",
+            "build/hbe-v5-fixed-fit-root-release-v1.json",
+            "--release-sha256",
+            "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d",
+            "--worker",
+            "readout",
+            "--deadline",
+            "1301070.956325375"
+          ],
+          "elapsed_seconds": 205.93635937501676,
+          "exit_code": 0,
+          "kill_reason": null,
+          "peak_sampled_active_output_bytes": 1510,
+          "peak_sampled_process_group_rss_bytes": 1185153024,
+          "pid": 59151,
+          "sampled_process_group_rss_cap_bytes": 3221225472,
+          "status": "completed_within_caps",
+          "wall_cap_seconds": 599.9999841670506
+        },
+        "release": {
+          "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+          "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+        }
+      }
+    },
+    "tension": {
+      "cleanup": {
+        "contained": true,
+        "direct_child_reaped": true,
+        "errors": [],
+        "exit_code": 0,
+        "fallback_used": false,
+        "remaining_members": []
+      },
+      "receipt": {
+        "native_calls_attempted": 1,
+        "native_stage": {
+          "active_output_cap_bytes": 536870912,
+          "command": [
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+            "-noconfig",
+            "-no_title",
+            "-i",
+            "specimen.feb",
+            "-o",
+            "solver.log"
+          ],
+          "elapsed_seconds": 130.2910117499996,
+          "exit_code": 0,
+          "kill_reason": null,
+          "peak_sampled_active_output_bytes": 388860097,
+          "peak_sampled_process_group_rss_bytes": 495009792,
+          "pid": 58416,
+          "sampled_process_group_rss_cap_bytes": 3221225472,
+          "status": "completed_within_caps",
+          "wall_cap_seconds": 420
+        },
+        "phase": "tension",
+        "release": {
+          "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+          "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+        }
+      }
+    }
+  },
+  "status": "completed_fitted_confirmation_and_prediction_freeze"
+}
