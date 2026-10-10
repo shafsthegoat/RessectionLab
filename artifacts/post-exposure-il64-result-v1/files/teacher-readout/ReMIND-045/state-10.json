@@ -1,0 +1,47 @@
+{
+  "action_ids": [
+    "STOP",
+    "nominal-cavity-c594e6a311f0b08776c29a0f",
+    "nominal-cavity-44a6425a059b79bbbf17038e",
+    "nominal-cavity-88bc1008c2bd9995dae66f1b",
+    "nominal-cavity-433013b34a62e75ccd6616b1"
+  ],
+  "action_mask": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "endpoint": "IL64",
+  "observation_hash": "sha256:1da33c3a2a3891f7240d7cf45cbb480e8a2a1dd85de1d458acf8db5922edfbd4",
+  "scores": {
+    "best_movement_minus_STOP": 5.1198272705078125,
+    "conditional_teacher_movement_probability": 0.4556932747364044,
+    "greedy_action": "nominal-cavity-88bc1008c2bd9995dae66f1b",
+    "logits": [
+      -5.183481693267822,
+      -0.08318662643432617,
+      -1.9393192529678345,
+      -0.06365466117858887,
+      -2.867974281311035
+    ],
+    "probabilities": [
+      0.0027163054328411818,
+      0.445665180683136,
+      0.06964670121669769,
+      0.4544554650783539,
+      0.027516348287463188
+    ],
+    "stop_probability": 0.0027163054328411818,
+    "teacher_CE": 0.7886553406715393,
+    "teacher_minus_STOP": 5.1198272705078125,
+    "teacher_movement_rank": 1,
+    "teacher_probability": 0.4544554650783539,
+    "teacher_rank": 1,
+    "value": 0.5552874803543091
+  },
+  "step": 10,
+  "subject": "ReMIND-045",
+  "teacher_action": "nominal-cavity-88bc1008c2bd9995dae66f1b"
+}

@@ -1,0 +1,751 @@
+[
+  {
+    "action_summaries": [
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "contact_cells": 0,
+        "geometry_unknowns": null,
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_id": null
+      }
+    ],
+    "actions": [
+      "STOP"
+    ],
+    "contact_cells": 0,
+    "independent_accepted": true,
+    "independent_failure_reason": null,
+    "outside_target_removed_mm3": 0.0,
+    "plan_seal": "sha256:240075a0fab00a180b639716048153dd96d60f80d8ee03a63d07d877e2f3778f",
+    "public_return": 0.0,
+    "removed_cells": 0,
+    "retained_contact_cells": 0,
+    "same_removed_cell_union_as_teacher": true,
+    "steps": 1,
+    "subject": "ReMIND-002",
+    "target_removed_mm3": 0.0,
+    "teacher_actions": [
+      "STOP"
+    ],
+    "teacher_public_return": 0.0,
+    "teacher_target_removed_mm3": 0.0,
+    "terminal_reason": "STOP"
+  },
+  {
+    "action_summaries": [
+      {
+        "action_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 46,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 6,
+        "reward": 5.687669335607047,
+        "target_removed_mm3": 5.722045898127047,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-77b000c9ce3f4e3f33cc6e54",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 47,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 5,
+        "reward": 4.733995019252539,
+        "target_removed_mm3": 4.76837158177254,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-bb89e11e6102720459340013",
+        "complete_tool_path_length_mm": 4.376562519999979,
+        "contact_cells": 45,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 5,
+        "reward": 4.733995019252539,
+        "target_removed_mm3": 4.76837158177254,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-bb1bb3546a118501d730fab2",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 42,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 6,
+        "reward": 5.687669335607047,
+        "target_removed_mm3": 5.722045898127047,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-9f0a72d7e5eaa5f361d41a7b",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 47,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 6,
+        "reward": 5.687669335607047,
+        "target_removed_mm3": 5.722045898127047,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-bc347fb6da0b567e41689b11",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 49,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8729720701890156,
+        "target_removed_mm3": 1.9073486327090157,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-d98d39fc5544c0371f3b9a10",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 51,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-44880c37d1801aea10e417db",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 50,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-45112b64dc879df87bf848c4",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 50,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-fd4ae7f5d3d7943fe64fa8b7",
+        "complete_tool_path_length_mm": 4.376562519999979,
+        "contact_cells": 51,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-c4989305cc16cfd3c2b0e354",
+        "complete_tool_path_length_mm": 4.376562519999979,
+        "contact_cells": 51,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-387dda41d472bc130eaddbdb",
+        "complete_tool_path_length_mm": 4.376562519999979,
+        "contact_cells": 51,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-1145c3cfa658a4858f5c9003",
+        "complete_tool_path_length_mm": 4.376562519999993,
+        "contact_cells": 43,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.7803207028980315,
+        "target_removed_mm3": 3.8146972654180313,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "contact_cells": 0,
+        "geometry_unknowns": null,
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_id": null
+      }
+    ],
+    "actions": [
+      "nominal-cavity-655c4afa2663656417dbdd6b",
+      "nominal-cavity-77b000c9ce3f4e3f33cc6e54",
+      "nominal-cavity-bb89e11e6102720459340013",
+      "nominal-cavity-bb1bb3546a118501d730fab2",
+      "nominal-cavity-9f0a72d7e5eaa5f361d41a7b",
+      "nominal-cavity-bc347fb6da0b567e41689b11",
+      "nominal-cavity-d98d39fc5544c0371f3b9a10",
+      "nominal-cavity-44880c37d1801aea10e417db",
+      "nominal-cavity-45112b64dc879df87bf848c4",
+      "nominal-cavity-fd4ae7f5d3d7943fe64fa8b7",
+      "nominal-cavity-c4989305cc16cfd3c2b0e354",
+      "nominal-cavity-387dda41d472bc130eaddbdb",
+      "nominal-cavity-1145c3cfa658a4858f5c9003",
+      "STOP"
+    ],
+    "contact_cells": 216,
+    "independent_accepted": true,
+    "independent_failure_reason": null,
+    "outside_target_removed_mm3": 0.0,
+    "plan_seal": "sha256:d96e2d116356b3cfb49c973ba7211d74df4a7b77917a30468d6003af04c6a1de",
+    "public_return": 54.86621503580145,
+    "removed_cells": 58,
+    "retained_contact_cells": 158,
+    "same_removed_cell_union_as_teacher": true,
+    "steps": 14,
+    "subject": "ReMIND-015",
+    "target_removed_mm3": 55.31311034856145,
+    "teacher_actions": [
+      "nominal-cavity-81c114a0600538d67baf4414",
+      "nominal-cavity-f4acd820cbfb0ed0423e8ce1",
+      "nominal-cavity-a5152cdc336beea2377717f9",
+      "nominal-cavity-1cbd3c4a581f4b88810331ab",
+      "nominal-cavity-fde756f16b8890d097dfa2b2",
+      "nominal-cavity-0bff70bcda7abbbf6f4ba2b5",
+      "nominal-cavity-9191b5ecb52d9653e6653b46",
+      "nominal-cavity-18a27c9bdaedc0c78c8b1eb5",
+      "nominal-cavity-6b6ca940447e253f73e6a608",
+      "nominal-cavity-75d906bf1966eab441bd14fb",
+      "nominal-cavity-3e0208b4da8b3619067435cd",
+      "nominal-cavity-db13ac7f68ddec6654723169",
+      "nominal-cavity-07f21f9720487f7217110137",
+      "STOP"
+    ],
+    "teacher_public_return": 54.866215035801446,
+    "teacher_target_removed_mm3": 55.31311034856145,
+    "terminal_reason": "STOP"
+  },
+  {
+    "action_summaries": [
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "contact_cells": 0,
+        "geometry_unknowns": null,
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_id": null
+      }
+    ],
+    "actions": [
+      "STOP"
+    ],
+    "contact_cells": 0,
+    "independent_accepted": true,
+    "independent_failure_reason": null,
+    "outside_target_removed_mm3": 0.0,
+    "plan_seal": "sha256:c3b7e6d5d89c37f0a2af529e3a8d36c219ed02ee92a36b38544a1615a6d10544",
+    "public_return": 0.0,
+    "removed_cells": 0,
+    "retained_contact_cells": 0,
+    "same_removed_cell_union_as_teacher": true,
+    "steps": 1,
+    "subject": "ReMIND-018",
+    "target_removed_mm3": 0.0,
+    "teacher_actions": [
+      "STOP"
+    ],
+    "teacher_public_return": 0.0,
+    "teacher_target_removed_mm3": 0.0,
+    "terminal_reason": "STOP"
+  },
+  {
+    "action_summaries": [
+      {
+        "action_id": "nominal-cavity-0bfcdcdda57847d7c5c68499",
+        "complete_tool_path_length_mm": 6.329688783145124,
+        "contact_cells": 42,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 5,
+        "reward": 4.732047805793682,
+        "target_removed_mm3": 4.768377494576828,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-13bbde525b7470979f1df38e",
+        "complete_tool_path_length_mm": 8.282814625241826,
+        "contact_cells": 50,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 6,
+        "reward": 5.6837701788669515,
+        "target_removed_mm3": 5.722052993492193,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-60ef32ab2c7e82004b28cc56",
+        "complete_tool_path_length_mm": 6.8828146252418225,
+        "contact_cells": 21,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.8867926842901236,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-122e12cb1fd35865df33e7e7",
+        "complete_tool_path_length_mm": 6.8828146252418225,
+        "contact_cells": 20,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.9167926842901236,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-3d130aae3fef5f12500f19c3",
+        "complete_tool_path_length_mm": 6.8828146252418225,
+        "contact_cells": 16,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.9167926842901236,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-0e5aefc319bc3611c4a99b84",
+        "complete_tool_path_length_mm": 8.8359404673385,
+        "contact_cells": 25,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8685150573633924,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-72ff484d77771f057c6e56d6",
+        "complete_tool_path_length_mm": 8.83594046733854,
+        "contact_cells": 25,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8685150573633924,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-1320e1c9403575a26ad9e577",
+        "complete_tool_path_length_mm": 8.835940467338563,
+        "contact_cells": 24,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8685150573633924,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-2c6516cfef6e09ba5e4ec808",
+        "complete_tool_path_length_mm": 8.83594046733854,
+        "contact_cells": 26,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8685150573633924,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-9066d8b0c9550a8bf253daba",
+        "complete_tool_path_length_mm": 8.8359404673385,
+        "contact_cells": 27,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8685150573633924,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-b91e4f76d5d6c981abc33487",
+        "complete_tool_path_length_mm": 6.329688783145124,
+        "contact_cells": 35,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.8873458101322204,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-05d996a8f9f07c2f5368fd75",
+        "complete_tool_path_length_mm": 8.282814625241826,
+        "contact_cells": 56,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 3,
+        "reward": 2.822743682120855,
+        "target_removed_mm3": 2.8610264967460965,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-a9d295a2ff04038608223030",
+        "complete_tool_path_length_mm": 8.282814625241851,
+        "contact_cells": 47,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8690681832054892,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-a2b756eb6fa5015b55f3fc7c",
+        "complete_tool_path_length_mm": 8.83594046733854,
+        "contact_cells": 22,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8385150573633924,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-3ae491d29ce84e2eeb074ec1",
+        "complete_tool_path_length_mm": 8.28281462524188,
+        "contact_cells": 44,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 3,
+        "reward": 2.792743682120855,
+        "target_removed_mm3": 2.8610264967460965,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-ab9c7d9f0fb28fee9259425d",
+        "complete_tool_path_length_mm": 6.32968878314507,
+        "contact_cells": 25,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.9173458101322204,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-21f6bcdc04f688395289560a",
+        "complete_tool_path_length_mm": 8.282814625241826,
+        "contact_cells": 46,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8690681832054892,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-bbc08b17d73ae7bb028fabdb",
+        "complete_tool_path_length_mm": 8.282814625241851,
+        "contact_cells": 44,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.9153926842901237,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-a7f9f8bec2dd5cdf2558d410",
+        "complete_tool_path_length_mm": 8.282814625241851,
+        "contact_cells": 42,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 2,
+        "reward": 1.8690681832054892,
+        "target_removed_mm3": 1.907350997830731,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-ed70f8ea229b990b439d6e5e",
+        "complete_tool_path_length_mm": 10.235940467338569,
+        "contact_cells": 63,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 4,
+        "reward": 3.774466055194124,
+        "target_removed_mm3": 3.814701995661462,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-28b0d884838bfae7937f0e17",
+        "complete_tool_path_length_mm": 8.282814625241826,
+        "contact_cells": 36,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.9153926842901237,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-515f3e2e2cafed0b0422a966",
+        "complete_tool_path_length_mm": 10.789066309435258,
+        "contact_cells": 31,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.8828864326059302,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "nominal-cavity-dae6aeb198aea84db741cfd0",
+        "complete_tool_path_length_mm": 10.235940467338544,
+        "contact_cells": 57,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 3,
+        "reward": 2.7907905562787585,
+        "target_removed_mm3": 2.8610264967460965,
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "action_id": "nominal-cavity-07413a7685ad5c661cffd6b6",
+        "complete_tool_path_length_mm": 8.83594046733854,
+        "contact_cells": 16,
+        "geometry_unknowns": [
+          "declared_external_workspace_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "normal_removed_mm3": 0.0,
+        "removed_cells": 1,
+        "reward": 0.884839558448027,
+        "target_removed_mm3": 0.9536754989153655,
+        "tool_id": "generic_suction"
+      }
+    ],
+    "actions": [
+      "nominal-cavity-0bfcdcdda57847d7c5c68499",
+      "nominal-cavity-13bbde525b7470979f1df38e",
+      "nominal-cavity-60ef32ab2c7e82004b28cc56",
+      "nominal-cavity-122e12cb1fd35865df33e7e7",
+      "nominal-cavity-3d130aae3fef5f12500f19c3",
+      "nominal-cavity-0e5aefc319bc3611c4a99b84",
+      "nominal-cavity-72ff484d77771f057c6e56d6",
+      "nominal-cavity-1320e1c9403575a26ad9e577",
+      "nominal-cavity-2c6516cfef6e09ba5e4ec808",
+      "nominal-cavity-9066d8b0c9550a8bf253daba",
+      "nominal-cavity-b91e4f76d5d6c981abc33487",
+      "nominal-cavity-05d996a8f9f07c2f5368fd75",
+      "nominal-cavity-a9d295a2ff04038608223030",
+      "nominal-cavity-a2b756eb6fa5015b55f3fc7c",
+      "nominal-cavity-3ae491d29ce84e2eeb074ec1",
+      "nominal-cavity-ab9c7d9f0fb28fee9259425d",
+      "nominal-cavity-21f6bcdc04f688395289560a",
+      "nominal-cavity-bbc08b17d73ae7bb028fabdb",
+      "nominal-cavity-a7f9f8bec2dd5cdf2558d410",
+      "nominal-cavity-ed70f8ea229b990b439d6e5e",
+      "nominal-cavity-28b0d884838bfae7937f0e17",
+      "nominal-cavity-515f3e2e2cafed0b0422a966",
+      "nominal-cavity-dae6aeb198aea84db741cfd0",
+      "nominal-cavity-07413a7685ad5c661cffd6b6"
+    ],
+    "contact_cells": 212,
+    "independent_accepted": false,
+    "independent_failure_reason": "not persisted by original worker",
+    "outside_target_removed_mm3": 0.0,
+    "plan_seal": "sha256:1b80581b2d04071f415583a2716f56b90a3b3d0bfa59dc43446ba718c4efeffb",
+    "public_return": 47.508437886941074,
+    "removed_cells": 51,
+    "retained_contact_cells": 161,
+    "same_removed_cell_union_as_teacher": true,
+    "steps": 24,
+    "subject": "ReMIND-045",
+    "target_removed_mm3": 48.637450444683644,
+    "teacher_actions": [
+      "nominal-cavity-2e7122d692aec111fb6a1628",
+      "nominal-cavity-7a69f4a8cd7e8ea71e4af5c2",
+      "nominal-cavity-08ddba04f5981a8ffabfe1ee",
+      "nominal-cavity-7bdf67f47de6e5ca7ba7d91e",
+      "nominal-cavity-6c207425fb1c81db3aaf6bde",
+      "nominal-cavity-bca3719c38b5f61afd8f0b51",
+      "nominal-cavity-5adbe8af9ad1faf0cb454802",
+      "nominal-cavity-c521d0546ad10479e3c347e3",
+      "nominal-cavity-ca216ec681ac4651f10d5c61",
+      "nominal-cavity-d57e3e6d61827150ad7f6c34",
+      "nominal-cavity-88bc1008c2bd9995dae66f1b",
+      "nominal-cavity-3532d3d0aba51e03e0899454",
+      "STOP"
+    ],
+    "teacher_public_return": 48.181962920864926,
+    "teacher_target_removed_mm3": 48.637450444683644,
+    "terminal_reason": "HORIZON"
+  }
+]

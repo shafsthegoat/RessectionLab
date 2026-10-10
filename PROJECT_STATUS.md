@@ -1,8 +1,15 @@
 # Project status
 
-**Current priority, October 10:** test whether shared imitation and scratch RL
-can learn the useful complete routes now established on the fixed recovered
-TRAIN cases, then test transfer under the same declared condition. The matched SELECT013
+**Current priority, October 10:** resolve the independent geometry rejection of
+the fixed post-exposure IL64 route on TRAIN045, then finish matched scratch RL
+and test transfer under the same declared condition. All 64 imitation updates
+completed. TRAIN015 reproduces search's 58-cell route outcome; 002/018 stop.
+TRAIN045's saved rollout removes the same 51 cells as search in 24 rather than
+12 movements, but its independent replay was rejected at movement 22's access
+check. The separately completed fixed-action diagnostic reproduces the rejection
+without training or model calls. That fourth result is
+unaccepted, and the original full attempt remains failed. No retraining is needed
+to diagnose its saved actions. The earlier matched SELECT013
 comparison is complete: imitation, scratch RL, greedy search and beam search all
 STOP with zero progress. Beam explores24 layers/519 negative prefixes; no useful
 transfer or learned advantage is demonstrated. On the original TRAIN cases,
@@ -15,7 +22,7 @@ padding prevents any exterior free-space seed. A separately labeled post-exposur
 condition now permits two positive complete routes: 58 target cells on 015 and 51
 on 045, with 002/018 still stopping. These remove less than 1% of either full target;
 the original failed conditions remain preserved. The new learning comparison
-will retain all four patients and all 29 teacher decisions, with fixed endpoints.
+retains all four patients and all 29 teacher decisions, with fixed endpoints.
 Automatic support and supplied tumor labels remain annotation-assisted inputs,
 not verified physical occupancy or neurological injury evidence. Existing patient
 roles remain fixed. No held-out patient or clinical benefit has been demonstrated.
@@ -23,7 +30,13 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
-- **The richer four-patient learning comparison is ready:** [the tested training integration](artifacts/post-exposure-learning-source-v1/RESULT.txt) admits only the exact post-exposure TRAIN condition and its 29 complete measured search decisions. Fresh shared initialization compares cached balanced IL64 with scratch RL8; all four final routes must complete and replay, including STOP or worse outcomes. All 154 canonical controls pass, alongside 13 runner controls and independent source review. Existing model, loss and reward are unchanged. This is preparation, with no new learning result yet; the actual fixed endpoints are next.
+- **The first richer imitation endpoint exposes a specific efficiency problem:** [the failed-run evidence](artifacts/post-exposure-il64-result-v1/REPORT.txt) preserves all 64 updates, all four cases, three accepted routes and the rejected TRAIN045 route. Independent saved-data checks pass 2,528 assertions. [Its motion diagnostic](artifacts/post-exposure-il-behavior-v1/REPORT.txt) finds no repeated or empty cuts: 045 reaches the teacher's exact 51-cell set with twice as many movements, 103.525 mm extra path and seven tool switches. Eight of twelve saved motion states rank lower-value actions first. These are training-patient findings; the rejected route remains unaccepted. A dense public-simulator ranking target is a proposed single contrast after the matched RL baseline, not a new result.
+
+- **The next optimization has concrete limits:** [the representation audit](artifacts/post-exposure-representation-audit-v1/REPORT.txt) places all 109 teacher-removed cells inside the native-resolution crop; blanket loss through whole-brain downsampling is unsupported. Learned feature retention is still unmeasured. [The deployment-cost audit](artifacts/learned-deployment-cost-audit-v1/REPORT.txt) attributes 90.30% of greedy time after construction to geometry previews, which the actor currently also requires. No latency advantage over greedy is demonstrated; a future lazy-verification comparison would need explicit input changes and full verification-cost accounting.
+
+- **Rejected evaluation evidence now survives:** the replay helper saves the independent certificate before rejecting a route and includes the reason in its error. Rejected routes still cannot produce accepted desktop frames. All 17 relevant generated preflight/evaluation controls pass. This reporting correction does not alter geometry, reward or the failed IL64 attempt.
+
+- **The richer four-patient learning comparison has reached its first endpoint:** [the tested training integration](artifacts/post-exposure-learning-source-v1/RESULT.txt) admits only the exact post-exposure TRAIN condition and its 29 complete measured search decisions. IL64 completes all updates and checkpoint reload; its failed fourth evaluation is described above. Scratch RL8 remains unrun. All 154 canonical integration controls passed, alongside 13 runner controls and independent source review. Existing model, loss and reward are unchanged; all four cases remain in the denominator.
 
 - **Fewer simulator copies, unchanged decisions:** [the paired memory optimization](artifacts/lazy-copy-performance-result-v1/REPORT.txt) avoids 422 working-mask copies and 1.015 GB of cumulative copying (17.66%) on the fixed TRAIN025 route. Both arms make 1,224 previews and preserve the complete three-motion/STOP route, scores, final state and replay exactly. Greedy time is 1.574 versus 1.587 seconds: this single ordered pair establishes no meaningful speed gain. All 105 relevant canonical controls pass; the earlier pre-worker setup failure remains recorded.
 

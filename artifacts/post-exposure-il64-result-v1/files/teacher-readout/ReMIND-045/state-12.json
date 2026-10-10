@@ -1,0 +1,31 @@
+{
+  "action_ids": [
+    "STOP"
+  ],
+  "action_mask": [
+    true
+  ],
+  "endpoint": "IL64",
+  "observation_hash": "sha256:bfb83876cf7daf568f636322ac416622af0f37422eefe333ad3e5c5af584e83d",
+  "scores": {
+    "best_movement_minus_STOP": null,
+    "conditional_teacher_movement_probability": null,
+    "greedy_action": "STOP",
+    "logits": [
+      -5.187429904937744
+    ],
+    "probabilities": [
+      1.0
+    ],
+    "stop_probability": 1.0,
+    "teacher_CE": -0.0,
+    "teacher_minus_STOP": 0.0,
+    "teacher_movement_rank": null,
+    "teacher_probability": 1.0,
+    "teacher_rank": 1,
+    "value": 0.35702335834503174
+  },
+  "step": 12,
+  "subject": "ReMIND-045",
+  "teacher_action": "STOP"
+}

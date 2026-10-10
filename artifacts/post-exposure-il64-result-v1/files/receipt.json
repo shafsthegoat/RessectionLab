@@ -1,0 +1,42 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "failed_or_unresolved",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 960,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 900,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoints": {},
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 727.7922132080421,
+  "endpoint_control_sha256": null,
+  "exit_code": 1,
+  "final_owned_pids": [],
+  "output_bytes": 8765145,
+  "private_reference_execution": false,
+  "release_sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b",
+  "result_sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975",
+  "sampled_peak_rss_bytes": 1548288000,
+  "samples": 3469,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/post-exposure-learning-v1/IL64/source-index.json",
+    "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+  },
+  "status": "failed_or_unresolved",
+  "stop_reason": "final_guard:ValueError:Incomplete fixed-four pilot endpoint",
+  "supervision_bytes_before_receipt": 19566,
+  "worker_final_sha256": "226d5a0e0efd2eafecd7301ff09bb7e302aa2a9a0bccbf818c00916cd98ff4fa",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

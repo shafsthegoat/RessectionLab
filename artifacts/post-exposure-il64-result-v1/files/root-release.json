@@ -1,0 +1,281 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "claim": "same world/model/init, distinct endpoint/objective and measured costs; no equal-cost or held-out claim",
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "completion": "fixed own updates and reloaded endpoint,29 teacher logits,4 complete learned replays; no performance threshold",
+  "execution_limits": {
+    "loss_forward_cap": 1856,
+    "native_preview_cap": 70080,
+    "parent_seconds": 960,
+    "policy_forward_cap": 1981,
+    "source_visits": 8,
+    "teacher_cache_payload_bytes": 268435456,
+    "teacher_trace_reuses": 256,
+    "updates": 64,
+    "worker_seconds": 900
+  },
+  "expected_head": "324e42e474430dcfa1fd9edf02104eee9f506652",
+  "inputs": {
+    "initial_release": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+      "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+    },
+    "metrics_ReMIND-002": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/episode-metrics.json",
+      "sha256": "59a3e11e3bd662063df245ba485ff36b4001c0445c688f572421ea42e1a83789"
+    },
+    "metrics_ReMIND-015": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/episode-metrics.json",
+      "sha256": "3ff9a551a4cad52e26936c797cdaf0b6923a6ddf5ae894867c8dd517a99359d9"
+    },
+    "metrics_ReMIND-018": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/episode-metrics.json",
+      "sha256": "911e0d6060b4e16188a054ff2f736be90f897796db48b22c2b85a3faf16cb012"
+    },
+    "metrics_ReMIND-045": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/episode-metrics.json",
+      "sha256": "fa67b7ee6862222d480d60a570161e7990082e854e0327814191a629a48f6e21"
+    },
+    "parent": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01.supervision/receipt.json",
+      "sha256": "664b7ac101e8c79e512d52f971f424b5e2b1bbeaa7d7b1502c110afb4364f233"
+    },
+    "plan_ReMIND-002": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/greedy-plan.json",
+      "sha256": "757449e8ac744daee89dd085924a27c8a7a4fc571a1c906994188bf08c4989bc"
+    },
+    "plan_ReMIND-015": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/greedy-plan.json",
+      "sha256": "954ec5204482ba6c91867e34e61700470f060c74b702711e57414a77cb2cfcf1"
+    },
+    "plan_ReMIND-018": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/greedy-plan.json",
+      "sha256": "4d0b9a0029293e787a99c276bd6bca9430bc0722c2eaaecd88bb193d4e1e5040"
+    },
+    "plan_ReMIND-045": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/greedy-plan.json",
+      "sha256": "da7b49d6fde2c97c9f6911f42475afb7a4cc946e8c894e8267cc4a82679c58c1"
+    },
+    "release": {
+      "path": "build/remind-post-exposure-feasibility-v1/root-release.json",
+      "sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a"
+    },
+    "replay_ReMIND-002": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/independent-episode.json",
+      "sha256": "40d784c101280b97bc902fc77acdf363e5243b1bfab3cfeeb4feb276713acae8"
+    },
+    "replay_ReMIND-015": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/independent-episode.json",
+      "sha256": "bcaf1303133576b7a281eec3915a3088f95306b17ef655041222f85272387547"
+    },
+    "replay_ReMIND-018": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/independent-episode.json",
+      "sha256": "20d0f0be9e4aa990136d47e5e2c91c2df140492b130d850fcb641e737bf7e6cb"
+    },
+    "replay_ReMIND-045": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/independent-episode.json",
+      "sha256": "a18c03193e4968bf2f2caa44257117c51107091ee0bdfe18083b7f5edd1b0db9"
+    },
+    "result": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/result.json",
+      "sha256": "7a57fd74f58b15d6975be4459fe4f46e6396dfa9e2f3c0fec0ef68cf5e550358"
+    },
+    "source_index": {
+      "path": "build/remind-post-exposure-feasibility-v1/source-index.json",
+      "sha256": "4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50"
+    }
+  },
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "il_teacher_weighting": "balanced_STOP_motion_CE_v1",
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+      "patient_order": [
+        "ReMIND-002",
+        "ReMIND-015",
+        "ReMIND-018",
+        "ReMIND-045"
+      ],
+      "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_cache_payload_bytes": 268435456,
+      "teacher_decisions": 29,
+      "teacher_observations": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+      "teacher_source": "fixed_saved_greedy_complete_histories_v1",
+      "teacher_steps": [
+        1,
+        14,
+        1,
+        13
+      ]
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 64,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "method": "IL",
+  "new_four_training": true,
+  "output": "build/post-exposure-learning-v1/IL64/attempt-01",
+  "parent_seconds": 960,
+  "public_manifest_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "source_index": {
+    "path": "build/post-exposure-learning-v1/IL64/source-index.json",
+    "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "version": "matched-post-exposure-learning-v1"
+}

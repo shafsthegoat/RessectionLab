@@ -1,0 +1,71 @@
+Post-exposure actor representation: source and saved-metadata finding
+
+Established input visibility
+The actor receives a fixed native-grid crop, not a whole-volume 64³ resize.
+NativeSpatialCase places it from the access, offsets its center inward by one
+quarter of its axis length, clips it to the source, and keeps it fixed throughout
+the episode. Array slicing preserves native samples; only intensity normalization
+is applied. All four crops are 64³ at approximately 0.9765625/0.9765625/1 mm spacing,
+or 62.5×62.5×64 mm cell extent. Affine reconciliation preserves sample indices.
+
+Saved source-affine/crop/history arithmetic finds all 109 removed cells inside the
+actor crops: 58 on 015 and 51 on 045, over 25 motions. Seven motions remove exactly
+one cell. A newly removed occupied cell becomes connected-free/cavity 1 within
+interaction-domain coverage, so these changes do not vanish at the DTO stage.
+002/018 have no committed motions. Every initially emitted ray has 5/5 samples
+inside the crop. Positive teacher entry-to-tip lengths are 0.488 mm on 015 and
+1.465–3.418 mm on 045: the five centerline samples are 0.122 mm and 0.366–0.854 mm apart.
+These short teacher rays provide no evidence of coarse axial sampling failure.
+
+Scale and compression
+Tools have active radii 1.0/1.7 mm, shaft radii 1.4/2.7 mm, and active centerline
+lengths 3/4 mm. One voxel is about 0.954 mm³. Adjacent source-voxel endpoints differ
+by 2/63≈0.03175 in normalized action coordinates; they are not quantized together.
+
+The encoder has two stride-one 3³ convolutions (18→8→16 channels;5³ receptive
+field), followed by 2³ adaptive-average pooling. Each global bin averages 32768
+encoded sites over about 31.25×31.25×32 mm. One input-cell change can affect at most
+125 encoded sites/channel before pooling. This is a support bound, not a measured
+activation or logit attenuation. Each action additionally samples five local
+encoded centerline features with trilinear interpolation and in-bounds flags.
+
+The 16 action scalars carry poses, direction, tool dimensions, angle and tool
+change; prospective removed-cell count, target gain and reward are absent.
+Nominal target/tissue remain static; the network must combine them with changing
+cavity to infer remaining material. The 16 global target scalars keep full-target
+centroid/bounds/mass static; only committed-overlap fraction changes. One target
+cell contributes 0.0001291 on 015 and 0.00003952 on 045. These increments are not
+float 32-zero. The actor also gets centroid-to-tip relation 4. STOP uses pooled
+context/state/spacing/global target; only the critic additionally receives the
+mean/max/count summary of legal candidate geometry and ray features.
+
+What is not established
+No weights, real observation arrays or model activations were read. Actual actor
+feature aliasing and a causal learned-compression failure are not demonstrated.
+Out-of-crop arrangements with equal overlap and identical remaining model inputs
+would be indistinguishable, but this conditional invariance is not evidence that
+the observed 109 inside-crop removals are invisible. Coarse pooling, static target
+summaries and learned target/cavity combination are plausible limitations only.
+Earlier annotation-to-MR nearest-neighbor sampling is a separate lossy stage:
+saved 002 tumor counts 24294→24274;015/018/045 counts unchanged. This does not arise
+from the actor crop and does not identify particular lost cells.
+
+One conditional diagnostic, after fixed endpoints
+If failures remain, use one frozen 29-state TRAIN teacher feature/readout audit:
+measure raw cavity deltas, pooled/ray feature deltas and STOP/matched-physical-
+action logits under fixed endpoint weights. Record unmatched actions explicitly.
+Exact feature equality could establish lost information; distinguishable features
+with wrong ranking would direct diagnosis elsewhere. No optimizer/search/new
+labels, architecture sweep, current-run tuning or SELECT-driven choice is implied.
+
+Reproduction and scope
+Run derive_saved.py from this directory with stdlib Python. It reads only the
+21 files pinned in input-pins.json, verifies the seven inspected source hashes
+against the frozen IL 64 source closure, and joins saved episode hashes to its
+release. scalar-calculations.json contains crop/spacing/action-count arithmetic;
+it contains no image, observation, weights or copied motion/cell-index arrays.
+Source anchors: native_spatial_task.py crop 420/channels 550/observation 796;
+spatial_policy.py encoder 129/inputs 213/pooling 269; spatial_observations.py 390;
+public_target_context.py 229; geometry.py 109. Exact bytes, not line numbers, are
+pinned. This is a representation audit of supplied public TRAIN evidence under
+an explicit simulated exposure assumption, not anatomy or clinical validation.

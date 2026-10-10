@@ -1,0 +1,21 @@
+{
+  "status": "failed_or_unresolved",
+  "method": "IL",
+  "SELECT_EVAL_opened": false,
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "torch": "2.14.1",
+    "numpy": "2.5.3",
+    "threads": 1,
+    "interop_threads": 1,
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "failure": {
+    "type": "ValueError",
+    "message": "Independent native geometry rejected replay"
+  },
+  "wall_seconds": 727.0557749578729,
+  "canonical_result_sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+}

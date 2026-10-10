@@ -1,0 +1,203 @@
+{
+  "excluded": "checkpoint weights, patient arrays, full coordinate/microstep trace copies; full originals bound by input-index.json",
+  "files": {
+    "REPORT.txt": {
+      "bytes": 4853,
+      "sha256": "5ab1a615d0962448d0ab3a5f68557a9d6514688692fbacf1092aada62c643228"
+    },
+    "audit-attempt-01.log": {
+      "bytes": 1203,
+      "sha256": "3f8629630e330222c089776064c29ce8c17e31bb177dc1343818220fe28893f6"
+    },
+    "audit-result.json": {
+      "bytes": 1315,
+      "sha256": "22bad504e389e6841f5cb0a8e47e58bac63c5d9408d5f9a9453c71e5fb38067b"
+    },
+    "audit_saved.py": {
+      "bytes": 13518,
+      "sha256": "398a67007f47adf17fb0dc2ec83ffd63d8c1188501c35f376e2164c6c22714f6"
+    },
+    "files/ReMIND-002-independent-geometry.json": {
+      "bytes": 2494,
+      "sha256": "8c0bdca48491153826756f61e1faaa4ff0907418f61a35a8ab05932e7a6b44be"
+    },
+    "files/ReMIND-015-independent-geometry.json": {
+      "bytes": 2626,
+      "sha256": "de50ee908f15910282c452c47662bdef545d48bcf1b2f31cf3072af8e0dbc438"
+    },
+    "files/ReMIND-018-independent-geometry.json": {
+      "bytes": 2494,
+      "sha256": "af23dc1a5a482d33bb001b2cde993079e06dce68697f98f5ead8ff32b72a783a"
+    },
+    "files/checkpoint-reload.json": {
+      "bytes": 238,
+      "sha256": "d4441ca39c88921651639fd3bfb2896c1e04b7a3e5e693e3357cf5db6079865a"
+    },
+    "files/declaration.json": {
+      "bytes": 16076,
+      "sha256": "cfd113bda84f0bb9d9277a7299f622b97a8049b095a58ae1d6512b3147d37d89"
+    },
+    "files/endpoint-teacher-metrics.json": {
+      "bytes": 262,
+      "sha256": "f12648322f9dea2fdd33b78e72548066c575cf4ae4a9d6d5353e2ed8e171b150"
+    },
+    "files/receipt.json": {
+      "bytes": 1637,
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "files/result.json": {
+      "bytes": 9786,
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    },
+    "files/root-release.json": {
+      "bytes": 9080,
+      "sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b"
+    },
+    "files/source-index.json": {
+      "bytes": 13888,
+      "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+    },
+    "files/teacher-readout/ReMIND-002/state-00.json": {
+      "bytes": 3138,
+      "sha256": "a218135fe9bf2f6965aad8e3e73d8942f8844156dbb9e183394ca993649d124d"
+    },
+    "files/teacher-readout/ReMIND-015/state-00.json": {
+      "bytes": 5202,
+      "sha256": "13f20551c7029dbf6ff801ef43cf6a9da945ae5f5c2a702b832a6c620d224e4b"
+    },
+    "files/teacher-readout/ReMIND-015/state-01.json": {
+      "bytes": 4879,
+      "sha256": "dfcb9f1d3cae2e18b048e9a9e1601d85d155ad77fe31fbe130561bcf033c463e"
+    },
+    "files/teacher-readout/ReMIND-015/state-02.json": {
+      "bytes": 4532,
+      "sha256": "145f3194db204c2f4e59b8a42be2ef5c083792bdf604d2ccaa46a6893979bde6"
+    },
+    "files/teacher-readout/ReMIND-015/state-03.json": {
+      "bytes": 4200,
+      "sha256": "822f0f9cdcd330a8b533312266fcadc28d3a779f107566c80b71bdda242b0186"
+    },
+    "files/teacher-readout/ReMIND-015/state-04.json": {
+      "bytes": 3866,
+      "sha256": "12ae8364301221eaad26e01c4bbd573956145d8ee42119a2674f6a08424d7871"
+    },
+    "files/teacher-readout/ReMIND-015/state-05.json": {
+      "bytes": 3520,
+      "sha256": "3d8a532b2aac95eec87e75eeefdcd16237d6cbc00cd3213bb51f1a1954331258"
+    },
+    "files/teacher-readout/ReMIND-015/state-06.json": {
+      "bytes": 3085,
+      "sha256": "73ba770eb1ec63e14638cce36737f95229136bf7ba03146b42fa4c9e2d85126a"
+    },
+    "files/teacher-readout/ReMIND-015/state-07.json": {
+      "bytes": 2641,
+      "sha256": "1b88805e0769574ba8b55800b4796a1ef81168d1a18f21a6a1cad63ce4209817"
+    },
+    "files/teacher-readout/ReMIND-015/state-08.json": {
+      "bytes": 2192,
+      "sha256": "76e17557f9040b1cff2503a10e09014d6ad6f3c4e6492582ee6e9abdd360b60f"
+    },
+    "files/teacher-readout/ReMIND-015/state-09.json": {
+      "bytes": 1747,
+      "sha256": "4316fda50f4c94b4cbcaacf2f23afb89faa1a2361ffcbca9cf425a7ba2876610"
+    },
+    "files/teacher-readout/ReMIND-015/state-10.json": {
+      "bytes": 1525,
+      "sha256": "e9b0b0045d46cb919a22efee1eaf6573c5644036dc3074e66417fb2d0a8938ce"
+    },
+    "files/teacher-readout/ReMIND-015/state-11.json": {
+      "bytes": 1308,
+      "sha256": "38e6b0dacc0c123ab9a151ae40b28dcb2683821c6b03348a8d225ef99ed887e0"
+    },
+    "files/teacher-readout/ReMIND-015/state-12.json": {
+      "bytes": 1081,
+      "sha256": "5f352f6c675a54217acb88701fcdc55398d7d0088b0a1fff6872a7e77da2e209"
+    },
+    "files/teacher-readout/ReMIND-015/state-13.json": {
+      "bytes": 693,
+      "sha256": "6f57d8d0d9b40bfdcf4daf14e8f288fc08fc3176097d53cd7ad075768ade7a5d"
+    },
+    "files/teacher-readout/ReMIND-018/state-00.json": {
+      "bytes": 2687,
+      "sha256": "24fd4d4c6f09b0560c6b3d33d6fe698dbf917c7d607b3dbcbc8254f5d2e34875"
+    },
+    "files/teacher-readout/ReMIND-045/state-00.json": {
+      "bytes": 5451,
+      "sha256": "7b001dbfddcaf12c39a496d777be74ce7fd342d887df7f635f120703d73732cb"
+    },
+    "files/teacher-readout/ReMIND-045/state-01.json": {
+      "bytes": 4995,
+      "sha256": "f9d1a377d2bf468daabb78d71e2c96985853f04d4f11df1634c0815bfbe85e0e"
+    },
+    "files/teacher-readout/ReMIND-045/state-02.json": {
+      "bytes": 4665,
+      "sha256": "0e53cc265424c8719aaeb3500e68b2ba814b3345228116201d63744ba16cad1b"
+    },
+    "files/teacher-readout/ReMIND-045/state-03.json": {
+      "bytes": 3655,
+      "sha256": "bbd786afb124d74bf393342902d2cb1be6e2f16b2832adf672bfbb1804297245"
+    },
+    "files/teacher-readout/ReMIND-045/state-04.json": {
+      "bytes": 3204,
+      "sha256": "922971a85a078f66a91c0f995e5ab699281ac8055e3ffc4094886d8014cfa3d4"
+    },
+    "files/teacher-readout/ReMIND-045/state-05.json": {
+      "bytes": 2865,
+      "sha256": "5c15501d64390522d623ffbd72413edcde5d48fbe7da281f03d19c95d7581955"
+    },
+    "files/teacher-readout/ReMIND-045/state-06.json": {
+      "bytes": 1866,
+      "sha256": "fd9c567228b294642aa15e48ad22c37e1c59f569c6652b0ecff9d2c23acaf9f5"
+    },
+    "files/teacher-readout/ReMIND-045/state-07.json": {
+      "bytes": 1867,
+      "sha256": "39fb7c2cc2b62e8b0d414d60cb46771f9188a7e50d41dc59a323657e3c0a64c3"
+    },
+    "files/teacher-readout/ReMIND-045/state-08.json": {
+      "bytes": 1420,
+      "sha256": "a334bfcf6fcfb72b96712ef385bf0f13b717d1f59e50f37b14d0fa4079422e8d"
+    },
+    "files/teacher-readout/ReMIND-045/state-09.json": {
+      "bytes": 1188,
+      "sha256": "aed4cd1e13d4b15d38b768feff237acf78d9ecba48e182dc3ef0049ae6b1346c"
+    },
+    "files/teacher-readout/ReMIND-045/state-10.json": {
+      "bytes": 1310,
+      "sha256": "56f2dff748f0b5cc10590bd76a767339fe874b597424da55183b73c48c5c3b7d"
+    },
+    "files/teacher-readout/ReMIND-045/state-11.json": {
+      "bytes": 1086,
+      "sha256": "574475418fbe5a87c3c25e285aa7e97edfe1606ea65863ac08cdc0192f699807"
+    },
+    "files/teacher-readout/ReMIND-045/state-12.json": {
+      "bytes": 693,
+      "sha256": "010e8e9780a767e6a3dab09b802ea507923c22c371e248defd8860344383f336"
+    },
+    "files/training-dynamics.json": {
+      "bytes": 51785,
+      "sha256": "6d3a58f1e44c433e287418cd165b891108320436d93f056a9913700be04a86cd"
+    },
+    "files/worker-final.json": {
+      "bytes": 685,
+      "sha256": "226d5a0e0efd2eafecd7301ff09bb7e302aa2a9a0bccbf818c00916cd98ff4fa"
+    },
+    "files/worker.log": {
+      "bytes": 2170,
+      "sha256": "ac029627a2e695e310a17e9f165ebbacab5fa0c476590c57c36eb64cbeed5559"
+    },
+    "input-index.json": {
+      "bytes": 76454,
+      "sha256": "dca05801a36c979630200b08a486a72abbb61e8b9bcf6730d6c98f2921ba2ba7"
+    },
+    "route-summary.json": {
+      "bytes": 27067,
+      "sha256": "50d468cd478763727231cc922cfbf6fa5bf786bc35351001f32a710c5d32fde7"
+    },
+    "update-summaries.json": {
+      "bytes": 286717,
+      "sha256": "5a8e403b2295d97764fb539b89fbdb8a33590ae691d8bddbed54eb3f568d97f6"
+    }
+  },
+  "status": "original_failed_endpoint_preserved_diagnostic_pending",
+  "total_bytes": 604909
+}

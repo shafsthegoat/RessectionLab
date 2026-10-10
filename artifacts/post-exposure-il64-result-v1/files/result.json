@@ -1,0 +1,220 @@
+{
+  "SELECT_EVAL_opened": false,
+  "TRAIN": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "TRAIN_greedy": {
+    "ReMIND-002": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+      "plan_seal": "sha256:240075a0fab00a180b639716048153dd96d60f80d8ee03a63d07d877e2f3778f",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-015": {
+      "actions": [
+        "nominal-cavity-655c4afa2663656417dbdd6b",
+        "nominal-cavity-77b000c9ce3f4e3f33cc6e54",
+        "nominal-cavity-bb89e11e6102720459340013",
+        "nominal-cavity-bb1bb3546a118501d730fab2",
+        "nominal-cavity-9f0a72d7e5eaa5f361d41a7b",
+        "nominal-cavity-bc347fb6da0b567e41689b11",
+        "nominal-cavity-d98d39fc5544c0371f3b9a10",
+        "nominal-cavity-44880c37d1801aea10e417db",
+        "nominal-cavity-45112b64dc879df87bf848c4",
+        "nominal-cavity-fd4ae7f5d3d7943fe64fa8b7",
+        "nominal-cavity-c4989305cc16cfd3c2b0e354",
+        "nominal-cavity-387dda41d472bc130eaddbdb",
+        "nominal-cavity-1145c3cfa658a4858f5c9003",
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+      "plan_seal": "sha256:d96e2d116356b3cfb49c973ba7211d74df4a7b77917a30468d6003af04c6a1de",
+      "public_return": 54.86621503580145,
+      "steps": 14,
+      "target_removed_mm3": 55.31311034856145
+    },
+    "ReMIND-018": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+      "plan_seal": "sha256:c3b7e6d5d89c37f0a2af529e3a8d36c219ed02ee92a36b38544a1615a6d10544",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "checkpoint_loads": 1,
+  "checkpoints": {
+    "IL": {
+      "bytes": 137636,
+      "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+      "path": "IL-final.psckpt",
+      "sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c"
+    }
+  },
+  "complete_wall_seconds": 723.747208958026,
+  "completed_source_visits": 7,
+  "endpoint_teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.00043637995258904994,
+    "balanced_mean_CE": 1.1842761767125922,
+    "motion_count": 25,
+    "motion_mean_NLL": 2.3681159734725954,
+    "teacher_action_accuracy": 0.3793103448275862,
+    "unweighted_mean_CE": 2.041539477814663
+  },
+  "failure": {
+    "committed": false,
+    "message": "Independent native geometry rejected replay",
+    "type": "ValueError"
+  },
+  "fresh_common_initialization_verified": true,
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "loss_forward_calls": 1856,
+  "method": "IL",
+  "native_preview_entries": 12370,
+  "optimizer_updates": {
+    "IL": 64,
+    "RL": 0
+  },
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "private_reference_reads": 0,
+  "search_calls": 0,
+  "selection_readiness": {
+    "execution_admitted": false,
+    "ready": false
+  },
+  "status": "failed_or_unresolved",
+  "teacher_cache": {
+    "RL_reuse": false,
+    "array_bytes": 228140810,
+    "cache_seal": "sha256:015d6716d2c626d06069f2b8a9e112e7d8292e89c7b3736b0680fdaf20e2b292",
+    "complete": true,
+    "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+    "memory_scope": "owned crop buffers plus JSON byte estimate; Python overhead and tree RSS remain supervised",
+    "metadata_json_bytes": 441861,
+    "mode": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+    "readout_rows": 29,
+    "trace_reuses": 256,
+    "traces": [
+      {
+        "array_bytes": 7867396,
+        "context_hash": "sha256:9b0707b791111a23b735cd8d8707a9c35c073ba5e683331cb29f22050b6c9b08",
+        "independent_replay_hash": "sha256:f40137d13b8dba12ec6b476bf34c02a823f7c97f4f8e63a54877c418f874b192",
+        "metadata_json_bytes": 11958,
+        "observations": [
+          "sha256:a3fe250d66db7d7d04ae81931828aa34fb5a8cccc6697e81e54f142c70b3ef06"
+        ],
+        "plan_seal": "sha256:360d251f8711fe158ac6154fad3db152e6cc7136f77e6cdd731041ef5310757a",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-002",
+        "trace_seal": "sha256:67c8db3bfe68c6aff5f23c861559d4d62d7cf5f6eece6a86a20464e8a6a6919e"
+      },
+      {
+        "array_bytes": 110138771,
+        "context_hash": "sha256:ed93f8375ec37828be6f8dfeff24d417618db65ab2ee4a106786389a41e82257",
+        "independent_replay_hash": "sha256:0e55c2d4a39aad0da635f5a0310d3eecc6f0e6b8eae40f0270ad43b122870e1c",
+        "metadata_json_bytes": 200312,
+        "observations": [
+          "sha256:99bedb2f37c12c84ad4fb51111a81bda8c10aed9af6ca97d282ed2fc5bfa8c44",
+          "sha256:2f4dc91f5a29df91301c7707453ed52575ea7df4ac3167b361364aca20a80a86",
+          "sha256:38ec2ffa4e35849b7a748b11484e37e67fc43e40d758a0c56462da9326f9575f",
+          "sha256:650b05250d3a140756e03057d5a52b72e46a7221cdd053c9d3ab1dfd7d342f6a",
+          "sha256:baec617f896772b2ffaae8dd201d253d790cda39364a89acbd9adbc3218c59ae",
+          "sha256:4e9e3950ab8efa7572d0907dd50a706b7970ac7941b4a67d69db980ece0be90e",
+          "sha256:fc6202d5be830c186350c002e1268b9ef587447021aaf9bef97ea0fac4767076",
+          "sha256:52820cf3aed0e4425f98cb80e72b8a93307a7847dfc7b4420a75a6db8663d33e",
+          "sha256:519932f96463350c0cd807583d6a784b3ac4325310e3ecbd5828e08226c6efc1",
+          "sha256:918a89d0b9f58d01cf17fd33af6d48e1ff39edb9f5b0722462c6745c30cd7dd8",
+          "sha256:429c5108d9b1c4918077c89879d4d9fdc008f60947650403e2267515061ddab0",
+          "sha256:3ad39e9702d980569ece43c8815b26859a7ffbd547f2ea7a7224134e12eff079",
+          "sha256:80710401a93370f8aec8159189a66d79444a600cb5fe382d4cdd5a02c4a0b7d1",
+          "sha256:bf1f87a48671ee89dea55913c2948d63c20686be2f5d63ab82c63ad19b6c598a"
+        ],
+        "plan_seal": "sha256:8482e1e49bd9ffd0e5924e260be955a8f85ca4dc4da636b2d9a89d2ec2a906c4",
+        "steps": 14,
+        "stop_steps": 1,
+        "subject": "ReMIND-015",
+        "trace_seal": "sha256:c796be31f385ead4dbef9fe35a3a34c46f1aa1bbc2308f1a1a8ab0bed46c3694"
+      },
+      {
+        "array_bytes": 7866880,
+        "context_hash": "sha256:ceddd29d57eb84ee0e74c2816ce9a2680e0f7541b013defbd59f8c531cc3447f",
+        "independent_replay_hash": "sha256:1ab4929e5e3d922ffbe24a9cabc5e64e08bdf765be8f1b1c1275336c547fab82",
+        "metadata_json_bytes": 11725,
+        "observations": [
+          "sha256:5312ee05f0bb91a936083652e38fd8ba9b384421ba200588dd94b0e241e05685"
+        ],
+        "plan_seal": "sha256:2ce98b24a4ce6d75e94e60f363033f3232773336a856705428832b67ac8e0ed8",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-018",
+        "trace_seal": "sha256:9372dc8d3bee281897b43f103488ac6b0d23da58f0668238e19f823ddaf37d84"
+      },
+      {
+        "array_bytes": 102267763,
+        "context_hash": "sha256:1c660e1b81b5465a6fb8987c163154a94f88b403595247fe3866ae6a7280cdd1",
+        "independent_replay_hash": "sha256:fd1ab94b92e4b2fd2f7df7a9776d51a473087a7eb29260eabc187e29e51e55a5",
+        "metadata_json_bytes": 217866,
+        "observations": [
+          "sha256:f1b76f48f457bc2dbe05aec280f28de06f428d1a2225c4515799a9872ae0edba",
+          "sha256:4f9ae26779202a8e3ed056028eec959c71c120aa6e3d081438e84eb3b6a54a7f",
+          "sha256:cfe8cc8c9a80d47b477980737067ff612ac6780d45c98a1048bd0e384e279fe7",
+          "sha256:cbcc03c929e1937b83b9a783ce30d215df85557f73321d3df8dd4ab293bdde06",
+          "sha256:94d2f37bd176481f1ee7d2de0cb61b1c22eee8c93632deefc42fb05735a009ba",
+          "sha256:3034f53857463c84b4b61e1f4e59f8a1bfd723b23548b6c806bd7e1f4818e6f1",
+          "sha256:413493c93811d3c73f7267f7432201c94faa28bb501efb84e0a4d7e096e288b4",
+          "sha256:0b74e0aee0eec6929a29f9342a0082cfe0ac0aeb0d1fcbfb007d2c6477f0d910",
+          "sha256:cbc4b2d5ea7451bab94b589fa28d8bfccf6a6489abae03f8f963d1b1322f6d5c",
+          "sha256:335a8e0fec9206b52eee0969f625d6517fb344324cd4b6936369fd1f26eb2131",
+          "sha256:1da33c3a2a3891f7240d7cf45cbb480e8a2a1dd85de1d458acf8db5922edfbd4",
+          "sha256:6ce86b87593ddac604a0d0b1f6ee6329f91a8d8ca3d3138e81d8a9a7a50d802f",
+          "sha256:bfb83876cf7daf568f636322ac416622af0f37422eefe333ad3e5c5af584e83d"
+        ],
+        "plan_seal": "sha256:a4fc941cdb38c066f3691799fc308947449744dcd032c4bf94b1681acd57d9f5",
+        "steps": 13,
+        "stop_steps": 1,
+        "subject": "ReMIND-045",
+        "trace_seal": "sha256:be2584f270168f3fa0e34e957db87fa24bc21b8289010d8d4e03ad867c938bb0"
+      }
+    ]
+  },
+  "teacher_decisions": 29,
+  "teacher_logit_forwards": 29,
+  "teacher_statuses": {
+    "ReMIND-002": "complete_replayed",
+    "ReMIND-015": "complete_replayed",
+    "ReMIND-018": "complete_replayed",
+    "ReMIND-045": "complete_replayed"
+  },
+  "teacher_steps": {
+    "ReMIND-002": 1,
+    "ReMIND-015": 14,
+    "ReMIND-018": 1,
+    "ReMIND-045": 13
+  },
+  "teacher_trace_reuses": 256,
+  "total_policy_forward_calls": 1925,
+  "training_dynamics_sha256": "6d3a58f1e44c433e287418cd165b891108320436d93f056a9913700be04a86cd"
+}

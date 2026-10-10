@@ -1,0 +1,328 @@
+{
+  "architecture": {
+    "critic_candidate_context": true,
+    "encoder_channels": [
+      8,
+      16
+    ],
+    "hidden_features": 32,
+    "physical_reference_mm": 10.0,
+    "ray_samples": 5
+  },
+  "boundary": {
+    "acquired_image_or_observation_array_reads": 0,
+    "checkpoint_reads": 0,
+    "full_actor_feature_aliasing_demonstrated": false,
+    "model_compression_bottleneck_established": false,
+    "model_forwards": 0,
+    "native_calls": 0,
+    "project_imports": 0,
+    "runtime_or_canonical_source_edits": false
+  },
+  "frozen_learning_head": "324e42e474430dcfa1fd9edf02104eee9f506652",
+  "rows": [
+    {
+      "crop_cell_extent_mm": [
+        62.49998936650052,
+        62.49999461152177,
+        64.00001121571009
+      ],
+      "crop_origin_voxels": [
+        67,
+        30,
+        0
+      ],
+      "crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "full_target_cells": 24274,
+      "initial_emitted_ray_sample_coverage": {
+        "full": 117,
+        "none": 0,
+        "partial": 0
+      },
+      "motion_steps": 0,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "pooled_bin_cell_extent_mm": [
+        31.24999468325026,
+        31.249997305760886,
+        32.000005607855044
+      ],
+      "prior_annotation_sampling": {
+        "resampling_can_omit_subvoxel_labels": true,
+        "saved_positive_voxels": 24274,
+        "source_positive_voxels_from_bound_execution": 24294,
+        "volume_change_percent": -0.08233756231560418
+      },
+      "removed_cell_counts_by_motion": [],
+      "removed_cells_in_crop_by_motion": [],
+      "single_cell_motion_count": 0,
+      "single_target_cell_global_overlap_fraction": 4.119634176485128e-05,
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "spacing_mm": [
+        0.9765623338515707,
+        0.9765624158050277,
+        1.0000001752454701
+      ],
+      "subject": "ReMIND-002",
+      "target_removed_mm3": 0.0,
+      "teacher_decisions": 1,
+      "teacher_entry_to_tip_mm_range": null,
+      "teacher_five_sample_spacing_mm_range": null,
+      "voxel_volume_mm3": 0.9536742390573468
+    },
+    {
+      "crop_cell_extent_mm": [
+        62.5,
+        62.49999999999999,
+        63.99999999652765
+      ],
+      "crop_origin_voxels": [
+        0,
+        83,
+        32
+      ],
+      "crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "full_target_cells": 7745,
+      "initial_emitted_ray_sample_coverage": {
+        "full": 78,
+        "none": 0,
+        "partial": 0
+      },
+      "motion_steps": 13,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "pooled_bin_cell_extent_mm": [
+        31.25,
+        31.249999999999996,
+        31.999999998263824
+      ],
+      "prior_annotation_sampling": {
+        "resampling_can_omit_subvoxel_labels": true,
+        "saved_positive_voxels": 7745,
+        "source_positive_voxels_from_bound_execution": 7745,
+        "volume_change_percent": 2.1816417561382195e-07
+      },
+      "removed_cell_counts_by_motion": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        1,
+        1,
+        1,
+        1
+      ],
+      "removed_cells_in_crop_by_motion": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        1,
+        1,
+        1,
+        1
+      ],
+      "single_cell_motion_count": 4,
+      "single_target_cell_global_overlap_fraction": 0.0001291155584247902,
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "spacing_mm": [
+        0.9765625,
+        0.9765624999999999,
+        0.9999999999457445
+      ],
+      "subject": "ReMIND-015",
+      "target_removed_mm3": 55.31311034856145,
+      "teacher_decisions": 14,
+      "teacher_entry_to_tip_mm_range": [
+        0.4882812499999929,
+        0.48828125
+      ],
+      "teacher_five_sample_spacing_mm_range": [
+        0.12207031249999822,
+        0.1220703125
+      ],
+      "voxel_volume_mm3": 0.9536743163545078
+    },
+    {
+      "crop_cell_extent_mm": [
+        62.5000142117988,
+        62.49999074624141,
+        64.0000185288945
+      ],
+      "crop_origin_voxels": [
+        0,
+        40,
+        9
+      ],
+      "crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "full_target_cells": 1247,
+      "initial_emitted_ray_sample_coverage": {
+        "full": 75,
+        "none": 0,
+        "partial": 0
+      },
+      "motion_steps": 0,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "pooled_bin_cell_extent_mm": [
+        31.2500071058994,
+        31.249995373120704,
+        32.00000926444725
+      ],
+      "prior_annotation_sampling": {
+        "resampling_can_omit_subvoxel_labels": true,
+        "saved_positive_voxels": 1247,
+        "source_positive_voxels_from_bound_execution": 1247,
+        "volume_change_percent": 4.512341349460769e-05
+      },
+      "removed_cell_counts_by_motion": [],
+      "removed_cells_in_crop_by_motion": [],
+      "single_cell_motion_count": 0,
+      "single_target_cell_global_overlap_fraction": 0.0008019246190858059,
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "spacing_mm": [
+        0.9765627220593562,
+        0.976562355410022,
+        1.0000002895139766
+      ],
+      "subject": "ReMIND-018",
+      "target_removed_mm3": 0.0,
+      "teacher_decisions": 1,
+      "teacher_entry_to_tip_mm_range": null,
+      "teacher_five_sample_spacing_mm_range": null,
+      "voxel_volume_mm3": 0.9536746681619731
+    },
+    {
+      "crop_cell_extent_mm": [
+        62.50002694709518,
+        62.5000382288889,
+        64.00001261660569
+      ],
+      "crop_origin_voxels": [
+        74,
+        35,
+        44
+      ],
+      "crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "full_target_cells": 25301,
+      "initial_emitted_ray_sample_coverage": {
+        "full": 91,
+        "none": 0,
+        "partial": 0
+      },
+      "motion_steps": 12,
+      "outside_supplied_target_removed_mm3": 0.0,
+      "pooled_bin_cell_extent_mm": [
+        31.25001347354759,
+        31.25001911444445,
+        32.000006308302844
+      ],
+      "prior_annotation_sampling": {
+        "resampling_can_omit_subvoxel_labels": true,
+        "saved_positive_voxels": 25301,
+        "source_positive_voxels_from_bound_execution": 25301,
+        "volume_change_percent": 0.00011392046512792575
+      },
+      "removed_cell_counts_by_motion": [
+        6,
+        6,
+        9,
+        5,
+        5,
+        10,
+        2,
+        3,
+        1,
+        1,
+        2,
+        1
+      ],
+      "removed_cells_in_crop_by_motion": [
+        6,
+        6,
+        9,
+        5,
+        5,
+        10,
+        2,
+        3,
+        1,
+        1,
+        2,
+        1
+      ],
+      "single_cell_motion_count": 3,
+      "single_target_cell_global_overlap_fraction": 3.952412948104818e-05,
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "spacing_mm": [
+        0.9765629210483622,
+        0.976563097326389,
+        1.0000001971344639
+      ],
+      "subject": "ReMIND-045",
+      "target_removed_mm3": 48.637450444683644,
+      "teacher_decisions": 13,
+      "teacher_entry_to_tip_mm_range": [
+        1.464844381572538,
+        3.4179702236692875
+      ],
+      "teacher_five_sample_spacing_mm_range": [
+        0.3662110953931345,
+        0.8544925559173219
+      ],
+      "voxel_volume_mm3": 0.9536754989153655
+    }
+  ],
+  "scope": "source plus saved TRAIN metadata arithmetic; not a feature/model execution",
+  "source_derived_resolution": {
+    "adjacent_source_voxel_normalized_coordinate_step": 0.031746031746031744,
+    "convolution_stride": 1,
+    "crop_resampling": false,
+    "global_pool_bins": [
+      2,
+      2,
+      2
+    ],
+    "interpretation": "geometric support and averaging coefficients only; no weights, activation amplitudes or logit attenuation measured",
+    "maximum_125_site_fraction_of_one_bin": 0.003814697265625,
+    "maximum_encoded_sites_affected_per_single_input_voxel_per_channel": 125,
+    "single_encoded_site_mean_weight": 3.0517578125e-05,
+    "sites_per_bin_at_64_cube": 32768,
+    "two_3_cube_convolution_receptive_field_voxels": [
+      5,
+      5,
+      5
+    ]
+  },
+  "source_files_match_IL64_release_closure": true,
+  "totals": {
+    "motion_steps": 25,
+    "removed_cells": 109,
+    "removed_cells_in_crop": 109,
+    "single_cell_motion_steps": 7,
+    "teacher_decisions": 29
+  }
+}

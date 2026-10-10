@@ -1,0 +1,71 @@
+Original new-four IL64: training completed; endpoint attempt failed
+
+All 64 fixed shared updates completed using the 29 authenticated/replayed teacher
+decisions. The saved fixed endpoint was reloaded once. The attempt nevertheless
+FAILED: three learned routes passed independent evaluation; ReMIND-045 completed
+its 24-action HORIZON rollout and identical authoritative native replay, but the
+independent geometry checker rejected it. The original worker raised before
+saving the rejected certificate. Its exact geometric failure reason is therefore
+not recoverable from that attempt's saved JSON alone. A separately owned fixed-
+action diagnostic is being prepared; no acceptance or repair is presumed here.
+
+All four TRAIN denominator, original learned endpoint:
+002: STOP; target 0, outside-target removal 0, return 0; independent PASS.
+015: 13 motions + STOP; target 55.3131103486 mm3, outside-target removal 0,
+     return 54.8662150358; independent PASS; same teacher removed-cell union.
+018: STOP; target 0, outside-target removal 0, return 0; independent PASS.
+045: 24 motions, HORIZON; saved target 48.6374504447 mm3 (51 cells), outside-
+     target removal 0, return 47.5084378869; independent REJECTED, reason unsaved.
+     It removes exactly the teacher's cell union. Teacher: 12 motions + STOP,
+     return 48.1819629209. All 24 saved motion rewards are positive. These are
+     saved nominal/authoritative-replay outcomes, not accepted independent outcomes.
+
+HORIZON is explicitly supported by the existing complete-episode contract. It
+does not explain the rejection. Source inspection places failure after exact
+native-history comparison and inside the independent geometry disposition.
+The policy's longer 045 route is a model-efficiency observation; it is not proof
+of a geometry defect, illegal policy actions, or a horizon validation bug.
+
+Independent saved-scalar checks: PASS, 2528 assertions, 0.0755 s, 29,163,520 B
+observed peak RSS. Stdlib only; no arrays, model/tensor/weight loading or geometry
+execution. Checked all 64 update-file/dynamics hashes and parameter-hash chain,
+all four contributions per update, exact 4 STOP/25 motion weights (0.125/0.02),
+1856 loss forwards, 29 saved logits/probabilities/ranks/CE, and full four route
+plan seals, legal choices, macro/micro removal/contact unions and scalar totals.
+Those checks do not independently establish tensor contents or mask geometry.
+
+Pre-update loss: 2.11400451884 -> 1.18689483270. Maximum pre-clip gradient norm
+1.72812151909; no update exceeded clip threshold 5. Endpoint teacher loss:
+STOP mean NLL 0.000436379953, motion mean NLL 2.36811597347, balanced mean
+1.18427617671. Exact teacher-action accuracy is 11/29 (37.93%).
+The 29 labels were reused for 64 updates, not 1856 independent patient examples.
+
+Actual original costs: 727.792213208 s parent / 723.747208958 s recorded execute
+body; sampled peak owned RSS 1,548,288,000 B. 12,370 native previews; 1,925 model
+forwards = 1,856 training + 29 readouts + 40 learned-route decisions. Seven visits
+completed; the eighth constructed/replayed but did not pass final evaluation.
+64 IL updates, zero RL updates, zero new teacher search/private/SELECT/EVAL work.
+Exit 1, clean reap, no cleanup errors or surviving owned PIDs. The parent stop
+reason is the secondary final guard 'Incomplete fixed-four pilot endpoint'; the
+worker/result preserve the original 'Independent native geometry rejected replay'.
+The 960 s / 3 GiB parent and output caps were not the trigger. The original
+selection_readiness stays false; original receipt/result are unmodified.
+
+Saved checkpoint identity only (weight bytes deliberately not opened/copied):
+SHA-256 c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c
+parameter hash sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3
+137636 bytes. Initialization sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9.
+
+Package contents: exact original result/receipt/worker final/log/declaration,
+release/source index, checkpoint-reload metadata, all 29 endpoint readouts,
+training dynamics, scalar update/contribution records and compact four-route
+summaries. input-index.json pins full saved traces/plans/replays without copying
+bulk microstep coordinates. Executing source is referenced through committed
+artifacts/post-exposure-learning-source-v1/source-index.json and the exact run
+source index; no redundant full source closure is included.
+
+This remains an annotation-assisted, assumed post-exposure geometric task.
+Unknown workspace/contact limitations persist; zero outside-target removal is
+not zero tool contact or clinical safety. No held-out transfer or surgical
+success follows from these TRAIN outcomes. A later diagnostic must retain this
+original failure and publish its own release, costs and certificate separately.

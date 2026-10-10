@@ -1,0 +1,41 @@
+Current learned deployment still pays for exhaustive candidate legality
+
+Finding: the current actor has no demonstrated latency advantage over native greedy at the same visited states. It can avoid a branching beam search, but native greedy is the relevant cheap comparator: most of the expensive work is already completed to construct the actor's legal-action input. This is a deployment-cost finding, not a claim that the methods make equally useful decisions.
+
+Source path
+NativeSpatialTask.__init__ calls reset -> observation -> _prepare_inventory. Every emitted base proposal receives a full native preview before the observation exists. With obstruction_opening enabled, those previews also supply the bounded public blocker evidence; added proposals then receive their own full previews. Only feasible motion certificates enter the actor's action list. SpatialPolicy.forward therefore starts after candidate enumeration and legality checking. STOP cannot currently bypass this initial inventory. A motion invalidates the inventory; step eagerly constructs the next observation. Cached repeated requests and planning_clone reuse certificates, but each newly visited state needs a new inventory. _transition also requires the complete inventory, so merely delaying observation construction would not provide a lazy-action path.
+
+Native greedy uses those same certificates' already-computed contained-cell removals to score the permitted nominal target and frozen costs. It commits only the winning action on a planning clone; it does not create a successor branch for every scored action. There is no private-reference benefit: planning_clone substitutes the public nominal target. Policy and search share permitted source data, but their effective access is not identical: the actor has the bounded crop/ray/global-context representation, while nominal scoring accesses the full permitted target at certificate removal indices.
+
+Saved SELECT013, unchanged S-union-T + obstruction world (HEAD 40137fe)
+All four methods selected STOP. Each initial construction made 119 previews; cached greedy selection needed zero additional previews and scored all 24 legal motions.
+
+Method          construction   inventory inside it   policy forward   construction + collection/replay
+IL64              0.571856 s       0.347852 s           0.288475 s              1.432691 s
+RL8               0.566433 s       0.342105 s           0.104431 s              1.233229 s
+native greedy     0.588280 s       0.345470 s           none                    1.153865 s
+
+Greedy selection itself took 0.008359 s, including clone/checks/scoring/STOP commit; construction + selection was 0.596639 s. Each complete collection/replay phase also made another 119 previews for its fresh replay. Those are verification costs, not another online decision. Learned selection alone was not separately timed; the forward timer excludes observation creation, trace output and replay. Fixed arm order, cold/warm effects and one observation per model prevent a reliable IL-versus-RL timing comparison. These are instrumented saved measurements, not a controlled latency benchmark.
+
+Beam selection took 219.388330 s and 60,338 additional previews. Avoiding this cost is credible, but native greedy achieved the same STOP outcome far more cheaply too. A speed claim against beam alone would conceal that baseline.
+
+Saved new-four post-exposure greedy routes (HEAD d583008; no models)
+These use the historical 13-axis provider, cap120, horizon24, footprint/intermediate enabled, obstruction opening absent. Initial emitted/fully previewed counts were 117, 78, 75, 91; legal counts were 21, 39, 17, 41 for 002/015/018/045 respectively. The two positive routes had 13 and 12 motions followed by STOP; 002/018 stopped immediately.
+
+The disjoint preview phases were:
+  initial inventories:                 361 calls /  8.018060 s
+  later inventories during selection: 2231 calls / 22.169317 s
+  authoritative sequence execution:   2231 calls / 22.144585 s
+  total:                              4823 calls / 52.331962 s
+
+Thus the selection-side shared cost was 2,592 previews / 30.187377 s, including initialization. Complete greedy calls took 24.550212 s excluding initial preparation; 22.169317 s (90.30%) was inside native preview. The 2.380895 s remainder includes candidate generation, scoring, cloning, commits, integrity checks and bookkeeping. It is only an upper bound on pure nominal scoring; that subphase was not isolated. Initial task/inventory/observation/output windows totaled 8.881809 s and likewise cannot be called pure candidate-generation time.
+
+The worker took 61.844229 s and its parent 62.416035 s. Preview time was 84.62% of worker wall time. Independent geometry audit took 0.609594 s and made no engine previews. Do not add nested greedy/native timers or charge authoritative execution twice. A current actor following exactly these same routes would require the same state inventories before its 29 decision forwards; actual actor routes/timing remain unmeasured here. This is not a forecast using SELECT forward times. Later source optimizations and different paths can change timings.
+
+Smallest future experiment worth considering (not implemented or selected for the active runs)
+A separately declared lazy verified-action shortlist on the new-four historical proposal condition could test whether reducing native queries creates a real model advantage. Keep the permitted world, tools, costs, complete-tool verifier and underlying geometric candidate pool fixed. A learned ordering would see public observation + uncertified candidate geometry, explicitly without a free legal mask or hypothetical removal outcomes; verify only a single predeclared bounded shortlist and admit only currently certified chosen actions. Every failure/query counts, and STOP remains available. Compare the learned selector and nominal greedy over that exact same verified shortlist, with exhaustive native greedy retained as the quality/cost reference. Report full-route return, missed useful actions, failed previews, total verification queries and end-to-end wall time, including independent replay separately. A faster but inferior/unsafe route is not success.
+
+This requires an explicit observation/action-admission adaptation: current policies were trained on already-legal candidate lists, and _transition reconstructs all candidates. It is not a safe switch on existing checkpoints. On an obstruction-enabled condition, all base queries used to discover blocker-centered proposals must still be charged; treating those additions as free would fabricate savings. No new architecture or shortlist size is chosen here. The current IL64/RL8 experiment is unchanged; its first result should be interpreted as learning quality, not evidence that inference bypasses native planning work.
+
+Evidence/reproduction
+Run derive_saved.py with the standard Python interpreter. It reads only saved JSON and Git source objects, verifies original result/release receipts and executed source pins, and writes scalars.json. It imports no project, NumPy or model code and opens no patient arrays/checkpoints. scalars.json contains exact input paths/hashes and executed source identities. All source analysis and arithmetic are saved-only; no scientific rerun or canonical edits.

@@ -1,0 +1,234 @@
+{
+  "SELECT013": {
+    "all_arms_STOP": true,
+    "executed_head": "40137febbe771652f1cd18703d6f060150a8ceda",
+    "parent_seconds": 228.13031133404002,
+    "rows": [
+      {
+        "arm": "IL64",
+        "collection_and_replay_inventory_seconds": 0.35230974899604917,
+        "collection_and_replay_preview_count": 119,
+        "collection_and_replay_wall_seconds": 0.8608345410320908,
+        "construction_wall_seconds": 0.5718563750851899,
+        "constructor_plus_collection_replay_wall_seconds": 1.4326909161172807,
+        "initial_inventory_request_inclusive_seconds": 0.34785225009545684,
+        "initial_preview_count": 119,
+        "policy_forward_count": 1,
+        "policy_forward_seconds": 0.2884751248639077,
+        "public_return": 0.0
+      },
+      {
+        "arm": "RL8",
+        "collection_and_replay_inventory_seconds": 0.34709333325736225,
+        "collection_and_replay_preview_count": 119,
+        "collection_and_replay_wall_seconds": 0.6667962081264704,
+        "construction_wall_seconds": 0.5664325000252575,
+        "constructor_plus_collection_replay_wall_seconds": 1.233228708151728,
+        "initial_inventory_request_inclusive_seconds": 0.3421048342715949,
+        "initial_preview_count": 119,
+        "policy_forward_count": 1,
+        "policy_forward_seconds": 0.10443112486973405,
+        "public_return": 0.0
+      },
+      {
+        "arm": "observed_greedy",
+        "collection_and_replay_inventory_seconds": 0.3463076229672879,
+        "collection_and_replay_preview_count": 119,
+        "collection_and_replay_wall_seconds": 0.565584999974817,
+        "construction_wall_seconds": 0.5882804580032825,
+        "constructor_plus_collection_replay_wall_seconds": 1.1538654579780996,
+        "constructor_plus_selection_wall_seconds": 0.5966390829999,
+        "initial_inventory_request_inclusive_seconds": 0.34546958305872977,
+        "initial_preview_count": 119,
+        "legal_actions_scored": 24,
+        "policy_forward_count": 0,
+        "policy_forward_seconds": 0,
+        "public_return": 0.0,
+        "selection_preview_count": 0,
+        "selection_wall_seconds": 0.008358624996617436
+      },
+      {
+        "arm": "observed_beam",
+        "collection_and_replay_inventory_seconds": 203.64584091911092,
+        "collection_and_replay_preview_count": 60457,
+        "collection_and_replay_wall_seconds": 219.98277479107492,
+        "construction_wall_seconds": 0.5728924579452723,
+        "constructor_plus_collection_replay_wall_seconds": 220.5556672490202,
+        "constructor_plus_selection_wall_seconds": 219.9612222921569,
+        "initial_inventory_request_inclusive_seconds": 0.3517726669088006,
+        "initial_preview_count": 119,
+        "policy_forward_count": 0,
+        "policy_forward_seconds": 0,
+        "public_return": 0.0,
+        "selection_preview_count": 60338,
+        "selection_wall_seconds": 219.38832983421162
+      }
+    ],
+    "timing_warning": "Construction and collection/replay are separate outer scopes; inner inventory, transition and forward times must not all be summed. Cold/warm order is uncontrolled.",
+    "worker_seconds": 224.53627612511627
+  },
+  "executed_source_pins": [
+    {
+      "head": "40137febbe771652f1cd18703d6f060150a8ceda",
+      "path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "e2e30f8e1fd6ef5f37b922d21c200e19422ea1c96982de7956c343e05256efec"
+    },
+    {
+      "head": "40137febbe771652f1cd18703d6f060150a8ceda",
+      "path": "src/resectionlab/native_proposals.py",
+      "sha256": "45a1dea3b85f919413c34eed7d84ab53817799918346714927d03bf2b6f9c359"
+    },
+    {
+      "head": "40137febbe771652f1cd18703d6f060150a8ceda",
+      "path": "src/resectionlab/spatial_policy.py",
+      "sha256": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4"
+    },
+    {
+      "head": "40137febbe771652f1cd18703d6f060150a8ceda",
+      "path": "src/resectionlab/planning_budget.py",
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c"
+    },
+    {
+      "head": "40137febbe771652f1cd18703d6f060150a8ceda",
+      "path": "src/resectionlab/patient_select_inference.py",
+      "sha256": "b7ad2e3c6583603216b1c640e793d6468ed08bc310db0716976c1d8c230731d6"
+    },
+    {
+      "head": "40137febbe771652f1cd18703d6f060150a8ceda",
+      "path": "src/resectionlab/patient_planning_preflight.py",
+      "sha256": "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04"
+    },
+    {
+      "head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+      "path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32"
+    },
+    {
+      "head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+      "path": "src/resectionlab/native_proposals.py",
+      "sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59"
+    },
+    {
+      "head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+      "path": "src/resectionlab/spatial_policy.py",
+      "sha256": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4"
+    },
+    {
+      "head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+      "path": "src/resectionlab/planning_budget.py",
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c"
+    }
+  ],
+  "input_pins": {
+    "build/obstruction-opening-select013-comparison-v1/attempt-01.supervision/receipt.json": "27f92b3d566ee88b0d2fd5bc0a9a508bb224a40e310e3f34c39246f219ecffef",
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/costs.json": "9321ee49832740d226f15de992c4763a642a178edd744b4e1e5e7d7b04d5c060",
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_beam/selection.json": "8952837f06938e04cf26ee290d107bbe9464815e8f31d416d2877599878990ef",
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/observed_greedy/selection.json": "c71d35d2e8d8456584709b7164067b15cde2efece74f40572829daa2b56409bd",
+    "build/obstruction-opening-select013-comparison-v1/attempt-01/result.json": "597d6ad3816d87a071551ac594bdc513c573aaf790bb5023f68794d70b48824b",
+    "build/obstruction-opening-select013-comparison-v1/root-release.json": "94fe3dd987ec34db2e35d428adb50974185038a709233d303b094540146af24e",
+    "build/obstruction-opening-select013-comparison-v1/source-index.json": "1f0369d2475d9934c1a0dddbc1fc839c5a5f4c7eb1e5a9da099b9c3257b03424",
+    "build/remind-post-exposure-feasibility-v1/attempt-01.supervision/receipt.json": "664b7ac101e8c79e512d52f971f424b5e2b1bbeaa7d7b1502c110afb4364f233",
+    "build/remind-post-exposure-feasibility-v1/attempt-01/result.json": "7a57fd74f58b15d6975be4459fe4f46e6396dfa9e2f3c0fec0ef68cf5e550358",
+    "build/remind-post-exposure-feasibility-v1/root-release.json": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a",
+    "build/remind-post-exposure-feasibility-v1/source-index.json": "4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50"
+  },
+  "new_four": {
+    "cases": [
+      {
+        "all_phase_previews": 117,
+        "before_initial_task_seconds": 0.2683665419463068,
+        "case_wall_seconds": 5.621613875031471,
+        "greedy_seconds_excluding_initial_preparation": 0.01415791711769998,
+        "independent_audit_seconds": 0.04986216616816819,
+        "initial_candidates_previewed": 117,
+        "initial_legal": 21,
+        "initial_task_inventory_observation_outputs_window_seconds": 5.237139167031273,
+        "nominal_actions_scored": 21,
+        "outside_target_removed_mm3": 0.0,
+        "selection_total_previews_including_constructor": 117,
+        "steps_including_STOP": 1,
+        "subject": "ReMIND-002",
+        "successor_previews_per_planning_or_execution": 0,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "all_phase_previews": 2356,
+        "before_initial_task_seconds": 0.21996108395978808,
+        "case_wall_seconds": 16.087327249813825,
+        "greedy_seconds_excluding_initial_preparation": 7.3704746251460165,
+        "independent_audit_seconds": 0.2422963329590857,
+        "initial_candidates_previewed": 78,
+        "initial_legal": 39,
+        "initial_task_inventory_observation_outputs_window_seconds": 0.5953820829745382,
+        "nominal_actions_scored": 257,
+        "outside_target_removed_mm3": 0.0,
+        "selection_total_previews_including_constructor": 1217,
+        "steps_including_STOP": 14,
+        "subject": "ReMIND-015",
+        "successor_previews_per_planning_or_execution": 1139,
+        "target_removed_mm3": 55.313110348561466
+      },
+      {
+        "all_phase_previews": 75,
+        "before_initial_task_seconds": 0.21804725006222725,
+        "case_wall_seconds": 1.8930151669774204,
+        "greedy_seconds_excluding_initial_preparation": 0.013920917175710201,
+        "independent_audit_seconds": 0.045999165857210755,
+        "initial_candidates_previewed": 75,
+        "initial_legal": 17,
+        "initial_task_inventory_observation_outputs_window_seconds": 1.5755758751183748,
+        "nominal_actions_scored": 17,
+        "outside_target_removed_mm3": 0.0,
+        "selection_total_previews_including_constructor": 75,
+        "steps_including_STOP": 1,
+        "subject": "ReMIND-018",
+        "successor_previews_per_planning_or_execution": 0,
+        "target_removed_mm3": 0.0
+      },
+      {
+        "all_phase_previews": 2275,
+        "before_initial_task_seconds": 0.2447675832081586,
+        "case_wall_seconds": 36.437972417101264,
+        "greedy_seconds_excluding_initial_preparation": 17.151658499846235,
+        "independent_audit_seconds": 0.2714359159581363,
+        "initial_candidates_previewed": 91,
+        "initial_legal": 41,
+        "initial_task_inventory_observation_outputs_window_seconds": 1.4737120838835835,
+        "nominal_actions_scored": 208,
+        "outside_target_removed_mm3": 0.0,
+        "selection_total_previews_including_constructor": 1183,
+        "steps_including_STOP": 13,
+        "subject": "ReMIND-045",
+        "successor_previews_per_planning_or_execution": 1092,
+        "target_removed_mm3": 48.63745044468365
+      }
+    ],
+    "executed_head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+    "timing_warning": "Preview phases are disjoint labels. Greedy time includes planning previews; its nonpreview remainder is an upper bound on pure nominal scoring, not its isolated duration. Per-case successor split follows deterministic identical full plan/execution and aggregate exact equality; no per-case native time profile exists.",
+    "totals": {
+      "all_phase_previews": 4823,
+      "all_preview_fraction_of_worker": 0.8461898990766188,
+      "all_preview_seconds": 52.331961824791506,
+      "authoritative_execution_previews": 2231,
+      "decisions_including_STOP": 29,
+      "execution_native_preview_seconds": 22.144585063215345,
+      "greedy_nonpreview_remainder_seconds": 2.380894826957956,
+      "greedy_seconds_excluding_initial_preparation": 24.55021195928566,
+      "independent_audit_seconds": 0.609593580942601,
+      "initial_native_preview_seconds": 8.018059629248455,
+      "initial_previews": 361,
+      "initial_task_inventory_observation_outputs_window_seconds": 8.88180920900777,
+      "nominal_actions_scored": 503,
+      "parent_sampled_peak_rss_bytes": 702431232,
+      "parent_seconds": 62.416034791851416,
+      "planning_native_preview_seconds": 22.169317132327706,
+      "planning_preview_fraction": 0.903019377962746,
+      "selection_native_preview_seconds_including_constructor": 30.18737676157616,
+      "selection_previews_including_constructor": 2592,
+      "successor_planning_previews": 2231,
+      "worker_nonpreview_remainder_seconds": 9.512267091078684,
+      "worker_seconds": 61.84422891587019
+    }
+  },
+  "scope": "saved_scalar_and_source_analysis_only_no_array_model_or_native_execution"
+}

@@ -1,0 +1,43 @@
+045 IL64 behavior: useful but inefficient positive-action ranking
+
+The attempt remains failed_or_unresolved because independent geometry rejected the 045 replay. This report analyzes the saved planning trace, not an accepted corrected episode. All four fixed TRAIN subjects remain in the denominator: 002/018 complete STOP, 015 complete58 target cells plus STOP, and045 unresolved. The checker diagnosis and any repair are owned separately.
+
+045 has no saved no-op loop. Every one of its24 motions has positive immediate reward and removes new target cells. There are0 repeated removed cells,0 zero-removal motions, and0 exact repeated tool/entry/tip tuples. The51-cell final set is exactly the teacher's51-cell set (48.637450mm³), with0 outside-target removal in both traces. Several positions are revisited with a different tool; those are additional useful cuts, not repeated empty actions.
+
+Teacher:12 aspirator motions plusSTOP,0 tool switches,95.487524mm full tool path,return48.181963.
+IL64 trace:24 motions (13aspirator/11suction),7 switches,199.012558mm path,return47.508438,endsHORIZON.
+The0.673525 return deficit is exactly0.36 from12 extra motion charges +0.103525 extra path charge +0.21 from7 switches. IL takes eighteen1–2-cell cuts; the teacher takes five1–2-cell cuts and several6–10-cell cuts. Its final24th action still removes1 target cell. A later STOP choice was never evaluated, so this is not demonstrated STOP refusal.
+
+The teacher STOP observation at step12 has zero legal motions; STOP probability1 is forced by the action inventory, not evidence that this state taught discretionary stopping. The015 teacher STOP is similarly forced. In contrast,002/018 root STOP readouts have21/17 legal motions with probabilities0.999738/0.998518, and their complete greedy rollouts do stop. No per-step logits were saved for the off-teacher045 rollout, so teacher-state STOP scores cannot be substituted for those visited states.
+
+Same-state evidence, not exact-action agreement alone
+The rollout diverges at its first action, making later observations off-teacher. Nonetheless, teacher-state readouts already show inefficient motion ordering: only4/12 motion labels are top-ranked; on every one of the8 mistakes the chosen alternative has lower immediate nominal return, rather than an equivalent tie. All12 top choices are positive. Action lists and labels were joined exactly to the previously completed greedy score records. Step indices below are zero-based. Logit gap is teacher minus top.
+
+step | legal motions | teacher rank | logit gap | teacher reward | top-choice reward | STOP probability
+   0 |            41 |            3 | -0.156852 |       5.683770 |          4.732048 | 0.000247611
+   1 |            37 |           18 | -0.724899 |       5.683770 |          4.732048 | 0.000273793
+   2 |            34 |           14 | -0.572917 |       8.542844 |          4.732048 | 0.000296124
+   3 |            25 |            1 |  0.000000 |       4.732048 |          4.732048 | 0.000358552
+   4 |            21 |           11 | -0.619010 |       4.730095 |          0.886793 | 0.000495896
+   5 |            18 |            3 | -0.100518 |       9.496519 |          0.886793 | 0.000558158
+   6 |             9 |            4 | -0.309496 |       1.871021 |          0.886793 | 0.00104325
+   7 |             9 |            1 |  0.000000 |       2.822744 |          2.822744 | 0.00102413
+   8 |             5 |            3 | -0.838841 |       0.917346 |          0.886793 | 0.00287287
+   9 |             3 |            1 |  0.000000 |       0.917346 |          0.917346 | 0.00789023
+  10 |             4 |            1 |  0.000000 |       1.869068 |          1.869068 | 0.00271631
+  11 |             2 |            2 | -0.928957 |       0.915393 |          0.884840 | 0.0272368
+  12 |             0 |            1 |  0.000000 |       0.000000 |          0.000000 | 1
+
+Example: teacher step5 favors a10-cell aspirator cut worth9.496519; the model instead chooses a useful small motion worth0.886793. This is not proof that it cannot represent target access. Root choice rank3 and near-flat motion probabilities, plus poor rankings on other teacher states, localize a motion-value discrimination problem before any need to invoke on-policy distribution shift. The latter may contribute after divergence but is not isolated.
+
+Available inputs and limits of this diagnosis
+The declared model receives permitted target/support/cavity and coverage, action entry/tip/axis, tip and shaft radii, tip/working length, a tool-change flag, and horizon/state. Public target context supplies centroid/extent/mass and tip relation. Path geometry is available; exact preentry path length is not a separate actor feature. Initial045 metadata reports all91 emitted candidate rays have all five sample locations inside the crop. Scalar affine checks place all24 chosen entry/tip endpoints inside that same64³ crop. Hence a blanket zero/out-of-crop ray-feature explanation is unsupported. No image arrays or encoded features were read: present raw geometry does not prove the convolution/pooling/ray representation retains the cell-scale detail needed to predict exact contained removal. The actor does not receive preview removal counts or future rewards as inputs.
+
+The balanced objective is0.5 mean motion NLL +0.5 mean STOP NLL. Endpoint motion NLL is2.368116 while STOP NLL is0.000436; overall exact teacher action accuracy is11/29. Training loss still decreases near update64 (1.211012 at57 to1.186895 before64), so neither convergence nor representation impossibility is established. 015 demonstrates why low exact-label agreement alone is insufficient: only4/14 teacher labels match, yet its independent full rollout reaches the same58 target cells and stops.
+
+One targeted model contrast after the unchanged matched RL baseline
+Prefer one motion-ranking supervision contrast on the same frozen teacher states, using all already-saved permitted nominal immediate action scores rather than only the winner's one-hot motion label. Supervise reward ordering through the existing actor logits; retain the current STOP examples, public inputs, architecture, initialization, reward, teacher states and fixed update endpoint. This directly tests whether denser within-state information improves the demonstrated preference for larger net-benefit cuts and avoids needless tool switches. Do not inject removal outcomes into deployment inputs, mask suction or hard-code a STOP threshold. These are explicit public-simulator training targets; their generation cost must be disclosed, although these particular scores are already saved. Extra loss arithmetic must also be counted even if forwards are unchanged.
+
+Falsifier: if teacher-state nominal regret and complete rollout motion/path cost do not improve while target removal is retained, the proposed supervision explanation is unsupported. Require an accepted independent full replay before declaring improvement. The summed same-state regret in scalars.json is a readout statistic only, not a predicted whole-route gain. This is a proposed single contrast, not implementation or training authorization, and does not change the active RL baseline. No generalization or clinical claim follows from these four TRAIN cases.
+
+Reproduction: standard-library derive_saved.py reads saved JSON only and writes scalars.json, which pins every input and includes the24-row scalar trace and13-row teacher table. No arrays, checkpoints, model/native execution or canonical edits.

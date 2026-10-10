@@ -1,0 +1,39 @@
+{
+  "actual_forwards": 1925,
+  "all_four_denominator": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "audit_peak_rss_bytes": 29163520,
+  "audit_wall_seconds": 0.07554445881396532,
+  "checkpoint": {
+    "bytes": 137636,
+    "parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+    "path": "IL-final.psckpt",
+    "sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c"
+  },
+  "checkpoint_bytes_opened": false,
+  "checks": 2528,
+  "clipped_updates": 0,
+  "gradient_max": 1.7281215190887451,
+  "loss_first": 2.1140045188367367,
+  "loss_last": 1.1868948327028193,
+  "native_preview_entries": 12370,
+  "original_045_failure_reason_saved": false,
+  "original_045_independent_acceptance": false,
+  "rss_bytes": 1548288000,
+  "runtime_seconds": 727.7922132080421,
+  "scope": "saved scalar/hash consistency; no mask geometry, tensor equality or new native replay",
+  "status": "saved_scalar_audit_pass_original_endpoint_failed",
+  "teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.00043637995258904994,
+    "balanced_mean_CE": 1.1842761767125922,
+    "motion_count": 25,
+    "motion_mean_NLL": 2.3681159734725954,
+    "teacher_action_accuracy": 0.3793103448275862,
+    "unweighted_mean_CE": 2.041539477814663
+  }
+}

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-learning-v1/cohort_worker.py", line 284, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-learning-v1/cohort_worker.py", line 270, in main
+    result=execute(release,args.release_sha256,output,progress)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-learning-v1/cohort_worker.py", line 217, in execute
+    result['TRAIN_greedy'][subject]=visits.run(subject,dest,'deployment.reloaded_TRAIN_greedy_replay.'+subject,greedy)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_sequential.py", line 91, in run
+    result = thaw_json(freeze_json(callback(base, context)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-learning-v1/cohort_worker.py", line 208, in greedy
+    sealed=preflight._seal_and_replay(base,context,trace,method=method,policy=reloaded,updates=cfg['updates'],output=dest,guard=guard)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_preflight.py", line 163, in _seal_and_replay
+    if audit["accepted"] is not True: raise ValueError("Independent native geometry rejected replay")
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Independent native geometry rejected replay
