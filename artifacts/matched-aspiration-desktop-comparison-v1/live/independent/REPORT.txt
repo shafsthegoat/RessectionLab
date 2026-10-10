@@ -1,0 +1,22 @@
+PASS — saved metadata and accessibility evidence, source 89ae71b
+
+The 284,628-byte workspace matches root SHA256 9f26cc26… . Its logical
+session hash and manifest hash pass. The saved actor envelope is exactly the
+new worker result (SHA256 856f8d56…), selected at frame 37 with replay visible.
+No companion selector or companion episode ID is saved.
+
+Saved AX identifies actor 5becf1f3… and companion 7b6b8f36… separately.
+Search is selected at withdrawal frame 37; its Save refusal explicitly asks
+to return to actor. The restored actor is selected at the same frame and shows
+Save success. Search displays “Actor evaluation is not reused” and has neither
+the actor vascular panel nor its evaluation button. Actor return restores that
+panel. Source/case IDs remain consistent with the saved result.
+
+Owned UI terminal receipt confirms normal exit, reaping, 113.809 s and
+1,095,450,624 B sampled tree peak, within its release limits. Worker completion
+binds the exact result and supervision receipt. No app/model/search/native
+replay/private reference or image-array decode occurred in this audit.
+Companion identity and interaction results are checked from saved AX snapshots;
+no independent companion replay or event-count reconstruction was attempted.
+
+Audit SHA256 cf83b7674cb0bfd77f7501c695a0f41c7aedf39039f01e2542224c1714cf3e86.

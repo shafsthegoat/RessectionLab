@@ -1071,3 +1071,11 @@ actor vascular report; Save requires returning to the actor. Root checks pass
 both working/exact staged builds. Independent boundary reviews pass. Original
 App WIP remains unstaged. Live Mac comparison inspection follows this source
 milestone; no new actor execution or advantage is claimed by the tests.
+
+Root live comparison at source `89ae71b` now passes: one new execution and one
+companion inspection, correct search withdrawal replay, search Save refusal,
+actor cursor restored to frame 37 and successful new workspace Save. The worker
+completed in 5.2540 seconds / 272,302,080 bytes sampled peak with two forwards and
+zero updates; outcomes equal the earlier run. The app exited zero in 113.809
+seconds / 1,095,450,624 bytes sampled tree peak. Genuine screenshots and the
+independent saved-metadata/AX audit are in the same comparison artifact.

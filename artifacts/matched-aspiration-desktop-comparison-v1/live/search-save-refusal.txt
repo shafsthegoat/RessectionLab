@@ -1,0 +1,279 @@
+Window: "RessectionLab", App: Electron.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading Synthetic access fixture, Value: 1
+						17 text Synthetic access fixture
+					18 text Geometry demonstration · no patient data
+					19 container Imaging workspace
+						20 heading Imaging workspace 2, Value: 2
+							21 text Imaging workspace
+						22 container
+							23 text Inspect scan
+							24 pop up button Description: Inspect scan, Value: Primary planning image
+								25 (selected) Primary planning image
+						26 container
+							27 text Additional image modality
+							28 pop up button Description: Additional image modality, Value: T2
+								29 (selected) T2
+						30 container
+							31 text Optional aligned labels
+							32 pop up button Description: Annotation provenance, Value: No annotation
+								33 (selected) No annotation
+						34 button Add image for inspection
+						35 text Save preserves attached images and their view settings. Sources keep separate native frames; saving does not establish registration or planning suitability.
+						36 disclosure triangle MRA · estimated labels
+							37 text MRA
+							38 text  · 
+							39 text estimated labels
+					40 container
+						41 heading Displayed image 01, Value: 2
+							42 text Displayed image 01
+						43 text Generated analytic signal 13 × 13 × 12 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					44 container
+						45 heading Target annotations 01, Value: 2
+							46 text Target annotations 01
+						47 button Center on annotations, Help: Move the linked MRI slices to the source annotation center.
+						48 checkbox Generated Nominal Target 0.04 mL · generated target, Value: 1
+						49 text Generated Nominal Target
+						50 text 0.04  mL · generated target Overlay opacity 32 %
+						51 slider Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					52 container
+						53 heading Functional evidence, Value: 2
+							54 text Functional evidence
+						55 text Motor network Unassessed Language network Unassessed Missing evidence remains unknown. Population priors require registration and review.
+					56 pop up button Inspect evidence
+					57 text Local processing · source preserved Workspace
+					58 container Current case: generated-sequential-v1
+						59 text generated-sequential-v1
+					60 heading Anatomy, in context, Value: 2
+						61 text Anatomy, in context
+					62 container Camera framing
+						63 toggle button Focus anatomy, Value: 0
+						64 toggle button Fit instruments, Value: 1
+					65 container
+						66 text GENERATED · modeled cavity ·  matched search  · frame  37 / 71  ·  withdrawal  · no patient admission
+						67 button Source view
+					68 container Linked patient imaging workspace
+						69 toolbar Imaging layout and 3D controls
+							70 container View layout
+								71 toggle button 3D focus, Value: 1
+								72 toggle button Signal review, Value: 0
+							73 toggle button Signal plane off, Help: Show or hide the source analytic signal plane in 3D; linked analytic signal views remain visible, Value: 0
+								74 text Signal
+								75 text  plane 
+								76 text off
+							77 pop up button Description: analytic signal plane shown in 3D, Value: Axial
+								78 (selected) Axial
+							79 button Description: Fit 3D view, Help: Fit anatomy and the selected 3D camera preset
+								80 text ↺ 
+								81 text Fit 3D
+						82 container
+							83 text 3D Spatial workspace RAS · mm
+							84 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								85 container
+									86 text Modeled residual annotations · step 37/71 Mint mesh: modeled removal · source  analytic signal  unchanged
+								87 container 3-D patient coordinates: R is right, A anterior, S superior
+									88 text R A S
+									89 text Patient axes
+								90 container
+									91 text Drag to rotate  ·  Scroll to zoom Double-click to link cursor
+						92 container
+							93 text Axial 4.0 mm
+							94 toggle button Description: Expand Axial analytic signal, Value: 0
+							95 container Axial source analytic signal, neurological convention, slice position 4.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								96 text L
+								97 text R
+								98 text A
+								99 text P
+								100 text 10
+								101 text  mm
+								102 text GENERATED ANALYTIC SIGNAL
+						103 container
+							104 text Coronal 6.0 mm
+							105 toggle button Description: Expand Coronal analytic signal, Value: 0
+							106 container Coronal source analytic signal, neurological convention, slice position 6.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								107 text L
+								108 text R
+								109 text S
+								110 text I
+								111 text 10
+								112 text  mm
+								113 text GENERATED ANALYTIC SIGNAL
+						114 container
+							115 text Sagittal 6.0 mm
+							116 toggle button Description: Expand Sagittal analytic signal, Value: 0
+							117 container Sagittal source analytic signal, neurological convention, slice position 6.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								118 text P
+								119 text A
+								120 text S
+								121 text I
+								122 text 10
+								123 text  mm
+								124 text GENERATED ANALYTIC SIGNAL
+						125 text Linked views
+						126 text RAS
+						127 text 6.0 / 6.0 / 4.0  mm
+						128 container
+							129 text Contrast
+							130 slider Description: Source analytic signal window width, Value: 1, Secondary Actions: Increment, Decrement
+						131 text Neurological convention
+					132 text Linked physical coordinates · RAS+ mm Complete rendered instrument envelopes
+					133 tab group Planning workflows
+						134 tab (settable, integer) Routes, Value: 0
+						135 tab (settable, integer) Inspect, Value: 0
+						136 tab (selected) Episode, Value: 1
+						137 tab (settable, integer) Refine, Value: 0
+					138 container Episode
+						139 container Generated development episode
+							140 text GENERATED SOFTWARE FIXTURE
+							141 heading Execute & replay, Value: 2
+								142 text Execute & replay
+							143 text One persistent cavity with recorded tool motion and tissue changes. No patient data or clinical validation.
+							144 text Episode selector
+							145 pop up button Episode selector, Value: Trained RL256 transfer · aspiration only
+								146 (selected) Trained RL256 transfer · aspiration only
+							147 button Execute generated episode
+							148 text Runs the existing trained RL256 actor on this generated fixture through an aspiration-only adapter. STOP remains available; probing is excluded. No training occurs. Transfer performance is not established.
+							149 container Matched aspiration comparison
+								150 heading Matched aspiration comparison, Value: 3
+									151 text Matched aspiration comparison
+								152 text Same initial generated task and aspiration/STOP rule. The branches can reach different states. This single bounded comparison does not establish superiority or generalization.
+								153 container Displayed comparison branch
+									154 toggle button Trained actor, Value: 0
+									155 toggle button Matched aspiration search, Value: 1
+								156 table Modeled outcomes of the two recorded branches
+									157 text Modeled outcomes of the two recorded branches
+									158 row
+										159 column header
+											160 text Outcome
+										161 column header
+											162 text Trained actor
+										163 column header
+											164 text Matched search
+									165 row
+										166 row header
+											167 text Modeled return
+										168 cell
+											169 text 3.3530
+										170 cell
+											171 text 3.3530
+									172 row
+										173 row header
+											174 text Target removed
+										175 cell
+											176 text 4.00  mm³
+										177 cell
+											178 text 4.00  mm³
+									179 row
+										180 row header
+											181 text Other tissue removed
+										182 cell
+											183 text 3.00  mm³
+										184 cell
+											185 text 3.00  mm³
+									186 row
+										187 row header
+											188 text Actions / termination
+										189 cell
+											190 text 2  /  STOP
+										191 cell
+											192 text 2  /  STOP
+								193 text Inspection replays saved native actions. It runs neither the actor nor a new search. The comparator is temporary; return to the actor replay before saving the workspace.
+								194 disclosure triangle Original search budget & binding
+									195 text Original search budget & binding
+							196 container
+								197 text Matched aspiration search · native replay checked RL256_ASPIRATION_MATCHED_SEARCH  ·  2  committed actions ·  72  recorded frames
+							198 button (disabled) Show this episode
+							199 button Source view
+							200 container
+								201 text Showing modeled step 37  /  71
+								202 slider Showing modeled step 37 / 71, Value: 37, Details: Showing checked step 37 of 71, Secondary Actions: Increment, Decrement
+							203 button Previous frame
+							204 button Next frame
+							205 text Aspiration · modeled removal / withdrawal
+							206 text Tip RAS+ mm:  6.00, 6.00, 9.50  ·  development-aspirator
+							207 definition list
+								208 container Target removed
+									209 text Target removed
+								210 container
+									211 text 4.00  mm³
+								212 container Other tissue removed
+									213 text Other tissue removed
+								214 container
+									215 text 3.00  mm³
+								216 container Target remaining
+									217 text Target remaining
+								218 container
+									219 text 32.00  mm³
+								220 container Probe use
+									221 text Probe use
+								222 text Excluded from this branch
+							223 text Recorded backend boundaries only. Withdrawal reverses the recorded path. No interpolation, extra tissue effects or elapsed-time animation.
+							224 text Vessel annotation encounters were not evaluated for this comparator. Actor evaluation is not reused.
+							225 heading Action timeline, Value: 3
+								226 text Action timeline
+							227 content list
+								228 button 1. Aspirate 7 cells removed · committed
+									229 text 1
+									230 text . 
+									231 text Aspirate
+									232 container
+										233 text 7  cells removed · committed
+								234 button 2. STOP 0 cells removed · committed
+									235 text 2
+									236 text . 
+									237 text STOP
+									238 container
+										239 text 0  cells removed · committed
+							240 container
+								241 disclosure triangle Rejected attempt & evidence
+									242 text Rejected attempt & evidence
+								243 text Fixture check: rejected probe · no state change
+								244 text PROBE ACTIVE REGION PENETRATES REMAINING TISSUE  · 0 cells removed. This was not STOP. Aspiration changes the shared cavity. Only then can the same probe reach and tangentially contact deeper retained surfaces. Generated software-development interaction sequence; probe is geometric contact, not new anatomical knowledge. SEARCH may omit its cost under the unchanged removal objective.
+								245 text Unsupported:
+								246 text tissue forces, deformation, actual sensor measurement, vascular injury, clinical outcomes . Patient admission: no. Clinical validation: no. Contact is modeled geometry, not an acquired measurement.
+								247 definition list
+									248 container Episode
+										249 text Episode
+									250 text sha256:7b6b8f3675f0d7f6647c4046badf410831fed732b6c008ea71e71b9a9d982162
+									251 container Source case
+										252 text Source case
+									253 text sha256:6946fad14898d0040ad6f4b1368d52a54100d213d587e81dfa79eed82a22d6eb
+									254 container Native source
+										255 text Native source
+									256 text sha256:271789605cf5b6510f47995b743782d3d298d44b780a39e9929aec72b37b18b4
+									257 container Current replay state
+										258 text Current replay state
+									259 text sha256:c1931066e474fa7745d5fd929b073b2611ea1b727a0078aff52bfd4c20991304
+					260 text Research use only
+					261 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					262 text Unable to complete the operation
+					263 text Return to the actor replay to save. This matched comparison is temporary.
+					264 button Dismiss error
+					265 text Generated episode · recorded tool poses and modeled cavity · no patient admission
+					266 text RAS 6.0 / 6.0 / 4.0 mm
+	267 close button
+	268 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	269 minimize button
+270 menu bar
+	271 Electron
+	272 File
+	273 Edit
+	274 View
+	275 Window
+
+The focused UI element is 10 button Save

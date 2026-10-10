@@ -1,0 +1,61 @@
+{
+  "actorEpisodeId": "sha256:5becf1f37c4cf0032f5433d3408819164e181d887fc280364247e1f761661886",
+  "actor_frame_restored": 37,
+  "companionEpisodeId_from_AX": "sha256:7b6b8f3675f0d7f6647c4046badf410831fed732b6c008ea71e71b9a9d982162",
+  "companion_saved": false,
+  "decision": "PASS_SAVED_METADATA_AND_AX",
+  "exact_actor_envelope_saved": true,
+  "input_hashes": {
+    "build/integrated-workspace-persistence-root/matched-comparison-actor.ressectionlab": "9f26cc26d65507fb6e674011eda363f91f389233ac7b9ef16cc991ff30a0eab0",
+    "build/matched-aspiration-live-root-v1/actor-restored-saved.txt": "610b832eac98a0abcd86631781ffb5c40c8d65cdb91e9bd7ca0cca898b43d2c7",
+    "build/matched-aspiration-live-root-v1/actual-attempt/completion.json": "d51c963259f6ca9512dfc2ab351f2a836a96c22bae6dead8d2611a4ba6c6434f",
+    "build/matched-aspiration-live-root-v1/actual-attempt/result.json": "856f8d569a8b3e45f95c1fceafc7f3528285f01e8bb5ca00c835ce478076baf8",
+    "build/matched-aspiration-live-root-v1/actual-attempt/supervision.json": "da0d8645f06346c0a5f4971ca8c36bf2946bfe6aa5d13d23cf291c6c9d14a987",
+    "build/matched-aspiration-live-root-v1/live-mac/terminal.json": "d07f3903aa06d867e430bcf18777bc9b10b5926793aaf5aae187527edb1db65f",
+    "build/matched-aspiration-live-root-v1/release.json": "7705e436143a9434e118eb4bc8d91d23aa7dd17848eb4c66b164328cabe323ba",
+    "build/matched-aspiration-live-root-v1/search-save-refusal.txt": "cacaf430c1f5ecb3715d4d94d1cec10cfb6b296ccc949879705cfc7d9657fd73",
+    "build/matched-aspiration-live-root-v1/search-withdrawal.txt": "cb3a82f425815d9d56777c0cb14cc3a857d55c27c5febdb821af1db79018a0f2"
+  },
+  "limits": [
+    "Saved AX verifies displayed identities and notices; no new live UI or scoring operation performed.",
+    "Companion identity is observed in AX, not independently reconstructed by a new replay.",
+    "Attempt and inspect counts follow root lifecycle observation; this metadata audit does not infer an event log from snapshots."
+  ],
+  "review_activity": {
+    "image_arrays_decoded": 0,
+    "model_calls": 0,
+    "native_replays": 0,
+    "private_reference_loads": 0,
+    "search_runs": 0
+  },
+  "search_actor_vascular_report_absent": true,
+  "search_save_refusal_visible": true,
+  "source_commit": "89ae71baf1ae2353e531f6c028b5f8389af07068",
+  "terminal": {
+    "elapsed_seconds": 113.80922754108906,
+    "exit_code": 0,
+    "reason": null,
+    "sampled_peak_tree_rss_bytes": 1095450624,
+    "samples": 215,
+    "transient_peaks_and_gpu_memory_measured": false,
+    "worker_reaped": true
+  },
+  "worker_supervision": {
+    "automaticRetry": false,
+    "cleanupErrors": [],
+    "elapsedSeconds": 5.2540051660034806,
+    "sampledPeakRssBytes": 272302080,
+    "samples": 25,
+    "samplingLimit": "transient peaks between samples may be missed",
+    "status": "complete",
+    "stopReason": null,
+    "unresolvedWorkerPid": null,
+    "workerReturnCode": 0,
+    "workerTerminationConfirmed": true
+  },
+  "workspaceSelection": {
+    "episodeId": "sha256:5becf1f37c4cf0032f5433d3408819164e181d887fc280364247e1f761661886",
+    "frameIndex": 37,
+    "visible": true
+  }
+}

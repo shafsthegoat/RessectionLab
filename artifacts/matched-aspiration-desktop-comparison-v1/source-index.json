@@ -78,9 +78,106 @@
       "source_path": "build/matched-aspiration-desktop-v1/root-formatting-guard-tests.txt",
       "bytes": 1022,
       "sha256": "bc891b14e8a91a56806524e5c2b5fcec59490075d42070547e250359fef21767"
+    },
+    {
+      "path": "live/release.json",
+      "source_path": "build/matched-aspiration-live-root-v1/release.json",
+      "bytes": 474,
+      "sha256": "7705e436143a9434e118eb4bc8d91d23aa7dd17848eb4c66b164328cabe323ba"
+    },
+    {
+      "path": "live/run_live_mac.py",
+      "source_path": "build/matched-aspiration-live-root-v1/run_live_mac.py",
+      "bytes": 1995,
+      "sha256": "fea3254e58c6baa7d26b4d474cc12482efec4f19b53b94a375d44a9c61aa3665"
+    },
+    {
+      "path": "live/search-withdrawal.png",
+      "source_path": "build/matched-aspiration-live-root-v1/search-withdrawal.png",
+      "bytes": 622481,
+      "sha256": "bce4b1fd365d7924be40ccad22dc53d6119838bddcf4656c227019fbafdab082"
+    },
+    {
+      "path": "live/search-withdrawal.txt",
+      "source_path": "build/matched-aspiration-live-root-v1/search-withdrawal.txt",
+      "bytes": 13236,
+      "sha256": "cb3a82f425815d9d56777c0cb14cc3a857d55c27c5febdb821af1db79018a0f2"
+    },
+    {
+      "path": "live/search-save-refusal.txt",
+      "source_path": "build/matched-aspiration-live-root-v1/search-save-refusal.txt",
+      "bytes": 13284,
+      "sha256": "cacaf430c1f5ecb3715d4d94d1cec10cfb6b296ccc949879705cfc7d9657fd73"
+    },
+    {
+      "path": "live/actor-restored-saved.png",
+      "source_path": "build/matched-aspiration-live-root-v1/actor-restored-saved.png",
+      "bytes": 620753,
+      "sha256": "c1ef808495ec4ae1ba9e0818333a01dd9df62c5ed9320a6d3fa8f9f74ca6a26c"
+    },
+    {
+      "path": "live/actor-restored-saved.txt",
+      "source_path": "build/matched-aspiration-live-root-v1/actor-restored-saved.txt",
+      "bytes": 14363,
+      "sha256": "610b832eac98a0abcd86631781ffb5c40c8d65cdb91e9bd7ca0cca898b43d2c7"
+    },
+    {
+      "path": "live/live-mac/owner.json",
+      "source_path": "build/matched-aspiration-live-root-v1/live-mac/owner.json",
+      "bytes": 68,
+      "sha256": "ea23c94f2a5b5ad0e111e5e10c7ac97549040cd7dcf4f293cb738a06fd93b475"
+    },
+    {
+      "path": "live/live-mac/terminal.json",
+      "source_path": "build/matched-aspiration-live-root-v1/live-mac/terminal.json",
+      "bytes": 219,
+      "sha256": "d07f3903aa06d867e430bcf18777bc9b10b5926793aaf5aae187527edb1db65f"
+    },
+    {
+      "path": "live/actual-attempt/attempt.json",
+      "source_path": "build/matched-aspiration-live-root-v1/actual-attempt/attempt.json",
+      "bytes": 203,
+      "sha256": "d792a08a025fea3396b5f580a6ffcb910f9b0cd1877c5ad3d072e7ba319dbb69"
+    },
+    {
+      "path": "live/actual-attempt/completion.json",
+      "source_path": "build/matched-aspiration-live-root-v1/actual-attempt/completion.json",
+      "bytes": 204,
+      "sha256": "d51c963259f6ca9512dfc2ab351f2a836a96c22bae6dead8d2611a4ba6c6434f"
+    },
+    {
+      "path": "live/actual-attempt/supervision.json",
+      "source_path": "build/matched-aspiration-live-root-v1/actual-attempt/supervision.json",
+      "bytes": 354,
+      "sha256": "da0d8645f06346c0a5f4971ca8c36bf2946bfe6aa5d13d23cf291c6c9d14a987"
+    },
+    {
+      "path": "live/actual-attempt/result.json",
+      "source_path": "build/matched-aspiration-live-root-v1/actual-attempt/result.json",
+      "bytes": 184977,
+      "sha256": "856f8d569a8b3e45f95c1fceafc7f3528285f01e8bb5ca00c835ce478076baf8"
+    },
+    {
+      "path": "live/independent/REPORT.txt",
+      "source_path": "build/matched-aspiration-live-independent-v1/REPORT.txt",
+      "bytes": 1349,
+      "sha256": "94f52d5cd0dd8d64f47b520ac279b8574e63e37c11f2d96673ff28b039e545cd"
+    },
+    {
+      "path": "live/independent/audit.json",
+      "source_path": "build/matched-aspiration-live-independent-v1/audit.json",
+      "bytes": 3108,
+      "sha256": "cf83b7674cb0bfd77f7501c695a0f41c7aedf39039f01e2542224c1714cf3e86"
     }
   ],
-  "total_bytes": 67124,
+  "total_bytes": 1544192,
   "patient_data_included": false,
-  "model_weights_included": false
+  "model_weights_included": false,
+  "live_source_commit": "89ae71baf1ae2353e531f6c028b5f8389af07068",
+  "local_saved_workspace": {
+    "path": "build/integrated-workspace-persistence-root/matched-comparison-actor.ressectionlab",
+    "bytes": 284628,
+    "sha256": "9f26cc26d65507fb6e674011eda363f91f389233ac7b9ef16cc991ff30a0eab0",
+    "included_in_git": false
+  }
 }
