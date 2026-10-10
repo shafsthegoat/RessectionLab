@@ -1395,3 +1395,22 @@ old selected attempts and all historical failure labels remain unchanged; an
 original-only monitor must not treat these as current unresolved files. No
 other declared eligible transfer remains pending. See the
 [composite result](../artifacts/tractoinferno-recovery-terminal-v1/RESULT.txt).
+
+## October 10, 2026 — Full-teacher refit connects to live Mac replay
+
+The distinct IL_TRAIN_REFIT option now shares the existing contact-family engine,
+public task contract and renderer. It preserves the original IL/RL publications,
+requires TRAIN before inference and reports the extra 1,280 loss evaluations and
+negative corpus comparison. Canonical checks pass: 33 Python, 507 exact-index
+desktop, 517 working-tree desktop, and both TypeScript/production builds.
+
+One owned pcf-14/surface inference completed in 4.399 seconds at 271,319,040 bytes
+sampled worker RSS, making two actor forwards and zero updates. Independent
+saved-result arithmetic verifies that its entire episode and canonical JSON equal
+the prior TRAIN-10 replay: 77 frames, aspiration removes three cells, probe
+retains and contacts the goal, return 0.292 and 18 mm round-trip path. Saved SEARCH
+still achieves a better 0.704 return with one removed cell. Root inspected the
+actual insertion/final frames, Save refusal and SELECT refusal; the auditor did
+not reopen the UI. The 93.204-second app session exited 0 with no resource cap.
+No new held-out or patient performance follows. See the
+[integration evidence](../artifacts/train-refit-desktop-integration-v1/REPORT.txt).

@@ -1,0 +1,61 @@
+{
+  "UI_checks_evidence": "root_reported_live_desktop_observation",
+  "complete_live_episode_equals_previous_TRAIN_10": true,
+  "exact_validated_tree": "27d8bf22171d87749bb3ef0093fe43bf396cef42",
+  "excluded_bulk": "Local 308132-byte live result and original 24 native replay envelopes stay in place; exact hashes are indexed. No weights, image arrays or compressed history archive copied.",
+  "inference_updates": 0,
+  "live_outcome": {
+    "cost": 0.7080000000000002,
+    "goal_retained_and_contacted": true,
+    "removed_mm3": 3,
+    "return": 0.2919999999999999,
+    "round_trip_path_mm": 18.0
+  },
+  "live_request": {
+    "goalId": "surface",
+    "layoutId": "pcf-14",
+    "selector": "IL_TRAIN_REFIT"
+  },
+  "live_result_sha256": "e006aef48c63a30eb323d9622176f48951363bc4ce4c94577d4a2508feeb1c49",
+  "new_training_or_evaluation": false,
+  "old_IL_RL_live_rerun": false,
+  "original_IL_RL_publication_unchanged": true,
+  "source_promotion_index": "905568afe3b7ff573de6c2f522149c8938874a8e1eed4ca94ce79af187afbb6f",
+  "source_review": "GO_SOURCE_ONLY_then_root_canonical_controls",
+  "status": "COMPLETED_GENERATED_TRAIN_INTEGRATION",
+  "training_budget": {
+    "fixed_readout_forwards": 80,
+    "loss_forwards": 1280,
+    "original_pilot_loss_forwards": 128,
+    "states_per_update": 40,
+    "updates": 32
+  },
+  "unfinished_scientific_claims": [
+    "Unseen-layout/patient generalization is not established.",
+    "This refit is weaker than saved SEARCH on the fixed TRAIN corpus.",
+    "No relation-policy or STOP-head successor experiment is authorized by this integration receipt."
+  ],
+  "validation": {
+    "both_saved_build_logs_pass": true,
+    "index_desktop_groups": [
+      97,
+      331,
+      79
+    ],
+    "python": 33,
+    "working_desktop_groups": [
+      97,
+      341,
+      79
+    ]
+  },
+  "version": "TRAIN-refit-desktop-integration-status-v1",
+  "whole_prior_TRAIN_outcome": {
+    "refit_STOP_only": 18,
+    "refit_contacts": 6,
+    "refit_mean_return": 0.05633333333333332,
+    "saved_SEARCH_contacts": 16,
+    "saved_SEARCH_mean_return": 0.2561666666666667,
+    "tasks": 24
+  }
+}

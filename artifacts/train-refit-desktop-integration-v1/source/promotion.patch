@@ -1,0 +1,1168 @@
+--- /dev/null
++++ b/artifacts/public-contact-train-refit-v1/desktop-release.json
+@@ -0,0 +1,59 @@
++{
++  "experimentHash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
++  "familyHash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
++  "files": {
++    "checkpoint": {
++      "bytes": 185330,
++      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt",
++      "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7"
++    },
++    "experiment": {
++      "bytes": 113281,
++      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/experiment-freeze.json",
++      "sha256": "1f6965eb5b292c795636df197b084f984fb08c32fbcf32b04830d361a434a3e7"
++    },
++    "fitResult": {
++      "bytes": 44061,
++      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/result.json",
++      "sha256": "e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51"
++    },
++    "fitSupervision": {
++      "bytes": 824,
++      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1.supervision/receipt.json",
++      "sha256": "ee30237f90565928aa4b05a7afb44dfce6f518f93e6603f6b5d4f070c1b5b441"
++    },
++    "independentAudit": {
++      "bytes": 4813,
++      "relativePath": "build/contact-full-teacher-rollout-result-v1/index.json",
++      "sha256": "4706f340b0ddcbfdc4d0dddc1f22f02a9c28f8e41570311bddb4da2c6c9ac388"
++    },
++    "rolloutResult": {
++      "bytes": 150593,
++      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/result.json",
++      "sha256": "32dd1bdcbd61f9ba41dd6654aaf33c9c446cf1ba35dc222e88c4734aec0782d8"
++    },
++    "rolloutSupervision": {
++      "bytes": 823,
++      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1.supervision/receipt.json",
++      "sha256": "7efdf482cd91ee25167d56e0584f17ffec45ba6cfb6c5c158e33cdac0f46a5a5"
++    }
++  },
++  "knownTRAINOutcome": {
++    "STOPOnly": 18,
++    "goalContacts": 6,
++    "meanReturn": 0.05633333333333332,
++    "savedSEARCHContacts": 16,
++    "scope": "generated_TRAIN_native_results_no_heldout_claim",
++    "tasks": 24
++  },
++  "parameterHash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
++  "scope": "TRAIN_only_generated_extra_compute_refit",
++  "trainingBudget": {
++    "fixedReadoutForwards": 80,
++    "lossForwards": 1280,
++    "statesPerUpdate": 40,
++    "updates": 32
++  },
++  "variant": "IL_TRAIN_REFIT",
++  "version": "public-contact-train-refit-desktop-release-v1"
++}
+--- a/desktop/electron/contact-family-authority.cjs
++++ b/desktop/electron/contact-family-authority.cjs
+@@ -58,7 +58,7 @@
+       input.fixture !== 'generated-public-contact-family-v2' ||
+       typeof input.layoutId !== 'string' || !/^pcf-(?:0[0-9]|1[0-9]|2[0-3])$/.test(input.layoutId) ||
+       typeof input.goalId !== 'string' || !['surface', 'deep'].includes(input.goalId) ||
+-      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL'].includes(input.selector)) {
++      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL', 'IL_TRAIN_REFIT'].includes(input.selector)) {
+     throw new Error('Only the fixed generated family and named methods are supported.');
+   }
+   // Canonical role and released method availability belong to the owned backend.
+@@ -78,7 +78,7 @@
+ function checkedFamilyAvailability(raw                           )                            {
+   const value = structuredClone(raw);
+   contactNeed(value && keys(value) === 'experimentHash,familyHash,fixture,layouts,methods,releaseHash,version' &&
+-    value.version === 'generated-public-contact-learning-availability-v1' &&
++    ['generated-public-contact-learning-availability-v1', 'generated-public-contact-learning-availability-v2'].includes(value.version) &&
+     value.fixture === 'generated-public-contact-family-v2' && digest(value.familyHash) &&
+     (value.experimentHash === null || digest(value.experimentHash)) &&
+     (value.releaseHash === null || digest(value.releaseHash)) &&
+@@ -95,7 +95,7 @@
+     counts[row.role]++;
+   }
+   contactNeed(contactSame(counts, {TRAIN: 12, SELECT: 4, MEASUREMENT_EVAL: 8}), 'layout role denominator changed.');
+-  contactNeed(value.methods && keys(value.methods) === 'IL,RL,SEARCH,STOP', 'missing fixed method slot.');
++  contactNeed(value.methods && keys(value.methods) === (value.version === 'generated-public-contact-learning-availability-v2' ? 'IL,IL_TRAIN_REFIT,RL,SEARCH,STOP' : 'IL,RL,SEARCH,STOP'), 'missing fixed method slot.');
+   for (const method of ['STOP', 'SEARCH', 'IL', 'RL']         ) {
+     const row = value.methods[method];
+     contactNeed(row && keys(row) === 'available,reason' && typeof row.available === 'boolean' &&
+@@ -104,6 +104,31 @@
+   }
+   contactNeed(value.methods.IL.available === value.methods.RL.available &&
+     (value.releaseHash !== null || !value.methods.IL.available), 'unreleased learned method cannot be enabled.');
++  if (value.version === 'generated-public-contact-learning-availability-v2') {
++    const row = value.methods.IL_TRAIN_REFIT;
++    contactNeed(row && keys(row) === 'allowedRoles,available,checkpointFileSha256,evidence,experimentHash,knownTRAINOutcome,parameterHash,reason,releaseHash,trainingBudget' &&
++      typeof row.available === 'boolean' && contactSame(row.allowedRoles, ['TRAIN']) &&
++      (row.reason === null || typeof row.reason === 'string' && row.reason.length > 0 && row.reason.length <= 1000) &&
++      (row.available ? row.reason === null : row.reason !== null), 'TRAIN refit availability is ambiguous.');
++    if (row.releaseHash === null) {
++      contactNeed(!row.available && row.experimentHash === null && row.parameterHash === null && row.checkpointFileSha256 === null &&
++        row.evidence === null && row.trainingBudget === null && row.knownTRAINOutcome === null, 'unpublished refit carries artifact identity.');
++    } else {
++      contactNeed(row.releaseHash === 'sha256:68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887' &&
++        row.experimentHash === 'sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f' &&
++        row.parameterHash === 'sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20' &&
++        row.checkpointFileSha256 === '5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7' &&
++        row.evidence && keys(row.evidence) === 'fitResultSha256,independentAuditSha256,rolloutResultSha256' &&
++        Object.values(row.evidence).every(hash => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)) &&
++        contactSame(row.trainingBudget, {updates: 32, statesPerUpdate: 40, lossForwards: 1280, fixedReadoutForwards: 80}),
++        'TRAIN refit artifact or extra training budget changed.');
++      const outcome = row.knownTRAINOutcome;
++      contactNeed(outcome && keys(outcome) === 'STOPOnly,goalContacts,meanReturn,savedSEARCHContacts,scope,tasks' &&
++        outcome.tasks === 24 && outcome.goalContacts === 6 && outcome.savedSEARCHContacts === 16 && outcome.STOPOnly === 18 &&
++        typeof outcome.meanReturn === 'number' && Math.abs(outcome.meanReturn - 0.05633333333333332) < 1e-12 &&
++        outcome.scope === 'generated_TRAIN_native_results_no_heldout_claim', 'fixed TRAIN refit negative outcomes changed.');
++    }
++  }
+   return value;
+ }
+ 
+@@ -112,7 +137,9 @@
+   const value = checkedFamilyAvailability(catalog);
+   const layout = value.layouts.find(row => row.layoutId === request.layoutId);
+   contactNeed(layout?.interactive === true && layout.role !== 'MEASUREMENT_EVAL', 'held-out layouts are unavailable for interactive execution.');
+-  contactNeed(value.methods[request.selector].available, value.methods[request.selector].reason ?? 'method unavailable.');
++  if (request.selector === 'IL_TRAIN_REFIT') contactNeed(layout.role === 'TRAIN', 'Full-teacher imitation is available only on TRAIN layouts.');
++  const method = value.methods[request.selector];
++  contactNeed(method?.available, method?.reason ?? 'method unavailable.');
+   return {request, layout, catalog: value};
+ }
+ 
+@@ -160,7 +187,7 @@
+   const e = episode, goal = e.publicGoal, task = e.taskContract, planning = e.planning;
+   contactNeed(e.schema === FAMILY_SCHEMA && e.fixture === request.fixture &&
+     e.taskKind === 'generated_family_public_retained_surface_contact' &&
+-    e.selector === request.selector && e.layoutId === request.layoutId &&
++    e.selector === (request.selector === 'IL_TRAIN_REFIT' ? 'IL' : request.selector) && e.layoutId === request.layoutId &&
+     e.splitRole === admitted.layout.role && e.familyHash === admitted.catalog.familyHash &&
+     contactSame(e.shape, FAMILY_SHAPE), 'family task/layout/role differs from requested generated world.');
+   contactNeed(goal && goal.goalId === request.goalId && goal.frame === 'RAS+' && goal.physicalUnits === 'mm' &&
+@@ -171,7 +198,7 @@
+     native_index: goal.nativeIndex, completion_value: 1, costs: CONTACT_COSTS,
+     meaning: 'committed_probe_contact_AND_currently_retained_cell', clinical_or_sensor_claim: false};
+   const declaration = task.declaration, binding = task.detachedObservationBinding;
+-  const experimentHash = catalog.experimentHash ?? planning.experimentHash;
++  const experimentHash = request.selector === 'IL_TRAIN_REFIT' ? catalog.methods.IL_TRAIN_REFIT?.experimentHash : catalog.experimentHash ?? planning.experimentHash;
+   contactNeed(digest(experimentHash), 'family execution has no frozen experiment identity.');
+   contactNeed(task.maxSteps === 2 && task.proposalMode === 'fixed_lattice_access_centerline_v1' &&
+     task.sourceCandidateVersion === task.proposalMode && task.objectiveVersion === objective.version &&
+@@ -217,7 +244,7 @@
+       typeof author.checkpointFileSha256 === 'string' && /^[a-f0-9]{64}$/.test(author.checkpointFileSha256) && author.checkpointVersion === 'public-goal-mode-spatial-checkpoint-v1' &&
+       [author.architectureHash, author.parameterHash, author.trainingLineageHash].every(digest) &&
+       author.architectureHash === planning.architecture_hash && author.parameterHash === planning.parameter_hash &&
+-      author.experimentHash === catalog.experimentHash && author.familyHash === e.familyHash &&
++      author.experimentHash === experimentHash && author.familyHash === e.familyHash &&
+       author.completedUpdates === 32 && author.checkpointKind === 'final' && author.inferenceOptimizerUpdates === 0 &&
+       author.verificationScope === 'bounded_checkpoint_bytes_and_declared_lineage_owned_native_replay_not_signed_training_proof' &&
+       lineage && lineage.kind === 'final' && lineage.method === e.selector && lineage.optimizer_updates === 32 &&
+@@ -247,12 +274,38 @@
+ 
+ return {checkedFamilyAuthority};})();
+ const {contactNeed}=shared;
+-function checkedFamilyExecution(result                     , catalog                           ) {
++function checkedFamilyExecution(result                     , catalog                           , request) {
+   const e = result.episode, p = result.executionProvenance, author = e.learnedAuthorship;
++  const refit = request.selector === 'IL_TRAIN_REFIT';
++  if (refit) {
++    const method = catalog.methods.IL_TRAIN_REFIT;
++    contactNeed(Object.keys(result).sort().join(',') === 'case,episode,episodeCanonicalJson,executionProvenance,policyVariant' &&
++      result.policyVariant === 'IL_TRAIN_REFIT' && e.selector === 'IL' && e.splitRole === 'TRAIN' && method?.available &&
++      p?.version === 'generated-contact-train-refit-execution-v1', 'refit response is not the requested distinct TRAIN method.');
++    const expectedKeys = ['version', 'variant', 'algorithm', 'layoutId', 'goalId', 'splitRole', 'experimentHash', 'familyHash',
++      'releaseManifestSha256', 'fitResultSha256', 'rolloutResultSha256', 'independentAuditSha256', 'checkpointFileSha256',
++      'architectureHash', 'parameterHash', 'trainingLineageHash', 'completedUpdates', 'statesPerUpdate',
++      'inferenceOptimizerUpdates', 'ownedResultSha256', 'ownedSupervisionSha256'];
++    contactNeed(author && Object.keys(p).sort().join(',') === expectedKeys.sort().join(',') && p.variant === 'IL_TRAIN_REFIT' &&
++      p.algorithm === 'IL' && p.layoutId === e.layoutId && p.goalId === e.publicGoal.goalId && p.splitRole === 'TRAIN' &&
++      p.familyHash === e.familyHash && p.experimentHash === method.experimentHash && p.experimentHash === author.experimentHash &&
++      p.architectureHash === author.architectureHash && p.parameterHash === method.parameterHash && p.parameterHash === author.parameterHash &&
++      p.trainingLineageHash === author.trainingLineageHash && p.checkpointFileSha256 === method.checkpointFileSha256 &&
++      p.checkpointFileSha256 === author.checkpointFileSha256 && p.completedUpdates === 32 && p.statesPerUpdate === 40 &&
++      p.inferenceOptimizerUpdates === 0 && method.releaseHash === 'sha256:' + p.releaseManifestSha256 &&
++      p.fitResultSha256 === method.evidence?.fitResultSha256 && p.rolloutResultSha256 === method.evidence?.rolloutResultSha256 &&
++      p.independentAuditSha256 === method.evidence?.independentAuditSha256 &&
++      [p.releaseManifestSha256, p.fitResultSha256, p.rolloutResultSha256, p.independentAuditSha256, p.checkpointFileSha256,
++        p.ownedResultSha256, p.ownedSupervisionSha256].every(hash => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)),
++      'live TRAIN refit differs from its separate audited publication.');
++    return;
++  }
++  contactNeed(result.policyVariant === undefined, 'original method cannot carry refit identity.');
+   const learned = e.selector === 'IL' || e.selector === 'RL';
+   contactNeed(Object.keys(result).sort().join(',') === (learned ?
+     'case,episode,episodeCanonicalJson,executionProvenance' : 'case,episode,episodeCanonicalJson'), 'unexpected family response fields.');
+   if (!learned) { contactNeed(p === undefined && author === null, 'nonlearned method claims live actor provenance.'); return; }
++  contactNeed(p?.version === 'generated-contact-family-execution-v1', 'original method requires its paired release.');
+   const expectedKeys = ['version', 'selector', 'layoutId', 'goalId', 'splitRole', 'experimentHash', 'familyHash',
+     'releaseManifestSha256', 'pilotResultSha256', 'finalFreezeSha256', 'checkpointFileSha256', 'architectureHash',
+     'parameterHash', 'trainingLineageHash', 'completedUpdates', 'inferenceOptimizerUpdates', 'ownedResultSha256', 'ownedSupervisionSha256'];
+--- a/desktop/electron/contact-family.cjs
++++ b/desktop/electron/contact-family.cjs
+@@ -10,7 +10,7 @@
+ function validateFamilyResult(result,request,catalog){
+   checkedPublicContactAssets(result);
+   const e=result?.episode,s=result?.case;
+-  const expected=checkedFamilyAuthority(e,request,catalog);checkedFamilyExecution(result,catalog);
++  const expected=checkedFamilyAuthority(e,request,catalog);checkedFamilyExecution(result,catalog,request);
+   if(typeof result.episodeCanonicalJson!=='string'||Buffer.byteLength(result.episodeCanonicalJson)>2*1024*1024||
+     hash(result.episodeCanonicalJson)!==e.episodeId)throw Error('Family canonical result changed');
+   const {episodeId,...body}=e;
+--- a/desktop/src/ContactFamilyPanel.tsx
++++ b/desktop/src/ContactFamilyPanel.tsx
+@@ -4,14 +4,15 @@
+ import type {ContactFamilyAvailability, ContactFamilyMethod, ContactFamilyGoal, ContactFamilyRequest} from './contact-family-types';
+ import type {ContactFamilyView} from './contact-family-data';
+ import type {ResectionApi} from './types';
+-const METHODS: ContactFamilyMethod[] = ['STOP', 'SEARCH', 'IL', 'RL'];
++const METHODS: ContactFamilyMethod[] = ['STOP', 'SEARCH', 'IL', 'RL', 'IL_TRAIN_REFIT'];
+ const displayReason = (reason: string | null | undefined) => {
+   if (reason === 'no_reviewed_final_32_update_pair_and_completed_pilot') return 'Final learned methods have not been released yet.';
+   if (reason === 'backend_controller_not_promoted') return 'This generated task is not enabled in the current engine yet.';
+   if (reason === 'backend_contact_release_failed_verification') return 'The learned release could not be verified. Inference is unavailable.';
++  if (reason === 'backend_train_refit_release_failed_verification') return 'The TRAIN-only refit artifact is unavailable or could not be verified.';
+   return reason;
+ };
+-const LABELS = {STOP: 'Immediate STOP', SEARCH: 'Bounded search', IL: 'Final imitation policy', RL: 'Final reinforcement policy'};
++const LABELS = {STOP: 'Immediate STOP', SEARCH: 'Bounded search', IL: 'Final imitation policy', RL: 'Final reinforcement policy', IL_TRAIN_REFIT: 'Full-teacher imitation · TRAIN only'};
+ 
+ export function ContactFamilyPanel({api, view, step, busy, visible, unavailableReason,
+   onExecute, onStep, onShow, onSource, onFocusGoal}: {
+@@ -39,7 +40,7 @@
+   };
+   useEffect(() => {void refresh(); return () => {generation.current++;};}, [api, unavailableReason]);
+   const selected = catalog?.layouts.find(row => row.layoutId === layout);
+-  const reason = unavailableReason ?? (!catalog ? 'Checking released methods…' : !selected?.interactive ? 'Held-out layouts are locked.' : displayReason(catalog.methods[method].reason));
++  const reason = unavailableReason ?? (!catalog ? 'Checking released methods…' : !selected?.interactive ? 'Held-out layouts are locked.' : method === 'IL_TRAIN_REFIT' && selected.role !== 'TRAIN' ? 'Full-teacher imitation is available only on TRAIN layouts.' : displayReason(catalog.methods[method]?.reason ?? (!catalog.methods[method] ? 'Method unavailable.' : null)));
+   const execute = () => {
+     if (!catalog || busy || pending || reason) return;
+     try {
+@@ -60,15 +61,16 @@
+     <select id="family-goal" value={goal} disabled={busy || pending} onChange={event => setGoal(event.target.value as ContactFamilyGoal)}><option value="surface">Surface</option><option value="deep">Deep</option></select>
+     <label className="field-label" htmlFor="family-method">Method</label>
+     <select id="family-method" value={method} disabled={busy || pending || !catalog} onChange={event => setMethod(event.target.value as ContactFamilyMethod)}>
+-      {METHODS.map(value => <option key={value} value={value} disabled={!catalog?.methods[value].available}>{LABELS[value]}{catalog && !catalog.methods[value].available ? ' · unavailable' : ''}</option>)}
++      {METHODS.map(value => <option key={value} value={value} disabled={!catalog?.methods[value]?.available || value === 'IL_TRAIN_REFIT' && selected?.role !== 'TRAIN'}>{LABELS[value]}{catalog && !catalog.methods[value]?.available ? ' · unavailable' : ''}</option>)}
+     </select>
+     <button className="primary-button" disabled={busy || pending || !!reason} onClick={execute}>{busy ? 'Executing / checking…' : 'Execute selected method'}</button>
+     <button className="text-button" disabled={busy || pending} onClick={() => void refresh()}>Refresh availability</button>
+     {error && <p role="alert">{error}</p>}{reason && <p className="muted-note" role="status">{reason}</p>}
+     {catalog && !catalog.methods.IL.available && <p className="instrument-note">{displayReason(catalog.methods.IL.reason)} No untrained substitute is run.</p>}
++    {method === 'IL_TRAIN_REFIT' && <p className="instrument-note">Full-teacher imitation uses extra TRAIN fitting: 1,280 loss evaluations versus 128 in the original pilot. Its fixed native TRAIN pass contacted 6 of 24 goals; saved bounded search contacted 16 of 24. Eighteen episodes chose STOP only. This is not held-out performance. Every TRAIN layout remains available for inspection.</p>}
+     <p className="instrument-note">TRAIN and SELECT are interactive; held-out layouts stay locked. Learned methods use released final artifacts for inference only. This control starts no training. One episode establishes neither superiority nor generalization.</p>
+     {view && episode && frame && prefix && <>
+-      <div className="episode-status" role="status"><strong>{episode.selector === 'IL' || episode.selector === 'RL' ? 'Final learned policy · live owned inference' : LABELS[episode.selector]}</strong>
++      <div className="episode-status" role="status"><strong>{view.policyVariant === 'IL_TRAIN_REFIT' ? 'Full-teacher imitation · TRAIN only · live owned inference' : episode.selector === 'IL' || episode.selector === 'RL' ? 'Final learned policy · live owned inference' : LABELS[episode.selector]}</strong>
+         <span>{episode.layoutId} · {episode.splitRole} · {episode.publicGoal.goalId} goal · native replay checked</span></div>
+       <p>Goal at native cell {episode.publicGoal.nativeIndex.join(', ')}; RAS+ mm {episode.publicGoal.rasMm.map(n => n.toFixed(1)).join(', ')}. The marker is a public task location, not anatomy.</p>
+       <p className="instrument-note">Temporary episode; workspace saving, vessel evaluation and the old aspiration comparison are unavailable. All tissue removal is charged. The zero nominal-target field carries no reward.</p>
+@@ -82,6 +84,7 @@
+       <details className="episode-evidence"><summary>Layout, method & public-input provenance</summary>
+         <p>{view.observation.cropShape.join(' × ')} public crop; structural, support, zero compatibility target, initial cavity, goal and committed contact are available. Motor and language channels are unavailable, not negative findings. No private reference was scored.</p>
+         <p>Contact earns 1 only while the goal remains intact. Native removal, action, motion and tool-change costs determine the return. Geometric contact is not a force, sensor or clinical result.</p>
++        {view.policyVariant === 'IL_TRAIN_REFIT' && <p>Separate full-teacher TRAIN refit: 32 updates using all 40 saved teacher states per update. Fixed native TRAIN outcomes were 6/24 contacts, 18 STOP-only episodes, versus 16/24 for saved bounded search. Original IL/RL artifacts remain separate; no held-out or clinical conclusion follows.</p>}
+         {episode.learnedAuthorship ? <p>Final {episode.learnedAuthorship.method}: {episode.learnedAuthorship.completedUpdates} recorded training updates; this inference made {Number(episode.planning.actor_forward_calls)} actor calls and zero optimizer updates. Artifact and owned-run bindings are consistency evidence, not signed proof of training.</p> : <p>No policy inference. SEARCH reports its returned bounded result, without a global-optimum claim.</p>}
+         <dl className="episode-identities"><dt>Episode</dt><dd>{episode.episodeId}</dd><dt>Family / source</dt><dd>{episode.familyHash}<br/>{episode.sourceHash}</dd><dt>Candidate proposals</dt><dd>{episode.taskContract.sourceCandidateVersion} · exact floating-point native paths</dd><dt>Public objective</dt><dd>{episode.publicGoal.objectiveHash}</dd>{episode.learnedAuthorship && <><dt>Checkpoint / parameters</dt><dd>{episode.learnedAuthorship.checkpointFileSha256}<br/>{episode.learnedAuthorship.parameterHash}</dd></>}</dl>
+       </details>
+--- a/desktop/src/contact-family-authority.ts
++++ b/desktop/src/contact-family-authority.ts
+@@ -42,7 +42,7 @@
+   const e = episode, goal = e.publicGoal, task = e.taskContract, planning = e.planning;
+   contactNeed(e.schema === FAMILY_SCHEMA && e.fixture === request.fixture &&
+     e.taskKind === 'generated_family_public_retained_surface_contact' &&
+-    e.selector === request.selector && e.layoutId === request.layoutId &&
++    e.selector === (request.selector === 'IL_TRAIN_REFIT' ? 'IL' : request.selector) && e.layoutId === request.layoutId &&
+     e.splitRole === admitted.layout.role && e.familyHash === admitted.catalog.familyHash &&
+     contactSame(e.shape, FAMILY_SHAPE), 'family task/layout/role differs from requested generated world.');
+   contactNeed(goal && goal.goalId === request.goalId && goal.frame === 'RAS+' && goal.physicalUnits === 'mm' &&
+@@ -53,7 +53,7 @@
+     native_index: goal.nativeIndex, completion_value: 1, costs: CONTACT_COSTS,
+     meaning: 'committed_probe_contact_AND_currently_retained_cell', clinical_or_sensor_claim: false};
+   const declaration = task.declaration, binding = task.detachedObservationBinding;
+-  const experimentHash = catalog.experimentHash ?? planning.experimentHash;
++  const experimentHash = request.selector === 'IL_TRAIN_REFIT' ? catalog.methods.IL_TRAIN_REFIT?.experimentHash : catalog.experimentHash ?? planning.experimentHash;
+   contactNeed(digest(experimentHash), 'family execution has no frozen experiment identity.');
+   contactNeed(task.maxSteps === 2 && task.proposalMode === 'fixed_lattice_access_centerline_v1' &&
+     task.sourceCandidateVersion === task.proposalMode && task.objectiveVersion === objective.version &&
+@@ -99,7 +99,7 @@
+       typeof author.checkpointFileSha256 === 'string' && /^[a-f0-9]{64}$/.test(author.checkpointFileSha256) && author.checkpointVersion === 'public-goal-mode-spatial-checkpoint-v1' &&
+       [author.architectureHash, author.parameterHash, author.trainingLineageHash].every(digest) &&
+       author.architectureHash === planning.architecture_hash && author.parameterHash === planning.parameter_hash &&
+-      author.experimentHash === catalog.experimentHash && author.familyHash === e.familyHash &&
++      author.experimentHash === experimentHash && author.familyHash === e.familyHash &&
+       author.completedUpdates === 32 && author.checkpointKind === 'final' && author.inferenceOptimizerUpdates === 0 &&
+       author.verificationScope === 'bounded_checkpoint_bytes_and_declared_lineage_owned_native_replay_not_signed_training_proof' &&
+       lineage && lineage.kind === 'final' && lineage.method === e.selector && lineage.optimizer_updates === 32 &&
+--- a/desktop/src/contact-family-availability.ts
++++ b/desktop/src/contact-family-availability.ts
+@@ -8,7 +8,7 @@
+ export function checkedFamilyAvailability(raw: ContactFamilyAvailability): ContactFamilyAvailability {
+   const value = structuredClone(raw);
+   contactNeed(value && keys(value) === 'experimentHash,familyHash,fixture,layouts,methods,releaseHash,version' &&
+-    value.version === 'generated-public-contact-learning-availability-v1' &&
++    ['generated-public-contact-learning-availability-v1', 'generated-public-contact-learning-availability-v2'].includes(value.version) &&
+     value.fixture === 'generated-public-contact-family-v2' && digest(value.familyHash) &&
+     (value.experimentHash === null || digest(value.experimentHash)) &&
+     (value.releaseHash === null || digest(value.releaseHash)) &&
+@@ -25,7 +25,7 @@
+     counts[row.role]++;
+   }
+   contactNeed(contactSame(counts, {TRAIN: 12, SELECT: 4, MEASUREMENT_EVAL: 8}), 'layout role denominator changed.');
+-  contactNeed(value.methods && keys(value.methods) === 'IL,RL,SEARCH,STOP', 'missing fixed method slot.');
++  contactNeed(value.methods && keys(value.methods) === (value.version === 'generated-public-contact-learning-availability-v2' ? 'IL,IL_TRAIN_REFIT,RL,SEARCH,STOP' : 'IL,RL,SEARCH,STOP'), 'missing fixed method slot.');
+   for (const method of ['STOP', 'SEARCH', 'IL', 'RL'] as const) {
+     const row = value.methods[method];
+     contactNeed(row && keys(row) === 'available,reason' && typeof row.available === 'boolean' &&
+@@ -34,6 +34,31 @@
+   }
+   contactNeed(value.methods.IL.available === value.methods.RL.available &&
+     (value.releaseHash !== null || !value.methods.IL.available), 'unreleased learned method cannot be enabled.');
++  if (value.version === 'generated-public-contact-learning-availability-v2') {
++    const row = value.methods.IL_TRAIN_REFIT;
++    contactNeed(row && keys(row) === 'allowedRoles,available,checkpointFileSha256,evidence,experimentHash,knownTRAINOutcome,parameterHash,reason,releaseHash,trainingBudget' &&
++      typeof row.available === 'boolean' && contactSame(row.allowedRoles, ['TRAIN']) &&
++      (row.reason === null || typeof row.reason === 'string' && row.reason.length > 0 && row.reason.length <= 1000) &&
++      (row.available ? row.reason === null : row.reason !== null), 'TRAIN refit availability is ambiguous.');
++    if (row.releaseHash === null) {
++      contactNeed(!row.available && row.experimentHash === null && row.parameterHash === null && row.checkpointFileSha256 === null &&
++        row.evidence === null && row.trainingBudget === null && row.knownTRAINOutcome === null, 'unpublished refit carries artifact identity.');
++    } else {
++      contactNeed(row.releaseHash === 'sha256:68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887' &&
++        row.experimentHash === 'sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f' &&
++        row.parameterHash === 'sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20' &&
++        row.checkpointFileSha256 === '5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7' &&
++        row.evidence && keys(row.evidence) === 'fitResultSha256,independentAuditSha256,rolloutResultSha256' &&
++        Object.values(row.evidence).every(hash => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)) &&
++        contactSame(row.trainingBudget, {updates: 32, statesPerUpdate: 40, lossForwards: 1280, fixedReadoutForwards: 80}),
++        'TRAIN refit artifact or extra training budget changed.');
++      const outcome = row.knownTRAINOutcome;
++      contactNeed(outcome && keys(outcome) === 'STOPOnly,goalContacts,meanReturn,savedSEARCHContacts,scope,tasks' &&
++        outcome.tasks === 24 && outcome.goalContacts === 6 && outcome.savedSEARCHContacts === 16 && outcome.STOPOnly === 18 &&
++        typeof outcome.meanReturn === 'number' && Math.abs(outcome.meanReturn - 0.05633333333333332) < 1e-12 &&
++        outcome.scope === 'generated_TRAIN_native_results_no_heldout_claim', 'fixed TRAIN refit negative outcomes changed.');
++    }
++  }
+   return value;
+ }
+ 
+@@ -42,6 +67,8 @@
+   const value = checkedFamilyAvailability(catalog);
+   const layout = value.layouts.find(row => row.layoutId === request.layoutId);
+   contactNeed(layout?.interactive === true && layout.role !== 'MEASUREMENT_EVAL', 'held-out layouts are unavailable for interactive execution.');
+-  contactNeed(value.methods[request.selector].available, value.methods[request.selector].reason ?? 'method unavailable.');
++  if (request.selector === 'IL_TRAIN_REFIT') contactNeed(layout.role === 'TRAIN', 'Full-teacher imitation is available only on TRAIN layouts.');
++  const method = value.methods[request.selector];
++  contactNeed(method?.available, method?.reason ?? 'method unavailable.');
+   return {request, layout, catalog: value};
+ }
+--- a/desktop/src/contact-family-data.ts
++++ b/desktop/src/contact-family-data.ts
+@@ -8,12 +8,38 @@
+ import {validateCaseDescriptor} from './case-data.ts';
+ import {sha256Bytes} from './source-integrity.ts';
+ 
+-export function checkedFamilyExecution(result: ContactFamilyResult, catalog: ContactFamilyAvailability) {
++export function checkedFamilyExecution(result: ContactFamilyResult, catalog: ContactFamilyAvailability, request: ContactFamilyRequest) {
+   const e = result.episode, p = result.executionProvenance, author = e.learnedAuthorship;
++  const refit = request.selector === 'IL_TRAIN_REFIT';
++  if (refit) {
++    const method = catalog.methods.IL_TRAIN_REFIT;
++    contactNeed(Object.keys(result).sort().join(',') === 'case,episode,episodeCanonicalJson,executionProvenance,policyVariant' &&
++      result.policyVariant === 'IL_TRAIN_REFIT' && e.selector === 'IL' && e.splitRole === 'TRAIN' && method?.available &&
++      p?.version === 'generated-contact-train-refit-execution-v1', 'refit response is not the requested distinct TRAIN method.');
++    const expectedKeys = ['version', 'variant', 'algorithm', 'layoutId', 'goalId', 'splitRole', 'experimentHash', 'familyHash',
++      'releaseManifestSha256', 'fitResultSha256', 'rolloutResultSha256', 'independentAuditSha256', 'checkpointFileSha256',
++      'architectureHash', 'parameterHash', 'trainingLineageHash', 'completedUpdates', 'statesPerUpdate',
++      'inferenceOptimizerUpdates', 'ownedResultSha256', 'ownedSupervisionSha256'];
++    contactNeed(author && Object.keys(p).sort().join(',') === expectedKeys.sort().join(',') && p.variant === 'IL_TRAIN_REFIT' &&
++      p.algorithm === 'IL' && p.layoutId === e.layoutId && p.goalId === e.publicGoal.goalId && p.splitRole === 'TRAIN' &&
++      p.familyHash === e.familyHash && p.experimentHash === method.experimentHash && p.experimentHash === author.experimentHash &&
++      p.architectureHash === author.architectureHash && p.parameterHash === method.parameterHash && p.parameterHash === author.parameterHash &&
++      p.trainingLineageHash === author.trainingLineageHash && p.checkpointFileSha256 === method.checkpointFileSha256 &&
++      p.checkpointFileSha256 === author.checkpointFileSha256 && p.completedUpdates === 32 && p.statesPerUpdate === 40 &&
++      p.inferenceOptimizerUpdates === 0 && method.releaseHash === 'sha256:' + p.releaseManifestSha256 &&
++      p.fitResultSha256 === method.evidence?.fitResultSha256 && p.rolloutResultSha256 === method.evidence?.rolloutResultSha256 &&
++      p.independentAuditSha256 === method.evidence?.independentAuditSha256 &&
++      [p.releaseManifestSha256, p.fitResultSha256, p.rolloutResultSha256, p.independentAuditSha256, p.checkpointFileSha256,
++        p.ownedResultSha256, p.ownedSupervisionSha256].every(hash => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)),
++      'live TRAIN refit differs from its separate audited publication.');
++    return;
++  }
++  contactNeed(result.policyVariant === undefined, 'original method cannot carry refit identity.');
+   const learned = e.selector === 'IL' || e.selector === 'RL';
+   contactNeed(Object.keys(result).sort().join(',') === (learned ?
+     'case,episode,episodeCanonicalJson,executionProvenance' : 'case,episode,episodeCanonicalJson'), 'unexpected family response fields.');
+   if (!learned) { contactNeed(p === undefined && author === null, 'nonlearned method claims live actor provenance.'); return; }
++  contactNeed(p?.version === 'generated-contact-family-execution-v1', 'original method requires its paired release.');
+   const expectedKeys = ['version', 'selector', 'layoutId', 'goalId', 'splitRole', 'experimentHash', 'familyHash',
+     'releaseManifestSha256', 'pilotResultSha256', 'finalFreezeSha256', 'checkpointFileSha256', 'architectureHash',
+     'parameterHash', 'trainingLineageHash', 'completedUpdates', 'inferenceOptimizerUpdates', 'ownedResultSha256', 'ownedSupervisionSha256'];
+@@ -37,7 +63,7 @@
+   const input = structuredClone(raw), request = structuredClone(requested), catalog = structuredClone(available);
+   checkedPublicContactAssets(input);
+   const e = input.episode, expected = checkedFamilyAuthority(e, request, catalog);
+-  checkedFamilyExecution(input, catalog);
++  checkedFamilyExecution(input, catalog, request);
+   const digest = async (text: string) => 'sha256:' + await sha256Bytes(new TextEncoder().encode(text));
+   contactNeed(await digest(expected.objectiveJson) === e.publicGoal.objectiveHash &&
+     await digest(expected.declarationJson) === e.taskContract.detachedObservationBinding.declaration_hash,
+@@ -53,6 +79,7 @@
+   const {voxelVolumeMm3} = validateCaseDescriptor(input.case);
+   return {...geometry, episode: e, source: input.case, observation,
+     executionProvenance: input.executionProvenance ?? null,
++    policyVariant: input.policyVariant ?? null,
+     ...checkedNativeContactOutcome(e, geometry.frames, voxelVolumeMm3)};
+ }
+ export type ContactFamilyView = Awaited<ReturnType<typeof hydrateContactFamilyEpisode>>;
+--- a/desktop/src/contact-family-request.ts
++++ b/desktop/src/contact-family-request.ts
+@@ -9,7 +9,7 @@
+       input.fixture !== 'generated-public-contact-family-v2' ||
+       typeof input.layoutId !== 'string' || !/^pcf-(?:0[0-9]|1[0-9]|2[0-3])$/.test(input.layoutId) ||
+       typeof input.goalId !== 'string' || !['surface', 'deep'].includes(input.goalId) ||
+-      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL'].includes(input.selector)) {
++      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL', 'IL_TRAIN_REFIT'].includes(input.selector)) {
+     throw new Error('Only the fixed generated family and named methods are supported.');
+   }
+   // Canonical role and released method availability belong to the owned backend.
+--- a/desktop/src/contact-family-types.ts
++++ b/desktop/src/contact-family-types.ts
+@@ -1,18 +1,19 @@
+ import type {CasePayload, Vec3} from './types';
+ import type {NativeEpisodeGeometry} from './native-episode-replay';
+ 
+-export type ContactFamilyMethod = 'STOP' | 'SEARCH' | 'IL' | 'RL';
++export type ContactFamilyAlgorithm = 'STOP' | 'SEARCH' | 'IL' | 'RL';
++export type ContactFamilyMethod = ContactFamilyAlgorithm | 'IL_TRAIN_REFIT';
+ export type ContactFamilyGoal = 'surface' | 'deep';
+ export type InteractiveContactRole = 'TRAIN' | 'SELECT';
+ export interface ContactFamilyAvailability {
+-  version: 'generated-public-contact-learning-availability-v1';
++  version: 'generated-public-contact-learning-availability-v1' | 'generated-public-contact-learning-availability-v2';
+   fixture: 'generated-public-contact-family-v2';
+   familyHash: string;
+   experimentHash: string | null;
+   releaseHash: string | null;
+   layouts: Array<{layoutId: string; role: InteractiveContactRole | 'MEASUREMENT_EVAL';
+     goals: ['surface', 'deep']; interactive: boolean}>;
+-  methods: Record<ContactFamilyMethod, {available: boolean; reason: string | null}>;
++  methods: Record<ContactFamilyAlgorithm, {available: boolean; reason: string | null}> & {IL_TRAIN_REFIT?: ContactTrainRefitAvailability};
+ }
+ export interface ContactLearnedAuthorship {
+   version: 'public-contact-learned-authorship-v1';
+@@ -62,7 +63,7 @@
+   schema: 'resectionlab.shared-native-contact-learning-episode.v3';
+   fixture: ContactFamilyRequest['fixture'];
+   taskKind: 'generated_family_public_retained_surface_contact';
+-  selector: ContactFamilyMethod;
++  selector: ContactFamilyAlgorithm;
+   familyHash: string;
+   layoutId: string;
+   splitRole: InteractiveContactRole;
+@@ -113,7 +114,8 @@
+   case: CasePayload;
+   episode: ContactFamilyEpisode;
+   episodeCanonicalJson: string;
+-  executionProvenance?: ContactFamilyExecution;
++  policyVariant?: 'IL_TRAIN_REFIT';
++  executionProvenance?: ContactFamilyExecution | ContactTrainRefitExecution;
+ }
+ export interface ContactFamilyExecution {
+   version: 'generated-contact-family-execution-v1';
+@@ -135,3 +137,28 @@
+   ownedResultSha256: string;
+   ownedSupervisionSha256: string;
+ }
++
++export interface ContactTrainRefitAvailability {
++  available: boolean;
++  reason: string | null;
++  allowedRoles: ['TRAIN'];
++  experimentHash: string | null;
++  releaseHash: string | null;
++  checkpointFileSha256: string | null;
++  parameterHash: string | null;
++  evidence: {fitResultSha256: string; rolloutResultSha256: string; independentAuditSha256: string} | null;
++  trainingBudget: {updates: 32; statesPerUpdate: 40; lossForwards: 1280; fixedReadoutForwards: 80} | null;
++  knownTRAINOutcome: {tasks: 24; goalContacts: 6; savedSEARCHContacts: 16; STOPOnly: 18;
++    meanReturn: number; scope: 'generated_TRAIN_native_results_no_heldout_claim'} | null;
++}
++export interface ContactTrainRefitExecution extends Omit<ContactFamilyExecution,
++  'version' | 'selector' | 'splitRole' | 'pilotResultSha256' | 'finalFreezeSha256'> {
++  version: 'generated-contact-train-refit-execution-v1';
++  variant: 'IL_TRAIN_REFIT';
++  algorithm: 'IL';
++  splitRole: 'TRAIN';
++  statesPerUpdate: 40;
++  fitResultSha256: string;
++  rolloutResultSha256: string;
++  independentAuditSha256: string;
++}
+--- /dev/null
++++ b/desktop/tests/contact-train-refit.test.mjs
+@@ -0,0 +1,55 @@
++// Handwritten metadata boundary controls, not live trained/native execution.
++import assert from 'node:assert/strict';
++import {test} from 'node:test';
++import {createRequire} from 'node:module';
++import {checkedFamilyAvailability, requireInteractiveFamilyRequest} from '../src/contact-family-availability.ts';
++import {checkedFamilyExecution} from '../src/contact-family-data.ts';
++import {unavailableCatalog} from './helpers/contact-family-catalog.mjs';
++const require=createRequire(import.meta.url), host=require('../electron/contact-family-authority.cjs');
++const h='a'.repeat(64), sha='sha256:'+h;
++function catalog(){const c=unavailableCatalog();c.version='generated-public-contact-learning-availability-v2';
++  c.methods.IL_TRAIN_REFIT={available:true,reason:null,allowedRoles:['TRAIN'],
++    experimentHash:'sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f',
++    releaseHash:'sha256:68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887',
++    checkpointFileSha256:'5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7',
++    parameterHash:'sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20',
++    evidence:{fitResultSha256:h,rolloutResultSha256:h,independentAuditSha256:h},
++    trainingBudget:{updates:32,statesPerUpdate:40,lossForwards:1280,fixedReadoutForwards:80},
++    knownTRAINOutcome:{tasks:24,goalContacts:6,savedSEARCHContacts:16,STOPOnly:18,meanReturn:0.05633333333333332,scope:'generated_TRAIN_native_results_no_heldout_claim'}};return c;}
++const request=()=>({fixture:'generated-public-contact-family-v2',layoutId:'pcf-00',goalId:'surface',selector:'IL_TRAIN_REFIT'});
++function envelope(c){const m=c.methods.IL_TRAIN_REFIT;
++  const author={experimentHash:m.experimentHash,architectureHash:sha,parameterHash:m.parameterHash,
++    trainingLineageHash:sha,checkpointFileSha256:m.checkpointFileSha256};
++  return {case:{},episode:{selector:'IL',layoutId:'pcf-00',publicGoal:{goalId:'surface'},splitRole:'TRAIN',familyHash:c.familyHash,learnedAuthorship:author},
++    episodeCanonicalJson:'{}',policyVariant:'IL_TRAIN_REFIT',executionProvenance:{version:'generated-contact-train-refit-execution-v1',
++      variant:'IL_TRAIN_REFIT',algorithm:'IL',layoutId:'pcf-00',goalId:'surface',splitRole:'TRAIN',familyHash:c.familyHash,
++      ...author,releaseManifestSha256:m.releaseHash.slice(7),...m.evidence,completedUpdates:32,statesPerUpdate:40,
++      inferenceOptimizerUpdates:0,ownedResultSha256:h,ownedSupervisionSha256:h}};}
++test('v1 catalog and original negative slots remain exact; distinct v2 admits TRAIN only',()=>{
++  assert.deepEqual(checkedFamilyAvailability(unavailableCatalog()),unavailableCatalog());
++  const c=catalog();assert.equal(checkedFamilyAvailability(c).methods.IL.available,false);
++  for(const api of [{requireInteractiveFamilyRequest},host]){
++    assert.equal(api.requireInteractiveFamilyRequest(request(),c).layout.role,'TRAIN');
++    for(const layoutId of ['pcf-12','pcf-20'])assert.throws(()=>api.requireInteractiveFamilyRequest({...request(),layoutId},c));
++    assert.throws(()=>api.requireInteractiveFamilyRequest(request(),unavailableCatalog()));
++  }
++});
++test('exact extra compute and all negative outcomes are required in both validators',()=>{
++  for(const mutate of [c=>c.methods.IL_TRAIN_REFIT.knownTRAINOutcome.goalContacts=24,
++    c=>c.methods.IL_TRAIN_REFIT.trainingBudget.lossForwards=128,
++    c=>c.methods.IL_TRAIN_REFIT.allowedRoles.push('SELECT'),
++    c=>c.methods.IL_TRAIN_REFIT.parameterHash=sha]){
++    const c=catalog();mutate(c);assert.throws(()=>checkedFamilyAvailability(c));assert.throws(()=>host.checkedFamilyAvailability(c));
++  }
++});
++test('distinct live provenance is internally checked and cannot replace original IL',()=>{
++  const c=catalog(), r=envelope(c);
++  for(const check of [checkedFamilyExecution,host.checkedFamilyExecution]){
++    check(r,c,request());assert.throws(()=>check(r,c,{...request(),selector:'IL'}));
++    for(const mutate of [r=>delete r.policyVariant,r=>r.executionProvenance.statesPerUpdate=4,
++      r=>r.executionProvenance.rolloutResultSha256='b'.repeat(64),r=>r.episode.splitRole='SELECT',
++      r=>r.executionProvenance.version='generated-contact-family-execution-v1',r=>r.executionProvenance.pilotResultSha256=h]){
++      const bad=structuredClone(r);mutate(bad);assert.throws(()=>check(bad,c,request()));
++    }
++  }
++});
+--- a/src/resectionlab/contact_family_desktop_bridge.py
++++ b/src/resectionlab/contact_family_desktop_bridge.py
+@@ -13,20 +13,22 @@
+ 
+ from .contact_family_desktop_release import (
+     ContactReleaseUnavailable, RELEASE_MANIFEST_SHA256, read_published_contact_release)
++from .contact_train_refit_release import (read_published_train_refit, require_train_refit_request,
++    EXPERIMENT_HASH as REFIT_EXPERIMENT_HASH, PARAMETER_HASH as REFIT_PARAMETER_HASH, CHECKPOINT_SHA256 as REFIT_CHECKPOINT_SHA256)
+ from .core import CaseData, SourceRef, semantic_digest
+ from .public_contact_family import (FAMILY_VERSION, GOAL_IDS, build_family_source,
+                                     family_digest, family_manifest, family_record,
+                                     layout_metadata)
+ 
+ 
+-CATALOG_VERSION = "generated-public-contact-learning-availability-v1"
++CATALOG_VERSION = "generated-public-contact-learning-availability-v2"
+ EXPECTED_FAMILY_VERSION = "generated-public-contact-family-v2"
+ EXPECTED_PROPOSAL_VERSION = "fixed_lattice_access_centerline_v1"
+-SELECTORS = ("STOP", "SEARCH", "IL", "RL")
++SELECTORS = ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT")
+ MAX_CONTROLLER_BYTES = 128 * 1024
+ # This binds the reviewed controller bytes. Its own closure checks the worker,
+ # published-release verifier, and canonical task/model source before release.
+-SUPERVISOR_SHA256 = "06b2ee711b6840f26e34f542555ae9081997a0b6baddb5ac8af103251ca5db61"
++SUPERVISOR_SHA256 = '73cf5c68f8c2bf51ef790e13d3bc24f9070e2ef2540d992585a54218d431a606'
+ 
+ 
+ def _root() -> Path:
+@@ -100,7 +102,25 @@
+             experiment_hash = experiment.fingerprint
+         except (ContactReleaseUnavailable, RuntimeError, ValueError, OSError):
+             unavailable = "backend_contact_release_failed_verification"
+-    return {"version": CATALOG_VERSION, "fixture": FAMILY_VERSION,
++    refit = None
++    try:
++        refit = read_published_train_refit(_root(), family_manifest=family_manifest())
++    except (ContactReleaseUnavailable, RuntimeError, ValueError, OSError):
++        pass
++    refit_method = {"available": refit is not None and controller_ready,
++        "reason": None if refit is not None and controller_ready else
++            "backend_train_refit_release_failed_verification" if refit is None else "backend_controller_not_promoted",
++        "allowedRoles": ["TRAIN"],
++        "experimentHash": None if refit is None else refit["manifest"]["experimentHash"],
++        "releaseHash": None if refit is None else "sha256:" + refit["manifestSha256"],
++        "checkpointFileSha256": None if refit is None else refit["manifest"]["files"]["checkpoint"]["sha256"],
++        "parameterHash": None if refit is None else refit["manifest"]["parameterHash"],
++        "evidence": None if refit is None else {"fitResultSha256": refit["manifest"]["files"]["fitResult"]["sha256"],
++            "rolloutResultSha256": refit["manifest"]["files"]["rolloutResult"]["sha256"],
++            "independentAuditSha256": refit["manifest"]["files"]["independentAudit"]["sha256"]},
++        "knownTRAINOutcome": None if refit is None else refit["knownTRAINOutcome"],
++        "trainingBudget": None if refit is None else refit["manifest"]["trainingBudget"]}
++    catalog = {"version": CATALOG_VERSION, "fixture": FAMILY_VERSION,
+         "familyHash": family_digest(), "experimentHash": experiment_hash,
+         "releaseHash": release, "layouts": layouts,
+         "methods": {method: {"available": controller_ready,
+@@ -110,7 +130,9 @@
+             else {"available": release is not None and controller_ready,
+                   "reason": (None if release is not None and controller_ready else
+                              unavailable if release is None else
+-                             "backend_controller_not_promoted")} for method in SELECTORS}}
++                             "backend_controller_not_promoted")} for method in ("STOP", "SEARCH", "IL", "RL")}}
++    catalog["methods"]["IL_TRAIN_REFIT"] = refit_method
++    return catalog
+ 
+ 
+ def execute_public_contact_family_episode(*, attempts_root: Path, layout_id: str,
+@@ -121,6 +143,13 @@
+     row = layout_metadata(layout_id)
+     if row["role"] not in ("TRAIN", "SELECT"):
+         raise ValueError("HELD_OUT_EXECUTION_CLOSED")
++    refit_publication = None
++    algorithm = "IL" if selector == "IL_TRAIN_REFIT" else selector
++    if selector == "IL_TRAIN_REFIT":
++        if row["role"] != "TRAIN":
++            raise ContactReleaseUnavailable("TRAIN_REFIT_ONLY: SELECT and MEASUREMENT layouts are unavailable")
++        refit_publication = read_published_train_refit(_root(), family_manifest=family_manifest())
++        require_train_refit_request(refit_publication, layout_id=layout_id, goal_id=goal_id)
+     if selector in ("IL", "RL"):
+         if RELEASE_MANIFEST_SHA256 is None:
+             raise ContactReleaseUnavailable("No reviewed final learned contact-family endpoint is available")
+@@ -138,7 +167,7 @@
+             episode.get("schema") != "resectionlab.shared-native-contact-learning-episode.v3" or
+             episode.get("taskKind") != "generated_family_public_retained_surface_contact" or
+             episode.get("fixture") != FAMILY_VERSION or episode.get("layoutId") != layout_id or
+-            episode.get("splitRole") != row["role"] or episode.get("selector") != selector or
++            episode.get("splitRole") != row["role"] or episode.get("selector") != algorithm or
+             episode.get("publicGoal", {}).get("goalId") != goal_id or
+             episode.get("caseHash") != case.semantic_hash or
+             episode.get("sourceHash") != source_hash or
+@@ -158,7 +187,37 @@
+             {key: value for key, value in episode.items() if key != "episodeId"}) != episode.get("episodeId"):
+         raise RuntimeError("Contact-family episode canonical identity changed after child completion")
+     response = {"case": case, "episode": episode, "episodeCanonicalJson": canonical}
+-    if selector in ("IL", "RL"):
++    if selector == "IL_TRAIN_REFIT":
++        authorship, evidence = episode.get("learnedAuthorship"), result.get("releaseEvidence")
++        files = refit_publication["manifest"]["files"]
++        expected_evidence = {"releaseManifestSha256": refit_publication["manifestSha256"],
++            "fitResultSha256": files["fitResult"]["sha256"],
++            "rolloutResultSha256": files["rolloutResult"]["sha256"],
++            "independentAuditSha256": files["independentAudit"]["sha256"],
++            "checkpointFileSha256": REFIT_CHECKPOINT_SHA256}
++        if (result.get("policyVariant") != "IL_TRAIN_REFIT" or evidence != expected_evidence
++                or type(authorship) is not dict or authorship.get("method") != "IL"
++                or authorship.get("experimentHash") != REFIT_EXPERIMENT_HASH
++                or authorship.get("parameterHash") != REFIT_PARAMETER_HASH
++                or authorship.get("checkpointFileSha256") != REFIT_CHECKPOINT_SHA256
++                or type(authorship.get("completedUpdates")) is not int or authorship["completedUpdates"] != 32
++                or type(authorship.get("inferenceOptimizerUpdates")) is not int or authorship["inferenceOptimizerUpdates"] != 0
++                or result.get("experimentHash") != REFIT_EXPERIMENT_HASH
++                or authorship.get("familyHash") != result.get("familyHash")):
++            raise RuntimeError("Owned TRAIN refit provenance differs from its distinct release")
++        response["policyVariant"] = "IL_TRAIN_REFIT"
++        response["executionProvenance"] = {
++            "version": "generated-contact-train-refit-execution-v1", "variant": "IL_TRAIN_REFIT", "algorithm": "IL",
++            "layoutId": layout_id, "goalId": goal_id, "splitRole": "TRAIN",
++            "experimentHash": authorship["experimentHash"], "familyHash": authorship["familyHash"],
++            **expected_evidence, "architectureHash": authorship["architectureHash"],
++            "parameterHash": authorship["parameterHash"], "trainingLineageHash": authorship["trainingLineageHash"],
++            "completedUpdates": 32, "statesPerUpdate": 40, "inferenceOptimizerUpdates": 0,
++            "ownedResultSha256": result["ownedResultSha256"],
++            "ownedSupervisionSha256": result["ownedSupervisionSha256"]}
++    elif selector in ("IL", "RL"):
++        if "policyVariant" in result:
++            raise RuntimeError("Original learned selector cannot carry refit identity")
+         authorship, release = episode.get("learnedAuthorship"), result.get("releaseEvidence")
+         if (type(authorship) is not dict or type(release) is not dict or
+                 authorship.get("method") != selector or
+@@ -185,6 +244,6 @@
+             "completedUpdates": 32, "inferenceOptimizerUpdates": 0,
+             "ownedResultSha256": result["ownedResultSha256"],
+             "ownedSupervisionSha256": result["ownedSupervisionSha256"]}
+-    elif episode.get("learnedAuthorship") is not None or result.get("releaseEvidence") is not None:
++    elif episode.get("learnedAuthorship") is not None or result.get("releaseEvidence") is not None or "policyVariant" in result:
+         raise RuntimeError("SEARCH/STOP contact-family result falsely claims checkpoint authorship")
+     return response
+--- a/src/resectionlab/contact_family_supervisor.py
++++ b/src/resectionlab/contact_family_supervisor.py
+@@ -52,11 +52,14 @@
+     "src/resectionlab/spatial_policy.py",
+     "src/resectionlab/spatial_observations.py",
+     "src/resectionlab/sequential_spatial_observation.py",
++    "artifacts/public-contact-train-refit-v1/desktop-release.json",
++    "local:contact_train_refit_release.py",
+ })
+ SOURCE_SHA256 = {
+-    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
++    "artifacts/public-contact-train-refit-v1/desktop-release.json": "68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887",
+     "local:contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
+-    "local:contact_family_worker.py": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
++    "local:contact_family_worker.py": "2b42a3509bdf9a612a3d3a00e3d554b5355bf575df4073a6019c81f8c4f38ee4",
++    "local:contact_train_refit_release.py": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee",
+     "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+     "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+     "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+@@ -67,6 +70,7 @@
+     "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+     "src/resectionlab/goal_mode_episode_adapter.py": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
+     "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
++    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+     "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+     "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+     "src/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+@@ -80,7 +84,7 @@
+     "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+     "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+     "src/resectionlab/surface_contact_episode.py": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+-    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
++    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+ }
+ 
+ 
+@@ -145,7 +149,7 @@
+                 selector: str, cancelled=None):
+     """Run exactly one attempt; the caller chooses a fresh backend-owned path."""
+     if (type(layout_id) is not str or type(goal_id) is not str or
+-            type(selector) is not str or selector not in ("STOP", "SEARCH", "IL", "RL")):
++            type(selector) is not str or selector not in ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT")):
+         raise ValueError("Choose one exact contact-family layout, goal and selector")
+     output = Path(output_directory)
+     output.mkdir(parents=True, exist_ok=False)
+--- a/src/resectionlab/contact_family_worker.py
++++ b/src/resectionlab/contact_family_worker.py
+@@ -1,6 +1,6 @@
+ """One owned generated contact-family episode; never trains or reads patients.
+ 
+-Only a root-published complete 32-update checkpoint pair can enable IL/RL.
++The original pair enables IL/RL; a separate audited TRAIN-only refit enables IL_TRAIN_REFIT.
+ SEARCH and STOP use the same exact native task and v3 replay exporter.
+ """
+ from __future__ import annotations
+@@ -25,9 +25,11 @@
+ 
+ 
+ ROOT = _activate_source()
++_PARENT_LEASE_ACTIVE = False
+ 
+ 
+ def _require_parent_lease():
++    global _PARENT_LEASE_ACTIVE
+     encoded = os.environ.get("RESECTIONLAB_PARENT_LEASE_FD")
+     if encoded is None or not encoded.isdecimal() or int(encoded) < 3:
+         raise RuntimeError("Contact-family worker requires an owned parent lease")
+@@ -40,6 +42,7 @@
+         finally:
+             os._exit(143)
+     threading.Thread(target=watch, name="contact-family-parent-lease", daemon=True).start()
++    _PARENT_LEASE_ACTIVE = True
+ 
+ 
+ def _write_reserved(handle, record):
+@@ -52,6 +55,8 @@
+ 
+ 
+ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
++    if not _PARENT_LEASE_ACTIVE:
++        raise RuntimeError("Contact-family worker requires its active parent lease before model import")
+     # One fresh output is reserved before any task, checkpoint, or native call.
+     with output.open("x") as handle:
+         _write_reserved(handle, {"status": "started", "scope": "generated_contact_family_v3",
+@@ -76,7 +81,7 @@
+             from resectionlab.surface_contact_episode import episode_envelope
+             from resectionlab.core import semantic_digest
+ 
+-            if selector not in ("STOP", "SEARCH", "IL", "RL"):
++            if selector not in ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT"):
+                 raise ValueError("Unknown fixed contact-family method")
+             if (FAMILY_VERSION != "generated-public-contact-family-v2" or
+                     SOURCE_CANDIDATE_VERSION != "fixed_lattice_access_centerline_v1"):
+@@ -86,6 +91,11 @@
+             if row["role"] not in ("TRAIN", "SELECT") or goal_id not in row["goals"]:
+                 raise ValueError("HELD_OUT_EXECUTION_CLOSED: choose a TRAIN/SELECT public family row")
+ 
++            refit = selector == "IL_TRAIN_REFIT"
++            algorithm = "IL" if refit else selector
++            if refit and row["role"] != "TRAIN":
++                raise ValueError("TRAIN_REFIT_ONLY: refuse role before artifact/model decode")
++            refit_publication = None
+             release = None
+             checkpoint_metadata = None
+             release_evidence = None
+@@ -107,6 +117,13 @@
+                 if checkpoint_metadata.file_sha256 != records[selector]["sha256"]:
+                     raise RuntimeError("Selected verified checkpoint file differs from the publication")
+ 
++            if refit:
++                stage = "TRAIN_refit_checkpoint_admission"
++                from resectionlab.contact_train_refit_release import load_train_refit_for_owned_inference
++                experiment, policy, checkpoint_metadata, refit_publication = load_train_refit_for_owned_inference(
++                    ROOT, layout_id=layout_id, goal_id=goal_id)
++                row = experiment.row(layout_id)
++
+             stage = "public_task_inventory_and_planning"
+             task = make_frozen_evaluation_task(experiment, layout_id, goal_id, release=release)
+             context, declaration = bind_family_episode(experiment, task, layout_id=layout_id,
+@@ -116,7 +133,7 @@
+             if (declaration.get("proposal_mode") != SOURCE_CANDIDATE_VERSION or
+                     declaration.get("source_candidate_version") != SOURCE_CANDIDATE_VERSION):
+                 raise RuntimeError("Contact-family declaration changed candidate rule")
+-            if selector in ("IL", "RL"):
++            if algorithm in ("IL", "RL"):
+                 plan, seal, accounting = plan_goal_mode_strategy(policy, task, context=context)
+             else:
+                 if selector == "STOP":
+@@ -132,10 +149,10 @@
+ 
+             stage = "sealed_native_execution_and_replay"
+             display, episode = export_family_strategy(experiment, task, layout_id=layout_id,
+-                goal_id=goal_id, selector=selector, plan=plan, seal=seal, accounting=accounting,
++                goal_id=goal_id, selector=algorithm, plan=plan, seal=seal, accounting=accounting,
+                 context=context, release=release, checkpoint_metadata=checkpoint_metadata)
+             if (episode.get("schema") != SCHEMA or episode.get("layoutId") != layout_id or
+-                    episode.get("splitRole") != row["role"] or episode.get("selector") != selector or
++                    episode.get("splitRole") != row["role"] or episode.get("selector") != algorithm or
+                     episode.get("publicGoal", {}).get("goalId") != goal_id or
+                     episode.get("caseHash") != display.semantic_hash or
+                     episode.get("patientAdmission") is not False or
+@@ -146,10 +163,10 @@
+                     contract.get("proposalMode") != SOURCE_CANDIDATE_VERSION or
+                     contract.get("sourceCandidateVersion") != SOURCE_CANDIDATE_VERSION):
+                 raise RuntimeError("Contact-family episode changed candidate rule")
+-            if selector in ("IL", "RL"):
++            if algorithm in ("IL", "RL"):
+                 authorship = episode.get("learnedAuthorship")
+                 if (authorship is None or authorship.get("checkpointFileSha256") !=
+-                        checkpoint_metadata.file_sha256 or authorship.get("method") != selector or
++                        checkpoint_metadata.file_sha256 or authorship.get("method") != algorithm or
+                         type(authorship.get("inferenceOptimizerUpdates")) is not int or
+                         authorship["inferenceOptimizerUpdates"] != 0):
+                     raise RuntimeError("Learned v3 episode omitted verified endpoint identity")
+@@ -169,6 +186,15 @@
+                     "pilotResultSha256": release_evidence["pilotResultSha256"],
+                     "finalFreezeSha256": release_evidence["finalFreezeSha256"],
+                     "checkpointFileSha256": checkpoint_metadata.file_sha256}}
++            if refit:
++                files = refit_publication["manifest"]["files"]
++                result["policyVariant"] = "IL_TRAIN_REFIT"
++                result["releaseEvidence"] = {
++                    "releaseManifestSha256": refit_publication["manifestSha256"],
++                    "fitResultSha256": files["fitResult"]["sha256"],
++                    "rolloutResultSha256": files["rolloutResult"]["sha256"],
++                    "independentAuditSha256": files["independentAudit"]["sha256"],
++                    "checkpointFileSha256": checkpoint_metadata.file_sha256}
+             _write_reserved(handle, result)
+             return result
+         except BaseException as error:
+--- /dev/null
++++ b/src/resectionlab/contact_train_refit_release.py
+@@ -0,0 +1,118 @@
++"""Separate fixed TRAIN-only refit publication; original IL/RL release unchanged.
++
++Parent metadata admission creates no task or model. Only an owned worker may call
++load_train_refit_for_owned_inference; it reuses the existing bounded decoder.
++"""
++from pathlib import Path
++from .contact_family_desktop_release import ContactReleaseUnavailable, _file, _json_file
++
++VARIANT = 'IL_TRAIN_REFIT'
++RELEASE_VERSION = 'public-contact-train-refit-desktop-release-v1'
++RELEASE_RELATIVE_PATH = 'artifacts/public-contact-train-refit-v1/desktop-release.json'
++RELEASE_MANIFEST_SHA256 = "68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887"
++EXPERIMENT_HASH = 'sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f'
++PARAMETER_HASH = 'sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20'
++CHECKPOINT_SHA256 = '5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7'
++FIT = 'build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/'
++ROLLOUT = 'build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/'
++SLOTS = {
++    'experiment': (FIT+'experiment-freeze.json', 256*1024),
++    'fitResult': (FIT+'result.json', 2*1024*1024),
++    'fitSupervision': (FIT[:-1]+'.supervision/receipt.json', 32*1024),
++    'rolloutResult': (ROLLOUT+'result.json', 2*1024*1024),
++    'rolloutSupervision': (ROLLOUT[:-1]+'.supervision/receipt.json', 32*1024),
++    'independentAudit': ('build/contact-full-teacher-rollout-result-v1/index.json', 64*1024),
++    'checkpoint': (FIT+'refit-IL-final.gmckpt', 4*1024*1024),
++}
++
++
++def _check_row(record):
++    if type(record) is not dict or set(record)!={'relativePath','sha256','bytes'}:
++        raise ContactReleaseUnavailable('TRAIN refit file descriptor changed')
++
++
++def read_published_train_refit(root, *, family_manifest):
++    """Pin completed fit plus all24 native outcomes, without decoding a model."""
++    if RELEASE_MANIFEST_SHA256 is None:
++        raise ContactReleaseUnavailable('No reviewed TRAIN-only refit has been published')
++    root=Path(root);path=root/RELEASE_RELATIVE_PATH
++    # Fixed path, bounded file and expected SHA; reuse the existing publication reader.
++    path=_file(root,RELEASE_RELATIVE_PATH,RELEASE_RELATIVE_PATH,32*1024,
++               RELEASE_MANIFEST_SHA256,path.stat().st_size if path.exists() else 1)
++    manifest=_json_file(path,32*1024,RELEASE_MANIFEST_SHA256)
++    if (set(manifest)!={'version','variant','scope','experimentHash','familyHash','parameterHash','files','trainingBudget','knownTRAINOutcome'}
++            or manifest['version']!=RELEASE_VERSION or manifest['variant']!=VARIANT
++            or manifest['scope']!='TRAIN_only_generated_extra_compute_refit'
++            or manifest['experimentHash']!=EXPERIMENT_HASH or manifest['parameterHash']!=PARAMETER_HASH
++            or manifest['familyHash']!=family_manifest['family_hash']
++            or type(manifest['files']) is not dict or set(manifest['files'])!=set(SLOTS)
++            or manifest['trainingBudget']!={'updates':32,'statesPerUpdate':40,'lossForwards':1280,'fixedReadoutForwards':80}):
++        raise ContactReleaseUnavailable('TRAIN refit publication identity/scope differs')
++    paths={};records={}
++    for key,(relative,limit) in SLOTS.items():
++        record=manifest['files'][key];_check_row(record)
++        paths[key]=_file(root,record['relativePath'],relative,limit,record['sha256'],record['bytes'])
++        if key!='checkpoint':records[key]=_json_file(paths[key],limit,record['sha256'])
++    from .core import semantic_digest
++    experiment,fit,rollout=records['experiment'],records['fitResult'],records['rolloutResult']
++    if (semantic_digest(experiment)!=EXPERIMENT_HASH
++            or experiment['version']!='generated-public-contact-full-teacher-refit-v1'
++            or semantic_digest(experiment['family_manifest'])!=semantic_digest(family_manifest)
++            or fit.get('status')!='complete_fixed_full40_TRAIN_refit'
++            or fit.get('experiment_hash')!=EXPERIMENT_HASH
++            or tuple(fit.get(k) for k in ('optimizer_updates','loss_forward_calls','readout_forward_calls'))!=(32,1280,80)
++            or fit.get('SELECT_or_MEASUREMENT_reads')!=0 or fit.get('patient_reads')!=0
++            or fit.get('final_checkpoint',{}).get('sha256')!=CHECKPOINT_SHA256
++            or fit['final_checkpoint'].get('parameter_hash')!=PARAMETER_HASH
++            or manifest['files']['checkpoint']['sha256']!=CHECKPOINT_SHA256):
++        raise ContactReleaseUnavailable('TRAIN refit fit/experiment/final endpoint differs')
++    expected=[(row['layout_id'],goal) for row in family_manifest['source_bindings'] if row['role']=='TRAIN'
++              for goal in ('surface','deep')]
++    rows=rollout.get('rows')
++    if (rollout.get('status')!='complete_fixed24_TRAIN_greedy_pass'
++            or rollout.get('experiment_hash')!=EXPERIMENT_HASH
++            or rollout.get('checkpoint',{}).get('sha256')!=CHECKPOINT_SHA256
++            or rollout['checkpoint'].get('parameter_hash')!=PARAMETER_HASH
++            or rollout.get('parameter_hash_after')!=PARAMETER_HASH
++            or any(rollout.get(k)!=0 for k in ('optimizer_updates','new_search_calls','new_teacher_calls','patient_reads','SELECT_or_MEASUREMENT_reads'))
++            or type(rows) is not list or len(rows)!=24
++            or [(r.get('layout_id'),r.get('goal_id')) for r in rows]!=expected
++            or any(r.get('status')!='complete' or r.get('role')!='TRAIN' for r in rows)):
++        raise ContactReleaseUnavailable('TRAIN refit native rollout is incomplete or substituted')
++    for label,target in [('fitSupervision','fitResult'),('rolloutSupervision','rolloutResult')]:
++        receipt=records[label]
++        if (receipt.get('status')!='complete' or receipt.get('exit_code')!=0 or receipt.get('cleanup_errors')!=[]
++                or receipt.get('final_owned_pids')!=[] or receipt.get('worker_termination_confirmed') is not True
++                or receipt.get('result_sha256')!=manifest['files'][target]['sha256']):
++            raise ContactReleaseUnavailable('TRAIN refit owned completion differs')
++    known={'tasks':24,'goalContacts':sum(bool(r['metrics']['goal_contacted_and_retained']) for r in rows),
++        'savedSEARCHContacts':sum(bool(r['saved_search_metrics']['goal_contacted_and_retained']) for r in rows),
++        'STOPOnly':sum(r['actions']==['STOP'] for r in rows),'meanReturn':sum(r['metrics']['total_reward'] for r in rows)/24,
++        'scope':'generated_TRAIN_native_results_no_heldout_claim'}
++    if manifest['knownTRAINOutcome']!=known or records['independentAudit'].get('status')!='PASS_SAVED_ONLY_ROLLOUT_PACKAGE':
++        raise ContactReleaseUnavailable('TRAIN refit publication hid or changed its audited native outcome')
++    return {'manifestSha256':RELEASE_MANIFEST_SHA256,'manifest':manifest,'paths':paths,
++        'experimentRecord':experiment,'allowedTRAINKeys':tuple(expected),'knownTRAINOutcome':known}
++
++
++def require_train_refit_request(publication, *, layout_id, goal_id):
++    if type(layout_id) is not str or type(goal_id) is not str or (layout_id,goal_id) not in publication['allowedTRAINKeys']:
++        raise ContactReleaseUnavailable('TRAIN_REFIT_ONLY: SELECT and MEASUREMENT layouts are unavailable')
++
++
++def load_train_refit_for_owned_inference(root, *, layout_id, goal_id):
++    """Owned-worker entry only. No user-supplied artifact path or fallback."""
++    from .public_contact_family import family_manifest,layout_metadata
++    if layout_metadata(layout_id)['role']!='TRAIN' or goal_id not in ('surface','deep'):
++        raise ContactReleaseUnavailable('TRAIN_REFIT_ONLY: refuse role before artifact/model read')
++    publication=read_published_train_refit(root,family_manifest=family_manifest())
++    require_train_refit_request(publication,layout_id=layout_id,goal_id=goal_id)
++    from .contact_learning_contract import freeze_full_teacher_refit
++    from .contact_checkpoint import load_contact_checkpoint
++    experiment=freeze_full_teacher_refit(publication['experimentRecord']['teacher_states'])
++    if experiment.fingerprint!=EXPERIMENT_HASH:raise ContactReleaseUnavailable('Refit experiment changed')
++    policy,metadata=load_contact_checkpoint(publication['paths']['checkpoint'],expected_sha256=CHECKPOINT_SHA256,
++                                            experiment=experiment,kind='final')
++    if metadata['parameter_hash']!=PARAMETER_HASH or metadata['lineage']['method']!='IL':
++        raise ContactReleaseUnavailable('Verified refit checkpoint identity differs')
++    return experiment,policy,metadata,publication
+--- a/src/resectionlab/desktop_bridge.py
++++ b/src/resectionlab/desktop_bridge.py
+@@ -1127,7 +1127,7 @@
+                     args.get("fixture") != CONTACT_FAMILY_VERSION or
+                     type(args.get("layoutId")) is not str or
+                     args.get("goalId") not in ("surface", "deep") or
+-                    args.get("selector") not in ("STOP", "SEARCH", "IL", "RL")):
++                    args.get("selector") not in ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT")):
+                 raise BridgeError("INVALID_ARGUMENT", "Choose a fixed generated family layout, goal and method")
+             from .contact_family_desktop_bridge import execute_public_contact_family_episode
+             from .contact_family_desktop_release import ContactReleaseUnavailable
+@@ -1148,7 +1148,9 @@
+                     episode.get("fixture") != args["fixture"] or
+                     episode.get("layoutId") != args["layoutId"] or
+                     episode.get("publicGoal", {}).get("goalId") != args["goalId"] or
+-                    episode.get("selector") != args["selector"] or
++                    episode.get("selector") != ("IL" if args["selector"] == "IL_TRAIN_REFIT" else args["selector"]) or
++                    (args["selector"] == "IL_TRAIN_REFIT" and (response.get("policyVariant") != "IL_TRAIN_REFIT" or episode.get("splitRole") != "TRAIN")) or
++                    (args["selector"] != "IL_TRAIN_REFIT" and "policyVariant" in response) or
+                     episode.get("splitRole") not in ("TRAIN", "SELECT") or
+                     episode.get("caseHash") != case.semantic_hash or
+                     episode.get("patientAdmission") is not False or
+@@ -1167,6 +1169,8 @@
+                       "episodeCanonicalJson": response["episodeCanonicalJson"]}
+             if "executionProvenance" in response:
+                 public["executionProvenance"] = response["executionProvenance"]
++            if "policyVariant" in response:
++                public["policyVariant"] = response["policyVariant"]
+             return public
+         if operation == "executePublicSurfaceContactEpisode":
+             # A distinct generated public goal on the same native engine and
+--- a/tests/test_contact_family_catalog.py
++++ b/tests/test_contact_family_catalog.py
+@@ -17,7 +17,7 @@
+     catalog = candidate.public_contact_family_availability()
+     assert set(catalog) == {"version", "fixture", "familyHash", "experimentHash",
+                             "releaseHash", "layouts", "methods"}
+-    assert catalog["version"] == "generated-public-contact-learning-availability-v1"
++    assert catalog["version"] == "generated-public-contact-learning-availability-v2"
+     assert catalog["fixture"] == candidate.FAMILY_VERSION
+     assert catalog["experimentHash"] is None and catalog["releaseHash"] is None
+     assert len(catalog["layouts"]) == len({row["layoutId"] for row in catalog["layouts"]}) == 24
+--- /dev/null
++++ b/tests/test_contact_train_refit_integration.py
+@@ -0,0 +1,57 @@
++"""Metadata and process admission only; no task/checkpoint/model execution."""
++import sys
++import pytest
++from resectionlab import contact_family_desktop_bridge as bridge
++from resectionlab import contact_family_supervisor as supervisor
++
++
++def test_refit_select_refuses_before_publication_or_controller(tmp_path, monkeypatch):
++    select = next(row['recipe']['layout_id'] for row in bridge.family_record()['layouts'] if row['role'] == 'SELECT')
++    def forbidden(*args, **kwargs):
++        pytest.fail('TRAIN-only refusal must precede publication/controller')
++    monkeypatch.setattr(bridge, 'read_published_train_refit', forbidden)
++    monkeypatch.setattr(bridge, '_read_exact_supervisor', forbidden)
++    with pytest.raises(bridge.ContactReleaseUnavailable, match='TRAIN_REFIT_ONLY'):
++        bridge.execute_public_contact_family_episode(attempts_root=tmp_path, layout_id=select,
++                                                     goal_id='surface', selector='IL_TRAIN_REFIT')
++    assert not list(tmp_path.iterdir())
++
++
++def test_refit_catalog_unavailable_keeps_original_slots(monkeypatch):
++    monkeypatch.setattr(bridge, '_controller_ready', lambda: True)
++    monkeypatch.setattr(bridge, 'RELEASE_MANIFEST_SHA256', None)
++    def unavailable(*args, **kwargs):
++        raise bridge.ContactReleaseUnavailable('missing refit')
++    monkeypatch.setattr(bridge, 'read_published_train_refit', unavailable)
++    value = bridge.public_contact_family_availability()
++    assert value['version'] == 'generated-public-contact-learning-availability-v2'
++    assert value['methods']['STOP'] == value['methods']['SEARCH'] == {'available': True, 'reason': None}
++    assert not value['methods']['IL']['available'] and not value['methods']['RL']['available']
++    refit = value['methods']['IL_TRAIN_REFIT']
++    assert refit['allowedRoles'] == ['TRAIN'] and refit['available'] is False
++    assert all(refit[key] is None for key in ('experimentHash', 'releaseHash', 'checkpointFileSha256',
++                                             'parameterHash', 'evidence', 'knownTRAINOutcome', 'trainingBudget'))
++
++
++def test_direct_worker_refuses_before_output_or_torch(tmp_path, monkeypatch):
++    from resectionlab import contact_family_worker as worker
++    before = 'torch' in sys.modules
++    monkeypatch.setattr(worker, '_PARENT_LEASE_ACTIVE', False)
++    with pytest.raises(RuntimeError, match='active parent lease'):
++        worker.execute(tmp_path / 'result.json', layout_id='pcf-06', goal_id='surface', selector='IL_TRAIN_REFIT')
++    assert ('torch' in sys.modules) == before and not list(tmp_path.iterdir())
++
++
++def test_refit_controller_accepts_selector_but_cancel_precedes_sources(tmp_path, monkeypatch):
++    monkeypatch.setattr(supervisor, '_check_sources', lambda: pytest.fail('source/child after cancellation'))
++    with pytest.raises(InterruptedError):
++        supervisor.run_attempt(tmp_path / 'cancel', layout_id='pcf-06', goal_id='surface',
++                               selector='IL_TRAIN_REFIT', cancelled=lambda: True)
++
++
++def test_refit_source_closure_keeps_relation_and_descriptor():
++    assert set(supervisor.SOURCE_SHA256) == supervisor.SOURCE_FILES
++    assert {'local:contact_train_refit_release.py', 'src/resectionlab/goal_relation_spatial_policy.py',
++            'artifacts/public-contact-train-refit-v1/desktop-release.json'} <= supervisor.SOURCE_FILES
++    assert supervisor.MAX_RESULT_BYTES == 2 * 1024 * 1024
++    assert supervisor.MAX_RSS_BYTES == 1024 * 1024 * 1024
+--- /dev/null
++++ b/tests/test_contact_train_refit_release.py
+@@ -0,0 +1,76 @@
++"""Metadata-only refit publication controls; no model/task/checkpoint decode."""
++import copy
++from pathlib import Path
++import pytest
++from resectionlab import contact_train_refit_release as release
++from resectionlab.core import semantic_digest
++
++
++@pytest.fixture
++def publication(monkeypatch,tmp_path):
++    family={'family_hash':'sha256:'+'f'*64,'source_bindings':[{'layout_id':f'pcf-{i:02d}','role':'TRAIN'} for i in range(12)]}
++    keys=[(r['layout_id'],g) for r in family['source_bindings'] for g in ('surface','deep')]
++    experiment={'version':'generated-public-contact-full-teacher-refit-v1','family_manifest':family,'teacher_states':[]}
++    exp_hash=semantic_digest(experiment);monkeypatch.setattr(release,'EXPERIMENT_HASH',exp_hash)
++    checkpoint={'sha256':release.CHECKPOINT_SHA256,'parameter_hash':release.PARAMETER_HASH}
++    fit={'status':'complete_fixed_full40_TRAIN_refit','experiment_hash':exp_hash,'optimizer_updates':32,
++         'loss_forward_calls':1280,'readout_forward_calls':80,'SELECT_or_MEASUREMENT_reads':0,'patient_reads':0,'final_checkpoint':checkpoint}
++    rows=[{'layout_id':l,'goal_id':g,'role':'TRAIN','status':'complete','actions':['STOP'],
++           'metrics':{'goal_contacted_and_retained':False,'total_reward':0.},
++           'saved_search_metrics':{'goal_contacted_and_retained':False}} for l,g in keys]
++    rollout={'status':'complete_fixed24_TRAIN_greedy_pass','experiment_hash':exp_hash,'checkpoint':checkpoint,
++             'parameter_hash_after':release.PARAMETER_HASH,'rows':rows,
++             **{k:0 for k in ('optimizer_updates','new_search_calls','new_teacher_calls','patient_reads','SELECT_or_MEASUREMENT_reads')}}
++    file_records={key:{'relativePath':relative,'sha256':release.CHECKPOINT_SHA256 if key=='checkpoint' else str(i)*64,'bytes':32}
++                  for i,(key,(relative,_)) in enumerate(release.SLOTS.items(),1)}
++    receipt=lambda target:{'status':'complete','exit_code':0,'cleanup_errors':[],'final_owned_pids':[],
++                          'worker_termination_confirmed':True,'result_sha256':file_records[target]['sha256']}
++    records={'experiment':experiment,'fitResult':fit,'rolloutResult':rollout,
++        'fitSupervision':receipt('fitResult'),'rolloutSupervision':receipt('rolloutResult'),
++        'independentAudit':{'status':'PASS_SAVED_ONLY_ROLLOUT_PACKAGE'}}
++    manifest={'version':release.RELEASE_VERSION,'variant':release.VARIANT,'scope':'TRAIN_only_generated_extra_compute_refit',
++        'experimentHash':exp_hash,'familyHash':family['family_hash'],'parameterHash':release.PARAMETER_HASH,'files':file_records,
++        'trainingBudget':{'updates':32,'statesPerUpdate':40,'lossForwards':1280,'fixedReadoutForwards':80},
++        'knownTRAINOutcome':{'tasks':24,'goalContacts':0,'savedSEARCHContacts':0,'STOPOnly':24,'meanReturn':0.,
++                             'scope':'generated_TRAIN_native_results_no_heldout_claim'}}
++    monkeypatch.setattr(release,'RELEASE_MANIFEST_SHA256','a'*64)
++    calls=[]
++    def fixed_file(root,relative,expected,limit,digest,size):
++        assert relative==expected;calls.append(relative);return Path(relative)
++    monkeypatch.setattr(release,'_file',fixed_file)
++    mapping={value[0]:records[key] for key,value in release.SLOTS.items() if key!='checkpoint'}
++    mapping[release.RELEASE_RELATIVE_PATH]=manifest
++    monkeypatch.setattr(release,'_json_file',lambda path,*args:mapping[str(path)])
++    return tmp_path,family,manifest,records,calls
++
++
++def test_distinct_publication_admits_all_train_keys_and_exposes_negative_results(publication):
++    root,family,manifest,records,calls=publication
++    checked=release.read_published_train_refit(root,family_manifest=family)
++    assert len(checked['allowedTRAINKeys'])==24 and checked['knownTRAINOutcome']['STOPOnly']==24
++    assert checked['manifest']['variant']=='IL_TRAIN_REFIT' and checked['manifest']['scope'].startswith('TRAIN_only')
++    release.require_train_refit_request(checked,layout_id='pcf-00',goal_id='surface')
++    with pytest.raises(release.ContactReleaseUnavailable):release.require_train_refit_request(checked,layout_id='other',goal_id='surface')
++
++
++def test_partial_or_changed_saved_rollout_cannot_publish(publication):
++    root,family,manifest,records,_=publication
++    records['rolloutResult']['rows'][0]['status']='failed_or_capped'
++    with pytest.raises(release.ContactReleaseUnavailable):release.read_published_train_refit(root,family_manifest=family)
++
++
++def test_published_outcomes_and_extra_training_budget_cannot_be_relabelled(publication):
++    root,family,manifest,records,_=publication
++    manifest['knownTRAINOutcome']['goalContacts']=24
++    with pytest.raises(release.ContactReleaseUnavailable):release.read_published_train_refit(root,family_manifest=family)
++    manifest['knownTRAINOutcome']['goalContacts']=0;manifest['trainingBudget']['statesPerUpdate']=4
++    with pytest.raises(release.ContactReleaseUnavailable):release.read_published_train_refit(root,family_manifest=family)
++
++
++def test_nontrain_owned_load_refused_before_publication_or_checkpoint_read(monkeypatch):
++    from resectionlab import public_contact_family
++    monkeypatch.setattr(public_contact_family,'layout_metadata',lambda layout:{'role':'SELECT'})
++    def forbidden(*args,**kwargs):raise AssertionError('Non-TRAIN request read publication/model')
++    monkeypatch.setattr(release,'read_published_train_refit',forbidden)
++    with pytest.raises(release.ContactReleaseUnavailable,match='TRAIN_REFIT_ONLY'):
++        release.load_train_refit_for_owned_inference(Path('.'),layout_id='pcf-00',goal_id='surface')

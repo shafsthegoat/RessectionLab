@@ -13,20 +13,22 @@ import uuid
 
 from .contact_family_desktop_release import (
     ContactReleaseUnavailable, RELEASE_MANIFEST_SHA256, read_published_contact_release)
+from .contact_train_refit_release import (read_published_train_refit, require_train_refit_request,
+    EXPERIMENT_HASH as REFIT_EXPERIMENT_HASH, PARAMETER_HASH as REFIT_PARAMETER_HASH, CHECKPOINT_SHA256 as REFIT_CHECKPOINT_SHA256)
 from .core import CaseData, SourceRef, semantic_digest
 from .public_contact_family import (FAMILY_VERSION, GOAL_IDS, build_family_source,
                                     family_digest, family_manifest, family_record,
                                     layout_metadata)
 
 
-CATALOG_VERSION = "generated-public-contact-learning-availability-v1"
+CATALOG_VERSION = "generated-public-contact-learning-availability-v2"
 EXPECTED_FAMILY_VERSION = "generated-public-contact-family-v2"
 EXPECTED_PROPOSAL_VERSION = "fixed_lattice_access_centerline_v1"
-SELECTORS = ("STOP", "SEARCH", "IL", "RL")
+SELECTORS = ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT")
 MAX_CONTROLLER_BYTES = 128 * 1024
 # This binds the reviewed controller bytes. Its own closure checks the worker,
 # published-release verifier, and canonical task/model source before release.
-SUPERVISOR_SHA256 = "06b2ee711b6840f26e34f542555ae9081997a0b6baddb5ac8af103251ca5db61"
+SUPERVISOR_SHA256 = '73cf5c68f8c2bf51ef790e13d3bc24f9070e2ef2540d992585a54218d431a606'
 
 
 def _root() -> Path:
@@ -100,7 +102,25 @@ def public_contact_family_availability() -> dict:
             experiment_hash = experiment.fingerprint
         except (ContactReleaseUnavailable, RuntimeError, ValueError, OSError):
             unavailable = "backend_contact_release_failed_verification"
-    return {"version": CATALOG_VERSION, "fixture": FAMILY_VERSION,
+    refit = None
+    try:
+        refit = read_published_train_refit(_root(), family_manifest=family_manifest())
+    except (ContactReleaseUnavailable, RuntimeError, ValueError, OSError):
+        pass
+    refit_method = {"available": refit is not None and controller_ready,
+        "reason": None if refit is not None and controller_ready else
+            "backend_train_refit_release_failed_verification" if refit is None else "backend_controller_not_promoted",
+        "allowedRoles": ["TRAIN"],
+        "experimentHash": None if refit is None else refit["manifest"]["experimentHash"],
+        "releaseHash": None if refit is None else "sha256:" + refit["manifestSha256"],
+        "checkpointFileSha256": None if refit is None else refit["manifest"]["files"]["checkpoint"]["sha256"],
+        "parameterHash": None if refit is None else refit["manifest"]["parameterHash"],
+        "evidence": None if refit is None else {"fitResultSha256": refit["manifest"]["files"]["fitResult"]["sha256"],
+            "rolloutResultSha256": refit["manifest"]["files"]["rolloutResult"]["sha256"],
+            "independentAuditSha256": refit["manifest"]["files"]["independentAudit"]["sha256"]},
+        "knownTRAINOutcome": None if refit is None else refit["knownTRAINOutcome"],
+        "trainingBudget": None if refit is None else refit["manifest"]["trainingBudget"]}
+    catalog = {"version": CATALOG_VERSION, "fixture": FAMILY_VERSION,
         "familyHash": family_digest(), "experimentHash": experiment_hash,
         "releaseHash": release, "layouts": layouts,
         "methods": {method: {"available": controller_ready,
@@ -110,7 +130,9 @@ def public_contact_family_availability() -> dict:
             else {"available": release is not None and controller_ready,
                   "reason": (None if release is not None and controller_ready else
                              unavailable if release is None else
-                             "backend_controller_not_promoted")} for method in SELECTORS}}
+                             "backend_controller_not_promoted")} for method in ("STOP", "SEARCH", "IL", "RL")}}
+    catalog["methods"]["IL_TRAIN_REFIT"] = refit_method
+    return catalog
 
 
 def execute_public_contact_family_episode(*, attempts_root: Path, layout_id: str,
@@ -121,6 +143,13 @@ def execute_public_contact_family_episode(*, attempts_root: Path, layout_id: str
     row = layout_metadata(layout_id)
     if row["role"] not in ("TRAIN", "SELECT"):
         raise ValueError("HELD_OUT_EXECUTION_CLOSED")
+    refit_publication = None
+    algorithm = "IL" if selector == "IL_TRAIN_REFIT" else selector
+    if selector == "IL_TRAIN_REFIT":
+        if row["role"] != "TRAIN":
+            raise ContactReleaseUnavailable("TRAIN_REFIT_ONLY: SELECT and MEASUREMENT layouts are unavailable")
+        refit_publication = read_published_train_refit(_root(), family_manifest=family_manifest())
+        require_train_refit_request(refit_publication, layout_id=layout_id, goal_id=goal_id)
     if selector in ("IL", "RL"):
         if RELEASE_MANIFEST_SHA256 is None:
             raise ContactReleaseUnavailable("No reviewed final learned contact-family endpoint is available")
@@ -138,7 +167,7 @@ def execute_public_contact_family_episode(*, attempts_root: Path, layout_id: str
             episode.get("schema") != "resectionlab.shared-native-contact-learning-episode.v3" or
             episode.get("taskKind") != "generated_family_public_retained_surface_contact" or
             episode.get("fixture") != FAMILY_VERSION or episode.get("layoutId") != layout_id or
-            episode.get("splitRole") != row["role"] or episode.get("selector") != selector or
+            episode.get("splitRole") != row["role"] or episode.get("selector") != algorithm or
             episode.get("publicGoal", {}).get("goalId") != goal_id or
             episode.get("caseHash") != case.semantic_hash or
             episode.get("sourceHash") != source_hash or
@@ -158,7 +187,37 @@ def execute_public_contact_family_episode(*, attempts_root: Path, layout_id: str
             {key: value for key, value in episode.items() if key != "episodeId"}) != episode.get("episodeId"):
         raise RuntimeError("Contact-family episode canonical identity changed after child completion")
     response = {"case": case, "episode": episode, "episodeCanonicalJson": canonical}
-    if selector in ("IL", "RL"):
+    if selector == "IL_TRAIN_REFIT":
+        authorship, evidence = episode.get("learnedAuthorship"), result.get("releaseEvidence")
+        files = refit_publication["manifest"]["files"]
+        expected_evidence = {"releaseManifestSha256": refit_publication["manifestSha256"],
+            "fitResultSha256": files["fitResult"]["sha256"],
+            "rolloutResultSha256": files["rolloutResult"]["sha256"],
+            "independentAuditSha256": files["independentAudit"]["sha256"],
+            "checkpointFileSha256": REFIT_CHECKPOINT_SHA256}
+        if (result.get("policyVariant") != "IL_TRAIN_REFIT" or evidence != expected_evidence
+                or type(authorship) is not dict or authorship.get("method") != "IL"
+                or authorship.get("experimentHash") != REFIT_EXPERIMENT_HASH
+                or authorship.get("parameterHash") != REFIT_PARAMETER_HASH
+                or authorship.get("checkpointFileSha256") != REFIT_CHECKPOINT_SHA256
+                or type(authorship.get("completedUpdates")) is not int or authorship["completedUpdates"] != 32
+                or type(authorship.get("inferenceOptimizerUpdates")) is not int or authorship["inferenceOptimizerUpdates"] != 0
+                or result.get("experimentHash") != REFIT_EXPERIMENT_HASH
+                or authorship.get("familyHash") != result.get("familyHash")):
+            raise RuntimeError("Owned TRAIN refit provenance differs from its distinct release")
+        response["policyVariant"] = "IL_TRAIN_REFIT"
+        response["executionProvenance"] = {
+            "version": "generated-contact-train-refit-execution-v1", "variant": "IL_TRAIN_REFIT", "algorithm": "IL",
+            "layoutId": layout_id, "goalId": goal_id, "splitRole": "TRAIN",
+            "experimentHash": authorship["experimentHash"], "familyHash": authorship["familyHash"],
+            **expected_evidence, "architectureHash": authorship["architectureHash"],
+            "parameterHash": authorship["parameterHash"], "trainingLineageHash": authorship["trainingLineageHash"],
+            "completedUpdates": 32, "statesPerUpdate": 40, "inferenceOptimizerUpdates": 0,
+            "ownedResultSha256": result["ownedResultSha256"],
+            "ownedSupervisionSha256": result["ownedSupervisionSha256"]}
+    elif selector in ("IL", "RL"):
+        if "policyVariant" in result:
+            raise RuntimeError("Original learned selector cannot carry refit identity")
         authorship, release = episode.get("learnedAuthorship"), result.get("releaseEvidence")
         if (type(authorship) is not dict or type(release) is not dict or
                 authorship.get("method") != selector or
@@ -185,6 +244,6 @@ def execute_public_contact_family_episode(*, attempts_root: Path, layout_id: str
             "completedUpdates": 32, "inferenceOptimizerUpdates": 0,
             "ownedResultSha256": result["ownedResultSha256"],
             "ownedSupervisionSha256": result["ownedSupervisionSha256"]}
-    elif episode.get("learnedAuthorship") is not None or result.get("releaseEvidence") is not None:
+    elif episode.get("learnedAuthorship") is not None or result.get("releaseEvidence") is not None or "policyVariant" in result:
         raise RuntimeError("SEARCH/STOP contact-family result falsely claims checkpoint authorship")
     return response

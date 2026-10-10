@@ -1,0 +1,59 @@
+{
+  "experimentHash": "sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f",
+  "familyHash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+  "files": {
+    "checkpoint": {
+      "bytes": 185330,
+      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/refit-IL-final.gmckpt",
+      "sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7"
+    },
+    "experiment": {
+      "bytes": 113281,
+      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/experiment-freeze.json",
+      "sha256": "1f6965eb5b292c795636df197b084f984fb08c32fbcf32b04830d361a434a3e7"
+    },
+    "fitResult": {
+      "bytes": 44061,
+      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1/result.json",
+      "sha256": "e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51"
+    },
+    "fitSupervision": {
+      "bytes": 824,
+      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-refit-run-v1.supervision/receipt.json",
+      "sha256": "ee30237f90565928aa4b05a7afb44dfce6f518f93e6603f6b5d4f070c1b5b441"
+    },
+    "independentAudit": {
+      "bytes": 4813,
+      "relativePath": "build/contact-full-teacher-rollout-result-v1/index.json",
+      "sha256": "4706f340b0ddcbfdc4d0dddc1f22f02a9c28f8e41570311bddb4da2c6c9ac388"
+    },
+    "rolloutResult": {
+      "bytes": 150593,
+      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1/result.json",
+      "sha256": "32dd1bdcbd61f9ba41dd6654aaf33c9c446cf1ba35dc222e88c4734aec0782d8"
+    },
+    "rolloutSupervision": {
+      "bytes": 823,
+      "relativePath": "build/goal-conditioned-policy-v1/full-teacher-rollout-run-v1.supervision/receipt.json",
+      "sha256": "7efdf482cd91ee25167d56e0584f17ffec45ba6cfb6c5c158e33cdac0f46a5a5"
+    }
+  },
+  "knownTRAINOutcome": {
+    "STOPOnly": 18,
+    "goalContacts": 6,
+    "meanReturn": 0.05633333333333332,
+    "savedSEARCHContacts": 16,
+    "scope": "generated_TRAIN_native_results_no_heldout_claim",
+    "tasks": 24
+  },
+  "parameterHash": "sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20",
+  "scope": "TRAIN_only_generated_extra_compute_refit",
+  "trainingBudget": {
+    "fixedReadoutForwards": 80,
+    "lossForwards": 1280,
+    "statesPerUpdate": 40,
+    "updates": 32
+  },
+  "variant": "IL_TRAIN_REFIT",
+  "version": "public-contact-train-refit-desktop-release-v1"
+}

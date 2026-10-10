@@ -17,7 +17,7 @@ def test_catalog_has_exact_roles_and_unpublished_learned_methods():
     catalog = candidate.public_contact_family_availability()
     assert set(catalog) == {"version", "fixture", "familyHash", "experimentHash",
                             "releaseHash", "layouts", "methods"}
-    assert catalog["version"] == "generated-public-contact-learning-availability-v1"
+    assert catalog["version"] == "generated-public-contact-learning-availability-v2"
     assert catalog["fixture"] == candidate.FAMILY_VERSION
     assert catalog["experimentHash"] is None and catalog["releaseHash"] is None
     assert len(catalog["layouts"]) == len({row["layoutId"] for row in catalog["layouts"]}) == 24

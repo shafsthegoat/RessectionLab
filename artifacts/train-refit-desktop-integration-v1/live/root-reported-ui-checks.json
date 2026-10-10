@@ -1,0 +1,12 @@
+{
+  "auditor_reopened_UI": false,
+  "checks": {
+    "SELECT_refit_Execute_disabled": true,
+    "frame39_probe_insertion": true,
+    "frame76_final_retained_goal_contact": true,
+    "save_refused": true
+  },
+  "evidence_kind": "root_reported_live_desktop_observation",
+  "old_IL_RL_rerun_in_this_session": false,
+  "scope": "Root explicitly reported visual/workflow checks; no screenshot or final transport envelope added by auditor."
+}

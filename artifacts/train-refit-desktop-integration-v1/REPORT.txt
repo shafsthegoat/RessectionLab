@@ -1,0 +1,74 @@
+Independent saved-only audit: live IL_TRAIN_REFIT desktop integration
+Verdict: PASS_SAVED_ONLY_LIVE_TRAIN_INTEGRATION
+
+One new attempt falls within the saved root-owned desktop launch/terminal window:
+contact-family-45c82739537747f89af12580daf07f28, pcf-14 / TRAIN / surface /
+IL_TRAIN_REFIT. Its complete result SHA256 is:
+e006aef48c63a30eb323d9622176f48951363bc4ce4c94577d4a2508feeb1c49
+The 308132-byte local result is preserved externally; this package does not copy
+its bulk native history or repeated canonical episode JSON.
+
+The entire live episode object AND its exact canonical JSON match the original
+full-teacher TRAIN-10 rollout envelope byte-for-byte at the string level and
+structurally at the object level. Episode:
+sha256:8ed19dfe1624d14b887dde09177fb028737362e64bdcedb84baeeb01df6e054c
+Complete strategy seal:
+sha256:22f72bff872d55794fa37651cd72b805d44b2683252f904ed24fc9791bc4b6fc
+
+Independent saved arithmetic verifies two actions and 38 insertion microsteps:
+aspiration removes exactly 3 native cells, costs .639 and earns -.639; probe
+removes no cells, costs .069 and earns .931. Both follow recorded 4.5 mm insertion
+paths and exact reverse withdrawals, 18 mm round trip in total. Goal potential
+changes 0 to 1 only at committed probe contact while the public goal cell remains
+intact. Final cost is .708 and return .292. The 77 frames correspond exactly to
+those insertion/withdrawal microsteps; frame 39 is probe insertion at the entry,
+frame 76 final withdrawal. Frame delta unions, cavity/contact/probe mask hashes,
+state ancestry, macro/micro removal/contact agreement, seal and canonical identity
+all pass. Remaining tissue hashes are corroborated by the identical prior envelope
+and no-removal rules, without source-array reconstruction.
+
+Recorded source/frame/task/objective/context/action identities and the saved
+independent full-tool geometry certificate match the earlier TRAIN episode.
+No collision, containment, engine transition or model was re-executed here. The
+same saved SEARCH comparison remains better on this goal: one removed cell and
+return .704, a .412 return advantage over the refit. This was deliberately a
+known costlier successful TRAIN case, not a new outcome or model-selection test.
+Across the fixed prior corpus the existing finding stays 6/24 contacts versus
+SEARCH 16/24 with 18 STOP-only refit episodes.
+
+Live child identity is the distinct IL_TRAIN_REFIT variant with inner algorithm
+IL. It binds the published full40 experiment fd211e00..., checkpoint 5d715139...,
+parameter 0bdd6713..., architecture 7651a3d1..., original fit/rollout/audit hashes,
+32 completed updates and zero inference optimizer updates. Planning records two
+actor forwards and two planning transitions; history records two authoritative
+actions. Desktop inventory preview counts are not instrumented and are not
+inferred from the older benchmark. No checkpoint payload was read by this audit;
+checkpoint identity is corroborated from saved verified-loader provenance and
+immutable publication metadata, not freshly rehashed weights.
+
+Owned inference receipt: complete, exit 0, no cleanup errors, no unresolved worker,
+termination confirmed, no retry, 4.39860074990429 seconds, 271319040 bytes sampled
+worker RSS. This is distinct from the whole desktop session: exit 0, no stop
+reason, 93.2039144160226 seconds and 812154880 bytes peak sampled process-group
+RSS. Neither receipt promises unseen transient peaks or process-tree accounting.
+
+All 18 promoted source hashes and 29 worker source-closure entries match the
+reviewed final rebase. Exact root index tree:
+27d8bf22171d87749bb3ef0093fe43bf396cef42
+Saved root logs confirm 33 Python tests, 517 working-tree desktop tests
+(97+341+79), 507 exact-index desktop tests (97+331+79), and both successful builds.
+These are root-run saved results, not auditor reruns. Prior independent source
+and rebase reviews remain included as historical scope-limited reports.
+
+UI observations are explicitly root-reported: frame 39 insertion and frame 76
+final visually checked; save refused; selecting SELECT disabled the refit Execute
+control. Auditor did not reopen UI or inspect screenshots. Child result retains
+releaseEvidence and variant; the final outer transport executionProvenance was
+not separately persisted. Source/tests and root live observation cover that
+transport boundary; saved child audit is not a fabricated transport capture.
+
+Audit execution imported only Python stdlib and read bounded source/JSON/log
+files. It made zero candidate/model/native/optimizer/UI/build/patient calls and
+read no checkpoint or image payload. No new held-out outcome was accessed. This
+establishes generated TRAIN application integration and reproducible saved
+behavior, not clinical validity or unseen-layout/patient generalization.

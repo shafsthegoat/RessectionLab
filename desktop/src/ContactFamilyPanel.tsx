@@ -4,14 +4,15 @@ import {checkedFamilyAvailability, requireInteractiveFamilyRequest} from './cont
 import type {ContactFamilyAvailability, ContactFamilyMethod, ContactFamilyGoal, ContactFamilyRequest} from './contact-family-types';
 import type {ContactFamilyView} from './contact-family-data';
 import type {ResectionApi} from './types';
-const METHODS: ContactFamilyMethod[] = ['STOP', 'SEARCH', 'IL', 'RL'];
+const METHODS: ContactFamilyMethod[] = ['STOP', 'SEARCH', 'IL', 'RL', 'IL_TRAIN_REFIT'];
 const displayReason = (reason: string | null | undefined) => {
   if (reason === 'no_reviewed_final_32_update_pair_and_completed_pilot') return 'Final learned methods have not been released yet.';
   if (reason === 'backend_controller_not_promoted') return 'This generated task is not enabled in the current engine yet.';
   if (reason === 'backend_contact_release_failed_verification') return 'The learned release could not be verified. Inference is unavailable.';
+  if (reason === 'backend_train_refit_release_failed_verification') return 'The TRAIN-only refit artifact is unavailable or could not be verified.';
   return reason;
 };
-const LABELS = {STOP: 'Immediate STOP', SEARCH: 'Bounded search', IL: 'Final imitation policy', RL: 'Final reinforcement policy'};
+const LABELS = {STOP: 'Immediate STOP', SEARCH: 'Bounded search', IL: 'Final imitation policy', RL: 'Final reinforcement policy', IL_TRAIN_REFIT: 'Full-teacher imitation · TRAIN only'};
 
 export function ContactFamilyPanel({api, view, step, busy, visible, unavailableReason,
   onExecute, onStep, onShow, onSource, onFocusGoal}: {
@@ -39,7 +40,7 @@ export function ContactFamilyPanel({api, view, step, busy, visible, unavailableR
   };
   useEffect(() => {void refresh(); return () => {generation.current++;};}, [api, unavailableReason]);
   const selected = catalog?.layouts.find(row => row.layoutId === layout);
-  const reason = unavailableReason ?? (!catalog ? 'Checking released methods…' : !selected?.interactive ? 'Held-out layouts are locked.' : displayReason(catalog.methods[method].reason));
+  const reason = unavailableReason ?? (!catalog ? 'Checking released methods…' : !selected?.interactive ? 'Held-out layouts are locked.' : method === 'IL_TRAIN_REFIT' && selected.role !== 'TRAIN' ? 'Full-teacher imitation is available only on TRAIN layouts.' : displayReason(catalog.methods[method]?.reason ?? (!catalog.methods[method] ? 'Method unavailable.' : null)));
   const execute = () => {
     if (!catalog || busy || pending || reason) return;
     try {
@@ -60,15 +61,16 @@ export function ContactFamilyPanel({api, view, step, busy, visible, unavailableR
     <select id="family-goal" value={goal} disabled={busy || pending} onChange={event => setGoal(event.target.value as ContactFamilyGoal)}><option value="surface">Surface</option><option value="deep">Deep</option></select>
     <label className="field-label" htmlFor="family-method">Method</label>
     <select id="family-method" value={method} disabled={busy || pending || !catalog} onChange={event => setMethod(event.target.value as ContactFamilyMethod)}>
-      {METHODS.map(value => <option key={value} value={value} disabled={!catalog?.methods[value].available}>{LABELS[value]}{catalog && !catalog.methods[value].available ? ' · unavailable' : ''}</option>)}
+      {METHODS.map(value => <option key={value} value={value} disabled={!catalog?.methods[value]?.available || value === 'IL_TRAIN_REFIT' && selected?.role !== 'TRAIN'}>{LABELS[value]}{catalog && !catalog.methods[value]?.available ? ' · unavailable' : ''}</option>)}
     </select>
     <button className="primary-button" disabled={busy || pending || !!reason} onClick={execute}>{busy ? 'Executing / checking…' : 'Execute selected method'}</button>
     <button className="text-button" disabled={busy || pending} onClick={() => void refresh()}>Refresh availability</button>
     {error && <p role="alert">{error}</p>}{reason && <p className="muted-note" role="status">{reason}</p>}
     {catalog && !catalog.methods.IL.available && <p className="instrument-note">{displayReason(catalog.methods.IL.reason)} No untrained substitute is run.</p>}
+    {method === 'IL_TRAIN_REFIT' && <p className="instrument-note">Full-teacher imitation uses extra TRAIN fitting: 1,280 loss evaluations versus 128 in the original pilot. Its fixed native TRAIN pass contacted 6 of 24 goals; saved bounded search contacted 16 of 24. Eighteen episodes chose STOP only. This is not held-out performance. Every TRAIN layout remains available for inspection.</p>}
     <p className="instrument-note">TRAIN and SELECT are interactive; held-out layouts stay locked. Learned methods use released final artifacts for inference only. This control starts no training. One episode establishes neither superiority nor generalization.</p>
     {view && episode && frame && prefix && <>
-      <div className="episode-status" role="status"><strong>{episode.selector === 'IL' || episode.selector === 'RL' ? 'Final learned policy · live owned inference' : LABELS[episode.selector]}</strong>
+      <div className="episode-status" role="status"><strong>{view.policyVariant === 'IL_TRAIN_REFIT' ? 'Full-teacher imitation · TRAIN only · live owned inference' : episode.selector === 'IL' || episode.selector === 'RL' ? 'Final learned policy · live owned inference' : LABELS[episode.selector]}</strong>
         <span>{episode.layoutId} · {episode.splitRole} · {episode.publicGoal.goalId} goal · native replay checked</span></div>
       <p>Goal at native cell {episode.publicGoal.nativeIndex.join(', ')}; RAS+ mm {episode.publicGoal.rasMm.map(n => n.toFixed(1)).join(', ')}. The marker is a public task location, not anatomy.</p>
       <p className="instrument-note">Temporary episode; workspace saving, vessel evaluation and the old aspiration comparison are unavailable. All tissue removal is charged. The zero nominal-target field carries no reward.</p>
@@ -82,6 +84,7 @@ export function ContactFamilyPanel({api, view, step, busy, visible, unavailableR
       <details className="episode-evidence"><summary>Layout, method & public-input provenance</summary>
         <p>{view.observation.cropShape.join(' × ')} public crop; structural, support, zero compatibility target, initial cavity, goal and committed contact are available. Motor and language channels are unavailable, not negative findings. No private reference was scored.</p>
         <p>Contact earns 1 only while the goal remains intact. Native removal, action, motion and tool-change costs determine the return. Geometric contact is not a force, sensor or clinical result.</p>
+        {view.policyVariant === 'IL_TRAIN_REFIT' && <p>Separate full-teacher TRAIN refit: 32 updates using all 40 saved teacher states per update. Fixed native TRAIN outcomes were 6/24 contacts, 18 STOP-only episodes, versus 16/24 for saved bounded search. Original IL/RL artifacts remain separate; no held-out or clinical conclusion follows.</p>}
         {episode.learnedAuthorship ? <p>Final {episode.learnedAuthorship.method}: {episode.learnedAuthorship.completedUpdates} recorded training updates; this inference made {Number(episode.planning.actor_forward_calls)} actor calls and zero optimizer updates. Artifact and owned-run bindings are consistency evidence, not signed proof of training.</p> : <p>No policy inference. SEARCH reports its returned bounded result, without a global-optimum claim.</p>}
         <dl className="episode-identities"><dt>Episode</dt><dd>{episode.episodeId}</dd><dt>Family / source</dt><dd>{episode.familyHash}<br/>{episode.sourceHash}</dd><dt>Candidate proposals</dt><dd>{episode.taskContract.sourceCandidateVersion} · exact floating-point native paths</dd><dt>Public objective</dt><dd>{episode.publicGoal.objectiveHash}</dd>{episode.learnedAuthorship && <><dt>Checkpoint / parameters</dt><dd>{episode.learnedAuthorship.checkpointFileSha256}<br/>{episode.learnedAuthorship.parameterHash}</dd></>}</dl>
       </details>

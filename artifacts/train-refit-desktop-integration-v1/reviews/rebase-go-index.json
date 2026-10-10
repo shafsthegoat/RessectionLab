@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "bytes": 1801,
+      "path": "build/train-refit-integration-rebase-independent-v1/REPORT.txt",
+      "sha256": "974902a862e87d62485975097f9debf19189a1ce150d6d660a035d19c70a70bf"
+    },
+    {
+      "bytes": 1370,
+      "path": "build/train-refit-integration-rebase-independent-v1/audit.json",
+      "sha256": "cc29a37a6c3767b1c12e890c0670c274a312e92556b4ac52a5cfd4f62f293443"
+    },
+    {
+      "bytes": 3765,
+      "path": "build/train-refit-integration-rebase-independent-v1/inspect_rebase.py",
+      "sha256": "86fa8a29ffabf06a13790e8753e5c1c19f64cb919307e1b9f42bd9523c083d80"
+    }
+  ],
+  "promotion_index_sha256": "905568afe3b7ff573de6c2f522149c8938874a8e1eed4ca94ce79af187afbb6f",
+  "status": "GO_SOURCE_ONLY_REBASE"
+}

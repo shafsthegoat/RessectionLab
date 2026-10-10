@@ -1127,7 +1127,7 @@ class BridgeSession:
                     args.get("fixture") != CONTACT_FAMILY_VERSION or
                     type(args.get("layoutId")) is not str or
                     args.get("goalId") not in ("surface", "deep") or
-                    args.get("selector") not in ("STOP", "SEARCH", "IL", "RL")):
+                    args.get("selector") not in ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT")):
                 raise BridgeError("INVALID_ARGUMENT", "Choose a fixed generated family layout, goal and method")
             from .contact_family_desktop_bridge import execute_public_contact_family_episode
             from .contact_family_desktop_release import ContactReleaseUnavailable
@@ -1148,7 +1148,9 @@ class BridgeSession:
                     episode.get("fixture") != args["fixture"] or
                     episode.get("layoutId") != args["layoutId"] or
                     episode.get("publicGoal", {}).get("goalId") != args["goalId"] or
-                    episode.get("selector") != args["selector"] or
+                    episode.get("selector") != ("IL" if args["selector"] == "IL_TRAIN_REFIT" else args["selector"]) or
+                    (args["selector"] == "IL_TRAIN_REFIT" and (response.get("policyVariant") != "IL_TRAIN_REFIT" or episode.get("splitRole") != "TRAIN")) or
+                    (args["selector"] != "IL_TRAIN_REFIT" and "policyVariant" in response) or
                     episode.get("splitRole") not in ("TRAIN", "SELECT") or
                     episode.get("caseHash") != case.semantic_hash or
                     episode.get("patientAdmission") is not False or
@@ -1167,6 +1169,8 @@ class BridgeSession:
                       "episodeCanonicalJson": response["episodeCanonicalJson"]}
             if "executionProvenance" in response:
                 public["executionProvenance"] = response["executionProvenance"]
+            if "policyVariant" in response:
+                public["policyVariant"] = response["policyVariant"]
             return public
         if operation == "executePublicSurfaceContactEpisode":
             # A distinct generated public goal on the same native engine and

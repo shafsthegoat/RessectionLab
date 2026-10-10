@@ -1,0 +1,127 @@
+{
+  "App_changes": false,
+  "canonical_relation_promotion": "d9aedf35f5819bb350951ce11f0172e893e70a7e7553614fad3c2d5b034ea512",
+  "diagnostic_retention_rebase": {
+    "added_root_lines": 5,
+    "base_sha256": "7fd77ab6ae0c17e8e795837b379e2663aac1f7b16e531237cbbc453ea74f26e8",
+    "delta_sha256": "c4401d7b4e8e06add083ca633599df88b878a259d06dd1dfc8f95c4eb1b4f291",
+    "removed_lines": 0,
+    "source_sha256": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3"
+  },
+  "files": [
+    {
+      "destination": "artifacts/public-contact-train-refit-v1/desktop-release.json",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/artifacts/public-contact-train-refit-v1/desktop-release.json",
+      "source_sha256": "68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887"
+    },
+    {
+      "destination": "desktop/electron/contact-family-authority.cjs",
+      "previous_sha256": "3d98792436c49fb31fb1ee27fb63bc90619cb7361e22fbe5a30a434ade60bf45",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/electron/contact-family-authority.cjs",
+      "source_sha256": "f54dd8e7e2735d5944aa47f8e9639bf0acf1c0dd2ace758f35c96a19277b8bd7"
+    },
+    {
+      "destination": "desktop/electron/contact-family.cjs",
+      "previous_sha256": "8ae7cc6c2e9013c7097fb7f7adfe3af1d4ba15a2f41907d01f144fd3d0463565",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/electron/contact-family.cjs",
+      "source_sha256": "a32b4265c5fe9409b5d17b042acbeeb9f2308e26078c5aa4e9a08e2a2576dcc0"
+    },
+    {
+      "destination": "desktop/src/ContactFamilyPanel.tsx",
+      "previous_sha256": "559810b3233849a5e943469b18456a1574b225a0f96f3955c25c4b7ed7a55ad2",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/src/ContactFamilyPanel.tsx",
+      "source_sha256": "119280c74e5e08541929d0e5a63ea7d0e05ffcc083ade030ea094c6c8c5f193d"
+    },
+    {
+      "destination": "desktop/src/contact-family-authority.ts",
+      "previous_sha256": "ae298558b4abbc44b7e23923f9796d53ba7aa11715494ffd22c2590a3acd2606",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/src/contact-family-authority.ts",
+      "source_sha256": "dc2cf327468b82b13fa1809a86e4270729a06bcb3bf69a3290e9b0666b5a971b"
+    },
+    {
+      "destination": "desktop/src/contact-family-availability.ts",
+      "previous_sha256": "477798439389518371213d974239ef883263574e7055903674427938a5738c47",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/src/contact-family-availability.ts",
+      "source_sha256": "8225e99b8d791ece3d3b654764218c5317e03bf413c1024a7ce760a3e14f46ff"
+    },
+    {
+      "destination": "desktop/src/contact-family-data.ts",
+      "previous_sha256": "791a14aa256601650b6d9e5d5372b7a34df5d4ff49a7d7db04b5a0179740c19a",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/src/contact-family-data.ts",
+      "source_sha256": "0775012818fc365fc9acd14e1e705cd5eadafc25c60c74d23461c112bf85dbfd"
+    },
+    {
+      "destination": "desktop/src/contact-family-request.ts",
+      "previous_sha256": "66be056b0e524e7f560beb5e7be5f324ae4036ad1c7140bb368f2e519857a741",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/src/contact-family-request.ts",
+      "source_sha256": "809313cf8bc33cf3c10d246c1ff60eaa98605283e20b6364cda8873f51d59ffa"
+    },
+    {
+      "destination": "desktop/src/contact-family-types.ts",
+      "previous_sha256": "c47b6a10b18feee04af6e9129cda8bd9fa9789b5c29f1b11bc30918391b79f2c",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/src/contact-family-types.ts",
+      "source_sha256": "a4cc78b7130b0e46edfdc678f2c4d6679795d333360254d6f470ef0ea3322edb"
+    },
+    {
+      "destination": "desktop/tests/contact-train-refit.test.mjs",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/desktop/tests/contact-train-refit.test.mjs",
+      "source_sha256": "5976d402999ae2dfd05716280d37adf626a046c1b6643c97592a83ce368f35ff"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_desktop_bridge.py",
+      "previous_sha256": "286ee14708ee2a745407b5a8f49871142ddcab20ea3f3d08519ccba45b9cc745",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/src/resectionlab/contact_family_desktop_bridge.py",
+      "source_sha256": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_supervisor.py",
+      "previous_sha256": "06b2ee711b6840f26e34f542555ae9081997a0b6baddb5ac8af103251ca5db61",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/src/resectionlab/contact_family_supervisor.py",
+      "source_sha256": "73cf5c68f8c2bf51ef790e13d3bc24f9070e2ef2540d992585a54218d431a606"
+    },
+    {
+      "destination": "src/resectionlab/contact_family_worker.py",
+      "previous_sha256": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/src/resectionlab/contact_family_worker.py",
+      "source_sha256": "2b42a3509bdf9a612a3d3a00e3d554b5355bf575df4073a6019c81f8c4f38ee4"
+    },
+    {
+      "destination": "src/resectionlab/contact_train_refit_release.py",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/src/resectionlab/contact_train_refit_release.py",
+      "source_sha256": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee"
+    },
+    {
+      "destination": "src/resectionlab/desktop_bridge.py",
+      "previous_sha256": "7fd77ab6ae0c17e8e795837b379e2663aac1f7b16e531237cbbc453ea74f26e8",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/src/resectionlab/desktop_bridge.py",
+      "source_sha256": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3"
+    },
+    {
+      "destination": "tests/test_contact_family_catalog.py",
+      "previous_sha256": "b35a7f0e376a44535ceb78b56cd28421b01e81d1b03e1627489a2b170066116c",
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/tests/test_contact_family_catalog.py",
+      "source_sha256": "b7a731e0436e17efa77e6f5f6b5dab17664d311f7011f16bc51769200475df51"
+    },
+    {
+      "destination": "tests/test_contact_train_refit_integration.py",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/tests/test_contact_train_refit_integration.py",
+      "source_sha256": "a4198159f80806a525c0e3922844b27a1359120b1d3f7026784f66eeeb901d22"
+    },
+    {
+      "destination": "tests/test_contact_train_refit_release.py",
+      "previous_sha256": null,
+      "source": "build/goal-conditioned-policy-v1/train-refit-integration-v1/stage/tests/test_contact_train_refit_release.py",
+      "source_sha256": "e8fb744c601371859ff5c45d97db98f5b4c017e1cc705e3ac74b15481afd9e26"
+    }
+  ],
+  "new_checkpoint_or_training": false,
+  "patch_sha256": "35a057f58ba7fd540d55c649e61e16c5b6197c9e86e70b771c02882931e47ec1",
+  "publication_promotion": "e199a3d47e1e2fe0495f68aab528c2a127548d4f008f2e8d4a9b85721d94008b",
+  "runtime_test_status": "not_executed_during_root_mechanics",
+  "status": "SOURCE_ONLY_UNEXECUTED",
+  "version": "TRAIN-refit-coupled-desktop-integration-v1"
+}

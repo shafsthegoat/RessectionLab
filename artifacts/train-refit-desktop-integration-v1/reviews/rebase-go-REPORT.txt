@@ -1,0 +1,32 @@
+Independent narrow rebase review: GO_SOURCE_ONLY
+
+Prior completed review covered promotion 0c2d747a..., not the final rebased index.
+This supplement explicitly extends that source GO to final promotion:
+905568afe3b7ff573de6c2f522149c8938874a8e1eed4ca94ce79af187afbb6f
+and patch:
+35a057f58ba7fd540d55c649e61e16c5b6197c9e86e70b771c02882931e47ec1
+Closure metadata:
+24c4e2397e2ad5f77b3c6936cf02aa829461a6c6d8557779d57ae602557d330e
+
+Canonical desktop_bridge.py base independently matches:
+7fd77ab6ae0c17e8e795837b379e2663aac1f7b16e531237cbbc453ea74f26e8
+Final staged desktop_bridge.py matches:
+ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3
+
+The complete before/after staged diff was independently recomputed. It contains
+exactly five added lines and zero removed lines: the latest-diagnostic transfer
+field/comment, reset of that field in both cached-case installation branches,
+and retention of those paths during transfer cleanup. This preserves the new
+diagnostic transfer retention in the refit integration. It does not change the
+refit dispatch, provenance, task/model execution, role checks or replay contract.
+
+All other 17 staged file bytes and all 29 owned-worker source closure entries are
+unchanged from the reviewed snapshot. Supervisor and inner bridge hashes are
+also unchanged. All final staged hashes match the new promotion index. Original
+review and historical pins remain preserved separately.
+
+No new source blocker. Prior source-review conditions still apply: canonical
+runtime/TS controls and any live TRAIN inspection remain root-owned and are not
+validated by this delta review. Only stdlib text/AST/JSON/hash operations were
+performed; no candidate imports, runtime tests, model/native execution, patient
+or checkpoint payload reads, or tracked writes occurred.

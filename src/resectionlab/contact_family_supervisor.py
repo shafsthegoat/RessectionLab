@@ -52,11 +52,14 @@ SOURCE_FILES = frozenset({
     "src/resectionlab/spatial_policy.py",
     "src/resectionlab/spatial_observations.py",
     "src/resectionlab/sequential_spatial_observation.py",
+    "artifacts/public-contact-train-refit-v1/desktop-release.json",
+    "local:contact_train_refit_release.py",
 })
 SOURCE_SHA256 = {
-    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+    "artifacts/public-contact-train-refit-v1/desktop-release.json": "68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887",
     "local:contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
-    "local:contact_family_worker.py": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
+    "local:contact_family_worker.py": "2b42a3509bdf9a612a3d3a00e3d554b5355bf575df4073a6019c81f8c4f38ee4",
+    "local:contact_train_refit_release.py": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee",
     "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
     "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
     "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
@@ -67,6 +70,7 @@ SOURCE_SHA256 = {
     "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
     "src/resectionlab/goal_mode_episode_adapter.py": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
     "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
     "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
     "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
     "src/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
@@ -80,7 +84,7 @@ SOURCE_SHA256 = {
     "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
     "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
     "src/resectionlab/surface_contact_episode.py": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
-    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
 }
 
 
@@ -145,7 +149,7 @@ def run_attempt(output_directory: Path, *, layout_id: str, goal_id: str,
                 selector: str, cancelled=None):
     """Run exactly one attempt; the caller chooses a fresh backend-owned path."""
     if (type(layout_id) is not str or type(goal_id) is not str or
-            type(selector) is not str or selector not in ("STOP", "SEARCH", "IL", "RL")):
+            type(selector) is not str or selector not in ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT")):
         raise ValueError("Choose one exact contact-family layout, goal and selector")
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=False)

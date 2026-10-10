@@ -1,6 +1,6 @@
 """One owned generated contact-family episode; never trains or reads patients.
 
-Only a root-published complete 32-update checkpoint pair can enable IL/RL.
+The original pair enables IL/RL; a separate audited TRAIN-only refit enables IL_TRAIN_REFIT.
 SEARCH and STOP use the same exact native task and v3 replay exporter.
 """
 from __future__ import annotations
@@ -25,9 +25,11 @@ def _activate_source():
 
 
 ROOT = _activate_source()
+_PARENT_LEASE_ACTIVE = False
 
 
 def _require_parent_lease():
+    global _PARENT_LEASE_ACTIVE
     encoded = os.environ.get("RESECTIONLAB_PARENT_LEASE_FD")
     if encoded is None or not encoded.isdecimal() or int(encoded) < 3:
         raise RuntimeError("Contact-family worker requires an owned parent lease")
@@ -40,6 +42,7 @@ def _require_parent_lease():
         finally:
             os._exit(143)
     threading.Thread(target=watch, name="contact-family-parent-lease", daemon=True).start()
+    _PARENT_LEASE_ACTIVE = True
 
 
 def _write_reserved(handle, record):
@@ -52,6 +55,8 @@ def _write_reserved(handle, record):
 
 
 def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
+    if not _PARENT_LEASE_ACTIVE:
+        raise RuntimeError("Contact-family worker requires its active parent lease before model import")
     # One fresh output is reserved before any task, checkpoint, or native call.
     with output.open("x") as handle:
         _write_reserved(handle, {"status": "started", "scope": "generated_contact_family_v3",
@@ -76,7 +81,7 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
             from resectionlab.surface_contact_episode import episode_envelope
             from resectionlab.core import semantic_digest
 
-            if selector not in ("STOP", "SEARCH", "IL", "RL"):
+            if selector not in ("STOP", "SEARCH", "IL", "RL", "IL_TRAIN_REFIT"):
                 raise ValueError("Unknown fixed contact-family method")
             if (FAMILY_VERSION != "generated-public-contact-family-v2" or
                     SOURCE_CANDIDATE_VERSION != "fixed_lattice_access_centerline_v1"):
@@ -86,6 +91,11 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
             if row["role"] not in ("TRAIN", "SELECT") or goal_id not in row["goals"]:
                 raise ValueError("HELD_OUT_EXECUTION_CLOSED: choose a TRAIN/SELECT public family row")
 
+            refit = selector == "IL_TRAIN_REFIT"
+            algorithm = "IL" if refit else selector
+            if refit and row["role"] != "TRAIN":
+                raise ValueError("TRAIN_REFIT_ONLY: refuse role before artifact/model decode")
+            refit_publication = None
             release = None
             checkpoint_metadata = None
             release_evidence = None
@@ -107,6 +117,13 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
                 if checkpoint_metadata.file_sha256 != records[selector]["sha256"]:
                     raise RuntimeError("Selected verified checkpoint file differs from the publication")
 
+            if refit:
+                stage = "TRAIN_refit_checkpoint_admission"
+                from resectionlab.contact_train_refit_release import load_train_refit_for_owned_inference
+                experiment, policy, checkpoint_metadata, refit_publication = load_train_refit_for_owned_inference(
+                    ROOT, layout_id=layout_id, goal_id=goal_id)
+                row = experiment.row(layout_id)
+
             stage = "public_task_inventory_and_planning"
             task = make_frozen_evaluation_task(experiment, layout_id, goal_id, release=release)
             context, declaration = bind_family_episode(experiment, task, layout_id=layout_id,
@@ -116,7 +133,7 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
             if (declaration.get("proposal_mode") != SOURCE_CANDIDATE_VERSION or
                     declaration.get("source_candidate_version") != SOURCE_CANDIDATE_VERSION):
                 raise RuntimeError("Contact-family declaration changed candidate rule")
-            if selector in ("IL", "RL"):
+            if algorithm in ("IL", "RL"):
                 plan, seal, accounting = plan_goal_mode_strategy(policy, task, context=context)
             else:
                 if selector == "STOP":
@@ -132,10 +149,10 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
 
             stage = "sealed_native_execution_and_replay"
             display, episode = export_family_strategy(experiment, task, layout_id=layout_id,
-                goal_id=goal_id, selector=selector, plan=plan, seal=seal, accounting=accounting,
+                goal_id=goal_id, selector=algorithm, plan=plan, seal=seal, accounting=accounting,
                 context=context, release=release, checkpoint_metadata=checkpoint_metadata)
             if (episode.get("schema") != SCHEMA or episode.get("layoutId") != layout_id or
-                    episode.get("splitRole") != row["role"] or episode.get("selector") != selector or
+                    episode.get("splitRole") != row["role"] or episode.get("selector") != algorithm or
                     episode.get("publicGoal", {}).get("goalId") != goal_id or
                     episode.get("caseHash") != display.semantic_hash or
                     episode.get("patientAdmission") is not False or
@@ -146,10 +163,10 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
                     contract.get("proposalMode") != SOURCE_CANDIDATE_VERSION or
                     contract.get("sourceCandidateVersion") != SOURCE_CANDIDATE_VERSION):
                 raise RuntimeError("Contact-family episode changed candidate rule")
-            if selector in ("IL", "RL"):
+            if algorithm in ("IL", "RL"):
                 authorship = episode.get("learnedAuthorship")
                 if (authorship is None or authorship.get("checkpointFileSha256") !=
-                        checkpoint_metadata.file_sha256 or authorship.get("method") != selector or
+                        checkpoint_metadata.file_sha256 or authorship.get("method") != algorithm or
                         type(authorship.get("inferenceOptimizerUpdates")) is not int or
                         authorship["inferenceOptimizerUpdates"] != 0):
                     raise RuntimeError("Learned v3 episode omitted verified endpoint identity")
@@ -169,6 +186,15 @@ def execute(output: Path, *, layout_id: str, goal_id: str, selector: str):
                     "pilotResultSha256": release_evidence["pilotResultSha256"],
                     "finalFreezeSha256": release_evidence["finalFreezeSha256"],
                     "checkpointFileSha256": checkpoint_metadata.file_sha256}}
+            if refit:
+                files = refit_publication["manifest"]["files"]
+                result["policyVariant"] = "IL_TRAIN_REFIT"
+                result["releaseEvidence"] = {
+                    "releaseManifestSha256": refit_publication["manifestSha256"],
+                    "fitResultSha256": files["fitResult"]["sha256"],
+                    "rolloutResultSha256": files["rolloutResult"]["sha256"],
+                    "independentAuditSha256": files["independentAudit"]["sha256"],
+                    "checkpointFileSha256": checkpoint_metadata.file_sha256}
             _write_reserved(handle, result)
             return result
         except BaseException as error:

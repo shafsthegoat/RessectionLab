@@ -58,7 +58,7 @@ function checkedContactFamilyRequest(value         )                       {
       input.fixture !== 'generated-public-contact-family-v2' ||
       typeof input.layoutId !== 'string' || !/^pcf-(?:0[0-9]|1[0-9]|2[0-3])$/.test(input.layoutId) ||
       typeof input.goalId !== 'string' || !['surface', 'deep'].includes(input.goalId) ||
-      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL'].includes(input.selector)) {
+      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL', 'IL_TRAIN_REFIT'].includes(input.selector)) {
     throw new Error('Only the fixed generated family and named methods are supported.');
   }
   // Canonical role and released method availability belong to the owned backend.
@@ -78,7 +78,7 @@ const keys = (value        ) => Object.keys(value).sort().join(',');
 function checkedFamilyAvailability(raw                           )                            {
   const value = structuredClone(raw);
   contactNeed(value && keys(value) === 'experimentHash,familyHash,fixture,layouts,methods,releaseHash,version' &&
-    value.version === 'generated-public-contact-learning-availability-v1' &&
+    ['generated-public-contact-learning-availability-v1', 'generated-public-contact-learning-availability-v2'].includes(value.version) &&
     value.fixture === 'generated-public-contact-family-v2' && digest(value.familyHash) &&
     (value.experimentHash === null || digest(value.experimentHash)) &&
     (value.releaseHash === null || digest(value.releaseHash)) &&
@@ -95,7 +95,7 @@ function checkedFamilyAvailability(raw                           )              
     counts[row.role]++;
   }
   contactNeed(contactSame(counts, {TRAIN: 12, SELECT: 4, MEASUREMENT_EVAL: 8}), 'layout role denominator changed.');
-  contactNeed(value.methods && keys(value.methods) === 'IL,RL,SEARCH,STOP', 'missing fixed method slot.');
+  contactNeed(value.methods && keys(value.methods) === (value.version === 'generated-public-contact-learning-availability-v2' ? 'IL,IL_TRAIN_REFIT,RL,SEARCH,STOP' : 'IL,RL,SEARCH,STOP'), 'missing fixed method slot.');
   for (const method of ['STOP', 'SEARCH', 'IL', 'RL']         ) {
     const row = value.methods[method];
     contactNeed(row && keys(row) === 'available,reason' && typeof row.available === 'boolean' &&
@@ -104,6 +104,31 @@ function checkedFamilyAvailability(raw                           )              
   }
   contactNeed(value.methods.IL.available === value.methods.RL.available &&
     (value.releaseHash !== null || !value.methods.IL.available), 'unreleased learned method cannot be enabled.');
+  if (value.version === 'generated-public-contact-learning-availability-v2') {
+    const row = value.methods.IL_TRAIN_REFIT;
+    contactNeed(row && keys(row) === 'allowedRoles,available,checkpointFileSha256,evidence,experimentHash,knownTRAINOutcome,parameterHash,reason,releaseHash,trainingBudget' &&
+      typeof row.available === 'boolean' && contactSame(row.allowedRoles, ['TRAIN']) &&
+      (row.reason === null || typeof row.reason === 'string' && row.reason.length > 0 && row.reason.length <= 1000) &&
+      (row.available ? row.reason === null : row.reason !== null), 'TRAIN refit availability is ambiguous.');
+    if (row.releaseHash === null) {
+      contactNeed(!row.available && row.experimentHash === null && row.parameterHash === null && row.checkpointFileSha256 === null &&
+        row.evidence === null && row.trainingBudget === null && row.knownTRAINOutcome === null, 'unpublished refit carries artifact identity.');
+    } else {
+      contactNeed(row.releaseHash === 'sha256:68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887' &&
+        row.experimentHash === 'sha256:fd211e00dbe6dd1c9ed50a58d6c3b9f9f8896a0acd3a7815b2c52e4a8dc1014f' &&
+        row.parameterHash === 'sha256:0bdd6713358937ac2c665ff700210b24eb6a88433f6f410fc87bb62f23f7fe20' &&
+        row.checkpointFileSha256 === '5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7' &&
+        row.evidence && keys(row.evidence) === 'fitResultSha256,independentAuditSha256,rolloutResultSha256' &&
+        Object.values(row.evidence).every(hash => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)) &&
+        contactSame(row.trainingBudget, {updates: 32, statesPerUpdate: 40, lossForwards: 1280, fixedReadoutForwards: 80}),
+        'TRAIN refit artifact or extra training budget changed.');
+      const outcome = row.knownTRAINOutcome;
+      contactNeed(outcome && keys(outcome) === 'STOPOnly,goalContacts,meanReturn,savedSEARCHContacts,scope,tasks' &&
+        outcome.tasks === 24 && outcome.goalContacts === 6 && outcome.savedSEARCHContacts === 16 && outcome.STOPOnly === 18 &&
+        typeof outcome.meanReturn === 'number' && Math.abs(outcome.meanReturn - 0.05633333333333332) < 1e-12 &&
+        outcome.scope === 'generated_TRAIN_native_results_no_heldout_claim', 'fixed TRAIN refit negative outcomes changed.');
+    }
+  }
   return value;
 }
 
@@ -112,7 +137,9 @@ function requireInteractiveFamilyRequest(raw         , catalog                  
   const value = checkedFamilyAvailability(catalog);
   const layout = value.layouts.find(row => row.layoutId === request.layoutId);
   contactNeed(layout?.interactive === true && layout.role !== 'MEASUREMENT_EVAL', 'held-out layouts are unavailable for interactive execution.');
-  contactNeed(value.methods[request.selector].available, value.methods[request.selector].reason ?? 'method unavailable.');
+  if (request.selector === 'IL_TRAIN_REFIT') contactNeed(layout.role === 'TRAIN', 'Full-teacher imitation is available only on TRAIN layouts.');
+  const method = value.methods[request.selector];
+  contactNeed(method?.available, method?.reason ?? 'method unavailable.');
   return {request, layout, catalog: value};
 }
 
@@ -160,7 +187,7 @@ function checkedFamilyAuthority(
   const e = episode, goal = e.publicGoal, task = e.taskContract, planning = e.planning;
   contactNeed(e.schema === FAMILY_SCHEMA && e.fixture === request.fixture &&
     e.taskKind === 'generated_family_public_retained_surface_contact' &&
-    e.selector === request.selector && e.layoutId === request.layoutId &&
+    e.selector === (request.selector === 'IL_TRAIN_REFIT' ? 'IL' : request.selector) && e.layoutId === request.layoutId &&
     e.splitRole === admitted.layout.role && e.familyHash === admitted.catalog.familyHash &&
     contactSame(e.shape, FAMILY_SHAPE), 'family task/layout/role differs from requested generated world.');
   contactNeed(goal && goal.goalId === request.goalId && goal.frame === 'RAS+' && goal.physicalUnits === 'mm' &&
@@ -171,7 +198,7 @@ function checkedFamilyAuthority(
     native_index: goal.nativeIndex, completion_value: 1, costs: CONTACT_COSTS,
     meaning: 'committed_probe_contact_AND_currently_retained_cell', clinical_or_sensor_claim: false};
   const declaration = task.declaration, binding = task.detachedObservationBinding;
-  const experimentHash = catalog.experimentHash ?? planning.experimentHash;
+  const experimentHash = request.selector === 'IL_TRAIN_REFIT' ? catalog.methods.IL_TRAIN_REFIT?.experimentHash : catalog.experimentHash ?? planning.experimentHash;
   contactNeed(digest(experimentHash), 'family execution has no frozen experiment identity.');
   contactNeed(task.maxSteps === 2 && task.proposalMode === 'fixed_lattice_access_centerline_v1' &&
     task.sourceCandidateVersion === task.proposalMode && task.objectiveVersion === objective.version &&
@@ -217,7 +244,7 @@ function checkedFamilyAuthority(
       typeof author.checkpointFileSha256 === 'string' && /^[a-f0-9]{64}$/.test(author.checkpointFileSha256) && author.checkpointVersion === 'public-goal-mode-spatial-checkpoint-v1' &&
       [author.architectureHash, author.parameterHash, author.trainingLineageHash].every(digest) &&
       author.architectureHash === planning.architecture_hash && author.parameterHash === planning.parameter_hash &&
-      author.experimentHash === catalog.experimentHash && author.familyHash === e.familyHash &&
+      author.experimentHash === experimentHash && author.familyHash === e.familyHash &&
       author.completedUpdates === 32 && author.checkpointKind === 'final' && author.inferenceOptimizerUpdates === 0 &&
       author.verificationScope === 'bounded_checkpoint_bytes_and_declared_lineage_owned_native_replay_not_signed_training_proof' &&
       lineage && lineage.kind === 'final' && lineage.method === e.selector && lineage.optimizer_updates === 32 &&
@@ -247,12 +274,38 @@ function checkedFamilyAuthority(
 
 return {checkedFamilyAuthority};})();
 const {contactNeed}=shared;
-function checkedFamilyExecution(result                     , catalog                           ) {
+function checkedFamilyExecution(result                     , catalog                           , request) {
   const e = result.episode, p = result.executionProvenance, author = e.learnedAuthorship;
+  const refit = request.selector === 'IL_TRAIN_REFIT';
+  if (refit) {
+    const method = catalog.methods.IL_TRAIN_REFIT;
+    contactNeed(Object.keys(result).sort().join(',') === 'case,episode,episodeCanonicalJson,executionProvenance,policyVariant' &&
+      result.policyVariant === 'IL_TRAIN_REFIT' && e.selector === 'IL' && e.splitRole === 'TRAIN' && method?.available &&
+      p?.version === 'generated-contact-train-refit-execution-v1', 'refit response is not the requested distinct TRAIN method.');
+    const expectedKeys = ['version', 'variant', 'algorithm', 'layoutId', 'goalId', 'splitRole', 'experimentHash', 'familyHash',
+      'releaseManifestSha256', 'fitResultSha256', 'rolloutResultSha256', 'independentAuditSha256', 'checkpointFileSha256',
+      'architectureHash', 'parameterHash', 'trainingLineageHash', 'completedUpdates', 'statesPerUpdate',
+      'inferenceOptimizerUpdates', 'ownedResultSha256', 'ownedSupervisionSha256'];
+    contactNeed(author && Object.keys(p).sort().join(',') === expectedKeys.sort().join(',') && p.variant === 'IL_TRAIN_REFIT' &&
+      p.algorithm === 'IL' && p.layoutId === e.layoutId && p.goalId === e.publicGoal.goalId && p.splitRole === 'TRAIN' &&
+      p.familyHash === e.familyHash && p.experimentHash === method.experimentHash && p.experimentHash === author.experimentHash &&
+      p.architectureHash === author.architectureHash && p.parameterHash === method.parameterHash && p.parameterHash === author.parameterHash &&
+      p.trainingLineageHash === author.trainingLineageHash && p.checkpointFileSha256 === method.checkpointFileSha256 &&
+      p.checkpointFileSha256 === author.checkpointFileSha256 && p.completedUpdates === 32 && p.statesPerUpdate === 40 &&
+      p.inferenceOptimizerUpdates === 0 && method.releaseHash === 'sha256:' + p.releaseManifestSha256 &&
+      p.fitResultSha256 === method.evidence?.fitResultSha256 && p.rolloutResultSha256 === method.evidence?.rolloutResultSha256 &&
+      p.independentAuditSha256 === method.evidence?.independentAuditSha256 &&
+      [p.releaseManifestSha256, p.fitResultSha256, p.rolloutResultSha256, p.independentAuditSha256, p.checkpointFileSha256,
+        p.ownedResultSha256, p.ownedSupervisionSha256].every(hash => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)),
+      'live TRAIN refit differs from its separate audited publication.');
+    return;
+  }
+  contactNeed(result.policyVariant === undefined, 'original method cannot carry refit identity.');
   const learned = e.selector === 'IL' || e.selector === 'RL';
   contactNeed(Object.keys(result).sort().join(',') === (learned ?
     'case,episode,episodeCanonicalJson,executionProvenance' : 'case,episode,episodeCanonicalJson'), 'unexpected family response fields.');
   if (!learned) { contactNeed(p === undefined && author === null, 'nonlearned method claims live actor provenance.'); return; }
+  contactNeed(p?.version === 'generated-contact-family-execution-v1', 'original method requires its paired release.');
   const expectedKeys = ['version', 'selector', 'layoutId', 'goalId', 'splitRole', 'experimentHash', 'familyHash',
     'releaseManifestSha256', 'pilotResultSha256', 'finalFreezeSha256', 'checkpointFileSha256', 'architectureHash',
     'parameterHash', 'trainingLineageHash', 'completedUpdates', 'inferenceOptimizerUpdates', 'ownedResultSha256', 'ownedSupervisionSha256'];

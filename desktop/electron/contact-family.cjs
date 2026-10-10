@@ -10,7 +10,7 @@ function familyRequest(value,catalog){return requireInteractiveFamilyRequest(pla
 function validateFamilyResult(result,request,catalog){
   checkedPublicContactAssets(result);
   const e=result?.episode,s=result?.case;
-  const expected=checkedFamilyAuthority(e,request,catalog);checkedFamilyExecution(result,catalog);
+  const expected=checkedFamilyAuthority(e,request,catalog);checkedFamilyExecution(result,catalog,request);
   if(typeof result.episodeCanonicalJson!=='string'||Buffer.byteLength(result.episodeCanonicalJson)>2*1024*1024||
     hash(result.episodeCanonicalJson)!==e.episodeId)throw Error('Family canonical result changed');
   const {episodeId,...body}=e;

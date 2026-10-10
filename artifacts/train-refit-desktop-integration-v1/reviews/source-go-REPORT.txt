@@ -1,0 +1,73 @@
+Independent source review: coupled IL_TRAIN_REFIT integration
+Verdict: GO_SOURCE_ONLY_PENDING_RELEASED_CANONICAL_RUNTIME_CONTROLS
+
+Frozen promotion 0c2d747a4bf66b152bd0c9ebaa0263b3e9806bcff73a2dfd14049b327fe5ceba
+Patch dbbaedf13926b65aa8d0d92c6db410840f4d186da64ca88a58115e616903f59b
+Closure 9a47eb7c39e81c11c910d9e3ecae1574fb5fc5ca158d978de9b3c0892ff95ece
+No concrete source blocker found. No executing source was edited by reviewer.
+
+The live path is coherent on source inspection: distinct request IL_TRAIN_REFIT
+maps to algorithm IL only at planner/exporter boundaries, while retaining the
+outer policyVariant and tagged execution provenance through worker, controller,
+outer bridge, Electron and renderer. The published loader returns the canonical
+VerifiedContactCheckpoint, which provides both Mapping metadata and file_sha256.
+The unchanged TRAIN task builder/context supports the refit experiment fingerprint;
+no paired held-out release is required or fabricated. Existing planner, sealed
+native executor, v3 exporter, arrays, continuous tool poses and replay are reused.
+No new goal, physics, policy or source arrays are introduced by this integration.
+
+Canonical parent layout admission refuses SELECT for the refit before publication
+or child creation and keeps MEASUREMENT closed. The loader repeats the TRAIN
+restriction. Worker execute() rejects absence of its active parent lease before
+Torch/model imports; main establishes the existing lease watcher first. Worker
+role checks precede checkpoint decode and task construction. This is an owned
+application-process contract, not a hostile-code sandbox. Existing wall/RSS/result
+bounds, cancellation, cleanup and single-attempt behavior are retained; no new
+process-tree measurement claim is made.
+
+The source closure retains the promoted relation architecture dependency while
+publishing the earlier full40 goal/mode refit checkpoint, not the untrained new
+relation architecture. All 29 closure hashes, supervisor hash, bridge binding and
+18 staged/base file hashes match. Existing App, types.ts and Case4 source remain
+untouched, and importDiagnosticLayer is preserved. App already delegates request
+and checked hydration to the modified panel/functions, so a separate App change
+is unnecessary for this method tag.
+
+Five mirrored function bodies agree between TypeScript and CJS after only explicit
+TypeScript annotation/cast and whitespace normalization: request, availability,
+interactive admission, family authority and execution provenance. This is a
+source comparison, not compilation or runtime evidence. Both boundaries compare
+refit request to algorithm IL plus policyVariant IL_TRAIN_REFIT; require TRAIN,
+new experiment/parameter/checkpoint identity, separate fit/rollout/audit evidence,
+32 updates and 40 states/update; reject refit/original substitution and fabricated
+paired pilot fields. The renderer retains canonical JSON/lineage/source/physical
+replay checks. Existing callers pass the request to the extended validator.
+
+Saved four-slot v1 availability remains valid for original methods. Current v2
+adds one optional refit slot. Missing refit payload/evidence makes that method
+unavailable without an untrained fallback or changing old learned artifacts.
+As expected, corruption of shared pinned source/module/descriptor bytes refuses
+the whole source closure; this stronger source failure is not method-specific.
+STOP/SEARCH and original paired IL/RL execution logic remain separate.
+
+The distinct label and live replay identify the TRAIN-only full-teacher refit.
+The fixed evidence is retained visibly: 6/24 goal contacts versus saved SEARCH
+16/24, 18 STOP-only episodes, all 24 TRAIN tasks inspectable, 1280 training-loss
+evaluations versus 128 original pilot evaluations. The available mean return
+0.05633333333333332 remains in the catalog. No held-out, clinical, superiority or
+new-learning claim is added. The proposed single pcf-14/surface live inspection
+is explicitly a known costlier successful TRAIN case, not a fresh efficacy test.
+
+Validation performed by reviewer: stdlib-only file hashes, JSON and AST/text
+inspection; no candidate imports, runtime tests, model/native calls, checkpoint
+payload reads, compiler/build, UI or patient/held-out access. An initial text
+parity check stopped on an unstripped TypeScript-only indexed type cast; adding
+that explicit cast removal made all five comparisons pass. No candidate source
+change was needed.
+
+Root-controlled next step after mechanics: promote exact bytes and run the
+proposed focused Python controls, TS/CJS boundary/replay/panel tests and compiler
+checks. These staged controls do not themselves prove a successful learned live
+branch. Only after they pass should root release the one owned live TRAIN request
+and inspect the resulting tagged authoritative replay. No retraining, SEARCH
+rerun, held-out request, sweep or automatic retry is required by this source GO.

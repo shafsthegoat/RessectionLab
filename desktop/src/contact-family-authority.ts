@@ -42,7 +42,7 @@ export function checkedFamilyAuthority(
   const e = episode, goal = e.publicGoal, task = e.taskContract, planning = e.planning;
   contactNeed(e.schema === FAMILY_SCHEMA && e.fixture === request.fixture &&
     e.taskKind === 'generated_family_public_retained_surface_contact' &&
-    e.selector === request.selector && e.layoutId === request.layoutId &&
+    e.selector === (request.selector === 'IL_TRAIN_REFIT' ? 'IL' : request.selector) && e.layoutId === request.layoutId &&
     e.splitRole === admitted.layout.role && e.familyHash === admitted.catalog.familyHash &&
     contactSame(e.shape, FAMILY_SHAPE), 'family task/layout/role differs from requested generated world.');
   contactNeed(goal && goal.goalId === request.goalId && goal.frame === 'RAS+' && goal.physicalUnits === 'mm' &&
@@ -53,7 +53,7 @@ export function checkedFamilyAuthority(
     native_index: goal.nativeIndex, completion_value: 1, costs: CONTACT_COSTS,
     meaning: 'committed_probe_contact_AND_currently_retained_cell', clinical_or_sensor_claim: false};
   const declaration = task.declaration, binding = task.detachedObservationBinding;
-  const experimentHash = catalog.experimentHash ?? planning.experimentHash;
+  const experimentHash = request.selector === 'IL_TRAIN_REFIT' ? catalog.methods.IL_TRAIN_REFIT?.experimentHash : catalog.experimentHash ?? planning.experimentHash;
   contactNeed(digest(experimentHash), 'family execution has no frozen experiment identity.');
   contactNeed(task.maxSteps === 2 && task.proposalMode === 'fixed_lattice_access_centerline_v1' &&
     task.sourceCandidateVersion === task.proposalMode && task.objectiveVersion === objective.version &&
@@ -99,7 +99,7 @@ export function checkedFamilyAuthority(
       typeof author.checkpointFileSha256 === 'string' && /^[a-f0-9]{64}$/.test(author.checkpointFileSha256) && author.checkpointVersion === 'public-goal-mode-spatial-checkpoint-v1' &&
       [author.architectureHash, author.parameterHash, author.trainingLineageHash].every(digest) &&
       author.architectureHash === planning.architecture_hash && author.parameterHash === planning.parameter_hash &&
-      author.experimentHash === catalog.experimentHash && author.familyHash === e.familyHash &&
+      author.experimentHash === experimentHash && author.familyHash === e.familyHash &&
       author.completedUpdates === 32 && author.checkpointKind === 'final' && author.inferenceOptimizerUpdates === 0 &&
       author.verificationScope === 'bounded_checkpoint_bytes_and_declared_lineage_owned_native_replay_not_signed_training_proof' &&
       lineage && lineage.kind === 'final' && lineage.method === e.selector && lineage.optimizer_updates === 32 &&

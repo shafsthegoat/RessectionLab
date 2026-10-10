@@ -1,0 +1,33 @@
+--- before-staged/src/resectionlab/desktop_bridge.py
++++ after-staged/src/resectionlab/desktop_bridge.py
+@@ -257,6 +257,8 @@
+     routes: Any = None
+     display_series: dict[str, dict] = field(default_factory=dict)
+     display_sources: dict[str, Any] = field(default_factory=dict)
++    # Latest diagnostic only: two live transfer paths, never workspace/planning data.
++    diagnostic_transfer_paths: tuple[str, ...] = ()
+     imaging_state: dict | None = None
+     episode: dict | None = None
+     episode_selection: dict | None = None
+@@ -411,11 +413,13 @@
+             if transient_public_contact:
+                 entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
+                     episode=None,episode_selection=None,workspace_hash=None,
++                    diagnostic_transfer_paths=(),
+                     comparison_pair=None,comparison_actor_episode_id=None,
+                     public_surface_contact_active=True)
+                 extra={}
+             else:
+                 entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
++                    diagnostic_transfer_paths=(),
+                     comparison_pair=None,comparison_actor_episode_id=None,
+                     public_surface_contact_active=False,**restored)
+                 extra=self._workspace_payload(entry)
+@@ -486,6 +490,7 @@
+         for cached in self.cases.values():
+             from .workspace_imaging import retained_paths
+             retained.update(retained_paths(cached.display_series))
++            retained.update(cached.diagnostic_transfer_paths)
+             retained.add(cached.descriptor["mri"]["path"])
+             if cached.descriptor["brainMask"]:
+                 retained.add(cached.descriptor["brainMask"]["path"])

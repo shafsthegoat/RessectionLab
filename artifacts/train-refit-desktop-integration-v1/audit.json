@@ -1,0 +1,134 @@
+{
+  "actions": [
+    {
+      "action_id": "NATIVE-SPATIAL:d57c8f281475e9d57aefe78e",
+      "cost": 0.6390000000000001,
+      "entry_ras_mm": [
+        9.0,
+        7.0,
+        1.5
+      ],
+      "microsteps": 19,
+      "mode": "aspirate",
+      "removed_cells": 3,
+      "reward": -0.6390000000000001,
+      "round_trip_path_mm": 9.0,
+      "tip_ras_mm": [
+        9.0,
+        7.0,
+        6.0
+      ]
+    },
+    {
+      "action_id": "NATIVE-SPATIAL:1ca05aeddbc79bbec7027d50",
+      "cost": 0.069,
+      "entry_ras_mm": [
+        9.0,
+        7.0,
+        1.5
+      ],
+      "microsteps": 19,
+      "mode": "probe",
+      "removed_cells": 0,
+      "reward": 0.931,
+      "round_trip_path_mm": 9.0,
+      "tip_ras_mm": [
+        9.0,
+        7.0,
+        6.0
+      ]
+    }
+  ],
+  "attempt_path": "/Users/sayemkamal/Library/Application Support/ressectionlab-desktop/research-runs/generated-contact-family-attempts/contact-family-45c82739537747f89af12580daf07f28",
+  "canonical_tree": "27d8bf22171d87749bb3ef0093fe43bf396cef42",
+  "checkpoint_payload_read": false,
+  "desktop_session": {
+    "elapsed_seconds": 93.2039144160226,
+    "exit_code": 0,
+    "measurement": "process_group_only",
+    "peak_sampled_process_group_rss_bytes": 812154880,
+    "stop_reason": null
+  },
+  "difference_from_saved_SEARCH": -0.41200000000000014,
+  "elapsed_audit_seconds": 0.010203625075519085,
+  "episode_algorithm": "IL",
+  "episode_id": "sha256:8ed19dfe1624d14b887dde09177fb028737362e64bdcedb84baeeb01df6e054c",
+  "final_outcome": {
+    "cost": 0.7080000000000002,
+    "goal_retained_and_contacted": true,
+    "removed_mm3": 3,
+    "return": 0.2919999999999999,
+    "round_trip_path_mm": 18.0
+  },
+  "frames": 77,
+  "history_hash": "sha256:3ee43e7689f471da9314bf39fb5016acc4fed04112695c811c3cadd632c6c2bd",
+  "identical_to_original_TRAIN_10_episode_and_canonical_json": true,
+  "inference_accounting": {
+    "actor_forwards": 2,
+    "authoritative_actions": 2,
+    "fresh_auditor_model_or_native_calls": 0,
+    "inventory_previews": "not instrumented in desktop worker",
+    "optimizer_updates": 0,
+    "planning_transitions": 2
+  },
+  "microsteps": 38,
+  "new_attempts_during_live_window": 1,
+  "owned_child": {
+    "automaticRetry": false,
+    "cleanupErrors": [],
+    "elapsedSeconds": 4.39860074990429,
+    "sampledPeakRssBytes": 271319040,
+    "samples": 21,
+    "samplingLimit": "transient peaks between samples may be missed",
+    "status": "complete",
+    "stopReason": null,
+    "unresolvedWorkerPid": null,
+    "workerReturnCode": 0,
+    "workerTerminationConfirmed": true
+  },
+  "policy_variant": "IL_TRAIN_REFIT",
+  "release_evidence": {
+    "checkpointFileSha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7",
+    "fitResultSha256": "e68bdc9c0f030532544ee6aa1343fea76a1ef1a06cf47526e1702aa0a049ed51",
+    "independentAuditSha256": "4706f340b0ddcbfdc4d0dddc1f22f02a9c28f8e41570311bddb4da2c6c9ac388",
+    "releaseManifestSha256": "68091a27acf63715f23e5a649de1f06dee56b2391e6bb6919fc8bbb36a2d8887",
+    "rolloutResultSha256": "32dd1bdcbd61f9ba41dd6654aaf33c9c446cf1ba35dc222e88c4734aec0782d8"
+  },
+  "request": {
+    "goalId": "surface",
+    "layoutId": "pcf-14",
+    "selector": "IL_TRAIN_REFIT"
+  },
+  "result_sha256": "e006aef48c63a30eb323d9622176f48951363bc4ce4c94577d4a2508feeb1c49",
+  "saved_SEARCH_same_goal": {
+    "goal_contacted_and_retained": true,
+    "goal_retained": true,
+    "removed_volume_mm3": 1.0,
+    "steps": 2,
+    "terminated": true,
+    "total_reward": 0.7040000000000001
+  },
+  "scope_limits": [
+    "exact saved native-history/geometry certificate corroboration; no fresh collision or tissue-geometry computation",
+    "remaining tissue hashes corroborated by exact prior envelope and unchanged-delta rules, not reconstructed from source arrays",
+    "child result stores release evidence; final outer executionProvenance transport/render state was not separately persisted",
+    "root reports frame39/frame76 visual inspection, save refusal and SELECT Execute disabled; auditor did not reopen UI",
+    "one previously observed generated TRAIN case; not new performance, generalization, heldout or clinical evidence"
+  ],
+  "status": "PASS_SAVED_ONLY_LIVE_TRAIN_INTEGRATION",
+  "strategy_seal": "sha256:22f72bff872d55794fa37651cd72b805d44b2683252f904ed24fc9791bc4b6fc",
+  "validation": {
+    "both_saved_build_logs_pass": true,
+    "index_desktop_groups": [
+      97,
+      331,
+      79
+    ],
+    "python": 33,
+    "working_desktop_groups": [
+      97,
+      341,
+      79
+    ]
+  }
+}

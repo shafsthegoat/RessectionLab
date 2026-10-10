@@ -9,7 +9,7 @@ export function checkedContactFamilyRequest(value: unknown): ContactFamilyReques
       input.fixture !== 'generated-public-contact-family-v2' ||
       typeof input.layoutId !== 'string' || !/^pcf-(?:0[0-9]|1[0-9]|2[0-3])$/.test(input.layoutId) ||
       typeof input.goalId !== 'string' || !['surface', 'deep'].includes(input.goalId) ||
-      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL'].includes(input.selector)) {
+      typeof input.selector !== 'string' || !['STOP', 'SEARCH', 'IL', 'RL', 'IL_TRAIN_REFIT'].includes(input.selector)) {
     throw new Error('Only the fixed generated family and named methods are supported.');
   }
   // Canonical role and released method availability belong to the owned backend.
