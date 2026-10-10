@@ -1,5 +1,6 @@
 import {hydrateCase,validateCaseDescriptor} from './case-data.ts';
 import {hydrateDisplaySeries} from './workspace-imaging-data.ts';
+import {checkedEpisodeAuthority} from './episode-authority.ts';
 import {hydrateDevelopmentEpisode} from './episode-data.ts';
 import {sourceFrameDigest} from './source-integrity.ts';
 import {rasAffine,transformPoint} from './viewer/coordinates.ts';
@@ -71,7 +72,9 @@ export async function hydrateWorkspace(sourceInput:CasePayload,api:ResectionApi,
     requireValue(session.episodeReplay!==undefined,'missing saved replay selection.');
     if(session.episodeReplay){
       const replay=session.episodeReplay;
-      requireValue(replay.validation==='authoritative_generated_replay'&&replay.accountingQualification==='historical_timings_not_remeasured'&&replay.episode?.caseHash===source.caseHash&&
+      checkedEpisodeAuthority(replay.episode,replay.episodeAuthorship,'reopened');
+      const qualification=replay.episode.selector==='RL256_ASPIRATION_TRANSFER'?'imported_computational_provenance_unverified':'historical_timings_not_remeasured';
+      requireValue(replay.validation==='authoritative_generated_replay'&&replay.accountingQualification===qualification&&replay.episode?.caseHash===source.caseHash&&
         Number.isSafeInteger(replay.frameIndex)&&replay.frameIndex>=0&&replay.frameIndex<replay.episode.replayFrames.length&&typeof replay.visible==='boolean',
         'saved episode has no valid backend replay admission.');
       requireValue(!replay.visible||imagingState.selectedSeriesId===null,'primary replay cannot be displayed on an auxiliary image.');
@@ -81,7 +84,7 @@ export async function hydrateWorkspace(sourceInput:CasePayload,api:ResectionApi,
   const series:DisplaySeriesView[]=[];
   for(const descriptor of session?.displaySeries??[]){series.push(await hydrateDisplaySeries(source,descriptor,api));current();}
   let episodeView:EpisodeView|null=null;
-  if(session?.episodeReplay){episodeView=await hydrateDevelopmentEpisode({case:source,...session.episodeReplay},api);current();}
+  if(session?.episodeReplay){episodeView=await hydrateDevelopmentEpisode({case:source,...session.episodeReplay},api,'reopened');current();}
   return {source,volume,series,imagingState,episodeView,episodeStep:session?.episodeReplay?.frameIndex??0,
     episodeVisible:session?.episodeReplay?.visible??false,session};
 }

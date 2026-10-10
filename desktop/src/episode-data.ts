@@ -1,16 +1,18 @@
 import type { CasePayload, ResectionApi, ViewerCase } from "./types.ts";
-import type { DevelopmentEpisode, DevelopmentEpisodeResult, NativeCell } from "./episode-types.ts";
+import type { DevelopmentEpisode, DevelopmentEpisodeResult, EpisodeOrigin, EpisodeAuthorship, NativeCell } from "./episode-types.ts";
 import type { ViewerReplay } from "./viewer/contracts.ts";
 import { hydrateCase, validateCaseDescriptor } from "./case-data.ts";
 import { arrayDigest, sha256Bytes, sourceImageDigest, sourceFrameDigest } from "./source-integrity.ts";
-export interface EpisodeView { episode: DevelopmentEpisode; source: CasePayload; volume: ViewerCase; frames: ViewerReplay[]; contactCounts: number[]; probeCounts: number[]; }
+export interface EpisodeView { origin: EpisodeOrigin; authorship: EpisodeAuthorship | null; episode: DevelopmentEpisode; source: CasePayload; volume: ViewerCase; frames: ViewerReplay[]; contactCounts: number[]; probeCounts: number[]; }
+import { checkedEpisodeAuthority } from "./episode-authority.ts";
 const HASH = /^sha256:[a-f0-9]{64}$/;
 const same = (a: unknown,b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 function requireValue(value: unknown, message: string): asserts value { if (!value) throw new Error(`Episode replay withheld: ${message}`); }
 const count = (mask: Uint8Array) => mask.reduce((sum,n) => sum+n,0);
 /** All mutation buffers are private to this validation; source arrays stay immutable. */
-export async function hydrateDevelopmentEpisode(input: DevelopmentEpisodeResult, api: ResectionApi): Promise<EpisodeView> {
+export async function hydrateDevelopmentEpisode(input: DevelopmentEpisodeResult, api: ResectionApi, origin: EpisodeOrigin = "live"): Promise<EpisodeView> {
   const source = structuredClone(input.case), episode = structuredClone(input.episode);
+  const authorship = checkedEpisodeAuthority(episode, structuredClone(input.episodeAuthorship), origin);
   requireValue(typeof input.episodeCanonicalJson === "string" && input.episodeCanonicalJson.length <= 2*1024*1024 &&
     `sha256:${await sha256Bytes(new TextEncoder().encode(input.episodeCanonicalJson))}` === episode.episodeId, "episode serialization digest changed.");
   const canonicalEpisode = JSON.parse(input.episodeCanonicalJson);
@@ -32,8 +34,6 @@ export async function hydrateDevelopmentEpisode(input: DevelopmentEpisodeResult,
   requireValue(episode.geometryAudit.feasible === true && episode.geometryAudit.complete_tool_checked === true &&
     episode.geometryAudit.frontier_checked === true && episode.geometryAudit.source_case_hash === episode.sourceHash,
     "complete-tool and frontier audit is unavailable.");
-  requireValue(episode.planning.sealedBeforeReferenceScoring === true && episode.planning.learnedPolicyExecuted === false,
-    "unsupported planning authority.");
   requireValue(source.brainMask && source.compartments.length === 1 && source.compartments[0].name === "generated_nominal_target", "missing generated tissue/target arrays.");
   const volume = await hydrateCase(source,api);
   const tissue = new Uint8Array(await api.readAsset(source.brainMask.assetId)).slice();
@@ -119,5 +119,5 @@ export async function hydrateDevelopmentEpisode(input: DevelopmentEpisodeResult,
   }
   requireValue(episode.initialStateId===episode.replayFrames[0].stateAfter && episode.finalStateId===episode.replayFrames.at(-1)!.stateAfter &&
     same(sorted(episode.finalRemovedIndicesNative),Array.from(removed.keys()).filter(n=>removed[n])), "final cavity differs from executed history.");
-  return {episode,source,volume,frames,contactCounts,probeCounts};
+  return {origin,authorship,episode,source,volume,frames,contactCounts,probeCounts};
 }

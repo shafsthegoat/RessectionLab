@@ -1,0 +1,18 @@
+Desktop trained aspiration transfer proposal V2
+
+PASS for the desktop contract. This supersedes desktop V1; V1 remains unchanged. Root owns integration and any actual inference/Electron launch. Backend review is separate.
+
+Narrow change from V1: a reopened RL256_ASPIRATION_TRANSFER requires accountingQualification=imported_computational_provenance_unverified in both host and renderer. SCRIPTED/SEARCH continue to require historical_timings_not_remeasured and reject the transfer qualification. The type permits both literals; runtime selection is strict. The imported transfer panel now explicitly says saved model calls, search counts and timings remain unverified. Geometry revalidation does not authenticate imported computational provenance.
+
+All other V1 safeguards remain: fixed generated request without model/path input; separate live/imported authorship; projection and identity binding; equal integer accounting aliases; aspiration/STOP-only trace; all recorded source-grid mask, exact motion and STOP checks; no App edits; unchanged vascular interface and old selectors. Policy/projection hashes remain in the existing provenance details.
+
+Validation:
+- 39 focused transfer transport/renderer/React controls passed, including old-qualification rejection for RL256 and new-qualification rejection for each old selector.
+- 33 existing workspace/host/panel controls passed on V2. The broader 79-control V1 result is retained in the immutable V1 directory; it was not counted as a new V2 run.
+- TypeScript check passed with the clean HEAD App snapshot.
+- Both backend V2 fake-identity envelopes passed host-to-renderer checking: identical one-action STOP / two-frame generated replay, correct live/imported qualification.
+- Full canonical patch applies cleanly; separate v1-to-v2.patch exposes only the six changed files.
+
+The backend fixtures use an untrained fake actor and fabricated trained metadata solely to test the wire contract over generated native geometry. Their verified_live_backend_run field tests a permitted transport value; these fixtures are not evidence of trained inference or actor authorship.
+
+Promotion is restricted to the 13 paths in promotion-files.json (9 production files and 4 tests/helpers). App, neighboring WIP, assets/dependencies and all backend sources are excluded. No tracked edits, Python, model/checkpoint calls, patient reads, network transfer or Electron launch occurred.

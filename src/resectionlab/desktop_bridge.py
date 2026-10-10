@@ -25,6 +25,7 @@ import sys
 import tempfile
 import threading
 import time
+from types import ModuleType
 import uuid
 from typing import Any, Callable
 
@@ -48,6 +49,7 @@ MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
 OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
+TRANSFER_SUPERVISOR_SHA256 = "60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
 RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
                        "nativeRequestSha256": "native-request.json", "reportSha256": "native-refinement.json",
@@ -1033,11 +1035,41 @@ class BridgeSession:
             # createSyntheticCase policy exclusion remains unchanged above.
             _keys(args, {"fixture", "selector"})
             if (set(args) != {"fixture", "selector"} or args.get("fixture") != "generated-sequential-v1"
-                    or args.get("selector") not in ("scripted", "SEARCH")):
+                    or args.get("selector") not in ("scripted", "SEARCH", "RL256_ASPIRATION_TRANSFER")):
                 raise BridgeError("INVALID_ARGUMENT", "Choose the fixed generated episode and selector")
             from .development_episode import execute_development_episode
             progress(0.1, "Executing the generated multistep software fixture")
-            case, episode = execute_development_episode(selector=args["selector"], cancelled=request.cancelled.is_set)
+            authorship = None
+            if args["selector"] == "RL256_ASPIRATION_TRANSFER":
+                supervisor_path = Path(__file__).with_name("legacy_transfer_supervisor.py")
+                if (supervisor_path.is_symlink() or not supervisor_path.is_file() or
+                        supervisor_path.stat().st_size > 128 * 1024):
+                    raise BridgeError("EPISODE_SOURCE_MISMATCH", "Bound trained-transfer controller changed")
+                with supervisor_path.open("rb") as source:
+                    supervisor_bytes = source.read(128 * 1024 + 1)
+                if hashlib.sha256(supervisor_bytes).hexdigest() != TRANSFER_SUPERVISOR_SHA256:
+                    raise BridgeError("EPISODE_SOURCE_MISMATCH", "Bound trained-transfer controller changed")
+                # Execute the checked source bytes directly; a prior valid .pyc
+                # must not substitute different controller code after hashing.
+                supervisor = ModuleType("fixed_reviewed_transfer_supervisor")
+                supervisor.__file__ = str(supervisor_path)
+                exec(compile(supervisor_bytes, str(supervisor_path), "exec"), supervisor.__dict__)
+                run_attempt = supervisor.run_attempt
+                from .legacy_transfer_episode import execute_transfer_episode_from_pair, transfer_authorship
+                parent = self.run_dir if self.run_dir is not None else self.transfers.root
+                attempts = parent / "generated-transfer-attempts"
+                attempts.mkdir(parents=True, exist_ok=True)
+                result = run_attempt(attempts / ("rl256-" + uuid.uuid4().hex),
+                                     cancelled=request.cancelled.is_set)
+                request.check()
+                case, episode = execute_transfer_episode_from_pair(result["pair"],
+                    cancelled=request.cancelled.is_set)
+                if (episode != result["episode"] or case.semantic_hash != result["caseHash"] or
+                        result["episodeAuthorship"] != transfer_authorship(episode, live_backend_run=True)):
+                    raise BridgeError("EPISODE_BINDING_MISMATCH", "Owned actor result differs from native replay")
+                authorship = result["episodeAuthorship"]
+            else:
+                case, episode = execute_development_episode(selector=args["selector"], cancelled=request.cancelled.is_set)
             request.check()
             if (episode.get("caseHash") != case.semantic_hash or episode.get("patientAdmission") is not False
                     or episode.get("clinicalValidation") is not False or episode.get("evidenceKind") != "generated_software_fixture"):
@@ -1055,7 +1087,10 @@ class BridgeSession:
             if entry.imaging_state is not None:
                 entry.imaging_state={**entry.imaging_state,'selectedSeriesId':None}
             entry.workspace_hash=None
-            return {"case": {**installed,**self._workspace_payload(entry)}, "episode": episode, "episodeCanonicalJson": canonical}
+            response={"case": {**installed,**self._workspace_payload(entry)}, "episode": episode, "episodeCanonicalJson": canonical}
+            if authorship is not None:
+                response["episodeAuthorship"]=authorship
+            return response
         if operation == "createSyntheticCase":
             _keys(args, {"shape"})
             shape = args.get("shape", [64, 64, 64])

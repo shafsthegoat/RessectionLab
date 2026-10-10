@@ -1,0 +1,83 @@
+Independent frozen backend review: HOLD before real checkpoint/worker release
+
+Candidate module pins are recorded in audit.json and exact source copies under
+snapshots/. No writer source was changed. Seven independent generated controls
+plus the five supplied fake-backend controls passed in 3.14 s under 20 s outer timeout,
+one numeric thread. Passing negative controls reproduce the findings below.
+Torch load and SpatialPolicy forward/act were blocked. No actual actor/checkpoint,
+patient, network or real child process was used. The test runner was the sole new
+process; owned-worker behaviors were represented by fake Popen objects.
+
+1. P1 — Real loader always refuses because the architecture constant is mistyped.
+legacy_transfer_episode.py:20 contains a3b6740a188… (63 hex). Canonical release is
+a3b6740ab188… (64 hex). fixed_rl256_loader.py:49 compares against the canonical V3
+module, so this path fails before checkpoint preflight. The fabricated geometry
+fixture copies the mistaken constant and therefore did not detect it. Independent
+control compares the literal to canonical saved result.json, opening no weights.
+Fix from canonical authority and add that comparison without importing weights.
+
+2. P1 — Hashed source does not establish which code executes.
+fixed_rl256_loader.py:46 uses exec_module after hashing .py. The independent
+control supplies matching canonical source bytes plus a timestamp/size-valid
+cached generated sentinel; that sentinel executes instead of the checked source.
+The worker command also uses only -B, which does not prevent reading existing
+.pyc. The bridge imports its supervisor before hashing that module's source.
+Use verified bytes compile/exec for the old loader and the existing fresh-cache,
+source-only bootstrap for worker/parent local imports. Keep all existing source
+pins. This is executed-source integrity, not a hostile-Python sandbox claim.
+
+3. P1 — New supervisor does not cover parent termination or full output budget.
+legacy_transfer_supervisor imports signal but installs no lifecycle termination
+handler. A normal parent SIGTERM bypasses Python finally, while its child starts a
+new session; the owned worker can outlive its monitor. Reuse the existing reviewed
+lifecycle controller or install equivalent owned-child termination handling around
+initialization through terminal publication, with bounded cleanup and receipts.
+Its runtime loop does not monitor output; only final result.json <= 2 MiB is checked.
+A fake completed worker with a > 2 MiB log is accepted. Bound total attempt output
+while alive, reserve receipt bytes, and retain failure accounting. The declared
+20s also excludes up to 0.5 s probe wait, 0.2 s sampling sleep and 4 s cleanup waits; either
+reserve these inside the envelope or state a 20 s work window plus bounded cleanup.
+No real termination experiment was run; missing signal handling is a source finding.
+
+4. P2 — Missing RSS observations are reported as zero and accepted.
+A fake child exiting before the first poll produces complete, samples 0 and
+sampledPeakRssBytes 0. That is not a measured zero or evidence the 1 GiB sampled cap
+was checked. Refuse an unobserved attempt or preserve null/unknown with an explicit
+qualification and an independently bound worker peak if that is accepted. Preserve
+live-observer failure refusal and avoid signals to an already-exited child.
+
+5. P2 — Reopened non-timing accounting is not checked or qualified as unverified.
+validate_transfer_planning validates actor_forward_calls but ignores
+model_transition_calls and accepts any matchedSearch.searchAccounting dict. A
+re-sealed saved fixture with model_transition_calls=-17 and searchAccounting
+{'actor_forward_calls':123456,'made_up':'claims'} passes _preflight. Yet the workspace
+qualification only says historical_timings_not_remeasured. Authorship is correctly
+unverified_imported, but this does not explain unverified search/transition counters.
+Check bounded non-timing accounting against the declared fixed method/history where
+possible; otherwise explicitly mark ALL imported computational provenance as
+unverified and withhold comparative claims based on it. Do not rerun the actor on
+open. The accepted candidate must not label arbitrary counters authoritative.
+
+Positive reviewed behavior
+- Original V3 load is bound to its original two-step task, with transfer projection
+  constructed afterward; it does not overwrite original context with the target.
+- The IPC selector is fixed, paths/weights/architecture are not renderer inputs.
+- The existing saved fake generated episode replays native geometry with actor
+  and checkpoint calls blocked. Imported authorship remains unverified_imported.
+- Re-sealed replay geometry corruption refuses before any private reference load.
+- Cancellation controls preserve failure receipts and fake direct-child cleanup;
+  prior attempt/output reuse refuses before loader/spawn.
+- Shared engine, native action IDs/history and replay remain the source of geometry.
+
+Additional bounded-loader issue to carry into repair
+The old V3 preflight verifies current size/hash, then load_bound_policy does another
+unbounded Path.read_bytes before checking length/hash. This remains a replacement
+window/allocation gap. A fixed backend loader should open a regular exact-size
+file and read at most 394010 bytes, checking the same immutable payload before the
+existing scoped deserializer. Do not loosen original ancestry/globals checks.
+
+Frozen principal sources
+legacy_transfer_episode.py 691c9f7e3ffe69b239952e3bb40b2333882b3b29e67817aa44b5e68e1a23a69d
+fixed_rl256_loader.py d6f24b47cd87f17dfe569d6d19f2a14b8faade6b211524b1bec8ff974a1c824a
+legacy_transfer_worker.py faba16654c6a3defa4e34858a11fef9c7ce6461ecbd0c6d8c6a1f3b2cc099d48
+legacy_transfer_supervisor.py 092e4cfd6c719c2fe97a8cff07ecaaca502542c96f9b504b29ea6a9fa97e0ddd

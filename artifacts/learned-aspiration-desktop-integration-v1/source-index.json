@@ -1,0 +1,101 @@
+{
+  "files": [
+    {
+      "path": "legacy-transfer-backend-independent-v1/REPORT.txt",
+      "source_path": "build/legacy-transfer-backend-independent-v1/REPORT.txt",
+      "sha256": "eb94e897d6e642906bf2b6231fbe9d254a4e7493180344016c12d710073a92c3",
+      "bytes": 5865
+    },
+    {
+      "path": "legacy-transfer-backend-independent-v2/REPORT.txt",
+      "source_path": "build/legacy-transfer-backend-independent-v2/REPORT.txt",
+      "sha256": "1ec87ed99805c0a1b729364e840a3b3e29af151017497ae81fdad121b24f8479",
+      "bytes": 5452
+    },
+    {
+      "path": "legacy-transfer-portability-independent-v3/REPORT.txt",
+      "source_path": "build/legacy-transfer-portability-independent-v3/REPORT.txt",
+      "sha256": "327c33a143c4970919b420cea0cd54e325adda60393761a8da2386e29f2785cd",
+      "bytes": 2994
+    },
+    {
+      "path": "legacy-transfer-desktop-v3/promotion-files.json",
+      "source_path": "build/legacy-transfer-desktop-v3/promotion-files.json",
+      "sha256": "ccb1ac8d0abe435adb97f0456865280b0ce940486ee49d34b3a82b73f35c2324",
+      "bytes": 3811
+    },
+    {
+      "path": "legacy-transfer-desktop-v3/RESULT.md",
+      "source_path": "build/legacy-transfer-desktop-v3/RESULT.md",
+      "sha256": "8d57b44b8b9ab15b09e53c98a88df0756d10d9ac7b36ab78834f0362c78ce3a9",
+      "bytes": 3756
+    },
+    {
+      "path": "learned-transfer-desktop-v2/promotion-files.json",
+      "source_path": "build/learned-transfer-desktop-v2/promotion-files.json",
+      "sha256": "617bc1f40b89b25b0f12e059f3df36e3c581989e0224b775227ebbe41a346299",
+      "bytes": 5332
+    },
+    {
+      "path": "learned-transfer-desktop-v2/REPORT.txt",
+      "source_path": "build/learned-transfer-desktop-v2/REPORT.txt",
+      "sha256": "674e6492f7c497ffef957969eb271dd8a65297b254873eed5b30cd2688969e8f",
+      "bytes": 2424
+    },
+    {
+      "path": "learned-transfer-desktop-v2/review-receipt.json",
+      "source_path": "build/learned-transfer-desktop-v2/review-receipt.json",
+      "sha256": "c9bc5fc1efc98572a5397f7047c7347c9e7b84313d7af99694ff5a63fa0560ea",
+      "bytes": 2846
+    },
+    {
+      "path": "root/backend-tests.json",
+      "source_path": "build/learned-transfer-root-integration-v1/backend-tests.json",
+      "bytes": 509,
+      "sha256": "f9b5bb49b029d8dea1ed295e95cdc795e8319b77121399562076c229282fdc0f"
+    },
+    {
+      "path": "root/backend-tests.txt",
+      "source_path": "build/learned-transfer-root-integration-v1/backend-tests.txt",
+      "bytes": 190,
+      "sha256": "43bb6ba3eff71c48e73a593cac100ddd24ca9f7c9cb7528d3c3348da7f583233"
+    },
+    {
+      "path": "root/desktop-tests.json",
+      "source_path": "build/learned-transfer-root-integration-v1/desktop-tests.json",
+      "bytes": 95,
+      "sha256": "c5407a53fe9ba786caa10e7f2e9229db0891129f22afb78d346a8479de645029"
+    },
+    {
+      "path": "root/desktop-tests.txt",
+      "source_path": "build/learned-transfer-root-integration-v1/desktop-tests.txt",
+      "bytes": 33631,
+      "sha256": "fe4d8fb5e1bb72df10dd042a2cff54ed60438e2ed4f0bf0239f018f794bfc520"
+    },
+    {
+      "path": "root/desktop-build.json",
+      "source_path": "build/learned-transfer-root-integration-v1/desktop-build.json",
+      "bytes": 145,
+      "sha256": "d84f3197bc9651f9395d57c487b8c1e4511e3117f4050916e10dffa4ecab717f"
+    },
+    {
+      "path": "root/desktop-build.txt",
+      "source_path": "build/learned-transfer-root-integration-v1/desktop-build.txt",
+      "bytes": 845,
+      "sha256": "119f99cc6d50847e715f97d13d98701cf813e7a2e305a38f477568a4b727bf0b"
+    },
+    {
+      "path": "root/staged-desktop-build.json",
+      "source_path": "build/learned-transfer-root-integration-v1/staged-desktop-build.json",
+      "bytes": 113,
+      "sha256": "7fb79066b29bc5db6d1ea61dc03a10a3b9c9b9f122ce874aaae95b818b33798b"
+    },
+    {
+      "path": "root/staged-desktop-build.txt",
+      "source_path": "build/learned-transfer-root-integration-v1/staged-desktop-build.txt",
+      "bytes": 1010,
+      "sha256": "37ba2c0b6b9e627513566490c2eab2677c7eefc27ce9b3c107bbd43fee15e6c5"
+    }
+  ],
+  "note": "Exact compact source reviews and promotion manifests; actual checkpoint execution evidence is separate."
+}

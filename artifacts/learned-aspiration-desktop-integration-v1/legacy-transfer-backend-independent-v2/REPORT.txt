@@ -1,0 +1,77 @@
+Independent V2 backend delta review: GO for generated fixed-selector integration
+
+The V1 HOLD findings are resolved by the reviewed V2 sources. This is source and
+generated-control approval, not an actual checkpoint load or trained-policy result.
+Root retains authority over any real actor attempt and its resource slot.
+
+Exact principal bindings:
+legacy_transfer_episode.py a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd
+fixed_rl256_loader.py 81fee924329817a3d2b94efe5eebeca50ca510f636429905b4fcbe730a2c7cd9
+legacy_transfer_worker.py 88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01
+legacy_transfer_supervisor.py b0574d5afdbe146ae0c6a32d89f4636387276a0935967b9e3962e9f5532ac553
+desktop_bridge.py 8e45815cc2b02b2636f0d6e4f36f85a970e22ab19b3c4656cd2acb002c90bb96
+workspace_bundle.py f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a
+All nine module hashes are recorded before/after in audit.json and unchanged;
+source snapshots are preserved. The final bridge8e45815c supersedes the author's
+preliminary3de896a9 hash. Original V1 negative evidence remains unchanged.
+
+Independent validation: 17 controls passed in 4.18 seconds under a 20-second test
+process timeout, one numeric thread, fresh nonexistent cache prefix and -B.
+Ten independent delta controls plus seven supplied backend controls were run.
+Torch load, SpatialPolicy forward and act were blocked in independent tests.
+No actual checkpoint bytes, trained/untrained actor forward, patient sources,
+private reference arrays or scientific worker were used. One generated idle child
+exercised the parent lease and exited143 at EOF; other child lifecycles were faked.
+Generated restricted SEARCH provided current accounting for an explicitly
+fabricated saved-identity fixture; that fixture is not learned-authorship evidence.
+
+Fixes verified
+1. The architecture literal exactly equals canonical original result.json and the
+   original loader receipt digest equals the saved V3 comparison receipt.
+2. The old V3 loader executes the same bytes it hashes via compile/exec. A generated
+   valid-pyc sentinel no longer runs; canonical source reaches a fake preflight
+   stop before checkpoint access. The parent bridge also compiles checked
+   supervisor bytes. Worker uses -I -B with a fresh attempt-local pycache prefix.
+3. Checkpoint input is O_NOFOLLOW, regular and exact-size, with expected-size+1
+   bounded reading; SHA verifies the immutable payload fed into unchanged V3
+   load_bound_policy. Generated exact/mismatched-size/hash/symlink cases pass.
+   Original preflight, scoped weights-only globals and original training context
+   remain unchanged; the projection binds afterward and does not spoof ancestry.
+4. Parent owns a write-only pipe lease; child receives only the read descriptor.
+   Closing the lease causes worker os._exit143 via its watcher, including parent
+   disappearance. The generated idle-child control verifies this without loading
+   any actor. Parent cancellation still cleans/reaps its owned process and keeps
+   receipts. Fake completed-child test confirms no postexit terminate/kill.
+5. Runtime log/result caps are monitored, and final caps remain checked. Missing
+   memory observations refuse completion. Positive sampled completion, no-sample
+   refusal, log overflow and RSS overflow were tested with deterministic children;
+   failures retain supervision/failure records and confirmed child termination.
+6. Imported model_transition_calls must match actor count. Fixed search schema,
+   limits and layer arithmetic are checked. Re-sealed negative actor count or
+   arbitrary search accounting now refuses. Even structurally valid imported
+   computational provenance is explicitly marked unverified, as is authorship.
+   Native geometry still replays without weights; re-sealed geometry changes
+   refuse before private reference loading. Source/action/history IDs remain intact.
+
+Resource release interpretation
+The child work window is20s with sampled direct-child RSS <=1GiB, one numeric
+thread, result <=2MiB and log <=1MiB. V2 explicitly has MAX_OPERATION_SECONDS25
+for probe/cleanup reserve; the writer confirmed20s work plus25s operation envelope.
+A root release must carry those two distinct limits rather than call it20s total.
+The final filesystem/source checks are ordinary parent finalization, not a second
+hard real-time watchdog; sampled RSS can miss transient peaks. The fixed worker
+runs threads and no subordinate scientific workers. No automatic retry or
+checkpoint selection is introduced. Runtime source/path promotion must preserve
+or deliberately rebind these exact source pins; frozen build paths cannot simply
+be moved without updating the executing source closure.
+
+Trust qualification
+The owned fixed loader/run can issue live backend attribution only after actual
+success. Saved canonical JSON or a saved learnedPolicyExecuted boolean cannot
+recreate that trust. Workspace import independently checks native geometry but
+returns unverified_imported and imported_computational_provenance_unverified;
+it never reexecutes the actor to validate a file. Private vascular evaluation
+remains post-seal and does not turn imported authorship into verified authorship.
+This is a generated transfer integration control, not original training-domain,
+patient, physical-mechanics or clinical validation. Real learned performance and
+UI execution still need the separately authorized actual run.

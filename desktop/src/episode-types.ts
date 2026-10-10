@@ -1,5 +1,13 @@
 // Generated development result from execute_development_episode(selector, cancelled).
 // The sidecar supplies `case` through its existing _install_case / CasePayload.
+export type EpisodeSelector = 'scripted' | 'SEARCH' | 'RL256_ASPIRATION_TRANSFER';
+export type EpisodeOrigin = 'live' | 'reopened';
+/** Response-only qualification; never inferred from the imported episode's claims. */
+export interface EpisodeAuthorship {
+  status: 'verified_live_backend_run' | 'unverified_imported';
+  checkpointSha256: string;
+  projectionHash: string;
+}
 export type XYZ = [number, number, number];
 export type NativeCell = [number, number, number];
 export interface DevelopmentEpisode {
@@ -8,7 +16,7 @@ export interface DevelopmentEpisode {
   caseHash: string;
   sourceHash: string;
   decisionModelHash: string;
-  selector: 'scripted' | 'SEARCH';
+  selector: EpisodeSelector;
   evidenceKind: 'generated_software_fixture';
   fidelity: 'native_grid_connected_exposed_tip_aspiration_and_nonremoving_geometric_probe';
   backendStatus: 'generated_executed';
@@ -60,8 +68,8 @@ export interface DevelopmentEpisode {
   unsupported: string[];
   interpretation: string;
 }
-// Request: executeDevelopmentEpisode({fixture:'generated-sequential-v1',selector:'scripted'|'SEARCH'})
-// Response: {case: CasePayload, episode: DevelopmentEpisode}.
+// Request: executeDevelopmentEpisode({fixture:'generated-sequential-v1',selector:EpisodeSelector})
+// Response: DevelopmentEpisodeResult; learned authorship is response-only.
 // Only recorded frames are displayed; no invented timing, force, sensor or interpolation.
 // Tissue is case.brainMask, target is case.compartments; exact cell deltas are native-grid indices.
 // All *IndicesNative frame fields are per-frame deltas, not cumulative masks.
@@ -69,5 +77,5 @@ export interface DevelopmentEpisode {
 // Probe delta = microstep contact cells that remain occupied, only on probe insertions.
 // Fixed fixture bounds: shape=[13,13,12], history<=6, replayFrames<=512, tools=2.
 
-export interface DevelopmentEpisodeRequest {fixture:"generated-sequential-v1";selector:"scripted"|"SEARCH";}
-export interface DevelopmentEpisodeResult {episodeCanonicalJson:string;case:import("./types").CasePayload;episode:DevelopmentEpisode;}
+export interface DevelopmentEpisodeRequest {fixture:"generated-sequential-v1";selector:EpisodeSelector;}
+export interface DevelopmentEpisodeResult {episodeAuthorship?:EpisodeAuthorship;episodeCanonicalJson:string;case:import("./types").CasePayload;episode:DevelopmentEpisode;}

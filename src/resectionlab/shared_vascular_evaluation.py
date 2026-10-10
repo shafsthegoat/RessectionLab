@@ -163,7 +163,7 @@ def _preflight(episode: dict, cancelled: Callable[[], bool] | None) -> tuple:
     _need(len(_canonical(episode)) <= 2 * 1024**2, "episode_document_budget")
     body = {key: value for key, value in episode.items() if key != "episodeId"}
     _need(semantic_digest(body) == episode.get("episodeId"), "episode_content_changed")
-    _need(episode.get("selector") in ("scripted", "SEARCH")
+    _need(episode.get("selector") in ("scripted", "SEARCH", "RL256_ASPIRATION_TRANSFER")
           and episode.get("frame") == "RAS+" and episode.get("physicalUnits") == "mm",
           "episode_scope_or_frame")
     task = make_development_task(cancelled=cancelled)
@@ -193,9 +193,12 @@ def _preflight(episode: dict, cancelled: Callable[[], bool] | None) -> tuple:
           "episode_tool_or_access_changed")
     planning = episode.get("planning")
     _need(type(planning) is dict and planning.get("sealedBeforeReferenceScoring") is True
-          and planning.get("learnedPolicyExecuted") is False
+          and planning.get("learnedPolicyExecuted") is (episode["selector"] == "RL256_ASPIRATION_TRANSFER")
           and semantic_digest(planning.get("strategy")) == planning.get("strategySeal"),
           "unsealed_generated_strategy")
+    if episode["selector"] == "RL256_ASPIRATION_TRANSFER":
+        from .legacy_transfer_episode import validate_transfer_planning
+        _need(validate_transfer_planning(task, episode), "transfer_projection_replay_changed")
     strategy = planning["strategy"]
     history = episode.get("history")
     _need(type(history) is list and 1 <= len(history) <= 6

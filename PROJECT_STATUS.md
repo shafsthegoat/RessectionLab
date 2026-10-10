@@ -2,6 +2,8 @@
 
 Current integrated results, October 9:
 
+- **Learned desktop selector wired:** the [fixed RL256 transfer integration](artifacts/learned-aspiration-desktop-integration-v1/RESULT.md) connects the generated episode selector to a bounded local checkpoint worker, matched aspiration-only search, native replay and honest reopened provenance. Root checks pass 84 backend and 372 desktop tests; working and exact staged builds pass. Actual checkpoint execution and live Mac inspection are next. Packaged model distribution, mixed-mode learned behavior and patient transfer remain open.
+
 - **Why more probe training would not help yet:** the [shared-task diagnostic](artifacts/shared-probe-decision-audit-v1/REPORT.txt) shows that removing two probes preserves the final cavity while improving generated return from 1.109 to 1.295. Probing changes contact history but adds no anatomical information in this task. A separately declared retained-surface contact objective makes tool choice meaningful in a small demonstration; it is a proposed new task, with no policy training or production reward change.
 
 - **Numerical comparison preparation:** the [separate native comparator](artifacts/hbe-v5-native-comparison-integration-v1/RESULT.md) is integrated with 91 passing canonical checks, unchanged mathematical thresholds and explicit source/receipt authentication. The original generated comparator remains generated-only. Actual twelve-row comparison is pending the final two runs; no physical validation follows from these software checks.

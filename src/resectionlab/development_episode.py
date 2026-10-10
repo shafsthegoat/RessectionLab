@@ -144,11 +144,7 @@ def replay_frames(task, history):
 
 
 def execute_development_episode(*, selector="scripted", cancelled=None):
-    """Execute one small generated episode and return the existing CaseData + JSON.
-
-    The desktop bridge owns installation/transfers. Cancellation/errors raise;
-    a failed computation is not converted into a completed STOP strategy.
-    """
+    """Execute the unchanged scripted/SEARCH generated desktop episode."""
     task = make_development_task(cancelled=cancelled)
     initial = task._engine.state_hash
     rejected = task._engine.preview_stroke(TOOLS[1].tool_id, (6., 6., 2.),
@@ -156,8 +152,18 @@ def execute_development_episode(*, selector="scripted", cancelled=None):
     if rejected.feasible or task._engine.state_hash != initial:
         raise RuntimeError("Expected pre-opening probe refusal did not preserve state")
     plan, seal, accounting = plan_development_episode(task, selector)
+    return _execute_sealed_development_plan(task, selector, plan, seal, accounting, rejected)
+
+
+def _execute_sealed_development_plan(task, selector, plan, seal, accounting, rejected):
+    """Common native replay/frame export after a source-bound nominal plan seals.
+
+    Callers must establish selector-specific planning provenance before entry.
+    This function never loads a policy or private vascular reference.
+    """
     if semantic_digest(plan) != seal:
         raise RuntimeError("Development strategy changed before execution")
+    initial = task._engine.state_hash
     for action in plan["actions"]:
         task.step(action)
     history = thaw_json(freeze_json(task.metrics()["history"]))
@@ -194,7 +200,8 @@ def execute_development_episode(*, selector="scripted", cancelled=None):
         "finalRemovedIndicesNative": np.argwhere(task._engine.removed_mask).tolist(),
         "geometryAudit": audit, "metrics": task.metrics(),
         "planning": {**accounting, "strategySeal": seal, "strategy": thaw_json(plan),
-                     "sealedBeforeReferenceScoring": True, "learnedPolicyExecuted": False},
+                     "sealedBeforeReferenceScoring": True,
+                     "learnedPolicyExecuted": selector == "RL256_ASPIRATION_TRANSFER"},
         "attemptDiagnostics": [{"status": "rejected", "interactionMode": "probe", "reason": rejected.reason,
             "toolId": TOOLS[1].tool_id, "tipRasMm": [6., 6., 2.],
             "stateBefore": initial, "stateAfter": initial, "removedIndicesNative": []}],

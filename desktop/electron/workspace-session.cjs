@@ -10,11 +10,12 @@ function validateWorkspaceResult(result) {
     throw new Error('Reopened workspace has an invalid primary/source binding');
   const replay=session.episodeReplay;
   if (replay!==null) {
-    if (!replay || replay.validation!=='authoritative_generated_replay' || replay.accountingQualification!=='historical_timings_not_remeasured' ||
+    const qualification=replay?.episode?.selector==='RL256_ASPIRATION_TRANSFER'?'imported_computational_provenance_unverified':'historical_timings_not_remeasured';
+    if (!replay || replay.validation!=='authoritative_generated_replay' || replay.accountingQualification!==qualification ||
         !Number.isSafeInteger(replay.frameIndex) || replay.frameIndex<0 || replay.frameIndex>=replay.episode?.replayFrames?.length ||
         typeof replay.visible!=='boolean' || (replay.visible && session.imagingState?.selectedSeriesId!==null))
       throw new Error('Reopened workspace replay was not revalidated for the primary image');
-    validateEpisodeResult({case:result,...replay},{selector:replay.episode?.selector});
+    validateEpisodeResult({case:result,...replay},{selector:replay.episode?.selector},'reopened');
   }
   return result;
 }

@@ -1,0 +1,43 @@
+Independent V3 portability delta: GO; V2 behavior review remains applicable
+
+Seven focused controls passed in 1.75 seconds under a 20-second outer timeout and
+one numeric thread, using a fresh cache prefix and -B. No checkpoint bytes, actor
+inference, patient sources or scientific child were used. The loader was exercised
+with fake original preflight/load callbacks and a generated immutable payload;
+the supervisor used a fake owned child. All ten source hashes remained unchanged.
+
+Exact changed bindings:
+fixed_rl256_loader.py 3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638
+legacy_transfer_supervisor.py 60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24
+desktop_bridge.py 7b9489d5bb6a5e5321c608975f3881bcf990261a8e74ad7656808c7723242f99
+legacy_checkpoint_rollout_v3.py b48831841b27742d123d1338ef2ff05005f39f1d6b755617c2c7bc959ea749e4
+The sibling historical loader is byte-identical to the committed attempt-v3
+source snapshot. Other semantic, worker, workspace and evaluator modules retain
+exact V2 pins. The bridge controller hash matches the V3 supervisor bytes.
+
+Portability tested in a generated checkout layout with no build/ directory:
+- Local source pins resolve to src/resectionlab siblings; other source pins resolve
+  against the discovered checkout root. All source checks pass after copying.
+- Modified or symlinked local worker source is rejected by the source closure.
+- The child argv names the sibling worker and preserves -I/-B/fresh-cache/lease
+  behavior; fake cancellation cleans the owned child and retains its receipt.
+- The fixed loader discovers the generated checkout root, executes the exact
+  hashed sibling historical source, then relocates ROOT, ART and CHECKPOINT before
+  either old preflight or old load runs. The old functions look these globals up
+  at call time, so no stale artifact root remains in their execution path.
+- Its old two-step task/release output goes unchanged to the old bound loader.
+  The checkpoint request remains the fixed 394009 bytes and exact original SHA.
+  The bounded payload is supplied to the old loader without a second path open;
+  CHECKPOINT is restored after the call. No actual artifact directory was needed
+  or created in this fake control.
+
+Limits and remaining execution scope
+This is portable between stage and tracked source checkouts containing pyproject
+and src plus the required released model/metadata assets. It is not a standalone
+installed-wheel or packaged-app loader lacking that checkout layout; those cases
+refuse. Source relocation does not download or admit a different checkpoint.
+Preserve the reviewed 20-second work window, 25-second operation/cleanup envelope,
+1-GiB sampled direct-child RSS, 2-MiB result and 1-MiB log limits. The V2 review's
+sampled-resource/finalization qualifications and imported-authorship downgrade
+remain unchanged. Actual checkpoint execution still requires root's resource
+release; this review establishes no trained performance result.

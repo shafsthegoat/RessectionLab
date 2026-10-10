@@ -1,0 +1,119 @@
+{
+  "schema": "desktop-proposal-file-map-v1",
+  "status": "desktop_contract_pass_backend_review_separate",
+  "supersedes": "build/learned-transfer-desktop-v1/promotion-files.json",
+  "supersededIndexSha256": "ad35a4e31b8e9540dad3b5348f616d8a5caeb8efb9e94e50949407f7a8670c09",
+  "baseHead": "e804aa88446d609b7e135973a1159f463b767cf2",
+  "files": [
+    {
+      "path": "desktop/src/episode-types.ts",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/src/episode-types.ts",
+      "bytes": 4627,
+      "sha256": "c4e8833ffa7e102d94f25379747f0f12fc4e047530f1934617df18a0fc6945b2",
+      "baselineSha256": "a3c3d56932dae0921ce41fe807f6ba3cb007ebc1c16fb03dfda2a7ab6d640ae1"
+    },
+    {
+      "path": "desktop/src/episode-authority.ts",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/src/episode-authority.ts",
+      "bytes": 4913,
+      "sha256": "5a5545882c26ed950bff6d31ab24ed6e70a3c87ac44ab33540b27f1d3ff67d1f",
+      "baselineSha256": null
+    },
+    {
+      "path": "desktop/src/episode-data.ts",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/src/episode-data.ts",
+      "bytes": 12637,
+      "sha256": "a67d1a0852014eb24e3c7982dbc7bf3c272e65dfe9cf580edd861803f381e82b",
+      "baselineSha256": "f5ee0bc8ac4817e04dad9c7f9ec61217c7e51b63024da1e0d3824c54eac97298"
+    },
+    {
+      "path": "desktop/src/EpisodePanel.tsx",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/src/EpisodePanel.tsx",
+      "bytes": 7530,
+      "sha256": "46aa0afce0e166b83455c1eb89f953626a0650c82096b4594257ba02cf37a4fd",
+      "baselineSha256": "e0b7706c6317ea7423c913a4d0dca639d07b23c1525ff6f4f7a3d92d2618a256"
+    },
+    {
+      "path": "desktop/src/workspace-session-types.ts",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/src/workspace-session-types.ts",
+      "bytes": 1572,
+      "sha256": "bd443b095edb86e9e213435ed0e61dd1eee608414e9ff254c773d3befcdd5200",
+      "baselineSha256": "1655d054583e8943849d0484f59c7a724e2590fafe81749f6bacd89f97d4bb3b"
+    },
+    {
+      "path": "desktop/src/workspace-session.ts",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/src/workspace-session.ts",
+      "bytes": 8277,
+      "sha256": "0ab7565ca1061d9edff97d8ad9491d7949c2bfa828ad85df6208034e3afc0fb2",
+      "baselineSha256": "bcd6133d88e413c1ffbfe038829f4706a4ab6e3bf5d3233b75a4206b58ceba18"
+    },
+    {
+      "path": "desktop/electron/episode-authority.cjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/electron/episode-authority.cjs",
+      "bytes": 4623,
+      "sha256": "79acde83033f6a9757146143f6ed4e31cf11ae633059584a4b6d5471ed2c9ae2",
+      "baselineSha256": null
+    },
+    {
+      "path": "desktop/electron/development-episode.cjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/electron/development-episode.cjs",
+      "bytes": 3097,
+      "sha256": "667a3d619167e36fc81743acfca27f5850fb6b43a017521783c746ea1f373a06",
+      "baselineSha256": "2be74ca44db0a01b056c12ecfc1b49561062ca587d17c9169e98073583d4131b"
+    },
+    {
+      "path": "desktop/electron/workspace-session.cjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/electron/workspace-session.cjs",
+      "bytes": 1592,
+      "sha256": "48e9c2f295e8ec7362d9edbf8496e3a80571b46d79952e64e1acdbb013b76d3c",
+      "baselineSha256": "ffdf64a350c2003cf9fee6f6956ec4ba73fc5108adafe44e2b54acfd61bb2df5"
+    },
+    {
+      "path": "desktop/tests/helpers/transfer-contract-fixture.mjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/tests/helpers/transfer-contract-fixture.mjs",
+      "bytes": 1886,
+      "sha256": "e60c0a712b32d2370e9ed56dd5976739146ce8578abab03cb06c1d419013a3c6",
+      "baselineSha256": null
+    },
+    {
+      "path": "desktop/tests/episode-transfer.test.mjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/tests/episode-transfer.test.mjs",
+      "bytes": 7532,
+      "sha256": "0c6b91b82545e7781e01c0890b5cd030fa11a4653a0464d9d5e9767997bff496",
+      "baselineSha256": null
+    },
+    {
+      "path": "desktop/tests/episode-transfer-panel.test.mjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/tests/episode-transfer-panel.test.mjs",
+      "bytes": 3721,
+      "sha256": "15819f84d349f5bcc7ec3045d0663f513f4a92ee6dd017c0a27b2b6717fc6ecd",
+      "baselineSha256": null
+    },
+    {
+      "path": "desktop/tests/episode-transfer-crossstack.mjs",
+      "source": "build/learned-transfer-desktop-v2/stage/desktop/tests/episode-transfer-crossstack.mjs",
+      "bytes": 1802,
+      "sha256": "c094de9bae6147e2c281d573668a50f5a008e643ac93283cb87c2ff377fa1402",
+      "baselineSha256": null
+    }
+  ],
+  "changedFromV1": [
+    "desktop/src/EpisodePanel.tsx",
+    "desktop/src/workspace-session-types.ts",
+    "desktop/src/workspace-session.ts",
+    "desktop/electron/workspace-session.cjs",
+    "desktop/tests/episode-transfer.test.mjs",
+    "desktop/tests/episode-transfer-panel.test.mjs"
+  ],
+  "excluded": [
+    "App.tsx",
+    "copied neighboring inspection WIP",
+    "copied fixtures/assets",
+    "node_modules",
+    "any backend source"
+  ],
+  "patchSha256": "c9583f34a038871a471e722596d17a61bda94f77a0805c28a6b432d9b75848a8",
+  "deltaSha256": "da5bccbbd0be103b8bc32392fbffcbc86bcad9cf9751c3398d49f89e5795dfee",
+  "totalFiles": 13,
+  "totalBytes": 63809
+}

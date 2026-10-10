@@ -1,18 +1,20 @@
 'use strict';
+const {checkedEpisodeAuthority}=require('./episode-authority.cjs');
 const { plainArgs } = require('./security.cjs');
 const { createHash } = require('node:crypto');
 const { isDeepStrictEqual } = require('node:util');
 const HASH = /^sha256:[a-f0-9]{64}$/;
 function episodeRequest(input) {
   const args = plainArgs(input, ['fixture','selector']);
-  if (args.fixture !== 'generated-sequential-v1' || !['scripted','SEARCH'].includes(args.selector) || Object.keys(args).length !== 2)
+  if (args.fixture !== 'generated-sequential-v1' || !['scripted','SEARCH','RL256_ASPIRATION_TRANSFER'].includes(args.selector) || Object.keys(args).length !== 2)
     throw new Error('Choose the fixed generated fixture and a supported episode selector');
   return {fixture:args.fixture,selector:args.selector};
 }
 /** Policy/identity envelope before asset traversal and renderer event forwarding.
  * Detailed cell/pose/prefix validation is shared by the renderer replay loader. */
-function validateEpisodeResult(result, request) {
+function validateEpisodeResult(result, request, origin='live') {
   const e=result?.episode, c=result?.case;
+  checkedEpisodeAuthority(e,result?.episodeAuthorship,origin);
   if (typeof result?.episodeCanonicalJson!=='string' || result.episodeCanonicalJson.length>2*1024*1024 ||
       `sha256:${createHash('sha256').update(result.episodeCanonicalJson).digest('hex')}` !== e?.episodeId)
     throw new Error('Generated episode serialization digest changed');
@@ -27,7 +29,7 @@ function validateEpisodeResult(result, request) {
     JSON.stringify(e.affine)!==JSON.stringify(c.affine) || e.frame!=='RAS+' || c.frame!=='RAS+' || e.physicalUnits!=='mm' ||
     !Array.isArray(e.history) || e.history.length<1 || e.history.length>6 || !Array.isArray(e.replayFrames) || e.replayFrames.length<2 || e.replayFrames.length>512 ||
     e.geometryAudit?.feasible!==true || e.geometryAudit?.complete_tool_checked!==true || e.geometryAudit?.frontier_checked!==true ||
-    e.geometryAudit?.source_case_hash!==e.sourceHash || e.planning?.learnedPolicyExecuted!==false || e.planning?.sealedBeforeReferenceScoring!==true)
+    e.geometryAudit?.source_case_hash!==e.sourceHash || e.planning?.sealedBeforeReferenceScoring!==true)
     throw new Error('Generated episode response has an invalid source, execution or evidence binding');
   if (Buffer.byteLength(JSON.stringify(e))>2*1024*1024) throw new Error('Generated episode exceeds its result budget');
   return result;

@@ -1,0 +1,83 @@
+{
+  "status": "PASS_desktop_proposal_V2",
+  "checks": {
+    "focused": 39,
+    "compatibility": 33,
+    "typecheck": "passed",
+    "patch": "applies",
+    "crossstack": [
+      "live",
+      "reopened"
+    ]
+  },
+  "limits": {
+    "electronLaunched": false,
+    "pythonCalled": false,
+    "modelExecuted": false,
+    "patientDataRead": false,
+    "trackedFilesEdited": false,
+    "AppIncluded": false,
+    "backendReview": "separate"
+  },
+  "evidence": [
+    {
+      "path": "build/learned-transfer-desktop-v2/REPORT.txt",
+      "sha256": "674e6492f7c497ffef957969eb271dd8a65297b254873eed5b30cd2688969e8f",
+      "bytes": 2424
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/promotion-files.json",
+      "sha256": "617bc1f40b89b25b0f12e059f3df36e3c581989e0224b775227ebbe41a346299",
+      "bytes": 5332
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/source.patch",
+      "sha256": "c9583f34a038871a471e722596d17a61bda94f77a0805c28a6b432d9b75848a8",
+      "bytes": 49202
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/v1-to-v2.patch",
+      "sha256": "da5bccbbd0be103b8bc32392fbffcbc86bcad9cf9751c3398d49f89e5795dfee",
+      "bytes": 11569
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/targeted-tests.txt",
+      "sha256": "1e20309bb8372fd8c3af7a7dcfdbd137e5eadbe766fd9d0e2ca8b32023ca02ef",
+      "bytes": 3767
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/compatibility-tests.txt",
+      "sha256": "1c36312e698b9055b274ad250b826f4a23f711c78e0133a880eece6d6e7e4220",
+      "bytes": 2756
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/typecheck.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/crossstack-live.txt",
+      "sha256": "9079d8be789b212f2705b52dbc52965094397af663620034bfda2ef667c1397d",
+      "bytes": 326
+    },
+    {
+      "path": "build/learned-transfer-desktop-v2/crossstack-reopened.txt",
+      "sha256": "b22aeda9acb41dd646d2780aa86cd0116be16b5414ed9f0009d455c73038b738",
+      "bytes": 324
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "build/legacy-transfer-desktop-v2/fake-loader-ui-contract-live.json",
+      "sha256": "3fbad2f89a0cd24b1c972d315ca745991cdf507b9432921c1055cfaa4e5c8cab",
+      "bytes": 79979,
+      "qualification": "untrained fake actor and fabricated identity software control; generated STOP geometry; no trained inference evidence"
+    },
+    {
+      "path": "build/legacy-transfer-desktop-v2/fake-loader-ui-contract-reopened.json",
+      "sha256": "0feebae8f19764d2e00588eca1785c538dde5f9a64195ad3747d5c80d5777164",
+      "bytes": 50200,
+      "qualification": "untrained fake actor and fabricated identity software control; generated STOP geometry; no trained inference evidence"
+    }
+  ]
+}

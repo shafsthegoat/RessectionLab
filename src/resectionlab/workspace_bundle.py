@@ -174,8 +174,17 @@ def validate_episode(primary,envelope,cancelled=None):
     episode=envelope['episode'];canonical=canonical_episode(episode)
     if canonical!=envelope['episodeCanonicalJson'] or 'sha256:'+sha256(canonical.encode()).hexdigest()!=episode.get('episodeId'):
         raise ValueError('Episode canonical identity mismatch')
-    if episode.get('selector') not in ('scripted','SEARCH') or episode.get('caseHash')!=primary.semantic_hash:
+    if episode.get('selector') not in ('scripted','SEARCH','RL256_ASPIRATION_TRANSFER') or episode.get('caseHash')!=primary.semantic_hash:
         raise ValueError('Saved episode does not name this fixed generated case')
+    if episode['selector']=='RL256_ASPIRATION_TRANSFER':
+        # Imported bytes can establish modeled geometry by fresh native replay.
+        # They cannot establish that a particular checkpoint chose the actions.
+        from .shared_vascular_evaluation import _preflight
+        task,_,_,_=_preflight(episode,cancelled)
+        from .development_episode import public_display_case
+        if public_display_case(task).semantic_hash!=primary.semantic_hash:
+            raise ValueError('Saved primary differs from generated source')
+        return deepcopy(envelope)
     from .development_episode import execute_development_episode
     expected_case,expected=execute_development_episode(selector=episode['selector'],cancelled=cancelled)
     if expected_case.semantic_hash!=primary.semantic_hash:raise ValueError('Saved primary differs from authoritative generated source')
@@ -277,6 +286,10 @@ def session_descriptor(entry):
     if entry.episode is not None and entry.episode_selection is not None:
         replay={**deepcopy(entry.episode),**{k:v for k,v in entry.episode_selection.items() if k!='episodeId'},
                 'validation':'authoritative_generated_replay','accountingQualification':'historical_timings_not_remeasured'}
+        if replay['episode']['selector']=='RL256_ASPIRATION_TRANSFER':
+            from .legacy_transfer_episode import transfer_authorship
+            replay['episodeAuthorship']=transfer_authorship(replay['episode'],live_backend_run=False)
+            replay['accountingQualification']='imported_computational_provenance_unverified'
     state=view_state(entry.case,sources,entry.imaging_state)
     identity=entry.workspace_hash or semantic_digest({'referenceCaseHash':entry.case.semantic_hash,
         'sources':[s.manifest(entry.case) for s in sources],'imagingState':state,'episodeReplay':replay})

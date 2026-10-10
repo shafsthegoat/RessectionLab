@@ -1,0 +1,88 @@
+{
+  "copy": [
+    {
+      "bytes": 13260,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/development_episode.py",
+      "sha256": "de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162",
+      "to": "src/resectionlab/development_episode.py"
+    },
+    {
+      "bytes": 107189,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/desktop_bridge.py",
+      "sha256": "7b9489d5bb6a5e5321c608975f3881bcf990261a8e74ad7656808c7723242f99",
+      "to": "src/resectionlab/desktop_bridge.py"
+    },
+    {
+      "bytes": 5154,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/fixed_rl256_loader.py",
+      "sha256": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638",
+      "to": "src/resectionlab/fixed_rl256_loader.py"
+    },
+    {
+      "bytes": 14707,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/legacy_checkpoint_rollout_v3.py",
+      "sha256": "b48831841b27742d123d1338ef2ff05005f39f1d6b755617c2c7bc959ea749e4",
+      "to": "src/resectionlab/legacy_checkpoint_rollout_v3.py"
+    },
+    {
+      "bytes": 19495,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/legacy_transfer_episode.py",
+      "sha256": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd",
+      "to": "src/resectionlab/legacy_transfer_episode.py"
+    },
+    {
+      "bytes": 10427,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/legacy_transfer_supervisor.py",
+      "sha256": "60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24",
+      "to": "src/resectionlab/legacy_transfer_supervisor.py"
+    },
+    {
+      "bytes": 4685,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/legacy_transfer_worker.py",
+      "sha256": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+      "to": "src/resectionlab/legacy_transfer_worker.py"
+    },
+    {
+      "bytes": 21512,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/shared_vascular_evaluation.py",
+      "sha256": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0",
+      "to": "src/resectionlab/shared_vascular_evaluation.py"
+    },
+    {
+      "bytes": 18934,
+      "from": "build/legacy-transfer-desktop-v3/stage/resectionlab/workspace_bundle.py",
+      "sha256": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a",
+      "to": "src/resectionlab/workspace_bundle.py"
+    },
+    {
+      "bytes": 5589,
+      "from": "build/legacy-transfer-desktop-v3/portable_tests/test_legacy_transfer_backend.py",
+      "sha256": "c496c087d9c162410ccfd3073911aff01859484234cad74d02c6dae9e10912c8",
+      "to": "tests/test_legacy_transfer_backend.py"
+    },
+    {
+      "bytes": 5368,
+      "from": "build/legacy-transfer-desktop-v3/portable_tests/test_legacy_transfer_plan_geometry.py",
+      "sha256": "4a5a260f9736c22a345b4c7892b7e9590e717d4760a7b41f7f4b347337e52ae9",
+      "to": "tests/test_legacy_transfer_plan_geometry.py"
+    }
+  ],
+  "frozenV2Preserved": true,
+  "limits": {
+    "logBytes": 1048576,
+    "resultBytes": 2097152,
+    "retries": 0,
+    "sampledWorkerRssBytes": 1073741824,
+    "totalOperationAndCleanupSeconds": 25,
+    "workSeconds": 20
+  },
+  "localModelAsset": "artifacts/native-opening-rl-capacity-v1/RL-256.pt; exact size/hash checked at execution; excluded from Git",
+  "noModelRunYet": true,
+  "preexistingRequiredSource": {
+    "path": "src/resectionlab/legacy_aspiration_projection.py",
+    "sha256": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c"
+  },
+  "schema": "legacy-transfer-portable-promotion-v1",
+  "scope": "generated aspiration-only RL256 transfer; no patient admission",
+  "sourceSnapshotOrigin": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/source-snapshot/legacy_checkpoint_rollout.py"
+}

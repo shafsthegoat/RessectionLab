@@ -1016,3 +1016,19 @@ No search, learning or reward tuning used that objective. The 368-preview audit
 took 1.624 seconds of worker time, with no model, checkpoint or patient access.
 Existing checkpoint/desktop integration remains first; a versioned mode/goal-aware
 task and actor would be needed before testing useful learned probing.
+
+### October 10: trained aspiration selector connected across backend and desktop
+
+The [source integration](../artifacts/learned-aspiration-desktop-integration-v1/RESULT.md)
+passes 84 canonical backend tests and 372 desktop tests. Working and exact staged
+desktop builds pass, preserving unrelated App/neighboring work. Independent
+review repaired the architecture literal, source/cache substitution, checkpoint
+read bounds, parent-disappearance handling and imported accounting qualification.
+The final portable worker executes checked installed sibling files, not ignored
+proposal code. The old checkpoint context is preserved before transfer projection.
+
+Actual checkpoint loading remains unexecuted in this source slice. The next
+bounded live run must retain both actor and matched restricted-search histories,
+followed by native replay and saved/imported provenance inspection. No new model
+updates, patient access or scientific performance claim follows from passing
+transport fixtures; their fabricated identities remain explicitly test-only.
