@@ -1,0 +1,37 @@
+{
+  "version": "tool-footprint-opening-contrast-inputs-v1",
+  "files": {
+    "baseline_reward": {
+      "path": "build/cross-patient-planning-v1/intermediate-opening-v1/baseline-reward.json",
+      "sha256": "9118bf398dbcb5c387391fb12203e72bcf2bb136cd3a8c4f18b28fc854703b62"
+    },
+    "bindings": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/admitted-public-bindings.json",
+      "sha256": "54475a75b5718c129ec2081b14829e9aa52dd8c70c5090524c23af2af371376e"
+    },
+    "context": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/context.json",
+      "sha256": "7a299b233e7b0c1359390ef1cf10199baa96ffd11fc0173c2292c357123a3a2e"
+    },
+    "original_release": {
+      "path": "build/cross-patient-planning-v1/actual-preflight-v2/release.json",
+      "sha256": "9772dc73f15abab98fcf784a152552214a3c682df76c1405b78bbdb307ae3b69"
+    },
+    "original_search": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2/search-prefixes.json",
+      "sha256": "392c712f1ccb65f419b6fbbcfeed583dee450896f8336ff772c5c9d168484619"
+    },
+    "prior_contrast_inventory": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2/initial-inventory.json",
+      "sha256": "54005ebf05a4adbc7aaafb066e97f7cf8303fd6e9680025e8119eed9da2433bc"
+    },
+    "prior_contrast_parent": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2.supervision/receipt.json",
+      "sha256": "4562193f98bd869c904333d3df13db1c9059e6785f28eac596620f418bbcecab"
+    },
+    "prior_contrast_result": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-two-lane-retention-search-v2/result.json",
+      "sha256": "996d8a293b1429a5549578c75aae36e55b4ed5a936f50bee445a6cbddc1600dd"
+    }
+  }
+}

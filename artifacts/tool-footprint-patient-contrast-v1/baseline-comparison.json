@@ -1,0 +1,18 @@
+{
+  "same_stop_decision": true,
+  "baseline_actions": [
+    "STOP"
+  ],
+  "new_actions": [
+    "STOP"
+  ],
+  "baseline_transition_calls": 246,
+  "new_transition_calls": 305,
+  "baseline_search_seconds": 32.177975333994254,
+  "new_search_seconds": 41.67429383308627,
+  "comparison_scope": "footprint opening family alone changes; same public arrays, frame, access, tools, reward, six-step horizon, beam and retention",
+  "source_bound_action_ids_not_expected_equal": true,
+  "tie_break_limit": "new source-bound action IDs can reorder equal-return path ties under the unchanged search rule",
+  "original_candidates_first_and_identical_except_source_bound_ids": true,
+  "same_sampling_budgets_not_a_runtime_speed_claim": true
+}

@@ -1,0 +1,40 @@
+{
+  "unchanged_public_arrays_frame_access_tools": {
+    "equal": true
+  },
+  "original_ledger_prefix": {
+    "equal": true,
+    "actual_canonical_sha256": "61af009951f5bcb7ab66ddaaf66195039bab96c698c8490de3b166319640048a",
+    "expected_canonical_sha256": "61af009951f5bcb7ab66ddaaf66195039bab96c698c8490de3b166319640048a",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "original_emitted_prefix": {
+    "equal": true,
+    "actual_canonical_sha256": "8ba3b5d78959a60c70b3f4e39fc1dce692394cb645f14ef2c27166eae5ab5683",
+    "expected_canonical_sha256": "8ba3b5d78959a60c70b3f4e39fc1dce692394cb645f14ef2c27166eae5ab5683",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "new_family_appended": {
+    "equal": true
+  },
+  "source_hash": {
+    "equal": true,
+    "actual": "sha256:b6d08778041818a2d3f19c01edc0fd64ad42ae2528da2a0c73aabd9106bddd50",
+    "previous": "sha256:88fbe3034a7581d69566eb5e2613502c9c4f38885df3cb34701e640d2e56a0ce",
+    "requirement": "new proposal rule must bind a distinct identity"
+  },
+  "decision_model_hash": {
+    "equal": true,
+    "actual": "sha256:58968126b0166634c60bf5cd384c5f1bc213ae350d55a735793a93f3f1093761",
+    "previous": "sha256:5d18e565410faad845b03fe3032d851da7548cad742e4c3e52154736affadbb5",
+    "requirement": "new proposal rule must bind a distinct identity"
+  },
+  "initial_observation_hash": {
+    "equal": true,
+    "actual": "sha256:aeb6b2d5c27deeca7769b9099322b057f2c48c96994b0e92e757cf14919aab3c",
+    "previous": "sha256:dcfbe9519550927eff29ab54a28c3e0547a143f140a38dff5a14adc53ee6a9fd",
+    "requirement": "new proposal rule must bind a distinct identity"
+  }
+}

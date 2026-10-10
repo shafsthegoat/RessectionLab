@@ -1,0 +1,55 @@
+{
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/result.json": {
+    "artifact": "result.json",
+    "sha256": "43e468a6ded761433e2ad1a065d684cff484ee92cc00c48b8baa7de5ea184ae8"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/retained-progress.json": {
+    "artifact": "retained-progress.json",
+    "sha256": "ab263d39913e7794c31c6bd234a8e05bc57b1c73671556386a0ac548379916b9"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/baseline-comparison.json": {
+    "artifact": "baseline-comparison.json",
+    "sha256": "3edac54df4d33656847f38590261843b3f7164f7d7bd4ac8903f74472142a61d"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/identity-checks.json": {
+    "artifact": "identity-checks.json",
+    "sha256": "1c26002e94782449c7217ca3977ffdd64881b9d9aa15e1c64510e2dc14e80f41"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/search-prefixes.json": {
+    "artifact": "search-prefixes.json",
+    "sha256": "14182123e2c7fae29c9c916a64afd1b45e14fa15b43232a43bebb78c95ef2a53"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1.supervision/receipt.json": {
+    "artifact": "receipt.json",
+    "sha256": "f86d72cdb89dcf0d9bd85a641e5cf57139a0ed8a381d7b136eee64f221c687d1"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1.supervision/declaration.json": {
+    "artifact": "declaration.json",
+    "sha256": "68680e7d4378ea22fb44223bbeb93bb0697ee363fe7156e68195b6581112e6b9"
+  },
+  "build/cross-patient-planning-v1/tool-footprint-opening-v1/release.json": {
+    "artifact": "release.json",
+    "sha256": "602907e1473114ddeed52fd00c6bd5f36a5692d0580c5e3aec89f5fda503705d"
+  },
+  "build/cross-patient-planning-v1/tool-footprint-opening-v1/source-index.json": {
+    "artifact": "source-index.json",
+    "sha256": "86f80b6b98d39b435bb050306ddc095d6b22521665142960f4b00fd0be6fde39"
+  },
+  "build/cross-patient-planning-v1/tool-footprint-opening-v1/input-index.json": {
+    "artifact": "input-index.json",
+    "sha256": "69a32ff3bee31384d8319fb86881e0fca8bc4264f5171f7b86a458121758821c"
+  },
+  "build/cross-patient-planning-v1/tool-footprint-opening-v1/search_worker.py": {
+    "artifact": "search_worker.py",
+    "sha256": "d1c6764b17e957a2d555b33e3560c8fdf8cc1f26012a15148a81a566269ffeae"
+  },
+  "build/cross-patient-planning-v1/tool-footprint-opening-v1/run_owned.py": {
+    "artifact": "run_owned.py",
+    "sha256": "6bafd2b3443d8d087e51374e1efd9cee70dc9fae7daa97c3ed6e5635e1dbefdc"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/observed-inventories.json": {
+    "sha256": "5d7602093e5412366d7eb3cdf006ac1886ea8240b576202831c526fce6cd5919",
+    "artifact": null,
+    "reason": "full generated ledger retained locally; compact per-state summary committed"
+  }
+}

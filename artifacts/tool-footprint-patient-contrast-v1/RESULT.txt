@@ -1,0 +1,61 @@
+ReMIND-008 footprint-opening contrast — October 10, 2026
+
+Result: the added opening family changes some explored sequences but does not
+improve the deepest retained opening or the final decision. Search still chooses
+STOP with return 0. This is a TRAIN diagnostic on real anatomy with simulated
+geometric interventions, not recorded surgery or clinical validation.
+
+The fixed six-step, width-two search completes 305 transitions and 1,056 native
+previews. Search takes 41.674294 seconds; the owned phase takes 47.636522 seconds
+at 1,481,785,344 bytes sampled peak RSS. No cap, cleanup error or remaining owned
+process is recorded. No model, optimizer, patient adaptation, private evaluation
+or authoritative sequence replay ran. Independent review used saved outputs only.
+
+Compared with the saved two-lane baseline, all public arrays, geometry, tools,
+reward, 13 columns, intermediate opening rule and resource ceilings are unchanged.
+All 104 original initial ledger entries and 92 emitted physical candidates match
+after removing source-bound identifiers. The new proposal option changes those
+identifiers, so equal-return tie ordering can change. Equal ceilings do not imply
+equal work or establish a speed improvement.
+
+Measured outcome:
+- Retained opening depth reaches 2.285100 mm at step 1 and 2.792900 mm at step 2,
+  then remains there through step 5, exactly as in the preceding condition.
+- The best-return lane reaches 1.777300 mm at step 5, versus 1.269500 mm before.
+- Best recorded six-action return improves from -0.829730 to -0.599687; outside-
+  supplied-target removal falls from 3.223261 to 2.062887 mm3. These candidates
+  remain worse than STOP and their recorded target removal is zero.
+- All 305 evaluated prefix returns are negative. Individual target counts for
+  every pruned prefix were not saved, so this is not an all-prefix zero-target claim.
+
+Depth means the deepest newly removed actor-covered cell center, not a continuous
+cleared corridor, insertion depth, terminal depth or maximum over every evaluated
+prefix. Accessible and removed tissue remain distinct. Outside supplied target
+does not mean verified normal tissue.
+
+Action coverage and selection explain the next experiment:
+- Every observed inventory spends 92 of 96 emitted slots on existing families.
+  Only four footprint candidates are emitted. Across 11 states, 44 are previewed
+  and 32 are feasible; 168 omitted-slot occurrences are recorded, not 168 distinct
+  omitted geometries. Initially 12 slots are omitted; the opening lane reaches 20.
+- CANDIDATE_CAP means not previewed. Its stored feasible:false must not be read as
+  a geometric rejection. All 42 emitted proximal/distal candidates are shaft-
+  blocked in each observed state but consume candidate slots.
+- At plateau states, a shallow aspirator at offset [-2,0] is emitted and feasible,
+  yet the opening lane retains one-cell suction increments instead. The central
+  aspirator remains shaft-blocked; it was not omitted by the cap.
+
+The next bounded contrast tests a volume-based tie-break among equally deep
+opening prefixes. It uses actual committed public-cell removal and leaves the
+true objective and STOP comparison unchanged. This deliberately aggressive
+exploration heuristic is not a surgical recommendation. The candidate-allocation
+limitation remains separate; longer training cannot resolve either omission or
+inadequate exploration by itself.
+
+Reproduction: executed source HEAD 5a6c1c303fa6c611df5ad91ef94bda3882e371be;
+release SHA 602907e1473114ddeed52fd00c6bd5f36a5692d0580c5e3aec89f5fda503705d;
+result SHA 43e468a6ded761433e2ad1a065d684cff484ee92cc00c48b8baa7de5ea184ae8.
+Restore the two driver files to the build paths named in source-index.json; verify
+all pinned dependencies and inputs before replaying. Do not overwrite the saved
+attempt. Patient arrays and the full generated ledger remain outside Git; the
+index and compact per-state ledger summary bind the retained originals.
