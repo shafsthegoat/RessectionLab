@@ -1,0 +1,74 @@
+{
+  "schema": "public-cohort-manifest-metadata-check-v1",
+  "factory_sha256": "94733d08180f2341314600cde67db89912358796f16afd1f86c7b8ef72fd7940",
+  "cases": [
+    {
+      "patient_id": "ReMIND-008",
+      "manifest_sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b",
+      "role": "TRAIN",
+      "array_keys": [
+        "image",
+        "supplied_support",
+        "supplied_whole_tumor",
+        "whole_tumor_domain"
+      ],
+      "only_public_array_paths": true,
+      "existing_1e_minus6_reconciliation_passes": true,
+      "remaining_affine_max_absolute_roundoff": 5.109602536001664e-10,
+      "target_denominator": 18509,
+      "unsupported_target_count": 6394
+    },
+    {
+      "patient_id": "ReMIND-010",
+      "manifest_sha256": "306a91148769920dee4c4afee41a25604a8df78e5b380bbf0f8de3595354fde6",
+      "role": "TRAIN",
+      "array_keys": [
+        "image",
+        "supplied_support",
+        "supplied_whole_tumor",
+        "whole_tumor_domain"
+      ],
+      "only_public_array_paths": true,
+      "existing_1e_minus6_reconciliation_passes": true,
+      "remaining_affine_max_absolute_roundoff": 2.914335439641036e-16,
+      "target_denominator": 15209,
+      "unsupported_target_count": 6988
+    },
+    {
+      "patient_id": "ReMIND-020",
+      "manifest_sha256": "1885f45ab6ef75113fc9e9657ebd74c70504a0a3b4ad9e4ccafb20df471aa6d4",
+      "role": "TRAIN",
+      "array_keys": [
+        "image",
+        "supplied_support",
+        "supplied_whole_tumor",
+        "whole_tumor_domain"
+      ],
+      "only_public_array_paths": true,
+      "existing_1e_minus6_reconciliation_passes": true,
+      "remaining_affine_max_absolute_roundoff": 2.220446049250313e-16,
+      "target_denominator": 49821,
+      "unsupported_target_count": 40373
+    },
+    {
+      "patient_id": "ReMIND-025",
+      "manifest_sha256": "ed77373178c2cbaa70d77c02939c0fe4a734cb8fabd273d60d93a6f65a47ff96",
+      "role": "TRAIN",
+      "array_keys": [
+        "image",
+        "supplied_support",
+        "supplied_whole_tumor",
+        "whole_tumor_domain"
+      ],
+      "only_public_array_paths": true,
+      "existing_1e_minus6_reconciliation_passes": true,
+      "remaining_affine_max_absolute_roundoff": 4.518954654919582e-16,
+      "target_denominator": 81762,
+      "unsupported_target_count": 34358
+    }
+  ],
+  "array_file_reads": 0,
+  "native_case_constructions": 0,
+  "patient_simulations": 0,
+  "original_frozen_factory_unchanged": true
+}

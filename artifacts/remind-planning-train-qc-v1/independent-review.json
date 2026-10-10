@@ -1,0 +1,625 @@
+{
+  "cohort_pin": {
+    "bytes": 70925,
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "decision": "PASS_SAVED_GEOMETRY_AND_ARRAY_INTEGRITY_FOR_EXPLICIT_CROPPED_ANNOTATION_TASK",
+  "full_volume_allocations": 0,
+  "limits": [
+    "Native-positive counts and outside-crop positive-centre counts are inherited from the exact bound executed converter; they cannot be independently recounted without original native label pixels, which were not reopened. Their physical volumes and saved resampled counts were independently verified.",
+    "No clinical anatomical accuracy or independent registration claim. Root reviews the saved overlays; this audit verifies their hashes only.",
+    "All three whole-tumor source-positive-centre crop-loss counts are zero, and whole-tumor volume changes are small; this does not prove NN preserves every thin label or topology.",
+    "Public-support and ventricular reference crop/resampling losses must remain in denominators. Endpoint claims apply to the declared crop, not complete source anatomy.",
+    "Source manual whole-tumor annotations are research task targets only by explicit choice; automatic Brainlab support and ventricles remain estimates.",
+    "Support-only removable tissue makes complete target removal infeasible in all three cases. Preserve target denominators and report infeasibility unless a different removable-domain condition is explicit. Do not silently clip targets or fill support using private references.",
+    "Original public support is informative about ventricular geometry; keep its zero cues visible and declared. Source-label overlap makes simultaneous perfect target-removal and zero ventricular-reference contact infeasible.",
+    "No roles or original arrays changed. These three TRAIN cases do not themselves establish cross-patient generalization or clinical safety."
+  ],
+  "original_DICOM_opens": 0,
+  "patients": [
+    {
+      "MR_finite_minmax": [
+        0.0,
+        6105.0
+      ],
+      "conflicts": {
+        "public_support_zero_total": 6637683,
+        "target_outside_support": 6988,
+        "target_outside_support_fraction": 0.45946479058452233,
+        "target_total": 15209,
+        "target_ventricle_overlap": 1,
+        "ventricle_fraction_of_public_zeros": 0.007413731568681421,
+        "ventricle_in_support_zero": 49210,
+        "ventricle_in_support_zero_fraction": 0.3388768377922391,
+        "ventricle_total": 145215
+      },
+      "header_refit": {
+        "cerebrum": {
+          "affine_max_abs_difference": 2.842170943040401e-14,
+          "max_position_residual_mm": 6.018734657759447e-06
+        },
+        "structural_t1ce": {
+          "affine_max_abs_difference": 9.947598300641403e-14,
+          "max_position_residual_mm": 0.0007001124238405024
+        },
+        "ventricles": {
+          "affine_max_abs_difference": 2.842170943040401e-14,
+          "max_position_residual_mm": 4.312387702577429e-06
+        },
+        "whole_tumor": {
+          "affine_max_abs_difference": 4.263256414560601e-14,
+          "max_position_residual_mm": 3.823188550624411e-06
+        }
+      },
+      "inputs": [
+        {
+          "bytes": 24581,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-mr/conversion-result.json",
+          "sha256": "33e6b45520d4cbeafbb8e5776f2592009944e9c3cf49d371970e4b9e666d1704"
+        },
+        {
+          "bytes": 285525,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-headers/result.json",
+          "sha256": "314ef63a04794fe8c6381a6c8045c1c91f5e0a106d87fc6a972a158ab6ae9d6a"
+        },
+        {
+          "bytes": 1177,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-supervisor.json",
+          "sha256": "97ed4055536df935eed068a99c6b5dd5f7f774bbe92e2722019d9e1a0f97c6b8"
+        },
+        {
+          "bytes": 882,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-headers-supervisor.json",
+          "sha256": "bcd935bb05339dceca11a0e0c1d3d44c41dff8b68314455efc75aa42209e893c"
+        },
+        {
+          "bytes": 84867,
+          "path": "build/real-cohort-eligibility-v1/ReMIND-010-case.json",
+          "sha256": "0ab752dc122426a9289995030d4a2d551e23ed244cab11305f2ecf284ce3aa95"
+        }
+      ],
+      "maximum_derived_corner_difference_mm": 3.975108393734348e-05,
+      "native_MR_spacing_mm": [
+        0.46879979415129525,
+        0.4688001674436682,
+        1.0000026881720494
+      ],
+      "patient_id": "ReMIND-010",
+      "public_source_domain_complete": true,
+      "role": "TRAIN",
+      "runtime": {
+        "child_reaped": true,
+        "sampled_peak_RSS_bytes": 1674592256,
+        "seconds": 2.5134495000820607,
+        "worker_reported_peak_RSS_bytes": 1836646400
+      },
+      "shape_xyz": [
+        270,
+        362,
+        109
+      ],
+      "source_read_accounting": {
+        "bytes": 71857276,
+        "objects": 112
+      },
+      "verified_artifacts": {
+        "MR_native_crop.npy": {
+          "bytes": 42614768,
+          "sha256": "ce084ea074aafff25491d493b0654c45e444a285a16f9e4af86d73a34baf2f1c"
+        },
+        "cerebrum_source_grid_domain.npy": {
+          "bytes": 10653788,
+          "sha256": "e7cb06432e426edb5b7765451bfb31704a954e1ae813ede6b227f1f8005f1b61"
+        },
+        "cerebrum_source_label.npy": {
+          "bytes": 10653788,
+          "sha256": "f370f83e6ee40489778bb44882523f2108f47d1c966d94eb1a124237f737cef3"
+        },
+        "evaluation-only-axis0-index127.png": {
+          "bytes": 45711,
+          "sha256": "e22cae248d9b3fc2bc7472c1c3f665106508987a71012d03a5c01daf3ee3b454"
+        },
+        "evaluation-only-axis1-index116.png": {
+          "bytes": 38402,
+          "sha256": "29d466b7dcdc75008f1b9c8fcfcb19401bc2a93aa13dc5b7c504310260a7d350"
+        },
+        "evaluation-only-axis2-index72.png": {
+          "bytes": 121004,
+          "sha256": "20be4dbf1cdd182ee5a13daf2ca011fef77f3a1ed222bb665d86e664ee367c07"
+        },
+        "ventricles_source_grid_domain.npy": {
+          "bytes": 10653788,
+          "sha256": "65550d570262f1d208ddd7babdd90262e21d93c57cc9cdf28640692051951554"
+        },
+        "ventricles_source_label.npy": {
+          "bytes": 10653788,
+          "sha256": "7d473c90c5f5fa032a34dd0541678802b3645bd8b7c9b05cf0900cb5d71d10d5"
+        },
+        "whole_tumor_source_grid_domain.npy": {
+          "bytes": 10653788,
+          "sha256": "789fa19facc5ec7d6614656bd6753fdba13b8ac44c1b57a6b9b69912e0f870ec"
+        },
+        "whole_tumor_source_label.npy": {
+          "bytes": 10653788,
+          "sha256": "e41b782c7d701887e5e09e11bbe81daa8e15ca9b04a6da22aab92a38051ba50d"
+        }
+      },
+      "volumes": {
+        "cerebrum": {
+          "outside_crop_fraction_of_source_positives": 0.009561725755627571,
+          "resampled_positive_bbox_inclusive": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              269,
+              361,
+              108
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 882607.3805400763,
+          "saved_resampled_positive_voxels_verified": 4015977,
+          "saved_source_domain_voxels_verified": 10653660,
+          "source_centre_cropping_mm3": 8498.137686300926,
+          "source_positive_centres_outside_crop_from_bound_execution": 314745,
+          "source_positive_mm3_from_bound_execution": 888766.0976157293,
+          "source_positive_voxels_from_bound_execution": 32917175,
+          "volume_change_percent": -0.6929513954430644
+        },
+        "ventricles": {
+          "outside_crop_fraction_of_source_positives": 0.018481138209224562,
+          "resampled_positive_bbox_inclusive": [
+            [
+              58,
+              87,
+              37
+            ],
+            [
+              214,
+              318,
+              108
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 31914.4832664946,
+          "saved_resampled_positive_voxels_verified": 145215,
+          "saved_source_domain_voxels_verified": 2670413,
+          "source_centre_cropping_mm3": 601.69660480599,
+          "source_positive_centres_outside_crop_from_bound_execution": 22285,
+          "source_positive_mm3_from_bound_execution": 32557.334834802692,
+          "source_positive_voxels_from_bound_execution": 1205824,
+          "volume_change_percent": -1.9745214759437357
+        },
+        "whole_tumor": {
+          "outside_crop_fraction_of_source_positives": 0.0,
+          "resampled_positive_bbox_inclusive": [
+            [
+              102,
+              92,
+              62
+            ],
+            [
+              152,
+              141,
+              82
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 3342.5429604387728,
+          "saved_resampled_positive_voxels_verified": 15209,
+          "saved_source_domain_voxels_verified": 54592,
+          "source_centre_cropping_mm3": 0.0,
+          "source_positive_centres_outside_crop_from_bound_execution": 0,
+          "source_positive_mm3_from_bound_execution": 3342.3233914442512,
+          "source_positive_voxels_from_bound_execution": 15208,
+          "volume_change_percent": 0.006569352178287247
+        }
+      }
+    },
+    {
+      "MR_finite_minmax": [
+        0.0,
+        1433.0
+      ],
+      "conflicts": {
+        "public_support_zero_total": 1728564,
+        "target_outside_support": 40373,
+        "target_outside_support_fraction": 0.8103610927119086,
+        "target_total": 49821,
+        "target_ventricle_overlap": 15,
+        "ventricle_fraction_of_public_zeros": 0.02550093603708049,
+        "ventricle_in_support_zero": 44080,
+        "ventricle_in_support_zero_fraction": 1.0,
+        "ventricle_total": 44080
+      },
+      "header_refit": {
+        "cerebrum": {
+          "affine_max_abs_difference": 7.105427357601002e-14,
+          "max_position_residual_mm": 6.147622628600581e-06
+        },
+        "structural_t1ce": {
+          "affine_max_abs_difference": 2.842170943040401e-14,
+          "max_position_residual_mm": 0.0005425000198750903
+        },
+        "ventricles": {
+          "affine_max_abs_difference": 2.842170943040401e-14,
+          "max_position_residual_mm": 4.625187907899857e-06
+        },
+        "whole_tumor": {
+          "affine_max_abs_difference": 4.263256414560601e-14,
+          "max_position_residual_mm": 4.204254097879639e-06
+        }
+      },
+      "inputs": [
+        {
+          "bytes": 24557,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-mr/conversion-result.json",
+          "sha256": "6fd6c3a0ac7be41c348cbca94f0f8e62898acecc923f31eacaef36f3c4f1ff1a"
+        },
+        {
+          "bytes": 312474,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-headers/result.json",
+          "sha256": "69084ce327710009ba7440d26b4c46d7f1bcab3700c3771b48a6efea4facaa77"
+        },
+        {
+          "bytes": 1177,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-supervisor.json",
+          "sha256": "76538ed32a9b0aee990173d0250886cfdb4c291dbae01628b69b775ec764f845"
+        },
+        {
+          "bytes": 880,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-headers-supervisor.json",
+          "sha256": "ba6108312f8502541b45dba083062271143f2be9202dcb48b2978d5a68f959eb"
+        },
+        {
+          "bytes": 93931,
+          "path": "build/real-cohort-eligibility-v1/ReMIND-020-case.json",
+          "sha256": "2676a4638ec5b45b164f67369d7ddd784b1395ca2860699a39ad22a786d7e10a"
+        }
+      ],
+      "maximum_derived_corner_difference_mm": 0.0001534197137408187,
+      "native_MR_spacing_mm": [
+        0.9765625502298125,
+        0.976562741185779,
+        0.999999968698778
+      ],
+      "patient_id": "ReMIND-020",
+      "public_source_domain_complete": true,
+      "role": "TRAIN",
+      "runtime": {
+        "child_reaped": true,
+        "sampled_peak_RSS_bytes": 1777844224,
+        "seconds": 1.5619423328898847,
+        "worker_reported_peak_RSS_bytes": 1877524480
+      },
+      "shape_xyz": [
+        133,
+        183,
+        114
+      ],
+      "source_read_accounting": {
+        "bytes": 29599696,
+        "objects": 117
+      },
+      "verified_artifacts": {
+        "MR_native_crop.npy": {
+          "bytes": 11098712,
+          "sha256": "c24ee394731b2a5764533c28bbc5e162d9845a8e098babe92fd2d691293479a9"
+        },
+        "cerebrum_source_grid_domain.npy": {
+          "bytes": 2774774,
+          "sha256": "c33595632c34f3111dd3f8ef3a782933fae9d2065efb18b21d0d4f9fa71d1cc0"
+        },
+        "cerebrum_source_label.npy": {
+          "bytes": 2774774,
+          "sha256": "143882dd58dd57c34c4209226b62174a6b5e6b64c350c443d3d28534307b1e1c"
+        },
+        "evaluation-only-axis0-index34.png": {
+          "bytes": 28628,
+          "sha256": "f492acd6194dce5a90b0fb636da9e8f5983db46bb6aa01c4264e34f501027298"
+        },
+        "evaluation-only-axis1-index89.png": {
+          "bytes": 22185,
+          "sha256": "fe931b42c5cf8f0c4631997462a3824ac6f71ae3572eeb1816b5fc97d0e0ffba"
+        },
+        "evaluation-only-axis2-index80.png": {
+          "bytes": 36140,
+          "sha256": "baa6d9b4ca71b32ad71b29b2b491f26cfac097444f96c3e09abd9163c6850507"
+        },
+        "ventricles_source_grid_domain.npy": {
+          "bytes": 2774774,
+          "sha256": "f8a2b82f2241ae607c146f06823684ec691a5ff559c908a8f0931026d0e76e6b"
+        },
+        "ventricles_source_label.npy": {
+          "bytes": 2774774,
+          "sha256": "918e90e1946ea831fdf3aaf0ae17f0e6477c225d93e9be7f474b1dc802ab83d7"
+        },
+        "whole_tumor_source_grid_domain.npy": {
+          "bytes": 2774774,
+          "sha256": "f4609ee6fab9f0cdf7adc1d7730336bcb42a39dac4ff5e3d4d2df02573480c20"
+        },
+        "whole_tumor_source_label.npy": {
+          "bytes": 2774774,
+          "sha256": "66aed85f91e9e9c90473bd5216d745cac78f8335998f376a288251aecb4fc7ff"
+        }
+      },
+      "volumes": {
+        "cerebrum": {
+          "outside_crop_fraction_of_source_positives": 0.00012957555572547594,
+          "resampled_positive_bbox_inclusive": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              132,
+              182,
+              113
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 997621.8027279234,
+          "saved_resampled_positive_voxels_verified": 1046082,
+          "saved_source_domain_voxels_verified": 2774646,
+          "source_centre_cropping_mm3": 129.37026977582664,
+          "source_positive_centres_outside_crop_from_bound_execution": 4794,
+          "source_positive_mm3_from_bound_execution": 998415.7046558672,
+          "source_positive_voxels_from_bound_execution": 36997719,
+          "volume_change_percent": -0.07951616989212429
+        },
+        "ventricles": {
+          "outside_crop_fraction_of_source_positives": 0.0259822972123297,
+          "resampled_positive_bbox_inclusive": [
+            [
+              34,
+              39,
+              39
+            ],
+            [
+              102,
+              162,
+              113
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 42037.97509587859,
+          "saved_resampled_positive_voxels_verified": 44080,
+          "saved_source_domain_voxels_verified": 651000,
+          "source_centre_cropping_mm3": 1121.8296802481702,
+          "source_positive_centres_outside_crop_from_bound_execution": 41571,
+          "source_positive_mm3_from_bound_execution": 43176.69338782772,
+          "source_positive_voxels_from_bound_execution": 1599974,
+          "volume_change_percent": -2.6373448325947013
+        },
+        "whole_tumor": {
+          "outside_crop_fraction_of_source_positives": 0.0,
+          "resampled_positive_bbox_inclusive": [
+            [
+              12,
+              54,
+              60
+            ],
+            [
+              56,
+              124,
+              100
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 47513.02080879689,
+          "saved_resampled_positive_voxels_verified": 49821,
+          "saved_source_domain_voxels_verified": 129163,
+          "source_centre_cropping_mm3": 0.0,
+          "source_positive_centres_outside_crop_from_bound_execution": 0,
+          "source_positive_mm3_from_bound_execution": 47519.68264183789,
+          "source_positive_voxels_from_bound_execution": 49828,
+          "volume_change_percent": -0.014019102550011375
+        }
+      }
+    },
+    {
+      "MR_finite_minmax": [
+        0.0,
+        2021.0
+      ],
+      "conflicts": {
+        "public_support_zero_total": 1497197,
+        "target_outside_support": 34358,
+        "target_outside_support_fraction": 0.42021966194564714,
+        "target_total": 81762,
+        "target_ventricle_overlap": 4597,
+        "ventricle_fraction_of_public_zeros": 0.022920163478820758,
+        "ventricle_in_support_zero": 34316,
+        "ventricle_in_support_zero_fraction": 0.9997378004369992,
+        "ventricle_total": 34325
+      },
+      "header_refit": {
+        "cerebrum": {
+          "affine_max_abs_difference": 2.842170943040401e-14,
+          "max_position_residual_mm": 5.284497001684229e-06
+        },
+        "structural_t1ce": {
+          "affine_max_abs_difference": 7.105427357601002e-14,
+          "max_position_residual_mm": 0.0007506633440778254
+        },
+        "ventricles": {
+          "affine_max_abs_difference": 3.552713678800501e-14,
+          "max_position_residual_mm": 2.9184774121898386e-06
+        },
+        "whole_tumor": {
+          "affine_max_abs_difference": 9.947598300641403e-14,
+          "max_position_residual_mm": 3.193950080786806e-06
+        }
+      },
+      "inputs": [
+        {
+          "bytes": 24644,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/conversion-result.json",
+          "sha256": "7ea5b802082caf6ac1f34120235c1d6b9f558f0957a38a366b85f193bbdb71f8"
+        },
+        {
+          "bytes": 278126,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-headers/result.json",
+          "sha256": "064eda2567807d99c37e51b711235b5e6639384d532c969e4b7e4a7e46e02c91"
+        },
+        {
+          "bytes": 1176,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-supervisor.json",
+          "sha256": "ba26ab85da598031d428c900748d48ac0f6f2e3ec97a17f0ff16a955564f1f1d"
+        },
+        {
+          "bytes": 880,
+          "path": "build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-headers-supervisor.json",
+          "sha256": "6e1e759c620f94b853bcc06d9f0aabdcfc6b4359f2fcc0084a5b05c2209e85f7"
+        },
+        {
+          "bytes": 93930,
+          "path": "build/real-cohort-eligibility-v1/ReMIND-025-case.json",
+          "sha256": "06efe9558054e1b882631a10116b128b38d718867f0e99de811f86a98290aef2"
+        }
+      ],
+      "maximum_derived_corner_difference_mm": 1.1005740040502823e-05,
+      "native_MR_spacing_mm": [
+        0.9765625711179714,
+        0.9765627279320612,
+        1.000000195843785
+      ],
+      "patient_id": "ReMIND-025",
+      "public_source_domain_complete": true,
+      "role": "TRAIN",
+      "runtime": {
+        "child_reaped": true,
+        "sampled_peak_RSS_bytes": 450052096,
+        "seconds": 0.5921682089101523,
+        "worker_reported_peak_RSS_bytes": 540753920
+      },
+      "shape_xyz": [
+        133,
+        169,
+        107
+      ],
+      "source_read_accounting": {
+        "bytes": 15422846,
+        "objects": 110
+      },
+      "verified_artifacts": {
+        "MR_native_crop.npy": {
+          "bytes": 9620284,
+          "sha256": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f"
+        },
+        "cerebrum_source_grid_domain.npy": {
+          "bytes": 2405167,
+          "sha256": "60f9b0d118a10853a7910be386e041d5adb6ab62089978c899232d187998976e"
+        },
+        "cerebrum_source_label.npy": {
+          "bytes": 2405167,
+          "sha256": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9"
+        },
+        "evaluation-only-axis0-index95.png": {
+          "bytes": 23621,
+          "sha256": "eb60a1f07c2d411c8b4eeae4019e6f234622143f75999a5ca7d1bc6dc868a7b7"
+        },
+        "evaluation-only-axis1-index40.png": {
+          "bytes": 19779,
+          "sha256": "3e42bf23ef28064cdd1df12e55487d95ac0a381427cca325d8cc535ca97267ff"
+        },
+        "evaluation-only-axis2-index65.png": {
+          "bytes": 30614,
+          "sha256": "b1c594e585835c3f7097d343868e4ab7dc27ad0608b81e20e12f921b59a7509c"
+        },
+        "ventricles_source_grid_domain.npy": {
+          "bytes": 2405167,
+          "sha256": "697cb554497681c83136c10aaee65625fedabd2b7859bfada38e681999685248"
+        },
+        "ventricles_source_label.npy": {
+          "bytes": 2405167,
+          "sha256": "de22f926dd5c056049e468528264323b28d055cb80b8abb925f7af31d654fcfe"
+        },
+        "whole_tumor_source_grid_domain.npy": {
+          "bytes": 2405167,
+          "sha256": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+        },
+        "whole_tumor_source_label.npy": {
+          "bytes": 2405167,
+          "sha256": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861"
+        }
+      },
+      "volumes": {
+        "cerebrum": {
+          "outside_crop_fraction_of_source_positives": 0.000407673181360766,
+          "resampled_positive_bbox_inclusive": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              132,
+              168,
+              106
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 865786.0334408074,
+          "saved_resampled_positive_voxels_verified": 907842,
+          "saved_source_domain_voxels_verified": 2405039,
+          "source_centre_cropping_mm3": 355.00533623348485,
+          "source_positive_centres_outside_crop_from_bound_execution": 2978,
+          "source_positive_mm3_from_bound_execution": 870808.6586626034,
+          "source_positive_voxels_from_bound_execution": 7304871,
+          "volume_change_percent": -0.5767771337402361
+        },
+        "ventricles": {
+          "outside_crop_fraction_of_source_positives": 0.012542755335937333,
+          "resampled_positive_bbox_inclusive": [
+            [
+              27,
+              39,
+              34
+            ],
+            [
+              105,
+              148,
+              106
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 32734.88734587705,
+          "saved_resampled_positive_voxels_verified": 34325,
+          "saved_source_domain_voxels_verified": 654080,
+          "source_centre_cropping_mm3": 418.7823200449127,
+          "source_positive_centres_outside_crop_from_bound_execution": 3513,
+          "source_positive_mm3_from_bound_execution": 33388.38308079113,
+          "source_positive_voxels_from_bound_execution": 280082,
+          "volume_change_percent": -1.9572548132468448
+        },
+        "whole_tumor": {
+          "outside_crop_fraction_of_source_positives": 0.0,
+          "resampled_positive_bbox_inclusive": [
+            [
+              67,
+              4,
+              37
+            ],
+            [
+              124,
+              77,
+              93
+            ]
+          ],
+          "saved_resampled_positive_mm3_verified": 77974.35860665985,
+          "saved_resampled_positive_voxels_verified": 81762,
+          "saved_source_domain_voxels_verified": 244644,
+          "source_centre_cropping_mm3": 0.0,
+          "source_positive_centres_outside_crop_from_bound_execution": 0,
+          "source_positive_mm3_from_bound_execution": 77974.31937684385,
+          "source_positive_voxels_from_bound_execution": 81762,
+          "volume_change_percent": 5.0311200294750336e-05
+        }
+      }
+    }
+  ],
+  "source_pins": {
+    "crop": "2bb3cefce51de48345570a361c4d479ac6d51328251ae7910d7ba87ed70effdb",
+    "headers": "77d91566a48d2b47c3ba59d5a7d05b51a0709022ad225cbe4d9410773c6312b1"
+  },
+  "source_pixel_redecode_calls": 0,
+  "verification": "Every saved array byte hashed; values streamed one x-plane at a time. MR finiteness and binary masks checked. All domain voxels independently solved from saved source/target world transforms; public domain is complete. Header affines refitted independently from saved raw plane fields."
+}

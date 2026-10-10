@@ -1,0 +1,462 @@
+{
+  "affine_ras_mm": [
+    [
+      0.9765009878053419,
+      0.0016548609365013784,
+      0.011101670807958671,
+      -60.67616943193141
+    ],
+    [
+      0.0015978838018127922,
+      -0.9765478985029927,
+      0.00526243154957694,
+      98.63132191403871
+    ],
+    [
+      0.010850018022607374,
+      -0.005121030245863395,
+      -0.99992472287021,
+      71.55845825652034
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "anatomical_accuracy_reviewed": false,
+  "blanket_training_or_actor_admission": false,
+  "clinical_suitability": false,
+  "condition": "supplied contrast-enhanced T1 MRI, automatic cerebrum support estimate, and manual whole-tumor annotation as an explicitly supplied task specification",
+  "coverage": {
+    "cerebrum": "Nearest-neighbor projection of automatic BrainLab source label; every output voxel lies inside its source domain, but zero is not confirmed empty anatomy",
+    "image": "Uninterpolated original MRI samples in public-support-bounds crop; outside crop unknown",
+    "whole_tumor": "Nearest-neighbor projection of manual Glioma label paired with source-grid domain; outside that domain unknown"
+  },
+  "input_files": {
+    "image": {
+      "bytes": 9620284,
+      "dtype": "float32",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/MR_native_crop.npy",
+      "sha256": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f"
+    },
+    "supplied_support": {
+      "bytes": 2405167,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/cerebrum_source_label.npy",
+      "sha256": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9"
+    },
+    "supplied_whole_tumor": {
+      "bytes": 2405167,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/whole_tumor_source_label.npy",
+      "sha256": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861"
+    },
+    "whole_tumor_domain": {
+      "bytes": 2405167,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/whole_tumor_source_grid_domain.npy",
+      "sha256": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+    }
+  },
+  "intended_use_status": "source geometry, coverage and saved arrays checked for explicit cropped supplied-annotation research; runtime remains separately bounded",
+  "patient_group": "ReMIND:025",
+  "patient_id": "ReMIND-025",
+  "private_evaluation_files_included": false,
+  "public_grid_selection": {
+    "all_output_cell_corners_inside_public_source_domain": true,
+    "bound_mm": 0.001,
+    "clipped_to_MR_coverage": false,
+    "image_interpolation": "none",
+    "maximum_world_corner_difference_mm": 1.1005740040502823e-05,
+    "original_MR_sampling_mm": [
+      0.9765625711179714,
+      0.9765627279320612,
+      1.000000195843785
+    ],
+    "planning_affine_method": "explicit polar orthogonal roundoff projection; exact source crop affine retained",
+    "public_cell_bounds_in_MR_index": {
+      "maximum": [
+        179.49999690325737,
+        216.49997045624298,
+        141.49999849242295
+      ],
+      "minimum": [
+        45.4999877024601,
+        46.499983599642135,
+        32.50001683946202
+      ]
+    },
+    "selection": "public cerebrum grid world bounds intersect MRI, then uniformly inset until every output cell corner is inside public source coverage",
+    "unclipped_MR_start": [
+      45,
+      46,
+      33
+    ],
+    "unclipped_MR_stop": [
+      180,
+      217,
+      142
+    ],
+    "uniform_inset_MR_cells_per_face": 1,
+    "uses_label_positive_extent": false,
+    "uses_private_labels": false
+  },
+  "public_label_resampling": {
+    "cerebrum": {
+      "independent_saved_volume_summary": {
+        "outside_crop_fraction_of_source_positives": 0.000407673181360766,
+        "resampled_positive_bbox_inclusive": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            132,
+            168,
+            106
+          ]
+        ],
+        "saved_resampled_positive_mm3_verified": 865786.0334408074,
+        "saved_resampled_positive_voxels_verified": 907842,
+        "saved_source_domain_voxels_verified": 2405039,
+        "source_centre_cropping_mm3": 355.00533623348485,
+        "source_positive_centres_outside_crop_from_bound_execution": 2978,
+        "source_positive_mm3_from_bound_execution": 870808.6586626034,
+        "source_positive_voxels_from_bound_execution": 7304871,
+        "volume_change_percent": -0.5767771337402361
+      },
+      "placement": {
+        "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+        "outside_source_domain": "unknown",
+        "resampled_positive_volume_mm3": 865786.0334408074,
+        "resampled_positive_voxels": 907842,
+        "resampled_source_domain_voxels": 2405039,
+        "resampling_can_omit_subvoxel_labels": true,
+        "source_grid_unchanged": true,
+        "source_index_to_target_index": [
+          [
+            0.5000000143059017,
+            -1.38772041275749e-10,
+            -1.2617370160830174e-08,
+            -0.25000695961863784
+          ],
+          [
+            2.1019450828323183e-10,
+            0.49999992753347167,
+            2.3088992747669762e-08,
+            -0.2500159847217193
+          ],
+          [
+            1.18823057418301e-08,
+            -2.4292773274751933e-08,
+            0.49999990846344133,
+            -1.249983194748097
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_positive_centres_outside_target_grid": 2978,
+        "source_positive_volume_mm3": 870808.6586626034,
+        "source_positive_voxels": 7304871,
+        "target_index_to_source_index": [
+          [
+            1.9999999427763937,
+            5.550906817530787e-10,
+            5.0469488412330606e-08,
+            0.5000139681557698
+          ],
+          [
+            -8.407759358522449e-10,
+            2.000000289866151,
+            -9.235600130670651e-08,
+            0.5000319262609482
+          ],
+          [
+            -4.752923034676969e-08,
+            9.717112495893909e-08,
+            2.000000366146296,
+            2.4999668595846174
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source_native_affine_ras_mm": [
+        [
+          0.4882505080046594,
+          0.000827429943127255,
+          0.005550822105105242,
+          -60.93459211858741
+        ],
+        [
+          0.00079894178103038,
+          -0.48827387861252125,
+          0.0026311927254151586,
+          98.86849706543927
+        ],
+        [
+          0.00542499728403529,
+          -0.002560490462389509,
+          -0.4999622701605751,
+          72.80691511552332
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_native_shape": [
+        268,
+        340,
+        218
+      ]
+    },
+    "whole_tumor": {
+      "independent_saved_volume_summary": {
+        "outside_crop_fraction_of_source_positives": 0.0,
+        "resampled_positive_bbox_inclusive": [
+          [
+            67,
+            4,
+            37
+          ],
+          [
+            124,
+            77,
+            93
+          ]
+        ],
+        "saved_resampled_positive_mm3_verified": 77974.35860665985,
+        "saved_resampled_positive_voxels_verified": 81762,
+        "saved_source_domain_voxels_verified": 244644,
+        "source_centre_cropping_mm3": 0.0,
+        "source_positive_centres_outside_crop_from_bound_execution": 0,
+        "source_positive_mm3_from_bound_execution": 77974.31937684385,
+        "source_positive_voxels_from_bound_execution": 81762,
+        "volume_change_percent": 5.0311200294750336e-05
+      },
+      "placement": {
+        "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+        "outside_source_domain": "unknown",
+        "resampled_positive_volume_mm3": 77974.35860665985,
+        "resampled_positive_voxels": 81762,
+        "resampled_source_domain_voxels": 244644,
+        "resampling_can_omit_subvoxel_labels": true,
+        "source_grid_unchanged": true,
+        "source_index_to_target_index": [
+          [
+            0.9999999262118109,
+            -2.7754405392856063e-10,
+            -2.6059468860116627e-08,
+            66.99998795894204
+          ],
+          [
+            4.203889734152172e-10,
+            0.9999997526669687,
+            5.339965324351742e-08,
+            3.9999845873019093
+          ],
+          [
+            2.3764609050634292e-08,
+            -4.85855415751843e-08,
+            0.9999998180093905,
+            37.00001108950838
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_positive_centres_outside_target_grid": 0,
+        "source_positive_volume_mm3": 77974.31937684385,
+        "source_positive_voxels": 81762,
+        "target_index_to_source_index": [
+          [
+            1.0000000737881938,
+            2.7754540983179754e-10,
+            2.6059475514304123e-08,
+            -66.9999938680612
+          ],
+          [
+            -4.203878395565852e-10,
+            1.0000002473330898,
+            -5.339967618003122e-08,
+            -3.9999835726758532
+          ],
+          [
+            -2.3764615151035035e-08,
+            4.858556242656048e-08,
+            1.0000001819906392,
+            -37.00001642527662
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source_native_affine_ras_mm": [
+        [
+          0.976500916015625,
+          0.001654859716796875,
+          0.011101643428830753,
+          5.166766354168179
+        ],
+        [
+          0.0015978833984375,
+          -0.9765476572265624,
+          0.0052623784029046565,
+          95.02691359243805
+        ],
+        [
+          0.01084999345703125,
+          -0.005120980400390625,
+          -0.9999245414495073,
+          35.267699456463404
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_native_shape": [
+        58,
+        74,
+        57
+      ]
+    }
+  },
+  "public_source_series": [
+    {
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.299725476978733854420576928981108584002",
+      "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.294904841591104719673433576501552668364",
+      "annotation_provenance": "Acquired source-described preoperative contrast-enhanced T1 MRI. Exact header modality/frame/timing and anatomy unreviewed.",
+      "kind": "structural_t1ce",
+      "series_uuid": "cac3f832-484f-4100-8fd1-1619410c7014",
+      "source_description": "3D_AX_T1_postcontrast"
+    },
+    {
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.58566260702559059858047119415527749062",
+      "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.294904841591104719673433576501552668364",
+      "annotation_provenance": "Source manual preoperative whole-tumor annotation created during planning; not automatically an explicit resection target/prescription. Case-specific algorithm/source SOP fields remain to be read.",
+      "kind": "whole_tumor",
+      "series_uuid": "a6fbfbc8-2c16-4096-820f-7d931d10637a",
+      "source_description": "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+    },
+    {
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.125400777667965122150818043747300706921",
+      "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.294904841591104719673433576501552668364",
+      "annotation_provenance": "Source automatic Brainlab preoperative annotation created during planning, supplied estimated support if intended-use QC passes; not a reviewed pial surface or intact-normal-tissue domain.",
+      "kind": "cerebrum",
+      "series_uuid": "54276c85-de76-47d1-af46-f5fe7fc1edd0",
+      "source_description": "cerebrum seg - MR ref: 3D_AX_T1_postcontrast"
+    }
+  ],
+  "public_support_domain_fully_covered": true,
+  "public_target_support_consistency": {
+    "intended_use_requirement": "PARTIAL_TARGET_PROGRESS on unchanged supplied derived arrays. Full supplied target stays in denominator; no target clipping, support union or hole filling.",
+    "outside_fraction": 0.42021966194564714,
+    "target_or_support_modified_for_task": false,
+    "whole_tumor_positive_outside_supplied_support": 34358,
+    "whole_tumor_positive_voxels": 81762
+  },
+  "reindex_policy": {
+    "derived_grid": {
+      "max_normalized_Gram_error": 3.091352519690797e-16,
+      "polar_corner_difference_mm": 9.258755909697673e-14,
+      "polar_transform_applied": false,
+      "spacing_mm": [
+        0.9765625711179716,
+        0.9765627279320614,
+        1.000000195843785
+      ]
+    },
+    "image_interpolation": "none",
+    "maximum_bound_mm": 0.001,
+    "maximum_crop_world_difference_mm": 1.1005740040502823e-05,
+    "original_MR_affine_overwritten": false,
+    "source_MR_grid": {
+      "max_normalized_Gram_error": 1.0937600104813904e-07,
+      "polar_corner_difference_mm": 1.1005740040502823e-05,
+      "polar_transform_applied": false,
+      "spacing_mm": [
+        0.9765625711179714,
+        0.9765627279320612,
+        1.000000195843785
+      ]
+    },
+    "source_MR_samples_preserved": true,
+    "subset_converter_fit_difference_mm": 1.7327931909151035e-05
+  },
+  "role": "TRAIN",
+  "schema": "remind-supplied-annotation-public-inputs-v2",
+  "shape_xyz": [
+    133,
+    169,
+    107
+  ],
+  "source_MR_crop_affine_ras_mm": [
+    [
+      0.9765009880089638,
+      0.0016548633612635058,
+      0.011101689024224707,
+      -60.67616943193141
+    ],
+    [
+      0.0015978808781052275,
+      -0.9765478987790998,
+      0.005262486266717389,
+      98.63132191403871
+    ],
+    [
+      0.010850000127182803,
+      -0.005120976810101897,
+      -0.9999247223799951,
+      71.55845825652034
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "source_bindings": {
+    "acquisition_source_binding_sha256": "a9efdc4ed2f947e6176c2fab6b0291587621452a8011057e568e8d6ab05bfe06",
+    "case_manifest_sha256": "06efe9558054e1b882631a10116b128b38d718867f0e99de811f86a98290aef2",
+    "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "conversion_receipt_sha256": "7ea5b802082caf6ac1f34120235c1d6b9f558f0957a38a366b85f193bbdb71f8",
+    "converter_source_sha256": "2bb3cefce51de48345570a361c4d479ac6d51328251ae7910d7ba87ed70effdb",
+    "header_snapshot_sha256": "064eda2567807d99c37e51b711235b5e6639384d532c969e4b7e4a7e46e02c91",
+    "pilot_sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f",
+    "saved_array_review_sha256": "863bdf2190c41e57919d024806f04cb0c8ad1203dba4fed3e26d35319f367b94"
+  },
+  "task_condition": "PARTIAL_TARGET_PROGRESS",
+  "task_limits": [
+    "Full supplied derived target remains the denominator; support-only removal cannot reach its outside-support portion.",
+    "Labels are nearest-neighbor derived; source positive crop losses and physical-volume changes are explicitly retained. Thin-label topology preservation is unproven.",
+    "Public support retains its informative zeros. No filling or private-reference-derived support is permitted.",
+    "Source whole tumor is not prescribed resection; automatic support is an estimate.",
+    "Source documentation supports preoperative planning annotations; exact acquired/available timestamps and expert accuracy remain unverified.",
+    "Missing vascular and functional anatomy stays unknown."
+  ]
+}

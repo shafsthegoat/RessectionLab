@@ -1,0 +1,169 @@
+{
+  "affine_ras_mm": [
+    [
+      0.5077995460268,
+      -0.0006029567334039999,
+      0.00031966646286164964,
+      -67.27264414662629
+    ],
+    [
+      -0.000602797060772,
+      -0.5077995764948,
+      -0.00024605857126659,
+      76.04573734852269
+    ],
+    [
+      0.000324948689738,
+      0.0002495104940286,
+      -0.49999985310981065,
+      96.88242078608342
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "anatomical_accuracy_reviewed": false,
+  "blanket_training_or_actor_admission": false,
+  "clinical_suitability": false,
+  "condition": "supplied contrast-enhanced T1 MRI, automatic cerebrum support estimate, and manual whole-tumor annotation as an explicitly supplied task specification",
+  "coverage": {
+    "cerebrum": "Source automatic BrainLab label on its entire native grid; zero is not absence of tissue or critical anatomy",
+    "image": "All samples in the declared public-cerebrum-extent crop; outside crop unknown",
+    "whole_tumor": "Source manual Glioma label paired with source-grid domain; outside that domain unknown"
+  },
+  "input_files": {
+    "image": {
+      "bytes": 83081128,
+      "dtype": "float32",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/MR_native_crop.npy",
+      "sha256": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123"
+    },
+    "supplied_support": {
+      "bytes": 20770378,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/cerebrum_source_label.npy",
+      "sha256": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b"
+    },
+    "supplied_whole_tumor": {
+      "bytes": 20770378,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/whole_tumor_source_label.npy",
+      "sha256": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e"
+    },
+    "whole_tumor_domain": {
+      "bytes": 20770378,
+      "dtype": "uint8",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-crop-v1/whole_tumor_source_grid_domain.npy",
+      "sha256": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+    }
+  },
+  "intended_use_status": "geometry_and_source_samples_checked; root research-task assumption decision pending",
+  "patient_group": "ReMIND:008",
+  "patient_id": "ReMIND-008",
+  "private_evaluation_files_included": false,
+  "public_target_support_consistency": {
+    "intended_use_requirement": "Root must explicitly define task treatment of target outside estimated support; do not silently intersect target, fill support or interpret support zero as empty tissue.",
+    "outside_crop_voxel_bbox_inclusive": {
+      "maximum": [
+        239,
+        246,
+        148
+      ],
+      "minimum": [
+        169,
+        190,
+        97
+      ]
+    },
+    "outside_fraction": 0.3454535631314496,
+    "outside_occupied_cell_RAS_bounds_mm": {
+      "maximum": [
+        54.268008,
+        -20.313233,
+        48.752831
+      ],
+      "minimum": [
+        18.193529,
+        -49.299402,
+        22.755989
+      ]
+    },
+    "outside_volume_mm3": 824.381,
+    "target_or_support_modified": false,
+    "whole_tumor_positive_outside_supplied_support": 6394,
+    "whole_tumor_positive_voxels": 18509
+  },
+  "reindex_policy": {
+    "derived_grid": {
+      "max_normalized_Gram_error": 2.01247509414688e-09,
+      "polar_corner_difference_mm": 3.3859260444514545e-07,
+      "polar_transform_applied": false,
+      "spacing_mm": [
+        0.5078000077796097,
+        0.5077999957666476,
+        0.5000000158412999
+      ]
+    },
+    "image_interpolation": "none",
+    "maximum_bound_mm": 0.001,
+    "maximum_crop_world_difference_mm": 0.00010749917866711526,
+    "original_MR_affine_overwritten": false,
+    "source_MR_grid": {
+      "max_normalized_Gram_error": 1.210607366007365e-07,
+      "polar_corner_difference_mm": 1.5165542627355336e-05,
+      "polar_transform_applied": false,
+      "spacing_mm": [
+        0.5077999815004373,
+        0.5077998965358008,
+        0.4999995743550285
+      ]
+    },
+    "source_MR_samples_preserved": true,
+    "subset_converter_fit_difference_mm": 0.00011237584100867831
+  },
+  "role": "TRAIN",
+  "schema": "remind-supplied-annotation-public-inputs-v2",
+  "shape_xyz": [
+    251,
+    331,
+    250
+  ],
+  "source_MR_crop_affine_ras_mm": [
+    [
+      0.5077995197448915,
+      -0.0006029566242650823,
+      0.00031964249946785436,
+      -67.27264728394194
+    ],
+    [
+      -0.0006027992566980225,
+      -0.5077994772639639,
+      -0.0002459969669182383,
+      76.04573949373399
+    ],
+    [
+      0.0003249488546264069,
+      0.0002495105694610817,
+      -0.49999941166902834,
+      96.88231954090975
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "task_limits": [
+    "Whole-tumor annotation is not a prescribed resection target; any goal derived from it is an explicit supplied-target condition.",
+    "Cerebrum segmentation has been supplied publicly, including all holes/zeros; do not claim those anatomical cues are absent.",
+    "No bright-intensity support, hole filling, hidden anatomy inputs or unannounced resampling.",
+    "Automatic source labels are not independently verified manual anatomy.",
+    "Prior-cavity label metadata exists; excluded payload has not been inspected. Do not assume intact normal tissue.",
+    "Source documentation describes preoperative planning annotations, but exact deidentified acquisition timing and expert accuracy remain unverified.",
+    "No vessels or functional anatomy are supplied; missing anatomy stays unknown."
+  ]
+}

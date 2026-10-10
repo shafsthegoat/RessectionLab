@@ -1,0 +1,31 @@
+{
+  "task_condition": "PARTIAL_TARGET_PROGRESS",
+  "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "pilot_sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f",
+  "cases": [
+    {
+      "patient_id": "ReMIND-008",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+      "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+    },
+    {
+      "patient_id": "ReMIND-010",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/public-cohort-v1/ReMIND-010-public-inputs-v2.json",
+      "sha256": "306a91148769920dee4c4afee41a25604a8df78e5b380bbf0f8de3595354fde6"
+    },
+    {
+      "patient_id": "ReMIND-020",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/public-cohort-v1/ReMIND-020-public-inputs-v2.json",
+      "sha256": "1885f45ab6ef75113fc9e9657ebd74c70504a0a3b4ad9e4ccafb20df471aa6d4"
+    },
+    {
+      "patient_id": "ReMIND-025",
+      "role": "TRAIN",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-planning-qc-v1/public-cohort-v1/ReMIND-025-public-inputs-v2.json",
+      "sha256": "ed77373178c2cbaa70d77c02939c0fe4a734cb8fabd273d60d93a6f65a47ff96"
+    }
+  ]
+}
