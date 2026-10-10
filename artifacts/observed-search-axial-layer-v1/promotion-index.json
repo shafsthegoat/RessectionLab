@@ -1,0 +1,33 @@
+{
+  "base_head": "2e9e4d332349d4abde43b304a432457d31dc32cb",
+  "canonical_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src:tests AXIAL_LAYER_BASELINE=build/observed-search-axial-layer-v1/baseline-observed-search.py OBSERVED_SEARCH_BASELINE=build/observed-search-axial-layer-v1/baseline-observed-search.py .venv/bin/python -m pytest -q tests/test_observed_search_axial_layer.py tests/test_observed_search_opening_volume.py tests/test_observed_search_opening_lane.py tests/test_observed_search.py tests/test_observed_search_diagnostics.py",
+  "files": [
+    {
+      "after_sha256": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd",
+      "before_sha256": "4356616a0ef846af4b94ef9824b3d6b713afbf83643cec3e7edea70a87e9f29a",
+      "destination": "src/resectionlab/observed_search.py",
+      "source": "build/observed-search-axial-layer-v1/stage/resectionlab/observed_search.py"
+    },
+    {
+      "after_sha256": "0cd8a54b3f8ac1c5f75755e5bc7283a14451934214306e13eaee0c886883e575",
+      "before_sha256": null,
+      "destination": "tests/test_observed_search_axial_layer.py",
+      "source": "build/observed-search-axial-layer-v1/stage/tests/test_observed_search_axial_layer.py"
+    }
+  ],
+  "numerical_cause": {
+    "build/observed-search-axial-layer-v1/numerical-cause.json": "58590d7c39fd1358b420e4e93343534fc20a186445665b9c0e981855add3f362",
+    "build/observed-search-axial-layer-v1/numerical-cause.py": "328a87dd2cc65dcd031619d49e0867d8ebc9cc606e412637404414c7a7eb2202"
+  },
+  "patch_sha256": "e9d8c288471bbd001f5dd8b481b8689e8f2cb0f37a428143f3835583c63428bf",
+  "scope": "One opt-in return_plus_axial_layer_volume_v1. Signed actual removed-cell layer then actualvolume; separate rawdepth diagnostics. All older modes exact parity; no geometry/reward/candidate/STOP changes.",
+  "tests": {
+    "log_sha256": "58110637bcb58a84a9d0b9050008e367eb55ce9b04f403f4685d5e8bb075440c",
+    "receipt": {
+      "path": "build/observed-search-axial-layer-v1/controls-v1.json",
+      "sha256": "38b3eb6d2f80d6137704242bdc09e5d021d99efdb5f5ec35bd71b5c422ad6d96"
+    },
+    "result": "179 passed in1.45s; parent1.775s/260653056B/one thread"
+  },
+  "version": "observed-search-axial-layer-promotion-v1"
+}

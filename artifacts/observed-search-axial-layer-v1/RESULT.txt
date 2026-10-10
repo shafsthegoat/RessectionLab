@@ -1,0 +1,28 @@
+Same-layer numerical ranking correction, October10,2026
+
+Saved public frame metadata reproduce two nominally equal axial-layer depths:
+3.3007001108926812 and3.3007001109218mm. Both correspond to x=240. Tiny transverse
+projection coefficients arise from reconciling the original and native grid.
+Exact float ordering bypassed the intended volume tie-break. The numerical
+reconstruction uses saved public metadata only; it does not authenticate an
+unexported removal history or establish a better counterfactual patient plan.
+
+New opt-in return_plus_axial_layer_volume_v1 ranks actual actor-covered removed
+cells by signed native axial layer, then actual cumulative removed volume, return
+and path. Raw mm remains descriptive. Unique axis, transverse alignment, native
+orthogonality, full-extent projected-minus-ideal drift within the existing1e-6mm
+reconciliation limit and less than half axial spacing are required. Negative,
+zero and unsigned indices are handled explicitly. No pairwise tolerance ties.
+The independent review caught and repaired a residual-shear admission gap.
+
+Geometry, tissue removal, source/observation identities, reward and final STOP
+objective are unchanged. Older modes remain available with exact output parity.
+No extra native calls, observations, private anatomy or learned model is used.
+179 staged controls pass in1.45s;179 canonical controls pass in1.33s. Tests include
+same-layer perturbations, next-layer priority, accumulation, sign/reflection,
+malformed/nonaligned frames and native toy integration. Source-only independent
+review clears final52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd.
+
+This is a numerical/search-retention correction, not patient accuracy evidence.
+The unchanged24-step patient contrast is next. Wider removal remains an aggressive
+exploration proxy and does not itself imply better clearance, utility or safety.

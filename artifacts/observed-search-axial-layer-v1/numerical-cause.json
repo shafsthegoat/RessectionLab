@@ -1,0 +1,130 @@
+{
+  "access_center_ras_mm": [
+    57.81281617159064,
+    -28.73810767915333,
+    39.01393683913569
+  ],
+  "access_index": [
+    246.5,
+    206.0,
+    116.0
+  ],
+  "cells": [
+    {
+      "absolute_reproduction_error_mm": 4.440892098500626e-16,
+      "native_cell": [
+        240,
+        208,
+        118
+      ],
+      "projected_depth_mm": 3.300700110892681,
+      "saved_depth_mm": 3.3007001108926812,
+      "saved_source": "recorded_cap120_depth",
+      "saved_step": 4,
+      "signed_axial_layer": -240
+    },
+    {
+      "absolute_reproduction_error_mm": 4.440892098500626e-16,
+      "native_cell": [
+        240,
+        206,
+        118
+      ],
+      "projected_depth_mm": 3.3007001109217997,
+      "saved_depth_mm": 3.3007001109218,
+      "saved_source": "recorded_cap96_depth",
+      "saved_step": 5,
+      "signed_axial_layer": -240
+    }
+  ],
+  "depth_coefficients_mm_per_native_index": [
+    -0.5078000077796095,
+    -1.4556637466773357e-11,
+    -5.03119016392016e-10
+  ],
+  "derived_native_affine_ras_mm": [
+    [
+      0.5077995460264906,
+      -0.0006029567482700632,
+      0.00031966596030809553,
+      -67.27264414662629
+    ],
+    [
+      -0.0006027970459639079,
+      -0.5077995764945451,
+      -0.00024605809521439345,
+      76.04573734852269
+    ],
+    [
+      0.0003249492006982536,
+      0.0002495109768910661,
+      -0.4999998531103661,
+      96.88242078608342
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "existing_grid_reconciliation_allowed_displacement_mm": 1e-06,
+  "existing_grid_reconciliation_max_corner_displacement_mm": 3.3859260444514545e-07,
+  "finding": "Same integer native axial layer. Reconciled native grid projected on original-grid aperture normal has tiny transverse coefficients; exact-float depth ordering suppresses same-layer volume ties.",
+  "inputs": {
+    "access_derivation": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-horizon24-search-v2/baseline-source/public-task-derivation.json",
+      "sha256": "fca8e8eadfee3a29e61d5aaa8d6f63c8599593f34c0dd106260b578ab08799d2"
+    },
+    "grid_reconciliation": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-horizon24-search-v2/baseline-source/admitted-public-bindings.json",
+      "sha256": "54475a75b5718c129ec2081b14829e9aa52dd8c70c5090524c23af2af371376e"
+    },
+    "public_source_manifest": {
+      "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+      "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+    },
+    "recorded_cap120_depth": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-footprint-cap120-search-v1/retained-progress.json",
+      "sha256": "cd8330caa3991c5b3386cb40881978ffe9db5a3a5a67c131802fc1f9f8f44e70"
+    },
+    "recorded_cap96_depth": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/retained-progress.json",
+      "sha256": "d4946a6d621a28c04fdc369c41b149a57cdf4e1eefd9c8520489a57faf166b52"
+    }
+  },
+  "limits": "Metadata projection reproduces recorded maxima; it does not independently authenticate the unexported removed-cell history or establish a better counterfactual plan. No patient array/model/native/geometry execution.",
+  "normal_from_original_source_axis": [
+    -0.9999990906797901,
+    0.0011870757218137343,
+    -0.0006399147001963636
+  ],
+  "original_affine_ras_mm": [
+    [
+      0.5077995460268,
+      -0.0006029567334039999,
+      0.00031966646286164964,
+      -67.27264414662629
+    ],
+    [
+      -0.000602797060772,
+      -0.5077995764948,
+      -0.00024605857126659,
+      76.04573734852269
+    ],
+    [
+      0.000324948689738,
+      0.0002495104940286,
+      -0.49999985310981065,
+      96.88242078608342
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "predicted_difference_mm": 2.9113274933546714e-11,
+  "saved_difference_mm": 2.9118929489868606e-11
+}

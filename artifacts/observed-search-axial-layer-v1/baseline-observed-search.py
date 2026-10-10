@@ -73,40 +73,7 @@ def _prefix_progress(parent, path, total, outcome):
     return row
 
 
-
-def _native_axial_layer_frame(native, shape, normal):
-    """Validate a public native-axis interpretation within existing roundoff bounds."""
-    from resectionlab.native_spatial_task import (
-        GRID_ROUNDOFF_MAX_DISPLACEMENT_MM, GRID_ROUNDOFF_MAX_GRAM_ERROR)
-    basis = native[:3, :3]
-    spacing = np.linalg.norm(basis, axis=0)
-    if not np.isfinite(spacing).all() or np.any(spacing <= 0):
-        raise ValueError("Axial-layer retention requires a nondegenerate native frame")
-    axes = basis / spacing
-    if float(np.max(np.abs(axes.T @ axes - np.eye(3)))) > GRID_ROUNDOFF_MAX_GRAM_ERROR:
-        raise ValueError("Axial-layer retention requires an orthogonal native frame")
-    alignment = axes.T @ normal
-    aligned = np.flatnonzero(np.abs(alignment) >= 1. - 1e-10)
-    if len(aligned) != 1:
-        raise ValueError("Axial-layer retention requires one native-axis-aligned public normal")
-    axis = int(aligned[0])
-    transverse = np.delete(alignment, axis)
-    if np.any(np.abs(transverse) > GRID_ROUNDOFF_MAX_GRAM_ERROR):
-        raise ValueError("Axial-layer retention requires transverse native-axis alignment")
-    sign = 1 if alignment[axis] > 0 else -1
-    projected = basis.T @ normal
-    ideal = np.zeros(3); ideal[axis] = sign * spacing[axis]
-    # Bound projection drift over the complete native cell extent, independent
-    # of crop, array values or selected actions. This is an admission check,
-    # never a pairwise tie tolerance or depth bucket.
-    drift = float(np.abs(projected - ideal) @ shape.astype(float))
-    if (not math.isfinite(drift) or drift > GRID_ROUNDOFF_MAX_DISPLACEMENT_MM
-            or drift >= .5 * spacing[axis]):
-        raise ValueError("Axial-layer projection drift exceeds native roundoff or layer-separation bound")
-    return axis, sign
-
-
-def _public_removed_opening_depth(observation, outcome, action, *, with_volume=False, with_axial_layer=False):
+def _public_removed_opening_depth(observation, outcome, action, *, with_volume=False):
     """Depth of newly removed, actor-covered cell centres; never tip travel.
 
     Reads only the existing public observation and exact nominal transition
@@ -149,24 +116,20 @@ def _public_removed_opening_depth(observation, outcome, action, *, with_volume=F
     if not math.isclose(norm, 1., abs_tol=1e-5, rel_tol=0.):
         raise ValueError("Opening retention requires a public unit inward normal")
     normal /= norm
-    if with_axial_layer:
-        if not with_volume:
-            raise ValueError("Axial-layer retention requires actual removed-volume accounting")
-        axis, sign = _native_axial_layer_frame(native, shape, normal)
     # A valid empty removal is no progress. Missing fields are never empty.
     if cells.shape == (0,):
-        return (None, 0., None) if with_axial_layer else ((None, 0.) if with_volume else None)
+        return (None, 0.) if with_volume else None
     if (cells.ndim != 2 or cells.shape[1] != 3 or cells.dtype.kind not in "iu"
             or np.any(cells < 0) or np.any(cells >= shape)
             or len(np.unique(cells, axis=0)) != len(cells)):
         raise ValueError("Opening retention requires distinct native removed-cell indices")
     if not len(cells):
-        return (None, 0., None) if with_axial_layer else ((None, 0.) if with_volume else None)
+        return (None, 0.) if with_volume else None
     world = cells @ native[:3, :3].T + native[:3, 3]
     crop = np.linalg.solve(affine[:3, :3], (world-affine[:3, 3]).T).T
     inside = np.all((crop >= -.5) & (crop < np.asarray(images.shape[1:])-.5), axis=1)
     if not inside.any():
-        return (None, 0., None) if with_axial_layer else ((None, 0.) if with_volume else None)
+        return (None, 0.) if with_volume else None
     world, crop = world[inside], np.floor(crop[inside]+.5).astype(np.int64)
     index = tuple(crop.T)
     covered = coverage[1][index] & coverage[3][index]
@@ -174,7 +137,7 @@ def _public_removed_opening_depth(observation, outcome, action, *, with_volume=F
         raise ValueError("Opening retention cannot credit previously observed cavity cells")
     eligible = covered & (images[1][index] > 0)
     if not eligible.any():
-        return (None, 0., None) if with_axial_layer else ((None, 0.) if with_volume else None)
+        return (None, 0.) if with_volume else None
     depths = (world[eligible]-state[3:6]) @ normal
     depth = float(np.max(depths))
     if not math.isfinite(depth):
@@ -183,11 +146,6 @@ def _public_removed_opening_depth(observation, outcome, action, *, with_volume=F
         volume = int(np.count_nonzero(depths > 0)) * voxel_volume
         if not math.isfinite(volume):
             raise ValueError("Opening volume produced nonfinite physical removal")
-        if with_axial_layer:
-            eligible_cells = cells[inside][eligible][depths > 0]
-            layer = ((int(np.max(eligible_cells[:, axis])) if sign > 0
-                      else -int(np.min(eligible_cells[:, axis]))) if len(eligible_cells) else None)
-            return (depth if depth > 0 else None), volume, layer
         return (depth if depth > 0 else None), volume
     return depth if depth > 0 else None
 
@@ -220,10 +178,7 @@ depth; terminal return/STOP selection is unchanged. It requires beam width >= 2
 and exact nominal removal records. Opt-in return_plus_opening_depth_volume_v1
 breaks equal-depth ties by cumulative actual actor-covered removed volume,
 then return/path. This deliberately favors wider removal only for retention;
-final objective/STOP are unchanged. Opt-in return_plus_axial_layer_volume_v1
-uses signed integer native axial layers after validating public normal/frame
-alignment, then actual removed volume. Raw projected mm remain diagnostics.
-Old modes add no new output fields.
+final objective/STOP are unchanged. Old modes add no new output fields.
 """
     started = time.perf_counter()
     integrity = {"policy_state_checks": 0, "policy_state_check_seconds": 0.,
@@ -290,10 +245,9 @@ planning clone. It defers successor observations, not current-action geometry.
         raise ValueError("Choose explicit eager or lazy_planning transition mode")
     if type(retained_prefix_diagnostics) is not bool:
         raise ValueError("retained_prefix_diagnostics must be an explicit bool")
-    if retention_mode not in {"return_only", "return_plus_opening_depth_v1", "return_plus_opening_depth_volume_v1", "return_plus_axial_layer_volume_v1"}:
+    if retention_mode not in {"return_only", "return_plus_opening_depth_v1", "return_plus_opening_depth_volume_v1"}:
         raise ValueError("Unknown observed-search retention mode")
-    axial_lane = retention_mode == "return_plus_axial_layer_volume_v1"
-    volume_lane = retention_mode == "return_plus_opening_depth_volume_v1" or axial_lane
+    volume_lane = retention_mode == "return_plus_opening_depth_volume_v1"
     opening_lane = retention_mode == "return_plus_opening_depth_v1" or volume_lane
     if opening_lane and beam_width < 2:
         raise ValueError("Opening retention requires beam_width >= 2")
@@ -318,8 +272,6 @@ planning clone. It defers successor observations, not current-action geometry.
         frontier_opening = {(): None}
     if volume_lane:
         frontier_volume = {(): 0.}
-    if axial_lane:
-        frontier_layer = {(): None}
     if retained_prefix_diagnostics:
         frontier_progress = {(): {"progress_status": "available", "target_removed_mm3": 0.,
             "outside_supplied_target_removed_mm3": 0., "max_insertion_distance_mm": 0.}}
@@ -352,17 +304,12 @@ planning clone. It defers successor observations, not current-action geometry.
                 "version": retention_mode, "terminal_objective_changed": False,
                 "scope": "newly_removed_actor_covered_cell_centres_from_public_aperture_plane",
                 "missing_progress": "null; malformed_or_non_nominal_record_refused",
-                "ranking": ("best_return_then_distinct_max_signed_native_axial_layer_then_actual_removed_volume_then_return_and_path"
-                            if axial_lane else "best_return_then_distinct_max_depth_tied_by_actual_removed_volume_then_return_and_path"
+                "ranking": ("best_return_then_distinct_max_depth_tied_by_actual_removed_volume_then_return_and_path"
                             if volume_lane else "best_return_then_distinct_max_depth_tied_by_return_and_path"),
                 **({"volume_scope": "cumulative_unique_newly_committed_positive_depth_actor_support_and_cavity_covered_native_cells_mm3",
-                    "depth_comparison": ("signed_integer_native_axial_layer; volume_breaks_same_layer; raw_mm_is_diagnostic"
-                                         if axial_lane else "exact_float_order_no_tolerance; volume_only_breaks_equal_depth"),
+                    "depth_comparison": "exact_float_order_no_tolerance; volume_only_breaks_equal_depth",
                     "volume_warning": "deliberately_aggressive_retention_proxy_not_clearance_safety_or_target_utility"}
                    if volume_lane else {}),
-                **({"axial_alignment": "orthogonal native frame; unique axis absolute-dot misalignment<=1e-10; transverse normalized dot<=existing1e-8 Gram bound; full-native-extent projection drift<=existing1e-6mm and<half axial spacing",
-                    "layer_scope": "maximum signed native axis index of eligible actual newly removed positive-depth cells; accumulated independently of raw projected depth",
-                    "pairwise_tolerance_or_bucket": False} if axial_lane else {}),
                 "extra_observations_or_previews": 0,
                 "memory": "at_most_beam_width_plus_one_retained_child_states_plus_current_child",
                 "costs": "progress_arithmetic_and_retention_included_in_wall_and_parent_RSS"}}
@@ -390,8 +337,6 @@ planning clone. It defers successor observations, not current-action geometry.
                 opening_child, child_opening = None, {}
             if volume_lane:
                 child_volume = {}
-            if axial_lane:
-                child_layer = {}
             if retained_prefix_diagnostics:
                 child_progress, terminal_progress = {}, []
             child_count = negative_children = 0
@@ -462,14 +407,8 @@ planning clone. It defers successor observations, not current-action geometry.
                         incumbent_terminated = child.terminated
                     if opening_lane:
                         if volume_lane:
-                            if axial_lane:
-                                new_depth, new_volume, new_layer = _public_removed_opening_depth(
-                                    observation, outcome, action, with_volume=True, with_axial_layer=True)
-                                indices = [value for value in (frontier_layer[prefix], new_layer) if value is not None]
-                                opening_layer = max(indices) if indices else None
-                            else:
-                                new_depth, new_volume = _public_removed_opening_depth(
-                                    observation, outcome, action, with_volume=True)
+                            new_depth, new_volume = _public_removed_opening_depth(
+                                observation, outcome, action, with_volume=True)
                             opening_volume = frontier_volume[prefix] + new_volume
                             if not math.isfinite(opening_volume):
                                 raise FloatingPointError("Nonfinite accumulated opening removal volume")
@@ -493,11 +432,9 @@ planning clone. It defers successor observations, not current-action geometry.
                             child_opening[path] = opening_depth
                             if volume_lane:
                                 child_volume[path] = opening_volume
-                            if axial_lane:
-                                child_layer[path] = opening_layer
                             if opening_depth is not None and (opening_child is None or
-                                    (-(opening_layer if axial_lane else opening_depth), *((-opening_volume,) if volume_lane else ()), -total, path) <
-                                    (-(child_layer[opening_child[1]] if axial_lane else child_opening[opening_child[1]]), *((-child_volume[opening_child[1]],)
+                                    (-opening_depth, *((-opening_volume,) if volume_lane else ()), -total, path) <
+                                    (-child_opening[opening_child[1]], *((-child_volume[opening_child[1]],)
                                       if volume_lane else ()), -opening_child[0], opening_child[1])):
                                 opening_child = (total, path, child)
                         # Retain the exact best beam incrementally. All actions
@@ -518,8 +455,6 @@ planning clone. It defers successor observations, not current-action geometry.
                             child_opening = {key: value for key, value in child_opening.items() if key in live_paths}
                             if volume_lane:
                                 child_volume = {key: value for key, value in child_volume.items() if key in live_paths}
-                            if axial_lane:
-                                child_layer = {key: value for key, value in child_layer.items() if key in live_paths}
                             if retained_prefix_diagnostics:
                                 child_progress = {key: value for key, value in child_progress.items() if key in live_paths}
                             selected = _opening_frontier(children, opening_child, beam_width)
@@ -527,7 +462,6 @@ planning clone. It defers successor observations, not current-action geometry.
                                 {"actions": list(row[1]), "estimated_incremental_return": row[0],
                                  "opening_depth_mm": child_opening[row[1]],
                                  **({"opening_removed_volume_mm3": child_volume[row[1]]} if volume_lane else {}),
-                                 **({"opening_axial_layer": child_layer[row[1]]} if axial_lane else {}),
                                  "reason": "best_return_and_opening" if row is children[0] and opening_child is not None and row[1] == opening_child[1]
                                      else "best_return" if row is children[0]
                                      else "opening" if opening_child is not None and row[1] == opening_child[1]
@@ -556,8 +490,6 @@ planning clone. It defers successor observations, not current-action geometry.
                 frontier_opening = {row[1]: child_opening[row[1]] for row in frontier}
             if volume_lane:
                 frontier_volume = {row[1]: child_volume[row[1]] for row in frontier}
-            if axial_lane:
-                frontier_layer = {row[1]: child_layer[row[1]] for row in frontier}
             kept = sum(value < 0 for value, _, _ in frontier)
             pruned = negative_children - kept
             negative_retained += kept
