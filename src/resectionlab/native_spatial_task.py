@@ -674,15 +674,38 @@ class NativeSpatialTask:
             batch = self.case._nominal_proposer.propose(self._engine, cancelled=self._cancelled)
             outcomes = {}
             origin, last = np.array(self.case._crop_origin), np.array(self.case._crop_origin)+self.case._crop_shape
-            for ray in batch.proposals:
+            obstruction = self.case.proposal_config.obstruction_opening
+            results = []
+            def certify(ray, *, collect_obstruction=False):
                 self._check_cancelled()
-                result = self._engine.preview_stroke(ray.tool_id, ray.tip_mm, entry_mm=ray.entry_mm)
+                options = {}
+                if collect_obstruction:
+                    from .native_proposals import OBSTRUCTION_CELLS_PER_PREVIEW
+                    options = {"obstruction_diagnostics": True,
+                               "obstruction_cell_limit": OBSTRUCTION_CELLS_PER_PREVIEW}
+                result = self._engine.preview_stroke(ray.tool_id, ray.tip_mm, entry_mm=ray.entry_mm, **options)
                 inside = bool(np.all(np.asarray(ray.voxel) >= origin) and np.all(np.asarray(ray.voxel) < last))
                 outcomes[ray.proposal_id] = {"entry_mm": list(ray.entry_mm), "tip_mm": list(ray.tip_mm),
                     "feasible": bool(result.feasible), "reason": result.reason,
                     "endpoint_center_in_actor_crop": inside}
                 if result.feasible:
                     inventory[ray.proposal_id] = result
+                if collect_obstruction:
+                    sidecar = result.obstruction_diagnostic
+                    if (result.reason == "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE") != (sidecar is not None):
+                        raise RuntimeError("Native preview omitted or misattributed requested obstruction evidence")
+                    return sidecar
+                return None
+            for ray in batch.proposals:
+                evidence = certify(ray, collect_obstruction=obstruction)
+                if obstruction:
+                    results.append(evidence)
+            if obstruction:
+                base_count = len(batch.proposals)
+                batch = self.case._nominal_proposer.append_obstruction_openings(
+                    batch, self._engine, results, cancelled=self._cancelled)
+                for ray in batch.proposals[base_count:]:
+                    certify(ray)
             for slot in batch.ledger:
                 row = {**asdict(slot), "offset_source_voxels": list(slot.offset_source_voxels),
                     "voxel": None if slot.voxel is None else list(slot.voxel),
@@ -985,12 +1008,31 @@ class NativeSpatialTask:
         if self.case._nominal_proposer is not None:
             config = self.case.proposal_config
             slots = len(config.offsets_source_voxels) * len(self.case.tools) * len(config.families)
+            obstruction = {}
+            if config.obstruction_opening:
+                from .native_proposals import OBSTRUCTION_CELLS_PER_PREVIEW
+                base_slots = len(config.offsets_source_voxels)*len(self.case.tools)*(len(config.families)-1)
+                slots = len(self._ledger)
+                accounting = (None if self._proposal_batch is None else self._proposal_batch.obstruction_accounting)
+                obstruction = {"obstruction_accounting": None if accounting is None else thaw_json(accounting),
+                    "base_declared_slots": base_slots,
+                    "added_declared_slots": 0 if self._terminated else slots-base_slots,
+                    "slot_upper_bound": base_slots+config.max_candidates*OBSTRUCTION_CELLS_PER_PREVIEW*len(self.case.tools),
+                    "discovery_complete": False}
             emitted = [copy.deepcopy(row) for row in self._ledger if row["proposal_reason"] == "PROPOSED_UNCERTIFIED"]
             counts = {}
             for row in self._ledger:
                 counts[row["proposal_reason"]] = counts.get(row["proposal_reason"], 0)+1
             omitted, duplicate = counts.get("CANDIDATE_CAP",0), counts.get("DUPLICATE_GEOMETRY",0)
+            evidence_truncated = False
+            if config.obstruction_opening:
+                selected_omissions = counts.get("OBSTRUCTION_SELECTION_CAP", 0)
+                obstruction.update(candidate_cap_omitted_count=omitted,
+                    obstruction_selection_omitted_count=selected_omissions)
+                omitted += selected_omissions
+                evidence_truncated = bool(accounting is not None and accounting["evidence_truncated"])
             return {"basis": self.case._candidate_scope, "provider_version": config.version,
+                **obstruction,
                 "source_hash": self._source_hash, "decision_model_hash": self.decision_model_hash,
                 "cavity_state_hash": self._engine.state_hash,
                 "provider_model_hash": self.case._nominal_proposer.model_hash,
@@ -1000,7 +1042,7 @@ class NativeSpatialTask:
                 "accepted_count": len(self._inventory), "rejected_count": len(emitted)-len(self._inventory),
                 "omitted_count": omitted, "duplicate_count": duplicate,
                 "unavailable_count": len(self._ledger)-len(emitted)-omitted-duplicate,
-                "complete": omitted == 0, "ledger_complete": True, "terminal": self._terminated,
+                "complete": omitted == 0 and not evidence_truncated, "ledger_complete": True, "terminal": self._terminated,
                 "steps_taken": self._steps, "max_steps": self.max_steps, "remaining_steps": self.max_steps-self._steps,
                 "terminated_slots": slots if self._terminated else 0, "candidate_cap": config.max_candidates,
                 "crop_clipping": False, "endpoint_centers_in_actor_crop": sum(row["endpoint_center_in_actor_crop"] for row in emitted),

@@ -1,0 +1,18 @@
+{
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 4.087699749972671,
+  "peak_child_rss_bytes": 260997120,
+  "threads": 1,
+  "source_pins": {
+    "build/obstruction-opening-proposals-v1/stage/tests/test_obstruction_opening_proposals.py": "d8af3aaf29ee3b8eb4a1cb41547d79a0e17a8d250b4ae750d5583fd08dcedb18",
+    "build/obstruction-opening-proposals-v1/stage/resectionlab/native_spatial_task.py": "e2e30f8e1fd6ef5f37b922d21c200e19422ea1c96982de7956c343e05256efec",
+    "build/obstruction-opening-proposals-v1/stage/resectionlab/native_proposals.py": "45a1dea3b85f919413c34eed7d84ab53817799918346714927d03bf2b6f9c359",
+    "build/obstruction-opening-proposals-v1/stage/resectionlab/patient_planning_cohort_spec.py": "69d4954749151a66783257832d6211a06cf19b225e9707b8c44f3461eab500fd",
+    "build/obstruction-opening-proposals-v1/before/native_spatial_task.py": "bab368b3d0e6deb771d8756dd52f717009a3bbed21d2341c7e0de500f373d28d",
+    "build/obstruction-opening-proposals-v1/before/native_proposals.py": "6c8b0cb430a3c2dacdba535564dec1654a13c02f4e97cfc768987fc08af0172e",
+    "build/obstruction-opening-proposals-v1/before/patient_planning_cohort_spec.py": "43991f4d7bc4ed30fbdb22e7996de2345762f0e68dedd4e32fc4f3b53eba4f7d"
+  },
+  "pins_unchanged": true,
+  "scope": "generated native/source controls and pinned historical protocol JSON only; no patient arrays/models/optimizer"
+}

@@ -363,6 +363,10 @@ INTERMEDIATE_OPENING_VERSION = "permitted-nominal-cavity-intermediate-opening-v1
 INTERMEDIATE_OPENING_FAMILY = "intermediate_opening"
 TOOL_FOOTPRINT_OPENING_VERSION = "permitted-nominal-cavity-tool-footprint-opening-v1"
 TOOL_FOOTPRINT_OPENING_FAMILY = "tool_footprint_opening"
+OBSTRUCTION_OPENING_VERSION = "permitted-first-obstruction-opening-v1"
+OBSTRUCTION_OPENING_FAMILY = "obstruction_opening"
+OBSTRUCTION_CELLS_PER_PREVIEW = 16
+OBSTRUCTION_SELECTED_CELLS = 16
 
 
 @dataclass(frozen=True)
@@ -380,11 +384,14 @@ class NominalCavityProposalConfig:
     nominal_min_membership: float = 0.
     intermediate_opening_mm: float | None = None
     tool_footprint_opening: bool = False
+    obstruction_opening: bool = False
 
     def __post_init__(self):
         offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
         if type(self.tool_footprint_opening) is not bool:
             raise ValueError("Tool-footprint opening must be an explicit bool")
+        if type(self.obstruction_opening) is not bool:
+            raise ValueError("Obstruction opening must be an explicit bool")
         limit = 120 if self.tool_footprint_opening else 96
         if type(self.max_candidates) is not int or not 1 <= self.max_candidates <= limit:
             raise ValueError(f"Nominal/cavity candidate cap must be between one and{limit}")
@@ -403,10 +410,13 @@ class NominalCavityProposalConfig:
     def families(self):
         return (NOMINAL_CAVITY_FAMILIES
             + (() if self.intermediate_opening_mm is None else (INTERMEDIATE_OPENING_FAMILY,))
-            + ((TOOL_FOOTPRINT_OPENING_FAMILY,) if self.tool_footprint_opening else ()))
+            + ((TOOL_FOOTPRINT_OPENING_FAMILY,) if self.tool_footprint_opening else ())
+            + ((OBSTRUCTION_OPENING_FAMILY,) if self.obstruction_opening else ()))
 
     @property
     def version(self):
+        if self.obstruction_opening:
+            return OBSTRUCTION_OPENING_VERSION
         if self.tool_footprint_opening:
             return TOOL_FOOTPRINT_OPENING_VERSION
         return NOMINAL_CAVITY_PROPOSAL_VERSION if self.intermediate_opening_mm is None else INTERMEDIATE_OPENING_VERSION
@@ -416,6 +426,7 @@ class NominalCavityProposalConfig:
         record = asdict(self)
         record.pop("intermediate_opening_mm")
         record.pop("tool_footprint_opening")
+        record.pop("obstruction_opening")
         legacy = {"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **record,
             "families": NOMINAL_CAVITY_FAMILIES, "order": "column_tool_family",
             "deduplication": "identical_tool_entry_tip", "crop_clipping": False,
@@ -434,7 +445,23 @@ class NominalCavityProposalConfig:
                 footprint_scope="positive_depth_public_tissue_and_authenticated_cavity; all_eight_native_corners; no_preview_or_target_ranking",
                 footprint_containment_tolerance_mm=1e-10,
                 footprint_budget="one_slot_per_column_tool; shared_max_candidates; explicit_capped_dispositions")
+        if self.obstruction_opening:
+            legacy.update(version=self.version, families=self.families, obstruction_opening=True,
+                order="entire_base_prefix_then_public_nominal_first_native_cell_order_then_tool_order",
+                obstruction_evidence="ordinary_base_previews_first_rejected_shaft_interval_only; no_recursive_previews",
+                obstruction_cells_per_preview=OBSTRUCTION_CELLS_PER_PREVIEW,
+                obstruction_selected_cells=OBSTRUCTION_SELECTED_CELLS,
+                obstruction_priority="permitted_public_nominal_membership_above_declared_threshold_then_native_index",
+                obstruction_rule="uncovered_eight_corner_radial_bound_across_declared_columns_and_existing_tips; cell_center_endpoint",
+                obstruction_budget="shared_max_candidates; bounded_evidence_is_incomplete_discovery; explicit_all_retained_cell_tool_dispositions")
         return semantic_digest(legacy)
+
+    def to_record(self):
+        """Preserve historical protocol records; only an enabled rule adds a key."""
+        record = asdict(self)
+        if not self.obstruction_opening:
+            record.pop("obstruction_opening")
+        return record
 
 
 @dataclass(frozen=True)
@@ -477,6 +504,14 @@ class ToolFootprintOpeningSlot(NominalCavitySlot):
 
 
 @dataclass(frozen=True)
+class ObstructionOpeningSlot(NominalCavitySlot):
+    blocker_voxel: tuple[int, int, int] | None = None
+    public_nominal_priority: bool = False
+    original_axis_min_corner_bound_mm: float | None = None
+    evidence_hashes: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
 class NominalCavityBatch:
     model_hash: str
     cavity_state_hash: str
@@ -485,13 +520,21 @@ class NominalCavityBatch:
     proposals: tuple[NominalCavityRay, ...]
     ledger: tuple[NominalCavitySlot, ...]
 
+    @property
+    def obstruction_accounting(self):
+        return getattr(self, "_obstruction_accounting", None)
+
     def to_dict(self):
         counts = {}
         for row in self.ledger:
             counts[row.reason] = counts.get(row.reason, 0) + 1
         return {**asdict(self), "counts": counts, "slot_count": len(self.ledger),
+            **({"obstruction_accounting": thaw_json(self.obstruction_accounting)}
+               if self.obstruction_accounting is not None else {}),
             "emitted_count": len(self.proposals), "geometry_certified": False,
-            "scope": ("declared_columns_and_tool_footprint_endpoint_family_not_all_paths"
+            "scope": ("base_columns_plus_bounded_first_obstruction_axes_not_all_paths"
+                      if self.obstruction_accounting is not None else
+                      "declared_columns_and_tool_footprint_endpoint_family_not_all_paths"
                       if any(row.family == TOOL_FOOTPRINT_OPENING_FAMILY for row in self.ledger)
                       else "declared_columns_and_original_plus_intermediate_endpoint_families_not_all_paths"
                       if any(row.family == INTERMEDIATE_OPENING_FAMILY for row in self.ledger)
@@ -813,7 +856,154 @@ class PreparedNominalCavityProposer:
         return NominalCavityBatch(self._model_hash, cavity_hash, self._nominal_hash,
             self._provenance_hash, tuple(rays), tuple(ledger))
 
-    def validate_batch(self, batch: NominalCavityBatch, engine: NativeResectionEngine) -> None:
+    def append_obstruction_openings(self, batch, engine, results, *, cancelled=None):
+        """Append public blocker-centered rays using the already paid base previews.
+
+        No preview, reward or reference label is queried here. A blocker is an
+        actual prior-remaining cell from the first rejected shaft interval, not
+        a complete corridor. Bounded retained prefixes imply incomplete discovery.
+        Every appended ray still requires its own unchanged native certification.
+        """
+        if not self._config.obstruction_opening:
+            raise ValueError("Obstruction opening requires its explicit proposal rule")
+        if (engine.config is not self._native or _source_identity(self._native) != self._source_identity
+                or _array_identity(self._nominal) != self._nominal_identity
+                or _array_identity(self._index_affine) != self._index_identity
+                or self._config.fingerprint != self._rule_hash
+                or semantic_digest(self._provenance) != self._provenance_hash
+                or semantic_digest(self._frame_record) != self._frame_hash
+                or (self._axis, self._sign, self._transverse, self._columns) != self._geometry_identity):
+            raise ValueError("Obstruction proposals require the exact frozen public source")
+        cavity = _verify_cavity(engine)
+        if (type(batch) is not NominalCavityBatch or batch.obstruction_accounting is not None
+                or batch.model_hash != self._model_hash or batch.cavity_state_hash != cavity
+                or batch.nominal_target_hash != self._nominal_hash
+                or batch.nominal_provenance_hash != self._provenance_hash
+                or len(results) != len(batch.proposals)
+                or len(results) > self._config.max_candidates
+                or any(r.family == OBSTRUCTION_OPENING_FAMILY for r in batch.proposals)):
+            raise ValueError("One exact base batch and its ordered preview results are required")
+        affine, shape = self._native.affine, self._native.tissue_mask.shape
+        access, normal = self._native.access, self._native.access.normal_inward
+        frame_hash = array_digest(affine)
+        tools = {t.tool_id: t for t in self._native.tools}
+        cells, evidence = {}, []
+        for ray, sidecar in zip(batch.proposals, results):
+            if cancelled is not None and cancelled():
+                raise InterruptedError("Obstruction evidence processing cancelled")
+            if sidecar is None:
+                continue
+            record = thaw_json(sidecar)
+            fingerprint = record.pop("fingerprint")
+            retained = np.asarray(record["blocked_indices_native"])
+            total, count = record["blocked_cell_count"], record["retained_cell_count"]
+            if (semantic_digest(record) != fingerprint
+                    or record["version"] != "native-first-shaft-obstruction-v1"
+                    or record["reason"] != "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+                    or record["source_hash"] != self._native.source_hash
+                    or record["source_state_hash"] != cavity
+                    or record["decision_model_hash"] != self._native.fingerprint
+                    or record["native_affine_hash"] != frame_hash
+                    or tuple(record["source_shape"]) != shape
+                    or record["tool"] != asdict(tools[ray.tool_id])
+                    or tuple(record["entry_mm"]) != ray.entry_mm
+                    or tuple(record["requested_tip_mm"]) != ray.tip_mm
+                    or record["interaction_mode"] != "aspirate"
+                    or record["cell_limit"] != OBSTRUCTION_CELLS_PER_PREVIEW
+                    or type(total) is not int or type(count) is not int
+                    or not 1 <= count <= OBSTRUCTION_CELLS_PER_PREVIEW or total < count
+                    or count != min(total, OBSTRUCTION_CELLS_PER_PREVIEW)
+                    or record["truncated"] is not (total > count)
+                    or record["complete_first_failure_set"] is not (total == count)
+                    or retained.shape != (count, 3) or retained.dtype.kind not in "iu"
+                    or np.any(retained < 0) or np.any(retained >= np.asarray(shape))
+                    or not np.all(engine.remaining_mask[tuple(retained.T)])):
+                raise ValueError("Malformed or stale bounded obstruction sidecar")
+            if total == count and array_digest(np.asarray(retained, np.int64)) != record["blocked_indices_hash"]:
+                raise ValueError("Complete obstruction cell digest differs")
+            evidence.append({"base_proposal_id": ray.proposal_id, "diagnostic_hash": fingerprint,
+                "blocked_cell_count": total, "retained_cell_count": count, "truncated": total > count})
+            for cell in retained:
+                cells.setdefault(tuple(int(v) for v in cell), set()).add(fingerprint)
+
+        # Original column axes may differ by tiny source/native reconciliation.
+        # The segment between their two extreme projected entries bounds that
+        # variation; failure of this necessary test proves radial noncontainment
+        # for any endpoint on that column, without pretending shaft clearance.
+        corners_offset = np.asarray(tuple(product((-.5, .5), repeat=3))) @ affine[:3, :3].T
+        entries = []
+        for column in self._columns:
+            if any(v < 0 or v >= shape[d] for d, v in zip(self._transverse, column)):
+                continue
+            ends = np.zeros((2, 3)); ends[:, self._axis] = (0, shape[self._axis]-1)
+            ends[:, self._transverse] = column
+            world = ends @ affine[:3, :3].T + affine[:3, 3]
+            entries.append(world - ((world-access.center_mm) @ normal)[:, None] * normal)
+        max_radius = max(t.tip_radius_mm for t in self._native.tools) - 1e-10
+        origin = np.linalg.solve(self._index_affine[:3, :3], access.center_mm-self._index_affine[:3, 3])
+        rays, ledger = list(batch.proposals), list(batch.ledger)
+        seen = {(r.tool_id, r.entry_mm, r.tip_mm): r.proposal_id for r in rays}
+        ordered = sorted(cells, key=lambda c: (not bool(self._nominal[c] > self._config.nominal_min_membership), c))
+        selected = selection_omitted = 0
+        for ordinal, cell in enumerate(ordered):
+            if cancelled is not None and cancelled():
+                raise InterruptedError("Obstruction opening preparation cancelled")
+            tip = affine[:3, :3] @ cell + affine[:3, 3]
+            depth = float((tip-access.center_mm) @ normal)
+            entry = tip-depth*normal
+            corners = tip + corners_offset
+            projected = corners - (((corners-access.center_mm) @ normal)[:, None] * normal)
+            bound = min((float(point_segment_distances(projected, pair[0], pair[1]).max())
+                         for pair in entries), default=None)
+            reason = ("BLOCKER_NOT_INWARD" if depth <= 0 else
+                      "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED" if bound is not None and bound <= max_radius else
+                      "OBSTRUCTION_SELECTION_CAP" if selected >= OBSTRUCTION_SELECTED_CELLS else None)
+            if reason is None:
+                selected += 1
+            elif reason == "OBSTRUCTION_SELECTION_CAP":
+                selection_omitted += 1
+            offset = tuple(cell[d]-int(np.rint(origin[d])) for d in self._transverse)
+            priority = bool(self._nominal[cell] > self._config.nominal_min_membership)
+            for tool in self._native.tools:
+                identifier, disposition = None, reason
+                key = (tool.tool_id, _point(entry), _point(tip))
+                if disposition is None:
+                    if key in seen:
+                        identifier, disposition = seen[key], "DUPLICATE_GEOMETRY"
+                    elif len(rays) >= self._config.max_candidates:
+                        disposition = "CANDIDATE_CAP"
+                    else:
+                        identifier = "nominal-cavity-" + semantic_digest({"model": self._model_hash,
+                            "cavity": cavity, "geometry": key}).split(":", 1)[1][:24]
+                        rays.append(NominalCavityRay(identifier, OBSTRUCTION_OPENING_FAMILY,
+                            len(self._columns)+ordinal, offset, tool.tool_id, cell, key[1], key[2]))
+                        seen[key], disposition = identifier, "PROPOSED_UNCERTIFIED"
+                ledger.append(ObstructionOpeningSlot(len(self._columns)+ordinal, offset, tool.tool_id,
+                    OBSTRUCTION_OPENING_FAMILY, disposition, identifier, cell, cell, priority, bound,
+                    tuple(sorted(cells[cell]))))
+        accounting = {"base_preview_calls": len(results), "added_preview_calls": len(rays)-len(batch.proposals),
+            "repeated_preview_calls": 0, "recursive_expansion": False,
+            "cells_per_preview_cap": OBSTRUCTION_CELLS_PER_PREVIEW, "selected_cells_cap": OBSTRUCTION_SELECTED_CELLS,
+            "first_failure_evidence": evidence, "retained_unique_cells": len(cells),
+            "selected_cells": selected, "selection_omitted_cells": selection_omitted,
+            "unretained_blocker_mentions": sum(r["blocked_cell_count"]-r["retained_cell_count"] for r in evidence),
+            "evidence_truncated": any(r["truncated"] for r in evidence),
+            "discovery_complete": False,
+            "scope": "bounded first rejected intervals of emitted base rays only; not all blockers or paths",
+            "priority": "permitted_public_nominal_membership_then_native_index; no_reference_or_reward_queries"}
+        result = NominalCavityBatch(batch.model_hash, cavity, batch.nominal_target_hash,
+            batch.nominal_provenance_hash, tuple(rays), tuple(ledger))
+        object.__setattr__(result, "_obstruction_accounting", freeze_json(accounting))
+        return result
+
+    def validate_batch(self, batch: NominalCavityBatch, engine: NativeResectionEngine, *, obstruction_results=None) -> None:
         """Validate current evidence/cavity dispositions, never certify geometry."""
-        if not isinstance(batch, NominalCavityBatch) or batch != self.propose(engine):
+        if not isinstance(batch, NominalCavityBatch) or batch.obstruction_accounting is None:
+            if not isinstance(batch, NominalCavityBatch) or batch != self.propose(engine):
+                raise ValueError("Nominal/cavity proposal batch is stale, altered or source-mismatched")
+            return
+        if obstruction_results is None:
+            raise ValueError("Extended batch validation requires its bound original preview sidecars")
+        expected = self.append_obstruction_openings(self.propose(engine), engine, obstruction_results)
+        if batch != expected or batch.obstruction_accounting != expected.obstruction_accounting:
             raise ValueError("Nominal/cavity proposal batch is stale, altered or source-mismatched")
