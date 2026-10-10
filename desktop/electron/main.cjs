@@ -1,4 +1,5 @@
 'use strict';
+const {contactRequest,validateContactResult}=require('./public-contact.cjs');
 const {comparisonRequest,validateComparisonResult}=require('./episode-comparison.cjs');
 const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs');
 
@@ -65,6 +66,7 @@ function bindOperations() {
     if (casePath) return engine.request('loadCase', { path: path.resolve(casePath) });
     return process.argv.includes('--demo') ? engine.request('createSyntheticCase') : null;
   });
+  handle('executePublicSurfaceContactEpisode', async args => { const request=contactRequest(args); return validateContactResult(await engine.request('executePublicSurfaceContactEpisode',request,30000),request); });
   handle('inspectDevelopmentEpisodeComparison', async args => { const request=comparisonRequest(args); return validateComparisonResult(await engine.request('inspectDevelopmentEpisodeComparison',request,30000),request); });
   handle('executeDevelopmentEpisode', args => engine.request('executeDevelopmentEpisode', episodeRequest(args), 30000));
   handle('evaluateDevelopmentEpisodeVascular', async args => { const request=vascularRequest(args); return validateVascularResult(await engine.request('evaluateDevelopmentEpisodeVascular',request),request); });

@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "fixture": "development-scripted.json",
+      "case": "baseline",
+      "outcome": "fulfilled",
+      "whole_view_equal": true,
+      "both_refuse": false
+    },
+    {
+      "fixture": "development-scripted.json",
+      "case": "withdrawal endpoint",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-scripted.json",
+      "case": "prefix hash",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-scripted.json",
+      "case": "stop delta",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "baseline",
+      "outcome": "fulfilled",
+      "whole_view_equal": true,
+      "both_refuse": false
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "withdrawal endpoint",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "prefix hash",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "stop delta",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    }
+  ],
+  "hashes": {
+    "../public-contact-desktop-v1/baseline/files/src/episode-data.ts": "a67d1a0852014eb24e3c7982dbc7bf3c272e65dfe9cf580edd861803f381e82b",
+    "./baseline-episode-data.ts": "7dea032e675963bf21360ea86ae79f8b48c036d6c771e242cd7676dedc3eca43",
+    "../public-contact-desktop-v1/stage/desktop/src/native-episode-replay.ts": "b9a34c2e244e60f58edf5dc0c6d57345ec581480a8aaa6d1757b2a185a038b72",
+    "../public-contact-desktop-v1/stage/desktop/src/episode-data.ts": "bfa6cc57e18c83c21bf07651ed1e3e20900a6329a99e56b3fee93e7ad42dd53c"
+  },
+  "baseline_binding": "Original a67d1a baseline is SHA-bound; executed copy differs only by asserted absolute relocation of relative imports to the staged shared helpers.",
+  "scope": "saved generated fixtures only; no replay engine or native/model process"
+}

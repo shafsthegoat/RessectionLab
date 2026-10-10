@@ -1,0 +1,112 @@
+{
+  "schema": "public-contact-desktop-integration-evidence-v1",
+  "files": [
+    {
+      "path": "source-index.json",
+      "source_path": "build/public-contact-desktop-v1/source-index.json",
+      "bytes": 10187,
+      "sha256": "bf1c52ff57b6c4e6b9b02acff6c84fcb3f993eb92c5c161d65fd57f1d12a1895"
+    },
+    {
+      "path": "HANDOFF.txt",
+      "source_path": "build/public-contact-desktop-v1/HANDOFF.txt",
+      "bytes": 3505,
+      "sha256": "dd25cbf9f092504e84fc4f543e9f0a10bd8e4e8f0762e8869ae4f272370dbafc"
+    },
+    {
+      "path": "crossstack-near.txt",
+      "source_path": "build/public-contact-desktop-v1/crossstack-near.txt",
+      "bytes": 466,
+      "sha256": "5c2d1b0dcda4d3ceb7b5b634f8781eda187d4304c03a28e4d0912daeecf0beff"
+    },
+    {
+      "path": "crossstack-costly.txt",
+      "source_path": "build/public-contact-desktop-v1/crossstack-costly.txt",
+      "bytes": 428,
+      "sha256": "1622d76a3954d2e0198f0a965b782c420730e10758308d98283a6e6f42ca97de"
+    },
+    {
+      "path": "root/desktop-tests.txt",
+      "source_path": "build/public-contact-live-root-v1/desktop-tests.txt",
+      "bytes": 40452,
+      "sha256": "418ba1be5018b03fbfb53a887adcd293276580cedb9cc830ff4972613459e624"
+    },
+    {
+      "path": "root/working-build.txt",
+      "source_path": "build/public-contact-live-root-v1/working-build.txt",
+      "bytes": 845,
+      "sha256": "557b1b17501af2d45de12888fbe306e3baae2e56820730a8ff762565459029ab"
+    },
+    {
+      "path": "root/exact-staged-build.txt",
+      "source_path": "build/public-contact-live-root-v1/exact-staged-build.txt",
+      "bytes": 1010,
+      "sha256": "76457c72b8cf642168403119b6b9be75188abaf72effa1657fc9394a072cf159"
+    },
+    {
+      "path": "root/exact-stage-index.json",
+      "source_path": "build/public-contact-live-root-v1/exact-stage-index.json",
+      "bytes": 33084,
+      "sha256": "f3b2bc60da18e1ce95d3d45a4c7697f4b4cad749c2ffd358e6dd92ae223a3d82"
+    },
+    {
+      "path": "independent/macro-contact-probe-original.json",
+      "source_path": "build/public-contact-desktop-independent-v1/macro-contact-probe-original.json",
+      "bytes": 551,
+      "sha256": "465cba8719fc61645b87383d7ae5bdc92e9ce61baeaae91b75724ec0b1068f2c"
+    },
+    {
+      "path": "independent/macro-contact-probe.json",
+      "source_path": "build/public-contact-desktop-independent-v1/macro-contact-probe.json",
+      "bytes": 137,
+      "sha256": "db63213d6b677a29a61a5d107fab254f68e4f7c437aad60cc24469ef071877a2"
+    },
+    {
+      "path": "independent/case-transfer-probe-original.json",
+      "source_path": "build/public-contact-desktop-independent-v1/case-transfer-probe-original.json",
+      "bytes": 117,
+      "sha256": "fc3c75b8f1542ce27213fe1adc115de55321fd860258a5d9a45e3ab5cb9baa68"
+    },
+    {
+      "path": "independent/case-transfer-probe.json",
+      "source_path": "build/public-contact-desktop-independent-v1/case-transfer-probe.json",
+      "bytes": 110,
+      "sha256": "800fcb4e2195152e0755f51c90f10399d405c75713f1a9e2fee89e25746cbf3f"
+    },
+    {
+      "path": "independent/v1-parity.json",
+      "source_path": "build/public-contact-desktop-independent-v1/v1-parity.json",
+      "bytes": 2253,
+      "sha256": "5714e252c3e8cd8eb113bbf02e4b17e83e7d5b7aa2e3437eaf9ca903a6994b95"
+    },
+    {
+      "path": "independent/generated-controls.txt",
+      "source_path": "build/public-contact-desktop-independent-v1/generated-controls.txt",
+      "bytes": 4933,
+      "sha256": "94e5a05b579e2272883cf45d61d46bf0047956d871ccef9e433d4cefbb2d038c"
+    },
+    {
+      "path": "independent/saved-bridge-controls.txt",
+      "source_path": "build/public-contact-desktop-independent-v1/saved-bridge-controls.txt",
+      "bytes": 894,
+      "sha256": "0e604b137ff3214745c3310896cfc235f4f416cf443a0efe8e272e7de8640d3c"
+    },
+    {
+      "path": "independent/v1-parity-post-promotion-insufficient.json",
+      "source_path": "build/public-contact-desktop-independent-v1/v1-parity-post-promotion.json",
+      "bytes": 1948,
+      "sha256": "4b37200f2b39d57d5450bc4ddd63e65bd9981b7fc482424dd954e5429c4c48f6"
+    }
+  ],
+  "canonical_tests": {
+    "main": 96,
+    "renderer": 277,
+    "viewer": 72,
+    "total": 445,
+    "failed": 0
+  },
+  "working_build": "passed",
+  "exact_staged_build": "passed; existing chunk-size advisory",
+  "live_mac_status": "not_run_in_source_slice",
+  "note": "Original post-promotion comparison lacked old-source binding and is preserved as insufficient evidence. Corrected comparison binds the saved original source. Build logs are verbatim, including reporter trailing whitespace."
+}

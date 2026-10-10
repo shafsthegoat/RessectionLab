@@ -1118,3 +1118,15 @@ costly SEARCH chooses STOP (0). No policy was trained or run. Root canonical tes
 pass 34 in 18.88 seconds; independent core/bridge controls pass 33/21. The bridge
 clears prior actor/comparison capabilities and refuses transient-contact Save.
 Desktop v2 admission and live inspection follow as the next integration step.
+
+### October 10: public-contact task becomes inspectable through Electron
+
+The [desktop integration](../artifacts/public-contact-desktop-integration-v1/RESULT.md)
+adds explicit v2 host/renderer admission, checked public-goal marker, exact native
+replay and objective-specific outcomes. Root tests pass 445 with both working
+and exact staged builds. Independent checks pass 52 controls and eight v1 parity
+cases. Two original negatives are preserved: macro/frame contact disagreement
+could alter reward, and hidden metadata could expose an extra transfer slot.
+Both now refuse. Contact Save remains explicitly unsupported; ordinary actor
+reopen restores its workflow. Live Mac checking follows; no learned or patient
+result is claimed by generated transport controls.

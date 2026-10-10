@@ -1,0 +1,265 @@
+{
+  "status": "frozen_for_independent_review",
+  "scope": "Generated public-contact desktop only; no model, patient or native execution",
+  "baseCommit": "53eaa2f34c9d6169db7b054dd7192db7751100ac",
+  "files": [
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/PublicContactPanel.tsx",
+      "target": "desktop/src/PublicContactPanel.tsx",
+      "bytes": 6000,
+      "sha256": "8bc3ef90deb3aa9713612c64e5d5b8c09158bb370da809a79ba2af16eb23b7ec",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/episode-data.ts",
+      "target": "desktop/src/episode-data.ts",
+      "bytes": 1134,
+      "sha256": "bfa6cc57e18c83c21bf07651ed1e3e20900a6329a99e56b3fee93e7ad42dd53c",
+      "before": {
+        "bytes": 12637,
+        "sha256": "a67d1a0852014eb24e3c7982dbc7bf3c272e65dfe9cf580edd861803f381e82b"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/native-episode-replay.ts",
+      "target": "desktop/src/native-episode-replay.ts",
+      "bytes": 12369,
+      "sha256": "b9a34c2e244e60f58edf5dc0c6d57345ec581480a8aaa6d1757b2a185a038b72",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/public-contact-authority.ts",
+      "target": "desktop/src/public-contact-authority.ts",
+      "bytes": 6074,
+      "sha256": "8aa8958b084a8d8c383de693359ecbf0212aad13548ebd7deb29d4d503cbeae4",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/public-contact-data.ts",
+      "target": "desktop/src/public-contact-data.ts",
+      "bytes": 5771,
+      "sha256": "1e0d62709608885fe7d05917fb8b0a7d9cd5774fd161babbe848d4b57f1019d0",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/public-contact-types.ts",
+      "target": "desktop/src/public-contact-types.ts",
+      "bytes": 1629,
+      "sha256": "bf092650c44e6d62269c4cbbbf104b37664771cd8b9e828521b88a88ee331db4",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/types.ts",
+      "target": "desktop/src/types.ts",
+      "bytes": 14248,
+      "sha256": "fed37970018086e215c96f6abe2a9a82730918b82c845fe100a60163c91cb388",
+      "before": {
+        "bytes": 14078,
+        "sha256": "ce561869355ea752868b6e9e19c630d3bc897115f8cac353fad8ac92a6f78036"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/viewer/ViewerWorkspace.tsx",
+      "target": "desktop/src/viewer/ViewerWorkspace.tsx",
+      "bytes": 27019,
+      "sha256": "f5a748267cd3aeab708716c9db272327ecedc6ce153e41c04acbfdfe0a66aacc",
+      "before": {
+        "bytes": 25854,
+        "sha256": "8f1bb859e992e3bcee25a86090d4c3303c47db1eb3d2165b4d67ac8068ed1739"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/viewer/VolumeRenderer.ts",
+      "target": "desktop/src/viewer/VolumeRenderer.ts",
+      "bytes": 40057,
+      "sha256": "982859a14599333163142384e05b1754369dee581e7129fb342758f7b614eaaa",
+      "before": {
+        "bytes": 39210,
+        "sha256": "d32da6505b48a152d17c2a826bac6827fdb6c77807c6fef00bc0e48c81303521"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/viewer/contracts.ts",
+      "target": "desktop/src/viewer/contracts.ts",
+      "bytes": 2897,
+      "sha256": "cbe9afc0bde419641b2552f2f14aa99b05a310a65927d787542e7965985dfd21",
+      "before": {
+        "bytes": 2834,
+        "sha256": "1ece5278a5260c3a5a0a09c3f92247630a207d0b2d531dfeea440e2747f69ee8"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/viewer/publicGoal.test.mjs",
+      "target": "desktop/src/viewer/publicGoal.test.mjs",
+      "bytes": 2886,
+      "sha256": "56ff0b5905a682b6a6a880044236dacbe05dedb921f8e570c331184be3af46e5",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/src/viewer/publicGoal.ts",
+      "target": "desktop/src/viewer/publicGoal.ts",
+      "bytes": 1766,
+      "sha256": "519b6e0a4a4057bea94d79518abb3fc42e8357ac67925f27b75625213d92380f",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/electron/main.cjs",
+      "target": "desktop/electron/main.cjs",
+      "bytes": 10913,
+      "sha256": "688f79141081b78c832c54cb1d28311cb0a46d25a08a661fba24c5078f879e83",
+      "before": {
+        "bytes": 10620,
+        "sha256": "bb6be44fa1df633e7bba33107b3aeedc4172988961032fae770da2ebb195e71f"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/electron/preload.cjs",
+      "target": "desktop/electron/preload.cjs",
+      "bytes": 2534,
+      "sha256": "3fffb59de80330bac55654c4c51bc902a8b49adde1c70e688a9c5d2888a45469",
+      "before": {
+        "bytes": 2415,
+        "sha256": "ebc4b2994f7d1acab85d703e85a43368571246870470595ed9d70ce80ffbef75"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/electron/public-contact-authority.cjs",
+      "target": "desktop/electron/public-contact-authority.cjs",
+      "bytes": 6040,
+      "sha256": "4111fce54d39442574958baf67f75e4dc602eb2c7f608b9081a3e62b99e52668",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/electron/public-contact.cjs",
+      "target": "desktop/electron/public-contact.cjs",
+      "bytes": 3101,
+      "sha256": "f234c3609bfdce7426148a5ea3afcec16ecb56d9f19e282702e10f3233484895",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/electron/public-contact.test.cjs",
+      "target": "desktop/electron/public-contact.test.cjs",
+      "bytes": 4689,
+      "sha256": "8699be787b68ccb8fbaf2bc45258c6db3e5ff8fc8e08dc7aa94417e160e43083",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/electron/sidecar.cjs",
+      "target": "desktop/electron/sidecar.cjs",
+      "bytes": 8528,
+      "sha256": "48509dce7221acc7a988fb6abdea921603ab7ce065480d549b018bcf04fc3271",
+      "before": {
+        "bytes": 8016,
+        "sha256": "609b5f5c67fd2c2426e8280cfa4d03f9657e80738309ea7006478cee0481ec26"
+      }
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/fixtures/public-contact-costly-SEARCH.json",
+      "target": "desktop/tests/fixtures/public-contact-costly-SEARCH.json",
+      "bytes": 33606,
+      "sha256": "b4c9b357034ffda5841d2dcc57be607dc0e15ad9a1518d74d3788eb74490d3a1",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/fixtures/public-contact-near-scripted.json",
+      "target": "desktop/tests/fixtures/public-contact-near-scripted.json",
+      "bytes": 126792,
+      "sha256": "82d1197212a13610e47c3ba836a7196233dc11bbfc1c637230d13ec302992885",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/helpers/public-contact-fixture.mjs",
+      "target": "desktop/tests/helpers/public-contact-fixture.mjs",
+      "bytes": 905,
+      "sha256": "8a1e3e13a7dc623825c088e8c462e339e2732d632552b62841ef90234e22b091",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/public-contact-app.test.mjs",
+      "target": "desktop/tests/public-contact-app.test.mjs",
+      "bytes": 5471,
+      "sha256": "68fc66eb588383ac15405cd5180b0d2b58f2091263b06f1c25fff49c5ffd28b5",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/public-contact-crossstack.mjs",
+      "target": "desktop/tests/public-contact-crossstack.mjs",
+      "bytes": 989,
+      "sha256": "b03bc7f5b7e4b61022e99d4ebfbacb62e029afb4f692117c2e36ec584f8aea2f",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/public-contact-panel.test.mjs",
+      "target": "desktop/tests/public-contact-panel.test.mjs",
+      "bytes": 3597,
+      "sha256": "5eb4826043961f29a6f92f90b357fe7777aef74f653bfddaa7b524a3ef1c65f3",
+      "before": null
+    },
+    {
+      "source": "build/public-contact-desktop-v1/stage/desktop/tests/public-contact.test.mjs",
+      "target": "desktop/tests/public-contact.test.mjs",
+      "bytes": 5229,
+      "sha256": "213c7f1ada2f528ba2a0645f65bce2d240291c10f1517c5c2466c5a427fb4151",
+      "before": null
+    }
+  ],
+  "sourcePatch": {
+    "bytes": 258872,
+    "sha256": "66dba11cf2d4874b7e6539870d387c0a4cd4b0789d7085a46b86112dd178a8e0"
+  },
+  "app": {
+    "worktree": {
+      "before": {
+        "bytes": 75771,
+        "sha256": "7e4a7fe612804073dccd0d7f92af498412ffeedd9c8c0b5028c2f8f32932ea09"
+      },
+      "after": {
+        "bytes": 81169,
+        "sha256": "617047e45697607300b9c3a2e324100899709950500dad72024d168253017202"
+      },
+      "patch": {
+        "path": "App.worktree.patch",
+        "bytes": 13181,
+        "sha256": "c16fa9b905021341e188eaa5770c8309896686390141bc97c6fa6186cc56e0b9"
+      }
+    },
+    "cleanHead": {
+      "before": {
+        "bytes": 70538,
+        "sha256": "b7b699044e14c3a4d7eade6d175150b946edd348c087fb5e892a7fccda8b2b63"
+      },
+      "after": {
+        "bytes": 75911,
+        "sha256": "1f4a73b823f92feccfd5cc9efca2e8272e0aa1c6dc04fe7f1191b7fc0f7fe4c1"
+      },
+      "patch": {
+        "path": "App.clean-HEAD.patch",
+        "bytes": 13077,
+        "sha256": "d4bcc17e5a6ebfb01f355943595facf0839e965d9d190745e4df60cc45b8be5a"
+      }
+    }
+  },
+  "fixtures": [
+    {
+      "path": "build/public-surface-contact-bridge-v1/near-scripted-fixture.json",
+      "bytes": 95302,
+      "sha256": "42dd28355ecbc2c0c873ed95a79bb33e561d70ce188b06bd9c652d989d9acf03"
+    },
+    {
+      "path": "build/public-surface-contact-bridge-v1/costly-SEARCH-fixture.json",
+      "bytes": 48734,
+      "sha256": "e483abed2a8acf9e63ff85f6a8c26f07036633ea327a167247b2c6fc027cc9a6"
+    }
+  ],
+  "tests": {
+    "focused": "test-focused-final-v2.txt",
+    "focusedPassed": 43,
+    "related": "test-related-v1.txt",
+    "relatedPassed": 183,
+    "typecheck": "typecheck-final-v2.txt",
+    "crossStack": [
+      "crossstack-near.txt",
+      "crossstack-costly.txt"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "ACCEPTED_INCONSISTENT_MACRO_PROBE",
+  "before": {
+    "modeledReturn": 0.7080000000000001,
+    "totalRemovedMm3": 1,
+    "completePathMm": 2,
+    "totalCost": 0.29200000000000004,
+    "retained": true,
+    "contactedAndRetained": true,
+    "termination": "horizon"
+  },
+  "after": {
+    "modeledReturn": -0.2919999999999999,
+    "totalRemovedMm3": 1,
+    "completePathMm": 2,
+    "totalCost": 0.29200000000000004,
+    "retained": true,
+    "contactedAndRetained": true,
+    "termination": "horizon"
+  },
+  "finalProbeContactCount": 5
+}

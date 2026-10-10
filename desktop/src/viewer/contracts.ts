@@ -33,6 +33,7 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  publicGoal?: import('./publicGoal').ViewerPublicGoal | null;
   /** Analytic software-fixture intensities; never an acquired MRI. */
   generatedSignal?: boolean;
   caseData: ViewerVolume | null;

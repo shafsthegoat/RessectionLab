@@ -1,3 +1,4 @@
+import {checkedPublicGoal,publicGoalSlicePoint,PUBLIC_GOAL_COLOR} from './publicGoal';
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
@@ -54,6 +55,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     priorLayer,
     inspectionTool,
   } = props;
+  const goalSelection = useMemo(() => {
+    try { return {goal:caseData ? checkedPublicGoal(caseData,props.publicGoal ?? null):null,error:null}; }
+    catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
+  },[caseData,props.publicGoal]);
+  const publicGoal = goalSelection.goal;
   const signalName = props.generatedSignal ? "analytic signal" : "MRI";
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
@@ -161,6 +167,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       setError(cause instanceof Error ? cause.message : String(cause));
     }
   }, [caseData]);
+
+  useEffect(() => {if(engine.current)engine.current.setPublicGoal(publicGoal);},[ready,caseData,publicGoal]);
 
   useEffect(() => {
     if (!engine.current) return;
@@ -548,6 +556,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 Mint mesh: modeled removal · source {signalName} unchanged
               </span>
             )}
+            {publicGoal && <span className="rl-viewer-route-key" style={{color:PUBLIC_GOAL_COLOR}}>◇ Public goal · {publicGoal.state.replaceAll('-',' ')} · declared location, not anatomy</span>}
             {inspected && (
               <span className="rl-viewer-route-key" style={{ color: INSPECTION_TOOL_COLOR }}>
                 ● Inspection tool · unexecuted preview · no tissue removed
@@ -626,6 +635,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           : 1;
         const pxPerMm = image ? image.width / mmWidth : 1;
         const scaleMm = pxPerMm * 20 < 78 ? 20 : 10;
+        const goalPoint = publicGoal && geometry ? publicGoalSlicePoint(publicGoal,geometry.bounds,plane,currentCursor,width,height) : null;
         return (
           <div
             key={plane}
@@ -672,6 +682,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               }}
               onKeyDown={(event) => keySlice(event, plane)}
             >
+              {goalPoint && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPoint.left,top:goalPoint.top,transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}
               <span className="rl-orientation rl-orientation-left">{left}</span>
               <span className="rl-orientation rl-orientation-right">
                 {right}
@@ -723,10 +734,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || proposalError || priorError || inspectionError) && (
+      {(error || replayError || proposalError || priorError || inspectionError || goalSelection.error) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || proposalError || priorError || inspectionError}</p>
+          <p>{error || replayError || proposalError || priorError || inspectionError || goalSelection.error}</p>
         </div>
       )}
     </div>

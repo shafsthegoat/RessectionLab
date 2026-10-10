@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "fixture": "development-scripted.json",
+      "case": "baseline",
+      "outcome": "fulfilled",
+      "whole_view_equal": true,
+      "both_refuse": false
+    },
+    {
+      "fixture": "development-scripted.json",
+      "case": "withdrawal endpoint",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-scripted.json",
+      "case": "prefix hash",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-scripted.json",
+      "case": "stop delta",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "baseline",
+      "outcome": "fulfilled",
+      "whole_view_equal": true,
+      "both_refuse": false
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "withdrawal endpoint",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "prefix hash",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    },
+    {
+      "fixture": "development-search.json",
+      "case": "stop delta",
+      "outcome": "rejected",
+      "whole_view_equal": false,
+      "both_refuse": true
+    }
+  ],
+  "hashes": {
+    "../../desktop/src/episode-data.ts": "bfa6cc57e18c83c21bf07651ed1e3e20900a6329a99e56b3fee93e7ad42dd53c",
+    "../public-contact-desktop-v1/stage/desktop/src/native-episode-replay.ts": "b9a34c2e244e60f58edf5dc0c6d57345ec581480a8aaa6d1757b2a185a038b72",
+    "../public-contact-desktop-v1/stage/desktop/src/episode-data.ts": "bfa6cc57e18c83c21bf07651ed1e3e20900a6329a99e56b3fee93e7ad42dd53c"
+  },
+  "scope": "saved generated fixtures only; no replay engine or native/model process"
+}

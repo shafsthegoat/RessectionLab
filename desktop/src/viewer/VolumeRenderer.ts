@@ -1,3 +1,5 @@
+import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
+import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import {
@@ -144,6 +146,7 @@ export class VolumeRenderer {
     THREE.BufferGeometry,
     THREE.ShaderMaterial
   >;
+  private readonly publicGoalObject = new THREE.Group();
   private readonly cursorObject: THREE.LineSegments;
   private readonly observer: ResizeObserver;
   private readonly worker: Worker;
@@ -351,6 +354,7 @@ export class VolumeRenderer {
     );
     this.cursorObject.renderOrder = 5;
     this.scene.add(this.cursorObject);
+    this.scene.add(this.publicGoalObject);
     this.camera.up.set(0, 0, 1);
     this.controls = new OrbitControls(this.camera, panes.anatomy);
     this.controls.enableDamping = true;
@@ -494,6 +498,18 @@ export class VolumeRenderer {
     this.sourcePlane.visible = plane !== null;
     if (plane !== null) this.activePlane = plane;
     this.updateSourcePlane();
+    this.requestRender();
+  }
+
+  /** Declared task marker only; never tissue, removal, route or measurement. */
+  setPublicGoal(input: ViewerPublicGoal | null): void {
+    disposeObject(this.publicGoalObject); this.publicGoalObject.clear();
+    const goal = checkedPublicGoal(this.volume, input);
+    if (goal) {
+      const marker = new THREE.Mesh(new THREE.SphereGeometry(.38, 12, 8), new THREE.MeshBasicMaterial({color: PUBLIC_GOAL_COLOR, wireframe: true, depthTest: false}));
+      marker.position.set(...goal.rasMm); marker.renderOrder = 10;
+      marker.userData.publicGoal = goal; this.publicGoalObject.add(marker);
+    }
     this.requestRender();
   }
 

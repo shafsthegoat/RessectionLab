@@ -40,6 +40,10 @@ import { WorkspaceBreadcrumb } from "./WorkspaceBreadcrumb";
 import { readOnlyPreview } from "./preview-api";
 import {useEpisodeComparison} from "./use-episode-comparison";
 import {requirePersistableEpisode} from "./episode-comparison-data";
+import {PublicContactPanel} from "./PublicContactPanel";
+import {hydratePublicContactEpisode,requirePersistableContact,contactGoalMarker} from "./public-contact-data";
+import type {PublicContactView} from "./public-contact-data";
+import type {ContactGoalId,ContactSelector} from "./public-contact-types";
 import { EpisodePanel } from "./EpisodePanel";
 import { hydrateDevelopmentEpisode } from "./episode-data";
 import type { EpisodeView } from "./episode-data";
@@ -534,6 +538,11 @@ export default function App() {
   );
   const [routes, setRoutes] = useState<RouteCandidate[]>([]);
   const [episodeView, setEpisodeView] = useState<EpisodeView | null>(null);
+  const [episodeWorkflow,setEpisodeWorkflow] = useState<"aspiration"|"public-contact">("aspiration");
+  const [publicContactView,setPublicContactView] = useState<PublicContactView|null>(null);
+  const [contactStep,setContactStep] = useState(0);
+  const [contactSelector,setContactSelector] = useState<ContactSelector>("SEARCH");
+  const [contactGoal,setContactGoal] = useState<ContactGoalId>("near");
   const [episodeStep, setEpisodeStep] = useState(0);
   const [episodeVisible, setEpisodeVisible] = useState(false);
   const [episodePending, setEpisodePending] = useState(false);
@@ -617,6 +626,8 @@ export default function App() {
   const comparison = useEpisodeComparison(episodeView, api, comparisonAvailable, payload?.caseHash ?? null);
   const displayedEpisodeView = comparison.activeView;
   const displayedEpisodeStep = comparison.arm === "search" ? comparison.companionStep : episodeStep;
+  const publicGoalMarker = useMemo(() => episodeVisible && episodeWorkflow === "public-contact" && publicContactView && publicContactView.source.caseHash === payload?.caseHash ? contactGoalMarker(publicContactView,contactStep) : null,
+    [episodeVisible,episodeWorkflow,publicContactView,contactStep,payload?.caseHash]);
   const actorReplayVisible = useRef(false);
   const fileNavigationBlocked = !api || busy || comparison.pending || engineStopped || readonly;
   const restoreSourceView = () => {
@@ -769,6 +780,7 @@ export default function App() {
           setCursor(reopened.imagingState.states.primary.cursor);
           setVisibleLayers(reopened.imagingState.states.primary.visibleLayers);
         }
+        setPublicContactView(null); setContactStep(0); setEpisodeWorkflow("aspiration");
         setEpisodeView(reopened.episodeView);
         setEpisodeStep(reopened.episodeStep);
         setEpisodeVisible(reopened.episodeVisible);
@@ -795,6 +807,7 @@ export default function App() {
   const showEpisode = () => {
     resetDisplayToPrimary();
     if (!displayedEpisodeView || displayedEpisodeView.source.caseHash !== activeCaseHash.current) return;
+    setEpisodeWorkflow("aspiration");
     clearPrior(); clearProposal(); setCertifiedReplay(null); setEpisodeVisible(false);
     setEpisodeVisible(true); setCameraMode("instruments");
     setMessage("Generated episode · recorded tool poses and modeled cavity · no patient admission");
@@ -809,6 +822,30 @@ export default function App() {
     if (arm === "search") { actorReplayVisible.current = episodeVisible; comparison.select(arm); showEpisode(); }
     else { comparison.select(arm); setEpisodeVisible(actorReplayVisible.current); }
   };
+  const showContact = () => {
+    if (!publicContactView || publicContactView.source.caseHash !== activeCaseHash.current) return;
+    resetDisplayToPrimary(); clearPrior(); clearProposal(); setCertifiedReplay(null);
+    setEpisodeVisible(true); setCameraMode("instruments");
+  };
+  const requestContactStep = (step:number) => {
+    if (!publicContactView || !Number.isInteger(step) || step < 0 || step >= publicContactView.frames.length) return;
+    setContactStep(step); showContact();
+  };
+  const executeContact = async () => {
+    if (!api?.executePublicSurfaceContactEpisode || controlsBlocked || readonly) return;
+    const generation=++episodeGeneration.current,sourceGeneration=caseGeneration.current;
+    setEpisodePending(true); setError(null); setEpisodeVisible(false);
+    try {
+      const result=await api.executePublicSurfaceContactEpisode({fixture:"generated-public-surface-contact-v1",goalId:contactGoal,selector:contactSelector});
+      const checked=await hydratePublicContactEpisode(result,api);
+      if (!mounted.current || generation!==episodeGeneration.current || sourceGeneration!==caseGeneration.current) return;
+      if (!await installCase(checked.source,api)) return;
+      setPublicContactView(checked); setContactStep(0); setEpisodeWorkflow("public-contact"); setEpisodeVisible(true);
+      setCursor([...checked.episode.publicGoal.rasMm]); setCameraMode("instruments"); setPlanningTab("episode");
+      setMessage("Generated public-contact task · exact replay and public objective checked · temporary, not saved");
+    } catch(failure) { if(mounted.current && generation===episodeGeneration.current)reportError(failure); }
+    finally { if(mounted.current && generation===episodeGeneration.current)setEpisodePending(false); }
+  };
   const executeEpisode = async () => {
     if (!api?.executeDevelopmentEpisode || controlsBlocked || readonly) return;
     const generation = ++episodeGeneration.current;
@@ -818,7 +855,7 @@ export default function App() {
       const checked = await hydrateDevelopmentEpisode(result,api);
       if (!mounted.current || generation !== episodeGeneration.current) return;
       if (!await installCase(checked.source,api)) return;
-      setEpisodeView(checked); setEpisodeStep(0); setEpisodeVisible(true);
+      setEpisodeWorkflow("aspiration"); setEpisodeView(checked); setEpisodeStep(0); setEpisodeVisible(true);
       setCameraMode("instruments"); setPlanningTab("episode");
       setMessage("Generated software episode executed · all recorded frame masks checked · no patient admission");
     } catch (failure) { if (mounted.current && generation === episodeGeneration.current) reportError(failure); }
@@ -1078,6 +1115,7 @@ export default function App() {
   const save = () =>
     act(async () => {
       if (!api || !payload) return;
+      requirePersistableContact(publicContactView);
       requirePersistableEpisode(displayedEpisodeView);
       const result = await api.saveCase({
         caseHash: payload.caseHash,
@@ -1115,6 +1153,7 @@ export default function App() {
     imaging.selected,
     episodeView,
     displayedEpisodeView,
+    publicContactView,
     comparison.pending,
     episodeStep,
     episodeVisible,
@@ -1164,7 +1203,9 @@ export default function App() {
   );
   const viewerReplay = useMemo(
     () =>
-      episodeVisible && displayedEpisodeView && displayedEpisodeView.source.caseHash === caseData?.caseHash
+      episodeVisible && episodeWorkflow === "public-contact" && publicContactView && publicContactView.source.caseHash === caseData?.caseHash
+        ? publicContactView.frames[contactStep]
+        : episodeVisible && episodeWorkflow === "aspiration" && displayedEpisodeView && displayedEpisodeView.source.caseHash === caseData?.caseHash
         ? displayedEpisodeView.frames[displayedEpisodeStep]
         : certifiedReplay && caseData
         ? {
@@ -1184,7 +1225,7 @@ export default function App() {
               certifiedReplay.result.modeledResidualTargetVolumeMm3,
           }
         : null,
-    [certifiedReplay, caseData, episodeVisible, displayedEpisodeView, displayedEpisodeStep],
+    [certifiedReplay, caseData, episodeVisible, displayedEpisodeView, displayedEpisodeStep,episodeWorkflow,publicContactView,contactStep],
   );
   const synthetic = !!payload?.metadata.is_synthetic;
   const supportGate = researchSupportGate(payload);
@@ -1362,11 +1403,12 @@ export default function App() {
         </section>
         <section className="case-section">
           <h2>
-            {imaging.selected ? (imaging.selected.descriptor.annotationKind === "estimated" ? "Estimated labels · display only" : "Source labels · display only") : "Target annotations"}{" "}
+            {imaging.selected ? (imaging.selected.descriptor.annotationKind === "estimated" ? "Estimated labels · display only" : "Source labels · display only") : publicContactView ? "Fixture background annotations" : "Target annotations"}{" "}
             <span>
               {displayedCase?.compartments.length.toString().padStart(2, "0") ?? "—"}
             </span>
           </h2>
+          {publicContactView && !imaging.selected && <p className="muted-note">These fixture annotations are unused by the contact reward. The public goal has its own marker.</p>}
           <AnnotationCenterButton
             center={imaging.selected ? null : annotationCenterMm}
             onCenter={setCursor}
@@ -1547,7 +1589,7 @@ export default function App() {
             </button>
           </div>
         )}
-        {episodeVisible && displayedEpisodeView && (
+        {episodeVisible && episodeWorkflow === "aspiration" && displayedEpisodeView && (
           <div className="modeled-replay-notice" role="status"><span>GENERATED · modeled cavity · {comparison.arm === "search" ? "matched search" : "selected episode"} · frame {displayedEpisodeStep}/{displayedEpisodeView.frames.length-1} · {displayedEpisodeView.episode.replayFrames[displayedEpisodeStep].phase} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>
         )}
         {certifiedReplay && (
@@ -1562,10 +1604,12 @@ export default function App() {
             </button>
           </div>
         )}
+        {episodeVisible && episodeWorkflow === "public-contact" && publicContactView && <div className="modeled-replay-notice" role="status"><span>GENERATED · public retained-contact · frame {contactStep}/{publicContactView.frames.length-1} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
         <div className="viewer-shell">
           {caseData && (
             <ViewerWorkspace
               generatedSignal={display.primaryOverlaysPermitted && synthetic}
+              publicGoal={display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={displayedCase}
               visibleLayers={displayedLayers}
               overlayOpacity={overlayOpacity}
@@ -1646,11 +1690,14 @@ export default function App() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content value="episode" className="planning-tab-content">
+            <label className="field-label" htmlFor="episode-workflow">Generated task</label><select id="episode-workflow" value={episodeWorkflow} disabled={controlsBlocked||comparison.pending} onChange={event=>{setEpisodeWorkflow(event.target.value as "aspiration"|"public-contact");setEpisodeVisible(false);}}><option value="aspiration">Aspiration & trained-transfer comparison</option><option value="public-contact">Public retained-contact goal</option></select>
+            {episodeWorkflow === "public-contact" ? <PublicContactPanel view={publicContactView?.source.caseHash===payload?.caseHash?publicContactView:null} step={contactStep} selector={contactSelector} goalId={contactGoal} busy={controlsBlocked||comparison.pending} visible={episodeVisible} onSelector={setContactSelector} onGoal={setContactGoal} onExecute={executeContact} onStep={requestContactStep} onShow={showContact} onSource={restoreSourceView} onFocusGoal={()=>{if(publicContactView){setCursor([...publicContactView.episode.publicGoal.rasMm]);showContact();}}} unavailableReason={engineStopped?"The local engine stopped.":readonly?"This browser preview is read only.":!api?.executePublicSurfaceContactEpisode||!engineOperations.has("executePublicSurfaceContactEpisode")?"This engine does not provide the public-contact task.":undefined}/> : <>
             <EpisodePanel vascularApi={!readonly && !engineStopped && engineOperations.has("evaluateDevelopmentEpisodeVascular") ? api : null} view={displayedEpisodeView?.source.caseHash === payload?.caseHash ? displayedEpisodeView : null} step={displayedEpisodeStep}
               comparison={{actor:episodeView, result:comparison.result, arm:comparison.arm, available:comparisonAvailable, pending:comparison.pending, error:comparison.error, inspect:comparison.inspect, select:selectComparisonArm}}
               selector={episodeSelector} onSelector={setEpisodeSelector} busy={controlsBlocked || comparison.pending}
               onExecute={executeEpisode} onStep={requestEpisodeStep} onShow={showEpisode} onSource={restoreSourceView} visible={episodeVisible}
               unavailableReason={engineStopped ? "The local engine stopped. Reopen the app to execute." : readonly ? "This browser preview is read only. Open the desktop app to execute." : !api?.executeDevelopmentEpisode || !engineOperations.has("executeDevelopmentEpisode") ? "This engine does not provide generated development episodes." : undefined}/>
+            </>}
           </Tabs.Content>
           <Tabs.Content value="routes" className="planning-tab-content">
             <div className="planning-title">
