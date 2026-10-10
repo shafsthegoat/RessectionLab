@@ -33,6 +33,7 @@ from .spatial_observations import (ObservedChannel, ObservedProcedureState,
 NATIVE_SPATIAL_VERSION = "native-spatial-observed-openings-v1"
 ACCESS_CENTERLINE_PROPOSAL_VERSION = "fixed_lattice_access_centerline_v1"
 MAX_PRIMITIVES = 96  # Below the unchanged engine's 128-certificate capacity.
+MAX_NATIVE_SPATIAL_STEPS = 24  # Explicit run budgets still bound work at any horizon.
 GRID_ROUNDOFF_MAX_DISPLACEMENT_MM = 1e-6
 GRID_ROUNDOFF_MAX_GRAM_ERROR = 1e-8
 SYNTHETIC_TARGET_THRESHOLD = .5
@@ -469,8 +470,9 @@ class NativeSpatialTask:
                  reward: RewardSpec = DEFAULT_NATIVE_SPATIAL_REWARD,
                  cancelled: Callable[[], bool] | None = None, _planning: bool = False,
                  tool_modes: Mapping[str, str] | None = None):
-        if not isinstance(case, NativeSpatialCase) or type(max_steps) is not int or not 1 <= max_steps <= 6:
-            raise ValueError("A typed native source and horizon1–6 are required")
+        if (not isinstance(case, NativeSpatialCase) or type(max_steps) is not int
+                or not 1 <= max_steps <= MAX_NATIVE_SPATIAL_STEPS):
+            raise ValueError(f"A typed native source and horizon1–{MAX_NATIVE_SPATIAL_STEPS} are required")
         if not isinstance(reward, RewardSpec) or reward.motor_per_mm3 or reward.language_per_mm3 or reward.graph_edge_cost:
             raise ValueError("Functional and graph costs must be disabled: function remains unassessed")
         if _planning and (case.nominal_target is None or not np.array_equal(case.reference_target, case.nominal_target)):

@@ -15,7 +15,7 @@ import json
 import numpy as np
 
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
-from .native_spatial_task import NativeSpatialCase, NativeSpatialTask
+from .native_spatial_task import MAX_NATIVE_SPATIAL_STEPS, NativeSpatialCase, NativeSpatialTask
 from .spatial_observations import SpatialObservation
 
 VERSION = "remind-public-annotation-assisted-native-v1"
@@ -200,7 +200,7 @@ bound here and enforced by the separately supervised caller.
           "intended_use_QC_not_header_only_required")
     _digest(qc["evidence_record_sha256"])
     _need(plan["scope"] == "patient_native_planning_experiment"
-          and type(plan["max_steps"]) is int and 1 <= plan["max_steps"] <= 6
+          and type(plan["max_steps"]) is int and 1 <= plan["max_steps"] <= MAX_NATIVE_SPATIAL_STEPS
           and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] >= 0
           and (member["role"] == "TRAIN" or plan["max_optimizer_updates"] == 0)
           and type(plan["threads"]) is int and plan["threads"] == 1
