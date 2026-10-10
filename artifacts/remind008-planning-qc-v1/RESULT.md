@@ -20,3 +20,13 @@ the CLI loads successfully and independent source review passes. An initial pyte
 invocation could not run because pytest is absent in that environment; the tests
 use standard-library unittest and ran directly without changing dependencies.
 This source integration performs no further patient reads or planning admission.
+
+The remaining three TRAIN headers reveal mismatched MRI/SEG resolutions. The
+`crop-mr` phase now preserves original MRI samples, chooses a crop using only
+public support-grid bounds, and explicitly maps source labels by nearest
+neighbour with separate coverage masks. A retained original affine and bounded
+(<0.001 mm) planning-grid roundoff transform distinguish geometry adjustment
+from image interpolation. Source-positive cropping losses and label-volume
+changes are reported; small-label preservation is not assumed. Nine regression
+and five independent-coordinate controls pass in the canonical imaging runtime.
+The original no-resampling ReMIND-008 result remains unchanged.

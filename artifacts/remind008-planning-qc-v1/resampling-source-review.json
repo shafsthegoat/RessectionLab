@@ -1,0 +1,30 @@
+{
+  "decision": "PASS_NARROW_CROP_MR_SOURCE_EXTENSION",
+  "generated_tests": {
+    "passed": 5,
+    "seconds": 0.014
+  },
+  "patient_array_opens": 0,
+  "patient_source_opens": 0,
+  "pins": {
+    "build/remind-planning-qc-independent-v1/resampling-generated-tests.txt": "670583d7fa90dde640679c5320a0b55b698260472e361b51d318faea1f21c52d",
+    "build/remind-planning-qc-v1/promotion-code-v2/scripts/prepare_remind_planning.py": "c0df1d11f74733d9af11ec0ecf9acac1ade95bd984f852920ce820da62253812",
+    "build/remind-planning-qc-v1/promotion-code-v2/src/resectionlab/remind_planning_qc.py": "2bb3cefce51de48345570a361c4d479ac6d51328251ae7910d7ba87ed70effdb",
+    "build/remind-planning-qc-v1/promotion-code-v2/tests/test_remind_planning_resampling.py": "3c9315ded8c0c3bb8117d2d26b7dbc0357dd40442879933a8c293e800922146b"
+  },
+  "result_review_limits": [
+    "This is source/generated verification, not an actual010/020/025 result review.",
+    "Public-bound insetting can discard source-positive anatomy; nearest-neighbour resampling can omit small labels even inside the crop. Actual counts, volume changes and source-positive centres outside must remain visible in eligibility and intended-use decisions.",
+    "source_samples_equal audits native decode before resampling; it does not say resampled labels equal the native array.",
+    "The resource estimate remains an estimate. Root supervision and actual saved terminal evidence establish the attempt resource outcome.",
+    "No source annotation, support or cohort role is modified; no clinical anatomical accuracy or registration claim."
+  ],
+  "reviewed_delta": [
+    "Only run_crop changes among prior functions; added mr_sampling_crop and resample_binary_nn. Other reviewed validation/source/sample helpers are structurally unchanged.",
+    "Output uses original MR sampling and exact native crop values/affine. Public cerebrum grid world bounds alone select crop. Uniform one-cell-per-face inset continues until all derived target cell corners are inside public source coverage; no private positive extent selects it.",
+    "Separate derived planning affine uses an explicit polar roundoff projection with at-most.001mm whole-crop cell-corner displacement. MRI samples are not interpolated.",
+    "Nearest source-centre labels and domain indicators are calculated one target XY plane at a time with floor(index+.5) and half-open native source coverage. Scalar world-coordinate oracle, anisotropy/obliquity, ties and domain cases pass.",
+    "Native decoded source sample equality is independently checked before label resampling. Saved placement report explicitly records resampling, native/placed positive volumes, source-positive centres outside output, source domains and possible missed subvoxel labels.",
+    "All three source-domain masks are saved for crop-mr. Public cerebrum domain must cover every output centre; private label-domain exterior remains unknown."
+  ]
+}

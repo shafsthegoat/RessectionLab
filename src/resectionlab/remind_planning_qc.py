@@ -370,6 +370,88 @@ def public_target_support_relation(target, support):
             "task_interpretation": "Source whole-tumor annotation is not prescribed resection. Any support-limited target or expanded removable domain must be an explicit task condition; source arrays remain unchanged."}
 
 
+def mr_sampling_crop(mr_geometry, public_geometry):
+    """Choose native MRI cells intersecting the public support grid world bounds."""
+    import numpy as np
+    mr = np.asarray(mr_geometry["affine_xyz_to_ras_mm"], dtype=float)
+    public = np.asarray(public_geometry["affine_xyz_to_ras_mm"], dtype=float)
+    full = np.asarray(mr_geometry["shape_xyz"], dtype=int)
+    mapped = (np.c_[corners(public_geometry["shape_xyz"]), np.ones(8)] @ (np.linalg.inv(mr) @ public).T)[:, :3]
+    low = np.floor(mapped.min(0)+.5).astype(int)
+    high = np.ceil(mapped.max(0)+.5).astype(int)
+    start, stop = np.maximum(low, 0), np.minimum(high, full)
+    clipped_to_mr = bool(np.any(start != low) or np.any(stop != high))
+    # MRI samples keep their native indices. Only this explicit derived planning
+    # affine receives the sub-micron orthogonal roundoff adjustment.
+    spacing = np.linalg.norm(mr[:3, :3], axis=0)
+    u, _, vt = np.linalg.svd(mr[:3, :3]/spacing)
+    inset = 0
+    while True:
+        shape = stop-start
+        need(np.all(shape >= 3), "no_contained_public_MR_crop")
+        native = mr.copy(); native[:3, 3] = (mr @ np.r_[start, 1])[:3]
+        derived = native.copy(); derived[:3, :3] = (u@vt)*spacing
+        source_corners = (np.c_[corners(shape), np.ones(8)] @ (np.linalg.inv(public) @ derived).T)[:, :3]
+        if np.all(source_corners >= -.5) and np.all(source_corners < np.asarray(public_geometry["shape_xyz"])-.5): break
+        # A deliberately conservative box; no anatomy-positive extent, target,
+        # or private reference influences this uniform one-cell inset.
+        start += 1; stop -= 1; inset += 1
+    need(int(np.prod(shape)) <= 32000000, "public_MR_crop_extent")
+    error = corner_error(native, derived, shape)
+    need(error <= MAX_CORNER_MM, "MR_orthogonal_roundoff_exceeds_bound")
+    return start, tuple(int(n) for n in shape), native, derived, {
+        "selection": "public cerebrum grid world bounds intersect MRI, then uniformly inset until every output cell corner is inside public source coverage",
+        "uses_private_labels": False, "uses_label_positive_extent": False,
+        "public_cell_bounds_in_MR_index": {"minimum": mapped.min(0).tolist(), "maximum": mapped.max(0).tolist()},
+        "unclipped_MR_start": low.tolist(), "unclipped_MR_stop": high.tolist(),
+        "clipped_to_MR_coverage": clipped_to_mr,
+        "uniform_inset_MR_cells_per_face": inset, "all_output_cell_corners_inside_public_source_domain": True,
+        "original_MR_sampling_mm": spacing.tolist(), "image_interpolation": "none",
+        "planning_affine_method": "explicit polar orthogonal roundoff projection; exact source crop affine retained",
+        "maximum_world_corner_difference_mm": error, "bound_mm": MAX_CORNER_MM}
+
+
+def resample_binary_nn(source, source_affine, target_affine, target_shape, checkpoint=None):
+    """Nearest source voxel centre, with half-open native cell-domain coverage.
+
+    Process one target XY plane at a time. Ties go toward the positive source
+    index (floor(x+.5)); no label-positive or private information sets the grid.
+    """
+    import numpy as np
+    need(source.ndim == 3 and source.dtype == np.uint8 and bool(np.all(source <= 1)), "binary_source_required")
+    transform = np.linalg.inv(np.asarray(source_affine)) @ np.asarray(target_affine)
+    x, y = np.indices(target_shape[:2], dtype=np.float64)
+    base = transform[:3, 0, None, None]*x + transform[:3, 1, None, None]*y + transform[:3, 3, None, None]
+    values = np.zeros(target_shape, np.uint8); domain = np.zeros(target_shape, np.uint8)
+    bounds = np.asarray(source.shape)[:, None, None]
+    for z in range(target_shape[2]):
+        if checkpoint: checkpoint()
+        coordinates = base + transform[:3, 2, None, None]*z
+        indices = np.floor(coordinates+.5).astype(np.int64)
+        valid = np.all((coordinates >= -.5) & (coordinates < bounds-.5), axis=0)
+        domain[:, :, z] = valid
+        points = indices[:, valid]
+        values[:, :, z][valid] = source[points[0], points[1], points[2]]
+    # Cropping losses and sampling losses differ. Count source-positive centres
+    # outside output cell coverage separately; NN may still miss tiny structures.
+    reverse = np.linalg.inv(np.asarray(target_affine)) @ np.asarray(source_affine)
+    outside = 0
+    for z in range(source.shape[2]):
+        if checkpoint: checkpoint()
+        sx, sy = np.nonzero(source[:, :, z])
+        mapped = reverse[:3, 0, None]*sx + reverse[:3, 1, None]*sy + (reverse[:3, 2]*z+reverse[:3, 3])[:, None]
+        inside = np.all((mapped >= -.5) & (mapped < np.asarray(target_shape)[:, None]-.5), axis=0)
+        outside += int(np.count_nonzero(~inside))
+    return values, domain, {"method": "nearest source centre; floor(index+.5), half-open source cell domain",
+        "target_index_to_source_index": transform.tolist(), "source_index_to_target_index": reverse.tolist(),
+        "source_positive_centres_outside_target_grid": outside,
+        "source_positive_voxels": int(source.sum()), "resampled_positive_voxels": int(values.sum()),
+        "resampled_source_domain_voxels": int(domain.sum()), "outside_source_domain": "unknown",
+        "source_grid_unchanged": True, "resampling_can_omit_subvoxel_labels": True,
+        "source_positive_volume_mm3": float(source.sum()*abs(np.linalg.det(np.asarray(source_affine)[:3, :3]))),
+        "resampled_positive_volume_mm3": float(values.sum()*abs(np.linalg.det(np.asarray(target_affine)[:3, :3])))}
+
+
 def run_crop(args):
     repository_root = Path(args.repository_root or ROOT).resolve()
     import numpy as np
@@ -385,11 +467,16 @@ def run_crop(args):
         series = {s["kind"]: s for s in case["series"]}
         core = source_module(repository_root / "scripts/convert_remind_development.py", CORE_SHA)
         mr = by_kind["structural_t1ce"]; public = by_kind["cerebrum"]
-        shape = tuple(public["geometry"]["shape_xyz"]); need(np.prod(shape) <= 32000000, "planning_voxel_cap")
-        mr_affine = np.asarray(mr["geometry"]["affine_xyz_to_ras_mm"]); derived = np.asarray(public["geometry"]["affine_xyz_to_ras_mm"])
-        start, crop_map = integer_map(derived, shape, mr_affine)
-        need(all(0 <= int(o) and int(o)+n <= full for o, n, full in zip(start, shape, mr["geometry"]["shape_xyz"])), "public_crop_outside_MR")
-        native_crop_affine = mr_affine.copy(); native_crop_affine[:3, 3] = (mr_affine @ np.r_[start, 1])[:3]
+        resample_labels = args.phase == "crop-mr"
+        mr_affine = np.asarray(mr["geometry"]["affine_xyz_to_ras_mm"])
+        if resample_labels:
+            start, shape, native_crop_affine, derived, crop_map = mr_sampling_crop(mr["geometry"], public["geometry"])
+        else:
+            shape = tuple(public["geometry"]["shape_xyz"]); need(np.prod(shape) <= 32000000, "planning_voxel_cap")
+            derived = np.asarray(public["geometry"]["affine_xyz_to_ras_mm"])
+            start, crop_map = integer_map(derived, shape, mr_affine)
+            need(all(0 <= int(o) and int(o)+n <= full for o, n, full in zip(start, shape, mr["geometry"]["shape_xyz"])), "public_crop_outside_MR")
+            native_crop_affine = mr_affine.copy(); native_crop_affine[:3, 3] = (mr_affine @ np.r_[start, 1])[:3]
         need(corner_error(native_crop_affine, derived, shape) <= MAX_CORNER_MM, "derived_grid_world_difference")
         selected_indices = mr["geometry"]["sorted_source_indices"][int(start[2]):int(start[2])+shape[2]]
         estimated_peak = sum(series["structural_t1ce"]["objects"][i]["bytes"] for i in selected_indices) + int(np.prod(mr["geometry"]["shape_xyz"][:2]))*shape[2]*16 + 256*1024**2
@@ -409,7 +496,8 @@ def run_crop(args):
         np.save(output/"MR_native_crop.npy", crop, allow_pickle=False)
         report.update(header_snapshot_sha256=args.headers_sha256, case_sha256=args.case_sha256, public_crop_start_MR=start.tolist(), shape_xyz=list(shape),
             MR_native_crop_affine_ras_mm=native_crop_affine.tolist(), planning_derived_affine_ras_mm=derived.tolist(),
-            planning_grid_source="public automatic cerebrum SEG native grid", crop_selection_uses_private_ventricle_labels=False,
+            planning_grid_source="original MRI sampling cropped using public cerebrum world bounds; explicit bounded orthogonal roundoff" if resample_labels else "public automatic cerebrum SEG native grid", crop_selection_uses_private_ventricle_labels=False,
+            labels_resampled=resample_labels,
             reindex_policy={"source_MR_samples_preserved": True, "image_interpolation": "none", "original_MR_affine_overwritten": False,
                 "maximum_crop_world_difference_mm": corner_error(native_crop_affine, derived, shape), "maximum_bound_mm": MAX_CORNER_MM,
                 "subset_converter_fit_difference_mm": fitted_error, "source_MR_grid": grid_quality(native_crop_affine, shape), "derived_grid": grid_quality(derived, shape)},
@@ -427,16 +515,26 @@ def run_crop(args):
             expected = raw_seg_samples(ds)[saved["geometry"]["sorted_source_indices"]].transpose(2, 1, 0)
             need(np.array_equal(native, expected), "independent_SEG_bit_sample_mismatch")
             need(corner_error(affine, saved["geometry"]["affine_xyz_to_ras_mm"], native.shape) < 1e-9, "SEG_saved_geometry")
-            offset, placement = integer_map(affine, native.shape, derived)
-            placed, domain = place(native, offset, shape); masks[kind] = placed
+            if resample_labels:
+                placed, domain, placement = resample_binary_nn(native, affine, derived, shape, lambda: guard(started))
+                if kind == "cerebrum": need(bool(np.all(domain)), "public_support_source_domain_incomplete")
+            else:
+                offset, placement = integer_map(affine, native.shape, derived)
+                placed, domain = place(native, offset, shape)
+            masks[kind] = placed
             np.save(output/f"{kind}_source_label.npy", placed, allow_pickle=False)
-            if kind != "cerebrum": np.save(output/f"{kind}_source_grid_domain.npy", domain, allow_pickle=False)
+            if kind != "cerebrum" or resample_labels: np.save(output/f"{kind}_source_grid_domain.npy", domain, allow_pickle=False)
             report["annotations"][kind] = {"source_native_affine_ras_mm": affine.tolist(), "source_native_shape": list(native.shape),
                 "source_native_geometry_retained": True, "placement": placement, "source_positive_voxels": int(native.sum()),
-                "placed_positive_voxels": int(placed.sum()), "native_grid_domain_voxels": int(domain.sum()),
+                "placed_positive_voxels": int(placed.sum()), "native_grid_domain_voxels": int(native.size),
+                "placed_source_domain_voxels": int(domain.sum()),
                 "outside_native_grid": "unknown; zero padded mask must be paired with domain", "source_samples_equal": True,
                 "ancestry": saved["ancestry"], "correspondence": saved["alignment"], "annotation_accuracy": "unreviewed"}
-            if kind == "whole_tumor": tumor_point = offset+(np.asarray(native.shape)-1)//2
+            if kind == "whole_tumor":
+                if resample_labels:
+                    centre = (np.linalg.inv(derived) @ affine @ np.r_[(np.asarray(native.shape)-1)/2, 1])[:3]
+                    tumor_point = np.clip(np.floor(centre+.5).astype(int), 0, np.asarray(shape)-1)
+                else: tumor_point = offset+(np.asarray(native.shape)-1)//2
             del native, expected, domain, ds; gc.collect()
         report["public_support_private_ventricle_relation"] = {"ventricle_positive_voxels": int(masks["ventricles"].sum()),
             "ventricle_positive_in_public_support_zero": int(np.count_nonzero(masks["ventricles"] & (masks["cerebrum"] == 0))),
