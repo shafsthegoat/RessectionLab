@@ -1,0 +1,106 @@
+{
+  "bytes": 61657062,
+  "declaration_path": "data/acquisition/remind-select-public-v1/declaration.json",
+  "declaration_sha256": "4618ccc76d9b28e382fa9205392aadf0bac88b20cc5fe4da9e10afcbbbf66a43",
+  "manifest_path": "data/acquisition/remind-select-public-v1/source/exact-object-manifest.json",
+  "manifest_sha256": "b3f2da842bcb7d519cbfca6179ab59562aaecd44d5ce9c73bf40363a735306f9",
+  "metadata_requests": 6,
+  "objects": 372,
+  "payload_requests": 0,
+  "series": [
+    {
+      "bytes": 787,
+      "exact_bytes": 7439388,
+      "headers": {
+        "saved_response_reused": "Prior verified-TLS HTTP200 response saved before exact zero-byte directory marker handling was added; no payload request."
+      },
+      "objects": 1,
+      "path": "data/acquisition/remind-select-public-v1/source/listing-30b3b7f5-a542-4fb2-9744-f7e91359d9bb.xml",
+      "series_uuid": "30b3b7f5-a542-4fb2-9744-f7e91359d9bb",
+      "sha256": "129981a66d64f2c28d73779047254df81c45a1db7b30246bea6b597b8d2642a9",
+      "tls_verified": true,
+      "url": "https://idc-open-data.s3.amazonaws.com/?list-type=2&prefix=30b3b7f5-a542-4fb2-9744-f7e91359d9bb%2F&max-keys=1000"
+    },
+    {
+      "bytes": 785,
+      "exact_bytes": 25470,
+      "headers": {
+        "Content-Length": null,
+        "Content-Type": "application/xml",
+        "Date": "Sat, 10 Oct 2026 07:55:31 GMT",
+        "ETag": null
+      },
+      "objects": 1,
+      "path": "data/acquisition/remind-select-public-v1/source/listing-6aecb7da-0b67-4765-9811-213b3c983b22.xml",
+      "series_uuid": "6aecb7da-0b67-4765-9811-213b3c983b22",
+      "sha256": "1da7ed5214924a14d8e17b7a855201838511a0611cd1dd8eabfcbfb732131b5d",
+      "tls_verified": true,
+      "url": "https://idc-open-data.s3.amazonaws.com/?list-type=2&prefix=6aecb7da-0b67-4765-9811-213b3c983b22%2F&max-keys=1000"
+    },
+    {
+      "bytes": 53313,
+      "exact_bytes": 25581836,
+      "headers": {
+        "Content-Length": null,
+        "Content-Type": "application/xml",
+        "Date": "Sat, 10 Oct 2026 07:55:31 GMT",
+        "ETag": null
+      },
+      "objects": 192,
+      "path": "data/acquisition/remind-select-public-v1/source/listing-79cb63bb-6c98-4d94-bd4b-c8f736e71ed8.xml",
+      "series_uuid": "79cb63bb-6c98-4d94-bd4b-c8f736e71ed8",
+      "sha256": "4d1297597135d130f45c221c835a56fdf218a590d6f66e0d861844f2ddacdc8f",
+      "tls_verified": true,
+      "url": "https://idc-open-data.s3.amazonaws.com/?list-type=2&prefix=79cb63bb-6c98-4d94-bd4b-c8f736e71ed8%2F&max-keys=1000"
+    },
+    {
+      "bytes": 785,
+      "exact_bytes": 21012,
+      "headers": {
+        "Content-Length": null,
+        "Content-Type": "application/xml",
+        "Date": "Sat, 10 Oct 2026 07:55:31 GMT",
+        "ETag": null
+      },
+      "objects": 1,
+      "path": "data/acquisition/remind-select-public-v1/source/listing-71000b63-56e3-42c3-977a-4389fb87046a.xml",
+      "series_uuid": "71000b63-56e3-42c3-977a-4389fb87046a",
+      "sha256": "a71b1d54d28588808178cb4576e386d82b8cf1ff2c0d5e78e67d55382a993454",
+      "tls_verified": true,
+      "url": "https://idc-open-data.s3.amazonaws.com/?list-type=2&prefix=71000b63-56e3-42c3-977a-4389fb87046a%2F&max-keys=1000"
+    },
+    {
+      "bytes": 787,
+      "exact_bytes": 8741376,
+      "headers": {
+        "Content-Length": null,
+        "Content-Type": "application/xml",
+        "Date": "Sat, 10 Oct 2026 07:55:31 GMT",
+        "ETag": null
+      },
+      "objects": 1,
+      "path": "data/acquisition/remind-select-public-v1/source/listing-88911f75-9082-427c-8cd6-9784aecf46c0.xml",
+      "series_uuid": "88911f75-9082-427c-8cd6-9784aecf46c0",
+      "sha256": "550ec85cd8e2585b80214203f55f008a1262ad113e2a93c0c3b35cb3614dbd2e",
+      "tls_verified": true,
+      "url": "https://idc-open-data.s3.amazonaws.com/?list-type=2&prefix=88911f75-9082-427c-8cd6-9784aecf46c0%2F&max-keys=1000"
+    },
+    {
+      "bytes": 48913,
+      "exact_bytes": 19847980,
+      "headers": {
+        "Content-Length": null,
+        "Content-Type": "application/xml",
+        "Date": "Sat, 10 Oct 2026 07:55:31 GMT",
+        "ETag": null
+      },
+      "objects": 176,
+      "path": "data/acquisition/remind-select-public-v1/source/listing-d5fd818e-ba97-4115-8dfb-eca2aa919b89.xml",
+      "series_uuid": "d5fd818e-ba97-4115-8dfb-eca2aa919b89",
+      "sha256": "74a2f7e93ce9380434faaa775a31dfc29085892e4b418f027cf8578236b31ee7",
+      "tls_verified": true,
+      "url": "https://idc-open-data.s3.amazonaws.com/?list-type=2&prefix=d5fd818e-ba97-4115-8dfb-eca2aa919b89%2F&max-keys=1000"
+    }
+  ],
+  "status": "all_six_public_series_listed"
+}

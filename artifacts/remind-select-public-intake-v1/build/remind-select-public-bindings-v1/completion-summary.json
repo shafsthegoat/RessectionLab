@@ -1,0 +1,100 @@
+{
+  "created_utc": "2026-10-10T07:57:04.069566+00:00",
+  "status": "all_public_SELECT_bytes_verified_no_QC",
+  "cases": [
+    {
+      "patient_id": "ReMIND-013",
+      "role": "SELECT",
+      "case": {
+        "path": "build/remind-select-public-bindings-v1/ReMIND-013-case.json",
+        "bytes": 92193,
+        "sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65"
+      },
+      "source_binding": {
+        "path": "build/remind-select-public-bindings-v1/ReMIND-013-source-binding.json",
+        "bytes": 99124,
+        "sha256": "b7dbf348afdf6ee570b8a6ad64a48b34b7f2a2a1d75fd5ee3c890e2fea26970f"
+      },
+      "objects": 194,
+      "bytes": 33046694,
+      "series": [
+        {
+          "kind": "structural_t1ce",
+          "series_uuid": "79cb63bb-6c98-4d94-bd4b-c8f736e71ed8",
+          "objects": 192,
+          "bytes": 25581836
+        },
+        {
+          "kind": "whole_tumor",
+          "series_uuid": "6aecb7da-0b67-4765-9811-213b3c983b22",
+          "objects": 1,
+          "bytes": 25470
+        },
+        {
+          "kind": "cerebrum",
+          "series_uuid": "30b3b7f5-a542-4fb2-9744-f7e91359d9bb",
+          "objects": 1,
+          "bytes": 7439388
+        }
+      ]
+    },
+    {
+      "patient_id": "ReMIND-037",
+      "role": "SELECT",
+      "case": {
+        "path": "build/remind-select-public-bindings-v1/ReMIND-037-case.json",
+        "bytes": 84982,
+        "sha256": "89ebb69cdd8d104eb726e402b2c09da9a4c3799a6bef97f7a646903562120fd9"
+      },
+      "source_binding": {
+        "path": "build/remind-select-public-bindings-v1/ReMIND-037-source-binding.json",
+        "bytes": 91321,
+        "sha256": "a5c7a071a5f50ac62d7bdec7053d3c91d01c35ffd5483d5c7da01313a2314105"
+      },
+      "objects": 178,
+      "bytes": 28610368,
+      "series": [
+        {
+          "kind": "structural_t1ce",
+          "series_uuid": "d5fd818e-ba97-4115-8dfb-eca2aa919b89",
+          "objects": 176,
+          "bytes": 19847980
+        },
+        {
+          "kind": "whole_tumor",
+          "series_uuid": "71000b63-56e3-42c3-977a-4389fb87046a",
+          "objects": 1,
+          "bytes": 21012
+        },
+        {
+          "kind": "cerebrum",
+          "series_uuid": "88911f75-9082-427c-8cd6-9784aecf46c0",
+          "objects": 1,
+          "bytes": 8741376
+        }
+      ]
+    }
+  ],
+  "completion": {
+    "path": "data/acquisition/remind-select-public-v1/completion.json",
+    "bytes": 323279,
+    "sha256": "9a016fb886582eeb044aede9e953a19bacf41a1a6e7deaa3635fc954c4de56d0"
+  },
+  "declaration": {
+    "path": "data/acquisition/remind-select-public-v1/declaration.json",
+    "bytes": 1936,
+    "sha256": "4618ccc76d9b28e382fa9205392aadf0bac88b20cc5fe4da9e10afcbbbf66a43"
+  },
+  "manifest": {
+    "path": "data/acquisition/remind-select-public-v1/source/exact-object-manifest.json",
+    "bytes": 383365,
+    "sha256": "b3f2da842bcb7d519cbfca6179ab59562aaecd44d5ce9c73bf40363a735306f9"
+  },
+  "total_objects": 372,
+  "total_bytes": 61657062,
+  "unresolved_files": 0,
+  "header_or_array_reads": 0,
+  "private_or_eval_payload_requests": 0,
+  "training_admitted": false,
+  "metadata_preparation_note": "First official listing included an exact zero-byte S3 directory marker; initial preparation assertion stopped before payload. Saved TLS response was reused with explicit exact-marker exclusion. No payload attempt/history reset."
+}

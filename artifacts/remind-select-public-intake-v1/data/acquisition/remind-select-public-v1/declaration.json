@@ -1,0 +1,34 @@
+{
+  "active_outputs_allowance_bytes": 68719476736,
+  "all_payloads_unreviewed": true,
+  "authorization": "Root explicit continuous exact six-public-series SELECT013/037 intake; no headers/pixels/arrays, private ventricular series or EVAL067; same frozen roles.",
+  "created_utc": "2026-10-10T07:55:30.580364+00:00",
+  "exact_source_bytes": 61657062,
+  "execution_released": true,
+  "free_space_reserve_bytes": 107374182400,
+  "headers_or_arrays_allowed": false,
+  "helper_sha256": {
+    "acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "manifest_path": "data/acquisition/remind-select-public-v1/source/exact-object-manifest.json",
+  "manifest_sha256": "b3f2da842bcb7d519cbfca6179ab59562aaecd44d5ce9c73bf40363a735306f9",
+  "max_payload_bytes": 104857600,
+  "max_transport_attempts_per_object_across_restarts": 3,
+  "max_workers": 1,
+  "metadata_pins": {
+    "build/remind-cohort-expansion-preparation-v1/idc-remind-series-metadata.json": "8301d9890e97316c8905448c9ec78e851d43ed18b383455ae138f4b13a8023be",
+    "data/acquisition/remind-train-seg-v1/source/tcia-collection.html": "cb172ef0f1fbdc79880dd7eccd932694175ffb9a6e0d0ba8fe757e9ed87813b9",
+    "manifests/experiments/remind-component-cohort-v1.json": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "manifests/experiments/remind-planning-pilot-v1.json": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f"
+  },
+  "objects": 372,
+  "roles": [
+    "SELECT"
+  ],
+  "runner_path": "build/remind-select-public-bindings-v1/run-intake.py",
+  "runner_sha256": "819ab7c806c113236d5b8a3e8e9fc8c5158132a68718a5fa1f9e82541fc3e6e6",
+  "schema": "remind-select-public-byte-release-v1",
+  "training_admitted": false
+}
