@@ -1,0 +1,209 @@
+{
+  "SELECT_EVAL_opened": false,
+  "TRAIN_greedy": {
+    "IL": {
+      "ReMIND-008": {
+        "actions": [
+          "nominal-cavity-791b0296bad254a5e9b20f62",
+          "nominal-cavity-1abafeeb6db535336c2657df",
+          "nominal-cavity-15d3efe4f8de7f927547e5bf",
+          "nominal-cavity-9aafa44a86f26c78d01d713b",
+          "nominal-cavity-2e5770344a83c0fb8e57584e",
+          "nominal-cavity-fb5056adf1072a0b33284bc8",
+          "nominal-cavity-5d76a67265378cef6d3ae498",
+          "nominal-cavity-c612d0b50cdfc9f66c703b2e",
+          "nominal-cavity-f3e54684b4febd94c76af08b",
+          "nominal-cavity-1aa822c6252b3a0facd4d450",
+          "nominal-cavity-1d84d5373135a00ad3bbe0c7",
+          "nominal-cavity-d03571be2141273ea5286140",
+          "nominal-cavity-2d41dcfbebd0f1dcb75fe0ec",
+          "nominal-cavity-4352f8ba5d02f72e9da09341",
+          "nominal-cavity-4c9583397de6e5d841e73d1b",
+          "nominal-cavity-2219df717cb744d61a423338",
+          "nominal-cavity-b0a39c0e4e357d84b6e2d277",
+          "nominal-cavity-5273b015cef75e9e4387af0a",
+          "nominal-cavity-878e5d78553d6b54282ec09a",
+          "nominal-cavity-6ab5d751d4278959e7cddcd1",
+          "nominal-cavity-a41dbb941113427649fccd01",
+          "nominal-cavity-7f9e83e424cd655dc54481ab",
+          "nominal-cavity-5044066d6d74f7e1657539fe",
+          "nominal-cavity-daa7e387b2968dfd7f18ee9b"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:91ce64615936b22713049e551f9497e8df9bb28a6cb4cee77a458ae5471df2e9",
+        "public_return": -3.2988319334404688,
+        "steps": 24
+      },
+      "ReMIND-010": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:861934d3fd5c7f280672cb37b4d9a9ba5c7e0717972cfc689b6866351ed77590",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-020": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:0827ea8e8a50bd058eb8e48c71020c2e8acf918ef689a44886aa24e823bfabf2",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-025": {
+        "actions": [
+          "nominal-cavity-968f3758c3de3eab8c99ca99",
+          "nominal-cavity-68d3bddca12c3a239d5cb85a",
+          "nominal-cavity-bdb3ffe51d89f8f7238e3a27",
+          "nominal-cavity-f24902065c5e7ac9c72732e7",
+          "nominal-cavity-be2ed7b333180f0f1043b2a1",
+          "nominal-cavity-27638e9d63ca87258d14d8c3",
+          "nominal-cavity-c464b0817f66bd01f333580f",
+          "nominal-cavity-8bb3189bd1ef99e3aa68c4c0",
+          "nominal-cavity-477d9355203fc0ae6febfc63",
+          "nominal-cavity-b840931e311a80e929e39836",
+          "nominal-cavity-c4e63f7439ea6e573d50312c",
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:8fc9c62398b961dbe4766bfdf76428e839a408f59b5531ecdbda1f143c1ca958",
+        "public_return": -1.5007769436824556,
+        "steps": 12
+      }
+    },
+    "RL": {
+      "ReMIND-008": {
+        "actions": [
+          "nominal-cavity-791b0296bad254a5e9b20f62",
+          "nominal-cavity-1abafeeb6db535336c2657df",
+          "nominal-cavity-61f90fb4cb0ad581c90080bb",
+          "nominal-cavity-2c5931c900c2b6b951bcc285",
+          "nominal-cavity-202c1b0ad2c5527ecb96a55d",
+          "nominal-cavity-d722e0d9e7f6a3421df51b5d",
+          "nominal-cavity-1d8318b2fb2429d891231e04",
+          "nominal-cavity-fd4fdcdc3ba7b18b3cee658a",
+          "nominal-cavity-b3708171c767af3543a58b67",
+          "nominal-cavity-40cc42f2e9c2c9db992d13c0",
+          "nominal-cavity-7afde49c80e04d248af6fd5e",
+          "nominal-cavity-3bcf2210757583199fa182e5",
+          "nominal-cavity-a494f22075ee07afbb34dde3",
+          "nominal-cavity-a7957ffae7e05bf9641fa188",
+          "nominal-cavity-284d9b71d4a3b82da386220e",
+          "nominal-cavity-80e8eca6caea78758800bc65",
+          "nominal-cavity-7c86d9f9cfd2b14ef7586702",
+          "nominal-cavity-dc6ee08811d67a74c83fd9ff",
+          "nominal-cavity-e014a631e678750256a80753",
+          "nominal-cavity-aef6fc2dddff90821d5113af",
+          "nominal-cavity-5cb6e59cf8abb1ca814cdef4",
+          "nominal-cavity-e2028931751805e690aff70e",
+          "nominal-cavity-1a4e687dfefece084dbf0d6b",
+          "nominal-cavity-4c6e3b2f6047d35e1a4f4466"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:4e1c40e64cbdb15a12ac38ae40badf33a4d38944ab330434f00cbd9bc91ceecf",
+        "public_return": -2.9812741133495972,
+        "steps": 24
+      },
+      "ReMIND-010": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:b5adc9db69b5ecf91366fefff3a3acdc23bbe82941e05ecdd11afcc8a8c6d24c",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-020": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:1c245647a2cd7b06d4f17f7fb601c9b0f593dbb8542d3c07244d35a9ba16bc75",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-025": {
+        "actions": [
+          "nominal-cavity-968f3758c3de3eab8c99ca99",
+          "nominal-cavity-68d3bddca12c3a239d5cb85a",
+          "nominal-cavity-8c48246a4b00be2ace752181",
+          "nominal-cavity-69f6e1060bdd0dd5879e416b",
+          "nominal-cavity-dd74594612ce60e6b39f2f35",
+          "nominal-cavity-3d756721f4978210110a5b11",
+          "nominal-cavity-730b5ba68c64062fcd38dac6",
+          "nominal-cavity-9215826c454bcc5333c155af",
+          "nominal-cavity-38a4ef9e067fd0b5ad97e3e3",
+          "nominal-cavity-e68f79b878ec15091881eb07",
+          "nominal-cavity-0a6b31967646d88869f8cf35",
+          "nominal-cavity-6d50aa55e425d611249024a2",
+          "nominal-cavity-0df8d88b88734f0fda202924",
+          "nominal-cavity-5d5bac82f733bce529448918",
+          "nominal-cavity-8b8dc1236f90ca06a4dc0850",
+          "nominal-cavity-d6ef61d7ec2285f48fb8325b",
+          "nominal-cavity-a6538f8e6406f6f743f45ef1",
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:c4cf1fe9b55c7f3adedd92fc0bb109c3946f9a1353fad2ecbb7973ca12603cf0",
+        "public_return": -4.009362077918177,
+        "steps": 18
+      }
+    }
+  },
+  "TRAIN_subjects": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "checkpoints": {
+    "IL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:437050c2dacd630dc7eeea6af20fe44071747b73f74ed5d4cecc1584fd91d5f1",
+      "path": "IL-final.psckpt",
+      "sha256": "4e0eece118513b9e215df60a04d76f0d922d16765d9ca3df0ddb03ffd31e8874"
+    },
+    "RL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:13d3d1932175d6cadbda79757251e0f773c08dfe28372acbbc804d3d5530737e",
+      "path": "RL-final.psckpt",
+      "sha256": "602d183dc61f9df29c80ee80e9eee4c0da9a724302b41afa76be3bc4fe489a33"
+    }
+  },
+  "clinical_claim": false,
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "complete_wall_seconds": 614.1896763751283,
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "optimizer_updates": {
+    "IL": 1,
+    "RL": 1
+  },
+  "output_bytes_before_terminal": 14786221,
+  "private_reference_reads": 0,
+  "selection_readiness": {
+    "SELECT_EVAL_opened": false,
+    "checkpoint_loader_available": true,
+    "execution_admitted": false,
+    "meaning": "both fixed endpoints and all8 complete TRAIN greedy replays retained",
+    "next_interface": "separate admitted greedy SELECT pass from authenticated checkpoints; no EVAL",
+    "ready": true
+  },
+  "status": "complete_TRAIN_only_not_heldout_performance",
+  "teacher_statuses": {
+    "ReMIND-008": "complete_replayed",
+    "ReMIND-010": "complete_replayed",
+    "ReMIND-020": "complete_replayed",
+    "ReMIND-025": "complete_replayed"
+  },
+  "version": "fixed-four-TRAIN-sequential-cohort-v2"
+}

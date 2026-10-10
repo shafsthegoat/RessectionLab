@@ -1,0 +1,190 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "claim": "bounded numerical TRAIN pilot only; no held-out, physical or clinical performance claim",
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 2882880,
+    "max_optimizer_updates": 2,
+    "max_policy_forwards": 480,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "completion": "all four complete teachers, one shared IL update, one shared RL update, both fixed checkpoints, eight complete TRAIN greedy native replays",
+  "cost_interpretation": "canonical preview/forward limits are conservative bounds; costs.json and owned receipt contain measured usage",
+  "expected_head": "8915c62aae2ecb0f04539a0f5ad1db03a4dd8286",
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "patient_order": [
+        "ReMIND-008",
+        "ReMIND-010",
+        "ReMIND-020",
+        "ReMIND-025"
+      ],
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_observations": "recollect_complete_pinned_plan_each_IL_update"
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 1,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-sequential-cohort-v2"
+  },
+  "learning_protocol_hash": "sha256:fb0e76f3f265928b8c734fc5b3cf4ec9d4d602b3c8c03be7e8c5ebd27ebd1182",
+  "limits": {
+    "max_native_previews": 2882880,
+    "max_optimizer_updates": 2,
+    "max_policy_forwards": 480,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "output": "build/cross-patient-planning-v1/fixed-four-train-pilot-v1/attempt-01",
+  "parent_seconds": 3600,
+  "public_manifest_index": {
+    "path": "build/remind-planning-qc-v1/public-cohort-v1/public-manifest-index.json",
+    "sha256": "11b5c1ae8f9b2c03695e7eb0768d2cc340db68631f3ddb50ba365910fe0187f7"
+  },
+  "retention_mode": "return_plus_opening_depth_volume_v1",
+  "selection": "fixed one-update endpoint; SELECT/EVAL closed and require separate future admission",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/fixed-four-train-pilot-v1/source-index.json",
+    "sha256": "0b41669916b089f8fddbfda8eecaca2d9a66ea70e95c803b8a8563c7a160494c"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "teacher_gate": "all complete teachers precede all-no-positive refusal; no capped teacher, skipped negative case, substitute patient or retry",
+  "version": "fixed-four-TRAIN-pilot-release-v1"
+}

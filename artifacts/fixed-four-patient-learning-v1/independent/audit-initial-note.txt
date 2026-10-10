@@ -1,0 +1,1 @@
+Initial metadata audit stopped at its own overly strict action-count assertion: independent geometry counts non-STOP tool sweeps, while plan/history count includes STOP. First teacher was STOP-only (history1, geometry0). No run/source defect. Corrected assertion counts non-STOP actions. No arrays or checkpoint data opened.

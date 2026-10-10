@@ -1,0 +1,704 @@
+{
+  "complete_wall_seconds": 614.1896763751283,
+  "completed_patient_visits": [
+    {
+      "phase": "offline.teacher.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "offline.teacher.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "offline.teacher.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "offline.teacher.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    },
+    {
+      "phase": "offline.IL.update-01.collection_replay.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "offline.IL.update-01.collection_replay.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "offline.IL.update-01.collection_replay.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "offline.IL.update-01.collection_replay.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    },
+    {
+      "phase": "offline.RL.update-01.collection_replay.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "offline.RL.update-01.collection_replay.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "offline.RL.update-01.collection_replay.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "offline.RL.update-01.collection_replay.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.IL.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.IL.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.IL.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.IL.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.RL.ReMIND-008",
+      "source_released": true,
+      "subject": "ReMIND-008"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.RL.ReMIND-010",
+      "source_released": true,
+      "subject": "ReMIND-010"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.RL.ReMIND-020",
+      "source_released": true,
+      "subject": "ReMIND-020"
+    },
+    {
+      "phase": "deployment.TRAIN_greedy_replay.RL.ReMIND-025",
+      "source_released": true,
+      "subject": "ReMIND-025"
+    }
+  ],
+  "cost_scope": "offline and deployment separate; nested instrumentation inclusive, do not sum",
+  "costs": {
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-008": {
+      "complete_wall_seconds": 72.73821333399974,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 121,
+      "inventory_request_inclusive_seconds": 53.24516841373406,
+      "inventory_request_returned": 121,
+      "native_preview_entries": 5272,
+      "native_transition_calls": 48,
+      "native_transition_inclusive_seconds": 55.137797167757526,
+      "native_transition_returned": 48,
+      "policy_forward_calls": 24,
+      "policy_forward_inclusive_seconds": 2.642642125952989,
+      "policy_forward_returned": 24,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0010864168871194124,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 2.6960141249001026,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.0672662490978837,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 108
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-010": {
+      "complete_wall_seconds": 1.6811228329315782,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.7834229988511652,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 106,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.0339652500115335,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1887887918855995,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012430001515895128,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 1.5983359580859542,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.774241958046332,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 106
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-020": {
+      "complete_wall_seconds": 0.6279037080239505,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.25814237585291266,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 94,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.02853775001130998,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.12437450001016259,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012339591048657894,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 0.5320301251485944,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.2573263740632683,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 94
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-025": {
+      "complete_wall_seconds": 15.581314583076164,
+      "inventory_build_or_terminal_empty_calls": 25,
+      "inventory_request_calls": 61,
+      "inventory_request_inclusive_seconds": 10.516457669436932,
+      "inventory_request_returned": 61,
+      "native_preview_entries": 2445,
+      "native_transition_calls": 24,
+      "native_transition_inclusive_seconds": 10.518193872878328,
+      "native_transition_returned": 24,
+      "policy_forward_calls": 12,
+      "policy_forward_inclusive_seconds": 1.3195352496113628,
+      "policy_forward_returned": 12,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012648748233914375,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.IL.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.678292625118047,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.4356260411441326,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 103
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-008": {
+      "complete_wall_seconds": 72.47587520908564,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 121,
+      "inventory_request_inclusive_seconds": 53.32153762248345,
+      "inventory_request_returned": 121,
+      "native_preview_entries": 5308,
+      "native_transition_calls": 48,
+      "native_transition_inclusive_seconds": 55.01889724913053,
+      "native_transition_returned": 48,
+      "policy_forward_calls": 24,
+      "policy_forward_inclusive_seconds": 2.756387332919985,
+      "policy_forward_returned": 24,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0010615000501275063,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 2.569876458030194,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.0713097502011806,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 108
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-010": {
+      "complete_wall_seconds": 1.6707706660963595,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.7779070839751512,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 106,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.034431041684001684,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.17847183300182223,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.00128837488591671,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 1.6156092500314116,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.784329499816522,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 106
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-020": {
+      "complete_wall_seconds": 0.6492349591571838,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.2565022499766201,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 94,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.029626917093992233,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1344166670460254,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012463750317692757,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 0.5337434171233326,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.25913429097272456,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 94
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-025": {
+      "complete_wall_seconds": 25.012026916025206,
+      "inventory_build_or_terminal_empty_calls": 37,
+      "inventory_request_calls": 91,
+      "inventory_request_inclusive_seconds": 16.51974512450397,
+      "inventory_request_returned": 91,
+      "native_preview_entries": 3735,
+      "native_transition_calls": 36,
+      "native_transition_inclusive_seconds": 16.75185375334695,
+      "native_transition_returned": 36,
+      "policy_forward_calls": 18,
+      "policy_forward_inclusive_seconds": 1.973183209542185,
+      "policy_forward_returned": 18,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012919160071760416,
+      "task_clone_returned": 1
+    },
+    "deployment.TRAIN_greedy_replay.RL.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.6892439171206206,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.44130329322069883,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 103
+    },
+    "offline.IL.checkpoint_save": {
+      "complete_wall_seconds": 0.0017334581352770329,
+      "native_preview_entries": 0
+    },
+    "offline.IL.update-01.action_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.4549502090085298,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.28207216691225767,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-01.action_backward.ReMIND-010": {
+      "complete_wall_seconds": 0.25876754079945385,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.1304364160168916,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-01.action_backward.ReMIND-020": {
+      "complete_wall_seconds": 0.27338058315217495,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.14052312495186925,
+      "policy_forward_returned": 1
+    },
+    "offline.IL.update-01.action_backward.ReMIND-025": {
+      "complete_wall_seconds": 0.5109624171163887,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 2,
+      "policy_forward_inclusive_seconds": 0.2449818339664489,
+      "policy_forward_returned": 2
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-008": {
+      "complete_wall_seconds": 2.681278915842995,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 1.0693388329818845,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 108,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.03912949934601784,
+      "native_transition_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0010780831798911095,
+      "task_clone_returned": 1
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 2.5867719578091055,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.0640452499501407,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 108
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-010": {
+      "complete_wall_seconds": 1.7402962921187282,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.7900152911897749,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 106,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.03395754098892212,
+      "native_transition_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0013227080926299095,
+      "task_clone_returned": 1
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 1.6206239580642432,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.7817151239141822,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 106
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-020": {
+      "complete_wall_seconds": 0.7582752499729395,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 0.2581403332296759,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 94,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.028131666826084256,
+      "native_transition_returned": 2,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.001247459091246128,
+      "task_clone_returned": 1
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 0.5180524589959532,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.255518916528672,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 94
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-025": {
+      "complete_wall_seconds": 2.381183792138472,
+      "inventory_build_or_terminal_empty_calls": 5,
+      "inventory_request_calls": 11,
+      "inventory_request_inclusive_seconds": 1.3229159987531602,
+      "inventory_request_returned": 11,
+      "native_preview_entries": 309,
+      "native_transition_calls": 4,
+      "native_transition_inclusive_seconds": 0.9454801250249147,
+      "native_transition_returned": 4,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012660000938922167,
+      "task_clone_returned": 1
+    },
+    "offline.IL.update-01.collection_replay.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.6738373329862952,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.43722900142893195,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 103
+    },
+    "offline.IL.update-01.shared_optimizer_step": {
+      "complete_wall_seconds": 0.009827957954257727,
+      "native_preview_entries": 0
+    },
+    "offline.RL.checkpoint_save": {
+      "complete_wall_seconds": 0.0025329578202217817,
+      "native_preview_entries": 0
+    },
+    "offline.RL.update-01.action_backward.ReMIND-008": {
+      "complete_wall_seconds": 0.27111149998381734,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.12629508296959102,
+      "policy_forward_returned": 1
+    },
+    "offline.RL.update-01.action_backward.ReMIND-010": {
+      "complete_wall_seconds": 3.691190749872476,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 15,
+      "policy_forward_inclusive_seconds": 1.751551166176796,
+      "policy_forward_returned": 15
+    },
+    "offline.RL.update-01.action_backward.ReMIND-020": {
+      "complete_wall_seconds": 4.677110957913101,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 20,
+      "policy_forward_inclusive_seconds": 2.1487483342643827,
+      "policy_forward_returned": 20
+    },
+    "offline.RL.update-01.action_backward.ReMIND-025": {
+      "complete_wall_seconds": 1.1559254589956254,
+      "native_preview_entries": 0,
+      "policy_forward_calls": 5,
+      "policy_forward_inclusive_seconds": 0.5259860008955002,
+      "policy_forward_returned": 5
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-008": {
+      "complete_wall_seconds": 2.6498370829503983,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "inventory_request_calls": 6,
+      "inventory_request_inclusive_seconds": 1.0684534613974392,
+      "inventory_request_returned": 6,
+      "native_preview_entries": 108,
+      "native_transition_calls": 2,
+      "native_transition_inclusive_seconds": 0.03937320807017386,
+      "native_transition_returned": 2,
+      "policy_forward_calls": 1,
+      "policy_forward_inclusive_seconds": 0.15064266696572304,
+      "policy_forward_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0010891659185290337,
+      "task_clone_returned": 1
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 2.539114708080888,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.0784487922210246,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 108
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-010": {
+      "complete_wall_seconds": 34.13307004189119,
+      "inventory_build_or_terminal_empty_calls": 31,
+      "inventory_request_calls": 76,
+      "inventory_request_inclusive_seconds": 23.333322456805035,
+      "inventory_request_returned": 76,
+      "native_preview_entries": 3190,
+      "native_transition_calls": 30,
+      "native_transition_inclusive_seconds": 23.639124126406386,
+      "native_transition_returned": 30,
+      "policy_forward_calls": 15,
+      "policy_forward_inclusive_seconds": 2.0540872924029827,
+      "policy_forward_returned": 15,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012837499380111694,
+      "task_clone_returned": 1
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 1.6348948751110584,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.7894538750406355,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 106
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-020": {
+      "complete_wall_seconds": 23.52441916614771,
+      "inventory_build_or_terminal_empty_calls": 41,
+      "inventory_request_calls": 101,
+      "inventory_request_inclusive_seconds": 11.409382288344204,
+      "inventory_request_returned": 101,
+      "native_preview_entries": 3836,
+      "native_transition_calls": 40,
+      "native_transition_inclusive_seconds": 11.99116845568642,
+      "native_transition_returned": 40,
+      "policy_forward_calls": 20,
+      "policy_forward_inclusive_seconds": 2.741466917330399,
+      "policy_forward_returned": 20,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012716669589281082,
+      "task_clone_returned": 1
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 0.5275673330761492,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.2614072908181697,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 94
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-025": {
+      "complete_wall_seconds": 6.7397960419766605,
+      "inventory_build_or_terminal_empty_calls": 11,
+      "inventory_request_calls": 26,
+      "inventory_request_inclusive_seconds": 4.041609041625634,
+      "inventory_request_returned": 26,
+      "native_preview_entries": 953,
+      "native_transition_calls": 10,
+      "native_transition_inclusive_seconds": 3.77163675124757,
+      "native_transition_returned": 10,
+      "policy_forward_calls": 5,
+      "policy_forward_inclusive_seconds": 0.5332140836399049,
+      "policy_forward_returned": 5,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0012279169168323278,
+      "task_clone_returned": 1
+    },
+    "offline.RL.update-01.collection_replay.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.6725085831712931,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.43436212511733174,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 103
+    },
+    "offline.RL.update-01.shared_optimizer_step": {
+      "complete_wall_seconds": 0.006506041856482625,
+      "native_preview_entries": 0
+    },
+    "offline.common_initialization": {
+      "complete_wall_seconds": 0.014890416990965605,
+      "native_preview_entries": 0
+    },
+    "offline.teacher.ReMIND-008": {
+      "complete_wall_seconds": 179.0508789580781,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 1454,
+      "inventory_request_inclusive_seconds": 79.20007299631834,
+      "inventory_request_returned": 1454,
+      "native_preview_entries": 5278,
+      "native_transition_calls": 1403,
+      "native_transition_inclusive_seconds": 86.63453666679561,
+      "native_transition_returned": 1403,
+      "task_clone_calls": 1403,
+      "task_clone_inclusive_seconds": 33.007477500941604,
+      "task_clone_returned": 1403
+    },
+    "offline.teacher.ReMIND-008.public_reconstruction": {
+      "complete_wall_seconds": 2.7235252500977367,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.025080833118409,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 108
+    },
+    "offline.teacher.ReMIND-010": {
+      "complete_wall_seconds": 96.57263462501578,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 1002,
+      "inventory_request_inclusive_seconds": 50.906136672711,
+      "inventory_request_returned": 1002,
+      "native_preview_entries": 5114,
+      "native_transition_calls": 951,
+      "native_transition_inclusive_seconds": 38.927297837799415,
+      "native_transition_returned": 951,
+      "task_clone_calls": 951,
+      "task_clone_inclusive_seconds": 17.74263271363452,
+      "task_clone_returned": 951
+    },
+    "offline.teacher.ReMIND-010.public_reconstruction": {
+      "complete_wall_seconds": 1.7638175839092582,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.835816043196246,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 106
+    },
+    "offline.teacher.ReMIND-020": {
+      "complete_wall_seconds": 21.77070579188876,
+      "inventory_build_or_terminal_empty_calls": 49,
+      "inventory_request_calls": 464,
+      "inventory_request_inclusive_seconds": 15.110407308442518,
+      "inventory_request_returned": 464,
+      "native_preview_entries": 4672,
+      "native_transition_calls": 413,
+      "native_transition_inclusive_seconds": 4.923109680181369,
+      "native_transition_returned": 413,
+      "task_clone_calls": 413,
+      "task_clone_inclusive_seconds": 2.5438776661176234,
+      "task_clone_returned": 413
+    },
+    "offline.teacher.ReMIND-020.public_reconstruction": {
+      "complete_wall_seconds": 0.5204869580920786,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.25566699891351163,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 94
+    },
+    "offline.teacher.ReMIND-025": {
+      "complete_wall_seconds": 23.62130866595544,
+      "inventory_build_or_terminal_empty_calls": 42,
+      "inventory_request_calls": 304,
+      "inventory_request_inclusive_seconds": 19.64325004746206,
+      "inventory_request_returned": 304,
+      "native_preview_entries": 4231,
+      "native_transition_calls": 259,
+      "native_transition_inclusive_seconds": 3.5802931680809706,
+      "native_transition_returned": 259,
+      "task_clone_calls": 257,
+      "task_clone_inclusive_seconds": 1.2680193725973368,
+      "task_clone_returned": 257
+    },
+    "offline.teacher.ReMIND-025.public_reconstruction": {
+      "complete_wall_seconds": 0.6712332919705659,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 0.4339026671368629,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 103
+    }
+  },
+  "memory_scope": "source lifetime checked; actual peak tree RSS requires owned supervisor",
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 614.1892060001846,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 2882880,
+      "planning_execution_seconds": 3540.0
+    },
+    "native_preview_entries": 47214,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 8800,
+          "raised": 0,
+          "rejected": 38414,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 38414
+          },
+          "returned": 47214,
+          "returned_microsteps": 282173,
+          "seconds": 226.20497650140896,
+          "started": 47214
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 47214,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "resource_authority": "owned parent hard wall/tree RSS/output receipt required",
+  "total_policy_forward_calls": 169
+}

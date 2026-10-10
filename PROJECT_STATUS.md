@@ -3,15 +3,18 @@
 **Current priority, October 10:** complete a cross-patient, limited-information
 planning experiment on qualified acquired anatomy. Preserve the negative learned
 results below; additional generated-task architecture sweeps and mechanics format
-work are deferred. The immediate bottleneck is a usable patient task with verified
-image/annotation geometry and the same permitted inputs for search and learned
-policies. ReMIND preoperative MRI with a supplied tumor region and source ventricular
-annotations is being qualified. Its ventricular annotations are automatic Brainlab
-estimates, not manual ground truth or evidence of neurological injury. Existing
-patient roles remain fixed. No patient model benefit has yet been demonstrated.
+work are deferred. The first four-patient shared learning run is complete: one case
+has a useful teacher action, but learned policies continue past its correct stopping
+point. The immediate experiment tests eight updates with the same task and inputs.
+ReMIND preoperative MRI uses a supplied tumor region and automatic tissue support;
+source ventricular estimates remain separate from deployment inputs. Those automatic
+Brainlab estimates are not manual ground truth or evidence of neurological injury.
+Existing patient roles remain fixed. No patient model benefit has been demonstrated.
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **First four-patient shared learning experiment is complete; search still wins:** [one shared update per method](artifacts/fixed-four-patient-learning-v1/RESULT.txt) uses all four fixed TRAIN patients and replays all eight final policies. Search finds one positive case (025, +0.91684); both learners take its useful first action but continue past the teacher STOP, ending at IL −1.50078 and RL −4.00936. All RL collection episodes miss target reward. The 617.749-second run completes at 2.671 GB sampled peak with 47,214 previews and authenticated checkpoints. This identifies a concrete stopping/exploration failure, not generalization benefit. A controlled eight-update follow-on holds task, reward, architecture and initialization fixed; SELECT/EVAL stay closed.
 
 - **The numerical correction does not improve the patient route:** [the matched axial-layer contrast](artifacts/observed-search-axial-layer-v1/patient-contrast/RESULT.txt) reaches target one step earlier but has the same step-23 target removal/depth and 7.95% more outside-target removal. STOP remains selected. All 1,279 evaluated cumulative returns are negative; the 163.335-second run completes with no cap omissions and passes independent audit. Preserve the variant, but keep established depth-volume retention for the next fixed-four TRAIN pilot with shared IL/RL updates and global public target context. Further single-patient blocker work is prepared but deferred.
 

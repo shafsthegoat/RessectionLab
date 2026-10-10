@@ -1,0 +1,65 @@
+Four-patient shared learning: completed, search still stronger
+October 10, 2026
+
+Executed canonical HEAD 8915c62aae2ecb0f04539a0f5ad1db03a4dd8286.
+One shared IL update and one shared RL update each used all four fixed TRAIN
+patients (008,010,020,025), identical fresh initial weights, the full permitted
+target summary, horizon24, cap120 and depth-volume search. All four teachers,
+all eight final greedy plans and native replays completed. SELECT013/037 and
+EVAL067 remained closed; no private reference arrays were read. These are
+simulator-generated geometric actions on acquired anatomy, not observed surgery.
+
+Patient       SEARCH return     IL return       RL return
+008                 0            -3.29883        -2.98127
+010                 0             0               0
+020                 0             0               0
+025                +0.91684       -1.50078        -4.00936
+
+The 025 teacher removes 0.953674795 mm3 supplied-target tissue, no outside-target
+tissue, then stops. Both final policies choose that identical first action and
+reach the identical teacher STOP observation, but continue. IL adds ten motions
+and 10.490423 mm3 outside-target removal; RL adds sixteen and 21.934520 mm3.
+IL stops with other actions available; RL stops only when no motion remains.
+An initial greedy baseline was not recorded, so the correct first action cannot
+be attributed to learning. One update does not diagnose architecture inadequacy.
+
+Useful teacher coverage is 1/4 patients. The other three complete searches select
+STOP. Five teacher labels include four STOPs. RL collects four complete episodes
+(41 decisions) with no target removal on any patient. Its 025 episode chooses
+four unhelpful openings, then STOP. This separates useful supervision and sampled
+reward exposure from an assertion that the physical surgical task is infeasible.
+
+The measured run takes 617.748817 owned seconds, 2,671,329,280 bytes sampled peak
+resident memory, 47,214 native previews and 169 policy forwards. Both optimizer
+updates change parameters; all four contexts contribute before either update.
+Detailed offline teacher/collection/backward and deployment/replay costs are
+separate in costs.json; nested inclusive timers must not be summed. Native replay
+and independent geometry checks are included. Frozen endpoint evaluations use
+in-memory policies; checkpoint bytes are saved/authenticated, not reloaded for
+these evaluations. Owned process exits zero, with no cleanup errors or remaining
+owned processes. Sampled RSS is not a kernel-enforced transient peak bound.
+
+Next experiment: eight shared updates from the same fresh initialization and
+unchanged task, reward, sampling and architecture. Require initial and first-update
+parameter hashes to match this run. Test whether 025 keeps the useful first action
+and stops next, while 008 learns to stop and 010/020 retain stopping. Report RL
+reward exposure and all failures. This is an added-compute learning test, not
+matched-cost superiority or held-out performance. No reward tuning to force a win.
+
+Anatomical limits remain: supplied manual target, automatic tissue support with
+substantial unsupported target membership, missing vessel/function evidence and
+unvalidated mechanical effects. Outside-target removal is a geometric proxy,
+not measured normal-tissue injury. No physical, clinical or generalization benefit
+is established. Independent saved-result audit passes: 20 replay histories, update contributions,
+source/evidence identities and counters agree. It authenticates saved geometry
+checks without rerunning them; an initial audit-only STOP-count assumption and
+its correction are retained.
+
+Reproduction: runtime/ retains exact four executed driver files and two reused
+owned-process helpers. Restore their paths from source-index.json and use the
+pinned Git HEAD for canonical source; public data paths/hashes are in that index.
+The one-attempt output already exists and must not be overwritten. A distinct
+prospective output/release is required for another execution. Local-output-index
+binds full excluded replay files and both local checkpoints; no weights or patient
+arrays are committed. result.json, method-summary.json and costs.json contain the
+compact quantitative evidence; root-release.json and receipt.json bind execution.
