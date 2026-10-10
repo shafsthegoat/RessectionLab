@@ -1,0 +1,44 @@
+{
+  "schema": "hbe-v5-torsion-evaluation-declaration-v1",
+  "status": "source_preparation_not_response_access_release",
+  "caps": {
+    "worker_seconds": 60, "cleanup_seconds": 10, "total_seconds": 70,
+    "sampled_group_rss_bytes": 536870912, "new_output_bytes": 16777216,
+    "threads": 1, "attempts": 1, "fit_calls": 0, "native_calls": 0,
+    "mesher_calls": 0, "held_out_member_reads": 2, "automatic_retry": false
+  },
+  "protocol": {
+    "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "roles": {
+    "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+    "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+  },
+  "source_template": {
+    "path": "artifacts/hbe-v5-fixed-fit-source-v1/false-release.json",
+    "sha256": "928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17"
+  },
+  "fixed_fit_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "csv_schemas": {
+    "torsion_neg": {
+      "delimiter": ",", "header": null, "coordinate_column": 0,
+      "response_column": 1, "coordinate_unit": "rad", "response_unit": "Nm"
+    },
+    "torsion_pos": {
+      "delimiter": ",", "header": null, "coordinate_column": 0,
+      "response_column": 1, "coordinate_unit": "rad", "response_unit": "Nm"
+    }
+  },
+  "torsion_header_inspected": false,
+  "schema_failure_policy": "preserve attempted exposure; no autodetection, skipped row, retry or replacement",
+  "donor_role": "DEVELOPMENT",
+  "specimen": "HBE_01_03",
+  "physical_validation_pass": null,
+  "empirical_tolerance": null,
+  "measurement_uncertainty": null,
+  "calibration_quality": "unchanged_poor_within_specimen_fit_not_physical_validation",
+  "patient_tool_mechanics_admitted": false,
+  "independent_donor_validation": false,
+  "upstream_required": "both fitted confirmations and immutable prereveal freeze independently accepted; exact root bindings supplied later"
+}
