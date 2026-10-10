@@ -1,0 +1,21 @@
+Frozen desktop proposal — ready for independent review and root-only integration.
+
+source-index.json SHA 27c60aaf63d7cd5f05dd822789f5ade5c54d2f5e2dd1eecadeaeccbb1c077862 binds exactly 30 non-App changed files / 382,669 bytes. source.patch SHA caa50df78cd9a2830d7a3d05fa146c8b93cd40f9bd0e19f6cac3f3ff6e2b04bc contains only these changes. Copied neighboring WIP/assets and unchanged electron/public-contact-authority.cjs are excluded.
+
+App is separate. App.worktree.patch SHA a728900e83be3a2ea75e0bb91034510390b00c80ae1dd37edb2140da2148b713 binds baseline 617047e45697607300b9c3a2e324100899709950500dad72024d168253017202. App.clean-HEAD.patch SHA 1b5dcf7c2e4a2b6ab3d7891a304b6860590db1609a46985193458b8982559b39 binds baseline 1f4a73b823f92feccfd5cc9efca2e8272e0aa1c6dc04fe7f1191b7fc0f7fe4c1. Apply only intended App hunks, never replace/stage the full working App. Read-only source/worktree/index patch checks passed.
+
+Separate v3 admission validates family-v2 identities, 15x15x14 native source, affine, public goal, candidate version, initial public channels/availability/coverage, full physical replay and native contact reward. Floating-point RAS geometry is preserved; integer cells remain integer cells. Existing v1/v2 default replay shape and objective behavior remain unchanged. TRAIN/SELECT can be selected; all measurement layouts stay locked. IL/RL stay unavailable until backend publication of reviewed final artifacts. No fabricated trained fixture or random-policy fallback exists.
+
+Live learned receipts must match episode lineage and current backend release. This is consistency evidence, not signed training proof. SEARCH call limits and beam pruning are labeled incomplete; time-limit results are refused with an explicit reason. No optimality, speed, superiority, generalization or clinical claim is made. Pilot benchmark facts are not hardcoded into the desktop.
+
+Family episodes are transient. Save refuses before API even after workflow changes; vascular and old aspiration comparison are unavailable. Same-source install clears prior actor/contact state. Ordinary reopen restores aspiration. Request and hydration failures remain distinct from STOP. Generation/source guards reject late responses.
+
+Validation: 49 focused controls pass in 363 ms (test-family-final-v2.txt); 113 existing related controls passed (test-existing-second.txt). Working and clean-HEAD TypeScript pass. Actual root-owned planned STOP pcf-06 and SEARCH pcf-10 responses, including source assets, pass existing AssetRegistry and renderer hydration (crossstack-final.txt). planned-transport-receipt.json SHA 37381961fc4a5bf49bce1a26f37b964989d5e21047c894a8534169fbe0fba09f pins raw inputs and transfer files.
+
+Saved STOP has 2 frames and zero return/removal. Saved SEARCH has 29 frames, aspiration then probe, retained goal contact, modeled return 0.704, 1 mm3 removal and 6 mm complete path. Candidate tip cells are integer; recorded full-tool poses include fractional coordinates. These saved generated controls are not new native runs or learned-policy evidence. Prior failed test/collection logs are retained.
+
+Node executable: /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node
+Focused command from repo root: NODE --experimental-strip-types --test build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-*.test.mjs build/public-contact-learning-desktop-v1/stage/desktop/electron/contact-family.test.cjs
+Saved cross-stack command: NODE --experimental-strip-types build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-crossstack.mjs build/contact-family-planned-transport-v1/catalog.json build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-STOP.json build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-SEARCH.json
+
+No tracked edits, Python/native/model/checkpoint/patient calls or live UI launch by this desktop task. Root owns promotion, full canonical checks, publication and actual desktop execution.

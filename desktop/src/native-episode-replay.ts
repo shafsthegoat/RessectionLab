@@ -10,7 +10,7 @@ function requireValue(value:unknown,message:string):asserts value{if(!value)thro
 const count=(mask:Uint8Array)=>mask.reduce((sum,n)=>sum+n,0);
 /** Shared physical replay only. Each task-specific caller must first admit its
  * exact schema, objective and execution provenance. This does not infer them. */
-export async function hydrateNativeEpisodeReplay<T extends NativeEpisodeGeometry>(input:{case:CasePayload;episode:T;episodeCanonicalJson:string},api:ResectionApi,maxSteps:2|6){
+export async function hydrateNativeEpisodeReplay<T extends NativeEpisodeGeometry>(input:{case:CasePayload;episode:T;episodeCanonicalJson:string},api:ResectionApi,maxSteps:2|6,admittedShape:readonly [number,number,number]=[13,13,12]){
   const source = structuredClone(input.case), episode = structuredClone(input.episode);
   requireValue(typeof input.episodeCanonicalJson === "string" && input.episodeCanonicalJson.length <= 2*1024*1024 &&
     `sha256:${await sha256Bytes(new TextEncoder().encode(input.episodeCanonicalJson))}` === episode.episodeId, "episode serialization digest changed.");
@@ -28,7 +28,7 @@ export async function hydrateNativeEpisodeReplay<T extends NativeEpisodeGeometry
   requireValue(source.frame === "RAS+" && episode.frame === "RAS+" && episode.physicalUnits === "mm" &&
     same(source.shape,episode.shape) && same(source.affine,episode.affine), "physical source grid changed.");
   const {voxelCount,voxelVolumeMm3} = validateCaseDescriptor(source);
-  requireValue(same(source.shape,[13,13,12]) && voxelCount <= 262144 && episode.history.length > 0 && episode.history.length <= maxSteps &&
+  requireValue(same(source.shape,admittedShape) && voxelCount <= 262144 && episode.history.length > 0 && episode.history.length <= maxSteps &&
     episode.replayFrames.length > 1 && episode.replayFrames.length <= 512, "development replay exceeds its bounded contract.");
   requireValue(episode.geometryAudit.feasible === true && episode.geometryAudit.complete_tool_checked === true &&
     episode.geometryAudit.frontier_checked === true && episode.geometryAudit.source_case_hash === episode.sourceHash,

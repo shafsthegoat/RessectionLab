@@ -1,0 +1,11 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{createRequire}=require('node:module');
+test('real main/preload binds metadata and execution IPC with 30 second bound and no artifact override',async()=>{
+ const {unavailableCatalog}=await import('../tests/helpers/contact-family-catalog.mjs');const handlers=new Map(),calls=[],frame={url:'file:///trusted-app.html'},window={webContents:{mainFrame:frame},isDestroyed:()=>false};
+ const main=path.join(__dirname,'main.cjs'),localRequire=createRequire(main),engine={request:async(...args)=>{calls.push(args);if(args[0]==='publicContactFamilyAvailability'){engine.contactFamilyAvailability=unavailableCatalog();return engine.contactFamilyAvailability}throw Error('BOUNDED_WORKER_REFUSED')}};
+ const context=vm.createContext({__dirname,process,Buffer,console,structuredClone,__engine:engine,__window:window,__url:frame.url,require:n=>n==='electron'?{app:{requestSingleInstanceLock:()=>false,quit(){},on(){}},ipcMain:{handle:(n,cb)=>handlers.set(n,cb)}}:localRequire(n)});
+ vm.runInContext(fs.readFileSync(main,'utf8'),context);vm.runInContext('engine=__engine;window=__window;allowedUrl=__url;bindOperations();',context);let api;vm.runInNewContext(fs.readFileSync(path.join(__dirname,'preload.cjs'),'utf8'),{require:()=>({contextBridge:{exposeInMainWorld:(_,v)=>api=v},ipcRenderer:{invoke:(n,a)=>handlers.get(n)({sender:window.webContents,senderFrame:frame},a)}})});
+ const catalog=await api.publicContactFamilyAvailability({});assert.equal(catalog.methods.IL.available,false);assert.equal(calls[0][2],30000);
+ const request={fixture:'generated-public-contact-family-v2',layoutId:'pcf-00',goalId:'surface',selector:'SEARCH'};await assert.rejects(api.executePublicContactFamilyEpisode(request),/BOUNDED_WORKER_REFUSED/);assert.equal(calls[1][2],30000);assert.deepEqual(calls[1][1],request);
+ for(const change of [{selector:'IL'},{layoutId:'pcf-20'},{checkpoint:'/arbitrary'}])await assert.rejects(api.executePublicContactFamilyEpisode({...request,...change}));assert.equal(calls.length,2);await assert.rejects(api.publicContactFamilyAvailability({path:'/arbitrary'}));assert.equal(calls.length,2);
+});

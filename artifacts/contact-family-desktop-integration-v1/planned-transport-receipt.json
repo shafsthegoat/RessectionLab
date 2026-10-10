@@ -1,0 +1,168 @@
+{
+  "status": "PASS",
+  "scope": "exact saved planned BridgeSession -> unchanged AssetRegistry -> host and renderer; no task/model execution",
+  "inputs": [
+    {
+      "path": "build/contact-family-planned-transport-v1/catalog.json",
+      "sha256": "99ddb8a931d008e2bc8d2a6e3a5ef29eecc48d917fc8d26dcbf13caf5f5667d0",
+      "bytes": 4366
+    },
+    {
+      "path": "desktop/electron/assets.cjs",
+      "sha256": "489bc5af82e21f30208d81d9ae9da28d97a3d50da276292df187291ab4e73292",
+      "bytes": 2990
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/STOP-transport.json",
+      "sha256": "42fe71373e3f8774a6bf5e70ce6c94e68b68cd85b3a95ede72de4847aa8baf4d",
+      "bytes": 35276
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/transfers/bridge-kc4_sjoj/28aa6c2bc49a3c55b31bbbf74f2c982be6dcc1cbe5d8f5c7ee85e3e2411c8495.bin",
+      "sha256": "28aa6c2bc49a3c55b31bbbf74f2c982be6dcc1cbe5d8f5c7ee85e3e2411c8495",
+      "bytes": 3150
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/transfers/bridge-kc4_sjoj/53a13942bd25414237f40d2228c26571fb029410791bf9490a22af958453a2e2.bin",
+      "sha256": "53a13942bd25414237f40d2228c26571fb029410791bf9490a22af958453a2e2",
+      "bytes": 3150
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/transfers/bridge-kc4_sjoj/8cbf2dc061d760d4b1e29f9db63f82a4970d2380937191d64af2666d907562f3.bin",
+      "sha256": "8cbf2dc061d760d4b1e29f9db63f82a4970d2380937191d64af2666d907562f3",
+      "bytes": 12600
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/SEARCH-transport.json",
+      "sha256": "e9410fd7ac8505c10ff0c8205533dc52317c71fedef2578a2a5dbcf083fe1c87",
+      "bytes": 127672
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/transfers/bridge-kc4_sjoj/3eca54e97ba22acd5ea806160ba161deeaa92d0108c6fc0124d0f49cf2992ad3.bin",
+      "sha256": "3eca54e97ba22acd5ea806160ba161deeaa92d0108c6fc0124d0f49cf2992ad3",
+      "bytes": 12600
+    },
+    {
+      "path": "build/contact-family-planned-transport-v1/transfers/bridge-kc4_sjoj/b6d6e542dbc2974cf6bbfc52cb66d89a51cff486c5d2b66fcf05ea610cb077e1.bin",
+      "sha256": "b6d6e542dbc2974cf6bbfc52cb66d89a51cff486c5d2b66fcf05ea610cb077e1",
+      "bytes": 3150
+    }
+  ],
+  "rows": [
+    {
+      "method": "STOP",
+      "layout": "pcf-06",
+      "role": "TRAIN",
+      "episodeId": "sha256:91e96aeb39a0bb7b37f989367e6bd7cbe16c980f5327c02895a69b9d72bcf58e",
+      "sourceHash": "sha256:772db65be32803e8ed41e10e780770060cd073f6b4edff717faaa873585815bc",
+      "shape": [
+        15,
+        15,
+        14
+      ],
+      "frames": 2,
+      "history": [
+        "stop"
+      ],
+      "subvoxelPhysicalPose": false,
+      "outcome": {
+        "modeledReturn": 0,
+        "totalRemovedMm3": 0,
+        "completePathMm": 0,
+        "totalCost": 0,
+        "retained": true,
+        "contactedAndRetained": false,
+        "termination": "STOP"
+      },
+      "observation": {
+        "nativeShape": [
+          15,
+          15,
+          14
+        ],
+        "cropShape": [
+          15,
+          15,
+          14
+        ],
+        "channelAvailable": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "coverageScope": "declared initial public crop only"
+      },
+      "fixture": {
+        "path": "build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-STOP.json",
+        "sha256": "7fa80212c710c67a992b2b2022e71df2886c6d5cb1f79c5f66d02bac8a807a96",
+        "bytes": 63912
+      }
+    },
+    {
+      "method": "SEARCH",
+      "layout": "pcf-10",
+      "role": "TRAIN",
+      "episodeId": "sha256:a94da4a80cb57fb4b4420b4e4289d8d846052958632c961b3887017e51e0b2ee",
+      "sourceHash": "sha256:a95db76f15ef7dcd46251395be0d20982ad153559c94e372fcc955f392ef3727",
+      "shape": [
+        15,
+        15,
+        14
+      ],
+      "frames": 29,
+      "history": [
+        "aspirate",
+        "probe"
+      ],
+      "subvoxelPhysicalPose": true,
+      "outcome": {
+        "modeledReturn": 0.7040000000000001,
+        "totalRemovedMm3": 1,
+        "completePathMm": 6,
+        "totalCost": 0.29600000000000004,
+        "retained": true,
+        "contactedAndRetained": true,
+        "termination": "horizon"
+      },
+      "observation": {
+        "nativeShape": [
+          15,
+          15,
+          14
+        ],
+        "cropShape": [
+          15,
+          15,
+          14
+        ],
+        "channelAvailable": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "coverageScope": "declared initial public crop only"
+      },
+      "fixture": {
+        "path": "build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-SEARCH.json",
+        "sha256": "ce4a068c4e5cb5064d3c11cb7517f315b6bd02afaaeac1392e6f0500f557f8e3",
+        "bytes": 154966
+      }
+    }
+  ],
+  "learnedExecution": "unavailable; no final publication admitted",
+  "costs": {
+    "new_native_calls": 0,
+    "new_model_forwards": 0,
+    "patient_reads": 0
+  }
+}

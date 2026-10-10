@@ -1,0 +1,9 @@
+# Contact-family desktop integration
+
+The Electron workspace now offers the fixed generated family, public surface/deep goals, bounded search and STOP, with learned availability controlled by the backend release. Full physical tool paths, goal status, removal and replay frames use the existing authoritative native exporter. TRAIN/SELECT are interactive; held-out layouts remain locked. Transient family episodes cannot be saved as an older workspace schema.
+
+Root canonical checks pass 494 tests (97 host, 325 renderer, 72 viewer). Both the working desktop and exact staged desktop build. An existing vascular-panel test initially failed during temporary cache deletion, after its assertions passed. That cleanup now uses the same bounded retry as the other panel tests; the original failed log is retained and the complete rerun passes. No production behavior was relaxed. Independent source review verifies all 30 source entries and both App patch variants. Original neighboring UI edits remain unstaged.
+
+Two planned actual backend transports pass host/renderer hydration using their exact generated source assets: STOP on TRAIN pcf-06/surface gives two frames and zero return; SEARCH on TRAIN pcf-10/surface gives aspiration then probe, 29 frames, one mm³ removal, six mm round-trip motion, 0.296 modeled cost and 0.704 return. Worker supervision completes at roughly 2.33 seconds each and 252/255 MB sampled peak, with clean cleanup. The original transport summary used a non-existent `frames` key and records null; the indexed hydration receipt checks the actual `replayFrames` and confirms 2/29.
+
+This commit establishes tested source and transport integration. Live Mac inspection and final learned publication follow separately. No learned superiority, patient transfer or physical contact validity follows.

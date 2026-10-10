@@ -1,0 +1,27 @@
+[
+  {
+    "method": "STOP",
+    "layout": "pcf-06",
+    "wall_seconds": 2.3375914581120014,
+    "sha256": "42fe71373e3f8774a6bf5e70ce6c94e68b68cd85b3a95ede72de4847aa8baf4d",
+    "bytes": 35276,
+    "episode_id": "sha256:91e96aeb39a0bb7b37f989367e6bd7cbe16c980f5327c02895a69b9d72bcf58e",
+    "history_modes": [
+      "stop"
+    ],
+    "frames": null
+  },
+  {
+    "method": "SEARCH",
+    "layout": "pcf-10",
+    "wall_seconds": 2.33691708301194,
+    "sha256": "e9410fd7ac8505c10ff0c8205533dc52317c71fedef2578a2a5dbcf083fe1c87",
+    "bytes": 127672,
+    "episode_id": "sha256:a94da4a80cb57fb4b4420b4e4289d8d846052958632c961b3887017e51e0b2ee",
+    "history_modes": [
+      "aspirate",
+      "probe"
+    ],
+    "frames": null
+  }
+]

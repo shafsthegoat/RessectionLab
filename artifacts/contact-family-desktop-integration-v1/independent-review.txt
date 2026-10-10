@@ -1,0 +1,31 @@
+Independent source review: generated contact-family desktop integration
+
+Decision: GO for the indexed source promotion and separate App integration hunks. No blocking source finding. Root owns canonical tests and the live Electron check. This is not learned-artifact publication, training/held-out admission, or medical validation.
+
+Frozen scope
+source-index.json SHA256 27c60aaf63d7cd5f05dd822789f5ade5c54d2f5e2dd1eecadeaeccbb1c077862
+source.patch SHA256 caa50df78cd9a2830d7a3d05fa146c8b93cd40f9bd0e19f6cac3f3ff6e2b04bc
+Base directory: build/public-contact-learning-desktop-v1/
+All 30 indexed non-App files were independently checked for exact hashes and lengths: 382,669 bytes. No candidate code was imported or executed during this review.
+
+App preservation and lifecycle
+The worktree baseline hash 617047e45697607300b9c3a2e324100899709950500dad72024d168253017202 matches the current dirty App. The clean baseline 1f4a73b823f92feccfd5cc9efca2e8272e0aa1c6dc04fe7f1191b7fc0f7fe4c1 matches current HEAD. Reviewed both integration diffs and their candidate difference; the clean App has no neighboring inspection imports/hooks. The worktree variant retains that preexisting work and invalidates its inspection when showing family replay. Unlisted copied files and neighboring WIP are excluded from promotion.
+Worktree patch a728900e83be3a2ea75e0bb91034510390b00c80ae1dd37edb2140da2148b713; resulting App ad4d290cae1aa9eac65e585b03b9f6c1fabc4efdea20ac1b1d7ad220b5831845.
+Clean HEAD patch 1b5dcf7c2e4a2b6ab3d7891a304b6860590db1609a46985193458b8982559b39; resulting App 0491ac9b0ff068890aca8666bcd28ec0c08d6299032b211fde8f670ae1fc9a7c.
+
+The family request records episode and source generations, validates/hydrates detached input before install, and refuses stale source/unmounted responses. Existing installCase separately guards hydration with its generation, clears prior actor/contact/family state even for the same case hash, and restores ordinary saved replay only through existing workspace admission. Request/validation failures remain errors; they do not become STOP. Availability fetch has its own invalidation generation. Existing primary-display overlay guards remain intact; family Show returns to the primary image. Family Save is explicitly refused before the API even after selecting another workflow. Family execution cannot reach the old aspiration comparison or vascular scoring UI.
+
+Source and replay boundaries
+The family has a distinct v3 admission requiring family-v2/candidate-v2 versions, exact request/layout/role, canonical episode bytes, common source identities, public objective/declaration, initial crop affine/goal/value/availability/coverage hashes, and fixed two-action protocol. Requests cannot specify checkpoints, private references, roles or poses. Catalog and host refuse unreleased learned methods and held-out interactive layouts; assets remain limited to existing public source slots. Learned response checks bind final artifact/lineage and owned execution metadata; no positive learned transport is claimed.
+
+The shared native replay diff only adds an explicit admitted shape parameter; fixed callers retain [13,13,12], and separately admitted family uses [15,15,14]. Existing insertion and reversed-withdrawal reconstruction, full-tool dimensions, native source-grid mask prefixes, per-frame hashes and engine ancestry checks remain. Added trajectory checks retain float physical entry/endpoints and active-tip continuity; integer cell indices are never used to snap poses. Extracted contact accounting preserves the prior equations and reconciles contact, removal, retained goal, path, effort and reward. Public contact remains a geometric task, not a force/sensor/injury claim.
+
+The saved SEARCH example has fractional recorded tool poses, including entry/microsteps; its final candidate tip coordinates happen to be integers. The crossstack continuousEndpointPresent:false field describes final tips only and does not contradict the stronger recorded-pose check. Immediate STOP is a distinct zero outcome. Search call-cap/beam-pruning qualifications are visible; time-cap results are refused with an explicit reason rather than displayed as completed STOP.
+
+Saved evidence inspected, not independently rerun
+- Author final focused controls: 49 passed, 0 failed, 363.043833 ms. Log test-family-final-v2.txt SHA256 d0762cffdbb013de5044a6b4f8e5ac9cda0d1c4b3654745d15b3515c20ebb918. Includes actual App handler extraction, stale response/reset/reopen/save, exact saved transport tampering with recomputed envelope identity, and actual panel rendering.
+- Prior related controls: 113 passed; author records working and clean-App TypeScript success, with empty diagnostic logs. Root's combined canonical suite remains separate.
+- Saved actual BridgeSession -> unchanged AssetRegistry -> host/renderer receipt: planned-transport-receipt.json SHA256 37381961fc4a5bf49bce1a26f37b964989d5e21047c894a8534169fbe0fba09f. STOP pcf-06 surface: two frames, zero removal/return. SEARCH pcf-10 surface: 29 frames, aspiration then probe, 1 mm3 removal, 6 mm round-trip path, 0.296 cost, 0.704 modeled return, retained/contacted goal. These are generated software outcomes.
+- crossstack-final.txt SHA256 f7b796efeef25e6d0a2ea523ae8913c21e6f937379d3b00e6ae988cc93f8c53e. Saved source/goal/coverage/withdrawal/contact and transfer-byte negatives are meaningful checks of this admitted path.
+
+Review activity was source, diffs, saved metadata/logs and read-only file hash verification only. No native, search, model, checkpoint, patient, UI, or test run occurred in this independent review. Exact learned positive transport and live Electron behavior remain untested here. Runtime consistency checks are not an independent recomputation of collision physics or signed proof of training.

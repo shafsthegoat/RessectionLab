@@ -19,7 +19,7 @@ export const contactSame=(a:unknown,b:unknown)=>JSON.stringify(contactStable(a))
 export function contactNeed(v:unknown,m:string):asserts v{if(!v)throw Error(`Public contact withheld: ${m}`)}
 /** This fixed metadata schema contains explicit float fields. Preserve Python's
  * .0 when recomputing those public objective/declaration hashes after JSON parse. */
-function metadataJson(v:unknown,key=''):string{
+export function metadataJson(v:unknown,key=''):string{
  if(typeof v==='number')return Number.isInteger(v)&&(key in CONTACT_COSTS||['completion_value','seconds'].includes(key))?`${v}.0`:JSON.stringify(v);
  if(Array.isArray(v))return '['+v.map(x=>metadataJson(x)).join(',')+']';
  if(v&&typeof v==='object')return '{'+Object.entries(v).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([k,x])=>JSON.stringify(k)+':'+metadataJson(x,k)).join(',')+'}';

@@ -1,0 +1,263 @@
+{
+  "version": "public-contact-family-desktop-promotion-v1",
+  "status": "READY_FOR_INDEPENDENT_REVIEW",
+  "headAtFreeze": "4384ea0ae681e46986de9505edf226dcaa2a6c8c",
+  "files": [
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/contact-family-types.ts",
+      "target": "desktop/src/contact-family-types.ts",
+      "sha256": "c47b6a10b18feee04af6e9129cda8bd9fa9789b5c29f1b11bc30918391b79f2c",
+      "bytes": 4932,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/contact-family-request.ts",
+      "target": "desktop/src/contact-family-request.ts",
+      "sha256": "66be056b0e524e7f560beb5e7be5f324ae4036ad1c7140bb368f2e519857a741",
+      "bytes": 1237,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/contact-family-availability.ts",
+      "target": "desktop/src/contact-family-availability.ts",
+      "sha256": "477798439389518371213d974239ef883263574e7055903674427938a5738c47",
+      "bytes": 3250,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/contact-family-authority.ts",
+      "target": "desktop/src/contact-family-authority.ts",
+      "sha256": "ae298558b4abbc44b7e23923f9796d53ba7aa11715494ffd22c2590a3acd2606",
+      "bytes": 11600,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/contact-family-observation.ts",
+      "target": "desktop/src/contact-family-observation.ts",
+      "sha256": "29b1092319e07b91927d9f9ffe5576e472722f49bdd4a3e30efed4d8543e473d",
+      "bytes": 4577,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/contact-family-data.ts",
+      "target": "desktop/src/contact-family-data.ts",
+      "sha256": "791a14aa256601650b6d9e5d5372b7a34df5d4ff49a7d7db04b5a0179740c19a",
+      "bytes": 4644,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/ContactFamilyPanel.tsx",
+      "target": "desktop/src/ContactFamilyPanel.tsx",
+      "sha256": "559810b3233849a5e943469b18456a1574b225a0f96f3955c25c4b7ed7a55ad2",
+      "bytes": 10903,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/native-contact-outcome.ts",
+      "target": "desktop/src/native-contact-outcome.ts",
+      "sha256": "ec15db7cd9fc0ca94382796adc9e0f5bd848d92206b36af501a9ab4a464dc332",
+      "bytes": 4729,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/public-contact-data.ts",
+      "target": "desktop/src/public-contact-data.ts",
+      "sha256": "1d3b99d78d0c586d10d0bada878db4f70a1b7efc9c32a6235568336c0d0392a3",
+      "bytes": 3013,
+      "beforeSha256": "1e0d62709608885fe7d05917fb8b0a7d9cd5774fd161babbe848d4b57f1019d0"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/native-episode-replay.ts",
+      "target": "desktop/src/native-episode-replay.ts",
+      "sha256": "26a8e6f98a03ae523d13285777065d7358ca667eda7bfb81bb385650aee0761f",
+      "bytes": 12429,
+      "beforeSha256": "b9a34c2e244e60f58edf5dc0c6d57345ec581480a8aaa6d1757b2a185a038b72"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/public-contact-authority.ts",
+      "target": "desktop/src/public-contact-authority.ts",
+      "sha256": "c67ad64ae720ae77f5a0a2b5e3b6dc401ca526475bfa871d8303eaa806116b5c",
+      "bytes": 6081,
+      "beforeSha256": "8aa8958b084a8d8c383de693359ecbf0212aad13548ebd7deb29d4d503cbeae4"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/src/types.ts",
+      "target": "desktop/src/types.ts",
+      "sha256": "eefa72e534e0b753e3f9129fe04d128101144061d9c9ae7dad5c67a7af78f3fb",
+      "bytes": 14558,
+      "beforeSha256": "fed37970018086e215c96f6abe2a9a82730918b82c845fe100a60163c91cb388"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/electron/contact-family.cjs",
+      "target": "desktop/electron/contact-family.cjs",
+      "sha256": "8ae7cc6c2e9013c7097fb7f7adfe3af1d4ba15a2f41907d01f144fd3d0463565",
+      "bytes": 2673,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/electron/contact-family-authority.cjs",
+      "target": "desktop/electron/contact-family-authority.cjs",
+      "sha256": "3d98792436c49fb31fb1ee27fb63bc90619cb7361e22fbe5a30a434ade60bf45",
+      "bytes": 24089,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/electron/main.cjs",
+      "target": "desktop/electron/main.cjs",
+      "sha256": "2757736d4d28d3ead4b436fa4ce391e452bf1b175a50df808c9a7967f4ba7138",
+      "bytes": 11504,
+      "beforeSha256": "688f79141081b78c832c54cb1d28311cb0a46d25a08a661fba24c5078f879e83"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/electron/preload.cjs",
+      "target": "desktop/electron/preload.cjs",
+      "sha256": "6afae381c05211ef54d05407c365eddbf642c9315b491f76d3d3350d9644ffa4",
+      "bytes": 2762,
+      "beforeSha256": "3fffb59de80330bac55654c4c51bc902a8b49adde1c70e688a9c5d2888a45469"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/electron/sidecar.cjs",
+      "target": "desktop/electron/sidecar.cjs",
+      "sha256": "5f1d505a9ecf17b0987911a0aa8a194116f2d8c870c1c0fcf517f5d4b7ad47ab",
+      "bytes": 9471,
+      "beforeSha256": "48509dce7221acc7a988fb6abdea921603ab7ce065480d549b018bcf04fc3271"
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/electron/contact-family.test.cjs",
+      "target": "desktop/electron/contact-family.test.cjs",
+      "sha256": "673fee039ebaa798f03f8a2e68b66ffcd60b19c543c7cb7189d95953970c5b8b",
+      "bytes": 2251,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-boundary.test.mjs",
+      "target": "desktop/tests/contact-family-boundary.test.mjs",
+      "sha256": "7f07a402671a4796cbe98f371075cf11565133222024649c15069bdd94f86922",
+      "bytes": 4302,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-app.test.mjs",
+      "target": "desktop/tests/contact-family-app.test.mjs",
+      "sha256": "67d35edcc98b26d65a22ddb518009bd4e86b2aca42bf23a25362fc32e4b61b89",
+      "bytes": 5671,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-controls.test.mjs",
+      "target": "desktop/tests/contact-family-controls.test.mjs",
+      "sha256": "705f03423a91ac84c65018b4b3b871e80f786340d8e25a15e3eaa2bbba1b1310",
+      "bytes": 2566,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-trajectory.test.mjs",
+      "target": "desktop/tests/contact-family-trajectory.test.mjs",
+      "sha256": "e5386ff021274db2ad17f48e088dea8da0b34e7b3e8fb17fd9d80a30a139d6a3",
+      "bytes": 1633,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-crossstack.mjs",
+      "target": "desktop/tests/contact-family-crossstack.mjs",
+      "sha256": "0870d2e8570b13681ab9ec05c7f4a36209e962f95d3d0b77dc611adb9fe74b6f",
+      "bytes": 1892,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/helpers/contact-family-catalog.mjs",
+      "target": "desktop/tests/helpers/contact-family-catalog.mjs",
+      "sha256": "84e685ec1604d68bbe95fee486cabf1b6357f62757c11cd41fec541c2b443cbf",
+      "bytes": 759,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-replay.test.mjs",
+      "target": "desktop/tests/contact-family-replay.test.mjs",
+      "sha256": "833d11134e4cbf1af492a1d7bea9e067e0f9223ae839ad37d434db171761dd24",
+      "bytes": 4052,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/contact-family-panel.test.mjs",
+      "target": "desktop/tests/contact-family-panel.test.mjs",
+      "sha256": "23f6cde0261059bc906ed460eb3e6c6605a7aa3775bf52ca42310f3bd95b102e",
+      "bytes": 2872,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/helpers/contact-family-fixture.mjs",
+      "target": "desktop/tests/helpers/contact-family-fixture.mjs",
+      "sha256": "f26ce9651a8c009ef8ed2033f247378eca4d3b84b89302cd91973b868186d84f",
+      "bytes": 975,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-STOP.json",
+      "target": "desktop/tests/fixtures/contact-family-STOP.json",
+      "sha256": "7fa80212c710c67a992b2b2022e71df2886c6d5cb1f79c5f66d02bac8a807a96",
+      "bytes": 63912,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-SEARCH.json",
+      "target": "desktop/tests/fixtures/contact-family-SEARCH.json",
+      "sha256": "ce4a068c4e5cb5064d3c11cb7517f315b6bd02afaaeac1392e6f0500f557f8e3",
+      "bytes": 154966,
+      "beforeSha256": null
+    },
+    {
+      "source": "build/public-contact-learning-desktop-v1/stage/desktop/tests/fixtures/contact-family-catalog.json",
+      "target": "desktop/tests/fixtures/contact-family-catalog.json",
+      "sha256": "99ddb8a931d008e2bc8d2a6e3a5ef29eecc48d917fc8d26dcbf13caf5f5667d0",
+      "bytes": 4366,
+      "beforeSha256": null
+    }
+  ],
+  "app": {
+    "target": "desktop/src/App.tsx",
+    "worktreeBaseline": {
+      "sha256": "617047e45697607300b9c3a2e324100899709950500dad72024d168253017202",
+      "bytes": 81169
+    },
+    "worktreePatch": {
+      "sha256": "a728900e83be3a2ea75e0bb91034510390b00c80ae1dd37edb2140da2148b713",
+      "bytes": 13732
+    },
+    "worktreeAfter": {
+      "sha256": "ad4d290cae1aa9eac65e585b03b9f6c1fabc4efdea20ac1b1d7ad220b5831845",
+      "bytes": 84430
+    },
+    "cleanHeadBaseline": {
+      "sha256": "1f4a73b823f92feccfd5cc9efca2e8272e0aa1c6dc04fe7f1191b7fc0f7fe4c1",
+      "bytes": 75911
+    },
+    "cleanHeadPatch": {
+      "sha256": "1b5dcf7c2e4a2b6ab3d7891a304b6860590db1609a46985193458b8982559b39",
+      "bytes": 13707
+    },
+    "cleanHeadAfter": {
+      "sha256": "0491ac9b0ff068890aca8666bcd28ec0c08d6299032b211fde8f670ae1fc9a7c",
+      "bytes": 79147
+    }
+  },
+  "validation": {
+    "focused49": "test-family-final-v2.txt",
+    "existing113": "test-existing-second.txt",
+    "workingTypecheck": "typecheck-final-v2.txt",
+    "cleanHeadTypecheck": "typecheck-clean-HEAD.txt",
+    "plannedTransportReceipt": {
+      "sha256": "37381961fc4a5bf49bce1a26f37b964989d5e21047c894a8534169fbe0fba09f",
+      "bytes": 5179
+    },
+    "crossstack": "crossstack-final.txt"
+  },
+  "learnedStatus": "Unavailable until reviewed publication; no positive learned transport claimed",
+  "exclusions": [
+    "Full App replacement",
+    "Unlisted copied files and neighboring WIP",
+    "Unchanged electron/public-contact-authority.cjs",
+    "Model/checkpoint/patient reads or runtime calls",
+    "UI launch"
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "version": "generated-public-contact-learning-availability-v1",
+  "fixture": "generated-public-contact-family-v2",
+  "familyHash": "sha256:ad21aff05f8a6df7b75cd86b12a5730d9554864fe9792a649489812a0fb053ed",
+  "experimentHash": null,
+  "releaseHash": null,
+  "layouts": [
+    {
+      "layoutId": "pcf-00",
+      "role": "SELECT",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-01",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-02",
+      "role": "SELECT",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-03",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-04",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-05",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-06",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-07",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-08",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-09",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-10",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-11",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-12",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-13",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-14",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-15",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-16",
+      "role": "SELECT",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-17",
+      "role": "MEASUREMENT_EVAL",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": false
+    },
+    {
+      "layoutId": "pcf-18",
+      "role": "SELECT",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-19",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-20",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-21",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-22",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    },
+    {
+      "layoutId": "pcf-23",
+      "role": "TRAIN",
+      "goals": [
+        "surface",
+        "deep"
+      ],
+      "interactive": true
+    }
+  ],
+  "methods": {
+    "STOP": {
+      "available": true,
+      "reason": null
+    },
+    "SEARCH": {
+      "available": true,
+      "reason": null
+    },
+    "IL": {
+      "available": false,
+      "reason": "no_reviewed_final_32_update_pair_and_completed_pilot"
+    },
+    "RL": {
+      "available": false,
+      "reason": "no_reviewed_final_32_update_pair_and_completed_pilot"
+    }
+  }
+}

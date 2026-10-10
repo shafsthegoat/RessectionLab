@@ -1,4 +1,5 @@
 'use strict';
+const {familyAvailabilityRequest,familyRequest,checkedFamilyAvailability,validateFamilyResult}=require('./contact-family.cjs');
 const {contactRequest,validateContactResult}=require('./public-contact.cjs');
 const {comparisonRequest,validateComparisonResult}=require('./episode-comparison.cjs');
 const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs');
@@ -13,7 +14,7 @@ const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
-const OPERATIONS = new Set(['ping', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
@@ -49,6 +50,9 @@ class Sidecar extends EventEmitter {
     if (op === 'inspectObservedLandmarkUpdate') {
       try { args = observedRequest(args); } catch (error) { return Promise.reject(error); }
     }
+    if (op === 'publicContactFamilyAvailability' || op === 'executePublicContactFamilyEpisode') {
+      try {args=op==='publicContactFamilyAvailability'?familyAvailabilityRequest(args):familyRequest(args,this.contactFamilyAvailability);}catch(error){return Promise.reject(error);}
+    }
     if (op === 'executePublicSurfaceContactEpisode') {
       try { args=contactRequest(args); } catch(error) { return Promise.reject(error); }
     }
@@ -72,6 +76,7 @@ class Sidecar extends EventEmitter {
       }, timeoutMs + 5000);
       this.pending.set(id, { resolve, reject, timeout, op,
         ...(op === 'evaluateDevelopmentEpisodeVascular' ? { vascularArgs: args } : {}),
+        ...(op === 'executePublicContactFamilyEpisode' ? {familyArgs:args,familyCatalog:structuredClone(this.contactFamilyAvailability)} : {}),
         ...(op === 'executePublicSurfaceContactEpisode' ? { contactArgs: args } : {}),
         ...(op === 'inspectDevelopmentEpisodeComparison' ? { comparisonArgs: args } : {}),
         ...(op === 'executeDevelopmentEpisode' ? { episodeArgs: args } : {}),
@@ -103,11 +108,13 @@ class Sidecar extends EventEmitter {
     if (observed) validateObservedEvent(message, pending.observedArgs);
     if (message.event === 'result') {
       if (pending.op === 'evaluateDevelopmentEpisodeVascular') validateVascularResult(message.result,pending.vascularArgs);
+      if (pending.op === 'publicContactFamilyAvailability') this.contactFamilyAvailability=checkedFamilyAvailability(message.result);
+      if (pending.op === 'executePublicContactFamilyEpisode') validateFamilyResult(message.result,pending.familyArgs,pending.familyCatalog);
       if (pending.op === 'executePublicSurfaceContactEpisode') validateContactResult(message.result,pending.contactArgs);
       if (pending.op === 'inspectDevelopmentEpisodeComparison') validateComparisonResult(message.result,pending.comparisonArgs);
       if (pending.op === 'executeDevelopmentEpisode') validateEpisodeResult(message.result, pending.episodeArgs);
       if (pending.op === 'loadCase') validateWorkspaceResult(message.result);
-      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode', 'executePublicSurfaceContactEpisode'].includes(pending.op)) this.assets.clear();
+      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode', 'executePublicSurfaceContactEpisode', 'executePublicContactFamilyEpisode'].includes(pending.op)) this.assets.clear();
       if (!observed) message.result = await this.assets.expose(message.result);
     }
     this.emit('event', { ...message, op: pending.op });

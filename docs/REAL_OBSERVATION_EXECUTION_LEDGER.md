@@ -1250,3 +1250,8 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 ## Specimen axial fit source continuation
 
 [Reviewed source](../artifacts/hbe-v5-axial-fit-source-v1/RESULT.md) integrates the single-scale fit after the accepted twelve-row numerical comparison. Root54 generated controls and independent59 controls pass. Original roles/law/two measured members unchanged; false release remains disabled. Actual calibration follows in one separately bound local attempt, with no torque, native call, patient property or clinical claim.
+
+
+## Contact-family Electron integration
+
+[Result](../artifacts/contact-family-desktop-integration-v1/RESULT.md): 494 canonical desktop tests and both working/exact staged builds pass. Genuine STOP and positive SEARCH transport replay admitted; both role/model provenance and physical paths checked. Original neighboring WIP preserved. One existing temp-cleanup failure retained and fixed with bounded retry. Live Mac and final learned publication follow separately.
