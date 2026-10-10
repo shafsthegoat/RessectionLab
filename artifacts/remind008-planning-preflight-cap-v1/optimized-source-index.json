@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "destination": "src/resectionlab/native_spatial_task.py",
+      "previous_sha256": "973b60e6519f49734d3d71e30562ea03b0fedded3051b0ee2669df3bc865a5c0",
+      "source": "build/cross-patient-planning-v1/lazy-hash-v1/stage/resectionlab/native_spatial_task.py",
+      "source_sha256": "1f814cc80499ee2202d6dc5359eb9fd1f9fb7e893c2601ce8e0143e41c4b7776"
+    },
+    {
+      "destination": "tests/test_native_lazy_hash_boundary.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/lazy-hash-v1/stage/tests/test_native_lazy_hash_boundary.py",
+      "source_sha256": "176b5c9bf4ee46e095a61d72b84cecb0b4823e29b19c4799f22750b290b4d194"
+    }
+  ],
+  "measured_basis": "v1 saved profile:96 outer advance_planning checks each immediately followed by _prepare_inventory full check; no mutable-state hash cache",
+  "patch_sha256": "b8eb280d6c098ab0304ef191a8905cf9a1a4341e58eddba5d7e4073d29f5226b",
+  "validation": "AST only; seven generated controls pending root; no execution",
+  "version": "native-lazy-redundant-hash-removal-v1"
+}

@@ -675,9 +675,11 @@ class NativeSpatialTask:
         scoring and committed history are identical to ``step``. A later
         observation or inventory request prepares the successor on demand.
         """
-        self._assert_frozen()
         if not self._planning:
             raise ValueError("LAZY_PLANNING_ONLY: advance_planning requires a nominal planning clone")
+        # _transition immediately enters _prepare_inventory, which performs the
+        # full live-state integrity check before any preview or mutation. Avoid
+        # hashing the same full native masks twice at this one API boundary.
         return self._transition(action, observe_successor=False)
 
     def _transition(self, action: str | int, *, observe_successor: bool):

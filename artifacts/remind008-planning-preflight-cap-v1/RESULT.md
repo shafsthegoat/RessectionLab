@@ -25,3 +25,10 @@ SEARCH can preview the full permitted target/support field. The actor uses a
 proposal endpoints lie outside that crop. This is a scale/interface preflight,
 not evidence of equal effective observations, learned benefit or clinical utility.
 Source patient anatomy is real; hypothetical access and actions are simulated.
+
+The narrow optimization is now integrated. Seventy-two focused tests pass in
+2.74 seconds: direct mutation of each state mask/history still refuses before
+commit, and the former extra-check path and optimized path produce identical
+search accounting (excluding elapsed time), actions and replayed native state.
+The measured first-run profile remains unchanged; no runtime speedup is claimed
+from generated controls.
