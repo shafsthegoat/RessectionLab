@@ -18,6 +18,7 @@ from scipy.ndimage import binary_fill_holes
 
 from .native_resection import NATIVE_RESECTION_VERSION, NativeResectionConfig, NativeResectionEngine
 from .core import array_digest, immutable_array, freeze_json, thaw_json, semantic_digest
+from .geometry import point_segment_distances
 
 
 AXIS_PROPOSAL_VERSION = "experimental-residual-axis-columns-v1"
@@ -357,6 +358,8 @@ NOMINAL_CAVITY_PROPOSAL_VERSION = "permitted-nominal-cavity-columns-v1"
 NOMINAL_CAVITY_FAMILIES = ("exposed_opening", "proximal_nominal", "distal_nominal")
 INTERMEDIATE_OPENING_VERSION = "permitted-nominal-cavity-intermediate-opening-v1"
 INTERMEDIATE_OPENING_FAMILY = "intermediate_opening"
+TOOL_FOOTPRINT_OPENING_VERSION = "permitted-nominal-cavity-tool-footprint-opening-v1"
+TOOL_FOOTPRINT_OPENING_FAMILY = "tool_footprint_opening"
 
 
 @dataclass(frozen=True)
@@ -371,6 +374,7 @@ class NominalCavityProposalConfig:
     max_candidates: int = 96
     nominal_min_membership: float = 0.
     intermediate_opening_mm: float | None = None
+    tool_footprint_opening: bool = False
 
     def __post_init__(self):
         offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
@@ -381,6 +385,8 @@ class NominalCavityProposalConfig:
             raise ValueError("Nominal membership threshold must be a declared finite value in [0,1)")
         object.__setattr__(self, "offsets_source_voxels", offsets)
         object.__setattr__(self, "nominal_min_membership", float(value))
+        if type(self.tool_footprint_opening) is not bool:
+            raise ValueError("Tool-footprint opening must be an explicit bool")
         advance = self.intermediate_opening_mm
         if advance is not None:
             if isinstance(advance, (bool, np.bool_)) or not isinstance(advance, (int, float, np.integer, np.floating)) or float(advance) != 1.:
@@ -389,16 +395,21 @@ class NominalCavityProposalConfig:
 
     @property
     def families(self):
-        return NOMINAL_CAVITY_FAMILIES + (() if self.intermediate_opening_mm is None else (INTERMEDIATE_OPENING_FAMILY,))
+        return (NOMINAL_CAVITY_FAMILIES
+            + (() if self.intermediate_opening_mm is None else (INTERMEDIATE_OPENING_FAMILY,))
+            + ((TOOL_FOOTPRINT_OPENING_FAMILY,) if self.tool_footprint_opening else ()))
 
     @property
     def version(self):
+        if self.tool_footprint_opening:
+            return TOOL_FOOTPRINT_OPENING_VERSION
         return NOMINAL_CAVITY_PROPOSAL_VERSION if self.intermediate_opening_mm is None else INTERMEDIATE_OPENING_VERSION
 
     @property
     def fingerprint(self):
         record = asdict(self)
         record.pop("intermediate_opening_mm")
+        record.pop("tool_footprint_opening")
         legacy = {"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **record,
             "families": NOMINAL_CAVITY_FAMILIES, "order": "column_tool_family",
             "deduplication": "identical_tool_entry_tip", "crop_clipping": False,
@@ -409,6 +420,14 @@ class NominalCavityProposalConfig:
                 intermediate_opening_mm=self.intermediate_opening_mm,
                 advance_rule="nearest_positive_source_axis_voxel_count; numpy_rint_ties_to_even; minimum_one",
                 endpoint_rule="actual_source_voxel_center; physical_increment_recorded; native_preview_required")
+        if self.tool_footprint_opening:
+            legacy.update(version=self.version, families=self.families,
+                tool_footprint_opening=True,
+                order="all_existing_families_then_tool_footprint_column_tool",
+                footprint_rule="first_positive_source_center_endpoint_whose_active_sweep_fully_contains_a_prior_face_exposed_remaining_cell",
+                footprint_scope="positive_depth_public_tissue_and_authenticated_cavity; all_eight_native_corners; no_preview_or_target_ranking",
+                footprint_containment_tolerance_mm=1e-10,
+                footprint_budget="one_slot_per_column_tool; shared_max_candidates; explicit_capped_dispositions")
         return semantic_digest(legacy)
 
 
@@ -444,6 +463,14 @@ class IntermediateOpeningSlot(NominalCavitySlot):
 
 
 @dataclass(frozen=True)
+class ToolFootprintOpeningSlot(NominalCavitySlot):
+    footprint_anchor_voxel: tuple[int, int, int] | None = None
+    footprint_exposed_cells: int = 0
+    footprint_radially_eligible_cells: int = 0
+    footprint_endpoint_tests: int = 0
+
+
+@dataclass(frozen=True)
 class NominalCavityBatch:
     model_hash: str
     cavity_state_hash: str
@@ -458,7 +485,9 @@ class NominalCavityBatch:
             counts[row.reason] = counts.get(row.reason, 0) + 1
         return {**asdict(self), "counts": counts, "slot_count": len(self.ledger),
             "emitted_count": len(self.proposals), "geometry_certified": False,
-            "scope": ("declared_columns_and_original_plus_intermediate_endpoint_families_not_all_paths"
+            "scope": ("declared_columns_and_tool_footprint_endpoint_family_not_all_paths"
+                      if any(row.family == TOOL_FOOTPRINT_OPENING_FAMILY for row in self.ledger)
+                      else "declared_columns_and_original_plus_intermediate_endpoint_families_not_all_paths"
                       if any(row.family == INTERMEDIATE_OPENING_FAMILY for row in self.ledger)
                       else "declared_columns_and_three_endpoint_families_not_all_paths")}
 
@@ -571,6 +600,76 @@ class PreparedNominalCavityProposer:
     def rule_hash(self):
         return self._rule_hash
 
+    def _tool_footprint_endpoint(self, engine, column, tool, *, cancelled=None):
+        """Select geometry from public exposed tissue; this is NOT certification.
+
+        The active capsule swept by a straight insertion spans entry-tip_length
+        to endpoint. Full native-cell containment uses the same eight-corner
+        distance rule as native_resection.contained_capsule_cells. Shaft order,
+        aperture, connectivity during cutting and actual removal remain solely
+        the native preview's responsibility. No preview or reward is queried.
+        """
+        shape, affine = self._native.tissue_mask.shape, self._native.affine
+        access, normal = self._native.access, self._native.access.normal_inward
+        endpoints = np.zeros((shape[self._axis], 3), dtype=np.int64)
+        endpoints[:, self._axis] = np.arange(shape[self._axis])
+        endpoints[:, self._transverse] = column
+        tips = endpoints @ affine[:3, :3].T + affine[:3, 3]
+        depths = (tips - access.center_mm) @ normal
+        order = np.argsort(depths, kind="stable")
+        order = order[depths[order] > 0]
+        if not len(order):
+            return None, None, 0, 0, 0
+        endpoints, tips, depths = endpoints[order], tips[order], depths[order]
+        entries = tips - depths[:, None] * normal
+        # Bound scratch work to the transverse footprint of every possible ray.
+        # Using both ends also covers the tiny original/native-frame roundoff.
+        inverse = np.linalg.inv(affine[:3, :3])
+        ends = np.concatenate((entries[[0, -1]] - tool.tip_length_mm * normal,
+                               tips[[0, -1]]))
+        index_ends = (ends - affine[:3, 3]) @ inverse.T
+        radial_index = tool.tip_radius_mm * np.linalg.norm(inverse, axis=1)
+        lower, upper = np.zeros(3, int), np.asarray(shape).copy()
+        for dim in self._transverse:
+            lower[dim] = max(0, int(np.floor(index_ends[:, dim].min() - radial_index[dim] - .5)))
+            upper[dim] = min(shape[dim], int(np.ceil(index_ends[:, dim].max() + radial_index[dim] + .5)) + 1)
+        region = tuple(slice(lo, hi) for lo, hi in zip(lower, upper))
+        cells = np.argwhere(engine.remaining_mask[region]) + lower
+        centers = cells @ affine[:3, :3].T + affine[:3, 3]
+        cells = cells[(centers - access.center_mm) @ normal > 0]
+        exposed = np.zeros(len(cells), bool)
+        for dim in range(3):
+            for sign in (-1, 1):
+                neighbor = cells.copy(); neighbor[:, dim] += sign
+                inside = np.all((neighbor >= 0) & (neighbor < shape), axis=1)
+                exposed |= ~inside
+                exposed[inside] |= engine.connected_free_mask[tuple(neighbor[inside].T)]
+        cells = cells[exposed]
+        exposed_count = len(cells)
+        if not exposed_count:
+            return None, None, 0, 0, 0
+        corners = ((cells @ affine[:3, :3].T + affine[:3, 3])[:, None, :]
+            + np.asarray(tuple(product((-.5, .5), repeat=3))) @ affine[:3, :3].T)
+        radius = tool.tip_radius_mm - 1e-10
+        # Necessary-only radial test: each corner must fit around at least one
+        # candidate entry. It cannot award containment or preview feasibility.
+        projected = corners - (((corners - access.center_mm) @ normal)[..., None] * normal)
+        possible = np.all(point_segment_distances(projected, entries[0], entries[-1]) <= radius, axis=1)
+        cells, corners = cells[possible], corners[possible]
+        eligible_count = len(cells)
+        if not eligible_count:
+            return None, None, exposed_count, 0, 0
+        for count, (endpoint, tip, entry) in enumerate(zip(endpoints, tips, entries), 1):
+            if cancelled is not None and cancelled():
+                raise InterruptedError("Tool-footprint opening preparation cancelled")
+            contained = np.all(point_segment_distances(corners,
+                entry - tool.tip_length_mm * normal, tip) <= radius, axis=1)
+            matches = np.flatnonzero(contained)
+            if len(matches):
+                return (tuple(int(v) for v in endpoint),
+                    tuple(int(v) for v in cells[matches[0]]), exposed_count, eligible_count, count)
+        return None, None, exposed_count, eligible_count, len(endpoints)
+
     def propose(self, engine: NativeResectionEngine, *, cancelled=None) -> NominalCavityBatch:
         if not isinstance(engine, NativeResectionEngine) or engine.config is not self._native:
             raise ValueError("Nominal/cavity provider is bound to its exact native source")
@@ -677,6 +776,34 @@ class PreparedNominalCavityProposer:
                     ledger.append(IntermediateOpeningSlot(column_index, offset, tool.tool_id,
                         INTERMEDIATE_OPENING_FAMILY, reason, identifier, endpoint, anchor,
                         self._config.intermediate_opening_mm, count, advance_mm))
+        if self._config.tool_footprint_opening:
+            for column_index, (offset, column) in enumerate(zip(self._config.offsets_source_voxels, self._columns)):
+                outside = any(v < 0 or v >= shape[dim] for dim, v in zip(self._transverse, column))
+                for tool in self._native.tools:
+                    if cancelled is not None and cancelled():
+                        raise InterruptedError("Tool-footprint opening preparation cancelled")
+                    endpoint, anchor, exposed, eligible, tests = ((None, None, 0, 0, 0) if outside else
+                        self._tool_footprint_endpoint(engine, column, tool, cancelled=cancelled))
+                    identifier = None
+                    reason = "COLUMN_OUT_OF_IMAGE" if outside else "NO_FULLY_CONTAINABLE_EXPOSED_FOOTPRINT_CELL"
+                    if endpoint is not None:
+                        tip = affine[:3, :3] @ endpoint + affine[:3, 3]
+                        depth = float((tip-access.center_mm) @ access.normal_inward)
+                        entry = tip-depth*access.normal_inward
+                        key = (tool.tool_id, _point(entry), _point(tip))
+                        if key in seen:
+                            identifier, reason = seen[key], "DUPLICATE_GEOMETRY"
+                        elif len(rays) >= self._config.max_candidates:
+                            reason = "CANDIDATE_CAP"
+                        else:
+                            identifier = "nominal-cavity-" + semantic_digest({"model": self._model_hash,
+                                "cavity": cavity_hash, "geometry": key}).split(":", 1)[1][:24]
+                            rays.append(NominalCavityRay(identifier, TOOL_FOOTPRINT_OPENING_FAMILY,
+                                column_index, offset, tool.tool_id, endpoint, key[1], key[2]))
+                            seen[key], reason = identifier, "PROPOSED_UNCERTIFIED"
+                    ledger.append(ToolFootprintOpeningSlot(column_index, offset, tool.tool_id,
+                        TOOL_FOOTPRINT_OPENING_FAMILY, reason, identifier, endpoint, anchor,
+                        exposed, eligible, tests))
         return NominalCavityBatch(self._model_hash, cavity_hash, self._nominal_hash,
             self._provenance_hash, tuple(rays), tuple(ledger))
 
