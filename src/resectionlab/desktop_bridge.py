@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -1111,6 +1111,58 @@ class BridgeSession:
             _require_json_budget(result, 2 * 1024 * 1024, "COMPARISON_RESULT_SIZE_LIMIT",
                                  "Matched SEARCH result exceeds 2 MiB")
             return result
+        if operation == "publicContactFamilyAvailability":
+            if args:
+                raise BridgeError("INVALID_ARGUMENT", "The generated contact-family catalog takes no arguments")
+            from .contact_family_desktop_bridge import public_contact_family_availability
+            return public_contact_family_availability()
+        if operation == "executePublicContactFamilyEpisode":
+            from .public_contact_family import FAMILY_VERSION as CONTACT_FAMILY_VERSION
+            if (set(args) != {"fixture", "layoutId", "goalId", "selector"} or
+                    args.get("fixture") != CONTACT_FAMILY_VERSION or
+                    type(args.get("layoutId")) is not str or
+                    args.get("goalId") not in ("surface", "deep") or
+                    args.get("selector") not in ("STOP", "SEARCH", "IL", "RL")):
+                raise BridgeError("INVALID_ARGUMENT", "Choose a fixed generated family layout, goal and method")
+            from .contact_family_desktop_bridge import execute_public_contact_family_episode
+            from .contact_family_desktop_release import ContactReleaseUnavailable
+            progress(0.1, "Executing the generated family public goal")
+            parent = self.run_dir if self.run_dir is not None else self.transfers.root
+            attempts = parent / "generated-contact-family-attempts"
+            attempts.mkdir(parents=True, exist_ok=True)
+            try:
+                response = execute_public_contact_family_episode(attempts_root=attempts,
+                    layout_id=args["layoutId"], goal_id=args["goalId"],
+                    selector=args["selector"], cancelled=request.cancelled.is_set)
+            except ContactReleaseUnavailable as error:
+                raise BridgeError("CONTACT_LEARNED_UNAVAILABLE", str(error)) from error
+            request.check()
+            case, episode = response["case"], response["episode"]
+            if (episode.get("schema") != "resectionlab.shared-native-contact-learning-episode.v3" or
+                    episode.get("taskKind") != "generated_family_public_retained_surface_contact" or
+                    episode.get("fixture") != args["fixture"] or
+                    episode.get("layoutId") != args["layoutId"] or
+                    episode.get("publicGoal", {}).get("goalId") != args["goalId"] or
+                    episode.get("selector") != args["selector"] or
+                    episode.get("splitRole") not in ("TRAIN", "SELECT") or
+                    episode.get("caseHash") != case.semantic_hash or
+                    episode.get("patientAdmission") is not False or
+                    episode.get("clinicalValidation") is not False):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Contact-family case or role changed")
+            _require_json_budget(episode, 2 * 1024 * 1024, "EPISODE_SIZE_LIMIT",
+                                 "Generated family episode exceeds 2 MiB")
+            progress(0.9, "Publishing checked generated family replay")
+            installed = self._install_case(case, {}, request, transient_public_contact=True)
+            entry = self.cases[case.semantic_hash]
+            if (entry.episode is not None or entry.comparison_pair is not None or
+                    entry.episode_selection is not None or not entry.public_surface_contact_active or
+                    "workspaceSession" in installed):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "An old episode survived the family install")
+            public = {"case": installed, "episode": episode,
+                      "episodeCanonicalJson": response["episodeCanonicalJson"]}
+            if "executionProvenance" in response:
+                public["executionProvenance"] = response["executionProvenance"]
+            return public
         if operation == "executePublicSurfaceContactEpisode":
             # A distinct generated public goal on the same native engine and
             # frame exporter. Do not admit an old aspiration checkpoint here.

@@ -1,0 +1,86 @@
+{
+  "actorForwardCalls": 0,
+  "architectureHashConstruction": "freeze_contact_experiment constructs an untrained GoalModeSpatialPolicy to derive architecture hash; no actor forward is recorded.",
+  "cause": "Previously negative unpinned-source test ran after source pins were populated; assertion failed after a real owned STOP worker completed",
+  "checkpointBranchEntered": false,
+  "checkpointBranchEvidence": "Worker only enters checkpoint admission for IL/RL; saved selector STOP, releaseEvidence and learnedAuthorship null. This is a source-path inference, not a filesystem access trace.",
+  "clinicalValidation": false,
+  "elapsedSeconds": 2.1134338330011815,
+  "episodeId": "sha256:ce6803bb445ecd1ebcee82496d04e851eb6e8b63bad0f9234a4dd7eef3e7ab03",
+  "files": {
+    "attempt.json": {
+      "bytes": 271,
+      "sha256": "7f1afdb6c77863b0ae84d33c166fcec75d7978f785b85d6ecba8744a69ca68e9"
+    },
+    "completion.json": {
+      "bytes": 204,
+      "sha256": "ac7f2e8013f5ea5ca8b1012aaabd242a76728767c0936bff6810a661fb08addc"
+    },
+    "progress.json": {
+      "bytes": 139,
+      "sha256": "1c53e0db115d75b069e93635a44223d181cbefb317511f09abef883dc0ec8bb6"
+    },
+    "result.json": {
+      "bytes": 31998,
+      "sha256": "e8dfced8e7e111b49fc6be97fa0e274e7edbaf6e48745311de44cc64f68684d3"
+    },
+    "source-snapshot/contact_family_desktop_release.py": {
+      "bytes": 10743,
+      "sha256": "2420c57dc9cc63a98276bc6ecc4cafc5373cf3cf6a1c8af11bbf950d293b0bd9"
+    },
+    "source-snapshot/contact_family_episode.py": {
+      "bytes": 14476,
+      "sha256": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6"
+    },
+    "source-snapshot/contact_family_supervisor.py": {
+      "bytes": 13929,
+      "sha256": "59f152ba79ac952e1c9270ea1c4776bb48b0c29ca790ef30551fd2d3d50c1495"
+    },
+    "source-snapshot/contact_family_worker.py": {
+      "bytes": 10762,
+      "sha256": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0"
+    },
+    "source-snapshot/contact_learning_contract.py": {
+      "bytes": 9989,
+      "sha256": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a"
+    },
+    "source-snapshot/native_spatial_task.py": {
+      "bytes": 68231,
+      "sha256": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea"
+    },
+    "source-snapshot/public_contact_family.py": {
+      "bytes": 11219,
+      "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800"
+    },
+    "supervision.json": {
+      "bytes": 354,
+      "sha256": "da015dccc0824cb2a24b799bd0c37f94dc0029734e1b3af2b231eaf86462bf92"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "fixture": "generated-public-contact-family-v2",
+  "historyLength": 1,
+  "learnedAuthorship": null,
+  "newOptimizerUpdates": 0,
+  "optimizerUpdates": 0,
+  "patientAdmission": false,
+  "plannedFixture": false,
+  "planningModelTransitionCalls": 0,
+  "promotableAsPlannedFixture": false,
+  "referenceScoringPerformed": false,
+  "releaseEvidence": null,
+  "sampledPeakRssBytes": 253231104,
+  "samples": 10,
+  "selector": "STOP",
+  "status": "preserved_unscheduled_generated_stop_test_execution",
+  "strategyActions": [
+    "STOP"
+  ],
+  "workerAbsentAtReadOnlyPs": true,
+  "workerExitCode": 0,
+  "workerPid": 44227,
+  "workerTerminal": true
+}

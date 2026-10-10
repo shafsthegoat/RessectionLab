@@ -1233,3 +1233,8 @@ The [same-case successor smoke](../artifacts/contact-learning-canonical-smoke-v2
 ## Optional scan preprocessing integrated, October 10 UTC
 
 [Canonical result](../artifacts/scan-preprocess-bridge-integration-v1/RESULT.md): four source/test/document/type files promoted from the independently reviewed algorithm. Seven canonical generated controls pass (0.154 s); base-runtime collection skips the optional dependency. No patient/model call; diagnostic-only output coverage, typed contract not yet renderer integration.
+
+
+## Contact-family desktop backend source integration
+
+[Result](../artifacts/contact-family-backend-integration-v1/RESULT.md): 21 canonical tests pass; independently reviewed catalog, role locks, fixed-source owned worker and v3 native export are now callable. IL/RL publication remains disabled pending exact completed-pilot review. Planned transport/UI validation follows separately; the stale-test STOP incident remains retained.

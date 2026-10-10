@@ -1,0 +1,73 @@
+{
+  "copy": [
+    {
+      "beforeSha256": null,
+      "bytes": 10743,
+      "from": "build/contact-learning-bridge-v1/stage/resectionlab/contact_family_desktop_release.py",
+      "sha256": "2420c57dc9cc63a98276bc6ecc4cafc5373cf3cf6a1c8af11bbf950d293b0bd9",
+      "to": "src/resectionlab/contact_family_desktop_release.py"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 10762,
+      "from": "build/contact-learning-bridge-v1/stage/resectionlab/contact_family_worker.py",
+      "sha256": "44e4c84075d28e7d01cabca741f859a03b5faee4a539ba6535297f5f212abbf0",
+      "to": "src/resectionlab/contact_family_worker.py"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 13929,
+      "from": "build/contact-learning-bridge-v1/stage/resectionlab/contact_family_supervisor.py",
+      "sha256": "59f152ba79ac952e1c9270ea1c4776bb48b0c29ca790ef30551fd2d3d50c1495",
+      "to": "src/resectionlab/contact_family_supervisor.py"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 11290,
+      "from": "build/contact-learning-bridge-v1/stage/resectionlab/contact_family_desktop_bridge.py",
+      "sha256": "5ffde0ee3747f34a4054a6fddd5c397bf009149cdac554002902b9952463a679",
+      "to": "src/resectionlab/contact_family_desktop_bridge.py"
+    },
+    {
+      "beforeSha256": "cc0158f8caaef8e777eb2d68d12d6577e3b4c9d9b6c52bfaf3497cb88055c801",
+      "bytes": 120751,
+      "from": "build/contact-learning-bridge-v1/stage/resectionlab/desktop_bridge.py",
+      "sha256": "30d81383243919bf73309b0d3b8ccbcd63c48d3a7b63b6e8eb5941a56395e6bd",
+      "to": "src/resectionlab/desktop_bridge.py"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 6116,
+      "from": "build/contact-learning-bridge-v1/portable_tests/test_contact_family_release.py",
+      "sha256": "cb892dfca637897f06d6bf5271c0f915eb5fd110104d635ee10d4da567ad8e17",
+      "to": "tests/test_contact_family_release.py"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 3383,
+      "from": "build/contact-learning-bridge-v1/portable_tests/test_contact_family_controller.py",
+      "sha256": "f2ee05257fa8dc8d36fcea3ab3bdbfcb941f9596e86b18521a8b5ef918a95bc3",
+      "to": "tests/test_contact_family_controller.py"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 3226,
+      "from": "build/contact-learning-bridge-v1/portable_tests/test_contact_family_catalog.py",
+      "sha256": "7725b8d1d1d504c98565df7954de8144f56b7dbb0ecaae387cdfbc16a08b2473",
+      "to": "tests/test_contact_family_catalog.py"
+    }
+  ],
+  "learnedReleaseManifestSha256": null,
+  "limits": {
+    "automaticRetries": 0,
+    "logBytes": 1048576,
+    "operationAndCleanupSeconds": 25,
+    "resultBytes": 2097152,
+    "sampledWorkerRssBytes": 1073741824,
+    "workSeconds": 20
+  },
+  "plannedNativeFixturesExecuted": false,
+  "schema": "generated-contact-family-backend-promotion-v1",
+  "scope": "generated family-v2 v3 episode bridge; STOP/SEARCH separately available; IL/RL remain disabled without reviewed final publication",
+  "unscheduledTestIncident": "build/contact-learning-bridge-v1/unscheduled-stop-test-incident/incident.json"
+}
