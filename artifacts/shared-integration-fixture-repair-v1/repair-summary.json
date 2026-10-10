@@ -1,0 +1,29 @@
+{
+  "base_head": "23570f7c257559f8ecd7b7fa27581dbbbe3af1a4",
+  "changed_paths": [
+    "tests/test_native_resection.py",
+    "tests/test_spatial_policy.py"
+  ],
+  "checkpoint_loads": 0,
+  "patch_path": "build/integration-baseline-fixture-repair-v1/source.patch",
+  "patch_sha256": "d688319497119b42d0b3e2c7abd4746ab4182e6736eadde2a89d10db864e762e",
+  "patient_reads": 0,
+  "production_sources_modified": false,
+  "repair": [
+    "Native helper fixture supplies explicit context=None, retaining unavailable-timestamp semantics.",
+    "Generated ramp observation now has content-bound source identity and the required two-step horizon. Loss/update tests supply explicit GeneratedDevelopmentContext.",
+    "Analytical two-logit controls use the validated observation DTO and explicit test architecture identity; expected gradients remain unchanged.",
+    "Invalid-evidence tests supply context and assert their specific rejection reason; three separate missing-context negatives exercise all guarded learning APIs."
+  ],
+  "scientific_guard_changes": false,
+  "scope": "Interpretable unit regression signal only. Existing unit gradient checks include one ephemeral optimizer update; no training job or scientific performance claim.",
+  "status": "test_only_candidate_ready",
+  "tests": {
+    "git_apply_check": "passed",
+    "log_sha256": "dd2b7bd7465d38f79f2e6fa6a1a12298fa4783d6c69c8af08ed18bc63e1c7900",
+    "passed": 34,
+    "pytest_seconds": 1.1376720829866827,
+    "receipt_sha256": "8eeddaf7d608ce6d00a141b557e0ebfecdfc1111bee08824322fc492749a8c5d"
+  },
+  "tracked_tests_modified": false
+}

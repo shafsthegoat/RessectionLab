@@ -1,0 +1,19 @@
+{
+  "scope": "test fixtures only; no production guard changes",
+  "canonical_result": "34 passed in 1.37s",
+  "production_changes": false,
+  "patient_reads": 0,
+  "checkpoint_loads": 0,
+  "training_job": false,
+  "unit_test_optimizer_update": true,
+  "tests": [
+    {
+      "path": "tests/test_native_resection.py",
+      "sha256": "3314119eeb22631772927458d49f53c0d77718e684cf560ff64c7be8202534d9"
+    },
+    {
+      "path": "tests/test_spatial_policy.py",
+      "sha256": "61b191887067d4f3361e890716bfefbf23d8656e8a014aa12c16cbedee308efc"
+    }
+  ]
+}

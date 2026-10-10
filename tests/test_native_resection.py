@@ -195,7 +195,7 @@ def test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame
     from resectionlab.core import SourceRef
     cfg = config()
     case = SimpleNamespace(mri=cfg.tissue_mask.astype(float), compartments={"target": cfg.target_labels > 0},
-                           brain_mask=cfg.tissue_mask, affine=cfg.affine, metadata={},
+                           brain_mask=cfg.tissue_mask, affine=cfg.affine, metadata={}, context=None,
                            case_id="analytic", semantic_hash="source-hash", frame="LPS+",
                            source_refs=(SourceRef("fixture", "synthetic://native-helper", provenance="simulated"),))
     converted = native_config_from_case(case, access=cfg.access)

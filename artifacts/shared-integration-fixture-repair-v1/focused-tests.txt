@@ -1,0 +1,3 @@
+..................................                                       [100%]
+34 passed in 1.05s
+{"status": "passed", "pytest_exit_code": 0, "pytest_seconds": 1.1376720829866827, "production_and_tracked_tests_unchanged": true, "blocked_accesses": [], "model_checkpoint_loads": 0, "patient_reads": 0, "scope": "Generated unit regressions only: four existing gradient/algebra tests, including one in-memory Adam update; no training job, learned checkpoint or scientific evidence", "numerical_threads": 1}

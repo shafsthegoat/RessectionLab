@@ -1,10 +1,11 @@
 """Small algebra and single-update checks, not a generalization experiment."""
 from dataclasses import replace
-from types import SimpleNamespace
 import numpy as np
 import pytest
 import torch
 
+from resectionlab.core import array_digest, semantic_digest
+from resectionlab.data_policy import DataPolicyError, GeneratedDevelopmentContext
 from resectionlab.geometry import AccessWindow, ToolGeometry
 from resectionlab.spatial_observations import (ObservedChannel, ObservedProcedureState,
     SpatialAction, SpatialInputs, build_spatial_observation)
@@ -33,9 +34,26 @@ def observation(*, transform=None, order=(0, 1, 2), exhausted=False, concealed=0
     inputs = SpatialInputs({
         "structural_intensity": ObservedChannel(scan, coverage, "synthetic_scan", "analytic ramp"),
         "observed_cavity": ObservedChannel(np.zeros(shape), source_kind="observed_procedure_state")},
-        frame @ affine, "synthetic_scan", "single-gradient-unit-fixture")
-    state = ObservedProcedureState(access, 3 if exhausted else 0, 3)
+        frame @ affine, "synthetic_scan", semantic_digest({
+            "fixture": "spatial-policy-analytic-ramp-v1", "scan": array_digest(scan),
+            "coverage": array_digest(coverage), "affine": array_digest(frame @ affine)}))
+    state = ObservedProcedureState(access, 2 if exhausted else 0, 2)
     return build_spatial_observation(inputs, tuple(actions[i] for i in order), state)
+
+
+def generated_context(obs):
+    # Software-only declaration for the explicit generated two-step contract;
+    # no patient, checkpoint, native reward fidelity, or generalization claim.
+    return GeneratedDevelopmentContext(
+        semantic_digest({"fixture": "spatial-policy-unit-controls-v1", "patient_count": 0}),
+        (obs.source_id,),
+        semantic_digest({"reward_source": "test-specified analytical constants", "max_steps": 2}))
+
+
+@pytest.mark.parametrize("function", [imitation_loss, reinforce_loss, gradient_step])
+def test_missing_generated_context_rejected_before_inputs(function):
+    with pytest.raises(DataPolicyError, match="RECORDED_EXPERIENCE_REQUIRED"):
+        function()
 
 
 def policy():
@@ -48,8 +66,10 @@ def policy():
 def test_actual_spatial_encoder_receives_scan_gradient_and_updates():
     model = policy(); obs = observation()
     initial = parameter_hash(model)
-    loss, stats = reinforce_loss(model, [[SpatialTransition(obs, "left", 2., True)]])
-    receipt = gradient_step(model, torch.optim.Adam(model.parameters(), lr=.001), loss)
+    loss, stats = reinforce_loss(model, [[SpatialTransition(obs, "left", 2., True)]],
+                                 learning_context=generated_context(obs))
+    receipt = gradient_step(model, torch.optim.Adam(model.parameters(), lr=.001), loss,
+                            learning_context=generated_context(obs))
     assert stats["loss_forward_calls"] == 1 and stats["completed_episodes"] == 1
     assert receipt["encoder_gradient_norm_before_clip"] > 0
     assert receipt["actor_gradient_norm_before_clip"] > 0
@@ -60,7 +80,7 @@ def test_actual_spatial_encoder_receives_scan_gradient_and_updates():
 
 def test_behavior_cloning_has_real_encoder_gradients_without_claiming_rl():
     model = policy(); obs = observation()
-    loss, stats = imitation_loss(model, [(obs, "right")])
+    loss, stats = imitation_loss(model, [(obs, "right")], learning_context=generated_context(obs))
     loss.backward()
     assert stats["kind"] == "search_action_behavior_cloning"
     assert model.encoder[0].weight.grad.abs().sum() > 0
@@ -119,8 +139,10 @@ def test_invalid_training_evidence_rejected_before_backward(bad):
     action = "obsolete" if bad == "stale_action" else "left"
     reward = float("nan") if bad == "nonfinite_reward" else 1.
     episode = [SpatialTransition(obs, action, reward, bad != "partial_episode")]
-    with pytest.raises(ValueError):
-        reinforce_loss(model, [episode])
+    expected = {"stale_action": "absent", "partial_episode": "complete episodes",
+                "masked_action": "masked", "nonfinite_reward": "Nonfinite transition reward"}
+    with pytest.raises(ValueError, match=expected[bad]):
+        reinforce_loss(model, [episode], learning_context=generated_context(obs))
     assert all(p.grad is None for p in model.parameters())
 
 
@@ -142,6 +164,9 @@ def test_configuration_and_nonfinite_geometry_fail_closed():
 
 
 class AnalyticPolicy(torch.nn.Module):
+    architecture_hash = semantic_digest({"fixture": "analytic-two-logit-policy-v1",
+                                         "logits": ["zero", "theta"], "value": "zero"})
+
     def __init__(self):
         super().__init__()
         self.theta = torch.nn.Parameter(torch.tensor(0.))
@@ -152,21 +177,23 @@ class AnalyticPolicy(torch.nn.Module):
 
 def test_analytic_variable_length_expected_return_gradient():
     model = AnalyticPolicy()
-    obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
-    episodes = [[SpatialTransition(obs, "cut", 1., True)],
-                [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]]
-    loss, _ = reinforce_loss(model, episodes, entropy_weight=0., value_weight=0.)
+    obs = observation(order=(0, 1))
+    episodes = [[SpatialTransition(obs, "left", 1., True)],
+                [SpatialTransition(obs, "left", 0., False), SpatialTransition(obs, "left", 2., True)]]
+    loss, _ = reinforce_loss(model, episodes, entropy_weight=0., value_weight=0.,
+                             learning_context=generated_context(obs))
     loss.backward()
-    # At theta0, dlogpi(cut)/dtheta=.5. Mean trajectory sums:
+    # At theta0, dlogpi(left)/dtheta=.5. Mean trajectory sums:
     # -(1*.5 + (2*.5+2*.5))/2 = -1.25, not mean-per-transition -.75.
     assert model.theta.grad.item() == pytest.approx(-1.25)
 
 
 def test_analytic_discounted_start_state_return_gradient():
     model = AnalyticPolicy()
-    obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
-    episode = [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]
-    loss, _ = reinforce_loss(model, [episode], gamma=.5, entropy_weight=0., value_weight=0.)
+    obs = observation(order=(0, 1))
+    episode = [SpatialTransition(obs, "left", 0., False), SpatialTransition(obs, "left", 2., True)]
+    loss, _ = reinforce_loss(model, [episode], gamma=.5, entropy_weight=0., value_weight=0.,
+                             learning_context=generated_context(obs))
     loss.backward()
     # Returns[1,2] at steps[0,1]: -(.5*1 + .5*.5*2) = -1.
     assert model.theta.grad.item() == pytest.approx(-1.)
