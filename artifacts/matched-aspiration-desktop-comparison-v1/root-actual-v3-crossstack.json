@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scope": "saved generated transport and replay validation only; no new engine/model execution",
+  "actorEpisodeId": "sha256:2c6dcf8b0cfc89ec4e23461d753cf0a72d42957993e0b02be5895bebc5e842e6",
+  "companionEpisodeId": "sha256:5c37d7399b9ed8f362d530a1525f663345540a0ac177d5923fff8e7d966e8927",
+  "pairSeal": "sha256:1d6a076aa7310a2b57c4d0851626a23c000582040e221359a03abac79cfb96eb",
+  "actorFrames": 72,
+  "companionFrames": 72,
+  "actor": {
+    "modeledReturn": 3.353,
+    "targetRemoved": 4,
+    "normalRemoved": 3,
+    "actions": 2,
+    "termination": "STOP"
+  },
+  "matchedSearch": {
+    "modeledReturn": 3.353,
+    "targetRemoved": 4,
+    "normalRemoved": 3,
+    "actions": 2,
+    "termination": "STOP"
+  },
+  "originalSearchModelTransitionCalls": 14,
+  "companionExecutionTransitions": 2,
+  "accountingQualification": "final companion steps only; additional validation replays are not totaled; no speed comparison"
+}

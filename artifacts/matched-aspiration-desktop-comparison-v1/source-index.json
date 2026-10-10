@@ -1,0 +1,86 @@
+{
+  "schema": "matched-aspiration-desktop-integration-v1",
+  "files": [
+    {
+      "path": "backend-promotion.json",
+      "source_path": "build/shared-transfer-comparator-v2/promotion-files.json",
+      "bytes": 1689,
+      "sha256": "a97d7e7e3be1abcf0e54e399052c8e61607652338a2b4f4f418e9e2ea6f8a9f9"
+    },
+    {
+      "path": "backend-review.txt",
+      "source_path": "build/shared-transfer-comparator-independent-v2/REPORT.txt",
+      "bytes": 3464,
+      "sha256": "3d6e6deaae126335067bfb4db8373acad81c857c0d3ecf0cad3ae3898a58a32d"
+    },
+    {
+      "path": "backend-audit.json",
+      "source_path": "build/shared-transfer-comparator-independent-v2/audit.json",
+      "bytes": 1698,
+      "sha256": "bed75d70db81718e0dcccd2954a0f42a83335912c9f24743b14d863ff7209059"
+    },
+    {
+      "path": "desktop-source-index.json",
+      "source_path": "build/matched-aspiration-desktop-v1/source-index.json",
+      "bytes": 7339,
+      "sha256": "8c65c0f358a435e74dedb4de5f2d3e4cb46005c066cc229ccb008bf5416ea7b8"
+    },
+    {
+      "path": "desktop-review.txt",
+      "source_path": "build/matched-aspiration-desktop-independent-v1/REPORT.txt",
+      "bytes": 3069,
+      "sha256": "7675c00db86064b60f3cd4d7cdf39e1487ca90ba07cdb67724484dd34795cd08"
+    },
+    {
+      "path": "desktop-audit.json",
+      "source_path": "build/matched-aspiration-desktop-independent-v1/audit.json",
+      "bytes": 9224,
+      "sha256": "8dbe177edd6516054144c324a9e7bc35a5f95ca219a0c53156c181adad9722d0"
+    },
+    {
+      "path": "root-backend-tests.txt",
+      "source_path": "build/shared-transfer-comparator-v2/root-canonical-tests.txt",
+      "bytes": 100,
+      "sha256": "667b845b893f62d5ac39cd8e273def7ca23b2d84dc70987bf9f3aead62ed4468"
+    },
+    {
+      "path": "root-desktop-tests.txt",
+      "source_path": "build/matched-aspiration-desktop-v1/root-desktop-tests.txt",
+      "bytes": 36416,
+      "sha256": "bb38cc81d599b4814bba3e40403154ceee42f39e1c2fb7675b9c7905a1da9b15"
+    },
+    {
+      "path": "root-working-build.txt",
+      "source_path": "build/matched-aspiration-desktop-v1/root-working-build.txt",
+      "bytes": 845,
+      "sha256": "7018c883bdda8f8110fbebb2ce151f910de1fbd2bb5e68ba1cf5cdbcdd498fb3"
+    },
+    {
+      "path": "root-exact-staged-build.txt",
+      "source_path": "build/matched-aspiration-desktop-v1/root-exact-staged-build.txt",
+      "bytes": 1010,
+      "sha256": "9264274da4945a356b3d112120a631da8e2913e34b0179fbeb2db4e62d558bda"
+    },
+    {
+      "path": "root-actual-v3-crossstack.json",
+      "source_path": "build/matched-aspiration-desktop-v1/root-actual-v3-crossstack.txt",
+      "bytes": 943,
+      "sha256": "2c94301d254a5427857c94d992fe64db78d4fc76b5c52845351844433e23645a"
+    },
+    {
+      "path": "root-formatting-delta.json",
+      "source_path": "build/matched-aspiration-desktop-v1/root-formatting-delta.json",
+      "bytes": 305,
+      "sha256": "b39bda3e0eebe59f6143a5595ad6474b743e932bd78007c430916cba887ffadb"
+    },
+    {
+      "path": "root-formatting-guard-tests.txt",
+      "source_path": "build/matched-aspiration-desktop-v1/root-formatting-guard-tests.txt",
+      "bytes": 1022,
+      "sha256": "bc891b14e8a91a56806524e5c2b5fcec59490075d42070547e250359fef21767"
+    }
+  ],
+  "total_bytes": 67124,
+  "patient_data_included": false,
+  "model_weights_included": false
+}

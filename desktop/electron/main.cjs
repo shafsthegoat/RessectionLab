@@ -1,4 +1,5 @@
 'use strict';
+const {comparisonRequest,validateComparisonResult}=require('./episode-comparison.cjs');
 const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs');
 
 const { app, BrowserWindow, dialog, ipcMain, session, Menu } = require('electron');
@@ -64,6 +65,7 @@ function bindOperations() {
     if (casePath) return engine.request('loadCase', { path: path.resolve(casePath) });
     return process.argv.includes('--demo') ? engine.request('createSyntheticCase') : null;
   });
+  handle('inspectDevelopmentEpisodeComparison', async args => { const request=comparisonRequest(args); return validateComparisonResult(await engine.request('inspectDevelopmentEpisodeComparison',request,30000),request); });
   handle('executeDevelopmentEpisode', args => engine.request('executeDevelopmentEpisode', episodeRequest(args), 30000));
   handle('evaluateDevelopmentEpisodeVascular', async args => { const request=vascularRequest(args); return validateVascularResult(await engine.request('evaluateDevelopmentEpisodeVascular',request),request); });
   handle('createSyntheticCase', () => engine.request('createSyntheticCase'));

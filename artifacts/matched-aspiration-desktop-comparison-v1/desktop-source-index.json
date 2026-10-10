@@ -1,0 +1,158 @@
+{
+  "schema": "ignored-comparator-desktop-proposal-v1",
+  "head": "3d83cb0cc6d99b15ab94d8532021e2fbca03dd55",
+  "files": [
+    {
+      "path": "desktop/src/episode-types.ts",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/episode-types.ts",
+      "beforeSha256": "c4e8833ffa7e102d94f25379747f0f12fc4e047530f1934617df18a0fc6945b2",
+      "sha256": "8ced3f053fc461da8945f2f14779d2be67a3c69524eaf313b83e5f7e32402690",
+      "bytes": 4737
+    },
+    {
+      "path": "desktop/src/episode-authority.ts",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/episode-authority.ts",
+      "beforeSha256": "5a5545882c26ed950bff6d31ab24ed6e70a3c87ac44ab33540b27f1d3ff67d1f",
+      "sha256": "9546f2bac65b3e5eb06fde44f1722f1caaae04439ba430b23208bd120d24bfb2",
+      "bytes": 6393
+    },
+    {
+      "path": "desktop/src/types.ts",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/types.ts",
+      "beforeSha256": "997c43242c987158793845e8c0954414979b5d0da5f153ba3cf4aa2d3c8a2b28",
+      "sha256": "ce561869355ea752868b6e9e19c630d3bc897115f8cac353fad8ac92a6f78036",
+      "bytes": 14078
+    },
+    {
+      "path": "desktop/src/EpisodePanel.tsx",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/EpisodePanel.tsx",
+      "beforeSha256": "46aa0afce0e166b83455c1eb89f953626a0650c82096b4594257ba02cf37a4fd",
+      "sha256": "930d0c73770a3fc4aba6e8c80c6edbfacfc39e3401d2f2f016f1271fd25c14be",
+      "bytes": 8176
+    },
+    {
+      "path": "desktop/src/episode-comparison-types.ts",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/episode-comparison-types.ts",
+      "beforeSha256": null,
+      "sha256": "db780d14aa27fa3d0e4f2ca0b7e73620157ac2d7daba8bbd88fe134da7dbbf11",
+      "bytes": 443
+    },
+    {
+      "path": "desktop/src/episode-comparison-data.ts",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/episode-comparison-data.ts",
+      "beforeSha256": null,
+      "sha256": "9bf9c88367ac7f41921e5fd6a13eddf1a529fc0ceb18ab1f442d649a76068d01",
+      "bytes": 5355
+    },
+    {
+      "path": "desktop/src/use-episode-comparison.ts",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/use-episode-comparison.ts",
+      "beforeSha256": null,
+      "sha256": "8c3803300dc5faada010e3132a91a97fa06e435789c6d808d681dbb2e5606927",
+      "bytes": 2011
+    },
+    {
+      "path": "desktop/src/EpisodeComparisonPanel.tsx",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/src/EpisodeComparisonPanel.tsx",
+      "beforeSha256": null,
+      "sha256": "2cc881eaa6708d72c85f8a269fade625647b57e823f054c9c2cde14c8abb8595",
+      "bytes": 3397
+    },
+    {
+      "path": "desktop/electron/main.cjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/electron/main.cjs",
+      "beforeSha256": "b0078c966f5bb31467ec31b2759ccf89c47566425b94f27a73b8064b29baba39",
+      "sha256": "bb6be44fa1df633e7bba33107b3aeedc4172988961032fae770da2ebb195e71f",
+      "bytes": 10620
+    },
+    {
+      "path": "desktop/electron/preload.cjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/electron/preload.cjs",
+      "beforeSha256": "d1c1aa5915c105ab8a59283902005142d8e10254cfa79a86eb05caa4e81a10b7",
+      "sha256": "ebc4b2994f7d1acab85d703e85a43368571246870470595ed9d70ce80ffbef75",
+      "bytes": 2415
+    },
+    {
+      "path": "desktop/electron/sidecar.cjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/electron/sidecar.cjs",
+      "beforeSha256": "2e8dd439a442833659cff6383a6eb5d5f7f1011e6a60e99b9684aa8852c3dd2b",
+      "sha256": "609b5f5c67fd2c2426e8280cfa4d03f9657e80738309ea7006478cee0481ec26",
+      "bytes": 8016
+    },
+    {
+      "path": "desktop/electron/episode-authority.cjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/electron/episode-authority.cjs",
+      "beforeSha256": "79acde83033f6a9757146143f6ed4e31cf11ae633059584a4b6d5471ed2c9ae2",
+      "sha256": "cc238fce9373148a6444d4a677c22421f936984ffbd2face4b9f9edcf4d3629d",
+      "bytes": 6443
+    },
+    {
+      "path": "desktop/electron/episode-comparison.cjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/electron/episode-comparison.cjs",
+      "beforeSha256": null,
+      "sha256": "9c74d57b25bd8b263e0558c612f8b84255b4d12c97e6bf050ee232b0529322c4",
+      "bytes": 3207
+    },
+    {
+      "path": "desktop/electron/episode-comparison.test.cjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/electron/episode-comparison.test.cjs",
+      "beforeSha256": null,
+      "sha256": "a00bff320027afbf6a906823db385e9503ba849f4d950a78a364a41a0ca81cd9",
+      "bytes": 3396
+    },
+    {
+      "path": "desktop/tests/helpers/comparison-contract-fixture.mjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/tests/helpers/comparison-contract-fixture.mjs",
+      "beforeSha256": null,
+      "sha256": "f2c5ae4d6b4c54ffc87150e06a91d46cabce338a92f2a7e4f9aba6591eb29331",
+      "bytes": 1600
+    },
+    {
+      "path": "desktop/tests/episode-comparison.test.mjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/tests/episode-comparison.test.mjs",
+      "beforeSha256": null,
+      "sha256": "c004dcdf10ee349274363bdbead9ee82cf261e7c5ca0d206ebbbb1f76ba7aa7c",
+      "bytes": 5386
+    },
+    {
+      "path": "desktop/tests/episode-comparison-panel.test.mjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/tests/episode-comparison-panel.test.mjs",
+      "beforeSha256": null,
+      "sha256": "5f766decc60997ef40d1b5284e5017fadb8cd41fe7afc0a9bddd8950f297ecc0",
+      "bytes": 4409
+    },
+    {
+      "path": "desktop/tests/episode-comparison-state.test.mjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/tests/episode-comparison-state.test.mjs",
+      "beforeSha256": null,
+      "sha256": "caf18623452a686b911fc3b4fd8c68b8d5cb3882429bd2cd4162306acf1adf26",
+      "bytes": 3486
+    },
+    {
+      "path": "desktop/tests/episode-comparison-crossstack.mjs",
+      "proposal": "build/matched-aspiration-desktop-v1/stage/desktop/tests/episode-comparison-crossstack.mjs",
+      "beforeSha256": null,
+      "sha256": "45b619951559e7b757d46429058df9f108c7df95eee73a01524df4319cb402b1",
+      "bytes": 2170
+    }
+  ],
+  "totalFiles": 19,
+  "totalBytes": 95738,
+  "sourcePatchSha256": "a82f3fa12b444188fd354e70c81f001a3dda17efde17017d59c505b89329f509",
+  "appPatches": {
+    "currentWorktree": {
+      "beforeSha256": "9c7ad547749013a057a9d13b1a6d2985405542cb890d3790222e423294f7806b",
+      "afterSha256": "7e4a7fe612804073dccd0d7f92af498412ffeedd9c8c0b5028c2f8f32932ea09",
+      "patch": "App.worktree.patch",
+      "patchSha256": "f46c50cc46a6e9bbd441c950199a0f67c1f1f018a62bf312a504a11de8a8897e"
+    },
+    "cleanHead": {
+      "beforeSha256": "371a9f5715ea02e90e1a466ce76d7b0e75347f182fcc9b73550fa5392f11fede",
+      "afterSha256": "b7b699044e14c3a4d7eade6d175150b946edd348c087fb5e892a7fccda8b2b63",
+      "patch": "App.clean-HEAD.patch",
+      "patchSha256": "64b65e060505bcf30770ed0b2fc00e73a285b3db9cd28f24d3d7cb568b4dad2c",
+      "source": "App.clean-HEAD.tsx"
+    }
+  },
+  "exclusions": "No full worktree App promotion, neighboring WIP, copied fixture assets, node_modules, or unrelated stage copies are included."
+}

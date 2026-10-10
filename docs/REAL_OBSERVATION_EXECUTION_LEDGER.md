@@ -1059,3 +1059,15 @@ above the prior snapshot. The 15 exhausted and 39 historical BrokenPipe records
 remain unresolved; 52 earlier deferred attempts are separately historical.
 Capacity is sufficient; recovery remains unlaunched while the original lock is
 held. All downloaded payloads remain unreviewed for intended use.
+
+### October 10: paired SEARCH becomes an inspectable desktop branch
+
+The [matched companion integration](../artifacts/matched-aspiration-desktop-comparison-v1/RESULT.md)
+retains the sealed live backend pair and replays its SEARCH IDs without new
+planning. The renderer switches between separately checked actor/search frames
+and compares modeled outcomes. The companion has no saved-file authorship or
+actor vascular report; Save requires returning to the actor. Root checks pass
+10 backend and 402 desktop tests, saved actual-pair cross-stack validation and
+both working/exact staged builds. Independent boundary reviews pass. Original
+App WIP remains unstaged. Live Mac comparison inspection follows this source
+milestone; no new actor execution or advantage is claimed by the tests.

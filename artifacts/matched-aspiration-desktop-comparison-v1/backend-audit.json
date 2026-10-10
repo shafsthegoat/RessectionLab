@@ -1,0 +1,33 @@
+{
+  "accounting": "companionExecutionTransitions excludes pair/actor validation replays; originalSearchModelTransitionCalls is historical",
+  "controls": {
+    "actor_calls": 0,
+    "checkpoint_opens": 0,
+    "first_run": {
+      "fixture_failure": 1,
+      "passed": 15,
+      "seconds": 2.53
+    },
+    "independent_total": 16,
+    "new_native_replays": 0,
+    "numeric_threads": 1,
+    "patient_reads": 0,
+    "private_reference_loads": 0,
+    "repaired_single_control": {
+      "passed": 1,
+      "seconds": 1.63
+    },
+    "search_runs": 0
+  },
+  "decision": "GO_source_and_bridge_boundaries",
+  "files": {
+    "build/shared-transfer-comparator-independent-v2/first-test_boundaries.py": "e8e282eee7fff25751d58755a145ece305dc0fd2f9dd59ba17a49512048e7ddd",
+    "build/shared-transfer-comparator-independent-v2/test_boundaries.py": "f324ffe01e9c548af2b8638e886fd69ff6f17c0fc8bd9079e15757dae4afc286",
+    "build/shared-transfer-comparator-v1/saved-v3-control.json": "745a9ada0b2fadd1ee97d59a86f19e0d515bd2417b822dd39fcbf86f1c3527c1",
+    "build/shared-transfer-comparator-v2/saved_pair_control.py": "c4fd1cd84ad9eebb59546f1254223b4f2a691dfc06af573b93ae45c8396fe193",
+    "build/shared-transfer-comparator-v2/stage/resectionlab/desktop_bridge.py": "7e0712d58cf935ed200c357bf30298dfde48057ddff6dcd920afc96cbbe5e80c",
+    "build/shared-transfer-comparator-v2/stage/resectionlab/shared_transfer_comparison.py": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835",
+    "build/shared-transfer-comparator-v2/test_comparison.py": "f949a357f21c37e0a055ef3662e1109993b94d02530bc21e356017fbb60c79c7"
+  },
+  "report_sha256": "3d6e6deaae126335067bfb4db8373acad81c857c0d3ecf0cad3ae3898a58a32d"
+}

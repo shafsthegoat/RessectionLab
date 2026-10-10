@@ -1,10 +1,12 @@
+import { EpisodeComparisonPanel } from "./EpisodeComparisonPanel";
+import type {EpisodeComparisonControls} from "./EpisodeComparisonPanel";
 import { EpisodeVascularPanel } from "./EpisodeVascularPanel";
 import type { EpisodeVascularApi } from "./episode-vascular-types";
 import { ReplayStepControl } from "./ReplayStepControl";
 import type { EpisodeView } from "./episode-data";
 import type { DevelopmentEpisodeRequest } from "./episode-types";
-export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelector,onExecute,onStep,onShow,onSource,visible,vascularApi=null}: {
-  vascularApi?:EpisodeVascularApi|null;view:EpisodeView|null;step:number;selector:DevelopmentEpisodeRequest["selector"];busy:boolean;unavailableReason?:string;
+export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelector,onExecute,onStep,onShow,onSource,visible,vascularApi=null,comparison}: {
+  comparison?:EpisodeComparisonControls;vascularApi?:EpisodeVascularApi|null;view:EpisodeView|null;step:number;selector:DevelopmentEpisodeRequest["selector"];busy:boolean;unavailableReason?:string;
   onSelector:(value:DevelopmentEpisodeRequest["selector"])=>void;onExecute:()=>void;onStep:(value:number)=>void;
   onShow:()=>void;onSource:()=>void;visible:boolean;
 }) {
@@ -12,6 +14,7 @@ export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelect
   const transferSelected=selector==='RL256_ASPIRATION_TRANSFER';
   const transferEpisode=episode?.selector==='RL256_ASPIRATION_TRANSFER';
   const reopened=view?.origin==='reopened';
+  const matchedSearch=episode?.selector==='RL256_ASPIRATION_MATCHED_SEARCH';
   return <section className="episode-panel" aria-label="Generated development episode">
     <div className="planning-title"><span className="eyebrow">GENERATED SOFTWARE FIXTURE</span><h2>Execute & replay</h2>
       <p>One persistent cavity with recorded tool motion and tissue changes. No patient data or clinical validation.</p></div>
@@ -25,8 +28,9 @@ export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelect
     <p className="instrument-note">{transferSelected
       ? 'Runs the existing trained RL256 actor on this generated fixture through an aspiration-only adapter. STOP remains available; probing is excluded. No training occurs. Transfer performance is not established.'
       : 'Scripted and SEARCH use the shared backend state and objective. These selectors do not run a learned policy.'}</p>
+    {comparison && <EpisodeComparisonPanel controls={comparison} busy={busy}/>}
     {episode && frame && replay && <>
-      <div className="episode-status" role="status"><strong>{transferEpisode
+      <div className="episode-status" role="status"><strong>{matchedSearch ? 'Matched aspiration search · native replay checked' : transferEpisode
         ? reopened ? 'Recorded trained-transfer claim · geometry revalidated' : 'Trained transfer · live backend run · geometry checked'
         : reopened ? 'Recorded episode · geometry revalidated' : 'Generated · executed · geometry checked'}</strong><span>{episode.selector} · {episode.history.length} committed actions · {episode.replayFrames.length} recorded frames</span></div>
       {transferEpisode && <p className="instrument-note">{reopened
@@ -37,16 +41,16 @@ export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelect
       <div className="episode-replay-buttons"><button className="outline-button" disabled={busy || step===0} onClick={()=>onStep(step-1)}>Previous frame</button><button className="outline-button" disabled={busy || step===episode.replayFrames.length-1} onClick={()=>onStep(step+1)}>Next frame</button></div>
       <p className="episode-pose"><strong>{frame.phase === "initial" ? "Initial tissue" : frame.phase === "stop" ? "STOP · committed terminal action" : `${frame.mode === "probe" ? "Probe · geometric contact" : "Aspiration · modeled removal"} / ${frame.phase}`}</strong>
         {frame.tipRasMm && <span>Tip RAS+ mm: {frame.tipRasMm.map(n=>n.toFixed(2)).join(", ")} · {frame.toolId}</span>}</p>
-      <dl className="episode-quantities"><div><dt>Target removed</dt><dd>{replay.removedTargetVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Other tissue removed</dt><dd>{replay.removedNormalVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Target remaining</dt><dd>{replay.residualTargetVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>{transferEpisode?'Probe use':'Probe contact'}</dt><dd>{transferEpisode?'Excluded from this selector':`${view.probeCounts[step]} cells contacted during probing`}</dd></div></dl>
+      <dl className="episode-quantities"><div><dt>Target removed</dt><dd>{replay.removedTargetVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Other tissue removed</dt><dd>{replay.removedNormalVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Target remaining</dt><dd>{replay.residualTargetVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>{transferEpisode||matchedSearch?'Probe use':'Probe contact'}</dt><dd>{transferEpisode?'Excluded from this selector':matchedSearch?'Excluded from this branch':`${view.probeCounts[step]} cells contacted during probing`}</dd></div></dl>
       <p className="instrument-note">Recorded backend boundaries only. Withdrawal reverses the recorded path. No interpolation, extra tissue effects or elapsed-time animation.</p>
-      <EpisodeVascularPanel episode={episode} actionIndex={frame.actionIndex} api={vascularApi} busy={busy}/>
+      {matchedSearch ? <p className="instrument-note">Vessel annotation encounters were not evaluated for this comparator. Actor evaluation is not reused.</p> : <EpisodeVascularPanel episode={episode} actionIndex={frame.actionIndex} api={vascularApi} busy={busy}/> }
       <h3>Action timeline</h3><ol className="episode-timeline">{episode.history.map((action,index)=>{
         const first=episode.replayFrames.findIndex(f=>f.actionIndex===index);
         return <li key={index}><button className={frame.actionIndex===index?"selected":""} disabled={busy} onClick={()=>onStep(first)} aria-current={frame.actionIndex===index?"step":undefined}>
           <span>{index+1}. {action.interaction_mode === "stop" ? "STOP" : action.interaction_mode === "probe" ? "Probe" : "Aspirate"}</span><small>{action.removed_indices_native.length} cells removed · committed</small></button></li>;
       })}</ol>
       <details open className="episode-evidence"><summary>Rejected attempt & evidence</summary>
-        {episode.attemptDiagnostics.map((attempt,i)=><p key={i}><strong>{transferEpisode?'Fixture check: rejected probe · no state change':'Rejected probe · no state change'}</strong><br/>{attempt.reason.replaceAll("_"," ")} · 0 cells removed. This was not STOP.</p>)}
+        {episode.attemptDiagnostics.map((attempt,i)=><p key={i}><strong>{transferEpisode||matchedSearch?'Fixture check: rejected probe · no state change':'Rejected probe · no state change'}</strong><br/>{attempt.reason.replaceAll("_"," ")} · 0 cells removed. This was not STOP.</p>)}
         {transferEpisode && <p>The rejected probe above is a fixture check, not a decision made by the transferred actor.</p>}
         <p>{String(episode.sequentialEffect.explanation)}</p><p>{episode.interpretation}</p>
         <p><strong>Unsupported:</strong> {episode.unsupported.map(v=>v.replaceAll("_"," ")).join(", ")}.</p>

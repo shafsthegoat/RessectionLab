@@ -1,0 +1,10 @@
+/** Saved generated transport only: no engine, checkpoint, actor or search. */
+import fs from 'node:fs';import assert from 'node:assert/strict';import {createRequire} from 'node:module';
+import {hydrateDevelopmentEpisode} from '../src/episode-data.ts';import {loadEpisodeComparison} from '../src/episode-comparison-data.ts';
+const require=createRequire(import.meta.url),{validateEpisodeResult}=require('../electron/development-episode.cjs'),{validateComparisonResult}=require('../electron/episode-comparison.cjs');
+const [actorPath,comparisonPath]=process.argv.slice(2);assert(actorPath&&comparisonPath,'Pass two saved generated transport fixtures');
+const live=JSON.parse(fs.readFileSync(actorPath,'utf8')),saved=JSON.parse(fs.readFileSync(comparisonPath,'utf8'));const assets={...live.assets,...saved.assets};
+const api={readAsset:async id=>{assert(Object.hasOwn(assets,id),'Missing generated asset');return new Uint8Array(Buffer.from(assets[id],'base64'))},inspectDevelopmentEpisodeComparison:async args=>{assert.deepEqual(args,{caseHash:live.result.case.caseHash,episodeId:live.result.episode.episodeId});return saved.result}};
+validateEpisodeResult(live.result,{selector:'RL256_ASPIRATION_TRANSFER'});validateComparisonResult(saved.result,{caseHash:live.result.case.caseHash,episodeId:live.result.episode.episodeId});
+const actor=await hydrateDevelopmentEpisode(live.result,api),result=await loadEpisodeComparison(api,actor,()=>true);
+console.log(JSON.stringify({status:'PASS',scope:'saved generated transport and replay validation only; no new engine/model execution',actorEpisodeId:actor.episode.episodeId,companionEpisodeId:result.companion.episode.episodeId,pairSeal:result.binding.pairSeal,actorFrames:actor.frames.length,companionFrames:result.companion.frames.length,actor:result.actorOutcome,matchedSearch:result.searchOutcome,originalSearchModelTransitionCalls:result.companion.episode.planning.originalSearchModelTransitionCalls,companionExecutionTransitions:result.companion.episode.planning.companionExecutionTransitions,accountingQualification:'final companion steps only; additional validation replays are not totaled; no speed comparison'},null,2));

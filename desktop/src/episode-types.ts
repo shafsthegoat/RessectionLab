@@ -1,7 +1,8 @@
 // Generated development result from execute_development_episode(selector, cancelled).
 // The sidecar supplies `case` through its existing _install_case / CasePayload.
 export type EpisodeSelector = 'scripted' | 'SEARCH' | 'RL256_ASPIRATION_TRANSFER';
-export type EpisodeOrigin = 'live' | 'reopened';
+export type EpisodeOutputSelector = EpisodeSelector | 'RL256_ASPIRATION_MATCHED_SEARCH';
+export type EpisodeOrigin = 'live' | 'reopened' | 'comparison';
 /** Response-only qualification; never inferred from the imported episode's claims. */
 export interface EpisodeAuthorship {
   status: 'verified_live_backend_run' | 'unverified_imported';
@@ -16,7 +17,7 @@ export interface DevelopmentEpisode {
   caseHash: string;
   sourceHash: string;
   decisionModelHash: string;
-  selector: EpisodeSelector;
+  selector: EpisodeOutputSelector;
   evidenceKind: 'generated_software_fixture';
   fidelity: 'native_grid_connected_exposed_tip_aspiration_and_nonremoving_geometric_probe';
   backendStatus: 'generated_executed';

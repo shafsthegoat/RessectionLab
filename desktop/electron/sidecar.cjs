@@ -1,4 +1,5 @@
 'use strict';
+const {comparisonRequest,validateComparisonResult}=require('./episode-comparison.cjs');
 const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs');
 
 const { spawn } = require('node:child_process');
@@ -11,7 +12,7 @@ const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
-const OPERATIONS = new Set(['ping', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['ping', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
@@ -47,6 +48,9 @@ class Sidecar extends EventEmitter {
     if (op === 'inspectObservedLandmarkUpdate') {
       try { args = observedRequest(args); } catch (error) { return Promise.reject(error); }
     }
+    if (op === 'inspectDevelopmentEpisodeComparison') {
+      try { args=comparisonRequest(args); } catch(error) { return Promise.reject(error); }
+    }
     if (op === 'executeDevelopmentEpisode') {
       try { args = episodeRequest(args); } catch (error) { return Promise.reject(error); }
     }
@@ -64,6 +68,7 @@ class Sidecar extends EventEmitter {
       }, timeoutMs + 5000);
       this.pending.set(id, { resolve, reject, timeout, op,
         ...(op === 'evaluateDevelopmentEpisodeVascular' ? { vascularArgs: args } : {}),
+        ...(op === 'inspectDevelopmentEpisodeComparison' ? { comparisonArgs: args } : {}),
         ...(op === 'executeDevelopmentEpisode' ? { episodeArgs: args } : {}),
         ...(op === 'inspectObservedLandmarkUpdate' ? { observedArgs: args } : {}) });
       this.child.stdin.write(message + '\n', error => { if (error) this.failAll(error); });
@@ -93,6 +98,7 @@ class Sidecar extends EventEmitter {
     if (observed) validateObservedEvent(message, pending.observedArgs);
     if (message.event === 'result') {
       if (pending.op === 'evaluateDevelopmentEpisodeVascular') validateVascularResult(message.result,pending.vascularArgs);
+      if (pending.op === 'inspectDevelopmentEpisodeComparison') validateComparisonResult(message.result,pending.comparisonArgs);
       if (pending.op === 'executeDevelopmentEpisode') validateEpisodeResult(message.result, pending.episodeArgs);
       if (pending.op === 'loadCase') validateWorkspaceResult(message.result);
       if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode'].includes(pending.op)) this.assets.clear();

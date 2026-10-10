@@ -38,6 +38,8 @@ import {
 import { AnnotationCenterButton } from "./AnnotationCenterButton";
 import { WorkspaceBreadcrumb } from "./WorkspaceBreadcrumb";
 import { readOnlyPreview } from "./preview-api";
+import {useEpisodeComparison} from "./use-episode-comparison";
+import {requirePersistableEpisode} from "./episode-comparison-data";
 import { EpisodePanel } from "./EpisodePanel";
 import { hydrateDevelopmentEpisode } from "./episode-data";
 import type { EpisodeView } from "./episode-data";
@@ -611,7 +613,12 @@ export default function App() {
   const busy = !!operation || hydrating || episodePending || imaging.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = busy || engineStopped || !display.planningInteractionPermitted;
-  const fileNavigationBlocked = !api || busy || engineStopped || readonly;
+  const comparisonAvailable = !readonly && !engineStopped && engineOperations.has("inspectDevelopmentEpisodeComparison");
+  const comparison = useEpisodeComparison(episodeView, api, comparisonAvailable, payload?.caseHash ?? null);
+  const displayedEpisodeView = comparison.activeView;
+  const displayedEpisodeStep = comparison.arm === "search" ? comparison.companionStep : episodeStep;
+  const actorReplayVisible = useRef(false);
+  const fileNavigationBlocked = !api || busy || comparison.pending || engineStopped || readonly;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
     setEpisodeVisible(false);
@@ -765,7 +772,7 @@ export default function App() {
         setEpisodeView(reopened.episodeView);
         setEpisodeStep(reopened.episodeStep);
         setEpisodeVisible(reopened.episodeVisible);
-        if (reopened.episodeView) setEpisodeSelector(reopened.episodeView.episode.selector);
+        if (reopened.episodeView && reopened.episodeView.episode.selector !== "RL256_ASPIRATION_MATCHED_SEARCH") setEpisodeSelector(reopened.episodeView.episode.selector);
         if (reopened.episodeVisible) { setCameraMode("instruments"); setPlanningTab("episode"); }
         setMessage(
           reopened.session ? `Workspace reopened · native image views restored${reopened.episodeView ? " · saved replay revalidated" : ""}` :
@@ -787,14 +794,20 @@ export default function App() {
 
   const showEpisode = () => {
     resetDisplayToPrimary();
-    if (!episodeView || episodeView.source.caseHash !== activeCaseHash.current) return;
+    if (!displayedEpisodeView || displayedEpisodeView.source.caseHash !== activeCaseHash.current) return;
     clearPrior(); clearProposal(); setCertifiedReplay(null); setEpisodeVisible(false);
     setEpisodeVisible(true); setCameraMode("instruments");
     setMessage("Generated episode · recorded tool poses and modeled cavity · no patient admission");
   };
   const requestEpisodeStep = (step: number) => {
-    if (!episodeView || !Number.isInteger(step) || step < 0 || step >= episodeView.frames.length) return;
-    setEpisodeStep(step); showEpisode();
+    if (!displayedEpisodeView || !Number.isInteger(step) || step < 0 || step >= displayedEpisodeView.frames.length) return;
+    if (comparison.arm === "search") comparison.setStep(step); else setEpisodeStep(step);
+    showEpisode();
+  };
+  const selectComparisonArm = (arm: "actor" | "search") => {
+    if (controlsBlocked || comparison.pending || !comparison.result || arm === comparison.arm) return;
+    if (arm === "search") { actorReplayVisible.current = episodeVisible; comparison.select(arm); showEpisode(); }
+    else { comparison.select(arm); setEpisodeVisible(actorReplayVisible.current); }
   };
   const executeEpisode = async () => {
     if (!api?.executeDevelopmentEpisode || controlsBlocked || readonly) return;
@@ -1065,6 +1078,7 @@ export default function App() {
   const save = () =>
     act(async () => {
       if (!api || !payload) return;
+      requirePersistableEpisode(displayedEpisodeView);
       const result = await api.saveCase({
         caseHash: payload.caseHash,
         workspace: {
@@ -1087,7 +1101,7 @@ export default function App() {
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event) => {
-      if (event.event !== "menuAction" || busy || engineStopped || readonly) return;
+      if (event.event !== "menuAction" || busy || comparison.pending || engineStopped || readonly) return;
       if (event.action === "openCase") void load("openCase");
       if (event.action === "saveCase" && payload) void save();
     });
@@ -1100,6 +1114,8 @@ export default function App() {
     imaging.snapshot,
     imaging.selected,
     episodeView,
+    displayedEpisodeView,
+    comparison.pending,
     episodeStep,
     episodeVisible,
     routeA,
@@ -1148,8 +1164,8 @@ export default function App() {
   );
   const viewerReplay = useMemo(
     () =>
-      episodeVisible && episodeView && episodeView.source.caseHash === caseData?.caseHash
-        ? episodeView.frames[episodeStep]
+      episodeVisible && displayedEpisodeView && displayedEpisodeView.source.caseHash === caseData?.caseHash
+        ? displayedEpisodeView.frames[displayedEpisodeStep]
         : certifiedReplay && caseData
         ? {
             removedMask: certifiedReplay.mask,
@@ -1168,7 +1184,7 @@ export default function App() {
               certifiedReplay.result.modeledResidualTargetVolumeMm3,
           }
         : null,
-    [certifiedReplay, caseData, episodeVisible, episodeView, episodeStep],
+    [certifiedReplay, caseData, episodeVisible, displayedEpisodeView, displayedEpisodeStep],
   );
   const synthetic = !!payload?.metadata.is_synthetic;
   const supportGate = researchSupportGate(payload);
@@ -1531,8 +1547,8 @@ export default function App() {
             </button>
           </div>
         )}
-        {episodeVisible && episodeView && (
-          <div className="modeled-replay-notice" role="status"><span>GENERATED · modeled cavity · frame {episodeStep}/{episodeView.frames.length-1} · {episodeView.episode.replayFrames[episodeStep].phase} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>
+        {episodeVisible && displayedEpisodeView && (
+          <div className="modeled-replay-notice" role="status"><span>GENERATED · modeled cavity · {comparison.arm === "search" ? "matched search" : "selected episode"} · frame {displayedEpisodeStep}/{displayedEpisodeView.frames.length-1} · {displayedEpisodeView.episode.replayFrames[displayedEpisodeStep].phase} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>
         )}
         {certifiedReplay && (
           <div className="modeled-replay-notice">
@@ -1630,8 +1646,9 @@ export default function App() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content value="episode" className="planning-tab-content">
-            <EpisodePanel vascularApi={!readonly && !engineStopped && engineOperations.has("evaluateDevelopmentEpisodeVascular") ? api : null} view={episodeView?.source.caseHash === payload?.caseHash ? episodeView : null} step={episodeStep}
-              selector={episodeSelector} onSelector={setEpisodeSelector} busy={controlsBlocked}
+            <EpisodePanel vascularApi={!readonly && !engineStopped && engineOperations.has("evaluateDevelopmentEpisodeVascular") ? api : null} view={displayedEpisodeView?.source.caseHash === payload?.caseHash ? displayedEpisodeView : null} step={displayedEpisodeStep}
+              comparison={{actor:episodeView, result:comparison.result, arm:comparison.arm, available:comparisonAvailable, pending:comparison.pending, error:comparison.error, inspect:comparison.inspect, select:selectComparisonArm}}
+              selector={episodeSelector} onSelector={setEpisodeSelector} busy={controlsBlocked || comparison.pending}
               onExecute={executeEpisode} onStep={requestEpisodeStep} onShow={showEpisode} onSource={restoreSourceView} visible={episodeVisible}
               unavailableReason={engineStopped ? "The local engine stopped. Reopen the app to execute." : readonly ? "This browser preview is read only. Open the desktop app to execute." : !api?.executeDevelopmentEpisode || !engineOperations.has("executeDevelopmentEpisode") ? "This engine does not provide generated development episodes." : undefined}/>
           </Tabs.Content>

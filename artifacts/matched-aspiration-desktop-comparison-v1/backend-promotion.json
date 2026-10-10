@@ -1,0 +1,32 @@
+{
+  "schema": "shared-transfer-comparator-promotion-v2",
+  "scope": "Generated-only, live-backend matched SEARCH companion; no new actor, search expansion, checkpoint load, patient input or private-reference scoring",
+  "baseDesktopBridgeSha256": "7b9489d5bb6a5e5321c608975f3881bcf990261a8e74ad7656808c7723242f99",
+  "files": [
+    {
+      "from": "build/shared-transfer-comparator-v2/promotion/src/resectionlab/shared_transfer_comparison.py",
+      "to": "src/resectionlab/shared_transfer_comparison.py",
+      "sha256": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835",
+      "bytes": 4840
+    },
+    {
+      "from": "build/shared-transfer-comparator-v2/promotion/src/resectionlab/desktop_bridge.py",
+      "to": "src/resectionlab/desktop_bridge.py",
+      "sha256": "7e0712d58cf935ed200c357bf30298dfde48057ddff6dcd920afc96cbbe5e80c",
+      "bytes": 112720
+    },
+    {
+      "from": "build/shared-transfer-comparator-v2/promotion/tests/test_shared_transfer_comparison.py",
+      "to": "tests/test_shared_transfer_comparison.py",
+      "sha256": "edf5638c74d331bc11699dfd2e5f0057b1cdfe0002cc91c8d6a1eb7ca046fc4b",
+      "bytes": 7497
+    }
+  ],
+  "validation": {
+    "generatedControls": "3 passed in 17.11 s against the exact promotion files through the package overlay",
+    "independentBackendReport": "build/shared-transfer-comparator-independent-v2/REPORT.txt",
+    "independentBackendReportSha256": "3d6e6deaae126335067bfb4db8373acad81c857c0d3ecf0cad3ae3898a58a32d",
+    "savedV3Fixture": "build/shared-transfer-comparator-v2/actual-v3-comparison-fixture.json",
+    "savedV3FixtureSha256": "f65f4bb16b460f54464261bb9bd6bd1bcadd58ffb2fef705c89eb575f07547b9"
+  }
+}

@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -261,6 +261,10 @@ class _CaseEntry:
     episode: dict | None = None
     episode_selection: dict | None = None
     workspace_hash: str | None = None
+    # Live-only sealed pair. Never serialized into a workspace or returned to
+    # the renderer; imported episodes have no comparison capability.
+    comparison_pair: Any = None
+    comparison_actor_episode_id: str | None = None
 
 
 @dataclass
@@ -398,7 +402,8 @@ class BridgeSession:
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         restored=self._workspace_fields(case,workspace)
         if case.semantic_hash in self.cases:
-            entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),**restored)
+            entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
+                comparison_pair=None,comparison_actor_episode_id=None,**restored)
             extra=self._workspace_payload(entry)
             request.begin_commit()
             self.cases[case.semantic_hash]=entry
@@ -1030,6 +1035,67 @@ class BridgeSession:
             # retained evidence directory for root's reproducible experiments.
             request.check()
             return result
+        if operation == "inspectDevelopmentEpisodeComparison":
+            # Read-only companion of the current live RL256 run. The renderer
+            # supplies only two identities, never actions, pair bytes or paths.
+            if set(args) != {"caseHash", "episodeId"}:
+                raise BridgeError("INVALID_ARGUMENT", "Name the current generated actor episode only")
+            entry = self._get_case(args["caseHash"])
+            episode_id = _string(args["episodeId"], "episodeId", maximum=80)
+            envelope = entry.episode
+            frozen_pair = entry.comparison_pair
+            if (envelope is None or frozen_pair is None or
+                    entry.comparison_actor_episode_id != episode_id):
+                raise BridgeError("COMPARISON_UNAVAILABLE", "A live matched pair is unavailable after reopen or case change")
+            if not isinstance(envelope, dict) or set(envelope) != {"episode", "episodeCanonicalJson"}:
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Stored actor episode is malformed")
+            actor_episode = envelope["episode"]
+            canonical = json.dumps({key: value for key, value in actor_episode.items() if key != "episodeId"},
+                                   sort_keys=True, separators=(",", ":"), allow_nan=False)
+            if (actor_episode.get("episodeId") != episode_id or canonical != envelope["episodeCanonicalJson"] or
+                    "sha256:" + hashlib.sha256(canonical.encode()).hexdigest() != episode_id or
+                    actor_episode.get("caseHash") != entry.case.semantic_hash or
+                    actor_episode.get("selector") != "RL256_ASPIRATION_TRANSFER"):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Stored actor identity changed")
+            _require_json_budget(envelope, 2 * 1024 * 1024, "EPISODE_SIZE_LIMIT", "Stored episode exceeds 2 MiB")
+            expected_envelope = json.loads(json.dumps(envelope, allow_nan=False))
+            pair = thaw_json(frozen_pair)
+            from .shared_transfer_comparison import execute_transfer_search_companion_from_pair
+            progress(0.1, "Replaying the matched projected SEARCH branch")
+            request.check()
+            case, companion = execute_transfer_search_companion_from_pair(
+                pair, expected_envelope["episode"], cancelled=request.cancelled.is_set)
+            request.check()
+            if (self.cases.get(args["caseHash"]) is not entry or
+                    entry.episode != expected_envelope or entry.comparison_pair is not frozen_pair or
+                    entry.comparison_actor_episode_id != episode_id or
+                    case.semantic_hash != entry.case.semantic_hash):
+                raise BridgeError("EPISODE_VERSION_MISMATCH", "Actor or matched pair changed during inspection")
+            actor = expected_envelope["episode"]
+            projected_actor = pair["actor"]["projection_trace"][0]["projected_observation_hash"]
+            projected_search = pair["search"]["projection_trace"][0]["projected_observation_hash"]
+            if (projected_actor != projected_search or
+                    companion["initialStateId"] != actor["initialStateId"] or
+                    companion["sourceHash"] != actor["sourceHash"] or
+                    companion["decisionModelHash"] != actor["decisionModelHash"] or
+                    companion["tools"] != actor["tools"] or companion["access"] != actor["access"] or
+                    companion["planning"]["pairSeal"] != pair["seal"] or
+                    companion["planning"]["matchedActorEpisodeId"] != episode_id or
+                    companion["planning"]["projectionHash"] != pair["projection_hash"] or
+                    companion["planning"]["learnedPolicyExecuted"] is not False):
+                raise BridgeError("COMPARISON_BINDING_MISMATCH", "Matched SEARCH changed source or action inventory")
+            companion_canonical = json.dumps({key: value for key, value in companion.items() if key != "episodeId"},
+                                             sort_keys=True, separators=(",", ":"), allow_nan=False)
+            if "sha256:" + hashlib.sha256(companion_canonical.encode()).hexdigest() != companion["episodeId"]:
+                raise BridgeError("COMPARISON_BINDING_MISMATCH", "Matched SEARCH episode identity changed")
+            result = {"caseHash": entry.case.semantic_hash, "actorEpisodeId": episode_id,
+                "actorStrategySeal": actor["planning"]["strategySeal"], "pairSeal": pair["seal"],
+                "projectionHash": pair["projection_hash"],
+                "initialProjectedObservationHash": projected_actor,
+                "companion": {"episode": companion, "episodeCanonicalJson": companion_canonical}}
+            _require_json_budget(result, 2 * 1024 * 1024, "COMPARISON_RESULT_SIZE_LIMIT",
+                                 "Matched SEARCH result exceeds 2 MiB")
+            return result
         if operation == "executeDevelopmentEpisode":
             # Explicitly authorized generated development path. The legacy
             # createSyntheticCase policy exclusion remains unchanged above.
@@ -1040,6 +1106,7 @@ class BridgeSession:
             from .development_episode import execute_development_episode
             progress(0.1, "Executing the generated multistep software fixture")
             authorship = None
+            comparison_pair = None
             if args["selector"] == "RL256_ASPIRATION_TRANSFER":
                 supervisor_path = Path(__file__).with_name("legacy_transfer_supervisor.py")
                 if (supervisor_path.is_symlink() or not supervisor_path.is_file() or
@@ -1068,6 +1135,7 @@ class BridgeSession:
                         result["episodeAuthorship"] != transfer_authorship(episode, live_backend_run=True)):
                     raise BridgeError("EPISODE_BINDING_MISMATCH", "Owned actor result differs from native replay")
                 authorship = result["episodeAuthorship"]
+                comparison_pair = freeze_json(result["pair"])
             else:
                 case, episode = execute_development_episode(selector=args["selector"], cancelled=request.cancelled.is_set)
             request.check()
@@ -1084,6 +1152,8 @@ class BridgeSession:
             entry=self.cases[case.semantic_hash]
             entry.episode=json.loads(json.dumps({'episode':episode,'episodeCanonicalJson':canonical}))
             entry.episode_selection={'episodeId':episode['episodeId'],'frameIndex':0,'visible':True}
+            entry.comparison_pair=comparison_pair
+            entry.comparison_actor_episode_id=episode['episodeId'] if comparison_pair is not None else None
             if entry.imaging_state is not None:
                 entry.imaging_state={**entry.imaging_state,'selectedSeriesId':None}
             entry.workspace_hash=None

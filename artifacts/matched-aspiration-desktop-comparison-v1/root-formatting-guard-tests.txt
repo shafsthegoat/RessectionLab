@@ -1,0 +1,20 @@
+✔ exact generated request supports only explicitly named fixture and selectors (0.608209ms)
+✔ actual source-bound generated episode accepted before asset exposure (4.09125ms)
+✔ main withholds changed tool (1.474875ms)
+✔ main withholds changed case (1.964959ms)
+✔ main withholds changed clinical (1.68425ms)
+✔ main withholds changed selector (1.071125ms)
+✔ main withholds changed raw serialization (0.734708ms)
+✔ IPC is advertised, request checked in main/sidecar, response checked before asset/event forwarding (0.240416ms)
+✔ sidecar accepts display-series without expiring primary assets (1.1335ms)
+✔ sidecar preserves primary assets and exposes only accepted companion (9.000583ms)
+✔ sidecar rejects injected companion assets and re-sealed forward counts before traversal/event (12.645625ms)
+✔ real main/preload method passes only identities under bounded IPC timeout (5.95725ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74.183416

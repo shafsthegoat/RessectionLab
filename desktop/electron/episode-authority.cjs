@@ -1,15 +1,28 @@
 'use strict';
+
 const HASH=/^sha256:[a-f0-9]{64}$/;
-const object=(value)=>!!value&&typeof value==='object'&&!Array.isArray(value);
-const exact=(value,keys)=>object(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.hasOwn(value,key));
-const digest=(value)=>typeof value==='string'&&HASH.test(value);
-function need(value,message){if(!value)throw new Error(`Episode authority withheld: ${message}`);}
-const ids=(value)=>Array.isArray(value)&&value.length<=4096&&value.every(id=>typeof id==='string'&&id.length>0&&id.length<=256)&&new Set(value).size===value.length;
+const object=(value        )                                =>!!value&&typeof value==='object'&&!Array.isArray(value);
+const exact=(value        ,keys         )                                =>object(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.hasOwn(value,key));
+const digest=(value        )=>typeof value==='string'&&HASH.test(value);
+function need(value        ,message       )              {if(!value)throw new Error(`Episode authority withheld: ${message}`);}
+const ids=(value        )                  =>Array.isArray(value)&&value.length<=4096&&value.every(id=>typeof id==='string'&&id.length>0&&id.length<=256)&&new Set(value).size===value.length;
 /** Transport consistency, not proof that a saved file was produced by an actor.
  * Only the current backend response can qualify a live checkpoint run. */
-function checkedEpisodeAuthority(episode,authorship,origin){
+function checkedEpisodeAuthority(episode                   ,authorship        ,origin              )                       {
   const p=episode?.planning;
   need(object(p)&&p.sealedBeforeReferenceScoring===true,'missing planning seal.');
+  const comparator=episode.selector==='RL256_ASPIRATION_MATCHED_SEARCH';
+  if(comparator){
+    need(origin==='comparison'&&authorship===undefined&&p.learnedPolicyExecuted===false&&p.policyIdentity===undefined&&
+      p.actorForwardCalls===0&&p.actor_forward_calls===0&&p.optimizerUpdates===0&&p.optimizer_updates===0&&
+      p.attributionScope==='matched_observed_search_record_from_live_pair_no_new_search'&&p.trainingDomainMatchesTarget===false&&p.privateReferenceScored===false&&
+      p.selector==='matched_projected_SEARCH_from_existing_pair'&&
+      [p.pairSeal,p.projectionHash,p.matchedActorEpisodeId,p.matchedActorStrategySeal,p.nativeSearchStrategySeal,p.strategySeal].every(digest)&&p.nativeSearchStrategySeal===p.strategySeal&&
+      Array.isArray(episode.history)&&episode.history.length>0&&episode.history.length<=6&&p.companionExecutionTransitions===episode.history.length&&
+      object(p.searchAccounting)&&Number.isSafeInteger(p.originalSearchModelTransitionCalls)&&Number(p.originalSearchModelTransitionCalls)>=0&&
+      p.searchAccounting.model_transition_calls===p.originalSearchModelTransitionCalls,'invalid matched-search provenance or replay accounting.');
+    checkedProjection(episode);return null;
+  }
   need(origin==='live'||origin==='reopened','unknown response origin.');
   if(episode.selector!=='RL256_ASPIRATION_TRANSFER'){
     need(['scripted','SEARCH'].includes(episode.selector)&&p.learnedPolicyExecuted===false&&authorship===undefined,'unsupported selector or learned attribution.');
@@ -29,6 +42,13 @@ function checkedEpisodeAuthority(episode,authorship,origin){
     'live and imported authorship cannot be interchanged.');
   need(Array.isArray(episode.history)&&episode.history.length===p.actorForwardCalls&&Array.isArray(p.projectionTrace)&&p.projectionTrace.length===episode.history.length,
     'transfer decisions, forward count and projection trace differ.');
+  checkedProjection(episode);
+  return {...authorship}                                ;
+}
+
+function checkedProjection(episode                   ){
+  const p=episode.planning;
+  need(Array.isArray(p.projectionTrace)&&p.projectionTrace.length===episode.history.length,'projection trace differs from history.');
   const strategy=p.strategy;
   need(object(strategy)&&Array.isArray(strategy.actions)&&strategy.actions.length===episode.history.length&&strategy.actions.every((id,i)=>id===episode.history[i].action_id),'sealed action order differs from history.');
   for(const [i,row] of p.projectionTrace.entries()){
@@ -44,7 +64,6 @@ function checkedEpisodeAuthority(episode,authorship,origin){
   }
   need(Array.isArray(episode.replayFrames)&&episode.replayFrames.every(frame=>frame.mode!=='probe'&&Array.isArray(frame.probeContactIndicesNative)&&frame.probeContactIndicesNative.length===0),
     'the transferred actor cannot replay probe contact.');
-  return {...authorship};
 }
 
 module.exports={checkedEpisodeAuthority};
