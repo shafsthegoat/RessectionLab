@@ -42,3 +42,32 @@ The tested extension permits only `--spatial-subject sub-PAT22`, `sub-PAT25`, `s
 Initial owner checks passed 106/106 in 2.20 seconds. Independent review then reproduced **three failures** in established-SHA reacquisition: wrong/missing S3 version and changed final URL were accepted. It also identified automatic redirect following before response validation. These negative results are retained in `artifacts/btc-spatial-acquisition-review-v1/`.
 
 The BTC transport now refuses redirects before any follow-up request and applies the same exact URL, version, length and checksum checks to both pending- and known-SHA images. The shared mirror downloader is unchanged. Combined owner, historical acquisition/preparation, and independent adversarial checks passed **135/135 in 2.11 seconds**. Repaired source SHA-256: `2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf`. No real image GET occurred during this audit; prospective roles and acquisition do not grant anatomical acceptance.
+
+
+## October 10 cross-patient planning pilot
+
+The [fixed ReMIND pilot](../manifests/experiments/remind-planning-pilot-v1.json)
+uses existing roles and metadata eligibility before method performance: TRAIN
+008/010/020/025, SELECT 013/037, and protected MEASUREMENT_EVAL 067. All 88
+people in the historical glioma-label stratum remain in the disposition table;
+19 match the same-reference MRI/tumor/ventricle/cerebrum predicate (14/4/1 by
+role). The other 26 source people remain outside that historical predicate.
+No failed case can be silently replaced, and one evaluation person cannot
+establish population efficacy. Existing BTC and other source roles remain fixed.
+
+The task is full-tool approach to an explicitly supplied whole-tumor region,
+using preoperative ceT1 and an explicitly supplied automatic cerebrum estimate.
+Access is hypothetical. The whole-tumor mask is not a prescribed resection target.
+Source ventricular annotations are withheld from planning and used only after
+all methods are sealed. They are automatic Brainlab outputs, not independent
+manual truth. Public cerebrum support may already reveal ventricular voids;
+that information must be measured and disclosed, not altered to create difficulty.
+Vessels, function and clinical injury probabilities remain unavailable.
+
+First TRAIN 008 header checks completed: 367 checksum-matching objects, shared
+MRI/SEG frame, source MANUAL tumor and AUTOMATIC BrainLab cerebrum/ventricle
+labels. No explicit source-SOP references were present. Source descriptions and
+shared frame support the next alignment check but do not establish anatomy.
+The full MRI has 95,420,416 voxels; the public cerebrum extent has 20,770,250,
+allowing an explicitly recorded native-resolution crop. Pixel values, coverage,
+anatomical alignment and intended-use qualification remain the next step.

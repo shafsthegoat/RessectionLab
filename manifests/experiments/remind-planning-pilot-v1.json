@@ -1,0 +1,1115 @@
+{
+  "schema": "remind-limited-information-planning-pilot-v1",
+  "status": "prospective_metadata_selection_not_training_admission",
+  "source_screen_sha256": "9fd069bd180c23c359f316cdac9bbc9de9c2314bbad696560fce35b7a2e2bf60",
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "bytes": 70925,
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "series_metadata": {
+    "path": "build/remind-cohort-expansion-preparation-v1/idc-remind-series-metadata.json",
+    "bytes": 954971,
+    "sha256": "8301d9890e97316c8905448c9ec78e851d43ed18b383455ae138f4b13a8023be"
+  },
+  "eligibility": {
+    "diagnosis_stratum": "strict_three_label_glioma",
+    "StudyDescription": "Preop",
+    "required_unique_SeriesDescription": [
+      "3D_AX_T1_postcontrast",
+      "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+      "ventricles seg - MR ref: 3D_AX_T1_postcontrast",
+      "cerebrum seg - MR ref: 3D_AX_T1_postcontrast"
+    ]
+  },
+  "pilot": {
+    "rule": "lowest lexicographic IDs within existing role after fixed metadata predicate; no performance/image selection",
+    "TRAIN": [
+      "ReMIND-008",
+      "ReMIND-010",
+      "ReMIND-020",
+      "ReMIND-025"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ],
+    "MEASUREMENT_EVAL": [
+      "ReMIND-067"
+    ]
+  },
+  "failed_case_replacement": false,
+  "selected_before_new_patient_payload_or_method_performance": true,
+  "existing_role_changes": false,
+  "source_people": 114,
+  "existing_strict_label_stratum_people": 88,
+  "outside_stratum_people": 26,
+  "matching_metadata_counts": {
+    "TRAIN": 14,
+    "SELECT": 4,
+    "MEASUREMENT_EVAL": 1
+  },
+  "all_in_stratum_dispositions": [
+    {
+      "subject": "ReMIND-001",
+      "role": "DEVELOPMENT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-002",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-003",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-006",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-008",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-009",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-010",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-011",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-012",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-013",
+      "role": "SELECT",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-015",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-018",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-019",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-020",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-021",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-022",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-023",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-024",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-025",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-026",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-027",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-028",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-031",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-032",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-033",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-034",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-037",
+      "role": "SELECT",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-039",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-040",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-041",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-044",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-045",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-046",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-048",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-049",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-050",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-051",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-052",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-053",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-054",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-055",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-056",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-058",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-059",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-060",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-062",
+      "role": "SELECT",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-063",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-065",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-066",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-067",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-068",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-069",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-070",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-071",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-074",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-075",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-076",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-077",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-078",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-079",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-080",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-081",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-082",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-083",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-085",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-086",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-087",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-088",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-089",
+      "role": "SELECT",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-091",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-093",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-094",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-095",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-096",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "3D_AX_T1_postcontrast",
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-097",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-098",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-100",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-101",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-105",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-106",
+      "role": "SELECT",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": true,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-107",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-108",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-109",
+      "role": "MEASUREMENT_EVAL",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-110",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-111",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-112",
+      "role": "TRAIN",
+      "metadata_candidate": true,
+      "missing_source_descriptions": [],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-113",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    },
+    {
+      "subject": "ReMIND-114",
+      "role": "TRAIN",
+      "metadata_candidate": false,
+      "missing_source_descriptions": [
+        "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "ventricles seg - MR ref: 3D_AX_T1_postcontrast"
+      ],
+      "duplicate_required_descriptions": {},
+      "source_prior_cavity_label_present": false,
+      "anatomy_qualified": false
+    }
+  ],
+  "same_reference_cerebrum_metadata": [
+    {
+      "subject": "ReMIND-008",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-010",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-013",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-020",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-025",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-037",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-060",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-062",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-067",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-068",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-070",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-074",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-075",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-077",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-086",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-089",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-097",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-107",
+      "present": true
+    },
+    {
+      "subject": "ReMIND-112",
+      "present": true
+    }
+  ],
+  "task": "full-tool approach to supplied whole-tumor region; hypothetical access; geometric research only",
+  "public_inputs": [
+    "preoperative ceT1",
+    "supplied manual whole-tumor region",
+    "supplied automatic Brainlab cerebrum estimate",
+    "instrument geometry",
+    "declared access",
+    "observed action history"
+  ],
+  "private_reference": "source automatic Brainlab ventricular annotation; not independent manual truth",
+  "whole_tumor_is_prescribed_resection_target": false,
+  "exact_availability_timestamps": null,
+  "preoperative_basis": "official source describes planning-stage annotation; DICOM dates retained without inventing acquisition dates",
+  "pretrained_overlap": "unknown; source automatic support may contain ventricular void information and must stay disclosed",
+  "no_clinical_injury_probability": true,
+  "evaluation_scope": "one reserved patient can demonstrate a case transfer only; no population efficacy claim",
+  "current_QC_state": "first TRAIN headers completed after metadata selection; anatomy/coverage still under qualification",
+  "independent_metadata_audit_sha256": "1b2f6ac80c8cda038ffd73dc75c187f45e2e56dec5f63e32891328f3165010e4"
+}
