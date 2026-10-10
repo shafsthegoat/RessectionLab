@@ -1,0 +1,7 @@
+Explicit simulated occupancy sensitivity is integrated; patient comparison pending.
+
+The default raw cerebrum occupancy is unchanged. The optional fixed-TRAIN search-only condition uses exactly raw S union unchanged supplied whole-tumor T, retains both original annotations and the full target/domain denominator, and records added cells and normalization differences. Access still derives from raw S. Derived occupancy is an unvalidated rigid removable-cell assumption, including unseparated necrotic components; it is not corrected anatomy or physical validation. No SELECT/EVAL or learning admission is granted for this condition.
+
+Validation: 162 tests and nine subtests pass in 8.95 seconds, including 24 generated occupancy controls, historical default source/protocol/observation/inventory parity, exact union/removal behavior, provenance tampering refusals, admission, SELECT, cache and RL diagnostic regression. Controls are generated software fixtures, not patient QC. Independent source review found and resolved raw-support and binary-domain provenance joins before execution.
+
+Next: the predefined paired eight-arm search experiment on TRAIN008/010/020/025, with zero actual policy forwards and optimizer work for both arms. No patient occupancy result or accuracy improvement is claimed by this source integration.

@@ -1,0 +1,53 @@
+{
+  "version": "paired-TRAIN-occupancy-source-v1",
+  "status": "source_only_tests_pending_root",
+  "base_HEAD": "069e47e4a4df235681e49283b320e45e1f83dc41",
+  "recipe": {
+    "path": "build/remind-cerebrum-semantics-v1/paired-train-recipe.json",
+    "sha256": "55e08ec2e9e7b3c9cd418bc6d39c0c835ac614aa605810a2432d0edd7f6846f8"
+  },
+  "files": [
+    {
+      "staged_path": "build/paired-train-occupancy-v1/stage/resectionlab/native_spatial_task.py",
+      "target_path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "744e295a4ea437395cc3eb82f3ad75c9e3336a5f5504b83a7c5c40b8bcf8ec00",
+      "before_sha256": "eccd576682ae392eb0883243dfee4ca9bc77874716840153ce9d7b3d90e3ac62"
+    },
+    {
+      "staged_path": "build/paired-train-occupancy-v1/stage/resectionlab/patient_planning_admission.py",
+      "target_path": "src/resectionlab/patient_planning_admission.py",
+      "sha256": "755891729bfbaf4a8c5695eb1d4fa5577f22ef4c6c73d75cc37e6500690fe138",
+      "before_sha256": "2953e80ef841ea1b4664da6caec68c41df6087b6a9d32eb94e391e5c1e3d2ea0"
+    },
+    {
+      "staged_path": "build/paired-train-occupancy-v1/stage/resectionlab/public_patient_factory.py",
+      "target_path": "src/resectionlab/public_patient_factory.py",
+      "sha256": "a6190ae6f2f7dde75fc64ab947050a469580f4cb68dc5fc3d3b663230e96cd4c",
+      "before_sha256": "bf918d5f5ae2f4b2b49843a1ea2949e3359106f56c57111b31e0aca93aac4d99"
+    },
+    {
+      "staged_path": "build/paired-train-occupancy-v1/stage/resectionlab/spatial_observations.py",
+      "target_path": "src/resectionlab/spatial_observations.py",
+      "sha256": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f",
+      "before_sha256": "0bec25ac9b5306bfe32b526acf3f6c7886745e958615f728aa36ca287a2e5fe0"
+    },
+    {
+      "staged_path": "build/paired-train-occupancy-v1/stage/tests/test_paired_train_occupancy.py",
+      "target_path": "tests/test_paired_train_occupancy.py",
+      "sha256": "123ad148cc00e3fd86514d591c9f5cfd785a25043bde39774543bcd973aa42d9",
+      "before_sha256": null
+    }
+  ],
+  "historical_baseline_files": [
+    {
+      "path": "build/paired-train-occupancy-v1/baseline/native_spatial_task.py",
+      "sha256": "eccd576682ae392eb0883243dfee4ca9bc77874716840153ce9d7b3d90e3ac62"
+    },
+    {
+      "path": "build/paired-train-occupancy-v1/baseline/public_patient_factory.py",
+      "sha256": "bf918d5f5ae2f4b2b49843a1ea2949e3359106f56c57111b31e0aca93aac4d99"
+    }
+  ],
+  "validation": "AST parse only; no test/project import/native/model/patient execution",
+  "patch_sha256": "ee2681b0154e6f1333924aa22b1b07e344adfa7fb53504ba1eb2470e8d5bce4c"
+}

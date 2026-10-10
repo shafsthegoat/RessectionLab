@@ -28,7 +28,7 @@ STATE_FEATURE_NAMES = ("steps_taken", "max_steps", "current_tool_present",
     "access_normal_x", "access_normal_y", "access_normal_z", "access_radius_mm")
 TRACKS = frozenset({"synthetic_scan", "annotation_assisted", "inference_only"})
 SOURCE_KINDS = frozenset({"unavailable", "observed_scan", "synthetic_scan",
-    "derived_from_scan", "observed_procedure_state", "supplied_annotation"})
+    "derived_from_scan", "observed_procedure_state", "supplied_annotation", "derived_occupancy_assumption"})
 MAX_VOLUME_VOXELS = 64 ** 3
 MAX_ACTIONS = 1024
 
@@ -179,6 +179,9 @@ class SpatialInputs:
                 if (channel.source_kind != "derived_from_scan" or channel.derived_from != ("structural_intensity",)
                         or not channel.derivation.strip()):
                     raise SpatialInputError("Scan tracks require declared scan-derived estimates; reference annotations are forbidden")
+            elif channel.source_kind == "derived_occupancy_assumption":
+                if name != "nominal_tissue" or not channel.derivation.strip():
+                    raise SpatialInputError("Derived occupancy is only an explicitly disclosed tissue assumption")
             elif channel.source_kind not in {"derived_from_scan", "supplied_annotation"}:
                 raise SpatialInputError("Annotation-assisted fields still require explicit estimate or annotation provenance")
             if name in {"nominal_tissue", "nominal_target"} and (np.any(channel.data < 0) or np.any(channel.data > 1)):

@@ -37,6 +37,9 @@ MAX_NATIVE_SPATIAL_STEPS = 24  # Explicit run budgets still bound work at any ho
 GRID_ROUNDOFF_MAX_DISPLACEMENT_MM = 1e-6
 GRID_ROUNDOFF_MAX_GRAM_ERROR = 1e-8
 SYNTHETIC_TARGET_THRESHOLD = .5
+RAW_CEREBRUM_OCCUPANCY = "raw_cerebrum_baseline"
+SUPPLIED_TUMOR_UNION_OCCUPANCY = "cerebrum_plus_supplied_tumor_assumption"
+DERIVED_OCCUPANCY_SOURCE_KIND = "derived_occupancy_assumption"
 DEFAULT_NATIVE_SPATIAL_REWARD = RewardSpec(target_per_mm3=1., normal_per_mm3=.2,
     motor_per_mm3=0., language_per_mm3=0., action_cost=.03,
     motion_per_mm=.001, tool_change_cost=.03, graph_edge_cost=0.)
@@ -200,6 +203,10 @@ class NativeSpatialCase:
     target_semantics: str = TARGET_WITHIN_SUPPORT
     public_target_context_variant: str | None = None
     public_target_domain: np.ndarray | None = None
+    # Only the explicit S union T assumption supplies this unchanged source S.
+    # This is retained separately from simulated occupancy, never relabeled QC.
+    occupancy_source_support: np.ndarray | None = None
+    _occupancy_derivation: Mapping = field(init=False, repr=False, default_factory=dict)
     _public_target_source: object | None = field(init=False,repr=False,default=None)
     _nominal_proposer: PreparedNominalCavityProposer | None = field(init=False, repr=False, default=None)
     _normalization_record: Mapping = field(init=False, repr=False)
@@ -238,6 +245,32 @@ class NativeSpatialCase:
                 raise ValueError("Supplied goal region requires explicit annotation-assisted public target")
         elif nominal is not None and np.any((nominal > 0) & ~support):
             raise ValueError("Permitted target estimates conflict with supplied tissue support")
+        if self.occupancy_source_support is None:
+            if self.support_source_kind == DERIVED_OCCUPANCY_SOURCE_KIND:
+                raise ValueError("Derived occupancy requires the unchanged source support")
+        else:
+            raw_support = _binary(self.occupancy_source_support, image.shape, "occupancy_source_support")
+            if (self.track != "annotation_assisted" or self.target_semantics != SUPPLIED_GOAL_REGION
+                    or self.support_source_kind != DERIVED_OCCUPANCY_SOURCE_KIND
+                    or not raw_support.any() or nominal is None
+                    or not np.array_equal(support, raw_support | (nominal > 0))):
+                raise ValueError("Derived occupancy must be exactly supplied S union unchanged supplied T")
+            added = (nominal > 0) & ~raw_support
+            object.__setattr__(self, "occupancy_source_support", raw_support)
+            object.__setattr__(self, "_occupancy_derivation", freeze_json({
+                "version": "supplied-support-target-union-v1",
+                "condition": SUPPLIED_TUMOR_UNION_OCCUPANCY,
+                "operation": "S OR (T > 0)",
+                "source_support_hash": array_digest(raw_support),
+                "supplied_target_hash": array_digest(nominal),
+                "derived_occupancy_hash": array_digest(support),
+                "added_region_hash": array_digest(added),
+                "source_support_positive_voxels": int(raw_support.sum()),
+                "added_region_positive_voxels": int(added.sum()),
+                "source_support_unchanged": True, "target_unchanged": True,
+                "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+                "anatomical_or_material_validation": False,
+                "outside_union": "unchanged simulation zeros; not certified empty anatomy"}))
         if self.proposal_mode == "nominal_cavity_v1":
             if nominal is None:
                 raise ValueError("ESSENTIAL_EVIDENCE_MISSING: nominal/cavity proposals need explicit permitted target evidence")
@@ -317,7 +350,11 @@ class NativeSpatialCase:
                 "unsupported_region_membership_mm3": unsupported,
                 "supported_region_membership_mm3": full-unsupported,
                 "fraction_denominator": "entire_unchanged_supplied_region",
-                "occupancy_modified": False, "target_modified": False,
+                "occupancy_modified": bool(self._occupancy_derivation.get("added_region_positive_voxels", 0)),
+                **({"derived_occupancy": True, "occupancy_condition": SUPPLIED_TUMOR_UNION_OCCUPANCY,
+                    "occupancy_derivation": self._occupancy_derivation}
+                   if self.occupancy_source_support is not None else {}),
+                "target_modified": False,
                 "unsupported_region_removable": False,
                 "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth"}))
         for name, value in (("structural_intensity", image), ("observed_support", support),
@@ -371,6 +408,8 @@ class NativeSpatialCase:
         source_hash = semantic_digest({"version": NATIVE_SPATIAL_VERSION,
             "scan": array_digest(image), "support": array_digest(support), "affine": array_digest(self.affine_ras_mm),
             "nominal_target": None if nominal is None else array_digest(nominal),
+            **({"occupancy_derivation": self._occupancy_derivation}
+               if self.occupancy_source_support is not None else {}),
             **({'public_target_context_variant':self.public_target_context_variant,
                 'public_target_domain':array_digest(self.public_target_domain)}
                if self.public_target_context_variant is not None else {}),
@@ -433,6 +472,8 @@ class NativeSpatialCase:
         return (arrays, None if self.nominal_target is None else _array_identity(self.nominal_target),
             semantic_digest({"access": _access_record(self.access), "tools": [asdict(t) for t in self.tools]}),
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
+            *((_array_identity(self.occupancy_source_support), semantic_digest(self._occupancy_derivation))
+              if self.occupancy_source_support is not None else ()),
             *((self.public_target_context_variant,_array_identity(self.public_target_domain),
                 None if self._public_target_source is None else self._public_target_source.fingerprint)
               if self.public_target_context_variant is not None else ()),

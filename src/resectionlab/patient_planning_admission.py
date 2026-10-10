@@ -15,7 +15,8 @@ import json
 import numpy as np
 
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
-from .native_spatial_task import MAX_NATIVE_SPATIAL_STEPS, NativeSpatialCase, NativeSpatialTask
+from .native_spatial_task import (MAX_NATIVE_SPATIAL_STEPS, NativeSpatialCase, NativeSpatialTask,
+    SUPPLIED_TUMOR_UNION_OCCUPANCY, DERIVED_OCCUPANCY_SOURCE_KIND)
 from .spatial_observations import SpatialObservation
 
 VERSION = "remind-public-annotation-assisted-native-v1"
@@ -191,10 +192,15 @@ bound here and enforced by the separately supervised caller.
     _need(type(cohort_bytes) is bytes and hashlib.sha256(cohort_bytes).hexdigest() == COHORT_SHA256,
           "original_ReMIND_cohort_bytes_required")
     cohort = json.loads(cohort_bytes)
-    source = _fields(source_binding, SOURCE_FIELDS, "exact_public_source_fields_required")
-    qc = _fields(qc_receipt, QC_FIELDS, "exact_public_QC_fields_required")
+    derived_occupancy = case.occupancy_source_support is not None
+    source = _fields(source_binding, SOURCE_FIELDS | ({"occupancy_derivation",
+        "target_domain_source_sha256", "target_domain_binary_hash"} if derived_occupancy else set()),
+        "exact_public_source_fields_required")
+    qc = _fields(qc_receipt, QC_FIELDS | ({"derived_occupancy_anatomically_validated"}
+        if derived_occupancy else set()), "exact_public_QC_fields_required")
     checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
-    plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set()),
+    plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
+        | ({"occupancy_condition"} if derived_occupancy else set()),
         "exact_preflight_protocol_fields_required")
     domain = source["evidence_domain"]
     _need(domain in {"acquired_patient", "generated_interface_control"}, "explicit_evidence_domain_required")
@@ -216,14 +222,41 @@ bound here and enforced by the separately supervised caller.
     semantics = (("source_automatic_Brainlab_cerebrum_annotation", "source_manual_whole_tumor_annotation")
                  if domain == "acquired_patient" else
                  ("generated_support_interface_control", "generated_target_interface_control"))
+    if derived_occupancy:
+        semantics = ("derived_simulated_S_union_T_occupancy_assumption", semantics[1])
+        _need(domain == "acquired_patient" and member["role"] == "TRAIN"
+              and source["subject"] in {"ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025"}
+              and not checkpoint_reload and plan["occupancy_condition"] == SUPPLIED_TUMOR_UNION_OCCUPANCY
+              and plan["initialization"] == "public_world_search_only"
+              and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
+              and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0,
+              "derived_occupancy_requires_fixed_TRAIN_search_only")
+        _need(qc["derived_occupancy_anatomically_validated"] is False
+              and semantic_digest(source["occupancy_derivation"]) == semantic_digest(case._occupancy_derivation)
+              and _same_hash(case._occupancy_derivation["source_support_hash"],
+                  case.support_provenance.get("raw_support_array_hash"))
+              and case.public_target_domain is not None
+              and _same_hash(source["target_domain_binary_hash"], array_digest(case.public_target_domain))
+              and case.support_provenance.get("occupancy_condition") == SUPPLIED_TUMOR_UNION_OCCUPANCY
+              and case.support_provenance.get("occupancy_unchanged") is
+                  (case._occupancy_derivation["added_region_positive_voxels"] == 0)
+              and case.support_provenance.get("target_unchanged") is True,
+              "derived_occupancy_provenance_or_QC_scope_mismatch")
+        for key, provenance_key in (("support_source_sha256", "supplied_support_file_sha256"),
+                ("target_source_sha256", "supplied_target_file_sha256"),
+                ("target_domain_source_sha256", "target_domain_file_sha256"),
+                ("target_domain_binary_hash", "target_domain_binary_hash")):
+            _need(_same_hash(source[key], case.support_provenance.get(provenance_key)),
+                  "unchanged_public_annotation_provenance_required")
     _need((source["support_semantics"], source["target_semantics"]) == semantics,
           "exact_disclosed_annotation_semantics_required")
     for field in ("t1_source_sha256", "support_source_sha256", "target_source_sha256"):
         _digest(source[field])
     case.assert_intact()
     _need(case.track == ("annotation_assisted" if domain == "acquired_patient" else "synthetic_scan")
-          and case.support_source_kind == case.target_source_kind ==
-              ("supplied_annotation" if domain == "acquired_patient" else "derived_from_scan")
+          and case.support_source_kind == (DERIVED_OCCUPANCY_SOURCE_KIND if derived_occupancy else
+              "supplied_annotation" if domain == "acquired_patient" else "derived_from_scan")
+          and case.target_source_kind == ("supplied_annotation" if domain == "acquired_patient" else "derived_from_scan")
           and case.nominal_target is not None and np.any(case.nominal_target)
           and np.array_equal(case.reference_target, case.nominal_target)
           and case.proposal_mode in {"fixed_lattice", "nominal_cavity_v1"}
@@ -258,11 +291,12 @@ bound here and enforced by the separately supervised caller.
           and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] >= 0
           and (member["role"] == "TRAIN" or plan["max_optimizer_updates"] == 0)
           and type(plan["threads"]) is int and plan["threads"] == 1
-          and (checkpoint_reload or plan["initialization"] == "fresh_seeded_shared_initialization")
+          and (checkpoint_reload or derived_occupancy or plan["initialization"] == "fresh_seeded_shared_initialization")
           and plan["private_reference_used"] is False and plan["clinical_claim"] is False
           and plan["split_changes"] is False, "exact_nonclinical_role_and_budget_contract_required")
     for key in ("max_native_previews", "max_policy_forwards", "worker_seconds", "memory_bytes"):
-        _need(type(plan[key]) is int and plan[key] > 0, "positive_integer_runtime_budgets_required")
+        _need(type(plan[key]) is int and (plan[key] == 0 if derived_occupancy and key == "max_policy_forwards"
+              else plan[key] > 0), "positive_integer_runtime_budgets_required")
     search = _fields(plan["search"], {"max_calls", "beam_width", "seconds"}, "exact_search_budget_required")
     _need(all(type(search[k]) is int and search[k] > 0 for k in search), "positive_integer_search_budgets_required")
     _digest(plan["runtime_release_sha256"])
@@ -270,6 +304,11 @@ bound here and enforced by the separately supervised caller.
     task = NativeSpatialTask(case, max_steps=plan["max_steps"])
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
+        **({"occupancy_condition": SUPPLIED_TUMOR_UNION_OCCUPANCY,
+            "occupancy_derivation": case._occupancy_derivation, "execution_kind": "search_only_no_policy",
+            "derived_occupancy_anatomically_validated": False,
+            "policy_comparison_permitted": False}
+           if derived_occupancy else {}),
         **({} if case.public_target_context_variant is None else {
             'public_target_context_variant':case.public_target_context_variant}),
         "patient_group": source["patient_group"], "role": member["role"], "evidence_domain": domain,

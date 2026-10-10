@@ -69,7 +69,7 @@ def check_public_labels(support, target, domain, manifest):
 def prepare_public_source(output, original_release, original_release_sha256, expected_protocol, progress,
         *, public_manifest_path, public_manifest_sha256, cohort_bytes,
         learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None,
-        expected_role="TRAIN", checkpoint_lineage=None):
+        expected_role="TRAIN", checkpoint_lineage=None, occupancy_condition="raw_cerebrum_baseline"):
     """Build one public source and admission inputs; caller owns supervised use.
 
     expected_protocol may be None for a first construction; then a learning
@@ -79,9 +79,18 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     """
     from resectionlab.geometry import AccessWindow, GENERIC_TOOLS
     from resectionlab.native_proposals import NominalCavityProposalConfig, SUPPLIED_GOAL_REGION
-    from resectionlab.native_spatial_task import NativeSpatialCase
+    from resectionlab.native_spatial_task import (NativeSpatialCase, RAW_CEREBRUM_OCCUPANCY,
+        SUPPLIED_TUMOR_UNION_OCCUPANCY, DERIVED_OCCUPANCY_SOURCE_KIND)
     release = original_release
     limits = release["limits"]
+    if occupancy_condition not in (RAW_CEREBRUM_OCCUPANCY, SUPPLIED_TUMOR_UNION_OCCUPANCY):
+        raise ValueError("Unknown explicit occupancy condition")
+    derived_occupancy = occupancy_condition == SUPPLIED_TUMOR_UNION_OCCUPANCY
+    if derived_occupancy and (expected_role != "TRAIN" or checkpoint_lineage is not None
+            or type(limits.get("max_optimizer_updates")) is not int or limits["max_optimizer_updates"] != 0
+            or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] != 0
+            or public_target_context_variant is None):
+        raise ValueError("Derived occupancy is TRAIN search-only with zero model and optimizer budgets and the public target/domain context")
     if expected_protocol is not None:
         if learning_protocol_hash is not None and learning_protocol_hash != expected_protocol["learning_protocol_hash"]:
             raise ValueError("Conflicting learning protocol hashes")
@@ -148,10 +157,14 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
         "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation"}
     write(output / "public-task-derivation.json", derived)
+    # Access above uses raw S in both conditions. No filling, clipping or route
+    # selection accompanies the explicitly assumed material added below.
+    occupancy = np.logical_or(support, target) if derived_occupancy else support
     progress("before_native_case_constructor", native_shape=list(image.shape), actor_crop=[64,64,64])
-    source = NativeSpatialCase(image, support, target, affine, access, GENERIC_TOOLS,
-        track="annotation_assisted", support_source_kind="supplied_annotation",
-        support_derivation="unchanged supplied automatic Brainlab cerebrum estimate; zeros are not confirmed free anatomy",
+    source = NativeSpatialCase(image, occupancy, target, affine, access, GENERIC_TOOLS,
+        track="annotation_assisted", support_source_kind=(DERIVED_OCCUPANCY_SOURCE_KIND if derived_occupancy else "supplied_annotation"),
+        support_derivation=("explicit simulated S union T rigid-cell occupancy assumption; original automatic cerebrum and manual tumor retained; not validated material or corrected anatomy"
+            if derived_occupancy else "unchanged supplied automatic Brainlab cerebrum estimate; zeros are not confirmed free anatomy"),
         nominal_target=target, target_source_kind="supplied_annotation",
         target_derivation=("unchanged supplied manual whole-tumor region; partial supported progress only; outside region not normal-anatomy truth"
             if subject == "ReMIND-008" else "unchanged supplied NN-derived manual whole-tumor region on declared planning grid; partial supported progress only; source losses retained in public manifest"),
@@ -160,7 +173,11 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             "supplied_target_file_sha256": manifest["input_files"]["supplied_whole_tumor"]["sha256"],
             "target_domain_file_sha256": manifest["input_files"]["whole_tumor_domain"]["sha256"],
             "target_domain_hash": array_digest(domain), "public_access_rule": derived,
-            "occupancy_unchanged": True, "target_unchanged": True,
+            "occupancy_unchanged": not derived_occupancy or unsupported == 0, "target_unchanged": True,
+            **({"occupancy_condition": occupancy_condition, "raw_support_array_hash": array_digest(np.asarray(support, bool)),
+                "target_domain_binary_hash": array_digest(np.asarray(domain, bool)),
+                "source_QC_scope": "unchanged supplied annotations and frame; derived occupancy is not anatomically validated"}
+               if derived_occupancy else {}),
             **({} if subject == "ReMIND-008" else {"source_MR_crop_affine_ras_mm": manifest["source_MR_crop_affine_ras_mm"],
                 "explicit_planning_grid": manifest["reindex_policy"], "public_source_bindings": manifest["source_bindings"],
                 "public_label_resampling": manifest["public_label_resampling"]})},
@@ -168,6 +185,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         native_grid_reconciliation="orthogonal_roundoff_1e-6mm",
         proposal_mode="nominal_cavity_v1", proposal_config=NominalCavityProposalConfig() if proposal_config is None else proposal_config,
         target_semantics=SUPPLIED_GOAL_REGION,
+        **({"occupancy_source_support": support} if derived_occupancy else {}),
         **({} if public_target_context_variant is None else {
             'public_target_context_variant':public_target_context_variant,
             'public_target_domain':np.asarray(domain,dtype=bool)}))
@@ -185,21 +203,38 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         "target_array_hash": array_digest(source.nominal_target), "affine_array_hash": array_digest(source.affine_ras_mm),
         "source_hash": source.source_hash, "availability_basis": "retrospective_annotation_assisted_source_preop",
         "acquired_at": None, "annotation_available_at": None,
-        "support_semantics": "source_automatic_Brainlab_cerebrum_annotation",
-        "target_semantics": "source_manual_whole_tumor_annotation"}
+        "support_semantics": ("derived_simulated_S_union_T_occupancy_assumption" if derived_occupancy
+            else "source_automatic_Brainlab_cerebrum_annotation"),
+        "target_semantics": "source_manual_whole_tumor_annotation",
+        **({"occupancy_derivation": thaw_json(source._occupancy_derivation),
+            "target_domain_source_sha256": files["whole_tumor_domain"]["sha256"],
+            "target_domain_binary_hash": array_digest(np.asarray(domain, bool))} if derived_occupancy else {})}
     qc = {"version": VERSION, "evidence_domain": "acquired_patient", "subject": subject,
         "public_source_binding_hash": semantic_digest(binding), "status": "pass", "scope": QC_SCOPE,
         "source_linkage_checked": True, "frame_geometry_checked": True, "coverage_checked": True,
         "annotation_meaning_checked": True, "public_support_assumption": True,
         "native_domain_fully_covered": True, "hypothetical_access_assumption": True,
-        "evidence_record_sha256": manifest.get("source_bindings", {}).get("saved_array_review_sha256", original_release_sha256)}
+        "evidence_record_sha256": manifest.get("source_bindings", {}).get("saved_array_review_sha256", original_release_sha256),
+        **({"derived_occupancy_anatomically_validated": False} if derived_occupancy else {})}
     protocol = {"version": VERSION, "scope": "patient_native_planning_experiment",
         "subject": subject, "role": expected_role, "evidence_domain": "acquired_patient",
         "public_source_binding_hash": semantic_digest(binding), "qc_receipt_hash": semantic_digest(qc),
-        **limits, "initialization": "fresh_seeded_shared_initialization" if expected_role == "TRAIN" else "frozen_TRAIN_checkpoint_reload", "private_reference_used": False,
+        **limits, "initialization": ("public_world_search_only" if derived_occupancy else
+            "fresh_seeded_shared_initialization" if expected_role == "TRAIN" else "frozen_TRAIN_checkpoint_reload"), "private_reference_used": False,
         "clinical_claim": False, "split_changes": False, "runtime_release_sha256": original_release_sha256,
         "learning_protocol_hash": learning_protocol_hash,
-        **({} if expected_role == "TRAIN" else {"checkpoint_lineage": checkpoint_lineage})}
+        **({} if expected_role == "TRAIN" else {"checkpoint_lineage": checkpoint_lineage}),
+        **({"occupancy_condition": occupancy_condition} if derived_occupancy else {})}
+    if derived_occupancy:
+        write(output / "derived-occupancy-assumption.json", {"condition": occupancy_condition,
+            "derivation": thaw_json(source._occupancy_derivation),
+            "raw_public_files": {key: {"sha256": files[key]["sha256"], "bytes": files[key]["bytes"]}
+                for key in ARRAY_KEYS},
+            "target_domain_hash": array_digest(domain), "access_derived_from": "raw S and unchanged T",
+            "public_access_rule": derived, "source_QC_validates_derived_material": False,
+            "policy_comparison_permitted": False,
+            "normalization_coupling": "support_percentile_1_99 uses this condition occupancy; compare recorded bounds across arms",
+            "intensity_normalization": thaw_json(source._normalization_record)})
     write(output / "admitted-public-bindings.json", {"source_binding": binding, "qc": qc,
         "protocol": protocol, "supplied_goal_extent": thaw_json(source._supplied_goal_extent),
         "native_grid_reconciliation": thaw_json(source._grid_record),
