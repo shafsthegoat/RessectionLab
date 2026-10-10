@@ -1,0 +1,41 @@
+{
+  "admission_forward_ceiling": 1,
+  "diagnostic_scope": "One equal-depth actual removed-volume retention contrast; no training, replay, private reference or cohort benchmark",
+  "endpoint_rule": "numpy_rint nearest source-axis voxelcount, minimum1; actual physicaladvance reported, may exceed requested1mm",
+  "expected_head": "d0a2cfc5d3690732b40604b907bfa5a5c3b0da21",
+  "input_index": {
+    "path": "build/cross-patient-planning-v1/opening-volume-retention-v1/input-index.json",
+    "sha256": "b3930e952d40082a747063eac60ee1905a8720182d3c125e488598345b1ae0c8"
+  },
+  "limits": {
+    "beam_width": 2,
+    "horizon": 6,
+    "memory_bytes": 3221225472,
+    "native_previews": 2000,
+    "optimizer_updates": 0,
+    "parent_seconds": 120,
+    "policy_forwards": 0,
+    "search_seconds": 60,
+    "search_transition_calls": 858,
+    "threads": 1,
+    "worker_seconds": 110
+  },
+  "output": "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1",
+  "owned_execution_forward_limit": 0,
+  "profile": false,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "requested_opening_lookahead_mm": 1.0,
+  "retention_policy": "return_plus_opening_depth_volume_v1",
+  "scope": "Only exact-depth cumulative actual removed actor-covered volume tie preference changes. Same source/model/observation/candidates, arrays, frame, access, tools, reward, horizon6, beam2, cap96,858 transitions,60s search. Optional public target context remains off.",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/opening-volume-retention-v1/source-index.json",
+    "sha256": "eedd90b8297ea6794ac3d257c21c1bc0143cb9840734eae44393d9d7891407b8"
+  },
+  "status": "released_one_attempt",
+  "tie_break_limit": "Source/model/observation/candidate IDs stay identical; only equal-depth opening-lane ranking uses volume before true return; default lane and terminal STOP unchanged",
+  "tool_footprint_opening": true,
+  "version": "opening-volume-retention-ReMIND-008-search-release-v1"
+}

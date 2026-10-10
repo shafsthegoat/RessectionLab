@@ -1,0 +1,20 @@
+{
+  "same_stop_decision": true,
+  "baseline_actions": [
+    "STOP"
+  ],
+  "new_actions": [
+    "STOP"
+  ],
+  "baseline_transition_calls": 305,
+  "new_transition_calls": 268,
+  "baseline_search_seconds": 41.67429383308627,
+  "new_search_seconds": 39.38999058306217,
+  "comparison_scope": "only equal-depth cumulative committed-volume tie preference changes; same source/model/observation/candidates, arrays, frame, access, tools, reward, horizon and beam",
+  "source_bound_action_ids_expected_equal": true,
+  "exact_initial_inventory_preserved": true,
+  "depth_comparison": "exact float order; no tolerance",
+  "candidate_cap": 96,
+  "omitted_candidate_legality_unknown": true,
+  "same_sampling_budgets_not_a_runtime_speed_claim": true
+}

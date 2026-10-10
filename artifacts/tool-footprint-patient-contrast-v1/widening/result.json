@@ -1,0 +1,123 @@
+{
+  "status": "complete_opening_volume_retention_search_contrast",
+  "scope": "same_public_world_equal_depth_volume_six_step_beam",
+  "optimizer_updates": 0,
+  "optimizer_construction_attempts": 0,
+  "policy_forward_calls": 0,
+  "policy_constructions": 0,
+  "checkpoint_loads": 0,
+  "private_array_reads": 0,
+  "search_invocations": 1,
+  "native_replay_calls": 0,
+  "original_attempt_unchanged": true,
+  "saved_baseline_cost": {
+    "search_seconds": 41.67429383308627,
+    "model_transition_calls": 305,
+    "native_previews": 1056,
+    "owned_wall_seconds": 47.63652233383618,
+    "sampled_peak_rss_bytes": 1481785344,
+    "costs_remain_separate_from_this_attempt": true
+  },
+  "actions": [
+    "STOP"
+  ],
+  "source_hash": "sha256:b6d08778041818a2d3f19c01edc0fd64ad42ae2528da2a0c73aabd9106bddd50",
+  "decision_model_hash": "sha256:58968126b0166634c60bf5cd384c5f1bc213ae350d55a735793a93f3f1093761",
+  "initial_observation_hash": "sha256:aeb6b2d5c27deeca7769b9099322b057f2c48c96994b0e92e757cf14919aab3c",
+  "original_release_sha256": "9772dc73f15abab98fcf784a152552214a3c682df76c1405b78bbdb307ae3b69",
+  "input_index_sha256": "b3930e952d40082a747063eac60ee1905a8720182d3c125e488598345b1ae0c8",
+  "baseline_comparison": {
+    "same_stop_decision": true,
+    "baseline_actions": [
+      "STOP"
+    ],
+    "new_actions": [
+      "STOP"
+    ],
+    "baseline_transition_calls": 305,
+    "new_transition_calls": 268,
+    "baseline_search_seconds": 41.67429383308627,
+    "new_search_seconds": 39.38999058306217,
+    "comparison_scope": "only equal-depth cumulative committed-volume tie preference changes; same source/model/observation/candidates, arrays, frame, access, tools, reward, horizon and beam",
+    "source_bound_action_ids_expected_equal": true,
+    "exact_initial_inventory_preserved": true,
+    "depth_comparison": "exact float order; no tolerance",
+    "candidate_cap": 96,
+    "omitted_candidate_legality_unknown": true,
+    "same_sampling_budgets_not_a_runtime_speed_claim": true
+  },
+  "baseline_source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64",
+  "retention_policy": "return_plus_opening_depth_volume_v1",
+  "same_public_world_original_candidates_preserved": true,
+  "tool_footprint_opening": true,
+  "proposal_rule_hash": "sha256:294f68be17ed50a3f95d3bc0eacfef6807a2f42bd2589fa576d3a2b702cec424",
+  "observed_inventory_states": 11,
+  "initial_added_family_dispositions": {
+    "declared": 26,
+    "emitted": 4,
+    "feasible": 4,
+    "cap_omitted": 12,
+    "dispositions": {
+      "DUPLICATE_GEOMETRY": 10,
+      "NATIVE_CONNECTED_STROKE": 4,
+      "CANDIDATE_CAP": 12
+    }
+  },
+  "actual_opening_advance_mm": [
+    1.0156000155592193
+  ],
+  "initial_extra_candidate_dispositions": {
+    "DUPLICATE_GEOMETRY": 2,
+    "PROPOSED_UNCERTIFIED": 24
+  },
+  "model_transition_calls": 268,
+  "completed_layers": 6,
+  "search_seconds": 39.38999058306217,
+  "policy_guidance": false,
+  "cost_scope": "new retention-only search plus public reconstruction and initial inventory; saved footprint baseline costs remain separate",
+  "limitation": "larger committed opening volume is an aggressive retention proxy, not shaft clearance or target utility; unchanged96 cap leaves omitted legality unknown; full-world search and64-cubed actor features have unequal effective inputs; retained removal depth differs from tip insertion",
+  "private_evaluation_performed": false,
+  "diagnostic_only_not_new_training_or_benchmark": true,
+  "worker_wall_seconds": 45.35037033283152,
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "complete_history_awaiting_independent_audit",
+    "failure": null,
+    "limits": {
+      "native_preview_entries": 2000,
+      "planning_execution_seconds": 110.0
+    },
+    "native_preview_entries": 1056,
+    "observed_admissions_before_accounting_failure": 1056,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 43.42599279200658,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": true,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 1056,
+          "returned": 1056,
+          "raised": 0,
+          "seconds": 9.110495547065511,
+          "feasible": 268,
+          "rejected": 788,
+          "returned_microsteps": 7267,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 788
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  }
+}

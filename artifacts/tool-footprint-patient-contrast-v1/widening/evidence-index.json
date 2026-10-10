@@ -1,0 +1,60 @@
+{
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/result.json": {
+    "copy": "result.json",
+    "sha256": "7850d7572209c580ce7128bcc8b082afd2cc1df30cfab6891bdc699ceae0c796"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/retained-progress.json": {
+    "copy": "retained-progress.json",
+    "sha256": "d4946a6d621a28c04fdc369c41b149a57cdf4e1eefd9c8520489a57faf166b52"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/identity-checks.json": {
+    "copy": "identity-checks.json",
+    "sha256": "99605a5161d7a56086d0a6731117d4656ef459dd7f63a6bedaeda5e5755ebb52"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/search-prefixes.json": {
+    "copy": "search-prefixes.json",
+    "sha256": "8316fe45efc5863d1d4840305ef10ff86f1358aa1eee0a1bd1d4d8b366b1aa4f"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/baseline-comparison.json": {
+    "copy": "baseline-comparison.json",
+    "sha256": "deb06969b5ec8b6f1d4356446399c9284ba1917e2f55714a61ffe33796b7435e"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1.supervision/receipt.json": {
+    "copy": "receipt.json",
+    "sha256": "d559edf504d4ae0d602eeed5fa9fdc2ed1562ebcf50903be707523119b1a6bd2"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1.supervision/declaration.json": {
+    "copy": "declaration.json",
+    "sha256": "8ec4d2248311f57151b8cfea87d6fe4dbbf4ce804c7239f3128365abea7cf3bd"
+  },
+  "build/cross-patient-planning-v1/opening-volume-retention-v1/release.json": {
+    "copy": "release.json",
+    "sha256": "619c9c70cd0f01ba8529c9568744bb00888b0aae70318e95e9d77aad04a473e9"
+  },
+  "build/cross-patient-planning-v1/opening-volume-retention-v1/source-index.json": {
+    "copy": "source-index.json",
+    "sha256": "eedd90b8297ea6794ac3d257c21c1bc0143cb9840734eae44393d9d7891407b8"
+  },
+  "build/cross-patient-planning-v1/opening-volume-retention-v1/input-index.json": {
+    "copy": "input-index.json",
+    "sha256": "b3930e952d40082a747063eac60ee1905a8720182d3c125e488598345b1ae0c8"
+  },
+  "build/cross-patient-planning-v1/opening-volume-retention-v1/search_worker.py": {
+    "copy": "search_worker.py",
+    "sha256": "b35ed6e6e21546ddd9b4e3224940b644801e1dde2f8a2356d81cc1a982be748b"
+  },
+  "build/cross-patient-planning-v1/opening-volume-retention-v1/run_owned.py": {
+    "copy": "run_owned.py",
+    "sha256": "2c63cff850b48984775ee3ef7e45ba78d4a53c3568324859a1f5c6d2b275d95c"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/observed-inventories.json": {
+    "copy": null,
+    "sha256": "361b085f9dbd30ab3fa4fb2edcbfd5fed12962a16775b182279a3c059f683a8e",
+    "scope": "full generated local inventory; not patient arrays"
+  },
+  "build/cross-patient-planning-v1/ReMIND-008-opening-volume-retention-search-v1/initial-inventory.json": {
+    "copy": null,
+    "sha256": "479692cff555e9c5efeac7137d804e6b84bedb5bd3c480e872d3082cadb814e5",
+    "scope": "full generated local inventory; not patient arrays"
+  }
+}

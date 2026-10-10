@@ -1,0 +1,27 @@
+{
+  "canonical_json_inventory": {
+    "equal": true,
+    "actual_canonical_sha256": "33c8cef98edefd8177b0cf6d53956608e0154488a20c3556007b798cba3cbc6b",
+    "expected_canonical_sha256": "33c8cef98edefd8177b0cf6d53956608e0154488a20c3556007b798cba3cbc6b",
+    "mismatch_field_paths": [],
+    "comparison": "canonical JSON; tuple/list share array encoding; values/order/types otherwise exact"
+  },
+  "source_hash": {
+    "equal": true,
+    "actual": "sha256:b6d08778041818a2d3f19c01edc0fd64ad42ae2528da2a0c73aabd9106bddd50",
+    "previous": "sha256:b6d08778041818a2d3f19c01edc0fd64ad42ae2528da2a0c73aabd9106bddd50",
+    "requirement": "identical footprint task, public observation and candidates"
+  },
+  "decision_model_hash": {
+    "equal": true,
+    "actual": "sha256:58968126b0166634c60bf5cd384c5f1bc213ae350d55a735793a93f3f1093761",
+    "previous": "sha256:58968126b0166634c60bf5cd384c5f1bc213ae350d55a735793a93f3f1093761",
+    "requirement": "identical footprint task, public observation and candidates"
+  },
+  "initial_observation_hash": {
+    "equal": true,
+    "actual": "sha256:aeb6b2d5c27deeca7769b9099322b057f2c48c96994b0e92e757cf14919aab3c",
+    "previous": "sha256:aeb6b2d5c27deeca7769b9099322b057f2c48c96994b0e92e757cf14919aab3c",
+    "requirement": "identical footprint task, public observation and candidates"
+  }
+}

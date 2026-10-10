@@ -1,0 +1,37 @@
+{
+  "files": {
+    "baseline_reward": {
+      "path": "build/cross-patient-planning-v1/intermediate-opening-v1/baseline-reward.json",
+      "sha256": "9118bf398dbcb5c387391fb12203e72bcf2bb136cd3a8c4f18b28fc854703b62"
+    },
+    "bindings": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/admitted-public-bindings.json",
+      "sha256": "54475a75b5718c129ec2081b14829e9aa52dd8c70c5090524c23af2af371376e"
+    },
+    "context": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-run-v2/preflight/context.json",
+      "sha256": "7a299b233e7b0c1359390ef1cf10199baa96ffd11fc0173c2292c357123a3a2e"
+    },
+    "original_release": {
+      "path": "build/cross-patient-planning-v1/actual-preflight-v2/release.json",
+      "sha256": "9772dc73f15abab98fcf784a152552214a3c682df76c1405b78bbdb307ae3b69"
+    },
+    "original_search": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/search-prefixes.json",
+      "sha256": "14182123e2c7fae29c9c916a64afd1b45e14fa15b43232a43bebb78c95ef2a53"
+    },
+    "prior_contrast_inventory": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/initial-inventory.json",
+      "sha256": "479692cff555e9c5efeac7137d804e6b84bedb5bd3c480e872d3082cadb814e5"
+    },
+    "prior_contrast_parent": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1.supervision/receipt.json",
+      "sha256": "f86d72cdb89dcf0d9bd85a641e5cf57139a0ed8a381d7b136eee64f221c687d1"
+    },
+    "prior_contrast_result": {
+      "path": "build/cross-patient-planning-v1/ReMIND-008-tool-footprint-opening-search-v1/result.json",
+      "sha256": "43e468a6ded761433e2ad1a065d684cff484ee92cc00c48b8baa7de5ea184ae8"
+    }
+  },
+  "version": "opening-volume-retention-contrast-inputs-v1"
+}
